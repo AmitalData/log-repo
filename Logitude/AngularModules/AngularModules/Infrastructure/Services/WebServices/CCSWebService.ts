@@ -1,25 +1,32 @@
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { ServiceHelper } from '../../Utilities/ServiceHelper';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { defer, of } from 'rxjs';
-
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Rx';
+import {ServiceHelper} from '../../Utilities/ServiceHelper';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+import {ApiQueryFilters} from '../../DataContracts/ApiQueryFilters';
+import {SessionInfo} from '../../Utilities/SessionInfo';
 @Injectable()
+
 export class CCSWebService {
     private _apiUrl: string;
-    private _http: HttpClient;
+    private _http: Http;
     constructor() {
-        this._http = ServiceHelper.HttpClient
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CCSWebService';
     }
 
-    Send(myShipmentId: string, myRecipient: string, isSendingCargonaut: boolean, isSendingDEXX: boolean, isMultiHS: boolean) {
-        var url = this._apiUrl + '/GetMessageResult?myShipmentId=' + myShipmentId + '&myRecipient=' + myRecipient + '&isSendingCargonaut=' + isSendingCargonaut + '&isSendingDEXX=' + isSendingDEXX + '&isMultiHS=' + isMultiHS;
+    Send(myShipmentId: string, myRecipient: string, isSendingCargonaut: boolean, isSendingDEXX: boolean) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myJsonResult = response;
+        var url = this._apiUrl + '/GetMessageResult?myShipmentId=' + myShipmentId + '&myRecipient=' + myRecipient + '&isSendingCargonaut=' + isSendingCargonaut + '&isSendingDEXX=' + isSendingDEXX;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var myJsonResult = response.json();
+
                 var mappedResult: CCSResult = new CCSResult();
 
                 if (myJsonResult) {
@@ -33,17 +40,19 @@ export class CCSWebService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
     GetFHLsValidation(myMasterId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetFHLsValidation?myMasterId=' + myMasterId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<FHLShipmentValidator> = [];
 
                 for (var key in allLists) {
@@ -54,18 +63,21 @@ export class CCSWebService {
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
-
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
     GetSendingValidations(myShipmentId: string, myRecipient: string, isSendingFHLs: boolean, isSendingCargonaut: boolean, isSendingDEXX: boolean, mainCarriageCarrierId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetSendingValidations?myShipmentId=' + myShipmentId + '&myRecipient=' + myRecipient + '&isSendingFHLs=' + isSendingFHLs + '&isSendingCargonaut=' + isSendingCargonaut + '&isSendingDEXX=' + isSendingDEXX + '&mainCarriageCarrierId=' + mainCarriageCarrierId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myJsonResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var myJsonResult = response.json();
+
                 var mappedResult: AWBResultClass = new AWBResultClass();
 
                 if (myJsonResult) {
@@ -78,19 +90,20 @@ export class CCSWebService {
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
-
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
     GetAWBPrintingStock(myShipmentId: string, isCargonautSending: boolean, isDEXXSending: boolean, isConfirmedByUser: boolean) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
         var url = this._apiUrl + '/GetAWBPrintingStock?myShipmentId=' + myShipmentId + '&isCargonautSending=' + isCargonautSending + '&isDEXXSending=' + isDEXXSending + '&isConfirmedByUser=' + isConfirmedByUser;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
 
                 var mappedResult: AWBPrintResult = new AWBPrintResult();
 
@@ -104,9 +117,8 @@ export class CCSWebService {
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
-
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -129,13 +141,11 @@ export class CCSResult {
     public IsValid: boolean;
     public IsMasterFieldMissing: boolean;
     public HasStockError: boolean;
-    public IsFNAValidationLong: boolean;
     public SendingCount: number;
     public StockRemainingBefore: number;
     public StockRemainingAfter: number;
     public IsDemoTenant: boolean;
 }
-
 export class AWBResultClass {
     public Id: string;
     public Tenant: number;
@@ -165,7 +175,6 @@ export class AWBResultClass {
     public ErrorsList: string[] = [];
     public ValidFHLsDataStringList: string[] = [];
 }
-
 export class FHLShipmentValidator {
     public Id: string;
     public IsFHLValid: boolean;
@@ -179,7 +188,6 @@ export class FHLShipmentValidator {
     public CargonautFHLStatusName: string;
     public FHLErrors: string[] = [];
 }
-
 export class AWBPrintResult {
     Id: string;
     Tenant: number;
@@ -198,3 +206,4 @@ export class AWBPrintResult {
     IsStockAlreadyTaken: boolean;
     IsNoRemainingStocks: boolean;
 }
+

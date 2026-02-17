@@ -15,7 +15,7 @@ import {PackageTypeListService} from '../../../../Common/Services/StandardLists/
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ShipmentDomainService, ExcelPackageFilter, ExcelPackage} from '../../../../Shipment/Services/ShipmentDomainService';
+import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
@@ -24,22 +24,9 @@ import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/Sh
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
 import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
-import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import {WarehouseReleasePMExtendedService} from '../../../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
-import { PackageAmountCalculator } from '../../../../Infrastructure/Utilities/PackageAmountCalculator';
-import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
-import { HorseList } from '../../../../Common/EntityLists/HorseList';
-import { ShipmentSubTypeListService } from '../../../../Shipment/services/standardlists/shipmentsubtypelistservice';
-import { ShipmentContainersWebService } from '../../../../Shipment/Services/ShipmentContainersWebService';
-import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
-import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-
-
-
-declare var ResultAsArray: any;
 
 @Component({
+    moduleId: module.id,
     templateUrl: './PackagesTabComponent.html',
 })
 
@@ -52,102 +39,51 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public TransportModeId: string;
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
-    public IsFromStandAloneScreen: boolean = false;
     public IsResourcesReady: boolean = false;
     public IsContainersFUVisible: boolean = false;
     public IsCommodityNameVisible: boolean = false;
-    public IsShowReleaseNumber: boolean = false;
     public IsCommodityNumberVisible: boolean = false;
-    public IsLastStatusVisible: boolean = false;
-    public IsDeletePackagesButtonVisible: boolean = false;
-    public IsDownloadUploadPackagesVisible: boolean = false;
-    public IsContainerFeatureToggleVisible: boolean = false;
-    public HorseFieldIsVisible: boolean = false;
-    public IsUsingVirtuallization: boolean = false;
-    private warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
+    public IsShippingInstructionsVisible: boolean = false;
     @Output() ReloadDetails = new EventEmitter();
     warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
-
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
-        this.SetIsUsingVirtuallization();
         this.EntityPM = entityArgs.EntityPM;
-        this.IsFromStandAloneScreen = entityArgs.IsFromStandAloneScreen;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.DirectionId = this.EntityPM.DirectionId;
         this.TransportModeId = this.EntityPM.TransportModeId;
         this.ItemsSource = new ObservableCollection([]);
         this.Listen();
-        this.setDigits();
-    }
-
-    SetIsUsingVirtuallization() {
-        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
-        if (hasGridVirtuallizationToggleFeature) {
-            this.IsUsingVirtuallization = true;
-        }
     }
 
     private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null; 
     private CrossDockReleasesEvent: any = null;
-    private firstDigit: string = ",";
-    private secondDigit: string = ".";
 
-    private IsDisconnectWarehouseReleasePackage: boolean = false;
-    private IsGroupageEntityClicked: boolean = false;
-
-    private chooseShipmentPackageFromWarehouseReleasePackages: boolean = false;
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "AWBWizardClosed") {
-                    this.entityArgs.EditComponent.ReloadEntityPM();
-                }
-
-                else if (s == "RefreshPackagesTabFromAWBWizard") {
-                    this.ItemsSource = new ObservableCollection([]);
                     this.SetUIProperties();
                     this.SetGenerateData();
+                    this.BuildItemsSource();
                 }
             });
-
+        
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.IsAddInsideButtonEnabled = false;
-
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
+                    
                     this.SetUIProperties();
                     this.SetGenerateData();
                     this.BuildItemsSource();
 
                     if (this.dowonload) {
-                        this.dowonload = false;
                         this.DownloadPackages();
-                    }
-
-                    if (this.saveAfterDeletePackages) {
-                        this.saveAfterDeletePackages = false;
-                        this.CreatePackagesFromExcel();
-                    }
-
-                    if (this.chooseShipmentPackageFromWarehouseReleasePackages) {
-                        this.chooseShipmentPackageFromWarehouseReleasePackages = false;
-                        this.OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow();
-                    }
-
-                    if (this.IsDisconnectWarehouseReleasePackage) {
-                        this.IsDisconnectWarehouseReleasePackage = false;
-                        this.EnableWarehouseRelaseForUse();
-                    }
-
-                    if (this.IsGroupageEntityClicked) {
-                        this.IsGroupageEntityClicked = false;
-                        this.RunGroupageWindow();
                     }
                 }
             });
@@ -160,6 +96,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.DirectionId = this.EntityPM.DirectionId;
 
                     this.OnResourcesReady();
+                    //this.SetUIProperties();
+                    //this.SetGenerateData();
+                    //this.BuildItemsSource();
                 }
             });
 
@@ -177,37 +116,19 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             });
         }
     }
-
-    private ChargeableWeightPasted: boolean = false;
-    ChargeableWeightPaste($event) {
-        this.ChargeableWeightPasted = true;
-    }
-
-    private GrossWeightPasted: boolean = false;
-    GrossWeightPaste($event) {
-        this.GrossWeightPasted = true;
-    }
-
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
         AppTool.KillEventEmitter(this.CrossDockReleasesEvent);
+        
     }
 
     ngOnInit() {
         if (this.EntityPM != null) {
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-
-            if (FeatureLocator.HasFeaturePermession("Shipment", "DELETEPACKAGES")) {
-                this.IsDeletePackagesButtonVisible = true;
-            }
-
-            if (this.IsFCLEntity && FeatureLocator.HasFeaturePermession("Shipment", "DOWNUPLPACAKGES")) {
-                this.IsDownloadUploadPackagesVisible = true;
-            }
 
             if (FeatureLocator.HasFeaturePermession("Shipment", "COMMODITYNUMBER")) {
                 this.IsCommodityNumberVisible = true;
@@ -216,12 +137,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             if (FeatureLocator.HasFeaturePermession("Shipment", "COMMODITYNAME")) {
                 this.IsCommodityNameVisible = true;
             }
-
-            if (FeatureLocator.HasFeaturePermession("Shipment", "RELEASENUMBER") && this.DirectionId != "I") {
-                this.IsShowReleaseNumber = true;
-            }
-
-            this.CheckHorseVisiblility();
 
             if (this.IsFCLEntity) {
                 this.entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe((res1: any) => {
@@ -242,20 +157,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     });
                 });
             }
-        }
-    }
-    private CheckHorseVisiblility() {
-        var service: ShipmentSubTypeListService = new ShipmentSubTypeListService();
-        service.getSingleFromCache(this.EntityPM.ShipmentSubTypeId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var mySubType = myResponse.Result;
 
-                var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "HRS")[0];
-                if (FeatureToggle && mySubType && mySubType.Code == "HORSE") {
-                    this.HorseFieldIsVisible = true;
-                }
-            }
-        });
+        }
     }
 
     public IsGroupageEntity: boolean = false;
@@ -272,7 +175,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     isInsideButtonVisible = false;
                 }
             }
-
+            
             if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
                 this.IsContainersFUVisible = true;
             }
@@ -300,25 +203,18 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 if (!myResponse.HasError) {
                     this.AllPackageTypes = myResponse.Result;
                 }
-            });
+            });           
         }
 
-        this.SetIsLastStatusVisible();
-    }
-
-    SetIsLastStatusVisible() {
         if (this.IsFCLEntity) {
-            if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated"))
-                this.IsLastStatusVisible = true;
-
             if (FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructions")) {
                 if (this.EntityPM.TransportModeId == "O" && (this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "I")) {
                     if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C") {
-                        this.IsLastStatusVisible = true;
+                        this.IsShippingInstructionsVisible = true;
                     }
 
                     else if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null) {
-                        this.IsLastStatusVisible = true;
+                        this.IsShippingInstructionsVisible = true;
                     }
                 }
             }
@@ -345,7 +241,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeightUnitCode.Short");
+            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Shipment.F.WtMsrUnitCode.Short");
         }
 
         if (this.IsLCLEntity) {
@@ -356,8 +252,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         else {
             this.AddButtonLabel = TextCodeTranslator.Translate("Shipment.B.Packages.AddContainer");
-            if (this.EntityPM.TransportModeId == "I")
-                this.AddButtonLabel = TextCodeTranslator.Translate("Shipment.B.Packages.AddFullTruckLoad");
             this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.ContainerTypeId");
             this.QuantityLabel = TextCodeTranslator.Translate("Shipment.F.NumberOfContainers");
         }
@@ -370,7 +264,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight.Short").replace('%ChargWeightCode', this.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.WtMsr.Short").replace('%ChargWeightCode', this.ChargeableWeightUnitCode);
         }
 
         this.VolumeColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Volume").replace("%UnitCode", this.EntityPM.VolumeUnitCode);
@@ -387,24 +281,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsTotalsFieldEnabled: boolean = true;
     public IsAddInsideButtonEnabled: boolean = false;
     SetUIProperties() {
-        this.CheckHorseVisiblility();
-        if (this.EntityPM.IsMultipleCommodities) {
-            this.IsEditingEnabled = false;
-        }
 
-        else {
-            this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
-        }
-
-        if (this.IsShipmentStatuesDelivered()) {
-            this.IsEditingEnabled = false;
-        }
-
-        this.IsContainerFeatureToggleVisible = false;
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-        if (featureToggle) {
-            this.IsContainerFeatureToggleVisible = true;
-        }
+        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
 
         this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsEditingEnabled);
@@ -425,10 +303,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("IsDangerous", this.ObjectTableName, isTotalsFieldEnabled);
-        this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isTotalsFieldEnabled && !this.EntityPM.IsMultipleCommodities);
+        this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isTotalsFieldEnabled);
         this.SetUIProperties_DimFactor();
         this.SetUIProperties_DimensionsUnitCode();
-
     }
     SetUIProperties_InsideButton() {
         var isButtonEnabled = false;
@@ -465,24 +342,17 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.DimensionsDependencyProperty1IsList = false;
         }
 
-        //this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
 
     BuildItemsSource() {
-        if (!this.EntityPM.IsMultipleCommodities) {
-            var itemsCollection: ShipmentPackageItem[] = [];
+        var itemsCollection: ShipmentPackageItem[] = [];
 
-            this.EntityPM.ShipmentPackages.forEach((item) => {
-                itemsCollection.push(new ShipmentPackageItem(item, this));
-            })
+        this.EntityPM.ShipmentPackages.forEach((item) => {
+            itemsCollection.push(new ShipmentPackageItem(item, this));
+        })
 
-            this.ItemsSource.InsertCollection(itemsCollection);
-        }
-
-        else {
-            this.ItemsSource = new ObservableCollection([]);
-        }
-
+        this.ItemsSource.InsertCollection(itemsCollection);
         this.SetGenerateData();
     }
 
@@ -532,7 +402,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.EntityPM.GrossWeightUnitCode = newValue;
 
             this.OnMeasurmentsSettingsChanged();
-            this.ComputeGrossWeigh_Kg_Ton();            
+            this.ComputeGrossWeigh_Kg_Ton();
         }
     }
 
@@ -543,7 +413,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.ComputeDimFactor();
             this.OnMeasurmentsSettingsChanged();
-            this.ComputeChargeableWeight_Kg();           
         }
     }
 
@@ -564,39 +433,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.EntityPM.Ratio = AppTool.GetRatioFromDimFactor(this.DimFactor, this.DimensionsUnitCode, this.ChargeableWeightUnitCode);
             ShipmentTool.OnShipmentRatioChanged(this.EntityPM);
-        }
-    }
-
-    private ComputeAWBChargeAmount() {
-        if (this.TransportModeId == "A") {
-            this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
-            this.ComputeAWBFrieghtAmount();
-        }
-    }
-    private ComputeAWBFrieghtAmount() {
-        var computedAmount = this.EntityPM.AWBChargeAmount;
-        var totaAmount = this.EntityPM.AWBFreightAmountPrepaid + this.EntityPM.AWBFreightAmountCollect;
-
-        var recompute = true;
-        var isPrepaidHasAmount = (this.EntityPM.AWBFreightAmountPrepaid != 0 && this.EntityPM.AWBFreightAmountPrepaid != null);
-        var isCollectHasAmount = (this.EntityPM.AWBFreightAmountCollect != 0 && this.EntityPM.AWBFreightAmountCollect != null);
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.FreightPrepaidCollectId)) {
-            if (isPrepaidHasAmount && isCollectHasAmount && (computedAmount == totaAmount)) {
-                recompute = false;
-            }
-        }
-
-        if (recompute) {
-            if (this.EntityPM.FreightPrepaidCollectId == "P") {
-                this.EntityPM.AWBFreightAmountCollect = 0;
-                this.EntityPM.AWBFreightAmountPrepaid = computedAmount == null ? 0 : computedAmount;
-            }
-
-            else if (this.EntityPM.FreightPrepaidCollectId == "C") {
-                this.EntityPM.AWBFreightAmountPrepaid = 0;
-                this.EntityPM.AWBFreightAmountCollect = computedAmount == null ? 0 : computedAmount;
-            }
         }
     }
 
@@ -634,30 +470,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.EntityPM.GrossWeightInKG = weigh_Kg;
         this.EntityPM.GrossWeightPerTon = weigh_Ton;
     }
-    private ComputeChargeableWeight_Kg() {
-        var weigh_Kg: number = null;
-        var weigh_Ton: number = null;
-
-        if (this.ChargeableWeight != null) {
-            var factorOfConvert: number = 1;
-
-            if (!AppTool.IsNullOrEmpty(this.ChargeableWeightUnitCode)) {
-                switch (this.ChargeableWeightUnitCode.toUpperCase()) {
-                    case "KG": { factorOfConvert = 1; break; }
-                    case "LB": { factorOfConvert = 0.45359237; break; }
-                    case "MT": { factorOfConvert = 1000; break; }
-                }
-            }
-
-            weigh_Kg = this.ChargeableWeight * factorOfConvert;
-        }
-
-        if (weigh_Kg != null) {
-            weigh_Kg = AppTool.Round(weigh_Kg, 3);
-        }
-        this.EntityPM.ChargeableWeightInKG = weigh_Kg;
-    }
-
     OnMeasurmentsSettingsChanged() {
         this.SetAttachedLabels();
         ShipmentTool.RecalculateShipmentFields(this.EntityPM);
@@ -686,89 +498,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
             this.EntityPM.Volume = AppTool.Round(newValue, 3);
-            this.ComputeVolume_CBM();
         }
     }
-
-    private ComputeVolume_CBM() {
-        var volume_CBM: number = null;
-
-        if (this.Volume != null) {
-            var factorOfConvert: number = 1;
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.VolumeUnitCode)) {
-                switch (this.EntityPM.VolumeUnitCode.toUpperCase()) {
-                    case "CBM": { factorOfConvert = 1; break; }
-                    case "CBI": { factorOfConvert = 61024; break; }      // 1m³ = 61024in³
-                    case "CBF": { factorOfConvert = 35.315; break; }     // 1m³ = 35.315ft³
-                }
-            }
-
-            volume_CBM = this.Volume / factorOfConvert;
-        }
-
-        if (volume_CBM != null) {
-            volume_CBM = AppTool.Round(volume_CBM, 3);
-        }
-        this.EntityPM.VolumeInCBM = volume_CBM;
-    }
-
 
     get VolumetricWeight() { return this.EntityPM.VolumetricWeight == null ? 0 : this.EntityPM.VolumetricWeight; }
     set VolumetricWeight(newValue: number) {
         if (this.EntityPM.VolumetricWeight != newValue) {
             this.EntityPM.VolumetricWeight = AppTool.Round(newValue, 3);
-        }
-    }
-
-    get GrossWeightPerStorageDays() { return this.EntityPM.GrossWeightPerStorageDays == null ? 0 : this.EntityPM.GrossWeightPerStorageDays; }
-    set GrossWeightPerStorageDays(newValue: number) {
-        if (this.EntityPM.GrossWeightPerStorageDays != newValue) {
-            this.EntityPM.GrossWeightPerStorageDays = AppTool.Round(newValue, 3);
-        }
-    }
-
-    private ComputeGrossWeight_PerStorageDays() {
-        var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
-        var freeDays = this.EntityPM.WarehouseStorageFreeDays;
-        if (freeDays == null) freeDays = 0;
-
-        var weightPerStorageDays;
-        if (this.EntityPM.TransportModeId != "A") {
-            weightPerStorageDays = Math.ceil(this.EntityPM.GrossWeightPerTon) * (StorageDays - freeDays);
-        }
-        else {
-            weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - freeDays);
-        }
-
-        this.GrossWeightPerStorageDays = weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
-
-        this.CheckStorageReceivableAmount();
-    }
-    private CheckStorageReceivableAmount() {
-        var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-
-        if (storageReceivable) {
-            var storageDays: number = null;
-            if (this.EntityPM.WarehouseLegActualEntryDate != null && this.EntityPM.WarehouseLegActualReleaseDate != null) {
-                if (DateTool.GetDateFromDate(this.EntityPM.WarehouseLegActualReleaseDate) >= DateTool.GetDateFromDate(this.EntityPM.WarehouseLegActualEntryDate)) {
-                    var days = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualEntryDate, this.EntityPM.WarehouseLegActualReleaseDate);
-                    storageDays = days;
-                }
-            }
-
-            var amount: number = ShipmentTool.ComputeImportStorageReceivableAmount(storageDays, this.EntityPM);
-
-            storageReceivable.TotalAmount = amount;
-            storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
-
-            if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
-                storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
-            }
-
-            else {
-                storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
-            }
         }
     }
 
@@ -805,7 +541,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.EntityPM.GrossWeight != newValue) {
             this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
             this.ComputeGrossWeigh_Kg_Ton();
-            this.ComputeGrossWeight_PerStorageDays();
         }
     }
 
@@ -813,9 +548,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
-            this.ComputeChargeableWeight_Kg();
-            this.ComputeGrossWeight_PerStorageDays();
-            this.ComputeAWBChargeAmount();
         }
     }
 
@@ -830,9 +562,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set ChargeableWeightEdited(value: boolean) {
         if (this.EntityPM.ChargeableWeightEdited != value) {
             this.EntityPM.ChargeableWeightEdited = value;
-            this.ComputeAWBChargeAmount();
         }
-    }
+    }    
 
     get AWBCommodityItemNumber() { return this.EntityPM.AWBCommodityItemNumber; }
     set AWBCommodityItemNumber(newValue: string) {
@@ -855,37 +586,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    private setDigits() {
-        this.firstDigit = ",";
-        this.secondDigit = ".";
-        //switch (SessionLocator.TenantPM.NumberFormatCode) {
-        //    case "CD": {
-        //        this.firstDigit = ",";
-        //        this.secondDigit = ".";
-        //        break;
-        //    }
-
-        //    case "DC": {
-        //        this.firstDigit = ".";
-        //        this.secondDigit = ",";
-        //        break;
-        //    }
-
-        //    case "AD": {
-        //        this.firstDigit = "'";
-        //        this.secondDigit = ".";
-        //        break;
-        //    }
-
-        //    default:
-        //        {
-        //            this.firstDigit = ",";
-        //            this.secondDigit = ".";
-        //            break;
-        //        }
-        //}
-    }
-
     GrossWeightLostFocus(input: any) {
 
         var valueComputed: number = 0;
@@ -897,19 +597,16 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
         });
 
-        // if (!AppTool.IsNullOrEmpty(input)) {
-        //     input = AppTool.Replace(input, ",", "");
-        //     valueInserted = Number(input);
-        // }
-
-        valueComputed = valueComputed == null ? 0 : valueComputed;
-        valueInserted = AppTool.GetNumberFromText(input);
-
-        if (valueComputed != valueInserted) {
-            this.GrossWeightEdited = true;
-            this.GrossWeight = valueInserted;
-            this.ComputeTotals();
+        if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
+            valueInserted = Number(input);
         }
+
+        valueComputed = valueComputed == 0 ? null : valueComputed;
+        valueInserted = valueInserted == 0 ? null : valueInserted;
+        this.GrossWeightEdited = !(valueComputed == valueInserted);
+        this.GrossWeight = valueInserted;
+        this.ComputeTotals();
     }
     ChargeableWeightLostFocus(input: any) {
 
@@ -919,17 +616,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
         if (!AppTool.IsNullOrEmpty(input)) {
-            valueInserted = AppTool.GetNumberFromText(input);
-            valueInserted = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            input = AppTool.Replace(input, ",", "");
+            valueInserted = Number(input);
         }
 
-        valueComputed = valueComputed == null ? 0 : valueComputed;
-        valueInserted = valueInserted == null ? 0 : valueInserted;
-        if (valueComputed != valueInserted) {
-            this.ChargeableWeightEdited = true;
-            this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
-            this.ComputeTotals();
-        }
+        valueComputed = valueComputed == 0 ? null : valueComputed;
+        valueInserted = valueInserted == 0 ? null : valueInserted;
+        this.ChargeableWeightEdited = !(valueComputed == valueInserted);
+        this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+        this.ComputeTotals();
     }
     ResetGrossWeightEdited() {
         this.GrossWeightEdited = false;
@@ -1021,7 +716,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsNoPackagesLoadedTextVisible: boolean = false;
     public IsRebuildButtonVisible: boolean = false;
     IsGeneratePackagesfromCrossDockReleasesButtonVisible: boolean = false;
-    //IsGeneratePackagesfromCrossDockReleasesButtonEnabled: boolean = false;
+    IsGeneratePackagesfromCrossDockReleasesButtonEnabled: boolean = false;
     GenerateCrossDockReleasesButtonLabel: string;
 
     GeneratePackagesfromCrossDockReleasesButtonClicked() {
@@ -1033,44 +728,30 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             confirmWindow.YesButtonText = "Add";
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    this.GeneratePackagesfromCrossDockReleases();
+                    this.GetWarehouseReleasePackageLists(true);
                 }
             });
 
-        } else this.GeneratePackagesfromCrossDockReleases();
-
-
-
+        } else this.GetWarehouseReleasePackageLists();
     }
 
-    GeneratePackagesfromCrossDockReleases() {
-
-        if (this.EntityPM.IsDirty) {
-            this.chooseShipmentPackageFromWarehouseReleasePackages = true;
-            this.CurrentSession.CurrentEditComponent.SaveChanges();
-        }
-        else this.OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow();
+    GetWarehouseReleasePackageLists(iscontainer: boolean = false) {
+        var warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService = new WarehouseReleasePackageListExtendedService();
+        warehouseReleasePackageListExtendedService.getWarehouseReleasePackageListsByShipmentId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var releasePackages: any = myResponse.Result;
+                if (releasePackages && releasePackages.length > 0) {
+                    if (iscontainer) releasePackages = releasePackages.filter(d => d.IsContainer);
+                    if (releasePackages.length>0) {
+                        this.GeneratePackagesFromWarehouseReleasesPackages(releasePackages);
+                    }
+                }
+            }
+        }); 
     }
-
-    OpenChooseShipmentPackageFromWarehouseReleasePackagesWindow() {
-
-        var windowArgs: any = {};
-
-        windowArgs.ViewModelTrigger = this;
-        windowArgs.IsContainer = !this.IsLCLEntity;
-        windowArgs.ShowNewWarehouseReleaseButton = true;
-        var logWindow = new LogitudeWindow();
-
-        logWindow.Width = !windowArgs.IsContainer ? 1200 : 1130;
-        logWindow.Height = 550;
-        logWindow.Title = "Choose Packages";
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show("./Warehouse/Components/ChoosePackagesFromWarehousePackageReleasesComponent");
-
-    }
-
+    
     SetGenerateData() {
-        this.IsGenerateControlVisible = !this.EntityPM.IsMultipleCommodities && this.EntityPM.ShipmentPackages.length == 0 ? true : false;
+        this.IsGenerateControlVisible = this.EntityPM.ShipmentPackages.length == 0 ? true : false;
         if (this.IsGenerateControlVisible) {
 
             var count = 0;
@@ -1086,11 +767,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             else {
                 this.GenerateButtonLabel = TextCodeTranslator.Translate("Shipment.O.GenerateFromOrderPackages").replace("%Number", count.toString());
-                if (this.EntityPM.ShipmentTypeId == "FCL" || this.EntityPM.ShipmentTypeId == "FCLD"|| this.EntityPM.ShipmentTypeId == "FTL") {
-                    this.IsGenerateButtonVisible = this.EntityPM.ShipmentOrderPackages.length > 0 ? true : false;
-                } else {
-                    this.IsGenerateButtonVisible = true;
-                }
+                this.IsGenerateButtonVisible = true;
                 this.IsGenerateButtonEnabled = this.EntityPM.BookingNumberOfPackages > 0 ? true : false;
             }
         }
@@ -1108,26 +785,26 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         if (!this.IsEditingEnabled) {
             this.IsGenerateButtonEnabled = false;
-            //this.IsGeneratePackagesfromCrossDockReleasesButtonEnabled = false;
+            this.IsGeneratePackagesfromCrossDockReleasesButtonEnabled = false;
         }
 
         //Cross Dock
         this.IsGeneratePackagesfromCrossDockReleasesButtonVisible = false;
         if (FeatureLocator.HasFeaturePermession("General", "CROSSDOCKS")) {
             if (this.IsGenerateButtonVisible && this.IsEditingEnabled) {
-                if ((this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") && this.EntityPM.DirectionId != "I") {
+                if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
                     this.GenerateCrossDockReleasesButtonLabel = "Generate from Cross Dock Releases Packages";
                     this.IsGeneratePackagesfromCrossDockReleasesButtonVisible = true;
-                    //var count: number = 0;
-                    //var warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService = new WarehouseReleasePackageListExtendedService();
-                    //warehouseReleasePackageListExtendedService.getCheckIfShipmentHasReleasePackages(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
-                    //    if (!myResponse.HasError) {
-                    //        var result: any = myResponse.Result;
-                    //        if (result == true) {
-                    //            this.IsGeneratePackagesfromCrossDockReleasesButtonEnabled = true;
-                    //        }
-                    //    }
-                    //});
+                    var count: number = 0;
+                    var warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService = new WarehouseReleasePackageListExtendedService();
+                    warehouseReleasePackageListExtendedService.getCheckIfShipmentHasReleasePackages(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var result: any = myResponse.Result;
+                            if (result == true) {
+                                this.IsGeneratePackagesfromCrossDockReleasesButtonEnabled = true;
+                            }
+                        }
+                    });
 
                 }
             }
@@ -1143,9 +820,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.Generate_FCL();
         }
         this.RefreshPackages();
-
+     
     }
-
+    
     Generate_LCL() {
         if (this.EntityPM.ShipmentOrderPackages.length > 0) {
             this.EntityPM.ShipmentOrderPackages.forEach(item => {
@@ -1216,54 +893,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 newPackage.Volume = item.Volume;
                 newPackage.Weight = item.Weight;
                 newPackage.Width = item.Width;
-                newPackage.WarehouseReleaseNumber = item.ReleaseNumber;
-                newPackage.WarehouseReleaseId = item.WarehouseReleaseId;
                 this.EntityPM.AddPackage(newPackage);
             });
 
             this.RefreshPackages();
         }
     }
-
-
-    WarehouseReleaseNumber: string;
-
-    DisconnectWarehouseReleasePackageButtonClick(item: any) {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("All packages connected to the release you are disconnecting will be deleted ?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.DisconnectWarehouseReleasePackage(item);
-            }
-        });
-    }
-
-
-    DisconnectWarehouseReleasePackage(item: any) {
-        this.WarehouseReleaseNumber = item.WarehouseReleaseNumber;
-        this.IsDisconnectWarehouseReleasePackage = true;
-
-        this.ItemsSource.Collection.filter(d => d.WarehouseReleaseNumber == item.WarehouseReleaseNumber).forEach((item) => {
-            this.DeletePackage(item);
-        });
-
-        this.DisconnectWarehouseReleaseOnShipment(item);
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
-
-
-    }
-
-    EnableWarehouseRelaseForUse() {
-        if (!AppTool.IsNullOrEmpty(this.WarehouseReleaseNumber)) {
-            this.CurrentSession.StartBusyIndicator("Saving...");
-            if (this.warehouseReleasePMExtendedService == null) this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
-            this.warehouseReleasePMExtendedService.EnableWarehouseRelaseForUse(this.WarehouseReleaseNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-                this.CurrentSession.StopBusyIndicator();
-            });
-        }
-    }
-
-
+    
     RefreshPackages() {
 
         this.BuildItemsSource();
@@ -1288,8 +924,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
-
-    private allPackages: ShipmentPackagePM[];
+       
     BuildButtonClicked() {
 
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -1301,9 +936,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    this.allPackages= myResponse.Result;
+                    var allPackages: ShipmentPackagePM[] = myResponse.Result;
 
-                    if (this.allPackages.length == 0) {
+                    if (allPackages.length == 0) {
                         this.IsNoPackagesLoadedTextVisible = true;
                     }
 
@@ -1311,69 +946,30 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         this.IsNoPackagesLoadedTextVisible = false;
 
                         if (this.IsGroupageEntity) {
-                            this.IsGroupageEntityClicked = true;
-                            this.CurrentSession.CurrentEditComponent.SaveChanges();
+                            var logWindow = new LogitudeWindow();
+                            logWindow.WindowArgs = { FatherComponent: this, AllPackages: allPackages };
+                            logWindow.Title = "Build Master Packages";
+                            logWindow.IsFillScreen = true;
+                            logWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Groupage/GroupageComponent");
+                            logWindow.WindowClosed.subscribe(s => {
+                                if (s) {
+                                    this.BuildItemsSource();
+                                    this.ComputeTotals();
+                                }
+                            });
                         }
 
                         else {
-                            this.BuildPackagesFromList(this.allPackages);
+                            this.BuildPackagesFromList(allPackages);
                         }
                     }
                 }
             }
         });
     }
-
-
-    RunGroupageWindow() {
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { FatherComponent: this, AllPackages: this.allPackages };
-        logWindow.Title = "Build Master Packages";
-        logWindow.IsFillScreen = true;
-        logWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Groupage/GroupageComponent");
-        logWindow.WindowClosed.subscribe(s => {
-            if (s) {
-                //this.entityArgs.EditComponent.SaveChanges();
-               this.BuildItemsSource();
-               this.ComputeTotals();
-            }
-        });
-    }
-
     RebuildButtonClicked() {
-        if (this.IsContainerFeatureToggleVisible && this.EntityPM.ShipmentPackages.length > 0 && !this.EntityPM.IsStandalonePickupDelivery) {
-            this.CurrentSession.StartBusyIndicatorLoading();
-            var shipmentDomainService = new ShipmentDomainService();
-            var shipmentId = this.EntityPM.Id;
-            shipmentDomainService.GetIfShipmentPackagesConnectedToStandAloneShipmentPackage(shipmentId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.CurrentSession.StopBusyIndicator();
-                    var isPackagesConnectedWithStandAlonePackage = myResponse.Result;
-                    if (isPackagesConnectedWithStandAlonePackage) {
-                        this.ValidateRebuildConnectedShipmetPackage()
-                    } else {
-                        this.ViewBuildPackagesConfirmationWindow();
-                    }
-                }
-                else {
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            });
-        } else {
-            this.ViewBuildPackagesConfirmationWindow();
-        }
-    }
-
-    ViewBuildPackagesConfirmationWindow() {
         var confirmWindow = new ConfirmWindow();
-
-        if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.LastStatusCode)).length > 0) {
-            confirmWindow.Show("Note that this will result in deleting container level statuses. Rebuild Packages?");
-        }
-        else {
-            confirmWindow.Show("Rebuild Packages?");
-        }
-
+        confirmWindow.Show("Rebuild Packages?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
 
@@ -1384,16 +980,59 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.ComputeTotals();
                 }
 
+                //this.EntityPM.ShipmentPackages.filter(f => f.OriginalShipmentPackageId != null).forEach(item => {
+                //    this.EntityPM.RemovePackage(item);
+                //});
+
+                //this.EntityPM.ShipmentPackages.forEach(item => {
+                //    item.InsideShipmentPackages.filter(f => f.OriginalShipmentPackageId != null).forEach(itemInside => {
+                //        item.RemoveInsideShipmentPackagePM(itemInside);
+                //    });
+                //});
+
                 this.BuildButtonClicked();
             }
         });
     }
-
     BuildPackagesFromList(allPackages: ShipmentPackagePM[]) {
 
         if (this.TransportModeId == "A") {
             allPackages.forEach(item => {
-                if (!AppTool.IsNullOrEmpty(item.HorseId)) {
+
+                var matchedItem = this.EntityPM.ShipmentPackages.filter(f => f.Height == item.Height && f.Width == item.Width && f.Length == item.Length && f.PackageTypeId == item.PackageTypeId)[0];
+                if (matchedItem != null) {
+
+                    // Quantity
+                    if (AppTool.IsNullOrEmpty(matchedItem.Quantity)) {
+                        matchedItem.Quantity = item.Quantity;
+                    }
+
+                    else {
+                        matchedItem.Quantity = matchedItem.Quantity + item.Quantity;
+                    }
+
+                    // Weight
+                    if (AppTool.IsNullOrEmpty(matchedItem.Weight)) {
+                        matchedItem.Weight = item.Weight;
+                    }
+
+                    else {
+                        matchedItem.Weight = matchedItem.Weight + item.Weight;
+                    }
+
+                    // Volume
+                    if (AppTool.IsNullOrEmpty(matchedItem.Width) || AppTool.IsNullOrEmpty(matchedItem.Height) || AppTool.IsNullOrEmpty(matchedItem.Length)) {
+                        matchedItem.Volume = (matchedItem.Weight * this.EntityPM.Ratio) / 1000;
+                        matchedItem.VolumetricWeight = matchedItem.Weight;
+                    }
+
+                    else {
+                        matchedItem.Volume = (matchedItem.Width * matchedItem.Height * matchedItem.Length * matchedItem.Quantity) / 1000000;
+                        matchedItem.VolumetricWeight = (matchedItem.Volume * 1000) / this.EntityPM.Ratio;
+                    }
+                }
+
+                else {
                     var newPackage = new ShipmentPackagePM(null);
                     newPackage.ShipmentId = this.EntityPM.Id;
                     newPackage.ClassNumber = item.ClassNumber;
@@ -1403,7 +1042,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     newPackage.Harmonize = item.Harmonize;
                     newPackage.Height = item.Height;
                     newPackage.IMDGCode = item.IMDGCode;
-                    newPackage.FlashPointTemperatureUnitCode = item.FlashPointTemperatureUnitCode;
+                    newPackage.FlashPointTemperatureUnitCode = item.FlashPointTemperatureUnitCode;                    
                     newPackage.IsContainer = item.IsContainer;
                     newPackage.IsDangerous = item.IsDangerous;
                     newPackage.Length = item.Length;
@@ -1432,90 +1071,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     newPackage.Reference4 = item.Reference4;
                     newPackage.CommodityNumber = item.CommodityNumber;
                     newPackage.CommodityName = item.CommodityName;
-                    newPackage.HorseId = item.HorseId;
-                    newPackage.HorseName = item.HorseName;
-                    newPackage.LCLContainerTypeId = item.LCLContainerTypeId;
                     this.EntityPM.AddPackage(newPackage);
-                }
-
-                else {
-                    var matchedItem = this.EntityPM.ShipmentPackages.filter(f => AppTool.IsNullOrEmpty(f.HorseId) && f.Height == item.Height && f.Width == item.Width && f.Length == item.Length && f.PackageTypeId == item.PackageTypeId)[0];
-                    if (matchedItem != null) {
-
-                        // Quantity
-                        if (AppTool.IsNullOrEmpty(matchedItem.Quantity)) {
-                            matchedItem.Quantity = item.Quantity;
-                        }
-
-                        else {
-                            matchedItem.Quantity = matchedItem.Quantity + item.Quantity;
-                        }
-
-                        // Weight
-                        if (AppTool.IsNullOrEmpty(matchedItem.Weight)) {
-                            matchedItem.Weight = item.Weight;
-                        }
-
-                        else {
-                            matchedItem.Weight = matchedItem.Weight + item.Weight;
-                        }
-
-                        // Volume
-                        if (AppTool.IsNullOrEmpty(matchedItem.Width) || AppTool.IsNullOrEmpty(matchedItem.Height) || AppTool.IsNullOrEmpty(matchedItem.Length)) {
-                            matchedItem.Volume = (matchedItem.Weight * this.EntityPM.Ratio) / 1000;
-                            matchedItem.VolumetricWeight = matchedItem.Weight;
-                        }
-
-                        else {
-                            matchedItem.Volume = (matchedItem.Width * matchedItem.Height * matchedItem.Length * matchedItem.Quantity) / 1000000;
-                            matchedItem.VolumetricWeight = (matchedItem.Volume * 1000) / this.EntityPM.Ratio;
-                        }
-                    }
-
-                    else {
-                        var newPackage = new ShipmentPackagePM(null);
-                        newPackage.ShipmentId = this.EntityPM.Id;
-                        newPackage.ClassNumber = item.ClassNumber;
-                        newPackage.ContainerNumber = item.ContainerNumber;
-                        newPackage.Description = item.Description;
-                        newPackage.FlashPoint = item.FlashPoint;
-                        newPackage.Harmonize = item.Harmonize;
-                        newPackage.Height = item.Height;
-                        newPackage.IMDGCode = item.IMDGCode;
-                        newPackage.FlashPointTemperatureUnitCode = item.FlashPointTemperatureUnitCode;
-                        newPackage.IsContainer = item.IsContainer;
-                        newPackage.IsDangerous = item.IsDangerous;
-                        newPackage.Length = item.Length;
-                        newPackage.MarksAndNumbers = item.MarksAndNumbers;
-                        newPackage.MaterialDescription = item.MaterialDescription;
-                        newPackage.PackageTypeId = item.PackageTypeId;
-                        newPackage.PackageTypeName = item.PackageTypeName;
-                        newPackage.PackagingGroup = item.PackagingGroup;
-                        newPackage.Quantity = item.Quantity;
-                        newPackage.ShipperSeal = item.ShipperSeal;
-                        newPackage.CarrierSeal = item.CarrierSeal;
-                        newPackage.SOC = item.SOC;
-                        newPackage.Tare = item.Tare;
-                        newPackage.Temperature = item.Temperature;
-                        newPackage.Tenant = item.Tenant;
-                        newPackage.UnNumber = item.UnNumber;
-                        newPackage.Ventilation = item.Ventilation;
-                        newPackage.Volume = item.Volume;
-                        newPackage.VolumetricWeight = item.VolumetricWeight;
-                        newPackage.Weight = item.Weight;
-                        newPackage.Width = item.Width;
-                        newPackage.OriginalShipmentPackageId = item.Id;
-                        newPackage.Reference1 = item.Reference1;
-                        newPackage.Reference2 = item.Reference2;
-                        newPackage.Reference3 = item.Reference3;
-                        newPackage.Reference4 = item.Reference4;
-                        newPackage.CommodityNumber = item.CommodityNumber;
-                        newPackage.CommodityName = item.CommodityName;
-                        newPackage.HorseId = item.HorseId;
-                        newPackage.HorseName = item.HorseName;
-                        newPackage.LCLContainerTypeId = item.LCLContainerTypeId;
-                        this.EntityPM.AddPackage(newPackage);
-                    }
                 }
             });
         }
@@ -1560,9 +1116,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 newPackage.Reference4 = item.Reference4;
                 newPackage.CommodityNumber = item.CommodityNumber;
                 newPackage.CommodityName = item.CommodityName;
-                newPackage.LCLContainerTypeId = item.LCLContainerTypeId;
-                newPackage.HorseId = item.HorseId;
-                newPackage.HorseName = item.HorseName;
 
                 item.InsideShipmentPackages.forEach(itemInside => {
                     var newInsidePackage = new InsideShipmentPackagePM(null);
@@ -1584,9 +1137,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     newInsidePackage.Reference4 = itemInside.Reference4;
                     newInsidePackage.CommodityNumber = itemInside.CommodityNumber;
                     newInsidePackage.CommodityName = itemInside.CommodityName;
-                    newInsidePackage.Harmonize = itemInside.Harmonize;
-                    newInsidePackage.HorseId = itemInside.HorseId;
-                    newInsidePackage.HorseName = itemInside.HorseName;
                     newPackage.AddInsideShipmentPackagePM(newInsidePackage);
                 });
 
@@ -1624,33 +1174,17 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     AddPackageClicked() {
-        if (!this.EntityPM.IsStandalonePickupDelivery) {
-            this.ViewAddPackageWindow();
-        } else  {
-            this.ValidateNumberOfStandAloneShipmentPackages();
-        }
-    }
 
-    ValidateNumberOfStandAloneShipmentPackages() {
-        var numberOfAllowedPackages = 1;
-        if (this.EntityPM.ShipmentPackages.length >= numberOfAllowedPackages) {
-            var messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Show("Stand Alone Shipment should have one container");
-        } else {
-            this.AddStandAloneContainerClicked();
-        }
-    }
-
-    ViewAddPackageWindow() {
         var logWindow = new LogitudeWindow();
         var itemPM = new ShipmentPackagePM(null);
         itemPM.NonActiveContainer = false;
+
         if (this.IsLCLEntity) {
             itemPM.IsContainer = false;
             itemPM.Tenant = SessionLocator.Tenant;
             logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddPackage");
-
         }
+
         else {
             itemPM.Quantity = 1;
             itemPM.IsContainer = true;
@@ -1658,63 +1192,24 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             itemPM.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
             itemPM.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
             logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddContainer");
-            if(this.EntityPM.TransportModeId == "I")
-              logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.AddFullTruckLoad");
         }
 
         var myPath: string;
         if (this.TransportModeId == "A") {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditAirPackageComponent";
-            logWindow.Width = 800;
-            logWindow.Height = 530;
+            logWindow.Height = 550;
         }
+
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
-            logWindow.Width = 990;
-            logWindow.Height = 660;
+            logWindow.Width = 940;
+            logWindow.Height = 610;
         }
 
         var itemComponent = new ShipmentPackageItem(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Show(myPath);
     }
-
-    AddStandAloneContainerClicked() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.ForwarderStandaloneShipmentId)) {
-            var windowArgs: any = {};
-
-            var shipmentDomainService = new ShipmentDomainService();
-            this.CurrentSession.StartBusyIndicatorLoading();
-            shipmentDomainService.GetFilteredForwarderShipmentPackages(this.EntityPM.ForwarderStandaloneShipmentId, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) =>  {
-                if (!myResponse.HasError) {
-                    this.CurrentSession.StopBusyIndicator();
-                    windowArgs.ShipmentPackages = myResponse.Result;
-                    windowArgs.ShipmentPM = this.EntityPM;
-                    windowArgs.IsLCLEntity = this.IsLCLEntity;
-                    windowArgs.IsFCLEntity = this.IsFCLEntity;
-                    windowArgs.TransportModeId = this.TransportModeId;
-                    windowArgs.IsFromShipmentPackageTab = true;
-
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Title = "Add Container";
-                    logWindow.WindowArgs = windowArgs;
-                    logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/SelectStandalonePackagesComponent");
-                    logWindow.WindowClosed.subscribe(result => {
-                        if (result) {
-                            this.BuildItemsSource();
-                        }
-                    });
-                }
-                else {
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            });
-        }
-        else {
-            this.ViewAddPackageWindow();
-        }
-    }
-
     EditPackageClicked(itemComponent: ShipmentPackageItem) {
 
         var logWindow = new LogitudeWindow();
@@ -1725,8 +1220,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         else {
             logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.EditContainer");
-            if(this.EntityPM.TransportModeId == "I")
-              logWindow.Title = TextCodeTranslator.Translate("ShipmentPackage.O.EditFullTruckLoad");
         }
 
         var myPath: string;
@@ -1734,135 +1227,45 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditAirPackageComponent";
             itemComponent.CopyPackageItems();
             itemComponent.BuildPackageItems();
-            logWindow.Width = 800;
-            logWindow.Height = 550;
         }
 
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
-            logWindow.Width = 990;
-            logWindow.Height = 660;
+            logWindow.Width = 940;
+            logWindow.Height = 610;
         }
 
         logWindow.DataContext = itemComponent;
         logWindow.Show(myPath);
     }
     DeletePackageClicked(itemComponent: ShipmentPackageItem) {
-        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated") && !this.EntityPM.IsStandalonePickupDelivery) {
-            this.CurrentSession.StartBusyIndicatorLoading();
-            var shipmentDomainService = new ShipmentDomainService();
-            var containerId = itemComponent.EntityPM.ContainerEntityId;
-            shipmentDomainService.GetIfShipmentPackageConnectedToPickUpDeliveryPackage(containerId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.CurrentSession.StopBusyIndicator();
-                    var isConnectedWithPickupDeliveryPackage = myResponse.Result;
-                    if (isConnectedWithPickupDeliveryPackage) {
-                        this.ValidateDeleteConnectedShipmetPackage()
-                    } else {
-                        this.ViewDeletePackageConfirmation(itemComponent);
-                    }
-                }
-                else {
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            });
-            
-        } else {
-            this.ViewDeletePackageConfirmation(itemComponent);
-        }
-    }
-
-    ViewDeletePackageConfirmation(itemComponent: ShipmentPackageItem) {
-        var message: string = "";
-
-        if (this.IsLCLEntity) {
-            message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPackage");
-        }
-
-        else {
-            if (!AppTool.IsNullOrEmpty(itemComponent.EntityPM.LastStatusCode)) {
-                message = "Note that this will result in deleting container level statuses. Delete This Container?";
-            }
-
-            else {
-                message = "Delete This Container";
-            }
-        }
+        var message = this.IsLCLEntity ? TextCodeTranslator.Translate("Shipment.M.DeleteThisPackage") : "Delete This Container";
 
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(message);
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
 
-                this.DeletePackage(itemComponent);
-
-                if (itemComponent.WarehouseReleaseNumber) {
-                    this.DisconnectWarehouseReleaseOnShipment(itemComponent);
+                if (itemComponent.EntityPM.ShipmentPackageItems != null) {
+                    itemComponent.EntityPM.ShipmentPackageItems.forEach(itemPackage => {
+                        itemComponent.EntityPM.RemoveShipmentPackageItemPM(itemPackage);
+                    });
                 }
 
+                if (itemComponent.EntityPM.InsideShipmentPackages != null) {
+                    itemComponent.EntityPM.InsideShipmentPackages.forEach(itemInside => {
+                        itemComponent.EntityPM.RemoveInsideShipmentPackagePM(itemInside);
+                    });
+                }
+
+                this.EntityPM.RemovePackage(itemComponent.EntityPM);
+                this.ItemsSource.Remove(itemComponent);
 
                 this.ComputeTotals();
                 this.SetUIProperties();
                 this.SetGenerateData();
             }
         });
-    }
-
-    ValidateDeleteConnectedShipmetPackage() {
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show("Can't Delete a Container that is Connected to a Pickup/Delivery");
-    }
-
-    ValidateRebuildConnectedShipmetPackage() {
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show("Can't Rebuild a Container that is Connected to a Pickup/Delivery");
-    }
-
-
-  DeletePackage(shipmentPackageItem: ShipmentPackageItem) {
-    if (shipmentPackageItem) {
-
-      if (shipmentPackageItem == this.SelectedRow) {
-        this.SelectedRow = null;
-        this.SetUIProperties_InsideButton();
-
-      }
-      if (shipmentPackageItem.EntityPM.ShipmentPackageItems != null) {
-        shipmentPackageItem.EntityPM.ShipmentPackageItems.forEach(itemPackage => {
-          shipmentPackageItem.EntityPM.RemoveShipmentPackageItemPM(itemPackage);
-        });
-      }
-
-      if (shipmentPackageItem.EntityPM.InsideShipmentPackages != null) {
-        shipmentPackageItem.EntityPM.InsideShipmentPackages.forEach(itemInside => {
-          shipmentPackageItem.EntityPM.RemoveInsideShipmentPackagePM(itemInside);
-        });
-      }
-
-      this.EntityPM.RemovePackage(shipmentPackageItem.EntityPM);
-      this.ItemsSource.Remove(shipmentPackageItem);
-    }
-  }
-
-    DisconnectWarehouseReleaseOnShipment(shipmentPackageItem: ShipmentPackageItem) {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.WarehouseReleasesIds) && !AppTool.IsNullOrEmpty(shipmentPackageItem.EntityPM.WarehouseReleaseId)) {
-            var warehouseReleasesIds = "";
-            this.EntityPM.WarehouseReleasesIds.split(',').forEach(item => {
-                if (!AppTool.IsNullOrEmpty(item)) {
-                    var packageitem = this.EntityPM.ShipmentPackages.filter(d => d.WarehouseReleaseId == item)[0];
-                    if (packageitem) {
-                        warehouseReleasesIds += (item + ",");
-                    }
-
-                }
-            });
-            if (!AppTool.IsNullOrEmpty(warehouseReleasesIds)) {
-                warehouseReleasesIds += ")";
-                warehouseReleasesIds = warehouseReleasesIds.replace(",)", "")
-            }
-            this.EntityPM.WarehouseReleasesIds = warehouseReleasesIds;
-        }
-
     }
 
     AddInsideButtonClicked() {
@@ -1939,44 +1342,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    public ViewContainerEntity(item: ShipmentPackageItem) {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Container";
-        logWindow.IsFillScreen = true;
-        var containerEntityId = item.EntityPM?.ContainerEntityId;
-        if (!AppTool.IsNullOrEmpty(containerEntityId)) {
-            this.RunContainerEntity(item);
-        }
-    }
-
-    RunContainerEntity(item: ShipmentPackageItem) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                var entityId = item.EntityPM?.ContainerEntityId;
-                var concurrencyGUID = this.EntityPM.ConcurrencyGUID;
-                var newConcurrencyGUID = this.EntityPM.NewConcurrencyGUID;
-                var iFields: any[] = [];
-                iFields.push({ FieldName: "ShipmentConcurrencyGUID", FieldValue: concurrencyGUID });
-                iFields.push({ FieldName: "ShipmentNewConcurrencyGUID", FieldValue: newConcurrencyGUID });
-
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'Container', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber, EntityFields: iFields });
-
-                let isEditComponentSaved = false;
-                cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (isEditComponentSaved) {
-                        this.entityArgs.EditComponent.ReloadEntityPM();
-                    }
-                });
-
-                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
-            });
-    }
-
     ViewStatusesClicked(item: ShipmentPackageItem) {
         if (item) {
             var logitudeWindow = new LogitudeWindow();
@@ -1989,323 +1354,20 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    DeletePackagesButtonClicked() {
-        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated") && this.EntityPM.ShipmentPackages.length > 0 && !this.EntityPM.IsStandalonePickupDelivery) {
-            this.CurrentSession.StartBusyIndicatorLoading();
-            var shipmentDomainService = new ShipmentDomainService();
-            var shipmentId = this.EntityPM.Id;
-            shipmentDomainService.GetIfShipmentPackagesConnectedToStandAloneShipmentPackage(shipmentId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.CurrentSession.StopBusyIndicator();
-                    var isPackagesConnectedWithStandAlonePackage = myResponse.Result;
-                    if (isPackagesConnectedWithStandAlonePackage) {
-                        this.ValidateDeleteConnectedShipmetPackage()
-                    } else {
-                        this.ViewDeletePackagesConfirmationWindow();
-                    }
-                }
-                else {
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            });
-        } else {
-            this.ViewDeletePackagesConfirmationWindow();
-        }
-    }
-
-    ViewDeletePackagesConfirmationWindow() {
-        if (this.EntityPM.ShipmentPackages.length > 0) {
-            var confirmWindow = new ConfirmWindow();
-
-            if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.LastStatusCode)).length > 0) {
-                confirmWindow.Show("Note that this will result in deleting container level statuses. Delete Packages?");
-            }
-
-            else {
-                confirmWindow.Show("Are you sure you want to delete all packages?");
-            }
-
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.StartDelete();
-                }
-            });
-        }
-    }
-    private StartDelete() {
-        var numberOfPackages: number = this.EntityPM.ShipmentPackages.length;
-
-        for (var i = this.EntityPM.ShipmentPackages.length - 1; i >= 0; i--) {
-            var shipmentPackage = this.EntityPM.ShipmentPackages[i];
-
-            //Package items
-            if (shipmentPackage.ShipmentPackageItems != null && shipmentPackage.ShipmentPackageItems.length > 0) {
-                for (var j = shipmentPackage.ShipmentPackageItems.length - 1; j >= 0; j--) {
-                    shipmentPackage.RemoveShipmentPackageItemPM(shipmentPackage.ShipmentPackageItems[j]);
-                }
-            }
-
-            // Inside packages
-            if (shipmentPackage.InsideShipmentPackages != null && shipmentPackage.InsideShipmentPackages.length > 0) {
-                for (var k = shipmentPackage.InsideShipmentPackages.length - 1; k >= 0; k--) {
-                    var insidePackage = shipmentPackage.InsideShipmentPackages[k];
-
-                    if (insidePackage.InsidePackageHarmonizes != null && insidePackage.InsidePackageHarmonizes.length > 0) {
-                        for (var f = insidePackage.InsidePackageHarmonizes.length - 1; f >= 0; f--) {
-                            insidePackage.RemoveShipmentPackageHarmonizePM(insidePackage.InsidePackageHarmonizes[f]);
-                        }
-                    }
-
-                    shipmentPackage.RemoveInsideShipmentPackagePM(insidePackage);
-                }
-            }
-
-            // package harmonize
-            if (shipmentPackage.ShipmentPackageHarmonizes != null && shipmentPackage.ShipmentPackageHarmonizes.length > 0) {
-                for (var m = shipmentPackage.ShipmentPackageHarmonizes.length - 1; m >= 0; m--) {
-                    shipmentPackage.RemoveShipmentPackageHarmonizePM(shipmentPackage.ShipmentPackageHarmonizes[m]);
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(shipmentPackage.DeliveryId)) {
-                var delivery = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.DeliveryId)[0];
-                if (delivery) {
-                    if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.length > 0) {
-                        for (var n = delivery.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
-                            var deliveryPackage = delivery.ShipmentPickUpDeliveryPackages[n]
-
-                            if (deliveryPackage) {
-                                if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
-                                    for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
-                                        deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
-                                    }
-                                }
-
-                                delivery.RemovePackage(deliveryPackage);
-                            }
-                        }
-                    }
-
-                    this.EntityPM.RemoveDelivery(delivery);
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId)) {
-                var emptyContainer = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.EmptyContainerReturnId)[0];
-                if (emptyContainer) {
-                    if (emptyContainer.ShipmentPickUpDeliveryPackages != null && emptyContainer.ShipmentPickUpDeliveryPackages.length > 0) {
-                        for (var n = emptyContainer.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
-                            var deliveryPackage = emptyContainer.ShipmentPickUpDeliveryPackages[n]
-
-                            if (deliveryPackage) {
-                                if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
-                                    for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
-                                        deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
-                                    }
-                                }
-
-                                emptyContainer.RemovePackage(deliveryPackage);
-                            }
-                        }
-                    }
-
-                    this.EntityPM.RemoveDelivery(emptyContainer);
-                }
-            }
-            
-            this.EntityPM.RemovePackage(shipmentPackage);
-        }
-
-        this.EntityPM.PackagesDeleted = true;
-        this.EntityPM.EventNote = numberOfPackages + " packages deleted";
-        this.ItemsSource = new ObservableCollection([]);
-        this.ComputeTotals();
-        this.SetUIProperties();
-        this.SetGenerateData();
-    }
-
     private dowonload: boolean = false;
-    DownloadClicked() {
+    DownloadPackagesClicked() {
         this.dowonload = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
     private DownloadPackages() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Downloading Packages";
+        logWindow.Title = "Downloading Packahes";
         logWindow.Width = 500;
         logWindow.Height = 200;
         logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/DownloadPackagesFileComponent');
         logWindow.ComponentLoaded.subscribe(comp => {
-            comp.Download(this.EntityPM.Id, this.EntityPM.ShipmentNumber);
+            comp.Download(this.EntityPM.Id);
         });
-    }
-
-    OnFileChanged(fileEvent) {
-        var file = fileEvent.target.files[0];
-
-        if (file) {
-            var extension: string = file.name.split('.')[1];
-
-            if (extension.includes("xls")) {
-                this.SelectExcelFile(fileEvent);
-            }
-
-            else {
-                var messageWindow: MessageWindow = new MessageWindow();
-                messageWindow.Show("You have to upload excel files only");
-            }
-        }   
-    }
-    SelectExcelFile(fileEvent) {
-        this.CurrentSession.StartBusyIndicatorLoading();
-
-        var file = fileEvent.target.files[0];
-
-        if (file && file.size > 0) {
-            var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
-            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var myResult = response.Result;
-                    if (myResult) {
-                        this.StartUploadingExcelFile(file);
-                    }
-                }
-            });
-        }
-    }
-    StartUploadingExcelFile(file: any) {
-        if (file && file.size > 0) {
-            var filebuffer = file.slice(0, file.size);
-            this.ConvertArrayBufferToBase64(filebuffer, this);
-        }
-    }
-    ConvertArrayBufferToBase64(file: any, context: any) {
-        var reader: FileReader = new FileReader();
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            var binary = '';
-            var bytes = new Uint8Array(ResultAsArray(e));
-            var len = bytes.byteLength;
-
-            for (var i = 0; i < len; i++) {
-                binary += String.fromCharCode(bytes[i]);
-            }
-
-            var filter = new ExcelPackageFilter();
-            filter.FileData = window.btoa(binary);
-            filter.ShipmentId = context.EntityPM.Id;
-
-            context.SendExcelToServer(filter);
-        };
-
-        reader.onerror = function (e) {
-            console.log(e);
-        };
-        reader.readAsArrayBuffer(file);
-    }
-    
-    private saveAfterDeletePackages: boolean = false;
-    private packages: ExcelPackage[];
-    SendExcelToServer(filter: any) {
-        var myDomainService: ShipmentDomainService = new ShipmentDomainService();
-
-        myDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                this.packages = response.Result;
-
-                if (this.packages.filter(d => d.HasErrors).length > 0) {
-                    this.CurrentSession.StopBusyIndicator();
-
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("File contains errors, please validate the data and try again");                    
-                }
-
-                else {
-                    if (this.EntityPM.ShipmentPackages.length > 0) {
-                        this.CurrentSession.StopBusyIndicator();
-
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
-                            if (confirmWindow.Yes) {
-                                this.saveAfterDeletePackages = true;
-                                this.StartDelete();
-                                this.CurrentSession.CurrentEditComponent.SaveChanges();
-                            }
-                        });
-                    }
-
-                    else {
-                        this.CreatePackagesFromExcel();
-                    }
-                }
-            }
-
-            else {
-                this.CurrentSession.StopBusyIndicator();
-            }
-        });
-    }
-    
-    private CreatePackagesFromExcel() {
-        this.packages.forEach(item => {
-            var shipmentPackage = new ShipmentPackagePM(null);
-            shipmentPackage.Quantity = 1;
-            shipmentPackage.IsContainer = true;
-            shipmentPackage.Tenant = SessionLocator.Tenant;
-            shipmentPackage.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
-            shipmentPackage.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
-
-            shipmentPackage.PackageTypeId = item.ContainerTypeId;
-            shipmentPackage.PackageTypeCode = item.ContainerTypeCode;
-            shipmentPackage.PackageTypeName = item.ContainerTypeName;
-            shipmentPackage.ContainerNumber = item.ContainerNumber;
-            shipmentPackage.Volume = item.Volume;
-            shipmentPackage.Weight = item.GrossWeight;
-            shipmentPackage.Tare = item.Tare;
-            shipmentPackage.ShipperSeal = item.ShipperSeal;
-            shipmentPackage.CarrierSeal = item.CarrierSeal;
-            shipmentPackage.MarksAndNumbers = item.MarksAndNumbers;
-            shipmentPackage.Description = item.Description;
-            shipmentPackage.IsContainerRefrigerated = item.IsRefrigerated;
-
-            var ratio: number = this.EntityPM.Ratio;
-            if (AppTool.IsNullOrZero(ratio)) {
-                ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
-            }
-
-            if (AppTool.IsNullOrZero(shipmentPackage.Volume)) {
-                shipmentPackage.Volume = PackageAmountCalculator.ComputeVolume(shipmentPackage.Volume, shipmentPackage.Quantity, shipmentPackage.Width, shipmentPackage.Height, shipmentPackage.Length, shipmentPackage.Weight, ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode);
-            }
-
-            shipmentPackage.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(shipmentPackage.VolumetricWeight, shipmentPackage.Volume, shipmentPackage.Weight, ratio, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode);
-
-            if (item.IsRefrigerated == false) {
-                shipmentPackage.NonActiveContainer = false;
-            }
-            
-            this.EntityPM.AddPackage(shipmentPackage);
-        });
-
-        this.BuildItemsSource();
-        this.ResetTotalEditedValues();
-        this.ComputeTotals();
-        this.CurrentSession.StopBusyIndicator();
-    }
-
-    private IsShipmentStatuesDelivered() {
-        var deliverdStausName = "Delivered";
-        var IsDeliveryOptionsEnabled = SessionLocator.TenantPM != null ? SessionLocator.TenantPM.EnableDeliveryOptions : false;
-
-        if (!IsDeliveryOptionsEnabled) {
-            return false;
-        }
-
-        if (this.EntityPM.StatusName == (deliverdStausName)) {
-            return true;
-        }
-
-        return false;
     }
 }
 
@@ -2316,7 +1378,6 @@ export class ShipmentPackageItem extends BaseComponent {
     public IsLCLEntity: boolean = false;
     public IsFCLEntity: boolean = false;
     public IsNewEntity: boolean = false;
-    public IsFromStandAloneScreen: boolean = false;
     public InsideItemsSource: InsideShipmentPackageItem[] = [];
     public PackageItemsList: ObservableCollection;
     public IsRowHover: boolean = false;
@@ -2324,36 +1385,21 @@ export class ShipmentPackageItem extends BaseComponent {
     public IsCommodityNameVisible: boolean = false;
     public IsCommodityNumberVisible: boolean = false;
     public IsVehicleDetails: boolean = false;
-    public IsShowReleaseNumber: boolean = false;
+
     private CurrentSession = SessionLocator.SelectedSession;
-    public HorseFieldIsVisible: boolean = false;
-    public IsContainerFeatureToggleVisible: boolean = false;
-    WarehouseReleaseNumber: string;
-    public TransportModeId: string;
     constructor(entity: ShipmentPackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.ShipmentPM = fatherComponent.EntityPM;
         this.IsLCLEntity = fatherComponent.IsLCLEntity;
         this.IsFCLEntity = fatherComponent.IsFCLEntity;
-        this.IsFromStandAloneScreen = fatherComponent.IsFromStandAloneScreen;
         this.IsCommodityNumberVisible = fatherComponent.IsCommodityNumberVisible;
-        this.IsCommodityNameVisible = fatherComponent.IsCommodityNameVisible;
-        this.HorseFieldIsVisible = fatherComponent.HorseFieldIsVisible;
-
-        this.IsContainerFeatureToggleVisible = fatherComponent.IsContainerFeatureToggleVisible;
-
-        this.TransportModeId = fatherComponent.TransportModeId;
-
-
+        this.IsCommodityNameVisible = fatherComponent.IsCommodityNameVisible;        
         this.IsNewEntity = isNew;
         this.SetUIProperties();
         this.BuildInsideItemsSource();
         this.ValidateContainerNumber(this.ContainerNumber);
         this.BuildPackageItems();
-
-        this.WarehouseReleaseNumber = this.EntityPM.WarehouseReleaseNumber;
-        if (this.WarehouseReleaseNumber) this.IsShowReleaseNumber = true;
         this.maxPackageItemsLineNumber = ArrayTool.Max(this.PackageItemsList.Collection, "LineNumber");
 
         if (this.IsNewEntity) {
@@ -2368,8 +1414,6 @@ export class ShipmentPackageItem extends BaseComponent {
     public IsEditingFieldsEnabled: boolean = false;
     public IsConnectedToRouting: boolean = false;
     public IsDeliveryConnectedWithMultiContainers: boolean = false;
-    public IsShipmentStatuesDelivered: boolean = false;
-
     SetUIProperties() {
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
 
@@ -2456,10 +1500,8 @@ export class ShipmentPackageItem extends BaseComponent {
             this.UIProperties.SetRequired('PackageTypeId', this.ObjectTableName, AppTool.IsNullOrEmpty(this.PackageTypeId) ? true : false);
 
             this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingFieldsEnabled);
-            this.UIProperties.SetEnabled("LCLContainerTypeId", this.ObjectTableName, this.IsEditingEnabled);
             this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingFieldsEnabled);
-            this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingFieldsEnabled);
 
             var isVolumeEnabled: boolean = false;
             var isDimensionEnabled: boolean = false;
@@ -2631,8 +1673,6 @@ export class ShipmentPackageItem extends BaseComponent {
             if (this.IsMultiHarmonize == true) {
                 isFieldEnabled = false;
             }
-        } else if (this.IsContainerFeatureToggleVisible && !this.IsEditingEnabled) {
-            isFieldEnabled = false;
         }
 
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
@@ -2654,13 +1694,6 @@ export class ShipmentPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("ChassisNumber", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
-    }
-
-    get LCLContainerTypeId() { return this.EntityPM.LCLContainerTypeId; }
-    set LCLContainerTypeId(newValue: string) {
-        if (this.EntityPM.LCLContainerTypeId != newValue) {
-            this.EntityPM.LCLContainerTypeId = newValue;
-        }
     }
 
     public PackageTypeList: PackageTypeList;
@@ -2726,13 +1759,6 @@ export class ShipmentPackageItem extends BaseComponent {
         }
     }
 
-    get ContainerStrippedDate() { return this.EntityPM.ContainerStrippedDate; }
-    set ContainerStrippedDate(newValue: Date) {
-        if (this.EntityPM.ContainerStrippedDate != newValue) {
-            this.EntityPM.ContainerStrippedDate = newValue;
-        }
-    }
-
     get PackageTypeName() { return this.EntityPM.PackageTypeName; }
     set PackageTypeName(newValue: string) {
         if (this.EntityPM.PackageTypeName != newValue) {
@@ -2760,7 +1786,7 @@ export class ShipmentPackageItem extends BaseComponent {
             this.EntityPM.NonActiveContainer = value;
 
             if (value) {
-                this.Temperature = '999';
+                this.Temperature = 999;
             }
 
             this.SetUIProperties_Container();
@@ -3046,9 +2072,9 @@ export class ShipmentPackageItem extends BaseComponent {
     }
 
     get Temperature() { return this.EntityPM.Temperature; }
-    set Temperature(newValue: string) {
+    set Temperature(newValue: number) {
         if (this.EntityPM.Temperature != newValue) {
-            this.EntityPM.Temperature = newValue;
+            this.EntityPM.Temperature = AppTool.Round(newValue, 3);
         }
     }
 
@@ -3155,10 +2181,6 @@ export class ShipmentPackageItem extends BaseComponent {
     }
 
     get LastStatusName() { return this.EntityPM.LastStatusName; }
-    get ContainerStatusName() { return this.EntityPM.ContainerStatusName; }
-    get ContainerStatusSourceCode() {
-        return this.EntityPM.ContainerStatusSourceCode;
-    }
 
     public MethodsList: any[] = [];
     FillMethodsList() {
@@ -3176,9 +2198,14 @@ export class ShipmentPackageItem extends BaseComponent {
         var importer: string = "";
         var importerRef1: string = "";
 
-        if (this.ShipmentPM.DirectionId == "E" || this.ShipmentPM.DirectionId == "I") {
+        if (this.ShipmentPM.DirectionId == "E") {
             importer = this.ShipmentPM.ConsigneeName;
             importerRef1 = this.ShipmentPM.ConsigneeReference1;
+        }
+
+        else if (this.ShipmentPM.DirectionId == "I") {
+            importer = this.ShipmentPM.ShipperName;
+            importerRef1 = this.ShipmentPM.ShipperReference1;
         }
 
         if (this.EntityPM.IsContainer) {
@@ -3250,7 +2277,6 @@ export class ShipmentPackageItem extends BaseComponent {
 
     // Package Items
     BuildPackageItems() {
-      
         if (this.PackageItemsList == null) {
             this.PackageItemsList = new ObservableCollection([]);
         }
@@ -3268,7 +2294,7 @@ export class ShipmentPackageItem extends BaseComponent {
 
         this.PackageItemsList.InsertCollection(itemsCollection);
     }
-  
+
     private maxPackageItemsLineNumber = 0;
     public savedItems: ShipmentPackageItemPM[] = [];
     public CopyPackageItems() {
@@ -3479,7 +2505,8 @@ export class ShipmentPackageItem extends BaseComponent {
             this.SetUIProperties_ValidateActualDates_R();
         }
     }
-    
+
+
     get Make() { return this.EntityPM.Make; }
     set Make(newValue: string) {
         if (this.EntityPM.Make != newValue) {
@@ -3493,7 +2520,8 @@ export class ShipmentPackageItem extends BaseComponent {
             this.EntityPM.Model = newValue;
         }
     }
-    
+
+
     get Year() { return this.EntityPM.Year; }
     set Year(newValue: string) {
         if (this.EntityPM.Year != newValue) {
@@ -3526,35 +2554,6 @@ export class ShipmentPackageItem extends BaseComponent {
     set CountryId(newValue: string) {
         if (this.EntityPM.CountryId != newValue) {
             this.EntityPM.CountryId = newValue;
-        }
-    }
-
-    get HorseId() { return this.EntityPM.HorseId; }
-    set HorseId(newValue: string) {
-        if (this.EntityPM.HorseId != newValue) {
-            this.EntityPM.HorseId = newValue;
-        }
-    }
-
-    get HorseName() { return this.EntityPM.HorseName; }
-    set HorseName(newValue: string) {
-        if (this.EntityPM.HorseName != newValue) {
-            this.EntityPM.HorseName = newValue;
-        }
-    }
-
-    horse: HorseList;
-    get Horse() { return this.horse; }
-    set Horse(value: HorseList) {
-        if (this.horse != value) {
-            this.horse = value;
-        }
-
-        if (value != null) {
-            this.HorseName = value.Name;
-        }
-        else {
-            this.HorseName = null;
         }
     }
 
@@ -3708,12 +2707,14 @@ export class ShipmentPackageItem extends BaseComponent {
         });
     }
     AddRouting(typeCode: string) {
+
         var myDeliveryIndex = 1;
         var myWindowTitle: string = null;
         var myPickUpDeliveryTypeCode: string = null;
         switch (typeCode) {
             case "R": {
                 myPickUpDeliveryTypeCode = "EMPT";
+
                 myWindowTitle = TextCodeTranslator.Translate("Shipment.O.Routings.AddEmptyCR");
 
                 if (this.ShipmentPM.ShipmentContainerReturnIndex) {
@@ -3779,7 +2780,6 @@ export class ShipmentPackageItem extends BaseComponent {
         newDeliveryPackagePM.Harmonize = this.EntityPM.Harmonize;
         newDeliveryPackagePM.OriginalShipmentPackageId = this.EntityPM.Id;
         newDeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
-        newDeliveryPackagePM.ContainerEntityId = this.EntityPM.ContainerEntityId;
 
         this.EntityPM.ShipmentPackageHarmonizes.forEach(harmonizeItem => {
             var harmonize = new PickUpDeliveryPackageHarmonizePM(null);
@@ -3797,7 +2797,7 @@ export class ShipmentPackageItem extends BaseComponent {
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = myWindowTitle;
-        logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: newDeliveryPM, IsNewEntity: true, ContainerReturnDeliveryId: this.DeliveryId, IsCreatingContainerDelivery: isCreatingContainerDelivery, IsAddEditEmptyCR: true  };
+        logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: newDeliveryPM, IsNewEntity: true, ContainerReturnDeliveryId: this.DeliveryId, IsCreatingContainerDelivery: isCreatingContainerDelivery };
         logitudeWindow.Width = 950;
         logitudeWindow.Height = 595;
 
@@ -3849,7 +2849,7 @@ export class ShipmentPackageItem extends BaseComponent {
             
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = windowTitle;
-            logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: myEditedDelivery, IsNewEntity: false, IsAddEditEmptyCR:true };
+            logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: myEditedDelivery, IsNewEntity: false };
             logitudeWindow.Width = 950;
             logitudeWindow.Height = 595;
 
@@ -3900,11 +2900,6 @@ export class InsideShipmentPackageItem extends BaseComponent {
     public IsNewEntity: boolean = false;
     public IsVehicleDetails: boolean = false;
     public CountryListService: CountryListService;
-    public IsEditingFieldsEnabled: boolean = false;
-
-    public IsContainerFeatureToggleVisible: boolean = false;
-
-    public HorseFieldIsVisible: boolean = false;
 
     constructor(entity: InsideShipmentPackagePM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
@@ -3913,13 +2908,6 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.ShipmentPackagePM = fatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         this.CountryListService = new CountryListService();
-        this.IsEditingFieldsEnabled = fatherComponent.IsEditingFieldsEnabled;
-
-        this.IsContainerFeatureToggleVisible = fatherComponent.IsContainerFeatureToggleVisible;
-
-        this.HorseFieldIsVisible = fatherComponent.HorseFieldIsVisible;
-
-
         this.SetUIProperties();
         if (this.IsNewEntity) {
             this.SetUIPropertiesOfCars(false);
@@ -3953,11 +2941,10 @@ export class InsideShipmentPackageItem extends BaseComponent {
                 else if (this.Volume != null) {
                     isDimensionEnabled = false;
                 }
-            }           
+            }
+           
         }
 
-        this.SetUIProperties_Harmonize();
-        this.UIProperties.SetEnabled("LCLContainerTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingEnabled);
@@ -4003,65 +2990,6 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("ChassisNumber", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
-    }
-    SetUIProperties_Harmonize() {
-
-        var isFieldEnabled: boolean = true;
-        if (this.IsEditingEnabled) {
-
-            isFieldEnabled = true;
-
-            if (this.IsMultiHarmonize == true) {
-                isFieldEnabled = false;
-            }
-        } else if (this.IsContainerFeatureToggleVisible && !this.IsEditingEnabled) {
-            isFieldEnabled = false;
-        }
-
-        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
-    }
-
-    get HorseId() { return this.EntityPM.HorseId; }
-    set HorseId(newValue: string) {
-        if (this.EntityPM.HorseId != newValue) {
-            this.EntityPM.HorseId = newValue;
-        }
-    }
-
-    get HorseName() { return this.EntityPM.HorseName; }
-    set HorseName(newValue: string) {
-        if (this.EntityPM.HorseName != newValue) {
-            this.EntityPM.HorseName = newValue;
-        }
-    }
-
-    horse: HorseList;
-    get Horse() { return this.horse; }
-    set Horse(value: HorseList) {
-        if (this.horse != value) {
-            this.horse = value;
-        }
-
-        if (value != null) {
-            this.HorseName = value.Name;
-        }
-        else {
-            this.HorseName = null;
-        }
-    }
-
-    get Harmonize() { return this.EntityPM.Harmonize; }
-    set Harmonize(newValue: string) {
-        if (this.EntityPM.Harmonize != newValue) {
-            this.EntityPM.Harmonize = newValue;
-        }
-    }
-
-    get IsMultiHarmonize() { return this.EntityPM.IsMultiHarmonize }
-    set IsMultiHarmonize(newValue: boolean) {
-        if (this.EntityPM.IsMultiHarmonize != newValue) {
-            this.EntityPM.IsMultiHarmonize = newValue;
-        }
     }
 
     get PackageTypeId() { return this.EntityPM.PackageTypeId; }
@@ -4333,7 +3261,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
     set CountryId(newValue: string) {
         if (this.EntityPM.CountryId != newValue) {
             this.EntityPM.CountryId = newValue;
-            this.CountryListService.getSingle(this.EntityPM.CountryId).subscribe((result:any) => {
+            this.CountryListService.getSingle(this.EntityPM.CountryId).subscribe(result => {
                 var country = result.Result;
                 if (country != null) {
                     this.EntityPM.CountryCode = country.Code;

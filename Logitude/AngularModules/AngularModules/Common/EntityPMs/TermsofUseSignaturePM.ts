@@ -20,7 +20,7 @@ export class TermsofUseSignaturePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -45,29 +45,16 @@ export class TermsofUseSignaturePM {
     public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
        
 	 
-    private termsofUseId: number;
-    public get TermsofUseId() { return this.termsofUseId; }
-    public set TermsofUseId(newValue: number) { if (this.termsofUseId != newValue) { this.termsofUseId = newValue; this.MarkAsDirty("TermsofUseId"); } }
-       
-	 
-    private versionNumber: number;
-    public get VersionNumber() { return this.versionNumber; }
-    public set VersionNumber(newValue: number) { if (this.versionNumber != newValue) { this.versionNumber = newValue; this.MarkAsDirty("VersionNumber"); } }
-       
-	 
-    private versionDocumentId: string;
-    public get VersionDocumentId() { return this.versionDocumentId; }
-    public set VersionDocumentId(newValue: string) { if (this.versionDocumentId != newValue) { this.versionDocumentId = newValue; this.MarkAsDirty("VersionDocumentId"); } }
+    private termsofUseVersion: number;
+    public get TermsofUseVersion() { return this.termsofUseVersion; }
+    public set TermsofUseVersion(newValue: number) { if (this.termsofUseVersion != newValue) { this.termsofUseVersion = newValue; this.MarkAsDirty("TermsofUseVersion"); } }
        
 	 
 
     public OldEntityPM: TermsofUseSignaturePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -75,7 +62,6 @@ export class TermsofUseSignaturePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TermsofUseSignature");
            
         }
-	 }
     }
     private MyClone: TermsofUseSignaturePM;
 

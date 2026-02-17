@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -31,7 +31,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.GrossWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.VolumeUnitCode).HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.DescriptionOfGoods).HasMaxLength(4000).IsUnicode(true);
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
              string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

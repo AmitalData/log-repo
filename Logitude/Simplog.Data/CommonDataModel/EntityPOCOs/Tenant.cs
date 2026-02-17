@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
@@ -27,8 +27,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string DimensionsUnitCode { get; set; }
         public string VolumeUnitCode { get; set; }
         public string GrossWeightUnitCode { get; set; }
-        [ForeignKey("WeightUnits")]
-        public virtual WeightUnit WeightUnit { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
         public string ExportFreightPrepaidCollectId { get; set; }
         public string ExportOtherPrepaidCollectId { get; set; }
@@ -39,7 +37,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string MasterImportFreightPrepaidCollectId { get; set; }
         public string MasterImportOtherPrepaidCollectId { get; set; }
         public bool IsHybrid { get; set; }
-        public bool IsIncrementalBuildRunning { get; set; }
         public bool IsQuoteSubjectEdited { get; set; }
         public string DefaultQuestionnaireId { get; set; }
         public string FreightCurrencyId { get; set; }
@@ -65,7 +62,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string VatMandatoryTypeCode { get; set; }
         public bool VatMandatoryForPotentialCustomers { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }
-        public string VatUniquePartnerTypeCode { get; set; }
 
         public virtual VatUniqueType VatUniqueType { get; set; }
         public virtual Country VatUniqueCountry { get; set; }
@@ -90,7 +86,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual WeightUnit ChargeableWeightUnit { get; set; }
         public virtual DimensionsUnit DimensionsUnit { get; set; }
         public virtual Currency ProfitCurrency { get; set; }
-        public virtual VatUniquePartnerType VatUniquePartnerType { get; set; }
 
         public string InvoiceSection1 { get; set; }
         public string InvoiceSection2 { get; set; }
@@ -100,18 +95,14 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool IsMobileActivated { get; set; }
         public bool SharedLogisticsMessageLink { get; set; }
-        public bool ShowMultiUnitsOfMeasurements { get; set; }
         public bool IsCustomerTelRequired { get; set; }
         public bool IsCustomerFaxRequired { get; set; }
         public bool IsPickDelAdrsRequired { get; set; }
         public bool IsCustomerAddress1Required { get; set; }
         public bool HasPrimaryContact { get; set; }
         public bool AllowEAWBMoreThanTenPackages { get; set; }
-        public bool SharedLogisMasterMessageLink { get; set; }
 
         public bool ExportQuotationsToIntegratedSystem { get; set; }
-
-        public bool IsQuotesRequestActivatedInShared { get; set; }
 
         public virtual AccountingSetting AccountingSetting { get; set; }
 
@@ -129,9 +120,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string RegulatedAgentNumber { get; set; }
         public bool RegulatedAgentRegimeActivated { get; set; }
+        public bool IsDocumentsArchive { get; set; }
         public string CustomerId { get; set; }
         public virtual Card CustomerCard { get; set; }
-        public bool CustomerTenantShareCustomsFile { get; set; }
+        public bool IsCustomerTenantShare { get; set; }
+        public bool CustomerTenantShareImportFile { get; set; }
         public bool CustomerTenantShareExportFile { get; set; }
 
 
@@ -144,7 +137,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public virtual VatFormatType VatFormatType { get; set; }
         public virtual Country VatFormatCountry { get; set; }
+        public string LogBoxAdminUserId { get; set; }
 
+        [ForeignKey("LogBoxAdminUserId")]
+        public Contact LogBoxAdminUser { get; set; }
 
         public bool IsCorrespondenceRightToLeftEnabled { get; set; }
         public bool IsNotesRightToLeftEnabled { get; set; }
@@ -159,6 +155,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string FMCNumber { get; set; }
         public bool TenantVATManagement { get; set; }
 
+        public bool DocumentShareAsDefault { get; set; }
         public string StorageEncryptionKey { get; set; }
         public string LayoutDirection { get; set; }
 
@@ -167,48 +164,15 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string TemperatureUnitCode { get; set; }
 
         public string DefaultSLAId { get; set; }
+        public string StockTypeCode { get; set; }
         public int TenantEmailSendingQuota { get; set; }
+        public bool AutoArchiveOnInvoice { get; set; }
 
         public string NumberFormatCode { get; set; }
 
         [ForeignKey("NumberFormatCode")]
         public virtual NumberFormat NumberFormat { get; set; }
 
-        public string EcommerceSupportEmail { get; set; }
-        public bool EcommerceTenant { get; set; }
 
-        public string CBSA { get; set; }
-        public string CAAT { get; set; }
-        public bool IsTestTenant { get; set; }
-
-        [ForeignKey("CheckDigitControlAlgorithmCode")]
-        public virtual CheckDigitControlAlgorithm CheckDigitControlAlgorithm { get; set; }
-        public string CheckDigitControlAlgorithmCode { get; set; }
-
-        public bool ApplyVATForAllPartners { get; set; }
-        public LogBoxTenantSetting LogBoxTenantSetting { get; set; }
-        public bool HideFCLAllIn { get; set; }
-        public bool AllowCustomersInAgentsLOV { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
-        public bool DisplayDocumentsAndEvents { get; set; }
-        public string TransferQuotationsToUnifreightTrigger { get; set; }
-
-        public double? AirRatio { get; set; }
-        public double? LCLRatio { get; set; }
-        public double? FCLRatio { get; set; }
-        public double? LTLRatio { get; set; }
-        public double? FTLRatio { get; set; }
-        public bool IsCargoTrackWebAccessActivated { get; set; }        
-        public bool EnableDeliveryOptions { get; set; }
-        public int? EmptyReturnClosingDays { get; set; }
-        public int? ShipmentATAClosingDays { get; set; }
-        public bool IsDigitalPortalAccessActivated { get; set; }
-        public bool UseNewTermsOfUse { get; set; }
-        public string ShipmentATADateIndicator { get; set; }
-        public bool ApproveUploadedDocuments { get; set; }
-        public bool JouranlApprovalIsIdle { get; set; }
-        public string InvoicePrintNotes { get; set; }
-        public string InvoicePrintNotesLocal { get; set; }
-        public bool HebrewTenant { get; set; }
     }
 }

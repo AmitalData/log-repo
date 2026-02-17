@@ -11,7 +11,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './MainSchedulerComponent.html',
 })
 
@@ -24,12 +24,10 @@ export class MainSchedulerComponent implements OnInit {
     IsShowTabUpdate: boolean = true;
     private PageChild_STASK: any = null;
     private PageChild_SFTP: any = null;
-    private PageChild_SSFTP: any = null;
 
 
     IsShowTaskScheduler: boolean = false;
     IsShowTabFTBScheduler: boolean = false;
-    IsShowTabSFTBScheduler: boolean = false;
 
     IsShowComponentWithTabs: boolean = false;
     IsShowComponentWithOutTabs: boolean = false;
@@ -40,18 +38,16 @@ export class MainSchedulerComponent implements OnInit {
        
         if (FeatureLocator.HasFeaturePermession("TasksScheduler", "TASK")) this.IsShowTaskScheduler = true;
         if (FeatureLocator.HasFeaturePermession("TasksScheduler", "FTP")) this.IsShowTabFTBScheduler = true;
-        if (FeatureLocator.HasFeaturePermession("TasksScheduler", "SFTP")) this.IsShowTabSFTBScheduler = true;
-
         if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ")) this.IsShowPackageNotIncludeMessage = true;
 
 
-        if (this.IsShowTaskScheduler && (this.IsShowTabFTBScheduler || this.IsShowTabSFTBScheduler)) this.IsShowComponentWithTabs = true;
-        else if (this.IsShowTaskScheduler || this.IsShowTabFTBScheduler || this.IsShowTabSFTBScheduler) this.IsShowComponentWithOutTabs = true;
+        if (this.IsShowTaskScheduler && this.IsShowTabFTBScheduler) this.IsShowComponentWithTabs = true;
+        else if (this.IsShowTaskScheduler || this.IsShowTabFTBScheduler) this.IsShowComponentWithOutTabs = true;
         else this.IsShowPackageNotIncludeMessage = true; 
 
 
 
-        if ((this.IsShowTaskScheduler || this.IsShowTabFTBScheduler || this.IsShowTabSFTBScheduler) && !this.IsShowPackageNotIncludeMessage ) {
+        if ((this.IsShowTaskScheduler || this.IsShowTabFTBScheduler) && !this.IsShowPackageNotIncludeMessage ) {
             this.RunComponent();
         }
  
@@ -83,9 +79,7 @@ export class MainSchedulerComponent implements OnInit {
             else {
                 this.isLoaderReady = true;
 
-                var tabCode = this.IsShowComponentWithTabs || this.IsShowTaskScheduler ? "STASK" : (this.IsShowTabFTBScheduler ? "SFTP" : "SSFTP");
-
-
+                var tabCode = this.IsShowComponentWithTabs || this.IsShowTaskScheduler ? "STASK" : "SFTP";
                 this.SetSelectedItem(tabCode);
             }
         }
@@ -104,7 +98,7 @@ export class MainSchedulerComponent implements OnInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -160,18 +154,6 @@ export class MainSchedulerComponent implements OnInit {
                                     .then(cmpRef => {
                                         this.PageChild_SFTP = cmpRef.instance;
                                         this.PageChild_SFTP.LoadData("FTP");
-                                    });
-                            }
-
-                            break;
-                        }
-
-                        case "SSFTP": {
-                            if (this.PageChild_SSFTP == null) {
-                                SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerComponent', myLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        this.PageChild_SSFTP = cmpRef.instance;
-                                        this.PageChild_SSFTP.LoadData("SFTP");
                                     });
                             }
 

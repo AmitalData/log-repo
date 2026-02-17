@@ -8,7 +8,7 @@ import {DateTool} from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'NewProjectComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewProjectComponent.html',
 })
 
@@ -50,15 +50,6 @@ export class NewProjectComponent extends BaseComponent {
         }
     }
 
-
-    get DayOffTypeCode() {
-        return this.EntityPM.DayOffTypeCode;
-    }
-    set DayOffTypeCode(value: string) {
-        if (this.EntityPM.DayOffTypeCode != value) {
-            this.EntityPM.DayOffTypeCode = value;
-        }
-    }
 
     get BudgetId() {
         return this.EntityPM.BudgetId;

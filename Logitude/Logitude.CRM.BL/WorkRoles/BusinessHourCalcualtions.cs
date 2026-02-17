@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -93,8 +93,6 @@ namespace Logitude.CRM.BL.WorkRoles
                 }
 
                 var endOfDay = getEndOfDay(startDate.Value);
-                if (endDate == null)
-                    endDate = DateTime.Today;
                 var startOfDay = getStartOfDay(endDate.Value);
                 var usedMinutesinEndDate = endDate.Value.Subtract(startOfDay).TotalMinutes;
                 var usedMinutesinStartDate = endOfDay.Subtract(startDate.Value).TotalMinutes;
@@ -447,39 +445,39 @@ namespace Logitude.CRM.BL.WorkRoles
         {
             bool isStartDate = false;
 
-            if (startDate.DayOfWeek == DayOfWeek.Saturday && businessHour.IsSaturdayEnabeled && businessHour.SaturdayFromHour != null)
+            if (startDate.DayOfWeek == DayOfWeek.Saturday && businessHour.IsSaturdayEnabeled)
             {
-                isStartDate = startDate.Hour < businessHour.SaturdayFromHour.Value.Hours || (startDate.Hour == businessHour.SaturdayFromHour.Value.Hours && startDate.Minute < businessHour.SaturdayFromHour.Value.Minutes);
+                isStartDate = startDate.Hour < businessHour.SaturdayFromHour.Hours || (startDate.Hour == businessHour.SaturdayFromHour.Hours && startDate.Minute < businessHour.SaturdayFromHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Sunday && businessHour.IsSundayEnabeled && businessHour.SundayFromHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Sunday && businessHour.IsSundayEnabeled)
             {
-                isStartDate = startDate.Hour < businessHour.SundayFromHour.Value.Hours || (startDate.Hour == businessHour.SundayFromHour.Value.Hours && startDate.Minute < businessHour.SundayFromHour.Value.Minutes);
+                isStartDate = startDate.Hour < businessHour.SundayFromHour.Hours || (startDate.Hour == businessHour.SundayFromHour.Hours && startDate.Minute < businessHour.SundayFromHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Monday && businessHour.IsMondayEnabeled && businessHour.MondayFromHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Monday && businessHour.IsMondayEnabeled)
             {
-                isStartDate = startDate.Hour < businessHour.MondayFromHour.Value.Hours || (startDate.Hour == businessHour.MondayFromHour.Value.Hours && startDate.Minute < businessHour.MondayFromHour.Value.Minutes);
+                isStartDate = startDate.Hour < businessHour.MondayFromHour.Hours || (startDate.Hour == businessHour.MondayFromHour.Hours && startDate.Minute < businessHour.MondayFromHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Tuesday && businessHour.IsTuesdayEnabeled && businessHour.TuesdayFromHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Tuesday && businessHour.IsTuesdayEnabeled)
             {
-                isStartDate = startDate.Hour < businessHour.TuesdayFromHour.Value.Hours || (startDate.Hour == businessHour.TuesdayFromHour.Value.Hours && startDate.Minute < businessHour.TuesdayFromHour.Value.Minutes);
+                isStartDate = startDate.Hour < businessHour.TuesdayFromHour.Hours || (startDate.Hour == businessHour.TuesdayFromHour.Hours && startDate.Minute < businessHour.TuesdayFromHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Wednesday && businessHour.IsWednesdayEnabeled && businessHour.WednesdayFromHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Wednesday && businessHour.IsWednesdayEnabeled)
             {
-                isStartDate = startDate.Hour < businessHour.WednesdayFromHour.Value.Hours || (startDate.Hour == businessHour.WednesdayFromHour.Value.Hours && startDate.Minute < businessHour.WednesdayFromHour.Value.Minutes);
+                isStartDate = startDate.Hour < businessHour.WednesdayFromHour.Hours || (startDate.Hour == businessHour.WednesdayFromHour.Hours && startDate.Minute < businessHour.WednesdayFromHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Thursday && businessHour.IsThursdayEnabeled && businessHour.ThursdayFromHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Thursday && businessHour.IsThursdayEnabeled)
             {
-                isStartDate = startDate.Hour < businessHour.ThursdayFromHour.Value.Hours || (startDate.Hour == businessHour.ThursdayFromHour.Value.Hours && startDate.Minute < businessHour.ThursdayFromHour.Value.Minutes);
+                isStartDate = startDate.Hour < businessHour.ThursdayFromHour.Hours || (startDate.Hour == businessHour.ThursdayFromHour.Hours && startDate.Minute < businessHour.ThursdayFromHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Friday && businessHour.IsFridayEnabeled && businessHour.FridayFromHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Friday && businessHour.IsFridayEnabeled)
             {
-                isStartDate = startDate.Hour < businessHour.FridayFromHour.Value.Hours || (startDate.Hour == businessHour.FridayFromHour.Value.Hours && startDate.Minute < businessHour.FridayFromHour.Value.Minutes);
+                isStartDate = startDate.Hour < businessHour.FridayFromHour.Hours || (startDate.Hour == businessHour.FridayFromHour.Hours && startDate.Minute < businessHour.FridayFromHour.Minutes);
             }
 
             return isStartDate;
@@ -489,39 +487,39 @@ namespace Logitude.CRM.BL.WorkRoles
         {
             bool isStartDate = false;
 
-            if (startDate.DayOfWeek == DayOfWeek.Saturday && businessHour.IsSaturdayEnabeled && businessHour.SaturdayToHour != null)
+            if (startDate.DayOfWeek == DayOfWeek.Saturday && businessHour.IsSaturdayEnabeled)
             {
-                isStartDate = startDate.Hour > businessHour.SaturdayToHour.Value.Hours || (startDate.Hour == businessHour.SaturdayToHour.Value.Hours && startDate.Minute > businessHour.SaturdayToHour.Value.Minutes);
+                isStartDate = startDate.Hour > businessHour.SaturdayToHour.Hours || (startDate.Hour == businessHour.SaturdayToHour.Hours && startDate.Minute > businessHour.SaturdayToHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Sunday && businessHour.IsSundayEnabeled && businessHour.SundayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Sunday && businessHour.IsSundayEnabeled)
             {
-                isStartDate = startDate.Hour > businessHour.SundayToHour.Value.Hours || (startDate.Hour == businessHour.SundayToHour.Value.Hours && startDate.Minute > businessHour.SundayToHour.Value.Minutes);
+                isStartDate = startDate.Hour > businessHour.SundayToHour.Hours || (startDate.Hour == businessHour.SundayToHour.Hours && startDate.Minute > businessHour.SundayToHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Monday && businessHour.IsMondayEnabeled && businessHour.MondayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Monday && businessHour.IsMondayEnabeled)
             {
-                isStartDate = startDate.Hour > businessHour.MondayToHour.Value.Hours || (startDate.Hour == businessHour.MondayToHour.Value.Hours && startDate.Minute > businessHour.MondayToHour.Value.Minutes);
+                isStartDate = startDate.Hour > businessHour.MondayToHour.Hours || (startDate.Hour == businessHour.MondayToHour.Hours && startDate.Minute > businessHour.MondayToHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Tuesday && businessHour.IsTuesdayEnabeled && businessHour.TuesdayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Tuesday && businessHour.IsTuesdayEnabeled)
             {
-                isStartDate = startDate.Hour > businessHour.TuesdayToHour.Value.Hours || (startDate.Hour == businessHour.TuesdayToHour.Value.Hours && startDate.Minute > businessHour.TuesdayToHour.Value.Minutes);
+                isStartDate = startDate.Hour > businessHour.TuesdayToHour.Hours || (startDate.Hour == businessHour.TuesdayToHour.Hours && startDate.Minute > businessHour.TuesdayToHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Wednesday && businessHour.IsWednesdayEnabeled && businessHour.WednesdayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Wednesday && businessHour.IsWednesdayEnabeled)
             {
-                isStartDate = startDate.Hour > businessHour.WednesdayToHour.Value.Hours || (startDate.Hour == businessHour.WednesdayToHour.Value.Hours && startDate.Minute > businessHour.WednesdayToHour.Value.Minutes);
+                isStartDate = startDate.Hour > businessHour.WednesdayToHour.Hours || (startDate.Hour == businessHour.WednesdayToHour.Hours && startDate.Minute > businessHour.WednesdayToHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Thursday && businessHour.IsThursdayEnabeled && businessHour.ThursdayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Thursday && businessHour.IsThursdayEnabeled)
             {
-                isStartDate = startDate.Hour > businessHour.ThursdayToHour.Value.Hours || (startDate.Hour == businessHour.ThursdayToHour.Value.Hours && startDate.Minute > businessHour.ThursdayToHour.Value.Minutes);
+                isStartDate = startDate.Hour > businessHour.ThursdayToHour.Hours || (startDate.Hour == businessHour.ThursdayToHour.Hours && startDate.Minute > businessHour.ThursdayToHour.Minutes);
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Friday && businessHour.IsFridayEnabeled && businessHour.FridayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Friday && businessHour.IsFridayEnabeled)
             {
-                isStartDate = startDate.Hour > businessHour.FridayToHour.Value.Hours || (startDate.Hour == businessHour.FridayToHour.Value.Hours && startDate.Minute > businessHour.FridayToHour.Value.Minutes);
+                isStartDate = startDate.Hour > businessHour.FridayToHour.Hours || (startDate.Hour == businessHour.FridayToHour.Hours && startDate.Minute > businessHour.FridayToHour.Minutes);
             }
 
             return isStartDate;
@@ -637,40 +635,40 @@ namespace Logitude.CRM.BL.WorkRoles
         {
             DateTime startDay;
 
-            if (nextDay.DayOfWeek == DayOfWeek.Saturday && businessHour.SaturdayFromHour != null)
+            if (nextDay.DayOfWeek == DayOfWeek.Saturday)
             {
-                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.SaturdayFromHour.Value.Hours, businessHour.SaturdayFromHour.Value.Minutes));
+                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.SaturdayFromHour.Hours, businessHour.SaturdayFromHour.Minutes));
             }
 
-            else if (nextDay.DayOfWeek == DayOfWeek.Sunday && businessHour.SundayFromHour != null)
+            else if (nextDay.DayOfWeek == DayOfWeek.Sunday)
             {
 
-                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.SundayFromHour.Value.Hours, businessHour.SundayFromHour.Value.Minutes));
+                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.SundayFromHour.Hours, businessHour.SundayFromHour.Minutes));
             }
 
-            else if (nextDay.DayOfWeek == DayOfWeek.Monday && businessHour.MondayFromHour != null)
+            else if (nextDay.DayOfWeek == DayOfWeek.Monday)
             {
-                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.MondayFromHour.Value.Hours, businessHour.MondayFromHour.Value.Minutes));
+                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.MondayFromHour.Hours, businessHour.MondayFromHour.Minutes));
             }
 
-            else if (nextDay.DayOfWeek == DayOfWeek.Tuesday && businessHour.TuesdayFromHour != null)
+            else if (nextDay.DayOfWeek == DayOfWeek.Tuesday)
             {
-                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.TuesdayFromHour.Value.Hours, businessHour.TuesdayFromHour.Value.Minutes));
+                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.TuesdayFromHour.Hours, businessHour.TuesdayFromHour.Minutes));
             }
 
-            else if (nextDay.DayOfWeek == DayOfWeek.Wednesday && businessHour.WednesdayFromHour != null)
+            else if (nextDay.DayOfWeek == DayOfWeek.Wednesday)
             {
-                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.WednesdayFromHour.Value.Hours, businessHour.WednesdayFromHour.Value.Minutes));
+                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.WednesdayFromHour.Hours, businessHour.WednesdayFromHour.Minutes));
             }
 
-            else if (nextDay.DayOfWeek == DayOfWeek.Thursday && businessHour.ThursdayFromHour != null)
+            else if (nextDay.DayOfWeek == DayOfWeek.Thursday)
             {
-                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.ThursdayFromHour.Value.Hours, businessHour.ThursdayFromHour.Value.Minutes));
+                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.ThursdayFromHour.Hours, businessHour.ThursdayFromHour.Minutes));
             }
 
-            else if (nextDay.DayOfWeek == DayOfWeek.Friday && businessHour.FridayFromHour != null)
+            else if (nextDay.DayOfWeek == DayOfWeek.Friday)
             {
-                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.FridayFromHour.Value.Hours, businessHour.FridayFromHour.Value.Minutes));
+                startDay = DateTime.Parse(string.Format("{0} {1}:{2}", nextDay.ToString(DateFormatWithYear), businessHour.FridayFromHour.Hours, businessHour.FridayFromHour.Minutes));
             }
 
             else
@@ -685,39 +683,39 @@ namespace Logitude.CRM.BL.WorkRoles
         {
             DateTime? endDay = startDate;
 
-            if (startDate.DayOfWeek == DayOfWeek.Saturday && businessHour.SaturdayToHour !=null)
+            if (startDate.DayOfWeek == DayOfWeek.Saturday)
             {
-                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.SaturdayToHour.Value.Hours, businessHour.SaturdayToHour.Value.Minutes));
+                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.SaturdayToHour.Hours, businessHour.SaturdayToHour.Minutes));
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Sunday && businessHour.SundayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Sunday)
             {
-                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.SundayToHour.Value.Hours, businessHour.SundayToHour.Value.Minutes));
+                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.SundayToHour.Hours, businessHour.SundayToHour.Minutes));
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Monday && businessHour.MondayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Monday)
             {
-                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.MondayToHour.Value.Hours, businessHour.MondayToHour.Value.Minutes));
+                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.MondayToHour.Hours, businessHour.MondayToHour.Minutes));
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Tuesday && businessHour.TuesdayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Tuesday)
             {
-                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.TuesdayToHour.Value.Hours, businessHour.TuesdayToHour.Value.Minutes));
+                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.TuesdayToHour.Hours, businessHour.TuesdayToHour.Minutes));
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Wednesday && businessHour.WednesdayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Wednesday)
             {
-                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.WednesdayToHour.Value.Hours, businessHour.WednesdayToHour.Value.Minutes));
+                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.WednesdayToHour.Hours, businessHour.WednesdayToHour.Minutes));
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Thursday && businessHour.ThursdayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Thursday)
             {
-                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.ThursdayToHour.Value.Hours, businessHour.ThursdayToHour.Value.Minutes));
+                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.ThursdayToHour.Hours, businessHour.ThursdayToHour.Minutes));
             }
 
-            else if (startDate.DayOfWeek == DayOfWeek.Friday && businessHour.FridayToHour != null)
+            else if (startDate.DayOfWeek == DayOfWeek.Friday)
             {
-                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.FridayToHour.Value.Hours, businessHour.FridayToHour.Value.Minutes));
+                endDay = DateTime.Parse(string.Format("{0} {1}:{2}", startDate.ToString(DateFormatWithYear), businessHour.FridayToHour.Hours, businessHour.FridayToHour.Minutes));
             }
 
             return endDay.Value;
@@ -737,39 +735,39 @@ namespace Logitude.CRM.BL.WorkRoles
                 }
             }
 
-            if (date.DayOfWeek == DayOfWeek.Saturday && businessHour.IsSaturdayEnabeled && businessHour.SaturdayToHour != null && businessHour.SaturdayFromHour != null)
+            if (date.DayOfWeek == DayOfWeek.Saturday && businessHour.IsSaturdayEnabeled)
             {
-                total = businessHour.SaturdayToHour.Value.Hours - businessHour.SaturdayFromHour.Value.Hours;
+                total = businessHour.SaturdayToHour.Hours - businessHour.SaturdayFromHour.Hours;
             }
 
-            if (date.DayOfWeek == DayOfWeek.Sunday && businessHour.IsSundayEnabeled && businessHour.SundayToHour != null && businessHour.SundayFromHour != null)
+            if (date.DayOfWeek == DayOfWeek.Sunday && businessHour.IsSundayEnabeled)
             {
-                total = businessHour.SundayToHour.Value.Hours - businessHour.SundayFromHour.Value.Hours;
+                total = businessHour.SundayToHour.Hours - businessHour.SundayFromHour.Hours;
             }
 
-            if (date.DayOfWeek == DayOfWeek.Monday && businessHour.IsMondayEnabeled && businessHour.MondayToHour != null && businessHour.MondayFromHour != null)
+            if (date.DayOfWeek == DayOfWeek.Monday && businessHour.IsMondayEnabeled)
             {
-                total = businessHour.MondayToHour.Value.Hours - businessHour.MondayFromHour.Value.Hours;
+                total = businessHour.MondayToHour.Hours - businessHour.MondayFromHour.Hours;
             }
 
-            if (date.DayOfWeek == DayOfWeek.Tuesday && businessHour.IsTuesdayEnabeled && businessHour.TuesdayToHour != null && businessHour.TuesdayFromHour != null)
+            if (date.DayOfWeek == DayOfWeek.Tuesday && businessHour.IsTuesdayEnabeled)
             {
-                total = businessHour.TuesdayToHour.Value.Hours - businessHour.TuesdayFromHour.Value.Hours;
+                total = businessHour.TuesdayToHour.Hours - businessHour.TuesdayFromHour.Hours;
             }
 
-            if (date.DayOfWeek == DayOfWeek.Wednesday && businessHour.IsWednesdayEnabeled && businessHour.WednesdayToHour != null && businessHour.WednesdayFromHour != null)
+            if (date.DayOfWeek == DayOfWeek.Wednesday && businessHour.IsWednesdayEnabeled)
             {
-                total = businessHour.WednesdayToHour.Value.Hours - businessHour.WednesdayFromHour.Value.Hours;
+                total = businessHour.WednesdayToHour.Hours - businessHour.WednesdayFromHour.Hours;
             }
 
-            if (date.DayOfWeek == DayOfWeek.Thursday && businessHour.IsThursdayEnabeled && businessHour.ThursdayToHour != null && businessHour.ThursdayFromHour != null)
+            if (date.DayOfWeek == DayOfWeek.Thursday && businessHour.IsThursdayEnabeled)
             {
-                total = businessHour.ThursdayToHour.Value.Hours - businessHour.ThursdayFromHour.Value.Hours;
+                total = businessHour.ThursdayToHour.Hours - businessHour.ThursdayFromHour.Hours;
             }
 
-            if (date.DayOfWeek == DayOfWeek.Friday && businessHour.IsFridayEnabeled && businessHour.FridayToHour != null && businessHour.FridayFromHour != null)
+            if (date.DayOfWeek == DayOfWeek.Friday && businessHour.IsFridayEnabeled)
             {
-                total = businessHour.FridayToHour.Value.Hours - businessHour.FridayFromHour.Value.Hours;
+                total = businessHour.FridayToHour.Hours - businessHour.FridayFromHour.Hours;
             }
 
             return total;
@@ -916,7 +914,7 @@ namespace Logitude.CRM.BL.WorkRoles
 
             var workingHoursInMinutes = (getTotalMinutes(date)) * 60;
 
-            while (workingHoursInMinutes != 0 && minutes > workingHoursInMinutes)
+            while (minutes > workingHoursInMinutes)
             {
                 date = getStartOfDay(date.AddDays(1));
                 date = nextOpenDay(date);

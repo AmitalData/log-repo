@@ -22,7 +22,7 @@ import { DeclarationCargoSplitPMService } from '../../../../Customs/Services/Sta
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DecCargoSplitConsPackDetComponent.html',
 })
 
@@ -54,13 +54,9 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
 
     }
 
-    IsExportDeclaration: boolean=false;
     LineNumber: string;
     SetWindowArgs(args: any) {
         var _entityResourceService: EntityResourceService = new EntityResourceService();
-        if (args.DeclarationDirection != null && args.DeclarationDirection=="E") {
-            this.IsExportDeclaration = true;
-        }
         _entityResourceService.getEntityResourceByTableName("Customs.PackingType", 0).subscribe((res: any) => {
             var entityListService: PackingTypeListService = new PackingTypeListService();
             entityListService.getAllFromCache().subscribe((res: any) => {
@@ -139,6 +135,7 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
         for (let item of this.decCargoSplitConsItemPM.DecCargoSplitConsPackDets) {
             this.ItemsSource.Insert(new DecCargoSplitConsPackDetLine(item, this));
         }
+
 
     }
 
@@ -472,7 +469,7 @@ export class DecCargoSplitConsPackDetLine extends BaseComponent {
 
     get MarksNumbers() { return this.entityPM.MarksNumbers; }
     set MarksNumbers(value: string) {
-        if (this.entityPM.MarksNumbers != value && !AppTool.IsNullOrEmpty(value)) {
+        if (this.entityPM.MarksNumbers != value) {
             this.entityPM.MarksNumbers = value;
 
         }

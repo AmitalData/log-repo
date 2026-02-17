@@ -11,7 +11,6 @@ using UnifreightIIG.Common.ClaimAnswerServiceReference;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Customs.BL.Models;
-using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -266,7 +265,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     claimRequestClaimDetail.ClaimDetailClaimAmount = GetClaimDetailClaimAmount(claimsRelatedEntity);
                     claimRequestClaimDetail.ClaimReason = GetClaimReason(claimsRelatedEntity);
                     claimRequestClaimDetail.exportListOfItemsID = GetClaimExportDeclaration(claimsRelatedEntity);
-                    claimRequestClaimDetail.ClaimAttachmentID = GetClaimAttachmentID(claimsRelatedEntity);
+
                     claimRequestClaimDetaillist.Add(claimRequestClaimDetail);
                 }
             }
@@ -446,17 +445,14 @@ namespace Logitude.CustomsMessaging.RequestServices
                     claimRequest.CustomerIdentification.externalIDSpecified = true;
                 }
             }
-            else
+            claimRequest.CustomerIdentification.passportCountry = _ClaimPM.PassportCountryTypeCode;
+            claimRequest.CustomerIdentification.passportNumber = _ClaimPM.PassportNumber;
+            if (!string.IsNullOrWhiteSpace(_ClaimPM.PassportTypeCode))
             {
-                claimRequest.CustomerIdentification.passportCountry = _ClaimPM.PassportCountryTypeCode;
-                claimRequest.CustomerIdentification.passportNumber = _ClaimPM.PassportNumber;
-                if (!string.IsNullOrWhiteSpace(_ClaimPM.PassportTypeCode))
-                {
-                    int passportType;
-                    int.TryParse(_ClaimPM.PassportTypeCode, out passportType);
-                    claimRequest.CustomerIdentification.passportType = passportType;
-                    claimRequest.CustomerIdentification.passportTypeSpecified = true;
-                }
+                int passportType;
+                int.TryParse(_ClaimPM.PassportTypeCode, out passportType);
+                claimRequest.CustomerIdentification.passportType = passportType;
+                claimRequest.CustomerIdentification.passportTypeSpecified = true;
             }
 
             return claimRequest;
@@ -494,32 +490,25 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
             }
 
-           
+            //Get ClaimsRelatedEntity Attachments
+            foreach (ClaimsRelatedEntityPM claimsRelatedEntityPM in _ClaimPM.ClaimsRelatedEntities)
+            {
+                var relatedEntityCustomsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = claimsRelatedEntityPM.ClaimId, ParentEntityCode = "Claim", Child1EntityCode = "ClaimsRelatedEntity", Child1EntityId = claimsRelatedEntityPM.EntityCounterKey.ToString() }, this._ClaimPM.Tenant);
+                foreach (CustomsDocumentPM customsDocumentPM in relatedEntityCustomsDocumentPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                    {
+                        var claimAttachment = new Attachment();
+                        claimAttachment.documentType = customsDocumentPM.DocumentTypeCode;
+                        claimAttachment.fileName = customsDocumentPM.Name;
+                        claimAttachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
+                        claimAttachment.IsAttachment = false.ToString();
+                        claimAttachmentList.Add(claimAttachment);
+                    }
+                }
+            }
 
             return claimAttachmentList.ToArray();
-        }
-
-        private string GetClaimAttachmentID(ClaimsRelatedEntityPM claimsRelatedEntityPM)
-        {
-            var claimAttachmentList = new List<Attachment>();
-            var customsDocumentQueryService = new CustomsDocumentQueryService(_DbContext);
-
-            //Get Claims Attachments
-
-
-            //Get ClaimsRelatedEntity Attachments
-
-            CustomsDocumentPM customsDocumentPM = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = claimsRelatedEntityPM.ClaimId, ParentEntityCode = "Claim", Child1EntityCode = "ClaimRelatedEntity", Child1EntityCode2 = "ClaimRelatedEntityCancelOrObjection", Child1EntityId = claimsRelatedEntityPM.EntityCounterKey.ToString() }, this._ClaimPM.Tenant).FirstOrDefault();
-                
-            if (!string.IsNullOrWhiteSpace(customsDocumentPM?.CustomsDocId))
-            {
-                        
-                return customsDocumentPM.ExternalAttachmentId;
-                   
-            }
-            
-
-            return null;
         }
 
         public static byte[] stringToBase64ByteArray(String input)

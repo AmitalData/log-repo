@@ -23,6 +23,5 @@ export class TraceEventList {
 		ShortView: boolean;
 		CustomerCareUserEmail: string;
 		Location: string;
-		PartnerName: string;
 	
 }

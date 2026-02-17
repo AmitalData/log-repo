@@ -13,23 +13,19 @@ import {AddressPM} from './AddressPM';
 import {ContactPM} from './ContactPM';
 
 import {CardExternalCodeByCurrencyPM} from './CardExternalCodeByCurrencyPM';
-
-import {WarehouseStoragePricingPM} from './WarehouseStoragePricingPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
 
-export class WarehousePM extends ObjectCustomFieldPM {
+export class WarehousePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		  super("Warehouse");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -255,9 +251,9 @@ export class WarehousePM extends ObjectCustomFieldPM {
     public set PrimaryContactPhone(newValue: string) { if (this.primaryContactPhone != newValue) { this.primaryContactPhone = newValue; this.MarkAsDirty("PrimaryContactPhone"); } }
        
 	 
-    private card: any;
+    private card: string;
     public get Card() { return this.card; }
-    public set Card(newValue: any) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
+    public set Card(newValue: string) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
        
 	 
      
@@ -376,150 +372,11 @@ export class WarehousePM extends ObjectCustomFieldPM {
     public set SATForeignRFC(newValue: string) { if (this.sATForeignRFC != newValue) { this.sATForeignRFC = newValue; this.MarkAsDirty("SATForeignRFC"); } }
        
 	 
-    private accountingVATSplit: boolean;
-    public get AccountingVATSplit() { return this.accountingVATSplit; }
-    public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
-       
-	 
-    private uploadingUniqueKey: string;
-    public get UploadingUniqueKey() { return this.uploadingUniqueKey; }
-    public set UploadingUniqueKey(newValue: string) { if (this.uploadingUniqueKey != newValue) { this.uploadingUniqueKey = newValue; this.MarkAsDirty("UploadingUniqueKey"); } }
-       
-	 
-    private chargeStorage: boolean;
-    public get ChargeStorage() { return this.chargeStorage; }
-    public set ChargeStorage(newValue: boolean) { if (this.chargeStorage != newValue) { this.chargeStorage = newValue; this.MarkAsDirty("ChargeStorage"); } }
-       
-	 
-    private currencyId: string;
-    public get CurrencyId() { return this.currencyId; }
-    public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
-       
-	 
-    private airWeightMeasurementCode: string;
-    public get AirWeightMeasurementCode() { return this.airWeightMeasurementCode; }
-    public set AirWeightMeasurementCode(newValue: string) { if (this.airWeightMeasurementCode != newValue) { this.airWeightMeasurementCode = newValue; this.MarkAsDirty("AirWeightMeasurementCode"); } }
-       
-	 
-    private oceanWeightMeasurementCode: string;
-    public get OceanWeightMeasurementCode() { return this.oceanWeightMeasurementCode; }
-    public set OceanWeightMeasurementCode(newValue: string) { if (this.oceanWeightMeasurementCode != newValue) { this.oceanWeightMeasurementCode = newValue; this.MarkAsDirty("OceanWeightMeasurementCode"); } }
-       
-	 
-    private inlandWeightMeasurementCode: string;
-    public get InlandWeightMeasurementCode() { return this.inlandWeightMeasurementCode; }
-    public set InlandWeightMeasurementCode(newValue: string) { if (this.inlandWeightMeasurementCode != newValue) { this.inlandWeightMeasurementCode = newValue; this.MarkAsDirty("InlandWeightMeasurementCode"); } }
-       
-	 
-    private airWeightRoundingCode: string;
-    public get AirWeightRoundingCode() { return this.airWeightRoundingCode; }
-    public set AirWeightRoundingCode(newValue: string) { if (this.airWeightRoundingCode != newValue) { this.airWeightRoundingCode = newValue; this.MarkAsDirty("AirWeightRoundingCode"); } }
-       
-	 
-    private oceanWeightRoundingCode: string;
-    public get OceanWeightRoundingCode() { return this.oceanWeightRoundingCode; }
-    public set OceanWeightRoundingCode(newValue: string) { if (this.oceanWeightRoundingCode != newValue) { this.oceanWeightRoundingCode = newValue; this.MarkAsDirty("OceanWeightRoundingCode"); } }
-       
-	 
-    private inlandWeightRoundingCode: string;
-    public get InlandWeightRoundingCode() { return this.inlandWeightRoundingCode; }
-    public set InlandWeightRoundingCode(newValue: string) { if (this.inlandWeightRoundingCode != newValue) { this.inlandWeightRoundingCode = newValue; this.MarkAsDirty("InlandWeightRoundingCode"); } }
-       
-	 
-     
-	private warehouseStoragePricings: WarehouseStoragePricingPM[];
-    get  WarehouseStoragePricings() {
-        if (this.warehouseStoragePricings == null) {
-            this.warehouseStoragePricings = [];
-        }
-
-        return this.warehouseStoragePricings;
-    }
-    set  WarehouseStoragePricings(newValue: WarehouseStoragePricingPM[]) {
-        if (this.warehouseStoragePricings != newValue) {
-            this.warehouseStoragePricings = newValue;
-        }
-    }
-    public AddWarehouseStoragePricingPM(item: WarehouseStoragePricingPM) {
-        if (item != null) {
-            var index = this.WarehouseStoragePricings.indexOf(item);
-            if (index == -1) {
-
-                item.EntityParentPM = this;
-
-                this. WarehouseStoragePricings.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveWarehouseStoragePricingPM(item: WarehouseStoragePricingPM) {
-        if (item != null) {
-            var index = this.WarehouseStoragePricings.indexOf(item);
-            if (index > -1) {
-                this. WarehouseStoragePricings.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-	    //public WarehouseStoragePricings: Array<WarehouseStoragePricingPMPM>= [];
-     private gLAccountId: string;
-    public get GLAccountId() { return this.gLAccountId; }
-    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
-       
-	 
-    private gLAccountNumber: string;
-    public get GLAccountNumber() { return this.gLAccountNumber; }
-    public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
-       
-	 
-    private storageFreeDays: number;
-    public get StorageFreeDays() { return this.storageFreeDays; }
-    public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
-       
-	 
-    private address1: string;
-    public get Address1() { return this.address1; }
-    public set Address1(newValue: string) { if (this.address1 != newValue) { this.address1 = newValue; this.MarkAsDirty("Address1"); } }
-       
-	 
-    private address2: string;
-    public get Address2() { return this.address2; }
-    public set Address2(newValue: string) { if (this.address2 != newValue) { this.address2 = newValue; this.MarkAsDirty("Address2"); } }
-       
-	 
-    private billToId: string;
-    public get BillToId() { return this.billToId; }
-    public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
-       
-	 
-    private regimenFiscalCode: string;
-    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
-    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
-       
-	 
-    private sATReceptorName: string;
-    public get SATReceptorName() { return this.sATReceptorName; }
-    public set SATReceptorName(newValue: string) { if (this.sATReceptorName != newValue) { this.sATReceptorName = newValue; this.MarkAsDirty("SATReceptorName"); } }
-       
-	 
-    private importLocalCustomerGroupId: string;
-    public get ImportLocalCustomerGroupId() { return this.importLocalCustomerGroupId; }
-    public set ImportLocalCustomerGroupId(newValue: string) { if (this.importLocalCustomerGroupId != newValue) { this.importLocalCustomerGroupId = newValue; this.MarkAsDirty("ImportLocalCustomerGroupId"); } }
-       
-	 
-    private exportLocalCustomerGroupId: string;
-    public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
-    public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
-       
-	 
 
     public OldEntityPM: WarehousePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -527,7 +384,6 @@ export class WarehousePM extends ObjectCustomFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Warehouse");
            
         }
-	 }
     }
     private MyClone: WarehousePM;
 
@@ -539,4 +395,4 @@ export class WarehousePM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

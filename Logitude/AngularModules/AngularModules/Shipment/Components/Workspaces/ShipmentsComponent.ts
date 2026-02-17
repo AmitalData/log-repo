@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ShipmentsComponent.html',
 })
 
@@ -25,16 +25,22 @@ export class ShipmentsComponent {
     @Output() ReloadUserQueries = new EventEmitter();
     public IsCloudDeployment: boolean = false;
     private myShipmentDomainService: ShipmentDomainService;
+    public TestToggleIsVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsApproveUploadedDocumentsEnabled: boolean = false;
     constructor() {
         this.myShipmentDomainService = new ShipmentDomainService();
+
         if (ObjectsLocator.GlobalSetting) {
-            if (ObjectsLocator.GlobalSetting?.DeploymentStage) {
-                if (ObjectsLocator.GlobalSetting?.DeploymentStage.toLowerCase() == "amitalstorage") {
+            if (ObjectsLocator.GlobalSetting.DeploymentStage) {
+                if (ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase() == "amitalstorage") {
                     this.IsCloudDeployment = true;
                 }
             }
+        }
+
+        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TST" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (FeatureToggle) {
+            this.TestToggleIsVisible = true;
         }
     }
 
@@ -55,6 +61,7 @@ export class ShipmentsComponent {
         this.ReloadUserQueries.emit();
     }
 
+
     // Queries Features
     public IsNewButtonVisible: boolean = false;
     public IsMessagingStockVisible: boolean = false;
@@ -73,7 +80,6 @@ export class ShipmentsComponent {
     public IsQueryVisible_MyFollowUps: boolean = false;
     public IsQueryVisible_AllShipments: boolean = false;
     public IsQueryVisible_AllMasters: boolean = false;
-    public IsQueryVisible_PendingApprovalDocuments: boolean = false;
     public IsQueryVisible_CanceledShipments: boolean = false;
     public IsQueryVisible_CreditLimitBlocked: boolean = false;
     public IsQueryVisible_FSRGroup: boolean = false;
@@ -82,9 +88,8 @@ export class ShipmentsComponent {
     public IsQueryVisible_ExpectedDeparturesNotTransmitted: boolean = false;
     public IsQueryVisible_ShippingInstructionsLast7Days: boolean = false;
     public IsQueryVisible_ContainerStatusLast7Days: boolean = false;
-    public IsQueryVisible_EBookingInProgress: boolean = false;
-    public IsDeparturesArrivalsVisible: boolean = false;
     private SetQueriesVisibility() {
+
         this.IsNewButtonVisible = false;
         if (!FeatureLocator.IsPackage_EAWB() && !SessionLocator.TenantPM.IsHybrid) {
             if (FeatureLocator.HasFeaturePermession("Shipment", "NEW")) {
@@ -103,17 +108,14 @@ export class ShipmentsComponent {
         this.IsQueryVisible_ExpectedDepartures = FeatureLocator.HasFeaturePermession("Shipment", "EXPECTEDDEPATURE") ? true : false;
         this.IsQueryVisible_AirlinesUpdates = FeatureLocator.HasFeaturePermession("Shipment", "AIRLINESUPDATES") ? true : false;
         this.IsMessagingStockVisible = SessionLocator.TenantManagementJS.IsAWBStockPrepaid;
-        this.IsDeparturesArrivalsVisible = FeatureLocator.HasFeaturePermession("Shipment", "DeparturesArrivals") ? true : false;
 
         // Others
         this.IsQueryVisible_AllFollowUps = FeatureLocator.HasFeaturePermession("Shipment", "ALLFOLLOWUPS") ? true : false;
         this.IsQueryVisible_MyFollowUps = FeatureLocator.HasFeaturePermession("Shipment", "MYFOLLOWUPS") ? true : false;
         this.IsQueryVisible_AllShipments = FeatureLocator.HasFeaturePermession("Shipment", "ALLSHIPMENTS") ? true : false;
         this.IsQueryVisible_AllMasters = FeatureLocator.HasFeaturePermession("Shipment", "ALLMASTERS") ? true : false;
-        this.IsQueryVisible_PendingApprovalDocuments = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Q.PendingApprovalDocuments") ? SessionLocator.TenantPM.ApproveUploadedDocuments : false;
-
         this.IsQueryVisible_CanceledShipments = FeatureLocator.HasFeaturePermession("Shipment", "CANCELLEDSHIPMENTS") ? true : false;
-        if (this.IsQueryVisible_AllFollowUps || this.IsQueryVisible_MyFollowUps || this.IsQueryVisible_AllShipments || this.IsQueryVisible_AllMasters || this.IsQueryVisible_CanceledShipments || this.IsQueryVisible_PendingApprovalDocuments) {
+        if (this.IsQueryVisible_AllFollowUps || this.IsQueryVisible_MyFollowUps || this.IsQueryVisible_AllShipments || this.IsQueryVisible_AllMasters || this.IsQueryVisible_CanceledShipments) {
             this.IsQueryVisible_OthersGroup = true;
         }
 
@@ -125,8 +127,7 @@ export class ShipmentsComponent {
         this.IsQueryVisible_ExpectedDeparturesNotTransmitted = FeatureLocator.HasFeaturePermession("Shipment", "ExpectedDeparturesNotTransmitted") ? true : false;
         this.IsQueryVisible_ShippingInstructionsLast7Days = FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructionsLast7Days") ? true : false;
         this.IsQueryVisible_ContainerStatusLast7Days = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusLast7Days") ? true : false;
-        this.IsQueryVisible_EBookingInProgress = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Q.EBookingInProgress") ? true : false;
-        if (this.IsQueryVisible_ExpectedDeparturesNotTransmitted || this.IsQueryVisible_ShippingInstructionsLast7Days || this.IsQueryVisible_ContainerStatusLast7Days || this.IsQueryVisible_EBookingInProgress) {
+        if (this.IsQueryVisible_ExpectedDeparturesNotTransmitted || this.IsQueryVisible_ShippingInstructionsLast7Days || this.IsQueryVisible_ContainerStatusLast7Days) {
             this.IsQueryVisible_INTTRAGroup = true;
         }
     }
@@ -171,9 +172,6 @@ export class ShipmentsComponent {
     public ExpectedDeparturesNotTransmittedCount: string;
     public ShippingInstructionsLast7DaysCount: string;
     public ContainerStatusLast7DaysCount: string;
-    public EBookingInProgressCount: string;
-    public PendingApprovalDocumentsCount: string;
-
     LoadQueriesCounts() {
         if (this.IsCloudDeployment == false) {
             this.myShipmentDomainService.GetShipmentsCounts(this.SelectedDirectionFilter, this.SelectedTransportFilter).subscribe((myResponse: ServiceResponse) => {
@@ -196,8 +194,6 @@ export class ShipmentsComponent {
                             this.ExpectedDeparturesNotTransmittedCount = myResult.ExpectedDeparturesNotTransmittedCount > 1000 ? "1000+" : myResult.ExpectedDeparturesNotTransmittedCount.toString();
                             this.ShippingInstructionsLast7DaysCount = myResult.ShippingInstructionsLast7DaysCount > 1000 ? "1000+" : myResult.ShippingInstructionsLast7DaysCount.toString();
                             this.ContainerStatusLast7DaysCount = myResult.ContainerStatusLast7DaysCount > 1000 ? "1000+" : myResult.ContainerStatusLast7DaysCount.toString();
-                            this.EBookingInProgressCount = myResult.EBookingInProgressCount > 1000 ? "1000+" : myResult.EBookingInProgressCount.toString();
-                            this.PendingApprovalDocumentsCount = myResult.PendingApprovalDocumentsCount > 1000 ? "1000+" : myResult.PendingApprovalDocumentsCount.toString();
                         }
                     }
                 }
@@ -545,7 +541,7 @@ export class ShipmentsComponent {
 
                 case "CreditLimitBlockedShipments":
                     {
-                        displayTitle = TextCodeTranslator.Translate("Shipment.Q.CreditLimitBlockedShipments");
+                        displayTitle = TextCodeTranslator.Translate("Shipment.Q.CreditLimitBlockedShipment");
                         this.SetDirectionTransportFilter();
                         break;
                     }
@@ -554,11 +550,6 @@ export class ShipmentsComponent {
                     {
                         displayTitle = TextCodeTranslator.Translate("Shipment.Q.ExpectedDeparturesNotTransmitted");
                         this.SetDirectionTransportFilter();
-                        break;
-                    }
-                case "Pending Approval Documents":
-                    {
-                        displayTitle = "Pending Approval Documents";
                         break;
                     }
 
@@ -572,7 +563,7 @@ export class ShipmentsComponent {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = "Operations";
             listArgs.MethodName = MethodName;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
 
@@ -666,7 +657,7 @@ export class ShipmentsComponent {
             listArgs.DisplayTitle = displayName;
             listArgs.BackButtonTitle = "Operations";
             listArgs.ShowViews = false;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
 
@@ -711,7 +702,7 @@ export class ShipmentsComponent {
             this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string");
         }
 
-        if (!AppTool.IsNullOrEmpty(this.SelectedTransportFilter) && this.SelectedTransportFilter != "All") {
+        if (!AppTool.IsNullOrEmpty(this.SelectedTransportFilter) && this.SelectedDirectionFilter != "All") {
             this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string");
         }
     }
@@ -830,14 +821,14 @@ class DepartureArrival {
         }
     }
     private Build_LSW() {
-        var list_EXP: FlightSummary[] = this.ExpectedItems.filter(d => d.ExpectedDateCode == "LSW");
+        var list_EXP: FlightSummary[] = this.ExpectedItems.filter(d => DateTool.TruncateTime(d.ExpectedDate).valueOf() >= DateTool.GetDateByDay(-7).valueOf() && DateTool.TruncateTime(d.ExpectedDate).valueOf() <= DateTool.GetDateByDay(-1).valueOf());
         if (list_EXP.length > 0) {
             var ids = this.GetIdsList(list_EXP);
             this.ExpectedCount = ids.length;
             this.ExpectedShipmentsIds = AppTool.GetIdsArrayText(ids);
         }
 
-        var list_ACT: FlightSummary[] = this.ActualItems.filter(d => d.ActualDateCode == "LSW");
+        var list_ACT: FlightSummary[] = this.ActualItems.filter(d => DateTool.TruncateTime(d.ActualDate).valueOf() >= DateTool.GetDateByDay(-7).valueOf() && DateTool.TruncateTime(d.ActualDate).valueOf() <= DateTool.GetDateByDay(-1).valueOf());
         if (list_ACT.length > 0) {
             var ids = this.GetIdsList(list_ACT);
             this.ActualCount = ids.length;
@@ -845,14 +836,14 @@ class DepartureArrival {
         }
     }
     private Build_TOD() {
-        var list_EXP: FlightSummary[] = this.ExpectedItems.filter(d => d.ExpectedDateCode == "TOD");
+        var list_EXP: FlightSummary[] = this.ExpectedItems.filter(d => DateTool.TruncateTime(d.ExpectedDate).valueOf() == DateTool.GetDateByDay(0).valueOf());
         if (list_EXP.length > 0) {
             var ids = this.GetIdsList(list_EXP);
             this.ExpectedCount = ids.length;
             this.ExpectedShipmentsIds = AppTool.GetIdsArrayText(ids);
         }
 
-        var list_ACT: FlightSummary[] = this.ActualItems.filter(d => d.ActualDateCode == "TOD");
+        var list_ACT: FlightSummary[] = this.ActualItems.filter(d => DateTool.TruncateTime(d.ActualDate).valueOf() == DateTool.GetDateByDay(0).valueOf());
         if (list_ACT.length > 0) {
             var ids = this.GetIdsList(list_ACT);
             this.ActualCount = ids.length;
@@ -860,7 +851,7 @@ class DepartureArrival {
         }
     }
     private Build_TOM() {
-        var list: FlightSummary[] = this.ExpectedItems.filter(d => d.ExpectedDateCode == "TOM");
+        var list: FlightSummary[] = this.ExpectedItems.filter(d => DateTool.TruncateTime(d.ExpectedDate).valueOf() == DateTool.GetDateByDay(1).valueOf());
         if (list.length > 0) {
             var ids = this.GetIdsList(list);
             this.ExpectedCount = ids.length;
@@ -868,7 +859,7 @@ class DepartureArrival {
         }
     }
     private Build_NXW() {
-        var list: FlightSummary[] = this.ExpectedItems.filter(d => d.ExpectedDateCode == "NXW");
+        var list: FlightSummary[] = this.ExpectedItems.filter(d => DateTool.TruncateTime(d.ExpectedDate).valueOf() >= DateTool.GetDateByDay(2).valueOf() && DateTool.TruncateTime(d.ExpectedDate).valueOf() <= DateTool.GetDateByDay(7).valueOf());
         if (list.length > 0) {
             var ids = this.GetIdsList(list);
             this.ExpectedCount = ids.length;

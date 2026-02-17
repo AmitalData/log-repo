@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +16,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public int Tenant { get; set; }
         public string UserId { get; set; }
         public string QueryId { get; set; }
-        public string QueryCode { get; set; }
 
         [ForeignKey("UserId")]
         public User User { get; set; }

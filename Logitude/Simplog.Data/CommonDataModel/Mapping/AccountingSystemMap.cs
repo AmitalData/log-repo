@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -34,8 +34,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AllowARPaymentsTransfer).HasColumnName("AllowARPaymentsTransfer");
             this.Property(t => t.CanTransferToDropbox).HasColumnName("CanTransferToDropbox");
             this.Property(t => t.AllowAPPaymentsTransfer).HasColumnName("AllowAPPaymentsTransfer");
-            this.Property(t => t.CanTransferToFTP).HasColumnName("CanTransferToFTP");
+
+
             
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -47,7 +49,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             {
                 this.Property(t => t.AllowPositiveAmountsInTheCreditNote).HasColumnName("AllowPositiveAmountsInTheCreditNote");
             }
-            //#endif
+//#endif
         }
     }
 }

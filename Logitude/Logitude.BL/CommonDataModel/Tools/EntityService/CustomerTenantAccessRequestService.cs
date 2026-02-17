@@ -4,7 +4,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -67,7 +67,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 IQueueService queue = new DbQueueService();
                 queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
-                queue.Send(new Dictionary<string, string>() { { "RequestId", entityPM.Id }, { "Tenant", entityPM.Tenant.ToString() }}, tenant);
+                queue.Send(new Dictionary<string, string>() { { "RequestId", entityPM.Id }, { "Tenant", entityPM.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
             }
             catch (Exception ex)
             {

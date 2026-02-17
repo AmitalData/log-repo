@@ -106,10 +106,6 @@ namespace Simplog.Data.QuoteModel.Mapping
                 .IsRequired()
                 .HasMaxLength(15);
 
-            this.Property(t => t.UpdatedByUserId)
-              .IsRequired()
-              .HasMaxLength(15);
-
             this.Property(t => t.DirectionId)
                 .IsRequired()
                 .IsFixedLength()
@@ -253,9 +249,6 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.CreatedByUser)
                 .HasMaxLength(40);
 
-            this.Property(t => t.UpdatedByUser)
-               .HasMaxLength(40);
-
             this.Property(t => t.FollowUpOwner)
                 .HasMaxLength(40);
 
@@ -321,7 +314,6 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ToPortId).HasColumnName("ToPortId");
             this.Property(t => t.IncotermId).HasColumnName("IncotermId");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
-            this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.DirectionId).HasColumnName("DirectionId");
             this.Property(t => t.TransportModeId).HasColumnName("TransportModeId");
             this.Property(t => t.IsDangerous).HasColumnName("IsDangerous");
@@ -384,7 +376,6 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ToPortName).HasColumnName("ToPortName");
             this.Property(t => t.ToPortCountry).HasColumnName("ToPortCountry");            
             this.Property(t => t.CreatedByUser).HasColumnName("CreatedByUser");
-            this.Property(t => t.UpdatedByUser).HasColumnName("UpdatedByUser");
             this.Property(t => t.FollowUpOwner).HasColumnName("FollowUpOwner");
             this.Property(t => t.QuoteTypeName).HasColumnName("QuoteTypeName");
             this.Property(t => t.FollowUpTypeId).HasColumnName("FollowUpTypeId");

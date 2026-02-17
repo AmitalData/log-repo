@@ -3,7 +3,7 @@ using Logitude.XSD.Analyzers.GLSHKAnalyzer;
 using Logitude.XSD.Simulators.CHAMPSimulators;
 using Logitude.XSD.Simulators.GLSHKSimulators;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -58,18 +58,11 @@ namespace Logitude.XSD.Simulators
 
             if (Result.IsValid)
             {
+
                 if (Args.MessageIdentifier == "AnalyzeQueueId")
                 {
-                    AnalyzeQueue analyzeQueue = null;
-                    AnalyzeQueueRepository analyzeQueueReposiory = null;
-
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        analyzeQueueReposiory = new AnalyzeQueueRepository();
-                        analyzeQueue = analyzeQueueReposiory.GetSingleAnalyzeQueue(Args.AnalyzeQueueId);
-                        scope.Complete();
-                    }
-
+                    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+                    AnalyzeQueue analyzeQueue = analyzeQueueReposiory.GetSingleAnalyzeQueue(Args.AnalyzeQueueId);
                     if (analyzeQueue != null)
                     {
                         CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueReposiory);
@@ -359,49 +352,41 @@ namespace Logitude.XSD.Simulators
         {
             bool isChampSimulator = false;
 
-            if (this.Args.IsChampSimulator)
+            if (Args.MessageIdentifier == "XML")
             {
-                isChampSimulator = true;
-            }
-
-            else
-            {
-                if (Args.MessageIdentifier == "XML")
+                if (Args.XmlText.Contains("<Message"))
                 {
-                    if (Args.XmlText.Contains("<Message"))
-                    {
-                        isChampSimulator = false;
-                    }
-
-                    else
-                    {
-                        isChampSimulator = true;
-                    }
+                    isChampSimulator = false;
                 }
 
                 else
                 {
-                    if (CCSTypeCode == "CHAMP")
-                    {
-                        isChampSimulator = true;
-                    }
+                    isChampSimulator = true;
+                }
+            }
 
-                    else if (Args.EntityName == "Booking" || Args.EntityName == "FlightsSchedulesRequest")
-                    {
-                        isChampSimulator = true;
-                    }
+            else
+            {
+                if (CCSTypeCode == "CHAMP")
+                {
+                    isChampSimulator = true;
+                }
 
-                    else
+                else if (Args.EntityName == "Booking" || Args.EntityName == "FlightsSchedulesRequest")
+                {
+                    isChampSimulator = true;
+                }
+
+                else
+                {
+                    switch (Args.MessageIdentifier)
                     {
-                        switch (Args.MessageIdentifier)
-                        {
-                            case "FFA":
-                            case "FVA":
-                                {
-                                    isChampSimulator = true;
-                                    break;
-                                }
-                        }
+                        case "FFA":
+                        case "FVA":
+                            {
+                                isChampSimulator = true;
+                                break;
+                            }
                     }
                 }
             }
@@ -483,7 +468,7 @@ namespace Logitude.XSD.Simulators
             {
                 DbQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ChampAnalyzer", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } }, analyzeQueue.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
                 queueservice.Complete();
             }
         }

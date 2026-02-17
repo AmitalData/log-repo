@@ -8,20 +8,14 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {FSRWebService, FSRResultClass} from '../../../../Infrastructure/Services/WebServices/FSRWebService';
 import {AWBOverviewTabComponent} from '../AWBWizard/Overview/AWBOverviewTabComponent';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './SendFSRComponent.html',
 })
 
 export class SendFSRComponent {
-  public SendingCount: number = 0;
-  public StockRemainingBefore: number = 0;
-  public StockRemainingAfter: number = 0;
-  public StockResultIsVisible: boolean = false;
-
     private entityPM: ShipmentPM;
     private Tenant: number;
     private tenantZeroAirlineField: string;
@@ -354,7 +348,7 @@ export class SendFSRComponent {
     get DemoAreaIsVisible() {
         var myResult = false;
 
-        if (ObjectsLocator.IsDemoTenant(this.Tenant.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+        if (this.Tenant == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             myResult = true;
         }
 

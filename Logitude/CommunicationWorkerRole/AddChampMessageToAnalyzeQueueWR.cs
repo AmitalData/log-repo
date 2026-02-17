@@ -91,7 +91,7 @@ namespace CommunicationWorkerRole
 
             DbQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ChampAnalyzer", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } }, analyzeQueue.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
             queueservice.Complete();
         }
 
@@ -114,9 +114,27 @@ namespace CommunicationWorkerRole
                 //string[] roleId = null;
 
                 string subscribtionName = "ChampSubScription";
-                
+                //try
+                //{
+                //    roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+                //}
+                //catch
+                //{
+                //    roleId = new string[] { "1", "2"};
+ 
+                //}
 
-                subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(), "champmessageintopic", subscribtionName);
+                //if (LogitudeSettings.DeploymentStage == "Dev")
+                //{
+                //    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
+                //}
+
+                //else
+                //{
+                //    subscribtionName = roleId[roleId.Length - 1];
+                //}
+
+                subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), "champmessageintopic", subscribtionName);
             }
 
             return base.OnStart();

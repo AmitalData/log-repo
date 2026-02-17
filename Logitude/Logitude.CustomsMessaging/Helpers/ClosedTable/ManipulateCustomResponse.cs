@@ -34,13 +34,10 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                 };
                 newResponseTableData.state = int.Parse(dr["State"].ToString());
                 newResponseTableData.malamID = int.Parse(dr["MalamID"].ToString());
-                if (dt.Columns.Contains("ExtraNumericData"))//20190306 sadenly MECHES dont send for table 1144 ?!?!- let it be ..
+                string sExtraNumericData = dr["ExtraNumericData"].ToString();
+                if (!string.IsNullOrWhiteSpace(sExtraNumericData))
                 {
-                    string sExtraNumericData = dr["ExtraNumericData"].ToString();
-                    if (!string.IsNullOrWhiteSpace(sExtraNumericData))
-                    {
-                        newResponseTableData.extraNumericData = int.Parse(sExtraNumericData);
-                    }
+                    newResponseTableData.extraNumericData = int.Parse(sExtraNumericData);
                 }
                 
                 

@@ -6,10 +6,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import {Observable}  from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {PortList} from '../../EntityLists/PortList';
@@ -19,10 +20,10 @@ import {PortList} from '../../EntityLists/PortList';
 export class PortExtendedListService {
 
     private _apiUrl: string;
-    private _http: HttpClient;
+    private _http: Http;
 	private CachedData: Array<PortList> = [];
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/portviews';
         this.CachedData = [];
     }
@@ -55,13 +56,17 @@ export class PortExtendedListService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var callUrl = this._apiUrl.concat(urlparameters);
 
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
-                var viewResponse: ServiceResponse = response.body;
+                var viewResponse: ServiceResponse;
+                viewResponse = response.json();
                 var _mappedListsArray: Array<PortList> = [];
                 if (viewResponse.Result) {
                     for (var key in viewResponse.Result) {
+
                         var entity: PortList;
                         entity = this.MapJsonToEntityList(viewResponse.Result[key]);
                         _mappedListsArray.push(entity);
@@ -69,15 +74,13 @@ export class PortExtendedListService {
                 }
                 viewResponse.Result = _mappedListsArray;
                 return viewResponse;
-
-                
-            }));
+            });
         }
         );
     }
 
     getMock() {
-        return of("a");
+        return Observable.of("a");
     }
     MapJsonToEntityList(jsonList: any) {
        

@@ -18,7 +18,7 @@
                                     </td>
 
                                     <td style="width: 1px;">
-                                        <button id="{{ 'Orders-AddPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackage()">{{AddButtonLabel}}</button>
+                                        <button id="{{ 'Orders-AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackage()">{{AddButtonLabel}}</button>
                                     </td>
 
                                     <td style="width: 3px;">
@@ -142,7 +142,7 @@
                                 </LogLov>
                             </div>
 
-                            <div style="width: 80px; display: block; float:left; margin-left: 15px;">
+                            <div style="width: 70px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
                             </div>
@@ -340,23 +340,7 @@
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Carrier'"
-                                                                        [DependencyFilter1Value]="CarrierDependencyFilter1Value"
-                                                                        [ShowInActive]="CarrierDependencyFilter1Value=='SL'" [ShowInActivePopUpWindow]="'true'">
-                                                                </LogLov>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr class="FormFieldRow" *ngIf="IsCarrierServiceLineVisible">
-                                                            <td>
-                                                                <LogLabel [ObjectFieldName]="'CarrierServiceLineId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                            </td>
-                                                            <td>
-                                                                <LogLov [ObjectFieldName]="'CarrierServiceLineId'"
-                                                                        [SelectedValue]="CarrierServiceLineId"
-                                                                        [ObjectTableName]="ObjectTableName"
-                                                                        [DataContext]="DataContext"
-                                                                        [LookUpTableName]="'CarrierServiceLine'"
-                                                                        [DependencyFilter1Value]="MainCarriageCarrierId">
+                                                                        [DependencyFilter1Value]="CarrierDependencyFilter1Value">
                                                                 </LogLov>
                                                             </td>
                                                         </tr>
@@ -448,10 +432,6 @@
                                                                         <td>
                                                                             <LogDatePicker [ObjectFieldName]="'WarehouseLegCutOffDate'" [SelectedDateValue]="WarehouseLegCutOffDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                                         </td>
-
-                                                                        <td style="width:18px; ">
-                                                                            <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'WarehouseLegCutOffDate'"></FollowupButton>
-                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow" *ngIf="IsFCLEntity">
@@ -461,10 +441,6 @@
 
                                                                         <td>
                                                                             <LogDatePicker [ObjectFieldName]="'WarehouseLegVGMCutOffDate'" [SelectedDateValue]="WarehouseLegVGMCutOffDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                                        </td>
-
-                                                                        <td style="width:18px;">
-                                                                            <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'WarehouseLegVGMCutOffDate'"></FollowupButton>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -500,22 +476,12 @@
 
                                                         <!-- AMS Closing Date -->
                                                         <tr class="FormFieldRow" *ngIf="IsAMSClosingDateVisible">
-                                                            <td colspan="2">
-                                                                <table>
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'AMSClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'AMSClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
 
-                                                                        <td>
-                                                                            <LogDatePicker [ObjectFieldName]="'AMSClosingDate'" [SelectedDateValue]="AMSClosingDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                                        </td>
-
-                                                                        <td style="width:18px; ">
-                                                                            <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'AMSClosingDate'"></FollowupButton>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
+                                                            <td>
+                                                                <LogDatePicker [ObjectFieldName]="'AMSClosingDate'" [SelectedDateValue]="AMSClosingDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                             </td>
                                                         </tr>
 
@@ -532,67 +498,18 @@
                                                 </td>
 
                                                 <!-- Confirmation Notes -->
-                                                <td style="width: 280px;">
+                                                <td style="width: 180px;">
                                                     <table>
-                                                        <!-- INTTRAContractNumber -->
+
                                                         <tr class="FormFieldRow">
                                                             <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width: 110px;">
-                                                                            <LogLabel [ObjectFieldName]="'INTTRAContractNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogTextBox [ObjectFieldName]="'INTTRAContractNumber'" [Text]="INTTRAContractNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                        </td>
-                                                                        <td style="width: 3px;">
-                                                                            <div></div>
-                                                                        </td>
-                                                                        <td style="width: 14px;">
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-
-                                                        <!-- INTTRA Harmonize -->
-                                                        <tr class="FormFieldRow">
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width: 110px;">
-                                                                            <LogLabel [ObjectFieldName]="'MainHarmonize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogTextBox [ObjectFieldName]="'MainHarmonize'" [Text]="MainHarmonize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                        </td>
-                                                                        <td style="width: 3px;">
-                                                                            <div></div>
-                                                                        </td>
-                                                                        <td style="width: 14px;">
-                                                                            <div>
-                                                                                <span class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseHarmonizeClicked()">
-                                                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
-                                                                                </span>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr class="FormFieldRow">
-                                                            <td style="width: 180px;">
                                                                 <LogLabel [ObjectFieldName]="'BookingConfirmationNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                             </td>
                                                         </tr>
 
                                                         <tr class="FormFieldRow" style="height: 90px;">
-                                                            <td style="height: 90px;width: 180px;">
-                                                                <div style="height: 90px;width: 180px;">
+                                                            <td style="height: 90px;">
+                                                                <div style="height: 90px;">
                                                                     <LogTextBox [ObjectFieldName]="'BookingConfirmationNotes'" [Text]="BookingConfirmationNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </td>

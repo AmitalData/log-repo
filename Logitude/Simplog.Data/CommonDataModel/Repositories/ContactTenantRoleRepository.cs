@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -8,7 +8,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class ContactTenantRoleRepository:IRepository<ContactTenantRole>
     {
         ICommonDataContext commonDataContext;
-
+        public ContactTenantRoleRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public ContactTenantRoleRepository(ICommonDataContext context)
         {
@@ -43,11 +46,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public bool CheckIfLastUserRole(string roleId, string contactTenantId, int tenant)
         {
             return (from a in context.ContactTenantRoles where a.RoleId != roleId && a.ContactTenantId == contactTenantId && a.Tenant == tenant select a).Any();
-        }
-
-        public IQueryable<ContactTenantRole> GetContactTenantRolesByRoleId(string roleId, int tenant)
-        {
-            return (from a in context.ContactTenantRoles where a.RoleId == roleId && a.Tenant == tenant select a);
         }
 
         public IQueryable<ContactTenantRole> GetContactTenantRoles(int tenant)

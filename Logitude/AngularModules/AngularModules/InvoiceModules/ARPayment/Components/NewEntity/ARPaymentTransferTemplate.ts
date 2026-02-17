@@ -13,11 +13,9 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator'; 
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ARPaymentPMService} from '../../../../Invoice/Services/StandardPMs/ARPaymentPMService';
-import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
-
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ARPaymentTransferTemplate.html',
 })
 
@@ -92,10 +90,7 @@ export class ARPaymentTransferTemplate extends BaseComponent {
             if (!response.HasError) {
                 var card: CardList = response.Result;
                 if (card != null) {
-                    var invoiceDomainService = new InvoiceDomainService();
-                    invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(card.Id, this.EntityPM.PaymentCurrencyId, false).subscribe((myResult: ServiceResponse) => {
-                        this.BillToExternalId = myResult.Result;
-                    });
+                    this.BillToExternalId = card.ReceivablesAccountingCard;
                 }
                 this.isBillToFinished = true;
                 this.BuildList();
@@ -471,10 +466,7 @@ export class ARTransferLineArgs extends BaseComponent {
                 var entity = s.EntityPM;
                 if (entity != null) {
                     if (this.Code == "BLTO") {
-                        var invoiceDomainService = new InvoiceDomainService();
-                        invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(entity.Id, this.EntityPM.PaymentCurrencyId, false).subscribe((myResult: ServiceResponse) => {
-                            this.EditingFieldValue = myResult.Result;
-                        });
+                        this.EditingFieldValue = entity.ReceivablesAccountingCard;
                     }
                     else if (this.Code == "CURR") {
                         this.EditingFieldValue = entity.AccountingExternalCode;

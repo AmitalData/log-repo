@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -40,7 +40,7 @@ namespace WebFreight.Web.WcfApi
                 if (importerDepositionPM != null)
                 {
                     ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
-                    response = await importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM, importerDepositionPM.Tenant != null ? (int)importerDepositionPM.Tenant : authToken.Tenant);
+                    response = await importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM, authToken.Tenant);
                 }
 
                 return response;

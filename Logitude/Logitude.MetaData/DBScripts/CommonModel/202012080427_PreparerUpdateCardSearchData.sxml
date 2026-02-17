@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Common"  Pre="true"  AOT="true"  TargetTableName="CardSearches">
-  <Sql Version="1">
-    <![CDATA[
-    delete CardSearches    where  Weight = 30  and  $LastCounterWhere$
-
-    ]]>
-  </Sql>
-
-</Script>

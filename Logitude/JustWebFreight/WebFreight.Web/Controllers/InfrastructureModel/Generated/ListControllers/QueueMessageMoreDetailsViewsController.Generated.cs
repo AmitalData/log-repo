@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,14 +26,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel;
@@ -41,50 +41,52 @@ using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityLists;
+
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControllers
-{
+{ 
 
-
+    
     public partial class QueueMessageMoreDetailsViewsController : ApiController
     {
-
-
+	  
+       
         public HttpResponseMessage GetSingle(string id)
         {
-            try
+		  try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "READ", authToken.Tenant);
+				
+		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+				QueueMessageMoreDetailsRepository  queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
+				QueueMessageMoreDetailsList entityList = null;
+				QueueMessageMoreDetails entityPoco = queueMessageMoreDetailsRepository.GetSingleQueueMessageMoreDetails(id );
 
-                IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-                QueueMessageMoreDetailsRepository queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
-                QueueMessageMoreDetailsList entityList = null;
-                QueueMessageMoreDetails entityPoco = queueMessageMoreDetailsRepository.GetSingleQueueMessageMoreDetails(id);
+				if (entityPoco != null)
+				{
+									List<QueueMessageMoreDetails> singleEntityList = new List<QueueMessageMoreDetails>();
+					singleEntityList.Add(entityPoco);
 
-                if (entityPoco != null)
-                {
-                    List<QueueMessageMoreDetails> singleEntityList = new List<QueueMessageMoreDetails>();
-                    singleEntityList.Add(entityPoco);
+					QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
+					IQueryable<QueueMessageMoreDetails> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<QueueMessageMoreDetailsList> iQueryableEntityList = queueMessageMoreDetailsQuery.GetIQueryableEntityList(iQueryable);
+				    entityList = iQueryableEntityList.FirstOrDefault();
 
-                    QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
-                    IQueryable<QueueMessageMoreDetails> iQueryable = singleEntityList.AsQueryable();
-                    IQueryable<QueueMessageMoreDetailsList> iQueryableEntityList = queueMessageMoreDetailsQuery.GetIQueryableEntityList(iQueryable);
-                    entityList = iQueryableEntityList.FirstOrDefault();
+			    }
 
-                }
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return Request.CreateResponse(HttpStatusCode.OK, entityList);
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+				               
+                return Request.CreateResponse(HttpStatusCode.OK,  entityList);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
+           
         }
 
         public HttpResponseMessage GetAll()
@@ -98,25 +100,25 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "READ", authToken.Tenant);
 
 
-                IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-                QueueMessageMoreDetailsRepository queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
-                IQueryable<QueueMessageMoreDetails> entityPocos = queueMessageMoreDetailsRepository.GetQueueMessageMoreDetails();
+				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+				QueueMessageMoreDetailsRepository  queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
+				IQueryable<QueueMessageMoreDetails> entityPocos = queueMessageMoreDetailsRepository.GetQueueMessageMoreDetails();
 
-                QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
-                IQueryable<QueueMessageMoreDetailsList> entityLists = queueMessageMoreDetailsQuery.GetIQueryableEntityList(entityPocos);
-                entityLists = entityLists.OrderBy(d => d.Id);
-                List<QueueMessageMoreDetailsList> listResult = entityLists.ToList();
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return Request.CreateResponse(HttpStatusCode.OK, listResult);
+				QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
+			    IQueryable<QueueMessageMoreDetailsList> entityLists = queueMessageMoreDetailsQuery.GetIQueryableEntityList(entityPocos);
+				entityLists = entityLists.OrderBy(d => d.Id);
+				List<QueueMessageMoreDetailsList> listResult = entityLists.ToList();
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+										
+				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        [HttpGet]
+        
+		[HttpGet]
         public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
         {
             try
@@ -125,10 +127,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "READ", authToken.Tenant);
-
+				int tenant = authToken.Tenant;
+				if(filters.Tenant != null)
+					tenant = tenant;
+				                
+				SecurityUtility.CheckContactFeature("QueueMessageMoreDetails", "READ", authToken.Tenant);
+	
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "QueueMessageMoreDetails",
@@ -137,33 +141,33 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                     QuerySection = "QueueMessageMoreDetails",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
-                    GetAll = filters.GetAll,
+					GetAll = filters.GetAll, 
                 };
 
-                List<ObjectField> QueueMessageMoreDetailsObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QueueMessageMoreDetails", tenant);
+				List<ObjectField> QueueMessageMoreDetailsObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QueueMessageMoreDetails",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
                     object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
                     object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
                     object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
-                    object filterValue2 = null;
+					object filterValue2 = null;
 
                     if (filterNameProp != null)
                     {
                         string filterName = filterNameProp.ToString();
                         string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-                        //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
+						//if (filterValue1 != null && filterValue1.GetType() == typeof(string))
                         //{
-                        //string[] values = filterValue1.ToString().Split(',');
-                        //if (values.Count() > 1)
-                        //{
-                        //filterValue1 = values[0];
-                        //filterValue2 = values[1];
-                        //}
+                           //string[] values = filterValue1.ToString().Split(',');
+                            //if (values.Count() > 1)
+                            //{
+                                //filterValue1 = values[0];
+                                //filterValue2 = values[1];
+                            //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-                        ObjectField field = QueueMessageMoreDetailsObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = QueueMessageMoreDetailsObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -172,8 +176,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -183,7 +186,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 }
 
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+              if (!string.IsNullOrEmpty(filters.AdditionalFilters))
                 {
                     JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
                     var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
@@ -201,8 +204,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
                         }
                         else
                         {
@@ -216,111 +218,111 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 GenericSort sortClass = new GenericSort();
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
-                QueueMessageMoreDetailsRepository queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
+                QueueMessageMoreDetailsRepository  queueMessageMoreDetailsRepository = new QueueMessageMoreDetailsRepository(MyContext);
                 IQueryable<QueueMessageMoreDetails> entityPocos = queueMessageMoreDetailsRepository.GetQueueMessageMoreDetails();
 
                 QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(queueMessageMoreDetailsRepository);
-
-                QueryOperations nonListQueryOperation = new QueryOperations();
+                
+				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
+				
                 entityPocos = genericFilter.GetFilteredQuery<QueueMessageMoreDetails>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<QueueMessageMoreDetailsList> entityLists = queueMessageMoreDetailsQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<QueueMessageMoreDetailsList>(listQueryOperation, entityLists);
 
-
+		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
-                {
-                    PropertyInfo propInfo = typeof(QueueMessageMoreDetailsList).GetProperty(queryOperations.SortByColumnName);
+                 {
+                   PropertyInfo propInfo = typeof(QueueMessageMoreDetailsList).GetProperty(queryOperations.SortByColumnName);
+                   
 
+                   ObjectField objectField = (from a in QueueMessageMoreDetailsObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
 
-                    ObjectField objectField = (from a in QueueMessageMoreDetailsObjectFields
-                                               where a.FieldName == queryOperations.SortByColumnName
-                                               select a).FirstOrDefault();
-
-                    if (objectField != null)
+                   if (objectField != null)
+                   {
+                    if (objectField.IsCustom)
                     {
-                        if (objectField.IsCustom)
-                        {
-                            entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, string>(queryOperations, entityLists);
-                        }
-                        else
-                        {
-                            switch (objectField.DataTypeCode.ToLower())
-                            {
-                                case "ntext":
-                                case "text":
-                                case "lookup":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, string>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "sigdouble":
-                                case "double":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, double>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "date":
-                                case "datetime":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, DateTime>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "unsinteger":
-                                case "integer":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, int>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "boolean":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, bool>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "unsdecimal":
-                                case "decimal":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, decimal>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                default:
-                                    {
-                                        entityLists = entityLists.OrderBy(d => d.Id);
-                                        break;
-                                    }
-                            }
-                        }
+                        entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, string>(queryOperations, entityLists);
                     }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+						case "lookup":
+                            {
+                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, string>(queryOperations, entityLists);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, double>(queryOperations, entityLists);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, DateTime>(queryOperations, entityLists);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, int>(queryOperations, entityLists);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, bool>(queryOperations, entityLists);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                entityLists = sortClass.GetSorterQuery<QueueMessageMoreDetailsList, decimal>(queryOperations, entityLists);
+                                break;
+                            }
+                        default:
+                            {
+                                entityLists = entityLists.OrderBy(d => d.Id);
+                                break;
+                            }
+                    }
+				 }
                 }
-                else
-                {
-                    entityLists = entityLists.OrderBy(d => d.Id);
-                }
+            }
+		    else
+            {
+                entityLists = entityLists.OrderBy(d => d.Id);
+            }
 
-                ServiceResponse response = new ServiceResponse();
+			ServiceResponse response = new ServiceResponse();
+			
+			if (filters.GetCount)
+              {
+					response.Count = entityLists.Count();
+			  }
+			  	if(!queryOperations.GetAll)
+				 {
 
-                if (filters.GetCount)
-                {
-                    response.Count = entityLists.Count();
-                }
-                if (!queryOperations.GetAll)
-                {
+                  entityLists = entityLists.Skip(skippedEntities);
+				  entityLists = entityLists.Take(queryOperations.PageSize);
 
-                    entityLists = entityLists.Skip(skippedEntities);
-                    entityLists = entityLists.Take(queryOperations.PageSize);
+				}
+			   List<QueueMessageMoreDetailsList> listResult = entityLists.ToList();
 
-                }
-                List<QueueMessageMoreDetailsList> listResult = entityLists.ToList();
-
-                response.Result = listResult;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
+               response.Result = listResult;
+			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+			   PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+               
                 return reponseMessage;
             }
             catch (Exception ex)
@@ -330,8 +332,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
         }
 
+		
 
-
-
+      
     }
 }
+	 

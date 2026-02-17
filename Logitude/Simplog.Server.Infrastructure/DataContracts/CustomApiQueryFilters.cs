@@ -1,4 +1,10 @@
-﻿namespace Simplog.Server.Infrastructure.DataContracts
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Simplog.Server.Infrastructure.DataContracts
 {
     public class CustomApiQueryFilters
     {  
@@ -10,8 +16,6 @@
         public int? Tenant { get; set; }
 
         public string queryId { get; set; }
-        public string queryCode { get; set; }
-
         //public int tenant { get; set; }
         public string userid { get; set; }
         public string ObjectTableName { get; set; }
@@ -57,5 +61,8 @@
         public string Filter10Operator { get; set; }
 
         public string AdditionalFilters { get; set; }
+
+
+
     }
 }

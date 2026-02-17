@@ -5,15 +5,16 @@ import {AppTool, FormatTool, FontTool, DateTool} from '../Tools';
 
 export class StringToColorPipe {
 
-    transform(input: any, Parameter: string = null, Direction:string=null): string {
+    transform(input: any, Parameter: string = null): string {
 
         var myResult: string = "#282E30";
 
         if (!AppTool.IsNullOrEmpty(input)) {
 
             var value = input + "";
-             if (!AppTool.IsNullOrEmpty(Parameter)) {
-                myResult = this.ApplyParameterPipe(value, Parameter,Direction);                
+
+            if (!AppTool.IsNullOrEmpty(Parameter)) {
+                myResult = this.ApplyParameterPipe(value, Parameter);                
             }
 
             else {
@@ -69,7 +70,6 @@ export class StringToColorPipe {
             case "Hybriding":
             case "Booking Request":
             case "Used":
-            case "Entered":
                 {
                     // Green
                     color = "#009161";
@@ -83,40 +83,30 @@ export class StringToColorPipe {
             case "Sent":
             case "Transferred":
             case "In Progress":
-            case "Arrival_referant":
-            case "Unpaid":
-
                 {
                     color = "#27AAE1";
                     break;
                 }
-            case "Arrival_referant":
 
-                {
-                    color = "#27AAE1";
-                    break;
-                }
             case "Printed":
             case "Pick Up":
-            case "Partially Pick Up":
             case "On Hand":
                 {
                     color = "#F37021";
                     break;
                 }
-                
+
+            case "Paid":
             case "Cleared":
             case "Delivery":
             case "Delivered":
-            case "Partially Delivered":
-            case "Out for Delivery":
                 {
                     color = "#2BB673";
                     break;
                 }
 
             case "Approved":
-            case "Paid":
+            case "Unpaid":
             case "Approved By Customer":
                 {
                     color = "#8DC63F";
@@ -202,19 +192,16 @@ export class StringToColorPipe {
 
         return color;
     }
-    private ApplyParameterPipe(value: string, Parameter: string ,Direction: string) {
+    private ApplyParameterPipe(value: string, Parameter: string) {
         var myResult: string = "#282E30";
-         if (Parameter == "CustomerStatusCode") {
-            myResult = this.ApplyCustomerStatusCodePipe(value);
-        }
 
-        if (Parameter == "ArrivalDate") {
-            myResult = this.ApplyArrivalDatePipe(value);
+        if (Parameter == "CustomerStatusCode") {
+            myResult = this.ApplyCustomerStatusCodePipe(value);
         }
 
         else if (Parameter == "TicketSeverityCode") {
             myResult = this.ApplyTicketSeverityCodePipe(value);
-         }
+        }
 
         else if (Parameter == "QuoteRatingCode") {
             myResult = this.ApplyQuoteRatingCodePipe(value);
@@ -250,12 +237,6 @@ export class StringToColorPipe {
         else if (Parameter == "DeclarationStatusTypeCode") {
             myResult = this.ApplyDeclarationStatusCodePipe(value);
         }
-            
-        else if (Parameter == "DeclarationAmendmentStatus")
-        {
-            myResult = this.ApplyDeclarationAmendmentStatusPipe(value,Direction);
-            
-        }
 
         else if (Parameter == "CustomsTransmissionsStatus") {
             myResult = this.ApplyCustomsTransmissionsStatusPipe(value);
@@ -281,15 +262,7 @@ export class StringToColorPipe {
 
         return myResult;
     }
-
-
-    private ApplyArrivalDatePipe(value: string) {
-        var myResult: string = "Blue";
-        if (value != 'ETA')
-            myResult = "Black";
-        return myResult;
-    }
- 
+    
     private ApplyCustomerStatusCodePipe(value: string) {
         var myResult: string = "#282E30";
 
@@ -321,69 +294,6 @@ export class StringToColorPipe {
 
         return myResult;
     }
-    private ApplyDeclarationAmendmentStatusPipe(value: string,direction:string) {
-        var myResult: string = "";
-
-        if(direction != "E")
-        {
-
-            switch (value) {
-                case "3":
-                case "6":
-
-                    {
-                        myResult = "#009161"; // green
-
-                        break;
-                    }
-                case "1":
-                case "2":
-                    {
-                        myResult = "#F37021"; // orange
-                        break;
-                    }
-                case "4":
-                case "5":
-
-                    {
-                        myResult = "#E53030"; // red
-                        break;
-                    }
-
-            }
-        }
-        else{
-            switch (value) {
-                case "1":
-                case "2":
-                case "11":    
-
-                    {
-                        myResult = "#009161"; // green
-
-                        break;
-                    }
-                case "6":
-                case "7":
-                case "8":
-                case "10":
-                    {
-                        myResult = "#F37021"; // orange
-                        break;
-                    }
-                case "4":
-                case "5":
-
-                    {
-                        myResult = "#E53030"; // red
-                        break;
-                    }
-
-            }
-        }
-
-        return myResult;
-    }
 
     private ApplyDeclarationStatusCodePipe(value: string) {
         var myResult: string = "";
@@ -393,68 +303,44 @@ export class StringToColorPipe {
             case "7":
             case "8":
             case "13":
-            case "43":
-            case "44":
-            {
-                myResult = "#009161"; // green
-                break;
-            }
-            case "4":
-            case "5":
-            case "6":
-            case "11":
-            case "15":
-            case "21":
-            case "22":
-            case "23":
-            case "24":
-            case "25":
-            case "26":
-            case "27":
-            case "28":
-            case "29":
-            case "30":
-            case "31":
-            case "32":
-            case "33":
-            case "34":
-            case "35":
-            case "40":
-            case "41":
-            case "42":
-            case "45":
-            case "47":
-            case "48":
-            case "49":
-            case "50":    
-            {
-                myResult = "#F37021"; // orange
-                break;
-            }
-            case "0":
-            case "1":
-            case "2":
-            case "9":
-            case "12":
-            case "14":
-            case "16":
-            case "17":
-            case "18":
-            case "19":
-            case "20":
-            case "37":
-            {
-                myResult = "#E53030"; // red
-                break;
-            }
+
+                {
+                    myResult = "#009161"; // green
+
+                    break;
+                }
+                   case "4":
+                   case "5":
+                   case "6":
+                   case "10":
+                   case "11":
+                   case "15":
+                   case "21":
+                {
+                    myResult = "#F37021"; // orange
+                    break;
+                }
+                    case "0":
+                    case "1":
+                    case "2":
+                    case "9":
+                    case "12":
+                    case "14":
+                    case "16":
+                    case "17":
+                    case "18":
+                    case "19":
+                    case "20":
+
+                {
+                    myResult = "#E53030"; // red
+                    break;
+                }
 
         }
 
         return myResult;
     }
-
-
-
     private ApplyTicketSeverityCodePipe(value: string) {
         var myResult: string = "#282E30";
 

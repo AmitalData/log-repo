@@ -1,4 +1,4 @@
-using Simplog.Server.Infrastructure.Helpers;
+ 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,36 +17,16 @@ namespace Logitude.Accounting.Data.Repositories
         
 		public List<GLAccountCurrency> GetMulti(EntityKeyFields entityKeys)
         {
-
-         GLAccountKeys myEntityKeys = entityKeys as GLAccountKeys;
-        return (from a in context.GLAccountCurrencies.Include("GLAccount") where a.MainGLAccountId == myEntityKeys.Id && a.GLAccount.Inactive ==false select a).ToList();
             
+			throw new NotImplementedException();
         }
-        public List<GLAccountCurrency> GetRelatedCurrenciesAccountByCustomerGLAccountAll(int tenant, string GLAccountId)
+        public List<GLAccountCurrency> GetRelatedCurrenciesAccountByCustomerGLAccount(int tenant, string GLAccountId)
         {
 
             return (from a in context.GLAccountCurrencies
                     where a.MainGLAccountId == GLAccountId && a.Tenant == tenant
                     select a).ToList();
         }
-        public List<GLAccountCurrency> GetRelatedCurrenciesAccountByCustomerGLAccountActive(int tenant, string GLAccountId)
-        {
-            return GetQRelatedCurrenciesAccountByCustomerGLAccountActive(tenant, GLAccountId).ToList();
-        }
-
-        public IQueryable<GLAccountCurrency> GetQRelatedCurrenciesAccountByCustomerGLAccountActive(int tenant, string GLAccountId)
-        {
-            return (from accCurr in context.GLAccountCurrencies
-                        //.Include("GLAccount") -- in unitest not work !!!
-                    join acc in context.GLAccounts
-                    on accCurr.GLAccountId equals acc.Id
-
-                    where accCurr.MainGLAccountId == GLAccountId && accCurr.Tenant == tenant
-                    where acc.Inactive == false
-                    select accCurr)
-                                ;
-        }
-
         public IQueryable<GLAccountCurrency> GetQRelatedCurrenciesAccountIdByCustomerGLAccount(int tenant, IQueryable<string> qGLAccountIdS)
         {
 
@@ -56,12 +36,6 @@ namespace Logitude.Accounting.Data.Repositories
                     select a/*.Id*/);
         }
 
-        public IQueryable<GLAccountCurrency> GetGLAccountCurrenciesByGLAccountIds(int tenant, List<string> accountIds)
-        {
-            return (from a in context.GLAccountCurrencies                     
-                    where accountIds.Contains(a.GLAccountId) && a.Tenant == tenant
-                    select a);
-        }
 
         public IQueryable<GLAccountCurrency> GetCurrenciesAccounts(int tenant)
         {
@@ -77,26 +51,6 @@ namespace Logitude.Accounting.Data.Repositories
 
             return (from a in context.GLAccountCurrencies
                     where a.MainGLAccountId == accountId && a.CurrencyId == currencyId && a.Tenant == tenant
-
-                    select a).FirstOrDefault();
-        }
-
-        public string GetReconcileMethodCodeByCurrencyAndGLAccountId(string accountId, string currencyId, int tenant)
-        {
-
-            return (from a in context.GLAccountCurrencies
-                    join b in context.GLAccounts on a.GLAccountId equals b.Id
-                    where a.MainGLAccountId == accountId && a.CurrencyId == currencyId && a.Tenant == tenant
-
-                    select b.ReconcileMethodCode).FirstOrDefault();
-        }
-
-
-        public GLAccountCurrency GetEntityByGLAccountId(string accountId,  int tenant)
-        {
-
-            return (from a in context.GLAccountCurrencies
-                    where a.GLAccountId == accountId &&  a.Tenant == tenant
 
                     select a).FirstOrDefault();
         }

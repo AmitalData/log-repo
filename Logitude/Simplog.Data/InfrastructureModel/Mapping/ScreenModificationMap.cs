@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -22,10 +22,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            this.Property(t => t.ScreenCode)
-               .HasMaxLength(100)
-               .IsUnicode(false);
-
             // Table & Column Mappings
             this.ToTable("ScreenModifications");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -33,7 +29,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.NumberOfColumns).HasColumnName("NumberOfColumns");
             this.Property(t => t.NumberOfRows).HasColumnName("NumberOfRows");
             this.Property(t => t.ScreenId).HasColumnName("ScreenId");
-            this.Property(t => t.ScreenCode).HasColumnName("ScreenCode");
 
             // Relationships
             //this.HasRequired(t => t.Screen)

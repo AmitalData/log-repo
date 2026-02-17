@@ -51,6 +51,7 @@ GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/InfrastructureModel","..
 
 
 
+GenerateAllControllers("../EntityFiles/InfrastructureModel","../.../JustWebFreight/WebFreight.Web/Controllers","WebFreightContext","InfrastructureModel");
 
 
 // Generate Infrastructure TS files --------------------------------------------------------------------------------------------------------------
@@ -61,7 +62,6 @@ GenerateAllServices("../EntityFiles/InfrastructureModel","../../AngularModules/A
 GenerateAllListServices("../EntityFiles/InfrastructureModel","../../AngularModules/AngularModules/Infrastructure/Services/StandardLists","Infrastructure");
 
 
-GenerateAllControllers("../EntityFiles/InfrastructureModel","../../JustWebFreight/WebFreight.Web/Controllers","WebFreightContext","InfrastructureModel");
 
 
 

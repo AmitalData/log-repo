@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -28,8 +28,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
                 EventTypeQuery eventTypesRepository = new EventTypeQuery(authToken.Tenant);
                 IQueryable<EventTypePM> iQueryable = eventTypesRepository.GetEventTypesByObjectTable(objectTableId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, iQueryable);
@@ -51,10 +49,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 EventTypeQuery eventTypesRepository = new EventTypeQuery(authToken.Tenant);
-                EventTypePM eventTypePM  = eventTypesRepository.GetSinglePMByCode(code, tenant);
+                EventTypePM eventTypePM  = eventTypesRepository.GetSingleEventTypePMByCode(code, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, eventTypePM);
 
             }
@@ -84,8 +81,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                         foreach (EventTypePM eventTypePm in eventTypePMLists)
                         {
-                            SecurityUtility.AuthenticationOnEntityTenant("EventType", eventTypePm.Tenant, authToken.Tenant);
-
                             service.Update(eventTypePm);
                         }
 

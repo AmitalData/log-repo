@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Workflow">
-  <Sql Version="1">
-    <![CDATA[
-    
-    delete Expressions where code = 'DATEDIF'
-    
-    ]]>
-  </Sql>
-</Script>

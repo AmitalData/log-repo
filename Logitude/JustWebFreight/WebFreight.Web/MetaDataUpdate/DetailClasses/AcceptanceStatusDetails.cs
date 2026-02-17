@@ -8,10 +8,8 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
     public class AcceptanceStatusDetails
     {
         public string Code { get; set; }
-        public string EnglishName { get; set; }
+        public string Name { get; set; }
         public string LocalName { get; set; }
         public string SearchFields { get; set; }
-        public string Inactive { get; set; }
-
     }
 }

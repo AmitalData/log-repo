@@ -1,32 +1,33 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
-import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import { ContainerFollowUpPM } from '../../EntityPMs/ContainerFollowUpPM';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import {ContainerFollowUpPM} from '../../EntityPMs/ContainerFollowUpPM';
 
 @Injectable()
 
 export class ContainerFollowUpPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ContainerFollowUp';
     }
 
     get(id: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(
-                map((response: HttpResponse<any>) => {
-                var pm = response.body;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
 
                 var entity: ContainerFollowUpPM;
                 if (pm) {
@@ -42,13 +43,17 @@ export class ContainerFollowUpPMService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     update(entityPM: ContainerFollowUpPM) {
 
         var callTime = new Date();
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
 
@@ -63,11 +68,11 @@ export class ContainerFollowUpPMService {
                 var mappedEntity: ContainerFollowUpPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(
-                    map((response: HttpResponse<any>) => {
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((response) => {
 
 
-                        var pm = response.body;
+                        var pm = response.json();
                         if (pm) {
                             var mappedResult: ContainerFollowUpPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -79,14 +84,14 @@ export class ContainerFollowUpPMService {
 
                         return serviceResponse;
 
-                    }), catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             }
         });

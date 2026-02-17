@@ -14,13 +14,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int Tenant { get; set; }
         public int FailedThresold { get; set; }
         public int WaitingThresold { get; set; }
-        [Key]
-        public int TypeCode { get; set; }
-    }
 
-    public enum ThresholdTypes
-    {
-        Hybrid,
-        Cloud
+
     }
 }

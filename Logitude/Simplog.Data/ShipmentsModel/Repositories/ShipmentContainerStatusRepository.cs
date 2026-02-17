@@ -45,11 +45,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from d in Context.ShipmentContainerStatuses where d.Tenant == tenant && d.ShipmentId == shipmentId select d);
         }
 
-        public IQueryable<ShipmentContainerStatus> GetShipmentContainerStatusByContainerId(string containerId, int tenant)
-        {
-            return (from d in Context.ShipmentContainerStatuses where d.Tenant == tenant && d.ContainerId == containerId select d);
-        }
-
         public void Add(ShipmentContainerStatus entity)
         {
             Context.ShipmentContainerStatuses.Add(entity);

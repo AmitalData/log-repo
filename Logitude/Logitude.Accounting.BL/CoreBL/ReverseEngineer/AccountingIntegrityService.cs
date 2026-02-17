@@ -1,9 +1,6 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports.Aging;
-using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
@@ -50,15 +47,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 return "To month is greater than from month";
             }
 
-            //if (accountingIntegrityInParam.ToMonthInclusive.Subtract(accountingIntegrityInParam.FromMonthInclusive) > TimeSpan.FromDays(365))
-            //{
-            //    return "day  Subtract  > 365 ";
-            //}
-            DateTime oneYearLater = accountingIntegrityInParam.FromMonthInclusive.AddYears(1);
-            bool isWithinOneYear = accountingIntegrityInParam.ToMonthInclusive <= oneYearLater;
-            if (!isWithinOneYear)
+            if (accountingIntegrityInParam.ToMonthInclusive.Subtract(accountingIntegrityInParam.FromMonthInclusive) > TimeSpan.FromDays(365))
             {
-                return "day Subtract > 365 ";
+                return "day  Subtract  > 365 ";
             }
             return "";
 
@@ -66,7 +57,6 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         }
         public AccountingIntegrityResult CheckIntegrity(AccountingIntegrityInParam accountingIntegrityInParam)
         {
-
             string errorMessage = CheckParams(accountingIntegrityInParam);
             if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -74,131 +64,15 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             }
 
             var myAccountingIntegrityResult = new AccountingIntegrityResult();
-            try
-            {
-                JournalLineToLedgerCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-                LedgerToMonthTotalCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+            JournalLineToLedgerCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+            LedgerToMonthTotalCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
-                GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+            GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 1, tenant {0}", accountingIntegrityInParam.Tenant));
-                var myDueLocalBalanceService = new DueLocalBalanceService();
-                myDueLocalBalanceService.ReBuild(accountingIntegrityInParam.Tenant, null, false); // fastRun=false 
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 2, tenant {0}", accountingIntegrityInParam.Tenant));
-
-
-                DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 3, tenant {0}", accountingIntegrityInParam.Tenant));
-
-
-                LedgerOpenAmountDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 4, tenant {0}", accountingIntegrityInParam.Tenant));
-
-                InterestReportDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 5, tenant {0}", accountingIntegrityInParam.Tenant));
-
-                RebuildAgingDataByType(accountingIntegrityInParam, myAccountingIntegrityResult, "Customer2");
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 6, tenant {0}", accountingIntegrityInParam.Tenant));
-
-                RebuildAgingDataByType(accountingIntegrityInParam, myAccountingIntegrityResult, "Vendor3");
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("AccountingIntegrityService, Point 7, tenant {0}", accountingIntegrityInParam.Tenant));
-
-
-            }
-            catch
-            {
-                myAccountingIntegrityResult.HasException = true;
-            }
-            finally
-            {
-                if (!myAccountingIntegrityResult.HasException)
-                {
-                    if (myAccountingIntegrityResult.MyAccountingIntegrityStep != null)
-                    {
-                        myAccountingIntegrityResult.HasException = myAccountingIntegrityResult.MyAccountingIntegrityStep
-                            .Any(r => !String.IsNullOrWhiteSpace(r.ExceptionMessage));
-
-
-                        myAccountingIntegrityResult.ShouldFix
-                            = myAccountingIntegrityResult.MyAccountingIntegrityStep
-                            .Any(r => r.ShouldFix);
-                    }
-
-                }
-            }
+            DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
             return myAccountingIntegrityResult;
         }
 
-        private static void RebuildAgingData(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
-        {
-            var sw = Stopwatch.StartNew();
-            string ExceptionMessage = "";
-            int badRows = 0;
-
-            try
-            {
-                var dailyRebuildAgingService = new DailyRebuildAgingService();
-                dailyRebuildAgingService.ReBuild(accountingIntegrityInParam.Tenant);
-            }
-            catch (Exception ee)
-            {
-                ExceptionMessage = ee.ToString();
-                //throw;
-            }
-            finally
-            {
-
-                myAccountingIntegrityResult.MyAccountingIntegrityStep = myAccountingIntegrityResult.MyAccountingIntegrityStep ?? new List<AccountingIntegrityStep>();
-                myAccountingIntegrityResult.MyAccountingIntegrityStep.Add(new AccountingIntegrityStep()
-                {
-                    Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    //Month = currentMonth,
-                    ExceptionMessage = ExceptionMessage,
-                    BadRows = badRows,
-                    ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
-                    ElapsedMilliseconds = sw.ElapsedMilliseconds,
-                });
-            }
-
-
-
-        }
-
-
-        private static void RebuildAgingDataByType(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult, string type)
-        {
-            var sw = Stopwatch.StartNew();
-            string ExceptionMessage = "";
-            int badRows = 0;
-
-            try
-            {
-                var dailyRebuildAgingService = new DailyRebuildAgingService();
-                dailyRebuildAgingService.ReBuildByType(accountingIntegrityInParam.Tenant, type);
-            }
-            catch (Exception ee)
-            {
-                ExceptionMessage = ee.ToString();
-                //throw;
-            }
-            finally
-            {
-
-                myAccountingIntegrityResult.MyAccountingIntegrityStep = myAccountingIntegrityResult.MyAccountingIntegrityStep ?? new List<AccountingIntegrityStep>();
-                myAccountingIntegrityResult.MyAccountingIntegrityStep.Add(new AccountingIntegrityStep()
-                {
-                    Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    //Month = currentMonth,
-                    ExceptionMessage = ExceptionMessage,
-                    BadRows = badRows,
-                    ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
-                    ElapsedMilliseconds = sw.ElapsedMilliseconds,
-                });
-            }
-
-
-
-        }
 
 
         public void FixDBIntegrity(int tenant, List<AccountingIntegrityStep> MyAccountingIntegrityStep)
@@ -278,145 +152,19 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             }
             catch (Exception eee)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee, "AccountingIntegrityService");
+
                 sb.AppendLine(eee.ToString());
-                throw new Exception(eee.ToString(), eee);// Itzik the exceptions is not thrown so i threw them
             }
             finally
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("AccountingIntegrityService:"+sb.ToString() );
+                Logger.LogMe(sb.ToString(), false, "AccountingIntegrityService");
             }
 
 
 
         }
 
-
-        private void LedgerOpenAmountDiffCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
-        {
-
-
-            int year = accountingIntegrityInParam.FromMonthInclusive.Year;
-            var icurrentMonth = accountingIntegrityInParam.FromMonthInclusive.Month;
-
-
-
-            var sw = Stopwatch.StartNew();
-            string ExceptionMessage = "";
-            int badRows = 0;
-
-            try
-            {
-                var myReconcileOpenAmountService = new ReconcileOpenAmountService();
-                var listDiff = myReconcileOpenAmountService.GetLedgerOpenAmountDiff(accountingIntegrityInParam.Tenant, year);
-
-                myAccountingIntegrityResult.LedgerOpenAmount = myAccountingIntegrityResult.LedgerOpenAmount ?? new List<LedgerOpenAmountRecoDiffM>();
-                myAccountingIntegrityResult.LedgerOpenAmount.AddRange(listDiff);
-                badRows = listDiff.Count();
-            }
-            catch (Exception ee)
-            {
-                ExceptionMessage = ee.ToString();
-                //throw;
-            }
-            finally
-            {
-
-                myAccountingIntegrityResult.MyAccountingIntegrityStep = myAccountingIntegrityResult.MyAccountingIntegrityStep ?? new List<AccountingIntegrityStep>();
-                myAccountingIntegrityResult.MyAccountingIntegrityStep.Add(new AccountingIntegrityStep()
-                {
-                    Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
-                    //Month = currentMonth,
-                    ExceptionMessage = ExceptionMessage,
-                    BadRows = badRows,
-                    ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
-                    ElapsedMilliseconds = sw.ElapsedMilliseconds,
-                });
-            }
-
-
-
-        }
-
-
-
-
-        private void InterestReportDiffCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
-        {
-
-
-
-            try
-            {
-
-
-                var sw = Stopwatch.StartNew();
-                string ExceptionMessage = "";
-                int badRows = 0;
-
-                try
-                {
-                    var gLAccountBalanceInterestReportCheck = new GLAccountBalanceInterestReportCheck(accountingIntegrityInParam.Tenant);
-                    gLAccountBalanceInterestReportCheck.CheckDbIntegrity();
-
-
-                    myAccountingIntegrityResult.InterestReportResult = myAccountingIntegrityResult.InterestReportResult ?? new List<InterestReportDiff>();
-                    myAccountingIntegrityResult.InterestReportResult.AddRange(gLAccountBalanceInterestReportCheck.CompareReport.InterestReportDiffList);
-                    badRows = gLAccountBalanceInterestReportCheck.CompareReport.InterestReportDiffList.Count();
-
-                    IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
-                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
-                    if (myAccountingIntegrityResult?.TotalOpenReconciliationResult?.Count() > 0)
-                    {
-                        myAccountingIntegrityResult.TotalOpenReconciliationResult.ForEach(r =>
-                        {
-                            if (!String.IsNullOrEmpty(r.AccountId))
-                            {
-                                GLAccountPM gLAccountPM = gLAccountQueryService.GetSingle(r.AccountId, false, true);
-                                if (gLAccountPM != null)
-                                {
-                                    r.DisplayNumber = gLAccountPM.DisplayNumber;
-                                    r.LocalName = gLAccountPM.LocalName;
-                                }
-                            }
-                        });
-                    }
-
-                }
-                catch (Exception ee)
-                {
-                    ExceptionMessage = ee.ToString();
-                    //throw;
-                }
-                finally
-                {
-
-                    myAccountingIntegrityResult.MyAccountingIntegrityStep = myAccountingIntegrityResult.MyAccountingIntegrityStep ?? new List<AccountingIntegrityStep>();
-                    myAccountingIntegrityResult.MyAccountingIntegrityStep.Add(new AccountingIntegrityStep()
-                    {
-                        Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
-                        //Month = currentMonth,
-                        ExceptionMessage = ExceptionMessage,
-                        BadRows = badRows,
-                        ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
-                        ElapsedMilliseconds = sw.ElapsedMilliseconds,
-                    });
-                }
-
-
-
-            }
-
-
-            catch (Exception e)
-            {
-
-                //throw;
-            }
-
-        }
-
-
+      
 
         private void DueLocalBalanceCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
         {
@@ -431,7 +179,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             var sw = Stopwatch.StartNew();
             string ExceptionMessage = "";
             int badRows = 0;
-
+            
             try
             {
                 var myDueLocalBalanceService = new DueLocalBalanceService();
@@ -439,23 +187,6 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                 myAccountingIntegrityResult.DueLocalBalance = myAccountingIntegrityResult.DueLocalBalance ?? new List<DueLocalBalanceDiffM>();
                 myAccountingIntegrityResult.DueLocalBalance.AddRange(listDiff);
-                IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
-                GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
-                if (myAccountingIntegrityResult.DueLocalBalance.Count > 0)
-                {
-                    myAccountingIntegrityResult.DueLocalBalance.ForEach(r =>
-                    {
-                        if (!String.IsNullOrEmpty(r.AccountId))
-                        {
-                            GLAccountPM gLAccountPM = gLAccountQueryService.GetSingle(r.AccountId, false, true);
-                            if (gLAccountPM != null)
-                            {
-                                r.DisplayNumber = gLAccountPM.DisplayNumber;
-                                r.LocalName = gLAccountPM.LocalName;
-                            }
-                        }
-                    });
-                }
                 badRows = listDiff.Count();
             }
             catch (Exception ee)
@@ -473,7 +204,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     //Month = currentMonth,
                     ExceptionMessage = ExceptionMessage,
                     BadRows = badRows,
-                    ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
+                    ShouldFix = (badRows>0 && String.IsNullOrWhiteSpace( ExceptionMessage)),
                     ElapsedMilliseconds = sw.ElapsedMilliseconds,
                 });
             }
@@ -483,7 +214,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
         }
 
-        public void GLAccountBalanceCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
+        private void GLAccountBalanceCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
         {
 
 
@@ -499,40 +230,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 {
                     var ReverseEngineerGLAccountBalance = new ReverseEngineerGLAccountBalance(/*currentMonth, */accountingIntegrityInParam.Tenant);
                     ReverseEngineerGLAccountBalance.CheckDbIntegrity();
-
-
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult = myAccountingIntegrityResult.BalanceInLocalCurrencyResult ?? new List<GLAccountBalanceDTO>();
                     myAccountingIntegrityResult.BalanceInLocalCurrencyResult.AddRange(ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList);
                     badRows = ReverseEngineerGLAccountBalance.CompareReport.GLAccountBalanceList.Count();
-                    myAccountingIntegrityResult.TotalOpenReconciliationResult = new List<GLAccountBalanceDTO>();
-                    myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(ReverseEngineerGLAccountBalance.CompareReport.TotalOpenReconciliation);
-
-                    var reverseEngineerControlAccountAccumulateChild = new ReverseEngineerControlAccountAccumulateChild(accountingIntegrityInParam.Tenant);
-                    reverseEngineerControlAccountAccumulateChild.CheckDbIntegrity();
-                    myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(reverseEngineerControlAccountAccumulateChild.CompareReport.GLAccountBalanceList);
-
-
-                    var ReverseEngineerCashBook = new ReverseEngineerCashBook(accountingIntegrityInParam.Tenant);
-                    ReverseEngineerCashBook.CheckDbIntegrity();
-                    myAccountingIntegrityResult.TotalOpenReconciliationResult.AddRange(ReverseEngineerCashBook.CompareReport.GLAccountBalanceList);
-                    IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
-                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
-                    if (myAccountingIntegrityResult.TotalOpenReconciliationResult.Count > 0)
-                    {
-                        myAccountingIntegrityResult.TotalOpenReconciliationResult.ForEach(r =>
-                        {
-                            if (!String.IsNullOrEmpty(r.AccountId))
-                            {
-                                GLAccountPM gLAccountPM = gLAccountQueryService.GetSingle(r.AccountId, false, true);
-                                if (gLAccountPM != null)
-                                {
-                                    r.DisplayNumber = gLAccountPM.DisplayNumber;
-                                    r.LocalName = gLAccountPM.LocalName;
-                                }
-                            }
-                        });
-                    }
-
                 }
                 catch (Exception ee)
                 {
@@ -584,37 +284,8 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                         var reverseEngineerTotalByMonthService = new ReverseEngineerTotalByMonthService(currentMonth, accountingIntegrityInParam.Tenant, null);
                         reverseEngineerTotalByMonthService.CheckDbIntegrity();
                         myAccountingIntegrityResult.LedgerToMounthTotalResult = myAccountingIntegrityResult.LedgerToMounthTotalResult ?? new List<GLAccountTotalByMonthsDTO>();
-                        var res = reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList;
-                        if (res.Any(r => r.ForeignAmountCredit != 0)
-                   || res.Any(r => r.ForeignAmountDebit != 0)
-                   || res.Any(r => r.LocalAmountCredit != 0)
-                   || res.Any(r => r.LocalAmountDebit != 0)
-                   )
-                        {
-                            myAccountingIntegrityResult.LedgerToMounthTotalResult.AddRange(reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList);
-                        }
-                            
-                            
-                        
-                        IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
-                        GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
-                        if (myAccountingIntegrityResult.LedgerToMounthTotalResult.Count > 0)
-                        {
-                            myAccountingIntegrityResult.LedgerToMounthTotalResult.ForEach(r =>
-                            {
-                                if (!String.IsNullOrEmpty(r.AccountId))
-                                {
-                                    GLAccountPM gLAccountPM = gLAccountQueryService.GetSingle(r.AccountId, false, true);
-                                    if (gLAccountPM != null)
-                                    {
-                                        r.DisplayNumber = gLAccountPM.DisplayNumber; 
-                                        r.LocalName = gLAccountPM.LocalName;
-                                    }
-                                }
-                            });
-                        }
-                        badRows = //reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList.Count();
-                            myAccountingIntegrityResult.LedgerToMounthTotalResult.Count();
+                        myAccountingIntegrityResult.LedgerToMounthTotalResult.AddRange(reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList);
+                        badRows = reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList.Count();
                     }
                     catch (Exception ee)
                     {
@@ -669,18 +340,6 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                         reverseEngineerLedgerTransactionService.CheckDbIntegrity();
                         myAccountingIntegrityResult.JournalLineToLedgerResult = myAccountingIntegrityResult.JournalLineToLedgerResult ?? new List<JournalLineLedgerDTO>();
                         myAccountingIntegrityResult.JournalLineToLedgerResult.AddRange(reverseEngineerLedgerTransactionService.CompareReport.rows);
-                        IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
-                        JournalQueryService journalQueryService = new JournalQueryService(context);
-                        if (myAccountingIntegrityResult.JournalLineToLedgerResult.Count > 0)
-                        {
-                            myAccountingIntegrityResult.JournalLineToLedgerResult.ForEach(r => 
-                            { 
-                                if (!String.IsNullOrEmpty(r.JournalId))
-                                {
-                                    r.JournalNumber = journalQueryService.GetSingle(r.JournalId, false, true).JournalNumber;
-                                }
-                            });
-                        }
                         badRows = reverseEngineerLedgerTransactionService.CompareReport.rows.Count();
                     }
                     catch (Exception ee)
@@ -718,9 +377,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         }
 
 
-        public BatchTaskExecutionPM FixEntegrityCheckErrorInBatch(string id, int tenant)
+        public  BatchTaskExecutionPM FixEntegrityCheckErrorInBatch(string id, int tenant)
         {
-            string xmlParameters = SerializeXMLParameters(id, tenant);
+            string xmlParameters=  SerializeXMLParameters(id, tenant);
 
             CreateBatchTaskExecution(xmlParameters, tenant);
             BatchTaskExecutionPM taskExecution = CreateBatchTaskExecution(xmlParameters, tenant);
@@ -728,7 +387,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             return taskExecution;
         }
 
-        public string SerializeXMLParameters(string id, int tenant)
+        public  string SerializeXMLParameters(string id, int tenant)
         {
             IntegrityCheckArgs args = new IntegrityCheckArgs() { EntityId = id, Tenant = tenant };
             var stringwriter = new System.IO.StringWriter();
@@ -738,7 +397,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             return xmlParameters;
         }
 
-        public BatchTaskExecutionPM CreateBatchTaskExecution(string xmlParameter, int tenant)
+        public  BatchTaskExecutionPM CreateBatchTaskExecution(string xmlParameter, int tenant)
         {
             BatchTaskExecutionPM taskExe = null;
             taskExe = new BatchTaskExecutionPM()
@@ -759,7 +418,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             return taskExe;
         }
 
-        public void SendBatchTaskToQueue(BatchTaskExecutionPM taskExecution)
+        public  void SendBatchTaskToQueue(BatchTaskExecutionPM taskExecution )
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
@@ -767,7 +426,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 {
                     { "BatchTaskExecutionId", taskExecution.Id },
                     { "Tenant", taskExecution.Tenant.ToString() }
-                }, taskExecution.Tenant);
+                });
 
         }
 
@@ -780,18 +439,13 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
     }
     public class AccountingIntegrityResult
     {
-        public bool HasException { get; set; }
-
         public List<AccountingIntegrityStep> MyAccountingIntegrityStep { get; set; }
 
         public List<JournalLineLedgerDTO> JournalLineToLedgerResult { get; set; }
         public List<GLAccountTotalByMonthsDTO> LedgerToMounthTotalResult { get; set; }
         public List<GLAccountBalanceDTO> BalanceInLocalCurrencyResult { get; set; }
         public List<DueLocalBalanceDiffM> DueLocalBalance { get; set; }
-        public bool ShouldFix { get; set; }
-        public List<LedgerOpenAmountRecoDiffM> LedgerOpenAmount { get; set; }
-        public List<GLAccountBalanceDTO> TotalOpenReconciliationResult { get; set; }
-        public List<InterestReportDiff> InterestReportResult { get; set; }
+
     }
 
     public class AccountingIntegrityStep
@@ -801,6 +455,6 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         public string ExceptionMessage { get; set; }
         public bool ShouldFix { get; set; }
         public int BadRows { get; set; }
-        public long ElapsedMilliseconds { get; set; }
+        public long ElapsedMilliseconds { get;  set; }
     }
 }

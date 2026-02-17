@@ -3,7 +3,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -58,7 +58,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     BranchRepository branchRepository = new BranchRepository(context);
                     BranchQuery branchQuery = new BranchQuery(branchRepository);
                     myResult.Branches = branchQuery.GetBranchPMsByTenant(tenant).ToList();
-                    myResult.Branches = myResult.Branches.Where(a=>!a.InActive).ToList();
+
                     List<ShippingLinePM> ShippingLines = (from d in context.ShippingLines.Include("Card")
                                                           where d.IsINTTRARegistered == true && d.Tenant == tenant
                                                           select new ShippingLinePM()
@@ -68,7 +68,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                               Code = d.Card.Code,
                                                               EnglishName = d.Card.EnglishName,
                                                               INTTRARegistrationNotes = d.INTTRARegistrationNotes,
-                                                              INTTRAUpdatesShipment = d.INTTRAUpdatesShipment,                                                              
                                                           }).ToList();
 
                     if (tenant != 0)
@@ -82,7 +81,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                                     Code = d.Card.Code,
                                                                     EnglishName = d.Card.EnglishName,
                                                                     INTTRARegistrationNotes = d.INTTRARegistrationNotes,
-                                                                    INTTRAUpdatesShipment = d.INTTRAUpdatesShipment,
                                                                 }).ToList();
 
                         foreach (ShippingLinePM line in ShippingLines_0)
@@ -103,16 +101,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         myResult.Items.Add(new INTTRASettingsHelperItem()
                         {
-                            IsLineItem = true,
-                            CompinedId = line.Id,
+                            CompinedId = line.Id,                            
                             Code = line.Code,
                             Name = line.EnglishName,
                             Notes = line.INTTRARegistrationNotes,
                             Tenant = line.Tenant,
                             ShippingLineId = line.Id,
-                            
-                            UpdatesShipmentsDates = line.INTTRAUpdatesShipment,
-                            UpdatesShipmentsDates_Old = line.INTTRAUpdatesShipment,
+                            IsLineItem = true,
                         });
 
                         foreach (BranchPM branch in myResult.Branches)
@@ -132,7 +127,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             if (RegisteredCarrier != null)
                             {
                                 item.IsRegistered = true;
-                                item.IsRegistered_Old = true;
                                 item.RegisteredCarrierId = RegisteredCarrier.Id;
                             }
 
@@ -227,125 +221,72 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     #endregion
 
                     #region Carriers
-
                     CardRepository iCardRepository = new CardRepository(iContext);
                     ShippingLineRepository iShippingLineRepository = new ShippingLineRepository(iContext);
                     INTTRABranchRegisteredCarrierRepository RegisteredCarrierRepository = new INTTRABranchRegisteredCarrierRepository(iContext);
                     List<INTTRABranchRegisteredCarrier> AllRegisteredCarriers = RegisteredCarrierRepository.GetAllByTenant(tenant).ToList();
 
-                    foreach (INTTRASettingsHelperItem itemPM in args.Items.Where(d => d.IsLineItem == true))
-                    {
-                        if (itemPM.UpdatesShipmentsDates != itemPM.UpdatesShipmentsDates_Old)
-                        {
-                            string iShippingLineId = null;
-
-                            if (itemPM.Tenant == 0 && tenant != 0)
-                            {
-                                ShippingLine iShippingLine = iShippingLineRepository.GetSingleShippingLineByCode(itemPM.Code, tenant);
-                                if (iShippingLine != null)
-                                {
-                                    iShippingLine.INTTRAUpdatesShipment = itemPM.UpdatesShipmentsDates;
-                                    iShippingLineRepository.Update(iShippingLine);
-                                }
-
-                                else
-                                {
-                                    iShippingLine = iShippingLineRepository.GetSingleShippingLine(itemPM.ShippingLineId, 0);
-                                    if (iShippingLine != null)
-                                    {
-                                        CardQuery iCardQuery = new CardQuery(iCardRepository);
-                                        CardList iCardList = iCardQuery.GetCarrierCopyToCurrentTenant(iShippingLine.Id, tenant, null, null, false, null);
-                                        if (iCardList != null)
-                                        {
-                                            iShippingLineId = iCardList.Id;
-                                        }
-                                    }
-                                }
-                            }
-
-                            else
-                            {
-                                iShippingLineId = itemPM.ShippingLineId;
-                            }
-
-                            if(iShippingLineId != null)
-                            {
-                                ShippingLine iShippingLine = iShippingLineRepository.GetSingleShippingLine(iShippingLineId, tenant);
-                                if (iShippingLine != null)
-                                {
-                                    iShippingLine.INTTRAUpdatesShipment = itemPM.UpdatesShipmentsDates;
-                                    iShippingLineRepository.Update(iShippingLine);
-                                }
-                            }
-                        }
-                    }
-
-                    iContext.SaveChanges();
-
                     foreach (INTTRASettingsHelperItem itemPM in args.Items.Where(d => d.IsLineItem == false))
                     {
-                        if (itemPM.IsRegistered != itemPM.IsRegistered_Old)
+                        INTTRABranchRegisteredCarrier itemPOCO = AllRegisteredCarriers.Where(d => d.ShippingLineId == itemPM.ShippingLineId && d.BranchId == itemPM.BranchId && d.Tenant == tenant).FirstOrDefault();
+
+                        if (itemPM.IsRegistered)
                         {
-                            INTTRABranchRegisteredCarrier itemPOCO = AllRegisteredCarriers.Where(d => d.ShippingLineId == itemPM.ShippingLineId && d.BranchId == itemPM.BranchId && d.Tenant == tenant).FirstOrDefault();
-
-                            if (itemPM.IsRegistered)
+                            if (itemPOCO == null)
                             {
-                                if (itemPOCO == null)
+                                string iShippingLineId = null;
+
+                                itemPOCO = new INTTRABranchRegisteredCarrier()
                                 {
-                                    string iShippingLineId = null;
+                                    Id = IdCounter.GetNumber("INTTRABranchRegisteredCarrier", tenant).ToString(),
+                                    Tenant = tenant,
+                                    BranchId = itemPM.BranchId,                                   
+                                    UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                                    UpdatedByUserId = loggedUserId,
+                                };
 
-                                    itemPOCO = new INTTRABranchRegisteredCarrier()
+                                if (itemPM.Tenant == 0 && tenant != 0)
+                                {
+                                    ShippingLine iShippingLine = iShippingLineRepository.GetSingleShippingLineByCode(itemPM.Code, tenant);
+                                    if (iShippingLine != null)
                                     {
-                                        Id = IdCounter.GetNumber("INTTRABranchRegisteredCarrier", tenant).ToString(),
-                                        Tenant = tenant,
-                                        BranchId = itemPM.BranchId,
-                                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                                        UpdatedByUserId = loggedUserId,
-                                    };
-
-                                    if (itemPM.Tenant == 0 && tenant != 0)
-                                    {
-                                        ShippingLine iShippingLine = iShippingLineRepository.GetSingleShippingLineByCode(itemPM.Code, tenant);
-                                        if (iShippingLine != null)
-                                        {
-                                            iShippingLineId = iShippingLine.Id;
-                                            iShippingLine.IsINTTRARegistered = true;
-                                            iShippingLine.INTTRARegistrationNotes = itemPM.Notes;
-                                            iShippingLineRepository.Update(iShippingLine);
-                                        }
-
-                                        else
-                                        {
-                                            iShippingLine = iShippingLineRepository.GetSingleShippingLine(itemPM.ShippingLineId, 0);
-                                            if (iShippingLine != null)
-                                            {
-                                                CardQuery iCardQuery = new CardQuery(iCardRepository);
-                                                CardList iCardList = iCardQuery.GetCarrierCopyToCurrentTenant(iShippingLine.Id, tenant, null, null, false, null);
-                                                if (iCardList != null)
-                                                {
-                                                    iShippingLineId = iCardList.Id;
-                                                }
-                                            }
-                                        }
+                                        iShippingLineId = iShippingLine.Id;
+                                        iShippingLine.IsINTTRARegistered = true;
+                                        iShippingLine.INTTRARegistrationNotes = itemPM.Notes;
+                                        iShippingLineRepository.Update(iShippingLine);
                                     }
 
                                     else
                                     {
-                                        iShippingLineId = itemPM.ShippingLineId;
+                                        iShippingLine = iShippingLineRepository.GetSingleShippingLine(itemPM.ShippingLineId, 0);
+                                        if (iShippingLine != null)
+                                        {
+                                            CardQuery iCardQuery = new CardQuery(iCardRepository);
+                                            CardList iCardList = iCardQuery.GetCarrierCopyToCurrentTenant(iShippingLine.Id, tenant, null, null, false, null);
+                                            if (iCardList != null)
+                                            {
+                                                iShippingLineId = iCardList.Id;                                                
+                                            }
+                                        }
                                     }
-
-                                    itemPOCO.ShippingLineId = iShippingLineId;
-
-                                    RegisteredCarrierRepository.Add(itemPOCO);
                                 }
-                            }
 
-                            else
-                            {
-                                if (itemPOCO != null)
+                                else
                                 {
-                                    RegisteredCarrierRepository.Remove(itemPOCO);
+                                    iShippingLineId = itemPM.ShippingLineId;
                                 }
+
+                                itemPOCO.ShippingLineId = iShippingLineId;
+
+                                RegisteredCarrierRepository.Add(itemPOCO);
+                            }
+                        }
+
+                        else
+                        {
+                            if (itemPOCO != null)
+                            {
+                                RegisteredCarrierRepository.Remove(itemPOCO);
                             }
                         }
                     }
@@ -467,11 +408,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string BranchId { get; set; }
         public string RegisteredCarrierId { get; set; }
         public bool IsRegistered { get; set; }
-        public bool IsRegistered_Old { get; set; }
         public int Tenant { get; set; }
         public string ShippingLineId { get; set; }
-        public bool UpdatesShipmentsDates { get; set; }
-        public bool UpdatesShipmentsDates_Old { get; set; }
     }
 
     public class INTTRACommunicationSettingsHelper

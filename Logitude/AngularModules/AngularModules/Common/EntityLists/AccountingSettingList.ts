@@ -31,9 +31,10 @@ export class AccountingSettingList {
 		ARInvoiceTransferStartDate: Date;
 		APInvoiceTransferStartDate: Date;
 		ARPaymentTransferStartDate: Date;
-		APPaymentTransferStartDate: Date;
 		AllowPositiveAmountsInTheCreditNote: boolean;
 		QBOrealMeID: string;
+		QBOAccessToken: string;
+		QBOAccessTokenSecret: string;
 		TransferToDropboxActivated: boolean;
 		EnableMultiPercentageVATTypes: boolean;
 		NotifyPastDateOnInvoiceEdit: boolean;
@@ -47,14 +48,5 @@ export class AccountingSettingList {
 		EnableNegativeOffsetARPayments: boolean;
 		EnableNegativeOffsetAPPayments: boolean;
 		EnableInvoiceStocksManagement: boolean;
-		RefreshToken: string;
-		QBOOAuth: number;
-		AllowManualARPaymentNumber: boolean;
-		AllowRegionalTaxManagement: boolean;
-		EnableAPPaymentExternalPayment: boolean;
-		TransferToFTPActivated: boolean;
-		TransferFTPDetailId: string;
-		EnableEnteringTotalVAT: boolean;
-		BlockSendInvoiceOriginalCopy: boolean;
 	
 }

@@ -8,7 +8,7 @@ import { DeclarationExtendedListService } from '../../../Customs/Services/Extend
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { DeclarationList } from '../../../Customs/EntityLists/DeclarationList';
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
-import { SpecialActivityRequestParams, OtherActivityDetails, GeneralDetails, CargoIdentifier, GoodsDetails, RepresentativeDetails, RePackingApprovalDetails, CurrentPackingDetails, PackingDetails, DesiredPackingDetails, SampleRequestDetails } from '../../../Customs/DataContract/RequestParams/SpecialActivityRequestParams';
+import { SpecialActivityRequestParams, GeneralDetails, CargoIdentifier, GoodsDetails, RepresentativeDetails, RePackingApprovalDetails, CurrentPackingDetails, PackingDetails, DesiredPackingDetails, SampleRequestDetails } from '../../../Customs/DataContract/RequestParams/SpecialActivityRequestParams';
 import { INF_MSG_GenericResponseData } from '../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -22,11 +22,10 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { LuhnAlgorithm } from '../../../Customs/Utilities/LuhnAlgorithm';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'SpecialActivityRequestComponent',
-    
+    moduleId: module.id,
     templateUrl: './SpecialActivityRequestComponent.html',
 })
 
@@ -50,7 +49,7 @@ export class SpecialActivityRequestComponent
     public RepackingCurrentList: ObservableCollection;
     public RepackingDesiredList: ObservableCollection;
     public SampleRequestList: ObservableCollection;
-    public RequestId: number;
+
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
     _CustomsSettingListService: CustomsSettingListService = new CustomsSettingListService();
@@ -62,7 +61,7 @@ export class SpecialActivityRequestComponent
         this.RepackingDesiredList = new ObservableCollection([]);
         this.SampleRequestList = new ObservableCollection([]);
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
         });
     }
 
@@ -75,43 +74,8 @@ export class SpecialActivityRequestComponent
             console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null");
         }
         this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
-        this.RequestId = new Date(Date.now()).getTime();
         this.subscribeWrapperComponent()
     }
-
-    MaxLength(event) {
-        if (this.OtherActivityComment.length == 3) {
-            return;
-        }
-    }
-    ViewDocumentsComponent() {
-        var windowArgs: any = {};
-        this.EntityPM = {};
-        this.EntityPM.Id = this.RequestId;
-        this.EntityPM.Tenant = SessionLocator.Tenant;
-        windowArgs.EntityPM = this.EntityPM;
-        // windowArgs.ObjectTableName = "Customs.CustomsCollateral";Cancellation
-        windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
-        windowArgs.EntityParentPM = "SpecialRequest";
-        //    windowArgs.SkipCtor = this.SkipCtor;
-
-        var windowTitle = "Customs.Declaration.TH.Documents";
-
-        var logWindow = new LogitudeWindow();
-        logWindow.IsHideHeader = true;
-        logWindow.Width = 1000;
-        logWindow.Height = 700;
-        logWindow.Title = windowTitle;
-        logWindow.ShowCloseButton = false;
-        logWindow.WindowArgs = windowArgs;
-       // logWindow.WindowClosed.subscribe(($event: any) => this.SkipCtor = true);
-
-       
-            logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
- 
-
-    }
-
 
     OnMassageDisplayMethod() {
         this.StorageFilterItems = new ApiQueryFilters();
@@ -124,7 +88,6 @@ export class SpecialActivityRequestComponent
             this.RequestParams.GeneralDetailsData.CargoIdentifier = new CargoIdentifier();
             this.RequestParams.GoodsDetailsData = new GoodsDetails();
             this.RequestParams.RePackingApprovalDetailsData = new RePackingApprovalDetails();
-            this.RequestParams.OtherActivityDetailsData = new OtherActivityDetails();
 
             this.SpecialActivityType = "6";
 
@@ -567,7 +530,7 @@ export class SpecialActivityRequestComponent
         this.SetRepresentativeRowNumber();
     }
 
-    DeleteRepresentativeDetailsCommand(item: RepresentativeComponent) {
+    private DeleteRepresentativeDetailsCommand(item: RepresentativeComponent) {
         this.RepresentativeList.Remove(item);
         this.SetRepresentativeRowNumber();
     }
@@ -597,20 +560,6 @@ export class SpecialActivityRequestComponent
                 this.SetIsSampleRequest(false);
             }
         }
-    }
-     get OtherActivityComment() { return this.RequestParams.OtherActivityDetailsData.OtherActivityComment; }
-    set OtherActivityComment(value: string) {
-         if (this.RequestParams.OtherActivityDetailsData.OtherActivityComment != value) {
-             if (value.length > 256) {
-                 this.ValidationErrorsList.push("שדה הערות - אורך מקסימלי 256 תוים");
-
-             }
-            else {
-                 this.ValidationErrorsList = [];
-            }
-
-            this.RequestParams.OtherActivityDetailsData.OtherActivityComment = value;
-         }
     }
     //#endregion OtherActivity Properties
 
@@ -676,7 +625,7 @@ export class SpecialActivityRequestComponent
         this.SetRepackingCurrentRowNumber();
     }
 
-    DeleteRepackingCurrentItemCommand(item: RepackingCurrentRequestDetailsComponent) {
+    private DeleteRepackingCurrentItemCommand(item: RepackingCurrentRequestDetailsComponent) {
         this.RepackingCurrentList.Remove(item);
         this.SetRepackingCurrentRowNumber();
     }
@@ -694,7 +643,7 @@ export class SpecialActivityRequestComponent
         this.SetRepackingDesiredRowNumber();
     }
 
-    DeleteRepackingDesiredRequestDetailsCommand(item: RepackingDesiredRequestDetailsComponent) {
+    private DeleteRepackingDesiredRequestDetailsCommand(item: RepackingDesiredRequestDetailsComponent) {
         this.RepackingDesiredList.Remove(item);
         this.SetRepackingDesiredRowNumber();
     }
@@ -731,7 +680,7 @@ export class SpecialActivityRequestComponent
         this.SetSampleRequestRowNumber();
     }
 
-    DeleteSampleRequestDetailsCommand(item: SampleRequestDetailsComponent) {
+    private DeleteSampleRequestDetailsCommand(item: SampleRequestDetailsComponent) {
         this.SampleRequestList.Remove(item);
         this.SetSampleRequestRowNumber();
     }
@@ -956,12 +905,6 @@ export class SpecialActivityRequestComponent
             this.ValidationErrorsList.push(msg);
         }
 
-        if ((!(AppTool.IsNullOrEmpty(this.OtherActivityComment))) && this.OtherActivityComment.length > 256) {
-             this.ValidationErrorsList.push("שדה הערות - אורך מקסימלי 256 תוים");
-
-         }
-
-
         switch (this.SpecialActivityType) {
             case "5": //RePackingApproval
                 if (this.RepackingCurrentList.Length == 0) {
@@ -1074,7 +1017,7 @@ export class SpecialActivityRequestComponent
         currRequestParams.RequestVIA = this._CustomSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = this._CustomSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.AppicationId = this.RequestId.toString();
+
         //GeneralDetails
         currRequestParams.GeneralDetailsData = new GeneralDetails();
         currRequestParams.GeneralDetailsData.SpecialActivityRequestNumber = this.SpecialActivityRequestNumber;
@@ -1239,14 +1182,12 @@ export class SpecialActivityRequestComponent
                     break;
                 }
             case "13": //Other
-                currRequestParams.OtherActivityDetailsData = new OtherActivityDetails();
-                currRequestParams.OtherActivityDetailsData.OtherActivityComment = this.OtherActivityComment;
                 break;
         }
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת בקשה לפעולות מיוחדות", true)
             .then((res) => {
                 this.ResponseData = res;

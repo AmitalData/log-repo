@@ -42,20 +42,13 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => fakeJournalUpdateOnCreating.GetLogContactId(journalPM))
             .Returns(expcted_LogId);
 
-            
             A.CallTo(() => fakeJournalUpdateOnCreating.GetObjectTableId(journalPM))
             .Returns(expcted_ObjectTableId);
 
             A.CallTo(() => fakeJournalUpdateOnCreating.AddAcitivityLog(journalPM, expcted_LogId, expcted_ObjectTableId))
             .Invokes(call => { bAddAcitivityLog = true; });
-
-            A.CallTo(() => fakeJournalUpdateOnCreating.ClearDMYByUserId(A<JournalPM>.Ignored, A<string>.Ignored))
-                .Invokes(call => { });
             
             
-
-
-
             //act
             fakeJournalUpdateOnCreating.OnCreating(journalPM, null);
 

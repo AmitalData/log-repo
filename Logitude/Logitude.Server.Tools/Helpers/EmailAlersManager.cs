@@ -1,7 +1,7 @@
 ﻿using Logitude.SystemLogs;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -19,7 +19,6 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Configuration;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -39,12 +38,8 @@ namespace Logitude.Server.Tools.Helpers
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             ContactRepository contactRepository = new ContactRepository(commonContext);
-
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.GetLoggedUserEmail(tenant), tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
-            }
+           
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), tenant);
             if (toEmails != null)
             {
                 string[] recipientEmails = toEmails.Split(';');
@@ -54,33 +49,27 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         Contact contact = contactRepository.GetSingleContactByEmail(toEmail, tenant);
                         string toContactName = contact != null ? " " + contact.EnglishName : "";
-                        string From = SettingUtil.Emails.FromNoReply;
+                        string From = "no-reply@cloud.amital.co.il";
 
-                       
+                        if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "simplog")
+                        {
+                            From = "no-reply@logitudeworld.com";
+                        }
 
                         TenantManagmentPrivateLabels privatelabel = null;
                         string PLURL = null;
-                        if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
+                        if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
                         {
                             
                             HttpContext context = HttpContext.Current;
                             string url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
-
-                            var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
-                            bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
-
-                            if (isAppServiceENV || isAppService)
-                            {
-                                if (!string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]))
-                                    url = context.Request.Headers["X-ORIGINAL-HOST"];
-                            }
-
+                                                                                      //var url = SecurityUtility.getLoggedDomain();
                             if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                             {
                                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                                 {
                                     TenantManagmentPrivateLabelsRepository query = new TenantManagmentPrivateLabelsRepository();
-                                    privatelabel = query.GetSingleTenantManagmentPrivateLabelByURL_Cache(url);
+                                    privatelabel = query.GetSingleTenantManagmentPrivateLabelByURL(url);
                                     scope.Complete();
 
                                 }
@@ -92,7 +81,7 @@ namespace Logitude.Server.Tools.Helpers
                             }
                             else
                             {
-                                From = SettingUtil.Emails.FromNoReplyLogbox;
+                                From = "no-reply@logbox.co.il";
                             } 
                         }
                         string notificationMail = BuildAlertEmailEnvelope(toContactName, tenant, loginMessage, PLURL);
@@ -102,6 +91,8 @@ namespace Logitude.Server.Tools.Helpers
                             Subject = subject,
                             From = From,
                             To = toEmail,
+                            CC = null,
+                            BCC = null,
                             EmailBody = notificationMail,
                             Tenant = tenant,
                             LoggingUserId = loggedContact.Id,
@@ -125,12 +116,15 @@ namespace Logitude.Server.Tools.Helpers
                 string toContactName = contact != null ? " " + contact.EnglishName : "";
 
                 string notificationMail = BuildAlertEmailEnvelope(toContactName, tenant, loginMessage);
-               
+                //emailService.InsertCommunicationLog(tenant, contact.Id, contact.Email, TenantServerConfigration.GetCurrentDateTime(tenant), "no-reply@logitudeworld.com", email, subject, notificationMail, true);
+
                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                 {
                     Subject = subject,
-                    From = SettingUtil.Emails.FromNoReply,
+                    From = "no-reply@logitudeworld.com",
                     To = email,
+                    CC = null,
+                    BCC = null,
                     EmailBody = HtmlTemplate.ToString(),
                     Tenant = tenant,
                     LoggingUserId = contact.Id,
@@ -184,28 +178,18 @@ namespace Logitude.Server.Tools.Helpers
             {
                 TenantManagmentPrivateLabels privatelabel = null;
                 string PLSign = LogitudeSettings.EmailAlertSignature;
-                if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox) || SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
+                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
                 {
 
                     HttpContext context = HttpContext.Current;
                     string url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
                                                                               //var url = SecurityUtility.getLoggedDomain();
-
-                    var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
-                    bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
-
-                    if (isAppServiceENV || isAppService)
-                    {
-                        if (!string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]))
-                            url = context.Request.Headers["X-ORIGINAL-HOST"];
-                    }
-
                     if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                         {
                             TenantManagmentPrivateLabelsRepository query = new TenantManagmentPrivateLabelsRepository();
-                            privatelabel = query.GetSingleTenantManagmentPrivateLabelByURL_Cache(url);
+                            privatelabel = query.GetSingleTenantManagmentPrivateLabelByURL(url);
                             scope.Complete();
                         }
                     }

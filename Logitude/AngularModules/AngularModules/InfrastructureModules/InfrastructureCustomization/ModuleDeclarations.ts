@@ -1,4 +1,4 @@
-import {RulesMainComponent} from './Components/Customization/RulesComponents/RulesMainComponent';
+﻿import {RulesMainComponent} from './Components/Customization/RulesComponents/RulesMainComponent';
 import {AddEditRuleComponent} from './Components/Customization/RulesComponents/AddEditRuleComponent';
 import {ObjectFieldsSearchComponent} from './Components/Customization/RulesComponents/ObjectFieldsSearchComponent';
 import {AddRuleFieldComponent} from './Components/Customization/RulesComponents/AddRuleFieldComponent';
@@ -15,21 +15,6 @@ import {TranslationComponent} from './Components/Translations/TranslationCompone
 import {DefaultTranslationComponent} from './Components/Translations/DefaultTranslationComponent';
 import {ScreenLayoutComponent} from './Components/Customization/ScreenLayoutComponent';
 import {LanguageSettingsComponent} from './Components/LanguageSettings/LanguageSettingsComponent';
-import { RuleUpdateHistoryComponent } from './Components/Customization/RulesComponents/RuleUpdateHistoryComponent';
-import { SetWorkerRoleNameComponent } from './Components/SetWorkerRoleName/SetWorkerRoleNameComponent';
-import { AddEditScreenComponent } from './Components/Customization/AddEditScreenComponent';
-import { AddTabComponent } from './Components/Customization/AddTabComponent';
-import { CustomizationTabsComponent } from './Components/Customization/CustomizationTabsComponent';
-import { LighteningScreenComponent } from './Components/Customization/Screen/LighteningScreenComponent';
-import { ClassicScreenComponent } from './Components/Customization/Screen/ClassicScreenComponent';
-import { QueryFilterTreeComponent } from './Components/Customization/QueryFilterTreeComponent';
-import { CustomizationEditComponent } from './Components/Customization/CustomizationEditComponent';
-import { SubEntitiesComponent } from './Components/Customization/SubEntitiesComponent';
-import { AddEditGridScreenSectionComponent } from './Components/Customization/Screen/Section/AddEditGridScreenSectionComponent';
-import { GridScreenSectionPreviewComponent } from './Components/Customization/Screen/Section/GridScreenSectionPreviewComponent';
-import { GridScreenComponent } from './Components/Customization/Screen/GridScreenComponent';
-import { AddCustomObjectComponent } from './Components/Customization/AddCustomObjectComponent';
-import { CustomizationQueriesComponent } from './Components/Customization/CustomizationQueriesComponent';
 
 export const Components =
     [
@@ -49,31 +34,11 @@ export const Components =
         ObjectFieldsSearchComponent,
         AddRuleFieldComponent,
         LanguageSettingsComponent,
-        RuleUpdateHistoryComponent,
-        SetWorkerRoleNameComponent,
-        AddEditScreenComponent,
-        CustomizationTabsComponent,
-        AddTabComponent,
-        ClassicScreenComponent,
-        LighteningScreenComponent,
-        QueryFilterTreeComponent,
-        CustomizationEditComponent,
-        SubEntitiesComponent,
-        AddEditGridScreenSectionComponent,
-        GridScreenSectionPreviewComponent,
-        GridScreenComponent,
-        AddCustomObjectComponent,
-        CustomizationQueriesComponent,
+
     ];
 export const ControlsComponents =
     [
         ScreenLayoutComponent,
-        ClassicScreenComponent,
-        LighteningScreenComponent,
-        QueryFilterTreeComponent,
-        GridScreenSectionPreviewComponent,
-        GridScreenComponent,
-
     ];
 
 export class ModuleDeclarations {
@@ -99,21 +64,7 @@ export class ModuleDeclarations {
             case "AddRuleFieldComponent": { myResult = AddRuleFieldComponent; break; }
             case "ScreenLayoutComponent": { myResult = ScreenLayoutComponent; break; }
             case "LanguageSettingsComponent": { myResult = LanguageSettingsComponent; break; }
-            case "RuleUpdateHistoryComponent": { myResult = RuleUpdateHistoryComponent; break; }
-            case "SetWorkerRoleNameComponent": { myResult = SetWorkerRoleNameComponent; break; }
-            case "AddEditScreenComponent": { myResult = AddEditScreenComponent; break; }
-            case "AddTabComponent": { myResult = AddTabComponent; break; }
-            case "CustomizationTabsComponent": { myResult = CustomizationTabsComponent; break; }
-            case "ClassicScreenComponent": { myResult = ClassicScreenComponent; break; }
-            case "LighteningScreenComponent": { myResult = LighteningScreenComponent; break; }
-            case "QueryFilterTreeComponent": { myResult = QueryFilterTreeComponent; break; }
-            case "CustomizationEditComponent": { myResult = CustomizationEditComponent; break; }
-            case "SubEntitiesComponent": { myResult = SubEntitiesComponent; break; }
-            case "AddEditGridScreenSectionComponent": { myResult = AddEditGridScreenSectionComponent; break; }
-            case "GridScreenSectionPreviewComponent": { myResult = GridScreenSectionPreviewComponent; break; }
-            case "GridScreenComponent": { myResult = GridScreenComponent; break; }
-            case "AddCustomObjectComponent": { myResult = AddCustomObjectComponent; break; }
-            case "CustomizationQueriesComponent": { myResult = CustomizationQueriesComponent; break; }
+
         }
 
         return myResult;

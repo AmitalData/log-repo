@@ -12,12 +12,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
    
-    public partial class Card
+    public class Card
     {
 
 	    
@@ -36,17 +35,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
 	[XmlAttribute]
     public string PartnerCode { get; set; }
-    
-    public bool IsDisconnectedFromGLAccount { get; set; }
-    
-    public string ReceivablesAccountingCard { get; set; }
-    
-    public string PayablesAccountingCard { get; set; }
-    
-    public string ICAO { get; set; }
-    
-	[XmlAttribute]
-    public bool AllowUnassignedEntry { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

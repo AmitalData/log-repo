@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,14 +26,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
@@ -42,80 +42,51 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.CustomFilters;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using System.Transactions;
-
+		  
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
-{
+{ 
 
-
+    
     public partial class ContactViewsController : ApiController
     {
-
-
+	  
+       
         public HttpResponseMessage GetSingle(string id)
         {
-            try
+		  try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("Contact", "READ", authToken.Tenant);
+				
+		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+				ContactRepository  contactRepository = new ContactRepository(MyContext);
+				ContactList entityList = null;
+				Contact entityPoco = contactRepository.GetSingleContact(id , authToken.Tenant);
 
-                ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
-                ContactRepository contactRepository = new ContactRepository(MyContext);
-                ContactList entityList = null;
-                Contact entityPoco = contactRepository.GetSingleContact(id, authToken.Tenant);
+				if (entityPoco != null)
+				{
+									List<Contact> singleEntityList = new List<Contact>();
+					singleEntityList.Add(entityPoco);
 
-                if (entityPoco != null)
-                {
-                    List<Contact> singleEntityList = new List<Contact>();
-                    singleEntityList.Add(entityPoco);
+					ContactQuery contactQuery = new ContactQuery(contactRepository);
+					IQueryable<Contact> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<ContactList> iQueryableEntityList = contactQuery.GetIQueryableEntityList(iQueryable);
+				    entityList = iQueryableEntityList.FirstOrDefault();
 
-                    ContactQuery contactQuery = new ContactQuery(contactRepository);
-                    IQueryable<Contact> iQueryable = singleEntityList.AsQueryable();
-                    //IQueryable<ContactList> iQueryableEntityList = contactQuery.GetIQueryableEntityList(iQueryable);
+			    }
 
-                    IQueryable<ContactList> iQueryableEntityList = null;
-                    UserRepository userRepository = new UserRepository(MyContext);
-                    UserQuery userQuery = new UserQuery(userRepository);
-
-                    string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
-                    UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, authToken.Tenant, true);
-
-                    var isDemo = false;
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        SettingRepository mySettingRepository = new SettingRepository();
-                        isDemo = mySettingRepository.IsDemoTenant(authToken.Tenant.ToString());
-                        scope.Complete();
-                    }
-
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        if (loggedUser != null && !loggedUser.IsCustomerCare && isDemo)
-                        {
-                            iQueryableEntityList = contactQuery.GetDemoTenantContactList(iQueryable, loggedUser.Id, authToken.Tenant);
-                        }
-                        else
-                        {
-                            iQueryableEntityList = contactQuery.GetIQueryableEntityList(iQueryable);
-                        }
-                        entityList = iQueryableEntityList.FirstOrDefault();
-                        scope.Complete();
-                    }
-                }
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return Request.CreateResponse(HttpStatusCode.OK, entityList);
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+				               
+                return Request.CreateResponse(HttpStatusCode.OK,  entityList);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
+           
         }
 
         public HttpResponseMessage GetAll()
@@ -129,25 +100,25 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 SecurityUtility.CheckContactFeature("Contact", "READ", authToken.Tenant);
 
 
-                ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
-                ContactRepository contactRepository = new ContactRepository(MyContext);
-                IQueryable<Contact> entityPocos = contactRepository.GetContacts(authToken.Tenant);
+				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+				ContactRepository  contactRepository = new ContactRepository(MyContext);
+				IQueryable<Contact> entityPocos = contactRepository.GetContacts(authToken.Tenant);
 
-                ContactQuery contactQuery = new ContactQuery(contactRepository);
-                IQueryable<ContactList> entityLists = contactQuery.GetIQueryableEntityList(entityPocos);
-                entityLists = entityLists.OrderBy(d => d.EnglishName);
-                List<ContactList> listResult = entityLists.ToList();
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return Request.CreateResponse(HttpStatusCode.OK, listResult);
+				ContactQuery contactQuery = new ContactQuery(contactRepository);
+			    IQueryable<ContactList> entityLists = contactQuery.GetIQueryableEntityList(entityPocos);
+				entityLists = entityLists.OrderBy(d => d.EnglishName);
+				List<ContactList> listResult = entityLists.ToList();
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+										
+				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        [HttpGet]
+        
+		[HttpGet]
         public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
         {
             try
@@ -156,10 +127,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.CheckContactFeature("Contact", "READ", authToken.Tenant);
-
+				int tenant = authToken.Tenant;
+				 
+				SecurityUtility.CheckContactFeature("Contact", "READ", authToken.Tenant);
+	
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "Contact",
@@ -168,33 +139,33 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     QuerySection = "Contacts",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
-                    GetAll = filters.GetAll,
+					GetAll = filters.GetAll, 
                 };
 
-                List<ObjectField> ContactObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Contact", tenant);
+				List<ObjectField> ContactObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Contact",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
                     object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
                     object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
                     object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
-                    object filterValue2 = null;
+					object filterValue2 = null;
 
                     if (filterNameProp != null)
                     {
                         string filterName = filterNameProp.ToString();
                         string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-                        //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
+						//if (filterValue1 != null && filterValue1.GetType() == typeof(string))
                         //{
-                        //string[] values = filterValue1.ToString().Split(',');
-                        //if (values.Count() > 1)
-                        //{
-                        //filterValue1 = values[0];
-                        //filterValue2 = values[1];
-                        //}
+                           //string[] values = filterValue1.ToString().Split(',');
+                            //if (values.Count() > 1)
+                            //{
+                                //filterValue1 = values[0];
+                                //filterValue2 = values[1];
+                            //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-                        ObjectField field = ContactObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = ContactObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -213,7 +184,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 }
 
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+              if (!string.IsNullOrEmpty(filters.AdditionalFilters))
                 {
                     JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
                     var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
@@ -245,144 +216,116 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 GenericSort sortClass = new GenericSort();
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
-                ContactRepository contactRepository = new ContactRepository(MyContext);
+                ContactRepository  contactRepository = new ContactRepository(MyContext);
 
 
                 IQueryable<Contact> entityPocos = null;
 
-                if (queryOperations.QueryFilterItems.Where(d => d.FieldName == "HasUser").FirstOrDefault() != null)
-                {
+                if (queryOperations.QueryFilterItems.Where(d=>d.FieldName == "HasUser").FirstOrDefault()!=null){
 
                     UserRepository userRepo = new UserRepository(tenant);
 
                     List<string> userIds = (from a in userRepo.context.Users
                                             where a.Tenant == tenant
                                             select a.Id).ToList();
-                    entityPocos = contactRepository.GetContacts(userIds, tenant).Where(d => d.UserType == "R");
+                    entityPocos = contactRepository.GetContacts(userIds, tenant).Where(d=>d.UserType == "R");
 
                 }
                 else entityPocos = contactRepository.GetContacts(tenant);
 
 
                 ContactQuery contactQuery = new ContactQuery(contactRepository);
-
-                QueryOperations nonListQueryOperation = new QueryOperations();
+                
+				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-                ContactCustomFilter customfilters = new ContactCustomFilter(tenant);
+				                
+				ContactCustomFilter customfilters = new ContactCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-
+	
                 entityPocos = genericFilter.GetFilteredQuery<Contact>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
+                IQueryable<ContactList> entityLists = contactQuery.GetIQueryableEntityList(entityPocos);
 
-                IQueryable<ContactList> entityLists = null;
-                UserRepository userRepository = new UserRepository(MyContext);
-                UserQuery userQuery = new UserQuery(userRepository);
+                entityLists = genericFilter.GetFilteredQuery<ContactList>(listQueryOperation, entityLists);
 
-                string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
-                UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, tenant, true);
+		 
+                if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+                 {
+                   PropertyInfo propInfo = typeof(ContactList).GetProperty(queryOperations.SortByColumnName);
+                   
 
-                var isDemo = false;
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    SettingRepository mySettingRepository = new SettingRepository();
-                    isDemo = mySettingRepository.IsDemoTenant(tenant.ToString());
-                    scope.Complete();
-                }
+                   ObjectField objectField = (from a in ContactObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
 
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    if (loggedUser != null && !loggedUser.IsCustomerCare && isDemo )
+                   if (objectField != null)
+                   {
+                    if (objectField.IsCustom)
                     {
-                        entityLists = contactQuery.GetDemoTenantContactList(entityPocos, loggedUser.Id, tenant);
+                        entityLists = sortClass.GetSorterQuery<ContactList, string>(queryOperations, entityLists);
                     }
-
                     else
                     {
-                        entityLists = contactQuery.GetIQueryableEntityList(entityPocos);
-                    }
-
-                    entityLists = genericFilter.GetFilteredQuery<ContactList>(listQueryOperation, entityLists);
-                    scope.Complete();
-                }
-
-                if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
-                {
-                    PropertyInfo propInfo = typeof(ContactList).GetProperty(queryOperations.SortByColumnName);
-
-
-                    ObjectField objectField = (from a in ContactObjectFields
-                                               where a.FieldName == queryOperations.SortByColumnName
-                                               select a).FirstOrDefault();
-
-                    if (objectField != null)
-                    {
-                        if (objectField.IsCustom)
-                        {
-                            entityLists = sortClass.GetSorterQuery<ContactList, string>(queryOperations, entityLists);
-                        }
-                        else
-                        {
-                            switch (objectField.DataTypeCode.ToLower())
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+						case "lookup":
                             {
-                                case "ntext":
-                                case "text":
-                                case "lookup":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<ContactList, string>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "sigdouble":
-                                case "double":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<ContactList, double>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "date":
-                                case "datetime":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<ContactList, DateTime>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "unsinteger":
-                                case "integer":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<ContactList, int>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "boolean":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<ContactList, bool>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "unsdecimal":
-                                case "decimal":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<ContactList, decimal>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                default:
-                                    {
-                                        entityLists = entityLists.OrderBy(d => d.EnglishName);
-                                        break;
-                                    }
+                                entityLists = sortClass.GetSorterQuery<ContactList, string>(queryOperations, entityLists);
+                                break;
                             }
-                        }
+						case "sigdouble":
+						case "double":
+                            {
+                                entityLists = sortClass.GetSorterQuery<ContactList, double>(queryOperations, entityLists);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                entityLists = sortClass.GetSorterQuery<ContactList, DateTime>(queryOperations, entityLists);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                entityLists = sortClass.GetSorterQuery<ContactList, int>(queryOperations, entityLists);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                entityLists = sortClass.GetSorterQuery<ContactList, bool>(queryOperations, entityLists);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                entityLists = sortClass.GetSorterQuery<ContactList, decimal>(queryOperations, entityLists);
+                                break;
+                            }
+                        default:
+                            {
+                                entityLists = entityLists.OrderBy(d => d.EnglishName);
+                                break;
+                            }
                     }
+				 }
                 }
-                else
-                {
-                    entityLists = entityLists.OrderBy(d => d.EnglishName);
-                }
+            }
+		    else
+            {
+                entityLists = entityLists.OrderBy(d => d.EnglishName);
+            }
 
-                ServiceResponse response = new ServiceResponse();
-
-                if (filters.GetCount)
-                {
-                    response.Count = entityLists.Count();
-                }
+			ServiceResponse response = new ServiceResponse();
+			
+			if (filters.GetCount)
+              {
+					response.Count = entityLists.Count();
+			  }
                 if (!queryOperations.GetAll)
                 {
 
@@ -422,9 +365,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 }
 
 
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
+			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+			   PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+               
                 return reponseMessage;
             }
             catch (Exception ex)
@@ -434,6 +377,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
         }
 
+		
+
+      
     }
 }
 	 

@@ -65,10 +65,6 @@ namespace Logitude.Server.Tools.QueueService
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                     {
                         mQueue.ScheduledEnqueueTimeUtc = time.ToUniversalTime();//.UtcNow;
-                            
-                            
-                            LogMessagingUtil.Instance.AppendLine("***** Delay Queue.ScheduledEnqueueTimeUtc = time.ToUniversalTime()" + time.ToUniversalTime().ToString());
-                        
                     }
                     else
                     {
@@ -101,11 +97,9 @@ namespace Logitude.Server.Tools.QueueService
             }
             else
             {
-
-
                 var queueService = new CustomDbQueueService//();
                 //queueService.InitializeQueue
-                    (this._SBQueueName, _QueueSendModel.Tenant, queueDefinitionCode: null);
+                    (this._SBQueueName, 0);
                 Dictionary<string, string> messageProperties = new Dictionary<string, string>();
                 //messageProperites.Add(QueueExt.QueuePropertyNames.InterfaceTypeCode.ToString(), "Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService");
                 messageProperties.Add("InterfaceTypeCode", _QueueSendModel.InterfaceTypeCode);
@@ -132,13 +126,11 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         
                         
-                        queueService.Send(messageProperties, _QueueSendModel.Tenant, _QueueSendModel.Delay, _QueueSendModel/*.TenantPriority ?? 89*/);
-                        LogMessagingUtil.Instance.AppendLine("***** Delay _QueueSendModel.Delay " + _QueueSendModel.Delay.ToString());
-
+                        queueService.Send(messageProperties, _QueueSendModel.Delay);
                     }
                     else
                     {
-                        queueId = queueService.Send(messageProperties, _QueueSendModel.Tenant, null, _QueueSendModel/*.TenantPriority ?? 89*/);
+                        queueId = queueService.Send(messageProperties);
                     }
                     
                     LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:CreateNew:SBQueueName=" + _SBQueueName + "QMId=" + queueId);
@@ -157,14 +149,8 @@ namespace Logitude.Server.Tools.QueueService
     }
     public class QueueSendModel
     {
-        public QueueSendModel()
-        {
-
-        }
         //public int ProcessState { get; set; }
 
-
-        
         public int Tenant { get; set; }
 
         public string InterfaceTypeCode { get; set; }
@@ -175,40 +161,13 @@ namespace Logitude.Server.Tools.QueueService
 
         string _DcaAnalyzeAggregateKey;
 
-        public int? TenantPriority { get; set; }
-
         public string DcaAnalyzeAggregateKey
         {
             get { return _DcaAnalyzeAggregateKey; }
             set { _DcaAnalyzeAggregateKey = value; }
         }
 
-        public bool UseRabbitMQ { get;  set; }
-        public string QueueGroupCodeRabbit { get; set; }
-        public string EntityCode { get; set; }
-        public string EntityId { get; set; }
+        
         
     }
-    public class RabbitQueueCodeService
-    {
-        public static string GetRabbitQueueCode(string QueueDefinitionCode, string QueueGroupCodeRabbit)
-        {
-            string env = GetEnv();
-            string myQueueCodeRabbit = QueueDefinitionCode;// $"AN_{env}_{this.QueueCode}";
-            if (!string.IsNullOrEmpty(QueueGroupCodeRabbit))
-            {
-                myQueueCodeRabbit = $"{myQueueCodeRabbit}_{QueueGroupCodeRabbit}";
-            }
-            myQueueCodeRabbit += "_" + env;
-            return myQueueCodeRabbit.ToLower();
-        }
-
-        private static string GetEnv()
-        {
-            var uri = new Uri(LogitudeSettings.LogitudeURL);
-            var branchEnv = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
-            return branchEnv;
-        }
-    }
-    
 }

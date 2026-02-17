@@ -26,7 +26,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.TOPDATA = entityPM.TOPDATA;
             entityPOCO.WIDTHDATA = entityPM.WIDTHDATA;
             entityPOCO.HEIGHTDATA = entityPM.HEIGHTDATA;
-            entityPOCO.QUETYPE = entityPM.QUETYPE;
         }
 
         public void POCOToPM(CFIMSVPAGEPM entityPM, CFIMSVPAGE entityPOCO)
@@ -40,7 +39,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.TOPDATA = entityPOCO.TOPDATA;
             entityPM.WIDTHDATA = entityPOCO.WIDTHDATA;
             entityPM.HEIGHTDATA = entityPOCO.HEIGHTDATA;
-            entityPM.QUETYPE = entityPOCO.QUETYPE;
         }
 
         public void CustomPMToPOCO(CFIMSVPAGEPM entityPM, CFIMSVPAGE entityPOCO)

@@ -1,10 +1,7 @@
-import {WizardComponent} from './Components/Wizard/WizardComponent';
+﻿import {WizardComponent} from './Components/Wizard/WizardComponent';
 import {SimulatorComponent} from './Components/Wizard/SimulatorComponent';
 import {INTTRASettingsComponent} from './Components/Maintenance/INTTRASettingsComponent';
 import {INTTRACommunicationSettingsComponent} from './Components/Maintenance/INTTRACommunicationSettingsComponent';
-import { SimulatorBookingComponent } from './Components/Wizard/SimulatorBookingComponent';
-import { SimulatorBookingLoadComponent } from './Components/Wizard/SimulatorBookingLoadComponent';
-import { AddEBookingVesselComponent } from './Components/Wizard/AddEBookingVesselComponent';
 
 export const Components =
     [
@@ -12,10 +9,8 @@ export const Components =
         SimulatorComponent,
         INTTRASettingsComponent,
         INTTRACommunicationSettingsComponent,
-        SimulatorBookingComponent,
-        SimulatorBookingLoadComponent,
-        AddEBookingVesselComponent
     ];
+
 
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -27,11 +22,9 @@ export class ModuleDeclarations {
             case "SimulatorComponent": { myResult = SimulatorComponent; break; }
             case "INTTRASettingsComponent": { myResult = INTTRASettingsComponent; break; }
             case "INTTRACommunicationSettingsComponent": { myResult = INTTRACommunicationSettingsComponent; break; }
-            case "SimulatorBookingComponent": { myResult = SimulatorBookingComponent; break; }
-            case "SimulatorBookingLoadComponent": { myResult = SimulatorBookingLoadComponent; break; }
-            case "AddEBookingVesselComponent": { myResult = AddEBookingVesselComponent; break; }
 
         }
+
         return myResult;
     }
 }

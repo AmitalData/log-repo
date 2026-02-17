@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -25,28 +25,24 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsSettingList> query = (from a in iQueryable.Include("User").Include("User.Contact").Include("CustomsEnvoirmentType")
                                                     select new CustomsSettingList()
                                                     {
-                                                        Id = a.Id,
-                                                        CustomsAgentId = a.CustomsAgentId,
-                                                        DCAServiceAddress = a.DCAServiceAddress,
-                                                        IIGServiceAddress = a.IIGServiceAddress,
-                                                        SignServiceAddress = a.SignServiceAddress,
-                                                        IsConnectedToUniFreight = a.IsConnectedToUniFreight,
-                                                        Tenant = a.Tenant,
-                                                        UServerServiceAddress = a.UServerServiceAddress,
-                                                        // DefaultNotificationAssignee = a.DefaultNotificationAssignee,
-                                                        DefaultNotificationAssigneeName = a.User != null ? a.User.Contact.LocalName : null,
-                                                        DCAPartnerVault = a.DCAPartnerVault,
-                                                        SearchFields = a.SearchFields,
-                                                        CustomsEnvoirmentTypeCode = a.CustomsEnvoirmentTypeCode,
-                                                        PaymentOrderAccCard = a.PaymentOrderAccCard,
-                                                        CustomsEnvoirmentTypeName = a.CustomsEnvoirmentType != null ? a.CustomsEnvoirmentType.LocalName : null,
-                                                        UnifreightCertificateActivated = a.UnifreightCertificateActivated,
-                                                        AutoFillAccountType = a.AutoFillAccountType,
-                                                        AutoUnitMeasurement = a.AutoUnitMeasurement,
-                                                        CompanyType = a.CompanyType,
-                                                        HSMToken = a.HSMToken,
-                                                        HSMCompanyId = a.HSMCompanyId,
-                                                        ForbiddenSigns = a.ForbiddenSigns
+                                                       Id = a.Id,
+                                                       CustomsAgentId = a.CustomsAgentId,
+                                                       DCAServiceAddress = a.DCAServiceAddress,
+                                                       IIGServiceAddress = a.IIGServiceAddress,
+                                                       SignServiceAddress = a.SignServiceAddress,
+                                                       IsConnectedToUniFreight = a.IsConnectedToUniFreight,
+                                                       Tenant = a.Tenant,
+                                                       UServerServiceAddress = a.UServerServiceAddress,
+                                                      // DefaultNotificationAssignee = a.DefaultNotificationAssignee,
+                                                       DefaultNotificationAssigneeName = a.User != null ? a.User.Contact.LocalName : null,
+                                                       DCAPartnerVault = a.DCAPartnerVault,
+                                                       SearchFields = a.SearchFields,
+                                                       CustomsEnvoirmentTypeCode = a.CustomsEnvoirmentTypeCode,
+                                                       PaymentOrderAccCard = a.PaymentOrderAccCard,
+                                                       CustomsEnvoirmentTypeName = a.CustomsEnvoirmentType != null? a.CustomsEnvoirmentType.LocalName : null,
+                                                       UnifreightCertificateActivated = a.UnifreightCertificateActivated,
+                                                       AutoFillAccountType = a.AutoFillAccountType,
+                                                       AutoUnitMeasurement = a.AutoUnitMeasurement,
                                                     });
             return query;
 		}

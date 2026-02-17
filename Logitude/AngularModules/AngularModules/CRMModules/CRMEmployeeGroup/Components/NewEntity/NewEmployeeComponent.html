@@ -1,4 +1,4 @@
-<style type="text/css">
+﻿<style type="text/css">
     .Box {
         width: 100%;
         height: 100%;
@@ -79,7 +79,7 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <EmailSearchTextBox [DontInCludeInactive]="true" [EmailsText]="EscalationNotify" [Watermark]="'Add Users'" [IsUsersList]="true" (EmailsTextChanged)="EscalationNotify = $event"></EmailSearchTextBox>
+                                        <EmailSearchTextBox [EmailsText]="EscalationNotify" [Watermark]="'Add Users'" [IsUsersList]="true" (EmailsTextChanged)="EscalationNotify = $event"></EmailSearchTextBox>
                                     </div>
                                 </td>
                                 <td><div></div></td>

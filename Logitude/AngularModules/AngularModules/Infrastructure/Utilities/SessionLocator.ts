@@ -9,18 +9,19 @@ import {ExternalParams} from './ExternalParams';
 import { LocalStorageManager } from './LocalStorageManager';
 import { SignalRChannelService } from '../Services/SignalRServices/SignalRChannelService';
 import {SATInterfaceSettingPM} from '../../Invoice/EntityPMs/SATInterfaceSettingPM';
+import {Http} from '@angular/http';
 import { TenantManagementJS } from '../DataContracts/TenantManagementJS';
 import { FeatureToggleList } from '../EntityLists/FeatureToggleList';
-import { Subscription } from 'rxjs';
+import { Observable, TimeInterval, Subscription } from 'rxjs/Rx';
 
 export class SessionLocator {
+    public static Http: Http;    
     public static RootComponent: any;
     public static SustainFocusOnCell: boolean = false;
     public static SustainLostFocusOnCell: boolean = false;
     public static SignalRChannelService: SignalRChannelService;
     public static DisableEntityValidation: boolean = false;
     public static UseCachedData: boolean = true;
-    public static UseMemoryCachedData: boolean = false;
     public static IsExternalParams: boolean = false;
     public static IsSiguOut: boolean = false;
     public static HomeComponent: HomeComponent;
@@ -47,13 +48,9 @@ export class SessionLocator {
     public static ApplicationLocation: ViewContainerRef;  
     public static SATInterfaceSettings: SATInterfaceSettingPM;
     public static FeatureToggles: FeatureToggleList[] = [];
-    public static TenantZeroFeatureToggles: FeatureToggleList[] = [];
     public static SelectedSession: SessionComponent;
     public static ShowUserNewReleaseToolTip: boolean = true;
     public static AllSessions: Array<SessionComponent>;
-    public static ProtractorEmails: Array<string> = [];
-    public static WorkerRoleName: string = null;
-    public static ChangedShipmentPartnersIds: string = "";
     public static AddSession(mySession: SessionComponent) {
         if (SessionLocator.AllSessions == null) {
             SessionLocator.AllSessions = new Array<SessionComponent>();

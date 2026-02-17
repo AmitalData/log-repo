@@ -1,15 +1,14 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+﻿import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
-import { AppTool } from '../../Infrastructure/Tools';
 
 @Component({
     selector: 'BackButton',
-    inputs: ['Text', 'IsEnabled', 'LayoutDirection'],
+    inputs: ['Text', 'IsEnabled'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
     `
-    <div id="{{ 'EditBackbutton' | IdGeneratorAsyncPipe | async}}" class="BackBottun" (mouseover)="IsHover = true" (mouseleave)="IsHover = false"
+    <div id="{{ 'EditBackbutton' | IdGeneratorPipe}}" class="BackBottun" (mouseover)="IsHover = true" (mouseleave)="IsHover = false"
         [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '10px'} : {'padding-left': '10px'}">
         <div class="BackBottonBody" [ngStyle]="LayoutDirection == 'rtl' ? {'border-right': 'none'} : {'border-left': 'none'}">{{Text}}</div>
 
@@ -95,7 +94,7 @@ import { AppTool } from '../../Infrastructure/Tools';
 export class BackButton implements OnInit {
     public Text: string = "Back";
     public IsHover: boolean = false;
-    LayoutDirection: string = '';
+    LayoutDirection: string = 'ltr';
 
     private isEnabled: boolean = true;
     get IsEnabled() { return this.isEnabled; }
@@ -105,7 +104,6 @@ export class BackButton implements OnInit {
         }
     }
     constructor() {
-        if (AppTool.IsNullOrEmpty(this.LayoutDirection)) this.LayoutDirection = 'ltr';
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     }
 

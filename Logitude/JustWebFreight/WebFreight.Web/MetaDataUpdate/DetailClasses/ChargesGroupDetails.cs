@@ -9,6 +9,5 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string SearchFields { get; set; }
         public int Tenant { get; set; }
         public string LocalName { get; set; }
-        public int ViewOrder { get; set; }
     }
 }

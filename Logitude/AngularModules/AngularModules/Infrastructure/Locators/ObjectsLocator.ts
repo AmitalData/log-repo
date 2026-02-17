@@ -16,12 +16,7 @@ export class ObjectsLocator {
     public static SharedLogisticsSettingPM: SharedLogisticsSettingPM = new SharedLogisticsSettingPM()
 
     public static LoggedUserId: string;
-    public static GlobalSetting: any = {
-        DeploymentStage: null,
-        WorkEnvironment: null,
-        LogitudeDemoTenants: null,
-        LayoutDirection: null
-    };
+    public static GlobalSetting: any;
     public static PrivateLableSettings: any;
 
     private static creditLimitSettingPM: CreditLimitSettingPM;
@@ -54,22 +49,13 @@ export class ObjectsLocator {
     }
     public static UpdateGlobalSetting(value: any) {
         this.GlobalSetting = value;
-    }
-    public static SetLayoutDirection(value: any) {
+
         if (value) {
-            Settings.LayoutDirection = value;
+            Settings.LayoutDirection = value.LayoutDirection;
         }
     }
     public static UpdatePrivateLableSettings(value: any) {
         this.PrivateLableSettings = value;
     }
-    public static IsDemoTenant(value: any): boolean {
-        var isDemoTenant = false;
 
-        var demoTenants = this.GlobalSetting.LogitudeDemoTenants?.split(",");
-        if (demoTenants && demoTenants.indexOf(value) !== -1) {
-            isDemoTenant = true;
-        }
-        return isDemoTenant;
-    }
 }

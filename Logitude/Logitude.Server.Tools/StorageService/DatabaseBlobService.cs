@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -68,10 +68,7 @@ namespace Logitude.Server.Tools.StorageService
 
 
         }
-        public Dictionary<string, byte[]> ReadAllFilesInFolder(string containerName, string folderName)
-        {
-            throw new NotImplementedException();
-        }
+
         public void WriteBlock(byte[] buffer, long sentBytes, string[] blockIdsList, int bufferNumber, BlobFileInfo fileInfo)
         {
             if (fileInfo.UnifreightFillingUploadBlock(buffer))
@@ -154,59 +151,6 @@ namespace Logitude.Server.Tools.StorageService
 
             return (file != null);
 
-        }
-
-        public void AppendText(string text, BlobFileInfo fileInfo)
-        {
-          
-            if (!string.IsNullOrEmpty(text))
-            {
-
-                BlobFileRepository blobFileRepository = new BlobFileRepository(0);
-                BlobFile file = blobFileRepository.GetSingleBlobFile(fileInfo.FileName);
-
-                if (file != null)
-                {
-
-                    if (file.Blob == null)
-                    {
-                        var txtBytes = Encoding.UTF8.GetBytes(text);
-                        file.Blob = txtBytes;
-                    }
-                    else
-                    {
-                        var fileText = Encoding.UTF8.GetString(file.Blob);
-                        fileText += text;
-                        var txtBytes = Encoding.UTF8.GetBytes(fileText);
-                        file.Blob = txtBytes;
-                        blobFileRepository.Update(file);
-                    }
-                }
-                else
-                {
-                    var txtBytes = Encoding.UTF8.GetBytes(text);
-                    file = new BlobFile()
-                    {
-                        Id = fileInfo.FileName,
-                        Blob = txtBytes,
-                    };
-
-                    blobFileRepository.Add(file);
-
-                }
-
-                blobFileRepository.SubmitChanges();
-            }
-        }
-
-        public void Dispose()
-        {
-          //  throw new NotImplementedException();
-        }
-
-        public void MoveFromAnotherStorage(string containerSASURI, string fileNameSource, BlobFileInfo destinationFileInfo)
-        {
-            throw new NotImplementedException();
         }
     }
 }

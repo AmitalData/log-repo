@@ -12,12 +12,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
 {
    
-    public partial class Quote
+    public class Quote
     {
 
 	    
@@ -98,8 +97,6 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public string TransitTime { get; set; }
     
     public double? ValueOfGoods { get; set; }
-    
-    public DateTime? StartDate { get; set; }
     
     public double? Volume { get; set; }
     
@@ -196,18 +193,6 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public DateTime? StageDate { get; set; }
     
     public string SameOrFixed { get; set; }
-    
-    public string PickupCity { get; set; }
-    
-    public Country PickupCountry { get; set; }
-    
-    public string PickupZipCode { get; set; }
-    
-    public string DeliveryCity { get; set; }
-    
-    public Country DeliveryCountry { get; set; }
-    
-    public string DeliveryZipCode { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

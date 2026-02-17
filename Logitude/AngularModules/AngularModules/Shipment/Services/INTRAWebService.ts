@@ -1,28 +1,29 @@
 import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
 
 @Injectable()
 
 export class INTRAWebService {
-    private _httpClient: HttpClient;
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._httpClient = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/INTRAWebService';
     }
 
     Send(myShipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetMessageResult?myShipmentId=' + myShipmentId;
 
-        return defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
 
                 var mappedResult: INTRAResult = new INTRAResult();
 
@@ -37,17 +38,19 @@ export class INTRAWebService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     Validate(myShipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetMessageResultValidate?myShipmentId=' + myShipmentId;
 
-        return defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
 
                 var mappedResult: INTRAResult = new INTRAResult();
 
@@ -62,33 +65,37 @@ export class INTRAWebService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetContainerStatuses(ShipmentId: string, ContainerId:string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetContainerStatuses?ShipmentId=' + ShipmentId + '&ContainerId=' + ContainerId;
 
-        return defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     ReadFTP() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetReadFTPFolder';
 
-        return defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
 
                 var entity: INTTRASimulator;
                 if (myJsonResult) {
@@ -98,16 +105,20 @@ export class INTRAWebService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     Simulate(entity: INTTRASimulator) {
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
 
             var mappedEntity: INTTRASimulator = this.MapJsonToINTTRASimulator(entity, false);
 
-            return this._httpClient.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
 
                 var mappedResult: INTTRASimulator = this.MapJsonToINTTRASimulator(myJsonResult, true, entity);
 
@@ -115,61 +126,9 @@ export class INTRAWebService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-    SendEBooking(myShipmentId: string) {
-
-        var url = this._apiUrl + '/GetSendEBooking?myShipmentId=' + myShipmentId;
-
-        return defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var myJsonResult = response;
-
-                var mappedResult: INTRAResult = new INTRAResult();
-
-                if (myJsonResult) {
-                    var jsonListKeys = Object.keys(myJsonResult);
-                    for (var key in jsonListKeys) {
-                        var property = jsonListKeys[key];
-                        mappedResult[property] = myJsonResult[property];
-                    }
-                }
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = mappedResult;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    ValidateBooking(myShipmentId: string) {
-
-        var url = this._apiUrl + '/GetBookingMessageResultValidate?myShipmentId=' + myShipmentId;
-
-        return defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var myJsonResult = response;
-
-                var mappedResult: INTRAResult = new INTRAResult();
-
-                if (myJsonResult) {
-                    var jsonListKeys = Object.keys(myJsonResult);
-                    for (var key in jsonListKeys) {
-                        var property = jsonListKeys[key];
-                        mappedResult[property] = myJsonResult[property];
-                    }
-                }
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = mappedResult;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
     MapJsonToINTTRASimulator(jsonPM: any, getCallMap: boolean = true, entity: INTTRASimulator = null) {
         if (!entity) {
             entity = new INTTRASimulator();

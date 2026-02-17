@@ -30,7 +30,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
     selector: 'LoadRecoExPageComponent',
-    
+    moduleId: module.id,
     providers: [EntityListService],
     templateUrl: './LoadRecoExPageComponent.html',
 })
@@ -74,7 +74,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
     IsShowProgressBar: boolean = false;
     IsUploadCanceled: boolean;
     IsUploadInProgress: boolean;
-    Placeholder: any='';
+    Placeholder: any;
 
     ResponseMessage: any;
     UploadButtonIsEnabled: boolean = true;
@@ -143,10 +143,8 @@ export class LoadRecoExPageComponent extends BaseComponent {
                     } else {
 
                         if (!AppTool.IsNullOrEmpty(response)) {
-                            //this.ShowMessage(JSON.stringify(response.Result));
-                            this._ResultLoadBankPage = response.Result;
-                            
-                            //this.CancelButtonClicked();
+                            this.ShowMessage(JSON.stringify(response.Result));
+                            this.CancelButtonClicked();
                         }
 
                     }
@@ -154,7 +152,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
         }
 
     }
-    _ResultLoadBankPage: ResultLoadBankPage;
+
 
     //#region upload
     public ShowMessage(message: string) {
@@ -261,18 +259,5 @@ export class LoadRecoExPageComponent extends BaseComponent {
     
 
     //#endregion upload
-
-}
-class ResultLoadBankPage {
-    public DBSuccessPageList  :MyDTO[];
-    public DBExceptionPageList: MyDTO[];
-    public ValidateBankPageAgaintDBErrors: MyDTO[];
-
-}
-class MyDTO
-{
-    public Message: string
-    public Verbose: string
-    public RawLine: string
 
 }

@@ -1,9 +1,9 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -210,7 +210,6 @@ namespace WebFreight.Web.GlobalModel
         {
             return globalTenantsRepository.GetGlobalTenantsByTenant(0);
         }
-        public List<GlobalTenant> GetAllTenants() =>globalTenantsRepository.All();
 
         public GlobalTenant GetGlobalTenantsByTenant(int tenant)
         {
@@ -2054,14 +2053,6 @@ namespace WebFreight.Web.GlobalModel
             HelpResourceRepository rep = new HelpResourceRepository();
             return rep.GetAllHelpResources();
         }
-        public IQueryable<HelpResource> GetReleaseHelpResources(int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("HelpResource", "READ", tenant);
-
-            HelpResourceRepository rep = new HelpResourceRepository();
-            return rep.GetReleaseHelpResources();
-        }
         #endregion
 
         #region TenantType
@@ -2442,145 +2433,21 @@ namespace WebFreight.Web.GlobalModel
 
         #endregion
 
-
-        #region BluesnapContractType
-
-        [Query(HasSideEffects = true)]
-        public IQueryable<BluesnapContractTypeList> GetBluesnapContractTypeFilters(byte[] xmlFilters, int tenant)
+        public void LoadDataBases()
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-
-            BluesnapContractTypeRepository BluesnapContractTypeRepository = new BluesnapContractTypeRepository(tenant);
-            BluesnapContractTypeQuery BluesnapContractTypeQuery = new BluesnapContractTypeQuery(BluesnapContractTypeRepository);
-
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-            GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort();
-
-            IQueryable<BluesnapContractType> iQueryable = BluesnapContractTypeRepository.GetBluesnapContractTypes();
-
-            QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-            QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-            iQueryable = filter.GetFilteredQuery<BluesnapContractType>(nonListQueryOperation, iQueryable);
-
-            int skippedPorts = queryOperations.PageIndex;
-
-            IQueryable<BluesnapContractTypeList> query2 = BluesnapContractTypeQuery.GetIQueryableEntityList(iQueryable);
-            query2 = filter.GetFilteredQuery<BluesnapContractTypeList>(listQueryOperation, query2);
-
-            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            if (LogitudeSettings.DeploymentStage != "Dev")
             {
-                PropertyInfo propInfo = typeof(BluesnapContractTypeList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("BluesnapContractType", tenant).ToList();
-
-                ObjectField objectField = (from a in shipmentObjectFields
-                                           where a.FieldName == queryOperations.SortByColumnName
-                                           select a).FirstOrDefault();
-
-                if (objectField != null)
-                {
-                    switch (objectField.DataTypeCode.ToLower())
-                    {
-                        case "text":
-                            {
-                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, string>(queryOperations, query2);
-                                break;
-                            }
-
-                        case "ntext":
-                            {
-                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, string>(queryOperations, query2);
-                                break;
-                            }
-                        case "double":
-                            {
-                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, double>(queryOperations, query2);
-                                break;
-                            }
-                        case "datetime":
-                            {
-                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, DateTime>(queryOperations, query2);
-                                break;
-                            }
-                        case "integer":
-                            {
-                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, int>(queryOperations, query2);
-                                break;
-                            }
-                        case "boolean":
-                            {
-                                query2 = sortClass.GetSorterQuery<BluesnapContractTypeList, bool>(queryOperations, query2);
-                                break;
-                            }
-                        default:
-                            {
-                                query2 = query2.OrderByDescending(d => d.Code);
-                                break;
-                            }
-                    }
-                }
+                GlobalDB db1 = new GlobalDB() { Id = "0", DBConnection = "WebFreightBranch2,simplog@z0n0c08sao,Saas256!@" };
+                globalDBsRepository.Add(db1);
             }
-
             else
             {
-                query2 = query2.OrderByDescending(d => d.Code);
+                GlobalDB db1 = new GlobalDB() { Id = "0", DBConnection = "WebFreightBranch2,sa,Saas256" /*BuildConnectionString("WebFreight")*/ };
+                globalDBsRepository.Add(db1);
             }
 
-            query2 = query2.Skip(skippedPorts);
-            query2 = query2.Take(queryOperations.PageSize);
-            return query2;
+            globalDBsRepository.SubmitChanges();
         }
-
-        public int GetBluesnapContractTypeFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-
-            BluesnapContractTypeRepository BluesnapContractTypeRepository = new BluesnapContractTypeRepository(tenant);
-            BluesnapContractTypeQuery BluesnapContractTypeQuery = new BluesnapContractTypeQuery(BluesnapContractTypeRepository);
-
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-            GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort();
-
-            IQueryable<BluesnapContractType> iQueryable = BluesnapContractTypeRepository.GetBluesnapContractTypes();
-
-            QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-            QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-            iQueryable = filter.GetFilteredQuery<BluesnapContractType>(nonListQueryOperation, iQueryable);
-
-            IQueryable<BluesnapContractTypeList> query2 = BluesnapContractTypeQuery.GetIQueryableEntityList(iQueryable);
-            query2 = filter.GetFilteredQuery<BluesnapContractTypeList>(listQueryOperation, query2);
-
-            int count = query2.Count();
-            return count;
-        }
-        #endregion
-
-        //public void LoadDataBases()
-        //{
-        //    if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
-        //    {
-        //        GlobalDB db1 = new GlobalDB() { Id = "0", DBConnection = "WebFreightBranch2,simplog@z0n0c08sao,Saas256!@" };
-        //        globalDBsRepository.Add(db1);
-        //    }
-        //    else
-        //    {
-        //        GlobalDB db1 = new GlobalDB() { Id = "0", DBConnection = "WebFreightBranch2,sa,Saas256" /*BuildConnectionString("WebFreight")*/ };
-        //        globalDBsRepository.Add(db1);
-        //    }
-
-        //    globalDBsRepository.SubmitChanges();
-        //}
 
         private string BuildConnectionString(string dbName)
         {

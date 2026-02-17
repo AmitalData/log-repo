@@ -149,7 +149,7 @@ export class GeneralDocumentFollowUpHelper {
 
                 if (followup) {
 
-                    this.followUpPMExtendedService.RemoveFollowUpById(followup.Id).subscribe((res: ServiceResponse) => {
+                    this.followUpPMExtendedService.RemoveFollowUpById(followup.Id).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         this.CurrentSession.StopBusyIndicator();
                         if (!pmResponse.HasError) {
@@ -175,7 +175,7 @@ export class GeneralDocumentFollowUpHelper {
 
         if (!AppTool.IsNullOrEmpty(this.EventTypeCode)) {
             this.CurrentSession.StartBusyIndicator("Please Wait...");
-            this._eventTypeExtendedPMService.GetEventTypeByCode(this.EventTypeCode, SessionInfo.LoggedUserTenant).subscribe((res: ServiceResponse) => {
+            this._eventTypeExtendedPMService.GetEventTypeByCode(this.EventTypeCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 this.CurrentSession.StopBusyIndicator();
                 if (!pmResponse.HasError) {

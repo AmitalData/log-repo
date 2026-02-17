@@ -60,10 +60,5 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
-
-
-
-        public bool IsShowAmountLocalCurrencyColumnInSharedLogistics { get; set; }
-
     }
 }

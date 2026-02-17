@@ -6,7 +6,6 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
-using System.Configuration;
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class GlobalDBRepository:IRepository<GlobalDB>
@@ -47,32 +46,31 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
            
         }
 
-        public GlobalDB GetGlobalDBById(string id)
+        public GlobalDB GetSingleGlobalDB(string id)
         {
-         
             return (from a in context.GlobalDBs
                     where a.Id == id
                     select a).FirstOrDefault();
         }
-        
-        public GlobalDB GetSingleGlobalDB(string id)
+
+        public static GlobalDB GetGlobalDBById(string id)
         {
 
             string name = "TenantDB" + id;
             GlobalDB db = null;
- 
+
+
+
             if (HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(name) == null)
                 {
+                    IGlobalContext context = GlobalContext.GetContext();
                     
-                        IGlobalContext context = GlobalContext.GetContext();
 
-
-                        db = (from a in context.GlobalDBs
-                              where a.Id == id
-                              select a).FirstOrDefault();
-                    
+                    db = (from a in context.GlobalDBs
+                          where a.Id == id
+                          select a).FirstOrDefault();
 
                     CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     //}
@@ -85,13 +83,13 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
             else
             {
-               
-                    IGlobalContext context = GlobalContext.GetContext();
+                IGlobalContext context = GlobalContext.GetContext();
 
-                    db = (from a in context.GlobalDBs
-                          where a.Id == id
-                          select a).FirstOrDefault();
-                
+               
+
+                db = (from a in context.GlobalDBs
+                      where a.Id == id
+                      select a).FirstOrDefault();
             }
 
 
@@ -99,62 +97,56 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             return db;
         }
 
-		public List<GlobalDB> GetGlobalDBsActive()
-		{
-			const string cacheKey = "GetGlobalDBs";
-
-			if (HttpContext.Current != null)
-			{
-				var cached = CacheManager.CacheWrapper.Get(cacheKey) as List<GlobalDB>;
-				if (cached != null)
-					return cached;
-
-				var dbs = GetActiveDataBases();
-				CacheManager.CacheWrapper.Insert(cacheKey, dbs, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-				return dbs;
-			}
-
-			return GetActiveDataBases();
-		}
-
-		public static GlobalDB GetGlobalDBByTenant(int tenant)
+        public static GlobalDB GetGlobalDBByTenant(int tenant)
         {
             string name = "TenantDB" + tenant;
             GlobalDB db = null;
-           
+
+         
+
+            if (HttpContext.Current != null)
+            {
                 if (CacheManager.CacheWrapper.Get(name) == null)
                 {
-                    db =  GetByGlobalTenant(tenant);                    
+                    IGlobalContext context = GlobalContext.GetContext();
+                    //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    //{
+                        GlobalTenant globaltenant = (from a in context.GlobalTenants
+                                                     where a.Id == tenant
+                                                     select a).FirstOrDefault();
 
-                    CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        db = (from a in context.GlobalDBs
+                              where a.Id == globaltenant.GlobalDBId
+                              select a).FirstOrDefault();
+
+                        CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     //}
                 }
                 else
                 {
                     db = (GlobalDB)CacheManager.CacheWrapper.Get(name);
                 }
-            
+            }
 
-           
+            else
+            {
+                IGlobalContext context = GlobalContext.GetContext();
+
+                GlobalTenant globaltenant = (from a in context.GlobalTenants
+                                             where a.Id == tenant
+                                             select a).FirstOrDefault();
+
+                db = (from a in context.GlobalDBs
+                      where a.Id == globaltenant.GlobalDBId
+                      select a).FirstOrDefault();
+            }
+
+
 
             return db;
         }
 
-        private static GlobalDB GetByGlobalTenant(int tenant)
-        {
-            tenant = SettingUtil.GetCurrentTenant(tenant);
-            GlobalDB db;
-            IGlobalContext context = GlobalContext.GetContext();
 
-            GlobalTenant globaltenant = (from a in context.GlobalTenants
-                                         where a.Id == tenant
-                                         select a).FirstOrDefault();
-
-            db = (from a in context.GlobalDBs
-                  where a.Id == globaltenant.GlobalDBId
-                  select a).FirstOrDefault();
-            return db;
-        }
 
         public int GetDataBasesCount()
         {
@@ -215,7 +207,5 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             throw new NotImplementedException();
         }
-
-   
     }
 }

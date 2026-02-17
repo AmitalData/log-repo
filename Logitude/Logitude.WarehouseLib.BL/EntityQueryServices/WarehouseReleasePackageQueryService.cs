@@ -14,7 +14,6 @@ using System.Web;
 using Logitude.WarehouseLib.BL.Helpers;
 using Logitude.WarehouseLib.BL.DataContracts;
 using Simplog.Data.Helpers;
-using Logitude.WarehouseLib.Data.EntityPOCOs;
 
 namespace Logitude.WarehouseLib.BL.EntityQueryServices
 {
@@ -26,7 +25,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         public List<WarehouseReleasePackagePM> GetWarehouseReleasePackagePMListsByWarehouseReleaseId(string WarehouseReleaseId, int tenant)
         {
 
-            List<WarehouseReleasePackagePM> myResult = (from a in context.WarehouseReleasePackages
+            List<WarehouseReleasePackagePM> myResult = (from a in context.WarehouseReleasePackages.Include("WarehouseRelease")
                                                         where a.Tenant == tenant && a.WarehouseRelease.Id == WarehouseReleaseId
                                                         select new WarehouseReleasePackagePM()
                                                         {
@@ -49,23 +48,10 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                             IsContainer = a.IsContainer,
                                                         }).ToList();
 
-            myResult = FullContainerNumberWarning(myResult);
-
             return myResult;
         }
 
-        private List<WarehouseReleasePackagePM> FullContainerNumberWarning(List<WarehouseReleasePackagePM> warehouseReleasePackagePMLists)
-        {
-            List<WarehouseReleasePackagePM> result = warehouseReleasePackagePMLists;
-            foreach (WarehouseReleasePackagePM warehouseReleasePackagePM in result)
-            {
-                if (!string.IsNullOrEmpty(warehouseReleasePackagePM.ContainerNumber))
-                {
-                    warehouseReleasePackagePM.ContainerNumberWarning = ContainerNumberWarehouseValidator.Validate(warehouseReleasePackagePM.ContainerNumber);
-                }
-            }
-            return result;
-        }
+
 
         public List<WarehouseReleasePackageList> GetWarehouseReleasePackageListsByWarehouseReleaseIds(List<string> warehouseReleaseIds, int tenant)
         {
@@ -105,53 +91,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                               Id = a.Id,
                                                               Tenant = a.Tenant,
                                                               ActualReleaseDate = a.WarehouseRelease!=null? a.WarehouseRelease.ActualReleaseDate:null,
-                                                              ReleaseNumber = a.WarehouseRelease != null ? a.WarehouseRelease.ReleaseNumber : null,
-                                                              WarehouseReleaseId = a.WarehouseReleaseId,
                                                           }).ToList();
-
-            return myResult;
-        }
-
-        public List<WarehouseReleasePackage> GetWarehouseReleasePackagesByIds(List<string> warehousePackagesReleaseIds, int tenant)
-        {
-            List<WarehouseReleasePackage> myResult = (from a in context.WarehouseReleasePackages.Include("WarehouseRelease")
-                                                        where a.Tenant == tenant && warehousePackagesReleaseIds.Contains(a.Id)
-                                                        select a).ToList();
-
-            return myResult;
-        }
-
-
-
-
-        public IQueryable<WarehouseReleasePackagePM> GetWarehouseReleasePackagePMLists(int tenant)
-        {
-
-            IQueryable<WarehouseReleasePackagePM> myResult = (from a in context.WarehouseReleasePackages.Include("WarehouseRelease").Include("WarehouseRelease.WarehouseReleaseStatus")
-                                                              where a.Tenant == tenant
-                                                              select new WarehouseReleasePackagePM()
-                                                              {
-                                                                  Id = a.Id,
-                                                                  Tenant = a.Tenant,
-                                                                  Seal = a.Seal,
-                                                                  Description = a.Description,
-                                                                  ContainerNumber = a.ContainerNumber,
-                                                                  Dimensions = a.IsContainer ? "" : a.Length + "-" + a.Width + "-" + a.Height,
-                                                                  Harmonize = a.Harmonize,
-                                                                  Height = a.Height,
-                                                                  Length = a.Length,
-                                                                  PackageTypeName = a.PackageType != null ? a.PackageType.EnglishName : null,
-                                                                  WarehouseReleaseId = a.WarehouseReleaseId,
-                                                                  Width = a.Width,
-                                                                  PackageTypeId = a.PackageTypeId,
-                                                                  Volume = a.Volume,
-                                                                  Quantity = a.Quantity,
-                                                                  Weight = a.Weight,
-                                                                  IsContainer = a.IsContainer,
-                                                                  ShipmentId = a.WarehouseRelease.ShipmentId,
-                                                                  ReleaseNumber = a.WarehouseRelease.ReleaseNumber,
-                                                                  ReleaseStatus = a.WarehouseRelease.WarehouseReleaseStatus!=null ? a.WarehouseRelease.WarehouseReleaseStatus.Name : null,
-                                                              });
 
             return myResult;
         }

@@ -88,7 +88,7 @@ namespace CommunicationWorkerRole
                     if (span.Minutes >= 10)
                     {
                         queue.InitializeQueue("DrobBoxQueue", 0);
-                        queue.Send(new Dictionary<string, string>() { { "Tenant", "0" } }, Tenant,null, null);
+                        queue.Send(new Dictionary<string, string>() { { "Tenant", "0" } }, null, null);
                         StartDate = DateTime.Now;
                     }
                 }

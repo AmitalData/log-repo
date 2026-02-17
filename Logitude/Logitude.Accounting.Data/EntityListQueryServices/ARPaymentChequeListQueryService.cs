@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -51,10 +51,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                          PaymentNumber = a.PaymentId != null ? a.Payment.PaymentNo : null,
 
-                                                         StatusCode = a.StatusCode,
-
-                                                         StatusName =  a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.LocalName : null ,
-
                                                      });
             return query;
         }
@@ -105,10 +101,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         queryableData = queryableData.Where(d => d.StatusCode == "1" && d.ValueDate.Date <= DateTime.Today.Date);
                     }
 
-                    if (item.FieldName == "UnRedeemedChequeStatus" && item.FieldValue.Equals("5") && item.FieldValue2.Equals("6"))
-                    {
-                        queryableData = queryableData.Where(d => d.StatusCode != "5" && d.StatusCode != "6");
-                    }
                 }
                 return queryableData;
             }
@@ -207,7 +199,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
     }
 
-
+  
 
 
     public class ARPaymentChequeFilterCallBack : ARPaymentChequeFilterCallBackCanBeNull
@@ -226,3 +218,4 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
     }
 }
+	

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -9,50 +9,30 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public TermsofUsMap()
         {
             // Primary Key
-            this.HasKey(t => t.Id);
+            this.HasKey(t => t.Version);
 
             // Properties
-            this.Property(t => t.Id)
+            this.Property(t => t.Version)
                 .HasDatabaseGeneratedOption(null);
-
-            this.Property(t => t.VersionDocumentId).HasMaxLength(15);
-
-            this.Property(t => t.PrivateLabelId).HasMaxLength(15);
 
             // Table & Column Mappings
             this.ToTable("TermsofUses");
-            this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
-            this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId");
-            this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId");
-            //#if ORACLE_DB
+
+//#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-               
+                this.Property(t => t.Version).HasColumnName("Version_");
                 this.Property(t => t.Date).HasColumnName("Date_");
-                this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
-                this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId");
-                this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId");
-                this.Property(t => t.IsNew).HasColumnName("IsNew");
-
             }
             //#else
             else
             {
-                
+                this.Property(t => t.Version).HasColumnName("Version");
                 this.Property(t => t.Date).HasColumnName("Date");
-                this.Property(t => t.VersionNumber).HasColumnName("VersionNumber");
-                this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId");
-                this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId");
-                this.Property(t => t.IsNew).HasColumnName("IsNew");
-
             }
-            //#endif
-
-            this.Property(t => t.Tenant).HasColumnName("Tenant");
-
-
+//#endif
+           
         }
     }
 }

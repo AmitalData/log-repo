@@ -34,7 +34,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             {
                 if (value != null)
                 {
-                    date = value.Value;
+                    date = value.Value.Date;
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsNew { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string Notes { get; set; }
+        public string Note { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string DoneNote { get; set; }

@@ -1,8 +1,7 @@
 // General
 import {OperationsComponent} from './Components/Workspaces/OperationsComponent';
 import {ShipmentsComponent} from './Components/Workspaces/ShipmentsComponent';
-import { ContainersFUsComponent } from './Components/Workspaces/ContainersFUsComponent';
-import { AMANACComponent } from './Components/Workspaces/AMANACComponent';
+import {ContainersFUsComponent} from './Components/Workspaces/ContainersFUsComponent';
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {ShipmentHelperComponent} from './Components/Helpers/ShipmentHelperComponent';
 import {ShipmentShortTitleComponent} from './Components/ShortTitles/ShipmentShortTitleComponent';
@@ -17,6 +16,7 @@ import {DateCellDisplayListTemplate} from './Components/ListTemplates/DateCellDi
 import {ApprovePaymentButtonListTemplate} from './Components/ListTemplates/ApprovePaymentButtonListTemplate';
 import {NewShipmentComponent} from './Components/NewEntity/NewShipmentComponent';
 import {NewMasterComponent} from './Components/NewEntity/NewMasterComponent';
+import {WizardAddEditAddressComponent} from './Components/NewEntity/WizardAddEditAddressComponent';
 import {WizardDimensionsComponent} from './Components/NewEntity/WizardDimensionsComponent';
 import {WizardAddEditDimensionsComponent} from './Components/NewEntity/WizardAddEditDimensionsComponent';
 import {ActionButtonsListTemplate} from './Components/ListTemplates/ActionButtonsListTemplate';
@@ -36,23 +36,14 @@ import { SplitPartialPackageComponent } from './Components/SplitShipment/SplitPa
 import { RemoveTasksButtonListTemplate } from './Components/ListTemplates/RemoveTasksButtonListTemplate';
 import { AnalyzeChampXMLComponent } from './Components/Helpers/AnalyzeChampXMLComponent';
 import { ShipmenDirectionConvertComponent } from './Components/MenuButtons/ShipmenDirectionConvertComponent';
-import { CustomsTransferHeaderHelperComponent } from './Components/Helpers/CustomsTransferHeaderHelperComponent';
-import { ContainerHelperComponent } from './Components/Helpers/ContainerHelperComponent';
-import { SupplierConsigneeListTemplate } from './Components/ListTemplates/SupplierConsigneeListTemplate';
-import { UpdateUnassigedDataComponent } from './Components/UnassigedData/UpdateUnassigedDataComponent';
-import { ContainerShortTitleComponent } from './Components/ShortTitles/ContainerShortTitleComponent';
-import { ContainerComponent } from './Components/Workspaces/ContainerComponent';
-import { ContainerViewsGraphComponent } from './Components/Templates/ContainerViewsGraphComponent';
 
 export const Components =
     [
         OperationsComponent,
         ShipmentsComponent,
         ContainersFUsComponent,
-        AMANACComponent,
         FieldTemplateComponent,
         ShipmentHelperComponent,
-        ContainerHelperComponent,
         ShipmentShortTitleComponent,
         ShipmentFiltersMenuComponent,
         TransportModeListHeaderTemplate,
@@ -63,6 +54,7 @@ export const Components =
         TaskCellDisplayListTemplate,
         NewShipmentComponent,
         NewMasterComponent,
+        WizardAddEditAddressComponent,
         WizardDimensionsComponent,
         WizardAddEditDimensionsComponent,
         DateCellDisplayListTemplate,
@@ -83,12 +75,6 @@ export const Components =
         RemoveTasksButtonListTemplate,
         AnalyzeChampXMLComponent,
         ShipmenDirectionConvertComponent,
-        CustomsTransferHeaderHelperComponent,
-        SupplierConsigneeListTemplate,
-        UpdateUnassigedDataComponent,
-        ContainerShortTitleComponent,
-        ContainerComponent,
-        ContainerViewsGraphComponent
     ];
 
 export const ControlsComponents =
@@ -104,11 +90,9 @@ export class ModuleDeclarations {
         switch (name) {
             case "OperationsComponent": { myResult = OperationsComponent; break; }
             case "ShipmentsComponent": { myResult = ShipmentsComponent; break; }
-            case "ContainersFUsComponent": { myResult = ContainersFUsComponent; break; }
-            case "AMANACComponent": { myResult = AMANACComponent; break; }
+            case "ContainersFUsComponent": { myResult = ContainersFUsComponent; break; }          
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "ShipmentHelperComponent": { myResult = ShipmentHelperComponent; break; }
-            case "ContainerHelperComponent": { myResult = ContainerHelperComponent; break; }
             case "ShipmentShortTitleComponent": { myResult = ShipmentShortTitleComponent; break; }
             case "ShipmentFiltersMenuComponent": { myResult = ShipmentFiltersMenuComponent; break; }
             case "TransportModeListHeaderTemplate": { myResult = TransportModeListHeaderTemplate; break; }
@@ -117,6 +101,7 @@ export class ModuleDeclarations {
             case "ReferenceNumberCellDisplayListTemplate": { myResult = ReferenceNumberCellDisplayListTemplate; break; }
             case "NewShipmentComponent": { myResult = NewShipmentComponent; break; }
             case "NewMasterComponent": { myResult = NewMasterComponent; break; }
+            case "WizardAddEditAddressComponent": { myResult = WizardAddEditAddressComponent; break; }
             case "WizardDimensionsComponent": { myResult = WizardDimensionsComponent; break; }
             case "WizardAddEditDimensionsComponent": { myResult = WizardAddEditDimensionsComponent; break; }
             case "StatusCellDisplayListTemplate": { myResult = StatusCellDisplayListTemplate; break; }
@@ -140,12 +125,6 @@ export class ModuleDeclarations {
             case "RemoveTasksButtonListTemplate": { myResult = RemoveTasksButtonListTemplate; break; }
             case "AnalyzeChampXMLComponent": { myResult = AnalyzeChampXMLComponent; break; }
             case "ShipmenDirectionConvertComponent": { myResult = ShipmenDirectionConvertComponent; break; }
-            case "CustomsTransferHeaderHelperComponent": { myResult = CustomsTransferHeaderHelperComponent; break; }
-            case "SupplierConsigneeListTemplate": { myResult = SupplierConsigneeListTemplate; break; } 
-            case "UpdateUnassigedDataComponent": { myResult = UpdateUnassigedDataComponent; break; }
-            case "ContainerShortTitleComponent": { myResult = ContainerShortTitleComponent; break; }
-            case "ContainerComponent": { myResult = ContainerComponent; break; }
-            case "ContainerViewsGraphComponent": { myResult = ContainerViewsGraphComponent; break; }
         }
 
         return myResult;

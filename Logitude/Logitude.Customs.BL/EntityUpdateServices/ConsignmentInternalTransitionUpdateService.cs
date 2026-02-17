@@ -19,7 +19,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             entityParentPM.ConsignmentInternalTransitionLastLineNumber += 1;
             entityPM.LineNumber = entityParentPM.ConsignmentInternalTransitionLastLineNumber;
-            entityPM.Tenant = entityParentPM.Tenant;
         }
 
 

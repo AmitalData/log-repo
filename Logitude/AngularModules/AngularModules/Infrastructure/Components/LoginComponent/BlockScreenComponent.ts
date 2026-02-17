@@ -3,7 +3,7 @@ import {SessionInfo} from '../../Utilities/SessionInfo';
 import {InfraSettings} from '../../Utilities/InfraSettings';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {LoginService} from '../../Services/LoginService';
-
+import {Headers} from '@angular/http';
 import {TenantManagementPMService} from '../../Services/StandardPMs/TenantManagementPMService';
 import {AppTool} from '../../Tools';
 import {Environment} from '../../Locators/Environment';
@@ -12,7 +12,7 @@ import { HomeComponent } from '../HomeComponent/HomeComponent';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './BlockScreenComponent.html',
 })
 
@@ -33,13 +33,13 @@ export class BlockScreenComponent {
     public authHeader;
     GoToManage() {
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
+        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
             var temp = myResult.Result;
             temp = temp.Token;
             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
             var link = "https://cp.bluesnap.com/jsp/account_login.jsp";
             if (!AppTool.IsNullOrEmpty(temp)) {
-                link = "https://ws.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
+                link = "https://www.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
             }
             var win = window.open(link, '_blank');
             win.focus();
@@ -53,8 +53,7 @@ export class BlockScreenComponent {
         d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
         let expires: string = `expires=${d.toUTCString()}`;
         let cpath: string = path ? `; path=${path}` : '';
-        const isSecure = (window.location.protocol === "https:");
-        document.cookie = `${name}=${value}; ${expires}${cpath}${isSecure ? "; Secure" : ""}; SameSite=Lax`;
+        document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
 
 
@@ -78,7 +77,7 @@ export class BlockScreenComponent {
         //    this.SampleLogoURL = temp;
         //}
         //else {
-        this.loginService.GetGlobalSetting().subscribe((Setting: any) => {
+        this.loginService.GetGlobalSetting().subscribe(Setting => {
             if (Setting) {
                 ObjectsLocator.GlobalSetting = Setting;
                 this.loginService.GetTenantManagement().subscribe(TenantManagement => {
@@ -86,7 +85,7 @@ export class BlockScreenComponent {
                     if (TenantManagement) {
                         var temptenant = myTenantManagementPMService.MapJsonToEntityPM(TenantManagement);
                         if (temptenant) {
-                            this.loginService.GetPrivateLableById(temptenant.PrivateLabelId).subscribe((Result:any) => {
+                            this.loginService.GetPrivateLableById(temptenant.PrivateLabelId).subscribe(Result => {
                                 SessionLocator.PrivateLableSettings = Result;
                                 if (SessionLocator.PrivateLableSettings) {
                                     this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
@@ -143,19 +142,19 @@ export class BlockScreenComponent {
         if (SessionLocator.BlockType == "company") {
             this.BlockMessagePart1 = "Your company subscription has expired.";
             this.BlockMessagePart2 = "To renew or subscribe please use the links under the billing icon (marked with a $ sign) above";
-            this.BlockMessagePart3 = "For more information and help please contact " ;
+            this.BlockMessagePart3 = "For more information and help please contact ";
         }
         else if (SessionLocator.BlockType == "user") {
             this.BlockMessagePart1 = "Your temporary access has expired";
             this.BlockMessagePart2 = "To renew or subscribe please use the links under the billing icon (marked with a $ sign) above";
-            this.BlockMessagePart3 = "For more information and help please contact " ;
+            this.BlockMessagePart3 = "For more information and help please contact ";
 
         }
         else if (SessionLocator.BlockType == "suspend") {
             this.BlockMessagePart1 = "Your company subscription has expired. The recurring renew has failed due to credit";
             this.BlockMessagePart2 = "card authorization error.To renew or subscribe please use the links under the billing icon (marked with a $ sign) above";
             this.BlockMessagePart3 = "Please contact your e-commerce vendor or ";
-           
+
         }
     }
 

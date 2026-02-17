@@ -1,14 +1,13 @@
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {Component}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'QuotesFilterComponent',
     templateUrl: './QuotesFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -57,62 +56,54 @@ export class QuotesFilterComponent extends BaseComponent   {
         date.setUTCSeconds(0);
         return date;
     }
-    public IsSchedulerReport: boolean = true;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                                       
-                case "OpenDate":
-                    this.FromDate =new Date(queryFilterItem.FieldValue);                                         
-                    break; 
-                case "ExpirationDate":
-                    this.ToDate =new Date(queryFilterItem.FieldValue);
-                    break;  
-                case "CustomerId":
-                    this.CustomerId=queryFilterItem.FieldValue;
-                    break;
-               
-                case "SalesmanUserId":
-                    this.SalesmanUserId = queryFilterItem.FieldValue;
-                    break;
-               
-                
-            }
-        }
-    }
-    ValidateSelectedFilters() {
+
+    RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
         if (this.FromDate > this.ToDate)
             this.ValidationErrorsList.push("From date field must be less than To date field");
 
-        return this.ValidationErrorsList.length == 0;
-    }
-    RunReport(isloading: boolean) {
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
+            if (this.FromDate) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "OpenDate";
+                this.queryFilterItem.FieldValue = this.FromDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItem.Operator = "GreaterThanOrEqual";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+            if (this.ToDate) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ExpirationDate";
+                this.queryFilterItem.FieldValue = this.ToDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItem.Operator = "LessThanOrEqual";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
 
-        if (this.ValidateSelectedFilters()) {
-               
+            if (this.CustomerId) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "CustomerId";
+                this.queryFilterItem.FieldValue = this.CustomerId;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);                
+            }
+
+            if (this.SalesmanUserId) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "SalesmanUserId";
+                this.queryFilterItem.FieldValue = this.SalesmanUserId;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);                
+            }   
+                     
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
 
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
@@ -125,45 +116,5 @@ export class QuotesFilterComponent extends BaseComponent   {
 
             this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
         }
-    }
-    GetQueryFilterItems(){
-        this.queryFilterItems = new Array<QueryFilterItem>();
-        if (this.FromDate) {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "OpenDate";
-            this.queryFilterItem.FieldValue = this.FromDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "GreaterThanOrEqual";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-        if (this.ToDate) {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ExpirationDate";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "LessThanOrEqual";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-
-        if (this.CustomerId) {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CustomerId";
-            this.queryFilterItem.FieldValue = this.CustomerId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);                
-        }
-
-        if (this.SalesmanUserId) {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "SalesmanUserId";
-            this.queryFilterItem.FieldValue = this.SalesmanUserId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);                
-        }   
-         return this.queryFilterItems;  
     }
 }

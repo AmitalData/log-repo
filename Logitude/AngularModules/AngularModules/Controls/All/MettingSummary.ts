@@ -7,7 +7,7 @@ import {CRMControlsService, MeetingSummary} from '../Services/CRMControlsService
 
 @Component({
     selector: "MettingSummary",
-    
+    moduleId: module.id,
      templateUrl: './MettingSummary.html',
      inputs: ['IsChecked', 'Text', 'EntityId', 'IsToRight'],
 })

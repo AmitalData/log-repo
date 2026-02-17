@@ -10,7 +10,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TransferStartDateComponent.html',
 })
 
@@ -25,8 +25,6 @@ export class TransferStartDateComponent extends BaseComponent {
     private pluralEntityName: string;
     private invoiceDomainService: InvoiceDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
-    private IsAccountingSystem_QB_QBO: boolean = false;
-
     constructor() {
         super();
         this.invoiceDomainService = new InvoiceDomainService();
@@ -54,10 +52,6 @@ export class TransferStartDateComponent extends BaseComponent {
                 }
         }
 
-        if (this.EntityPM.AccountingSystemCode == "QB" || this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG") {
-            this.IsAccountingSystem_QB_QBO = true;
-        }
-
         this.IsResourcesReady = true;
         this.Clone();
     }
@@ -80,13 +74,6 @@ export class TransferStartDateComponent extends BaseComponent {
     public set ARPaymentTransferStartDate(value: Date) {
         if (this.EntityPM.ARPaymentTransferStartDate != value) {
             this.EntityPM.ARPaymentTransferStartDate = value;
-        }
-    }
-
-    public get APPaymentTransferStartDate() { return this.EntityPM.APPaymentTransferStartDate }
-    public set APPaymentTransferStartDate(value: Date) {
-        if (this.EntityPM.APPaymentTransferStartDate != value) {
-            this.EntityPM.APPaymentTransferStartDate = value;
         }
     }
 
@@ -118,11 +105,6 @@ export class TransferStartDateComponent extends BaseComponent {
                     myStartDate = this.ARPaymentTransferStartDate;
                     break;
                 }
-
-                case "APPayment": {
-                    myStartDate = this.APPaymentTransferStartDate;
-                    break;
-                }
             }
 
             if (AppTool.IsNullOrEmpty(myStartDate)) {
@@ -133,25 +115,19 @@ export class TransferStartDateComponent extends BaseComponent {
             this.ValidationErrorsList = errors;
 
             if (errors.length == 0) {
-                if (this.IsAccountingSystem_QB_QBO) {
-                    this.UpdateAccountingSettingStartDate(myStartDate);
-                }
+                var myConfirmWindow = new ConfirmWindow();
+                myConfirmWindow.Width = 400;
+                myConfirmWindow.Show(this.GetConfirmMessage(myStartDate));
 
-                else {
-                    var myConfirmWindow = new ConfirmWindow();
-                    myConfirmWindow.Width = 400;
-                    myConfirmWindow.Show(this.GetConfirmMessage(myStartDate));
+                myConfirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (myConfirmWindow.Yes) {
+                        this.UpdateSystemStartDate(myStartDate);
+                    }
 
-                    myConfirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (myConfirmWindow.Yes) {
-                            this.UpdateSystemStartDate(myStartDate);
-                        }
-
-                        else {
-                            this.ReApplyOkButton();
-                        }
-                    });
-                }
+                    else {
+                        this.ReApplyOkButton();
+                    }
+                });
             }
 
             else {
@@ -166,44 +142,32 @@ export class TransferStartDateComponent extends BaseComponent {
     GetConfirmMessage(myStartDate: Date) {
         var myResult: string = "";
         var myDateString: string = "";
-        
+
+        if (!AppTool.IsNullOrEmpty(this.ARPaymentTransferStartDate)) {
+            myDateString = DateTool.GetDateFormats(this.ARPaymentTransferStartDate).ShortDateString;
+        }
+
         switch (this.Code) {
             case "ARInvoice":
                 {
-                    if (!AppTool.IsNullOrEmpty(this.ARInvoiceTransferStartDate)) {
-                        myDateString = DateTool.GetDateFormats(this.ARInvoiceTransferStartDate).ShortDateString;
-                    }
-
                     myResult = "Please note that all the AR invoices with an invoice date smaller than " + myDateString + ", will be updated and marked as blocked for transfer";
                     break;
                 }
 
             case "APInvoice":
                 {
-                    if (!AppTool.IsNullOrEmpty(this.APInvoiceTransferStartDate)) {
-                        myDateString = DateTool.GetDateFormats(this.APInvoiceTransferStartDate).ShortDateString;
-                    }
-
                     myResult = "Please note that all the AP invoices with an invoice date smaller than " + myDateString + ", will be updated and marked as blocked for transfer";
                     break;
                 }
 
             case "ARPayment":
                 {
-                    if (!AppTool.IsNullOrEmpty(this.ARPaymentTransferStartDate)) {
-                        myDateString = DateTool.GetDateFormats(this.ARPaymentTransferStartDate).ShortDateString;
-                    }
-
                     myResult = "Please note that all the AR payments with a register date smaller than " + myDateString + ", will be updated and marked as blocked for transfer";
                     break;
                 }
 
             case "APPayment":
                 {
-                    if (!AppTool.IsNullOrEmpty(this.APPaymentTransferStartDate)) {
-                        myDateString = DateTool.GetDateFormats(this.APPaymentTransferStartDate).ShortDateString;
-                    }
-
                     myResult = "Please note that all the AP payments with a register date smaller than " + myDateString + ", will be updated and marked as blocked for transfer";
                     break;
                 }
@@ -261,20 +225,6 @@ export class TransferStartDateComponent extends BaseComponent {
         });        
     }
 
-    UpdateAccountingSettingStartDate(myStartDate: Date) {
-        this.CurrentSession.StartBusyIndicator("Updating...");
-        this.invoiceDomainService.SetAccountingSettingStartDate(this.Code, myStartDate).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse.HasError) {
-                this.ValidationErrorsList = myResponse.ErrorsArray;
-                this.ReApplyOkButton();
-            }
-            else {
-                this.Clone();
-                this.CurrentSession.CloseCurrentWindow();
-            }
-        });
-    }
-
     Blocking() {
         if (this.entitiesIdsList.length == 0) {
             if (this.sentCount == 1) {
@@ -320,7 +270,6 @@ export class TransferStartDateComponent extends BaseComponent {
         this.myCloner.AddField('ARInvoiceTransferStartDate');
         this.myCloner.AddField('APInvoiceTransferStartDate');
         this.myCloner.AddField('ARPaymentTransferStartDate');
-        this.myCloner.AddField('APPaymentTransferStartDate');
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {

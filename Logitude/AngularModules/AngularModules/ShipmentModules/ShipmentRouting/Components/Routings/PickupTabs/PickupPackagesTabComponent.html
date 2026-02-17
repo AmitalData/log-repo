@@ -1,4 +1,4 @@
-
+﻿
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -14,25 +14,21 @@
                             </span>
                         </td>
 
-                        <td style="width:5px;" *ngIf="IsAddContainerVisible">
-                            <div></div>
-                        </td>
-
-                        <td style="width: 1px" *ngIf="IsAddContainerVisible">
-                            <button [attr.data-cy]="'AddContainerFromPickup'" [disabled]="!IsAddContainerEnabled" class="Button" (click)="AddContainerClicked()">Add Container</button>
-                        </td>
 
                         <td style="width:5px;">
                             <div></div>
-                        </td>
+                      
+                    
 
                         <td style="width: 1px">
                             <button [disabled]="!IsEditingEnabled" class="Button" (click)="CopyfromShipmentPackagesButtonClicked()">Copy from Shipment Packages</button>
                         </td>
 
+
                         <td style="width:5px;">
                             <div></div>
                         </td>
+
 
                     </tr>
                 </table>
@@ -132,7 +128,7 @@
 
                                     <td class="CellTools" style="width: 25px; min-width: 25px; max-width: 25px;">
                                         <span class="CellSeparator"></span>
-                                        <IconButton [disabled]="!IsEditingEnabled && !IsAddContainerEnabled" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteButtonClicked(item)"></IconButton>
+                                        <IconButton [disabled]="!IsEditingEnabled" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteButtonClicked(item)"></IconButton>
                                     </td>
 
 

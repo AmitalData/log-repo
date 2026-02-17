@@ -1,4 +1,4 @@
-import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
+﻿import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {InvoiceComponent} from './Components/Workspaces/InvoiceComponent';
 import {AccountReceivablesComponent} from './Components/Workspaces/AccountReceivablesComponent';
 import {AccountPayablesComponent} from './Components/Workspaces/AccountPayablesComponent';
@@ -11,9 +11,9 @@ import {TransferStartDateComponent} from './Components/Workspaces/Windows/Transf
 import {PrintTaxComponent} from './Components/Workspaces/Windows/PrintTaxComponent';
 import {ExternalAccountingSystemComponent} from './Components/Workspaces/ExternalAccountingSystemComponent';
 import {QuickBooksLogin} from './Components/Workspaces/QuickBooksLogin';
+
 import {AccountingTab_AccountingPaymentMethod} from './Components/AccountingTab/AccountingTab_AccountingPaymentMethod'; 
 import {AccountingTab_APPaymentMethod} from './Components/AccountingTab/AccountingTab_APPaymentMethod';
-import { ExternalTransmissionSettingsComponent } from './Components/Workspaces/Windows/ExternalTransmissionSettingsComponent';
 
 // BankAccountLite
 import {NewBankAccountLiteComponent} from './Components/NewEntity/NewBankAccountLiteComponent';
@@ -41,14 +41,7 @@ import {ARInvoiceMenuButtonsComponent} from './Components/MenuButtonsComponents/
 import {CreditLimitPopupComponent} from './Components/NewEntity/CreditLimitPopupComponent';
 import {SettingsComponent} from './Components/Workspaces/SettingsComponent';
 import {SATInterfaceSettingsComponent} from './Components/Workspaces/SATInterfaceSettingsComponent'; 
-import { SendPaymentWindowComponent } from './Components/SAT/SendPaymentWindowComponent';
-import { ARInvoiceCancellationReasionComponent } from './Components/MenuButtons/ARInvoice/ARInvoiceCancellationReasionComponent';
-import { ARInvoiceLinesVATAmountsAdjustmentsComponent } from './Components/SAT/ARInvoiceLinesVATAmountsAdjustmentsComponent';
-import { NewConfirmationNumberDefaultComponent } from './Components/NewEntity/NewConfirmationNumberDefaultComponent';
-import { NewMasavInterfaceComponent } from './Components/NewEntity/NewMasavInterfaceComponent';
-import { MasavInterfaceDetailsTabComponent } from './Components/EditTabs/MasavInterface/MasavInterfaceDetailsTabComponent';
-import { MasavInterfaceListTemplate } from './Components/Templates/MasavInterfaceListTemplate';
-
+import {SendPaymentWindowComponent} from './Components/SAT/SendPaymentWindowComponent';
 
 export const Components =
     [
@@ -63,9 +56,9 @@ export const Components =
         TransferSettingsComponent,
         TransferStartDateComponent,
         PrintTaxComponent,
-        ExternalTransmissionSettingsComponent,
-        NewBankAccountLiteComponent,  
-        NewConfirmationNumberDefaultComponent,    
+        
+        NewBankAccountLiteComponent,
+        
         APInvoiceShortTitleComponent,
         APPaymentShortTitleComponent,
         ARInvoiceShortTitleComponent,
@@ -75,23 +68,20 @@ export const Components =
         ARInvoiceHelperComponent,
         ARPaymentHelperComponent,
         AccountingTransferHeaderHelperComponent,
+
         ARInvoiceIsPrintedHeaderTemplate,
         ARInvoiceSentHeaderTemplate,
         ARInvoiceMenuButtonsComponent,
         ExternalAccountingSystemComponent,
         QuickBooksLogin,
-        TransferHeaderDetailsTabComponent,        
+        TransferHeaderDetailsTabComponent,
+        
         CreditLimitPopupComponent,
         SettingsComponent,
         SATInterfaceSettingsComponent,
         SendPaymentWindowComponent,
         AccountingTab_AccountingPaymentMethod,
-        AccountingTab_APPaymentMethod,
-        ARInvoiceCancellationReasionComponent,
-        ARInvoiceLinesVATAmountsAdjustmentsComponent,
-        NewMasavInterfaceComponent,
-        MasavInterfaceDetailsTabComponent,
-        MasavInterfaceListTemplate
+        AccountingTab_APPaymentMethod,        
     ];
 
 export class ModuleDeclarations {
@@ -111,10 +101,10 @@ export class ModuleDeclarations {
             case "TransferSettingsComponent": { myResult = TransferSettingsComponent; break; }               
             case "TransferStartDateComponent": { myResult = TransferStartDateComponent; break; }
             case "PrintTaxComponent": { myResult = PrintTaxComponent; break; }
-            case "NewBankAccountLiteComponent": { myResult = NewBankAccountLiteComponent; break; }             
-            case "APInvoiceShortTitleComponent": { myResult = APInvoiceShortTitleComponent; break; }
-            case "NewConfirmationNumberDefaultComponent": { myResult = NewConfirmationNumberDefaultComponent; break; }             
 
+            case "NewBankAccountLiteComponent": { myResult = NewBankAccountLiteComponent; break; }
+             
+            case "APInvoiceShortTitleComponent": { myResult = APInvoiceShortTitleComponent; break; }
             case "APPaymentShortTitleComponent": { myResult = APPaymentShortTitleComponent; break; }
             case "ARInvoiceShortTitleComponent": { myResult = ARInvoiceShortTitleComponent; break; }
             case "ARPaymentShortTitleComponent": { myResult = ARPaymentShortTitleComponent; break; }
@@ -122,25 +112,21 @@ export class ModuleDeclarations {
             case "APPaymentHelperComponent": { myResult = APPaymentHelperComponent; break; }
             case "ARInvoiceHelperComponent": { myResult = ARInvoiceHelperComponent; break; }
             case "ARPaymentHelperComponent": { myResult = ARPaymentHelperComponent; break; }
-            case "AccountingTransferHeaderHelperComponent": { myResult = AccountingTransferHeaderHelperComponent; break; }                
+            case "AccountingTransferHeaderHelperComponent": { myResult = AccountingTransferHeaderHelperComponent; break; }
+                
             case "ARInvoiceIsPrintedHeaderTemplate": { myResult = ARInvoiceIsPrintedHeaderTemplate; break; }
             case "ARInvoiceSentHeaderTemplate": { myResult = ARInvoiceSentHeaderTemplate; break; }
             case "ARInvoiceMenuButtonsComponent": { myResult = ARInvoiceMenuButtonsComponent; break; }
             case "ExternalAccountingSystemComponent": { myResult = ExternalAccountingSystemComponent; break; }
             case "QuickBooksLogin": { myResult = QuickBooksLogin; break; }
-            case "TransferHeaderDetailsTabComponent": { myResult = TransferHeaderDetailsTabComponent; break; }                
+            case "TransferHeaderDetailsTabComponent": { myResult = TransferHeaderDetailsTabComponent; break; }
+                
             case "CreditLimitPopupComponent": { myResult = CreditLimitPopupComponent; break; } 
             case "SettingsComponent": { myResult = SettingsComponent; break; }    
             case "SATInterfaceSettingsComponent": { myResult = SATInterfaceSettingsComponent; break; }
             case "SendPaymentWindowComponent": { myResult = SendPaymentWindowComponent; break; }     
             case "AccountingTab_AccountingPaymentMethod": { myResult = AccountingTab_AccountingPaymentMethod; break; }     
-            case "AccountingTab_APPaymentMethod": { myResult = AccountingTab_APPaymentMethod; break; }
-            case "ExternalTransmissionSettingsComponent": { myResult = ExternalTransmissionSettingsComponent; break; }
-            case "ARInvoiceCancellationReasionComponent": { myResult = ARInvoiceCancellationReasionComponent; break; }
-            case "ARInvoiceLinesVATAmountsAdjustmentsComponent": { myResult = ARInvoiceLinesVATAmountsAdjustmentsComponent; break; }     
-            case "NewMasavInterfaceComponent": { myResult = NewMasavInterfaceComponent; break; }             
-            case "MasavInterfaceDetailsTabComponent": { myResult = MasavInterfaceDetailsTabComponent; break; }
-            case "MasavInterfaceListTemplate" : { myResult = MasavInterfaceListTemplate; break; }
+            case "AccountingTab_APPaymentMethod": { myResult = AccountingTab_APPaymentMethod; break; }    
         }
 
         return myResult;

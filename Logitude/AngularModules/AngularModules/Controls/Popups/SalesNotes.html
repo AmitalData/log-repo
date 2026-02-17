@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .LogitudeSalesNotes {
         position: relative;
@@ -100,7 +100,7 @@
                                             {{Title}}
                                         </td>
 
-                                        <td *ngIf="!IsFromQuote" style="width: 18px">
+                                        <td style="width: 18px">
                                             <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" (click)="AddButtonClicked()"></IconButton>
                                         </td>
                                     </tr>
@@ -153,7 +153,7 @@
                                                                         </tr>
                                                                     </table>
 
-                                                                    <div *ngIf="!IsFromQuote"  [hidden]="item.IsButtonsHidden" style="height: 18px; width: 38px; position: absolute; top: 1px; right: 1px;">
+                                                                    <div [hidden]="item.IsButtonsHidden" style="height: 18px; width: 38px; position: absolute; top: 1px; right: 1px;">
                                                                         <table>
                                                                             <tr>
                                                                                 <td>

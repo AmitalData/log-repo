@@ -7,7 +7,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 //import {Guid} from '../../../Infrastructure/Utilities/Guid';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'DWFilterSettings',
     templateUrl: './DWFilterSettings.html',
 })

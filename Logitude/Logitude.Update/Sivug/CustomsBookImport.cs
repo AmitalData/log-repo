@@ -73,7 +73,7 @@ namespace Logitude.Update.Sivug
             {
                 //List<CustomsBook_CustomsItem> 
                  var   mehesCustomsItemRows = contx.CustomsBook_CustomsItem
-                    .Where(rec => rec.CustomsBookTypeID >= 1 && rec.CustomsBookTypeID <= 3)
+                    .Where(rec => rec.CustomsBookTypeID == 1)
                     .Select(rec => new //CustomsBook_CustomsItem()
                     {
                         ID = rec.ID,
@@ -94,7 +94,6 @@ namespace Logitude.Update.Sivug
                         FullClassification = item.FullClassification,
                         CustomsItemHierarchicLocationID = item.CustomsItemHierarchicLocationID,
                         ComputedCheckDigit = item.ComputedCheckDigit,
-                        CustomsBookTypeID = item.CustomsBookTypeID.Value,
                     };
                     if (item.CustomsItemCategoryID != null)
                     {

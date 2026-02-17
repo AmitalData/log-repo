@@ -1,12 +1,12 @@
-import {Component}  from '@angular/core';
-import { ClientPM } from 'Customs/EntityPMs/ClientPM';
+﻿import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ClientPM} from '../../../../../Customs/EntityPMs/ClientPM';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ClientGeneralTabComponent.html',
 })
 
@@ -73,7 +73,6 @@ export class ClientGeneralTabComponent extends BaseComponent{
         this.UIProperties.SetEnabled("PassportCountryCode", this.ObjectTableName, this.controlEnabled);
         this.UIProperties.SetEnabled("PassportFirstName", this.ObjectTableName, this.controlEnabled);
         this.UIProperties.SetEnabled("PassportLastName", this.ObjectTableName, this.controlEnabled);
-        this.UIProperties.SetEnabled("NationalIdentificationNumber", this.ObjectTableName, this.controlEnabled);
 
         this.UIProperties.SetEnabled("EnglishFatherName", this.ObjectTableName, this.controlEnabled);
         this.UIProperties.SetEnabled("EnglishBirthPlace", this.ObjectTableName, this.controlEnabled);
@@ -170,8 +169,7 @@ export class ClientGeneralTabComponent extends BaseComponent{
         public get PassportExpirationDate() { return this.entityPM.PassportExpirationDate; }
         public set PassportExpirationDate(newValue: Date) { this.entityPM.PassportExpirationDate = newValue; }
  
-        public get NationalIdentificationNumber() { return this.entityPM.NationalIdentificationNumber; }
-        public set NationalIdentificationNumber(newValue: string) { this.entityPM.NationalIdentificationNumber = newValue; }
+      
 
     //#endregio
 

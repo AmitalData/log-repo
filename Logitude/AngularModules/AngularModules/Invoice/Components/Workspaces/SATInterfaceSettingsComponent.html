@@ -1,4 +1,4 @@
-
+﻿
 <table *ngIf="EntityPM">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -15,7 +15,7 @@
 
 
                     <tr class="FormFieldRow">
-                        <td style="width:155px; ">
+                        <td style="width:120px; ">
                             <LogLabel [ObjectFieldName]="'SATInterfaceCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
@@ -35,15 +35,15 @@
                     </tr>
 
                     <tr class="FormFieldRow">
-                        <td style="width:155px; ">
+                        <td style="width:120px; ">
                             <LogLabel [ObjectFieldName]="'ActivationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
                         <td style="width:230px; ">
                             <LogDatePicker [ObjectFieldName]="'ActivationDate'" [DataContext]="EntityPM"
-                                           [ObjectTableName]="ObjectTableName" [HideColumns]="true" [SelectedDateValue]="ActivationDate"></LogDatePicker>
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" [SelectedDateValue]="ActivationDate"></LogDatePicker>
 
-
+                           
                         </td>
 
                         <td>
@@ -51,8 +51,8 @@
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40'">
-                        <td style="width:155px; ">
+                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33'">
+                        <td style="width:120px; ">
                             <LogLabel [ObjectFieldName]="'Token'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
@@ -71,9 +71,9 @@
                             <div style="color:black;margin-left:12px">You need to connect your Dropbox account to enable transfer via Dropbox folder</div>
                         </td>
                         <td>
-                            <Hyperlink style="margin-left:3px;" (click)="ViewDropboxConnection()" [FontSize]="12" [Text]="'Dropbox Connection'"></Hyperlink>
+                            <Hyperlink style="margin-left:3px;" (click)="ViewDropboxConnection()" [FontSize]="12" [Text]="'Dropbox Connection'"></Hyperlink> 
                         </td>
-
+ 
                         <td>
                             <div></div>
                         </td>
@@ -81,21 +81,21 @@
 
 
                     <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'CONT'">
-                        <td style="width:155px; ">
+                        <td style="width:120px; ">
                             <LogLabel [Text]="'Folder'" [DataContext]="EntityPM"></LogLabel>
                         </td>
-
+                        
                         <td><input readonly="readonly" type="text" value="FromLogitude\SAT" /></td>
-
+                        
 
                         <td>
                             <div></div>
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40'">
-
-                        <td style="width:155px; ">
+                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33'">
+                     
+                        <td style="width:120px; ">
                             <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                         </td>
 
@@ -104,7 +104,8 @@
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="EntityPM"
                                     [SelectedValue]="EntityPM.MetodoPagoCode"
-                                    [LookUpTableName]="'MetodoPago'">
+                                    [LookUpTableName]="'MetodoPago'"
+                                    >
                             </LogLov>
                         </td>
 
@@ -112,49 +113,17 @@
                             <div></div>
                         </td>
 
-
+                      
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF40'">
-
-                        <td style="width:155px; ">
-                            <LogLabel [ObjectFieldName]="'SATCompanyName'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
-                        </td>
-
-                        <td style="width:230px; ">
-                            <LogTextBox [ObjectFieldName]="'SATCompanyName'" [InputType]="'text'" [DataContext]="EntityPM"
-                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-
-
-                    </tr>
-                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF40'">
-                        <td style="width:155px; ">
-                            <LogLabel [ObjectFieldName]="'TransferExpenseCharges'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
-                        </td>
-                        <td style="width:230px; ">
-                            <LogCheckBox [ObjectFieldName]="'TransferExpenseCharges'"
-                                         [Checked]="EntityPM.TransferExpenseCharges"
-                                         [ObjectTableName]="ObjectTableName"
-                                         [DataContext]="EntityPM"
-                                         [HideColumns]="true"></LogCheckBox>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
                     <tr class="FormFieldRow">
                         <td colspan="1">
                             <div style="color:black;margin-left:12px">Integrated via</div>
                         </td>
-
+                      
                         <td>
                             <a *ngIf="EntityPM.SATInterfaceCode === 'CONT'" href="http://www.integratunegocioenlinea.com.mx/" target="_blank">http://www.integratunegocioenlinea.com.mx</a>
-                            <a *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40'" href="http://profact.com.mx/" target="_blank">http://profact.com.mx</a>
+                            <a *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33'" href="http://profact.com.mx/" target="_blank">http://profact.com.mx</a>
                             <!--<Hyperlink style="margin-left:3px;" (click)="ViewDropboxConnection()" [FontSize]="12" [Text]="'Dropbox Connection'"></Hyperlink>-->
                         </td>
 
@@ -162,51 +131,6 @@
                         <td>
                             <div></div>
                         </td>
-                    </tr>
-
-                    <tr class="FormFieldRow" *ngIf="((EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33' || EntityPM.SATInterfaceCode === 'PROF40') && IsCartaPorteSettingsEnabled)">
-
-
-                        <td style="width:185px;">
-                            <LogLabel [NoObjectField]="true"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="EntityPM"
-                                      [Text]="'For'"></LogLabel>
-                        </td>
-
-                        <td colspan="3">
-                            <table>
-                                <tr>
-                                    <td style="width:85px;">
-                                        <LogCheckBox [Text]="'AR Invoices'"
-                                                     [ObjectFieldName]="'IsARInvoiceTransferEnabled'"
-                                                     [Checked]="EntityPM.IsARInvoiceTransferEnabled"
-                                                     [ObjectTableName]="ObjectTableName"
-                                                     [DataContext]="EntityPM"
-                                                     [HideColumns]="true"></LogCheckBox>
-                                    </td>
-
-                                    <td style="width:10px;">
-                                        <div>
-                                        </div>
-                                    </td>
-
-                                    <td style="width:85px;">
-                                        <LogCheckBox [Text]="'Carta Porte'"
-                                                     [ObjectFieldName]="'IsCartaPorteTransferEnabled'"
-                                                     [Checked]="EntityPM.IsCartaPorteTransferEnabled"
-                                                     [ObjectTableName]="ObjectTableName"
-                                                     [DataContext]="EntityPM"
-                                                     [HideColumns]="true"></LogCheckBox>
-                                    </td>
-                                    <td>
-                                        <div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-
                     </tr>
 
 

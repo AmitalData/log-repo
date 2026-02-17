@@ -12,7 +12,7 @@ import {TextCodeTranslator} from  '../../../Infrastructure/Utilities/TextCodeTra
 import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditClassificationComponent.html',
 })
 

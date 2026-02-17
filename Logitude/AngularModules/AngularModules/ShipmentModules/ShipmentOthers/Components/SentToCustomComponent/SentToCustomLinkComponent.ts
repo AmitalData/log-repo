@@ -6,7 +6,7 @@ import {LogitudeWindow} from  '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'SentToCustomLinkComponent',
-    
+    moduleId: module.id,
     templateUrl: './SentToCustomLinkComponent.html',
 })
 

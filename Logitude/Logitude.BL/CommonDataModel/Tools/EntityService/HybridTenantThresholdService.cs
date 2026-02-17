@@ -4,7 +4,7 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
@@ -51,7 +51,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.entityPm = entityPM;
-            this.Poco = entityRepository.GetSingleHybridTenantThreshold(entityPm.Tenant,entityPm.TypeCode);
+            this.Poco = entityRepository.GetSingleHybridTenantThreshold(entityPm.Tenant);
 
             // HybridTenantThresholdValidating.Validate(entityPM);
              //HybridTenantThresholdTracing.Trace(entityPM, Poco, isNewEntity);

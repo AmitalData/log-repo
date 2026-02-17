@@ -10,7 +10,7 @@ import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AcceptAgentInvitaionComponent.html',
     providers: [AgentSharedLogisticsKeyPMService],
 })
@@ -37,7 +37,7 @@ export class AcceptAgentInvitaionComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(this.SharedKey)) {
             this.CurrentSession.StartBusyIndicator("Sending...");
 
-            this._agentSharedLogisticsKeyPMService.GetSingle(this.SharedKey).subscribe((response:any) => {
+            this._agentSharedLogisticsKeyPMService.GetSingle(this.SharedKey).subscribe(response => {
 
                 this.CurrentSession.StopBusyIndicator();
                 if (!response.HasError) {
@@ -57,7 +57,7 @@ export class AcceptAgentInvitaionComponent extends BaseComponent {
                         this.agentSharedLogisticsKey.StatusCode = "A";
 
                         this.CurrentSession.StartBusyIndicator("Saving...");
-                        this._agentSharedLogisticsKeyPMService.update(this.agentSharedLogisticsKey,this.EntityPM.Id,true).subscribe((res:any) => {
+                        this._agentSharedLogisticsKeyPMService.update(this.agentSharedLogisticsKey,this.EntityPM.Id,true).subscribe(res => {
                             this.CurrentSession.StopBusyIndicator();
                             if (!res.HasError) {
                                 this.agentSharedLogisticsKey = res.Result;

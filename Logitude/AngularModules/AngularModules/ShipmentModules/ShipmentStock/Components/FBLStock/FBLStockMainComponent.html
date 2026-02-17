@@ -1,4 +1,4 @@
-
+﻿
 <div class="TabHolder">
     <table *ngIf="IsVisibile">
         <!--<tr class="TabTitleRow">
@@ -23,7 +23,7 @@
                         </td>-->
 
                         <td style="width: 57px;">
-                            <button [attr.data-cy]="'Add_FBL'" class="Button" [disabled]="!IsAddEnabled" (click)="AddStockClicked()">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" [disabled]="!IsAddEnabled" (click)="AddStockClicked()">Add</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -31,7 +31,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button [attr.data-cy]="'Remove_FBL'" class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveClicked()">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveClicked()">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -39,7 +39,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button [attr.data-cy]="'RemoveSeries_FBL'" class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveSeriesClicked()">{{'FBLStock.B.RemoveSeries' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveSeriesClicked()">{{'FBLStock.B.RemoveSeries' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>
@@ -107,7 +107,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button class="Button" (click)="CloseClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" (click)="CloseClicked()">Close</button>
                         </td>
 
                         <!--<td style="width: 5px;">
@@ -115,7 +115,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                            <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
                         </td>-->
                     </tr>
                 </table>

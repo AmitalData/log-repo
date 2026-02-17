@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -35,9 +35,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-            this.Property(t => t.SaleTariffUse).HasColumnName("SaleTariffUse");
-            this.Property(t => t.CostTariffUse).HasColumnName("CostTariffUse");
-
+           
 
 
         }

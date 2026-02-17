@@ -92,8 +92,6 @@ public partial class CFIDATA_DATA
 
     private string casualImporterContactField;
 
-    private string vALUE_IN_USDField;
-
     /// <remarks/>
     public string ImporterName
     {
@@ -351,19 +349,6 @@ public partial class CFIDATA_DATA
         set
         {
             this.casualImporterContactField = value;
-        }
-    }
-
-    /// <remarks/>
-    public string VALUE_IN_USD
-    {
-        get
-        {
-            return this.vALUE_IN_USDField;
-        }
-        set
-        {
-            this.vALUE_IN_USDField = value;
         }
     }
 }

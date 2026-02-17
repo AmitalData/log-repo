@@ -4,7 +4,7 @@ using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -85,7 +85,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("DocumentFilingBackupQueueBuilderQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() } });
 
                 scope.Complete();
             }
@@ -113,7 +113,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("DocumentFilingBackupQueueBuilderQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "BatchId", Poco.Id.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
 
                 scope.Complete();
             }

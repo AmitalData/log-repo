@@ -61,7 +61,7 @@ GenerateAllDomainServices("../EntityFiles","../.../JustWebFreight/WebFreight.Web
 
 // ---------------------------- typedscript generated files
 
-	GenerateAllControllers("../EntityFiles","../../JustWebFreight/WebFreight.Web/Controllers","BookingContext","Logitude.BookingLib","BookingModel");
+	GenerateAllControllers("../EntityFiles","../.../JustWebFreight/WebFreight.Web/Controllers","BookingContext","Logitude.BookingLib","BookingModel");
  
 
 // Generate Commmon TS files---------------------------------------------------------------------------------------------------------------

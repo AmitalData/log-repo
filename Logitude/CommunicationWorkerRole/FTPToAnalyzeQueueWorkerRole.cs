@@ -3,7 +3,7 @@ using Logitude.Server.Tools.FTP;
 using Logitude.SystemLogs;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -38,7 +38,7 @@ namespace CommunicationWorkerRole
                             ReadFTPFiles(ftpDetail, "Artemus");
                         }
 
-                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(Tenant != null? (int)Tenant: 0);
+                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
                         List<INTTRASetting> allINTTRASetting = myCommonContext.INTTRASettings.Where(d => d.InSettingsId != null).ToList();
                         foreach (INTTRASetting item in allINTTRASetting)
                         {
@@ -46,22 +46,14 @@ namespace CommunicationWorkerRole
                             FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(item.InSettingsId, item.Tenant);
                             this.ReadFTPFiles(ftpDetail, "INTTRA");
                         }
-                        
-                        List<AccountingSetting> accountingSettings = myCommonContext.AccountingSettings.Where(d => d.TransferFTPDetailId != null).ToList();
-                        foreach (AccountingSetting item in accountingSettings)
-                        {
-                            FTPDetailRepository ftpDetailsRepository = new FTPDetailRepository(myCommonContext);
-                            FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(item.TransferFTPDetailId, item.Id);
-                            this.ReadFTPFiles(ftpDetail, "Transfer");
-                        }
 
                         LogDoneItemInMemory();
-                        Thread.Sleep(60000);
+                        Thread.Sleep(10000);
                     }
                     catch (Exception ex)
                     {
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex.Message, null);
-                        Thread.Sleep(60000);
+                        Thread.Sleep(10000);
                     }
 
                 }
@@ -110,11 +102,11 @@ namespace CommunicationWorkerRole
 
                 foreach (string fileName in directoryFiles)
                 {
-                    string extention = Path.GetExtension(fileName);
-                    if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
+					string extention = Path.GetExtension(fileName);
+					if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
                     {
-                        string p_message = "";
-                        byte[] fileData = ftpService.Download(fileName, out p_message);
+						string p_message = "";
+						byte[] fileData = ftpService.Download(fileName, out p_message);
 
                         switch (myService)
                         {
@@ -129,22 +121,13 @@ namespace CommunicationWorkerRole
                                     SaveMessageToAnalyzeQueue_INTTRA(fileName, fileData, ftpDetail.Tenant);
                                     break;
                                 }
-
-                            case "Transfer":
-                                {
-                                    SaveMessageToAnalyzeQueue_Transfer(fileName, fileData, ftpDetail.Tenant);
-                                    break;
-                                }
                         }
 
                         ftpService.Delete(fileName);
                     }
                 }
             }
-            catch (FTPServiceException exc)
-            {
-                // will add log in the future
-            }
+
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex.Message, null);
@@ -193,29 +176,6 @@ namespace CommunicationWorkerRole
                 ConnectedToEntity = false,
                 ConnectedToTenant = false,
                 //Tenant = tenant,
-                FileSize = fileBytes.Length,
-                FileName = fileName,
-            };
-
-            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
-            analyzeQueueReposiory.Add(analyzeQueue);
-            analyzeQueueReposiory.SubmitChanges();
-        }
-        private void SaveMessageToAnalyzeQueue_Transfer(string fileName, byte[] fileBytes, int tenant)
-        {
-            fileName = fileName.Split('/')[fileName.Split('/').Length - 1].ToLower();
-            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-
-            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
-            {
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-                From = "Generic Interface",
-                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-                MessageBody = fileBytes,
-                Status = "W",
-                Retries = 0,
-                ConnectedToEntity = false,
-                ConnectedToTenant = false,
                 FileSize = fileBytes.Length,
                 FileName = fileName,
             };

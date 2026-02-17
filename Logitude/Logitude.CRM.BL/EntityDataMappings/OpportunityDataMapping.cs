@@ -12,17 +12,15 @@ using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityKeys;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.CRM.BL.Validators;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {
@@ -170,7 +168,6 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 entityPM.LeadSourceName = source.Name;
             }
 
-
             //entityPM.Field1 = new CustomFieldClass("Field1", "Opportunity", entityPOCO.Field1);
             //entityPM.Field2 = new CustomFieldClass("Field2", "Opportunity", entityPOCO.Field2);
             //entityPM.Field3 = new CustomFieldClass("Field3", "Opportunity", entityPOCO.Field3);
@@ -282,7 +279,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
         {
             List<RoleFeature> myFeatureRoles = new List<RoleFeature>();
             
-            if (loggedUserEmail != "support@amital.co.il")
+            if (loggedUserEmail != "admin@fnarsoft.com")
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(myCurrentTenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Customer", 0, true);

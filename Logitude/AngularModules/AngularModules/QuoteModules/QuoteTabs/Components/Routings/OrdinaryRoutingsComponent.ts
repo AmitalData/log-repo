@@ -1,6 +1,6 @@
-import {Component, OnDestroy} from '@angular/core';
+﻿import {Component, OnDestroy} from '@angular/core';
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
+import {QuoteDomainService, QuoteSubjectArgs} from '../../../../Quote/Services/QuoteDomainService';
 import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -18,7 +18,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 
 @Component({
     selector: 'OrdinaryRoutingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './OrdinaryRoutingsComponent.html',
 })
 
@@ -154,7 +154,11 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
 
             myQuoteDomainService.ComputeQuoteAutomaticSubject(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    this.EntityPM.Subject = myResponse.Result;
+                    var myArgs: QuoteSubjectArgs = myResponse.Result;
+
+                    if (myArgs != null) {
+                        this.EntityPM.Subject = myArgs.Subject;
+                    }
                 }
             });
         }
@@ -387,9 +391,6 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
 
             if (newValue == null) {
                 this.EntityPM.FromCountryId = null;
-                this.EntityPM.FromCountryCode = null;
-                this.EntityPM.FromPortCountry = null;
-                this.EntityPM.FromCountryName = null;
             }
 
             else {
@@ -399,9 +400,6 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
                         var port: PortList = myResponse.Result;
                         if (port != null) {
                             this.EntityPM.FromCountryId = port.CountryId;
-                            this.EntityPM.FromCountryCode = port.CountryCode;
-                            this.EntityPM.FromPortCountry = port.CountryName;
-                            this.EntityPM.FromCountryName = port.CountryName;
                         }                        
                     }
                 });                
@@ -416,9 +414,6 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
 
             if (newValue == null) {
                 this.EntityPM.ToCountryId = null;
-                this.EntityPM.ToCountryCode = null;
-                this.EntityPM.ToPortCountry = null;
-                this.EntityPM.ToCountryName = null;
             }
 
             else {
@@ -428,9 +423,6 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
                         var port: PortList = myResponse.Result;
                         if (port != null) {
                             this.EntityPM.ToCountryId = port.CountryId;
-                            this.EntityPM.ToCountryCode = port.CountryCode;
-                            this.EntityPM.ToPortCountry = port.CountryName;
-                            this.EntityPM.ToCountryName = port.CountryName;
                         }
                     }
                 });
@@ -667,8 +659,8 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = TextCodeTranslator.Translate("Quote.S.Routings.EditAddress");
-            logeWindow.WindowArgs = { EntityId: myAddressId };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId, CardId: myPartnerId };
+            logeWindow.Show("./QuoteModules/QuoteTabs/Components/Routings/RoutingsAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -698,7 +690,7 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
                     if (!AppTool.IsNullOrEmpty(myPartnerId)) {
                         entityPM = new AddressPM();
                         entityPM.Tenant = SessionLocator.Tenant;
-                        entityPM.AddressTypeId = "P";
+                        entityPM.AddressTypeId = "O";
                         entityPM.CardId = myPartnerId;
                     }
                 }
@@ -713,7 +705,7 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
                     if (!AppTool.IsNullOrEmpty(myPartnerId)) {
                         entityPM = new AddressPM();
                         entityPM.Tenant = SessionLocator.Tenant;
-                        entityPM.AddressTypeId = "P";
+                        entityPM.AddressTypeId = "O";
                         entityPM.CardId = myPartnerId;
                     }
                 }
@@ -727,8 +719,8 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = TextCodeTranslator.Translate("Quote.S.Routings.AddAddress");
-            logeWindow.WindowArgs = { EntityPM: entityPM };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM, CardId: myPartnerId };
+            logeWindow.Show("./QuoteModules/QuoteTabs/Components/Routings/RoutingsAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {

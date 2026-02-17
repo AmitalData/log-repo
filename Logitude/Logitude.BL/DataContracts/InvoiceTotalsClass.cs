@@ -16,12 +16,5 @@ namespace Logitude.BL.DataContracts
         public string ExternalVatCard { get; set; }
         public string ExternalTAXItemId { get; set; }
         public string VatTypeCell { get; set; }
-        public double VatRecognizedPercentage { get; set; }
-        public DateTime DateForVatInterest { get; set; }
-        public int LineNumber { get; set; }
-        public bool IsRegionalTax { get; set; }
-        public double LocalCurrencyVATAmount { get; set; }
-        public double ProfitCurrencyVATAmount { get; set; }
-        public double InvoiceCurrencyVATAmount { get; set; }
     }
 }

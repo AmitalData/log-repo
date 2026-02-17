@@ -17,7 +17,7 @@ import { AgentSharedLogisticsKey } from '../../../Common/EntityPMs/AgentSharedLo
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {UIProperty, UIProperties}  from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import {LogitudeWindow} from '../../../Controls/Windows/logitudewindow';
 
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
@@ -29,7 +29,7 @@ import {ContactListService} from '../../../Common/Services/StandardLists/Contact
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AddressPM} from '../../../Common/EntityPMs/AddressPM';
 @Component({
-    
+    moduleId: module.id,
     selector: 'SharedManifestStarted',
     templateUrl: './SharedManifestStarted.html',
     providers: [SharedAgentManifestService, AgentSharedLogisticsKeyPMService],
@@ -850,8 +850,8 @@ export class PartnerItem extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Partners/AddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.AddressId = null;
@@ -874,8 +874,8 @@ export class PartnerItem extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Partners/AddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
 

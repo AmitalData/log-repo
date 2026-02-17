@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -8,7 +8,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditAirPackageComponent.html',
 })
 
@@ -19,7 +19,6 @@ export class AddEditAirPackageComponent {
     public OkBtnId: string;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor() {
         if (this.CurrentSession == null) {
             this.OkBtnId = "OkBtn_-1_-1"; 
@@ -28,41 +27,6 @@ export class AddEditAirPackageComponent {
         else {
             this.OkBtnId = "OkBtn_" + this.CurrentSession.GetNewId("OkBtn"); 
         }
-        this.RunComponent();
-    }
-
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
-    LoadChildComponent() {
-        let screenCode: string = "ShipmentPackage.AdditionalFields";
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.HideLastColumn = true;
-                cmpRef.instance.LabelWidth = 120;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-            });
     }
 
     SetDataContext(dataContext: ShipmentPackageItem) {
@@ -80,7 +44,7 @@ export class AddEditAirPackageComponent {
     SetLabels() {
         this.TareLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Tare').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumeLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Volume').replace('%VolumeCode', this.DataContext.ShipmentPM.VolumeUnitCode);
-        this.DimensionsLabel = TextCodeTranslator.Translate('Shipment.O.Packages.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
+        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Weight').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
     }

@@ -1,5 +1,4 @@
-﻿using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -117,9 +116,16 @@ namespace Logitude.TariffModule.BL.Validators
                             CustomFieldClass fieldClass = propertyValue as CustomFieldClass;
                             propertyValue = fieldClass.Value;
                         }
-                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()))
+                        if (propertyValue != null)
                         {
-                            stringLengthError = stringLengthError + "," + TariffModuleTranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
+                            if (!objectfeildprop.IsMaxLength)
+                            {
+                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
+                                {
+                                    stringLengthError = stringLengthError + "," + TariffModuleTranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
+
+                                }
+                            }
                         }
                     }
 
@@ -377,9 +383,15 @@ namespace Logitude.TariffModule.BL.Validators
                             CustomFieldClass fieldClass = propertyValue as CustomFieldClass;
                             propertyValue = fieldClass.Value;
                         }
-                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()))
+                        if (propertyValue != null)
                         {
-                            return false;
+                            if (!objectfeildprop.IsMaxLength)
+                            {
+                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
+                                {
+                                    return false;
+                                }
+                            }
                         }
                     }
 

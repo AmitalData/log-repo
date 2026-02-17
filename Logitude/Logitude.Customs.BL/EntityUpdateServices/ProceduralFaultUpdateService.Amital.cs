@@ -13,7 +13,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class ProceduralFaultUpdateService
     {
-        private void UpdateUnifreight(ProceduralFaultPM dirtyEntityPM,string direction)
+        private void UpdateUnifreight(ProceduralFaultPM dirtyEntityPM)
         {
             string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyEntityPM.Tenant);
 
@@ -42,7 +42,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (direction != "E" && toSendStatusLIK == true)
+            if (toSendStatusLIK == true)
             {
                 SendProceduralFaultStatus("LIK", "LIK", dirtyEntityPM, loggingUserId);
             }
@@ -73,14 +73,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityId = dirtyEntityPM.DeclarationId;
                     customFile = dirtyEntityPM.CustomFileNo;
                 }
-           
-
-                var comments = eventContextTagModel.FUStatusRemarks;
-                if (statusId == "LIK")
-                {
-                    comments = dirtyEntityPM.Remarks;
-                }
-
 
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
@@ -103,7 +95,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
                         //status_save = "no_fail",
-                        comments = comments,
+                        comments = eventContextTagModel.FUStatusRemarks,
                     }
                 };
                 AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);

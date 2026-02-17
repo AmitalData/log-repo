@@ -38,16 +38,6 @@ namespace Unifreight.BL.EntityPMs
         public string SUPPLIERACCOUNTN { get; set; }
 
         public double? COMMISSIONPERCENT { get; set; }
-        public int Tenant { get; set; }
-
-
-        public bool IS_SYNCH { get; set; }
-
-        public DateTime? LAST_UPDATE_DT { get; set; }
-        public string COUNTRYIDN { get; set; }
-        public string CURRENCYIDN { get; set; }
-        public string INCOTERMIDN { get; set; }
-
 
         #region Ext
 

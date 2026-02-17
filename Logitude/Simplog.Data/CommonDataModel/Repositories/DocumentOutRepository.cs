@@ -1,17 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
-    public class DocumentOutRepository : IRepository<DocumentOut>
+    public class DocumentOutRepository:IRepository<DocumentOut>
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentOutRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentOutRepository(ICommonDataContext context)
         {
@@ -32,59 +35,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             DocumentOut d = (from a in context.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").Include("DocumentsFiling.CreatedByUser.Contact")
 
-                             where a.Id == id && a.Tenant == tenant
-                             select a).FirstOrDefault();
+                                  where a.Id == id && a.Tenant == tenant
+                                  select a).FirstOrDefault();
             return d;
         }
 
-
-        public byte[] GetEditableFieldsById(string id, int tenant)
+        public DocumentOut GetDocumentOutByEntityAndChildEntity(string entityId, string childEntityId)
         {
-            byte[] editableFields = (from a in context.DocumentOuts
-                                     where a.Id == id && a.Tenant == tenant
-                                     select a.EditableFields).FirstOrDefault();
-            return editableFields;
-        }
-
-
-        public DocumentOut GetDocumentOutByEntityId(string entityId, string objectTableId, int tenant)
-        {
-            DocumentOut documentOut = (from a in context.DocumentOuts
-                                       .Include("DocumentsFiling")
-                                       where
-                                       a.Tenant == tenant
-                                       && a.DocumentsFiling.EntityId == entityId
-                                       && a.DocumentsFiling.ObjectTableId == objectTableId
+            DocumentOut documentOut = (from a in context.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").Include("DocumentsFiling.CreatedByUser.Contact")
+                                       where a.DocumentsFiling.EntityId == entityId && a.DocumentsFiling.ChildEntityId == childEntityId
                                        select a).FirstOrDefault();
-            return documentOut;
-        }
-
-        public DocumentOut GetDocumentOutByEntityAndChildEntity(string entityId, string childEntityId, int tenant)
-        {
-            if (string.IsNullOrEmpty(entityId) && string.IsNullOrEmpty(childEntityId))
-                return null;
-            IQueryable<DocumentOut> query = context.DocumentOuts.Where(a => a.Tenant == tenant);
-
-            if (entityId == null)
-            {
-                query = query.Where(a => a.DocumentsFiling.EntityId == null);
-            }
-            else
-            {
-                query = query.Where(a => a.DocumentsFiling.EntityId == entityId);
-            }
-
-            if (childEntityId == null)
-            {
-                query = query.Where(a => a.DocumentsFiling.ChildEntityId == null);
-            }
-            else
-            {
-                query = query.Where(a => a.DocumentsFiling.ChildEntityId == childEntityId);
-            }
-
-            DocumentOut documentOut = query.FirstOrDefault();
-
             return documentOut;
         }
 
@@ -106,11 +66,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
 
-        public string GetDocumentOutIdByDocumentTypeIdAndEntityId(string entityId, string documentTypeId, string objectTableId, int tenant)
+        public string GetDocumentOutIdByDocumentTypeIdAndEntityId(string entityId, string documentTypeId,string objectTableId, int tenant)
         {
             string documentOutId = (from a in context.DocumentOuts.Include("DocumentsFiling")
-                                    where a.DocumentsFiling.EntityId == entityId && a.DocumentsFiling.DocumentTypeId == documentTypeId && a.DocumentsFiling.ObjectTableId == objectTableId && a.DocumentsFiling.DirectionCode == "O" && a.Tenant == tenant
-                                    select a.Id).FirstOrDefault();
+                                       where a.DocumentsFiling.EntityId == entityId && a.DocumentsFiling.DocumentTypeId == documentTypeId && a.DocumentsFiling.ObjectTableId == objectTableId && a.DocumentsFiling.DirectionCode == "O" && a.Tenant == tenant
+                                       select a.Id).FirstOrDefault();
             return documentOutId;
         }
 
@@ -121,7 +81,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             List<DocumentOut> documentOuts;
             documentOuts = (from a in context.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").Include("DocumentsFiling.CreatedByUser.Contact")
                             where a.DocumentsFiling.EntityId == shipmentId
-                            select a).ToList();
+                select a).ToList();
             return documentOuts;
         }
 
@@ -158,7 +118,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void SubmitChanges()
         {
-            context.SaveChanges();
+            context.SaveChanges();  
         }
 
 

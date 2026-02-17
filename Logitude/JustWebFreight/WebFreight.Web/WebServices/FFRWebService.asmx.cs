@@ -23,10 +23,10 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -154,12 +154,9 @@ namespace WebFreight.Web.WebServices
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                SettingRepository settingRepository = new SettingRepository();
-                var isDemoTenant = settingRepository.IsDemoTenant(myTenant.ToString());
-
                 if (this.myTenant != 290)
                 {
-                   
+                    SettingRepository settingRepository = new SettingRepository();
                     Setting setting = settingRepository.GetSingleSetting("1");
                     if (setting != null)
                     {
@@ -185,7 +182,7 @@ namespace WebFreight.Web.WebServices
                         AWBMessagesCCSTypeCode = tenantManagement.AWBMessagesCCSTypeCode;
                     }
 
-                    if (isDemoTenant || IsEAWBOnlyDemo)
+                    if (myTenant == 65 || IsEAWBOnlyDemo)
                     {
                         this.IsDemoTenant = true;
                         this.myResult.IsDemoTenant = true;
@@ -646,7 +643,7 @@ namespace WebFreight.Web.WebServices
 					//}
 					//string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);//"emailqueue"
 					DbQueueService queueservice = new DbQueueService("EmailQueue", myTenant);
-					queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", myTenant.ToString() } }, myTenant);
+					queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", myTenant.ToString() } });
 				}
 
                 catch (Exception ex)
@@ -724,12 +721,12 @@ namespace WebFreight.Web.WebServices
                 EntityReference = myBooking.BookingNumber,
                 SearchFields = myBooking.BookingNumber + "," + xmlTarget + "," + "O" + "," + xmlSubject,
                 CreateDateUTC = DateTime.UtcNow,
-                AWBNumber = myBooking.AirlinePrefix + "-" + myBooking.Master,
+                AWBNumber = myBooking.Master,
             };
 
             if (IsDemoTenant)
             {
-                commLog.CommunicationStatusTypeCode = "D";
+                commLog.CommunicationStatusTypeCode = "E";
                 commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(myTenant);
                 commLog.DoneDateUTC = DateTime.UtcNow;
             }

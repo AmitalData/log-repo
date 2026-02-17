@@ -17,7 +17,7 @@ import {InviteeArgs} from '../../../../CRM/Args';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditInviteesComponent.html',
 })
 
@@ -179,7 +179,7 @@ export class AddEditInviteesComponent extends BaseComponent {
         this.filterAgrs = new ApiQueryFilters();
         this.myPartnerId = this.SelectedPartnerItem.PartnerId;
         console.log(this.myPartnerId);
-        this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
+        this.onQueryChangeEvent.emit({ QueryId: "", Filters: this.filterAgrs });
     }
 
     columns: any;

@@ -3,7 +3,7 @@ using Logitude.BookingLib.BL.EntityPMs;
 using Logitude.BookingLib.BL.EntityUpdateServices;
 using Logitude.BookingLib.Data;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -35,7 +35,7 @@ namespace WebFreight.Web.Controllers.BookingModel.Extended
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BookingProduct", "NEW", authToken.Tenant);
 
-                        IBookingContext MyContext = BookingContext.GetContext(authToken.Tenant);
+                        IBookingContext MyContext = BookingContext.GetContext(0);
                         BookingProductUpdateService service = new BookingProductUpdateService(MyContext, new Dictionary<string, IContext>(), 0);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                         service.Update(entityPM, true);
@@ -86,7 +86,7 @@ namespace WebFreight.Web.Controllers.BookingModel.Extended
                             CacheManager.CacheWrapper.Invalidate(entityPmName);
                         }
 
-                        IBookingContext MyContext = BookingContext.GetContext(authToken.Tenant);
+                        IBookingContext MyContext = BookingContext.GetContext(0);
                         BookingProductUpdateService service = new BookingProductUpdateService(MyContext, new Dictionary<string, IContext>(), 0);
                         service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;

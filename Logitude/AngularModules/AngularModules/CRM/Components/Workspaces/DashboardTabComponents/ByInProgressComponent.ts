@@ -22,7 +22,7 @@ import {ListComponentArgs} from '../../../../Infrastructure/Args';
 declare var makeAmBarChart, BarClick, PieClick, makePieChart, ResetItem, ResetItemPie: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ByInProgressComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
@@ -526,7 +526,7 @@ export class ByInProgressComponent extends BaseComponent {
 
 
     LoadQuotesData(days: number) {
-        this.crmDomainService.GetQuotesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
+        this.crmDomainService.GetQuotesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
             try {
                 if (this.CurrentQuotesBySalesmanChart != null) {
                     this.CurrentQuotesBySalesmanChart.clear();
@@ -576,7 +576,7 @@ export class ByInProgressComponent extends BaseComponent {
 
 
     LoadCustomersData(days: number) {
-        this.crmDomainService.GetCustomersGroupBySalesman(days, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
+        this.crmDomainService.GetCustomersGroupBySalesman(days, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
             if (result.Result.length == 0) {
                 this.NewCustomerDashboardListExistance = false;
                 try {
@@ -706,7 +706,7 @@ export class ByInProgressComponent extends BaseComponent {
 
 
     LoadActivitiesData(days: number) {
-        this.crmDomainService.GetActivitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
+        this.crmDomainService.GetActivitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
             if (result.Result.length == 0) {
                 this.NewActivitiesDashboardIdExistance = false;
                 try {
@@ -866,7 +866,7 @@ export class ByInProgressComponent extends BaseComponent {
     }
 
     LoadOpportunitiesData(days: number) {
-        this.crmDomainService.GetOpportunitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
+        this.crmDomainService.GetOpportunitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
             try {
                 if (this.CurrentOpportunityBySalesmanChart != null) {
                     this.CurrentOpportunityBySalesmanChart.clear();

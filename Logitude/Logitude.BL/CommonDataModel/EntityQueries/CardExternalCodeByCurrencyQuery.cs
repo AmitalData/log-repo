@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CardExternalCodeByCurrencyRepository repository;
 
-
+        public CardExternalCodeByCurrencyQuery()
+        {
+            repository = new CardExternalCodeByCurrencyRepository();
+        }
 
         public CardExternalCodeByCurrencyQuery(int tenant)
         {
@@ -45,11 +48,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ExternalRecievableTableId = entityPoco.ExternalRecievableTableId,
                     ExternalPayableTableId = entityPoco.ExternalPayableTableId,
                     CurrencyCode = entityPoco.Currency != null ? entityPoco.Currency.Code : null,
-                    CurrencyName = entityPoco.Currency != null ? entityPoco.Currency.EnglishName : null,
-                    CardName = entityPoco.Card != null ? entityPoco.Card.EnglishName : null,
-
-                    //  ExternalTableName = entityPoco.ExternalTable != null ? entityPoco.ExternalTable.Name : null,
-                    //  ExternalTableCode = entityPoco.ExternalTable != null ? entityPoco.ExternalTable.Code : null,
+                  //  ExternalTableName = entityPoco.ExternalTable != null ? entityPoco.ExternalTable.Name : null,
+                  //  ExternalTableCode = entityPoco.ExternalTable != null ? entityPoco.ExternalTable.Code : null,
                 };
             }
 
@@ -71,11 +71,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              ExternalPayableTableId = a.ExternalPayableTableId,
                                                              Tenant = a.Tenant,
                                                              CurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                                                             CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
-                                                             CardName = a.Card != null ? a.Card.EnglishName : null,
-
-                                                             //  ExternalTableName = a.ExternalTable != null ? a.ExternalTable.Name : null,
-                                                             //  ExternalTableCode = a.ExternalTable != null ? a.ExternalTable.Code : null,
+                                                           //  ExternalTableName = a.ExternalTable != null ? a.ExternalTable.Name : null,
+                                                           //  ExternalTableCode = a.ExternalTable != null ? a.ExternalTable.Code : null,
                                                          }).ToList();
 
             return result;
@@ -96,11 +93,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                    ExternalPayableTableId = a.ExternalPayableTableId,
                                                                    Tenant = a.Tenant,
                                                                    CurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                                                                   CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
-                                                                   CardName = a.Card != null ? a.Card.EnglishName : null,
-
-                                                                   // ExternalTableName = a.ExternalTable != null ? a.ExternalTable.Name : null,
-                                                                   // ExternalTableCode = a.ExternalTable != null ? a.ExternalTable.Code : null,
+                                                                  // ExternalTableName = a.ExternalTable != null ? a.ExternalTable.Name : null,
+                                                                  // ExternalTableCode = a.ExternalTable != null ? a.ExternalTable.Code : null,
                                                                });
 
             return result;

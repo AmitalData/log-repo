@@ -1,5 +1,5 @@
-<style type="text/css">
-    .promptBox {
+﻿<style type="text/css">
+    .promptBox{
         text-align: center;
         /* padding: 10px;
         padding-top: 15px; */
@@ -9,24 +9,16 @@
         height: 85px;
         border-radius: 5px;
     }
-    .lnk{
-        width: 90px;margin: 20px;color: #0497f8; font-size: 16px;text-decoration: none;
-    }
 </style>
 <div class="MediaFill">
 
     <div *ngIf="ShowMessage">
         <div class="promptBox CenterCenter" style="text-align: center;">
             {{'Accounting.O.ClientActivationMSG' | TextCodeTranslationPipe}}
-            <br><br>
-            <a class="lnk" id="{{'Activate' | IdGeneratorAsyncPipe | async}}" (click)="FullAccountingClicked()">
-                {{'Accounting.O.ClientActivationBTN' | TextCodeTranslationPipe}}
-            </a>
-            <a *ngIf="ShowConnectToCardButton" class="lnk" id="{{'Connect2ExistCard' | IdGeneratorAsyncPipe | async}}" (click)="Connect2ExistCard()">
-                    {{'GLAccount.O.Connect2ExistingCard' | TextCodeTranslationPipe}}
-            </a>
+<br><br>
+        <a  style="width: 90px;margin-top: 20px;color: #0497f8; font-size: 16px;text-decoration: none;" (click)="FullAccountingClicked()">{{'Accounting.O.ClientActivationBTN' | TextCodeTranslationPipe}}</a>
         </div>
     </div>
 
-    <div *ngIf="!ShowMessage"  #TabPlaceholder></div>
+    <div #TabPlaceholder></div>
 </div>

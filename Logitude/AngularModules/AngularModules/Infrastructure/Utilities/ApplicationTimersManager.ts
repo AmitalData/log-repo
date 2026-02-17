@@ -7,6 +7,7 @@ import {ErrorsLogPMService} from '../../Infrastructure/Services/ExtendedPMs/Erro
 import {LogitudeApplicationService} from '../../Infrastructure/Services/WebServices/LogitudeApplicationService';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
+import { Observable}     from 'rxjs/Rx';
 import {SessionLocator} from '../Utilities/SessionLocator';
 import {CachedDataManager} from '../Utilities/CachedDataManager';
 import {SessionInfo} from '../Utilities/SessionInfo';
@@ -16,19 +17,17 @@ import {UserLastLoginPM}  from '../../Common/EntityPMs/UserLastLoginPM';
 import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
 import { PerformanceLogService } from '../../Infrastructure/Services/ExtendedPMs/PerformanceLogService';
 import { PerformanceLog } from '../Others/PerformanceLog';
+//import { SignalRGeneralService } from '../Services/SignalRServices/SignalRGeneralService';
 import { LogitudeHubChannelEvent } from '../Services/SignalRServices/SignalRChannelService';
 import { SignalRChannelService } from '../Services/SignalRServices/SignalRChannelService';
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
-import { interval } from 'rxjs';
-import { timeInterval } from 'rxjs/operators';
-import { Environment } from 'Infrastructure/Locators/Environment';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Injectable()
-
 export class ApplicationTimersManager {
 
-
+     
     logService: ErrorsLogPMService;
     performanceLogService: PerformanceLogService;
 
@@ -47,7 +46,7 @@ export class ApplicationTimersManager {
         this.userLastLoginPMService = new UserLastLoginPMService();
         this.performanceLogService = new PerformanceLogService();
         //this.signalRGeneralService = new SignalRGeneralService();
-
+       
     }
 
     public StartApplicationTimers() {
@@ -55,33 +54,38 @@ export class ApplicationTimersManager {
         //this.signalRChannelService = new SignalRChannelService();
         //SessionLocator.SignalRChannelService = this.signalRChannelService;
         SessionLocator.TimersSubscribtions.push(
-            this.getTimer(30000).subscribe((res:any) => {
+            this.getTimer(30000).subscribe(res => {
                 this.AddErrorLogs();
                 //console.log('The response is received.');
             })
         );
-        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
+        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
             console.log("WorkEnvironment is customs! Suppress this.AddPeformanceLogs();");
         } else {
-            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {
+            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
                 this.AddPeformanceLogs();
             }));
         }
 
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(60000).subscribe((res:any) => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
             this.CheckIsupgradingSystem();
         }));
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
+            this.CheckApplicationLocalStorage();
+        }));
+
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
             this.CheckUserLastLogin();
         }));
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(120000).subscribe((res:any) => {
+
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
             this.CheckUserValidity();
         }));
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(60000).subscribe((res:any) => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(60000).subscribe(res => {
             CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(reponse => {
                 console.log("------------- SystemMetadataLastUpdate has been checked by timer! ---------------");
             });
@@ -89,7 +93,7 @@ export class ApplicationTimersManager {
         }));
 
         if (SessionLocator.UseCachedData) {
-            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {
+            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
                 CachedDataManager.CheckCachedTableLastUpdateDate().subscribe(reponse => {
 
                     console.log("cached tables checked by timer!");
@@ -102,11 +106,11 @@ export class ApplicationTimersManager {
 
 
             //Observable.Interval(TimeSpan.FromSeconds(1.0));
-            //var timerId = setTimeout(this.AddErrorLogs, 2000)
+            //var timerId = setTimeout(this.AddErrorLogs, 2000)  
             // setInterval(SaveErrorLogs, delay);//60000
 
             //this.signalRGeneralService.messageReceived.subscribe((ms: ChannelEvent) => {
-            //    
+            //    debugger;
 
 
             //});
@@ -128,72 +132,84 @@ export class ApplicationTimersManager {
     }
 
     getTimer(period?: number) {
-        return interval(period).pipe(timeInterval());
+        return Observable.interval(period).timeInterval();
     }
 
+    
+
+
+
+    private CheckApplicationLocalStorage() {
+        try {
+            var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;//MAC//WIN32
+            if (window.localStorage.length === 0 && !isMac) {
+                var messageWindow: MessageWindow = new MessageWindow();
+
+                messageWindow.Width = 450;
+                messageWindow.Title = "Application Storage Deleted";
+                messageWindow.Height = 190;
+                messageWindow.Show("Your application storage has been deleted. Please login again.");
+                messageWindow.WindowClosed.subscribe(($event: any) => {
+                    this.OnSignoutClicked();
+                });
+
+
+            }
+
+
+        }
+        catch (e) { console.error(e); }
+    }
 
     IsUserUnlock: boolean = false;
 
     private CheckUserLastLogin() {
-        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id).subscribe((response: any) => {
+        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant).subscribe(response => {
             if (!response.HasError && response.Result) {
-                let lastloginPM: UserLastLoginPM = response.Result;
-                this.HandleComputerIdChangedForLoggedUser(lastloginPM);
+
+                var lastloginPM: UserLastLoginPM = response.Result;
+
+                var computerId: string = SessionLocator.GetComputerIdFromStorage();
+                if (!AppTool.IsNullOrEmpty(computerId) && lastloginPM.ComputerId != computerId && !ObjectsLocator.GlobalSetting.SameUserLoginEnabled) {
+
+                    if (!this.IsUserUnlock) {//
+                        this.IsUserUnlock = true;
+
+                        if (this.CurrentSession) {
+                            this.CurrentSession.StopBusyIndicator();
+                            if (this.CurrentSession.CurrentWindow) {
+                                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            }
+                        }
+                        var args = "";
+
+                        var logWindow = new LogitudeWindow();
+                        logWindow.IsOverAll = true;
+                        logWindow.Title = "";
+                        logWindow.WindowArgs = args;
+                        logWindow.Width = 1000;
+                        logWindow.Height = 250;
+                        logWindow.IsHideWindowMargin = true;
+                        logWindow.IsHideHeader = true;
+                        SessionLocator.HomeComponent.ShowLockIndicator = true;
+                        logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/UserUnlockComponent/UserUnlockComponent');
+                        logWindow.WindowClosed.subscribe(($event: any) => {
+                            SessionLocator.HomeComponent.ShowLockIndicator = false;
+                            this.IsUserUnlock = false;
+
+                    });
+
+                }
+
+
             }
-        });
-    }
 
-    private HandleComputerIdChangedForLoggedUser(lastloginPM: UserLastLoginPM) {
-        let computerId: string = SessionLocator.GetComputerIdFromStorage();
-        if(SessionLocator.LoggedUserPM.Tenant == 0) return;
-        if (AppTool.IsNullOrEmpty(computerId)) return;
-        if (ObjectsLocator.GlobalSetting.SameUserLoginEnabled) return;
-        if (lastloginPM.ComputerId == computerId) return;
-        let workEnvironment: string = this.GetWorkEnvironment();
-        if (this.IsSameUserLoginEnabledWithDifferentEnvironmentToggle() && lastloginPM.ComputerId != computerId && lastloginPM.WorkEnvironment?.toLowerCase() != workEnvironment?.toLowerCase()) return;
-        this.HandleUserUnlocked();
-       
-    }
 
-    private GetWorkEnvironment(): string {
-        if (AppTool.IsNullOrEmpty(ObjectsLocator?.GlobalSetting?.WorkEnvironment)) return "logitude";
-        return ObjectsLocator?.GlobalSetting?.WorkEnvironment?.toLowerCase() == "logbox" ? location.href.toLowerCase().indexOf('.logbox.') > -1 ? "logbox" : "privatelabel" : ObjectsLocator?.GlobalSetting?.WorkEnvironment;
-    }
-    private IsSameUserLoginEnabledWithDifferentEnvironmentToggle() {
-        let SameUserLoginEnabledWithDifferentEnvironmentToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ULE")[0];
-        if (SameUserLoginEnabledWithDifferentEnvironmentToggle)
-            return true;
-        return false;
-    }
-
-    private HandleUserUnlocked() {
-        if (this.IsUserUnlock) return;
-
-        this.IsUserUnlock = true;
-
-        if (this.CurrentSession) {
-            this.CurrentSession.StopBusyIndicator();
-            if (this.CurrentSession.CurrentWindow) {
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            }
         }
 
-        var args = "";
-        var logWindow = new LogitudeWindow();
-        logWindow.IsOverAll = true;
-        logWindow.Title = "";
-        logWindow.WindowArgs = args;
-        logWindow.Width = 1000;
-        logWindow.Height = 250;
-        logWindow.IsHideWindowMargin = true;
-        logWindow.IsHideHeader = true;
-        SessionLocator.HomeComponent.ShowLockIndicator = true;
-        logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/UserUnlockComponent/UserUnlockComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            SessionLocator.HomeComponent.ShowLockIndicator = false;
-            this.IsUserUnlock = false;
         });
     }
+
 
     IsUpgradingEnd: boolean = false;
     private CheckIsupgradingSystem() {
@@ -201,7 +217,7 @@ export class ApplicationTimersManager {
 
             if (!this.IsUpgradingEnd) {
 
-                this.logitudeApplicationService.GetCheckIsupgradingSystem().subscribe((res: ServiceResponse) => {
+                this.logitudeApplicationService.GetCheckIsupgradingSystem().subscribe(res => {
 
                     var pmResponse: ServiceResponse = res;
 
@@ -231,7 +247,7 @@ export class ApplicationTimersManager {
 
             }
         }
-
+        
         catch (e) { console.error(e); }
     }
 
@@ -240,10 +256,10 @@ export class ApplicationTimersManager {
         try {
 
 
-            this.logitudeApplicationService.GetCurrenctUserValidity().subscribe((res: ServiceResponse) => {
+            this.logitudeApplicationService.GetCurrenctUserValidity().subscribe(res => {
 
                 var response: ServiceResponse = res;
-
+                 
 
                 if (!response.HasError) {
                     var myResult = response.Result;
@@ -261,7 +277,7 @@ export class ApplicationTimersManager {
                                 }
 
                                 if (myResult.ErrorCode == "SUPG") {
-                                    errorMessage = "The site is upgrading right now and you will be logged out , sorry for disturbing you!";
+                                    errorMessage = "The site is upgrading right now and you will be logged out , sorry for disturbing you!"; 
 
                                     if (this.IsUpgradingEnd) {
                                         isShowMessage = false;
@@ -269,7 +285,7 @@ export class ApplicationTimersManager {
                                         this.IsUpgradingEnd = true;
                                     }
                                 }
-
+                                
                                 if (isShowMessage) {
                                     var messageWindow: MessageWindow = new MessageWindow();
                                     messageWindow.Width = 450;
@@ -300,7 +316,7 @@ export class ApplicationTimersManager {
     OnSignoutClicked() {
         SessionLocator.HomeComponent.SignoutClicked();
     }
-
+    
     private AddErrorLogs() {
         try {
             for (var key in sessionStorage) {
@@ -309,8 +325,8 @@ export class ApplicationTimersManager {
                     var logJson = window.sessionStorage.getItem(key)
                     var errorLog: ErrorLogPM = JSON.parse(logJson);
 
-                    this.logService.insert(errorLog).subscribe((response: ServiceResponse) => {
-
+                    this.logService.insert(errorLog).subscribe(response => {
+                      
                         window.sessionStorage.removeItem(["ErrorLogs", response.Result.Id]);
 
                     }, error=> {
@@ -337,7 +353,7 @@ export class ApplicationTimersManager {
                     //PerformanceLogs,5d816163-030d-4d76-a5ef-c19a43951e0b
 
 
-                    //this.performanceLogService.insert(performanceLog).subscribe((response:any) => {
+                    //this.performanceLogService.insert(performanceLog).subscribe(response => {
 
                     //    window.sessionStorage.removeItem(["PerformanceLogs", response.Result.Id]);
 
@@ -359,7 +375,7 @@ export class ApplicationTimersManager {
                     break;
             }
             if (tobeAddedLogsList.length > 0) {
-                this.performanceLogService.insertLogsList(tobeAddedLogsList).subscribe((response: ServiceResponse) => {
+                this.performanceLogService.insertLogsList(tobeAddedLogsList).subscribe(response => {
                 }, error => {
                     console.error("Adding Performance Log Timer: ", error);
                 });
@@ -368,7 +384,7 @@ export class ApplicationTimersManager {
         catch (e) { console.error(e); }
     }
 
-
+    
 
 
 //    private AtomicLong lastTick = new AtomicLong(0L);
@@ -386,7 +402,7 @@ export class ApplicationTimersManager {
 //         timerObs.un
 //     }
 
-
+         
 //    //if (subscription != null && !subscription.isUnsubscribed()) {
 //    //    System.out.println("stopped");
 //    //    subscription.unsubscribe();

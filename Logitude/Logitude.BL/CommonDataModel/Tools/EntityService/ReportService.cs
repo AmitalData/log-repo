@@ -6,10 +6,10 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
 
@@ -44,10 +44,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm.Id = IdCounter.GetNumber("Report", tenant).ToString();
             this.Poco = new Report();
             this.Poco.Id = this.entityPm.Id;
-            if ( entityPM.Tenant == 0)
-            {
-                UpdateAvailableForSchedulingForAllTenants(entityPM);
-            }
+
             ReportValidating.Validate(entityPM, this.ObjectContext, this.isNewEntity);
             ReportTracing.Trace(entityPM, Poco, isNewEntity);
             ReportMapping.MapEntity(entityPM, Poco, isNewEntity);
@@ -61,11 +58,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleReport(entityPM.Id, entityPm.Tenant);
             
-            if (entityPM.AvailableForScheduling !=Poco.AvailableForScheduling && entityPM.Tenant==0)
-            {
-                UpdateAvailableForSchedulingForAllTenants(entityPM);
-              
-            }
             ReportValidating.Validate(entityPM, this.ObjectContext, this.isNewEntity);
             ReportTracing.Trace(entityPM, Poco, isNewEntity);
             ReportMapping.MapEntity(entityPM, Poco, isNewEntity);
@@ -136,16 +128,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             return document.Id;
-        }
-
-        public void UpdateAvailableForSchedulingForAllTenants(ReportPM entityPM)
-        {
-            var reportsWithSameCode = entityRepository.GetReportsToUpdateAvailableForScheduling(entityPM.Code,entityPM.AvailableForScheduling);
-            foreach (var report in reportsWithSameCode)
-            {
-                report.AvailableForScheduling = entityPM.AvailableForScheduling;
-                entityRepository.Update(report);
-            }
         }
     }
 }

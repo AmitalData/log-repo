@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentTypeCopyRepository repository;
 
-
+        public DocumentTypeCopyQuery()
+        {
+            repository = new DocumentTypeCopyRepository(); 
+        }
 
         public DocumentTypeCopyQuery(int tenant)
         {
@@ -80,21 +83,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-        public List<DocumentTypeCopyList> GetDocumentTypeCopiesByObjectTableId(string objectTableId,int tenant)
-        {
-            List<DocumentTypeCopyList> copies = (from a in repository.context.DocumentTypeCopies.Include("DocumentType")
-                                               where a.Tenant == tenant  && (a.DocumentType!=null && a.DocumentType.ObjectTableId == objectTableId ) && !a.InActive
-                                               select new DocumentTypeCopyList()
-                                               {
-                                                   InActive = a.InActive,
-                                                   Code = a.Code,
-                                                   Id = a.Id,
-                                                   Name = a.Name,
-                                                   Tenant = a.Tenant,
-                                                   DocumentTypeId = a.DocumentTypeId,
-                                               }).ToList();
-            return copies;
-        }
 
 
         public List<DocumentTypeCopyList> GetDocumentTypeCopyListsBydocumentTypeCopyIds(List<string> documentTypeCopyIds, int tenant)
@@ -116,40 +104,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return documentTypeCopyLists;
         }
 
-        public List<DocumentTypeCopyPM> GetDocumentTypeCopiesWithoutLimitedOneForAutomations(string documentTypeId, string limitedPrintCopyId, int tenant)
-        {
-            List<DocumentTypeCopyPM> documentTypeCopies = GetDocumentTypeCopiesByDocumentType(documentTypeId, null, tenant);
-            if (!string.IsNullOrEmpty(limitedPrintCopyId) && documentTypeCopies != null && documentTypeCopies.Count()>1)
-                documentTypeCopies = RemoveLimitedDocumentCopyFromDocumentCopies(limitedPrintCopyId, documentTypeCopies);
 
-            return documentTypeCopies;
-        }
 
-        private List<DocumentTypeCopyPM> RemoveLimitedDocumentCopyFromDocumentCopies(string limitedPrintCopyId, List<DocumentTypeCopyPM> documentCopies)
-        {
-            List<DocumentTypeCopyPM> documentTypeCopies = documentCopies;
-            DocumentTypeCopyPM limitedDocumentCopy = documentTypeCopies.Where(documentCopy => documentCopy.Id == limitedPrintCopyId).FirstOrDefault();
-            if (limitedDocumentCopy != null)
-                documentTypeCopies = documentTypeCopies.Where(documentCopy => documentCopy.Id != limitedDocumentCopy.Id).ToList();
 
-            return documentTypeCopies;
-        }
-
-        public List<DocumentTypeCopyList> GetDocumentTypeCopiesByDocumentTypeId(string documentTypeId, int tenant)
-        {
-            List<DocumentTypeCopyList> copies = (from a in repository.context.DocumentTypeCopies
-                                               where a.DocumentTypeId == documentTypeId && a.Tenant == tenant
-                                               select new DocumentTypeCopyList()
-                                               {
-                                                   Code = a.Code,
-                                                   Id = a.Id,
-                                                   Name = a.Name,
-                                                   Tenant = a.Tenant,
-                                                   DocumentTypeId = a.DocumentTypeId,
-                                                   InActive = a.InActive,
-                                               }).ToList();
-
-            return copies;
-        }
     }
 }

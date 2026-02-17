@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class DeclarationFormsDataProvider: BaseDataProvider
+    public class DeclarationFormsDataProvider
     {
         public string CustomFileNumber { get; set; }
     }

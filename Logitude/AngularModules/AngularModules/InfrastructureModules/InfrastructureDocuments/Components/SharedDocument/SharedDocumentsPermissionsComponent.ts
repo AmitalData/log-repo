@@ -9,7 +9,7 @@ import {DocumentTypeCopyPM} from '../../../../Common/EntityPMs/DocumentTypeCopyP
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SharedDocumentsPermissionsComponent',
     templateUrl: './SharedDocumentsPermissionsComponent.html',
     providers: [DocumentTypePMExtendedService],
@@ -21,8 +21,7 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
     DocumentPermissiosSelectedViewModel: SharedDocumentsPermissionsViewModel;
     DocumentPermissiosLists: SharedDocumentsPermissionsViewModel[];
     ObjectTableId: string;
-    FullComponentsVisibility: boolean = true;
-    FromAgentView: boolean = false;
+    FullComponentsVisibility: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypePMExtendedService: DocumentTypePMExtendedService) {
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -41,7 +40,7 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
     LoadData() {
         this.DocumentPermissiosLists = [];
         this.AllDocumentPermissiosLists = [];
-        this._documentTypePMExtendedService.GetDocumentTypesPMByObjectTableIdForDocumentPremissions(this.ObjectTableId, SessionLocator.Tenant).subscribe((res:any) => {
+        this._documentTypePMExtendedService.GetDocumentTypesPMByObjectTableIdForDocumentPremissions(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var myList = pmResponse.Result;
@@ -80,21 +79,21 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
     
-    SaveButtonClicked(incomingDocumentTypes?: DocumentTypePM[]) {
+    SaveButtonClicked() {
         var documentTypePMList: DocumentTypePM[] = [];
 
         this.CurrentSession.StartBusyIndicatorSaving();
 
         this.DocumentPermissiosLists.forEach((item) => {
+
             if (item.EntityPM.IsDirty) {
                 documentTypePMList.push(item.EntityPM);
             }
         });
 
-        if(incomingDocumentTypes && incomingDocumentTypes.length > 0) this.MapIncomingDocumentTypes(incomingDocumentTypes,documentTypePMList);
         if (documentTypePMList.length > 0) {
 
-            this._documentTypePMExtendedService.update(documentTypePMList).subscribe((res:any) => {
+            this._documentTypePMExtendedService.update(documentTypePMList).subscribe(res => {
                 this.CloseButtonClicked();
             });
         }
@@ -104,15 +103,6 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
 
 
     }
-
-    MapIncomingDocumentTypes(incomingDocumentTypes: DocumentTypePM[], documentTypePMList: DocumentTypePM[]) {
-        documentTypePMList.forEach(element => {
-           var incomingDocument = incomingDocumentTypes.find(x=>x.Id == element.Id);
-           if(!incomingDocument) return;
-           element.IsCustomerView = incomingDocument.IsCustomerView;
-       });
-    }
-
     onSearchTextChangeEvent(searchText) {
         if (!searchText) searchText = "";
 

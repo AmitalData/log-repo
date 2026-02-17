@@ -21,8 +21,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool ActivateCustomsManagementInShipments { get; set; }
         public string ArtemusOutSettingsId { get; set; }
         public string ArtemusInSettingsId { get; set; }
-        public DateTime? AMCAirStartDate { get; set; }
-        public DateTime?  AMCOceanStartDate { get; set; }
 
         [ForeignKey("LocalCustomsInterfaceCode")]
         public virtual CustomsInterface LocalCustomsInterface { get; set; }

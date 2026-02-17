@@ -7,9 +7,9 @@ declare var SelectingElement: any;
 
 @Component({
     selector: 'log-cell-template',
-    
+    moduleId: module.id,
     templateUrl: './LogCellTemplateComponent.html',
-    inputs: ['TabIndex', 'IsEnabled', 'CellColor', 'Alignment', 'IsFilled', 'DisableColors', 'IgnoreMods', 'RIndex','IsEditMode','NextMoveWithEnter']
+    inputs: ['TabIndex', 'IsEnabled', 'CellColor', 'Alignment', 'IsFilled', 'DisableColors', 'IgnoreMods', 'RIndex','IsEditMode']
 })
 
 export class LogCellTemplateComponent implements OnDestroy {
@@ -17,7 +17,6 @@ export class LogCellTemplateComponent implements OnDestroy {
     IgnoreMods: boolean = false;
     RIndex: number = -1;
     ObsNewElementInsertedSub: any;
-    NextMoveWithEnter: boolean = false;
     @Output() CellClicked = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(CC: LogColumnComponent, private CD: ChangeDetectorRef) {
@@ -146,7 +145,7 @@ export class LogCellTemplateComponent implements OnDestroy {
             this.tabIndex = value;
         }
     }
-   
+
     private alignment: string = "left";
     get Alignment() { return this.alignment; }
     set Alignment(value: string) {
@@ -217,10 +216,6 @@ export class LogCellTemplateComponent implements OnDestroy {
         this.isEditable = this.ColumnComponent.Editable;
         this.isrequired = this.ColumnComponent.required;
 
-        if (this.IsEditMode) {
-            this.IsDisplayMode = false;
-        }
-
         //this.Editindex = this.ColumnComponent.Editindex;
         ////this.CurrentSession.ResetRowIndex();
         if (this.RIndex >= 0) {
@@ -279,14 +274,7 @@ export class LogCellTemplateComponent implements OnDestroy {
             this.CurrentSession.CurrentLogGrid = this.ColumnComponent.LogGridId;
             this.CurrentSession.EndOfRowReachedEvent.emit(this.RowIndex + 1);
         }
-        if ( this.NextMoveWithEnter == true && $event.keyCode == 13) {
-            var element = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + (this.ColumnComponent.index + 1) + "_" + (this.TempRowIndex));
-            if (element) {
-                element.focus();
-            }
-        }
-        else  if ( this.NextMoveWithEnter != true && $event.keyCode == 13)
-        {
+        if ($event.keyCode == 13) {
             var element = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
             if (element) {
                 element.focus();
@@ -295,6 +283,7 @@ export class LogCellTemplateComponent implements OnDestroy {
         if ($event.keyCode == 121) {
             if ($event.altKey) {
                 var originalElement = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex));
+                //var nextElement = document.getElementById(this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + this.ColumnComponent.index + "_" + (this.TempRowIndex + 1));
                 var originalData = this.ColumnComponent.EditableLogGridComponent.ItemSource.Collection[this.RowIndex - 1][this.ColumnComponent.binding];
                 var nextData = this.ColumnComponent.EditableLogGridComponent.ItemSource.Collection[this.RowIndex][this.ColumnComponent.binding];
                 var elementinputs = originalElement.getElementsByTagName("input");
@@ -303,6 +292,7 @@ export class LogCellTemplateComponent implements OnDestroy {
 
                     this.CurrentSession.CopyCellIntoMemory.emit(elementinputs[0].id);
                 }
+                //this.ColumnComponent.EditableLogGridComponent.ItemSource.Collection[this.RowIndex][this.ColumnComponent.binding] = originalData;
 
                 if ((this.ColumnComponent.index + 1) == colCount) {
                     this.CurrentSession.CurrentLogGrid = this.ColumnComponent.LogGridId;
@@ -315,16 +305,27 @@ export class LogCellTemplateComponent implements OnDestroy {
                     }
                 }
                 else {
-                    setTimeout(() => {
-                        var columnIndex = this.ColumnComponent.index + 1;
+                    var columnIndex = this.ColumnComponent.index + 1;
                     var elementId = this.ColumnComponent.LogGridId + this.CurrentSession.SessionIndex + "_" + columnIndex + "_" + (this.TempRowIndex);
                     var nextElement = document.getElementById(elementId);
                     nextElement.focus();
-                    }, 200);
-                   
                 }
 
-              
+                //var elements = originalElement.getElementsByTagName("logtextbox");
+                //var elementinputs = originalElement.getElementsByTagName("input");
+                //if (elementinputs != null && elementinputs.length>0 && nextElement != null) {
+                //    this.CurrentSession.CopyCellIntoMemory.emit(elementinputs[0].id);
+
+                //    nextElement.focus();
+                //}
+                //var fieldName = elements[0].getAttributeNode("ng-reflect--object-field-name");
+                //var dataContext = elements[0].getAttributeNode("ng-reflect--data-context");
+
+                //var nextElements = nextElement.getElementsByTagName("logtextbox");
+                //var nFieldName = nextElements[0].getAttribute("ng-reflect--object-field-name");
+                //var nDataContext = nextElements[0].getAttribute("ng-reflect--data-context");
+
+               // nDataContext[nFieldName] = dataContext[fieldName];
 
             }
         }
@@ -336,11 +337,11 @@ export class LogCellTemplateComponent implements OnDestroy {
   private focusTimerToken: any;
     blurevt(_thisComponent: LogCellTemplateComponent) {
       if (!SessionLocator.SustainFocusOnCell) {
-        //this.focusTimerToken = setTimeout(() => {
-        //  ElementProperities(_thisComponent);
-        //}, 1);
+        this.focusTimerToken = setTimeout(() => {
           ElementProperities(_thisComponent);
-            
+        }, 1);
+
+
             if (_thisComponent.EventSub) {
                 _thisComponent.EventSub.unsubscribe();
                 _thisComponent.IsClickedOnce = false;
@@ -359,10 +360,9 @@ export class LogCellTemplateComponent implements OnDestroy {
 
     OnBlurEventImplementation(_thisComponent: LogCellTemplateComponent) {
         if (!SessionLocator.SustainFocusOnCell) {
-        //   this.focusTimerToken = setTimeout(() => {
-            
-        //   }, 1);
-        ElementProperities(_thisComponent);
+          this.focusTimerToken = setTimeout(() => {
+            ElementProperities(_thisComponent);
+          }, 1);
             if (_thisComponent.EventSub) {
                 _thisComponent.EventSub.unsubscribe();
                 _thisComponent.IsClickedOnce = false;

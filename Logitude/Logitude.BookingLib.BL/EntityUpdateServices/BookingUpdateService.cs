@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -22,11 +22,10 @@ using Logitude.BookingLib.BL.Helpers;
 using System.Data.Entity.Core;
 using Logitude.BookingLib.BL.Validators;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BookingLib.BL.EntityUpdateServices.Behaviours.BookingBehaviours.Validators;
 
 namespace Logitude.BookingLib.BL.EntityUpdateServices
 {
@@ -485,31 +484,18 @@ namespace Logitude.BookingLib.BL.EntityUpdateServices
 
         private void ValidateMasterNumber(BookingPM entityPM)
         {
-            BookingMasterIsUsedValidator validator = new BookingMasterIsUsedValidator();
-
-            validator.Validate(new BookingMasterIsUsedValidatorArgs()
+            if (entityPM.Tenant != 343 && entityPM.Tenant != 528)
             {
-                Tenant = entityPM.Tenant,
-                BookingId = entityPM.Id,
-                DirectionCode = entityPM.DirectionCode,
-                TransportModeCode = entityPM.TransportModeCode,
-                Master = entityPM.Master,
-                AirlinePrefix = entityPM.AirlinePrefix,
-                IsCancelled = entityPM.IsCancelled,
-            });
-
-            //if (entityPM.Tenant != 343 && entityPM.Tenant != 528)
-            //{
-            //    if (!string.IsNullOrEmpty(entityPM.Master) && !string.IsNullOrEmpty(entityPM.AirlinePrefix) && !entityPM.IsCancelled)
-            //    {
-            //        BookingRepository myBookingRepository = new BookingRepository(entityPM.Tenant);
-            //        bool isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(entityPM.Master, entityPM.AirlinePrefix, entityPM.Id, entityPM.Tenant, entityPM.DirectionCode, entityPM.TransportModeCode);
-            //        if (isMasterFieldUsed)
-            //        {
-            //            throw new ApplicationException("Master field already used in another Booking");
-            //        }
-            //    }
-            //}
+                if (!string.IsNullOrEmpty(entityPM.Master) && !string.IsNullOrEmpty(entityPM.AirlinePrefix) && !entityPM.IsCancelled)
+                {
+                    BookingRepository myBookingRepository = new BookingRepository(entityPM.Tenant);
+                    bool isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(entityPM.Master, entityPM.AirlinePrefix, entityPM.Id, entityPM.Tenant, entityPM.DirectionCode, entityPM.TransportModeCode);
+                    if (isMasterFieldUsed)
+                    {
+                        throw new ApplicationException("Master field already used in another Booking");
+                    }
+                }
+            }
         }
 
         protected override void CheckConcurrency(BookingPM entityPM, Booking entityPOCO)

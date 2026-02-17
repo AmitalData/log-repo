@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .iwanttohover:hover {
         background: #DDE6F0;
@@ -43,7 +43,7 @@
 
                         <td style="width: 300px; vertical-align:middle;">
 
-                            <SearchBox [attr.data-cy]="'Search Shared Manifests'" [Watermark]="SearchText" [ObjectTableName]="'AgentSharedManifest'" [IsQuickSearch]="true" (ItemClicked)="EditAgentSharedManifest($event)"></SearchBox>
+                            <SearchBox [Watermark]="SearchText" [ObjectTableName]="'AgentSharedManifest'" [IsQuickSearch]="true" (ItemClicked)="EditAgentSharedManifest($event)"></SearchBox>
                          
                         </td>
 
@@ -94,9 +94,9 @@
                                                     <div>Waiting for Acceptance</div>
                                               
                                                     <div>
-                                                        <p [attr.data-cy]="'Air Manifests'" class="QueryLink" *ngIf="AgentSharedManifestsAirVisibility" (click)="ViewAgentSharedManifestQuery('Air')" >Air Manifests  ({{AgentSharedManifestsAirCount}})</p>
-                                                        <p [attr.data-cy]="'Ocean Manifests'" class="QueryLink" *ngIf="AgentSharedManifestsOceanVisibility" (click)="ViewAgentSharedManifestQuery('Ocean')" >Ocean Manifests  ({{AgentSharedManifestsOceanCount}})</p>
-                                                        <p [attr.data-cy]="'Inland Manifests'" class="QueryLink" *ngIf="AgentSharedManifestsInlandVisibility" (click)="ViewAgentSharedManifestQuery('Inland')" >Inland Manifests  ({{AgentSharedManifestsInlandCount}})</p>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsAirVisibility" (click)="ViewAgentSharedManifestQuery('Air')" >Air Manifests  ({{AgentSharedManifestsAirCount}})</p>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsOceanVisibility" (click)="ViewAgentSharedManifestQuery('Ocean')" >Ocean Manifests  ({{AgentSharedManifestsOceanCount}})</p>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsInlandVisibility" (click)="ViewAgentSharedManifestQuery('Inland')" >Inland Manifests  ({{AgentSharedManifestsInlandCount}})</p>
                          
                                                     </div>
                                                 </div>
@@ -106,8 +106,8 @@
                                                     <div>Others</div>
 
                                                     <div>
-                                                        <p [attr.data-cy]="'Cancelled Manifests'" class="QueryLink" *ngIf="AgentSharedManifestsCancelledVisibility" (click)="ViewAgentSharedManifestQuery('Cancelled')" >Cancelled Manifests  </p>
-                                                        <p [attr.data-cy]="'All Manifests'" class="QueryLink" *ngIf="AgentSharedManifestsAllVisibility"  (click)="ViewAgentSharedManifestQuery('All')">All Manifests  </p>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsCancelledVisibility" (click)="ViewAgentSharedManifestQuery('Cancelled')" >Cancelled Manifests  </p>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsAllVisibility"  (click)="ViewAgentSharedManifestQuery('All')">All Manifests  </p>
                                                       
 
                                                     </div>
@@ -133,7 +133,7 @@
                                                     <div>Display Settings</div>
                                                     <div>
                                                       
-                                                        <p [attr.data-cy]="'Documents Permissions'" class="QueryLink" (click)="DocumentsPermissionsLinkClick()">Documents Permissions</p>
+                                                        <p  class="QueryLink" (click)="DocumentsPermissionsLinkClick()">Documents Permissions</p>
                                                     </div>
                                                 </div>
 

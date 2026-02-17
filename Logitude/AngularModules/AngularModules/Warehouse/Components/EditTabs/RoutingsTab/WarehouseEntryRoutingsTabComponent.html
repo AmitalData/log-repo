@@ -1,218 +1,48 @@
-
+﻿
 <div class="TabHolder">
 
     <table *ngIf="!IsInlandDomestic">
         <tr class="TabTitleRow">
-            <td >{{'WarehouseEntry.TH.Routings' | TextCodeTranslationPipe}}</td>
+            <td>{{'WarehouseEntry.TH.Routings' | TextCodeTranslationPipe}}</td>
         </tr>
-
-
-
-        <tr style="height: 100px;">
-            <td>
+        <tr>
+            <td style="width: 400px;">
                 <table>
-                    <tr>
 
-                        <td style="width:700px">
-                            <table>
-                                <tr>
-
-                                    <!-- From -->
-                                    <td>
-                                        <fieldset class="MediaFill GroupBox">
-                                            <legend>
-                                                <span>Origin</span>
-                                            </legend>
-
-                                            <div style="height: 170px; width: 100%; margin-top: -5px;">
-                                                <table>
-                                                    <tr style="height: 25px;">
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-
-                                                                    <td style="width:108px">
-                                                                        <RadioButton [IsEnabled]="IsEnableEdit" [Name]="'FromRadio'" [IsChecked]="FromTypeCode == 'PORT'" (Checked)="FromTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <RadioButton [IsEnabled]="IsEnableEdit" [Name]="'FromRadio'" [IsChecked]="FromTypeCode == 'CASL'" (Checked)="FromTypeCode = 'CASL'" [Text]="'Country'"></RadioButton>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-
-
-                                                            <!-- PORT -->
-                                                            <table *ngIf="FromTypeCode == 'PORT'">
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 110px;">
-                                                                        <LogLabel [Text]="'From Port'" [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'FromPortId'"
-                                                                                [SelectedValue]="FromPortId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Port'"
-                                                                                [DependencyFilter1Value]="TransportModeId">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-
-                                                            <!-- CASL -->
-                                                            <table *ngIf="FromTypeCode == 'CASL'">
-
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 110px;">
-                                                                        <LogLabel [Text]="'From Country'" [ObjectFieldName]="'FromCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'FromCountryId'"
-                                                                                [SelectedValue]="FromCountryId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Country'">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </fieldset>
-                                    </td>
-
-                                    <td style="width: 20px;">
-                                        <div></div>
-                                    </td>
-
-                                    <!-- To -->
-                                    <td>
-                                        <fieldset class="MediaFill GroupBox">
-                                            <legend>
-                                                <span>Destination</span>
-                                            </legend>
-
-                                            <div style="height: 170px; width: 100%; margin-top: -5px;">
-                                                <table>
-                                                    <tr style="height: 25px;">
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-
-                                                                    <td style="width:90px">
-                                                                        <RadioButton [IsEnabled]="IsEnableEdit" [Name]="'ToRadio'" [IsChecked]="ToTypeCode == 'PORT'" (Checked)="ToTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <RadioButton [IsEnabled]="IsEnableEdit" [Name]="'ToRadio'" [IsChecked]="ToTypeCode == 'CASL'" (Checked)="ToTypeCode = 'CASL'" [Text]="'Country'"></RadioButton>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-
-
-                                                            <!-- PORT -->
-                                                            <table *ngIf="ToTypeCode == 'PORT'">
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 90px;">
-                                                                        <LogLabel [Text]="'To Port'" [ObjectFieldName]="'ToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'ToPortId'"
-                                                                                [SelectedValue]="ToPortId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Port'"
-                                                                                [DependencyFilter1Value]="TransportModeId">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
-
-
-
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-
-                                                            <!-- CASL -->
-                                                            <table *ngIf="ToTypeCode == 'CASL'">
-
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 90px;">
-                                                                        <LogLabel [Text]="'To Country'" [ObjectFieldName]="'ToCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'ToCountryId'"
-                                                                                [SelectedValue]="ToCountryId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Country'">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </fieldset>
-                                    </td>
-                                </tr>
-                            </table>
+                    <!-- GateWay -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 115px;">
+                            <LogLabel [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 240px;">
+                            <LogLov [ObjectFieldName]="'FromPortId'"
+                                    [SelectedValue]="FromPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [DependencyFilter1Value]="TransportModeId">
+                            </LogLov>
                         </td>
                         <td></td>
-
                     </tr>
-                </table>
-            </td>
 
-        </tr>
+                    <!-- Destination -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'ToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'ToPortId'"
+                                    [SelectedValue]="ToPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [DependencyFilter1Value]="TransportModeId">
+                            </LogLov>
+                        </td>
+                        <td></td>
+                    </tr>
 
-
-        <tr style="height:10px">
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>
-                <table>
                     <!-- Trucker -->
                     <tr class="FormFieldRow">
                         <td style="width: 115px;">
@@ -227,24 +57,16 @@
                                     [DependencyFilter1Value]="'TR'">
                             </LogLov>
                         </td>
-                        <td></td>
                     </tr>
-                    <tr style="height:5px;">
-                        <td style="height:5px;"></td>
-                    </tr>
+
                     <!-- TruckNumber -->
                     <tr class="FormFieldRow">
-                        <td style="width: 115px;" class="FormFieldRow">
-                            <div style="height: 65px;">
-                                <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </div>
+                        <td class="FormFieldRow">
+                            <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 240px;">
-                            <div style="height: 65px;">
-                                <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                            </div>
+                            <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
-                        <td></td>
                     </tr>
 
                     <tr>
@@ -255,12 +77,10 @@
                 </table>
             </td>
 
-
+            <td>
+                <div></div>
+            </td>
         </tr>
-
-        <tr></tr>
-
-
     </table>
 
     <!-- InlandDomestic -->

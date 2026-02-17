@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.BusinessUnitFilters;
@@ -18,22 +18,6 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.Azure;
-using Logitude.Server.Tools.StorageService;
-using Microsoft.Practices.Unity;
-using Logitude.Server.Tools;
-using System.IO;
-using Logitude.BL.DataContracts;
-using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Server.Tools.CustomFields;
-using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.CommonDataModel.ExternalService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -41,7 +25,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CardRepository repository;
 
-    
+        public CardQuery()
+        {
+            repository = new CardRepository();
+        }
 
         public CardQuery(int tenant)
         {
@@ -67,7 +54,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  LocalName = card.LocalName,
                                                  ReceivablesAccountingCard = card.ReceivablesAccountingCard,
                                                  PayablesAccountingCard = card.PayablesAccountingCard,
-                                                 AccountingVATSplit = card.AccountingVATSplit,
                                                  InActive = card.InActive,
                                                  Notes = card.Notes,
                                                  Id = card.Id,
@@ -88,11 +74,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  Swift = card.Swift,
                                                  IBANNumber = card.IBANNumber,
                                                  InvitationDate = card.InvitationDate,
-                                                 CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                                  SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                                  SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
-                                                 CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
-                                                 CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                                  PrimaryContactId = card.PrimaryContactId,
                                                  EnableConsolidationInvoices = card.EnableConsolidationInvoices,
                                                  CityName = card.CityName,
@@ -103,7 +86,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                                                  AccountManagerUserName = card.Customer == null ? null : (card.Customer.AccountManagerUser == null ? null : (card.Customer.AccountManagerUser.Contact.EnglishName)),
                                                  AccountManagerUserId = card.Customer == null ? null : card.Customer.AccountManagerUserId,
-                                                 TeamId = card.Customer == null ? null : card.Customer.TeamId,
                                                  CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                  IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                  RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
@@ -119,24 +101,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  SATForeignRFC = card.SATForeignRFC,
                                                  MetodoPagoCode = card.MetodoPagoCode,
                                                  UsoCFDICode = card.UsoCFDICode,
-                                                 RegimenFiscalCode = card.RegimenFiscalCode,
                                                  StateName = card.StateName,
                                                  IsInternationalPartner = card.IsInternationalPartner,
                                                  IsAutonomy = card.IsAutonomy,
                                                  CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                                  CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
-                                                 CreatedByPartner = card.CreatedByPartner,
-                                                 BillToId = card.BillToId,
-                                                 SATCustomerName = card.SATCustomerName,
-                                                 EORInumber = card.EORInumber,
-                                                 SingleInvoiceTemplateId = card.SingleInvoiceTemplateId,
-                                                 CustomsInvoiceTemplateId = card.CustomsInvoiceTemplateId,
-                                                 ConsolidationInvoiceTemplateId = card.ConsolidationInvoiceTemplateId,
-                                                 ManifestInvoiceTemplateId = card.ManifestInvoiceTemplateId,
-                                                 EmailForSendingSingArinvoice = card.EmailForSendingSingArinvoice,
-                                                 SendingInterestReport = card.SendingInterestReport,
-                                                 ExternalSystem = card.ExternalSystem,
-                                                 IsCustomer = card.IsCustomer,
                                              });
 
 
@@ -146,49 +115,27 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return myResult;
         }
 
-        public CardPM GetSinglePMFromCache(string id, int tenant)
-        {
-            string entityKeyString = $"GetSinglePMFromCache({id},{tenant})";
-            var res = CacheManager.GetOrInsertNewObject<CardPM>(entityKeyString, () =>
-               {
-                   return this.GetSinglePM(id, tenant);
-               });
-            return res;
-        }
-
-        public CardPM GetSinglePM(string id, int tenant, bool includeAddress = true)
+        public CardPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
             {
                 string entityName = "CardPM" + id + tenant;
                 CardPM entity;
-                string myMainAddressId = null;
-                string myBillingAddressId = null;
-                string myPickupDeliveryAddressId = null;
 
                 AddressQuery addressQuery = new AddressQuery(tenant);
-
-                if (includeAddress)
+                AddressPM myMainAddresss = addressQuery.GetAddressPMByTypeAndCard(id, "M", tenant);
+                string myMainAddressId = null;
+                if (myMainAddresss != null)
                 {
-                    AddressPM myMainAddresss = addressQuery.GetAddressPMByTypeAndCard(id, "M", tenant);
-                    if (myMainAddresss != null)
-                    {
-                        myMainAddressId = myMainAddresss.Id;
-                    }
-
-                    AddressPM myBillingAddress = addressQuery.GetAddressPMByTypeAndCard(id, "B", tenant);
-                    if (myBillingAddress != null)
-                    {
-                        myBillingAddressId = myBillingAddress.Id;
-                    }
-
-                    AddressPM myPickupDeliveryAddress = addressQuery.GetAddressPMByTypeAndCard(id, "P", tenant);
-                    if (myPickupDeliveryAddress != null)
-                    {
-                        myPickupDeliveryAddressId = myPickupDeliveryAddress.Id;
-                    }
+                    myMainAddressId = myMainAddresss.Id;
                 }
 
+                AddressPM myBillingAddress = addressQuery.GetAddressPMByTypeAndCard(id, "B", tenant);
+                string myBillingAddressId = null;
+                if (myBillingAddress != null)
+                {
+                    myBillingAddressId = myBillingAddress.Id;
+                }
 
                 if (HttpContext.Current != null)
                 {
@@ -202,7 +149,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   select new CardPM()
                                   {
                                       ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                      AccountingVATSplit = a.AccountingVATSplit,
                                       PayablesAccountingCard = a.PayablesAccountingCard,
                                       EnglishName = a.EnglishName,
                                       Id = a.Id,
@@ -217,7 +163,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       Code = a.Code,
                                       MainAddressId = myMainAddressId,
                                       BillingAddressId = myBillingAddressId,
-                                      PickupDeliveryAddressId = myPickupDeliveryAddressId,
                                       CountryId = a.CountryId,
                                       CountryCode = a.CountryCode,
                                       CountryName = a.CountryName,
@@ -234,16 +179,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       Swift = a.Swift,
                                       IBANNumber = a.IBANNumber,
                                       InvitationDate = a.InvitationDate,
-                                      CargoTrackingInvitationDate = a.CargoTrackingInvitationDate,
                                       SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
                                       SharedLogisticsInvitationStatusName = a.SharedLogisticsInvitationStatus != null ? a.SharedLogisticsInvitationStatus.Name : null,
-                                      CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                      CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                       LastLoginDate = a.LastLoginDate,
                                       CollectorId = a.CollectorId,
                                       ClassifierId = a.ClassifierId,
-                                      ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
-                                      CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
+                                      ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
+                                      CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
                                       CreateDate = a.CreateDate,
                                       UpdateDate = a.UpdateDate,
                                       CreatedByUserId = a.CreatedByUserId,
@@ -251,8 +193,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.PrimaryContactId,
                                       EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                       SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
-                                      AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
-                                      TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                       SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                       IsActiveForMobile = a.IsActiveForMobile,
                                       IsCustomer = a.IsCustomer,
@@ -267,40 +207,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       SATForeignRFC = a.SATForeignRFC,
                                       MetodoPagoCode = a.MetodoPagoCode,
                                       UsoCFDICode = a.UsoCFDICode,
-                                      RegimenFiscalCode = a.RegimenFiscalCode,
                                       StateName = a.StateName,
-                                      CustomerStatusCode = a.Customer != null ? (a.Customer.CustomerStatus != null ? a.Customer.CustomerStatus.Code : null) : null,
+
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
-                                      CreatedByPartner = a.CreatedByPartner,
-                                      StorageFreeDays = a.StorageFreeDays,
-                                      RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
-                                      IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
-                                      LeadSourceId = a.Customer != null ? (a.Customer.LeadSource != null ? a.Customer.LeadSource.Id : null) : null,
-                                      LeadDescription = a.Customer != null ? a.Customer.LeadDescription : null,
-                                      StartWorkingDate = a.Customer != null ? a.Customer.StartWorkingDate: null,
-                                      BillToId = a.BillToId,
-                                      ICAO = al != null ? al.ICAO : "",
-                                      SATCustomerName = a.SATCustomerName,
-                                      ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
-                                      ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                      CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
-                                      EORInumber = a.EORInumber,
-                                      SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
-                                      CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
-                                      ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
-                                      ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
-                                      EmailForSendingSingArinvoice=a.EmailForSendingSingArinvoice,
-                                      SendingInterestReport=a.SendingInterestReport,
-                                      ExternalSystem = a.ExternalSystem,
-                                      
                                   }).FirstOrDefault();
 
 
                         if (entity != null)
                         {
                             entity.Addresses = addressQuery.GetAddressesByCardId(id, tenant);
-                            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
 
                             string name = "CardPM" + entity.Id + tenant;
 
@@ -326,7 +242,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               select new CardPM()
                               {
                                   ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                  AccountingVATSplit = a.AccountingVATSplit,
                                   PayablesAccountingCard = a.PayablesAccountingCard,
                                   EnglishName = a.EnglishName,
                                   Id = a.Id,
@@ -341,7 +256,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   Code = a.Code,
                                   MainAddressId = myMainAddressId,
                                   BillingAddressId = myBillingAddressId,
-                                  PickupDeliveryAddressId = myPickupDeliveryAddressId,
                                   CountryId = a.CountryId,
                                   CountryCode = a.CountryCode,
                                   CountryName = a.CountryName,
@@ -358,30 +272,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   Swift = a.Swift,
                                   IBANNumber = a.IBANNumber,
                                   InvitationDate = a.InvitationDate,
-                                  CargoTrackingInvitationDate = a.CargoTrackingInvitationDate,
                                   SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
-                                  CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                  CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                   SharedLogisticsInvitationStatusName = a.SharedLogisticsInvitationStatus != null ? a.SharedLogisticsInvitationStatus.Name : null,
                                   LastLoginDate = a.LastLoginDate,
                                   CollectorId = a.CollectorId,
                                   ClassifierId = a.ClassifierId,
-                                  ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
-                                  CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
+                                  ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
+                                  CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
                                   CreateDate = a.CreateDate,
-                                  UpdateDate = a.UpdateDate,    
+                                  UpdateDate = a.UpdateDate,
                                   CreatedByUserId = a.CreatedByUserId,
                                   UpdatedByUserId = a.UpdatedByUserId,
                                   PrimaryContactId = a.PrimaryContactId,
                                   EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                   SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
-                                  AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
-                                  TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                   SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                   IsActiveForMobile = a.IsActiveForMobile,
-                                  IsCustomer = a.IsCustomer,
-                                  CityName = a.CityName,
-                                  ContactId = a.PrimaryContactId,
                                   IRSPlace = a.IRSPlace,
                                   IRSNumber = a.IRSNumber,
                                   SupportNotes = a.SupportNotes,
@@ -391,42 +297,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATForeignRFC = a.SATForeignRFC,
                                   MetodoPagoCode = a.MetodoPagoCode,
                                   UsoCFDICode = a.UsoCFDICode,
-                                  RegimenFiscalCode = a.RegimenFiscalCode,
                                   StateName = a.StateName,
-                                  CustomerStatusCode = a.Customer != null ? (a.Customer.CustomerStatus != null ? a.Customer.CustomerStatus.Code : null) : null,
                                   IsInternationalPartner = a.IsInternationalPartner,
                                   IsAutonomy = a.IsAutonomy,
-                                  CreatedByPartner = a.CreatedByPartner,
-                                  StorageFreeDays = a.StorageFreeDays,
-                                  RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
-                                  IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
-                                  LeadSourceId = a.Customer != null ? (a.Customer.LeadSource != null ? a.Customer.LeadSource.Id : null) : null,
-                                  CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
-                                  LeadDescription = a.Customer != null ? a.Customer.LeadDescription : null,
-                                  StartWorkingDate = a.Customer != null ? a.Customer.StartWorkingDate : null,
-                                  BillToId = a.BillToId,
-                                  ICAO = al != null ? al.ICAO : "",
-                                  SATCustomerName = a.SATCustomerName,
-                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
-                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                  EORInumber = a.EORInumber,
-                                  SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
-                                  CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
-                                  ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
-                                  ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
-                                  EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                                  SendingInterestReport = a.SendingInterestReport,
-                                  ExternalSystem = a.ExternalSystem,
                               }).FirstOrDefault();
 
                     if (entity != null)
                     {
                         entity.Addresses = addressQuery.GetAddressesByCardId(id, tenant);
-                        new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = new List<CardPM> { entity }.Cast<object>().ToList() }).Set();
                     }
                 }
-                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(entity.Tenant);
-                entity = partnerARinvoiceDocumentTypeService.Set(entity);
+
                 return entity;
             }
 
@@ -436,192 +317,64 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<CardList> GetCardListsByListIds(List<string> cardIds, int tenant)
         {
             List<CardList> cardLists = (from a in repository.context.Cards
-                                        where cardIds.Contains(a.Id) && a.Tenant == tenant
+                                           where cardIds.Contains(a.Id) && a.Tenant == tenant
+                                              select new CardList()
+                                              {
+                                                  Id = a.Id,
+                                                  Tenant = a.Tenant,
+                                                  EnglishName = a.EnglishName,
+                                         
+                                              }).ToList();
+            return cardLists;
+        }    
+
+        public CardPM GetSinglePMByCode(string code, int tenant)
+        {
+            var cardId = repository.GetCardIdByCode(code,tenant);
+            return GetSinglePM(cardId, tenant);
+
+        }
+
+        public CardList GetSingleByGLAccount(string glAccountId, int tenant)
+        {
+            CardList cardList = (from a in repository.context.Cards
+                                        where a.GLAccountId == glAccountId && a.Tenant == tenant
                                         select new CardList()
                                         {
                                             Id = a.Id,
                                             Tenant = a.Tenant,
                                             EnglishName = a.EnglishName,
 
-                                        }).ToList();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "List", Entities = cardLists.Cast<object>().ToList() }).Set();
-            return cardLists;
-        }
-
-        public List<CardPM> GetAllCardPMsByTenant(int tenant) 
-        {
-            List<CardPM> cardPMs = (from a in repository.context.Cards
-                                    where a.Tenant == tenant
-                                    select new CardPM()
-                                    {
-                                        Id = a.Id,
-                                        Tenant = a.Tenant,
-                                        EnglishName = a.EnglishName,
-                                        Code = a.Code,
-                                        PartnerTypeId = a.PartnerTypeId
-
-                                    }).ToList();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", Tenant = tenant, Type = "PM", Entities = cardPMs.Cast<object>().ToList() }).Set();
-            return cardPMs;
-        }
-
-        public List<CardPM> GetAllLocalCards(int tenant)
-        {
-            List<CardPM> cardPMs =
-             (
-                  from rec in repository.context.Cards
-                  where !string.IsNullOrEmpty(rec.VatNumber) && rec.CountryCode == "IL" && rec.Tenant == tenant
-                  select new CardPM()
-                  {
-                      Id = rec.Id,
-                      Tenant = rec.Tenant,
-                      EnglishName = rec.EnglishName,
-                      Code = rec.Code,
-                      VatNumber = rec.VatNumber,
-                      PartnerTypeId = rec.PartnerTypeId
-
-                  }).ToList();
-            return cardPMs;
-        }
-        public CardPM GetSinglePMByCode(string code, int tenant)
-        {
-            var cardId = repository.GetCardIdByCode(code, tenant);
-            return GetSinglePM(cardId, tenant);
-
-        }
-
-        public CardPM GetSinglePMByCodePartnerTypes(string code, int tenant, List<string> partnerTypes = null)
-        {
-            var cardId = repository.GetCardIdByCodePartnerTypes(code, tenant, partnerTypes);
-            return GetSinglePM(cardId, tenant);
-
-        }
-
-        public CardPM GetSinglePMByExternalId(string externalId, int tenant)
-        {
-            var cardId = repository.GetCardIdByExternalId(externalId, tenant);
-            CardPM cardPM = GetSinglePM(cardId, tenant);
-
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            cardPM.Contacts = contactQuery.GetContactsbyCardId(cardId, tenant).ToList();
-            return cardPM;
-        }
-
-        public CardList GetSingleByGLAccount(string glAccountId, int tenant, bool fromCache)
-        {
-
-            string entityKeyString = $"GetSingleByGLAccount({glAccountId},{tenant})";
-            CardList cardList = CacheManager.GetOrInsertNewObject<CardList>(entityKeyString,
-                () =>
-                {
-                    return JustGetSingleByGLAccount(glAccountId, tenant);
-                }, supressForceInsert: fromCache);
+                                        }).FirstOrDefault();
             return cardList;
         }
-
-        private CardList JustGetSingleByGLAccount(string glAccountId, int tenant)
-        {
-            return (from a in repository.context.Cards
-                    where a.GLAccountId == glAccountId && a.Tenant == tenant
-                    select new CardList()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        EnglishName = a.EnglishName,
-                        SalesmanUserId = a.SalesmanUserId,
-                        CollectorId = a.CollectorId,
-
-                    }).FirstOrDefault();
-        }
-
-        public List<CardList> GetAllCardsByGLAccount(string glAccountId, int tenant)
-        {
-            return (from a in repository.context.Cards
-                    where a.GLAccountId == glAccountId && a.Tenant == tenant
-                    select new CardList()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        EnglishName = a.EnglishName,
-                        SalesmanUserId = a.SalesmanUserId,
-                        CollectorId = a.CollectorId,
-                        PaymentTermId = a.PaymentTermId,
-
-                    }).ToList();
-        }
-
-        public IQueryable<CardList> GetCardListsByTenant(int tenant)
-        {
-            AddressRepository addressRepository = new AddressRepository(tenant);
-            AddressQuery addressQuery = new AddressQuery(tenant);
-            IQueryable<CardList> cards = from a in repository.context.Cards
-                                         where a.Tenant == tenant
-                                         select new CardList()
-                                         {
-                                             Id = a.Id,
-                                             Code = a.Code,
-                                             EnglishName = a.EnglishName,
-                                             VatNumber = a.VatNumber,
-                                             CountryCode = a.CountryCode,
-                                             CountryName = a.CountryName,
-                                             CityName = a.CityName,
-                                             GLAccountId = a.GLAccountId
-                                         };
-
-            return cards;
-        }
-
         public IQueryable<CardList> GetCardPMsByTenant(int tenant)
         {
             AddressRepository addressRepository = new AddressRepository(tenant);
             AddressQuery addressQuery = new AddressQuery(tenant);
             IQueryable<CardList> cards = from a in repository.context.Cards
-                                         where a.Tenant == tenant
-                                         select new CardList()
-                                         {
-                                             Id = a.Id,
-                                             Code = a.Code,
-                                             EnglishName = a.EnglishName,
-                                             VatNumber = a.VatNumber,
-                                             CountryCode = a.CountryCode,
-                                             CountryName = a.CountryName,
-                                             CityName = a.CityName,
-                                             GLAccountId = a.GLAccountId,
-                                             SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
-                                             CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                             InActive = a.InActive , 
-                                            PartnerTypeId = a.PartnerTypeId,
-                                         };
-
+                                       where a.Tenant == tenant
+                                       select new CardList()
+                                       {    
+                                           Id = a.Id,
+                                           Code = a.Code ,
+                                           EnglishName=a.EnglishName,
+                                           VatNumber = a.VatNumber,
+                                           CountryCode = a.CountryCode,
+                                           CountryName = a.CountryName,
+                                           CityName = a.CityName,
+                                           GLAccountId = a.GLAccountId
+                                       };
+            
             return cards;
-        }
-
-        public IQueryable<CardList> GetCarrierPMsByTenant(int tenant)
-        {
-            AddressRepository addressRepository = new AddressRepository(tenant);
-            IQueryable<CardList> carriers = from a in repository.context.Cards
-                                            where a.Tenant == tenant && (a.PartnerTypeId == "AL" || a.PartnerTypeId == "SL" || a.PartnerTypeId == "TR")
-                                            select new CardList()
-                                            {
-                                                Id = a.Id,
-                                                Code = a.Code,
-                                                EnglishName = a.EnglishName,
-                                                VatNumber = a.VatNumber,
-                                                CountryCode = a.CountryCode,
-                                                CountryName = a.CountryName,
-                                                CityName = a.CityName,
-                                                GLAccountId = a.GLAccountId
-                                            };
-
-            return carriers;
         }
 
         public List<string> GetCardIdsByTenant(int tenant)
         {
 
             List<string> cards = (from a in repository.context.Cards
-                                  where a.Tenant == tenant
-                                  select a.Id).ToList();
+                                          where a.Tenant == tenant
+                                          select a.Id).ToList();
 
             return cards;
         }
@@ -636,7 +389,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           select new CardList()
                                           {
                                               ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                              AccountingVATSplit = a.AccountingVATSplit,
                                               PayablesAccountingCard = a.PayablesAccountingCard,
                                               EnglishName = a.EnglishName,
                                               Id = a.Id,
@@ -658,11 +410,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Swift = a.Swift,
                                               IBANNumber = a.IBANNumber,
                                               InvitationDate = a.InvitationDate,
-                                              CargoTrackingInvitationDate = a.CargoTrackingInvitationDate,
                                               SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
                                               SharedLogisticsInvitationStatusName = a.SharedLogisticsInvitationStatus != null ? a.SharedLogisticsInvitationStatus.Name : null,
-                                              CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                              CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                               LastLoginDate = a.LastLoginDate,
                                               // CollectorId = a.CollectorId,
                                               // ClassifierId = a.ClassifierId,
@@ -690,21 +439,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SATForeignRFC = a.SATForeignRFC,
                                               MetodoPagoCode = a.MetodoPagoCode,
                                               UsoCFDICode = a.UsoCFDICode,
-                                              RegimenFiscalCode = a.RegimenFiscalCode,
                                               StateName = a.StateName,
                                               IsInternationalPartner = a.IsInternationalPartner,
                                               IsAutonomy = a.IsAutonomy,
-                                              CreatedByPartner = a.CreatedByPartner,
-                                              BillToId = a.BillToId,
-                                              SATCustomerName = a.SATCustomerName,
-                                              EORInumber = a.EORInumber,
-                                              SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
-                                              CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
-                                              ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
-                                              ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
-                                              EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                                              SendingInterestReport = a.SendingInterestReport,
-                                              ExternalSystem = a.ExternalSystem,
                                           });
             return cards;
         }
@@ -718,7 +455,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           select new CardList()
                                           {
                                               ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                              AccountingVATSplit = a.AccountingVATSplit,
                                               PayablesAccountingCard = a.PayablesAccountingCard,
                                               EnglishName = a.EnglishName,
                                               Id = a.Id,
@@ -740,11 +476,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Swift = a.Swift,
                                               IBANNumber = a.IBANNumber,
                                               InvitationDate = a.InvitationDate,
-                                              CargoTrackingInvitationDate = a.CargoTrackingInvitationDate,
                                               SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
                                               SharedLogisticsInvitationStatusName = a.SharedLogisticsInvitationStatus != null ? a.SharedLogisticsInvitationStatus.Name : null,
-                                              CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                              CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                               LastLoginDate = a.LastLoginDate,
                                               // CollectorId = a.CollectorId,
                                               // ClassifierId = a.ClassifierId,
@@ -772,21 +505,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SATForeignRFC = a.SATForeignRFC,
                                               MetodoPagoCode = a.MetodoPagoCode,
                                               UsoCFDICode = a.UsoCFDICode,
-                                              RegimenFiscalCode = a.RegimenFiscalCode,
                                               StateName = a.StateName,
                                               IsInternationalPartner = a.IsInternationalPartner,
                                               IsAutonomy = a.IsAutonomy,
-                                              CreatedByPartner = a.CreatedByPartner,
-                                              BillToId = a.BillToId,
-                                              SATCustomerName = a.SATCustomerName,
-                                              EORInumber = a.EORInumber,
-                                              SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
-                                              CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
-                                              ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
-                                              ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
-                                              EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                                              SendingInterestReport = a.SendingInterestReport,
-                                              ExternalSystem = a.ExternalSystem,
                                           });
             return cards;
         }
@@ -820,7 +541,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       select new CardPM()
                                       {
                                           ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                          AccountingVATSplit = a.AccountingVATSplit,
                                           PayablesAccountingCard = a.PayablesAccountingCard,
                                           EnglishName = a.EnglishName,
                                           Id = a.Id,
@@ -850,16 +570,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           Swift = a.Swift,
                                           IBANNumber = a.IBANNumber,
                                           InvitationDate = a.InvitationDate,
-                                          CargoTrackingInvitationDate = a.CargoTrackingInvitationDate,
                                           SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
                                           SharedLogisticsInvitationStatusName = a.SharedLogisticsInvitationStatus != null ? a.SharedLogisticsInvitationStatus.Name : null,
-                                          CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                          CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                           LastLoginDate = a.LastLoginDate,
                                           CollectorId = a.CollectorId,
                                           ClassifierId = a.ClassifierId,
-                                          ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
-                                          CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
+                                          ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
+                                          CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
                                           CreateDate = a.CreateDate,
                                           UpdateDate = a.UpdateDate,
                                           CreatedByUserId = a.CreatedByUserId,
@@ -867,8 +584,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           PrimaryContactId = a.PrimaryContactId,
                                           EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                           SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
-                                          AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
-                                          TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                           SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                           IsActiveForMobile = a.IsActiveForMobile,
                                           IsCustomer = a.IsCustomer,
@@ -883,23 +598,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           SATForeignRFC = a.SATForeignRFC,
                                           MetodoPagoCode = a.MetodoPagoCode,
                                           UsoCFDICode = a.UsoCFDICode,
-                                          RegimenFiscalCode = a.RegimenFiscalCode,
                                           StateName = a.StateName,
                                           IsInternationalPartner = a.IsInternationalPartner,
                                           IsAutonomy = a.IsAutonomy,
-                                          CreatedByPartner = a.CreatedByPartner,
-                                          BillToId = a.BillToId,
-                                          SATCustomerName = a.SATCustomerName,
-                                          ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
-                                          ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                          EORInumber = a.EORInumber,
-                                          SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
-                                          CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
-                                          ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
-                                          ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
-                                          EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                                          SendingInterestReport = a.SendingInterestReport,
-                                          ExternalSystem = a.ExternalSystem,
                                       }).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -922,7 +623,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   select new CardPM()
                                   {
                                       ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                      AccountingVATSplit = a.AccountingVATSplit,
                                       PayablesAccountingCard = a.PayablesAccountingCard,
                                       EnglishName = a.EnglishName,
                                       Id = a.Id,
@@ -952,16 +652,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       Swift = a.Swift,
                                       IBANNumber = a.IBANNumber,
                                       InvitationDate = a.InvitationDate,
-                                      CargoTrackingInvitationDate = a.CargoTrackingInvitationDate,
                                       SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
                                       SharedLogisticsInvitationStatusName = a.SharedLogisticsInvitationStatus != null ? a.SharedLogisticsInvitationStatus.Name : null,
-                                      CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                      CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                       LastLoginDate = a.LastLoginDate,
                                       CollectorId = a.CollectorId,
                                       ClassifierId = a.ClassifierId,
-                                      ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
-                                      CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
+                                      ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
+                                      CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
                                       CreateDate = a.CreateDate,
                                       UpdateDate = a.UpdateDate,
                                       CreatedByUserId = a.CreatedByUserId,
@@ -969,8 +666,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.PrimaryContactId,
                                       EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                       SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
-                                      AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
-                                      TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                       SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                       IsActiveForMobile = a.IsActiveForMobile,
                                       IsCustomer = a.IsCustomer,
@@ -985,23 +680,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       SATForeignRFC = a.SATForeignRFC,
                                       MetodoPagoCode = a.MetodoPagoCode,
                                       UsoCFDICode = a.UsoCFDICode,
-                                      RegimenFiscalCode = a.RegimenFiscalCode,
                                       StateName = a.StateName,
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
-                                      CreatedByPartner = a.CreatedByPartner,
-                                      BillToId = a.BillToId,
-                                      SATCustomerName = a.SATCustomerName,
-                                      ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
-                                      ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                      EORInumber = a.EORInumber,
-                                      SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
-                                      CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
-                                      ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
-                                      ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
-                                      EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                                      SendingInterestReport = a.SendingInterestReport,
-                                      ExternalSystem = a.ExternalSystem,
                                   }).FirstOrDefault();
                     }
                 }
@@ -1014,7 +695,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               select new CardPM()
                               {
                                   ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                  AccountingVATSplit = a.AccountingVATSplit,
                                   PayablesAccountingCard = a.PayablesAccountingCard,
                                   EnglishName = a.EnglishName,
                                   Id = a.Id,
@@ -1044,16 +724,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   Swift = a.Swift,
                                   IBANNumber = a.IBANNumber,
                                   InvitationDate = a.InvitationDate,
-                                  CargoTrackingInvitationDate = a.CargoTrackingInvitationDate,
                                   SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
                                   SharedLogisticsInvitationStatusName = a.SharedLogisticsInvitationStatus != null ? a.SharedLogisticsInvitationStatus.Name : null,
-                                  CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                  CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                   LastLoginDate = a.LastLoginDate,
                                   CollectorId = a.CollectorId,
                                   ClassifierId = a.ClassifierId,
-                                  ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
-                                  CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
+                                  ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
+                                  CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
                                   CreateDate = a.CreateDate,
                                   UpdateDate = a.UpdateDate,
                                   CreatedByUserId = a.CreatedByUserId,
@@ -1061,8 +738,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PrimaryContactId = a.PrimaryContactId,
                                   EnableConsolidationInvoices = a.EnableConsolidationInvoices,
                                   SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
-                                  AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
-                                  TeamId = a.Customer == null ? null : a.Customer.TeamId,
                                   SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
                                   IsActiveForMobile = a.IsActiveForMobile,
                                   IsCustomer = a.IsCustomer,
@@ -1077,28 +752,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATForeignRFC = a.SATForeignRFC,
                                   MetodoPagoCode = a.MetodoPagoCode,
                                   UsoCFDICode = a.UsoCFDICode,
-                                  RegimenFiscalCode = a.RegimenFiscalCode,
                                   StateName = a.StateName,
                                   IsInternationalPartner = a.IsInternationalPartner,
                                   IsAutonomy = a.IsAutonomy,
-                                  CreatedByPartner = a.CreatedByPartner,
-                                  BillToId = a.BillToId,
-                                  SATCustomerName = a.SATCustomerName,
-                                  ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
-                                  ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
-                                  EORInumber = a.EORInumber,
-                                  SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
-                                  CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
-                                  ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
-                                  ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
-                                  EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                                  SendingInterestReport = a.SendingInterestReport,
-                                  ExternalSystem = a.ExternalSystem,
                               }).FirstOrDefault();
                 }
 
-                PartnerARinvoiceDocumentTypeService partnerARinvoiceDocumentTypeService = new PartnerARinvoiceDocumentTypeService(entity.Tenant);
-                entity = partnerARinvoiceDocumentTypeService.Set(entity);
                 return entity;
             }
 
@@ -1120,7 +779,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EnglishName = entityPOCO.EnglishName,
                     LocalName = entityPOCO.LocalName,
                     ReceivablesAccountingCard = entityPOCO.ReceivablesAccountingCard,
-                    AccountingVATSplit = entityPOCO.AccountingVATSplit,
                     PayablesAccountingCard = entityPOCO.PayablesAccountingCard,
                     InActive = entityPOCO.InActive,
                     Notes = entityPOCO.Notes,
@@ -1141,11 +799,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Swift = entityPOCO.Swift,
                     IBANNumber = entityPOCO.IBANNumber,
                     InvitationDate = entityPOCO.InvitationDate,
-                    CargoTrackingInvitationDate = entityPOCO.CargoTrackingInvitationDate,
                     SharedLogisticsInvitationStatusCode = entityPOCO.SharedLogisticsInvitationStatusCode,
                     SharedLogisticsInvitationStatusName = entityPOCO.SharedLogisticsInvitationStatus != null ? entityPOCO.SharedLogisticsInvitationStatus.Name : null,
-                    CargoTrackingInvitationStatusCode = entityPOCO.CargoTrackingInvitationStatusCode,
-                    CargoTrackingInvitationStatusName = entityPOCO.CargoTrackingInvitationStatus != null ? entityPOCO.CargoTrackingInvitationStatus.Name : null,
                     LastLoginDate = entityPOCO.LastLoginDate,
                     PrimaryContactId = entityPOCO.PrimaryContactId,
                     EnableConsolidationInvoices = entityPOCO.EnableConsolidationInvoices,
@@ -1161,27 +816,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SATForeignRFC = entityPOCO.SATForeignRFC,
                     MetodoPagoCode = entityPOCO.MetodoPagoCode,
                     UsoCFDICode = entityPOCO.UsoCFDICode,
-                    RegimenFiscalCode = entityPOCO.RegimenFiscalCode,
-                    //FirmCode = entityPOCO.Warehouse != null ? entityPOCO.Warehouse.FirmCode : null,
+                    FirmCode = entityPOCO.Warehouse != null ? entityPOCO.Warehouse.FirmCode : null,
                     StateName = entityPOCO.StateName,
                     IsInternationalPartner = entityPOCO.IsInternationalPartner,
                     IsAutonomy = entityPOCO.IsAutonomy,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
-                    CreatedByPartner = entityPOCO.CreatedByPartner,
-                    StorageFreeDays = entityPOCO.StorageFreeDays,
-                    BillToId = entityPOCO.BillToId,
-                    Address1 = entityPOCO.Address1,
-                    Address2 = entityPOCO.Address2,
-                    SATCustomerName = entityPOCO.SATCustomerName,
-                    EORInumber = entityPOCO.EORInumber,
-                    SingleInvoiceTemplateId = entityPOCO.SingleInvoiceTemplateId,
-                    CustomsInvoiceTemplateId = entityPOCO.CustomsInvoiceTemplateId,
-                    ConsolidationInvoiceTemplateId = entityPOCO.ConsolidationInvoiceTemplateId,
-                    ManifestInvoiceTemplateId = entityPOCO.ManifestInvoiceTemplateId,
-                    EmailForSendingSingArinvoice = entityPOCO.EmailForSendingSingArinvoice,
-                    SendingInterestReport = entityPOCO.SendingInterestReport,
-                    ExternalSystem = entityPOCO.ExternalSystem,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -1191,7 +831,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entityList.KCExpirationDate = entityPOCO.Customer.KCExpirationDate;
                     entityList.SalesmanUserId = entityPOCO.Customer.SalesmanUserId;
                     entityList.AccountManagerUserId = entityPOCO.Customer.AccountManagerUserId;
-                    entityList.TeamId = entityPOCO.Customer.TeamId;
                     entityList.IsCreditLimitEnabled = entityPOCO.Customer.IsCreditLimitEnabled;
                     entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
                     entityList.CreditLimitOpenBalance = entityPOCO.Customer.CreditLimitOpenBalance;
@@ -1252,25 +891,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             }
                         }
                     }
-
-                    SetCustomerTeamName(entityPOCO, entityList);
-
-                    entityList.OpenShipments = SetCustomerOpenShipments(entityList);
                     #endregion
-                }
-
-                else if (entityPOCO.Warehouse != null)
-                {
-                    entityList.FirmCode = entityPOCO.Warehouse.FirmCode;
-                    entityList.WarehouseTypeCode = entityPOCO.Warehouse.TypeCode;
-                    entityList.ChargeStorage = entityPOCO.Warehouse.ChargeStorage;
-                    entityList.ChargeStorageCurrencyId = entityPOCO.Warehouse.CurrencyId;
-                    entityList.AirWeightMeasurementCode = entityPOCO.Warehouse.AirWeightMeasurementCode;
-                    entityList.OceanWeightMeasurementCode = entityPOCO.Warehouse.OceanWeightMeasurementCode;
-                    entityList.InlandWeightMeasurementCode = entityPOCO.Warehouse.InlandWeightMeasurementCode;
-                    entityList.AirWeightRoundingCode = entityPOCO.Warehouse.AirWeightRoundingCode;
-                    entityList.OceanWeightRoundingCode = entityPOCO.Warehouse.OceanWeightRoundingCode;
-                    entityList.InlandWeightRoundingCode = entityPOCO.Warehouse.InlandWeightRoundingCode;
                 }
 
                 if (entityPOCO.PartnerTypeId == "AL")
@@ -1342,218 +963,72 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entityList;
         }
 
-        private static void SetCustomerTeamName(Card entityPOCO, CardList entityList)
-        {
-            if (string.IsNullOrEmpty(entityPOCO.Customer.TeamId)) return;
-            if (entityPOCO.Customer.CustomerTeam != null)
-            {
-                entityList.TeamName = entityPOCO.Customer.CustomerTeam.Name;
-            }
-        }
-
-        private decimal SetCustomerOpenShipments(CardList card)
-        {
-            CustomerOpenFilesAmountQuery customerOpenFilesAmountQuery = new CustomerOpenFilesAmountQuery(card.Tenant);
-            CustomerOpenFilesAmountPM customerOpenFilesAmount = customerOpenFilesAmountQuery.GetSinglePMByCustomerId(card.Id, card.Tenant);
-            if (customerOpenFilesAmount != null)
-            {
-                return customerOpenFilesAmount.TotalOpenFilesAmount;
-            }
-            else return 0;
-
-        }
-
         public IQueryable<CardList> GetIQueryableEntityList(IQueryable<Card> iQueryable)
         {
-            string objcetTableId = new ObjectTableQuery(0).GetObjectTableIdByName("Card");
             IQueryable<CardList> myResult = from card in iQueryable
-                                            join customFieldsMainObject in repository.context.CustomFieldsMainObjects.Where(d => d.ObjectTableId == objcetTableId) on card.Id equals customFieldsMainObject.EntityId into customFieldsMainObjectJoin
-                                            from customFieldsMainObject in customFieldsMainObjectJoin.DefaultIfEmpty()
+                                          select new CardList()
+                                          {
+                                              Code = card.Code,
+                                              CreateDate = card.CreateDate,
+                                              EnglishName = card.EnglishName,
+                                              LocalName = card.LocalName,
+                                              ReceivablesAccountingCard = card.ReceivablesAccountingCard,
+                                              PayablesAccountingCard = card.PayablesAccountingCard,
+                                              InActive = card.InActive,
+                                              Notes = card.Notes,
+                                              Id = card.Id,
+                                              Tenant = card.Tenant,
+                                              VatNumber = card.VatNumber,
+                                              PaymentTermId = card.PaymentTermId,
+                                              PartnerTypeId = card.PartnerTypeId,
+                                              PartnerTypeName = card.PartnerType == null ? null : card.PartnerType.Name,
+                                              PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
+                                              WebSite = card.Website,
+                                              InvoiceCurrencyId = card.InvoiceCurrencyId,
+                                              VatTypeId = card.VatTypeId,
+                                              SearchFields = card.SearchFields,
+                                              BankName = card.BankName,
+                                              BankAddress = card.BankAddress,
+                                              AccountNumber = card.AccountNumber,
+                                              Swift = card.Swift,
+                                              IBANNumber = card.IBANNumber,
+                                              InvitationDate = card.InvitationDate,
+                                              SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
+                                              SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                              LastLoginDate = card.LastLoginDate,
+                                              SalesmanUserEnglishName = card.Customer != null ? (card.Customer.SalesmanUser != null ? card.Customer.SalesmanUser.Contact.EnglishName : null) : null,
+                                              CustomerStatusCode = card.Customer != null ? (card.Customer.CustomerStatus != null ? card.Customer.CustomerStatus.Code : null) : null,
+                                              CustomerStatusName = card.Customer != null ? (card.Customer.CustomerStatus != null ? card.Customer.CustomerStatus.Name : null) : null,
+                                              PrimaryContactId = card.PrimaryContactId,
+                                              EnableConsolidationInvoices = card.EnableConsolidationInvoices,
+                                              CityName = card.CityName,
+                                              CountryId = card.CountryId,
+                                              CountryCode = card.CountryCode,
+                                              CountryName = card.CountryName,
+                                              KnownConsignor = card.Customer == null ? null : card.Customer.KnownConsignor,
+                                              KCExpirationDate = card.Customer == null ? null : card.Customer.KCExpirationDate,
+                                              SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
+                                              SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
+                                              AccountManagerUserName = card.Customer == null ? null : (card.Customer.AccountManagerUser == null ? null : (card.Customer.AccountManagerUser.Contact.EnglishName)),
+                                              AccountManagerUserId = card.Customer == null ? null : card.Customer.AccountManagerUserId,
+                                              CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
+                                              IATACode = card.Agent == null ? null : card.Agent.IATACode,
+                                              RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
+                                              SupportNotes = card.SupportNotes,
+                                              GLAccountId = card.GLAccountId,
+                                              ExternalAccountingBusinessArea = card.ExternalAccountingBusinessArea,
+                                              SATPaymentMethodCode = card.SATPaymentMethodCode,
+                                              SATForeignRFC = card.SATForeignRFC,
+                                              MetodoPagoCode = card.MetodoPagoCode,
+                                              UsoCFDICode = card.UsoCFDICode,
+                                              StateName = card.StateName,
+                                              IsInternationalPartner = card.IsInternationalPartner,
+                                              IsAutonomy = card.IsAutonomy,
+                                              CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
+                                              CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
+                                          };
 
-                                            select new CardList()
-                                            {
-                                                Code = card.Code,
-                                                CreateDate = card.CreateDate,
-                                                EnglishName = card.EnglishName,
-                                                LocalName = card.LocalName,
-                                                ReceivablesAccountingCard = card.ReceivablesAccountingCard,
-                                                AccountingVATSplit = card.AccountingVATSplit,
-                                                PayablesAccountingCard = card.PayablesAccountingCard,
-                                                InActive = card.InActive,
-                                                Notes = card.Notes,
-                                                Id = card.Id,
-                                                Tenant = card.Tenant,
-                                                VatNumber = card.VatNumber,
-                                                PaymentTermId = card.PaymentTermId,
-                                                PartnerTypeId = card.PartnerTypeId,
-                                                PartnerTypeName = card.PartnerType == null ? null : (card.PartnerType.Id == "CS" && card.Customer != null && card.Customer.IsCustomer == false ? "Shipper/Consignee" : card.PartnerType.Name),
-                                                PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
-                                                WebSite = card.Website,
-                                                InvoiceCurrencyId = card.InvoiceCurrencyId,
-                                                VatTypeId = card.VatTypeId,
-                                                SearchFields = card.SearchFields,
-                                                BankName = card.BankName,
-                                                BankAddress = card.BankAddress,
-                                                AccountNumber = card.AccountNumber,
-                                                Swift = card.Swift,
-                                                IBANNumber = card.IBANNumber,
-                                                InvitationDate = card.InvitationDate,
-                                                CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
-                                                SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
-                                                SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
-                                                CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
-                                                CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
-                                                LastLoginDate = card.LastLoginDate,
-                                                SalesmanUserEnglishName = card.Customer != null ? (card.Customer.SalesmanUser != null ? card.Customer.SalesmanUser.Contact.EnglishName : null) : null,
-                                                CustomerStatusCode = card.Customer != null ? (card.Customer.CustomerStatus != null ? card.Customer.CustomerStatus.Code : null) : null,
-                                                CustomerStatusName = card.Customer != null ? (card.Customer.CustomerStatus != null ? card.Customer.CustomerStatus.Name : null) : null,
-                                                PrimaryContactId = card.PrimaryContactId,
-                                                EnableConsolidationInvoices = card.EnableConsolidationInvoices,
-                                                CityName = card.CityName,
-                                                Address1 = card.Address1,
-                                                Address2 = card.Address2,
-                                                CountryId = card.CountryId,
-                                                CountryCode = card.CountryCode,
-                                                CountryName = card.CountryName,
-                                                KnownConsignor = card.Customer == null ? null : card.Customer.KnownConsignor,
-                                                KCExpirationDate = card.Customer == null ? null : card.Customer.KCExpirationDate,
-                                                SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
-                                                SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
-                                                AccountManagerUserName = card.Customer == null ? null : (card.Customer.AccountManagerUser == null ? null : (card.Customer.AccountManagerUser.Contact.EnglishName)),
-                                                TeamName = card.Customer == null ? null : (card.Customer.CustomerTeam == null ? null : (card.Customer.CustomerTeam.Name)),
-                                                AccountManagerUserId = card.Customer == null ? null : card.Customer.AccountManagerUserId,
-                                                TeamId = card.Customer == null ? null : card.Customer.TeamId,
-                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
-                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
-                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
-                                                SupportNotes = card.SupportNotes,
-                                                GLAccountId = card.GLAccountId,
-                                                ExternalAccountingBusinessArea = card.ExternalAccountingBusinessArea,
-                                                SATPaymentMethodCode = card.SATPaymentMethodCode,
-                                                SATForeignRFC = card.SATForeignRFC,
-                                                MetodoPagoCode = card.MetodoPagoCode,
-                                                UsoCFDICode = card.UsoCFDICode,
-                                                RegimenFiscalCode = card.RegimenFiscalCode,
-                                                StateName = card.StateName,
-                                                IsInternationalPartner = card.IsInternationalPartner,
-                                                IsAutonomy = card.IsAutonomy,
-                                                GLAccountDisplayNumber = card.GLAccountDisplayNumber,
-                                                CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
-                                                CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
-                                                CreatedByPartner = card.CreatedByPartner,
-                                                RankId = card.Customer != null ? (card.Customer.Rank != null ? card.Customer.Rank.Name : null) : null,
-                                                IndustryId = card.Customer != null ? (card.Customer.Industry != null ? card.Customer.Industry.Name : null) : null,
-                                                RecordDate = card.UpdateDate != null ? card.UpdateDate : card.CreateDate,
-                                                BillToId = card.BillToId,
-                                                SATCustomerName = card.SATCustomerName,
-                                                Field1 = customFieldsMainObject != null ? customFieldsMainObject.Field1 : null,
-                                                Field2 = customFieldsMainObject != null ? customFieldsMainObject.Field2 : null,
-                                                Field3 = customFieldsMainObject != null ? customFieldsMainObject.Field3 : null,
-                                                Field4 = customFieldsMainObject != null ? customFieldsMainObject.Field4 : null,
-                                                Field5 = customFieldsMainObject != null ? customFieldsMainObject.Field5 : null,
-                                                Field6 = customFieldsMainObject != null ? customFieldsMainObject.Field6 : null,
-                                                Field7 = customFieldsMainObject != null ? customFieldsMainObject.Field7 : null,
-                                                Field8 = customFieldsMainObject != null ? customFieldsMainObject.Field8 : null,
-                                                Field9 = customFieldsMainObject != null ? customFieldsMainObject.Field9 : null,
-                                                Field10 = customFieldsMainObject != null ? customFieldsMainObject.Field10 : null,
-                                                Field11 = customFieldsMainObject != null ? customFieldsMainObject.Field11 : null,
-                                                Field12 = customFieldsMainObject != null ? customFieldsMainObject.Field12 : null,
-                                                Field13 = customFieldsMainObject != null ? customFieldsMainObject.Field13 : null,
-                                                Field14 = customFieldsMainObject != null ? customFieldsMainObject.Field14 : null,
-                                                Field15 = customFieldsMainObject != null ? customFieldsMainObject.Field15 : null,
-                                                Field16 = customFieldsMainObject != null ? customFieldsMainObject.Field16 : null,
-                                                Field17 = customFieldsMainObject != null ? customFieldsMainObject.Field17 : null,
-                                                Field18 = customFieldsMainObject != null ? customFieldsMainObject.Field18 : null,
-                                                Field19 = customFieldsMainObject != null ? customFieldsMainObject.Field19 : null,
-                                                Field20 = customFieldsMainObject != null ? customFieldsMainObject.Field20 : null,
-                                                Field21 = customFieldsMainObject != null ? customFieldsMainObject.Field21 : null,
-                                                Field22 = customFieldsMainObject != null ? customFieldsMainObject.Field22 : null,
-                                                Field23 = customFieldsMainObject != null ? customFieldsMainObject.Field23 : null,
-                                                Field24 = customFieldsMainObject != null ? customFieldsMainObject.Field24 : null,
-                                                Field25 = customFieldsMainObject != null ? customFieldsMainObject.Field25 : null,
-                                                Field26 = customFieldsMainObject != null ? customFieldsMainObject.Field26 : null,
-                                                Field27 = customFieldsMainObject != null ? customFieldsMainObject.Field27 : null,
-                                                Field28 = customFieldsMainObject != null ? customFieldsMainObject.Field28 : null,
-                                                Field29 = customFieldsMainObject != null ? customFieldsMainObject.Field29 : null,
-                                                Field30 = customFieldsMainObject != null ? customFieldsMainObject.Field30 : null,
-                                                Field31 = customFieldsMainObject != null ? customFieldsMainObject.Field31 : null,
-                                                Field32 = customFieldsMainObject != null ? customFieldsMainObject.Field32 : null,
-                                                Field33 = customFieldsMainObject != null ? customFieldsMainObject.Field33 : null,
-                                                Field34 = customFieldsMainObject != null ? customFieldsMainObject.Field34 : null,
-                                                Field35 = customFieldsMainObject != null ? customFieldsMainObject.Field35 : null,
-                                                Field36 = customFieldsMainObject != null ? customFieldsMainObject.Field36 : null,
-                                                Field37 = customFieldsMainObject != null ? customFieldsMainObject.Field37 : null,
-                                                Field38 = customFieldsMainObject != null ? customFieldsMainObject.Field38 : null,
-                                                Field39 = customFieldsMainObject != null ? customFieldsMainObject.Field39 : null,
-                                                Field40 = customFieldsMainObject != null ? customFieldsMainObject.Field40 : null,
-                                                Field41 = customFieldsMainObject != null ? customFieldsMainObject.Field41 : null,
-                                                Field42 = customFieldsMainObject != null ? customFieldsMainObject.Field42 : null,
-                                                Field43 = customFieldsMainObject != null ? customFieldsMainObject.Field43 : null,
-                                                Field44 = customFieldsMainObject != null ? customFieldsMainObject.Field44 : null,
-                                                Field45 = customFieldsMainObject != null ? customFieldsMainObject.Field45 : null,
-                                                Field46 = customFieldsMainObject != null ? customFieldsMainObject.Field46 : null,
-                                                Field47 = customFieldsMainObject != null ? customFieldsMainObject.Field47 : null,
-                                                Field48 = customFieldsMainObject != null ? customFieldsMainObject.Field48 : null,
-                                                Field49 = customFieldsMainObject != null ? customFieldsMainObject.Field49 : null,
-                                                Field50 = customFieldsMainObject != null ? customFieldsMainObject.Field50 : null,
-                                                EORInumber = card.EORInumber,
-                                                SingleInvoiceTemplateId = card.SingleInvoiceTemplateId,
-                                                CustomsInvoiceTemplateId = card.CustomsInvoiceTemplateId,
-                                                ConsolidationInvoiceTemplateId = card.ConsolidationInvoiceTemplateId,
-                                                ManifestInvoiceTemplateId = card.ManifestInvoiceTemplateId,
-                                                EmailForSendingSingArinvoice = card.EmailForSendingSingArinvoice,
-                                                SendingInterestReport = card.SendingInterestReport,
-                                                ExternalSystem = card.ExternalSystem,
-                                                IsCustomer = card.IsCustomer,
-                                            };
-
-            if (myResult.Count() > 0)
-            {
-                int tenant = myResult.FirstOrDefault().Tenant;
-
-                CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
-                myResult = myFilter.RunFilter(myResult);
-            }
-
-            return myResult;
-        }
-
-
-
-        public IQueryable<CardList> GetIQueryableEntityListShort(IQueryable<Card> iQueryable)
-        {
-
-
-
-            IQueryable<CardList> myResult = from card in iQueryable
-                                         
-                                            select new CardList()
-                                            {
-                                                Code = card.Code,
-                                                CreateDate = card.CreateDate,
-                                                 InActive = card.InActive,
-                                                Id = card.Id,
-                                                Tenant = card.Tenant,
-                                                EnglishName = card.EnglishName,
-                                                LocalName = card.LocalName,
-                                                VatNumber = card.VatNumber,
-                                                PartnerTypeName = card.PartnerType == null ? null : (card.PartnerType.Id == "CS" && card.Customer != null && card.Customer.IsCustomer == false ? "Shipper/Consignee" : card.PartnerType.Name),
-                                                CityName = card.CityName,
-                                                 CountryCode = card.CountryCode,
-                                                SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
-                                                SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
-                                                PartnerTypeId = card.PartnerTypeId,
-                                                CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
-                                                CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
-                                                GLAccountDisplayNumber = card.GLAccountDisplayNumber,
-                                                GLAccountId = card.GLAccountId,
-                                                SearchFields = card.SearchFields,
-                                                IsCustomer = card.IsCustomer,
-
-
-                                            };
-
-            if (myResult.Count() > 0)
+            if(myResult.Count() > 0)
             {
                 int tenant = myResult.FirstOrDefault().Tenant;
 
@@ -1573,7 +1048,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           select new CardList()
                                           {
                                               ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                              AccountingVATSplit = a.AccountingVATSplit,
                                               PayablesAccountingCard = a.PayablesAccountingCard,
                                               EnglishName = a.EnglishName,
                                               Id = a.Id,
@@ -1595,11 +1069,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Swift = a.Swift,
                                               IBANNumber = a.IBANNumber,
                                               InvitationDate = a.InvitationDate,
-                                              CargoTrackingInvitationDate = a.CargoTrackingInvitationDate,
                                               SharedLogisticsInvitationStatusCode = a.SharedLogisticsInvitationStatusCode,
                                               SharedLogisticsInvitationStatusName = a.SharedLogisticsInvitationStatus != null ? a.SharedLogisticsInvitationStatus.Name : null,
-                                              CargoTrackingInvitationStatusCode = a.CargoTrackingInvitationStatusCode,
-                                              CargoTrackingInvitationStatusName = a.CargoTrackingInvitationStatus != null ? a.CargoTrackingInvitationStatus.Name : null,
                                               LastLoginDate = a.LastLoginDate,
                                               // CollectorId = a.CollectorId,
                                               // ClassifierId = a.ClassifierId,
@@ -1627,23 +1098,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SATForeignRFC = a.SATForeignRFC,
                                               MetodoPagoCode = a.MetodoPagoCode,
                                               UsoCFDICode = a.UsoCFDICode,
-                                              RegimenFiscalCode = a.RegimenFiscalCode,
                                               StateName = a.StateName,
                                               IsInternationalPartner = a.IsInternationalPartner,
                                               IsAutonomy = a.IsAutonomy,
                                               CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                                               CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                              CreatedByPartner = a.CreatedByPartner,
-                                              BillToId = a.BillToId,
-                                              SATCustomerName = a.SATCustomerName,
-                                              EORInumber = a.EORInumber,
-                                              SingleInvoiceTemplateId = a.SingleInvoiceTemplateId,
-                                              CustomsInvoiceTemplateId = a.CustomsInvoiceTemplateId,
-                                              ConsolidationInvoiceTemplateId = a.ConsolidationInvoiceTemplateId,
-                                              ManifestInvoiceTemplateId = a.ManifestInvoiceTemplateId,
-                                              EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                                              SendingInterestReport = a.SendingInterestReport,
-                                              ExternalSystem = a.ExternalSystem,
                                           });
             return cards;
         }
@@ -1660,57 +1119,50 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 ShippingLineRepository shippingLineRepository = new ShippingLineRepository(objectContext);
                 AddressRepository AddressRepository = new AddressRepository(objectContext);
 
+
                 Card oldTenantCard = CardRepository.GetSingleCard(entityId, 0, true);
-                Card newTenantCard = CardRepository.GetSingleCardByCodeAndType(oldTenantCard.Code, oldTenantCard.PartnerTypeId, tenant, false);
+            Card newTenantCard = CardRepository.GetSingleCardByCodeAndType(oldTenantCard.Code, oldTenantCard.PartnerTypeId, tenant, false);
                 if (oldTenantCard.UpdateDate == null)
-                {
                     oldTenantCard.UpdateDate = oldTenantCard.CreateDate;
-                }
-
-                if (newTenantCard.CreateDate != oldTenantCard.UpdateDate)
-                {
-                    DateTime? todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    newTenantCard.UpdateDate = todayDateTime;
-                    newTenantCard.CreateDate = oldTenantCard.UpdateDate;
+            if (newTenantCard.CreateDate != oldTenantCard.UpdateDate)
+            {
+                DateTime? todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                newTenantCard.UpdateDate = todayDateTime;
+                    newTenantCard.CreateDate = oldTenantCard.UpdateDate ;
                     newTenantCard.EnglishName = oldTenantCard.EnglishName;
-                    newTenantCard.LocalName = oldTenantCard.LocalName;
-
-                    if (string.IsNullOrEmpty(newTenantCard.ImageDetailId))
-                    {
-                        newTenantCard.ImageDetailId = oldTenantCard.ImageDetailId;
-                    }
-
+                newTenantCard.LocalName = oldTenantCard.LocalName;
                     CardRepository.Update(newTenantCard);
                     CardRepository.SubmitChanges();
-
-                    switch (newTenantCard.PartnerTypeId)
-                    {
-                        case "AL":
+                     switch (newTenantCard.PartnerTypeId)
                             {
-                                Airline NewAirline = airlineRepository.GetSingleAirline(newTenantCard.Id, newTenantCard.Tenant);
-                                Airline oldAirline = airlineRepository.GetSingleAirline(oldTenantCard.Id, oldTenantCard.Tenant);
-                                newTenantCard.Website = oldTenantCard.Website;
-                                NewAirline.Prefix = oldAirline.Prefix;
-                                NewAirline.ICAO = oldAirline.ICAO;
-                                NewAirline.CheckDigit = oldAirline.CheckDigit;
-                                NewAirline.LimitedLength = oldAirline.LimitedLength;
-                                airlineRepository.Update(NewAirline);
+                                case "AL":
+                                    {
+                                        Airline NewAirline = airlineRepository.GetSingleAirline(newTenantCard.Id, newTenantCard.Tenant);
+                                        Airline oldAirline = airlineRepository.GetSingleAirline(oldTenantCard.Id, oldTenantCard.Tenant);
+                                        newTenantCard.Website = oldTenantCard.Website;
+                                        NewAirline.Prefix = oldAirline.Prefix;
+                                        NewAirline.ICAO = oldAirline.ICAO;
+                                        NewAirline.CheckDigit = oldAirline.CheckDigit;
+                                        NewAirline.LimitedLength = oldAirline.LimitedLength;
+                                        airlineRepository.Update(NewAirline);
                                 airlineRepository.SubmitChanges();
-                                break;
-                            }
+                                        break;
+                                    }
 
-                        case "SL":
-                            {
-                                ShippingLine NewShippingLine = shippingLineRepository.GetSingleShippingLine(newTenantCard.Id, newTenantCard.Tenant);
-                                ShippingLine oldShippingLine = shippingLineRepository.GetSingleShippingLine(oldTenantCard.Id, oldTenantCard.Tenant);
-                                newTenantCard.Website = oldTenantCard.Website;
-                                NewShippingLine.SCACCode = oldShippingLine.SCACCode;
-                                shippingLineRepository.Update(NewShippingLine);
+                                case "SL":
+                                    {
+                                        ShippingLine NewShippingLine = shippingLineRepository.GetSingleShippingLine(newTenantCard.Id, newTenantCard.Tenant);
+                                        ShippingLine oldShippingLine = shippingLineRepository.GetSingleShippingLine(oldTenantCard.Id, oldTenantCard.Tenant);
+                                        newTenantCard.Website = oldTenantCard.Website;
+                                        NewShippingLine.SCACCode = oldShippingLine.SCACCode;
+                                        shippingLineRepository.Update(NewShippingLine);
                                 shippingLineRepository.SubmitChanges();
-                                break;
+                                        break;
+                                    }
+                             
                             }
-                    }
-                }
+                
+            }
 
                 CardList myCardList = new CardList()
                 {
@@ -1718,7 +1170,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EnglishName = newTenantCard.EnglishName,
                     LocalName = newTenantCard.LocalName,
                     ReceivablesAccountingCard = newTenantCard.ReceivablesAccountingCard,
-                    AccountingVATSplit = newTenantCard.AccountingVATSplit,
                     PayablesAccountingCard = newTenantCard.PayablesAccountingCard,
                     InActive = newTenantCard.InActive,
                     Notes = newTenantCard.Notes,
@@ -1738,7 +1189,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CityName = newTenantCard.CityName,
                     CountryName = newTenantCard.CountryName,
                     StateName = newTenantCard.StateName,
-
                 };
 
                 if (myCardList.CityName == null || myCardList.CountryName == null || myCardList.StateName == null)
@@ -1753,12 +1203,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             myCardList.StateName = myMainAddress.State == null ? null : myMainAddress.State.EnglishName;
                         }
                     }
-                }
+                }                
                 scope.Complete();
 
                 return myCardList;
             }
+
         }
+
 
         public CardList GetCarrierCopyToCurrentTenant(string entityId, int tenant, string ccsTypeCode, string newAirlineActionCode, bool newAirlineActionValue, string notes)
         {
@@ -1836,8 +1288,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StateName = oldTenantCard.StateName,
                     IsInternationalPartner = oldTenantCard.IsInternationalPartner,
                     IsAutonomy = oldTenantCard.IsAutonomy,
-                    SATCustomerName = oldTenantCard.SATCustomerName,
-                    EORInumber = oldTenantCard.EORInumber,
                 };
 
                 #region PaymentTerm
@@ -1917,8 +1367,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                             countryRepository.Add(newCountry);
                             countryRepository.SubmitChanges();
-
-                            AddCountryKafkaQueueMessage(newCountry);
                             #endregion
                         }
 
@@ -1929,63 +1377,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 }
                 #endregion
 
-                #region Image Detail
-                if (oldTenantCard.ImageDetailId != null)
-                {
-                    IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
-                    ImageDetailRepository imageDetailRepository = new ImageDetailRepository(webFreightContext);
-                    ImageDetail oldImageDetail = imageDetailRepository.GetSingleImageDetail(oldTenantCard.ImageDetailId, 0);
-                    if (oldImageDetail != null)
-                    {
-                        string fileName = oldImageDetail.Id + "." + oldImageDetail.Extension;
-                        string filePath = "tenant0/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), "images");
-                        IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                        BlobFileInfo fileInfo = new BlobFileInfo()
-                        {
-                            FileName = oldImageDetail.Id,
-                            FolderName = "images",
-                            Extension = oldImageDetail.Extension,
-                            Tenant = 0,
-                        };
-
-                        byte[] datainByte = storageservice.Read(fileInfo);
-
-                        ImageDetail newImageDetail = new ImageDetail()
-                        {
-                            Id = IdCounter.GetNumber("ImageDetail", tenant),
-                            Tenant = tenant,
-                            Extension = oldImageDetail.Extension,
-                            Size = datainByte.Length
-                        };
-
-                        imageDetailRepository.Add(newImageDetail);
-                        imageDetailRepository.SubmitChanges();
-                        newTenantCard.ImageDetailId = newImageDetail.Id;
-
-                        MemoryStream memorystream = new MemoryStream(datainByte);
-                        BlobFileInfo fileInfo2 = new BlobFileInfo()
-                        {
-                            FileName = newImageDetail.Id,
-                            FolderName = "images",
-                            Extension = newImageDetail.Extension,
-                            Tenant = tenant,
-                            FileSize = datainByte.Length,
-                        };
-
-                        string[] blockIdsList = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
-                        storageservice.WriteBlock(datainByte, datainByte.Length, blockIdsList, 0, fileInfo2);
-                    }
-                }
-                #endregion
-
                 CardRepository.Add(newTenantCard);
                 CardRepository.SubmitChanges();
 
-                AddCardKafkaQueueMessage(newTenantCard);
-
                 TableLastUpdateClass.UpdateTableHistory(newTenantCard.Tenant, "Card");
                 TableLastUpdateClass.UpdateTableHistory(newTenantCard.Tenant, tableName);
-
                 #endregion
 
                 #region Addresses
@@ -2127,8 +1523,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                             ContactRepository.Add(contact);
                             ContactRepository.SubmitChanges();
-
-                            AddContactKafkaQueueMessage(contact);
                         }
                     }
 
@@ -2142,8 +1536,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     CardContactRepository.Add(newcardContact);
                     CardContactRepository.SubmitChanges();
-
-                    AddCardContactKafkaQueueMessage(newcardContact);
                 }
                 #endregion
 
@@ -2222,7 +1614,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         airlineRepository.Add(newAirline);
                         airlineRepository.SubmitChanges();
 
-                        var stacks = mawbStackQuery.GetMAWBStackPMsByAirlineId(oldAirline.Id, oldAirline.Tenant).ToList();
+                        List<MAWBStackPM> stacks = mawbStackQuery.GetMAWBStackPMsByAirlineId(oldAirline.Id, oldAirline.Tenant).ToList();
 
                         foreach (MAWBStackPM stack in stacks)
                         {
@@ -2258,7 +1650,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             SCACCode = oldShippingLine.SCACCode,
                             IsINTTRARegistered = oldShippingLine.IsINTTRARegistered,
                             INTTRARegistrationNotes = oldShippingLine.INTTRARegistrationNotes,
-                            INTTRAUpdatesShipment = oldShippingLine.INTTRAUpdatesShipment,
                         };
 
                         if (oldShippingLine.ShippingAgentId != null)
@@ -2315,11 +1706,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 TableLastUpdateClass.UpdateTableHistory(tenant, tableName);
                 TableLastUpdateClass.UpdateTableHistory(tenant, "Carrier");
-                if (!LogitudeSettings.IsCostomsDeploy)
-                {
-                    RunStoredProcedureClass.UpdateCardSearcsRecords(newTenantCard.Id, newTenantCard.Tenant);
-                }
             }
+
             #region CardList            
             CardList myCardList = new CardList()
             {
@@ -2327,7 +1715,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 EnglishName = newTenantCard.EnglishName,
                 LocalName = newTenantCard.LocalName,
                 ReceivablesAccountingCard = newTenantCard.ReceivablesAccountingCard,
-                AccountingVATSplit = newTenantCard.AccountingVATSplit,
                 PayablesAccountingCard = newTenantCard.PayablesAccountingCard,
                 InActive = newTenantCard.InActive,
                 Notes = newTenantCard.Notes,
@@ -2366,100 +1753,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return myCardList;
         }
-
-        #region Send messages to CTool
-        private void AddCountryKafkaQueueMessage(Country country)
-        {
-            if (country != null && !FeatureToggleHelper.HasFeatureToggle("CTL", country.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage(country);
-        }
-
-        private void AddKafkaQueueMessage(Country country)
-        {
-            if (country != null)
-            {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("CToolLookups", 0);
-                var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Country" },
-                { "EntityId", country.Id },
-                { "Tenant", country.Tenant.ToString()}};
-                queueservice.Send(queueMessage, country.Tenant);
-            }
-        }
-
-        private void AddCardKafkaQueueMessage(Card card)
-        {
-            if (card != null && !FeatureToggleHelper.HasFeatureToggle("CTL", card.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage(card);
-        }
-
-        private void AddKafkaQueueMessage(Card card)
-        {
-            if (card != null)
-            {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("CToolLookups", 0);
-                var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Card" },
-                { "EntityId", card.Id },
-                { "Tenant", card.Tenant.ToString()}};
-                queueservice.Send(queueMessage, card.Tenant);
-            }
-        }
-
-        private void AddContactKafkaQueueMessage(Contact contact)
-        {
-            if (contact != null && !FeatureToggleHelper.HasFeatureToggle("CTL", contact.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage(contact);
-        }
-
-        private void AddKafkaQueueMessage(Contact contact)
-        {
-            if (contact != null)
-            {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("CToolLookups", 0);
-                var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Contact" },
-                { "EntityId", contact.Id },
-                { "Tenant", contact.Tenant.ToString()}};
-                queueservice.Send(queueMessage, contact.Tenant);
-            }
-        }
-
-        private void AddCardContactKafkaQueueMessage(CardContact cardContact)
-        {
-            if (cardContact != null && !FeatureToggleHelper.HasFeatureToggle("CTL", cardContact.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage(cardContact);
-        }
-
-        private void AddKafkaQueueMessage(CardContact cardContact)
-        {
-            if (cardContact != null)
-            {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("CToolLookups", 0);
-                var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Contact" },
-                { "EntityId", cardContact.ContactId },
-                { "Tenant", cardContact.Tenant.ToString()}};
-                queueservice.Send(queueMessage, cardContact.Tenant);
-            }
-        }
-        #endregion
 
         private void CheckPartcipant(Airline myTenantAirline, int tenantManagmentId, bool isProcessed, string processType, string updatedBy, string code)
         {
@@ -2563,7 +1856,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    select new CardList()
                                    {
                                        ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                       AccountingVATSplit = a.AccountingVATSplit,
                                        PayablesAccountingCard = a.PayablesAccountingCard,
                                        EnglishName = a.EnglishName,
                                        Id = a.Id,
@@ -2599,14 +1891,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        SATForeignRFC = a.SATForeignRFC,
                                        MetodoPagoCode = a.MetodoPagoCode,
                                        UsoCFDICode = a.UsoCFDICode,
-                                       RegimenFiscalCode = a.RegimenFiscalCode,
                                        IsInternationalPartner = a.IsInternationalPartner,
                                        IsAutonomy = a.IsAutonomy,
-                                       CreatedByPartner = a.CreatedByPartner,
-                                       BillToId = a.BillToId,
-                                       SATCustomerName = a.SATCustomerName,
-                                       EORInumber = a.EORInumber,
-                                       ExternalSystem = a.ExternalSystem,
                                    }).ToList();
             return card.FirstOrDefault();
         }
@@ -2620,8 +1906,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                                         Id = a.Id,
                                         Tenant = a.Tenant,
-                                        EnglishName = a.EnglishName,
-                                        Code = a.Code,
+                                        EnglishName =a.EnglishName,
+                                        Code=a.Code,
                                     }).ToList();
             return Cards;
         }
@@ -2629,7 +1915,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<CardList> GetCardListsByCardIds(List<string> CardIds, int tenant)
         {
             List<CardList> Cards = (from a in repository.context.Cards.Include("PartnerType")
-                                    where CardIds.Contains(a.Id) && a.Tenant == tenant
+                                    where CardIds.Contains(a.Id) && a.Tenant == tenant 
                                     select new CardList()
                                     {
 
@@ -2637,9 +1923,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         Tenant = a.Tenant,
                                         EnglishName = a.EnglishName,
                                         Code = a.Code,
-                                        PartnerTypeName = a.PartnerType != null ? a.PartnerType.Name : "",
-                                        Notes = a.Notes
-
+                                        PartnerTypeName = a.PartnerType!=null ? a.PartnerType.Name: "",
+                                        
                                     }).ToList();
             return Cards;
         }
@@ -2647,15 +1932,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public CardList GetCardListForWareHouseById(string cardId, int tenant)
         {
             CardList cardList = (from a in repository.context.Cards
-                                 where a.Id == cardId && a.Tenant == tenant
-                                 select new CardList()
-                                 {
-                                     Id = a.Id,
-                                     Tenant = a.Tenant,
-                                     EnglishName = a.EnglishName,
-                                     Code = a.Code,
-                                     FirmCode = a.Warehouse != null ? a.Warehouse.FirmCode : null,
-                                 }).FirstOrDefault();
+                     where a.Id == cardId && a.Tenant == tenant
+                     select new CardList()
+                     {
+                         Id = a.Id,
+                         Tenant = a.Tenant,
+                         EnglishName = a.EnglishName,
+                         Code = a.Code,
+                     }).FirstOrDefault();
 
             return cardList;
         }
@@ -2683,246 +1967,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cardList;
         }
 
-        public List<CardList> GetCardPMsByGLAccountId(string glAccountId, int tenant)
-        {
-            IQueryable<CardList> IQueryable_cards = from a in repository.context.Cards.Include("CreditLimitAmount").Include("PaymentTerm")
-                                                    where a.Tenant == tenant && a.GLAccountId == glAccountId
-                                                    select new CardList()
-                                                    {
-                                                        Id = a.Id,
-                                                        Code = a.Code,
-                                                        EnglishName = a.EnglishName,
-                                                        LocalName = a.LocalName,
-                                                        VatNumber = a.VatNumber,
-                                                        CountryCode = a.CountryCode,
-                                                        CountryName = a.CountryName,
-                                                        CreditLimitAmount = a.Customer == null ? null : a.Customer.CreditLimitAmount,
-                                                        AccountingPartnerCreditLimit = a.AccountingPartner == null ? null : a.AccountingPartner.CreditLimit,
-                                                        Tenant = a.Tenant,
-                                                        CityName = a.CityName,
-                                                        GLAccountId = a.GLAccountId,
-                                                        PartnerTypeId = a.PartnerTypeId,
-                                                        BusinessPhone = a.Phone,
-                                                        SalesmanUserId = a.SalesmanUserId,
-                                                        CollectorId = a.CollectorId,
-                                                        PaymentTermId = a.PaymentTermId,
-                                                        PaymentTermLocalName = a.PaymentTerm.LocalName,
-                                                        PaymentTermEnglishName = a.PaymentTerm.EnglishName,
-                                                        ExternalSystem = a.ExternalSystem,
-                                                    };
-
-
-            List<CardList> cards = IQueryable_cards.ToList();
-            foreach (CardList card in cards)
-            {
-                card.OpenShipments = SetCustomerOpenShipments(card);
-            }
-
-            return cards;
-        }
-
-        public List<CardList> GetCardsByGLAccountIds(List<string> glAccountIds, int tenant)
-        {
-            List<CardList> cards = (from a in repository.context.Cards
-                                    where a.Tenant == tenant && glAccountIds.Contains(a.GLAccountId)
-                                    select new CardList()
-                                    {
-                                        Id = a.Id,
-                                        Code = a.Code,
-                                        EnglishName = a.EnglishName,
-                                        LocalName = a.LocalName,
-                                        VatNumber = a.VatNumber,
-                                        CountryCode = a.CountryCode,
-                                        CountryName = a.CountryName,
-                                        Tenant = a.Tenant,
-                                        CityName = a.CityName,
-                                        GLAccountId = a.GLAccountId,
-                                        PartnerTypeId = a.PartnerTypeId,
-                                    }).ToList();
-            return cards;
-        }
-
-
-        public List<CardList> GetCustomerCardsWithoutGLAccount(int tenant)
-        {
-            IQueryable<CardList> cards = from a in repository.context.Cards
-                                         where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
-                                            && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO")
-                                         select new CardList()
-                                         {
-                                             Id = a.Id,
-                                             Code = a.Code,
-                                             EnglishName = a.EnglishName,
-                                             LocalName = a.LocalName,
-                                             PartnerTypeId = a.PartnerTypeId,
-                                             PayablesAccountingCard = a.PayablesAccountingCard,
-                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                             AccountingVATSplit = a.AccountingVATSplit,
-                                             GLAccountId = a.GLAccountId,
-                                         };
-
-            return cards.ToList();
-        }
-
-        public List<CardList> GetVendorCardsWithoutGLAccount(int tenant)
-        {
-            IQueryable<CardList> cards = from a in repository.context.Cards
-                                         where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
-                                            && (a.PartnerTypeId == "VD" || a.PartnerTypeId == "DR" || a.PartnerTypeId == "LL" || a.PartnerTypeId == "WA" || a.PartnerTypeId == "AG")
-                                         select new CardList()
-                                         {
-                                             Id = a.Id,
-                                             Code = a.Code,
-                                             EnglishName = a.EnglishName,
-                                             LocalName = a.LocalName,
-                                             PartnerTypeId = a.PartnerTypeId,
-                                             PayablesAccountingCard = a.PayablesAccountingCard,
-                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                             GLAccountId = a.GLAccountId,
-                                         };
-
-            return cards.ToList();
-        }
-
-        public List<CardList> GetAllOtherCardsWithoutGLAccount(int tenant)
-        {
-            IQueryable<CardList> cards = from a in repository.context.Cards
-                                         where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
-                                            && (a.PartnerTypeId != "CS" && a.PartnerTypeId != "PO" && a.PartnerTypeId != "AG")
-                                            && (a.PartnerTypeId != "VD" && a.PartnerTypeId != "DR" && a.PartnerTypeId != "LL" && a.PartnerTypeId != "WA")
-
-                                         select new CardList()
-                                         {
-                                             Id = a.Id,
-                                             Code = a.Code,
-                                             EnglishName = a.EnglishName,
-                                             LocalName = a.LocalName,
-                                             PartnerTypeId = a.PartnerTypeId,
-                                             PayablesAccountingCard = a.PayablesAccountingCard,
-                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                             AccountingVATSplit = a.AccountingVATSplit,
-                                             GLAccountId = a.GLAccountId,
-                                         };
-
-            return cards.ToList();
-        }
-
-
-        public IQueryable<Card> GetAllCards()
-        {
-            IQueryable<Card> cards = (from a in repository.context.Cards select a);
-
-
-            return cards;
-        }
-
-        public IQueryable<CardList> GetCardsByTenant(int tenant)
-        {
-            IQueryable<CardList> cards = from a in repository.context.Cards
-                                         where a.Tenant == tenant
-                                         select new CardList()
-                                         {
-                                             Id = a.Id,
-                                             Code = a.Code,
-                                             EnglishName = a.EnglishName,
-                                             LocalName = a.LocalName,
-                                             PartnerTypeId = a.PartnerTypeId,
-                                             PayablesAccountingCard = a.PayablesAccountingCard,
-                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
-                                             AccountingVATSplit = a.AccountingVATSplit,
-                                             GLAccountId = a.GLAccountId,
-                                             PrimaryContactId = a.PrimaryContactId,
-                                             BusinessPhone = a.PrimaryContact.BusinessPhone,
-                                             //CreditStatus = a.cred,
-
-                                         };
-
-            return cards;
-        }
-
-        public List<ShortPartnersDetails> GetConnectedPartnerIdsByGLAccountId(string glAccountId, int tenant)
-        {
-            List<ShortPartnersDetails> cards = (from a in repository.context.Cards
-                                                where a.Tenant == tenant && a.GLAccountId == glAccountId
-                                                select new ShortPartnersDetails()
-                                                {
-                                                    PartnerId = a.Id,
-                                                    PartnerName = a.PartnerType.Name,
-                                                    InActive = a.InActive
-                                                }).ToList();
-
-            return cards;
-        }
- 
-
-        public List<CardList> GetAllCardsByVatNumber(string vatNumber, int tenant)
-        {
-            List<CardList> cards = (from a in repository.context.Cards
-                                                where a.Tenant == tenant && a.VatNumber == vatNumber
-                                                select new CardList()
-                                                {
-                                                   Code= a.Code,
-                                                   Id= a.Id,
-                                                   VatNumber=a.VatNumber,
-                                                   LocalName= a.LocalName,
-                                                   EnglishName=a.EnglishName,
-                                                    InActive = a.InActive
-                                                }).ToList();
-
-            return cards;
-        }
- 
-        public bool IsCardExisitByCardId(string cardId, int tenant)
-        {
-            bool isCardExisit = (from a in repository.context.Cards
-                                 where a.Tenant == tenant && a.Id == cardId
-                                 select a).Any();
-            return isCardExisit;
-        }
-        public bool IsCardExisitByCardCode(string code, int tenant)
-        {
-            var cardId = repository.GetCardIdByCode(code, tenant);
-            bool isCardExisit = cardId == null ? false : true;
-
-            return isCardExisit;
-        }
-
-        public CarrierCard GetSingleCarrierCard(string cardId, int tenant, string partnerType = null)
-        {
-            if (!string.IsNullOrEmpty(partnerType))
-            {
-                return (from a in repository.context.Cards
-                        where a.Tenant == tenant && a.Id == cardId
-                        && a.PartnerTypeId == partnerType
-                        select new CarrierCard
-                        {
-                            Code = a.Code,
-                            InActive = a.InActive,
-                        }).FirstOrDefault();
-            }
-
-            return (from a in repository.context.Cards
-                        where a.Tenant == tenant && a.Id == cardId
-                        && (a.PartnerTypeId == "TR" || a.PartnerTypeId == "SL" || a.PartnerTypeId == "AL")
-                        select new CarrierCard
-                        {
-                            Code = a.Code,
-                            InActive = a.InActive,
-                        }).FirstOrDefault();            
-        }
- 
-    }
-
-    public class ShortPartnersDetails
-    {
-        public string PartnerId { get; set; }
-        public string PartnerName { get; set; }
-        public bool InActive { get; set; }
-    }
-    public class CarrierCard
-    {
-        public string Code { get; set; }
-        public bool InActive { get; set; }
 
     }
 }

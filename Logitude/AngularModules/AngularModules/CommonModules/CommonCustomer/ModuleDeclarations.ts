@@ -1,4 +1,4 @@
-import {NewCustomerComponent} from './Components/NewEntity/NewCustomerComponent';
+﻿import {NewCustomerComponent} from './Components/NewEntity/NewCustomerComponent';
 import {CustomerAWBStockTabComponent} from './Components/EditTabs/CustomerAWBStockTabComponent';
 import {CustomerCommitmentsTabComponent} from './Components/EditTabs/CustomerCommitmentsTabComponent';
 import {EditProductCommitmentComponent} from './Components/EditTabs/EditProductCommitmentComponent';
@@ -21,9 +21,6 @@ import {CustomerSalesmanByProductSplitComponent} from './Components/EditTabs/Mor
 import {CustomerForwarderByProductSplitComponent} from './Components/EditTabs/MoreButtons/CustomerForwarderByProductSplitComponent';
 import {CustomerCustomsAgentByProductSplitComponent} from './Components/EditTabs/MoreButtons/CustomerCustomsAgentByProductSplitComponent';
 import {CustomerMediatorByProductSplitComponent} from './Components/EditTabs/MoreButtons/CustomerMediatorByProductSplitComponent';
-import { CustomerOccasionsTabComponent } from './Components/EditTabs/CustomerOccasionsTabComponent';
-import { CustomerProductItemsTabComponent } from './Components/EditTabs/CustomerProductItemsTabComponent';
-import { AddEditCustomerProductItemComponent } from './Components/AddEdit/AddEditCustomerProductItemComponent';
 
 export const Components =
     [
@@ -50,9 +47,6 @@ export const Components =
         CustomerForwarderByProductSplitComponent,
         CustomerCustomsAgentByProductSplitComponent,
         CustomerMediatorByProductSplitComponent,
-        CustomerOccasionsTabComponent,
-        CustomerProductItemsTabComponent,
-        AddEditCustomerProductItemComponent,
     ];
 
 export class ModuleDeclarations {
@@ -84,9 +78,6 @@ export class ModuleDeclarations {
             case "CustomerForwarderByProductSplitComponent": { myResult = CustomerForwarderByProductSplitComponent; break }
             case "CustomerCustomsAgentByProductSplitComponent": { myResult = CustomerCustomsAgentByProductSplitComponent; break }
             case "CustomerMediatorByProductSplitComponent": { myResult = CustomerMediatorByProductSplitComponent; break }
-            case "CustomerOccasionsTabComponent": { myResult = CustomerOccasionsTabComponent; break }
-            case "CustomerProductItemsTabComponent": { myResult = CustomerProductItemsTabComponent; break }
-            case "AddEditCustomerProductItemComponent": { myResult = AddEditCustomerProductItemComponent; break }
         }
 
         return myResult;

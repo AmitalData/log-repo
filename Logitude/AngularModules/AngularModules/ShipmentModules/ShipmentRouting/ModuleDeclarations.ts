@@ -21,12 +21,6 @@ import {DeliveryPackagesChooseComponent} from './Components/Routings/DeliveryTab
 import {DeliveryPackagesConnectComponent} from './Components/Routings/DeliveryTabs/DeliveryPackagesConnectComponent';
 import {OnCarriageDateComponent} from './Components/Routings/OnCarriageDateComponent';
 import { AddEditPackageHarmonizeComponent } from './Components/Routings/AddEditPackageHarmonizeComponent';
-import { WarehouseStoragePricingComponent } from './Components/Routings/WarehouseStoragePricingComponent';
-import { ChooseStandaloneShipmentComponent } from './Components/Routings/ChooseStandaloneShipmentComponent';
-import { SelectStandalonePackagesComponent } from './Components/Routings/SelectStandalonePackagesComponent';
-import { StandAlonePickupDeilveryActionsComponent } from './Components/Routings/StandAlonePickupDeilveryActionsComponent';
-import { ChooseVesselComponent } from './Components/Routings/ChooseVesselComponent';
-import { InlandDomesticAddressComponent } from './Components/Routings/InlandDomesticAddressComponent';
 
 export const Components =
     [
@@ -52,12 +46,6 @@ export const Components =
         DeliveryPackagesChooseComponent,       
         DeliveryPackagesConnectComponent,
         AddEditPackageHarmonizeComponent,
-        WarehouseStoragePricingComponent,
-        ChooseStandaloneShipmentComponent,
-        SelectStandalonePackagesComponent,
-        StandAlonePickupDeilveryActionsComponent,
-        ChooseVesselComponent,
-        InlandDomesticAddressComponent,
     ];
 
 export const ControlsComponents =
@@ -94,12 +82,6 @@ export class ModuleDeclarations {
             case "DeliveryPackagesChooseComponent": { myResult = DeliveryPackagesChooseComponent; break; }
             case "DeliveryPackagesConnectComponent": { myResult = DeliveryPackagesConnectComponent; break; }
             case "AddEditPackageHarmonizeComponent": { myResult = AddEditPackageHarmonizeComponent; break; }
-            case "WarehouseStoragePricingComponent": { myResult = WarehouseStoragePricingComponent; break; }
-            case "ChooseStandaloneShipmentComponent": { myResult = ChooseStandaloneShipmentComponent; break; }
-            case "SelectStandalonePackagesComponent": { myResult = SelectStandalonePackagesComponent; break; }
-            case "StandAlonePickupDeilveryActionsComponent": { myResult = StandAlonePickupDeilveryActionsComponent; break; }
-            case "ChooseVesselComponent": { myResult = ChooseVesselComponent; break; }
-            case "InlandDomesticAddressComponent": { myResult = InlandDomesticAddressComponent; break; }
         }
 
         return myResult;

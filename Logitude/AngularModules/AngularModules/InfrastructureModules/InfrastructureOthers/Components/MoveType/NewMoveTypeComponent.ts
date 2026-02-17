@@ -8,7 +8,7 @@ import {ClassLevelValidator} from '../../../../Infrastructure/Validators/ClassLe
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewMoveTypeComponent.html',    
 })
 
@@ -60,7 +60,7 @@ export class NewMoveTypeComponent extends BaseComponent {
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-            this.MoveTypePMService.insert(this.MoveTypePM).subscribe((res:any) => {
+            this.MoveTypePMService.insert(this.MoveTypePM).subscribe(res => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 var pmResponse: ServiceResponse = res;

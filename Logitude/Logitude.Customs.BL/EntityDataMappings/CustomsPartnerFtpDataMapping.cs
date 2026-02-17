@@ -11,8 +11,6 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -28,20 +26,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPOCO.Id = entityPM.Id;
             }
+            //throw new NotImplementedException();
         }
 
         public void CustomPOCOToPM(CustomsPartnerFtpPM entityPM, CustomsPartnerFtp entityPOCO)
         {
-            if (entityPOCO.FtpDetailsId != null)
-            {
-                FTPDetailRepository ftpDetailsRepository = new FTPDetailRepository(entityPOCO.Tenant);
-                FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(entityPOCO.FtpDetailsId, entityPOCO.Tenant);
-                if (ftpDetail != null)
-                {
-                    entityPM.MyFtpDetail = ftpDetail;
-                }
-            }
-		}
+            //throw new NotImplementedException();
+        }
    }
 
 

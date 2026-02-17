@@ -8,25 +8,21 @@
    declare @State varchar(40) 
    declare @SourceTenant int
    declare @ParentTenant int
-   declare @AutomaticLastUpdateDate as datetime
-   declare @InActive as bit
 
 	DECLARE PortsCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Ports.Id, dw_Ports.EnglishName, dw_Ports.Code , dw_Ports.LocalName , dw_Ports.CombinedCode ,dw_Countries.EnglishName, dw_States.EnglishName, dw_Ports.Tenant, dw_DWHSettings.ParentTenant, dw_Ports.AutomaticLastUpdateDate, dw_Ports.InActive
+	SELECT dw_Ports.Id, dw_Ports.EnglishName, dw_Ports.Code , dw_Ports.LocalName , dw_Ports.CombinedCode ,dw_Countries.EnglishName, dw_States.EnglishName, dw_Ports.Tenant, dw_DWHSettings.ParentTenant 
 	From dw_Ports
 	INNER JOIN dw_States ON dw_Ports.StateId = dw_States.Id
 	INNER JOIN dw_Countries ON dw_Ports.CountryId = dw_Countries.Id
 	INNER JOIN dw_DWHSettings ON dw_Ports.Tenant = dw_DWHSettings.Tenant
-	where dw_Ports.Id !='-1'
-
-	OPEN PortsCursor FETCH NEXT FROM PortsCursor INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
+	OPEN PortsCursor FETCH NEXT FROM PortsCursor INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
-	insert into #DIM_PortsTemp  (Id,Name,Code,[Local Name],[UN Loc Code] ,Country,[State Name],  [Source Tenant],[Parent Tenant],[Automatic Last Update Date],[InActive])  values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive)
+	insert into #DIM_PortsTemp  (Id,Name,Code,[Local Name],[UN Loc Code] ,Country,[State Name],  [Source Tenant],[Parent Tenant])  values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant)
 
-	FETCH NEXT FROM PortsCursor   INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
+	FETCH NEXT FROM PortsCursor   INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant 
 		End
 	CLOSE PortsCursor
 	DEALLOCATE PortsCursor

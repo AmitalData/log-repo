@@ -214,7 +214,7 @@
                 if (value != null) {                    
 
                     var date1 = new Date();
-                    var date2 = value; //$.format.date(value);                    
+                    var date2 = $.format.date(value);                    
 
                     var year1 = $.format.date(date1, "yyyy")
                     var year2 = $.format.date(date2, "yyyy")
@@ -283,7 +283,7 @@
                 if (value != null) {                   
 
                     var date1 = new Date();
-                    var date2 = value; //$.format.date(value);
+                    var date2 = $.format.date(value);
 
                     var year1 = $.format.date(date1, "yyyy")
                     var year2 = $.format.date(date2, "yyyy")

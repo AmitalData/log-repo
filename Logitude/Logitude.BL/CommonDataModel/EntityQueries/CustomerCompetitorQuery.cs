@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityDws;
@@ -17,7 +17,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {                
         CustomerCompetitorRepository repository;
 
-
+        public CustomerCompetitorQuery()
+        {
+            repository = new CustomerCompetitorRepository();
+        }
 
         public CustomerCompetitorQuery(int tenant)
         {
@@ -107,16 +110,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<CustomerCompetitorDW> GetCustomerCompetitorsDW(int tenant)
         {
             List<CustomerCompetitorDW> result = (from a in repository.context.CustomerCompetitors.Include("Competitor").Include("Customer")
-                                                 where a.Tenant == tenant
-                                                 select new CustomerCompetitorDW()
-                                                 {
-                                                     CustomerId = a.CustomerId,
-                                                     CompetitorId = a.CompetitorId,
-                                                     Tenant = a.Tenant,
-                                                     CustomerName = a.Customer != null ? a.Customer.Card.EnglishName : null,
-                                                     CompetitorName = a.Competitor != null ? a.Competitor.Name : null,
+                where a.Tenant == tenant
+                select new CustomerCompetitorDW()
+                {
+                    CustomerId = a.CustomerId,
+                    CompetitorId = a.CompetitorId,
+                    Tenant = a.Tenant,
+                    CustomerName = a.Customer != null ? a.Customer.Card.EnglishName : null,
+                    CompetitorName = a.Competitor != null ? a.Competitor.Name : null,
 
-                                                 }).ToList();
+                }).ToList();
 
             return result;
         }

@@ -9,7 +9,6 @@ using Simplog.Server.Infrastructure.Azure;
 
 using WebFreight.Web.Azure;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web
 {
@@ -49,9 +48,12 @@ namespace WebFreight.Web
             xapfilename = xapfilename.ToLower();
 
 
-            if (                !LogitudeSettings.IsCostomsDeploy                 &&
+            if (
+                !LogitudeSettings.IsCostomsDeploy
+                //Simplog.Server.Infrastructure.Helpers.SettingUtil.ForceDownloadXapFromIIS() 
+                &&
                 
-               !SettingUtil.DeploymentStage.IsDBStage( SettingUtil.DeploymentStage.Development) && LogitudeSettings.UsingAzure)
+                LogitudeSettings.DeploymentStage != "Dev" && LogitudeSettings.UsingAzure)
             {
 
                 var blobfile = blobContainer.GetBlockBlobReference(xapfilename);
@@ -240,7 +242,7 @@ namespace WebFreight.Web
             byte[] datainByte = null;
             xapfilename = xapfilename.ToLower();
 
-            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
+            if (LogitudeSettings.DeploymentStage != "Dev")
             {
 
                 var blobfile = blobContainer.GetBlockBlobReference(xapfilename);

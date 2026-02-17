@@ -38,9 +38,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.APExternalId)
            .HasMaxLength(25)
            .IsUnicode(false);
-            this.Property(t => t.LocalName)
-               .HasMaxLength(100)
-               .IsUnicode(true);
+
             // Table & Column Mappings
             this.ToTable("AccountingPaymentMethods");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -54,7 +52,6 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.APExternalId).HasColumnName("APExternalId");
             this.Property(t => t.IsAR).HasColumnName("IsAR");
             this.Property(t => t.IsAP).HasColumnName("IsAP");
-            this.Property(t => t.LocalName).HasColumnName("LocalName");
 
 
         }

@@ -34,19 +34,18 @@
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="250" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
                         <TextBlock Height="25"
                                    Margin="5"
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
-                                   Text="Data Contract Name :" />
+                                   Text="Data Contract Name :" /> 
                     </StackPanel>
                     <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
                         <TextBlock Height="25"
@@ -55,21 +54,15 @@
                                    FontWeight="Bold"
                                    Text="Version :" />
                     </StackPanel>
-                    <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Vertical">
-                        <TextBlock Height="25"
-                            Margin="5"
-                            VerticalAlignment="Center"
-                            FontWeight="Bold"
-                            Text="Include Tenant 0 Data: "/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Vertical" Visibility="Collapsed">
+                    <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Vertical" Visibility="Collapsed">
                         <TextBlock Height="25"
                                    Margin="5"
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="Computing Partner Name :" />
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Grid.Row="0"  Orientation="Vertical">
+
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
                         <TextBox Height="25"
                                  Margin="5"
                                  VerticalAlignment="Center"
@@ -87,13 +80,7 @@
                                                 Mode=TwoWay}" />
 
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical" >
-                        <CheckBox 
-                        Margin="5"
-                        VerticalAlignment="Center"
-                        IsChecked="{Binding IncludeTenant0Data, Mode=TwoWay}"/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Vertical" Visibility="Collapsed">
+                    <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical" Visibility="Collapsed">
                         <TextBox Height="25"
                                  Margin="5"
                                  VerticalAlignment="Center"

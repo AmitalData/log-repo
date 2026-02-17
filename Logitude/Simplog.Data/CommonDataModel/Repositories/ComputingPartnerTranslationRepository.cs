@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             get { return context; }
         }
 
-
+        public ComputingPartnerTranslationRepository()
+        {
+            this.context = new CommonDataContext();
+        }
 
         public ComputingPartnerTranslationRepository(int tenant)
         {
@@ -36,16 +39,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public ComputingPartnerTranslation GetSingleComputingPartnerTranslation(string id)
         {
             return (from d in Context.ComputingPartnerTranslations where d.Id == id select d).FirstOrDefault();
-        }
-
-        public ComputingPartnerTranslation GetSingleTranslationByOurCode(string partnerId, string tableId, string ourCode, int tenant)
-        {
-            return (from d in Context.ComputingPartnerTranslations 
-                    where d.ComputingPartnerId == partnerId 
-                    && d.ObjectTableId == tableId
-                    && d.OurCode == ourCode
-                    &&d.Tenant == tenant
-                    select d).FirstOrDefault();
         }
 
         public List<ComputingPartnerTranslation> All()

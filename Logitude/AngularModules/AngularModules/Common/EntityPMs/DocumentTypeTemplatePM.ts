@@ -7,12 +7,12 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
-import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
-import { Output, EventEmitter } from '@angular/core';
-import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
+import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
+import {Output, EventEmitter}  from '@angular/core';
+import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
 export class DocumentTypeTemplatePM {
@@ -215,70 +215,17 @@ export class DocumentTypeTemplatePM {
     public set CC(newValue: string) { if (this.cC != newValue) { this.cC = newValue; this.MarkAsDirty("CC"); } }
        
 	 
-    private bCC: string;
-    public get BCC() { return this.bCC; }
-    public set BCC(newValue: string) { if (this.bCC != newValue) { this.bCC = newValue; this.MarkAsDirty("BCC"); } }
-       
-	 
-    private to: string;
-    public get To() { return this.to; }
-    public set To(newValue: string) { if (this.to != newValue) { this.to = newValue; this.MarkAsDirty("To"); } }
-       
-	 
-    private automationId: string;
-    public get AutomationId() { return this.automationId; }
-    public set AutomationId(newValue: string) { if (this.automationId != newValue) { this.automationId = newValue; this.MarkAsDirty("AutomationId"); } }
-       
-    private entityId: string;
-    public get EntityId() { return this.entityId; }
-    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
-    
-    private isSystem: boolean;
-    public get IsSystem() { return this.isSystem; }
-    public set IsSystem(newValue: boolean) { if (this.isSystem != newValue) { this.isSystem = newValue; this.MarkAsDirty("IsSystem"); } }
-       
-	 
-    private attachedExternalDocumentsIds: string;
-    public get AttachedExternalDocumentsIds() { return this.attachedExternalDocumentsIds; }
-    public set AttachedExternalDocumentsIds(newValue: string) { if (this.attachedExternalDocumentsIds != newValue) { this.attachedExternalDocumentsIds = newValue; this.MarkAsDirty("AttachedExternalDocumentsIds"); } }
-
-    private defultAttachmentsXML: string;
-    public get DefultAttachmentsXML() { return this.defultAttachmentsXML; }
-    public set DefultAttachmentsXML(newValue: string) { if (this.defultAttachmentsXML != newValue) { this.defultAttachmentsXML = newValue; this.MarkAsDirty("DefultAttachmentsXML "); } }
-
-
-
-    private isDefultAttachmentsXMLChanged: boolean;
-    public get IsDefultAttachmentsXMLChanged() { return this.isDefultAttachmentsXMLChanged; }
-    public set IsDefultAttachmentsXMLChanged(newValue: boolean) { if (this.isDefultAttachmentsXMLChanged != newValue) { this.isDefultAttachmentsXMLChanged = newValue; this.MarkAsDirty("IsDefultAttachmentsXMLChanged"); } }
-
-
-
-
-    private documentDefultAttachments: any[];
-    get DocumentDefultAttachments() {
-        if (this.documentDefultAttachments == null) {
-            this.documentDefultAttachments = [];
-        }
-
-        return this.documentDefultAttachments;
-    }
-    set DocumentDefultAttachments(newValue: any[]) {
-        if (this.documentDefultAttachments != newValue) {
-            this.documentDefultAttachments = newValue;
-        }
-    }
 
     public OldEntityPM: DocumentTypeTemplatePM;
-
+		
     public IsDirty: boolean;
-    MarkAsDirty(propertyName: string = null) {
+    MarkAsDirty(propertyName:string = null) {
         this.IsDirty = true;
-
+		  	
         if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentTypeTemplate");
-
+           
         }
     }
     private MyClone: DocumentTypeTemplatePM;

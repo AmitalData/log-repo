@@ -1,7 +1,6 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +12,8 @@ namespace Logitude.CRM.Data.Helpers
 {
     public class Tools
     {
-        [ThreadStatic] public static string AuthenticatedUserEmail = string.Empty;
         public static string GetAuthenticatedUser()
         {
-            if(HttpContext.Current == null && !string.IsNullOrEmpty(AuthenticatedUserEmail))
-            {
-                return AuthenticatedUserEmail;
-            }
             if (HttpContext.Current != null)
             {
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))

@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -40,8 +40,6 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 					                          Version = a.Version,
 					
 					                          MinPrice = a.MinPrice,
-
-                                              TransitTime = a.TransitTime,
 					
 		                    	            });
             return query;
@@ -49,8 +47,8 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 
 		private IQueryable<TariffLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TariffLine> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 				private IQueryable<TariffLine> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<TariffLine> iQueryable, int tenant)
         {
 			return iQueryable;

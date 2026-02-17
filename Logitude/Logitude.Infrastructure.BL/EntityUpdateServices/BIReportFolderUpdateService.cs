@@ -3,7 +3,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Logitude.Infrastructure.BL.EntityUpdateServices
 {
@@ -25,14 +24,6 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             }
-
-            string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-            if (!entityPM.PermissionForAll)
-            {
-                entityPM.PermittedByUserId = loggedContact.Id;
-            }
         }
 
         protected override void OnUpdating(BIReportFolderPM entityPM)
@@ -42,14 +33,6 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            }
-
-            string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-            if (!entityPM.PermissionForAll)
-            {
-                entityPM.PermittedByUserId = loggedContact.Id;
             }
         }
         protected override void Trace(BIReportFolderPM entityPM, BIReportFolder entityPOCO, string changesXml)
@@ -92,10 +75,5 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
             }
         }
 
-        protected override void UpdateComposition(BIReportFolderPM entityPM)
-        {
-            BIFoldersPermissionUpdateService biFoldersPermissionUpdateService = new BIFoldersPermissionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-            biFoldersPermissionUpdateService.UpdateMulti(entityPM.PermittedBIFolders, entityPM.DeletedPermittedBIFolders, entityPM, false);
-        }
     }
 }

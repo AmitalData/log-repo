@@ -1,4 +1,5 @@
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -10,7 +11,7 @@ import {DocumentFilingBackupBatchPMService} from '../../../../Common/Services/St
 import {DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddDocumentFilingBackupBatchComponent',
     templateUrl: './AddDocumentFilingBackupBatchComponent.html',
 })
@@ -133,7 +134,7 @@ export class AddDocumentFilingBackupBatchComponent extends BaseComponent impleme
         documentFilingBackupBatchPM.TotalFailed = 0;
         documentFilingBackupBatchPM.TotalDocuments = 0;
         documentFilingBackupBatchPM.TotalSucceeded = 0;
-        service.insert(documentFilingBackupBatchPM).subscribe((res:any) => {
+        service.insert(documentFilingBackupBatchPM).subscribe(res => {
             this.CurrentSession.StopBusyIndicator();
             if (!res.HasError) {
                 this.CurrentSession.CloseCurrentWindowEmit("OK");

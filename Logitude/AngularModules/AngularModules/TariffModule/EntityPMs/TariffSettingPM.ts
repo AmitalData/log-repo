@@ -39,59 +39,11 @@ export class TariffSettingPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private defaultWarningPercentage: number;
-    public get DefaultWarningPercentage() { return this.defaultWarningPercentage; }
-    public set DefaultWarningPercentage(newValue: number) { if (this.defaultWarningPercentage != newValue) { this.defaultWarningPercentage = newValue; this.MarkAsDirty("DefaultWarningPercentage"); } }
-       
-	 
-    private airDefaultStepsId: string;
-    public get AirDefaultStepsId() { return this.airDefaultStepsId; }
-    public set AirDefaultStepsId(newValue: string) { if (this.airDefaultStepsId != newValue) { this.airDefaultStepsId = newValue; this.MarkAsDirty("AirDefaultStepsId"); } }
-       
-	 
-    private lCLDefaultStepsId: string;
-    public get LCLDefaultStepsId() { return this.lCLDefaultStepsId; }
-    public set LCLDefaultStepsId(newValue: string) { if (this.lCLDefaultStepsId != newValue) { this.lCLDefaultStepsId = newValue; this.MarkAsDirty("LCLDefaultStepsId"); } }
-       
-	 
-    private airDefaultSteps: string;
-    public get AirDefaultSteps() { return this.airDefaultSteps; }
-    public set AirDefaultSteps(newValue: string) { if (this.airDefaultSteps != newValue) { this.airDefaultSteps = newValue; this.MarkAsDirty("AirDefaultSteps"); } }
-       
-	 
-    private lCLDefaultSteps: string;
-    public get LCLDefaultSteps() { return this.lCLDefaultSteps; }
-    public set LCLDefaultSteps(newValue: string) { if (this.lCLDefaultSteps != newValue) { this.lCLDefaultSteps = newValue; this.MarkAsDirty("LCLDefaultSteps"); } }
-       
-	 
-    private containerDefaults: string;
-    public get ContainerDefaults() { return this.containerDefaults; }
-    public set ContainerDefaults(newValue: string) { if (this.containerDefaults != newValue) { this.containerDefaults = newValue; this.MarkAsDirty("ContainerDefaults"); } }
-       
-	 
-    private defaultCurrencyId: string;
-    public get DefaultCurrencyId() { return this.defaultCurrencyId; }
-    public set DefaultCurrencyId(newValue: string) { if (this.defaultCurrencyId != newValue) { this.defaultCurrencyId = newValue; this.MarkAsDirty("DefaultCurrencyId"); } }
-       
-	 
-    private airUnitOfMeasurementCode: string;
-    public get AirUnitOfMeasurementCode() { return this.airUnitOfMeasurementCode; }
-    public set AirUnitOfMeasurementCode(newValue: string) { if (this.airUnitOfMeasurementCode != newValue) { this.airUnitOfMeasurementCode = newValue; this.MarkAsDirty("AirUnitOfMeasurementCode"); } }
-       
-	 
-    private lCLUnitOfMeasurementCode: string;
-    public get LCLUnitOfMeasurementCode() { return this.lCLUnitOfMeasurementCode; }
-    public set LCLUnitOfMeasurementCode(newValue: string) { if (this.lCLUnitOfMeasurementCode != newValue) { this.lCLUnitOfMeasurementCode = newValue; this.MarkAsDirty("LCLUnitOfMeasurementCode"); } }
-       
-	 
 
     public OldEntityPM: TariffSettingPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -99,7 +51,6 @@ export class TariffSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffSetting");
            
         }
-       }
     }
 
     private MyClone: TariffSettingPM;

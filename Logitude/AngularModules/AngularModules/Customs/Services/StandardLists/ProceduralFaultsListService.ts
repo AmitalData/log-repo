@@ -6,9 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -21,11 +20,11 @@ import {ProceduralFaultList} from '../../EntityLists/ProceduralFaultList';
 @Injectable()
 
 export class ProceduralFaultListService {
-	private _http: HttpClient;
+	private _http: Http;
     private _apiUrl: string;   
 	public static CachedData: Array<ProceduralFaultList> = [];
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/proceduralfaultviews';  
     }
 
@@ -34,9 +33,9 @@ export class ProceduralFaultListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var list = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, { headers: authHeader }).map(response => {
+                var list = response.json();
                     
                 var entity: ProceduralFaultList;
 				if(list)
@@ -48,7 +47,7 @@ export class ProceduralFaultListService {
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -57,10 +56,10 @@ export class ProceduralFaultListService {
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
 
-       return defer(() => {
-            return this._http.get(this._apiUrl+'/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+       return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
-              var allLists = response;
+              var allLists = response.json();
               var _mappedListsArray: Array< ProceduralFaultList> = [];
 		      if(allLists)
 			  {
@@ -75,7 +74,7 @@ export class ProceduralFaultListService {
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 	
@@ -113,13 +112,13 @@ export class ProceduralFaultListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return defer(() => {
+	   return Observable.defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                serviceResponse = response.json();
                 var _mappedListsArray: Array< ProceduralFaultList> = [];
 				if(serviceResponse.Result)
 				{
@@ -134,7 +133,7 @@ export class ProceduralFaultListService {
 
                 serviceResponse.Result = _mappedListsArray;                  
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });        
     }
 

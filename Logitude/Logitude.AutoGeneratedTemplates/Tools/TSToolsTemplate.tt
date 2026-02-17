@@ -2,9 +2,6 @@
 <#@ output extension=".cs" #>
 
 <#@ Assembly Name="System.Windows.Forms" #>
-<#@ import namespace="System.Security.Cryptography" #>
-<#@ import namespace="System.Security" #>
- 
 <#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Diagnostics" #>
@@ -41,7 +38,7 @@ private string GetTSDataType(dynamic field)
                 result = "number";
             }
 
-            if (typecode == "Date" || typecode == "DateTime"  || typecode == "DateTime2")
+            if (typecode == "Date" || typecode == "DateTime")
             {
                 result = "Date";
             }

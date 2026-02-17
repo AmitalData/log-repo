@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
@@ -59,17 +59,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string VatTypeId { get; set; }
         public bool IsBackToBack { get; set; }
         public string ReceivableId { get; set; }
-
-        public string TariffId { get; set; }
-        public string TariffNumber { get; set; }
-        public string TariffLineId { get; set; }
-        public int TariffVersion { get; set; }
-        public bool IsCustomsChargesTariff { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
-        public double? VatAmountLocal { get; set; }
-        public double? VatAmountProfit { get; set; }
-        public double? ProratedAmountInLocalCurrency { get; set; }
-        public double? ProratedAmountInProfitCurrency { get; set; }
 
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }

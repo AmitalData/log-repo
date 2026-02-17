@@ -7,7 +7,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Transactions;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -46,7 +46,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                    ValidationOrder = a.ValidationOrder,
                                                                    Condition = a.Condition,
                                                                    Code = a.Code,
-                                                                   ObjectFieldCode = a.ObjectFieldCode,
                                                                }).FirstOrDefault();
 
 
@@ -70,7 +69,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                    ValidationOrder = a.ValidationOrder,
                                                                    Condition = a.Condition,
                                                                    Code = a.Code,
-                                                                   ObjectFieldCode = a.ObjectFieldCode,
                                                                }).FirstOrDefault();
             return objectFieldValidationPm;
         }
@@ -92,25 +90,24 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                                 ValidationOrder = a.ValidationOrder,
                                                                                 Condition = a.Condition,
                                                                                 Code = a.Code,
-                                                                                ObjectFieldCode = a.ObjectFieldCode,
                                                                             }).AsQueryable();
             return objectFieldValidationPMs;
         }
 
-        public List<ObjectFieldValidationPM> GetObjectFieldValidationPMsByObjectFieldCode(string objectFieldCode, int tenant)
+        public List<ObjectFieldValidationPM> GetObjectFieldValidationPMsByObjectFieldId(string objectFieldId, int tenant)
         {
             List<ObjectFieldValidationPM> tenantZeroQuery;
             List<ObjectFieldValidationPM> currentTenantQuery;
             List<ObjectFieldValidationPM> query = new List<ObjectFieldValidationPM>();
-            string listName = "objectfieldvalidationpms" + objectFieldCode + tenant;
+            string listName = "objectfieldvalidationpms" + objectFieldId + tenant;
             List<ObjectTableRule> selectedRules = new List<ObjectTableRule>();
             if (CacheManager.CacheWrapper.Get(listName) == null)
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-               //    WebFreightContext  webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
+               //    WebFreightContext  webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
                     tenantZeroQuery = (from a in repository.context.ObjectFieldValidations
-                                       where (a.Tenant == 0) && a.ObjectFieldCode == objectFieldCode
+                                       where (a.Tenant == 0) && a.ObjectFieldId == objectFieldId
                                        select new ObjectFieldValidationPM()
                                        {
 
@@ -122,7 +119,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            ValidationOrder = a.ValidationOrder,
                                            Condition = a.Condition,
                                            Code = a.Code,
-                                           ObjectFieldCode = a.ObjectFieldCode,
                                        }).ToList();
 
 
@@ -132,7 +128,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                  //  WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
                     currentTenantQuery = (from a in repository.context.ObjectFieldValidations
-                                          where (a.Tenant == tenant) && a.ObjectFieldCode == objectFieldCode
+                                          where (a.Tenant == tenant) && a.ObjectFieldId == objectFieldId
                                           select new ObjectFieldValidationPM()
                                           {
 
@@ -144,7 +140,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                               ValidationOrder = a.ValidationOrder,
                                               Condition = a.Condition,
                                               Code = a.Code,
-                                              ObjectFieldCode = a.ObjectFieldCode,
                                           }).ToList();
 
                 }
@@ -172,7 +167,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                    IWebFreightContext context = WebFreightContext.GetContext(0);
                     tenantZeroQuery = (from a in context.ObjectFieldValidations
                                        where (a.Tenant == 0)
                                        select new ObjectFieldValidationPM()
@@ -186,7 +181,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            ValidationOrder = a.ValidationOrder,
                                            Condition = a.Condition,
                                            Code = a.Code,
-                                           ObjectFieldCode = a.ObjectFieldCode,
                                        }).ToList();
 
 
@@ -210,7 +204,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   ValidationOrder = a.ValidationOrder,
                                                   Condition = a.Condition,
                                                   Code = a.Code,
-                                                  ObjectFieldCode = a.ObjectFieldCode,
                                               }).ToList();
 
                     }

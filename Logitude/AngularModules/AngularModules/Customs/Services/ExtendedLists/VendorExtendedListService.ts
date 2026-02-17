@@ -1,8 +1,7 @@
-
+﻿
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -15,10 +14,10 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 
 export class VendorExtendedListService {
 
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/VendorExtended';
     }
 
@@ -29,12 +28,12 @@ export class VendorExtendedListService {
 
         var url = this._apiUrl + '/GetVendorsWithImporterDespositions';
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetVendorsWithImporterDespositions/?' + 'vendorId=' + vendorId + '&importerId=' + importerId + '&ShowOnlyValid=' + ShowOnlyValid + '&useImporterFilter=' + useImporterFilter+ '&searchText=' + searchText, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetVendorsWithImporterDespositions/?' + 'vendorId=' + vendorId + '&importerId=' + importerId + '&ShowOnlyValid=' + ShowOnlyValid + '&useImporterFilter=' + useImporterFilter+ '&searchText=' + searchText, { headers: authHeader }).map(response => {
 
 
                
-                var serviceResponse: ServiceResponse = response;
+                var serviceResponse: ServiceResponse = response.json();
                 var _mappedListsArray: Array<ImporterDespositionClass> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -48,7 +47,7 @@ export class VendorExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 

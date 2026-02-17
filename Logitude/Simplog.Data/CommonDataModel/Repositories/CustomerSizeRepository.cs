@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public CustomerSizeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CustomerSizeRepository(ICommonDataContext context)
         {
@@ -33,11 +36,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.CustomerSizes where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
-
-        public CustomerSize GetSingleCustomerSizeByCode(string code, int tenant)
-        {
-            return (from record in context.CustomerSizes where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
-        }
+        
         public void Add(CustomerSize entity)
         {
             context.CustomerSizes.Add(entity);

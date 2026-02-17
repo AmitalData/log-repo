@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .emptyticket {
         border: 1px solid #8C8C8C;
@@ -68,20 +68,20 @@
        pointer-events:none;
     }
 </style>
-<table [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'">
+<table>
     <tr>
         <td>
             <div class="SimpleGridView">
                 <div class="SimpleGridViewHeader">
                     <table>
                         <tr class="SimpleGridHeaderRow">
-                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">{{'Shipment.O.InvoiceNumber' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">{{'Shipment.O.PLIncoterms' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">{{'Shipment.O.AccountAmount' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">{{'Shipment.O.PLCurrency' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">{{'Shipment.O.PLAccountCountry' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">{{'Shipment.O.PLSupplier' | TextCodeTranslationPipe}}</td>
-                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">{{'Shipment.O.PLFreightDetails' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">מס' חשבון ספק</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">תנאי מכר</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">סכום חשבון</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">מטבע</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">ארץ חשבון</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">ספק</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">נתוני הובלה</td>
                             <td></td>
                             <!--<td class="LastChild">
                         <div></div>
@@ -135,7 +135,7 @@
     <tr style="height:1px;">
         <td>
             <div style="float:left;margin-left:10px;">
-                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;">{{'Shipment.O.Close' | TextCodeTranslationPipe}}</button>
+                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;">סגור</button>
             </div> 
         </td>
     </tr>

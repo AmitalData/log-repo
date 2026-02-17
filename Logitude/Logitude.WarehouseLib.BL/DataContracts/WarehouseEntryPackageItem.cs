@@ -39,9 +39,6 @@ namespace Logitude.WarehouseLib.BL.DataContracts
         public string SpecialInstructions { get; set; }
         public double? VolumetricWeight { get; set; }
         public string EntryReference { get; set; }
-
-        public string Commodity { get; set; }
-
     }
 
 }

@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -43,23 +41,6 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data;
-using Simplog.Server.Infrastructure;
-using Logitude.BL.CommonDataModel.EntityOtherServices;
-using Logitude.BL.QuoteModel.EntityQueries;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using WebFreight.Web.Helpers.SignUp;
-using Logitude.BL.DataContracts;
-using Logitude.Server.Tools.QueueService;
-using WebFreight.Web.Helpers.SignUp.Logbox;
-using Logitude.Workflow.Data.Repositories;
-using Logitude.Workflow.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Simplog.Data.InfrastructureModel;
-using WebFreight.Web.Helpers.APIHelpers;
-using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -109,9 +90,6 @@ namespace WebFreight.Web.InfrastructureModel
         static VatTypeRepository vatTypeRepository;
         static ChargesTypeRepository chargesTypeRepository;
         static ChargesGroupRepository chargesGroupRepository;
-        static QuoteChargesGroupRepository quoteChargesGroupRepository;
-        static AccountingCompanyTypeRepository accountingCompanyTypeRepository;
-
         static RankRepository rankRepository;
         static PackageTypeRepository packageTypeRepository;
         static DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository;
@@ -128,12 +106,6 @@ namespace WebFreight.Web.InfrastructureModel
         static OpportunityTypeRepository opportunityTypeRepository;
         static DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository;
         static AccountingPaymentMethodRepository PaymentMethodRepository;
-        static QuoteClosingReasonRepository quoteClosingReasonRepository;
-        static ShipmentSubTypeRepository shipmentSubTypeRepository;
-
-        // Tariff 
-        static PriceStepRepository priceStepRepository;
-        static TariffProductRepository tariffProductRepository;
 
         //Tickets 
         static TicketTypeRepository ticketTypeRepository;
@@ -141,11 +113,6 @@ namespace WebFreight.Web.InfrastructureModel
         static TicketSeverityRepository ticketSeverityRepository;
         static TicketClassificationRepository ticketClassificationRepository;
 
-        //Task
-        static TaskPriorityRepository taskPriorityRepository;
-        static TaskStatusRepository taskStatusRepository;
-
-      
         //SLA 
         static BusinessHourRepository businessHourRepository;
         static SLAHeaderRepository slaHeaderRepository;
@@ -154,9 +121,7 @@ namespace WebFreight.Web.InfrastructureModel
         private static AdvancedQueryFilterQuery advancedQueryFilterQuery;
         private static ChargesTypeQuery chargesTypeQuery;
         private static ChargesGroupQuery chargesGroupQuery;
-        private static QuoteChargesGroupQuery quoteChargesGroupQuery;
-        private static AccountingCompanyTypeQueryService AccountingCompanyTypeQuery;
-         private static EntityStatusQuery entityStatusQuery;
+        private static EntityStatusQuery entityStatusQuery;
         private static EventTypeQuery eventTypeQuery;
         private static MenusTableQuery menusTableQuery;
         private static ObjectFieldQuery objectFieldsQuery;
@@ -179,12 +144,6 @@ namespace WebFreight.Web.InfrastructureModel
         private static AdditionalServiceQuery additionalServiceQuery;
         private static OpportunityClosingReasonQueryService closingReasonQuery;
         private static CustomsRequiredFieldRepository customsRequiredFieldRepository;
-        private static DocumentTypeCustomsDataRepository documentTypeCustomsDataRepository;
-        private static QuoteClosingReasonQuery quoteClosingReasonQuery;
-        private static ShipmentSubTypeQuery shipmentSubTypeQuery;
-        static CustomerGroupRepository customerGroupRepository;
-
-       
         public static ScreenFieldsRepository ScreenFieldsRepository
         {
             get { return screenFieldsRepository; }
@@ -227,13 +186,6 @@ namespace WebFreight.Web.InfrastructureModel
             get { return customsRequiredFieldRepository; }
             set { customsRequiredFieldRepository = value; }
         }
-         static TenantIdleStatusRepository tenantIdleStatusRepository;
-         public static DocumentTypeCustomsDataRepository DocumentTypeCustomsDataRepository
-        {
-            get { return documentTypeCustomsDataRepository; }
-            set { documentTypeCustomsDataRepository = value; }
-        }
-
 
         static FullAccountingSettingRepository fullAccountingSettingsRepository;
         static BankCodeRepository bankCodeRepository;
@@ -280,9 +232,6 @@ namespace WebFreight.Web.InfrastructureModel
             vatTypeRepository = new VatTypeRepository(theTenant);
             chargesTypeRepository = new ChargesTypeRepository(theTenant);
             chargesGroupRepository = new ChargesGroupRepository(theTenant);
-            quoteChargesGroupRepository = new QuoteChargesGroupRepository(theTenant);
-            accountingCompanyTypeRepository = new AccountingCompanyTypeRepository(theTenant);
-
             rankRepository = new RankRepository(theTenant);
             packageTypeRepository = new PackageTypeRepository(theTenant);
             documentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(theTenant);
@@ -298,25 +247,14 @@ namespace WebFreight.Web.InfrastructureModel
             quoteStageRepository = new QuoteStageRepository(theTenant);
             opportunityTypeRepository = new OpportunityTypeRepository(theTenant);
             customsRequiredFieldRepository = new Logitude.Customs.Data.Repsitories.CustomsRequiredFieldRepository(theTenant);
-            documentTypeCustomsDataRepository = new Logitude.Customs.Data.Repsitories.DocumentTypeCustomsDataRepository(theTenant);
             documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(theTenant);
             PaymentMethodRepository = new Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository(theTenant);
-            quoteClosingReasonRepository = new QuoteClosingReasonRepository(theTenant);
-            shipmentSubTypeRepository = new ShipmentSubTypeRepository(theTenant);
-
-            //Tariff 
-            priceStepRepository = new PriceStepRepository(theTenant);
-            tariffProductRepository = new TariffProductRepository(theTenant);
 
             //Tickets 
             ticketTypeRepository = new TicketTypeRepository(theTenant);
             ticketStageRepository = new TicketStageRepository(theTenant);
             ticketSeverityRepository = new TicketSeverityRepository(theTenant);
             ticketClassificationRepository = new TicketClassificationRepository(theTenant);
-
-            //Task
-            taskPriorityRepository = new TaskPriorityRepository(theTenant);
-            taskStatusRepository = new TaskStatusRepository(theTenant);
 
             // SLA 
             businessHourRepository = new BusinessHourRepository(theTenant);
@@ -333,8 +271,6 @@ namespace WebFreight.Web.InfrastructureModel
             advancedQueryFilterQuery = new AdvancedQueryFilterQuery(theTenant);
             chargesTypeQuery = new ChargesTypeQuery(theTenant);
             chargesGroupQuery = new ChargesGroupQuery(theTenant);
-            quoteChargesGroupQuery = new QuoteChargesGroupQuery(theTenant);
-            AccountingCompanyTypeQuery = new AccountingCompanyTypeQueryService(theTenant);
             documentTypeQuery = new DocumentTypeQuery(theTenant);
             measurementQuery = new MeasurementQuery(theTenant);
             packageTypeQuery = new PackageTypeQuery(theTenant);
@@ -345,13 +281,10 @@ namespace WebFreight.Web.InfrastructureModel
             industryQuery = new IndustryQuery(industryRepository);
             additionalServiceQuery = new AdditionalServiceQuery(additionalServiceRepository);
             closingReasonQuery = new OpportunityClosingReasonQueryService(closingReasonRepository);
-            quoteClosingReasonQuery = new QuoteClosingReasonQuery(quoteClosingReasonRepository);
-            shipmentSubTypeQuery = new ShipmentSubTypeQuery(shipmentSubTypeRepository);
-             fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
-            tenantIdleStatusRepository = new TenantIdleStatusRepository(theTenant);
-             bankCodeRepository = new BankCodeRepository(theTenant);
+
+            fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
+            bankCodeRepository = new BankCodeRepository(theTenant);
             taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(theTenant);
-            customerGroupRepository = new CustomerGroupRepository(theTenant);
             #endregion
         }
         private static Setting setting;
@@ -372,26 +305,37 @@ namespace WebFreight.Web.InfrastructureModel
                 //using (TransactionScope scope = TransactionFactory.GetTransaction())
                 //{
                 // globalTenantRepository = new GlobalTenantRepository();
-                TariffSetting zeroTariffSetting = null;
+                TariffSetting zeroTariffSetting;
                 AccountingSetting zeroAccountingSettings;
                 SATInterfaceSetting tenantZeroSATInterfaceSetting;
                 CustomsInterfaceSetting zeroCustomsInterfaceSetting;
                 SharedLogisticsSetting zeroSharedLogisticsSetting;
                 List<ObjectTable> tenantZeroObjectTables;
+                List<TextCode> tenantZeroTextCodes;
+                List<ObjectFieldPM> tenantZeroObjectFields;
+                List<Role> tenantZeroRoles;
+                List<Feature> tenantZeroFeatures;
                 List<Counter> tenantZeroCounters;
                 List<CounterDefinition> tenantZeroCounterDefinitions;
+                List<ScreenPM> tenantZeroScreens;
+                List<ObjectTableRule> tenantZeroObjectTableRules;
+                List<QueryPM> tenantZeroQueries;
+                List<QueryColumnPM> tenantZeroQueryColumns;
+                List<AdvancedQueryFilterPM> tenantZeroAdvancedQueryFilters;
+                List<TranslationHeader> tenantZeroTranslationHeaders;
                 List<PaymentTerm> tenantZeroPaymentTerms;
                 List<DocumentTypePM> tenantZeroDocumentTypes;
+                List<MenusTablePM> tenantZeroMenusTables;
                 List<EntityStatusPM> tenantZeroEntityStatus;
                 List<EventTypePM> tenantZeroEventTypes;
                 List<MeasurementPM> tenantZeroMeasurements;
                 List<VatType> tenantZeroVatTypes;
                 List<ChargesTypePM> tenantZeroChargesTypes;
                 List<ChargesGroupPM> tenantZeroChargesGroups;
-                List<QuoteChargesGroupPM> tenantZeroQuoteChargesGroups;
-                List<AccountingCompanyTypePM> tenantZeroAccountingCompanyTypes;
+
                 List<PackageTypePM> tenantZeroPackageTypes;
                 List<DocumentTypeCustomField> tenantZeroCustomFields;
+                List<Account> tenantZeroAccounts;
                 List<CreditCardTypePM> tenantZeroCreditCardTypes;
                 List<MoveTypePM> tenantZeroMoveTypes;
                 List<LeadSource> tenantZeroLeadSources;
@@ -402,22 +346,15 @@ namespace WebFreight.Web.InfrastructureModel
                 List<QuoteStage> tenantZeroQuoteStages;
                 List<OpportunityType> tenantZeroOpportunityTypes;
                 List<CustomsRequiredField> tenantZeroCustomsRequiredFields = null;
-                List<DocumentTypeCustomsData> tenantZeroDocumentTypeCustomsDatas = null;
                 List<DocumentsMetaDataType> tenantZeroDocumentsMetaDataType = null;
-                List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods = null;
+                List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods;
                 List<BankCode> tenantZeroBankCodes = null;
                 List<TaxWithholdingAssessOffice> tenantZeroTaxWithholdingAssessOffices = null;
-                List<QuoteClosingReason> tenantZeroQuoteClosingReasons = null;
-                List<ShipmentSubType> tenantZeroShipmentSubTypes = null;
-
                 //Tickets
                 List<TicketType> tenantZeroTicketTypes = null;
                 List<TicketStage> tenantZeroTicketStages = null;
                 List<TicketSeverity> tenantZeroTicketSeverities = null;
-
-                //Task
-                List<TaskPriority> tenantZeroTaskPriorities = null;
-                List<TaskStatus> tenantZeroTaskStatuses = null;
+                List<TicketClassification> tenantZeroTicketClassifications = null;
 
                 // SLA
                 List<BusinessHour> tenantZeroBusinessHours = null;
@@ -430,24 +367,33 @@ namespace WebFreight.Web.InfrastructureModel
 
                     #region lists
                     tenantZeroObjectTables = objectTableRepository.GetObjectsByTenant(0).Where(d => d.InActive == false).ToList();
+                    tenantZeroTextCodes = textCodeRepository.GetActiveTextCodesByTenant(0).ToList();
+                    tenantZeroObjectFields = objectFieldsQuery.GetObjectFieldPMsByTenant(0, 0).ToList();
+                    tenantZeroRoles = roleRepository.GetRoles(0).ToList();
+                    tenantZeroFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
                     tenantZeroCounters = counterRepository.GetCounters(0).ToList();
                     tenantZeroCounterDefinitions = counterDefinitionRepository.GetCounterDefinitions(0).ToList();
+                    tenantZeroScreens = screensQuery.GetScreenPMsByTenant(0).ToList();
+                    tenantZeroObjectTableRules = objectTableRuleRepository.GetObjectTableRules(0).ToList();
+                    tenantZeroQueries = queryQuery.GetQueryPMsByTenantSystemLevel(0).ToList();
+                    tenantZeroQueryColumns = queryColumnQuery.GetQueryColumnsByTenantAndNoUser(0).ToList();
+                    tenantZeroAdvancedQueryFilters = advancedQueryFilterQuery.GetAdvancedQueryFiltersByTenantAndNoUser(0).ToList();
+                    tenantZeroTranslationHeaders = translationHeaderRepository.GetTranslationHeadersByTenant(0).ToList();
                     tenantZeroPaymentTerms = paymentTermRepository.GetPaymenTermsByTenant(0).ToList();
                     tenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0).ToList();
+                    tenantZeroMenusTables = menusTableQuery.GetMenusTablePMsByTenant(0).ToList();
                     tenantZeroEntityStatus = entityStatusQuery.GetEntityStatusPMsByTenant(0).ToList();
                     tenantZeroEventTypes = eventTypeQuery.GetEventTypePMsByTenant(0).ToList();
                     tenantZeroMeasurements = measurementQuery.GetUnitOfMeasurementPMs(0).ToList();
                     tenantZeroVatTypes = vatTypeRepository.GetVatTypes(0).ToList();
                     tenantZeroChargesTypes = chargesTypeQuery.GetChargesTypePMsByTenant(0).ToList();
                     tenantZeroChargesGroups = chargesGroupQuery.GetChargesGroupPMsByTenant(0).ToList();
-                    tenantZeroQuoteChargesGroups = quoteChargesGroupQuery.GetQuoteChargesGroupPMsByTenant(0).ToList();
-                    tenantZeroAccountingCompanyTypes = AccountingCompanyTypeQuery.GetByTenant(0).ToList();
-
                     tenantZeroPackageTypes = packageTypeQuery.GetPackageTypePMsByTenant(0).ToList();
                     tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
+                    tenantZeroAccounts = accountRepository.GetAccountsByTenant(0).ToList();
 
-                    ITariffModuleContext iTariffContext = TariffModuleContext.GetContext(tenant);
-                    if (setting.WorkEnvironment != "customs") zeroTariffSetting = (from d in iTariffContext.TariffSettings where d.Tenant == 0 select d).FirstOrDefault();
+                    ITariffModuleContext iTariffContext= TariffModuleContext.GetContext(0);
+                    zeroTariffSetting = (from d in iTariffContext.TariffSettings where d.Tenant == 0 select d).FirstOrDefault();
 
                     zeroAccountingSettings = accountingSettingsRepository.GetSingleAccountSetting(0);
                     zeroCustomsInterfaceSetting = customsInterfaceSettingRepository.GetSingleCustomsInterfaceSetting(0, 0);
@@ -462,23 +408,17 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroQuoteStages = quoteStageRepository.GetQuoteStagesForSignup(0).ToList();
                     tenantZeroOpportunityTypes = opportunityTypeRepository.GetAll(0).ToList();
                     tenantZeroDocumentsMetaDataType = documentsMetaDataTypeRepository.GetDocumentsMetaDataTypes(0).ToList();
-                    if (setting.WorkEnvironment != "customs") tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
-                    if (setting.WorkEnvironment != "customs") tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
-                    if (setting.WorkEnvironment != "customs") tenantZeroQuoteClosingReasons = quoteClosingReasonRepository.GetQuoteClosingReasons(0).ToList();
-                    if (setting.WorkEnvironment != "customs") tenantZeroShipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(0).ToList();
-
+                    tenantZeroPaymentMethods = PaymentMethodRepository.GetAccountingPaymentMethods(0).ToList();
+                    tenantZeroBankCodes = bankCodeRepository.GetAll(0).ToList();
                     //Tickets 
                     tenantZeroTicketTypes = ticketTypeRepository.GetAll(0).ToList();
                     tenantZeroTicketStages = ticketStageRepository.GetAll(0).ToList();
                     tenantZeroTicketSeverities = ticketSeverityRepository.GetAll(0).ToList();
-
-                    //Task
-                    if (setting.WorkEnvironment != "customs") tenantZeroTaskPriorities = taskPriorityRepository.GetAll(0).ToList();
-                    if (setting.WorkEnvironment != "customs") tenantZeroTaskStatuses = taskStatusRepository.GetAll(0).ToList();
+                    tenantZeroTicketClassifications = ticketClassificationRepository.GetAll(0).ToList();
 
                     //SLA 
                     tenantZeroBusinessHours = businessHourRepository.GetBusinessHours(0).ToList();
-                    if (setting.WorkEnvironment != "customs") tenantZeroSLAHeaders = slaHeaderRepository.GetAll(0).ToList();
+                    tenantZeroSLAHeaders = slaHeaderRepository.GetAll(0).ToList();
                     tenantZeroSLALines = slaLineRepository.GetAll(0).ToList();
                     tenantZeroWithholdingTaxDeductionType = withholdingTaxDeductionTypeRepository.GetAll(0).ToList();
                     tenantZeroSATInterfaceSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(0);
@@ -486,43 +426,30 @@ namespace WebFreight.Web.InfrastructureModel
                     if (setting.WorkEnvironment == "customs")
                     {
                         tenantZeroCustomsRequiredFields = CustomsRequiredFieldRepository.GetAll(0).ToList();
-                        tenantZeroDocumentTypeCustomsDatas = DocumentTypeCustomsDataRepository.GetAll(0).ToList();
                     }
-
                     #endregion
                     scope.Complete();
                 }
 
-                tenant = CreateTenant(signUpInfo);
+                tenant = CreateTenant(signUpInfo, tenantRepository, globalTenantRepository);
                 InitializeRepositories(tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
-                if (setting.WorkEnvironment != "customs") AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
-                if (setting.WorkEnvironment != "customs")
-                    AddDefaultTariffProducts(tenant);
-
-
-
+                AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
                 AddBranchesAndDepartments(tenant, branchRepository, departmentRepository);
 
-                UserShortDetails userShortDetails = new UserShortDetails
-                {
-                    Tenant = tenant,
-                    Name = signUpInfo.Name,
-                    Email = signUpInfo.Email,
-                    PhoneNumber = signUpInfo.Phone
-                };
-                password = AddUser(userShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
-                AddCounters(tenant, counterRepository, tenantZeroObjectTables, tenantZeroCounters);
+                password = AddUser(tenant, signUpInfo.Name, signUpInfo.Email, signUpInfo.Phone, userRepository, branchRepository, departmentRepository, roleRepository);
+                UpdateLogBoxTenant(tenant, signUpInfo, tenantRepository, globalTenantRepository);
+                AddCounters(tenant, counterRepository, tenantZeroObjectTables, /*CurrentTenantObjectTables*/null, tenantZeroCounters);
                 List<Counter> currentTenantCounters = counterRepository.GetCounters(tenant).ToList();
 
                 AddCounterDefinitions(tenant, counterDefinitionRepository, tenantZeroCounters, currentTenantCounters, tenantZeroCounterDefinitions);
-                AddTenantSettings(tenant, tenantSettingRepository, tenantZeroObjectTables);
+                AddTenantSettings(tenant, tenantSettingRepository, tenantZeroObjectTables,/* CurrentTenantObjectTables*/null);
                 AddPaymentTerms(tenant, paymentTermRepository, tenantZeroPaymentTerms);
 
-                AddDocumentTypes(tenant, documentTypeRepository, documentTypeCopyRepository, tenantZeroDocumentTypes, tenantZeroObjectTables, /*CurrentTenantObjectTables*/null, documentTypeCustomFieldRepository, tenantZeroCustomFields, signUpInfo.CountryCode);
+                AddDocumentTypes(tenant, documentTypeRepository, documentTypeCopyRepository, tenantZeroDocumentTypes, tenantZeroObjectTables, /*CurrentTenantObjectTables*/null, documentTypeCustomFieldRepository, tenantZeroCustomFields);
                 List<DocumentType> currentTenantDocumentTypes = documentTypeRepository.GetDocumentTypes(tenant).ToList();
 
                 AddDocumentTypeTemplates(tenant, documentTypeTemplateRepository, tenantZeroDocumentTypes, currentTenantDocumentTypes, documentTypeRepository, signUpInfo.CountryCode);
@@ -530,7 +457,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddEntityStatus(tenant, entityStatusRepository, tenantZeroEntityStatus, tenantZeroObjectTables);
                 List<EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToList();
 
-                AddEventTypes(tenant, eventTypeRepository, tenantZeroEventTypes, tenantZeroObjectTables, currentTenantEntityStatus, tenantZeroEntityStatus);
+                AddEventTypes(tenant, eventTypeRepository, tenantZeroEventTypes, /*CurrentTenantObjectTables*/null, tenantZeroObjectTables, currentTenantEntityStatus);
 
                 AddMeasurements(tenant, measurementRepository, tenantZeroMeasurements);
                 List<Measurement> currentTenantMeasurement = measurementRepository.GetMeasurementsByTenant(tenant).ToList();
@@ -544,7 +471,6 @@ namespace WebFreight.Web.InfrastructureModel
                 AddVatTypes(tenant, vatTypeRepository, tenantZeroVatTypes, vatTypePercentageRepository);
                 List<VatType> currentTenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
-
                 AddLeadSources(tenant, leadSourceRepository, tenantZeroLeadSources);
                 AddStages(tenant, stageRepository, tenantZeroStages);
                 AddIndustries(tenant, industryRepository, tenantZeroIndustries);
@@ -553,33 +479,27 @@ namespace WebFreight.Web.InfrastructureModel
                 AddQuoteStages(tenant, quoteStageRepository, tenantZeroQuoteStages);
                 AddChargesTypes(tenant, chargesTypeRepository, tenantZeroChargesTypes, currentTenantMeasurement, tenantZeroVatTypes, currentTenantVatTypes);
                 AddChargesGroups(tenant, chargesGroupRepository, tenantZeroChargesGroups);
-                CopyQuoteChargesGroupsFromTenantZero(tenant, quoteChargesGroupRepository, tenantZeroQuoteChargesGroups);
-                CopyAccountingCompanyTypeFromTenantZero(tenant, accountingCompanyTypeRepository, tenantZeroAccountingCompanyTypes);
-
                 AddRanks(tenant, rankRepository);
                 AddPackageTypes(tenant, packageTypeRepository, measurementRepository, tenantZeroPackageTypes);
                 AddOpportunityTypes(tenant, opportunityTypeRepository, tenantZeroOpportunityTypes);
                 AddDocumentsMetaDataTypes(tenant, documentsMetaDataTypeRepository, tenantZeroDocumentsMetaDataType);
-                if (setting.WorkEnvironment != "customs") AddPaymentMethods(tenant, PaymentMethodRepository, tenantZeroPaymentMethods);
+                AddPaymentMethods(tenant, PaymentMethodRepository, tenantZeroPaymentMethods);
                 AddTicketTypes(tenant, ticketTypeRepository, tenantZeroTicketTypes);
                 AddTicketStages(tenant, ticketStageRepository, tenantZeroTicketStages);
                 AddTicketSeverities(tenant, ticketSeverityRepository, tenantZeroTicketSeverities);
-                if (setting.WorkEnvironment != "customs") AddQuoteClosingReasons(tenant, quoteClosingReasonRepository, tenantZeroQuoteClosingReasons);
-                if (setting.WorkEnvironment != "customs") AddShipmentSubTypes(tenant, shipmentSubTypeRepository, tenantZeroShipmentSubTypes);
+
                 AddBusinessHours(tenant, businessHourRepository, tenantZeroBusinessHours);
-                if (setting.WorkEnvironment != "customs") AddSLAHeaders(tenant, slaHeaderRepository, tenantZeroSLAHeaders);
+                AddSLAHeaders(tenant, slaHeaderRepository, tenantZeroSLAHeaders);
                 AddWithholdingTaxDeductionTypes(tenant, withholdingTaxDeductionTypeRepository, tenantZeroWithholdingTaxDeductionType);
                 //AddSLALines(tenant, slaLineRepository, tenantZeroSLALines);
-                if (setting.WorkEnvironment != "customs") AddBankCodes(tenant, bankCodeRepository, tenantZeroBankCodes);
+                AddBankCodes(tenant, bankCodeRepository, tenantZeroBankCodes);
                 AddTaxWithholdingAssessOffice(tenant, taxWithholdingAssessOfficeRepository, tenantZeroTaxWithholdingAssessOffices);
                 //AddJournalActionTypes(tenant);
+
 
                 if (setting.WorkEnvironment == "customs")
                 {
                     AddCustomsRequiredFields(tenant, customsRequiredFieldRepository, tenantZeroCustomsRequiredFields);
-                    AddDocumentType(tenant, documentTypeRepository, tenantZeroDocumentTypes.Where(a => !currentTenantDocumentTypes.Any(c => c.Code == a.Code)).ToList());
-                    AddDocumentTypeCustomsData(tenant, documentTypeCustomsDataRepository, tenantZeroDocumentTypeCustomsDatas);
-                    AddPendingsOver900(tenant);
                 }
                 else
                 {
@@ -588,55 +508,28 @@ namespace WebFreight.Web.InfrastructureModel
                     AddJournalActionTypes(tenant);
                 }
 
-                UserShortDetails systemUserShortDetails = new UserShortDetails
-                {
-                    Tenant = tenant,
-                    Name = "System",
-                    Email = "system@tenant" + tenant + ".com",
-                    PhoneNumber = "99999999"
-                };
-                string systemPassword = AddUser(systemUserShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
+                string systemPassword = AddUser(tenant, "System", "system@tenant" + tenant + ".com", "99999999", userRepository, branchRepository, departmentRepository, roleRepository);
 
-                if (setting.WorkEnvironment != "customs")
-                {
-                    AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
-                    AddDefaultTenantIdleStatuses(tenant, tenantIdleStatusRepository);
-
-                }
+                AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
 
                 AddReportFromTenantZero(tenant);
 
-                if (setting.WorkEnvironment != "customs") AddGeneralBIReportFolder(tenant);
-
                 AddTenantLoginPolicy(tenant);
 
-                AddAutomationFromTenantZero(tenant, tenantZeroDocumentTypes);
+                AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
 
-                    if (setting.WorkEnvironment != "customs") { 
-                //Task
-                AddTaskPriorities(tenant, taskPriorityRepository, tenantZeroTaskPriorities);
-                AddTaskStatuses(tenant, taskStatusRepository, tenantZeroTaskStatuses);
-                }
-                else
-                {
-                    AddDefaultCustomsSettings(tenant);
-                }
-                new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
                 #endregion
                 scop.Complete();
             }
 
 
-            LogboxSignUpService logboxSignUpService = new LogboxSignUpService(signUpInfo, tenant);
-            logboxSignUpService.Update();
 
-
+            
             TenantManagement tenantManagement = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))
             {
                 TenantManagementRepository tenantrep = new TenantManagementRepository();
                 tenantManagement = tenantrep.GetSingleTenantManagement(tenant);
-                UpdateTenantManagement(logboxSignUpService, tenantManagement, tenantrep);
                 scope.Complete();
             }
 
@@ -647,7 +540,7 @@ namespace WebFreight.Web.InfrastructureModel
 
             InitializeEmployeeGroup(signUpInfo.Email);
             InitializeTicketClassification();
-            AddGeneralCustomerGroup();
+
 
             AddQuoteTemplate(tenant);
             if (signUpInfo.IsCrmTenant)
@@ -787,12 +680,6 @@ namespace WebFreight.Web.InfrastructureModel
                                         documentTypeRepository.SubmitChanges();
                                     }
                                 }
-
-                                if(countryCode == "MX")
-                                {
-                                    MexicanCountryCities mexicanCountryCities = new MexicanCountryCities();
-                                    mexicanCountryCities.AddMexicanCountryCities(tenant, countryId);     
-                                }
                             }                                                      
                         }
                         #endregion
@@ -828,100 +715,7 @@ namespace WebFreight.Web.InfrastructureModel
                 }
             }
 
-            CustomerTenantAccessSignUpRequest.Send(signUpInfo, tenant);
-            
-            signUpInfo.Tenant = tenant;
             return password;
-        }
-
-        private static void UpdateTenantManagement(LogboxSignUpService logboxSignUpService, TenantManagement tenantManagement, TenantManagementRepository tenantManagementRepository)
-        {
-            TenantManagmentPrivateLabels selectedTenantManagmentPrivateLabel = logboxSignUpService.GetSelectedTenantManagmentPrivateLabels();
-            if (selectedTenantManagmentPrivateLabel == null) return;
-            tenantManagement.DistributorCode = selectedTenantManagmentPrivateLabel.DistributorCode;
-            tenantManagementRepository.Update(tenantManagement);
-            tenantManagementRepository.SubmitChanges();
-        }
-
-        private static void AddShipmentSubTypes(int tenant, ShipmentSubTypeRepository shipmentSubTypeRepository, List<ShipmentSubType> tenantZeroShipmentSubTypes)
-        {
-            foreach (ShipmentSubType subType in tenantZeroShipmentSubTypes)
-            {
-                ShipmentSubType newSubType = new ShipmentSubType()
-                {
-                    Tenant = tenant,
-                    Name = subType.Name,
-                    Code = subType.Code,
-                    ShipmentTypeCode = subType.ShipmentTypeCode,
-                    Inactive = subType.Inactive,
-                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    CreatedByUserId = subType.CreatedByUserId,
-                    UpdatedByUserId = subType.UpdatedByUserId,
-                    SearchFields = subType.SearchFields,
-                    Id = IdCounter.GetNumber("ShipmentSubType", tenant).ToString(),
-                };
-                shipmentSubTypeRepository.Add(newSubType);
-            }
-            shipmentSubTypeRepository.SubmitChanges();
-        }
-
-        private static void AddQuoteClosingReasons(int tenant, QuoteClosingReasonRepository quoteClosingReasonRepository, List<QuoteClosingReason> tenantZeroQuoteClosingReasons)
-        {
-            //User myUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, false);
-
-            List<QuoteClosingReason> closingReasonsList = tenantZeroQuoteClosingReasons.Where(d => d.Tenant == 0).ToList();
-            foreach (QuoteClosingReason closingReason in closingReasonsList)
-            {
-                QuoteClosingReason newClosingReason = new QuoteClosingReason()
-                {
-                    Tenant = tenant,
-                    Name = closingReason.Name,
-                    Code = closingReason.Code,
-                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    CreatedByUserId = closingReason.CreatedByUserId,
-                    UpdatedByUserId = closingReason.UpdatedByUserId,
-                    SearchFields = closingReason.SearchFields,                    
-                    Id = IdCounter.GetNumber("QuoteClosingReason", tenant).ToString(),
-                };
-                quoteClosingReasonRepository.Add(newClosingReason);
-            }
-            quoteClosingReasonRepository.SubmitChanges();
-        }
-
-        private static void AddPriceSteps(TariffSetting setting)
-        {
-            List<PriceStep>  tenantZeroPriceSteps = priceStepRepository.GetAll(0).ToList();
-            List<PriceStep> priceSteps = tenantZeroPriceSteps.Where(d => d.Tenant == 0).ToList();
-            TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
-
-            foreach (PriceStep item in priceSteps)
-            {
-                PriceStep newPriceStep = new PriceStep()
-                {
-                    Id = IdCounter.GetNumber("PriceStep", tenant).ToString(),
-                    Tenant = tenant,
-                    CreateDate = item.CreateDate,
-                    CreatedByUserId = item.CreatedByUserId,
-                    UpdateDate = item.UpdateDate,
-                    UpdatedByUserId = item.UpdatedByUserId,
-                    Name = item.Name,
-                    Steps = item.Steps,
-                    Inactive = item.Inactive,
-                    SearchFields = item.SearchFields,
-                };
-
-                priceStepRepository.Add(newPriceStep);
-                priceStepRepository.SubmitChanges();
-                if (setting != null)
-                {
-                    setting.AirDefaultStepsId = newPriceStep.Id;
-                    setting.LCLDefaultStepsId = newPriceStep.Id;
-                    tariffSettingRepository.Update(setting);
-                    tariffSettingRepository.SubmitChanges();
-                }
-            }
         }
 
         private static void AddAutomationFromTenantZero(int tenant, List<DocumentTypePM> tenantZeroDocumentTypes)
@@ -1050,50 +844,28 @@ namespace WebFreight.Web.InfrastructureModel
             TicketClassificationRepository classifiationRepository = new TicketClassificationRepository(tenant);
             TicketSeverityRepository severityRepository = new TicketSeverityRepository(tenant);
             EmployeeGroupRepository employeeGroupRepository = new EmployeeGroupRepository(tenant);
-            TicketSeverity ticketSeverity = severityRepository.GetTicketSeverityByCode("MD", tenant);
-            if (ticketSeverity != null)// added because it fails when from customs.
-            {
-                string defaultSeverityId = severityRepository.GetTicketSeverityByCode("MD", tenant).Id;
-                EmployeeGroup employeeGroup = employeeGroupRepository.GetEmployeeGroupByName("Unassigned Tickets", tenant);
-                bool isTicketClassificationExists = classifiationRepository.IsTicketClassificationExists(tenant);
 
-                if (!isTicketClassificationExists)
+            string defaultSeverityId = severityRepository.GetTicketSeverityByCode("MD", tenant).Id;
+            EmployeeGroup employeeGroup = employeeGroupRepository.GetEmployeeGroupByName("Unassigned Tickets", tenant);
+            bool isTicketClassificationExists = classifiationRepository.IsTicketClassificationExists(tenant);
+
+            if (!isTicketClassificationExists)
+            {
+                TicketClassification classification = new TicketClassification()
                 {
-                    TicketClassification classification = new TicketClassification()
-                    {
-                        Id = Convert.ToString(tenant),
-                        Tenant = tenant,
-                        Name = "General",
-                        ParentId = null,
-                        SearchFields = "General",
-                        Inactive = false,
-                        DefaultSeverityId = defaultSeverityId,
-                        EmployeeGroupId = employeeGroup.Id,
-                    };
+                    Id = Convert.ToString(tenant),
+                    Tenant = tenant,
+                    Name = "General",
+                    ParentId = null,
+                    SearchFields = "General",
+                    Inactive = false,
+                    DefaultSeverityId = defaultSeverityId,
+                    EmployeeGroupId = employeeGroup.Id,
+                };
 
-                    classifiationRepository.Add(classification);
-                    classifiationRepository.SubmitChanges();
-                }
+                classifiationRepository.Add(classification);
+                classifiationRepository.SubmitChanges();
             }
-        }
-        private static void AddGeneralCustomerGroup()
-        {
-            User systemUser = GetTenantSystemUser(tenant);
-            CustomerGroup customerGroup = new CustomerGroup()
-            {
-                Id = IdCounter.GetNumber("CustomerGroup", tenant).ToString(),
-                Tenant = tenant,
-                Name = "General",
-                CreateDate = DateTime.Now,
-                CreatedByUserId = systemUser?.Id,
-                UpdateDate = DateTime.Now,
-                UpdatedByUserId = systemUser?.Id,
-                SearchFields = "General",
-                InActive = false,
-            };
-
-            customerGroupRepository.Add(customerGroup);
-            customerGroupRepository.SubmitChanges();
         }
 
         private static void AddJournalActionTypes(int tenant)
@@ -1144,7 +916,7 @@ namespace WebFreight.Web.InfrastructureModel
                 EnglishName = "Debit+Credit+VAT Extract",
                 LocalName = "חובה+זכות+חילוץ מע\"מ",
                 SearchFields = "4חובה+זכות+חילוץ מע\"מDebit+Credit+VAT Extract",
-                Inactive = true,
+                Inactive = false,
             };
             repository.Add(type4);
 
@@ -1159,94 +931,13 @@ namespace WebFreight.Web.InfrastructureModel
                 {
                     Id = IdCounter.GetNumber("CustomsRequiredField", tenant).ToString(),
                     ObjectfieldId = field.ObjectfieldId,
-                    ObjectfieldCode = field.ObjectfieldCode,
                     ObjectTableId = field.ObjectTableId,
-                    IsImport=field.IsImport,
-                    IsExport=field.IsExport,
                     Tenant = tenant,
                 };
                 customsRequiredFieldRepository.Add(newField);
             }
 
             customsRequiredFieldRepository.SubmitChanges();
-        }
-
-        private static void AddDocumentType(int tenant, Simplog.Data.CommonDataModel.Repositories.DocumentTypeRepository documentTypeRepository, List<DocumentTypePM> tenantZeroDocumentTypes)
-        {
-            foreach (DocumentTypePM field in tenantZeroDocumentTypes)
-            {
-
-                DocumentType newField = new DocumentType()
-                {
-                    Id = IdCounter.GetNumber("DocumentType", tenant).ToString(),
-                    Code = field.Code,
-                    Tenant = tenant,
-                    IsAir = field.IsAir,
-                    IsDocIn = field.IsDocIn,
-                    IsDocOut = field.IsDocOut,
-                    IsInland = field.IsInland,
-                    IsOcean = field.IsOcean,
-                    Name = field.Name,
-                    Notes = field.Notes,
-                    InActive = field.InActive,
-                    SearchFields = field.SearchFields,
-                    ObjectTableId = field.ObjectTableId,
-                    Subject = field.Subject,
-                    DocumentTypeDefaultHTMLTemplateId = field.DocumentTypeDefaultHTMLTemplateId,
-                    DocumentTypeDefaultReportTemplateId = field.DocumentTypeDefaultReportTemplateId,
-                    TemplateFormatCode = field.TemplateFormatCode,
-                    DocumentTypeDefaultEditorTool = field.DocumentTypeDefaultEditorTool,
-                    IsMaster = field.IsMaster,
-                    IsDirect = field.IsDirect,
-                    IsHouse = field.IsHouse,
-                    CustomControl = field.CustomControl,
-                    AgentRoleId = field.AgentRoleId,
-                    CustomerRoleId = field.CustomerRoleId,
-                    IsAgentView = field.IsAgentView,
-                    IsCustomerView = field.IsCustomerView,
-                    IsReadOnly = field.IsReadOnly,
-                    LimitedPrintCopyId = field.LimitedPrintCopyId,
-                    IsDocumentOneTimePrintLimited = field.IsDocumentOneTimePrintLimited,
-                    IsCopiedAtSignup = field.IsCopiedAtSignup,
-                    IsEnabledForCustomers = field.IsEnabledForCustomers,
-                    CountryCode = field.CountryCode,
-                    DocumentTypeCategoryCode = field.DocumentTypeCategoryCode,
-                    OrderBy = field.OrderBy,
-                    FileName = field.FileName,
-                    IsAgentSharedInDirect = field.IsAgentSharedInDirect,
-                    IsAgentSharedInHouse = field.IsAgentSharedInHouse,
-                    IsAgentSharedInMaster = field.IsAgentSharedInMaster,
-                    SharedDocumentTypeCopyId = field.SharedDocumentTypeCopyId,
-                    IsAirDigitalSignRequired = field.IsAirDigitalSignRequired,
-                    IsOceanDigitalSignRequired = field.IsOceanDigitalSignRequired,
-                    IsInlandDigitalSignRequired = field.IsInlandDigitalSignRequired,
-                    IsSystemAdditionalPrintingFields = field.IsSystemAdditionalPrintingFields,
-                    PrintingFieldsScreenCode = field.PrintingFieldsScreenCode,
-                    AddedManually = field.AddedManually,
-                    OnPrintPopulateDateFieldName = field.OnPrintPopulateDateFieldName,
-                    OnSendPopulateDateFieldName = field.OnSendPopulateDateFieldName,
-                    OnUploadPopulateDateFieldName = field.OnUploadPopulateDateFieldName,
-                };
-                documentTypeRepository.Add(newField);
-            }
-
-            documentTypeRepository.SubmitChanges();
-        }
-
-        private static void AddDocumentTypeCustomsData(int tenant, Logitude.Customs.Data.Repsitories.DocumentTypeCustomsDataRepository documentTypeCustomsDataRepository, List<DocumentTypeCustomsData> tenantZeroDocumentTypeCustomsDatas)
-        {
-            foreach (DocumentTypeCustomsData field in tenantZeroDocumentTypeCustomsDatas)
-            {
-                DocumentTypeCustomsData newField = new DocumentTypeCustomsData()
-                {
-                    Tenant = tenant,
-                    DocumentTypeId=field.DocumentTypeId,
-                    CustomsDoucumentTypeCode = field.CustomsDoucumentTypeCode,
-                };
-                documentTypeCustomsDataRepository.Add(newField);
-            }
-
-            documentTypeCustomsDataRepository.SubmitChanges();
         }
         private static void AddBankCodes(int tenant, BankCodeRepository bankCodeRepository, List<BankCode> tenantZeroBankCode)
         {
@@ -1264,41 +955,6 @@ namespace WebFreight.Web.InfrastructureModel
                  SearchFields = field.Code +","+field.EnglishName +"," + field.LocalName,
 
                 };
-
-                if (!string.IsNullOrEmpty(newField.LogoId))
-                {
-                    try
-                    {
-                        Uploader uploader = new Uploader();
-                        byte[] data = uploader.DownloadFile(newField.LogoId, "jpg", "images", field.Tenant);
-
-                        if (data != null)
-                        {
-                            ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
-                            ImageParameter filter = new ImageParameter()
-                            {
-                                Key = newField.LogoId,
-                                Base64String = Convert.ToBase64String(data),
-                                BufferNumber = 0,
-                                Extension = "jpg",
-                                FileLocation = "",
-                                FileName = "images",
-                                Height = 150,
-                                Width = 150,
-                                Tenant = tenant,
-                                TokenTenant = tenant,
-                                KeepOriginalSize = false,
-                                UploadMode = "ImageComponent",
-                            };
-                            newField.LogoId = imageLibraryControllerHelper.UploadImage(filter);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed copying logo from tenant {field?.Tenant} to new tenant {tenant}, error: {ex.Message}");
-                    }
-                }
-
                 bankCodeRepository.Add(newField);
             }
 
@@ -1314,45 +970,12 @@ namespace WebFreight.Web.InfrastructureModel
                     Id = IdCounter.GetNumber("TariffSetting", theTenant).ToString(),
                     Tenant = theTenant,
                     DefaultPriceSteps = zeroEntity.DefaultPriceSteps,
-                    ContainerDefaults = "20GP, 40GP, 20HC",
                 };
 
                 iRepository.Add(settings);
                 iRepository.SubmitChanges();
-                AddPriceSteps(settings);
-            }   
+            }
         }
-
-        private static void AddDefaultTariffProducts(int tenant)
-        {
-            TariffProduct GENTariffProduct = new TariffProduct()
-            {
-                Id = IdCounter.GetNumber("TariffProduct", tenant).ToString(),
-                Tenant = tenant,
-                Code = "GEN",
-                Name = "General",
-                LocalName = "General",
-                Inactive = false,
-                SearchFields = "GEN, General"
-            };
-            
-            TariffProduct DNGTariffProduct = new TariffProduct()
-            {
-                Id = IdCounter.GetNumber("TariffProduct", tenant).ToString(),
-                Tenant = tenant,
-                Code = "DNG",
-                Name = "Dangerous Goods",
-                LocalName = "Dangerous Goods",
-                Inactive = false,
-                SearchFields = "DNG, Dangerous Goods"
-            };
-
-            tariffProductRepository.Add(GENTariffProduct);
-            tariffProductRepository.Add(DNGTariffProduct);
-            tariffProductRepository.SubmitChanges();
-        }
-
-
 
         private static void AddDefaultAccountingSettings(int theTenant, AccountingSettingRepository theAccountingSettingsRepository, AccountingSetting tenantZeroAccoutingSettings)
         {
@@ -1451,7 +1074,6 @@ namespace WebFreight.Web.InfrastructureModel
                 {
                     Tenant = theTenant,
                     Id = theTenant.ToString(),
-                    IsShowAmountLocalCurrency = true,
                 };
 
                 theSharedLogisticsSettingRepository.Add(settings);
@@ -1459,8 +1081,38 @@ namespace WebFreight.Web.InfrastructureModel
             }
         }
 
-        public static int CreateTenant(SignUpInfoClass signUpInfoClass)
-        {       
+        //private static void AddAccounts(int theTenant, AccountRepository theAccountRepository, List<Account> tenantZeroAccounts)
+        //{
+        //    foreach (Account a in tenantZeroAccounts)
+        //    {
+        //        Account newAccount = new Account()
+        //        {
+        //            Id = IdCounter.GetNumber("Account", theTenant),
+        //            Name = a.Name,
+        //            AccountTypeCode = a.AccountTypeCode,
+        //            AddedManually = false,
+        //            Code = a.Code,
+        //            Tenant = theTenant,
+        //            ExternalAccountingCard = a.ExternalAccountingCard,
+        //            InActive = a.InActive,
+        //            SearchFields = a.SearchFields,
+
+        //        };
+        //        theAccountRepository.Add(newAccount);
+        //    }
+        //    theAccountRepository.SubmitChanges();
+        //}
+
+        public static int CreateTenant(SignUpInfoClass signUpInfoClass, TenantRepository tenantRepository, GlobalTenantRepository globalTenantRepository)
+        {
+            GlobalTenant globalTenant;
+            GlobalDB database;
+            //int id;
+            //using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 0, 0)))
+            //{
+            //    id = TenantCounter.GetNumber();
+            //    scope.Complete();
+            //}          
             LogitudeLead lead = null;
 
             if (signUpInfoClass.IsCrmTenant)
@@ -1473,50 +1125,6 @@ namespace WebFreight.Web.InfrastructureModel
                 }
             }
 
-            TenantPM newTenant = GetNewTenantPM(signUpInfoClass, lead);
-
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 0, 0)))
-            {
-                TenantRepository tenantZeroRepository = new TenantRepository(0);
-                Tenant tenantZero = tenantZeroRepository.GetSingleTenant(0);
-
-                if (tenantZero != null)
-                {
-                    newTenant = MapTenantZeroDetailsToNewTenant(newTenant, tenantZero, signUpInfoClass);
-                }
-                scope.Complete();
-            }
-
-            newTenant.PasswordPolicyCode = GetPasswordPolicyCode(newTenant);
-            const int numberOfDefaultLogboxTenantUsers = 3;
-            newTenant.TotalDefaultNumberOfUsers = signUpInfoClass.IsCreateLogboxTenantFromCloud ? numberOfDefaultLogboxTenantUsers : newTenant.TotalDefaultNumberOfUsers;
-            
-            ICommonDataContext commonContext = CommonDataContext.GetContext(newTenant.Id);
-            TenantService service = new TenantService(commonContext, newTenant.Id);
-            if (LogitudeSettings.WorkEnvironment == "cloud" || SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
-                newTenant.IsHybrid = true;
-            service.Create(newTenant);
-            newTenant = AddHybridPartner(signUpInfoClass, newTenant);
-            return newTenant.Id;
-        }
-
-        private static TenantPM AddHybridPartner(SignUpInfoClass signUpInfo,TenantPM newTenant)
-        {
-            if (LogitudeSettings.WorkEnvironment != "cloud" && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
-                return newTenant;
-            newTenant.IsHybrid = true;
-            HybridPartnerPM entityPM = new HybridPartnerPM();
-            entityPM.Name = signUpInfo.Company;
-            entityPM.PartnerTenant = newTenant.Id;
-            entityPM.LocalName = signUpInfo.Company;
-            ICommonDataContext Context = CommonDataContext.GetContext(tenant);
-            HybridPartnerService hybridPartnerService = new HybridPartnerService(Context, 0);
-            hybridPartnerService.Create(entityPM);
-            return newTenant;
-        }
-
-        private static TenantPM GetNewTenantPM(SignUpInfoClass signUpInfoClass, LogitudeLead lead)
-        {
             TenantPM newTenant = new TenantPM()
             {
                 Company = signUpInfoClass.Company,
@@ -1536,64 +1144,177 @@ namespace WebFreight.Web.InfrastructureModel
                 PackageCode = signUpInfoClass.PackageCode,
                 CreateTenantFromSignUp = true,
                 TimeZoneOffset = null,
-                CheckDigitControlAlgorithmCode = "NONE",
-                TransferQuotationsToUnifreightTrigger = "OnSend",
-                VatNumber = signUpInfoClass.VatNumber,
-                IsNewLogboxFromCloud = signUpInfoClass.IsCreateLogboxTenantFromCloud,
             };
 
-            return newTenant;
-        }
+            //DateTime currentdate;
+            //DateTime futureDate;
+            //using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 0, 0)))
+            //{
+            //    currentdate = TenantServerConfigration.GetCurrentDateTime(0);
+            //    futureDate = TenantServerConfigration.GetCurrentDateTime(0).AddDays(30);
+            //}
 
-        private static TenantPM MapTenantZeroDetailsToNewTenant(TenantPM newTenant, Tenant tenantZero, SignUpInfoClass signUpInfo)
-        {
-            newTenant.MasterExportFreightPrepaidCollectId = tenantZero.MasterExportFreightPrepaidCollectId;
-            newTenant.MasterExportOtherPrepaidCollectId = tenantZero.MasterExportOtherPrepaidCollectId;
-            newTenant.MasterImportFreightPrepaidCollectId = tenantZero.MasterImportFreightPrepaidCollectId;
-            newTenant.MasterImportOtherPrepaidCollectId = tenantZero.MasterImportOtherPrepaidCollectId;
-
-            newTenant.AirRatio = tenantZero.AirRatio;
-            newTenant.FCLRatio = tenantZero.FCLRatio;
-            newTenant.LCLRatio = tenantZero.LCLRatio;
-            newTenant.FTLRatio = tenantZero.FTLRatio;
-            newTenant.LTLRatio = tenantZero.LTLRatio;
-
-            if (CheckIsDayLightSettingsRequiredForEnvironment() || signUpInfo.IsCreateLogboxTenantFromCloud)
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 0, 0)))
             {
-                FillDayLightDetails(newTenant, tenantZero, signUpInfo);
+                TenantRepository tenantZeroRepository = new TenantRepository(0);
+                Tenant tenantZero = tenantZeroRepository.GetSingleTenant(0);
+
+                if (tenantZero != null)
+                {
+                    newTenant.MasterExportFreightPrepaidCollectId = tenantZero.MasterExportFreightPrepaidCollectId;
+                    newTenant.MasterExportOtherPrepaidCollectId = tenantZero.MasterExportOtherPrepaidCollectId;
+                    newTenant.MasterImportFreightPrepaidCollectId = tenantZero.MasterImportFreightPrepaidCollectId;
+                    newTenant.MasterImportOtherPrepaidCollectId = tenantZero.MasterImportOtherPrepaidCollectId;
+                }
+                scope.Complete();
             }
 
-            return newTenant;
-        }
 
-        private static void FillDayLightDetails(TenantPM newTenant, Tenant tenantZero, SignUpInfoClass signUpInfo)
-        {
-            newTenant.DayLightStartDate = tenantZero.DayLightStartDate;
-            newTenant.DayLightEndDate = tenantZero.DayLightEndDate;
-            newTenant.DayLightOffset = tenantZero.DayLightOffset;
-            newTenant.TimeZoneOffset = signUpInfo.TimeZoneOffset;
-        }
-
-        private static string GetPasswordPolicyCode(TenantPM newTenant)
-        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(newTenant.Id);
+            TenantService service = new TenantService(commonContext, newTenant.Id);
+            tenantRepository = new TenantRepository(newTenant.Id);
             PasswordPolicyRepository passwordPoliciesRepository = new PasswordPolicyRepository(newTenant.Id);
             PasswordPolicy policy = passwordPoliciesRepository.GetSinglePasswordPolicy("MEDU");
 
-            return policy.Code;
+            newTenant.PasswordPolicyCode = policy.Code;
+
+            service.Create(newTenant);
+            //tenantRepository.Add(newTenant);
+            //tenantRepository.SubmitChanges();           
+            return newTenant.Id;
         }
-
-        private static bool CheckIsDayLightSettingsRequiredForEnvironment()
+        public static void UpdateLogBoxTenant(int tenant, SignUpInfoClass signUpInfoClass, TenantRepository tenantRepository, GlobalTenantRepository globalTenantRepository)
         {
-            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction))
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            TenantService service = new TenantService(commonContext, tenant);
+            TenantQuery query = new TenantQuery(tenant);
+            var newTenant = query.GetSinglePM(tenant);
+            if (signUpInfoClass.PackageCode == "IMPO")
             {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }         
+                AddressRepository addressRepository = new AddressRepository(signUpInfoClass.Tenant);
+                var CustomerAddress = addressRepository.GetMainAddressByCardId(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
+                AddressService addressService = new AddressService(commonContext, tenant);
+                CountryRepository CountryRepository = new CountryRepository(tenant);
+                ContactRepository ContactRepository = new ContactRepository(signUpInfoClass.Tenant);
+                ContactService ContactService = new ContactService(commonContext, tenant);
+                CardQuery cardQuery = new CardQuery(signUpInfoClass.Tenant);
+                CustomerQuery CustomerQuery = new CustomerQuery(signUpInfoClass.Tenant);
+                var currentCard = cardQuery.GetSinglePM(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
+                var currentCustomer = CustomerQuery.GetSinglePMForLogBox(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
+                ContactQuery contactQuery = new ContactQuery(ContactRepository);
+                var CurrentContact = contactQuery.GetSinglePM(currentCard.PrimaryContactId, signUpInfoClass.Tenant);
+                CustomerQuery = new CustomerQuery(tenant);
+                ContactPM contactPM = contactQuery.GetContactByEmailOnly(signUpInfoClass.Email, tenant);//commonContext.Contacts.Where(d => d.Tenant == tenant && d.Email == signUpInfoClass.Email).FirstOrDefault();
+                                                                                                        //{
+                                                                                                        //    Tenant = tenant,
+                                                                                                        //    EnglishName = CurrentContact.EnglishName,
+                                                                                                        //    InActive = false,
+                                                                                                        //    DisplayGettingStarted = false,
+                                                                                                        //    IsUser = true,
+                                                                                                        //    Email = CurrentContact.Email,
+                                                                                                        //    LocalName = CurrentContact.LocalName,
+                                                                                                        //    BusinessPhone = CurrentContact.BusinessPhone,
+                                                                                                        //    Mobile = CurrentContact.Mobile
 
+                //};
+                contactPM.SetAsPrimaryForCard = true;
+                contactPM.IsCreatedWithPartner = true;
+                //ContactService.Update(contactPM);
+                CustomerPM customerPM = new CustomerPM()
+                {
+                    Tenant = tenant,
+                    PrimaryContactId = contactPM.Id,
+                    IsFirstContactToAdd = true,
+                    EnglishName = currentCard.EnglishName,
+                    LocalName = currentCard.LocalName,
+                    PartnerTypeId = "CS",
+                    Code = CodeCounter.GetNumber("Card", tenant).ToString(),
+                    IsHybrid = true,
+                    IsCustomer = true,
+                    ExistedContactId = contactPM.Id,
+                    Contacts = new List<ContactPM>(),
+                };
+                customerPM.Contacts.Add(contactPM);
+                //var Contact = ContactRepository.GetSingleContactByEmailAndTenant("system@tenant" + tenant + ".com", tenant);
+                CustomerService CustomerService = new CustomerService(commonContext, customerPM, contactPM.Id);
+                CustomerService.Create();
+
+
+                var NewCountry = CountryRepository.GetSingleCountryByCode(CustomerAddress.Country.Code, tenant);
+                AddressPM TenantAddress = new AddressPM()
+                {
+                    Address1 = CustomerAddress.Address1,
+                    Address2 = CustomerAddress.Address2,
+                    AddressTypeId = CustomerAddress.AddressTypeId,
+                    Name = CustomerAddress.Name,
+                    City = CustomerAddress.City,
+                    CountryId = NewCountry.Id,
+                    IsLocalLanguage = true,
+                    InActive = false,
+                    Description = CustomerAddress.Description,
+                    Tenant = tenant,
+                    IsHybrid = true,
+                };
+                addressService.Create(TenantAddress);
+                CurrencyRepository CurrencyRepository = new CurrencyRepository(0);
+                CurrencyQuery currencyQuery = new CurrencyQuery(CurrencyRepository);
+                var currencies = currencyQuery.GetCurrenciesByTenantPM(0).Where(d => d.Code == "USD" || d.Code == "NIS").ToList();
+                CurrencyRepository = new CurrencyRepository(tenant);
+                //foreach (CurrencyPM currency in currencies)
+                //{
+                //    Currency newCurrency = new Currency()
+                //    {
+                //        Code = currency.Code,
+                //        EnglishName = currency.EnglishName,
+                //        Id = IdCounter.GetNumber("Currency", tenant).ToString(),
+                //        InActive = currency.InActive,
+                //        LocalName = currency.LocalName,
+                //        Notes = currency.Notes,
+                //        Tenant = tenant,
+                //        SearchFields = currency.SearchFields,
+                //    };
+                //    CurrencyRepository.Add(newCurrency);
+                //}
+                //CurrencyRepository.SubmitChanges();
+                var Cur = CurrencyRepository.GetSingleCurrencyByCode("NIS", 0);
+                var ProfCur = CurrencyRepository.GetSingleCurrencyByCode("USD", 0);
+                Currency newCurrency = new Currency()
+                {
+                    Code = Cur.Code,
+                    EnglishName = Cur.EnglishName,
+                    Id = IdCounter.GetNumber("Currency", tenant).ToString(),
+                    InActive = Cur.InActive,
+                    LocalName = Cur.LocalName,
+                    Notes = Cur.Notes,
+                    Tenant = tenant,
+                    SearchFields = Cur.SearchFields,
+                };
+                CurrencyRepository.Add(newCurrency);
+                newCurrency = new Currency()
+                {
+                    Code = ProfCur.Code,
+                    EnglishName = ProfCur.EnglishName,
+                    Id = IdCounter.GetNumber("Currency", tenant).ToString(),
+                    InActive = ProfCur.InActive,
+                    LocalName = ProfCur.LocalName,
+                    Notes = ProfCur.Notes,
+                    Tenant = tenant,
+                    SearchFields = ProfCur.SearchFields,
+                };
+                CurrencyRepository.Add(newCurrency);
+                CurrencyRepository.SubmitChanges();
+                CardRepository CardRepository = new CardRepository(signUpInfoClass.Tenant);
+                var CrmCustomer = CardRepository.GetSingleCard(signUpInfoClass.CustomerId, signUpInfoClass.Tenant, false);
+                newTenant.CurrencyId = Cur.Id;
+                newTenant.ProfitCurrencyId = ProfCur.Id;
+                newTenant.ProfitCurrencyRate = 4;
+                newTenant.VatNumber = CrmCustomer.VatNumber;
+                newTenant.AddressId = TenantAddress.Id;
+                newTenant.IsDocumentsArchive = true;
+                newTenant.CustomerId = customerPM.Id;
+                service.Update(newTenant);
+            }
+        }
         public static void AddBranchesAndDepartments(int theTenant, BranchRepository theBranchRepository, DepartmentRepository theDepartmentRepository)
         {
             Department deb;
@@ -1646,61 +1367,354 @@ namespace WebFreight.Web.InfrastructureModel
             theBranchRepository.SubmitChanges();
         }
 
-        public static string AddUser(UserShortDetails userShortDetails, UserRepository theUserRepository, BranchRepository theBranchRepository, DepartmentRepository theDepartmentRepository, RoleRepository theRoleRepository)
+        public static void AddObjectTable(int theTenant, ObjectTableRepository theObjectTableRepository, List<ObjectTable> tenantZeroObjectTables)
+        {
+
+            Dictionary<string, ObjectTable> currentTenantObjectTables = new Dictionary<string, ObjectTable>();
+            foreach (ObjectTable objectTable in tenantZeroObjectTables)
+            {
+                //ObjectTable baseObjectTable = null;
+                //ObjectTable currentBaseTable = null;
+                //if (objectTable.BaseObjectTableId != null)
+                //{
+                //    baseObjectTable = TenantZeroObjectTables.Where(d => d.Id == objectTable.BaseObjectTableId).FirstOrDefault();
+                //    currentBaseTable = CurrentTenantObjectTables[baseObjectTable.Name];
+                //}
+                ObjectTable newObjectTable = new ObjectTable()
+                {
+                    Id = IdCounter.GetNumber("ObjectTable", theTenant).ToString(),
+                    Tenant = theTenant,
+                    Name = objectTable.Name,
+                    IsNewWizard = objectTable.IsNewWizard,
+                    NewWizardControlName = objectTable.NewWizardControlName,
+                    LookUp1 = objectTable.LookUp1,
+                    LookUp2 = objectTable.LookUp2,
+                    DependencyFilter1 = objectTable.DependencyFilter1,
+                    DependencyFilter2 = objectTable.DependencyFilter2,
+                    KeyPropertyPath = objectTable.KeyPropertyPath,
+                    IsClosed = objectTable.IsClosed,
+                    AutoCompleteSearchWindow = objectTable.AutoCompleteSearchWindow,
+                    CacheOnClient = objectTable.CacheOnClient,
+                    EditableFromAutoCompleteWindow = objectTable.EditableFromAutoCompleteWindow,
+                    HasCounter = objectTable.HasCounter,
+                    EnableAddFromLOV = objectTable.EnableAddFromLOV,
+                    EnableEditFromLOV = objectTable.EnableEditFromLOV,
+                    LastUpdateDate = objectTable.LastUpdateDate,
+                    IsMain = objectTable.IsMain,
+                    IsRestrictable = objectTable.IsRestrictable,
+                    IsAutoComplete = objectTable.IsAutoComplete,
+                    SortingByObjectField = objectTable.SortingByObjectField,
+                    DBTableName = objectTable.DBTableName,
+                    HasCustomFields = objectTable.HasCustomFields,
+                    CustomFieldsCount = objectTable.CustomFieldsCount,
+                    SearchFields = objectTable.SearchFields,
+                    IsSaveButtonVisible = objectTable.IsSaveButtonVisible,
+                    ClientModuleName = objectTable.ClientModuleName,
+                    ServerModuleName = objectTable.ServerModuleName,
+                    NewWizardComponentPath = objectTable.NewWizardComponentPath,
+                    HasHelper = objectTable.HasHelper,
+                    HasShortTitle = objectTable.HasShortTitle,
+                    HasMenuButtons = objectTable.HasMenuButtons,
+                    HasFiltersMenu = objectTable.HasFiltersMenu,
+                };
+
+                theObjectTableRepository.Add(newObjectTable);
+                currentTenantObjectTables.Add(newObjectTable.Name, newObjectTable);
+            }
+
+            theObjectTableRepository.SubmitChanges();
+        }
+
+        public static void AddTextCodes(int theTenant, TextCodeRepository theTextCodeRepository, List<TextCode> tenantZeroTextCodes, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, ObjectTableRepository theObjectTableRepository)
+        {
+            foreach (TextCode textCode in tenantZeroTextCodes)
+            {
+                ObjectTable tenantZeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == textCode.ObjectTableId).FirstOrDefault();
+                ObjectTable currentTenantObjectTable = currentTenantObjectTables.Where(d => d.Name == tenantZeroObjectTable.Name).FirstOrDefault();
+
+                TextCode newTextCode = new TextCode()
+                {
+                    Id = IdCounter.GetNumber("TextCode", theTenant).ToString(),
+                    ObjectTableId = currentTenantObjectTable.Id,
+                    TextCodeTypeCode = textCode.TextCodeTypeCode,
+                    Code = textCode.Code,
+                    DefaultText = textCode.DefaultText,
+                    DefaultTextPlural = textCode.DefaultTextPlural,
+                    Tenant = theTenant,
+                };
+                theTextCodeRepository.Add(newTextCode);
+                if (tenantZeroObjectTable.DescriptionTextCodeId == textCode.Id)
+                {
+                    currentTenantObjectTable.DescriptionTextCodeId = newTextCode.Id;
+                    theObjectTableRepository.Update(currentTenantObjectTable);
+
+                }
+            }
+            theTextCodeRepository.SubmitChanges();
+            theObjectTableRepository.SubmitChanges();
+        }
+
+        public static void AddObjectFields(int theTenant, ObjectFieldRepository theObjectFieldsRepository, List<ObjectFieldPM> tenantZeroObjectFields, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, List<TextCode> tenantZeroTextCodes, ObjectFieldValidationRepository theObjectFieldValidationRepository, TextCodeRepository theTextCodeRepository)
+        {
+            Dictionary<string, TextCode> currentTenantTextCodes = theTextCodeRepository.GetActiveTextCodesByTenant(theTenant).ToDictionary(d => d.Code + d.Tenant + d.ObjectTableId, a => a);//text code is already exist 24/8
+
+            foreach (ObjectFieldPM zeroObject in tenantZeroObjectFields)
+            {
+                ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == zeroObject.ObjectTableId).FirstOrDefault();
+                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+
+                ObjectTable zeroLookUpTable = null;
+                ObjectTable currentLookUpTable = null;
+                if (zeroObject.LookUpTableId != null)
+                {
+                    zeroLookUpTable = tenantZeroObjectTables.Where(d => d.Id == zeroObject.LookUpTableId).FirstOrDefault();
+                    currentLookUpTable = currentTenantObjectTables.Where(d => d.Name == zeroLookUpTable.Name).FirstOrDefault();
+                }
+                ObjectTable zeroMultiTable = null;
+                ObjectTable currentMultiTable = null;
+                if (zeroObject.MultiTableId != null)
+                {
+                    zeroMultiTable = tenantZeroObjectTables.Where(d => d.Id == zeroObject.MultiTableId).FirstOrDefault();
+                    currentMultiTable = currentTenantObjectTables.Where(d => d.Name == zeroMultiTable.Name).FirstOrDefault();
+                }
+
+
+                TextCode zeroShortTextCode = null;
+                TextCode currentShortTextCode = null;
+                if (zeroObject.ShortNameTextCodeId != null)
+                {
+                    zeroShortTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.ShortNameTextCodeId).FirstOrDefault();
+                    currentShortTextCode = currentTenantTextCodes[zeroShortTextCode.Code + theTenant + currentObjectTable.Id];
+                }
+
+                TextCode zerofullTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.FullNameTextCodeId).FirstOrDefault();
+                TextCode currentfullTextCode = currentTenantTextCodes[zerofullTextCode.Code + theTenant + currentObjectTable.Id];
+
+                TextCode zeroListTextCode = null;
+                TextCode currentListTextCode = null;
+                if (zeroObject.ListTextCodeId != null)
+                {
+                    zeroListTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.ListTextCodeId).FirstOrDefault();
+                    currentListTextCode = currentTenantTextCodes[zeroListTextCode.Code + theTenant + currentObjectTable.Id];
+                }
+
+                TextCode zeroHelpTextCode = tenantZeroTextCodes.Where(d => d.Id == zeroObject.HelpTextCodeId).FirstOrDefault();
+                TextCode currentHelpTextCode = currentTenantTextCodes[zeroHelpTextCode.Code + theTenant + currentObjectTable.Id];
+
+
+                ObjectField newObjectField = new ObjectField()
+                {
+                    AutomaticField = zeroObject.AutomaticField,
+                    CanFilter = zeroObject.CanFilter,
+                    ConverterName = zeroObject.ConverterName,
+                    DataTemplateName = zeroObject.DataTemplateName,
+                    DataTypeCode = zeroObject.DataTypeCode,
+                    DependencyFilter1Type = zeroObject.DependencyFilter1Type,
+                    DependencyFilter1Value = zeroObject.DependencyFilter1Value,
+                    DependencyFilter2Type = zeroObject.DependencyFilter2Type,
+                    DependencyFilter2Value = zeroObject.DependencyFilter2Value,
+                    DigitsAfterPoint = zeroObject.DigitsAfterPoint,
+                    DisplayInEntityVariables = zeroObject.DisplayInEntityVariables,
+                    DisplayInList = zeroObject.DisplayInList,
+                    DisplayInLookUpIndex = zeroObject.DisplayInLookUpIndex,
+                    DisplayInSearchWindowFilters = zeroObject.DisplayInSearchWindowFilters,
+                    DisplayInSearchWindowFiltersIndex = zeroObject.DisplayInSearchWindowFiltersIndex,
+                    DisplayInSearchWindowList = zeroObject.DisplayInSearchWindowList,
+                    DisplayInSearchWindowListIndex = zeroObject.DisplayInSearchWindowListIndex,
+                    DisplayOnLookUp = zeroObject.DisplayOnLookUp,
+                    DisplayOnly = zeroObject.DisplayOnly,
+                    FieldName = zeroObject.FieldName,
+                    FullNameTextCodeId = currentfullTextCode.Id,
+                    HelpTextCodeId = currentHelpTextCode != null ? currentHelpTextCode.Id : null,
+                    ListTextCodeId = currentListTextCode != null ? currentListTextCode.Id : null,
+                    ObjectTableId = currentObjectTable.Id,
+                    ShortNameTextCodeId = currentShortTextCode != null ? currentShortTextCode.Id : null,
+                    Id = IdCounter.GetNumber("ObjectField", theTenant).ToString(),
+                    IsCustom = zeroObject.IsCustom,
+                    IsCustomFilter = zeroObject.IsCustomFilter,
+                    IsMulti = zeroObject.IsMulti,
+                    IsRequiered = zeroObject.IsRequiered,
+                    IsRestrictable = zeroObject.IsRestrictable,
+                    IsTimeFrameFilter = zeroObject.IsTimeFrameFilter,
+                    ListPropertyPath = zeroObject.ListPropertyPath,
+                    LookUpControlName = zeroObject.LookUpControlName,
+                    LookUpTableId = currentLookUpTable != null ? currentLookUpTable.Id : null,
+                    MaxLength = zeroObject.MaxLength,
+                    MinLength = zeroObject.MinLength,
+                    MultiLine = zeroObject.MultiLine,
+                    MultiTableId = currentMultiTable != null ? currentMultiTable.Id : null,
+                    Operator = zeroObject.Operator,
+                    PMPropertyPath = zeroObject.PMPropertyPath,
+                    SystemMaxLength = zeroObject.SystemMaxLength,
+                    SystemRequired = zeroObject.SystemRequired,
+                    Tenant = theTenant,
+                    TextCase = zeroObject.TextCase,
+                    UniqueField = zeroObject.UniqueField,
+                    ValidForQuerySection1 = zeroObject.ValidForQuerySection1,
+                    ValidForQuerySection2 = zeroObject.ValidForQuerySection2,
+                    SearchFields = zeroObject.SearchFields,
+                    ColumnHeaderTemplateName = zeroObject.ColumnHeaderTemplateName,
+                    DisplayInLookupColumnSize = zeroObject.DisplayInLookupColumnSize,
+                    HasTemplate = zeroObject.HasTemplate,
+                    HtmlHeaderComponentUrl = zeroObject.HtmlHeaderComponentUrl,
+                    HtmlListComponentUrl = zeroObject.HtmlListComponentUrl,
+                    HtmlHeaderComponentName = zeroObject.HtmlHeaderComponentName,
+                    HtmlListComponentName = zeroObject.HtmlListComponentName,
+                };
+
+                theObjectFieldsRepository.Add(newObjectField);
+
+                foreach (ObjectFieldValidationPM validation in zeroObject.ObjectFieldValidations)
+                {
+                    ObjectFieldValidation newValidation = new ObjectFieldValidation()
+                    {
+                        Condition = validation.Condition,
+                        ErrorMessage = validation.ErrorMessage,
+                        Id = IdCounter.GetNumber("ObjectFieldValidation", theTenant).ToString(),
+                        ObjectFieldId = newObjectField.Id,
+                        Tenant = theTenant,
+                        ValidationOrder = validation.ValidationOrder,
+                        ValidationExpression = validation.ValidationExpression,
+                        Code = validation.Code,
+
+                    };
+                    theObjectFieldValidationRepository.Add(newValidation);
+                }
+
+            }
+            theObjectFieldsRepository.SubmitChanges();
+            theObjectFieldValidationRepository.SubmitChanges();
+        }
+
+        public static void AddRoles(int theTenant, RoleRepository theRoleRepository, List<Role> tenantZeroRoles)
+        {
+            foreach (Role role in tenantZeroRoles)
+            {
+                Role newRole = new Role()
+                {
+                    Id = IdCounter.GetNumber("Role", theTenant).ToString(),
+                    Code = role.Code,
+                    Name = role.Name,
+                    Tenant = theTenant,
+
+                };
+                theRoleRepository.Add(newRole);
+            }
+            theRoleRepository.SubmitChanges();
+        }
+
+        public static void AddFeatures(int theTenant, FeatureRepository theFeatureRepository, List<Feature> tenantZeroFeatures, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, List<TextCode> tenantZeroTextCodes, List<TextCode> currentTenantTextCodes)
+        {
+            foreach (Feature feature in tenantZeroFeatures)
+            {
+                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Id == feature.NameTextCodeId).FirstOrDefault();
+                TextCode featureText = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
+                ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == feature.ObjectTableId).FirstOrDefault();
+                ObjectTable featureObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+                Feature newFeature = new Feature()
+                {
+                    Tenant = theTenant,
+                    Code = feature.Code,
+                    NameTextCodeId = featureText.Id,
+                    ObjectTableId = featureObjectTable.Id,
+                    Id = IdCounter.GetNumber("Feature", theTenant).ToString(),
+                };
+                theFeatureRepository.Add(newFeature);
+            }
+            theFeatureRepository.SubmitChanges();
+        }
+
+        public static void AddRoleFeatures(int theTenant, RoleFeatureRepository theRoleFeatureRepository, List<Role> tenantZeroRoles, List<Role> currentTenantRoles, List<Feature> tenantZeroFeatures, List<Feature> currentTenantFeatures, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables)
+        {
+            List<RoleFeature> roleFeatures = theRoleFeatureRepository.GetRoleFeaturesByTenant(0).ToList();
+            foreach (RoleFeature roleFeature in roleFeatures)
+            {
+                Role zeroRole = tenantZeroRoles.Where(d => d.Id == roleFeature.RoleId).FirstOrDefault();
+                Feature zeroFeature = tenantZeroFeatures.Where(d => d.Id == roleFeature.FeatureId).FirstOrDefault();
+                ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == zeroFeature.ObjectTableId).FirstOrDefault();
+                ObjectTable featureObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+                Role role = currentTenantRoles.Where(d => d.Name == zeroRole.Name).FirstOrDefault();
+                Feature feature = currentTenantFeatures.Where(d => d.Code == zeroFeature.Code && d.ObjectTableId == featureObjectTable.Id).FirstOrDefault();
+                RoleFeature newRoleFeature = new RoleFeature()
+                {
+                    Tenant = theTenant,
+                    FeatureId = feature.Id,
+                    RoleId = role.Id,
+                    Id = IdCounter.GetNumber("RoleFeature", theTenant).ToString(),
+                };
+                theRoleFeatureRepository.Add(newRoleFeature);
+            }
+            theRoleFeatureRepository.SubmitChanges();
+        }
+
+        public static string AddUser(int theTenant, string name, string email, string phoneNumber, UserRepository theUserRepository, BranchRepository theBranchRepository, DepartmentRepository theDepartmentRepository, RoleRepository theRoleRepository)
         {
             ContactRepository contactRepository = new ContactRepository(tenant);
             ContactTenantRepository contactTenantRepository = new ContactTenantRepository(tenant);
             ContactTenantRoleRepository contactTenantRoleRepository = new ContactTenantRoleRepository(tenant);
-            UserPM user = GetNewUserPM(userShortDetails, theBranchRepository, theDepartmentRepository);
 
-            InsertUser(user, theUserRepository, contactRepository, theRoleRepository, contactTenantRoleRepository, contactTenantRepository);
-
-            if (!user.Email.Contains("system@tenant") && !user.Email.Contains("customercare@logitudeworld"))
-            {
-                SetUserData(userShortDetails.Tenant);
-            }
-
-            return user.Password;
-        }
-
-        private static UserPM GetNewUserPM(UserShortDetails userShortDetails, BranchRepository theBranchRepository, DepartmentRepository theDepartmentRepository)
-        {
+            WebFreightDomainService webFreightdomain = new WebFreightDomainService();
             BranchQuery branchQuery = new BranchQuery(theBranchRepository);
             BranchPM branch = branchQuery.GetBranchByName("Main Office", tenant);
             DepartmentQuery departmentQuery = new DepartmentQuery(theDepartmentRepository);
             DepartmentPM department = departmentQuery.GetDepartmentByName("Management", tenant);
-            UserPM user = new UserPM
-            {
-                Tenant = userShortDetails.Tenant,
-                InternetAccess = true,
-                Email = userShortDetails.Email,
-                BusinessUnitId = userShortDetails.Tenant.ToString(),
-                DontShowLocal = setting.WorkEnvironment == "customs" ? false : true,
-                EnglishName = userShortDetails.Name,
-                Birthday = DateTime.Now,
-                Fax = "",
-                Mobile = "",
-                LocalName = userShortDetails.Name,
-                Anniversary = DateTime.Now,
-                DepartmentId = department.Id,
-                BranchId = branch.Id,
-                BusinessPhone = userShortDetails.PhoneNumber,
-                SignupRole = true,
-                SearchFields = userShortDetails.Email + "," + userShortDetails.Name + "," + userShortDetails.PhoneNumber
-            };
+            UserPM user = new UserPM();
+            user.Tenant = theTenant;
+            user.InternetAccess = true;
+            user.Email = email;
+            user.BusinessUnitId = theTenant.ToString();
+            //user.Id = IdCounter.GetNumber("User").ToString();
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 0, 0)))
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
                 ContactPassword contactPassword = globalContext.ContactPasswords.Where(c => c.Email == user.Email).FirstOrDefault();
-                user.Password = contactPassword == null ? PasswordGenerator.Generate(8) : null;
-
+                if (contactPassword == null)
+                {
+                    user.Password = PasswordGenerator.Generate(8); //"123";
+                }
+                else
+                {
+                    user.Password = null;
+                }
                 scope.Complete();
             }
 
-            user.DontShowLocal = setting.WorkEnvironment == "customs" ? false : true;
+            if (setting.WorkEnvironment == "customs")
+            {
+                user.DontShowLocal = false;
+            }
+            else
+            {
+                user.DontShowLocal = true;
+            }
+            user.EnglishName = name;
+            //user.EnglishLastName = txtLstEnglishName.Text;
+            user.Birthday = DateTime.Now;
+            user.Fax = "";
+            user.Mobile = "";
+            user.LocalName = name;
+            //user.LocalLastName = txtLstEnglishName.Text;
+            user.Anniversary = DateTime.Now;
+            user.DepartmentId = department.Id;
+            user.BranchId = branch.Id;
+            user.BusinessPhone = phoneNumber;
+            //user.Contact.Id = "11";
+            user.SignupRole = true;
+            user.SearchFields = email + "," + name + "," + phoneNumber;
             user.UserType = user.Email.Contains("system@tenant") ? "S" : "R";
-            return user;
+            user.BusinessUnitId = user.Tenant.ToString();
+            InsertUser(user, theUserRepository, contactRepository, theRoleRepository, contactTenantRoleRepository, contactTenantRepository);
+
+            if (!user.Email.Contains("system@tenant") && !user.Email.Contains("customercare@logitudeworld"))
+            {
+                SetUserData(theTenant);
+            }
+
+            return user.Password;
         }
 
         public static void MapUserToContact(UserPM user, Contact contact)
@@ -1752,7 +1766,7 @@ namespace WebFreight.Web.InfrastructureModel
             user.Email = user.Email.ToLower();
             Contact newContact = new Contact();
             MapUserToContact(user, newContact);
-            Contact adminContact = contactsRepository.GetSingleContactByEmail("support@amital.co.il", 0);
+            Contact adminContact = contactsRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
             if (adminContact != null)
             {
                 newContact.Signature = adminContact.Signature;
@@ -1834,19 +1848,36 @@ namespace WebFreight.Web.InfrastructureModel
                         globalContext.ContactPasswords.Add(contactPassword);
                     }
 
+
+
                     GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
-                    bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(0)
+
+                    bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
                                                 where a.Email == newContact.Email
                                                 select a).Any();
 
+                    //bool globalContactIdExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
+                    //                            where a.Id==newContact.Id
+                    //                            select a).Any();
+                    //while (globalContactIdExists)
+                    //{
+                    //    newContact.Id = IdCounter.GetNumber("Contact", newContact.Tenant);
+                    //    globalContactIdExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
+                    //                             where a.Id == newContact.Id
+                    //                             select a).Any();
+                    //}
+
                     if (!globalContactExists)
                     {
-                        GlobalContact gcontact = new GlobalContact() { Email = newContact.Email, Id = newContact.Id, GlobalTenantId = 0, IsUser = true, };
+
+                        GlobalContact gcontact = new GlobalContact() { Email = newContact.Email, Id = newContact.Id, GlobalTenantId = newContact.Tenant, IsUser = true, };
 
                         globalContactRep.Add(gcontact);
                         globalContactRep.SubmitChanges();
                         scope.Complete();
                     }
+                    //throw new Exception("hahahahahaha");
+
                 }
                 contactTenantsRepository.Add(newContactTenant);
             }
@@ -1868,24 +1899,21 @@ namespace WebFreight.Web.InfrastructureModel
             //}
         }
 
-        public static void AddCounters(int theTenant, CounterRepository theCounterRepository, List<ObjectTable> tenantZeroObjectTables, List<Counter> tenantZeroCounters)
+        public static void AddCounters(int theTenant, CounterRepository theCounterRepository, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, List<Counter> tenantZeroCounters)
         {
             foreach (Counter counter in tenantZeroCounters)
             {
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == counter.ObjectTableId).FirstOrDefault();
-                if (zeroObjectTable != null)
+                //ObjectTable currentObjectTable = CurrentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+                Counter newCounterPM = new Counter()
                 {
-                    //ObjectTable currentObjectTable = CurrentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
-                    Counter newCounterPM = new Counter()
-                    {
-                        Tenant = theTenant,
-                        ObjectTableId = zeroObjectTable.Id,
-                        Code = counter.Code,
-                        Name = counter.Name,
-                        Id = IdCounter.GetNumber("Counter", theTenant).ToString(),
-                    };
-                    theCounterRepository.Add(newCounterPM);
-                }
+                    Tenant = theTenant,
+                    ObjectTableId = zeroObjectTable.Id,
+                    Code = counter.Code,
+                    Name = counter.Name,
+                    Id = IdCounter.GetNumber("Counter", theTenant).ToString(),
+                };
+                theCounterRepository.Add(newCounterPM);
             }
             theCounterRepository.SubmitChanges();
         }
@@ -1912,29 +1940,306 @@ namespace WebFreight.Web.InfrastructureModel
             theCounterDefinitionRepository.SubmitChanges();
         }
 
-        public static void AddTenantSettings(int theTenant, TenantSettingRepository theTenantSettingRepository, List<ObjectTable> tenantZeroObjectTables)
+        public static void AddTenantSettings(int theTenant, TenantSettingRepository theTenantSettingRepository, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables)
         {
             tenantSettingQuery = new TenantSettingQuery(theTenantSettingRepository);
             List<TenantSettingPM> settings = tenantSettingQuery.GetTenantSettingsByTenant(0).ToList();
             foreach (TenantSettingPM setting in settings)
             {
                 ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == setting.ObjectTableId).FirstOrDefault();
-                if (zeroObjectTable != null)
+
+                TenantSetting newTenantSetting = new TenantSetting()
                 {
-                    TenantSetting newTenantSetting = new TenantSetting()
-                    {
-                        Tenant = theTenant,
-                        ObjectTableId = zeroObjectTable.Id,
-                        SettingCode = setting.SettingCode,
-                        SettingValue = setting.SettingValue,
-                        Id = IdCounter.GetNumber("TenantSetting", theTenant).ToString(),
-                        Size = setting.Size,
-                        Prefix = setting.Prefix,
-                    };
-                    theTenantSettingRepository.Add(newTenantSetting);
-                }
+                    Tenant = theTenant,
+                    ObjectTableId = zeroObjectTable.Id,
+                    SettingCode = setting.SettingCode,
+                    SettingValue = setting.SettingValue,
+                    Id = IdCounter.GetNumber("TenantSetting", theTenant).ToString(),
+                    Size = setting.Size,
+                    Prefix = setting.Prefix,
+                };
+                theTenantSettingRepository.Add(newTenantSetting);
             }
             theTenantSettingRepository.SubmitChanges();
+        }
+
+        public static void AddObjectTableTabs(int theTenant, ObjectTableTabRepository theObjectTableTabRepository, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, List<TextCode> tenantZeroTextCodes, List<TextCode> currentTenantTextCodes)
+        {
+            objectTableTabQuery = new ObjectTableTabQuery(theObjectTableTabRepository);
+            List<ObjectTableTabPM> objectTableTabs = objectTableTabQuery.GetObjectTableTabPMsByTenant(0).ToList();
+            foreach (ObjectTableTabPM tab in objectTableTabs)
+            {
+                ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == tab.ObjectTableId).FirstOrDefault();
+                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+                TextCode tenantZeroFeatureText = tenantZeroTextCodes.Where(d => d.Id == tab.TabNameTextCodeId).FirstOrDefault();
+                TextCode text = currentTenantTextCodes.Where(d => d.Code == tenantZeroFeatureText.Code).FirstOrDefault();
+
+                ObjectTableTab newTab = new ObjectTableTab()
+                {
+                    Tenant = theTenant,
+                    Code = tab.Code,
+                    ObjectTableId = currentObjectTable.Id,
+                    TabNameTextCodeId = text.Id,
+                    IndexOrder = tab.IndexOrder,
+                    ControlPath = tab.ControlPath,
+                    Id = IdCounter.GetNumber("ObjectTableTab", theTenant).ToString(),
+
+                };
+                theObjectTableTabRepository.Add(newTab);
+            }
+            theObjectTableTabRepository.SubmitChanges();
+        }
+
+        public static void AddObjectTableHelperControls(int theTenant, ObjectTableHelperControlRepository theObjectTableHelperControlRepository, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables)
+        {
+            objectTableHelperControlQuery = new ObjectTableHelperControlQuery(theObjectTableHelperControlRepository);
+
+            List<ObjectTableHelperControlPM> objectTableTabs = objectTableHelperControlQuery.GetObjectTableHelperControlPMsByTenant(0).ToList();
+            foreach (ObjectTableHelperControlPM helper in objectTableTabs)
+            {
+                ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == helper.ObjectTableId).FirstOrDefault();
+                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+                ObjectTableHelperControl newTab = new ObjectTableHelperControl()
+                {
+                    Tenant = theTenant,
+                    Code = helper.Code,
+                    ObjectTableId = currentObjectTable.Id,
+                    Id = IdCounter.GetNumber("ObjectTableHelperControl", theTenant).ToString(),
+                    ControlPath = helper.ControlPath,
+
+                };
+                theObjectTableHelperControlRepository.Add(newTab);
+            }
+            theObjectTableHelperControlRepository.SubmitChanges();
+        }
+
+        public static void AddScreens(int theTenant, ScreensRepository theScreensRepository, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, List<ScreenPM> tenantZeroScreens, ObjectTableRepository objectTabelRepository)
+        {
+            foreach (ScreenPM screen in tenantZeroScreens)
+            {
+                ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == screen.ObjectTableId).FirstOrDefault();
+                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+                Screen newScreen = new Screen()
+                {
+                    Id = IdCounter.GetNumber("Screen", theTenant).ToString(),
+                    Tenant = theTenant,
+                    Code = screen.Code,
+                    NumberOfColumns = screen.NumberOfColumns,
+                    NumberOfRows = screen.NumberOfRows,
+                    ObjectTableId = currentObjectTable.Id,
+                    IsReadOnly = screen.IsReadOnly,
+                    Name = screen.Name,
+                };
+
+                theScreensRepository.Add(newScreen);
+            }
+
+            theScreensRepository.SubmitChanges();
+            screensQuery = new ScreensQuery(theScreensRepository);
+            List<ScreenPM> currentScreens = screensQuery.GetScreenPMsByTenant(theTenant).ToList();
+            foreach (ObjectTable objectTable in tenantZeroObjectTables)
+            {
+                if (objectTable.HeaderScreenId != null)
+                {
+                    ScreenPM zeroScreen = tenantZeroScreens.Where(d => d.Id == objectTable.HeaderScreenId).FirstOrDefault();
+                    ScreenPM currentScreen = currentScreens.Where(d => d.Code == zeroScreen.Code).FirstOrDefault();
+
+                    ObjectTable currentObject = currentTenantObjectTables.Where(d => d.Name == objectTable.Name).FirstOrDefault();
+                    currentObject.HeaderScreenId = currentScreen.Id;
+                    objectTabelRepository.Update(currentObject);
+                }
+            }
+            objectTabelRepository.SubmitChanges();
+        }
+
+        public static void AddScreenFields(int theTenant, ScreenFieldsRepository theScreenFieldsRepository, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, List<Screen> currentTenantScreens, List<ObjectFieldPM> tenantZeroObjectFields, List<ObjectField> currentTenantObjectFields)
+        {
+            screenFieldsQuery = new ScreenFieldsQuery(theScreenFieldsRepository);
+            List<ScreenFieldPM> fieldsList = screenFieldsQuery.GetScreenFieldPMsByTenant(0).ToList();
+
+            foreach (ScreenFieldPM field in fieldsList)
+            {
+
+                ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.Id == field.ObjectFieldId).FirstOrDefault();
+
+                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == field.ObjectFieldObjectTableName).FirstOrDefault();
+                ObjectField currentObjectField = currentTenantObjectFields.Where(d => d.FieldName == zeroObjectField.FieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
+
+                Screen currentScreen = currentTenantScreens.Where(d => d.Code == field.ScreenCode && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
+
+                ScreenField newField = new ScreenField()
+                {
+                    Id = IdCounter.GetNumber("ScreenField", theTenant).ToString(),
+                    ObjectFieldId = currentObjectField.Id,
+                    ScreenId = currentScreen.Id,
+                    Tenant = theTenant,
+                    Row = field.Row,
+                    Column = field.Column
+                };
+                theScreenFieldsRepository.Add(newField);
+            }
+
+            theScreenFieldsRepository.SubmitChanges();
+        }
+
+        public static void AddObjectTableRules(int theTenant, ObjectTableRuleRepository theObjectTableRuleRepository, List<ObjectTableRule> tenantZeroObjectTableRules, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, List<ObjectFieldPM> tenantZeroObjectFields, List<ObjectField> currentTenantObjectFields)
+        {
+            foreach (ObjectTableRule rule in tenantZeroObjectTableRules)
+            {
+                ObjectTable zeroObjectTable = tenantZeroObjectTables.Where(d => d.Id == rule.ObjectTableId).FirstOrDefault();
+                ObjectTable objectTable = currentTenantObjectTables.Where(d => d.Name == zeroObjectTable.Name).FirstOrDefault();
+
+                ObjectField triggerfield = null;
+                if (rule.TriggerFieldId != null)
+                {
+                    ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.Id == rule.TriggerFieldId).FirstOrDefault();
+                    triggerfield = currentTenantObjectFields.Where(d => d.FieldName == zeroObjectField.FieldName && d.ObjectTableId == objectTable.Id).FirstOrDefault();
+                }
+
+                ObjectTableRule newRule = new ObjectTableRule()
+                {
+                    Id = IdCounter.GetNumber("ObjectTableRule", theTenant).ToString(),
+                    Tenant = theTenant,
+                    Condition = rule.Condition,
+                    InActive = rule.InActive,
+                    Name = rule.Name,
+                    ObjectTableId = objectTable.Id,
+                    OutputMessage = rule.OutputMessage,
+                    RuleCode = rule.RuleCode,
+                    RuleTypeCode = rule.RuleTypeCode,
+                    SystemLevel = rule.SystemLevel,
+                    ActiveForNew = rule.ActiveForNew,
+                    ActiveForUpdate = rule.ActiveForUpdate,
+                    TriggerFieldId = triggerfield != null ? triggerfield.Id : null,
+                    TriggerTypeCode = rule.TriggerTypeCode,
+                    RuleNotificationTypeCode = rule.RuleNotificationTypeCode,
+
+                };
+                theObjectTableRuleRepository.Add(newRule);
+            }
+            theObjectTableRuleRepository.SubmitChanges();
+        }
+
+        public static void AddObjectTableRuleFields(int theTenant, ObjectTableRuleFieldRepository theObjectTableRuleFieldRepository, List<ObjectTableRule> tenantZeroObjectTableRules, List<ObjectTableRule> currentTenantObjectTableRules, List<ObjectFieldPM> tenantZeroObjectFields, List<ObjectField> currentTenantObjectFields)
+        {
+            objectTableRuleFieldQuery = new ObjectTableRuleFieldQuery(theObjectTableRuleFieldRepository);
+            List<ObjectTableRuleFieldPM> ruleFieldsList = objectTableRuleFieldQuery.GetObjectTableRuleFieldPMsByTenant(0).ToList();
+
+            foreach (ObjectTableRuleFieldPM ruleField in ruleFieldsList)
+            {
+                ObjectTableRule zeroRule = tenantZeroObjectTableRules.Where(d => d.Id == ruleField.ObjectTableRuleId).FirstOrDefault();
+                ObjectTableRule rule = currentTenantObjectTableRules.Where(r => r.RuleCode == zeroRule.RuleCode && r.Tenant == theTenant).FirstOrDefault();
+                ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.Id == ruleField.ObjectFieldId).FirstOrDefault();
+                ObjectField objectField = currentTenantObjectFields.Where(d => d.ObjectTableId == rule.ObjectTableId && d.Tenant == theTenant && d.FieldName == zeroObjectField.FieldName).FirstOrDefault();
+
+                ObjectTableRuleField newRuleField = new ObjectTableRuleField()
+                {
+                    Id = IdCounter.GetNumber("ObjectTableRuleField", theTenant).ToString(),
+                    Tenant = theTenant,
+                    ObjectFieldId = objectField.Id,
+                    ObjectTableRuleId = rule.Id,
+                    SystemLevel = ruleField.SystemLevel,
+                    RuleNotificationTypeCode = ruleField.RuleNotificationTypeCode,
+                    Expression = ruleField.Expression,
+                };
+
+                theObjectTableRuleFieldRepository.Add(newRuleField);
+            }
+
+            theObjectTableRuleFieldRepository.SubmitChanges();
+        }
+
+        public static void AddQueries(int theTenant, QueryRepository theQueryRepository, List<ObjectTable> currentTenantObjectTables, List<QueryPM> tenantZeroQueries, List<TextCode> currentTenantTextCodes)
+        {
+            foreach (QueryPM q in tenantZeroQueries)
+            {
+                ObjectTable objecdtTable = currentTenantObjectTables.Where(d => d.Name == q.ObjectTableName && d.Tenant == theTenant).FirstOrDefault();
+                TextCode textCode = currentTenantTextCodes.Where(d => d.Code == q.NameTextCodeCode && d.ObjectTableId == objecdtTable.Id).FirstOrDefault();
+                Query newQuery = new Query()
+                {
+                    Id = IdCounter.GetNumber("Query", theTenant).ToString(),
+                    Code = q.Code,
+                    ObjectTableId = objecdtTable.Id,
+                    Tenant = theTenant,
+                    SystemLevel = q.SystemLevel,
+                    TenantLevel = q.TenantLevel,
+                    QuerySection = q.QuerySection,
+                    OriginalQueryId = q.Id,
+                    IndexOrder = q.IndexOrder,
+                    DisplayCount = q.DisplayCount,
+                    NameTextCodeId = textCode.Id,
+                    QueryGroupCode = q.QueryGroupCode,
+                    IsAddNewEntityEnabled = q.IsAddNewEntityEnabled,
+                    DefaultSortDirection = q.DefaultSortDirection,
+                    DefaultSortColumn = q.DefaultSortColumn,
+
+                };
+                theQueryRepository.Add(newQuery);
+            }
+            theQueryRepository.SubmitChanges();
+        }
+
+        public static void AddQueryColumns(int theTenant, QueryColumnRepository theQueryColumnRepository, List<QueryColumnPM> tenantZeroQueryColumns, List<ObjectField> currentTenantObjectFields, List<QueryPM> currentTenantQueries, List<ObjectTable> currentTenantObjectTables)
+        {
+            foreach (QueryColumnPM q in tenantZeroQueryColumns)
+            {
+                QueryPM usedQuery = currentTenantQueries.Where(d => d.Code == q.QueryCode && d.Tenant == theTenant && d.ObjectTableName == q.QueryObjectTableName).FirstOrDefault();
+                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == q.QueryObjectTableName).FirstOrDefault();
+                ObjectField usedObjectField = currentTenantObjectFields.Where(d => d.FieldName == q.ObjectFieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
+                QueryColumn newQuery = new QueryColumn()
+                {
+                    Id = IdCounter.GetNumber("QueryColumn", theTenant).ToString(),
+                    IndexOrder = q.IndexOrder,
+                    ObjectFieldId = usedObjectField.Id,
+                    QueryId = usedQuery.Id,
+                    Tenant = theTenant,
+                    ColumnWidth = q.ColumnWidth
+                };
+                theQueryColumnRepository.Add(newQuery);
+            }
+            theQueryColumnRepository.SubmitChanges();
+        }
+
+        public static void AddAdvancedQueryFilters(int theTenant, AdvancedQueryFilterRepository theAdvancedQueryFilterRepository, List<AdvancedQueryFilterPM> tenantZeroAdvancedQueryFilters, List<ObjectField> currentTenantObjectFields, List<QueryPM> currentTenantQueries, List<ObjectTable> currentTenantObjectTables)
+        {
+            foreach (AdvancedQueryFilterPM q in tenantZeroAdvancedQueryFilters)
+            {
+                QueryPM usedQuery = currentTenantQueries.Where(d => d.Code == q.QueryCode && d.Tenant == theTenant && d.ObjectTableName == q.QueryObjectTableName).FirstOrDefault();
+                ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == q.QueryObjectTableName).FirstOrDefault();
+                ObjectField usedObjectField = currentTenantObjectFields.Where(d => d.FieldName == q.ObjectFieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
+                AdvancedQueryFilter newQuery = new AdvancedQueryFilter()
+                {
+                    IndexOrder = q.IndexOrder,
+                    ObjectFieldId = usedObjectField.Id,
+                    QueryId = usedQuery.Id,
+                    Tenant = theTenant,
+                    Id = IdCounter.GetNumber("AdvancedQueryFilter", theTenant).ToString(),
+                    IsPredefined = q.IsPredefined,
+                    Operator = q.Operator,
+                    PredefinedValue = q.PredefinedValue,
+                    PredefinedValue2 = q.PredefinedValue2,
+
+                };
+                theAdvancedQueryFilterRepository.Add(newQuery);
+            }
+            theAdvancedQueryFilterRepository.SubmitChanges();
+        }
+
+        public static void AddTranslationHeaders(int theTenant, TranslationHeaderRepository theTranslationHeaderRepository, List<TranslationHeader> tenantZeroTranslationHeaders)
+        {
+            foreach (TranslationHeader header in tenantZeroTranslationHeaders)
+            {
+                TranslationHeader newTranslationHeader = new TranslationHeader()
+                {
+                    Description = header.Description,
+                    Code = header.Code, //IdCounter.GetNumber("TranslationHeader").ToString()
+                };
+                theTranslationHeaderRepository.Add(newTranslationHeader);
+            }
+            theTranslationHeaderRepository.SubmitChanges();
         }
 
         public static void AddPaymentTerms(int theTenant, PaymentTermRepository thePaymentTermRepository, List<PaymentTerm> tenantZeroPaymentTerms)
@@ -1956,7 +2261,6 @@ namespace WebFreight.Web.InfrastructureModel
                     IsManuallySet = a.IsManuallySet,
                     DisplayInLOV = a.DisplayInLOV,
                     FromDateTypeCode = "INV",
-                    Code = a.Code,
                 };
 
                 thePaymentTermRepository.Add(newPaymentTerm);
@@ -1965,19 +2269,85 @@ namespace WebFreight.Web.InfrastructureModel
             thePaymentTermRepository.SubmitChanges();
         }
 
-        public static void AddDocumentTypes(int theTenant, DocumentTypeRepository theDocumentTypeRepository, DocumentTypeCopyRepository theDocumentTypeCopyRepository, List<DocumentTypePM> tenantZeroDocumentTypes, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, DocumentTypeCustomFieldRepository theDocumentTypeCustomFieldRepository, List<DocumentTypeCustomField> tenantZeroCustomFields, string countryCode=null)
+        public static void AddDocumentTypes(int theTenant, DocumentTypeRepository theDocumentTypeRepository, DocumentTypeCopyRepository theDocumentTypeCopyRepository, List<DocumentTypePM> tenantZeroDocumentTypes, List<ObjectTable> tenantZeroObjectTables, List<ObjectTable> currentTenantObjectTables, DocumentTypeCustomFieldRepository theDocumentTypeCustomFieldRepository, List<DocumentTypeCustomField> tenantZeroCustomFields)
         {
-            //string countryCode = GetCurrentTenantCountryCode(tenant);
-
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes)
             {
                 AutomationHelper automationHelper = new AutomationHelper();
                 List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
 
-                if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode?.Trim()) || (docType.CountryCode == countryCode)))
+                if ((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers )|| automationDocumentTypeIds.Contains(docType.Id))
                 {
                     ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == docType.ObjectTableId).FirstOrDefault();
-                    DocumentTypeQuery.AddDocumentType(docType, theTenant, theDocumentTypeRepository, theDocumentTypeCopyRepository, theDocumentTypeCustomFieldRepository, tenantZeroObject != null ? tenantZeroObject.Id : "", tenantZeroCustomFields);
+
+                    List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
+                    DocumentType newDocType = new DocumentType()
+                    {
+                        Id = IdCounter.GetNumber("DocumentType", theTenant).ToString(),
+                        Code = docType.Code,
+                        Name = docType.Name,
+                        IsOcean = docType.IsOcean,
+                        IsAir = docType.IsAir,
+                        IsInland = docType.IsInland,
+                        IsDocIn = docType.IsDocIn,
+                        IsDocOut = false,
+                        FollowUpTypeId = docType.FollowUpTypeId,
+                        Tenant = theTenant,
+                        ObjectTableId = tenantZeroObject != null ? tenantZeroObject.Id : "",
+                        SearchFields = docType.SearchFields,
+                        IsMaster = docType.IsMaster,
+                        IsDirect = docType.IsDirect,
+                        IsHouse = docType.IsHouse,
+                        TemplateFormatCode = docType.TemplateFormatCode,
+                        IsEnabledForCustomers = true,
+                        IsCopiedAtSignup = true,
+                        CountryCode = docType.CountryCode,
+                        Subject = docType.Subject,
+                        Notes = docType.Notes,
+                        OrderBy = docType.OrderBy,
+                        DocumentTypeCategoryCode = docType.DocumentTypeCategoryCode,
+                        //IsAgentView = docType.IsAgentView,
+                        //IsCustomerView = docType.IsCustomerView,
+                        IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
+                        PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
+                    };
+                    foreach (DocumentTypeCopyPM copy in docType.DocumentTypeCopies)
+                    {
+                        if (!copy.InActive)
+                        {
+                            DocumentTypeCopy newCopy = new DocumentTypeCopy()
+                            {
+                                Id = IdCounter.GetNumber("DocumentTypeCopy", theTenant).ToString(),
+                                Code = copy.Code,
+                                Name = copy.Name,
+                                Tenant = theTenant,
+                                IndexOrder = copy.IndexOrder,
+                                IsSelectedByDefault = copy.IsSelectedByDefault,
+                                DocumentTypeId = newDocType.Id,
+                            };
+                            theDocumentTypeCopyRepository.Add(newCopy);
+                        }
+                    }
+                    foreach (DocumentTypeCustomField customField in zeroCustomFields)
+                    {
+                        DocumentTypeCustomField newCustomField = new DocumentTypeCustomField()
+                        {
+                            DocumentTypeId = newDocType.Id,
+                            DefaultValue = customField.DefaultValue,
+                            FieldCode = customField.FieldCode,
+                            FieldDataTypeCode = customField.FieldDataTypeCode,
+                            Id = IdCounter.GetNumber("DocumentTypeCustomField", theTenant).ToString(),
+                            InActive = customField.InActive,
+                            IndexOrder = customField.IndexOrder,
+                            IsRequired = customField.IsRequired,
+                            MultiLine = customField.MultiLine,
+                            Name = customField.Name,
+                            Tenant = theTenant,
+                        };
+                        theDocumentTypeCustomFieldRepository.Add(newCustomField);
+                    }
+
+                    theDocumentTypeRepository.Add(newDocType);
                 }
             }
             theDocumentTypeRepository.SubmitChanges();
@@ -1989,20 +2359,147 @@ namespace WebFreight.Web.InfrastructureModel
         {
             DocumentTypeTemplateQuery theDocumentTypeTemplateQuery = new DocumentTypeTemplateQuery(theDocumentTypeTemplateRepository);
             List<DocumentTypeTemplatePM> documentTypeTemplateList = theDocumentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(0).ToList();
+
             AutomationHelper automationHelper = new AutomationHelper();
-            List<string> automationDocumentTypeTemplateIds = automationHelper.GetAutomationDocumentTypeTemplateIds(tenant);
+            List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
 
-            documentTypeTemplateList = documentTypeTemplateList.Where(d => (d.IsCopiedAtSignup && d.IsEnabledForCustomers) || d.IsSystem || automationDocumentTypeTemplateIds.Contains(d.Id)).ToList();
+            documentTypeTemplateList = documentTypeTemplateList.Where(d => (d.IsCopiedAtSignup && d.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(d.Id)).ToList();
 
-            foreach (DocumentTypePM documenttype in tenantZeroDocumentType)
+
+            #region Defult Template
+          
+            
+            //TenantQuery query = new TenantQuery(theTenant);
+            //AddressRepository addressRepository = new AddressRepository(theTenant);
+            //CountryRepository countryRepository = new CountryRepository(theTenant);
+
+            //var newTenant = query.GetSinglePM(theTenant);
+            //if (newTenant != null && !string.IsNullOrEmpty(newTenant.AddressId))
+            //{
+            //    Address address = addressRepository.GetSingleAddress(newTenant.AddressId, theTenant);
+            //    if (address != null && !string.IsNullOrEmpty(address.CountryId))
+            //    {
+            //        Country country = countryRepository.GetSingleCountry(address.CountryId, theTenant);
+            //        if(country!=null && !string.IsNullOrEmpty(country.Code))
+            //        {
+            //            coutryCode = country.Code;
+            //        }
+            //    }
+            //}
+            #endregion
+
+            foreach (DocumentTypeTemplatePM a in documentTypeTemplateList)
             {
-                DocumentTypeTemplateQuery.AddDocumentTypeTemplate(documenttype, theTenant, theDocumentTypeTemplateRepository, currentTenantDocumentType, theDocumentTypeRepository, documentTypeTemplateList, coutryCode);
-            }
+                DocumentTypePM documenttype = tenantZeroDocumentType.Where(d => d.Id == a.DocumentTypeId && d.Tenant == 0).FirstOrDefault();
+                DocumentType usedDocumenttype = currentTenantDocumentType.Where(d => d.Code == documenttype.Code && d.Tenant == theTenant && !d.InActive && d.IsCopiedAtSignup).FirstOrDefault();
 
+                if (usedDocumenttype != null)
+                {
+                    DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
+                    {
+                        Id = IdCounter.GetNumber("DocumentTypeTemplate", theTenant).ToString(),
+                        Tenant = theTenant,
+                        TemplateBody = a.TemplateBody,
+                        TemplateBodyHtml = a.TemplateBodyHtml,
+                        TemplateFooterHeight = a.TemplateFooterHeight,
+                        TemplateHeaderHeight = a.TemplateHeaderHeight,
+                        TemplateFooterHtml = a.TemplateFooterHtml,
+                        TemplateHeaderHtml = a.TemplateHeaderHtml,
+                        TemplateType = a.TemplateType,
+                        HorizontalShift = a.HorizontalShift,
+                        InActive = a.InActive,
+                        Description = a.Description,
+                        DocumentTypeId = usedDocumenttype.Id,
+                        EditorTool = a.EditorTool,
+                        VerticalShift = a.VerticalShift,
+                        IsEnabledForCustomers = true,
+                        IsCopiedAtSignup = true,
+                        CountryCode = a.CountryCode,
+                        Language = a.Language,
+                        OriginalTemplateId = a.Id,
+                        InternalRemarks = a.InternalRemarks,
+                        Subject = a.Subject,
+                        From = a.From,
+                        CC = a.CC,
+                        ReplyTo =a.ReplyTo,
+
+                    };
+
+                    #region Set Defult as Country Tenant
+                    DocumentTypeTemplatePM documentTypeDefaultReportTemplate = documentTypeTemplateList.Where(d => d.CountryCode == coutryCode && d.DocumentTypeCode == usedDocumenttype.Code && d.TemplateType == "P" && d.Id == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+                    DocumentTypeTemplatePM documentTypeDefaultHTMLTemplate = documentTypeTemplateList.Where(d => d.CountryCode == coutryCode && d.DocumentTypeCode == usedDocumenttype.Code && d.TemplateType == "M" && d.Id == documenttype.DocumentTypeDefaultHTMLTemplateId).FirstOrDefault();
+
+
+                    if(documentTypeDefaultReportTemplate == null)
+                    {
+                        documentTypeDefaultReportTemplate = documentTypeTemplateList.Where(d => d.CountryCode == coutryCode && d.DocumentTypeCode == usedDocumenttype.Code && d.TemplateType == "P" ).FirstOrDefault();
+                    }
+                    if (documentTypeDefaultHTMLTemplate == null)
+                    {
+                        documentTypeDefaultHTMLTemplate = documentTypeTemplateList.Where(d => d.CountryCode == coutryCode && d.DocumentTypeCode == usedDocumenttype.Code && d.TemplateType == "M" ).FirstOrDefault();
+                    }
+
+                    if (documentTypeDefaultReportTemplate == null)
+                    {
+                        documentTypeDefaultReportTemplate = documentTypeTemplateList.Where(d => documenttype.DocumentTypeDefaultReportTemplateId == d.Id).FirstOrDefault();
+                    }
+                    if (documentTypeDefaultHTMLTemplate == null)
+                    {
+                        documentTypeDefaultHTMLTemplate = documentTypeTemplateList.Where(d => documenttype.DocumentTypeDefaultHTMLTemplateId == d.Id).FirstOrDefault();
+                    }
+
+
+                    if (documentTypeDefaultReportTemplate != null || documentTypeDefaultHTMLTemplate != null)
+                    {
+                        if (documentTypeDefaultReportTemplate != null && string.IsNullOrEmpty(usedDocumenttype.DocumentTypeDefaultReportTemplateId))
+                        {
+                            if (a.Id == documentTypeDefaultReportTemplate.Id)
+                            {
+                                usedDocumenttype.DocumentTypeDefaultReportTemplateId = newtemplate.Id;
+                            }
+                        }
+
+                        if (documentTypeDefaultHTMLTemplate != null && string.IsNullOrEmpty(usedDocumenttype.DocumentTypeDefaultHTMLTemplateId))
+                        {
+                            if (a.Id == documentTypeDefaultHTMLTemplate.Id)
+                            {
+                                usedDocumenttype.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
+                            }
+                        }
+                    }
+                    #endregion
+
+          
+                    usedDocumenttype.IsDocOut = documenttype.IsDocOut;
+                    theDocumentTypeRepository.Update(usedDocumenttype);
+                    theDocumentTypeTemplateRepository.Add(newtemplate);
+                }
+            }
             theDocumentTypeTemplateRepository.SubmitChanges();
             theDocumentTypeRepository.SubmitChanges();
         }
 
+        public static void AddMenusTables(int theTenant, MenusTableRepository theMenusTableRepository, List<ObjectTable> currentTenantObjectTables, List<MenusTablePM> tenantZeroMenusTables, List<Feature> currentTenantFeatures)
+        {
+            foreach (MenusTablePM menusTable in tenantZeroMenusTables)
+            {
+                MenusTable newMenusTable = new MenusTable()
+                {
+                    Id = IdCounter.GetNumber("MenusTable", theTenant).ToString(),
+                    Tenant = theTenant,
+                    Code = menusTable.Code,
+                    CategoryTypeCode = menusTable.CategoryTypeCode,
+                    MenuTypeCode = menusTable.MenuTypeCode,
+                    Icon = menusTable.Icon,
+                    IndexOfOrder = menusTable.IndexOfOrder,
+                    TextCode = menusTable.TextCode,
+                    ObjectTableId = currentTenantObjectTables.Where(d => d.Name == menusTable.ObjectTableName && d.Tenant == theTenant).FirstOrDefault() != null ? currentTenantObjectTables.Where(d => d.Name == menusTable.ObjectTableName && d.Tenant == theTenant).FirstOrDefault().Id : null,
+                    FeatureId = currentTenantFeatures.Where(d => d.Code == menusTable.FeatureCode).FirstOrDefault() != null ? currentTenantFeatures.Where(d => d.Code == menusTable.FeatureCode).FirstOrDefault().Id : null,
+                };
+                theMenusTableRepository.Add(newMenusTable);
+            }
+            theMenusTableRepository.SubmitChanges();
+        }
 
         public static void AddEntityStatus(int theTenant, EntityStatusRepository theEntityStatusRepository, List<EntityStatusPM> tenantZeroEntityStatus, List<ObjectTable> tenantZeroObjectTables)
         {
@@ -2024,49 +2521,33 @@ namespace WebFreight.Web.InfrastructureModel
             theEntityStatusRepository.SubmitChanges();
         }
 
-        public static void AddEventTypes(int theTenant, EventTypeRepository theEventTypeRepository, List<EventTypePM> tenantZeroEventTypes, List<ObjectTable> tenantZeroObjectTables, List<EntityStatus> currentTenantEntityStatus, List<EntityStatusPM> tenantZeroEntityStatus)
+        public static void AddEventTypes(int theTenant, EventTypeRepository theEventTypeRepository, List<EventTypePM> tenantZeroEventTypes, List<ObjectTable> currentTenantObjectTables, List<ObjectTable> tenantZeroObjectTables, List<EntityStatus> currentTenantEntityStatus)
         {
             foreach (EventTypePM eventType in tenantZeroEventTypes)
             {
                 ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == eventType.ObjectTableId).FirstOrDefault();
 
-                if (tenantZeroObject != null)
+                EventType newEventType = new EventType()
                 {
-                    EventType newEventType = new EventType()
-                    {
-                        Id = IdCounter.GetNumber("EventType", theTenant).ToString(),
-                        Tenant = theTenant,
-                        AddedManually = eventType.AddedManually,
-                        Code = eventType.Code,
-                        EnglishName = eventType.EnglishName,
-                        FollowUpEnglishName = eventType.FollowUpEnglishName,
-                        FollowUpLocalName = eventType.FollowUpLocalName,
-                        ManualActivatedFollowUp = eventType.ManualActivatedFollowUp,
-                        IsFollowUp = eventType.IsFollowUp,
-                        IsManualEntry = eventType.IsManualEntry,
-                        ObjectTableId = tenantZeroObject.Id,
-                        EventTypeCategoryCode = eventType.EventTypeCategoryCode,
-                        LocalName = eventType.LocalName,
-                        ShortView = eventType.ShortView,
-                        SearchFields = eventType.SearchFields,
-                        IsCustomerView = eventType.IsCustomerView,                         
-                    };
+                    Id = IdCounter.GetNumber("EventType", theTenant).ToString(),
+                    Tenant = theTenant,
+                    AddedManually = eventType.AddedManually,
+                    Code = eventType.Code,
+                    EnglishName = eventType.EnglishName,
+                    EntityStatusId = currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault() != null ? currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault().Id : null,
+                    FollowUpEnglishName = eventType.FollowUpEnglishName,
+                    FollowUpLocalName = eventType.FollowUpLocalName,
+                    ManualActivatedFollowUp = eventType.ManualActivatedFollowUp,
+                    IsFollowUp = eventType.IsFollowUp,
+                    IsManualEntry = eventType.IsManualEntry,
+                    ObjectTableId = tenantZeroObject.Id,
+                    LocalName = eventType.LocalName,
+                    ShortView = eventType.ShortView,
+                    SearchFields = eventType.SearchFields,
+                    IsCustomerView = eventType.IsCustomerView,
+                };
 
-                    if (eventType.EntityStatusId != null)
-                    {
-                        EntityStatusPM tenantZeroStatus = tenantZeroEntityStatus.Where(d => d.Id == eventType.EntityStatusId).FirstOrDefault();
-                        if (tenantZeroStatus != null)
-                        {
-                            EntityStatus tenantStatus = currentTenantEntityStatus.Where(d => d.Code == tenantZeroStatus.Code && d.ObjectTableId == tenantZeroStatus.ObjectTableId).FirstOrDefault();
-                            if (tenantStatus != null)
-                            {
-                                newEventType.EntityStatusId = tenantStatus.Id;
-                            }
-                        }
-                    }
-
-                    theEventTypeRepository.Add(newEventType);
-                }
+                theEventTypeRepository.Add(newEventType);
             }
 
             theEventTypeRepository.SubmitChanges();
@@ -2188,8 +2669,6 @@ namespace WebFreight.Web.InfrastructureModel
                     AWBPrintDescription = a.AWBPrintDescription,
                     ChargesGroupCode = a.ChargesGroupCode,
                     ChargesGroupId = a.ChargesGroupId,
-                    QuoteChargesGroupCode = a.QuoteChargesGroupCode,
-                    QuoteChargesGroupId = a.QuoteChargesGroupId,
                     IATACodeId = a.IATACodeId,
                     Description = a.Description,
                     IsAir = a.IsAir,
@@ -2238,7 +2717,6 @@ namespace WebFreight.Web.InfrastructureModel
                     Name = a.Name,
                     LocalName = localName,
                     SearchFields = a.SearchFields,
-                    ViewOrder = a.ViewOrder,
 
                 };
                 theChargesGroupRepository.Add(chargesGroup);
@@ -2246,59 +2724,7 @@ namespace WebFreight.Web.InfrastructureModel
             }
             theChargesGroupRepository.SubmitChanges();
         }
-
-        public static void CopyQuoteChargesGroupsFromTenantZero(int theTenant, QuoteChargesGroupRepository theChargesGroupRepository, List<QuoteChargesGroupPM> tenantZeroChargesGroups)
-        {
-            foreach (QuoteChargesGroupPM quoteChargesGroup in tenantZeroChargesGroups)
-            {
-                AddQuoteChargesGroup(quoteChargesGroup, theTenant, theChargesGroupRepository);
-            }
-            theChargesGroupRepository.SubmitChanges();
-        }
-
-
-        public static void CopyAccountingCompanyTypeFromTenantZero(int theTenant, AccountingCompanyTypeRepository accountingCompanyTypeRepository, List<AccountingCompanyTypePM> tenantZeroAccountingCompanyTypes)
-        {
-            foreach (AccountingCompanyTypePM accountingCompanyTypes in tenantZeroAccountingCompanyTypes)
-            {
-                AddAccountingCompanyType(accountingCompanyTypes, theTenant, accountingCompanyTypeRepository);
-            }
-            accountingCompanyTypeRepository.SubmitChanges();
-        }
-
-        private static void AddQuoteChargesGroup(QuoteChargesGroupPM quoteChargesGroup, int theTenant, QuoteChargesGroupRepository theChargesGroupRepository)
-        {
-            string localName = !string.IsNullOrEmpty(quoteChargesGroup.LocalName) ? quoteChargesGroup.LocalName : quoteChargesGroup.Name;
-            QuoteChargesGroup chargesGroup = new QuoteChargesGroup()
-            {
-                Id = IdCounter.GetNumber("QuoteChargesGroup", theTenant).ToString(),
-                Tenant = theTenant,
-                Code = quoteChargesGroup.Code,
-                Name = quoteChargesGroup.Name,
-                LocalName = localName,
-                SearchFields = quoteChargesGroup.SearchFields,
-                ViewOrder = quoteChargesGroup.ViewOrder,
-
-            };
-            theChargesGroupRepository.Add(chargesGroup);
-        }
-        private static void AddAccountingCompanyType(AccountingCompanyTypePM accountingCompanyTypes, int theTenant, AccountingCompanyTypeRepository  accountingCompanyTypeRepository)
-        {
-
-            AccountingCompanyType accountingCompanyType = new AccountingCompanyType()
-            {
-                Id = IdCounter.GetNumber("AccountingCompanyType", theTenant).ToString(),
-                Tenant = theTenant,
-                Code = accountingCompanyTypes.Code,
-                EnglishName= accountingCompanyTypes.EnglishName,
-                LocalName = accountingCompanyTypes. LocalName,
-                SearchFields = accountingCompanyTypes.SearchFields,
-                Inactive = accountingCompanyTypes.Inactive,
-
-            };
-            accountingCompanyTypeRepository.Add(accountingCompanyType);
-        }
-
+        
         public static void AddRanks(int theTenant, RankRepository theRankRepository)
         {
             List<Rank> ranks = theRankRepository.GetRanks(0).ToList();
@@ -2539,7 +2965,13 @@ namespace WebFreight.Web.InfrastructureModel
             }
             TypeRepository.SubmitChanges();
         }
-              
+
+
+        public static void AddMenuButtons(int theTenant)
+        {
+            GeneralDomainService generalDomain = new GeneralDomainService();
+        }
+
         public static void SetUserData(int theTenant)
         {
             GlobalZoneRepository globalZoneRepository;
@@ -2623,8 +3055,7 @@ namespace WebFreight.Web.InfrastructureModel
                     SearchFields = c.SearchFields,
                     HasStates = c.HasStates,
                     IsStateRequired = c.IsStateRequired,
-                    IsNorthAmerica = c.IsNorthAmerica,
-                    IsGreaterChina = c.IsGreaterChina,
+
                 };
                 countryRepository.Add(country);
             }
@@ -2703,8 +3134,6 @@ namespace WebFreight.Web.InfrastructureModel
 
                 portRepository.Add(newPort);
                 portRepository.SubmitChanges();
-                RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
-
             }
 
             #region Carriers
@@ -2761,38 +3190,6 @@ namespace WebFreight.Web.InfrastructureModel
             reportHelper.UpdateReports(theTenant);
         }
 
-        public static void AddGeneralBIReportFolder(int tenant)
-        {
-            User systemUser = GetTenantSystemUser(tenant);
-            BIReportFolderRepository bIReportFolderRepository = new BIReportFolderRepository(tenant);
-            BIReportFolder bIReportFolder = new BIReportFolder()
-            {
-                Id = IdCounter.GetNumber("BIReportFolder", tenant),
-                Tenant = tenant,
-                CreateDate = DateTime.Now,
-                CreatedByUserId = systemUser?.Id,
-                UpdateDate = DateTime.Now,
-                UpdatedByUserId = systemUser?.Id,
-                SearchFields = "General",
-                Name = "General",
-                Description = null,
-                Index = 0,
-                PermissionForAll = true,
-                PermittedByUserId = null,
-            };
-
-            bIReportFolderRepository.Add(bIReportFolder);
-            bIReportFolderRepository.SubmitChanges();
-        }
-
-        private static User GetTenantSystemUser(int tenant)
-        {
-            string systemUserEmail = "system@tenant" + tenant + ".com";
-            UserRepository userRepository = new UserRepository(tenant);
-            User systemUser = userRepository.GetSingleUserByEmail(systemUserEmail, tenant, false);
-            return systemUser;
-        }
-
         public static void AddTenantLoginPolicy(int theTenant)
         {
             TenantLoginPolicyRepository tenantLoginPolicyRepository = new TenantLoginPolicyRepository(theTenant);
@@ -2800,7 +3197,8 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 Tenant = theTenant,
                 LoginPolicyCode = "NOREST",
-                SessionTimeout = 8
+                SessionTimeout = 8,
+               
             };
 
             tenantLoginPolicyRepository.Add(tenantLoginPolicy);
@@ -2810,12 +3208,9 @@ namespace WebFreight.Web.InfrastructureModel
         public static void AddQuoteTemplate(int theTenant)
         {
             QuoteTemplateHelper quoteTemplateHelper = new QuoteTemplateHelper();
-            QuoteTemplateCopyDetails quoteTemplateCopyDetails = new QuoteTemplateCopyDetails
-            {
-                Tenant = theTenant
-            };
-            quoteTemplateHelper.CopyQuoteTemplateFromTenantZero(quoteTemplateCopyDetails);
+            string quoteTemplateId = quoteTemplateHelper.CopyQuoteTemplateFromTenantZero(theTenant);
         }
+
 
         #region Tickets 
         public static void AddTicketTypes(int theTenant, TicketTypeRepository TypeRepository, List<TicketType> tenantZeroTypes)
@@ -2836,58 +3231,6 @@ namespace WebFreight.Web.InfrastructureModel
                 TypeRepository.Add(newType);
             }
             TypeRepository.SubmitChanges();
-        }
-
-        public static void AddTaskPriorities(int tenant, TaskPriorityRepository taskPriorityRepository, List<TaskPriority> tenantZeroTaskPriorities)
-        {
-            User systemUser = GetTenantSystemUser(tenant);
-            DateTime currentDatetime = DateTime.Now;
-
-            List<TaskPriority> taskPriorities = tenantZeroTaskPriorities.Where(t => t.Tenant == 0).ToList();
-            foreach (TaskPriority taskPriority in taskPriorities)
-            {
-                TaskPriority newTaskPriority = new TaskPriority()
-                {
-                    Id = IdCounter.GetNumber("TaskPriority", tenant),
-                    Tenant = tenant,
-                    Name = taskPriority.Name,
-                    Code = taskPriority.Code,
-                    SearchFields = taskPriority.SearchFields,
-                    DisplayOrder = taskPriority.DisplayOrder,
-                    CreateDate = currentDatetime,
-                    UpdateDate = currentDatetime,
-                    CreatedByUserId = systemUser?.Id,
-                    UpdatedByUserId = systemUser?.Id
-                };
-                taskPriorityRepository.Add(newTaskPriority);
-            }
-            taskPriorityRepository.SubmitChanges();
-        }
-
-        public static void AddTaskStatuses(int tenant, TaskStatusRepository taskStatusRepository, List<TaskStatus> tenantZeroTaskStatuses)
-        {
-            User systemUser = GetTenantSystemUser(tenant);
-            DateTime currentDatetime = DateTime.Now;
-
-            List<TaskStatus> taskStatuses = tenantZeroTaskStatuses.Where(t => t.Tenant == 0).ToList();
-            foreach (TaskStatus taskStatus in taskStatuses)
-            {
-                TaskStatus newTaskStatus = new TaskStatus()
-                {
-                    Id = IdCounter.GetNumber("TaskStatus", tenant),
-                    Tenant = tenant,
-                    Name = taskStatus.Name,
-                    Code = taskStatus.Code,
-                    SearchFields = taskStatus.SearchFields,
-                    Closed = taskStatus.Closed,
-                    CreateDate = currentDatetime,
-                    UpdateDate = currentDatetime,
-                    CreatedByUserId = systemUser?.Id,
-                    UpdatedByUserId = systemUser?.Id
-                };
-                taskStatusRepository.Add(newTaskStatus);
-            }
-            taskStatusRepository.SubmitChanges();
         }
 
         public static void AddTicketStages(int theTenant, TicketStageRepository TypeRepository, List<TicketStage> tenantZeroTypes)
@@ -2930,9 +3273,11 @@ namespace WebFreight.Web.InfrastructureModel
             }
             TypeRepository.SubmitChanges();
         }
+
         #endregion 
 
         #region SLA 
+
         public static void AddBusinessHours(int theTenant, BusinessHourRepository TypeRepository, List<BusinessHour> tenantZeroTypes)
         {
             List<BusinessHour> BusinessHoursList = tenantZeroTypes.Where(d => d.Tenant == 0).ToList();
@@ -2986,11 +3331,9 @@ namespace WebFreight.Web.InfrastructureModel
             TypeRepository.SubmitChanges();
         }
 
-        public static void AddSLAHeaders(int theTenant, SLAHeaderRepository repository, List<SLAHeader> tenantZeroTypes)
+        public static void AddSLAHeaders(int theTenant, SLAHeaderRepository TypeRepository, List<SLAHeader> tenantZeroTypes)
         {
             List<SLAHeader> SLAHeadersList = tenantZeroTypes.Where(d => d.Tenant == 0).ToList();
-            TenantRepository tenantRepository;
-            Tenant tenantPoco;
             foreach (SLAHeader item in SLAHeadersList)
             {
                 SLAHeader newSLAHeader = new SLAHeader()
@@ -3005,17 +3348,18 @@ namespace WebFreight.Web.InfrastructureModel
                     Description = item.Description,
                 };
 
-                repository.Add(newSLAHeader);
-                repository.SubmitChanges();
+                TypeRepository.Add(newSLAHeader);
+            }
 
-                tenantRepository = new TenantRepository(theTenant);
-                tenantPoco = tenantRepository.GetSingleByTenant(theTenant);
-                if (tenantPoco != null)
-                {
-                    tenantPoco.DefaultSLAId = newSLAHeader.Id;
-                    tenantRepository.Update(tenantPoco);
-                    tenantRepository.SubmitChanges();
-                }
+            TypeRepository.SubmitChanges();
+
+            if (SLAHeadersList != null && SLAHeadersList.Count() > 0)
+            {
+                TenantRepository tenantRepository = new TenantRepository(tenant);
+                Tenant tenantPoco = tenantRepository.GetSingleByTenant(tenant);
+                tenantPoco.DefaultSLAId = SLAHeadersList.FirstOrDefault().Id;
+                tenantRepository.Update(tenantPoco);
+                tenantRepository.SubmitChanges();
             }
         }
 
@@ -3109,79 +3453,25 @@ namespace WebFreight.Web.InfrastructureModel
             };
 
             TypeRepository.Add(newSLALine);
+
             TypeRepository.SubmitChanges();
         }
+
         #endregion 
 
-        private static void AddDefaultCustomsSettings(int theTenant)
-        {
-            CustomsSettingRepository customsSettingRepository = new CustomsSettingRepository(theTenant);
-            CustomsSetting customsSetting = new CustomsSetting()
-            {
-                Id = theTenant.ToString(),
-                Tenant = theTenant,
-                CompanyType="C",
-            };
-            customsSettingRepository.Add(customsSetting);
-            customsSettingRepository.SubmitChanges();
-        }
         private static void AddDefaultFullAccountingSettings(int theTenant, FullAccountingSettingRepository theFullAccountingSettingsRepository)
         {
             FullAccountingSetting settings = new FullAccountingSetting()
             {
                 Id = theTenant.ToString(),
                 Tenant = theTenant,
-				TenantForConfirmationNumberApi = "-1"
-			};
+            };
 
             theFullAccountingSettingsRepository.Add(settings);
             theFullAccountingSettingsRepository.SubmitChanges();
+
         }
 
-        private static void AddDefaultTenantIdleStatuses(int theTenant, TenantIdleStatusRepository tenantIdleStatusRepository)
-        {
-
-
-            TenantIdleStatus tenantIdleStatusJournal = new TenantIdleStatus()
-            {
-                Id = theTenant.ToString(),
-                Tenant = theTenant,
-                CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now,
-                SearchFields = null,
-                Idle = false,
-                ObjectTable = "Journal",
-            };
-
-            tenantIdleStatusRepository.Add(tenantIdleStatusJournal);
-
-            TenantIdleStatus tenantIdleStatusARInvoice = new TenantIdleStatus()
-            {
-                Id = theTenant.ToString(),
-                Tenant = theTenant,
-                CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now,
-                SearchFields = null,
-                Idle = false,
-                ObjectTable = "ARInvoice",
-            };
-
-            tenantIdleStatusRepository.Add(tenantIdleStatusARInvoice);
-
-            TenantIdleStatus tenantIdleStatusBatchTaskExecution = new TenantIdleStatus()
-            {
-                Id = theTenant.ToString(),
-                Tenant = theTenant,
-                CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now,
-                SearchFields = null,
-                Idle = false,
-                ObjectTable = "BatchTaskExecution",
-            };
-            tenantIdleStatusRepository.Add(tenantIdleStatusBatchTaskExecution);
-
-            tenantIdleStatusRepository.SubmitChanges();
-        }
 
         public static void AddWithholdingTaxDeductionTypes(int theTenant, WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository, List<WithholdingTaxDeductionType> tenantZeroTypes)
         {
@@ -3203,45 +3493,5 @@ namespace WebFreight.Web.InfrastructureModel
             }
             withholdingTaxDeductionTypeRepository.SubmitChanges();
         }
-
-        public static  void AddPendingsOver900(int tenant)
-        {
-            CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
-            List<CourierPendingReason> typesList = courierPendingReasonRepository.GetAll(0).ToList();
-            foreach (CourierPendingReason type in typesList)
-            {
-                CourierPendingReason newtype = new CourierPendingReason()
-                {
-                    Id = IdCounter.GetNumber("Customs.CourierPendingReason", tenant).ToString(),
-                    Tenant = tenant,
-                    EnglishName = type.EnglishName,
-                    Code = type.Code,
-                    LocalName = type.LocalName,
-                    SearchFields = type.SearchFields,
-                    Inactive = type.Inactive,
-                    RequiresPayment=type.RequiresPayment,
-                    RequiresApproval=type.RequiresApproval,
-                    SwissportSuspendedCode=type.SwissportSuspendedCode,
-                    MamanSuspendedCode=type.MamanSuspendedCode,
-                    UnifreightStatusCode=type.UnifreightStatusCode,
-                    ErrorPlace=type.ErrorPlace,
-                    OverseasSuspendedCode = type.OverseasSuspendedCode,
-
-
-                };
-                courierPendingReasonRepository.Add(newtype);
-            }
-            courierPendingReasonRepository.SubmitChanges();
-        }
-
-
-    }
-
-    public class UserShortDetails
-    {
-        public int Tenant;
-        public string Name;
-        public string Email;
-        public string PhoneNumber;
     }
 }

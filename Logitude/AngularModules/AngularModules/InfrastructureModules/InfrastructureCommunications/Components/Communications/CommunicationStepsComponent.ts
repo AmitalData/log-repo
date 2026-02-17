@@ -1,5 +1,5 @@
 declare var window: any;
-import { Directive, ChangeDetectorRef , Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
+import { Directive, ChangeDetectorRef , Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
 
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -17,7 +17,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'communication-steps',
     templateUrl: './CommunicationStepsComponent.html',
@@ -46,7 +46,7 @@ export class CommunicationStepsComponent
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this._communicationLogStepListService = new CommunicationLogStepListService();
-        this.EntityPM = this.entityArgs.EntityPM;
+      
         this._CommunicationLogStepDataViewModelList = new ObservableCollection([]);
     }
     ngOnInit() {
@@ -98,7 +98,7 @@ export class CommunicationStepsComponent
     LoadCommunicationLogSteps() {
 
         
-        this._communicationLogStepListService.getCommunicationLogStepsListsByLogId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((res:any) => {
+        this._communicationLogStepListService.getCommunicationLogStepsListsByLogId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

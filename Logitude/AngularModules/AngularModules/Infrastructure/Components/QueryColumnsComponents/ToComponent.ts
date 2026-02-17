@@ -10,9 +10,9 @@ import {PartnersDomainService} from '../../../Common/Services/PartnersDomainServ
 import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters'; 
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {IdGeneratorPipe} from '../../../Controls/Pipes/IdGeneratorPipe';
+
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'ToComponent',
     templateUrl: './ToComponent.html',
@@ -26,20 +26,19 @@ export class ToComponent implements OnInit {
     public TenantPM: TenantPM;
     public entityId: string;
     IsChecked: boolean = false;
-    IdGeneratorPipe: IdGeneratorPipe;
+ 
     Key: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef,  private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
-        this.IdGeneratorPipe = new IdGeneratorPipe();
 
     }
 
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName;
-        this.Key = this.IdGeneratorPipe.transform("SendMessage"+fieldName+"CheckBox");
-   
+        this.Key = Guid.newGuid() + fieldName;
+
         if (this.rowData.Email) {
 
             if (fieldName == "To" && window.ToEmailLists) {

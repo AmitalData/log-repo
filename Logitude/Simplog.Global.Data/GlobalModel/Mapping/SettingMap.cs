@@ -17,12 +17,12 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.LogitudeURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ChampURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.IOSSharedAppMinimumVersion).IsRequired();
-            this.Property(t => t.AndroidSharedAppMinimumVersion).IsRequired();
+            this.Property(t => t.AndroidSharedAppMinimumVersion).IsRequired();           
             this.Property(t => t.DeploymentStage).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.UsingAzure).IsRequired();
             this.Property(t => t.IsLogEnabled).IsRequired();
             this.Property(t => t.ChampEnv).IsRequired().HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.CustomerCareIP).IsRequired().HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.CustomerCareIP).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.TotangoServiceId).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.StorageAccountName).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.StorageType).IsRequired().HasMaxLength(60).IsUnicode(false);
@@ -40,6 +40,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ForwarderTenantsURL).HasMaxLength(600).IsUnicode(false);
             this.Property(t => t.CustomerTenantsURL).HasMaxLength(600).IsUnicode(false);
             this.Property(t => t.DomainName).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.QBOConsumerKey).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.QBOAppToken).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.QBOConsumerSecretKey).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ProductName).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EmailAlertSignature).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.QueueServiceMode).HasMaxLength(15).IsUnicode(false);
@@ -62,25 +65,6 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.INTTRATestFTPHost).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.OceanInsightsToken).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.ReleaseNotesURL).HasMaxLength(600).IsUnicode(false);
-            this.Property(t => t.CPUIntensiveWebServicesURL).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChampProdAPIURL).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChampProdAPIPassword).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.ChampTestAPIURL).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChampTestAPIPassword).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.QBOClientID).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.QBOClientSecret).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.StorageAccountKey).IsRequired().HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.TMPersonalAccessToken).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.LogitudeDemoTenants).IsUnicode(false).HasColumnName("LogitudeDemoTenants");
-            this.Property(t => t.AmitalCloudEnvironmentURL).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasMaxLength(50).IsUnicode(true);
-            this.Property(t => t.ReleaseDateString).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.DNSZone).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.DNSIPAddress).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.AzurePrincipalSecretKey).HasMaxLength(1000).IsUnicode(false);
-			this.Property(t => t.WindWardSettings).HasMaxLength(1000).IsUnicode(false);
-			this.Property(t => t.LogitudeIISURL).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.CustomURL).HasMaxLength(1000).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Settings");
@@ -106,7 +90,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IOSSharedAppMinimumVersion).HasColumnName("IOSSharedAppMinimumVersion");
             this.Property(t => t.AndroidSharedAppMinimumVersion).HasColumnName("AndroidSharedAppMinimumVersion");
             this.Property(t => t.DomainName).HasColumnName("DomainName");
-            this.Property(t => t.ProductName).HasColumnName("ProductName");
+            this.Property(t => t.ProductName).HasColumnName("ProductName");     
             this.Property(t => t.LogoCode).HasColumnName("LogoCode");
             this.Property(t => t.EnableHybridQueue).HasColumnName("EnableHybridQueue");
             this.Property(t => t.GLSHKURL).HasColumnName("GLSHKURL");
@@ -126,33 +110,16 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.SignAppVersion).HasColumnName("SignAppVersion");
             this.Property(t => t.DocumentFilingEmailDomain).HasColumnName("DocumentFilingEmailDomain");
             this.Property(t => t.ReportsRunUsingWR).HasColumnName("ReportsRunUsingWR");
-            this.Property(t => t.CPUIntensiveWebServicesURL).HasColumnName("CPUIntensiveWebServicesURL");
-            this.Property(t => t.ChampProdAPIURL).HasColumnName("ChampProdAPIURL");
-            this.Property(t => t.ChampProdAPIPassword).HasColumnName("ChampProdAPIPassword");
-            this.Property(t => t.ChampTestAPIPassword).HasColumnName("ChampTestAPIPassword");
-            this.Property(t => t.ChampTestAPIURL).HasColumnName("ChampTestAPIURL");
-            this.Property(t => t.QBOOAuthDefault).HasColumnName("QBOOAuthDefault");
-            this.Property(t => t.QBOClientID).HasColumnName("QBOClientID");
-            this.Property(t => t.QBOClientSecret).HasColumnName("QBOClientSecret");
-            this.Property(t => t.TMPersonalAccessExpirationDate).HasColumnName("TMPersonalAccessExpirationDate");
-            this.Property(t => t.OITenantNumber).HasColumnName("OITenantNumber");
-            this.Property(t => t.AmitalCloudEnvironmentURL).HasColumnName("AmitalCloudEnvironmentURL");
-            this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey");
-            this.Property(t => t.ReleaseDateString).HasColumnName("ReleaseDateString");
-            this.Property(t => t.DNSZone).HasColumnName("DNSZone");
-            this.Property(t => t.DNSIPAddress).HasColumnName("DNSIPAddress");
-            this.Property(t => t.AzurePrincipalSecretKey).HasColumnName("AzurePrincipalSecretKey");
-            
+            this.Property(t => t.DWNextRunTime).HasColumnName("DWNextRunTime");            
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnString");
-                this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPK");
             }
             else
             {
                 this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnectionString");
-                this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey");
             }
 
             this.Property(t => t.ForwarderTenantsURL).HasColumnName("ForwarderTenantsURL");
@@ -168,13 +135,10 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.INTTRAProdFTPHost).HasColumnName("INTTRAProdFTPHost");
             this.Property(t => t.INTTRATestFTPHost).HasColumnName("INTTRATestFTPHost");
             this.Property(t => t.OceanInsightsToken).HasColumnName("OceanInsightsToken");
+            this.Property(t => t.IsFullBuildDWRunning).HasColumnName("IsFullBuildDWRunning");
+            this.Property(t => t.IsIncrementalDWRunning).HasColumnName("IsIncrementalDWRunning");
             this.Property(t => t.EmailSendingQuota).HasColumnName("EmailSendingQuota");
             this.Property(t => t.ReleaseNotesURL).HasColumnName("ReleaseNotesURL");
-            this.Property(t => t.TMPersonalAccessToken).HasColumnName("TMPersonalAccessToken");
-			this.Property(t => t.WindWardSettings).HasColumnName("WindWardSettings");
-			this.Property(t => t.LogitudeIISURL).HasColumnName("LogitudeIISURL");
-            this.Property(t => t.CustomURL).HasColumnName("CustomURL");
-
         }
     }
 }

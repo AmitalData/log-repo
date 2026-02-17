@@ -9,10 +9,10 @@ using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -275,7 +275,7 @@ namespace Logitude.XSD.INTTRA.BL
                 {
                     IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue(commLog.QueueName, 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } }, Tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } });
                 }
 
                 catch (Exception ex)
@@ -295,7 +295,6 @@ namespace Logitude.XSD.INTTRA.BL
         private void UpdateShipmentStatus()
         {
             this.DataContext.Shipment.INTTRASIStatusCode = "SENT";
-            this.DataContext.Shipment.INTTRABookingStatusCode = "SI";
             this.DataContext.Shipment.INTTRASIStatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.DataContext.shipmentRepository.Update(this.DataContext.Shipment);
         }
@@ -399,7 +398,6 @@ namespace Logitude.XSD.INTTRA.BL
                         Username = fTPDetail.UserName,
                         Password = fTPDetail.Password,
                         Filename = filename,
-                        UseSFTP = fTPDetail.UseSFTP,
                     };
 
                     myResult = JsonConvert.SerializeObject(settings);
@@ -1038,6 +1036,5 @@ namespace Logitude.XSD.INTTRA.BL
         public string Username { get; set; }
         public string Password { get; set; }
         public string Filename { get; set; }
-        public bool UseSFTP { get; set; }
     }
 }

@@ -6,7 +6,7 @@ import {AdditionalServiceListService} from './Services/StandardLists/AdditionalS
 import {AddressListService} from './Services/StandardLists/AddressListService';
 import {AgentListService} from './Services/StandardLists/AgentListService';
 import {AirlineListService} from './Services/StandardLists/AirlineListService';
-import { AirlineStatisticsListService } from './Services/StandardLists/AirlineStatisticsListService';
+import {AirlineStatisticsListService} from './Services/StandardLists/AirlineStatisticsListService';
 import {AutomationResultEmailRecipientListService} from './Services/StandardLists/AutomationResultEmailRecipientListService';
 import {BranchListService} from './Services/StandardLists/BranchListService';
 import {BusinessUnitListService} from './Services/StandardLists/BusinessUnitListService';
@@ -29,7 +29,12 @@ import {TemplateFormatListService} from './Services/StandardLists/TemplateFormat
 import {CustomerTenantAccessListService} from './Services/StandardLists/CustomerTenantAccessListService';
 import {AirlineMessagingRuleListService} from './Services/StandardLists/AirlineMessagingRuleListService';
 import {CustomsShipperListService} from './Services/StandardLists/CustomsShipperListService';
+
+//import {CustomerAdditionalServiceListService} from './Services/StandardLists/CustomerAdditionalServiceListService';
 import {CustomerListService} from './Services/StandardLists/CustomerListService';
+//import {CustomerProductActualDataListService} from './Services/StandardLists/CustomerProductActualDataListService';
+//import {CustomerProductListService} from './Services/StandardLists/CustomerProductListService';
+//import {CustomerProductLocationListService} from './Services/StandardLists/CustomerProductLocationListService';
 import {CustomerSizeListService} from './Services/StandardLists/CustomerSizeListService';
 import {CustomerStatusListService} from './Services/StandardLists/CustomerStatusListService';
 import {DepartmentListService} from './Services/StandardLists/DepartmentListService';
@@ -43,6 +48,8 @@ import {DocumentTypeTemplateListService} from './Services/StandardLists/Document
 import {DueTypeListService} from './Services/StandardLists/DueTypeListService';
 import {GlobalZoneListService} from './Services/StandardLists/GlobalZoneListService';
 import {HybridPartnerListService} from './Services/StandardLists/HybridPartnerListService';
+//import {HybridTenantStateListService} from './Services/StandardLists/HybridTenantStateListService';
+//import {HybridTenantThresholdListService} from './Services/StandardLists/HybridTenantThresholdListService';
 import {IncotermListService} from './Services/StandardLists/IncotermListService';
 import {IndustryListService} from './Services/StandardLists/IndustryListService';
 import {LeadSourceListService} from './Services/StandardLists/LeadSourceListService';
@@ -54,6 +61,7 @@ import {ParticipantListService} from './Services/StandardLists/ParticipantListSe
 import {PartnerTypeListService} from './Services/StandardLists/PartnerTypeListService';
 import {PasswordPolicyListService} from './Services/StandardLists/PasswordPolicyListService';
 import {PaymentTermListService} from './Services/StandardLists/PaymentTermListService';
+
 import {WarehouseExtendedListService} from './Services/ExtendedLists/WarehouseExtendedListService';
 import {PortService} from './Services/ExtendedLists/PortService';
 import {PortListService} from './Services/StandardLists/PortListService';
@@ -63,15 +71,19 @@ import {RankListService} from './Services/StandardLists/RankListService';
 import {RateClassListService} from './Services/StandardLists/RateClassListService';
 import {RegionListService} from './Services/StandardLists/RegionListService';
 import {ReportListService} from './Services/StandardLists/ReportListService';
+//import {RestrictionListService} from './Services/StandardLists/RestrictionListService';
 import {RoleListService} from './Services/StandardLists/RoleListService';
 import {ShippingAgentListService} from './Services/StandardLists/ShippingAgentListService';
 import {ShippingLineListService} from './Services/StandardLists/ShippingLineListService';
 import {StateListService} from './Services/StandardLists/StateListService';
+//import {TarrifChargeListService} from './Services/StandardLists/TarrifChargeListService';
+//import {TarrifFromToListService} from './Services/StandardLists/TarrifFromToListService';
 import {TarrifFromToTypeListService} from './Services/StandardLists/TarrifFromToTypeListService';
 import {TarrifHeaderListService} from './Services/StandardLists/TarrifHeaderListService';
 import {TarrifStepListService} from './Services/StandardLists/TarrifStepListService';
 import {TarrifTypeListService} from './Services/StandardLists/TarrifTypeListService';
 import {TenantListService} from './Services/StandardLists/TenantListService';
+//import {TermsofUseSignatureListService} from './Services/StandardLists/TermsofUseSignatureListService';
 import {TruckerListService} from './Services/StandardLists/TruckerListService';
 import {UserListService} from './Services/StandardLists/UserListService';
 import {VatMandatoryTypeListService} from './Services/StandardLists/VatMandatoryTypeListService';
@@ -83,17 +95,18 @@ import {WarehouseListService} from './Services/StandardLists/WarehouseListServic
 import {WeightUnitListService} from './Services/StandardLists/WeightUnitListService';
 import {AgentSharedManifestListService} from './Services/StandardLists/AgentSharedManifestListService';
 import {VatFormatTypeListService} from './Services/StandardLists/VatFormatTypeListService';
+
 import {TwoFactorAuthenticationDeviceListService} from './Services/StandardLists/TwoFactorAuthenticationDeviceListService';
 import {LoginPolicyListService} from './Services/StandardLists/LoginPolicyListService';
 import {MetodoPagoListService} from './Services/StandardLists/MetodoPagoListService';
 import {CustomerTenantAccessPMService} from './Services/StandardPMs/CustomerTenantAccessPMService';
 import {UsoCFDIListService} from './Services/StandardLists/UsoCFDIListService';
-import {RegimenFiscalListService} from './Services/StandardLists/RegimenFiscalListService';
-import {PostalCodeListService} from './Services/StandardLists/PostalCodeListService';
-import {PostalCodePMService} from './Services/StandardPMs/PostalCodePMService';
+
 import {ReportsTemplateListService} from './Services/StandardLists/ReportsTemplateListService';
 import {ReportsTemplatesVersionListService} from './Services/StandardLists/ReportsTemplatesVersionListService';
+
 import {AccountingSettingPMService} from './Services/StandardPMs/AccountingSettingPMService';
+//import {AccountingSystemPMService} from './Services/StandardPMs/AccountingSystemPMService';
 import {AdditionalServicePMService} from './Services/StandardPMs/AdditionalServicePMService';
 import {AddressPMService} from './Services/StandardPMs/AddressPMService';
 import {AgentPMService} from './Services/StandardPMs/AgentPMService';
@@ -107,81 +120,92 @@ import {CardPMService} from './Services/StandardPMs/CardPMService';
 import {ChargesTypePMService} from './Services/StandardPMs/ChargesTypePMService';
 import {CommodityPMService} from './Services/StandardPMs/CommodityPMService';
 import {CommunicationLogPMService} from './Services/StandardPMs/CommunicationLogPMService';
+//import {CommunicationLogTypePMService} from './Services/StandardPMs/CommunicationLogTypePMService';
+//import {CommunicationStatusTypePMService} from './Services/StandardPMs/CommunicationStatusTypePMService';
 import {CompetitorPMService} from './Services/StandardPMs/CompetitorPMService';
+//import {ContactDoneMethodPMService} from './Services/StandardPMs/ContactDoneMethodPMService';
 import {ContactPMService} from './Services/StandardPMs/ContactPMService';
 import {CountryCityPMService} from './Services/StandardPMs/CountryCityPMService';
 import {CountryPMService} from './Services/StandardPMs/CountryPMService';
 import {CurrencyPMService} from './Services/StandardPMs/CurrencyPMService';
 import {CustomAgentPMService} from './Services/StandardPMs/CustomAgentPMService';
 import {CustomerPMService} from './Services/StandardPMs/CustomerPMService';
+//import {CustomerProductActualDataPMService} from './Services/StandardPMs/CustomerProductActualDataPMService';
+//import {CustomerProductLocationPMService} from './Services/StandardPMs/CustomerProductLocationPMService';
+//import {CustomerProductPMService} from './Services/StandardPMs/CustomerProductPMService';
 import {CustomerSizePMService} from './Services/StandardPMs/CustomerSizePMService';
+//import {CustomerStatusPMService} from './Services/StandardPMs/CustomerStatusPMService';
 import {DepartmentPMService} from './Services/StandardPMs/DepartmentPMService';
+//import {DimensionsUnitPMService} from './Services/StandardPMs/DimensionsUnitPMService';
 import {DistributorPMService} from './Services/StandardPMs/DistributorPMService';
 import {DocumentFolderPMService} from './Services/StandardPMs/DocumentFolderPMService';
 import {DocumentsFilingPMService} from './Services/StandardPMs/DocumentsFilingPMService';
+//import {DocumentTypeCategoryPMService} from './Services/StandardPMs/DocumentTypeCategoryPMService';
 import {DocumentTypePMService} from './Services/StandardPMs/DocumentTypePMService';
 import {DocumentTypeTemplatePMService} from './Services/StandardPMs/DocumentTypeTemplatePMService';
+//import {DueTypePMService} from './Services/StandardPMs/DueTypePMService';
 import {GlobalZonePMService} from './Services/StandardPMs/GlobalZonePMService';
 import {HybridPartnerPMService} from './Services/StandardPMs/HybridPartnerPMService';
+//import {HybridTenantStatePMService} from './Services/StandardPMs/HybridTenantStatePMService';
+//import {HybridTenantThresholdPMService} from './Services/StandardPMs/HybridTenantThresholdPMService';
 import {IncotermPMService} from './Services/StandardPMs/IncotermPMService';
 import {IndustryPMService} from './Services/StandardPMs/IndustryPMService';
 import {LeadSourcePMService} from './Services/StandardPMs/LeadSourcePMService';
 import {LogitudeMessagesTransmissionLogPMService} from './Services/StandardPMs/LogitudeMessagesTransmissionLogPMService';
 import {MAWBStackPMService} from './Services/StandardPMs/MAWBStackPMService';
 import {MeasurementPMService} from './Services/StandardPMs/MeasurementPMService';
+//import {PackageConnectedPackagePMService} from './Services/StandardPMs/PackageConnectedPackagePMService';
 import {PackagePMService} from './Services/StandardPMs/PackagePMService';
 import {PackageTypePMService} from './Services/StandardPMs/PackageTypePMService';
 import {ParticipantPMService} from './Services/StandardPMs/ParticipantPMService';
+//import {PartnerTypePMService} from './Services/StandardPMs/PartnerTypePMService';
+//import {PasswordPolicyPMService} from './Services/StandardPMs/PasswordPolicyPMService';
 import {PaymentTermPMService} from './Services/StandardPMs/PaymentTermPMService';
 import {PortPMService} from './Services/StandardPMs/PortPMService';
+//import {ProductPeriodPMService} from './Services/StandardPMs/ProductPeriodPMService';
 import {ProductTypePMService} from './Services/StandardPMs/ProductTypePMService';
 import {RankPMService} from './Services/StandardPMs/RankPMService';
+//import {RateClassPMService} from './Services/StandardPMs/RateClassPMService';
 import {RegionPMService} from './Services/StandardPMs/RegionPMService';
 import {ReportPMService} from './Services/StandardPMs/ReportPMService';
+//import {RestrictionPMService} from './Services/StandardPMs/RestrictionPMService';
 import {RolePMService} from './Services/StandardPMs/RolePMService';
 import {ShippingAgentPMService} from './Services/StandardPMs/ShippingAgentPMService';
 import {ShippingLinePMService} from './Services/StandardPMs/ShippingLinePMService';
 import {StatePMService} from './Services/StandardPMs/StatePMService';
+//import {TarrifChargePMService} from './Services/StandardPMs/TarrifChargePMService';
+//import {TarrifFromToPMService} from './Services/StandardPMs/TarrifFromToPMService';
+//import {TarrifFromToTypePMService} from './Services/StandardPMs/TarrifFromToTypePMService';
 import {TarrifHeaderPMService} from './Services/StandardPMs/TarrifHeaderPMService';
 import {TarrifStepPMService} from './Services/StandardPMs/TarrifStepPMService';
+//import {TarrifTypePMService} from './Services/StandardPMs/TarrifTypePMService';
 import {TenantPMService} from './Services/StandardPMs/TenantPMService';
 import {TermsofUseSignaturePMService} from './Services/StandardPMs/TermsofUseSignaturePMService';
 import {TruckerPMService} from './Services/StandardPMs/TruckerPMService';
+//import {UserLicensePMService} from './Services/StandardPMs/UserLicensePMService';
 import {UserPMService} from './Services/StandardPMs/UserPMService';
 import {VatTypePMService} from './Services/StandardPMs/VatTypePMService';
 import {VendorPMService} from './Services/StandardPMs/VendorPMService';
 import {VesselPMService} from './Services/StandardPMs/VesselPMService';
 import { WarehousePMService } from './Services/StandardPMs/WarehousePMService';
+
 import { AgentSharedManifestPMService } from './Services/StandardPMs/AgentSharedManifestPMService';
+//import {WeightUnitPMService} from './Services/StandardPMs/WeightUnitPMService';
 import {CustomsShipperPMService} from './Services/StandardPMs/CustomsShipperPMService';
 import {CustomerMenuButtonsHandler} from './Components/MenuButtons/CustomerMenuButtonsHandler';
 import {UserMenuButtonsHandler} from './Components/MenuButtons/UserMenuButtonsHandler';
 import {CommunicationLogMenuButtonsHandler} from './Components/MenuButtons/CommunicationLogMenuButtonsHandler';
 import {CustomerTenantAccessMenuButtonsHandler} from './Components/MenuButtons/CustomerTenantAccessMenuButtonsHandler';
-import {ReportExecutionLogMenuButtonsHandler} from './Components/MenuButtons/ReportExecutionLogMenuButtonsHandler';
 import {ReportsTemplatePMService} from './Services/StandardPMs/ReportsTemplatePMService';
 import {ReportsTemplatesVersionPMService} from './Services/StandardPMs/ReportsTemplatesVersionPMService';
 import {ContactMenuButtonsHandler} from './Components/MenuButtons/ContactMenuButtonsHandler';
-import { AgentMenuButtonsHandler } from './Components/MenuButtons/AgentMenuButtonsHandler';
+
 import {DocumentsFilingExtendedPMService} from './Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-import { ShippingAgentMenuButtonsHandler } from './Components/MenuButtons/ShippingAgentMenuButtonsHandler';
-import { CustomAgentMenuButtonsHandler } from './Components/MenuButtons/CustomAgentMenuButtonsHandler';
-import { ShippingLineMenuButtonsHandler } from './Components/MenuButtons/ShippingLineMenuButtonsHandler';
-import { TruckerMenuButtonsHandler } from './Components/MenuButtons/TruckerMenuButtonsHandler';
-import { VendorMenuButtonsHandler } from './Components/MenuButtons/VendorMenuButtonsHandler';
-import { AirlineMenuButtonsHandler } from './Components/MenuButtons/AirlineMenuButtonsHandler';
-import { AccountingPartnerMenuButtonsHandler } from './Components/MenuButtons/AccountingPartnerMenuButtonsHandler';
+
 import {PaymentTermDateTypeListService} from './Services/StandardLists/PaymentTermDateTypeListService';
 import { NumberFormatListService } from './Services/StandardLists/NumberFormatListService';
-import { WarehouseWeightMeasurementListService } from './Services/StandardLists/WarehouseWeightMeasurementListService';
-import { WarehouseWeightRoundingListService } from './Services/StandardLists/WarehouseWeightRoundingListService';
-import { HorseListService } from './Services/StandardLists/HorseListService';
-import { HorsePMService } from './Services/StandardPMs/HorsePMService';
-import { LogitudeGridExportToExcelExtendedPMService } from './Services/ExtendedPMs/LogitudeGridExportToExcelExtendedPMService';
-import { ShippingLineExtendedPMService } from './Services/ExtendedPMs/ShippingLineExtendedPMService';
-import { HorseGenderListService } from './Services/StandardLists/HorseGenderListService';
-import { PortGroupListService } from './Services/StandardLists/PortGroupListService';
-import { PortGroupPMService } from './Services/StandardPMs/PortGroupPMService';
+
+
 
 // Extended Lists
 import {CarrierExtendedListService} from './Services/ExtendedLists/CarrierExtendedListService';
@@ -207,34 +231,8 @@ import {DocumentFilingBackupBatchListService} from './Services/StandardLists/Doc
 
 import {DocumentFilingBackupSettingPMService} from './Services/StandardPMs/DocumentFilingBackupSettingPMService';
 import {DocumentFilingBackupBatchPMService} from './Services/StandardPMs/DocumentFilingBackupBatchPMService';
-import { CheckDigitControlAlgorithmListService } from './Services/StandardLists/CheckDigitControlAlgorithmListService';
-import { PaymentGatewayPartnerListService } from './Services/StandardLists/PaymentGatewayPartnerListService';
-import { AccountingPartnerListService } from './Services/StandardLists/AccountingPartnerListService';
-import { AccountingPartnerPMService } from './Services/StandardPMs/AccountingPartnerPMService';
-import { UserLastSettingsPMService } from './Services/StandardPMs/UserLastSettingsPMService';
-import { UserLastSettingsExtendedPMService } from './Services/ExtendedPMs/UserLastSettingsExtendedPMService';
-import { AddressTypeListService } from './Services/StandardLists/AddressTypeListService';
-import { ReportExecutionLogListService } from './Services/StandardLists/ReportExecutionLogListService';
-import { ReportExecutionLogPMService } from './Services/StandardPMs/ReportExecutionLogPMService';
-import { ProductItemListService } from './Services/StandardLists/ProductItemListService';
-import { DocumentFileService } from './Services/DocumentServices/DocumentFileService';
- import { QuoteGroupSectionListService } from './Services/StandardLists/QuoteGroupSectionListService';
- import { PortTimeZoneListService } from './Services/StandardLists/PortTimeZoneListService';
-import { PortTimeZonePMService } from './Services/StandardPMs/PortTimeZonePMService';
-import { CustomerTeamPMService } from './Services/StandardPMs/CustomerTeamPMService';
-import { CustomerTeamListService } from './Services/StandardLists/CustomerTeamListService';
-import { CustomerGroupPMService } from './Services/StandardPMs/CustomerGroupPMService';
-import { CustomerGroupListService } from './Services/StandardLists/CustomerGroupListService';
-import { MentionListService } from './Services/StandardLists/MentionListService';
-import { MentionPMService } from './Services/StandardPMs/MentionPMService';
-import { CarrierServiceLineListService } from './Services/StandardLists/CarrierServiceLineListService';
-import { WarehouseMenuButtonsHandler } from './Components/MenuButtons/WarehouseMenuButtonsHandler';
-import {ResponsibilityListService } from './Services/StandardLists/ResponsibilityListService';
-import { ExternalLinkListService } from './Services/StandardLists/ExternalLinkListService';
-import { ExternalLinkPMService } from './Services/StandardPMs/ExternalLinkPMService';
-import { DocumentsMetaDataTypeListService } from './Services/StandardLists/DocumentsMetaDataTypeListService';
-import { DocumentsMetaDataTypePMService } from './Services/StandardPMs/DocumentsMetaDataTypePMService';
- 
+
+
 export class ModuleProviders {
     public static GetInstance(name: string) {
 
@@ -250,7 +248,6 @@ export class ModuleProviders {
             case "AgentListService": { myResult = new AgentListService(); break; }
             case "AirlineListService": { myResult = new AirlineListService(); break; }
             case "AirlineStatisticsListService": { myResult = new AirlineStatisticsListService(); break; }
-            case "AirlineMessagingRuleListService": { myResult = new AirlineMessagingRuleListService(); break; }
             case "AutomationResultEmailRecipientListService": { myResult = new AutomationResultEmailRecipientListService(); break; }
             case "BranchListService": { myResult = new BranchListService(); break; }
             case "BusinessUnitListService": { myResult = new BusinessUnitListService(); break; }
@@ -270,7 +267,11 @@ export class ModuleProviders {
             case "CountryListService": { myResult = new CountryListService(); break; }
             case "CurrencyListService": { myResult = new CurrencyListService(); break; }
             case "CustomAgentListService": { myResult = new CustomAgentListService(); break; }
+            //case "CustomerAdditionalServiceListService": { myResult = new CustomerAdditionalServiceListService(); break; }
             case "CustomerListService": { myResult = new CustomerListService(); break; }
+            //case "CustomerProductActualDataListService": { myResult = new CustomerProductActualDataListService(); break; }
+            //case "CustomerProductListService": { myResult = new CustomerProductListService(); break; }
+            //case "CustomerProductLocationListService": { myResult = new CustomerProductLocationListService(); break; }
             case "CustomerSizeListService": { myResult = new CustomerSizeListService(); break; }
             case "CustomerStatusListService": { myResult = new CustomerStatusListService(); break; }
             case "DepartmentListService": { myResult = new DepartmentListService(); break; }
@@ -284,6 +285,8 @@ export class ModuleProviders {
             case "DueTypeListService": { myResult = new DueTypeListService(); break; }
             case "GlobalZoneListService": { myResult = new GlobalZoneListService(); break; }
             case "HybridPartnerListService": { myResult = new HybridPartnerListService(); break; }
+            //case "HybridTenantStateListService": { myResult = new HybridTenantStateListService(); break; }
+            //case "HybridTenantThresholdListService": { myResult = new HybridTenantThresholdListService(); break; }
             case "IncotermListService": { myResult = new IncotermListService(); break; }
             case "IndustryListService": { myResult = new IndustryListService(); break; }
             case "LeadSourceListService": { myResult = new LeadSourceListService(); break; }
@@ -294,7 +297,7 @@ export class ModuleProviders {
             case "ParticipantListService": { myResult = new ParticipantListService(); break; }
             case "PartnerTypeListService": { myResult = new PartnerTypeListService(); break; }
             case "PasswordPolicyListService": { myResult = new PasswordPolicyListService(); break; }
-            case "PaymentTermListService": { myResult = new PaymentTermListService(); break; }
+            case "PaymentTermListService": { myResult = new PaymentTermListService(); break; }                
             case "PortService": { myResult = new PortService(); break; }
             case "WarehouseExtendedListService": { myResult = new WarehouseExtendedListService(); break; }
             case "PortListService": { myResult = new PortListService(); break; }
@@ -304,15 +307,19 @@ export class ModuleProviders {
             case "RateClassListService": { myResult = new RateClassListService(); break; }
             case "RegionListService": { myResult = new RegionListService(); break; }
             case "ReportListService": { myResult = new ReportListService(); break; }
+            //case "RestrictionListService": { myResult = new RestrictionListService(); break; }
             case "RoleListService": { myResult = new RoleListService(); break; }
             case "ShippingAgentListService": { myResult = new ShippingAgentListService(); break; }
             case "ShippingLineListService": { myResult = new ShippingLineListService(); break; }
             case "StateListService": { myResult = new StateListService(); break; }
+            //case "TarrifChargeListService": { myResult = new TarrifChargeListService(); break; }
+            //case "TarrifFromToListService": { myResult = new TarrifFromToListService(); break; }
             case "TarrifFromToTypeListService": { myResult = new TarrifFromToTypeListService(); break; }
             case "TarrifHeaderListService": { myResult = new TarrifHeaderListService(); break; }
             case "TarrifStepListService": { myResult = new TarrifStepListService(); break; }
             case "TarrifTypeListService": { myResult = new TarrifTypeListService(); break; }
             case "TenantListService": { myResult = new TenantListService(); break; }
+            //case "TermsofUseSignatureListService": { myResult = new TermsofUseSignatureListService(); break; }
             case "TruckerListService": { myResult = new TruckerListService(); break; }
             case "UserListService": { myResult = new UserListService(); break; }
             case "VatMandatoryTypeListService": { myResult = new VatMandatoryTypeListService(); break; }
@@ -324,9 +331,16 @@ export class ModuleProviders {
             case "WeightUnitListService": { myResult = new WeightUnitListService(); break; }
             case "AgentSharedManifestListService": { myResult = new AgentSharedManifestListService(); break; }
             case "VatFormatTypeListService": { myResult = new VatFormatTypeListService(); break; }
+
             case "CustomsShipperListService": { myResult = new CustomsShipperListService(); break; }
+
+
+
             case "CustomerTenantAccessPMService": { myResult = new CustomerTenantAccessPMService(); break; }
+
+                
             case "AccountingSettingPMService": { myResult = new AccountingSettingPMService(); break; }
+            //case "AccountingSystemPMService": { myResult = new AccountingSystemPMService(); break; }
             case "AdditionalServicePMService": { myResult = new AdditionalServicePMService(); break; }
             case "AddressPMService": { myResult = new AddressPMService(); break; }
             case "AgentPMService": { myResult = new AgentPMService(); break; }
@@ -340,139 +354,130 @@ export class ModuleProviders {
             case "ChargesTypePMService": { myResult = new ChargesTypePMService(); break; }
             case "CommodityPMService": { myResult = new CommodityPMService(); break; }
             case "CommunicationLogPMService": { myResult = new CommunicationLogPMService(); break; }
+            //case "CommunicationLogTypePMService": { myResult = new CommunicationLogTypePMService(); break; }
+            //case "CommunicationStatusTypePMService": { myResult = new CommunicationStatusTypePMService(); break; }
             case "CompetitorPMService": { myResult = new CompetitorPMService(); break; }
+            //case "ContactDoneMethodPMService": { myResult = new ContactDoneMethodPMService(); break; }
             case "ContactPMService": { myResult = new ContactPMService(); break; }
             case "CountryCityPMService": { myResult = new CountryCityPMService(); break; }
             case "CountryPMService": { myResult = new CountryPMService(); break; }
             case "CurrencyPMService": { myResult = new CurrencyPMService(); break; }
             case "CustomAgentPMService": { myResult = new CustomAgentPMService(); break; }
             case "CustomerPMService": { myResult = new CustomerPMService(); break; }
+            //case "CustomerProductActualDataPMService": { myResult = new CustomerProductActualDataPMService(); break; }
+            //case "CustomerProductLocationPMService": { myResult = new CustomerProductLocationPMService(); break; }
+            //case "CustomerProductPMService": { myResult = new CustomerProductPMService(); break; }
             case "CustomerSizePMService": { myResult = new CustomerSizePMService(); break; }
+            //case "CustomerStatusPMService": { myResult = new CustomerStatusPMService(); break; }
             case "DepartmentPMService": { myResult = new DepartmentPMService(); break; }
+            //case "DimensionsUnitPMService": { myResult = new DimensionsUnitPMService(); break; }
             case "DistributorPMService": { myResult = new DistributorPMService(); break; }
             case "DocumentFolderPMService": { myResult = new DocumentFolderPMService(); break; }
             case "DocumentsFilingPMService": { myResult = new DocumentsFilingPMService(); break; }
+            //case "DocumentTypeCategoryPMService": { myResult = new DocumentTypeCategoryPMService(); break; }
             case "DocumentTypePMService": { myResult = new DocumentTypePMService(); break; }
             case "DocumentTypeTemplatePMService": { myResult = new DocumentTypeTemplatePMService(); break; }
+            //case "DueTypePMService": { myResult = new DueTypePMService(); break; }
             case "GlobalZonePMService": { myResult = new GlobalZonePMService(); break; }
             case "HybridPartnerPMService": { myResult = new HybridPartnerPMService(); break; }
+            //case "HybridTenantStatePMService": { myResult = new HybridTenantStatePMService(); break; }
+            //case "HybridTenantThresholdPMService": { myResult = new HybridTenantThresholdPMService(); break; }
             case "IncotermPMService": { myResult = new IncotermPMService(); break; }
             case "IndustryPMService": { myResult = new IndustryPMService(); break; }
             case "LeadSourcePMService": { myResult = new LeadSourcePMService(); break; }
             case "LogitudeMessagesTransmissionLogPMService": { myResult = new LogitudeMessagesTransmissionLogPMService(); break; }
             case "MAWBStackPMService": { myResult = new MAWBStackPMService(); break; }
             case "MeasurementPMService": { myResult = new MeasurementPMService(); break; }
+            //case "PackageConnectedPackagePMService": { myResult = new PackageConnectedPackagePMService(); break; }
             case "PackagePMService": { myResult = new PackagePMService(); break; }
             case "PackageTypePMService": { myResult = new PackageTypePMService(); break; }
             case "ParticipantPMService": { myResult = new ParticipantPMService(); break; }
+            //case "PartnerTypePMService": { myResult = new PartnerTypePMService(); break; }
+            //case "PasswordPolicyPMService": { myResult = new PasswordPolicyPMService(); break; }
             case "PaymentTermPMService": { myResult = new PaymentTermPMService(); break; }
             case "PortPMService": { myResult = new PortPMService(); break; }
+            //case "ProductPeriodPMService": { myResult = new ProductPeriodPMService(); break; }
             case "ProductTypePMService": { myResult = new ProductTypePMService(); break; }
             case "RankPMService": { myResult = new RankPMService(); break; }
+            //case "RateClassPMService": { myResult = new RateClassPMService(); break; }
             case "RegionPMService": { myResult = new RegionPMService(); break; }
             case "ReportPMService": { myResult = new ReportPMService(); break; }
+            //case "RestrictionPMService": { myResult = new RestrictionPMService(); break; }
             case "RolePMService": { myResult = new RolePMService(); break; }
             case "ShippingAgentPMService": { myResult = new ShippingAgentPMService(); break; }
             case "ShippingLinePMService": { myResult = new ShippingLinePMService(); break; }
             case "StatePMService": { myResult = new StatePMService(); break; }
+            //case "TarrifChargePMService": { myResult = new TarrifChargePMService(); break; }
+            //case "TarrifFromToPMService": { myResult = new TarrifFromToPMService(); break; }
+            //case "TarrifFromToTypePMService": { myResult = new TarrifFromToTypePMService(); break; }
             case "TarrifHeaderPMService": { myResult = new TarrifHeaderPMService(); break; }
             case "TarrifStepPMService": { myResult = new TarrifStepPMService(); break; }
+            //case "TarrifTypePMService": { myResult = new TarrifTypePMService(); break; }
             case "TenantPMService": { myResult = new TenantPMService(); break; }
             case "TermsofUseSignaturePMService": { myResult = new TermsofUseSignaturePMService(); break; }
             case "TruckerPMService": { myResult = new TruckerPMService(); break; }
+            //case "UserLicensePMService": { myResult = new UserLicensePMService(); break; }
             case "UserPMService": { myResult = new UserPMService(); break; }
             case "VatTypePMService": { myResult = new VatTypePMService(); break; }
             case "VendorPMService": { myResult = new VendorPMService(); break; }
             case "VesselPMService": { myResult = new VesselPMService(); break; }
             case "WarehousePMService": { myResult = new WarehousePMService(); break; }
             case "CustomsShipperPMService": { myResult = new CustomsShipperPMService(); break; }
-            case "AgentMenuButtonsHandler": { myResult = new AgentMenuButtonsHandler(); break; }
-            case "CustomerMenuButtonsHandler": { myResult = new CustomerMenuButtonsHandler(); break; }
-            case "UserMenuButtonsHandler": { myResult = new UserMenuButtonsHandler(); break; }
-            case "CommunicationLogMenuButtonsHandler": { myResult = new CommunicationLogMenuButtonsHandler(); break; }
-            case "ContactMenuButtonsHandler": { myResult = new ContactMenuButtonsHandler(); break; }
-            case "DocumentsFilingExtendedPMService": { myResult = new DocumentsFilingExtendedPMService(); break; }
-            case "CustomAgentMenuButtonsHandler": { myResult = new CustomAgentMenuButtonsHandler(); break; }
-            case "ShippingAgentMenuButtonsHandler": { myResult = new ShippingAgentMenuButtonsHandler(); break; }
-            case "ShippingLineMenuButtonsHandler": { myResult = new ShippingLineMenuButtonsHandler(); break; }
-            case "VendorMenuButtonsHandler": { myResult = new VendorMenuButtonsHandler(); break; }
-            case "TruckerMenuButtonsHandler": { myResult = new TruckerMenuButtonsHandler(); break; }
-            case "AirlineMenuButtonsHandler": { myResult = new AirlineMenuButtonsHandler(); break; }
-            case "AccountingPartnerMenuButtonsHandler": { myResult = new AccountingPartnerMenuButtonsHandler(); break; }
-            case "WarehouseMenuButtonsHandler": { myResult = new WarehouseMenuButtonsHandler(); break; }
-            case "CarrierExtendedListService": { myResult = new CarrierExtendedListService(); break; }
-            case "PortExtendedListService": { myResult = new PortExtendedListService(); break; }
-            case "PaymentTermDateTypeListService": { myResult = new PaymentTermDateTypeListService(); break; }
-            case "AgentSharedManifestPMService": { myResult = new AgentSharedManifestPMService(); break; }
-            case "AgentSharedManifestListService": { myResult = new AgentSharedManifestListService(); break; }
-            case "CustomerFieldsUpdateSettingPMService": { myResult = new CustomerFieldsUpdateSettingPMService(); break; }
-            case "CustomerFieldsUpdateSettingListService": { myResult = new CustomerFieldsUpdateSettingListService(); break; }
-            case "TenantLoginPolicyPMService": { myResult = new TenantLoginPolicyPMService(); break; }
-            case "TwoFactorAuthenticationDeviceExtendedPMService": { myResult = new TwoFactorAuthenticationDeviceExtendedPMService(); break; }
+                
+            //case "WeightUnitPMService": { myResult = new WeightUnitPMService(); break; }
+
+            case "CustomerMenuButtonsHandler": { myResult = new CustomerMenuButtonsHandler(); break; }    
+            case "UserMenuButtonsHandler": { myResult = new UserMenuButtonsHandler(); break; }  
+            case "CommunicationLogMenuButtonsHandler": { myResult = new CommunicationLogMenuButtonsHandler(); break; } 
+            case "ContactMenuButtonsHandler": { myResult = new ContactMenuButtonsHandler(); break; }   
+            case "DocumentsFilingExtendedPMService": { myResult = new DocumentsFilingExtendedPMService(); break; }   
+
+            case "CarrierExtendedListService": { myResult = new CarrierExtendedListService(); break; }   
+            case "PortExtendedListService": { myResult = new PortExtendedListService(); break; }   
+
+            case "PaymentTermDateTypeListService": { myResult = new PaymentTermDateTypeListService(); break; }  
+
+            case "AgentSharedManifestPMService": { myResult = new AgentSharedManifestPMService(); break; } 
+            case "AgentSharedManifestListService": { myResult = new AgentSharedManifestListService(); break; }//
+
+            case "CustomerFieldsUpdateSettingPMService": { myResult = new CustomerFieldsUpdateSettingPMService(); break; }//
+            case "CustomerFieldsUpdateSettingListService": { myResult = new CustomerFieldsUpdateSettingListService(); break; }//
+
+            case "TenantLoginPolicyPMService": { myResult = new TenantLoginPolicyPMService(); break; }//
+            case "TwoFactorAuthenticationDeviceExtendedPMService": { myResult = new TwoFactorAuthenticationDeviceExtendedPMService(); break; }//
+
             case "LoginPolicyListService": { myResult = new LoginPolicyListService(); break; }
+
             case "TwoFactorAuthenticationDeviceListService": { myResult = new TwoFactorAuthenticationDeviceListService(); break; }
-            case "FeaturePackageTypeListService": { myResult = new FeaturePackageTypeListService(); break; }
-            case "MetodoPagoListService": { myResult = new MetodoPagoListService(); break; }
-            case "UsoCFDIListService": { myResult = new UsoCFDIListService(); break; }
-            case "RegimenFiscalListService": { myResult = new RegimenFiscalListService(); break; }
-            case "PostalCodeListService": { myResult = new PostalCodeListService(); break; }
-            case "PostalCodePMService": { myResult = new PostalCodePMService(); break; }
+            case "FeaturePackageTypeListService": { myResult = new FeaturePackageTypeListService(); break; }  
+            case "MetodoPagoListService": { myResult = new MetodoPagoListService(); break; }  
+            case "UsoCFDIListService": { myResult = new UsoCFDIListService(); break; }  
             case "ComputingPartnerPMService": { myResult = new ComputingPartnerPMService(); break; }
-            case "ComputingPartnerTranslationPMService": { myResult = new ComputingPartnerTranslationPMService(); break; }
+            case "ComputingPartnerTranslationPMService": { myResult = new ComputingPartnerTranslationPMService(); break; }  
             case "CustomerTenantAccessMenuButtonsHandler": { myResult = new CustomerTenantAccessMenuButtonsHandler(); break; }
-            case "ReportExecutionLogMenuButtonsHandler": { myResult = new ReportExecutionLogMenuButtonsHandler(); break; }  
-            case "CustomerTenantAccessListService": { myResult = new CustomerTenantAccessListService(); break; }
-            case "TenantLoginPolicyListService": { myResult = new TenantLoginPolicyListService(); break; }
-            case "RegistryDateTypeListService": { myResult = new RegistryDateTypeListService(); break; }
+            case "CustomerTenantAccessListService": { myResult = new CustomerTenantAccessListService(); break; }  
+            case "TenantLoginPolicyListService": { myResult = new TenantLoginPolicyListService(); break; }//
+            case "RegistryDateTypeListService": { myResult = new RegistryDateTypeListService(); break; }//                
             case "WarehouseTypeListService": { myResult = new WarehouseTypeListService(); break; }
-            case "ReportsTemplateListService": { myResult = new ReportsTemplateListService(); break; }
+
+            case "ReportsTemplateListService": { myResult = new ReportsTemplateListService(); break; }//                
             case "ReportsTemplatesVersionListService": { myResult = new ReportsTemplatesVersionListService(); break; }
+
             case "ReportsTemplatePMService": { myResult = new ReportsTemplatePMService(); break; }
-            case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }
+            case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }//  
+
             case "DocumentFilingBackupSettingListService": { myResult = new DocumentFilingBackupSettingListService(); break; }
             case "DocumentFilingBackupBatchListService": { myResult = new DocumentFilingBackupBatchListService(); break; }
             case "DocumentFilingBackupSettingPMService": { myResult = new DocumentFilingBackupSettingPMService(); break; }
             case "DocumentFilingBackupBatchPMService": { myResult = new DocumentFilingBackupBatchPMService(); break; }
-            case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }
-            case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }
-            case "NumberFormatListService": { myResult = new NumberFormatListService(); break; }
-            case "CheckDigitControlAlgorithmListService": { myResult = new CheckDigitControlAlgorithmListService(); break; }
-            case "PaymentGatewayPartnerListService": { myResult = new PaymentGatewayPartnerListService(); break; }
-            case "AccountingPartnerListService": { myResult = new AccountingPartnerListService(); break; }
-            case "AccountingPartnerPMService": { myResult = new AccountingPartnerPMService(); break; }
-            case "UserLastSettingsPMService": { myResult = new UserLastSettingsPMService(); break; }
-            case "UserLastSettingsExtendedPMService": { myResult = new UserLastSettingsExtendedPMService(); break; }
-            case "AddressTypeListService": { myResult = new AddressTypeListService(); break; }
-            case "WarehouseWeightMeasurementListService": { myResult = new WarehouseWeightMeasurementListService(); break; }
-            case "WarehouseWeightRoundingListService": { myResult = new WarehouseWeightRoundingListService(); break; }
-            case "HorseListService": { myResult = new HorseListService(); break; }
-            case "HorsePMService": { myResult = new HorsePMService(); break; }
-            case "LogitudeGridExportToExcelExtendedPMService": { myResult = new LogitudeGridExportToExcelExtendedPMService(); break; }
-            case "ReportExecutionLogListService": { myResult = new ReportExecutionLogListService(); break; }
-            case "ReportExecutionLogPMService": { myResult = new ReportExecutionLogPMService(); break; }
-            case "ProductItemListService": { myResult = new ProductItemListService(); break; }
-            case "DocumentFileService": { myResult = new DocumentFileService(); break; }
-             case "QuoteGroupSectionListService": { myResult = new QuoteGroupSectionListService(); break; }
 
-             case "ShippingLineExtendedPMService": { myResult = new ShippingLineExtendedPMService(); break; }
-            case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
-            case "PortTimeZonePMService": { myResult = new PortTimeZonePMService(); break; }
-            case "CustomerTeamPMService": { myResult = new CustomerTeamPMService(); break; }
-            case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
-            case "CustomerGroupPMService": { myResult = new CustomerGroupPMService(); break; }
-            case "CustomerGroupListService": { myResult = new CustomerGroupListService(); break; }
-            case "MentionListService": { myResult = new MentionListService(); break; }
-            case "MentionPMService": { myResult = new MentionPMService(); break; }
-            case "CarrierServiceLineListService": { myResult = new CarrierServiceLineListService(); break; }
-            case "HorseGenderListService": { myResult = new HorseGenderListService(); break; }
-            case "PortGroupListService": { myResult = new PortGroupListService(); break; }
-            case "PortGroupPMService": { myResult = new PortGroupPMService(); break; }
-            case "ResponsibilityListService": { myResult = new ResponsibilityListService(); break; }
-            case "DocumentsMetaDataTypeListService": { myResult = new DocumentsMetaDataTypeListService(); break; }
-            case "DocumentsMetaDataTypePMService": { myResult = new DocumentsMetaDataTypePMService(); break; }
-            case "ExternalLinkListService": { myResult = new ExternalLinkListService(); break; }
-            case "ExternalLinkPMService": { myResult = new ExternalLinkPMService(); break; }
-         }
+    
+            case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }//                
+            case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }//
+            case "NumberFormatListService": { myResult = new NumberFormatListService(); break; }
+
+                
+        }
 
         return myResult;
     }

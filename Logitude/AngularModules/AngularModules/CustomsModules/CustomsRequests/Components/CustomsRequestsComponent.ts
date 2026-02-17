@@ -27,7 +27,7 @@ import { CustomsVendorPM } from '../../../Customs/EntityPMs/CustomsVendorPM';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomsRequestsComponent.html',
 })
 
@@ -37,22 +37,20 @@ export class CustomsRequestsComponent implements OnInit {
     //private CustomsRequestMenuItems: CustomsMenuItem[];
     private _CustomsRequestMenuService: CustomsRequestMenuService;
     public ItemsSource: CustomsMenuItem[];
-    public IsFromWindow:boolean=false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response2 => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((resp => {
-                    this._entityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((resp => {
-
                     this._CustomsRequestMenuService = new CustomsRequestMenuService();
                     
                     //this.BuildCustomsList();
                     //this.ItemsSource = this.CustomsRequestMenuItems;
                     this.ItemsSource = this._CustomsRequestMenuService.CustomsRequestMenuItems;
-                }));
+
                 }));
             });
         });
@@ -81,19 +79,13 @@ export class CustomsRequestsComponent implements OnInit {
             switch (item.ScreenName) {
                 case 'Vendors':
                 case 'Clients': { // Query 
-                    if(this.IsFromWindow){
-
-                        this.OpenListComponentFromTheWindow(item.objectTableName);
-                    }
-                    else{
                     this.OpenListQueryByObjectTable(item.objectTableName); // Abdullah: fill objectTableName when u build the item
-                    }
                     break;
                 }
                 case 'SearchVendor': {
 
-                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
-                        this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
                             var vendor = new CustomsVendorPM();
                             vendor.Tenant = SessionLocator.Tenant;
                             vendor.VendorTypeCode = "1";
@@ -122,8 +114,8 @@ export class CustomsRequestsComponent implements OnInit {
                 }
                 case 'NewVendor': {
 
-                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
-                        this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
                             var vendor = new CustomsVendorPM();
                             vendor.Tenant = SessionLocator.Tenant;
                             vendor.VendorTypeCode = "1";
@@ -177,13 +169,13 @@ export class CustomsRequestsComponent implements OnInit {
 
         SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
 
-        listArgs.QueryCode = SelectedQuery.UniqueCode;
+        listArgs.QueryCode = SelectedQuery.Code;
         listArgs.ObjectTableName = objectTablePM.Name;
        
         listArgs.BackButtonTitle = TextCodeTranslator.Translate("Customs.General.O.Customs"); // Customs Request--> General.MH.Customs | Customs-->Customs.General.O.Customs
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
@@ -196,7 +188,7 @@ export class CustomsRequestsComponent implements OnInit {
         var SelectedQuery = null;
 
         // Get Query
-        var allQueries: any[] = window.Queries.filter(x => x.UniqueCode === queryCode).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        var allQueries: any[] = window.Queries.filter(x => x.Code === queryCode).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         if (allQueries.length == 0) {
             console.log("[!] No Queries found for " + queryCode);
             return;
@@ -210,47 +202,19 @@ export class CustomsRequestsComponent implements OnInit {
             return;
         }
 
-        listArgs.QueryCode = SelectedQuery.UniqueCode;
-        listArgs.ObjectTableName = objectTablePM.Name;
-
-        listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.Customs"); // Customs Request
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
-            listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionMenuLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run(listArgs);
-                });
-        });
-    }
-    OpenListComponentFromTheWindow(objectTableName: string){
-        var listArgs = new ListComponentArgs();
-        var objectTablePM = window.ObjectTables.filter(d => d.Name == objectTableName)[0];
-        var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === objectTablePM.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-        var SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
         listArgs.QueryCode = SelectedQuery.Code;
         listArgs.ObjectTableName = objectTablePM.Name;
 
-        listArgs.BackButtonTitle = TextCodeTranslator.Translate("Customs.General.O.Customs");
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+        listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.Customs"); // Customs Request
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.FinishedLoading());
                 });
         });
     }
-    SetWindowArgs(args: any) {
-        if (args != null) {
-            this.IsFromWindow=true;
-            console.log(this.IsFromWindow+"i am from the window");
-        }
-            
-    }
 
-    FinishedLoading(){
-        console.log("hola from the buttom of my heart");
-    }
    
 }

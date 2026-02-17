@@ -41,7 +41,7 @@
                                 </td>
                                 <td style="width:70px;min-width:70px;max-width:70px" class="Label">Customer</td>
                                 <td style="width:200px;">
-                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'CustomerId'"
+                                    <LogLov [ObjectFieldName]="'CustomerId'"
                                             [SelectedValue]="CustomerId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
@@ -56,7 +56,7 @@
                                 </td>
                                 <td style="width:80px;min-width:70px;max-width:70px" class="Label">Vehicle Type</td>
                                 <td style="width:180px;">
-                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'PackageTypeId'"
+                                    <LogLov [ObjectFieldName]="'PackageTypeId'"
                                             [SelectedValue]="PackageTypeId"
                                             [ObjectTableName]=""
                                             [DataContext]="DataContext"
@@ -85,7 +85,7 @@
                                 </td>
 
                                 <td style="width:90px;">
-                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">{{RunReportTitle}}</button>
+                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
                                 </td>
 
                                 <td>

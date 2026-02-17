@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,32 +23,9 @@ namespace WarehouseData
         public bool IsCloseTable { get; set; }
         public string BuildScriptName { get; set; }
         public string IncrementalScriptName { get; set; }
-        public string ObjectTableId { get; set; }
+
         public string DWObjectTableCode { get; set; }
-        public bool HasCustomFields { get; set; }
-        public int MaxNumberOfCustomFields { get; set; }
-        public string DWTableKeyName { get; set; }
-        public string FieldIndexes { get; set; }
-        public string RefreshIds { get; set; }
-        public string ParentKeyName { get; set; }
-        public string ObjectTableName { get; set; }
-         
-
-        public string AdditionalIndexes { get; set; }
-        
         public List<DWObjectFieldDB> DWObjectFieldDBLists { get; set; }
-        public List<DWObjectFieldDB> ObjectFieldDBLists { get; set; }
-        public List<IndexItem> Indexes { get; set; }
-        public List<TableClass> RelatedEntities { get; set; }
-        public List<string> FieldsDBNameLists { get; set; }
-        public List<string> RelatedFactTables { get; set; }
-        public bool HasMultipleDWTables { get; set; }
-        public List<string> MultipleDW_TablesNames { get; set; }
-        public List<string> MultipleTablesNames { get; set; }
-        public int BatchesCount { get; set; }
-        public bool UseBatches { get; set; }
-        public int DataCount { get; set; }
-
 
     }
 
@@ -63,18 +39,6 @@ namespace WarehouseData
         public bool IsPrimaryKey { get; set; }
         public string DimensionTableCode { get; set; }
         
-    }
-
-    [DataContract(Namespace = "")]
-    public class IndexItem
-    {
-        [DataMember]
-        public string Columns { get; set; }
-
-        [DataMember]
-        public string Include { get; set; }
- 
-
     }
 
 }

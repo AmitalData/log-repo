@@ -9,17 +9,15 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { InsideShipmentPackagePM } from '../../../../Shipment/EntityPMs/InsideShipmentPackagePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditPackageHarmonizeComponent.html',
 })
 
 export class AddEditPackageHarmonizeComponent {
     public ShipmentPM: ShipmentPM = null;
     public EntityPM: ShipmentPackagePM;
-    public InsidePackagePM: InsideShipmentPackagePM;
     public ItemsSource: HarmonizeItemClass[] = [];
     public ObjectTableName: string = "ShipmentPackageHarmonize";
     public IsEditingEnabled: boolean = true;
@@ -30,33 +28,21 @@ export class AddEditPackageHarmonizeComponent {
 
     }
 
-    private isInsidePackageDirty: boolean = false;
     private isPackageDirty: boolean = false;
     private isShipmentDirty: boolean = false;
     SetWindowArgs(args: any) {
-        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
             if (args) {
                 this.IsEditingEnabled = args['IsEditingEnabled'];
                 this.EntityPM = args['PackagePM'];
                 this.ShipmentPM = args['ShipmentPM'];
-                this.InsidePackagePM = args['InsidePackagePM'];
 
                 this.isPackageDirty = this.EntityPM.IsDirty;
                 this.isShipmentDirty = this.ShipmentPM.IsDirty;
 
-                if (this.InsidePackagePM != null) {
-                    this.isInsidePackageDirty = this.InsidePackagePM.IsDirty;
-
-                    this.InsidePackagePM.InsidePackageHarmonizes.forEach((item: ShipmentPackageHarmonizePM) => {
-                        this.ItemsSource.push(new HarmonizeItemClass(item));
-                    });
-                }
-
-                else {
-                    this.EntityPM.ShipmentPackageHarmonizes.forEach((item: ShipmentPackageHarmonizePM) => {
-                        this.ItemsSource.push(new HarmonizeItemClass(item));
-                    });
-                }
+                this.EntityPM.ShipmentPackageHarmonizes.forEach((item: ShipmentPackageHarmonizePM) => {
+                    this.ItemsSource.push(new HarmonizeItemClass(item));
+                });
 
                 this.Clone();
             }
@@ -66,16 +52,7 @@ export class AddEditPackageHarmonizeComponent {
     }
 
     AddButtonClicked() {
-        var item: ShipmentPackageHarmonizePM;
-
-        if (this.InsidePackagePM != null) {
-            item = new ShipmentPackageHarmonizePM(this.InsidePackagePM);
-        }
-
-        else {
-            item = new ShipmentPackageHarmonizePM(this.EntityPM);
-        }
-
+        var item: ShipmentPackageHarmonizePM = new ShipmentPackageHarmonizePM(this.EntityPM);
         this.ItemsSource.push(new HarmonizeItemClass(item));
     }
     DeleteItem(item: HarmonizeItemClass) {
@@ -95,10 +72,6 @@ export class AddEditPackageHarmonizeComponent {
             }          
         });
 
-        if (this.InsidePackagePM != null) {
-            this.InsidePackagePM.IsDirty = this.isInsidePackageDirty;
-        }
-
         this.EntityPM.IsDirty = this.isPackageDirty;
         this.ShipmentPM.IsDirty = this.isShipmentDirty;
 
@@ -114,94 +87,45 @@ export class AddEditPackageHarmonizeComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            if (this.InsidePackagePM != null) {
-                this.FillHarmonizes_InsidePackage();
-            }
+            var allItemsPM: ShipmentPackageHarmonizePM[] = [];
+            
+            this.ItemsSource.forEach((item: HarmonizeItemClass) => {
+                var index = this.EntityPM.ShipmentPackageHarmonizes.indexOf(item.EntityPM);
 
-            else {
-                this.FillHarmonizes_ShipmentPackage();
+                if (index > -1) {
+                    var itemPM = this.EntityPM.ShipmentPackageHarmonizes[index];
+                    if (itemPM) {
+                        if (itemPM.Harmonize != item.Harmonize) {
+                            itemPM.Harmonize = item.Harmonize;
+                        }
+                    }
+                }
+
+                else {
+                    this.EntityPM.ShipmentPackageHarmonizes.push(item.EntityPM);
+                }
+
+                allItemsPM.push(item.EntityPM);
+            });
+
+            for (var i = this.EntityPM.ShipmentPackageHarmonizes.length - 1; i >= 0; i--) {
+
+                var index = allItemsPM.indexOf(this.EntityPM.ShipmentPackageHarmonizes[i]);
+
+                if (index == -1) {
+                    var item = this.EntityPM.ShipmentPackageHarmonizes[i];
+                    this.EntityPM.RemoveShipmentPackageHarmonizePM(item);
+                } 
+            }
+            
+            this.EntityPM.IsMultiHarmonize = this.EntityPM.ShipmentPackageHarmonizes.length > 0 ? true : false;
+            if (this.EntityPM.IsMultiHarmonize) {
+                if (this.EntityPM.Harmonize) {
+                    this.EntityPM.Harmonize = null;
+                }
             }
 
             this.CurrentSession.CloseCurrentWindowEmit("Ok");
-        }
-    }
-    FillHarmonizes_InsidePackage() {
-        var allItemsPM: ShipmentPackageHarmonizePM[] = [];
-
-        this.ItemsSource.forEach((item: HarmonizeItemClass) => {
-            var index = this.InsidePackagePM.InsidePackageHarmonizes.indexOf(item.EntityPM);
-
-            if (index > -1) {
-                var itemPM = this.InsidePackagePM.InsidePackageHarmonizes[index];
-                if (itemPM) {
-                    if (itemPM.Harmonize != item.Harmonize) {
-                        itemPM.Harmonize = item.Harmonize;
-                    }
-                }
-            }
-
-            else {
-                this.InsidePackagePM.InsidePackageHarmonizes.push(item.EntityPM);
-            }
-
-            allItemsPM.push(item.EntityPM);
-        });
-
-        for (var i = this.InsidePackagePM.InsidePackageHarmonizes.length - 1; i >= 0; i--) {
-
-            var index = allItemsPM.indexOf(this.InsidePackagePM.InsidePackageHarmonizes[i]);
-
-            if (index == -1) {
-                var item = this.InsidePackagePM.InsidePackageHarmonizes[i];
-                this.InsidePackagePM.RemoveShipmentPackageHarmonizePM(item);
-            }
-        }
-
-        this.InsidePackagePM.IsMultiHarmonize = this.InsidePackagePM.InsidePackageHarmonizes.length > 0 ? true : false;
-        if (this.InsidePackagePM.IsMultiHarmonize) {
-            if (this.InsidePackagePM.Harmonize) {
-                this.InsidePackagePM.Harmonize = null;
-            }
-        }
-    }
-
-    FillHarmonizes_ShipmentPackage() {
-        var allItemsPM: ShipmentPackageHarmonizePM[] = [];
-
-        this.ItemsSource.forEach((item: HarmonizeItemClass) => {
-            var index = this.EntityPM.ShipmentPackageHarmonizes.indexOf(item.EntityPM);
-
-            if (index > -1) {
-                var itemPM = this.EntityPM.ShipmentPackageHarmonizes[index];
-                if (itemPM) {
-                    if (itemPM.Harmonize != item.Harmonize) {
-                        itemPM.Harmonize = item.Harmonize;
-                    }
-                }
-            }
-
-            else {
-                this.EntityPM.ShipmentPackageHarmonizes.push(item.EntityPM);
-            }
-
-            allItemsPM.push(item.EntityPM);
-        });
-
-        for (var i = this.EntityPM.ShipmentPackageHarmonizes.length - 1; i >= 0; i--) {
-
-            var index = allItemsPM.indexOf(this.EntityPM.ShipmentPackageHarmonizes[i]);
-
-            if (index == -1) {
-                var item = this.EntityPM.ShipmentPackageHarmonizes[i];
-                this.EntityPM.RemoveShipmentPackageHarmonizePM(item);
-            }
-        }
-
-        this.EntityPM.IsMultiHarmonize = this.EntityPM.ShipmentPackageHarmonizes.length > 0 ? true : false;
-        if (this.EntityPM.IsMultiHarmonize) {
-            if (this.EntityPM.Harmonize) {
-                this.EntityPM.Harmonize = null;
-            }
         }
     }
 

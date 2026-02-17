@@ -10,14 +10,11 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -42,59 +39,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public User GetUserById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public User GetUserById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("User with Id " + Id + " doesn't exist");
 
-				return UserDataMapping(temp,Tenant,ComputingPartnerName);
+				return UserDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
 		
-		public User GetUserByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+		public User GetUserByCode(string Code,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePMByCode(Code, Tenant);				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("User with Code " + Code + " doesn't exist");
 
-				return UserDataMapping(temp,Tenant,ComputingPartnerName);
+				return UserDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
-                throw ex;
-            }
-        }
-		
-		public User GetUserByEmail(string Email,int Tenant,  string ComputingPartnerName = "")
-        { 
-		    try
-            {
-				 
-				
-				var temp = query.GetSinglePMByEmail(Email, Tenant);				
-				 if (temp == null)
-                    throw new ApplicationException("User with Email " + Email + " doesn't exist");
 
-				return UserDataMapping(temp,Tenant,ComputingPartnerName);
-			}
-
-            catch (Exception ex)
-            {
                 throw ex;
             }
         }
@@ -109,7 +87,6 @@ using Simplog.Data.CommonDataModel;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
 				   temp.ExternalCode = MyEntityPM.Code;
-				   temp.Code = MyEntityPM.Email;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
 				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Email,ComputingPartnerName,"User");  					
 				   return temp;
@@ -121,7 +98,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public UserPM UserDataMappingAndValidatin(User MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public UserPM UserDataMappingAndValidatin(User MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -133,11 +110,7 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.ExternalCode))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.ExternalCode, Tenant  );
-					} 
-					if (!string.IsNullOrEmpty(MyEntity.Code))
-					{
-						temp = query.GetSinglePMByEmail(MyEntity.Code, Tenant  );
+						temp = query.GetSinglePMByCode(MyEntity.ExternalCode, Tenant);
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -149,80 +122,28 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("User with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByEmail(MyCode, Tenant );
+						temp = query.GetSinglePMByEmail(MyCode, Tenant);
 						
 						
 					}
 					
-					
-			  	   if(temp == null)
-					{   
-					    throw new ApplicationException("User with Code " + MyEntity.Code + " doesn't exist");
+					   					   
+					if(temp == null)
+					{
+					    throw new ApplicationException("User with ExternalCode " + MyEntity.ExternalCode + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-					   
-					    if(!string.IsNullOrEmpty(MyEntity.Id))
-					    {
-					        throw new ApplicationException("User with provided key doesn't exist");
-						
-						}
-						//else
-						//{
-						//    temp.Id = MyEntity.Id;
-
-						//} 
-
-						
+						temp.Id = MyEntity.Id;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.EnglishName = MyEntity.EnglishName;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalName = MyEntity.LocalName;
-
-										}  
-
-					
+					temp.EnglishName = MyEntity.EnglishName;
+					temp.LocalName = MyEntity.LocalName;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
-					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ExternalCode))
-						{								
-							temp.Code = MyEntity.ExternalCode;
-								
-						
-						}  
-
-						
+						temp.Code = MyEntity.ExternalCode;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Email = MyEntity.Code;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Email = MyEntity.PartnerCode;
-
-										}  
-
-										   
-					return temp;
+					temp.Email = MyEntity.PartnerCode;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -230,8 +151,6 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

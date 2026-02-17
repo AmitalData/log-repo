@@ -10,7 +10,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 
 @Component({
     selector: 'NewIntegrityCheckComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewIntegrityCheckComponent.html',
 })
 
@@ -137,7 +137,7 @@ export class NewIntegrityCheckComponent extends BaseComponent implements OnInit 
             if (this.EntityPM != null) {
 
                 this.CurrentSession.StartBusyIndicatorSaving();
-                this._AccountingIntegrityCheckPMService.insert(this.EntityPM).subscribe((myResult:any) => {
+                this._AccountingIntegrityCheckPMService.insert(this.EntityPM).subscribe(myResult => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {

@@ -25,8 +25,5 @@ export class ReportsTemplateList {
 		ReplyTo: string;
 		CC: string;
 		Subject: string;
-		ObjectTableId: string;
-		EntityId: string;
-		UseStimul: boolean;
 	
-}
+}

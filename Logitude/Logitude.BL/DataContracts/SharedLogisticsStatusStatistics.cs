@@ -20,12 +20,5 @@ namespace Logitude.BL.DataContracts
         public int InvitedAgentsCount { get; set; }
         public int NotInvitedAgentsCount { get; set; }
         public int ActivatedAgentsCount { get; set; }
-
-        public int NotInvitedCToolPartnersCount { get; set; }
-        public int InvitedCToolPartnersCount { get; set; }
-        public int ActivatedCToolPartnersCount { get; set; }
-
-
-
     }
 }

@@ -11,7 +11,7 @@ namespace WebFreight.Web.AccountingModel.Reports.OpenFormatReport
 {
     public class OpenFormatReportPrintService
     {
-        public OpenFormatReportPM openFormatReportPM;
+
 
 
         public OpenFormatReportDataProvider LoadDataProvider(string entityId, int tenant)
@@ -21,7 +21,7 @@ namespace WebFreight.Web.AccountingModel.Reports.OpenFormatReport
 
             OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(tenant);
 
-            openFormatReportPM = openFormatReportQueryService.GetSingle(entityId, false, false);
+            OpenFormatReportPM openFormatReportPM = openFormatReportQueryService.GetSingle(entityId, false, false);
             if (openFormatReportPM != null)
             {
                 using (var stringReader = new System.IO.StringReader(openFormatReportPM.PDFRerportXML))

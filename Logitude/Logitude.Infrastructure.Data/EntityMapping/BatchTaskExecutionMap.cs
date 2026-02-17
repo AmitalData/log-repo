@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data;
@@ -44,7 +44,6 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             {
               this.Property(t => t.PrametersXml).HasMaxLength(4000);
 			}
-            this.Property(t => t.NotDisplayInMenu).HasColumnName("NotDisplayInMenu");
 
 
             this.Property(t => t.PrametersXml).HasColumnName("PrametersXml").IsUnicode(true);
@@ -68,18 +67,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.DoneDateTime).HasColumnName("DoneDateTime");
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.ProgressMessage).HasMaxLength(2000);
-			}
-            else
-            {
-              this.Property(t => t.ProgressMessage).HasMaxLength(4000);
-			}
-
-
-            this.Property(t => t.ProgressMessage).HasColumnName("ProgressMessage").IsUnicode(true);
+            this.Property(t => t.ProgressMessage).HasColumnName("ProgressMessage").HasMaxLength(120).IsUnicode(true);
 
             this.Property(t => t.ProgressPercentage).HasColumnName("ProgressPercentage");
 

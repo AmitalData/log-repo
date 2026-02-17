@@ -13,7 +13,7 @@ using WebFreight.Web.InfrastructureModel;
 using WebFreight.Web.Helpers;
 using System;
 using System.Linq;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Counters;
 

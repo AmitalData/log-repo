@@ -3,7 +3,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Server.Tools.ExternalServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,9 +72,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
        
-        public void BuildRealSteps(InterfaceTenantDefinitionManagementPM InterfaceTenantDefinitionWithManagment,ref SendRequestVIA requestVIA ,bool ForcePersonalSign,bool avoidSign
-            ,bool ForceCompanySign
-            )
+        public void BuildRealSteps(InterfaceTenantDefinitionManagementPM InterfaceTenantDefinitionWithManagment,ref SendRequestVIA requestVIA ,bool ForcePersonalSign)
         {
              RealSteps = new List<CustomsStepEnum>(Enum.GetValues(typeof(CustomsStepEnum)).OfType<CustomsStepEnum>());
 
@@ -83,11 +81,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 this.SignStepName=SignQueue.CustomRequestSignPersonal ;
                 RealSteps.Remove(CustomsStepEnum.CustomRequestSign);
             }
-            else if (ForceCompanySign)
-            {
-                this.SignStepName = SignQueue.CustomRequestSign;
-                RealSteps.Remove(CustomsStepEnum.CustomRequestSignPersonal);
-            } 
             else
             {
                 switch (InterfaceTenantDefinitionWithManagment.InterfaceManagement.SignatureBy)
@@ -109,15 +102,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         break;
                 }
             }
-            if (avoidSign)
-            {
-                RealSteps.Remove(CustomsStepEnum.CustomRequestSign);
-                RealSteps.Remove(CustomsStepEnum.CustomRequestSignPersonal);
-                this.SignStepName = null;
-            }
+            
 
-
-
+                    
+            
 
             requestVIA =CalcRequestVIA = Via(InterfaceTenantDefinitionWithManagment, requestVIA);
             if (CalcRequestVIA != SendRequestVIA.DCABatch)
@@ -210,7 +198,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
     public interface IMessageController
     {
         bool ToRetry(CustomsStepEnum CustomsProcessState, int retries);
-        void BuildRealSteps(InterfaceTenantDefinitionManagementPM InterfaceTenantDefinitionWithManagment, ref SendRequestVIA requestVIA, bool ForceSign, bool avoidSign, bool ForceCompanySign);
+        void BuildRealSteps(InterfaceTenantDefinitionManagementPM InterfaceTenantDefinitionWithManagment, ref SendRequestVIA requestVIA, bool ForceSign);
 
         CustomsCommandEnum ConvertToWR(CustomsStepEnum nxtEnum);
         //SendRequestVIA CalcRequestVIA { get; private set; }

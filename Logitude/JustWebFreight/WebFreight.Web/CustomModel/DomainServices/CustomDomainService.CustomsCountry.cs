@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
@@ -29,7 +29,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
         {
             customContext = CustomContext.GetContext(tenant);
             customsCountryQuery = new CustomsCountryQueryService(customContext);
-            CustomsCountryPM CustomsCountry = customsCountryQuery.GetSingleCustomsCountryWithTenant(id, tenant);
+            CustomsCountryPM CustomsCountry = customsCountryQuery.GetSingle(id, false, false);
             return CustomsCountry;
         }
 

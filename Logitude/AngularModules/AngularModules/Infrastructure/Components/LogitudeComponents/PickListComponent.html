@@ -434,8 +434,7 @@
                             <table>
                                 <tr>
                                     <td style="position:relative">
-                                        <input [attr.data-cy]="DataCy" 
-                                               [id]="ElementId"
+                                        <input [id]="ElementId"
                                                [disabled]="IsDisabled"
                                                [(ngModel)]="SearchTextNgModel"
                                                (keydown)="OnSearchIputKeyDown($event)"
@@ -501,7 +500,7 @@
                              [style.height.px]="DropDownHeight">
 
                             <!-- My Data items -->
-                            <ul [id]="MyDataListId" class="DropDownList" *ngIf="IsDropDownVisible" [style.height.px]="DropDownHeight">
+                            <ul [id]="MyDataListId" class="DropDownList" *ngIf="IsDropDownVisible" [ngStyle]="MyDropDownHeight">
                                 <li *ngFor="let item of ItemsSource;let i=index"
                                     class="DropDownListItem"
                                     (click)="OnSelected(item)"
@@ -511,9 +510,9 @@
                                     [class.InActive]="item.InActive">
 
                                     <div style="height:20px; font-size:10px; width:100%; position:relative; " (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
-                                        <div 
+                                        <div [style.width.px]="150"
                                              [style.min-width.px]="150"
-                                             [style.max-width]="DropDownWidth"
+                                             [style.max-width]="150"
                                              style="padding: 0px 1px; height:100%; font-size:10px; overflow:hidden;text-overflow:ellipsis; white-space:nowrap; position: relative; display: inline-block; " (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
                                             {{item.Value}}
                                         </div>

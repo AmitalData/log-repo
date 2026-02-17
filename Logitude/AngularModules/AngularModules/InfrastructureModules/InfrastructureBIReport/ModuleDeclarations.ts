@@ -7,10 +7,6 @@ import { EditShipmentLinkRendererComponent } from './Components/TemplateRenderer
 import { AgGridColumnsOperations } from './Components/NewEntity/AgGridColumnsOperations';
 import { DWAskUserFiltersComponent } from './Components/Workspaces/DWAskUserFiltersComponent'; 
 import { DateSampleComponent } from './Components/Workspaces/DateSampleComponent'; 
-import { BIReportListTemplate } from './Components/ListTemplates/BIReportListTemplate';
-import { ChooseSpecificUserComponent } from './Components/NewEntity/ChooseSpecificUserComponent';
-import { BIExportSettingAdvanceComponent } from './Components/Workspaces/BIExportSettingAdvanceComponent';
-import { DWQueryBuilderBaseComponent } from './Components/Workspaces/DWQueryBuilderBaseComponent'; 
 
 export const Components =
     [
@@ -22,11 +18,7 @@ export const Components =
         DWAskUserFiltersComponent,
         AGGridCustomHeader,
         EditShipmentLinkRendererComponent,
-        DateSampleComponent,
-        BIReportListTemplate,
-        ChooseSpecificUserComponent,
-        BIExportSettingAdvanceComponent,
-        DWQueryBuilderBaseComponent
+        DateSampleComponent
     ];
 
 export class ModuleDeclarations {
@@ -42,12 +34,6 @@ export class ModuleDeclarations {
             case "AGGridCustomHeader": { myResult = AGGridCustomHeader; break; }
             case "EditShipmentLinkRendererComponent": { myResult = EditShipmentLinkRendererComponent; break; }
             case "DateSampleComponent": { myResult = DateSampleComponent; break; }
-            case "ChooseSpecificUserComponent": { myResult = ChooseSpecificUserComponent; break; }
-            case "BIExportSettingAdvanceComponent": { myResult = BIExportSettingAdvanceComponent; break; }
-            case "DWQueryBuilderBaseComponent": { myResult = DWQueryBuilderBaseComponent; break; }
-            //Templates
-            case "BIReportListTemplate": { myResult = BIReportListTemplate; break; }
-
 
         }
         return myResult;

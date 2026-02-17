@@ -11,7 +11,7 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.EntityPMs; 
 using Logitude.TariffModule.Data;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
@@ -33,56 +33,22 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
         public void CustomPOCOToPM(TariffLinePM entityPM, TariffLine entityPOCO)
         {
             PortRepository portRepository = new PortRepository(entityPOCO.Tenant);
-            CurrencyRepository currencyRepository = new CurrencyRepository(entityPOCO.Tenant);
-            CountryRepository countryRepository = new CountryRepository(entityPOCO.Tenant);
-
             Port fromPort = portRepository.GetSinglePort(entityPOCO.OriginPortId, entityPOCO.Tenant);
             Port toPort = portRepository.GetSinglePort(entityPOCO.DestinationPortId, entityPOCO.Tenant);
-            Port viaPort = portRepository.GetSinglePort(entityPOCO.ViaPortId, entityPOCO.Tenant);
-            Country fromCountry = countryRepository.GetSingleCountry(entityPOCO.FromCountryId, entityPOCO.Tenant);
-            Country toCountry = countryRepository.GetSingleCountry(entityPOCO.ToCountryId, entityPOCO.Tenant);
 
             if (fromPort != null)
             {
                 entityPM.OriginPortCode = fromPort.Code;
-                entityPM.OriginPortCombinedCode = fromPort.CombinedCode;
                 entityPM.OriginPortName = fromPort.EnglishName;
             }
-
             if (toPort != null)
             {
                 entityPM.DestinationPortCode = toPort.Code;
-                entityPM.DestinationPortCombinedCode = toPort.CombinedCode;
                 entityPM.DestinationPortName = toPort.EnglishName;
             }
-
-            if (viaPort != null)
-            {
-                entityPM.ViaPortCode = viaPort.Code;
-                entityPM.ViaPortCombinedCode = viaPort.CombinedCode;
-                entityPM.ViaPortName = viaPort.EnglishName;
-            }
-
-            if (fromCountry != null)
-            {
-                entityPM.FromCountryCode = fromCountry.Code;
-                entityPM.FromCountryName = fromCountry.EnglishName;
-            }
-
-            if (toCountry != null)
-            {
-                entityPM.ToCountryCode = toCountry.Code;
-                entityPM.ToCountryName = toCountry.EnglishName;
-            }
-            if (!string.IsNullOrEmpty(entityPOCO.CurrencyId))
-            {
-                Currency currency = currencyRepository.GetSingleCurrency(entityPOCO.CurrencyId, entityPOCO.Tenant);
-                if (currency != null)
-                {
-                    entityPM.CurrencyCode = currency.Code;
-                }
-            }            
         }
-    }
+   }
+
+
 }
    

@@ -22,7 +22,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 declare var makeChart, FunnelClick, ResetItemFunnel;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuotesComponent.html',
 })
 
@@ -36,7 +36,7 @@ export class QuotesComponent extends BaseComponent {
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
             this.IsResourcesReady = true;
             this.InitializeServices();
             this.LoadNonFilteredQueries();
@@ -75,7 +75,7 @@ export class QuotesComponent extends BaseComponent {
 
         // Records Types
         this.RecordsTypesFilterList = [];
-        this.RecordsTypesFilterList.push(new CodeNameClass("S", "Salesman Records"));
+        this.RecordsTypesFilterList.push(new CodeNameClass("S", "Salesmen Records"));
         this.RecordsTypesFilterList.push(new CodeNameClass("C", "Created By Records"));
         this.RecordsTypeFilterCode = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_RecordsType);
         if (AppTool.IsNullOrEmpty(this.RecordsTypeFilterCode)) {
@@ -415,26 +415,26 @@ export class QuotesComponent extends BaseComponent {
     public Quotes_All: number;
     public Quotes_My: number;
     private LoadQueriesCounts() {
-        this.myDomainService.GetQuotesCounts(this.OwnerId, this.BusinessUnitId, this.currentDirectionId, this.currentTransportModeId, this.RecordsTypeFilterCode).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    var myData: CRMSummary = myResponse.Result;
-                    if (myData != null) {
-                        this.Quotes_Created = myData.Quotes_Created;
-                        this.Quotes_Draft = myData.Quotes_Draft;
-                        this.Quotes_Expired = myData.Quotes_Expired;
-                        this.Quotes_Accepted = myData.Quotes_Accepted;
-                        this.Quotes_AcceptedNOShip = myData.Quotes_AcceptedNOShip;
-                        this.Quotes_Cancelled = myData.Quotes_Cancelled;
-                        this.Quotes_Sent = myData.Quotes_Sent;
-                        this.Quotes_AllFollowups = myData.Quotes_AllFollowups;
-                        this.Quotes_MyFollowups = myData.Quotes_MyFollowups;
-                        this.Quotes_All = myData.Quotes_All;
-                        this.Quotes_My = myData.Quotes_My;
-                    }
+        this.myDomainService.GetQuotesCounts(this.OwnerId, this.BusinessUnitId, this.currentDirectionId, this.currentTransportModeId, this.RecordsTypeFilterCode).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResponse.HasError) {
+
+                var myData: CRMSummary = myResponse.Result;
+                if (myData != null) {
+                    this.Quotes_Created = myData.Quotes_Created;
+                    this.Quotes_Draft = myData.Quotes_Draft;
+                    this.Quotes_Expired = myData.Quotes_Expired;
+                    this.Quotes_Accepted = myData.Quotes_Accepted;
+                    this.Quotes_AcceptedNOShip = myData.Quotes_AcceptedNOShip;
+                    this.Quotes_Cancelled = myData.Quotes_Cancelled;
+                    this.Quotes_Sent = myData.Quotes_Sent;
+                    this.Quotes_AllFollowups = myData.Quotes_AllFollowups;
+                    this.Quotes_MyFollowups = myData.Quotes_MyFollowups;
+                    this.Quotes_All = myData.Quotes_All;
+                    this.Quotes_My = myData.Quotes_My;
                 }
             }
-        });
+        });  
     }
 
     // Load Recent Data
@@ -668,7 +668,7 @@ export class QuotesComponent extends BaseComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -816,15 +816,10 @@ export class QuotesComponent extends BaseComponent {
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.BackButtonCompleted());
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
                     this.CurrentSession.AddMenuReference(cmpRef);
                 });;
         }
-    }
-
-    BackButtonCompleted() {
-        this.InitializeFilters();
-        this.LoadAllScreenData();
     }
 
     OnImageError(item: any, field: string) {

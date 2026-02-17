@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .MenuFilters {
         color: #909293;
@@ -69,15 +69,7 @@
                         <SearchTextBox [ObjectTableName]="'Shipment'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [PlaceHolder]="'Search Shipments ...'"></SearchTextBox>
                     </td>
 
-                    <td style="width: 485px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width: 90px; vertical-align: middle; position:relative;">
-                        <DirectionsFilter *ngIf="IsPrivateLabelWithMoreThanOneDirectionFilter  && !IsLogbox" [HideExport]="IsLogbox || !IsExportActivated" [ShowCustomFilter]="IsLogbox|| IsCustomsActivated" [HideImportDomistic]="IsLogbox|| IsPrivateLabel" [HideAMANACFilters]="true" [SelectedValue]="SelectedDirectionFilter" [Width]="90" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
-                    </td>
-
-                    <td style="width: 3px;">
+                    <td style="width: 590px;">
                         <div></div>
                     </td>
 

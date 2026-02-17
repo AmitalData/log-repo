@@ -18,7 +18,7 @@ import {ComputingPartnerTranslationPM} from '../../../Common/EntityPMs/Computing
 declare var window: any;
 @Component({
     selector: 'ComputingPartnerTranslateComponent',
-    
+    moduleId: module.id,
     templateUrl: './ComputingPartnerTranslateComponent.html',
 })
 
@@ -35,11 +35,6 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
                 }
 
                 var table = window.ObjectTables.filter(d => d.Name === res.Value.ObjectTableName)[0];
-                if (table && !AppTool.IsNullOrEmpty(table.ParentObjectTableName)) {
-                    table = window.ObjectTables.filter(d => d.Name === table.ParentObjectTableName)[0];
-                    res.Value.ObjectTableId = table.Id;
-                    res.Value.ObjectTableName = table.Name;
-                }
                 if (table)
                     filters.ClinetName = table.ClientModuleName;
                 filters.computingPartnerId = res.Value.ComputingPartnerId;
@@ -48,7 +43,7 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
                 filters.ComputingPartnerName = res.Value.ComputingPartnerName;
                 var domainService: CommonDomainService = new CommonDomainService();
                 var items: any[] = [];
-                    domainService.getNoneZeroTenantTranslation(res.Value.ComputingPartnerId, res.Value.ObjectTableId, res.Value.OurCode).subscribe((p:any) => {
+                    domainService.getNoneZeroTenantTranslation(res.Value.ComputingPartnerId, res.Value.ObjectTableId, res.Value.OurCode).subscribe(p => {
                         var item: any = {};
                         item.ComputingPartnerId = p.Result.ComputingPartnerId != null ? p.Result.ComputingPartnerId : res.Value.ComputingPartnerId;
                         item.OurCode = p.Result.OurCode != null ? p.Result.OurCode : res.Value.OurCode;
@@ -198,22 +193,14 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
             filters.ComputingPartnerName = this.EntityPM.ComputingPartnerName;
             filters.SearchingFields = this.searchFields;
             filters.IsClosedTable = table.IsClosed;
-            this.FillParentObjectTableDetails(filters);
             var service: CommonDomainService = new CommonDomainService();
             return new Promise((resolve, reject) => {
                 resolve(service.getByFilters(filters))
-            }).then((result:any) => {
+            }).then(result => {
                 return result;
             });
 
 
-    }
-
-    private FillParentObjectTableDetails(filters: CustomApiQueryFilters) {
-        let parentObjectTableName = window.ObjectTables.filter(f => f.Name === this.EntityPM.ObjectTableName)[0]?.ParentObjectTableName;
-        if (!parentObjectTableName) return;
-        filters.ParentObjectTableName = parentObjectTableName;
-        filters.ParentObjectTableId = window.ObjectTables.filter(f => f.Name === parentObjectTableName)[0]?.Id;
     }
 
     CancelButtonClicked() {

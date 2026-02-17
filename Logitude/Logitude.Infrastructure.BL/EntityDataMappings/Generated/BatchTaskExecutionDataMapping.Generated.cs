@@ -37,8 +37,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         ProgressPercentage, 
 	         Subject, 
 	         CallStack,
-            NotDisplayInMenu
-        }
+	      }
 
 
 	      public enum PMPropertyNames
@@ -50,10 +49,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         CreatedByUserId, 
 	         SearchFields, 
 	         ClassName, 
-	         PrametersXml,
-            NotDisplayInMenu,
-
-             StatusCode, 
+	         PrametersXml, 
+	         StatusCode, 
 	         ErrorLog, 
 	         StartDateTime, 
 	         DoneDateTime, 
@@ -100,12 +97,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             {
 				entityPOCO.PrametersXml = entityPM.PrametersXml;
 			}
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotDisplayInMenu))
-            {
-                entityPOCO.NotDisplayInMenu = entityPM.NotDisplayInMenu;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
             {
 				entityPOCO.StatusCode = entityPM.StatusCode;
 			}
@@ -185,11 +178,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             {
 					entityPM.PrametersXml = entityPOCO.PrametersXml;
             }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.NotDisplayInMenu))
-            {
-                entityPM.NotDisplayInMenu = entityPOCO.NotDisplayInMenu;
-            }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
             {
 					entityPM.StatusCode = entityPOCO.StatusCode;
             }
@@ -264,12 +254,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             {
                 oldEntityPM.PrametersXml = entityPM.PrametersXml;
             }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotDisplayInMenu))
-            {
-                oldEntityPM.NotDisplayInMenu = entityPM.NotDisplayInMenu;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
             {
                 oldEntityPM.StatusCode = entityPM.StatusCode;
             }

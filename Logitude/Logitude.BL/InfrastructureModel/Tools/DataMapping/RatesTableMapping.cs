@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -17,10 +17,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             }
 
             entity.Rate = entityPM.Rate;
-            entity.Unit = entityPM.Unit;
-            entity.ValueDate = entityPM.ValueDate.Value.Date;
-            entity.UpdatedByUserId = entityPM.UpdatedByUserId;
-            entity.UpdatedDate = entityPM.UpdatedDate;
+            entity.ValueDate = entityPM.ValueDate.Value.Date;            
         }
     }
 }

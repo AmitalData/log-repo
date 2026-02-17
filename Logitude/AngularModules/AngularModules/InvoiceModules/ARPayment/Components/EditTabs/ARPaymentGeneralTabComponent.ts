@@ -6,12 +6,10 @@ import {ARPaymentPM} from '../../../../Invoice/EntityPMs/ARPaymentPM';
 import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ARPaymentGeneralTabComponent.html',
 })
 export class ARPaymentGeneralTabComponent extends BaseComponent implements OnInit {
-  public MetodoPagoCode: any;
-
     public EntityPM: ARPaymentPM;
     public ObjectTableName: string = "ARPayment";
     // public TenantPM: TenantPM;
@@ -20,9 +18,7 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
     public DataContext: ARPaymentGeneralTabComponent = this;
     private ScreenCode: string = "ARPayment.GeneralTabScreen";
     public DisplaySATSettings: boolean = false;
-    public DisplayFechaPago: boolean = false;
-
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
 
@@ -32,10 +28,6 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
             if (this.EntityPM.PaymentInvoices.length > 0 && !AppTool.IsNullOrEmpty(this.EntityPM.MetodoPagoCode)) {
                 this.EntityPM.UIProperties.SetEnabled("MetodoPagoCode", this.ObjectTableName, false);
             }
-
-            
-                this.DisplayFechaPago = true;
-          
 
         }
 
@@ -68,7 +60,7 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -142,7 +134,7 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
     }
 
     ValidateTipoCadenaPagoFields() {
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (!AppTool.IsNullOrEmpty(this.TipoCadenaPago) && this.TipoCadenaPago == "01" && this.SATPaymentMethodCode == "03") {
                 if (AppTool.IsNullOrEmpty(this.CertPago))
                     this.UIProperties.SetRequired("CertPago", "ARPayment", true);
@@ -219,20 +211,6 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM.SelloPago != newValue) {
             this.EntityPM.SelloPago = newValue;
             this.ValidateTipoCadenaPagoFields();
-        }
-    }
-
-    get FechaPago() {
-        if (this.EntityPM != null) {
-            return this.EntityPM.FechaPago;
-        }
-        else
-            return null;
-    }
-    set FechaPago(newValue: Date) {
-        if (this.EntityPM.FechaPago != newValue) {
-            this.EntityPM.FechaPago = newValue;
-             
         }
     }
 

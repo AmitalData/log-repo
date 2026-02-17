@@ -1,10 +1,12 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { NewOpportunity } from './NewEntity/NewOpportunity';
-import { EditOpportunityMainTab } from './EditEntity/EditOpportunityMainTab';
-import { EditOpportunityGeneralTab } from './EditEntity/EditOpportunityGeneralTab';
-import { OpportunityActions } from './EditEntity/OpportunitiesActions';
+import {EditOpportunityMainTab  } from './EditEntity/EditOpportunityMainTab';
+import {EditOpportunityGeneralTab} from './EditEntity/EditOpportunityGeneralTab';
+
+
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
+
 export class OpportunityModule {
     private Helper: FieldsHelper;
     private Generator: GeneralFunctions;
@@ -12,7 +14,7 @@ export class OpportunityModule {
     private addOpportunity: NewOpportunity;
     private editMainTab: EditOpportunityMainTab;
     private editGeneralTab: EditOpportunityGeneralTab;
-    private OpportunityActions: OpportunityActions;
+
     constructor() {
         this.Helper = new FieldsHelper();
         this.Generator = new GeneralFunctions();
@@ -20,19 +22,25 @@ export class OpportunityModule {
         this.editMainTab = new EditOpportunityMainTab();
 
         this.editGeneralTab = new EditOpportunityGeneralTab();
-        this.OpportunityActions = new OpportunityActions();
     }
-    public DoOpportunity() {
-        var OpportunityNo = this.Generator.RandomNum();
-        this.addOpportunity.CreateNewOpportunity('Opportunity # ' + OpportunityNo);
-        this.Generator.QuickSearchTextBox('Opportunity_Search', 'Opportunity # ' + OpportunityNo);
 
-        this.editMainTab.EditMainTab('Opportunity # ' + OpportunityNo);
-        this.editGeneralTab.EditGeneralTab('Opportunity # ' + OpportunityNo);
-        
-        this.OpportunityActions.SaveOpportunity()
-        this.OpportunityActions.OpportunityActions();
+    public CreateOpportunity() {
+        var activityNo = this.Generator.RandomNum();
+
+        this.addOpportunity.CreateNewOpportunity('Opportunity # ' + activityNo);
+        this.QuickSearchBox('Opportunity_Search', 'Opportunity # ' + activityNo);
+        this.editMainTab.EditMainTab('Opportunity # ' + activityNo);
+        this.editGeneralTab.EditGeneralTab('Opportunity # ' + activityNo);
+       
+        // browser.driver.sleep(6000);
+
     }
+    QuickSearchBox(searchFeildId: string, searchByRef: string) {
+        this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.LogitudeQuickSearchItem', 0);
+    }
+
+
 }
 
 

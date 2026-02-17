@@ -19,14 +19,12 @@ namespace Unifreight.BL.EntityDataMappings
         {
             entityPOCO.FILENO = entityPM.FILENO;
             entityPOCO.REMARK = entityPM.REMARK;
-            entityPOCO.AQOPERATION = entityPM.AQOPERATION;
         }
 
         public void POCOToPM(CFIMSVFILEPM entityPM, CFIMSVFILE entityPOCO)
         {
             entityPM.FILENO = entityPOCO.FILENO;
             entityPM.REMARK = entityPOCO.REMARK;
-            entityPM.AQOPERATION = entityPOCO.AQOPERATION;
         }
 
         public void CustomPMToPOCO(CFIMSVFILEPM entityPM, CFIMSVFILE entityPOCO)

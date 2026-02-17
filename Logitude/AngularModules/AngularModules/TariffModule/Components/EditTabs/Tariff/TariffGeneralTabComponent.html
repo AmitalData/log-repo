@@ -1,688 +1,399 @@
 
-<div class="TabHolder">
-    <table>
-        <tr>
-            <td style="width:500px">
+<div class="TabHolder" style="overflow:auto; height:100%;width:100%">
+    <table *ngIf="IsResourcesReady">
+        <tr class="TabTitleRow">
+            <td>
                 <table>
-                    <tr class="TabTitleRow">
-                        <td colspan="3">
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <!-- Name -->
-                    <tr class="FormFieldRow">
-                        <td style="width:150px;">
-                            <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td style="width:230px;">
-                            <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <!-- ContractNumber -->
-                    <tr class="FormFieldRow">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'ContractNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <LogTextBox [ObjectFieldName]="'ContractNumber'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogTextBox>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <!-- Seller -->
-                    <tr class="FormFieldRow" *ngIf="IsSellerVisible">
-                        <td [attr.title]="SellerToolTip">
-                            <LogLabel [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <LogLov [ObjectFieldName]="'SellerId'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [SelectedValue]="SellerId"
-                                    [DataContext]="DataContext"
-                                    [DependencyFilter1IsList]="true"
-                                    [HideMaintenanceIcon]="true"
-                                    [DependencyFilter1Value]="SellerDependancy"
-                                    [LookUpTableName]="'Card'"
-                                    (SelectedItemChanged)="Seller = $event">
-                            </LogLov>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <!-- CustomerGroupId -->
-                    <tr class="FormFieldRow" *ngIf="IsCustomerGroupVisible">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'CustomerGroupId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-                        <td>
-                            <LogLov [ObjectFieldName]="'CustomerGroupId'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [SelectedValue]="CustomerGroupId"
-                                    [DataContext]="DataContext"
-                                    [DependencyFilter1IsList]="true"
-                                    [HideMaintenanceIcon]="true"
-                                    [LookUpTableName]="'CustomerGroup'">
-                            </LogLov>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <!-- Currency -->
-                    <tr class="FormFieldRow">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="TariffCurrencyTextCode"></LogLabel>
-                        </td>
-
-                        <td>
-                            <LogLov [ObjectFieldName]="'CurrencyId'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [SelectedValue]="CurrencyId"
-                                    [DataContext]="DataContext"
-                                    [HideMaintenanceIcon]="true"
-                                    [LookUpTableName]="'Currency'">
-                            </LogLov>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <!-- Unit Of Measurement -->
-                    <tr *ngIf="IsUnitOfMeasurementFieldVisible" class="FormFieldRow">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'UnitOfMeasurementCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <LogLov [ObjectFieldName]="'UnitOfMeasurementCode'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [SelectedValue]="UnitOfMeasurementCode"
-                                    [DataContext]="DataContext"
-                                    [HideMaintenanceIcon]="true"
-                                    [LookUpTableName]="'WeightUnit'">
-                            </LogLov>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <tr style="height: 5px;">
-                        <td colspan="3">
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <!-- Tariff Product -->
-                    <tr class="FormFieldRow" *ngIf="EntityPM.TypeCode == 'AFC'">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'TariffProductId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <LogLov [ObjectFieldName]="'TariffProductId'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [SelectedValue]="TariffProductId"
-                                    [DataContext]="DataContext"
-                                    [HideMaintenanceIcon]="true"
-                                    [LookUpTableName]="'TariffProduct'">
-                            </LogLov>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <tr style="height: 5px;">
-                        <td colspan="3">
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <!-- Notes -->
-                    <tr style="height: 85px;">
-                        <td style="vertical-align: top;">
-                            <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <div class="MediaFill">
-                                <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                            </div>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
                     <tr>
-                        <td colspan="3">
-                            <div></div>
-                        </td>
+                        <td style="float:left;">{{'Tariff.TH.General' | TextCodeTranslationPipe}}</td>
                     </tr>
                 </table>
             </td>
+        </tr>
 
-            <td style="width: 450px;" *ngIf="VisibileSurchargesArea">
+        <tr style="height: 1px;">
+            <td>
                 <table>
-                    <tr class="TabTitleRow">
-                        <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC'  && EntityPM.TypeCode != 'ICS' && EntityPM.TypeCode != 'ECS' && EntityPM.TypeCode != 'IFT'">
-                            Surcharges
-                        </td>
-
-                        <td *ngIf="EntityPM.TypeCode == 'ICC' || EntityPM.TypeCode == 'ECC'">
-                            Customs Charges
-                        </td>
-
-                        <td *ngIf="EntityPM.TypeCode == 'IFT'">
-                            Charges
-                        </td>
-
-
-                        <td *ngIf="EntityPM.TypeCode == 'ICS' || EntityPM.TypeCode == 'ECS'">
-                            Local Charges
-                        </td>
-                    </tr>
-
                     <tr>
-                        <td>
+                        <td style="width:360px;">
                             <table>
-                                <tr>
-                                    <!--Labels-->
-                                    <td style="width:30px;">
-                                        <table>
-                                            <tr class="FormFieldRow">
-                                                <td>1.</td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>2.</td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>3.</td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>4.</td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>5.</td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>6.</td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>7.</td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>8.</td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>9.</td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>10.</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div></div></td>
-                                            </tr>
-                                        </table>
+                                <!-- Name -->
+                                <tr class="customtrclass">
+                                    <td style="width:120px;">
+                                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
-
-                                    <!--Charges-->
-                                    <td style="width:160px;">
-                                        <table>
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge1Id'"
-                                                            [SelectedValue]="Surcharge1Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge2Id'"
-                                                            [SelectedValue]="Surcharge2Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge3Id'"
-                                                            [SelectedValue]="Surcharge3Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge4Id'"
-                                                            [SelectedValue]="Surcharge4Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge5Id'"
-                                                            [SelectedValue]="Surcharge5Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge6Id'"
-                                                            [SelectedValue]="Surcharge6Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge7Id'"
-                                                            [SelectedValue]="Surcharge7Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge8Id'"
-                                                            [SelectedValue]="Surcharge8Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge9Id'"
-                                                            [SelectedValue]="Surcharge9Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge10Id'"
-                                                            [SelectedValue]="Surcharge10Id"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'ChargesType'"
-                                                            [HideLastColumn]="true"
-                                                            [RunToggleMode]="true"
-                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div></div></td>
-                                            </tr>
-                                        </table>
+                                    <td style="width:230px;">
+                                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                     </td>
-
-                                    <td style="width:5px">
+                                    <td>
                                         <div></div>
                                     </td>
-
-                                    <!--Measurements-->
-                                    <td>
-                                        <table>
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge1UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge1UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge2UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge2UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge3UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge3UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge4UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge4UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge5UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge5UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge6UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge6UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge7UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge7UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge8UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge8UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge9UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge9UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'Surcharge10UOM'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="Surcharge10UOM"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><div></div></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-
                                 </tr>
 
-                            </table>
-                        </td>
-
-                        <td style="width:100px;"><div></div></td>
-
-                    </tr>
-                </table>
-            </td>
-
-            <td style="width: 250px;" *ngIf="IsContainersAreaVisible">
-                <table>
-                    <tr class="TabTitleRow">
-                        <td>
-                            Containers Types
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table>
+                                <!-- ContractNumber -->
                                 <tr class="FormFieldRow">
-                                    <td style="width:30px">
-                                        <div>1.</div>
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ContractNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
-                                        <LogLov [ObjectFieldName]="'ContainerType1Id'"
-                                                [SelectedValue]="ContainerType1Id"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'PackageType'"
-                                                [HideLastColumn]="true"
-                                                [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
-                                                [DependencyFilter2Value]="true">
-                                        </LogLov>
+                                        <LogTextBox [ObjectFieldName]="'ContractNumber'" [InputType]="'integer'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
+                                <!-- Seller -->
                                 <tr class="FormFieldRow">
-                                    <td style="width:30px">
-                                        <div>2.</div>
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
-                                        <LogLov [ObjectFieldName]="'ContainerType2Id'"
-                                                [SelectedValue]="DataContext.ContainerType2Id"
+                                        <LogLov [ObjectFieldName]="'SellerId'"
                                                 [ObjectTableName]="ObjectTableName"
+                                                [SelectedValue]="SellerId"
                                                 [DataContext]="DataContext"
-                                                [LookUpTableName]="'PackageType'"
-                                                [HideLastColumn]="true"
-                                                [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
-                                                [DependencyFilter2Value]="true">
+                                                [DependencyFilter1IsList]="true"
+                                                [HideMaintenanceIcon]="true"
+                                                [DependencyFilter1Value]="'AL'"
+                                                [LookUpTableName]="'Card'">
                                         </LogLov>
+                                    </td>
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
+                                <!-- Currency -->
                                 <tr class="FormFieldRow">
-                                    <td style="width:30px">
-                                        <div>3.</div>
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
-                                        <LogLov [ObjectFieldName]="'ContainerType3Id'"
-                                                [SelectedValue]="DataContext"
+                                        <LogLov [ObjectFieldName]="'CurrencyId'"
                                                 [ObjectTableName]="ObjectTableName"
+                                                [SelectedValue]="CurrencyId"
                                                 [DataContext]="DataContext"
-                                                [LookUpTableName]="'PackageType'"
-                                                [HideLastColumn]="true"
-                                                [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
-                                                [DependencyFilter2Value]="true">
+                                                [HideMaintenanceIcon]="true"
+                                                [LookUpTableName]="'Currency'">
                                         </LogLov>
-                                    </td>
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td style="width:30px">
-                                        <div>4.</div>
                                     </td>
                                     <td>
-                                        <LogLov [ObjectFieldName]="'ContainerType4Id'"
-                                                [SelectedValue]="DataContext"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'PackageType'"
-                                                [HideLastColumn]="true"
-                                                [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
-                                                [DependencyFilter2Value]="true">
-                                        </LogLov>
-                                    </td>
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td style="width:30px">
-                                        <div>5.</div>
-                                    </td>
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'ContainerType5Id'"
-                                                [SelectedValue]="DataContext"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'PackageType'"
-                                                [HideLastColumn]="true"
-                                                [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
-                                                [DependencyFilter2Value]="true">
-                                        </LogLov>
+                                        <div></div>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td></td>
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
                                 </tr>
                             </table>
+                        </td>
+
+                        <td style="width:50px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:360px;">
+                            <table>
+                                <!-- StartDate -->
+                                <tr class="FormFieldRow">
+                                    <td style="width:120px;">
+                                        <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width:230px;">
+                                        <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- ExpirationDate -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [SelectedDateValue]="ExpirationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Description -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
                         </td>
                     </tr>
                 </table>
             </td>
+        </tr>
 
+        <tr style="height: 20px;">
             <td>
                 <div></div>
             </td>
         </tr>
+
+        <tr class="SectionHeader">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <label>Tariffs</label>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width:95px;">
+                            <Hyperlink (click)="DownloadExcel()" [Text]="'Download Excel'"></Hyperlink>
+                        </td>
+
+                        <td width="5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:95px;">
+                            <input class="upload" style="display: none;width:65px"
+                                   type="file" (change)="OnFileChanged($event)"
+                                   #fileInput>
+                            <a href="#">
+                                <button (click)="fileInput.click()">Upload Excel</button>
+                            </a>
+                            <!--<Hyperlink (click)="UploadExcel()" [Text]="'Upload Excel'"></Hyperlink>-->
+                        </td>
+
+                        <td width="5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 20px; padding: 3px;">
+                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
+                        </td>
+
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- Tariff Grid -->
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource">
+
+                                    <!-- OriginPortId -->
+                                    <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.OriginPortCode}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'OriginPortId'"
+                                                        [ObjectTableName]="'TarifflLine'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Port'"
+                                                        [HideColumns]="true"
+                                                        (SelectedItemChanged)="item.OriginPort = $event"
+                                                        [DisplayMemberPath]="'Code'"
+                                                        [FocusOnMe]="true"
+                                                        [SelectedValue]="item.OriginPortId">
+                                                </LogLov>
+
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- DestinationPortId -->
+                                    <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.DestinationPortCode}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'DestinationPortId'"
+                                                        [ObjectTableName]="'TarifflLine'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Port'"
+                                                        [HideColumns]="true"
+                                                        (SelectedItemChanged)="item.DestinationPort = $event"
+                                                        [DisplayMemberPath]="'Code'"
+                                                        [FocusOnMe]="true"
+                                                        [SelectedValue]="item.DestinationPortId">
+                                                </LogLov>
+
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- MinPrice -->
+                                    <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.MinPrice}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                            [Text]="item.MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Step1Price -->
+                                    <log-column *ngIf="Step1PriceVisibility" [header]="Step1PriceLabel" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.Step1Price}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step1Price'" [InputType]="'double'" [DataContext]="item"
+                                                            [Text]="item.Step1Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Step2Price -->
+                                    <log-column *ngIf="Step2PriceVisibility" [header]="Step2PriceLabel" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.Step2Price}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step2Price'" [InputType]="'double'" [DataContext]="item"
+                                                            [Text]="item.Step2Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Step3Price -->
+                                    <log-column *ngIf="Step3PriceVisibility" [header]="Step3PriceLabel" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.Step3Price}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step3Price'" [InputType]="'double'" [DataContext]="item"
+                                                            [Text]="item.Step3Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Step4Price -->
+                                    <log-column *ngIf="Step4PriceVisibility" [header]="Step4PriceLabel" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.Step4Price}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step4Price'" [InputType]="'double'" [DataContext]="item"
+                                                            [Text]="item.Step4Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Step5Price -->
+                                    <log-column *ngIf="Step5PriceVisibility" [header]="Step5PriceLabel" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.Step5Price}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step5Price'" [InputType]="'double'" [DataContext]="item"
+                                                            [Text]="item.Step5Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Step6Price -->
+                                    <log-column *ngIf="Step6PriceVisibility" [header]="Step6PriceLabel" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.Step6Price}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step6Price'" [InputType]="'double'" [DataContext]="item"
+                                                            [Text]="item.Step6Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Step7Price -->
+                                    <log-column *ngIf="Step7PriceVisibility" [header]="Step7PriceLabel" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.Step7Price}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step7Price'" [InputType]="'double'" [DataContext]="item"
+                                                            [Text]="item.Step7Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Step8Price -->
+                                    <log-column *ngIf="Step8PriceVisibility" [header]="Step8PriceLabel" [width]="'50'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.Step8Price}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step8Price'" [InputType]="'double'" [DataContext]="item"
+                                                            [Text]="item.Step8Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Tools Button -->
+                                    <log-column [width]="'80'" [Editable]="true" [Alignment]="'right'">
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <span class="CellSeparator" style="float: left;"></span>
+                                            <div style="width: 22px; float: left; height:20px; padding-top: 2px; display:block">
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditTariffButtonClicked(item)"></IconButton>
+                                            </div>
+                                            <div style="width: 22px; float: left; height:20px; padding-top: 2px; display:block">
+                                                <IconButton [Name]="'delete'" [IsSmall]="true" (click)="DeleteTariffButtonClicked(item)"></IconButton>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
     </table>
 </div>

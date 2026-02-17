@@ -112,7 +112,7 @@
         }
 </style>
 
-<div [attr.data-cy]="DataCy" class="ComboBox" [class.ComboBoxDisabled]="IsDisabled" [attr.id]="ControlId" style="width:250px;" (focus)="OnFocus()" (blur)="OnLostFocus()" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()" tabindex="0">
+<div class="ComboBox" [class.ComboBoxDisabled]="IsDisabled" [attr.id]="ControlId" style="width:250px;" (focus)="OnFocus()" (blur)="OnLostFocus()" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()" tabindex="0">
     <table (mousedown)="mousedown()">
         <tr>
             <td style="width: 2px;">
@@ -138,7 +138,7 @@
     <div class="ComboBoxDropdown" style="top:214px;border-top:solid 1px #aaaaaa" [attr.id]="DropdownId">
         <div class="ScrollViewer">
             <ul class="ScrollContent" [attr.id]="ListControlId">
-                <li [ngStyle]="QueryCode == 'LedgerTransaction.LedgerTransactions' && {'display': 'none'}" class="TextTrimming" style="border:none;height: 22px;margin-top: 1px;min-height: 22px;padding-left: 5px;padding-right: 5px;text-align: left;width: 100%;">
+                <li class="TextTrimming" style="border:none;height: 22px;margin-top: 1px;min-height: 22px;padding-left: 5px;padding-right: 5px;text-align: left;width: 100%;">
                     <table>
                         <tr>
                             <td style="width:90px;cursor:default;">Greater Than</td>
@@ -148,7 +148,7 @@
                         </tr>
                     </table>
                 </li>
-                <li [ngStyle]="QueryCode == 'LedgerTransaction.LedgerTransactions' && {'display': 'none'}" class="TextTrimming" style="border:none;height: 22px;margin-top: 1px;min-height: 22px;padding-left: 5px;padding-right: 5px;text-align: left;width: 100%;">
+                <li class="TextTrimming" style="border:none;height: 22px;margin-top: 1px;min-height: 22px;padding-left: 5px;padding-right: 5px;text-align: left;width: 100%;">
                     <table>
                         <tr>
                             <td style="width:90px;cursor:default;">Less Than</td>
@@ -158,7 +158,7 @@
                         </tr>
                     </table>
                 </li>
-                <li [attr.data-cy]="'TodayDateItem'" class="ComboBoxItem TextTrimming" (click)="ItemClicked('Today')" style="border:none;" [class.Selected]="'Today' === SelectedItem">
+                <li class="ComboBoxItem TextTrimming" (click)="ItemClicked('Today')" style="border:none;" [class.Selected]="'Today' === SelectedItem">
                     <table>
                         <tr>
                             <td style="width:90px;cursor:default;">Today</td>
@@ -175,26 +175,6 @@
                             <td style="width:90px;cursor:default;">Yesterday</td>
                             <td style="float:left;cursor:default;">
                                 <span tabindex="0" (mousedown)="ItemClicked('Yesterday')">{{Yesterday}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </li>
-                <li *ngIf="HasAdvancedFiltersOptionsToggle" class="ComboBoxItem TextTrimming" (click)="ItemClicked('Less than Today')" style="border:none;" [class.Selected]="'Less than Today' === SelectedItem">
-                    <table>
-                        <tr>
-                            <td style="width:90px;cursor:default;">Less than Today</td>
-                            <td style="float:left;cursor:default;margin-left: 70px;">
-                                <span tabindex="0" (mousedown)="ItemClicked('Less than Today')">{{LessThanToday}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </li>
-                <li *ngIf="HasAdvancedFiltersOptionsToggle" class="ComboBoxItem TextTrimming" (click)="ItemClicked('Less than or equal Today')" style="border:none;" [class.Selected]="'Less than or equal Today' === SelectedItem">
-                    <table>
-                        <tr>
-                            <td style="width:90px;cursor:default;">Less than or equal Today</td>
-                            <td style="float:left;cursor:default;margin-left: 10px;">
-                                <span tabindex="0" (mousedown)="ItemClicked('Less than Today')">{{LessThanOrEqualToday}}</span>
                             </td>
                         </tr>
                     </table>

@@ -1,15 +1,13 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -37,9 +35,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("Vendor", authToken.Tenant);
-
-                VendorQueryService Service = new VendorQueryService(tenant);
+				VendorQueryService Service = new VendorQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetVendorById(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
@@ -60,25 +56,22 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-					SecurityUtility.AuthenticateAPICall(tenant);
-                    SecurityUtility.AuthenticateAccessibleAPI("Vendor", authToken.Tenant);
-
-                    Logitude.BL.Security.ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, tenant);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+					ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     string computingPartnerCode = "";
                     if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
                         computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
                     }
 
-                    ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                     CardRepository cardRepository = new CardRepository(MyContext);
 
                     if (!string.IsNullOrEmpty(entity.Code))
                     {
-                        bool exist = (from a in cardRepository.GetCards(tenant)
-                                      where a.PartnerTypeId == "VD" && a.Code == entity.Code && a.Tenant == tenant
+                        bool exist = (from a in cardRepository.GetCards(authToken.Tenant)
+                                      where a.PartnerTypeId == "VD" && a.Code == entity.Code && a.Tenant == authToken.Tenant
                                       select a).Any();
 
                         if (exist)
@@ -87,8 +80,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                     }
 
-                    VendorQueryService mappingService = new VendorQueryService(tenant);
-                    VendorPM entityPM = mappingService.VendorCustomDataMappingAndValidating(entity, tenant, computingPartnerCode);
+                    VendorQueryService mappingService = new VendorQueryService(authToken.Tenant);
+                    VendorPM entityPM = mappingService.VendorCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
@@ -109,44 +102,34 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 throw new ApplicationException("Main address city is required");
                             }
                         }
-                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
-                        {
-                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
-                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
-                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
 
-                        }
-                        if (entity.GLAccount != null && !string.IsNullOrEmpty(entity.GLAccount.InternalNumber))
-                        {
-                            entityPM.Code = entity.GLAccount.InternalNumber;
-                        }
-                        VendorService service = new VendorService(MyContext, tenant);
+                        VendorService service = new VendorService(MyContext, authToken.Tenant);
                         service.Create(entityPM);
 
                         #region GLAccount
                         if (entity.GLAccount != null)
                         {
                             FullAccountingHelper fullAccountingHelper = new FullAccountingHelper();                            
-                            Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.Id, tenant);
+                            Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.Id, authToken.Tenant);
                             if (card != null)
                             {
                                 GLAccountPM gLAccountEntity = new GLAccountPM();
-                                gLAccountEntity.Tenant = tenant;
+                                gLAccountEntity.Tenant = authToken.Tenant;
                                 gLAccountEntity.PassedFromAPI = true;
                                 gLAccountEntity.ChartOfAccountsTypeCode = "4";
                                 gLAccountEntity.RevenueExpenseType = "3";
                                 gLAccountEntity.AccountTypeCode = "3";
                                 gLAccountEntity.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                                gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
-                                gLAccountEntity.DisplayNumber = entity.GLAccount.InternalNumber;
-                                gLAccountEntity.DeductionFileNumber = string.IsNullOrWhiteSpace(entity.GLAccount.DeductionFileNumber) ? null : entity.GLAccount.DeductionFileNumber;
-                                gLAccountEntity.AssessingOfficeCode = string.IsNullOrWhiteSpace(entity.GLAccount.AssessingOfficeCode) ? null : entity.GLAccount.AssessingOfficeCode;
-                                gLAccountEntity.DeductionFileTypeId = entity.GLAccount.DeductionTypeCode;
-                                gLAccountEntity.ConsolidationVat = string.IsNullOrWhiteSpace(entity.GLAccount.ConsolidationVat) ? null : entity.GLAccount.ConsolidationVat;
-                                MapGLAccountTaxWithholdingFields(entity, gLAccountEntity);
 
                                 //DisplayNumber
-                                SetDisplayNumber(entity, card, gLAccountEntity);
+                                if (string.IsNullOrEmpty(entity.GLAccount.DisplayNumber))
+                                {
+                                    gLAccountEntity.DisplayNumber = card.Code;
+                                }
+                                else
+                                {
+                                    gLAccountEntity.DisplayNumber = entity.GLAccount.DisplayNumber;
+                                }
 
                                 //EnglishName
                                 if (string.IsNullOrEmpty(entity.GLAccount.EnglishName))
@@ -175,16 +158,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 }
                                 else
                                 {
-                                    ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(tenant);
+                                    ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(authToken.Tenant);
                                     ChartOfAccount chartOfAccount = new ChartOfAccount();
 
                                     if (!string.IsNullOrEmpty(entity.GLAccount.ChartOfAccount.Id))
                                     {
-                                        chartOfAccount = chartOfAccountRepository.GetSingle(entity.GLAccount.ChartOfAccount.Id, tenant);
+                                        chartOfAccount = chartOfAccountRepository.GetSingle(entity.GLAccount.ChartOfAccount.Id, authToken.Tenant);
                                     }
                                     else
                                     {
-                                        chartOfAccount = chartOfAccountRepository.GetSingleByCode(entity.GLAccount.ChartOfAccount.Code, tenant);
+                                        chartOfAccount = chartOfAccountRepository.GetSingleByCode(entity.GLAccount.ChartOfAccount.Code, authToken.Tenant);
                                     }
 
                                     if (chartOfAccount == null)
@@ -214,7 +197,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     else
                                     {
                                         CurrencyRepository currencyRepository = new CurrencyRepository(MyContext);
-                                        Currency currency = currencyRepository.GetSingleCurrencyByCode(entity.GLAccount.Currency.Code, tenant);
+                                        Currency currency = currencyRepository.GetSingleCurrencyByCode(entity.GLAccount.Currency.Code, authToken.Tenant);
                                         if (currency == null)
                                         {
                                             throw new ApplicationException("Currency with Code " + entity.GLAccount.Currency.Code + " doesn't exist");
@@ -232,7 +215,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     }
                                     else
                                     {
-                                        ReconcileMethodRepository reconcileMethodRepository = new ReconcileMethodRepository(tenant);
+                                        ReconcileMethodRepository reconcileMethodRepository = new ReconcileMethodRepository(authToken.Tenant);
                                         ReconcileMethod reconcileMethod = reconcileMethodRepository.GetSingle(entity.GLAccount.ReconcileMethod.Code);
                                         if (reconcileMethod == null)
                                         {
@@ -260,8 +243,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         scope.Complete();
                     }
 
-                    var result = mappingService.GetVendorById(entityPM.Id, tenant);
-                    APIHelper.AddCommunicationLog("D", entity, result, "Vendor", entityPM.Id, "Vendor API", tenant);
+                    var result = mappingService.GetVendorById(entityPM.Id, authToken.Tenant);
+                    APIHelper.AddCommunicationLog("D", entity, result, "Vendor", entityPM.Id, "Vendor API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
 
@@ -277,55 +260,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Vendor", null, "Vendor API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            }
-        }
-
-        private static void MapGLAccountTaxWithholdingFields(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
-        {
-            gLAccountEntity.DeductionFileNumber = entity.GLAccount.DeductionFileNumber;
-            gLAccountEntity.AssessingOfficeCode = GetTaxWithholdingAssessingOfficeId(entity, gLAccountEntity);
-            gLAccountEntity.DeductionFileTypeId = GetDeductionFileTypeId(entity, gLAccountEntity);
-            gLAccountEntity.DeductionTypeId = GetDeductionTypeId(entity, gLAccountEntity);
-            gLAccountEntity.ConsolidationVat = entity.GLAccount.ConsolidationVat;
-            gLAccountEntity.Occupation = entity.GLAccount.Occupation;
-        }
-        
-
-        private static string GetDeductionTypeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
-        {
-            AccountingCompanyTypeQueryService accountingCompanyTypeService = new AccountingCompanyTypeQueryService(gLAccountEntity.Tenant);
-            var accountingCompanyType = accountingCompanyTypeService.GetByCode(entity.GLAccount.DeductionTypeCode, gLAccountEntity.Tenant);
-            return accountingCompanyType != null ? accountingCompanyType.Id : null;
-        }
-
-        private static string GetDeductionFileTypeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
-        {
-            WithholdingTaxDeductionTypeQueryService taxDeductionTypeService = new WithholdingTaxDeductionTypeQueryService(gLAccountEntity.Tenant);
-            var taxDeductionType = taxDeductionTypeService.GetByCode(entity.GLAccount.DeductionFileTypeCode, gLAccountEntity.Tenant);
-             return taxDeductionType!= null ? taxDeductionType.Id:null;
-        }
-
-        private static string GetTaxWithholdingAssessingOfficeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
-        {
-            TaxWithholdingAssessOfficeQueryService assessOfficeService = new TaxWithholdingAssessOfficeQueryService(gLAccountEntity.Tenant);
-            var assessOffice = assessOfficeService.GetByNumber(entity.GLAccount.AssessingOfficeCode, gLAccountEntity.Tenant);
-            return assessOffice != null? assessOffice.Id:null;
-        }
-
-
-        private static void SetDisplayNumber(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, Simplog.Data.CommonDataModel.EntityPOCOs.Card card, GLAccountPM gLAccountEntity)
-        {
-            if (!string.IsNullOrEmpty(entity.GLAccount.DisplayNumber))
-            {
-                gLAccountEntity.DisplayNumber = entity.GLAccount.DisplayNumber;
-            }
-            else if (!string.IsNullOrEmpty(entity.GLAccount.InternalNumber))
-            {
-                gLAccountEntity.DisplayNumber = entity.GLAccount.InternalNumber;
-            }
-            else
-            {
-                gLAccountEntity.DisplayNumber = card.Code;
             }
         }
 

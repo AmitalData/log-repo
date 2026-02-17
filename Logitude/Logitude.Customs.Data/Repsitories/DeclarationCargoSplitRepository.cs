@@ -28,15 +28,6 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
-
-        public List<DeclarationCargoSplit> GetDeclarationCargoSplitsList(List<string> declarationIds, int tenant)
-        {
-            return (from a in context.DeclarationCargoSplits
-                    where declarationIds.Contains( a.DeclarationId) && a.Tenant == tenant
-                    select a).ToList();
-        }
-
-
         public string GetIdByDeclarationCargoSplitRequestNumber(string declarationCargoSplitRequestNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationCargoSplitRequestNumber)) return "";
@@ -51,13 +42,13 @@ namespace Logitude.Customs.Data.Repsitories
 
         public string GetIdByCargoIdentifiers(string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, int cargoIdentifierType, int tenant)
         {
-            if (String.IsNullOrWhiteSpace(cargoIdentifierKey1) || String.IsNullOrWhiteSpace(cargoIdentifierKey2)) return "";
+            if (String.IsNullOrWhiteSpace(cargoIdentifierKey1) || String.IsNullOrWhiteSpace(cargoIdentifierKey2) || String.IsNullOrWhiteSpace(cargoIdentifierKey3)) return "";
             string cargoTypeCode = null;
             if (cargoIdentifierType > 0) cargoTypeCode = cargoIdentifierType.ToString();
             return
                   (
                   from rec in context.DeclarationCargoSplits
-                  where rec.ManifestNumber == cargoIdentifierKey1 && rec.SecondCargoID == cargoIdentifierKey2 && (rec.ThirdCargoID == cargoIdentifierKey3 || string.IsNullOrEmpty(cargoIdentifierKey3)) && rec.CargoTypeCode == cargoTypeCode && rec.Tenant == tenant
+                  where rec.ManifestNumber == cargoIdentifierKey1 && rec.SecondCargoID == cargoIdentifierKey2 && rec.ThirdCargoID == cargoIdentifierKey3 && rec.CargoTypeCode == cargoTypeCode && rec.Tenant == tenant
                   select rec.Id
                   )
                   .FirstOrDefault();

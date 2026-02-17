@@ -3,10 +3,9 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +23,6 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                 entityPM.Id = IdCounter.GetNumber("BIReport", entityPM.Tenant);
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                entityPM.LastRunId = InsertLastRunDetailsData(entityPM);
             }
         }
 
@@ -77,21 +75,6 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                     Notes = changesXml
                 });
             }
-        }
-
-        private string InsertLastRunDetailsData(BIReportPM entityPM)
-        {
-            var lastRunDetailUpdateService = new LastRunDetailUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            LastRunDetailPM lastRunDetailPM = new LastRunDetailPM()
-            {
-                ChangeSetOp = ChangeSetOperation.Insert,
-                Tenant = entityPM.Tenant,
-                LastRunDate = entityPM.CreateDate,
-                LastRunByUserId = entityPM.CreatedByUserId
-            };
-
-            lastRunDetailUpdateService.Update(lastRunDetailPM, false);
-            return lastRunDetailPM.Id;
         }
     }
 }

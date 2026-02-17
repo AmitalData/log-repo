@@ -1,11 +1,10 @@
-
+﻿
 <style>
     .subTitle {
         color: #1b90cb;
         font-size: 16px;
     }
-
-    .DisbleBox {
+     .DisbleBox{
         display: inline-block;
         border: 1px solid #ffd800;
         border-radius: 5px;
@@ -14,31 +13,9 @@
         margin: 5px;
         color: gray;
         font-family: sans-serif;
-    }
-    
-    .check-all-werapper {
-        height: 26px;
-        display: inline-block;
-        width: 53px;
-    }
-    
-
-    .title-container {
-        display: inline-block;
-        padding: 0px;
-        height: 18px;
-        padding-right: 14px;
-    }
-
-    .ActionButton {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-    }
-
-    .ToggleButton {
-        border: none;
-    }
+     }
 </style>
-<table *ngIf=" EntityPM != null && EntityPM.Direction != 'E'">
+<table>
     <tr>
         <td>
             <div class="TableHolder">
@@ -55,27 +32,16 @@
                                     <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
                                 </div>
                             </div>
-                            <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="width: 100%;text-align:center">
+                            <div *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="width: 100%;text-align:center">
                                 <div class="DisbleBox">
                                     {{DisplayOnlyMessage}}
                                 </div>
                             </div>
                         </td>
-                      
-                        <td style="height: 20px; padding: 5px; padding-bottom: 0px;">
-                            <div>
-                                <table>
-                                    <tr>
-                                        <td *ngIf="!IsDisplayOnly && MultiUpdate" style="float:left;">
-                                            <button class="Button" (click)="OpenMultiUpdateWindow()">  עדכון קוד תהליך/הנחה פטור </button>
-                                        </td>
-                                        <td style="width:10px;"><div></div></td>
-                                        <td style="width:15px;">
-                                            <div><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+
+                        <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                            <div><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
+
                         </td>
 
                     </tr>
@@ -93,152 +59,128 @@
 
 
                                     <log-column [header]="'Customs.SupplierInvoice.F.SequenceNumeric' | TextCodeTranslationPipe" [binding]="'SequenceNumeric'" [width]="'30'" [Alignment]="'left'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.SequenceNumeric}}</span>
-                                                </div>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.SequenceNumeric}}</span>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoice.F.InvoiceNumber' | TextCodeTranslationPipe" [binding]="'InvoiceNumber'" [width]="'80'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.InvoiceNumber}}</span>
-                                                </div>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.InvoiceNumber}}</span>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoice.F.IssueDate' | TextCodeTranslationPipe" [binding]="'IssueDate'" [width]="'75'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.IssueDate | DateTimeToDatePipe}}</span>
-                                                </div>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.IssueDate | DateTimeToDatePipe}}</span>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoice.F.IncotermCode' | TextCodeTranslationPipe" [binding]="'IncotermCode'" [width]="'60'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.IncotermCode}}</span>
-                                                </div>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.IncotermCode}}</span>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [width]="'120'" [visibility]="'visibile'" [Alignment]="'right'" [header]="'Customs.SupplierInvoice.F.InvoiceAmount' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="padding-right:5px">{{item.InvoiceAmount | NumbersPipe:'n2'}}</span>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span style="padding-right:5px">{{item.InvoiceAmount | NumbersPipe:'n2'}}</span>
 
-                                                    <span style="float: right;">{{item.InvoiceCurrencyTypeCode}}</span>
-                                                </div>
+                                                <span style="float: right;">{{item.InvoiceCurrencyTypeCode}}</span>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoice.F.IssueCountryCode' | TextCodeTranslationPipe" [binding]="'IssueCountryName'" [width]="'80'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.IssueCountryName}}</span>
-                                                </div>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.IssueCountryName}}</span>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoice.F.VendorName' | TextCodeTranslationPipe" [binding]="'VendorName'" [width]="'90'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.VendorName}}</span>
-                                                </div>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.VendorName}}</span>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoice.F.PreferenceDocumentTypeCode' | TextCodeTranslationPipe" [binding]="'PreferenceDocumentTypeName'" [width]="'100'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.PreferenceDocumentTypeName}}</span>
-                                                </div>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.PreferenceDocumentTypeName}}</span>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.Declaration.O.FreightAmount' | TextCodeTranslationPipe" [binding]="'TotalFreightInFreightCurrency'" [width]="'90'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="padding-right:5px">{{item.TotalFreightInFreightCurrency | NumbersPipe:'n2'}}</span>
-                                                    <span style="float: right; ">{{item.FreightCurrencyTypeCode}}</span>
-                                                </div>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span style="padding-right:5px">{{item.TotalFreightInFreightCurrency | NumbersPipe:'n2'}}</span>
+                                                <span style="float: right; ">{{item.FreightCurrencyTypeCode}}</span>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [width]="'90'" [visibility]="'visibile'" [Alignment]="'right'" [header]="'Customs.Declaration.O.Insurance' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="padding-right:5px">{{item.InsuranceAmount | NumbersPipe:'n2'}}</span>
-                                                    <span style="float: right; ">{{item.InsruanceCurrencyTypeCode}}</span>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span style="padding-right:5px">{{item.InsuranceAmount | NumbersPipe:'n2'}}</span>
+                                                <span style="float: right; ">{{item.InsruanceCurrencyTypeCode}}</span>
+                                               
+                                            </div>
 
-                                                </div>
-
-
-                                            </log-cell-template>
-                                        </ng-template>
+                                           
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template  [IgnoreMods]="true" template="let item" #logcelltemplate>
 
-                                                <span class="CellSeparator" style="float: right;"></span>
+                                            <span class="CellSeparator" style="float: right;"></span>
 
-                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
-                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>
-                                                </div>
-                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
-                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
-                                                </div>
-                                                <!--<div style="width: 22px;  height:20px;float:left; padding-top: 2px;">
-                                                    <CheckBox [IsChecked]="IsPrimary" ></CheckBox>
-                                                    <LogCheckBox [Checked]="item.IsPrimarySupplierInvoice" [ObjectTableName]="'Customs.SupplierInvoice'" [ObjectFieldName]="'IsPrimarySupplierInvoice'" [DataContext]="item" (ValueChanged)="IsPrimarySupplierInvoiceChecked($event,item)"></LogCheckBox>
-                                                </div>-->
+                                            <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>
+                                            </div>
+                                            <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                            </div>
+                                            <!--<div style="width: 22px;  height:20px;float:left; padding-top: 2px;">
+                                                <CheckBox [IsChecked]="IsPrimary" ></CheckBox>
+                                                <LogCheckBox [Checked]="item.IsPrimarySupplierInvoice" [ObjectTableName]="'Customs.SupplierInvoice'" [ObjectFieldName]="'IsPrimarySupplierInvoice'" [DataContext]="item" (ValueChanged)="IsPrimarySupplierInvoiceChecked($event,item)"></LogCheckBox>
+                                            </div>-->
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [width]="'20'" [Editable]="true" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="padding-top: 1px; width: 18px; height:20px;float:left;vertical-align:central">
-                                                    <LogCheckBox [Checked]="item.IsPrimarySupplierInvoice" [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                                 [ObjectFieldName]="'IsPrimarySupplierInvoice'" [DataContext]="item" [HideColumns]="true"
-                                                                 (ValueChanged)="IsPrimarySupplierInvoiceChecked($event,item)"></LogCheckBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template  [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="padding-top: 1px; width: 18px; height:20px;float:left;vertical-align:central">
+                                                <LogCheckBox [Checked]="item.IsPrimarySupplierInvoice" [ObjectTableName]="'Customs.SupplierInvoice'" 
+                                                             [ObjectFieldName]="'IsPrimarySupplierInvoice'" [DataContext]="item" [HideColumns]="true"
+                                                             (ValueChanged)="IsPrimarySupplierInvoiceChecked($event,item)"></LogCheckBox>
+                                            </div>
+                                        </log-cell-template>
 
                                     </log-column>
 
@@ -260,7 +202,7 @@
                         <td *ngIf="IsAccumulated">
                             <div style="width: 100%;text-align:center">
                                 <div class="DisbleBox">
-                                    {{IsAccumulatedMessageText}}
+                                   {{IsAccumulatedMessageText}}
 
 
 
@@ -273,19 +215,20 @@
 
 
                             <div class="GeneratedGridContainer" style="padding:5px">
-                                <logitude-grid GridWidth="100%" GridHeight="100%"
-                                               [ObjectTable]="ObjectTableName"
-                                               [dataSource]="DataSource"
+                                <logitude-grid GridWidth="100%" GridHeight="100%" 
+                                               [ObjectTable]="ObjectTableName" 
+                                               [dataSource]="DataSource" 
                                                (AfterViewInitCompleted)="ViewInitCompleted($event)"
                                                (rowSelectedEvent)="OnRowSelected2($event)"
-                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                               [columns]="columns"
+                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent" 
+                                               [columns]="columns" 
                                                [QueryChangeEvent]="onQueryChangeEvent"
                                                [SelectedRow]="SelectedRow2"
-                                               [IsCustomTemplate]="true" [IsGradiantSelectedColor]="true">
+                                               [IsCustomTemplate]="true" [IsGradiantSelectedColor]="true"
+                                               >
                                 </logitude-grid>
                             </div>
-                            <!--<div class="GeneratedGridContainer">
+                            <!--<div class="GeneratedGridContainer"> 
                                 <logitude-edit-grid GridWidth="100%"
                                                     GridHeight="100%"
                                                     [ItemSource]="InvoiceItems">
@@ -312,356 +255,3 @@
         </td>
     </tr>
 </table>
-<table *ngIf="EntityPM != null &&  EntityPM.Direction=='E'">
-    <tr>
-        <td>
-            <div class="TableHolder">
-                <table *ngIf="IsVisible">
-
-                    <tr style="height:25px">
-                        
-                        <td class="check-all-werapper">
-                            <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div class="ActionButton" style="width: 35px;height:23px;padding-right:4px ">
-                                                <CheckBox [IsChecked]="IsChecked" (Checked)="$event ? OnAllBtnClicked() : OnNoneBtnClicked()"></CheckBox>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
-                                                <img src="./Images/ToggleIcon.png" style="float:left;" />
-                                                <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
-                                                    <button style="text-align:right" (click)="OnAllBtnClicked()">
-                                                        {{'Customs.General.O.SelectAll' | TextCodeTranslationPipe}}
-                                                    </button>
-                                                    <button style="text-align:right" (click)="OnNoneBtnClicked()">
-                                                        {{ 'Customs.General.O.CancelSelect' | TextCodeTranslationPipe }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-
-                        <td class="title-container">
-                        <div class="TabTitleRow" style="width:150px">  {{'Customs.Declaration.TH.ExporterInvoices'| TextCodeTranslationPipe}} </div>
-                        </td>                        
-                        <td>
-                            <div style="width:100%;text-align:center" *ngIf="IsDisplayOnly">
-                                <div class="DisbleBox">
-                                    {{DisplayOnlyMessage}}
-                                    <span style="padding: 0px 16px;">-</span>
-                                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
-                                </div>
-                            </div>
-                            <div *ngIf="!IsDisplayOnly" style="width: 100%;text-align:center">
-                                <div *ngIf="ShowStorageStatusMessage || IsDisplayMessage" class="DisbleBox">
-                                    {{DisplayOnlyMessage}}
-                                </div>
-                            </div>
-                        </td>
-                        <td *ngIf="IsOcr" style="height: 20px;padding: 5px;padding-bottom: 0px;width: 80px;">
-                            <div>
-                                <button  [disabled]="IsDisplayOnly || SupplierInvoiceComprehensiveUpdate.length < 1" class="Button" (click)="OpenOcrDefult()" style="width: 80px; margin-right: 15px; display: inline-block;">עדכון גורף</button>
-                                <input     style="display:none;width:65px" class="upload" />
-                            </div>                                        
-                        </td>
-                        <td *ngIf="showUploadInvoicesFromCsvBtn" style="height: 20px;padding: 5px;padding-bottom: 0px;width: 150px;">
-                            <div>
-                                <button *ngIf="showUploadInvoicesFromCsvBtn" [disabled]="IsDisplayOnly || ItemsSource.Length < 1" class="Button" (click)="OpenUpLoadFile()" style="width: 140px; margin-right: 15px; display: inline-block;">טעינת חשבונות יצואן מאקסל</button>
-                                <input #myInput accept=".csv,.CSV" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
-                            </div>                                        
-                        </td>
-                        <td  style="height: 20px;padding: 5px;padding-bottom: 0px;width: 200px;">
-                            <div>
-                                <button *ngIf="showMultiUpdateWindowBtn" [disabled]="IsDisplayOnly" class="Button" (click)="OpenMultiUpdateWindow()" style="width: 140px; display: inline-block;">  עדכון קוד תהליך/הנחה פטור </button>
-                                <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="5" style="height: 40%;">
-
-                            <div class="CellContent" style="bottom: 5px;padding:5px">
-                                <logitude-edit-grid GridWidth="100%"
-                                                    GridHeight="100%"
-                                                    [ItemSource]="ItemsSource"
-                                                    (SelectedItemChanged)="OnRowSelected($event)"
-                                                    [SelectedRow]="SelectedRow">
-
-                                                    <log-column *ngIf="IsOcr" [header]="'Customs.Consignment.O.ComprehensiveUpdate' | TextCodeTranslationPipe" [binding]="'BuyerRoleName'" [width]="'60'">
-                                                        <ng-template let-item>
-                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                                <div style="padding-top: 1px; width: 18px; height:20px;vertical-align:central;PADDING-RIGHT:20PX">
-                                                                    <LogCheckBox  [ObjectTableName]="'Customs.SupplierInvoice'" [Checked]="IsChecked" 
-                                                                     [DataContext]="item" [HideColumns]="true" (ValueChanged)="IsComprehensiveUpdateChecked($event,item)"
-                                                                    ></LogCheckBox>
-                                                                </div>
-                
-                                                            </log-cell-template>
-                                                        </ng-template>
-                                                    </log-column>
-
-                                    <log-column [header]="'Customs.SupplierInvoice.F.SequenceNumeric' | TextCodeTranslationPipe" [binding]="'SequenceNumeric'" [width]="'30'" [Alignment]="'left'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.SequenceNumeric}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <log-column [header]="'Customs.SupplierInvoice.F.InvoiceNumber' | TextCodeTranslationPipe" [binding]="'InvoiceNumber'" [width]="'80'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.InvoiceNumber}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <log-column [header]="'Customs.SupplierInvoice.F.IssueDate' | TextCodeTranslationPipe" [binding]="'IssueDate'" [width]="'75'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.IssueDate | DateTimeToDatePipe}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <log-column [header]="'Customs.SupplierInvoice.F.IncotermCode' | TextCodeTranslationPipe" [binding]="'IncotermCode'" [width]="'60'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.IncotermCode}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <log-column [width]="'120'" [visibility]="'visibile'" [Alignment]="'right'" [header]="'Customs.SupplierInvoice.F.InvoiceAmount' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="padding-right:5px">{{item.InvoiceAmount | NumbersPipe:'n2'}}</span>
-
-                                                    <span style="float: right;">{{item.InvoiceCurrencyTypeCode}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <!-- <log-column [header]="'Customs.SupplierInvoice.F.IssueCountryCode' | TextCodeTranslationPipe" [binding]="'IssueCountryName'" [width]="'80'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.IssueCountryName}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
- -->
-                                    <log-column [header]="'Customs.SupplierInvoice.F.PreferenceDocumentTypeCode' | TextCodeTranslationPipe" [binding]="'PreferenceDocumentTypeName'" [width]="'100'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span>{{item.PreferenceDocumentTypeName}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <log-column [header]="'Customs.Declaration.O.FreightActualAmount' | TextCodeTranslationPipe" [binding]="'TotalFreightInFreightCurrency'" [width]="'90'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right; direction:ltr;">
-                                                    <span style="float: right; ">{{item.ExportFreightAmount}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <log-column [width]="'90'" [visibility]="'visibile'" [Alignment]="'right'" [header]="'Customs.ExportDeclaration.O.Insurance' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right;direction:ltr;">
-                                                    <span style="padding-right:5px">{{item.ExportInsuranceAmount}}</span>
-                                                </div>
-
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-                               
-                                    <log-column [header]="'Customs.SupplierInvoice.F.PartyRelationshipName' | TextCodeTranslationPipe" [binding]="'PartyRelationshipName'" [width]="'90'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="float: right; ">{{item.PartyRelationshipName}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-                                    <log-column [header]="'Customs.SupplierInvoice.F.BuyerName' | TextCodeTranslationPipe" [binding]="'BuyerName'" [width]="'90'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="float: right; ">{{item.BuyerName}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-                                    <log-column [header]="'Customs.SupplierInvoice.F.BuyerAddress' | TextCodeTranslationPipe" [binding]="'BuyerAddress'" [width]="'130'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="float: right; ">{{item.BuyerAddress}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-                                    <log-column [header]="'Customs.SupplierInvoice.F.BuyerCountryName' | TextCodeTranslationPipe" [binding]="'BuyerCountryName'" [width]="'90'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="float: right; ">{{item.BuyerCountryName}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-                                    <log-column [header]="'Customs.SupplierInvoice.F.BuyerRoleName' | TextCodeTranslationPipe" [binding]="'BuyerRoleName'" [width]="'90'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
-                                                    <span style="float: right; ">{{item.BuyerRoleName}}</span>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-                                   
-                                    <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-
-                                                <span class="CellSeparator" style="float: right;"></span>
-
-                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
-                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>
-                                                </div>
-                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
-                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
-                                                </div>
-                                                <!--<div style="width: 22px;  height:20px;float:left; padding-top: 2px;">
-                    <CheckBox [IsChecked]="IsPrimary" ></CheckBox>
-                    <LogCheckBox [Checked]="item.IsPrimarySupplierInvoice" [ObjectTableName]="'Customs.SupplierInvoice'" [ObjectFieldName]="'IsPrimarySupplierInvoice'" [DataContext]="item" (ValueChanged)="IsPrimarySupplierInvoiceChecked($event,item)"></LogCheckBox>
-                </div>-->
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <log-column *ngIf="EntityPM.Direction != 'E'" [width]="'20'" [Editable]="true" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="padding-top: 1px; width: 18px; height:20px;float:left;vertical-align:central">
-                                                    <LogCheckBox [Checked]="item.IsPrimarySupplierInvoice" [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                                 [ObjectFieldName]="'IsPrimarySupplierInvoice'" [DataContext]="item" [HideColumns]="true"
-                                                                 (ValueChanged)="IsPrimarySupplierInvoiceChecked($event,item)"></LogCheckBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-
-                                    </log-column>
-
-
-
-
-                                </logitude-edit-grid>
-                            </div>
-                        </td>
-
-                    </tr>
-
-
-
-
-                    <tr class="TabTitleRow" style="width:150px">
-
-                        <td> {{'Customs.Declaration.O.Items'| TextCodeTranslationPipe}} </td>
-                        <td *ngIf="IsAccumulated">
-                            <div style="width: 100%;text-align:center">
-                                <div class="DisbleBox">
-                                    {{IsAccumulatedMessageText}}
-
-
-
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" style="height: 60%; padding: 5px;" *ngIf="IsVisible">
-
-
-                            <div class="GeneratedGridContainer" style="padding:5px">
-                                <logitude-grid GridWidth="100%" GridHeight="100%"
-                                               [ObjectTable]="ObjectTableName"
-                                               [dataSource]="DataSource"
-                                               (AfterViewInitCompleted)="ViewInitCompleted($event)"
-                                               (rowSelectedEvent)="OnRowSelected2($event)"
-                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                               [columns]="columns"
-                                               [QueryChangeEvent]="onQueryChangeEvent"
-                                               [SelectedRow]="SelectedRow2"
-                                               [IsCustomTemplate]="true" [IsGradiantSelectedColor]="true">
-                                </logitude-grid>
-                            </div>
-                            <!--<div class="GeneratedGridContainer">
-                                <logitude-edit-grid GridWidth="100%"
-                                                    GridHeight="100%"
-                                                    [ItemSource]="InvoiceItems">
-
-
-
-                                    <log-column [header]="'Customs.SupplierInvoiceItem.F.SequenceNumeric' | TextCodeTranslationPipe" [binding]="'SequenceNumeric'" [width]="'50'"  [Alignment]="'left'"></log-column>
-                                    <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe" [binding]="'ItemCode'" [width]="'100'"  [Alignment]="'left'"></log-column>
-                                    <log-column [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe" [binding]="'ClassificationCode'" [width]="'100'"  [Alignment]="'left'"></log-column>
-                                    <log-column [header]="'Customs.SupplierInvoiceItem.F.TradeAgreementCode' | TextCodeTranslationPipe" [binding]="'TradeAgreementName'" [width]="'100'"  [Alignment]="'left'"></log-column>
-                                    <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="'left'" [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantity' | TextCodeTranslationPipe"  [binding]="'InvoiceQuantity'"></log-column>
-                                    <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemPrice' | TextCodeTranslationPipe" [binding]="'ItemPrice'" [width]="'100'"  [Alignment]="'left'"></log-column>
-                                    <log-column [header]="'Customs.SupplierInvoiceItem.F.OriginCountryCode' | TextCodeTranslationPipe" [binding]="'OriginCountryCode'" [width]="'100'"  [Alignment]="'left'"></log-column>
-
-
-                                </logitude-edit-grid>
-                            </div>-->
-                        </td>
-
-                    </tr>
-                </table>
-
-            </div>
-        </td>
-    </tr>
-</table>
-

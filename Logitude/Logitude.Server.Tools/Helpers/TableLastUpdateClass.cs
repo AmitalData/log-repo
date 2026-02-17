@@ -1,10 +1,10 @@
 using System;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -12,11 +12,6 @@ using Simplog.Server.Infrastructure.Helpers;
 using System.Web;
 using System.Collections.Generic;
 using System.Linq;
-using Logitude.Server.Tools;
-using Logitude.Customs.Data;
-using Simplog.Server.Infrastructure;
-using System.Diagnostics;
-//using Logitude.Server.Tools.SignalRHubs;
 
 namespace Logitude.BL.Helpers
 {
@@ -31,33 +26,33 @@ namespace Logitude.BL.Helpers
     {
 
         public static void UpdateTableHistory(int tenant, string tableName
-            , TableLastUpdateM tableLastUpdateM = null,int contextTenant=0)
+            , TableLastUpdateM tableLastUpdateM = null)
         {
-            if (contextTenant == 0)
-            {
-                contextTenant = SettingUtil.GetCurrentTenant();
-            }
+            
             User loggedUser = null;
             ObjectTable entityObjectTable = null;
-            IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             ObjectTableLastUpdateRepository tableLastUpdateRepository = new ObjectTableLastUpdateRepository(context);
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
-            UserRepository userRepository = new UserRepository(contextTenant);
+            //ContactRepository contactRepository = new ContactRepository(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
 
 
 
 
-            entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
+            entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
+            //Customs.CurrencyTypes
             tableName = tableName ?? "";
             if (entityObjectTable == null && tableName.EndsWith("s", StringComparison.OrdinalIgnoreCase))
             {
+                //Customs.CurrencyType
                 var tableWithoutS = tableName.Substring(0, Math.Max(0, tableName.Length - 1));
-                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
+                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
             }
 
 
-            loggedUser = loggedUser ?? GetUser(tenant, tableLastUpdateM, contextTenant);
-            entityObjectTable = entityObjectTable ?? GetObjectTable(tenant, tableName, tableLastUpdateM, context,contextTenant);
+            loggedUser = loggedUser ?? GetUser(tenant, tableLastUpdateM);
+            entityObjectTable = entityObjectTable ?? GetObjectTable(tenant, tableName, tableLastUpdateM, context);
 
 
             if (loggedUser == null)
@@ -80,6 +75,19 @@ namespace Logitude.BL.Helpers
             {
                 ObjectTableLastUpdateUpsert(tenant, loggedUser, entityObjectTable, tableLastUpdateRepository);
             }
+            //Mohammad: not every table has an objectfield like features or queries or screens it crashes here when update features in tenant 0 .
+            //else
+            //{
+            //    var mess=String.Format("UpdateTableHistory(tenant={0},tableName={1}) : Bad Params", tenant, tableName);
+            //    LogMessagingUtil.Instance.AppendLine(mess);
+                
+            //    //If it were up to me I would crash it like this 
+            //    //throw new Exception(mess);
+            //    //But I do not know what it means to Ramallah
+            //    if (Debugger.IsAttached) Debugger.Break();
+            //    throw new Exception("ObjectTableLastUpdateUpsert is must :" + mess);//ihab confirm : ObjectTableLastUpdateUpsert is must
+            //}
+
         }
 
         private static void ObjectTableLastUpdateUpsert(int tenant, User loggedContact, ObjectTable entityObjectTable, ObjectTableLastUpdateRepository tableLastUpdateRepository)
@@ -109,10 +117,12 @@ namespace Logitude.BL.Helpers
             }
 
             tableLastUpdateRepository.SubmitChanges();
+           // SignalRHubMessageSender.SendTenantChannelMessage("CachedTableUpdate", entityObjectTable.Name, tenant);
+            //HubEventPublisher.PublishChannelEvent(new HubChannelEvent() { ChannelName = "Tenant" + tenant, EventName = "CachedTableUpdate", Data = entityObjectTable.Name });
         }
     
 
-        private static ObjectTable GetObjectTable(int tenant, string tableName, TableLastUpdateM tableLastUpdateM, IWebFreightContext context,int contextTenant=0)
+        private static ObjectTable GetObjectTable(int tenant, string tableName, TableLastUpdateM tableLastUpdateM, IWebFreightContext context)
         {
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
             ObjectTable entityObjectTable = null;
@@ -124,15 +134,15 @@ namespace Logitude.BL.Helpers
             }
             if (entityObjectTable == null)
             {
-                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
+                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
             }
             return entityObjectTable;
         }
 
-        private static User GetUser(int tenant, TableLastUpdateM tableLastUpdateM,int contextTenant=0)
+        private static User GetUser(int tenant, TableLastUpdateM tableLastUpdateM)
         {
-            ContactRepository contactRepository = new ContactRepository(contextTenant);
-            UserRepository userRepository = new UserRepository(contextTenant);
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
             User loggedUser = null;
 
             if (tableLastUpdateM != null && !String.IsNullOrWhiteSpace(tableLastUpdateM.AlternativeUserId))
@@ -229,35 +239,21 @@ namespace Logitude.BL.Helpers
                 }
             }
         }
-        public static void UpdateCacheTableHistory(int tenant)
+        public static void UpdateCacheTableHistory()
         {
-            string sqlDDL_NoNeedCommit = "delete objecttablelastupdates where objecttableid   in ( select id From  objecttables where id in (select objecttableid from objecttablelastupdates ) and name not like 'Custom%') ";
-            ((CustomContext.GetContext(tenant)) as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
-(dr) =>
-{
-
-   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ExecuteReaderSingleResult: {dr.GetString(0)}");
-return 0;
-});
 
 
-            
-
-            var objectTabelRepository = new ObjectTableRepository(tenant);
-            var list = objectTabelRepository.GetAllCacheOnClient(0, contextTenant: tenant);
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                list = list.Where(r => (r.Name ?? "").StartsWith("Customs.")).ToList();
-            }
+            var objectTabelRepository = new ObjectTableRepository(0);
+            var list = objectTabelRepository.GetAllCacheOnClient(0);
             foreach (var item in list)
             {
                 TableLastUpdateClass.UpdateTableHistory(0, item.Name, new TableLastUpdateM()
                 {
                     ObjectTableId = item.Id,
                     AlternativeUserTenant = 0,
-                    AlternativeUserId = "1-1" ///in oracle  //"support@amital.co.il"=1-1
+                    AlternativeUserId = "1-1" ///in oracle  //"admin@fnarsoft.com"=1-1
 
-                }, tenant);
+                });
             }
         }
         public static void UpdateSystemMetaDataHistory(bool updateFields = true, bool updateTranslations = true)
@@ -294,15 +290,15 @@ return 0;
         }
 
 
-        public static void UpdateAllClosedTablesHistory(int tenant)
+        public static void UpdateAllClosedTablesHistory()
         {
-            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+            IWebFreightContext context = WebFreightContext.GetContext(0);
             ObjectTableLastUpdateRepository tableLastUpdateRepository = new ObjectTableLastUpdateRepository(context);
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
-            ContactRepository contactRepository = new ContactRepository(tenant);
+            ContactRepository contactRepository = new ContactRepository(0);
 
             List<ObjectTable> objectTablesList = objectTabelRepository.GetObjectsByTenant(0).Where(t=>t.IsClosed).ToList();
-            Contact loggedContact = contactRepository.GetSingleContactByEmailMultiDB("system@tenant0.com", 0,true, tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail("system@tenant0.com", 0);
 
             foreach (ObjectTable table in objectTablesList)
             {
@@ -320,7 +316,7 @@ return 0;
 
                     tableLastUpdate = new ObjectTableLastUpdate()
                     {
-                        Id = IdCounter.GetNumber("ObjectTableLastUpdate", tenant),
+                        Id = IdCounter.GetNumber("ObjectTableLastUpdate", 0),
                         Tenant = 0,
                         LastUpdateDate = DateTime.UtcNow,
                         ObjectTableId = table.Id,

@@ -13,10 +13,10 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using System.Reflection;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using WebFreight.Web.InfrastructureModel.DomainServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -46,7 +46,6 @@ using WebFreight.Web.WcfApi;
 using System.Data.SqlClient;
 using Logitude.XSD.FSR;
 using System.Text.RegularExpressions;
-using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
 
 namespace WebFreight.Web.ShipmentsModel.DomainServices
 {
@@ -91,8 +90,6 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             bool hasExpDepNotTransmittedFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ExpectedDeparturesNotTransmitted", tenant);
             bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
             bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
-            bool hasEBookingInProgressFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.EBookingInProgress", tenant);
-            bool hasPendingApprovalDocumentsFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.PendingApprovalDocuments.", tenant);
 
             string loggedUserEmail = ServiceContext.User.Identity.Name;
             string loggedContactId = null;
@@ -105,7 +102,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             shipmentQuery = new ShipmentQuery(tenant);
 
-            ShipmentsSummary myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, directionId, transportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature,hasPendingApprovalDocumentsFeature);
+            ShipmentsSummary myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, directionId, transportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature);
 
             return myResult;
         }
@@ -346,12 +343,6 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                              OperationalDate = f.OperationalDate,
                              CutoffDate = f.CutoffDate,
                              NumberOfHouses = f.NumberOfHouses,
-                             WarehouseLegLastFreeDate = f.WarehouseLegLastFreeDate,
-                             LastFinalDestination = f.LastFinalDestination,
-                             EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
-                             MainCarriageVesselName = f.MainCarriageVesselName,
-                             WarehouseLegTerminalName = f.WarehouseLegTerminalName,
-                             BookingConfirmationNumber = f.BookingConfirmationNumber,
                          };
 
             query2 = filter.GetFilteredQuery<ShipmentList>(listQueryOperation, query2);
@@ -420,7 +411,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 ContactTenantPM contactTenant = contactTenantsRepository.GetContactTenantForUser(contact.Id, tenant);
                 List<RestrictionPM> restrictions = restrictionQuery.GetResitrictionsByObjectTableAndContact(contactTenant.Id, objectTable.Id, tenant).ToList();
                 var query = from restriction in restrictions
-                            group restriction by restriction.ObjectFieldCode into objectTableGroup
+                            group restriction by restriction.ObjectFieldId into objectTableGroup
                             select new
                             {
                                 key = objectTableGroup.Key,
@@ -456,41 +447,41 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             #region Join
             IQueryable<ShipmentList> iQueryable = (from myShipment in shipmentContext.Shipments
 
-                                                       // Join Shipments --> ShipmentMasterDatas
+                                                   // Join Shipments --> ShipmentMasterDatas
                                                    join db_Masters in shipmentContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
                                                    from myMaster in ShipmentsMasters.DefaultIfEmpty()
 
-                                                       // Join Shipments --> FHLStatus
+                                                   // Join Shipments --> FHLStatus
                                                    join db_FHLStatuses in shipmentContext.FHLStatus on myShipment.FHLStatusCode equals db_FHLStatuses.Code into ShipmentFHLStatuses
                                                    from myFHLStatus in ShipmentFHLStatuses.DefaultIfEmpty()
 
-                                                       // Join Shipments --> FHLStatus (Cargonaut|DEXX)
+                                                   // Join Shipments --> FHLStatus (Cargonaut|DEXX)
                                                    join db_FHLCargonautStatuses in shipmentContext.FHLStatus on myShipment.CargonautFHLStatusCode equals db_FHLCargonautStatuses.Code into ShipmentFHLCargonautStatuses
                                                    from myFHLCargonautStatus in ShipmentFHLCargonautStatuses.DefaultIfEmpty()
 
-                                                       // Join Shipments --> AWBStatus (Last Status)
+                                                   // Join Shipments --> AWBStatus (Last Status)
                                                    join db_AWBLastStatuses in shipmentContext.AWBStatus on myShipment.CarrierLastStatusCode equals db_AWBLastStatuses.Code into ShipmentCarrierLastStatuses
                                                    from myLastStatus in ShipmentCarrierLastStatuses.DefaultIfEmpty()
 
-                                                       // Join Shipments --> ShipmentComputedFields
-                                                       //join db_ComputedFields in shipmentContext.ShipmentComputedFields on myShipment.Id equals db_ComputedFields.Id into myShipmentComputedFields
-                                                       //from myShipmentComputedField in myShipmentComputedFields.DefaultIfEmpty()
+                                                   // Join Shipments --> ShipmentComputedFields
+                                                   //join db_ComputedFields in shipmentContext.ShipmentComputedFields on myShipment.Id equals db_ComputedFields.Id into myShipmentComputedFields
+                                                   //from myShipmentComputedField in myShipmentComputedFields.DefaultIfEmpty()
 
-                                                       // Join ShipmentMasterDatas --> FWBStatus
-                                                       //join fwbStatuses in shipmentContext.FWBStatus on myMaster.FWBStatusCode equals fwbStatuses.Code into ShipmentFWBStatuses
-                                                       //from myFWBStatus in ShipmentFWBStatuses.DefaultIfEmpty()
+                                                   // Join ShipmentMasterDatas --> FWBStatus
+                                                   //join fwbStatuses in shipmentContext.FWBStatus on myMaster.FWBStatusCode equals fwbStatuses.Code into ShipmentFWBStatuses
+                                                   //from myFWBStatus in ShipmentFWBStatuses.DefaultIfEmpty()
 
-                                                       // Join ShipmentMasterDatas --> FWBStatus (Cargonaut|DEXX)
-                                                       //join fwbCargonautStatuses in shipmentContext.FWBStatus on myMaster.CargonautFWBStatusCode equals fwbCargonautStatuses.Code into ShipmentFWBCargonautStatuses
-                                                       //from myFWBCargonautStatus in ShipmentFWBCargonautStatuses.DefaultIfEmpty()
+                                                   // Join ShipmentMasterDatas --> FWBStatus (Cargonaut|DEXX)
+                                                   //join fwbCargonautStatuses in shipmentContext.FWBStatus on myMaster.CargonautFWBStatusCode equals fwbCargonautStatuses.Code into ShipmentFWBCargonautStatuses
+                                                   //from myFWBCargonautStatus in ShipmentFWBCargonautStatuses.DefaultIfEmpty()
 
 
 
-                                                       //join directions in allDirections on shipment.DirectionId equals directions.Id into ShipmentDirections
-                                                       //from myMirection in ShipmentDirections.DefaultIfEmpty()
+                                                   //join directions in allDirections on shipment.DirectionId equals directions.Id into ShipmentDirections
+                                                   //from myMirection in ShipmentDirections.DefaultIfEmpty()
 
-                                                       //join transportModes in freightContext.TransportModes on shipment.TransportModeId equals transportModes.Id into ShipmentTransportModes
-                                                       //from myTransportMode in ShipmentTransportModes.DefaultIfEmpty()
+                                                   //join transportModes in freightContext.TransportModes on shipment.TransportModeId equals transportModes.Id into ShipmentTransportModes
+                                                   //from myTransportMode in ShipmentTransportModes.DefaultIfEmpty()
 
                                                    where myShipment.Tenant == tenant
 
@@ -547,7 +538,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        CustomFileId = myShipment.CustomFileId,
                                                        CustomFileNumber = myShipment.CustomFileNumber,
                                                        CustomsDeclarationNumber = myShipment.CustomsDeclarationNumber,
-
+                                                       CutoffDate = myShipment.CutoffDate,
                                                        DeliveryOrder = myShipment.DeliveryOrder,
                                                        DepartmentId = myShipment.DepartmentId,
                                                        EstimateProfitInLocalCurrency = myShipment.EstimateProfitInLocalCurrency,
@@ -605,7 +596,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        OrderChargeableWeight = myShipment.OrderChargeableWeight,
                                                        OrderVolumetricWeight = myShipment.OrderVolumetricWeight,
                                                        PackagesQuantity = myShipment.PackagesQuantity,
-                                                       PreCarriageETD = myMaster.PreCarriageETD,
+                                                       PreCarriageETD = myShipment.PreCarriageETD,
                                                        ProductCode = myShipment.ProductCode,
                                                        ProfitExchangeRate = myShipment.ProfitExchangeRate,
                                                        ProfitInLocalCurrency = myShipment.ProfitInLocalCurrency,
@@ -635,7 +626,6 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        #endregion
 
                                                        #region Master Fields
-                                                       CutoffDate = myMaster.CutoffDate,
                                                        AirlinePrefix = myMaster.AirlinePrefix,
                                                        MainCarriageATA = myMaster.MainCarriageATA,
                                                        FWBStatusCode = myMaster.FWBStatusCode,
@@ -864,10 +854,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             IShipmentsContext context = ShipmentsContext.GetContext(tenant);
             ShipmentsContext activeContext = context.GetActiveDbContext() as ShipmentsContext;
 
-            IQueryable<OutlookShipmentView> shipments = activeContext.Database.SqlQuery<OutlookShipmentView>("WITH OutlookShipmentView AS(SELECT top 10 Shipments.Id,Shipments.CreateDateTime, Shipments.SearchFields, Shipments.Tenant, Shipments.ShipmentNumber,Shipments.CustomerId,Shipments.Routing,ShipmentMasterDatas.AirlinePrefix, " +
-                "Shipments.AccountManagerUserId,Shipments.IsOperationalClosed,ShipmentMasterDatas.Master,Shipments.DirectionId, Shipments.TransportModeId,Shipments.ShipmentLevelCode ,CustomerCards.EnglishName AS CustomerName , AgentCards.EnglishName AS AgentName FROM Shipments " +
-                " LEFT OUTER JOIN ShipmentMasterDatas ShipmentMasterDatas ON ShipmentMasterDatas.Id = Shipments.MasterShipmentDataId LEFT OUTER JOIN  Cards AS CustomerCards ON Shipments.CustomerId = CustomerCards.Id " +
-                " LEFT OUTER JOIN ShipmentMasterDatas ShipmentMasterData ON ShipmentMasterData.Id = Shipments.MasterShipmentDataId LEFT OUTER JOIN  Cards AS AgentCards ON Shipments.AgentId = AgentCards.Id " + Where + " ) select * from OutlookShipmentView", parameters.ToArray()).AsQueryable();
+            IQueryable<OutlookShipmentView> shipments = activeContext.Database.SqlQuery<OutlookShipmentView>("WITH OutlookShipmentView AS(SELECT top 10 Shipments.Id,Shipments.CreateDateTime, Shipments.SearchFields, Shipments.Tenant, Shipments.ShipmentNumber,Shipments.CustomerId,Shipments.Routing,ShipmentMasterDatas.AirlinePrefix, Shipments.AccountManagerUserId,Shipments.IsOperationalClosed,ShipmentMasterDatas.Master,Shipments.DirectionId, Shipments.TransportModeId ,CustomerCards.EnglishName AS CustomerName FROM Shipments LEFT OUTER JOIN ShipmentMasterDatas ON ShipmentMasterDatas.Id = Shipments.MasterShipmentDataId LEFT OUTER JOIN  Cards AS CustomerCards ON Shipments.CustomerId = CustomerCards.Id " + Where + " ) select * from OutlookShipmentView", parameters.ToArray()).AsQueryable();
 
             myResult = (from f in shipments
                         select new ShipmentList()
@@ -878,14 +865,12 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                             DirectionName = f.DirectionId == "I" ? "Import" : "Export",
                             TransportModeName = f.TransportModeId == "I" ? "Inland" : f.TransportModeId == "A" ? "Air" : "Ocean",
                             ShipmentNumber = f.ShipmentNumber,
-                            ShipmentLevelCode = f.ShipmentLevelCode,
                             TransportModeId = f.TransportModeId,
                             Routing = f.Routing,
                             CustomerName = f.CustomerName,
                             LongMaster = f.TransportModeId == "A" ? (!string.IsNullOrEmpty(f.AirlinePrefix) && !string.IsNullOrEmpty(f.Master) ? f.AirlinePrefix + "-" + f.Master : "") : f.Master,
                             SearchFields = f.SearchFields,
                             CustomerId = f.CustomerId,
-                            AgentName = f.AgentName,
                         }).ToList();
 
             //if (!string.IsNullOrEmpty(mySearchFields))
@@ -1047,11 +1032,17 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         [Query(HasSideEffects = true)]
         public IQueryable<ShipmentList> GetShipmentFilters(byte[] xmlFilters, int tenant)
         {
-         
+            //using (TransactionScope scope = TransactionFactory.GetTransaction())
+            //{
+            //var user = HttpContext.Current.User;
+            //var threadUser = Thread.CurrentPrincipal;
             SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
             shipmentRepository = new ShipmentRepository(tenant);
-            shipmentRepository.SetSecondDBforContext(tenant);
+
+            //TenantQuery tenantQuery = new TenantQuery(tenant);
+            //TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -1166,179 +1157,13 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             List<ShipmentList> listQuery = query2.ToList();
 
-            FillContainerNumbers(listQuery);
-
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
-            customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
-
-            return listQuery.AsQueryable();
-            //}
-        }
-        [Query(HasSideEffects = true)]
-        public IQueryable<LogBoxShipmentList> GetLogBoxShipmentFilters(byte[] xmlFilters, int tenant)
-        {
-
-            SecurityUtility.AuthenticationOnTenant(tenant);
-
-            shipmentRepository = new ShipmentRepository(tenant);
-            shipmentRepository.SetSecondDBforContext(tenant);
-
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-            GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort();
-
-            #region Restrictions region
-            AddRestrictionFilters(queryOperations, "Shipment", tenant);
-            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
-
-            if (SecurityUtility.CheckTableContactFeature("User", "PRODUCTS", tenant))
-            {
-                ProductPermitionsFilter.AddUserProductRestrictionFilters(queryOperations, tenant);
-            }
-            #endregion
-
-            LogBoxShipmentCustomFilter customfilters = new LogBoxShipmentCustomFilter(tenant);
-            IQueryable<LogBoxShipmentDataView> shipments = shipmentRepository.GetLogBoxShipmentViewsByTenant(tenant);
-            var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
-
-            if (MySearchFilter != null)
-            {
-                var SearchTerm = MySearchFilter.FieldValue.ToString();
-                shipments = shipments.Where(a => a.SearchFields.Contains(SearchTerm));
-                queryOperations.QueryFilterItems.Remove(MySearchFilter);
-            }
-            shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
-
-            QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-            QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-            var dddddd = Thread.CurrentPrincipal;
-
-            shipments = filter.GetFilteredQuery<LogBoxShipmentDataView>(nonListQueryOperation, shipments);
-            int skippedShipments = queryOperations.PageIndex;
-
-            ShipmentQuery myShipmentQuery = new ShipmentQuery(shipmentRepository);
-
-            var query2 = myShipmentQuery.GetIQueryableLogBoxShipmentList(shipments, tenant);
-
-            query2 = filter.GetFilteredQuery<LogBoxShipmentList>(listQueryOperation, query2);
-
-            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
-            {
-                PropertyInfo propInfo = typeof(LogBoxShipmentList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant).ToList();
-
-                ObjectField objectField = (from a in shipmentObjectFields
-                                           where a.FieldName == queryOperations.SortByColumnName
-                                           select a).FirstOrDefault();
-
-                if (objectField != null)
-                {
-                    if (!objectField.IsCustom)
-                    {
-                        switch (objectField.DataTypeCode.ToLower())
-                        {
-                            case "text":
-                                {
-                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, string>(queryOperations, query2);
-                                    break;
-                                }
-                            case "double":
-                                {
-                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, double>(queryOperations, query2);
-                                    break;
-                                }
-                            case "datetime":
-                                {
-                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, DateTime>(queryOperations, query2);
-                                    break;
-                                }
-                            case "integer":
-                                {
-                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, int>(queryOperations, query2);
-                                    break;
-                                }
-                            case "lookup":
-                                {
-                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, string>(queryOperations, query2);
-                                    break;
-                                }
-                            case "boolean":
-                                {
-                                    query2 = sortClass.GetSorterQuery<LogBoxShipmentList, bool>(queryOperations, query2);
-                                    break;
-                                }
-                            default:
-                                {
-                                    query2 = query2.OrderByDescending(d => d.CreateDateTime);
-                                    break;
-                                }
-                        }
-                    }
-                    else
-                    {
-                        query2 = sortClass.GetSorterQuery<LogBoxShipmentList, string>(queryOperations, query2);
-                    }
-                }
-            }
-            else
-            {
-                query2 = query2.OrderByDescending(d => d.CreateDateTime);
-            }
-
-            query2 = System.Data.Entity.QueryableExtensions.Skip(query2, () => skippedShipments);
-            query2 = System.Data.Entity.QueryableExtensions.Take(query2, () => queryOperations.PageSize);
-            //query2 = query2.Skip(skippedShipments);
-            //query2 = query2.Take(queryOperations.PageSize);
-
-            List<LogBoxShipmentList> listQuery = query2.ToList();
-
-            PopulateLogBoxShipmentDetails(listQuery,queryOperations);
-
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery.AsQueryable();
             //}
         }
 
-        private void FillContainerNumbers(List<ShipmentList> listQuery)
-        {
-            listQuery.ForEach(shipment =>
-            {
-                bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
-                if (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray))
-                {
-                    shipment.TruckContainerNumber = shipment.TransportModeId == "O" ? Regex.Replace(shipment.ContainersNumbersandTypesArray, "(\\[.*?\\])", "") : isInlandDomesticShipment ? shipment.TruckNumber : shipment.CarrierNumber;
-                }
-            });
-        }
-        private void PopulateLogBoxShipmentDetails(List<LogBoxShipmentList> listQuery,QueryOperations queryOperations)
-        {
-            
-                var ShipmentNumberFilter = queryOperations?.QueryFilterItems?.Where(QueryFilterItem => QueryFilterItem.FieldName == "ColumnName?").FirstOrDefault();
-               
-                listQuery.ForEach(shipment =>
-              {
-                bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
-                if (shipment.TransportModeId != "O" || !string.IsNullOrEmpty(shipment.ContainersNumbersandTypesArray))
-                {
-                    shipment.TruckContainerNumber = shipment.TransportModeId == "O" ? Regex.Replace(shipment.ContainersNumbersandTypesArray, "(\\[.*?\\])", "") : isInlandDomesticShipment ? shipment.TruckNumber : shipment.CarrierNumber;
-                }
-                if (ShipmentNumberFilter != null)
-                {
-                    if (ShipmentNumberFilter.FieldValue.Equals("ForwarderShipmentNumber"))
-                        shipment.ForwarderShipmentNumber = shipment.ForwarderShipmentNumber!= null ? shipment.ForwarderShipmentNumber : shipment.CustomerReference1;
-                    else if (ShipmentNumberFilter.FieldValue.Equals("MyShipments"))
-                        shipment.ForwarderShipmentNumber = shipment.CustomerReference1;
-                    else
-                        shipment.ForwarderShipmentNumber = shipment.ForwarderShipmentNumber;
-                }
-            });
-        }
         public List<ShipmentList> GetRecentActivityShipments(int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
@@ -1368,68 +1193,13 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             InvoiceEntityFields result = shipmentQuery.GetInvoiceEntityFields(entityId, tenant);
             return result;
         }
-        public int GetLogBoxShipmentFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-
-
-            shipmentRepository = new ShipmentRepository(tenant);
-            shipmentRepository.SetSecondDBforContext(tenant);
-
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
-            #region Restrictions region
-            AddRestrictionFilters(queryOperations, "Shipment", tenant);
-            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
-
-            if (SecurityUtility.CheckTableContactFeature("User", "PRODUCTS", tenant))
-            {
-                ProductPermitionsFilter.AddUserProductRestrictionFilters(queryOperations, tenant);
-            }
-            #endregion
-
-            GenericFilter filter = new GenericFilter();
-            LogBoxShipmentCustomFilter customfilters = new LogBoxShipmentCustomFilter(tenant);
-            IQueryable<LogBoxShipmentDataView> shipments = shipmentRepository.GetLogBoxShipmentViewsByTenant(tenant);
-            shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
-            QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-            QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-            shipments = filter.GetFilteredQuery<LogBoxShipmentDataView>(nonListQueryOperation, shipments);
-            int skippedShipments = queryOperations.PageIndex;
-
-
-            ShipmentQuery myShipmentQuery = new ShipmentQuery(shipmentRepository);
-
-            var query2 = myShipmentQuery.GetIQueryableLogBoxShipmentList(shipments, tenant);
-
-            query2 = filter.GetFilteredQuery<LogBoxShipmentList>(listQueryOperation, query2);
-
-            int count;
-            if (queryOperations.GetAll)
-            {
-                count = query2.Count();
-            }
-            else
-            {
-                count = query2.Take(1001).Count();
-            }
-
-            return count;
-        }
 
         public int GetShipmentFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-
+            SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
             shipmentRepository = new ShipmentRepository(tenant);
-            shipmentRepository.SetSecondDBforContext(tenant);
-
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
@@ -1523,40 +1293,40 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             IQueryable<ShipmentList> iQueryable = (from myShipment in shipmentContext.Shipments
 
-                                                       // Join Shipments --> ShipmentMasterDatas
+                                                   // Join Shipments --> ShipmentMasterDatas
                                                    join db_Masters in shipmentContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
                                                    from myMaster in ShipmentsMasters.DefaultIfEmpty()
 
-                                                       // Join Shipments --> FHLStatus
+                                                   // Join Shipments --> FHLStatus
                                                    join db_FHLStatuses in shipmentContext.FHLStatus on myShipment.FHLStatusCode equals db_FHLStatuses.Code into ShipmentFHLStatuses
                                                    from myFHLStatus in ShipmentFHLStatuses.DefaultIfEmpty()
 
-                                                       // Join Shipments --> FHLStatus (Cargonaut|DEXX)
+                                                   // Join Shipments --> FHLStatus (Cargonaut|DEXX)
                                                    join db_FHLCargonautStatuses in shipmentContext.FHLStatus on myShipment.CargonautFHLStatusCode equals db_FHLCargonautStatuses.Code into ShipmentFHLCargonautStatuses
                                                    from myFHLCargonautStatus in ShipmentFHLCargonautStatuses.DefaultIfEmpty()
 
-                                                       // Join Shipments --> AWBStatus (Last Status)
+                                                   // Join Shipments --> AWBStatus (Last Status)
                                                    join db_AWBLastStatuses in shipmentContext.AWBStatus on myShipment.CarrierLastStatusCode equals db_AWBLastStatuses.Code into ShipmentCarrierLastStatuses
                                                    from myLastStatus in ShipmentCarrierLastStatuses.DefaultIfEmpty()
 
-                                                       // Join Shipments --> ShipmentComputedFields
-                                                       //join db_ComputedFields in shipmentContext.ShipmentComputedFields on myShipment.Id equals db_ComputedFields.Id into myShipmentComputedFields
-                                                       //from myShipmentComputedField in myShipmentComputedFields.DefaultIfEmpty()
+                                                   // Join Shipments --> ShipmentComputedFields
+                                                   //join db_ComputedFields in shipmentContext.ShipmentComputedFields on myShipment.Id equals db_ComputedFields.Id into myShipmentComputedFields
+                                                   //from myShipmentComputedField in myShipmentComputedFields.DefaultIfEmpty()
 
-                                                       // Join ShipmentMasterDatas --> FWBStatus
+                                                   // Join ShipmentMasterDatas --> FWBStatus
                                                    join fwbStatuses in shipmentContext.FWBStatus on myMaster.FWBStatusCode equals fwbStatuses.Code into ShipmentFWBStatuses
                                                    from myFWBStatus in ShipmentFWBStatuses.DefaultIfEmpty()
 
-                                                       // Join ShipmentMasterDatas --> FWBStatus (Cargonaut|DEXX)
+                                                   // Join ShipmentMasterDatas --> FWBStatus (Cargonaut|DEXX)
                                                    join fwbCargonautStatuses in shipmentContext.FWBStatus on myMaster.CargonautFWBStatusCode equals fwbCargonautStatuses.Code into ShipmentFWBCargonautStatuses
                                                    from myFWBCargonautStatus in ShipmentFWBCargonautStatuses.DefaultIfEmpty()
 
 
-                                                       //join directions in allDirections on shipment.DirectionId equals directions.Id into ShipmentDirections
-                                                       //from myMirection in ShipmentDirections.DefaultIfEmpty()
+                                                   //join directions in allDirections on shipment.DirectionId equals directions.Id into ShipmentDirections
+                                                   //from myMirection in ShipmentDirections.DefaultIfEmpty()
 
-                                                       //join transportModes in freightContext.TransportModes on shipment.TransportModeId equals transportModes.Id into ShipmentTransportModes
-                                                       //from myTransportMode in ShipmentTransportModes.DefaultIfEmpty()
+                                                   //join transportModes in freightContext.TransportModes on shipment.TransportModeId equals transportModes.Id into ShipmentTransportModes
+                                                   //from myTransportMode in ShipmentTransportModes.DefaultIfEmpty()
 
                                                    where myShipment.Tenant == tenant
 
@@ -1613,7 +1383,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        CustomFileId = myShipment.CustomFileId,
                                                        CustomFileNumber = myShipment.CustomFileNumber,
                                                        CustomsDeclarationNumber = myShipment.CustomsDeclarationNumber,
-
+                                                       CutoffDate = myShipment.CutoffDate,
                                                        DeliveryOrder = myShipment.DeliveryOrder,
                                                        DepartmentId = myShipment.DepartmentId,
                                                        EstimateProfitInLocalCurrency = myShipment.EstimateProfitInLocalCurrency,
@@ -1671,7 +1441,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        OrderChargeableWeight = myShipment.OrderChargeableWeight,
                                                        OrderVolumetricWeight = myShipment.OrderVolumetricWeight,
                                                        PackagesQuantity = myShipment.PackagesQuantity,
-                                                       PreCarriageETD = myMaster.PreCarriageETD,
+                                                       PreCarriageETD = myShipment.PreCarriageETD,
                                                        ProductCode = myShipment.ProductCode,
                                                        ProfitExchangeRate = myShipment.ProfitExchangeRate,
                                                        ProfitInLocalCurrency = myShipment.ProfitInLocalCurrency,
@@ -1704,7 +1474,6 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        #endregion
 
                                                        #region Master Fields
-                                                       CutoffDate = myMaster.CutoffDate,
                                                        AirlinePrefix = myMaster.AirlinePrefix,
                                                        MainCarriageATA = myMaster.MainCarriageATA,
                                                        FWBStatusCode = myMaster.FWBStatusCode,
@@ -2199,13 +1968,13 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             objectContext = ShipmentsContext.GetContext(tenant);
             shipmentRepository = new ShipmentRepository(objectContext);
             Shipment entityPOCO = shipmentRepository.GetSingleShipment(entityId, tenant);
-
+            
             if (entityPOCO != null)
             {
                 EventTypeRepository eventTypeRep = new EventTypeRepository(webFreightContext);
                 EventType eventType = eventTypeRep.GetSingleEventType(eventTypeId, tenant);
                 if (eventType != null)
-                {
+                {                    
                     if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                     {
                         #region
@@ -2288,7 +2057,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                     else if (eventType.Code == "EXRE")
                     {
                         #region
-                        if (!string.IsNullOrEmpty(newTraceEvent.Notes) && newTraceEvent.Notes.Length > 500) entityPOCO.ExceptionResolvedDescription = newTraceEvent.Notes.Substring(0, 499);
+                        if (!string.IsNullOrEmpty(newTraceEvent.Notes) && newTraceEvent.Notes.Length > 500)  entityPOCO.ExceptionResolvedDescription = newTraceEvent.Notes.Substring(0, 499);
                         else entityPOCO.ExceptionResolvedDescription = newTraceEvent.Notes;
 
                         entityPOCO.HasException = false;
@@ -2313,9 +2082,6 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
                     shipmentRepository.Update(entityPOCO);
                     shipmentRepository.SubmitChanges();
-                    RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
-
-
                 }
             }
 
@@ -2521,7 +2287,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             ShipmentPM shipment = shipmentQuery.GetSinglePM(entityId, tenant);
             int idCounter = 0;
 
-            if (shipment.CustomerId != null)
+            if (shipment.CustomerId != null )
             {
                 list.Add(new EntityPartner()
                 {
@@ -2532,7 +2298,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 });
             }
 
-            if (shipment.ShipperId != null)
+            if (shipment.ShipperId != null )
             {
                 list.Add(new EntityPartner()
                 {
@@ -2554,7 +2320,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 });
             }
 
-            if (shipment.AgentId != null)
+            if (shipment.AgentId != null )
             {
                 list.Add(new EntityPartner()
                 {
@@ -2565,7 +2331,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 });
             }
 
-            if (shipment.CustomAgentImportId != null)
+            if (shipment.CustomAgentImportId != null )
             {
                 list.Add(new EntityPartner()
                 {
@@ -2576,7 +2342,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 });
             }
 
-            if (shipment.CustomAgentExportId != null)
+            if (shipment.CustomAgentExportId != null )
             {
                 list.Add(new EntityPartner()
                 {
@@ -2587,7 +2353,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 });
             }
 
-            if (shipment.Notify1Id != null)
+            if (shipment.Notify1Id != null )
             {
                 list.Add(new EntityPartner()
                 {
@@ -2598,7 +2364,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 });
             }
 
-            if (shipment.Notify2Id != null)
+            if (shipment.Notify2Id != null )
             {
                 list.Add(new EntityPartner()
                 {
@@ -2620,7 +2386,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 });
             }
 
-            if (shipment.ConsigneeNotImporterId != null)
+            if (shipment.ConsigneeNotImporterId != null )
             {
                 list.Add(new EntityPartner()
                 {
@@ -2642,7 +2408,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 });
             }
 
-            if (shipment.ConsolidatorId != null)
+            if (shipment.ConsolidatorId != null )
             {
                 list.Add(new EntityPartner()
                 {
@@ -2691,55 +2457,32 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         {
             string myResult = null;
 
-            try
+            bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(entityId, myMasterField, myAirlinePrefixField, myDirectionId, myTransportModeId, myShipmentLevelCode, isCancelled, myTenant);
+            if (isFieldExists)
             {
-                ShipmentMasterIsUsedValidator validator = new ShipmentMasterIsUsedValidator();
+                myResult = "Master field already used in another Shipment";
+            }
 
-                validator.Validate(new ShipmentMasterIsUsedValidatorArgs()
+            else
+            {
+                isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(myBookingId, myMasterField, myAirlinePrefixField, myDirectionId, myTransportModeId, myShipmentLevelCode, isCancelled, myTenant);
+                if (isFieldExists)
                 {
-                    Tenant = myTenant,
-                    ShipmentId = entityId,
-                    BookingId = myBookingId,
-                    DirectionId = myDirectionId,
-                    TransportModeId = myTransportModeId,
-                    ShipmentLevelCode = myShipmentLevelCode,
-                    Master = myMasterField,
-                    AirlinePrefix = myAirlinePrefixField,
-                    IsCancelled = isCancelled,
-                });
+                    myResult = "Master field already used in another Booking";
+                }
             }
-
-            catch (Exception ex)
-            {
-                myResult = ex.Message;
-            }
-
-            //bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(entityId, myMasterField, myAirlinePrefixField, myDirectionId, myTransportModeId, myShipmentLevelCode, isCancelled, myTenant);
-            //if (isFieldExists)
-            //{
-            //    myResult = "Master field already used in another Shipment";
-            //}
-
-            //else
-            //{
-            //    isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(myBookingId, myMasterField, myAirlinePrefixField, myDirectionId, myTransportModeId, myShipmentLevelCode, isCancelled, myTenant);
-            //    if (isFieldExists)
-            //    {
-            //        myResult = "Master field already used in another Booking";
-            //    }
-            //}
 
             return myResult;
         }
 
-        //public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string SearchFilter,string TypeCode = null)
-        //{
-        //    SecurityUtility.AuthenticationOnTenant(tenant);
+        public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string SearchFilter,string TypeCode = null)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
-        //    shipmentQuery = new ShipmentQuery(tenant);
-        //    ImporterQueriesDataCounts result = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, SearchFilter, ServiceContext.User.Identity.Name, TypeCode);
-        //    return result;
-        //}
+            shipmentQuery = new ShipmentQuery(tenant);
+            ImporterQueriesDataCounts result = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, SearchFilter, ServiceContext.User.Identity.Name, TypeCode);
+            return result;
+        }
 
         public ShipmentPM GetUnSecuredShipmentPMTest(int tenant)
         {
@@ -2844,7 +2587,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             return myResult;
         }
 
-
+      
         public List<string> GetShipmentIdsForFullTextSearch(byte[] xmlFilters, int tenant)
         {
             List<ShipmentList> myResult = new List<ShipmentList>();
@@ -2855,7 +2598,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
+             
             List<SqlParameter> parameters = new List<SqlParameter>();
 
             parameters.Add(new SqlParameter("@Tenant", tenant));
@@ -2866,7 +2609,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 if (item.FieldValue != null)
                 {
                     switch (item.FieldName)
-                    {
+                    { 
                         case "SearchFields":
                             {
                                 string mySearchFields = null;
@@ -2879,16 +2622,16 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 }
             }
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-
+             
 
             IShipmentsContext context = ShipmentsContext.GetContext(tenant);
             ShipmentsContext activeContext = context.GetActiveDbContext() as ShipmentsContext;
 
             List<string> shipmentsIds = activeContext.Database.SqlQuery<string>(("SELECT Shipments.Id FROM Shipments " + Where), parameters.ToArray()).ToList();
 
+            
 
-
-
+           
 
             return shipmentsIds;
         }

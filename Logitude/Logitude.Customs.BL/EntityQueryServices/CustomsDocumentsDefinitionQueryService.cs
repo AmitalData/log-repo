@@ -7,10 +7,10 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Server.Infrastructure;
@@ -28,14 +28,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         */
         
-        public List<CustomsDocumentsDefinitionPM> GetCustomsDocumentsDefinitionsForDeclaration(string cargoTypeCode, string processTypeCode, string transportTypeCode, string declarationTypeCode, int tenant)
+        public List<CustomsDocumentsDefinitionPM> GetCustomsDocumentsDefinitionsForDeclaration(string cargoTypeCode, string processTypeCode, string transportTypeCode, int tenant)
         {
             if(String.IsNullOrWhiteSpace(cargoTypeCode) || String.IsNullOrWhiteSpace(processTypeCode) || String.IsNullOrWhiteSpace(transportTypeCode))
             {
-                return new List<CustomsDocumentsDefinitionPM>();
+                return null;
             }
             
-            List <CustomsDocumentsDefinition> CustomsDocumentsDefinitions = repository.GetCustomsDocumentsDefinitionsForDeclaration(cargoTypeCode, processTypeCode, transportTypeCode, declarationTypeCode, tenant);
+            List <CustomsDocumentsDefinition> CustomsDocumentsDefinitions = repository.GetCustomsDocumentsDefinitionsForDeclaration(cargoTypeCode, processTypeCode, transportTypeCode, tenant);
             List<CustomsDocumentsDefinitionPM> CustomsDocumentsDefinitionPMs = new List<CustomsDocumentsDefinitionPM>();
             string docType = null;
             foreach (CustomsDocumentsDefinition definition in CustomsDocumentsDefinitions)

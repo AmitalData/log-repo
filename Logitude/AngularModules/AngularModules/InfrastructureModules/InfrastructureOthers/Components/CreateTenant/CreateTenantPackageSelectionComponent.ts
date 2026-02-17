@@ -2,6 +2,7 @@ import {Component, OnInit}  from '@angular/core';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import 'rxjs/add/operator/map';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SignUpService} from '../../../../Infrastructure/Services/ExtendedPMs/SignUpService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -10,7 +11,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'CreateTenantPackageSelectionComponent',
     templateUrl: './CreateTenantPackageSelectionComponent.html',
@@ -45,7 +46,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
 
 
     ) {
-        this._entityResourceService.getEntityResourceByTableName("Package").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Package").subscribe(response => {
             this.IsStardLoadPage = true;
       
         });
@@ -66,7 +67,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
     }
 
 
-    private packageCode: string = (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2") ? "IMPO" : "BUSN";
+    private packageCode: string = (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") ? "IMPO" : "BUSN";
     get PackageCode() { return this.packageCode; }
     set PackageCode(newValue: string) {
         if (this.packageCode != newValue) {
@@ -128,10 +129,5 @@ export class SignUpInfoClass {
     public CountryName: string;
     public CountryCode: string;
     public ObjecttableName: string;
-    public VatNumber: string;
-    public TimeZoneOffset: number;
-    public City: string;
-    public IsCreateLogboxTenantFromCloud: boolean;
-    public AdditionalEmail: string;
     
 }

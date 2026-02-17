@@ -5,7 +5,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.Messaging.LogitudeClient.DeclarationErrorPointer;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -29,8 +29,8 @@ namespace Logitude.Customs.BL.StimulReport.Mapping
             CardRepository rep = new CardRepository(declarationPM.Tenant);
             Card customerCard = rep.GetSingleCardByCode(declarationPM.CustomerCode, declarationPM.Tenant, false);
             List<DeclarationErrorView> declarationErrors;
-            ClientQueryService clientQueryService = new ClientQueryService(context);
-
+            
+            
             var declarationSReport = new DeclarationSReport();
             declarationSReport.mehes_file = new List<mehes_file>(); declarationSReport.mehes_file.Add(new mehes_file());
             declarationSReport.mehes_file[0].custom_agent = declarationPM.AgentId;
@@ -62,15 +62,6 @@ namespace Logitude.Customs.BL.StimulReport.Mapping
                 declarationSReport.mehes_file[0].transfer_importer_id = customerCard.VatNumber;
             }
             declarationSReport.mehes_file[0].importer[0].importername = declarationPM.CalculatedImporterName; //5 // moran 19.12.17 - AMI-62612 - change ImporterName to CalculatedImporterName
-            if (!string.IsNullOrWhiteSpace(declarationPM.ImporterId))
-            {
-                ClientPM clientPM = clientQueryService.GetSingle(declarationPM.ImporterId, false, false);
-                if (clientPM != null)
-                {
-                    declarationSReport.mehes_file[0].importer[0].importerfacilitationTypeCode = clientPM.FacilitationTypeCode;
-                }
-            }
-
             declarationSReport.mehes_file[0].declaration_num = declarationPM.DeclarationNumber; //9
             declarationSReport.mehes_file[0].version_id = declarationPM.VersionId; //9
             declarationSReport.mehes_file[0].customs_branch = new List<customs_branch>(); declarationSReport.mehes_file[0].customs_branch.Add(new customs_branch());
@@ -127,34 +118,6 @@ namespace Logitude.Customs.BL.StimulReport.Mapping
             {
                 declarationSReport.mehes_file[0].trans_import_name = declarationPM.TransferImporterName; //13
             }
-
-
-            //Find TransferImporter
-            if (!string.IsNullOrWhiteSpace(declarationPM.TransferImporterId))
-            {
-                ClientPM myClientPM = clientQueryService.GetSingle(declarationPM.TransferImporterId, false, false);
-                if (myClientPM != null)
-                {
-                    declarationSReport.mehes_file[0].transfer_importer_id = myClientPM.Code;
-                }
-                else
-                {
-                    if (!string.IsNullOrWhiteSpace(declarationPM.TransferImporterCode))
-                    {
-                        declarationSReport.mehes_file[0].transfer_importer_id = declarationPM.TransferImporterCode;
-                    }
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrWhiteSpace(declarationPM.TransferImporterCode))
-                {
-                    declarationSReport.mehes_file[0].transfer_importer_id = declarationPM.TransferImporterCode;
-                }
-            }
-
-
-
             //declarationSReport.mehes_file[0].owner_right = new List<owner_right>(); declarationSReport.mehes_file[0].owner_right.Add(new owner_right());
             //declarationSReport.mehes_file[0].owner_right[0].owner_rightid = declarationPM.EntitleImporterCode; //14
             //declarationSReport.mehes_file[0].owner_right[0].owner_rightname = declarationPM.EntitleImporterName; //14
@@ -179,31 +142,6 @@ namespace Logitude.Customs.BL.StimulReport.Mapping
             {
                 declarationSReport.mehes_file[0].Entitle_importer_name = declarationPM.EntitleImporterName;
             }
-
-            //Find EntitleImporter
-            if (!string.IsNullOrWhiteSpace(declarationPM.EntitleImporterId))
-            {
-                ClientPM myClientPM = clientQueryService.GetSingle(declarationPM.EntitleImporterId, false, false);
-                if (myClientPM != null)
-                {
-                    declarationSReport.mehes_file[0].Entitle_importer_Code = myClientPM.Code;
-                }
-                else
-                {
-                    if (!string.IsNullOrWhiteSpace(declarationPM.EntitleImporterCode))
-                    {
-                        declarationSReport.mehes_file[0].Entitle_importer_Code = declarationPM.EntitleImporterCode;
-                    }
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrWhiteSpace(declarationPM.EntitleImporterCode))
-                {
-                    declarationSReport.mehes_file[0].Entitle_importer_Code = declarationPM.EntitleImporterCode;
-                }
-            }
-
             // סוג + מס' הצהרה קשורה // ?? //15 
             declarationSReport.mehes_file[0].mishgor = GetMishgor(declarationPM);
 
@@ -479,7 +417,7 @@ namespace Logitude.Customs.BL.StimulReport.Mapping
                 if (consignment.ConsignmentInternalTransitions != null && consignment.ConsignmentInternalTransitions.Count > 0)
                 {
                     InternalBorderSiteTypeQueryService internalBorderSiteTypeQueryService = new InternalBorderSiteTypeQueryService(context);
-                    InternalBorderSiteTypePM internalBorderSiteTypePM = new InternalBorderSiteTypePM();
+                    InternalBorderSiteTypePM internalBorderSiteTypePM = new Def.EntityPMs.InternalBorderSiteTypePM();
 
                     if (!string.IsNullOrWhiteSpace(consignment.ConsignmentInternalTransitions[0].SiteCode))
                     {
@@ -627,7 +565,7 @@ namespace Logitude.Customs.BL.StimulReport.Mapping
                     else
                     {
                         decimal tempAmount;
-                        if (decimal.TryParse(amounts.Where(d => d.currency == supplierInvoice.InvoiceCurrencyTypeCode).FirstOrDefault().amount, out tempAmount))
+                        if(decimal.TryParse(amounts.Where(d => d.currency == supplierInvoice.InvoiceCurrencyTypeCode).FirstOrDefault().amount, out tempAmount))
                         {
                             tempAmount += supplierInvoice.InvoiceAmount.Value;
                             amounts.Where(d => d.currency == supplierInvoice.InvoiceCurrencyTypeCode).FirstOrDefault().amount = tempAmount.ToString();
@@ -1004,11 +942,11 @@ namespace Logitude.Customs.BL.StimulReport.Mapping
             acc_suppliersup_item.Acc_supplieritemsConDeclars = GetSupplierInvoiceItemConDeclars(supplierInvoiceItem);
             acc_suppliersup_item.Acc_supplieritemsMods = GetSupplierInvoiceItemMods(supplierInvoiceItem);
             acc_suppliersup_item.Acc_supplieritemsLevies = GetSupplierInvoiceItemLevies(supplierInvoiceItem);
-            acc_suppliersup_item.Acc_supplieritemsProdIdents = GetSupplierInvoiceItemProdIdents(supplierInvoiceItem);
+            acc_suppliersup_item.Acc_supplieritemsProdIdents = GetSupplierInvoiceItemProdIdents(supplierInvoiceItem); 
             acc_suppliersup_item.Acc_supplieritemsSerialNums = GetSupplierInvoiceItemSerialNums(supplierInvoiceItem);
-            acc_suppliersup_item.Acc_supplieritemsDescripts = GetSupplierInvoiceItemDescripts(supplierInvoiceItem);
+            acc_suppliersup_item.Acc_supplieritemsDescripts = GetSupplierInvoiceItemDescripts(supplierInvoiceItem);   
             acc_suppliersup_item.Acc_supplieritemsVehicles = GetSupplierInvoiceItemVehicles(supplierInvoiceItem);
-            acc_suppliersup_item.Acc_supplieritemsVehicleAndMods = GetSupplierInvoiceItemVehicleMods(supplierInvoiceItem);
+            acc_suppliersup_item.Acc_supplieritemsVehicleAndMods = GetSupplierInvoiceItemVehicleMods(supplierInvoiceItem); 
 
             return acc_suppliersup_item;
         }

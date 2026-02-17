@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -533,99 +533,7 @@ namespace Logitude.CRM.BL.EntityPMs
               }
              set {  deletedAttachments = value; }
 	    }
-	  	  private string contactImageDetailId ;
-	  	  
-       
-	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContactImageDetailId  
-	   {
-	    
-	     get
-		{
-		   return contactImageDetailId;
-		 }
-		 set
-		 {
-		   if(contactImageDetailId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactImageDetailId",OldValue=contactImageDetailId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   contactImageDetailId=value;
-		   }
-			
-		 }
-	   }
-	  private string contactDefaultColor ;
-	  	  
-       
-	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContactDefaultColor  
-	   {
-	    
-	     get
-		{
-		   return contactDefaultColor;
-		 }
-		 set
-		 {
-		   if(contactDefaultColor != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactDefaultColor",OldValue=contactDefaultColor,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   contactDefaultColor=value;
-		   }
-			
-		 }
-	   }
-	  private int? contactIndexColor ;
-	  	  
-       
-	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int? ContactIndexColor  
-	   {
-	    
-	     get
-		{
-		   return contactIndexColor;
-		 }
-		 set
-		 {
-		   if(contactIndexColor != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactIndexColor",OldValue=contactIndexColor,NewValue=value,PropertyType="int?"};
-		    NotifyPropertyChanged(values);
-		   contactIndexColor=value;
-		   }
-			
-		 }
-	   }
-	  private bool isContainsQuotationAttachment ;
-	  	  
-       
-	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsContainsQuotationAttachment  
-	   {
-	    
-	     get
-		{
-		   return isContainsQuotationAttachment;
-		 }
-		 set
-		 {
-		   if(isContainsQuotationAttachment != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsContainsQuotationAttachment",OldValue=isContainsQuotationAttachment,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isContainsQuotationAttachment=value;
-		   }
-			
-		 }
-	   }
-   }
+	     }
    
 }
 	 

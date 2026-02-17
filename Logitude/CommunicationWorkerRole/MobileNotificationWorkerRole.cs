@@ -1,5 +1,4 @@
-﻿using Logitude.Server.Tools.QueueService;
-using Logitude.SystemLogs;
+﻿using Logitude.SystemLogs;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -19,171 +18,141 @@ namespace CommunicationWorkerRole
     public class MobileNotificationWorkerRole : WorkerEntryPoint
     {
 
-        IQueueService queueservice;
+        QueueDescription queueDescription;
+        QueueClient client;
+        private bool _OnStartDone;
+        string mobilenotificationlogQueueName;
 
+        string tenantName = "";
         public override void Run()
         {
             int? tenant = null;
             string notificationId = null;
-            string tenantName = "";
-
             while (IsRunning)
             {
-                if (!General.IsUpdating())
+                try
                 {
-                    try
+                    int sleeptime = 2000;
+                    var message = client.Receive(new TimeSpan(0, 0, 10));
+                    LastActivity = DateTime.UtcNow;
+                    if (message != null)
                     {
-                        queueservice = new DbQueueService();
-                        queueservice.InitializeQueue("mobilenotificationlogqueue", 0);
-                        var response = queueservice.Receive(new TimeSpan(0, 0, 10));
-                        
-                        if (response != null && response.MessageId != null)
+                        try
                         {
-                            try
+                            if (message.Properties.Keys.Contains("NotificationId"))  notificationId = message.Properties["NotificationId"].ToString();
+                            if (message.Properties.Keys.Contains("Tenant"))  tenant = (int)message.Properties["Tenant"];
+                            if (message.Properties.Keys.Contains("TenantName")) tenantName = message.Properties["TenantName"].ToString();
+
+                            if (notificationId == null || tenant == null)
                             {
-                                notificationId = response.MessageValues.Keys.Contains("NotificationId") ? response.MessageValues["NotificationId"].ToString() : "";
-                                tenantName = response.MessageValues.Keys.Contains("TenantName") ? response.MessageValues["TenantName"].ToString() : "";
-                                tenant = response.MessageValues.Keys.Contains("Tenant") && !string.IsNullOrEmpty(response.MessageValues["Tenant"].ToString()) ? (int?)int.Parse(response.MessageValues["Tenant"].ToString()) : null;
+                                message.Complete();
+                                
+                                continue;
+                            }
 
+                            MobileNotificationLogRepository mobileNotificationLogRepository = new MobileNotificationLogRepository();
+                            MobileNotificationLog mobileNotificationLog = mobileNotificationLogRepository.GetSingleMobileNotificationLogBuIdAndTenant(notificationId, tenant);//GetFirstNotCompletedMobileNotificationLog();
 
-                                if (notificationId == null || tenant == null)
-                                {
-                                    queueservice.Complete();
+                            if (mobileNotificationLog == null) { message.Complete(); continue; }
+                           
+                            ContactMobileDeviceRepository contactMobileDeviceRepository = new ContactMobileDeviceRepository();
 
-                                    continue;
-                                }
+                            List<ContactMobileDevice> contactMobileDeviceLists = contactMobileDeviceRepository.GetAllDeviceByEmail(mobileNotificationLog.Email);
 
-                                MobileNotificationLogRepository mobileNotificationLogRepository = new MobileNotificationLogRepository();
-                                MobileNotificationLog mobileNotificationLog = mobileNotificationLogRepository.GetSingleMobileNotificationLogBuIdAndTenant(notificationId, tenant);//GetFirstNotCompletedMobileNotificationLog();
-
-                                if (mobileNotificationLog == null) { queueservice.Complete(); continue; }
-
-                                ContactMobileDeviceRepository contactMobileDeviceRepository = new ContactMobileDeviceRepository();
-
-                                List<ContactMobileDevice> contactMobileDeviceLists = contactMobileDeviceRepository.GetAllDeviceByEmail(mobileNotificationLog.Email);
-
-                                if (contactMobileDeviceLists.Count == 0)
-                                {
-                                    mobileNotificationLog.AndroidStatus = "D";
-                                    mobileNotificationLog.IOSStatus = "D";
-                                    mobileNotificationLogRepository.Update(mobileNotificationLog);
-                                    mobileNotificationLogRepository.SubmitChanges();
-                                    queueservice.Complete();
-                                    continue;
-                                }
-
-                                List<ContactMobileDevice> iosDeviceList = contactMobileDeviceLists.Where(d => d.Platform == "IOS").ToList();
-                                List<ContactMobileDevice> androidDeviceList = contactMobileDeviceLists.Where(d => d.Platform == "Android").ToList();
-
-
-                                if (androidDeviceList.Count == 0 && mobileNotificationLog.AndroidStatus == "W") mobileNotificationLog.AndroidStatus = "D";
-                                if (iosDeviceList.Count == 0 && mobileNotificationLog.IOSStatus == "W") mobileNotificationLog.IOSStatus = "D";
-
-
-                                #region Send to  IOS Device
-
-                                int badgeNumber = mobileNotificationLogRepository.GetNotificationCountByEmail(mobileNotificationLog.Email);
-                                if (iosDeviceList.Count > 0 && mobileNotificationLog.IOSStatus == "W")
-                                {
-                                    List<List<string>> Tags = GetTagsMobileDevice(iosDeviceList);
-                                    int temp = 0;
-                                    int Count = Tags.Count;
-                                    foreach (List<string> tag in Tags)
-                                    {
-                                        temp++;
-                                        bool isEnd = false;
-                                        while (!isEnd)
-                                        {
-                                            if (temp != Count) isEnd = true;
-                                            Task[] tasks = { SendNotificationForIOSAsync(tag, mobileNotificationLog, badgeNumber, tenantName) };
-                                            isEnd = ComplateTask(tasks, mobileNotificationLog, temp, Count, isEnd, "Before sending notification to ios registered devices", "ios");
-                                        }
-                                    }
-                                }
-
-                                #endregion
-
-                                #region Send to  Android Device
-
-                                if (androidDeviceList.Count > 0 && mobileNotificationLog.AndroidStatus == "W")
-                                {
-                                    List<List<string>> Tags = GetTagsMobileDevice(androidDeviceList);
-
-                                    int temp = 0;
-                                    int Count = Tags.Count;//androidDeviceList.Count / 20;
-                                    foreach (List<string> tag in Tags)
-                                    {
-                                        temp++;
-                                        bool isEnd = false;
-                                        while (!isEnd)
-                                        {
-                                            if (temp != Count) isEnd = true;
-                                            Task[] tasks = { SendNotificationForAndroidAsync(tag, mobileNotificationLog, badgeNumber, tenantName) };
-                                            isEnd = ComplateTask(tasks, mobileNotificationLog, temp, Count, isEnd, "Before sending notification to android registered devices", "android");
-                                        }
-                                    }
-
-                                }
-
-
-                                #endregion
-
-
+                            if (contactMobileDeviceLists.Count == 0)
+                            {
+                                mobileNotificationLog.AndroidStatus = "D";
+                                mobileNotificationLog.IOSStatus = "D";
                                 mobileNotificationLogRepository.Update(mobileNotificationLog);
                                 mobileNotificationLogRepository.SubmitChanges();
-
-
-                                queueservice.Complete();
-                                LogDoneItemInMemory();
+                                message.Complete();
+                                continue;
                             }
 
-                            catch (Exception ex)
+                            List<ContactMobileDevice> iosDeviceList = contactMobileDeviceLists.Where(d => d.Platform == "IOS").ToList();
+                            List<ContactMobileDevice> androidDeviceList = contactMobileDeviceLists.Where(d => d.Platform == "Android").ToList();
+
+
+                            if (androidDeviceList.Count == 0 && mobileNotificationLog.AndroidStatus == "W") mobileNotificationLog.AndroidStatus = "D";
+                            if (iosDeviceList.Count == 0 && mobileNotificationLog.IOSStatus == "W") mobileNotificationLog.IOSStatus = "D";
+
+
+                            #region Send to  IOS Device
+
+                            int badgeNumber = mobileNotificationLogRepository.GetNotificationCountByEmail(mobileNotificationLog.Email);
+                            if (iosDeviceList.Count > 0 && mobileNotificationLog.IOSStatus == "W")
                             {
-                                ExceptionHandler.HandleException(ex, DateTime.Now, (int)tenant, "", "MobileNotificationWorkerRole", "", null);
-                                #region HandleException
-                                if (response.MessageValues.Keys.Contains("NotificationId"))
+                                List<List<string>> Tags = GetTagsMobileDevice(iosDeviceList);
+                                int temp = 0;
+                                int Count = Tags.Count;
+                                foreach (List<string> tag in Tags)
                                 {
-                                    if (response.RetryNumber <= 1)
+                                    temp++;
+                                   bool isEnd = false;
+                                    while (!isEnd)
                                     {
-                                        queueservice.Delay(new TimeSpan(0, 0, 0, 5));
+                                        if (temp!= Count)isEnd = true;
+                                        Task[] tasks = { SendNotificationForIOSAsync(tag, mobileNotificationLog, badgeNumber, tenantName) };
+                                        isEnd = ComplateTask(tasks, mobileNotificationLog, temp, Count, isEnd, "Before sending notification to ios registered devices", "ios");
                                     }
+                                }
+                            }
 
-                                    if (response.RetryNumber > 1 && response.RetryNumber <= 2)
-                                    {
-                                        queueservice.Delay(new TimeSpan(0, 0, 0, 10));
-                                    }
-                                    if (response.RetryNumber >= 3)
-                                    {
-                                        queueservice.CompleteAsFailed();
-                                    }
-                                }
-                                else
+                            #endregion
+
+                            #region Send to  Android Device
+
+                            if (androidDeviceList.Count > 0 && mobileNotificationLog.AndroidStatus == "W")
+                            {
+                                List<List<string>> Tags = GetTagsMobileDevice(androidDeviceList);
+
+                                int temp = 0;
+                                int Count = Tags.Count;//androidDeviceList.Count / 20;
+                                foreach (List<string> tag in Tags)
                                 {
-                                    queueservice.CompleteAsFailed();
+                                    temp++;
+                                    bool isEnd = false;
+                                    while (!isEnd)
+                                    {
+                                        if (temp != Count) isEnd = true;
+                                        Task[] tasks = { SendNotificationForAndroidAsync(tag, mobileNotificationLog, badgeNumber, tenantName) };
+                                        isEnd = ComplateTask(tasks, mobileNotificationLog, temp, Count, isEnd, "Before sending notification to android registered devices", "android");
+                                    }
                                 }
-                                #endregion
 
                             }
 
+
+                            #endregion
+
+
+                            mobileNotificationLogRepository.Update(mobileNotificationLog);
+                            mobileNotificationLogRepository.SubmitChanges();
+
+                            message.Complete();
+                            LogDoneItemInMemory();
                         }
-                        else
+
+                        catch (Exception ex)
                         {
-                            Thread.Sleep(10000);
+                            ExceptionHandler.HandleException(ex, DateTime.Now, (int)tenant, "", "MobileNotificationLogWorkerRole", "", null);
+                            DelayQueueMessage(message);
                         }
 
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "mobile notification worker role start", null, null);
-                        Thread.Sleep(10000);
 
                     }
+
+
+
                 }
-                else
+
+                catch (Exception ex)
                 {
-                    Thread.Sleep(60000);
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "mobile notification worker role start", null, null);
+                    Thread.Sleep(10000);
                 }
             }
+
         }
 
         private static Task<NotificationOutcome> SendNotificationForAndroidAsync(List<string> tagsList, MobileNotificationLog mobileNotificationLog, int badgeNumber ,string tenantName)
@@ -191,12 +160,12 @@ namespace CommunicationWorkerRole
          
             string gcmMessage = "{\"data\":{\"msg\":\"" + mobileNotificationLog.NotificationMessageAndroid + "\",  \"EntitiyId\":\"" + mobileNotificationLog.EntityId + "\"  , \"NotifiyId\":\"" + mobileNotificationLog.Id + "\"  , \"Tenant\":\"" + mobileNotificationLog.Tenant.ToString() + "\" , \"badge\":\"" + badgeNumber.ToString() + "\"  , \"title\":\"" + tenantName + "\" }}";
             NotificationHubClient hub = NotificationHubClient.CreateClientFromConnectionString(LogitudeSettings.NotificationHubConnectionString, LogitudeSettings.NotificationHubName);
-            Task<NotificationOutcome> result = hub.SendFcmNativeNotificationAsync(gcmMessage, tagsList);
+            Task<NotificationOutcome> result = hub.SendGcmNativeNotificationAsync(gcmMessage, tagsList);
 
             return result;
 
         }
-    
+
         private static Task<NotificationOutcome> SendNotificationForIOSAsync( List<string> tagsList ,  MobileNotificationLog mobileNotificationLog , int badgeNumber,string tenantName)
         {
 
@@ -208,7 +177,79 @@ namespace CommunicationWorkerRole
             return result;
         }
 
-    
+        public override bool OnStart()
+        {
+            ThreadId = Guid.NewGuid().ToString();
+            BatchServiceCode = "MobileNotification";
+            DoneItemsInRange = new Dictionary<DateTime, int>();
+
+            try
+            {
+                mobilenotificationlogQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment("mobilenotificationlogqueue");
+                if (!StorageAcountDetails.NameSpaceManager.QueueExists(mobilenotificationlogQueueName))
+                {
+                    queueDescription = new QueueDescription(mobilenotificationlogQueueName);
+                    queueDescription.MaxSizeInMegabytes = 5120;
+                    queueDescription.EnableDeadLetteringOnMessageExpiration = false;
+                    StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription);
+                }
+
+                client = StorageAcountDetails.CreateServiceBusQueueClient(mobilenotificationlogQueueName);
+            }
+            catch (Exception ex)
+            {
+                //  ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "email worker role start", null, null);
+            }
+
+            // Set the maximum number of concurrent connections
+            ServicePointManager.DefaultConnectionLimit = 12;
+
+            //DiagnosticMonitor.Start("DiagnosticsConnectionString");
+
+            // For information on handling configuration changes
+            // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
+            RoleEnvironment.Changing += RoleEnvironmentChanging;
+
+            return base.OnStart();
+        }
+
+        private void RoleEnvironmentChanging(object sender, RoleEnvironmentChangingEventArgs e)
+        {
+            // If a configuration setting is changing
+            if (e.Changes.Any(change => change is RoleEnvironmentConfigurationSettingChange))
+            {
+                // Set e.Cancel to true to restart this role instance
+                e.Cancel = true;
+            }
+        }
+
+        private static void DelayQueueMessage(BrokeredMessage message)
+        {
+            if (message.DeliveryCount < 11)
+            {
+                if (message.DeliveryCount >= 3 && message.DeliveryCount <= 5)
+                {
+                    //    Thread.Sleep(new TimeSpan(0, 0, 10));
+                    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(5);
+                }
+
+                if (message.DeliveryCount > 5 && message.DeliveryCount <= 10)
+                {
+                    //Thread.Sleep(new TimeSpan(0, 0, 30));
+                    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(10);
+                }
+                if (message.DeliveryCount == 11)
+                {
+                    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(60);
+                }
+                message.Abandon();
+            }
+            else
+            {
+                // add error log
+                message.Complete();
+            }
+        }
 
         private string GetExceptionMessage(Exception exc)
         {
@@ -323,28 +364,7 @@ namespace CommunicationWorkerRole
         }
 
 
-        public override bool OnStart()
-        {
-            ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "MobileNotification";
-            DoneItemsInRange = new Dictionary<DateTime, int>();
-            ConnectClient();
-            return base.OnStart();
-        }
 
-        private void ConnectClient()
-        {
-            try
-            {
-                queueservice = new DbQueueService();
-                queueservice.InitializeQueue("mobilenotificationlogqueue", 0);
-            }
-
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Mobile Notification worker role start", null, null);
-            }
-        }
 
     }
 }

@@ -19,75 +19,10 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
     public partial class LedgerTransactionBalanceServiceUnderTest
     {
-        [TestMethod]
-        public void Run_ByAccountingDate_YearTransferButVoided_Ignored()
-        {
-            bool voidedYearTransferTest = true;
-            bool myYearTransferTest = true;
-            var myIAccountingContext = GetIAccountingContextDateType(myYearTransferTest, voidedYearTransferTest);
-            var fltr = new LedgerTransactionBalanceFilter()
-            {
-                Tenant = _MyTenant,
-                GLAccountId = _MainGLAccountIdTeva,
-                IncludeRelatedCurrenciesAccount = false,
-                IncludeChildAccounts = false,
-                //CurrencyId = _CurrencyIdEUR,
-                From = new DateTime(2018, 01, 1),
-                To = new DateTime(2018, 11, 1),
-                PageSize = 100,
-                PageStartAtRecordIndex = 0,
-                DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate
-            };
-            var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
-
-
-            //Act 
-            classUnderTest.Run();
-            Assert.IsNotNull(classUnderTest.Response);
-            Assert.AreEqual(100m, classUnderTest.Response.StartBalanceLocal);
-            Assert.AreEqual(350m, classUnderTest.Response.EndBalanceLocal);
-            Assert.IsNotNull(classUnderTest.Response.MyLedgerTransactionList);
-            Assert.AreEqual(2, classUnderTest.Response.MyLedgerTransactionList.Count());
-            Assert.AreEqual("2", classUnderTest.Response.MyLedgerTransactionList.First().Id);
-            Assert.AreEqual("3", classUnderTest.Response.MyLedgerTransactionList.Last().Id);
-        }
-
-        [TestMethod]
-        public void Run_ByAccountingDate_YearTransfer()
-        {
-            bool myYearTransferTest = true;
-            var myIAccountingContext = GetIAccountingContextDateType(myYearTransferTest);
-            var fltr = new LedgerTransactionBalanceFilter()
-            {
-                Tenant = _MyTenant,
-                GLAccountId = _MainGLAccountIdTeva,
-                IncludeRelatedCurrenciesAccount = false,
-                IncludeChildAccounts = false,
-                //CurrencyId = _CurrencyIdEUR,
-                From = new DateTime(2018, 01, 1),
-                To = new DateTime(2018, 11, 1),
-                PageSize = 100,
-                PageStartAtRecordIndex = 0,
-                DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate
-            };
-            var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
-
-
-            //Act 
-            classUnderTest.Run();
-            Assert.IsNotNull(classUnderTest.Response);
-            Assert.AreEqual(150m, classUnderTest.Response.StartBalanceLocal);
-            Assert.AreEqual(400m, classUnderTest.Response.EndBalanceLocal);
-            Assert.IsNotNull(classUnderTest.Response.MyLedgerTransactionList);
-            Assert.AreEqual(2, classUnderTest.Response.MyLedgerTransactionList.Count());
-            Assert.AreEqual("2", classUnderTest.Response.MyLedgerTransactionList.First().Id);
-            Assert.AreEqual("3", classUnderTest.Response.MyLedgerTransactionList.Last().Id);
-        }
 
         [TestMethod]
         public void Run_ByAccountingDate()
         {
-            
             var myIAccountingContext = GetIAccountingContextDateType();
             var fltr = new LedgerTransactionBalanceFilter()
             {
@@ -100,7 +35,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 To = new DateTime(2018, 11, 1),
                 PageSize = 100,
                 PageStartAtRecordIndex = 0,
-                DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate
+                DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate
             };
             var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
 
@@ -131,7 +66,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 To = new DateTime(2018, 11, 1),
                 PageSize = 100,
                 PageStartAtRecordIndex = 0,
-                DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate
+                DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate
             };
             var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
 
@@ -215,7 +150,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
 
-        IAccountingContext GetIAccountingContextDateType(bool myYearTransferTest=false, bool voidedYearTransferTest = false)
+        IAccountingContext GetIAccountingContextDateType()
         {
             var accountingCurrency = _CurrencyIdUSD;
             var myGLAccount = new GLAccount()
@@ -235,7 +170,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             {
                 new GLAccountTotalByMonth()
                 {
-                    DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
+                    DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
                     Tenant=_MyTenant,
                     Year =yyyy-1,
                     Month =12,
@@ -284,10 +219,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var currDate = _StartDate.AddMonths(2);
             int myId = 1;
             var mockLedgerTransaction = new MockObjectSet<LedgerTransaction>();
-
-
-            string YearTransferTestJornalstorno = "YearTransferTest storno";
-
             var listLedgerTransaction = new List<LedgerTransaction>()
             {
                  new LedgerTransaction()
@@ -296,13 +227,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     CreateDate =currDate,
                     Tenant=_MyTenant,
                     AccountId = _MainGLAccountIdTeva,
-                    AccountingDate = new DateTime(yyyy, 1, 1),
+                    AccountingDate = new DateTime(yyyy, 6, 1),
                     DueDate= new DateTime(yyyy, 7, 10),
                     DocumentDate= new DateTime(yyyy, 5, 15),
                     LocalAmountDebit = 50,
                     CurrencyId = _CurrencyIdUSD,
                     ForeignAmountDebit = 50,
-                    JournalId="YearTransferTest"
 
                  },
                  new LedgerTransaction()
@@ -333,67 +263,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     ForeignAmountDebit = 150,
 
                  },
-                  new LedgerTransaction()
-                 {
-                      Id = GetId(ref myId),
-                    CreateDate =currDate,
-                    Tenant=_MyTenant,
-                    AccountId = _MainGLAccountIdTeva,
-                    AccountingDate = new DateTime(yyyy, 1, 1),
-                    DueDate= new DateTime(yyyy, 7, 10),
-                    DocumentDate= new DateTime(yyyy, 5, 15),
-                    LocalAmountDebit = -50,
-                    CurrencyId = _CurrencyIdUSD,
-                    ForeignAmountDebit = -50,
-                    JournalId=YearTransferTestJornalstorno
-
-                 },
-
             };
 
-            var mockJournal = new MockObjectSet<Journal>();
-
-            if (myYearTransferTest)
-            {
-                var l=listLedgerTransaction.First();
-                mockJournal.Add(
-
-                    new Journal()
-                    {
-                        Id = l.JournalId,
-                        AccountingDate = l.AccountingDate,
-                        Tenant = l.Tenant,
-                        AccountingEntityCode = "11",
-               //         VoidedByJournalId= voidedYearTransferTest? "voidJ":""
-                    }
-                );
-                if (!voidedYearTransferTest)
-                {
-                    removeYearTransferSrorno(YearTransferTestJornalstorno, listLedgerTransaction);
-                }
-                else
-                {
-                    var l2 = listLedgerTransaction.First(r => r.JournalId == YearTransferTestJornalstorno);
-                    mockJournal.Add(
-
-                        new Journal()
-                        {
-                            Id = l2.JournalId,
-                            AccountingDate = l2.AccountingDate,
-                            Tenant = l2.Tenant,
-                            AccountingEntityCode = "11",
-                        
-                    }
-                    );
-
-                }
-
-            }
-            else
-            {
-                removeYearTransferSrorno(YearTransferTestJornalstorno, listLedgerTransaction);
-
-            }
             listLedgerTransaction.ForEach(
                 tran =>
                 {
@@ -416,19 +287,13 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
             A.CallTo(() => fakeIAccountingContext.Journals)
-                .Returns(mockJournal);
+                .Returns(new MockObjectSet<Journal>());
             A.CallTo(() => fakeIAccountingContext.JournalLines)
                 .Returns(new MockObjectSet<JournalLine>());
 
 
 
             return fakeIAccountingContext;
-        }
-
-        private static void removeYearTransferSrorno(string YearTransferTestJornalstorno, List<LedgerTransaction> listLedgerTransaction)
-        {
-            var lYearTransferTestJornalstorno = listLedgerTransaction.First(r => r.JournalId == YearTransferTestJornalstorno);
-            listLedgerTransaction.Remove(lYearTransferTestJornalstorno);
         }
 
         private void AccTot(MockObjectSet<GLAccountTotalByMonth> mockGLAccountTotalByMonth, List<LedgerTransaction> listLedgerTransaction)
@@ -439,7 +304,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var myTotList = q
                 .Select(g => new GLAccountTotalByMonth()
                 {
-                    DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
+                    DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
                     Tenant = _MyTenant,
                     Year = g.Key.Year,
                     Month = g.Key.Month,

@@ -1,5 +1,4 @@
 ﻿using CHAMP17;
-using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -8,17 +7,16 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data.Repositories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Logitude.XSD;
 using Logitude.XSD.FSR;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -284,7 +282,7 @@ namespace WebFreight.Web.WebServices
                             DocumentId = document.Id,
                             EntityReference = entityReference,
                             CreateDateUTC = DateTime.UtcNow,
-                            AWBNumber = myPrefix + "-" + myMaster,
+                            AWBNumber = myMaster,
                         };
 
                         if (IsDemoTenant)
@@ -329,7 +327,7 @@ namespace WebFreight.Web.WebServices
                         else
                         {
                             myShipment.IsFSRSent = true;
-                            myShipment.LastSentByUserId = loggedContactId;
+                            myBooking.LastSentByUserId = loggedContactId;
                             myShipment.LastFSRStatusRequestDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                             ShipmentService service = new ShipmentService(shipmentContext, myShipment, email);
@@ -364,23 +362,20 @@ namespace WebFreight.Web.WebServices
                         {
                             try
                             {
-                                //using (TransactionScope serializableScope = TransactionFactory.GetNewSerializableTransaction())
-                                //{
-                                //    BrokeredMessage message = new BrokeredMessage();
+                                using (TransactionScope serializableScope = TransactionFactory.GetNewSerializableTransaction())
+                                {
+                                    BrokeredMessage message = new BrokeredMessage();
 
-                                //    message.Properties["CommunicationLogId"] = commLog.Id;
-                                //    message.Properties["Tenant"] = tenant;
-                                //    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("champmessageoutqueue");
+                                    message.Properties["CommunicationLogId"] = commLog.Id;
+                                    message.Properties["Tenant"] = tenant;
+                                    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("champmessageoutqueue");
 
-                                //    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
+                                    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
 
-                                //    client.Send(message);
+                                    client.Send(message);
 
-                                //    serializableScope.Complete();
-                                //}
-
-                                DbQueueService queueservice = new DbQueueService("champmessageoutqueue", tenant);
-                                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
+                                    serializableScope.Complete();
+                                }
                             }
 
                             catch (Exception ex)

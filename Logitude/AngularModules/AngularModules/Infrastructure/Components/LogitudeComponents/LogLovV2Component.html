@@ -533,11 +533,10 @@
                             <table>
                                 <tr>
                                     <td style="position:relative">
-                                        <input [attr.data-cy]="DataCy" 
-                                               [id]="ElementId"
+                                        <input [id]="ElementId"
                                                [disabled]="IsDisabled"
                                                [(ngModel)]="SearchTextNgModel"
-                                               (keydown)="OnSearchIputKeyDown($event)"                                            
+                                               (keydown)="OnSearchIputKeyDown($event)"
                                                (keyup)="OnSearchInputKeyUP($event)"
                                                (focus)="OnFocus()"
                                                (blur)="OnSearchInputBlur()"
@@ -630,7 +629,6 @@
                         <!-- BEGIN: Dropdown panel -->
                         <div (mouseover)="OnDropDownMouseOver()" (mouseout)="OnDropDownMouseOut()"
                              FixedPosition
-                            [UseDefaultPosition]="UseDefaultPosition"
                             [ElementId]="DropdownId"
                             [RelativeElementId]="DivLogLovId"
                             [VertDisplacement]="22"
@@ -648,7 +646,7 @@
                                   *ngIf="DisplayHeader">
                                 <div *ngFor="let col of headerColumns; let colIndex = index"
                                      [style.width.px]="Widths[colIndex]"
-                                     [style.max-width]="ColumnsWidths.length == 0 ? (colIndex > 1 ? '85px' : '') : ''"
+                                     [style.max-width]="colIndex > 1 ? '85px' : ''"
                                      [style.min-width.px]="MinWidths[colIndex]"
                                      [style.padding-right]="colIndex == 0 ? '3px' : ''"
                                      [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
@@ -670,7 +668,7 @@
                                     [class.liItemSelected]="(item&&SelectedItemKey)?(item[KeyPropertyPath] === SelectedItemKey?true:false):false"
                                     (mouseover)="OnLiMouseOver($event)"
                                     (mouseleave)="OnLiMouseLeave($event)" [attr.name]="item[DisplayMemberPath]"
-                                    [class.InActive]="item.InActive || item.Inactive">
+                                    [class.InActive]="item.InActive">
 
                                     <!-- the style was like this but because of bug 48807 i changed it height:20px; font-size:10px; width:100%; position:relative; display: table;-->
 
@@ -678,7 +676,7 @@
                                         <div *ngFor="let col of headerColumns; let colIndex = index"
                                              [style.width.px]="Widths[colIndex]"
                                              [style.min-width.px]="MinWidths[colIndex]"
-                                             [style.max-width]="ColumnsWidths.length == 0 ? (colIndex > 1 ? '85px' : '') : ''"
+                                             [style.max-width]="colIndex > 1 ? '85px' : ''"
                                              [style.color]="colIndex > 1 ? '#8d8d8d' : ''"
                                              [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
                                              [title]="item[col.Field]"
@@ -709,14 +707,13 @@
                                     (click)="OnAllDataSelect(item)"
                                     (mouseover)="OnLiMouseOver($event)"
                                     (mouseleave)="OnLiMouseLeave($event)"
-                                    [class.InActive]="item.InActive || item.Inactive">
-
+                                   >
                                    <!--the style was like this but because of bug 48807 i changed it height:20px; font-size:10px; width:100%; position:relative;display: table;-->
                                     <div style="height:16px; font-size:10px; width:100%; position:relative;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
                                         <div *ngFor="let col of headerColumns; let colIndex = index"
 
                                              [style.width.px]="Widths[colIndex]"
-                                             [style.max-width]="ColumnsWidths.length == 0 ? (colIndex > 1 ? '85px' : '') : ''"
+                                             [style.max-width]="colIndex > 1 ? '85px' : ''"
                                              [style.min-width.px]="MinWidths[colIndex]"
                                              [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
                                              [style.color]="colIndex > 1 ? '#8d8d8d' : ''"
@@ -725,7 +722,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <div class="NoResult" *ngIf="AllDataLovMessage">{{AllDataLovMessage}}</div>
+                                <div class="NoResult" *ngIf="LovMessage">{{LovMessage}}</div>
                                 <div class="LoadingDiv" *ngIf="isLoadingZero">
                                     <div class="spinner spinner-AllData" style="margin: 40px auto 0;">
                                         <div class="bounce1"></div>
@@ -737,7 +734,7 @@
 
                             <!-- Footer -->
                             <div class="LogLOVFooter" [style.text-align]="LayoutDirection=='rtl' ? 'left' : 'right'" *ngIf="ShowAddLink || ShowSearchButton">
-                                <ul *ngIf="ShowLanguageFilter && !ForceShowLocalAndEnglishColumns"  float-start >
+                                <ul *ngIf="ShowLanguageFilter"  float-start >
                                     <li style="width: 50px;" [class.SelectedFilter]="LanguageFilterValue == 'L'" (click)="SwitchBetweenLocalAndEng('L')" class="noselect">
                                         Local
                                     </li>
@@ -776,7 +773,7 @@
                 <HelpIcon *ngIf="ShowHelp" [HideHeader]="true" [Text]="ObjectFieldHelp" [IconSize]="15"></HelpIcon>
             </td>
 
-            <td *ngIf="(!HideColumns && !ShowSearchButton) || (!HideColumns && HideLastColumn)" style="width: 18px;">
+            <td *ngIf="!HideColumns && !ShowSearchButton" style="width: 18px;">
                 <div></div>
             </td>
         </tr>

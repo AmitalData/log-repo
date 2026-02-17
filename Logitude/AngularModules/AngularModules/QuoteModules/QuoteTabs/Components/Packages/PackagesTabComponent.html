@@ -13,7 +13,7 @@
                                     <td>{{'Quote.TH.Packages' | TextCodeTranslationPipe}}</td>
 
                                     <td style="width: 90px" *ngIf="!QuoteIsFCL">
-                                        <button id="{{ 'AddPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsAddButtonEnabled" class="Button" (click)="AddPackageClicked()">{{'Quote.B.AddPackage' | TextCodeTranslationPipe}}</button>
+                                        <button [disabled]="!IsAddButtonEnabled" class="Button" (click)="AddPackageClicked()">{{'Quote.B.AddPackage' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;">
@@ -66,7 +66,8 @@
                                                     [SelectedValue]="DimensionsUnitCode"
                                                     [HideColumns]="true"
                                                     [DependencyFilter1Value]="DimensionsDependencyProperty1"
-                                                    [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList">
+                                                    [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList"                                                      
+                                                    >
                                             </LogLov>
                                         </div>
 
@@ -81,31 +82,15 @@
                                             </LogLov>
                                         </div>
 
-                                        <div style="width: 80px; display: block; float:left; margin-left: 15px;">
+                                        <div style="width: 70px; display: block; float:left; margin-left: 15px;">
                                             <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled" [SelectedValue]="Ratio"></RatioBox>
-                                        </div>
-
-                                        <div *ngIf="IsHybrid" style="width: 120px; display: block; float:left; margin-left: 15px;">
-                                            <LogLabel [HideColumns]="true" [ObjectFieldName]="'PickupDeliveryRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            <RatioBox [ObjectFieldName]="'PickupDeliveryRatio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
-                                        </div>
-
-                                        <div  *ngIf="IsHybrid" style="width: 170px; display: block; float:left; margin-left: 15px;">
-                                            <LogLabel [HideColumns]="true" [ObjectFieldName]="'PickupDeliveryCWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            <LogLov [ObjectFieldName]="'PickupDeliveryCWeightUnitCode'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="DataContext"
-                                                    [LookUpTableName]="'WeightUnit'"
-                                                    [SelectedValue]="PickupDeliveryCWeightUnitCode"
-                                                    [HideColumns]="true">
-                                            </LogLov>
+                                            <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
                                         </div>
 
                                         <!--<div style="width: 110px; display: block; float:left; margin-left: 2px;">
-        <LogLabel [ObjectFieldName]="'DimFactor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
-        <LogTextBox [ObjectFieldName]="'DimFactor'" [Text]="DimFactor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-    </div>-->
+                                            <LogLabel [ObjectFieldName]="'DimFactor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
+                                            <LogTextBox [ObjectFieldName]="'DimFactor'" [Text]="DimFactor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        </div>-->
                                     </td>
                                 </tr>
 
@@ -123,91 +108,79 @@
                             <div class="MediaFill">
 
                                 <!-- LCL -->
-                                <logitude-edit-grid *ngIf="!QuoteIsFCL" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow" [UseVirtuallization]="IsUsingVirtuallization">
+                                <logitude-edit-grid *ngIf="!QuoteIsFCL" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
 
                                     <!-- Icon -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template  #logcelltemplate [TabIndex]="-1">
-                                                <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Package Type -->
                                     <log-column [width]="'200'" [header]="'QuotePackage.CH.PackageTypeNameListLable' | TextCodeTranslationPipe" *ngIf="TransportModeId != 'A'">
-                                        <ng-template let-item>
-                                            <log-cell-template  #logcelltemplate [IsEnabled]="false">
-                                                {{item.PackageTypeName}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            {{item.PackageTypeName}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Quantity -->
                                     <log-column [width]="'120'" [header]="'QuotePackage.CH.QuantityListLable' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template  #logcelltemplate>
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Quantity">
-                                                    {{item.Quantity}}
-                                                </div>
+                                        <log-cell-template template="let item" #logcelltemplate>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Quantity">
+                                                {{item.Quantity}}
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Dimensions -->
                                     <log-column [width]="'230'" [header]="'QuotePackage.CH.DimensionsListLable' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template  #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                                {{item.Dimensions}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                                            {{item.Dimensions}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Volume -->
                                     <log-column [width]="'120'" [header]="'QuotePackage.CH.VolumeListLable' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template  #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
-                                                    {{item.Volume | NumbersPipe:'N3'}}
-                                                </div>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                                                {{item.Volume | NumbersPipe:'N3'}}
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Gross Weight -->
                                     <log-column [width]="'120'" [header]="'QuotePackage.CH.GrossWeightListLable' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template  #logcelltemplate>
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.GrossWeight | NumbersPipe:'N3'">
-                                                    {{item.GrossWeight | NumbersPipe:'N3'}}
-                                                </div>
+                                        <log-cell-template template="let item" #logcelltemplate>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'GrossWeight'" [Text]="item.GrossWeight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.GrossWeight | NumbersPipe:'N3'">
+                                                {{item.GrossWeight | NumbersPipe:'N3'}}
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'GrossWeight'" [Text]="item.GrossWeight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Buttons -->
                                     <log-column [width]="'100'">
-                                        <ng-template let-item>
-                                            <log-cell-template >
-                                                <div class="LeftCenter" style="height: 20px;">
-                                                    <span class="CellSeparator"></span>
-                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
-                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackageClicked(item)" [disabled]="!IsEditingEnabled"></IconButton>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item">
+                                            <div class="LeftCenter" style="height: 20px;">
+                                                <span class="CellSeparator"></span>
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackageClicked(item)" [disabled]="!IsEditingEnabled"></IconButton>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -232,7 +205,7 @@
                                                         </td>
 
                                                         <td>
-                                                            <label class="Label">{{'Quote.S.NewQuote.PackageType' | TextCodeTranslationPipe}}</label>
+                                                            <label class="Label">{{'Quote.F.PackageTypeId.Short' | TextCodeTranslationPipe}}</label>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -685,32 +658,8 @@
                                 <tr class="FormFieldRow" style="height:70px;">
                                     <td colspan="3">
                                         <div class="MediaFill">
-                                            <LogTextBox [ForceDirection]="DescriptionFlowDirection" [HideColumns]="IsDescriptionRightToLeftEnabled" [InputType]="'ntext'" [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                            <LogTextBox [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                         </div>
-                                    </td>
-
-                                    <td *ngIf="IsDescriptionRightToLeftEnabled" style="width: 50px;height:20px; vertical-align:top;">
-                                        <table style="width: 50px;height:20px; vertical-align:top;">
-                                            <tr style="width: 50px;height:20px; vertical-align:top;">
-                                                <td style="width:5px;">
-                                                    <div></div>
-                                                </td>
-                                                <td style="width: 16px;height: 14px;">
-                                                    <div [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionLeftClicked()">
-                                                        <img src="./Images/LTR.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionRightClicked()" />
-
-                                                    </div>
-                                                </td>
-                                                <td style="width:5px;">
-                                                    <div></div>
-                                                </td>
-                                                <td style="width: 16px;height: 14px;">
-                                                    <div [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionRightClicked()">
-                                                        <img src="./Images/RTL.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionLeftClicked()" />
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
                                     </td>
                                 </tr>
 

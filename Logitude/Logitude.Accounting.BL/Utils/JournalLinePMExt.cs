@@ -11,7 +11,7 @@ namespace //Logitude.Accounting.BL.Utils
 {
     public static class JournalLinePMExt
     {
-        public static JournalActionTypeEnum ActionTypeCodeEnum_Getter(this JournalLinePM @this)
+        public static MyJournalActionTypeEnum ActionTypeCodeEnum_Getter(this JournalLinePM @this)
         {
             if (String.IsNullOrWhiteSpace(@this.ActionTypeCode))
             {
@@ -23,12 +23,12 @@ namespace //Logitude.Accounting.BL.Utils
                     @this.ActionTypeCode = action.Code;
                 }
             }
-            var codeEnum = JournalActionTypeEnum.NotValid;
-            Enum.TryParse<JournalActionTypeEnum>(@this.ActionTypeCode, out codeEnum);
+            var codeEnum = MyJournalActionTypeEnum.NotValid;
+            Enum.TryParse<MyJournalActionTypeEnum>(@this.ActionTypeCode, out codeEnum);
             return codeEnum;
         }
 
-        public static void ActionTypeCodeEnum_Setter(this JournalLinePM @this ,  JournalActionTypeEnum value)
+        public static void ActionTypeCodeEnum_Setter(this JournalLinePM @this ,  MyJournalActionTypeEnum value)
         {
             int iVal = (int)value;
             @this.ActionTypeCode = "";

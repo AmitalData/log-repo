@@ -1,19 +1,25 @@
+using System.Data.Entity.Core.EntityClient;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
+using System.Transactions;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Mapping;
-using Simplog.Data.InvoiceModel.Mapping;
-using Simplog.Data.QuoteModel.Mapping;
-using Simplog.Data.ShipmentsModel.Mapping;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Helpers;
-using Simplog.Global.Data.GlobalModel.Mapping;
-using Simplog.Server.Infrastructure;
-using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
+using Simplog.Data.CommonDataModel.Mapping;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Helpers;
+using Simplog.Server.Infrastructure;
+using Simplog.Data.InvoiceModel.Mapping;
+using Simplog.Data.ShipmentsModel.Mapping;
+using Simplog.Data.InfrastructureModel.Mapping;
+using Simplog.Data.QuoteModel.Mapping;
+using System;
+using System.Data;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Data.SqlClient;
+using System.Linq;
+using System.Configuration;
+using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Simplog.Data.CommonDataModel
 {
@@ -31,12 +37,14 @@ namespace Simplog.Data.CommonDataModel
         {
             if (LogitudeSettings.WorkEnvironment == "customs" && LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                GlobalDB currentDb;                
-                currentDb = GlobalDbHelper.GetSingleGlobalDBOracle();                
-                string dbConnectionInfo = currentDb.DBConnection;
-                string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+                GlobalDB currentDb;
 
-                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+                //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                //{                
+                currentDb = GlobalDbHelper.GetSingleGlobalDB();
+                //}
+                string dbConnectionInfo = currentDb.DBConnection;
+                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
                 return connection;
             }
             else
@@ -47,7 +55,7 @@ namespace Simplog.Data.CommonDataModel
                 DbConnection connection = new SqlConnection(builder.ToString());
                 return connection;
             }
-
+ 
         }
 
 
@@ -63,27 +71,7 @@ namespace Simplog.Data.CommonDataModel
 
         }
 
-        public CommonDataContext(string nameOrConnectionString) : base(nameOrConnectionString)
-        {
-            Database.SetInitializer<CommonDataContext>(null);
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.AutoDetectChangesEnabled = false;
-            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
-        }
-
         public static ICommonDataContext GetContext(int tenant)
-        {
-            GlobalDB currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-            {
-                return new CommonDataContext(DatabaseInitializer.GetConnection(currentDb.DBConnection, currentDb.SecondaryAzureDBConnection));
-            }
-            else
-            {
-                return new CommonDataContext(DatabaseInitializer.GetConnectionString(currentDb.DBConnection, currentDb.SecondaryAzureDBConnection));
-            }
-        }
-        public static CommonDataContext GetFullContext(int tenant)
         {
             GlobalDB currentDb;
             //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -91,22 +79,12 @@ namespace Simplog.Data.CommonDataModel
             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             //}
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             CommonDataContext context = new CommonDataContext(connection);
 
             return context;
         }
-        public static ICommonDataContext GetSecContext(int tenant)
-        {
-            GlobalDB currentDb;
-            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
-            CommonDataContext context = new CommonDataContext(connection);
-            return context;
-        }
+
         public static CommonDataContext GetContextByDBId(string dbId)
         {
             GlobalDB currentDb;
@@ -116,9 +94,7 @@ namespace Simplog.Data.CommonDataModel
             currentDb = GlobalDbHelper.GetGlobalDBById(dbId);
             //}
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             CommonDataContext context = new CommonDataContext(connection);
 
             return context;
@@ -149,8 +125,6 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new AdvancedQueryFilterMap());
             modelBuilder.Configurations.Add(new AgentMap());
             modelBuilder.Configurations.Add(new AirlineMap());
-            modelBuilder.Configurations.Add(new CarrierAreaMap());
-            modelBuilder.Configurations.Add(new CarrierAreasPortMap());
             modelBuilder.Configurations.Add(new APInvoiceEntityMap());
             modelBuilder.Configurations.Add(new APInvoiceLineMap());
             modelBuilder.Configurations.Add(new APInvoicePaymentMap());
@@ -158,6 +132,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -268,13 +243,10 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new QueryGroupMap());
             modelBuilder.Configurations.Add(new QuoteChargeMap());
             modelBuilder.Configurations.Add(new QuoteCustomerTypeMap());
-            modelBuilder.Configurations.Add(new QuoteGroupSectionMap());
             modelBuilder.Configurations.Add(new QuotePriceStepMap());
             modelBuilder.Configurations.Add(new QuoteMap());
             modelBuilder.Configurations.Add(new QuoteTypeMap());
             modelBuilder.Configurations.Add(new RankMap());
-            modelBuilder.Configurations.Add(new CustomerTeamMap());
-            modelBuilder.Configurations.Add(new CustomerGroupMap());
             modelBuilder.Configurations.Add(new RateClassMap());
             modelBuilder.Configurations.Add(new RatesTableMap());
             modelBuilder.Configurations.Add(new RestrictionMap());
@@ -347,7 +319,6 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
-            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -408,8 +379,6 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new ComputingPartnerTableMap());
             modelBuilder.Configurations.Add(new ComputingPartnerTranslationMap());
             modelBuilder.Configurations.Add(new CustomersDataViewMap());
-            modelBuilder.Configurations.Add(new AllActiveGLAccountsViewMap());
-
             modelBuilder.Configurations.Add(new DocumentFolderMap());
             modelBuilder.Configurations.Add(new DocumentsDataProviderMap());
             modelBuilder.Configurations.Add(new DocumentTypeCategoryMap());
@@ -465,48 +434,17 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new TemperatureUnitMap());
             modelBuilder.Configurations.Add(new HybridPartnersPermissionMap());
             modelBuilder.Configurations.Add(new DWHSettingMap());
-            modelBuilder.Configurations.Add(new PaymentGatewayPartnerMap());
+            modelBuilder.Configurations.Add(new PaymentGatewayPartnersMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
-            modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
-            modelBuilder.Configurations.Add(new CardContactProductMap());
-            modelBuilder.Configurations.Add(new DWHBuildStatusMap());
-            modelBuilder.Configurations.Add(new DocumentsExecutionLogMap());
-            modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap()); 
-            modelBuilder.Configurations.Add(new UserLastSettingsMap());
-            modelBuilder.Configurations.Add(new DigitalContactLastSettingMap());
-            modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
-            modelBuilder.Configurations.Add(new CustomsInterfaceMap());
-            modelBuilder.Configurations.Add(new TariffCarrierTranslationMap());
-            modelBuilder.Configurations.Add(new VatUniquePartnerTypeMap());
-            modelBuilder.Configurations.Add(new WarehouseWeightMeasurementMap());
-            modelBuilder.Configurations.Add(new WarehouseWeightRoundingMap());
-            modelBuilder.Configurations.Add(new WarehouseStoragePricingMap());
-            modelBuilder.Configurations.Add(new CardSearchMap());
-            modelBuilder.Configurations.Add(new HorseMap());
-            modelBuilder.Configurations.Add(new CargoTenantMilestoneDefinitionMap());
-            modelBuilder.Configurations.Add(new DWHEnvironmentSettingMap());
-            modelBuilder.Configurations.Add(new PortTimeZoneMap());
-            modelBuilder.Configurations.Add(new UnassignedEntityMap());
-            modelBuilder.Configurations.Add(new HTSCodeMap());
-            modelBuilder.Configurations.Add(new ProductItemMap());
-            modelBuilder.Configurations.Add(new MentionMap());
-            modelBuilder.Configurations.Add(new CarrierServiceLineMap());
-            modelBuilder.Configurations.Add(new HorseGenderMap());
-            modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
-            modelBuilder.Configurations.Add(new FreelancerGroupTypeMap());
-            modelBuilder.Configurations.Add( new UserFreelancerGroupMap());
-            modelBuilder.Configurations.Add(new TruckerSettingMap());
-
-
 
             base.OnModelCreating(modelBuilder);
         }
 
-        public IDbSet<TariffCarrierTranslation> TariffCarrierTranslations { get; set; }
         public IDbSet<VatFormatType> VatFormatTypes { get; set; }
         public IDbSet<EmailProvider> EmailProviders { get; set; }
+        public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
         public IDbSet<VatUniqueType> VatUniqueTypes { get; set; }
         public IDbSet<VatMandatoryType> VatMandatoryTypes { get; set; }
         public IDbSet<CustomerSalesNote> CustomerSalesNotes { get; set; }
@@ -525,15 +463,10 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CardContact> CardContacts { get; set; }
         public IDbSet<PartnerType> PartnerTypes { get; set; }
         public IDbSet<Rank> Ranks { get; set; }
-        public IDbSet<CustomerTeam> CustomerTeams { get; set; }
-        public IDbSet<CustomerGroup> CustomerGroups { get; set; }
         public IDbSet<User> Users { get; set; }
         public IDbSet<Department> Departments { get; set; }
         public IDbSet<Branch> Branches { get; set; }
         public IDbSet<Airline> Airlines { get; set; }
-        public IDbSet<CarrierArea> CarrierAreas { get; set; }
-        public IDbSet<CarrierAreasPort> CarrierAreasPorts { get; set; }
-
         public IDbSet<ShippingLine> ShippingLines { get; set; }
         public IDbSet<Trucker> Truckers { get; set; }
         public IDbSet<Tenant> Tenants { get; set; }
@@ -561,7 +494,6 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CommunicationLog> CommunicationLogs { get; set; }
         public IDbSet<CommunicationAttachment> CommunicationAttachments { get; set; }
         public IDbSet<DueType> DueTypes { get; set; }
-        public IDbSet<QuoteGroupSection> QuoteGroupSections { get; set; }
         public IDbSet<CommunicationStatusType> CommunicationStatusTypes { get; set; }
         public IDbSet<CommunicationLogType> CommunicationLogTypes { get; set; }
         public IDbSet<WarehouseType> WarehouseTypes { get; set; }
@@ -569,13 +501,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<DocumentTypeTemplate> DocumentTypeTemplates { get; set; }
         public IDbSet<TemplateFormat> TemplateFormats { get; set; }
         public IDbSet<DWHSetting> DWHSettings { get; set; }
-        public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
-        public IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
-        public IDbSet<UserLastSettings> UserLastSettings { get; set; }
-        public IDbSet<WarehouseWeightMeasurement> WarehouseWeightMeasurements { get; set; }
-        public IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; set; }
-        public IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; set; }
-        public IDbSet<Horse> Horses { get; set; }
+        
 
         public IDbSet<Warehouse> Warehouses
         {
@@ -991,11 +917,6 @@ namespace Simplog.Data.CommonDataModel
             get;
             set;
         }
-        public IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions
-        {
-            get;
-            set;
-        }
         public IDbSet<ComputingPartner> ComputingPartners { get; set; }
         public IDbSet<ComputingPartnerCode> ComputingPartnerCodes { get; set; }
         public IDbSet<ComputingPartnerTable> ComputingPartnerTables { get; set; }
@@ -1041,8 +962,6 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<ChargesExternalAccountsByProduct> ChargesExternalAccountsByProducts { get; set; }
         public IDbSet<RegistryDateType> RegistryDateTypes { get; set; }
         public IDbSet<UsoCFDI> UsoCFDIs { get; set; }
-        public IDbSet<RegimenFiscal> RegimenFiscals { get; set; }
-        public IDbSet<PostalCode> PostalCodes { get; set; }
         public IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         public IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
         public IDbSet<FeatureChange> FeatureChanges { get; set; }
@@ -1054,48 +973,32 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<INTTRASettingMode> INTTRASettingModes { get; set; }
         public IDbSet<INTTRABranchRegisteredCarrier> INTTRABranchRegisteredCarriers { get; set; }
         public IDbSet<TemperatureUnit> TemperatureUnits { get; set; }
-        public IDbSet<DocumentFilingBackupBatch> DocumentFilingBackupBatches { get; set; }
-        public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
-        public IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
-        public IDbSet<PaymentGatewayPartner> PaymentGatewayPartners { get; set; }
-        public IDbSet<CustomsShipper> CustomsShippers { get; set; }
+
+        public IDbSet<DocumentFilingBackupBatch> DocumentFilingBackupBatches
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings
+        {
+            get;
+            set;
+        }
+        public IDbSet<HybridPartnersPermission> HybridPartnersPermissions {
+            get;
+            set;
+        }
+
+        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners
+        {
+            get;
+            set;
+        }
+
+       public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
-        public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
-        public IDbSet<CardContactProduct> CardContactProducts { get; set; }
-        public IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs { get; set; } 
-        public IDbSet<AccountingPartner> AccountingPartners { get; set; }
-        public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
-
-        public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; set; }
-        public IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
-        public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
-        public IDbSet<CardSearch> CardSearches { get; set; }
-        public IDbSet<ProductItem> ProductItems { get; set; }
-        public IDbSet<HTSCode> HTSCodes { get; set; }
-        public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
-
-        public IDbSet<PortTimeZone> PortTimeZones { get; set; }
-        public IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
-        public IDbSet<Mention> Mentions { get; set; }
-        public IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
-        public IDbSet<HorseGender> HorseGenders { get; set; }
-        public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get; set; }
-        public IDbSet<PortGroup> PortGroups { get; set; }
-
-        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; set; }
-
-        public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
-        public IDbSet<ExternalLink> ExternalLinks { get; set; }
-
-        public IDbSet<FreelancerGroupType> FreelancerGroupTypes { get; set; }
-        public IDbSet<UserFreelancerGroup> UserFreelancerGroups { get; set; }
-
-        public IDbSet<TruckerSetting> TruckerSettings { get; set; }
-        public IDbSet<Responsibility> Responsibilities { get; set; }
-        public IDbSet<SearchIndexEditHistory> SearchIndexEditHistories { get; set; }
-
-
 
         public DbConnection GetConnection()
         {

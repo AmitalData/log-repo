@@ -35,7 +35,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ICustomContext context = MainContext as CustomContext;
             var metaDataValueRepository = new CustomsDocumentMetaDataValueRepository(context);
             var documentInRep = new DocumentsFilingRepository(tenant);
-            var listDF= documentInRep.GetDocumentsFilingsByEntityId_noInclude(entityId, tenant);
+            var listDF= documentInRep.GetDocumentsFilingsByEntityId(entityId, tenant);
             if (!listDF.Any())
             {
                 return new List<CustomsDocumentMetaDataValuePM>();

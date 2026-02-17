@@ -10,7 +10,6 @@ using Simplog.Server.Infrastructure;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data; 
 using Logitude.WarehouseLib.Data.EntityMapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.WarehouseLib.Data
 {
@@ -25,9 +24,8 @@ namespace Logitude.WarehouseLib.Data
 		 IDbSet<WarehouseRelease> WarehouseReleases { get; }
 		 IDbSet<WarehouseReleasePackage> WarehouseReleasePackages { get; }
 		 IDbSet<WarehouseReleaseStatus> WarehouseReleaseStatuses { get; }
-        IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
-
-        void SetAsModified(object entity);
+	 
+         void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();
 

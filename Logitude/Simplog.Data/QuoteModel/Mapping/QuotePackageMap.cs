@@ -34,7 +34,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.PackageTypeId).HasColumnName("PackageTypeId");
-            this.Property(t => t.Quantity).IsRequired().HasColumnName("Quantity");
+            this.Property(t => t.Quantity).HasColumnName("Quantity");
             this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
             this.Property(t => t.Volume).HasColumnName("Volume");
             this.Property(t => t.Height).HasColumnName("Height");
@@ -42,7 +42,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Length).HasColumnName("Length");
             this.Property(t => t.QuoteId).HasColumnName("QuoteId");
             this.Property(t => t.VolumetricWeight).HasColumnName("VolumetricWeight");
-           
+
             // Relationships
             this.HasOptional(t => t.PackageType)
                 .WithMany()

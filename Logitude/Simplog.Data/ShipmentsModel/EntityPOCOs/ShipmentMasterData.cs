@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
@@ -73,9 +73,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Driver { get; set; }
         public string TruckNumber { get; set; }
         public string TrailerNumber { get; set; }
-        public string Transshipment1TrailerNumber { get; set; }
-        public string Transshipment2TrailerNumber { get; set; }
-        public string Transshipment3TrailerNumber { get; set; }
         public DateTime? MainCarriageSTD { get; set; }
         public DateTime? MainCarriageSTA { get; set; }
         public DateTime? Transshipment1STD { get; set; }
@@ -90,7 +87,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string StatusId { get; set; }
         public DateTime? StatusDate { get; set; }
         public string StatusLocation { get; set; }
-        public string PartialStatusAmount { get; set; }
+
         public string CargonautFWBStatusCode { get; set; }
         public DateTime? CargonautFWBStatusDate { get; set; }
         public string MainCarriageCarrierPrefix { get; set; }
@@ -121,12 +118,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public DateTime? DocumentsClosingDate { get; set; }
         public string OBLTypeCode { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         [ForeignKey("OBLTypeCode")]
         public OBLType OBLType { get; set; }
-
-        public DateTime? CutoffDate { get; set; }
 
         #region Objects
 
@@ -188,102 +182,5 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("InterlineId")]
         public virtual Card InterlineCard { get; set; }
         #endregion
-
-        //pre carriage
-        public string PreCarriageTransportModeId { get; set; }
-        public string PreCarriageFromPortId { get; set; }
-        public string PreCarriageToPortId { get; set; }
-        public string PreCarriageCarrierId { get; set; }
-        public string PreCarriageCarrierNumber { get; set; }
-        public DateTime? PreCarriageETD { get; set; }
-        public DateTime? PreCarriageATD { get; set; }
-        public DateTime? PreCarriageETA { get; set; }
-        public DateTime? PreCarriageATA { get; set; }
-        public string PreCarriageVesselId { get; set; }
-
-        //on carriage
-        public string OnCarriageTransportModeId { get; set; }
-        public string OnCarriageFromPortId { get; set; }
-        public string OnCarriageToPortId { get; set; }
-        public string OnCarriageCarrierId { get; set; }
-        public string OnCarriageCarrierNumber { get; set; }
-        public DateTime? OnCarriageETD { get; set; }
-        public DateTime? OnCarriageATD { get; set; }
-        public DateTime? OnCarriageETA { get; set; }
-        public DateTime? OnCarriageATA { get; set; }
-        public string OnCarriageVesselId { get; set; }
-        public string OnCarriageAdditionalTransportModeCode { get; set; }
-        public bool SplitOnCarriage { get; set; }
-
-        public Vessel PreCarriageVessel { get; set; }
-        public virtual TransportMode PreCarriageTransportMode { get; set; }
-        public virtual Port PreCarriageFromPort { get; set; }
-        public virtual Port PreCarriageToPort { get; set; }
-        public virtual Card PreCarriageCarrierCard { get; set; }
-
-        public Vessel OnCarriageVessel { get; set; }
-        public virtual TransportMode OnCarriageTransportMode { get; set; }
-        public virtual Port OnCarriageFromPort { get; set; }
-        public virtual Port OnCarriageToPort { get; set; }
-        public virtual Card OnCarriageCarrierCard { get; set; }
-        public virtual PickUpDeliveryTransportMode OnCarriageAdditionalTransportMode { get; set; }
-
-        public string InlandDomesticFromZipCode { get; set; }
-        public string InlandDomesticToZipCode { get; set; }
-        public string InlandDomesticFromCity { get; set; }
-        public string InlandDomesticToCity { get; set; }
-        public string InlandDomesticFromCountryId { get; set; }
-        public string InlandDomesticToCountryId { get; set; }
-        public string InlandDomesticFromTypeCode { get; set; }
-        public string InlandDomesticToTypeCode { get; set; }
-        public string MainCarriageFromPortAddress { get; set; }
-        public string MainCarriageToPortAddress { get; set; }
-
-        [ForeignKey("InlandDomesticFromTypeCode")]
-        public PickUpDeliveryFromToType InlandDomesticFromType { get; set; }
-
-        [ForeignKey("InlandDomesticToTypeCode")]
-        public PickUpDeliveryFromToType InlandDomesticToType { get; set; }
-
-        [ForeignKey("InlandDomesticFromCountryId")]
-        public virtual Country InlandDomesticFromCountry { get; set; }
-
-        [ForeignKey("InlandDomesticToCountryId")]
-        public virtual Country InlandDomesticToCountry { get; set; }
-
-        public string OperationalStatusId { get; set; }
-        public string BillingStatusId { get; set; }
-
-        public virtual EntityStatus OperationalStatus { get; set; }
-        public virtual EntityStatus BillingStatus { get; set; }
-
-        public string MainCarriageVesselName { get; set; }
-        public string Transshipment1VesselName { get; set; }
-        public string Transshipment2VesselName { get; set; }
-        public string Transshipment3VesselName { get; set; }
-        public string PreCarriageVesselName { get; set; }
-        public string OnCarriageVesselName { get; set; }
-        public string CarrierServiceLineId { get; set; }
-        public virtual CarrierServiceLine CarrierServiceLine { get; set; }
-
-        public string InlandDomesticToAddress1 { get; set; }
-        public string InlandDomesticToAddress2 { get; set; }
-        public string InlandDomesticToPhone { get; set; }
-        public string InlandDomesticToFax { get; set; }
-        public string InlandDomesticToStateId { get; set; }
-
-        [ForeignKey("InlandDomesticToStateId")]
-        public virtual State InlandDomesticToState { get; set; }
-
-
-        public string InlandDomesticFromAddress1 { get; set; }
-        public string InlandDomesticFromAddress2 { get; set; }
-        public string InlandDomesticFromPhone { get; set; }
-        public string InlandDomesticFromFax { get; set; }
-        public string InlandDomesticFromStateId { get; set; }
-
-        [ForeignKey("InlandDomesticFromStateId")]
-        public virtual State InlandDomesticFromState { get; set; }
-        public int? NumberOfTransshipments { get; set; }
     }
 }

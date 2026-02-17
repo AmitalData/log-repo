@@ -20,7 +20,7 @@ export class MAWBStackPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -75,19 +75,16 @@ export class MAWBStackPM {
     public set AirlineName(newValue: string) { if (this.airlineName != newValue) { this.airlineName = newValue; this.MarkAsDirty("AirlineName"); } }
        
 	 
-    private airline: any;
+    private airline: string;
     public get Airline() { return this.airline; }
-    public set Airline(newValue: any) { if (this.airline != newValue) { this.airline = newValue; this.MarkAsDirty("Airline"); } }
+    public set Airline(newValue: string) { if (this.airline != newValue) { this.airline = newValue; this.MarkAsDirty("Airline"); } }
        
 	 
 
     public OldEntityPM: MAWBStackPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -95,7 +92,6 @@ export class MAWBStackPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "MAWBStack");
            
         }
-	 }
     }
     private MyClone: MAWBStackPM;
 

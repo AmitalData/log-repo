@@ -9,7 +9,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Social.BL.Helpers;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -24,7 +24,7 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.CRM.Data.EntityKeys;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -111,7 +111,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             ActivityListQueryService listService = new ActivityListQueryService(crmContext);
             ActivityList list = listService.GetSingle(id);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Activity", tenant, new List<ActivityList> { list }.Cast<object>().ToList());
 
             return list;
@@ -180,7 +180,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
 
             List<ActivityList> listQuery = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Activity", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery;
@@ -251,42 +251,39 @@ namespace WebFreight.Web.CRMModel.DomainServices
             }
 
             activityRepository = new ActivityRepository(crmContext);
-            activityQuery = new ActivityQueryService(crmContext);
-           
-            ActivityPM entityPM = activityQuery.GetSingle(activityId, true, false);
+            Activity entity = activityRepository.GetSingle(activityId, tenant);
 
-            string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-
-            //ActivityUpdateService activityUpdateService = new ActivityUpdateService(crmContext);
-            
-            if (entityPM != null)
+            if (entity != null)
             {
-                CloseActivityAndSaveChanges(summary, entityPM, loggedContact);
+                DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-                Activity entity = activityRepository.GetSingle(activityId, tenant);
-                //entity.IsOpen = false;
-                //entity.ActivityStatusCode = "C";
-                //entity.MeetingSummary = summary;
-                //entity.NeedSynchronization = true;
-                //entity.CompleteDate = todayDateTime;
-                //entity.UpdateDate = todayDateTime;
-                //this.InitializeSortingFields(entity);
-                //if (loggedContact != null)
-                //{
-                //    entity.UpdatedByUserId = loggedContact.Id;
-                //}
-                //activityRepository.Update(entity);
-                //activityRepository.SubmitChanges();
-                //this.CreateEntityEvent(entity.UpdatedByUserId, entity, "CM");
+                entity.IsOpen = false;
+                entity.ActivityStatusCode = "C";
+                entity.MeetingSummary = summary;
+                entity.NeedSynchronization = true;
+                entity.CompleteDate = todayDateTime;
+                entity.UpdateDate = todayDateTime;
 
+                this.InitializeSortingFields(entity);
+
+                string email = HttpContext.Current.User.Identity.Name;
+                ContactRepository contactRepository = new ContactRepository(tenant);
+                Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+                if (loggedContact != null)
+                {
+                    entity.UpdatedByUserId = loggedContact.Id;
+                }
+
+                activityRepository.Update(entity);
+                activityRepository.SubmitChanges();
 
                 if (entity.ActivityTypeCode == "AP" && post)
                 {
                     string message = "Meeting completed:" + Environment.NewLine + entity.MeetingSummary;
                     AutomaticPosting.CreatePost(entity.Id, "Activity", loggedContact.Id, entity.Subject, message, true, entity.Tenant);
                 }
+
+                this.CreateEntityEvent(entity.UpdatedByUserId, entity, "CM");
 
                 if (!string.IsNullOrEmpty(entity.OpportunityId))
                 {
@@ -301,6 +298,8 @@ namespace WebFreight.Web.CRMModel.DomainServices
                         opportunity.LastActivitySubject = entity.Subject;
                         opportunity.LastCompletedActivityTypeCode = entity.ActivityTypeCode;
                         opportunity.LastCompletedActivityDate = entity.CompleteDate;
+                        opportunityRepository.Update(opportunity);
+                        opportunityRepository.SubmitChanges();
 
                         //Next activity
                         IQueryable<Activity> iQueryableActivities = activityRepository.GetActivitiesByOpportunityId(entity.OpportunityId, tenant);
@@ -422,32 +421,11 @@ namespace WebFreight.Web.CRMModel.DomainServices
                     }
 
 
-                    //this.AddCorrespondenceLine(entity.Id, "LineCompleted");
+                    this.AddCorrespondenceLine(entity.Id, "LineCompleted");
 
                     #endregion
                 }
             }
-        }
-
-        private void CloseActivityAndSaveChanges(string summary, ActivityPM entityPM, Contact loggedContact)
-        {
-            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            entityPM.IsOpen = false;
-            entityPM.ActivityStatusCode = "C";
-            entityPM.MeetingSummary = summary;
-            entityPM.NeedSynchronization = true;
-            entityPM.CompleteDate = todayDateTime;
-            entityPM.UpdateDate = todayDateTime;
-            this.InitializeSortingFields(entityPM);
-            if (loggedContact != null)
-            {
-                entityPM.UpdatedByUserId = loggedContact.Id;
-            }
-
-            ActivityUpdateService service = new ActivityUpdateService(crmContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            service.InitializeEntityPM(entityPM);
-            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-            service.Update(entityPM, true);
         }
 
         [Invoke]
@@ -661,100 +639,6 @@ namespace WebFreight.Web.CRMModel.DomainServices
             }
         }
 
-        private void InitializeSortingFields(ActivityPM entityPM)
-        {
-            switch (entityPM.ActivityTypeCode)
-            {
-                case "TS":
-                    {
-                        if (entityPM.CompleteDate != null)
-                        {
-                            entityPM.SortingDate = entityPM.CompleteDate;
-                            entityPM.SortingBy = "Complete Date";
-                        }
-
-                        else if (entityPM.DueDate != null)
-                        {
-                            entityPM.SortingDate = entityPM.DueDate;
-                            entityPM.SortingBy = "Due Date";
-                        }
-
-                        else if (entityPM.StartDateTime != null)
-                        {
-                            entityPM.SortingDate = entityPM.StartDateTime;
-                            entityPM.SortingBy = "Start Date";
-                        }
-
-                        else if (entityPM.CreateDate != null)
-                        {
-                            entityPM.SortingDate = entityPM.CreateDate;
-                            entityPM.SortingBy = "Create Date";
-                        }
-
-                        break;
-                    }
-
-                case "AP":
-                    {
-                        if (entityPM.CompleteDate != null)
-                        {
-                            entityPM.SortingDate = entityPM.CompleteDate;
-                            entityPM.SortingBy = "Complete Date";
-                        }
-
-                        else if (entityPM.StartDateTime != null)
-                        {
-                            entityPM.SortingDate = entityPM.StartDateTime;
-                            entityPM.SortingBy = "Start Date";
-                        }
-
-                        break;
-                    }
-
-                case "CL":
-                    {
-                        if (entityPM.CompleteDate != null)
-                        {
-                            entityPM.SortingDate = entityPM.CompleteDate;
-                            entityPM.SortingBy = "Complete Date";
-                        }
-
-                        else if (entityPM.DueDate != null)
-                        {
-                            entityPM.SortingDate = entityPM.DueDate;
-                            entityPM.SortingBy = "Due Date";
-                        }
-
-                        else if (entityPM.CreateDate != null)
-                        {
-                            entityPM.SortingDate = entityPM.CreateDate;
-                            entityPM.SortingBy = "Create Date";
-                        }
-
-                        break;
-                    }
-
-                case "EI":
-                    {
-                        if (entityPM.SendReceiveDate != null)
-                        {
-                            entityPM.SortingDate = entityPM.SendReceiveDate;
-                            entityPM.SortingBy = "Send/Receive Date";
-                        }
-                        break;
-                    }
-
-                case "EO":
-                    {
-                        if (entityPM.SendReceiveDate != null)
-                        {
-                            entityPM.SortingDate = entityPM.SendReceiveDate;
-                            entityPM.SortingBy = "Send/Receive Date";
-                        }
-                        break;
-                    }
-            }
-        }
         private void InitializeSortingFields(Activity entity)
         {
             switch (entity.ActivityTypeCode)

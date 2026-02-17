@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -35,28 +35,12 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
-                    if (item.FieldName == "Occasion_CustomersQuery")
-                    {
-                        string value = item.FieldValue as string;
-                        if (!string.IsNullOrEmpty(value))
-                        {
-                            value = value.TrimEnd(',');
-                            var contactIds = value.Split(',');
-                            CardContactRepository cardContactRepository = new CardContactRepository(tenant);
-                            var customersId = cardContactRepository.GetCardsContactsForContactIds_Ids(contactIds.ToList(), tenant);
-                            var customers = customersId.Split(',');
-                            if (customers.Count() > 0)
-                            {
-                                queryableData = queryableData.Where(c => customers.Contains(c.Id));
-                            }
-                        }
-                    }
-
                     if (item.FieldName == "MyCustomers")
                     {
                         string loggedUser = AuthenticationUtil.GetAuthenticatedUser();
                         ContactRepository contactRep = new ContactRepository(tenant);
                         Contact loggedContact = contactRep.GetSingleContactByEmail(loggedUser, tenant);
+
                         queryableData = queryableData.Where(d => d.SalesmanUserId == loggedContact.Id && d.IsCustomer == true && d.InActive == false);
                     }
 
@@ -160,6 +144,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                         date2 = todayDate.AddDays(0);
                                         break;
                                     }
+
                                 case "PO_YS":
                                 case "CS_YS":
                                     {
@@ -167,6 +152,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                         date2 = todayDate.AddDays(-1);
                                         break;
                                     }
+
                                 case "PO_LW":
                                 case "CS_LW":
                                     {
@@ -218,12 +204,12 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
                         if (!string.IsNullOrEmpty(mySalesmanUserId))
                         {
-                            queryableData = queryableData.Where(d =>d.SalesmanUserId == mySalesmanUserId);
+                            queryableData = queryableData.Where(d => d.SalesmanUserId == null || d.SalesmanUserId == mySalesmanUserId);
                         }
 
                         if (!string.IsNullOrEmpty(mySalesmanBusinessUnitId))
                         {
-                            queryableData = queryableData.Where(d =>d.SalesmanBusinessUnitId == mySalesmanBusinessUnitId);
+                            queryableData = queryableData.Where(d => d.SalesmanUserId == null || d.SalesmanBusinessUnitId == mySalesmanBusinessUnitId);
                         }
                     }
                 }
@@ -235,16 +221,17 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
         public IQueryable<CustomersDataView> GetFreelancerCustomers(IQueryable<CustomersDataView> queryableData, int tenant)
         {
-            var frlUtil = new FreelancerCustomersUtil(tenant);
+            FreelancerCustomersUtil frlUtil = new FreelancerCustomersUtil(tenant);
 
             List<string> customersIds = frlUtil.GetConnectedCustomersIds(tenant);
-            
             if (customersIds.Count > 0)
             {
                 queryableData = queryableData.Where(d => customersIds.Contains(d.Id));
             }
             
             return queryableData;
+
+
         }
     }
 }

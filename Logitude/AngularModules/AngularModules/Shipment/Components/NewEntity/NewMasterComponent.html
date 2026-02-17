@@ -75,10 +75,10 @@
     }
 </style>
 
-<table [hidden]="!ScreenIsReady">
+<table>
     <tr>
         <td>
-            <div class="FillParent CurvedArea">
+            <div class="FillParent CurvedArea" *ngIf="IsResourcesReady">
                 <table>
                     <tr>
                         <td style="width: 155px; vertical-align: top" class="AppLeftMenuBackground">
@@ -92,7 +92,7 @@
                                             <div style="font-size: 13px; color: #6E7172;">{{'Master.F.DirectionId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of DirectionsList">
-                                                    <input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" [attr.name]="'DirectionsRadio' + SessionIndex" type="radio" [checked]="DirectionId == item.Code" (click)="DirectionId = item.Code" [disabled]="!IsDirectionListEnabled" />
+                                                    <input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" [attr.name]="'DirectionsRadio' + SessionIndex" type="radio" [checked]="DirectionId == item.Code" (click)="DirectionId = item.Code" />
                                                     <label [attr.for]="'DirectionRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == item.Code ? '#287828':'#282E30'}">
                                                         <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Directions/' + item.Code + '.png'" />
                                                         {{item.Name}}
@@ -106,7 +106,7 @@
                                             <div style="font-size: 13px; color: #6E7172">{{'Master.F.TransportModeId.Short' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of TransportModesList">
-                                                    <input [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" [disabled]="!IsTransportModesListEnabled" />
+                                                    <input [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" [disabled]="!DirectionId" />
                                                     <label [attr.for]="'TransportModeRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: TransportModeId == item.Code ? '#287828':'#282E30'}">
                                                         <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Icons/' + item.Code + '.png'" />
                                                         {{item.Name}}
@@ -125,7 +125,7 @@
                                                             <td>
                                                                 <div class="MediaFill">
                                                                     <div class="LeftCenter">
-                                                                        <input [attr.id]="'ShipmentTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentTypeId == item.Code" (click)="ShipmentTypeId = item.Code" [disabled]="!IsMasterTypesListEnabled" />
+                                                                        <input [attr.id]="'ShipmentTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentTypeId == item.Code" (click)="ShipmentTypeId = item.Code" />
                                                                         <label [attr.for]="'ShipmentTypeRadio_' + SessionIndex + item.Code" style="text-indent: 45px; font-size: 12px" [ngStyle]="{color: ShipmentTypeId == item.Code ? '#287828':'#282E30'}">
                                                                             <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="item.SRC" />
                                                                             {{item.Name}}
@@ -142,19 +142,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- Shipment Sub Types -->
-                                        <div style="margin: 10px;" *ngIf="DirectionId && TransportModeId && ShipmentTypeId && SubTypeFeatureToggle">
-                                            <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentSubTypeId' | TextCodeTranslationPipe}}:</div>
-                                            <div style="margin-top: -2px;">
-                                                <div class="RadioButton" *ngFor="let item of ShipmentSubTypesList" [attr.id]="'ShipmentSubTypeRadio_Div_' + SessionIndex + item.Code">
-                                                    <input [attr.id]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentSubTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentSubTypeId == item.Code" (click)="ShipmentSubTypeId = item.Code" [disabled]="!IsShipmentSubTypesListEnabled" />
-                                                    <label [attr.for]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" style="text-indent: 20px; font-size: 12px" [ngStyle]="{color: ShipmentSubTypeId == item.Code ? '#287828':'#282E30'}">
-                                                        {{item.Name}}
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </td>
                                 </tr>
 
@@ -166,81 +153,134 @@
                             </table>
 
                             <!-- Copy Mood -->
-                            <div *ngIf="IsCopyFromShipment" class="MediaFill">
+                            <div *ngIf="IsCopyFromShipment" class="MediaFill CopyArea">
                                 <div class="MediaFillAbsolute" style="left: 5px; top: 5px;">
                                     <ScrollViewer>
                                         <table *ngIf="SourceEntityPM">
 
+                                            <!-- Icons -->
+                                            <tr style="height: 30px;">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 20px;">
+                                                                <div style="width: 100%; height: 100%; position:relative;">
+                                                                    <img class="CenterCenter" [attr.src]="'./Images/Directions/' + DirectionId + '.png'" />
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 20px;">
+                                                                <div style="width: 100%; height: 100%; position:relative;">
+                                                                    <img class="CenterCenter" style="top: -2px;" [attr.src]="'./Images/Icons/' + TransportModeId + '.png'" />
+                                                                </div>
+                                                            </td>
+
+                                                            <td>{{ShipmentTypeName}}</td>
+                                                        </tr>
+
+                                                        <tr style="height: 10px">
+                                                            <td colspan="3">
+                                                                <div style="height:1px; width: 100%; background: #999999; opacity:0.5;"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 1px">
+                                                <td>
+                                                    <div class="Value">{{'Shipment.S.NewShipment.SelectFields' | TextCodeTranslationPipe}}</div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Partners -->
+                                            <tr style="height: 1px;" *ngIf="!IsInlandDomestic">
+                                                <td>
+                                                    <table>
+                                                        <tr style="height: 5px">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.Partners' | TextCodeTranslationPipe}}</div>
+                                                                <CheckBox [Top]="5" *ngIf="SourceEntityPM.AgentId" [IsChecked]="IsCopyAgent" (Checked)="IsCopyAgent = $event" [IsEnabled]="IsCopyAgentEnabled" [Text]="'Shipment.S.NewShipment.Agent' | TextCodeTranslationPipe"></CheckBox>
+                                                                
+                                                                <div style="margin-top: 10px;" *ngIf="IsCopyOtherPartnersVisible">
+                                                                    <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.OtherPartners' | TextCodeTranslationPipe}}</div>
+                                                                    <CheckBox [Top]="5" *ngIf="SourceEntityPM.ShipperId" [IsChecked]="IsCopyShipper" (Checked)="IsCopyShipper = $event" [Text]="'Shipment.F.Shipper' | TextCodeTranslationPipe"></CheckBox>
+                                                                    <CheckBox [Top]="5" *ngIf="SourceEntityPM.ConsigneeId" [IsChecked]="IsCopyConsignee" (Checked)="IsCopyConsignee = $event" [Text]="'Shipment.F.Consignee' | TextCodeTranslationPipe"></CheckBox>
+                                                                    <CheckBox [Top]="5" *ngIf="SourceEntityPM.CustomAgentImportId" [IsChecked]="IsCopyCustomAgentImport" (Checked)="IsCopyCustomAgentImport = $event" [Text]="'Shipment.S.NewShipment.CustomAgentImport' | TextCodeTranslationPipe"></CheckBox>
+                                                                    <CheckBox [Top]="5" *ngIf="SourceEntityPM.CustomAgentExportId" [IsChecked]="IsCopyCustomAgentExport" (Checked)="IsCopyCustomAgentExport = $event" [Text]="'Shipment.S.NewShipment.CustomAgentExport' | TextCodeTranslationPipe"></CheckBox>
+                                                                    <CheckBox [Top]="5" *ngIf="SourceEntityPM.Notify1Id" [IsChecked]="IsCopyNotify1" (Checked)="IsCopyNotify1 = $event" [Text]="'Shipment.S.NewShipment.Notify1' | TextCodeTranslationPipe"></CheckBox>
+                                                                    <CheckBox [Top]="5" *ngIf="SourceEntityPM.Notify2Id" [IsChecked]="IsCopyNotify2" (Checked)="IsCopyNotify2 = $event" [Text]="'Shipment.S.NewShipment.Notify2' | TextCodeTranslationPipe"></CheckBox>
+                                                                    <CheckBox [Top]="5" *ngIf="SourceEntityPM.ShipperNotExporterId" [IsChecked]="IsCopyShipperNotExporter" (Checked)="IsCopyShipperNotExporter = $event" [Text]="'Shipment.S.NewShipment.ShipperNotExporter' | TextCodeTranslationPipe"></CheckBox>
+                                                                    <CheckBox [Top]="5" *ngIf="SourceEntityPM.ConsigneeNotImporterId" [IsChecked]="IsCopyConsigneeNotImporter" (Checked)="IsCopyConsigneeNotImporter = $event" [Text]="'Shipment.S.NewShipment.ConsigneeNotImporter' | TextCodeTranslationPipe"></CheckBox>
+                                                                    <CheckBox [Top]="5" *ngIf="SourceEntityPM.FreightForwarderId" [IsChecked]="IsCopyFreightForwarder" (Checked)="IsCopyFreightForwarder = $event" [Text]="'Shipment.S.NewShipment.FreightForward' | TextCodeTranslationPipe"></CheckBox>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 10px">
+                                                            <td style="vertical-align: bottom">
+                                                                <div style="height:1px; width: 100%; background: #999999; opacity:0.5;"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Routings -->
+                                            <tr style="height: 1px;" *ngIf="!IsInlandDomestic">
+                                                <td>
+                                                    <table>
+                                                        <tr style="height: 5px">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.Routings' | TextCodeTranslationPipe}}</div>
+                                                                <CheckBox [Top]="5" [IsChecked]="true" [Text]="'Shipment.S.NewShipment.MainCarriage' | TextCodeTranslationPipe" [IsEnabled]="false"></CheckBox>
+
+                                                                <!-- Task 47943: Copy Pickup/Delivery in masters -->
+                                                                <!--<CheckBox [Top]="5" [IsChecked]="IncludePickUp" (Checked)="IncludePickUp = $event" [Text]="'Shipment.S.NewShipment.IncludePickUp' | TextCodeTranslationPipe"></CheckBox>-->
+                                                                <!--<CheckBox [Top]="5" [IsChecked]="IncludeDelivery" (Checked)="IncludeDelivery = $event" [Text]="'Shipment.S.NewShipment.IncludeDelivery' | TextCodeTranslationPipe"></CheckBox>-->
+                                                                <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyFlights" (Checked)="IsCopyFlights = $event" [Text]="'Include flights'"></CheckBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 10px">
+                                                            <td style="vertical-align: bottom">
+                                                                <div style="height:1px; width: 100%; background: #999999; opacity:0.5;"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <!-- OtherDetails -->
                                             <tr style="height: 1px;">
                                                 <td>
+                                                    <table>
+                                                        <tr style="height: 5px">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
 
-                                                    <!-- Icons -->
-                                                    <div style="height: 30px;">
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width: 20px;">
-                                                                    <div style="width: 100%; height: 100%; position:relative;">
-                                                                        <img class="CenterCenter" [attr.src]="'./Images/Directions/' + DirectionId + '.png'" />
-                                                                    </div>
-                                                                </td>
-
-                                                                <td style="width: 20px;">
-                                                                    <div style="width: 100%; height: 100%; position:relative;">
-                                                                        <img class="CenterCenter" style="top: -2px;" [attr.src]="'./Images/Icons/' + TransportModeId + '.png'" />
-                                                                    </div>
-                                                                </td>
-
-                                                                <td>{{ShipmentTypeName}}</td>
-                                                            </tr>
-
-                                                            <tr style="height: 10px">
-                                                                <td colspan="3">
-                                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.5;"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-
-                                                    <div class="Value">{{'Shipment.S.NewShipment.SelectFields' | TextCodeTranslationPipe}}</div>
-                                                    <div style="height: 5px; width: 100%;"></div>
-
-                                                    <!-- Partners -->
-                                                    <div *ngIf="!IsInlandDomestic">
-                                                        <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.Partners' | TextCodeTranslationPipe}}</div>
-                                                        <CheckBox [Top]="5" *ngIf="SourceEntityPM.AgentId" [IsChecked]="IsCopyAgent" (Checked)="IsCopyAgent = $event" [IsEnabled]="IsCopyAgentEnabled" [Text]="'Shipment.S.NewShipment.Agent' | TextCodeTranslationPipe"></CheckBox>
-
-                                                        <div style="margin-top: 10px;" *ngIf="IsCopyOtherPartnersVisible">
-                                                            <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.OtherPartners' | TextCodeTranslationPipe}}</div>
-                                                            <CheckBox [Top]="5" *ngIf="SourceEntityPM.ShipperId" [IsChecked]="IsCopyShipper" (Checked)="IsCopyShipper = $event" [Text]="'Shipment.F.Shipper' | TextCodeTranslationPipe"></CheckBox>
-                                                            <CheckBox [Top]="5" *ngIf="SourceEntityPM.ConsigneeId" [IsChecked]="IsCopyConsignee" (Checked)="IsCopyConsignee = $event" [Text]="'Shipment.F.Consignee' | TextCodeTranslationPipe"></CheckBox>
-                                                            <CheckBox [Top]="5" *ngIf="SourceEntityPM.CustomAgentImportId" [IsChecked]="IsCopyCustomAgentImport" (Checked)="IsCopyCustomAgentImport = $event" [Text]="'Shipment.S.NewShipment.CustomAgentImport' | TextCodeTranslationPipe"></CheckBox>
-                                                            <CheckBox [Top]="5" *ngIf="SourceEntityPM.CustomAgentExportId" [IsChecked]="IsCopyCustomAgentExport" (Checked)="IsCopyCustomAgentExport = $event" [Text]="'Shipment.S.NewShipment.CustomAgentExport' | TextCodeTranslationPipe"></CheckBox>
-                                                            <CheckBox [Top]="5" *ngIf="SourceEntityPM.Notify1Id" [IsChecked]="IsCopyNotify1" (Checked)="IsCopyNotify1 = $event" [Text]="'Shipment.S.NewShipment.Notify1' | TextCodeTranslationPipe"></CheckBox>
-                                                            <CheckBox [Top]="5" *ngIf="SourceEntityPM.Notify2Id" [IsChecked]="IsCopyNotify2" (Checked)="IsCopyNotify2 = $event" [Text]="'Shipment.S.NewShipment.Notify2' | TextCodeTranslationPipe"></CheckBox>
-                                                            <CheckBox [Top]="5" *ngIf="SourceEntityPM.ShipperNotExporterId" [IsChecked]="IsCopyShipperNotExporter" (Checked)="IsCopyShipperNotExporter = $event" [Text]="'Shipment.S.NewShipment.ShipperNotExporter' | TextCodeTranslationPipe"></CheckBox>
-                                                            <CheckBox [Top]="5" *ngIf="SourceEntityPM.ConsigneeNotImporterId" [IsChecked]="IsCopyConsigneeNotImporter" (Checked)="IsCopyConsigneeNotImporter = $event" [Text]="'Shipment.S.NewShipment.ConsigneeNotImporter' | TextCodeTranslationPipe"></CheckBox>
-                                                            <CheckBox [Top]="5" *ngIf="SourceEntityPM.FreightForwarderId" [IsChecked]="IsCopyFreightForwarder" (Checked)="IsCopyFreightForwarder = $event" [Text]="'Shipment.S.NewShipment.FreightForward' | TextCodeTranslationPipe"></CheckBox>
-                                                        </div>
-
-                                                        <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
-                                                    </div>
-
-                                                    <!-- Routings -->
-                                                    <div *ngIf="!IsInlandDomestic">
-                                                        <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.Routings' | TextCodeTranslationPipe}}</div>
-                                                        <CheckBox [Top]="5" [IsChecked]="true" [Text]="'Shipment.S.NewShipment.MainCarriage' | TextCodeTranslationPipe" [IsEnabled]="false"></CheckBox>
-                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyFlights" (Checked)="IsCopyFlights = $event" [Text]="'Include flights'"></CheckBox>
-                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyPreCarriage" (Checked)="IsCopyPreCarriage = $event" [Text]="'Pre carriage'"></CheckBox>
-                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyOnCarriage" (Checked)="IsCopyOnCarriage = $event" [Text]="'On carriage'"></CheckBox>
-                                                        <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
-                                                    </div>
-
-                                                    <!-- Other Details -->
-                                                    <div>
-                                                        <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.OtherDetails' | TextCodeTranslationPipe}}</div>
-                                                        <CheckBox [Top]="5" [IsChecked]="IsCopyDescription" (Checked)="IsCopyDescription = $event" [Text]="'Shipment.F.DescriptionOfGoods' | TextCodeTranslationPipe" [IsEnabled]="IsCopyDescriptionEnabled"></CheckBox>
-                                                        <CheckBox [Top]="5" [IsChecked]="IsCopyPackages" (Checked)="IsCopyPackages = $event" [Text]="'Shipment.S.NewShipment.IncludePackages' | TextCodeTranslationPipe" [IsEnabled]="IsCopyPackagesEnabled"></CheckBox>
-                                                    </div>
+                                                        <tr>
+                                                            <td>
+                                                                <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.OtherDetails' | TextCodeTranslationPipe}}</div>
+                                                                <CheckBox [Top]="5" [IsChecked]="IsCopyDescription" (Checked)="IsCopyDescription = $event" [Text]="'Shipment.F.DescriptionOfGoods' | TextCodeTranslationPipe" [IsEnabled]="IsCopyDescriptionEnabled"></CheckBox>
+                                                                <CheckBox [Top]="5" [IsChecked]="IsCopyPackages" (Checked)="IsCopyPackages = $event" [Text]="'Shipment.S.NewShipment.IncludePackages' | TextCodeTranslationPipe" [IsEnabled]="IsCopyPackagesEnabled"></CheckBox>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
 
@@ -284,8 +324,7 @@
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Card'"
                                                                         [DisplayMemberPath]="'EnglishName'"
-                                                                        [DependencyFilter1Value]="AgentDependencyProperty1"
-                                                                        [DependencyFilter1IsList]="AgentDependencyProperty1IsList">
+                                                                        [DependencyFilter1Value]="'AG'">
                                                                 </LogLov>
                                                             </td>
 
@@ -320,7 +359,7 @@
                                                                         <td>
                                                                             <div style="margin-left: 2px;">
                                                                                 <!--<IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('S')" [disabled]="!AgentAddressId"></IconButton>
-            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
+                                                                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
                                                                             </div>
                                                                         </td>
                                                                         <td [style.width.px]="LabelColumnWidth">
@@ -334,9 +373,6 @@
                                                                                     [LookUpTableName]="'Contact'"
                                                                                     [DependencyFilter1Value]="AgentId">
                                                                             </LogLov>
-                                                                        </td>
-                                                                        <td style="width: 20px;">
-                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddContact(AgentId)"></IconButton>
                                                                         </td>
                                                                     </tr>
 
@@ -364,11 +400,6 @@
                                                                                 </p>
                                                                             </div>
                                                                         </td>
-
-
-                                                                        <td style="width: 20px;">
-                                                                            <div></div>
-                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow">
@@ -386,10 +417,6 @@
                                                                         </td>
                                                                         <td [style.width.px]="ControlColumnWidth">
                                                                             <LogTextBox [ObjectFieldName]="'AgentReference2'" [Text]="AgentReference2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-
-                                                                        <td style="width: 20px;">
-                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -418,7 +445,8 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Port'"
-                                                                                    [DependencyFilter1Value]="TransportModeId">
+                                                                                    [DependencyFilter1Value]="TransportModeId"
+                                                                                    >
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -433,7 +461,8 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Port'"
-                                                                                    [DependencyFilter1Value]="TransportModeId">
+                                                                                    [DependencyFilter1Value]="TransportModeId"
+                                                                                    >
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -448,7 +477,7 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Carrier'"
-                                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1" [ShowInActive]="CarrierDependencyProperty1=='SL'" [ShowInActivePopUpWindow]="'true'">
+                                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -482,31 +511,14 @@
 
                                                                     <tr class="FormFieldRow" *ngIf="TransportModeId == 'O'">
                                                                         <td [style.width.px]="LabelColumnWidth">
-                                                                            <LogLabel [ObjectFieldName]="'MainCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                            <LogLabel [ObjectFieldName]="'MainCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
-
-                                                                        <td [style.width.px]="ControlColumnWidth" *ngIf="IsVesselFreeTextVisible">
-                                                                            <table>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'MainCarriageVesselName'" [Text]="MainCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                    <td style="width: 20px; left:-15px;">
-                                                                                        <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsScreenEnabled" (click)="ChooseVesselClicked()">
-                                                                                            <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
-                                                                                        </span>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-
-                                                                        <td [style.width.px]="ControlColumnWidth" *ngIf="!IsVesselFreeTextVisible">
+                                                                        <td [style.width.px]="ControlColumnWidth">
                                                                             <LogLov [ObjectFieldName]="'MainCarriageVesselId'"
                                                                                     [SelectedValue]="MainCarriageVesselId"
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
-                                                                                    [LookUpTableName]="'Vessel'"
-                                                                                    (SelectedItemChanged)="MainCarriageVessel = $event">
+                                                                                    [LookUpTableName]="'Vessel'">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -856,7 +868,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="MediaFill">
-                                                                    <div class="LocationDirective" ChildDirective></div>
+                                                                    <div class="LocationDirective" #Child></div>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -883,7 +895,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'MasterCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'MasterCancelbtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -891,7 +903,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'MasterCreatebtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled">{{OkButtonLabel}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'MasterCreatebtn' | IdGeneratorPipe}}" [disabled]="!IsScreenEnabled">{{OkButtonLabel}}</button>
                     </td>
                 </tr>
             </table>

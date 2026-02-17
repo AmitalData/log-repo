@@ -2,61 +2,20 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Interfaces;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.Security
 {
     public class LoggedContactUtil : ILoggedContactUtil
     {
-
         public ContactPM GetLoggedContact(int tenant)
         {
-            string userIdentityName;
-
-            string userEmailSetByReportWR = AuthenticationUtil.AuthenticatedUserEmail;
-            if (userEmailSetByReportWR != null)
-                userIdentityName = userEmailSetByReportWR;
-            else
-                userIdentityName = AuthenticationUtil.ResolveUserIdentityName(tenant); // fix by Islam for 69295 Wrong user name recorded in events of AR invoices
-
-            string key = $"GetLoggedContact({userIdentityName}{tenant})";
-            var loggedContact = CacheManager.GetOrInsertNewObject<ContactPM>(key, () =>
-            {
-                var res = GetLoggedContactNoValidCache(tenant);
-                return res;
-            }, true);
-            return loggedContact;
-
-        }
-
-        public Contact GetLoggedContactsIncludingCustomerCareForWR(int tenant)
-        {
-            string userIdentityName;
-
-            string userEmailSetByReportWR = AuthenticationUtil.AuthenticatedUserEmail;
-            if (userEmailSetByReportWR == null)
-                return null;
-            userIdentityName = userEmailSetByReportWR;
-            string key = $"GetLoggedContactsIncludingCustomerCareForWR({userIdentityName}{tenant})";
-            var loggedContact = CacheManager.GetOrInsertNewObject<Contact>(key, () =>
-            {
-                var res = GetLoggedContactIncludingCustomerCareNoValidCache(tenant);
-                return res;
-            }, true);
-            return loggedContact;
-
-        }
-
-        ContactPM GetLoggedContactNoValidCache(int tenant)
-        {
-            ContactPM loggedContact = null;
+            ContactPM loggedContact=null;
             try
             {
                 if (HttpContext.Current != null)
@@ -76,30 +35,14 @@ namespace Logitude.BL.Security
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
-                        loggedContact = new ContactQuery(tenant).GetSingleByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
-                    else
-                        loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
+                    loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
                 }
             }
             catch { }
-
+            
 
             loggedContact = loggedContact ?? new ContactPM() { DontShowLocal = true };
             return loggedContact;
         }
-
-        public Contact GetLoggedContactIncludingCustomerCareNoValidCache(int tenant)
-        {
-            string userEmail = AuthenticationUtil.AuthenticatedUserEmail;
-            if (string.IsNullOrEmpty(userEmail))
-            {
-                return new Contact() { DontShowLocalLabels = true };
-            }
-
-            Contact loggedContact = new ContactQuery(tenant).GetContactByEmail(userEmail, tenant);
-            return loggedContact ?? new Contact() { DontShowLocalLabels = true };
-        }
-
     }
 }

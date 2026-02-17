@@ -105,7 +105,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             Assert.AreEqual(defaultJournal.Id, baseJournal.Id);
             Assert.AreEqual(defaultJournal.OriginalJournalId, baseJournal.OriginalJournalId);
-            Assert.AreEqual("6", baseJournal.StatusCode);
+            Assert.AreEqual("2", baseJournal.StatusCode);
 
 
             Assert.AreEqual(defaultJournal.QueueId, baseJournal.QueueId);
@@ -291,50 +291,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
         }
-
-
-        [TestMethod]
-        public void CreateStorno_WithStornoOverrideM_AccountingDate()
-        {
-
-            JournalPM entityPM = GetDefaultJournal();
-            JournalPM defaultJournal = GetDefaultJournal();
-
-            var stornoOverrideM = new StornoOverrideM()
-            {
-                AccountingEntityCode = "myAccountingEntityCode",
-                AccountingEntityId = "myAccountingEntityId",
-                AccountingEntityReference = "OverrideAccountingEntityId",
-
-                AccountingDate = new DateTime(2019, 11, 11),
-                LineNotes= "override Notes"
-            };
-            var fakeJournalStornoService = GetJournalStornoService(entityPM, stornoOverrideM);
-            var storno = fakeJournalStornoService.CreateStornoAndCommitUpdate();
-            //var storno = entityPM.CreateStorno(stornoOverrideM);
-            Assert.IsNotNull(storno);
-            Assert.IsNotNull(storno.JournalLines);
-
-            
-            Assert.AreEqual(defaultJournal.Tenant, storno.Tenant);
-
-
-
-            Assert.AreEqual(defaultJournal.TypeCode, storno.TypeCode);
-
-            Assert.AreEqual(2, defaultJournal.JournalLines.Count);
-
-            Assert.AreEqual(null, storno.JournalNumber);
-
-
-            Assert.AreEqual(stornoOverrideM.AccountingEntityReference, storno.AccountingEntityReference);
-            Assert.AreEqual(stornoOverrideM.AccountingEntityId, storno.AccountingEntityId);
-            Assert.AreEqual(stornoOverrideM.AccountingEntityCode, storno.AccountingEntityCode);
-            Assert.AreEqual(stornoOverrideM.AccountingDate, storno.AccountingDate);
-            Assert.IsTrue(storno.JournalLines.TrueForAll(r => r.Notes == stornoOverrideM.LineNotes));
-
-
-        }
         private JournalPM GetDefaultJournal()
         {
 
@@ -369,7 +325,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         
                       AccountingDate = j.AccountingDate,
                       //ActionName = "1", 
-                      ActionTypeCodeEnum= JournalActionTypeEnum.Credit,
+                      ActionTypeCodeEnum= MyJournalActionTypeEnum.Credit,
                       ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert, 
                       CreditAccountId = "GetCreditAccountId()",
                       //DebitAccountId = "35",
@@ -394,7 +350,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     {
                       AccountingDate = j.AccountingDate,
                       //ActionName = "2", 
-                      ActionTypeCodeEnum= JournalActionTypeEnum.Debit,
+                      ActionTypeCodeEnum= MyJournalActionTypeEnum.Debit,
                       ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert, 
                       //CreditAccountId = "35", 
                       CurrencyId =("USD"),

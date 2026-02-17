@@ -1,6 +1,4 @@
-﻿//Yuval Chalup 25.06.2015 TASK-8907
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.Data.Repsitories;
+﻿                                                        //Yuval Chalup 25.06.2015 TASK-8907
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
@@ -58,7 +56,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                 myST_NG_40_MSG7_SpecialActivityRequestMessage.desiredPackingDetails = GetdesiredPackingDetailsList(requestParams);  
             }
 
-            myST_NG_40_MSG7_SpecialActivityRequestMessage.Attachment = GetAttachments(requestParams.AppicationId, requestParams.Tenant);
 
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = "בקשה לפעולות מיוחדות";
@@ -67,34 +64,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             return myST_NG_40_MSG7_SpecialActivityRequestMessage;
 
         }
-
-        private Attachment[] GetAttachments(string parentEntityId, int tenant )
-        {
-            List<Attachment> attachments = new List<Attachment>();
-
-
-
-            var customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = parentEntityId, ParentEntityCode = "SpecialRequest" }, tenant);
-
-            foreach (var customsDocumentPM in customsDocumentPMList)
-            {
-                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
-                {
-                    var attachment = new Attachment();
-                    attachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
-                    attachment.IsAttachment = "false";
-                 //   attachment.keywords = customsDocumentPM.Name;
-                //    attachment.fileName = customsDocumentPM.Name;
-
-                  //  attachment.documentType = customsDocumentPM.DocumentTypeCode;
-                    attachments.Add(attachment);
-                }
-            }
-            return attachments.ToArray();
-
-        }
-
 
         //////////////////////////////          General         //////////////////////////////
         private ST_NG_40_MSG7_SpecialActivityRequestMessageGeneral GetGeneralDetails(SpecialActivityRequestParams requestParams)
@@ -159,12 +128,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                     cargoIdentifierKey3 = requestParams.GeneralDetailsData.CargoIdentifier.CargoIdentifierKey3,
                     cargoIdentifierType = requestParams.GeneralDetailsData.CargoIdentifier.CargoIdentifierType,
                 };
-            }
-
-            // OtherActivity        
-            if (requestParams.OtherActivityDetailsData != null)
-            {
-                myGeneral.OtherComment = requestParams.OtherActivityDetailsData.OtherActivityComment;
             }
 
             return myGeneral;

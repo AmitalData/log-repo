@@ -8,17 +8,13 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -86,6 +82,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
         public HttpResponseMessage GetCarrierUpdate(string entityId)
         {
             try
@@ -105,6 +103,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
         public HttpResponseMessage GetMessagingRulesForAirline(string myAirlineCode, string myMessageCode)
         {
             try
@@ -313,7 +313,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 CardQuery cardQuery = new CardQuery(authToken.Tenant);
                 CardList myResult = cardQuery.GetCarrierCopyToCurrentTenant(entityId, authToken.Tenant, null, null, false, null);
 
@@ -333,7 +333,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 PartnersDomainService partnersDomain = new PartnersDomainService();
                 bool myResult = partnersDomain.IsCustomerConnectedToEntities(entityId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -352,7 +352,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 PartnersDomainService partnersDomain = new PartnersDomainService();
 
                 bool myResult = false;
@@ -428,7 +427,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", authToken.Tenant);
 
                 AirlineQuery entityQuery = new AirlineQuery(authToken.Tenant);
@@ -448,7 +446,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", authToken.Tenant);
 
@@ -470,7 +468,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("ShippingLine", "READ", authToken.Tenant);
 
@@ -493,7 +490,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Trucker", "READ", authToken.Tenant);
 
                 TruckerQuery entityQuery = new TruckerQuery(tenant);
@@ -515,7 +511,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Warehouse", "READ", authToken.Tenant);
 
                 WarehouseQuery entityQuery = new WarehouseQuery(tenant);
@@ -591,7 +586,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }        
+        }
+        
         public HttpResponseMessage GetAddressByCardAndType(string cardId, string type)
         {
             try
@@ -643,7 +639,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetIsVATUniqueForCustomer(string vatNumber, string customerId, string countryId, string partnerTypeId)
+        public HttpResponseMessage GetIsVATUniqueForCustomer(string vatNumber, string customerId, string countryId)
         {
             try
             {
@@ -651,7 +647,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 AddressRepository addressRepository = new AddressRepository(tenant);
                 TenantRepository tenantRepository = new TenantRepository(tenant);
                 Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
@@ -663,30 +659,56 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                        where a.Tenant == tenant
                        && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO")
                        && a.VatNumber == vatNumber
-                       && !a.InActive
-                       && a.Customer.CustomerStatusCode != "INA"
                        select a);
 
                 if (allMatchedCards != null)
                 {
-                    if (myTenant.VatUniqueTypeCode != "UNT")
+                    if (myTenant.VatUniqueTypeCode == "UFA")
                     {
-                        bool doValidation = false;
-
-                        if ((myTenant.VatUniquePartnerTypeCode == "POT" && partnerTypeId == "PO") || myTenant.VatUniquePartnerTypeCode == "ALL")
+                        if (isNewEntity)
                         {
-                            doValidation = true;
+                            if (allMatchedCards.Count() > 0)
+                            {
+                                isAlreadyExists = true;
+                            }
                         }
 
-                        else if (myTenant.VatUniquePartnerTypeCode == "CUS" && partnerTypeId == "CS")
+                        else
                         {
-                            allMatchedCards = allMatchedCards.Where(d => d.PartnerTypeId == "CS" && d.Customer.CustomerStatusCode == "ACT");
-                            doValidation = true;
+                            if (allMatchedCards.Where(d => d.Id != customerId).Any())
+                            {
+                                isAlreadyExists = true;
+                            }
+                        }
+                    }
+
+                    else if (myTenant.VatUniqueTypeCode == "USC")
+                    {
+                        if (!isNewEntity)
+                        {
+                            allMatchedCards = allMatchedCards.Where(d => d.Id != customerId);
                         }
 
-                        if (doValidation)
+                        if (allMatchedCards != null)
                         {
-                            isAlreadyExists = this.ValidateVAT_UniqueCountry(customerId, countryId, allMatchedCards, myTenant, isNewEntity, addressRepository);
+                            if (!string.IsNullOrEmpty(countryId))
+                            {
+                                if (countryId == myTenant.VatUniqueCountryId)
+                                {
+                                    foreach (Card item in allMatchedCards)
+                                    {
+                                        Address address = addressRepository.GetMainAddressByCardId(item.Id, tenant);
+                                        if (address != null)
+                                        {
+                                            if (address.CountryId == countryId)
+                                            {
+                                                isAlreadyExists = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -699,62 +721,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private bool ValidateVAT_UniqueCountry(string customerId, string countryId, IQueryable<Card> allMatchedCards, Tenant myTenant, bool isNewEntity, AddressRepository addressRepository)
-        {
-            bool isAlreadyExists = false;
-
-            if (myTenant.VatUniqueTypeCode == "UFA")
-            {
-                if (isNewEntity)
-                {
-                    if (allMatchedCards.Count() > 0)
-                    {
-                        isAlreadyExists = true;
-                    }
-                }
-
-                else
-                {
-                    if (allMatchedCards.Where(d => d.Id != customerId).Any())
-                    {
-                        isAlreadyExists = true;
-                    }
-                }
-            }
-
-            else if (myTenant.VatUniqueTypeCode == "USC")
-            {
-                if (!isNewEntity)
-                {
-                    allMatchedCards = allMatchedCards.Where(d => d.Id != customerId);
-                }
-
-                if (allMatchedCards != null)
-                {
-                    if (!string.IsNullOrEmpty(countryId))
-                    {
-                        if (countryId == myTenant.VatUniqueCountryId)
-                        {
-                            foreach (Card item in allMatchedCards)
-                            {
-                                Address address = addressRepository.GetMainAddressByCardId(item.Id, myTenant.Id);
-                                if (address != null)
-                                {
-                                    if (address.CountryId == countryId)
-                                    {
-                                        isAlreadyExists = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return isAlreadyExists;
-        }
-
         public HttpResponseMessage GetCardExternalAccountsByProducts(string myCardId)
         {
             try
@@ -793,6 +759,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+
+        
         // Partners, Address, Contact
         public HttpResponseMessage PostPartnerAddress(PartnerServicePM args)
         {
@@ -976,7 +944,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             {
                                 if (args.Contact != null)
                                 {
-                                    HandleInactiveContact(args);
                                     if (args.Contact.Id == null)
                                     {
                                         this.CreateContact(args);
@@ -985,23 +952,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     else
                                     {
                                         this.UpdateContact(args);
-                                    }
-                                }
-
-                                break;
-                            }
-                        case "AC"://Accounting Partner
-                            {
-                                if (args.AccountingPartner != null)
-                                {
-                                    if (args.AccountingPartner.Id == null)
-                                    {
-                                        this.CreateAccountingPartner(args);
-                                    }
-
-                                    else
-                                    {
-                                        this.UpdateAccountingPartner(args);
                                     }
                                 }
 
@@ -1019,169 +969,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        [HttpPut]
-        public HttpResponseMessage CheckDuplicate(PartnerServicePM args)
-        {
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
-                    int tenant = authToken.Tenant;
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-                    string VatNumber = "" ;
-                    string Code =" " ;
-                    switch (args.PartnerTypeId)
-                    {
-                        case "AG":
-                            {
-                                if (args.Agent != null)
-                                {
-                                    VatNumber = args.Agent.VatNumber;
-                                    Code = args.Agent?.Code;
-                                }
-
-                                break;
-                            }
-
-                        case "CS":
-                        case "PO":
-                            {
-                                if (args.Customer != null)
-                                {
-                                   VatNumber = args.Customer.VatNumber;
-                                    Code = args.Customer?.Code;
-                                }
-
-                                break;
-                            }
-
-                        case "CG":
-                            {
-                                if (args.CustomAgent != null)
-                                {
-                                    VatNumber = args.CustomAgent.VatNumber;
-                                    Code = args.CustomAgent?.Code;
-                                }
-
-                                break;
-                            }
-
-                        case "SG":
-                            {
-                                if (args.ShippingAgent != null)
-                                {
-                                    VatNumber = args.ShippingAgent.VatNumber;
-                                    Code = args.ShippingAgent?.Code;
-                                }
-
-                                break;
-                            }
-
-                        case "VD":
-                            {
-                                if (args.Vendor != null)
-                                {
-                                    VatNumber = args.Vendor.VatNumber;
-                                    Code = args.Vendor?.Code;
-                                }
-
-                                break;
-                            }
-
-                        case "WH":
-                            {
-                                if (args.Warehouse != null)
-                                {
-                                    VatNumber = args.Warehouse.VatNumber;
-                                    Code = args.Warehouse?.Code;
-                                }
-
-                                break;
-                            }
-
-                        case "AL":
-                            {
-                                if (args.Airline != null)
-                                {
-                                    VatNumber = args.Airline.VatNumber;
-                                    Code = args.Airline?.Code;
-                                }
-
-                                break;
-                            }
-
-                        case "SL":
-                            {
-                                if (args.ShippingLine != null)
-                                {
-                                    VatNumber = args.ShippingLine.VatNumber;
-                                    Code = args.ShippingLine?.Code;
-                                }
-
-                                break;
-                            }
-
-                        case "TR":
-                            {
-                                if (args.Trucker != null)
-                                {
-                                    VatNumber = args.Trucker.VatNumber;
-                                    Code = args.Trucker?.Code;
-                                }
-
-                                break;
-                            }
-
-                        case "AC"://Accounting Partner
-                            {
-                                if (args.AccountingPartner != null)
-                                {
-                                    VatNumber = args.AccountingPartner.VatNumber;
-                                    Code = args.AccountingPartner?.Code;
-                                }
-
-                                break;
-                            }
-                    }
-                    string response = null;
-                    if (!string.IsNullOrEmpty(VatNumber))
-                    {
-                        ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-                        CardService entityQuery = new CardService(objectContext, tenant);
-                        response = entityQuery.CheckIfVatNumberExists(args.PartnerTypeId, VatNumber, Code, tenant);
-                    }
-                      
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, response);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        private void HandleInactiveContact(PartnerServicePM args)
-        {
-            if (args.InactiveContactId != null)
-            {
-                ContactPM tempContactPM = args.Contact;
-                ContactQuery contactQuery = new ContactQuery(args.Tenant);
-                ContactPM contactPM = contactQuery.GetSingleContactPM(args.InactiveContactId);
-                args.Contact = contactPM;
-                args.Contact.InActive = false;
-                ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
-                this.UpdatePartnerContact(args, objectContext);
-                args.Contact = tempContactPM;
-                args.Contact.InActive = !args.IsReactivatingContact;
-            }
-        }
-
+      
         public HttpResponseMessage GetRecentCustomers(string ownerId, string businessUnitId)
         {
             try
@@ -1216,7 +1004,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
                 myResult = myFilter.RunFilter(myResult);
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetCustomFieldsValues("Customer", tenant, myResult.Cast<object>().ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -1300,7 +1088,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 DateTime? date = DateHelper.GetDate(startDate);
 
                 ownerId = this.FixFilter(ownerId);
@@ -1325,8 +1113,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
 
@@ -1372,7 +1159,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 PartnersDomainService service = new PartnersDomainService();
                 service.AllowAirline(isAllowed, code, tenant, myTenantId);                
 
@@ -1425,7 +1212,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 PartnersDomainService service = new PartnersDomainService();
                 service.RegistrationRequested(isRequested, tenantAirlineId, zeroAirlineId, tenant, tenantManagmentId, AWBMessagesCCSTypeCode);
 
@@ -1445,7 +1232,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 PartnersDomainService service = new PartnersDomainService();
                 service.RegisteringAirline(isRegistered, tenantAirlineId, zeroAirlineId, tenant, tenantManagmentId, AWBMessagesCCSTypeCode, loggedContactName);
 
@@ -1465,7 +1252,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 PartnersDomainService service = new PartnersDomainService();
                 service.SetIsDirect(isDirect, tenantAirlineId, zeroAirlineId, tenant, tenantManagmentId, AWBMessagesCCSTypeCode);
 
@@ -1485,7 +1272,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 declineNotes = this.FixFilter(declineNotes);
 
                 PartnersDomainService service = new PartnersDomainService();
@@ -1666,7 +1453,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
             VendorService myPartnerService = new VendorService(objectContext, args.Tenant);
 
-            if (args.Vendor.Addresses != null && args.Vendor.Addresses.Count == 0)
+            if (args.Vendor.Addresses.Count == 0)
             {
                 if (args.Address != null)
                 {
@@ -1674,7 +1461,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
 
-            if (args.Vendor.Contacts != null && args.Vendor.Contacts.Count == 0)
+            if (args.Vendor.Contacts.Count == 0)
             {
                 if (args.Contact != null)
                 {
@@ -1684,12 +1471,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             myPartnerService.Create(args.Vendor);
 
-            if (args.Vendor.Addresses != null && args.Vendor.Addresses.Count > 0)
+            if (args.Vendor.Addresses.Count > 0)
             {
                 args.AddressId = args.Vendor.Addresses.FirstOrDefault().Id;
             }
 
-            if (args.Vendor.Contacts != null &&  args.Vendor.Contacts.Count > 0)
+            if (args.Vendor.Contacts.Count > 0)
             {
                 args.ContactId = args.Vendor.Contacts.FirstOrDefault().Id;
             }
@@ -1794,8 +1581,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            this.UpdatePartnerAddress(args, objectContext);
-            this.UpdatePartnerContact(args, objectContext);
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
 
             if (args.IsPartnerDirty)
             {
@@ -1814,8 +1640,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            this.UpdatePartnerAddress(args, objectContext);
-            this.UpdatePartnerContact(args, objectContext);
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
 
             if (args.IsPartnerDirty)
             {
@@ -1834,8 +1699,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            this.UpdatePartnerAddress(args, objectContext);
-            this.UpdatePartnerContact(args, objectContext);
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
 
             if (args.IsPartnerDirty)
             {
@@ -1854,8 +1758,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            this.UpdatePartnerAddress(args, objectContext);
-            this.UpdatePartnerContact(args, objectContext);
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
 
             if (args.IsPartnerDirty)
             {
@@ -1874,8 +1817,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            this.UpdatePartnerAddress(args, objectContext);
-            this.UpdatePartnerContact(args, objectContext);
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
 
             if (args.IsPartnerDirty)
             {
@@ -1894,8 +1876,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            this.UpdatePartnerAddress(args, objectContext);
-            this.UpdatePartnerContact(args, objectContext);
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
 
             if (args.IsPartnerDirty)
             {
@@ -1914,8 +1935,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            this.UpdatePartnerAddress(args, objectContext);
-            this.UpdatePartnerContact(args, objectContext);
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
 
             if (args.IsPartnerDirty)
             {
@@ -1934,8 +1994,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            this.UpdatePartnerAddress(args, objectContext);
-            this.UpdatePartnerContact(args, objectContext);
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
 
             if (args.IsPartnerDirty)
             {
@@ -1954,8 +2053,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
 
-            this.UpdatePartnerAddress(args, objectContext);
-            this.UpdatePartnerContact(args, objectContext);
+            if (args.Address != null)
+            {
+                if (args.IsAddressDirty)
+                {
+                    AddressService service = new AddressService(objectContext, args.Tenant);
+
+                    if (args.Address.Id == null)
+                    {
+                        service.Create(args.Address);
+                        args.AddressId = args.Address.Id;
+                    }
+
+                    else
+                    {
+                        service.Update(args.Address);
+                    }
+                }
+            }
+
+            if (args.Contact != null)
+            {
+                if (args.IsContactDirty)
+                {
+                    ContactService service = new ContactService(objectContext, args.Tenant);
+
+                    if (args.Contact.Id == null)
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
+
+                        service.Create(args.Contact);
+                        args.ContactId = args.Contact.Id;
+                    }
+
+                    else
+                    {
+                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
+
+                        service.Update(args.Contact);
+                    }
+                }
+            }
 
             if (args.IsPartnerDirty)
             {
@@ -1970,162 +2108,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 myPartnerService.Update(args.Trucker);
             }
         }
-        private void UpdatePartnerAddress(PartnerServicePM args, ICommonDataContext objectContext)
-        {
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
 
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-        }
-        private void UpdatePartnerContact(PartnerServicePM args, ICommonDataContext objectContext)
-        {
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-                    
-                    if (args.IsConnectingInactiveContact)
-                    {
-                        args.Contact.OldSimilarInactiveContactId = args.InactiveContactId;
-
-                        if (args.IsReactivatingContact)
-                        {
-                            args.Contact.InActive = false;
-                        }
-                    }
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-                        service.Update(args.Contact);
-                        UpdateCustomerContactFields(args);
-                    }
-                }
-            }
-        }
-        private void CreateAccountingPartner(PartnerServicePM args)
-        {
-            SecurityUtility.CheckContactFeature("AccountingPartner", "NEW", args.Tenant);
-
-            ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
-            AccountingPartnerService myPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
-
-            if (args.AccountingPartner.Addresses != null && args.AccountingPartner.Addresses.Count == 0)
-            {
-                if (args.Address != null)
-                {
-                    args.AccountingPartner.Addresses.Add(args.Address);
-                }
-            }
-
-            if (args.AccountingPartner.Contacts != null && args.AccountingPartner.Contacts.Count == 0)
-            {
-                if (args.Contact != null)
-                {
-                    args.AccountingPartner.Contacts.Add(args.Contact);
-                }
-            }
-
-            myPartnerService.Create(args.AccountingPartner);
-
-            if (args.AccountingPartner.Addresses != null && args.AccountingPartner.Addresses.Count > 0)
-            {
-                args.AddressId = args.AccountingPartner.Addresses.FirstOrDefault().Id;
-            }
-
-            if (args.AccountingPartner.Contacts != null && args.AccountingPartner.Contacts.Count > 0)
-            {
-                args.ContactId = args.AccountingPartner.Contacts.FirstOrDefault().Id;
-            }
-
-            args.PartnerId = args.AccountingPartner.Id;
-
-        }
-        private void UpdateAccountingPartner(PartnerServicePM args)
-        {
-            ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
-
-            if (args.Address != null)
-            {
-                if (args.IsAddressDirty)
-                {
-                    AddressService service = new AddressService(objectContext, args.Tenant);
-
-                    if (args.Address.Id == null)
-                    {
-                        service.Create(args.Address);
-                        args.AddressId = args.Address.Id;
-                    }
-
-                    else
-                    {
-                        service.Update(args.Address);
-                    }
-                }
-            }
-
-            if (args.Contact != null)
-            {
-                if (args.IsContactDirty)
-                {
-                    ContactService service = new ContactService(objectContext, args.Tenant);
-
-                    if (args.Contact.Id == null)
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "NEW", args.Tenant);
-
-                        service.Create(args.Contact);
-                        args.ContactId = args.Contact.Id;
-                    }
-
-                    else
-                    {
-                        SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
-
-                        service.Update(args.Contact);
-                    }
-                }
-            }
-
-            if (args.IsPartnerDirty)
-            {
-                SecurityUtility.CheckContactFeature("AccountingPartner", "UPDATE", args.Tenant);
-
-                if (args.AccountingPartner.IsFirstContactToAdd)
-                {
-                    args.AccountingPartner.PrimaryContactId = args.ContactId;
-                }
-
-                AccountingPartnerService myPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
-                myPartnerService.Update(args.AccountingPartner);
-            }
-
-        }
-
-        public HttpResponseMessage PutPartnerExternalAccounts(PartnerExternalAccountsServicePM args)
+        public HttpResponseMessage Put(PartnerExternalAccountsServicePM args)
         {
             try
             {
@@ -2270,15 +2254,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        public HttpResponseMessage GetCustomersQuickSearch([FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetCustomersQuickSearch(string SearchText)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                string SearchText = filters.Filter10Value;
 
                 PartnersDomainService domainService = new PartnersDomainService();
                 List<CustomerList> myResult = domainService.GetCustomersQuickSearch(tenant, SearchText);
@@ -2296,11 +2278,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 AirlineRepository airlineRepository = new AirlineRepository(MyContext);
                 AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
@@ -2320,9 +2297,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
 
@@ -2538,386 +2512,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return loggedUserId;
         }
 
-        public HttpResponseMessage GetCardContactProducts(string cardId, string contactId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;                
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                CardContactRepository cardContactRepository = new CardContactRepository(commonDataContext);
-                CardContact cardContact = cardContactRepository.GetCardContactByContactAndCard(cardId, contactId, tenant);
-                CardContactProductRepository cardContactProductRepository = new CardContactProductRepository(commonDataContext);
-                CardContactProductQuery cardContactProductQuery = new CardContactProductQuery(cardContactProductRepository);
-
-                List<CardContactProductPM> cardContactProducts = new List<CardContactProductPM>();
-                if(cardContact != null)
-                {
-                    cardContactProducts = cardContactProductQuery.GetCardContactProductPMsByCardContactId(cardContact.Id, tenant);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, cardContactProducts);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetAllCarrierAreasByCarrierId(string carrierId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                CarrierAreaQuery carrierAreaQuery = new CarrierAreaQuery(tenant);
-                List<CarrierAreaPM> carrierAreas = carrierAreaQuery.GetCarrierAreasPMsByCarrierId(carrierId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, carrierAreas);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetRemoveCarrierAreaFromCarrier(string areaId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                CarrierAreaRepository carrierAreaRepository = new CarrierAreaRepository(commonDataContext);
-                CarrierAreasPortRepository carrierAreasPortRepository = new CarrierAreasPortRepository(commonDataContext);
-
-                CarrierArea carrierArea = carrierAreaRepository.GetSingleCarrierArea(areaId, tenant);
-
-                if(carrierArea != null)
-                {
-                    List<CarrierAreasPort> areasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(areaId, tenant);
-                    if(areasPorts != null && areasPorts.Count > 0)
-                    {
-                        foreach (CarrierAreasPort item in areasPorts)
-                        {
-                            carrierAreasPortRepository.Remove(item);
-                        }
-                    }
-
-                    carrierAreaRepository.Remove(carrierArea);
-                    commonDataContext.SaveChanges();
-                }               
-
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetInUseWarehouse(string code)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string loggedUserEmail = authToken.Email;
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                PartnersDomainService partnersDomain = new PartnersDomainService();
-
-                bool myResult = false;
-                
-                CardRepository rep = new CardRepository(tenant);
-                List<Card> cards = rep.GetWarehouseCards(tenant).ToList();
-
-                if (!string.IsNullOrEmpty(code))
-                {
-                    if (cards.Where(p => p.Code == code).FirstOrDefault() != null)
-                    {
-                        myResult = true;
-                    }
-                    else
-                    {
-                        myResult = false;
-                    }
-                }
-                else
-                {
-                    myResult = false;
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetAllTariffTranslationsByCarrierId(string carrierId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                TariffCarrierTranslationQuery myQuery = new TariffCarrierTranslationQuery(tenant);
-                List<TariffCarrierTranslationPM> myResult = myQuery.GetTranslationsByCarrier(carrierId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetRemoveTranslationFromCarrier(string id)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                TariffCarrierTranslationRepository myRepository = new TariffCarrierTranslationRepository(commonDataContext);
-                
-                TariffCarrierTranslation translation = myRepository.GetSingleTariffCarrierTranslation(id, tenant);
-
-                if (translation != null)
-                {
-                    myRepository.Remove(translation);
-                    commonDataContext.SaveChanges();
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetWarehouseStoragePricingForWarehouse(string warehouseId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                WarehouseStoragePricingQuery warehouseStoragePricingQuery = new WarehouseStoragePricingQuery(tenant);
-                List<WarehouseStoragePricingPM> myResult = warehouseStoragePricingQuery.GetWarehouseStoragePricingPMsByWarehouseId(warehouseId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-
-        }
-
-        private void UpdateCustomerContactFields(PartnerServicePM args)
-        {
-            if (args.Customer != null && args.Contact != null)
-            {
-                args.Customer.PrimaryContactPhone = args.Contact.BusinessPhone;
-                args.Customer.PrimaryContactName = args.Contact.EnglishName;
-                args.IsPartnerDirty = true;
-            }
-        }
-
-        public HttpResponseMessage GetCustomerProductItemHTSCodeByCountry(string productItemId, string dischargePortCountryId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
-                HTSCodePM hTSCode = hTSCodeQuery.GetSingleHTSCodeByProductItemAndCountry(productItemId, dischargePortCountryId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, hTSCode);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetSingleCustomerProductItem(string productItemId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ProductItemQuery productItemQuery = new ProductItemQuery(tenant);
-                ProductItemPM productItem = productItemQuery.GetSinglePM(productItemId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, productItem);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage PutCusttomerProductItem(ProductItemPM productItem)
-        {
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.CheckContactFeature("Customer", "UPDATE", tenant);
-
-                    if (productItem != null)
-                    {
-                        productItem.ChangeSetOp = ChangeSetOperation.Update;
-                        ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-                        CustomerRepository customerRepository = new CustomerRepository(commonContext);
-                        CustomerQuery customerQuery = new CustomerQuery(customerRepository);
-                        CustomerPM customerPM = customerQuery.GetSinglePM(productItem.CustomerId, tenant);
-
-                        if (customerPM != null)
-                        {
-                            customerPM.CustomerProductItems.Remove(customerPM.CustomerProductItems.Where(d => d.Id == productItem.Id).FirstOrDefault());
-                            customerPM.CustomerProductItems.Add(productItem);
-                            
-                            List<ProductItemPM> productItemsChangeSet = customerPM.CustomerProductItems;
-                            foreach (ProductItemPM itemPM in productItemsChangeSet)
-                            {
-                                switch (itemPM.ChangeSetOp)
-                                {
-                                    case ChangeSetOperation.Update:
-                                        {
-                                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
-                                            itemPM.HTSCodeChangeSet = itemPM.HTSCodes.ToList();
-                                            break;
-                                        }
-
-                                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
-                                }
-                            }
-
-                            CustomerService service = new CustomerService(commonContext, customerPM);
-                            service.SetChangeSet(customerPM.SalesNotes, customerPM.CustomerProducts, customerPM.CustomerCompetitors, customerPM.CustomerAdditionalServices, customerPM.CustomerSalesmanByProducts, customerPM.CustomerAccountManagerByProducts, customerPM.CustomerCustomsAgentByProducts, customerPM.CustomerForwarderByProducts, customerPM.CustomerMediatorByProducts, customerPM.CardExternalCodeByCurrencies, productItemsChangeSet);
-                            service.Update();
-                        }
-                    }
-
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, productItem);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetAllCarrierServiceLinesByCarrierId(string carrierId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                CarrierServiceLineQuery carrierServiceLineQuery = new CarrierServiceLineQuery(tenant);
-                List<CarrierServiceLinePM> serviceLinePMs = carrierServiceLineQuery.GetCarrierServiceLinePMsByCardId(carrierId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, serviceLinePMs);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetRemoveServiceLineFromCarrier(string serviceLineId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                CarrierServiceLineRepository serviceLineRepository = new CarrierServiceLineRepository(commonDataContext);
-                CarrierServiceLine serviceLine = serviceLineRepository.GetSingleCarrierServiceLine(serviceLineId, tenant);
-
-                if (serviceLine != null)
-                {
-                    this.ValidateConnectedShipmentsToServiceLine(serviceLine);
-                    serviceLineRepository.Remove(serviceLine);
-                    commonDataContext.SaveChanges();
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        private void ValidateConnectedShipmentsToServiceLine(CarrierServiceLine serviceLine)
-        {
-            ShipmentRepository shipmentRepository = new ShipmentRepository(serviceLine.Tenant);
-            IQueryable<ShipmentMasterData> shipments = shipmentRepository.GetMasterByServiceLineId(serviceLine.Id, serviceLine.Tenant);
-
-            if(shipments.Count() > 0)
-            {
-                throw new ApplicationException("Can't delete Service lines which are connected to shipments");
-            }
-        }
     }
 }

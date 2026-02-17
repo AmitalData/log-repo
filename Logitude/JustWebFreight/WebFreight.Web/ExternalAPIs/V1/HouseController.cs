@@ -1,19 +1,14 @@
-﻿using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
-using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
-using Logitude.Infrastructure.Data;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -29,17 +24,15 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.DataContracts;
-using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
-using Container = Logitude.BL.ShipmentsModel.APIDataContract.ApiV1.Container;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class HouseController : ApiController
     {
-        public HttpResponseMessage GetSingleHouse(string id, string include = "")
+        public HttpResponseMessage GetSingleHouse(string id)
         {
             try
             {
@@ -47,12 +40,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                SecurityUtility.AuthenticateAPICall(tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("House", authToken.Tenant);
+				SecurityUtility.AuthenticateAPICall(tenant);
 
-                HouseQueryService Service = new HouseQueryService(tenant);
+				HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetHouseById(id, tenant, include);
+                var Result = Service.GetHouseById(id, tenant);
+                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -62,7 +55,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleHouseByNumber(string number, string include = "")
+        public HttpResponseMessage GetSingleHouseByNumber(string number)
         {
             try
             {
@@ -70,12 +63,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                SecurityUtility.AuthenticateAPICall(tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("House", authToken.Tenant);
+				SecurityUtility.AuthenticateAPICall(tenant);
 
-                HouseQueryService Service = new HouseQueryService(tenant);
+				HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetHouseByShipmentNumber(number, tenant, include);
+                var Result = Service.GetHouseByShipmentNumber(number, tenant);
+                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -94,140 +87,281 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                    SecurityUtility.AuthenticateAccessibleAPI("House", authToken.Tenant);
 
+					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                    Logitude.BL.Security.ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+
+                    ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     string computingPartnerCode = "";
                     if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
                         computingPartnerCode = entity.ComputingPartnerCode;
                     }
 
-                    ExternalAPIXMLEntityValidator externalAPIXMLEntityValidator = new ExternalAPIXMLEntityValidator(authToken.Tenant);
-                    externalAPIXMLEntityValidator.ValidateHouseEntity(entity, MyContext);
-                    this.InitOceanOrInlandPackages(entity);
-                    this.InitContainers(entity);
+                    if (!string.IsNullOrEmpty(entity.HouseNo))
+                    {
+                        bool exist = (from a in MyContext.Shipments
+                                      where a.Tenant == authToken.Tenant
+                                      && a.ShipmentLevelCode == "H"
+                                      && !string.IsNullOrEmpty(a.House)
+                                      && a.House == entity.HouseNo
+                                      select a).Any();
 
-                    APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
-                    entity = apiUnassignedDataHandler.HandleUnassignedHouseShipmentData(entity);
+                        if (exist)
+                        {
+                            throw new ApplicationException("A House with the given house number already exists");
+                        }
+                    }
 
+                    if (entity.TransportMode != null && entity.ShipmentType != null)
+                    {
+                        if (entity.TransportMode.Code != "A")
+                        {
+                            if (entity.OceanOrInlandPackages != null && entity.OceanOrInlandPackages.Count > 0)
+                            {
+                                foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
+                                {
+                                    if (item.PackageType == null)
+                                    {
+                                        string message = entity.ShipmentType.Code.Contains("LCL") ? "Package Type is required" : "Container Type is required";
+                                        throw new ApplicationException(message);
+                                    }
+
+                                    else
+                                    {
+                                        if (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL"))
+                                        {
+                                            if (item.Pieces == null || item.Pieces == 0)
+                                            {
+                                                item.Pieces = 1;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (entity.TransportMode != null && entity.TransportMode.Code != "A")
+                    {
+                        if (entity.ShipmentType == null || (entity.ShipmentType != null && string.IsNullOrEmpty(entity.ShipmentType.Code)))
+                        {
+                            throw new ApplicationException("Missing Shipment Type");
+                        }
+                    }
+
+                    if (entity.Receivables != null && entity.Receivables.Count > 0)
+                    {
+                        foreach (Receivable item in entity.Receivables)
+                        {
+                            if(item.ChargesType == null)
+                            {
+                                throw new ApplicationException("Receivable Charges Type is required");
+                            }
+                            
+                            if (item.Currency == null)
+                            {
+                                throw new ApplicationException("Receivable Currency is required");
+                            }
+                        }
+                    }
+
+                    if (entity.Payables != null && entity.Payables.Count > 0)
+                    {
+                        foreach (Payable item in entity.Payables)
+                        {
+                            if (item.ChargesType == null)
+                            {
+                                throw new ApplicationException("Payable Charges Type is required");
+                            }
+                            
+                            if (item.Currency == null)
+                            {
+                                throw new ApplicationException("Payable Currency is required");
+                            }
+                        }
+                    }
+                    
                     HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.HouseCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
-                    entityPM.IsExternalAPI = true;
-
-                    ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(entityPM, authToken.Tenant);
-                    externalAPIShipmentValidator.ValidateUnitCodes();
-                    externalAPIShipmentValidator.ValidatePickupDeliveryPackages();
-                    externalAPIShipmentValidator.ValidatePartnersDueToDirection();
-                    externalAPIShipmentValidator.ValidateInActiveCarriers(entityPM);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        this.SetPrepaidCollectIds(entityPM);
+                        switch(entityPM.DirectionId)
+                        {
+                            case "I":
+                                {
+                                    if(string.IsNullOrEmpty(entityPM.ConsigneeId))
+                                    {
+                                        throw new ApplicationException("Consignee is required for import houses");
+                                    }
+
+                                    break;
+                                }
+
+                            case "E":
+                                {
+                                    if (string.IsNullOrEmpty(entityPM.ShipperId))
+                                    {
+                                        throw new ApplicationException("Shipper is required for export houses");
+                                    }
+
+                                    break;
+                                }
+
+                            case "D":
+                                {
+                                    if (string.IsNullOrEmpty(entityPM.ShipperId))
+                                    {
+                                        throw new ApplicationException("Shipper is required for domestic houses");
+                                    }
+
+                                    break;
+                                }
+
+                            case "R":
+                                {
+                                    if (string.IsNullOrEmpty(entityPM.ShipperId))
+                                    {
+                                        throw new ApplicationException("Shipper is required for drop houses");
+                                    }
+
+                                    break;
+                                }
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
+                        {
+                            throw new ApplicationException("Missing volume unit code");
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.DimensionsUnitCode))
+                        {
+                            throw new ApplicationException("Missing dimensions unit code");
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
+                        {
+                            throw new ApplicationException("Missing gross weight unit code");
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
+                        {
+                            throw new ApplicationException("Missing chargeable weight unit code");
+                        }
+
+                        switch (entityPM.VolumeUnitCode)
+                        {
+                            case "CBF":
+                                {
+                                    if (entityPM.DimensionsUnitCode == "Cm")
+                                    {
+                                        throw new ApplicationException("When volume unit is CBF, dimensions unit should be Inch or Cm");
+                                    }
+                                    break;
+                                }
+
+                            case "CBI":
+                                {
+                                    if (entityPM.DimensionsUnitCode != "Inc")
+                                    {
+                                        throw new ApplicationException("When volume unit is CBI, dimensions unit should be Inch");
+                                    }
+                                    break;
+                                }
+
+                            case "CBM":
+                                {
+                                    if (entityPM.DimensionsUnitCode != "Cm")
+                                    {
+                                        throw new ApplicationException("When volume unit is CBM, dimensions unit should be Cm");
+                                    }
+                                    break;
+                                }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.IncotermId))
+                        {
+                            IncotermRepository myIncotermRepository = new IncotermRepository(entityPM.Tenant);
+                            Incoterm myIncoterm = myIncotermRepository.GetSingleIncoterm(entityPM.IncotermId, entityPM.Tenant);
+                            if (myIncoterm != null)
+                            {
+                                entityPM.FreightPrepaidCollectId = myIncoterm.Freight;
+                                entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
+                            }
+                        }
 
                         AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-                        this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
+                        if (!string.IsNullOrEmpty(entityPM.CustomerId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.CustomerAddressId = address.Id;
+                            }
+
+                            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+                            Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
+                            if (customer != null)
+                            {
+                                entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
+                                entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
+                            }
+                        }
+
+                        else
+                        {
+                            throw new ApplicationException("Customer is missing");
+                        }
+                        
+                        if (!string.IsNullOrEmpty(entityPM.ShipperId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
+                            if(address != null)
+                            {
+                                entityPM.ShipperAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ConsigneeAddressId = address.Id;
+                            }
+                        }
                         
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
                             {
-                                bool hasContainerInsidePackages = false;
                                 if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
                                 {
                                     item.IsContainer = true;
                                 }
 
-                                if (!item.IsContainer)
-                                {
-                                    if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
-                                    {
-                                        throw new ApplicationException("Inside Packages allowed in FCL/FTL shipments only");
-                                    }
-                                   
-                                }
-                                else
-                                {
-                                    if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
-                                    {
-                                       
-
-                                        hasContainerInsidePackages = true;
-                                        item.Weight = 0;
-                                        item.Volume = 0;
-                                        item.InsideShipmentPackages.ForEach(inside =>
-                                        {
-                                            if (inside.Weight != null)
-                                            {
-                                                item.Weight += inside.Weight;
-                                            }
-
-                                            if (inside.Volume != null)
-                                            {
-                                                item.Volume += inside.Volume;
-                                            }
-
-                                            if (inside.Quantity == null)
-                                            {
-                                                throw new ApplicationException("Inside Packages Quantity is required");
-                                            }
-                                            inside.Volume = ComputeHelper.ComputeInsideVolume(inside, entityPM);
-
-                                            inside.VolumetricWeight = ComputeHelper.ComputeInsideVolumetricWeight(inside, entityPM);
-
-                                        });
-                                    }
-                                }
-                                if (!hasContainerInsidePackages)
-                                {
-                                    item.Volume = ComputeHelper.ComputeVolume(item, entityPM);
-                                }
+                                item.Volume = ComputeHelper.ComputeVolume(item, entityPM);
                                 item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
-                                hasContainerInsidePackages = false;
                             }
                         }
 
                         ComputeHelper.ComputeTotals(entityPM);
-
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
                         receivablePayableHelper.ValidateReceivablesAndPayables();
                         receivablePayableHelper.ComputeReceivablesPayablesTotals();
-                        
-                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
-                        {
-                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
-                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
-                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
-                        }
-                     
-                        if (entityPM.CustomsClearanceDate != null)
-                        {
-                            entityPM.IncludesCustoms = true;
-                        }
-
-                        ExternalAPIMainCarriageLegsHelper externalAPIMainCarriageLegsHelper = new ExternalAPIMainCarriageLegsHelper(entityPM, authToken.Tenant);
-                        externalAPIMainCarriageLegsHelper.ValidateRoutingsSeriesDates();
-
-                        entityPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
-                        entityPM = apiUnassignedDataHandler.AddHouseShipmentUnassignedData(entity, entityPM);
 
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
-                        if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
-                        {
-                            EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
-                            eventQueryService.CreateShipmentTraceEvents(entityPM, entity.AddManualEvents, true, computingPartnerCode);
-                        }
-
                         scope.Complete();
                     }
-                    
-                    var result = mappingService.GetHouseById(entityPM.Id, authToken.Tenant, null);
+
+
+                    var result = mappingService.GetHouseById(entityPM.Id, authToken.Tenant);
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "House API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
+
                 }
 
                 catch (Exception ex)
@@ -237,7 +371,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
                 }
             }
-
             else
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
@@ -245,270 +378,346 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-
-        private void InitOceanOrInlandPackages(House entity)
-        {
-            if (entity.OceanOrInlandPackages == null)
-            {
-                return;
-            }
-            foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
-            {
-                if (item.PackageType != null)
-                {
-                    if (entity.ShipmentType != null && (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL")))
-                    {
-                        if (item.Pieces == null || item.Pieces == 0)
-                        {
-                            item.Pieces = 1;
-                        }
-                    }
-                }
-            }
-        }
-        private void InitContainers(House entity)
-        {
-            if (entity.Containers == null)
-            {
-                return;
-            }
-
-            foreach (Container item in entity.Containers)
-            {
-                item.Pieces = 1;
-            }
-        }
-        private void ValidateAndSetCustomerData(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
-        {
-            if (!string.IsNullOrEmpty(entityPM.CustomerId))
-            {
-                if (entityPM.CustomerId == entityPM.ShipperId
-                    || entityPM.CustomerId == entityPM.ConsigneeId
-                    || entityPM.CustomerId == entityPM.ShipperNotExporterId
-                    || entityPM.CustomerId == entityPM.AgentId
-                    || entityPM.CustomerId == entityPM.CustomAgentImportId
-                    || entityPM.CustomerId == entityPM.ReleasingAgentId
-                    || entityPM.CustomerId == entityPM.FreightForwarderId
-                    || entityPM.CustomerId == entityPM.Notify1Id
-                    || entityPM.CustomerId == entityPM.Notify2Id)
-                {
-                    this.SetCustomerTypeCode(entityPM);
-
-                    Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, tenant);
-                    if (address != null)
-                    {
-                        entityPM.CustomerAddressId = address.Id;
-                    }
-
-                    CardRepository cardRepository = new CardRepository(tenant);
-                    Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, tenant);
-                    if (customer != null)
-                    {
-                        if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
-                        {
-                            entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
-                        }
-
-                        if (customer.Customer != null)
-                        {
-                            if (string.IsNullOrEmpty(entityPM.AccountManagerUserId))
-                            {
-                                entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
-                            }
-                        }
-                    }
-                }
-
-                else
-                {
-                    throw new ApplicationException("The sent customer is not one of the sent partners");
-                }
-            }
-
-            else
-            {
-                if (entityPM.DirectionId == "I")
-                {
-                    entityPM.CustomerId = entityPM.ConsigneeId;
-                    entityPM.ShipmentCustomerTypeCode = "CON";
-                }
-
-                else
-                {
-                    entityPM.CustomerId = entityPM.ShipperId;
-                    entityPM.ShipmentCustomerTypeCode = "SHI";
-                }
-
-                if (string.IsNullOrEmpty(entityPM.CustomerId))
-                {
-                    throw new ApplicationException("The customer is required");
-                }
-            }
-        }
-        private void SetCustomerTypeCode(ShipmentPM entityPM)
-        {
-            if (entityPM.CustomerId == entityPM.ShipperId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "SHI";
-            }
-
-            else if (entityPM.CustomerId == entityPM.ConsigneeId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "CON";
-            }
-
-            else if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "SNE";
-            }
-
-            else if (entityPM.CustomerId == entityPM.AgentId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "AGT";
-            }
-
-            else if (entityPM.CustomerId == entityPM.CustomAgentImportId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "CAI";
-            }
-
-            else if (entityPM.CustomerId == entityPM.ReleasingAgentId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "REA";
-            }
-
-            else if (entityPM.CustomerId == entityPM.FreightForwarderId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "FOR";
-            }
-
-            else if (entityPM.CustomerId == entityPM.Notify1Id)
-            {
-                entityPM.ShipmentCustomerTypeCode = "NT1";
-            }
-
-            else if (entityPM.CustomerId == entityPM.Notify2Id)
-            {
-                entityPM.ShipmentCustomerTypeCode = "NT2";
-            }
-        }
-
+        
         public HttpResponseMessage Put(House entity)
         {
-            if (ModelState.IsValid)
+            var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
+            APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
+            return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        string token = HttpContext.Current.Request.Headers["Token"];
+            //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            //        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+            //        ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+            //        string computingPartnerCode = "";
+            //        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode)) computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
+
+            //        IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+            //        HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
+            //        ShipmentPM entityPM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+
+            //        using (TransactionScope scope = TransactionFactory.GetTransaction())
+            //        {
+            //            ShipmentRepository entityRepository = new ShipmentRepository(MyContext);
+            //            Shipment entityPoco = null;
+            //            entityPoco = entityRepository.GetSingleShipment(entityPM.Id, authToken.Tenant);
+
+            //            if (entityPoco == null)
+            //            {
+            //                throw new ApplicationException("No shipment found");
+            //            }
+
+            //            else
+            //            {
+            //                if (!string.IsNullOrEmpty(entityPM.MasterShipmentDataId) || entityPM.IsOperationalClosed || entityPM.IsAccountingClosed || entityPM.IsCancelled)
+            //                {
+            //                    this.CheckEntityChanges(entityPM, entityPoco, MyContext, authToken.Tenant);
+            //                }
+
+            //                else
+            //                {
+            //                    this.DoUpdate(entityPM, MyContext, authToken.Tenant);
+            //                }
+            //            }
+
+
+            //            scope.Complete();
+            //        }
+
+            //        var result = mappingService.GetHouseById(entityPM.Id, authToken.Tenant);
+            //        APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "House API", authToken.Tenant);
+            //        return Request.CreateResponse(HttpStatusCode.OK, result);
+            //    }
+
+            //    catch (Exception ex)
+            //    {
+            //        var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+            //        APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
+            //        return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            //    }
+            //}
+
+            //else
+            //{
+            //    var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+            //    APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
+            //    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+
+            //}
+        }
+
+        private void CheckEntityChanges(ShipmentPM entityPM, Shipment entityPoco, IShipmentsContext context, int tenant)
+        {
+            if (!string.IsNullOrEmpty(entityPM.MasterShipmentDataId) && !entityPM.IsOperationalClosed && !entityPM.IsAccountingClosed && !entityPM.IsCancelled)
             {
-                try
+                if (entityPM.FromPortId != entityPoco.FromPortId)
                 {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.AuthenticateAccessibleAPI("House", authToken.Tenant);
+                    throw new ApplicationException("You can't change from port, because this house is connected to master");
+                }
 
-                    if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
+                else if (entityPM.ToPortId != entityPoco.ToPortId)
+                {
+                    throw new ApplicationException("You can't change to port, because this house is connected to master");
+                }
+
+                else
+                {
+                    this.DoUpdate(entityPM, context, tenant);
+                }
+            }
+
+            else if (entityPM.IsOperationalClosed || entityPM.IsAccountingClosed || entityPM.IsCancelled)
+            {
+                string message = "closed";
+                if (entityPM.IsCancelled)
+                {
+                    message = "cancelled";
+                }
+                else if(entityPM.IsAccountingClosed)
+                {
+                    message = "accounting closed";
+                }
+                else if (entityPM.IsOperationalClosed)
+                {
+                    message = "operational closed";
+                }
+
+                if (entityPM.ShipperId != entityPoco.ShipperId)
+                {
+                    throw new ApplicationException("You can't change shipper, because this house is " + message);
+                }
+
+                else if (entityPM.ConsigneeId != entityPoco.ConsigneeId)
+                {
+                    throw new ApplicationException("You can't change consignee, because this house is " + message);
+                }
+
+                else if (entityPM.CustomerId != entityPoco.CustomerId)
+                {
+                    throw new ApplicationException("You can't change customer, because this house is " + message);
+                }
+
+                else if (entityPM.FromPortId != entityPoco.FromPortId)
+                {
+                    throw new ApplicationException("You can't change from port, because this house is " + message);
+                }
+
+                else if (entityPM.House != entityPoco.House)
+                {
+                    throw new ApplicationException("You can't change house, because this house is " + message);
+                }
+
+                else if (entityPM.IncotermId != entityPoco.IncotermId)
+                {
+                    throw new ApplicationException("You can't change incoterm, because this house is " + message);
+                }
+
+                else if (entityPM.ToPortId != entityPoco.ToPortId)
+                {
+                    throw new ApplicationException("You can't change to port, because this house is " + message);
+                }
+
+                else if (entityPM.ChargeableWeightUnitCode != entityPoco.ChargeableWeightUnitCode)
+                {
+                    throw new ApplicationException("You can't change Chargeable Weight Unit, because this house is " + message);
+                }
+
+                else if (entityPM.GrossWeightUnitCode != entityPoco.GrossWeightUnitCode)
+                {
+                    throw new ApplicationException("You can't change Gross Weight Unit, because this house is " + message);
+                }
+
+                else if (entityPM.VolumeUnitCode != entityPoco.VolumeUnitCode)
+                {
+                    throw new ApplicationException("You can't change Volume Unit, because this house is " + message);
+                }
+
+                else if (entityPM.HAWBDate != entityPoco.HAWBDate)
+                {
+                    throw new ApplicationException("You can't change HAWB Date, because this house is " + message);
+                }
+
+                else if (entityPM.DescriptionOfGoods != entityPoco.DescriptionOfGoods)
+                {
+                    throw new ApplicationException("You can't change Description Of Goods, because this house is " + message);
+                }
+
+                else if (entityPM.BranchId != entityPoco.BranchId)
+                {
+                    throw new ApplicationException("You can't change Branch, because this house is " + message);
+                }
+
+                else if (entityPM.DepartmentId != entityPoco.DepartmentId)
+                {
+                    throw new ApplicationException("You can't change Department, because this house is " + message);
+                }
+
+                else
+                {
+                    ShipmentPackageRepository packageRepository = new ShipmentPackageRepository(entityPM.Tenant);
+                    List<ShipmentPackage> packages = packageRepository.GetShipmentPackagesForShipmentTenant(entityPM.Id, entityPM.Tenant).ToList();
+
+                    if (packages.Count < entityPM.ShipmentPackages.Count)
                     {
-                        string computingPartnerCode = "";
-                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
-                        {
-                            computingPartnerCode = entity.ComputingPartnerCode;
-                        }
-                        IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                        HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
+                        throw new ApplicationException("You can't add packages, because this house is " + message);
+                    }
 
-                        this.InitOceanOrInlandPackages(entity);
-                        this.InitContainers(entity);
-
-                        APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
-                        entity = apiUnassignedDataHandler.HandleUnassignedHouseShipmentData(entity);
-
-                        ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode, true);
-
-                        if (HousePM != null)
-                        {
-                            HousePM.ConcurrencyGUID = entity.ConcurrencyGUID;
-                            HousePM.IsExternalAPI = true;
-
-                            if (HousePM.IsOperationalClosed)
-                            {
-                                throw new ApplicationException("Can't update operationally closed shipments");
-                            }
-
-                            if (HousePM.IsCancelled)
-                            {
-                                throw new ApplicationException("Can't update cancelled shipments");
-                            }
-
-                            if (!string.IsNullOrEmpty(HousePM.MasterShipmentDataId))
-                            {
-                                throw new ApplicationException("Can't update house connected to master");
-                            }
-
-                            if (HousePM.CustomsClearanceDate != null && HousePM.IncludesCustoms == false)
-                            {
-                                HousePM.IncludesCustoms = true;
-                            }
-
-                            ExternalAPIMainCarriageLegsHelper externalAPIMainCarriageLegsHelper = new ExternalAPIMainCarriageLegsHelper(HousePM, authToken.Tenant);
-                            externalAPIMainCarriageLegsHelper.ValidateRoutingsSeriesDates();
-
-                            AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
-                            this.ValidateAndSetCustomerData(HousePM, addressRepository, authToken.Tenant);
-                            HousePM = this.UpdatePartners(MyContext, HousePM);
-
-                            ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(HousePM, authToken.Tenant);
-                            externalAPIShipmentValidator.ValidateUpdateShipmentPackages(HousePM);
-                            externalAPIShipmentValidator.ValidateInActiveCarriers(HousePM);
-                            //externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(HousePM);
-                            //externalAPIShipmentValidator.UpdatePayablesChangeSet(HousePM);
-                            //externalAPIShipmentValidator.UpdateReceivablesChangeSet(HousePM);
-
-                            HousePM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
-                            HousePM = apiUnassignedDataHandler.AddHouseShipmentUnassignedData(entity, HousePM);
-
-                            ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
-                            service.Update(true);
-
-                            if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
-                            {
-                                EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
-                                eventQueryService.CreateShipmentTraceEvents(HousePM, entity.AddManualEvents, true, "");
-                            }
-                        }
-
-                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-                        mappingService = new HouseQueryService(authToken.Tenant);
-                        var result = mappingService.GetHouseById(HousePM.Id, authToken.Tenant, null);
-                        APIHelper.AddCommunicationLog("D", entity, result, "Shipment", HousePM.Id, "House API", authToken.Tenant);
-                        return Request.CreateResponse(HttpStatusCode.OK, result);
+                    else if (packages.Count > entityPM.ShipmentPackages.Count)
+                    {
+                        throw new ApplicationException("You can't delete packages, because this house is " + message);
                     }
 
                     else
                     {
-                        throw new ApplicationException("Update is not allowed");
+                        foreach (ShipmentPackagePM itemPM in entityPM.ShipmentPackages)
+                        {
+                            ShipmentPackage item = packages.Where(d => d.Id == itemPM.Id).FirstOrDefault();
+
+                            if (itemPM.PackageTypeId != item.PackageTypeId)
+                            {
+                                throw new ApplicationException("You can't change Package Type, because this house is " + message);
+                            }
+
+                            else if (itemPM.Length != item.Length)
+                            {
+                                throw new ApplicationException("You can't change Length, because this house is " + message);
+                            }
+
+                            else if (itemPM.Width != item.Width)
+                            {
+                                throw new ApplicationException("You can't change Width, because this house is " + message);
+                            }
+
+                            else if (itemPM.Height != item.Height)
+                            {
+                                throw new ApplicationException("You can't change Height, because this house is " + message);
+                            }
+
+                            else if (itemPM.Quantity != item.Quantity)
+                            {
+                                throw new ApplicationException("You can't change Quantity, because this house is " + message);
+                            }
+
+                            else if (itemPM.Volume != item.Volume)
+                            {
+                                throw new ApplicationException("You can't change Volume, because this house is " + message);
+                            }
+
+                            else if (itemPM.Weight != item.Weight)
+                            {
+                                throw new ApplicationException("You can't change Weight, because this house is " + message);
+                            }
+
+                            else if (itemPM.Reference1 != item.Reference1)
+                            {
+                                throw new ApplicationException("You can't change Reference 1, because this house is " + message);
+                            }
+
+                            else if (itemPM.Reference2 != item.Reference2)
+                            {
+                                throw new ApplicationException("You can't change Reference 2, because this house is " + message);
+                            }
+
+                            else if (itemPM.Reference3 != item.Reference3)
+                            {
+                                throw new ApplicationException("You can't change Reference 3, because this house is " + message);
+                            }
+
+                            else if (itemPM.CommodityNumber != item.CommodityNumber)
+                            {
+                                throw new ApplicationException("You can't change Commodity Number, because this house is " + message);
+                            }
+
+                            if (!string.IsNullOrEmpty(entityPM.ShipmentTypeId))
+                            {
+                                if (itemPM.ShipperSeal != item.ShipperSeal)
+                                {
+                                    throw new ApplicationException("You can't change Shipper Seal, because this house is " + message);
+                                }
+
+                                else if (itemPM.CarrierSeal != item.CarrierSeal)
+                                {
+                                    throw new ApplicationException("You can't change Carrier Seal, because this house is " + message);
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(entityPM.ShipmentTypeId) && entityPM.ShipmentTypeId != "FCLD")
+                            {
+                                if (itemPM.Harmonize != item.Harmonize)
+                                {
+                                    throw new ApplicationException("You can't change Length, because this house is " + message);
+                                }
+
+                                else if (itemPM.Temperature != item.Temperature)
+                                {
+                                    throw new ApplicationException("You can't change Temperature, because this house is " + message);
+                                }
+
+                                else if (itemPM.Ventilation != item.Ventilation)
+                                {
+                                    throw new ApplicationException("You can't change Ventilation, because this house is " + message);
+                                }
+
+                                else if (itemPM.IsDangerous != item.IsDangerous)
+                                {
+                                    throw new ApplicationException("You can't change Is Dangerous, because this house is " + message);
+                                }
+
+                                else if (itemPM.ClassNumber != item.ClassNumber)
+                                {
+                                    throw new ApplicationException("You can't change Class Number, because this house is " + message);
+                                }
+
+                                else if (itemPM.UnNumber != item.UnNumber)
+                                {
+                                    throw new ApplicationException("You can't change Un Number, because this house is " + message);
+                                }
+
+                                else if (itemPM.PackagingGroup != item.PackagingGroup)
+                                {
+                                    throw new ApplicationException("You can't change Packaging Group, because this house is " + message);
+                                }
+
+                                else if (itemPM.IMDGCode != item.IMDGCode)
+                                {
+                                    throw new ApplicationException("You can't change IMDG Code, because this house is " + message);
+                                }
+
+                                else if (itemPM.FlashPoint != item.FlashPoint)
+                                {
+                                    throw new ApplicationException("You can't change Flash Point, because this house is " + message);
+                                }
+
+                                else if (itemPM.MaterialDescription != item.MaterialDescription)
+                                {
+                                    throw new ApplicationException("You can't change Material Description, because this house is " + message);
+                                }
+                            }
+
+                            if (entityPM.ShipmentTypeId == "FCLD")
+                            {
+                                if (itemPM.Tare != item.Tare)
+                                {
+                                    throw new ApplicationException("You can't change Tare, because this house is " + message);
+                                }
+
+                                else if (itemPM.MarksAndNumbers != item.MarksAndNumbers)
+                                {
+                                    throw new ApplicationException("You can't change Marks And Numbers, because this house is " + message);
+                                }
+                            }
+                        }
                     }
                 }
-
-                catch (Exception ex)
-                {
-                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                    APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
-                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-                }
-            }
-            else
-            {
-                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
-                APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "House API");
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
 
-        private ShipmentPM UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
-        {
-            ExternalAPIShipmentPartnersModifier externalAPIShipmentPartnersUpdate = new ExternalAPIShipmentPartnersModifier(shipmentsContext, shipmentPM);
-            return externalAPIShipmentPartnersUpdate.UpdatePartners();
-        }
-
-        private void SetPrepaidCollectIds(ShipmentPM entityPM)
+        private void DoUpdate(ShipmentPM entityPM, IShipmentsContext MyContext, int tenant)
         {
             if (!string.IsNullOrEmpty(entityPM.IncotermId))
             {
@@ -520,6 +729,40 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                 }
             }
-        }       
+
+            if (!string.IsNullOrEmpty(entityPM.CustomerId))
+            {
+                CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+                Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
+                if (customer != null)
+                {
+                    entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
+                    entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
+                }
+            }
+
+            if (entityPM.ShipmentPackages.Count > 0)
+            {
+                foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
+                {
+                    item.Volume = ComputeHelper.ComputeVolume(item, entityPM);
+                    item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
+                    item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                }
+            }
+
+            ComputeHelper.ComputeTotals(entityPM);
+
+            ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
+            ShipmentPackageQuery shipPackageQuery = new ShipmentPackageQuery(new ShipmentPackageRepository(MyContext));
+            List<ShipmentPackagePM> shipmentPackages = shipPackageQuery.GetShipmentPackages(entityPM.Id, entityPM.ShipmentNumber, tenant);
+            foreach (ShipmentPackagePM package in shipmentPackages)
+            {
+                package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                entityPM.ShipmentPackages.Add(package);
+            }
+
+            service.Update(true);
+        }
     }
 }

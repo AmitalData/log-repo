@@ -3,7 +3,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 
 @Component({
     selector: 'TicketDocsOutTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './ViewInboundLineBodyComponent.html',
 })
 

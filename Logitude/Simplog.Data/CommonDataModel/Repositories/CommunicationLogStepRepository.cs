@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 
@@ -49,7 +49,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
            return (from a in context.CommunicationLogSteps 
                        .Include("CommunicationStatusType")
                        .Include("Document")
-                   where a.CommunicationLogId == id && a.StepNumber == StepNumber && a.Tenant == tenant
+                   where a.CommunicationLogId == id && a.StepNumber == StepNumber
                     select a).FirstOrDefault();
 
         }
@@ -123,7 +123,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
                        .Include("CommunicationStatusType")
                        .Include("Document")
                     where a.CommunicationLogId == id
-                    && a.Tenant == tenant
                     orderby a.StepNumber //MUST !!!
                     select a).ToList();
 
@@ -142,33 +141,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         EntityPOCOs.CommunicationLogStep Server.Infrastructure.IRepository<EntityPOCOs.CommunicationLogStep>.GetSingle(Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
-        }
-
-        public IQueryable<CommunicationLogStep> GetQMultiCommunicationLog(string id, int tenant)
-        {
-            return (from a in context.CommunicationLogSteps
-                       .Include("CommunicationStatusType")
-                       .Include("Document")
-                    where a.CommunicationLogId == id &&
-                    a.Tenant == tenant
-                    orderby a.StepNumber //MUST !!!
-                    select a);
-            
-        }
-        public IQueryable<string> Get104921()
-        {
-            //25 - נובמבר - 2019
-            //104921 ==select  count(*) from CommunicationLogs where createdate_> sysdate -10
-            DateTime sdateTime = new DateTime(2019, 11, 25);
-            DateTime edateTime = new DateTime(2019, 12, 05);
-            var q=
-            context.CommunicationLogs
-                .Where(r => r.CreateDate > sdateTime)
-                .Where(r => r.CreateDate <= edateTime)
-                ///..Take(1000*200)
-                //104921 ==select  count(*) from CommunicationLogs where createdate_> sysdate -10
-                .Select(r=>r.Id);
-            return q;
         }
     }
 }

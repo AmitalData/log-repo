@@ -9,32 +9,26 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {CardList} from '../../../../Common/EntityLists/CardList'; 
 import {PortList} from '../../../../Common/EntityLists/PortList';
+import {VesselList} from '../../../../Common/EntityLists/VesselList';  
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
 import {PortListService} from '../../../../Common/Services/StandardLists/PortListService';
+import {VesselListService} from '../../../../Common/Services/StandardLists/VesselListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
-import { VesselList } from '../../../../Common/EntityLists/VesselList';
 
 @Component({
+    moduleId: module.id,
     templateUrl: './AddEditPreCarriageComponent.html',
 })
 
 export class AddEditPreCarriageComponent extends BaseComponent {
     public EntityPM: ShipmentPM;
     public ObjectTableName: string;
-    public DataContext = this;
+    public DataContext = this;   
     public ValidationErrorsList: string[] = [];
     public FatherComponent: RoutingsTabComponent;
     public IsConnectedHouse: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public LegType: string;
-    public IsOkButtonEnabled: boolean = true;
-    private SaveCompletedEvent: any = null;
-    public IsChooseVesselVisible: boolean = false;
-    public IsVesselFreeTextVisible: boolean = false;
     constructor() {
         super();
         this.InitServices();
@@ -42,22 +36,18 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
     private myPortListService: PortListService;
     private myCardListService: CardListService;
+    private myVesselListService: VesselListService;
     InitServices() {
         this.myPortListService = new PortListService();
         this.myCardListService = new CardListService();
+        this.myVesselListService = new VesselListService();
     }
 
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
-        this.LegType = args['LegType'];
         this.Clone();
-
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VSL")[0];
-        if (featureToggle) {
-            this.IsVesselFreeTextVisible = true;
-        }
 
         this.SetDefaultValues();
         this.SetUIProperties();
@@ -67,52 +57,17 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     SetDefaultValues() {
         if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
             this.IsConnectedHouse = true;
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageFromPortId)) {
-                this.PreForwardingToPortId = this.EntityPM.PreCarriageFromPortId;
-            }
-
-            else {
-                this.PreForwardingToPortId = this.EntityPM.MainCarriageFromPortId;
-            }
+            this.PreCarriageToPortId = this.EntityPM.MainCarriageFromPortId;
         }
     }
 
     public IsEditingEnabled: boolean = true;
-    public IsCloseMasterInfoVisible: boolean = false;
     SetUIProperties() {
         var isEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
-        this.IsEditingEnabled = isEditingEnabled;
 
-        if (this.EntityPM.ShipmentLevelCode == "H") {
-            this.SetUIProperties_Forwarding();
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId) && this.LegType == "Pre Carriage") {
-                this.SetUIProperties_Carriage_ConnectedMaster();
-                this.IsOkButtonEnabled = false;
-            }
-        }
-
-        else {
-            this.SetUIProperties_Carriage();
-        }
-    }
-    SetUIProperties_Carriage() {
         var isTransportFieldEnabled = false;
         var isCarrierNumberFieldEnabled = false;
-        var isConnectedMasterPortsEnabled = false;
-        this.IsCloseMasterInfoVisible = false;
-
-        if (this.IsEditingEnabled) {
-            isConnectedMasterPortsEnabled = true;
-
-            if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-                if (this.EntityPM.StatusWeight >= 60) {
-                    isConnectedMasterPortsEnabled = false;
-                    this.IsCloseMasterInfoVisible = true;
-                }
-            }
-
+        if (isEditingEnabled) {
             if (!AppTool.IsNullOrEmpty(this.PreCarriageTransportModeId)) {
                 isTransportFieldEnabled = true;
             }
@@ -122,61 +77,28 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             }
         }
 
-        this.UIProperties.SetEnabled("PreCarriageTransportModeId", this.ObjectTableName, isConnectedMasterPortsEnabled);
-        this.UIProperties.SetEnabled("PreCarriageFromPortId", this.ObjectTableName, isConnectedMasterPortsEnabled && isTransportFieldEnabled);
-        this.UIProperties.SetEnabled("PreCarriageToPortId", this.ObjectTableName, isConnectedMasterPortsEnabled && !this.IsConnectedHouse && isTransportFieldEnabled);
+        this.IsEditingEnabled = isEditingEnabled;
+        this.UIProperties.SetEnabled("PreCarriageTransportModeId", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("PreCarriageFromPortId", this.ObjectTableName, isTransportFieldEnabled);
+        this.UIProperties.SetEnabled("PreCarriageToPortId", this.ObjectTableName, isTransportFieldEnabled && this.IsConnectedHouse == false);
         this.UIProperties.SetEnabled("PreCarriageCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("PreCarriageCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
-        this.UIProperties.SetEnabled("PreCarriageVesselName", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreCarriageVesselId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreCarriageETD", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreCarriageETA", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreCarriageATD", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreCarriageATA", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetVisibility("PreCarriageVesselName", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
+        this.UIProperties.SetEnabled("PreCarriageVesselId", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("PreCarriageETD", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("PreCarriageETA", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("PreCarriageATD", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("PreCarriageATA", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetVisibility("PreCarriageVesselId", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
-        this.IsChooseVesselVisible = this.PreCarriageTransportModeId == "O" ? true : false;
-
-        this.SetUIProperties_Carriage_RequiredFields();
-        this.SetUIProperties_Carriage_ValidateActualDates();
+        this.SetUIProperties_RequiredFields();
+        this.SetUIProperties_ValidateActualDates();
     }
-    SetUIProperties_Forwarding() {
-        var isTransportFieldEnabled = false;
-        var isCarrierNumberFieldEnabled = false;
-        if (this.IsEditingEnabled) {
-            if (!AppTool.IsNullOrEmpty(this.PreForwardingTransportModeId)) {
-                isTransportFieldEnabled = true;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.PreForwardingCarrierId)) {
-                isCarrierNumberFieldEnabled = true;
-            }
-        }
-
-        this.UIProperties.SetEnabled("PreForwardingTransportModeId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreForwardingFromPortId", this.ObjectTableName, isTransportFieldEnabled);
-        this.UIProperties.SetEnabled("PreForwardingToPortId", this.ObjectTableName, isTransportFieldEnabled && this.IsConnectedHouse == false);
-        this.UIProperties.SetEnabled("PreForwardingCarrierId", this.ObjectTableName, isTransportFieldEnabled);
-        this.UIProperties.SetEnabled("PreForwardingCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
-        this.UIProperties.SetEnabled("PreForwardingVesselName", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreForwardingVesselId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreForwardingETD", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreForwardingETA", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreForwardingATD", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PreForwardingATA", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetVisibility("PreForwardingVesselName", this.ObjectTableName, this.PreForwardingTransportModeId == "O" ? true : false);
-        this.UIProperties.SetVisibility("PreForwardingVesselId", this.ObjectTableName, this.PreForwardingTransportModeId == "O" ? true : false);
-        this.IsChooseVesselVisible = this.PreForwardingTransportModeId == "O" ? true : false;
-
-        this.SetUIProperties_Forwarding_RequiredFields();
-        this.SetUIProperties_Forwarding_ValidateActualDates();
-    }
-    SetUIProperties_Carriage_RequiredFields() {
+    SetUIProperties_RequiredFields() {
         this.UIProperties.SetRequired("PreCarriageTransportModeId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PreCarriageTransportModeId) ? true : false);
         this.UIProperties.SetRequired("PreCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PreCarriageFromPortId) ? true : false);
         this.UIProperties.SetRequired("PreCarriageToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PreCarriageToPortId) ? true : false);
     }
-    SetUIProperties_Carriage_ValidateActualDates() {
+    SetUIProperties_ValidateActualDates() {
+
         this.UIProperties.SetValidity("PreCarriageATD", this.ObjectTableName, true, null);
         this.UIProperties.SetValidity("PreCarriageATA", this.ObjectTableName, true, null);
 
@@ -190,65 +112,12 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             this.UIProperties.SetValidity("PreCarriageATA", this.ObjectTableName, false, errorMessage);
         }
     }
-    SetUIProperties_Forwarding_RequiredFields() {
-        this.UIProperties.SetRequired("PreForwardingTransportModeId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PreForwardingTransportModeId) ? true : false);
-        this.UIProperties.SetRequired("PreForwardingFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PreForwardingFromPortId) ? true : false);
-        this.UIProperties.SetRequired("PreForwardingToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PreForwardingToPortId) ? true : false);
-    }
-    SetUIProperties_Forwarding_ValidateActualDates() {
-        this.UIProperties.SetValidity("PreForwardingATD", this.ObjectTableName, true, null);
-        this.UIProperties.SetValidity("PreForwardingATA", this.ObjectTableName, true, null);
-
-        if (!DateTool.IsActualDateValid(this.PreForwardingATD)) {
-            var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATD"));
-            this.UIProperties.SetValidity("PreForwardingATD", this.ObjectTableName, false, errorMessage);
-        }
-
-        if (!DateTool.IsActualDateValid(this.PreForwardingATA)) {
-            var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA"));
-            this.UIProperties.SetValidity("PreForwardingATA", this.ObjectTableName, false, errorMessage);
-        }
-    }
-    SetUIProperties_Carriage_ConnectedMaster() {
-        this.UIProperties.SetEnabled("PreCarriageTransportModeId", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageFromPortId", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageToPortId", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageCarrierId", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageCarrierNumber", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageVesselName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageVesselId", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageETD", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageETA", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageATD", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("PreCarriageATA", this.ObjectTableName, false);
-        this.UIProperties.SetVisibility("PreCarriageVesselName", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
-        this.UIProperties.SetVisibility("PreCarriageVesselId", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
-        this.IsChooseVesselVisible = this.PreCarriageTransportModeId == "O" ? true : false;
-    }
-
-    get IsCloseHouseInfoVisible() {
-        var myResult = false;
-
-        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null && this.LegType == "Pre Carriage") {
-            myResult = true;
-        }
-
-        return myResult;
-    }
 
     public CarrierDependencyProperty1: string = null;
     SetDependencies() {
         var myResult: string = null;
-        var transportModeId = null;
 
-        if (this.EntityPM.ShipmentLevelCode == "H") {
-            transportModeId = this.PreForwardingTransportModeId;
-        }
-        else {
-            transportModeId = this.PreCarriageTransportModeId;
-        }
-
-        switch (transportModeId) {
+        switch (this.PreCarriageTransportModeId) {
             case "A": { myResult = "AL"; break; }
             case "O": { myResult = "SL"; break; }
             case "I": { myResult = "TR"; break; }
@@ -256,6 +125,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
         this.CarrierDependencyProperty1 = myResult;
     }
+
 
     get PreCarriageTransportModeId() { return this.EntityPM.PreCarriageTransportModeId; }
     set PreCarriageTransportModeId(value: string) {
@@ -270,8 +140,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             this.PreCarriageCarrierId = null;
             this.PreCarriageCarrierNumber = null;
             this.PreCarriageVesselId = null;
-            this.PreCarriageVesselName = null;
-            this.SetUIProperties_Carriage();
+            this.SetUIProperties();
             this.SetDependencies();
         }
     }
@@ -280,7 +149,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     set PreCarriageFromPortId(value: string) {
         if (this.EntityPM.PreCarriageFromPortId != value) {
             this.EntityPM.PreCarriageFromPortId = value;
-            this.SetUIProperties_Carriage_RequiredFields();
+            this.SetUIProperties_RequiredFields();
 
             if (AppTool.IsNullOrEmpty(value)) {
                 this.EntityPM.PreCarriageFromPortCode = null;
@@ -323,7 +192,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     set PreCarriageToPortId(value: string) {
         if (this.EntityPM.PreCarriageToPortId != value) {
             this.EntityPM.PreCarriageToPortId = value;
-            this.SetUIProperties_Carriage_RequiredFields();
+            this.SetUIProperties_RequiredFields();
 
             if (AppTool.IsNullOrEmpty(value)) {
                 RoutingHelper.PreCarriageToPortChanged(this.EntityPM, null);
@@ -358,7 +227,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             this.EntityPM.PreCarriageCarrierId = value;
             this.SetUIProperties();
 
-            if (AppTool.IsNullOrEmpty(value)) {
+            if (AppTool.IsNullOrEmpty(value)) {                
                 this.EntityPM.PreCarriageCarrierCode = null;
                 this.EntityPM.PreCarriageCarrierName = null;
                 this.EntityPM.PreCarriageCarrierWebSite = null;
@@ -387,32 +256,23 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     }
 
     get PreCarriageVesselId() { return this.EntityPM.PreCarriageVesselId; }
-    set PreCarriageVesselId(newValue: string) {
-        if (this.EntityPM.PreCarriageVesselId != newValue) {
-            this.EntityPM.PreCarriageVesselId = newValue;            
-        }
-    }
+    set PreCarriageVesselId(value: string) {
+        if (this.EntityPM.PreCarriageVesselId != value) {
+            this.EntityPM.PreCarriageVesselId = value;
 
-    private preCarriageVessel: VesselList;
-    get PreCarriageVessel() { return this.preCarriageVessel; }
-    set PreCarriageVessel(value: VesselList) {
-        if (this.preCarriageVessel != value) {
-            this.preCarriageVessel = value;
-        }
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.EntityPM.PreCarriageVesselName = null;
+            }
 
-        this.PreCarriageVesselName = null;
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.PreCarriageVesselName = value.EnglishName;
-        }
-    }
-
-    get PreCarriageVesselName() { return this.EntityPM.PreCarriageVesselName; }
-    set PreCarriageVesselName(newValue: string) {
-        if (this.EntityPM.PreCarriageVesselName != newValue) {
-            this.EntityPM.PreCarriageVesselName = newValue;
-
-            if (this.IsVesselFreeTextVisible) {
-                this.PreCarriageVesselId = null;
+            else {
+                this.myVesselListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: VesselList = myResponse.Result;
+                        if (list) {
+                            this.EntityPM.PreCarriageVesselName = list.EnglishName;
+                        }
+                    }
+                });
             }
         }
     }
@@ -435,7 +295,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     set PreCarriageATD(value: Date) {
         if (this.EntityPM.PreCarriageATD != value) {
             this.EntityPM.PreCarriageATD = value;
-            this.SetUIProperties_Carriage_ValidateActualDates();
+            this.SetUIProperties_ValidateActualDates();
         }
     }
 
@@ -443,226 +303,15 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     set PreCarriageATA(value: Date) {
         if (this.EntityPM.PreCarriageATA != value) {
             this.EntityPM.PreCarriageATA = value;
-            this.SetUIProperties_Carriage_ValidateActualDates();
-        }
-    }
-
-    get PreForwardingTransportModeId() { return this.EntityPM.PreForwardingTransportModeId; }
-    set PreForwardingTransportModeId(value: string) {
-        if (this.EntityPM.PreForwardingTransportModeId != value) {
-            this.EntityPM.PreForwardingTransportModeId = value;
-            this.PreForwardingFromPortId = null;
-
-            if (!this.IsConnectedHouse) {
-                this.PreForwardingToPortId = null;
-            }
-
-            this.PreForwardingCarrierId = null;
-            this.PreForwardingCarrierNumber = null;
-            this.PreForwardingVesselId = null;
-            this.PreForwardingVesselName = null;
-            this.SetUIProperties_Forwarding();
-            this.SetDependencies();
-        }
-    }
-
-    get PreForwardingFromPortId() { return this.EntityPM.PreForwardingFromPortId; }
-    set PreForwardingFromPortId(value: string) {
-        if (this.EntityPM.PreForwardingFromPortId != value) {
-            this.EntityPM.PreForwardingFromPortId = value;
-            this.SetUIProperties_Forwarding_RequiredFields();
-
-            if (AppTool.IsNullOrEmpty(value)) {
-                this.EntityPM.PreForwardingFromPortCode = null;
-                this.EntityPM.PreForwardingFromPortName = null;
-                this.EntityPM.PreForwardingFromPortCountryCode = null;
-                this.EntityPM.PreForwardingFromPortCountryName = null;
-            }
-
-            else {
-                this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: PortList = myResponse.Result;
-                        if (list) {
-                            this.EntityPM.PreForwardingFromPortCode = list.Code;
-                            this.EntityPM.PreForwardingFromPortName = list.EnglishName;
-                            this.EntityPM.PreForwardingFromPortCountryCode = list.CountryCode;
-                            this.EntityPM.PreForwardingFromPortCountryName = list.CountryName;
-                        }
-
-                        else {
-                            this.myPortListService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
-                                if (!myResponse2.HasError) {
-                                    list = myResponse2.Result;
-                                    if (list) {
-                                        this.EntityPM.PreForwardingFromPortCode = list.Code;
-                                        this.EntityPM.PreForwardingFromPortName = list.EnglishName;
-                                        this.EntityPM.PreForwardingFromPortCountryCode = list.CountryCode;
-                                        this.EntityPM.PreForwardingFromPortCountryName = list.CountryName;
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    get PreForwardingToPortId() { return this.EntityPM.PreForwardingToPortId; }
-    set PreForwardingToPortId(value: string) {
-        if (this.EntityPM.PreForwardingToPortId != value) {
-            this.EntityPM.PreForwardingToPortId = value;
-            this.SetUIProperties_Forwarding_RequiredFields();
-
-            if (AppTool.IsNullOrEmpty(value)) {
-                RoutingHelper.PreForwardingToPortChanged(this.EntityPM, null);
-            }
-
-            else {
-                this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: PortList = myResponse.Result;
-
-                        if (list) {
-                            RoutingHelper.PreForwardingToPortChanged(this.EntityPM, list);
-                        }
-
-                        else {
-                            this.myPortListService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
-                                if (!myResponse2.HasError) {
-                                    list = myResponse2.Result;
-                                    RoutingHelper.PreForwardingToPortChanged(this.EntityPM, list);
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    get PreForwardingCarrierId() { return this.EntityPM.PreForwardingCarrierId; }
-    set PreForwardingCarrierId(value: string) {
-        if (this.EntityPM.PreForwardingCarrierId != value) {
-            this.EntityPM.PreForwardingCarrierId = value;
-            this.SetUIProperties();
-
-            if (AppTool.IsNullOrEmpty(value)) {
-                this.EntityPM.PreForwardingCarrierCode = null;
-                this.EntityPM.PreForwardingCarrierName = null;
-                this.EntityPM.PreForwardingCarrierWebSite = null;
-            }
-
-            else {
-                this.myCardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: CardList = myResponse.Result;
-                        if (list) {
-                            this.EntityPM.PreForwardingCarrierCode = list.Code;
-                            this.EntityPM.PreForwardingCarrierName = list.EnglishName;
-                            this.EntityPM.PreForwardingCarrierWebSite = list.WebSite;
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    get PreForwardingCarrierNumber() { return this.EntityPM.PreForwardingCarrierNumber; }
-    set PreForwardingCarrierNumber(value: string) {
-        if (this.EntityPM.PreForwardingCarrierNumber != value) {
-            this.EntityPM.PreForwardingCarrierNumber = value;
-        }
-    }
-
-    get PreForwardingVesselId() { return this.EntityPM.PreForwardingVesselId; }
-    set PreForwardingVesselId(newValue: string) {
-        if (this.EntityPM.PreForwardingVesselId != newValue) {
-            this.EntityPM.PreForwardingVesselId = newValue;            
-        }
-    }
-
-    private preForwardingVessel: VesselList;
-    get PreForwardingVessel() { return this.preForwardingVessel; }
-    set PreForwardingVessel(value: VesselList) {
-        if (this.preForwardingVessel != value) {
-            this.preForwardingVessel = value;
-        }
-
-        this.PreForwardingVesselName = null;
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.PreForwardingVesselName = value.EnglishName;
-        }
-    }
-
-    get PreForwardingVesselName() { return this.EntityPM.PreForwardingVesselName; }
-    set PreForwardingVesselName(newValue: string) {
-        if (this.EntityPM.PreForwardingVesselName != newValue) {
-            this.EntityPM.PreForwardingVesselName = newValue;
-
-            if (this.IsVesselFreeTextVisible) {
-                this.PreForwardingVesselId = null;
-            }
-        }
-    }
-
-    get PreForwardingETD() { return this.EntityPM.PreForwardingETD; }
-    set PreForwardingETD(value: Date) {
-        if (this.EntityPM.PreForwardingETD != value) {
-            this.EntityPM.PreForwardingETD = value;
-        }
-    }
-
-    get PreForwardingETA() { return this.EntityPM.PreForwardingETA; }
-    set PreForwardingETA(value: Date) {
-        if (this.EntityPM.PreForwardingETA != value) {
-            this.EntityPM.PreForwardingETA = value;
-        }
-    }
-
-    get PreForwardingATD() { return this.EntityPM.PreForwardingATD; }
-    set PreForwardingATD(value: Date) {
-        if (this.EntityPM.PreForwardingATD != value) {
-            this.EntityPM.PreForwardingATD = value;
-            this.SetUIProperties_Forwarding_ValidateActualDates();
-        }
-    }
-
-    get PreForwardingATA() { return this.EntityPM.PreForwardingATA; }
-    set PreForwardingATA(value: Date) {
-        if (this.EntityPM.PreForwardingATA != value) {
-            this.EntityPM.PreForwardingATA = value;
-            this.SetUIProperties_Forwarding_ValidateActualDates();
+            this.SetUIProperties_ValidateActualDates();
         }
     }
 
     SetActualDateClicked(fieldName: string) {
-        if (this.EntityPM.ShipmentLevelCode == "H") {
-            switch (fieldName) {
-                case "PreForwardingETD": { this.PreForwardingATD = DateTool.GetDateParts(this.PreForwardingETD).DateObject; break; }
-                case "PreForwardingETA": { this.PreForwardingATA = DateTool.GetDateParts(this.PreForwardingETA).DateObject; break; }
-            }
+        switch (fieldName) {
+            case "PreCarriageETD": { this.PreCarriageATD = DateTool.GetDateParts(this.PreCarriageETD).DateObject; break; }
+            case "PreCarriageETA": { this.PreCarriageATA = DateTool.GetDateParts(this.PreCarriageETA).DateObject; break; }
         }
-
-        else {
-            switch (fieldName) {
-                case "PreCarriageETD": { this.PreCarriageATD = DateTool.GetDateParts(this.PreCarriageETD).DateObject; break; }
-                case "PreCarriageETA": { this.PreCarriageATA = DateTool.GetDateParts(this.PreCarriageETA).DateObject; break; }
-            }
-        }
-    }
-
-    ChooseVesselClicked(type: string) {
-        var idProperty = type == "P" ? "PreCarriageVesselId" : "PreForwardingVesselId";
-        var nameProperty = type == "P" ? "PreCarriageVesselName" : "PreForwardingVesselName";
-
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 775;
-        logitudeWindow.Height = 570;
-        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, IdProperty: idProperty, NameProperty: nameProperty };
-        logitudeWindow.Title = "Vessel Search";
-        logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/ChooseVesselComponent");
     }
 
     CancelButtonClicked() {
@@ -670,36 +319,8 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        this.ValidationErrorsList = this.Validate();
-
-        if (this.ValidationErrorsList.length == 0) {
-            var isShowChangePortsWindow: boolean = this.CheckToShowChangePortsWindow();            
-
-            if (isShowChangePortsWindow) {
-                this.ShowConfirmChangePortsWindow();                
-            }
-
-            else {
-                this.CloseWindowOnOk();
-            }            
-        }
-    }
-    private Validate(): string[] {
-        var errors: string[] = [];
+        var errors: string[] = []; 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-
-        if (this.EntityPM.ShipmentLevelCode == "H") {
-            errors = this.ValidatePreForwarding(msg);
-        }
-
-        else {
-            errors = this.ValidatePreCarriage(msg);
-        }
-
-        return errors;
-    }
-    private ValidatePreCarriage(msg: string): string[] {
-        var errors: string[] = [];
 
         if (AppTool.IsNullOrEmpty(this.PreCarriageTransportModeId)) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.TransportMode")));
@@ -724,87 +345,13 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA")));
         }
 
-        return errors;
-    }
-    private ValidatePreForwarding(msg: string): string[] {
-        var errors: string[] = [];
+        this.ValidationErrorsList = errors;
 
-        if (AppTool.IsNullOrEmpty(this.PreForwardingTransportModeId)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.TransportMode")));
-        }
-
-        if (AppTool.IsNullOrEmpty(this.PreForwardingFromPortId)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.From")));
-        }
-
-        if (AppTool.IsNullOrEmpty(this.PreForwardingToPortId)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.To")));
-        }
-
-        // Series Dates
-        RoutingHelper.ValidateRoutingsSeriesDates(this.EntityPM, errors, "PreForwarding");
-
-        // Actual Dates
-        if (!DateTool.IsActualDateValid(this.PreForwardingATD)) {
-            errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATD")));
-        }
-        if (!DateTool.IsActualDateValid(this.PreForwardingATA)) {
-            errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA")));
-        }
-
-        return errors;
-    }
-    private CheckToShowChangePortsWindow(): boolean {
-        var isShowChangePortsWindow: boolean = false;
-        if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-            if (this.EntityPM.ShipmentConsoleShipments.filter(d => !AppTool.IsNullOrEmpty(d.PreForwardingFromPortId) && !AppTool.IsNullOrEmpty(d.PreForwardingToPortId)).length > 0) {
-                if (this.EntityPM.OriginPreCarriageFromPortId != this.EntityPM.PreCarriageFromPortId) {
-                    isShowChangePortsWindow = true;
-                }
-            }
-
-            else {
-                if (this.EntityPM.OriginPreCarriageToPortId != this.EntityPM.PreCarriageToPortId) {
-                    isShowChangePortsWindow = true;
-                }
-            }
-        }
-
-        return isShowChangePortsWindow;
-    }
-    private ShowConfirmChangePortsWindow() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Title = "Ports Changed";
-        confirmWindow.Show("Updating the Master shipment ports will update the house shipment accordingly");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.SaveMasterHousesPorts();                
-            }
-        });
-    }
-    private SaveMasterHousesPorts() {
-        if (!this.SaveCompletedEvent) {
-            this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                AppTool.KillEventEmitter(this.SaveCompletedEvent);
-                this.SaveCompletedEvent = null;
-
-                if (isSaveSuccess) {
-                    this.CurrentSession.SessionEvent.emit("ReloadHouses");
-                    this.CloseWindowOnOk();
-                }
-
-                else {
-                    this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
-                }
-            });
-
-            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        if (errors.length == 0) {
+            this.FatherComponent.BuildItemsCollection();
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
-    private CloseWindowOnOk() {
-        this.FatherComponent.BuildItemsCollection();
-        this.CurrentSession.CloseCurrentWindowEmit("OK");
-    }    
 
     private myCloner: Cloner;
     private entityCloner: Cloner;
@@ -828,7 +375,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             oldItem.JobId = item.JobId;
             oldItem.LegType = item.LegType;
             oldItem.ManualActivatedFollowUp = item.ManualActivatedFollowUp;
-            oldItem.Notes = item.Notes;
+            oldItem.Note = item.Note;
             oldItem.OwnerUserId = item.OwnerUserId;
             oldItem.OwnerUserName = item.OwnerUserName;
             oldItem.ShipmentId = item.ShipmentId;
@@ -848,22 +395,10 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.myCloner.AddField('PreCarriageCarrierId');
         this.myCloner.AddField('PreCarriageCarrierNumber');
         this.myCloner.AddField('PreCarriageVesselId');
-        this.myCloner.AddField('PreCarriageVesselName');
         this.myCloner.AddField('PreCarriageETD');
         this.myCloner.AddField('PreCarriageETA');
         this.myCloner.AddField('PreCarriageATD');
         this.myCloner.AddField('PreCarriageATA');
-        this.myCloner.AddField('PreForwardingTransportModeId');
-        this.myCloner.AddField('PreForwardingFromPortId');
-        this.myCloner.AddField('PreForwardingToPortId');
-        this.myCloner.AddField('PreForwardingCarrierId');
-        this.myCloner.AddField('PreForwardingCarrierNumber');
-        this.myCloner.AddField('PreForwardingVesselId');
-        this.myCloner.AddField('PreForwardingVesselName');
-        this.myCloner.AddField('PreForwardingETD');
-        this.myCloner.AddField('PreForwardingETA');
-        this.myCloner.AddField('PreForwardingATD');
-        this.myCloner.AddField('PreForwardingATA');
         this.myCloner.AddEntity(this.EntityPM);
 
         this.entityCloner = new Cloner(this.EntityPM);
@@ -874,6 +409,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.entityCloner.AddField('MainCarriageFromPortName');
         this.entityCloner.AddField('MainCarriageFromPortCountryCode');
         this.entityCloner.AddField('MainCarriageFromPortCountryName');
+        this.entityCloner.AddField('MainCarriageFromPortCountryEC');
         this.entityCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {

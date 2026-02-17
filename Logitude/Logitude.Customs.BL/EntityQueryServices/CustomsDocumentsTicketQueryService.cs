@@ -8,9 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IdentityModel.Metadata;
-using Logitude.Customs.Data.EntityMapping;
-using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -25,111 +22,85 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.CustomsDocumentPointers = pointerQueryService.GetPointersForTicket(entityPM.Id, entityPM.Tenant);
 
         }
- 
-       
-        public int CheckRequestedCustomsDocIdsByEntityIdAndChilds(string entityId , int tenant, string parentEntityCode, string requestedCustomsDocId)
+        public List<CustomsDocumentsTicketPM> GetCustomsDocumentsTicketPMsByEntityIdAndChilds(string entityId, string child1EntityId, string child2EntityId, string child3EntityId, int tenant, string parentEntityCode)
         {
-
-
-            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, "", "", "", tenant, "Declaration");
-            //var test = customsDocumentsTicketPMList.Where(x => string.IsNullOrEmpty(x.VerificationStatusTypeCode) && !string.IsNullOrEmpty(x.RequestedCustomsDocId) && x.RequestedCustomsDocId != requestedCustomsDocId);
-            if (customsDocumentsTicketPMList.Count(x=>string.IsNullOrEmpty(x.VerificationStatusTypeCode) && !string.IsNullOrEmpty(x.RequestedCustomsDocId) && x.RequestedCustomsDocId != requestedCustomsDocId) >0 )
-            {
-                return 1;
-            }
-
-
-            return 0;
-        }
-       
-        public List<CustomsDocumentsTicketPM> GetCustomsDocumentsTicketPMsByEntityIdAndChilds(
-            string entityId,
-            string child1EntityId,
-            string child2EntityId,
-            string child3EntityId,
-            int tenant,
-            string parentEntityCode,
-            bool isAir = false)
-        {
-            LogMessagingUtil.Instance.AppendLine("GetCustomsDocumentsTicketPMsByEntityIdAndChilds");
-
-            List<CustomsDocumentsTicket> tickets =
-                repository.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(
-                    entityId, child1EntityId, child2EntityId, child3EntityId, tenant, parentEntityCode, isAir);
-
+            List<CustomsDocumentsTicket> tickets = repository.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, child1EntityId, child2EntityId, child3EntityId,tenant,parentEntityCode);
             ICustomContext context = MainContext as CustomContext;
-            CustomsDocumentPointerQueryService pointerQueryService = new CustomsDocumentPointerQueryService(context);
+             CustomsDocumentPointerQueryService pointerQueryService = new CustomsDocumentPointerQueryService(context);
+            
+            List<CustomsDocumentsTicketPM> ticketPMs = (from a in tickets
+                                                        //select new CustomsDocumentsTicketPM()
+                                                        //{
+                                                        //    Id = a.Id,
+                                                        //    DocumentTypeCode = a.DocumentTypeCode,
+                                                        //    Tenant = a.Tenant,
+                                                        //    DocumentsFilingId = a.DocumentsFilingId,
+                                                        //    RequestedCustomsDocId = a.RequestedCustomsDocId,
+                                                        //    Remarks=a.Remarks,
+                                                        //     VerificationRemarks=a.VerificationRemarks,
+                                                        //     VerificationStatusTypeCode=a.VerificationStatusTypeCode,
+                                                        //      UserRemarks = a.UserRemarks,
+                                                        //}
+                                                        select this.GetEntityPM(a)
+                                                        ).ToList();
+            List<string> ids=(from a in ticketPMs
+                              select a.Id).ToList();
 
-            List<CustomsDocumentsTicketPM> ticketPMs =
-                tickets.Select(a => this.GetEntityPM(a)).ToList();
-            List<string> ids = ticketPMs.Select(a => a.Id).ToList();
-
-            List<CustomsDocumentPointerPM> pointerPMs =
-                pointerQueryService.GetPointersForMultipleTickets(ids, tenant);
-
+            List<CustomsDocumentPointerPM> pointerPMs = pointerQueryService.GetPointersForMultipleTickets(ids, tenant);
             List<int> supplierInvoiceKeys = new List<int>();
             List<int> supplierInvoiceItemKeys = new List<int>();
             List<int> supplierInvoiceKeysForItems = new List<int>();
             List<int> claimsRelatedEntityKeys = new List<int>();
-
             foreach (CustomsDocumentPointerPM pointer in pointerPMs)
             {
-                LogMessagingUtil.Instance.AppendLine("pointer.DocumentTypeCode " + pointer.DocumentTypeCode);
-
                 if (pointer.ParentEntityCode == "Declaration")
                 {
-                    string invKeyStr = IsSiiRequest(pointer) ? pointer.Child2EntityId : pointer.Child1EntityId;
-                    string itemKeyStr = IsSiiRequest(pointer) ? pointer.Child3EntityId : pointer.Child2EntityId;
-
-                    if (!string.IsNullOrEmpty(invKeyStr) && string.IsNullOrEmpty(itemKeyStr))
+                    if (!string.IsNullOrEmpty(pointer.Child1EntityId) && string.IsNullOrEmpty(pointer.Child2EntityId))
                     {
-                        if (int.TryParse(invKeyStr, out int invoiceKey))
-                            supplierInvoiceKeys.Add(invoiceKey);
+                        int invoiceKey;
+                        int.TryParse(pointer.Child1EntityId, out invoiceKey);
+                        supplierInvoiceKeys.Add(invoiceKey);
                     }
-                    else if (!string.IsNullOrEmpty(invKeyStr) && !string.IsNullOrEmpty(itemKeyStr))
+
+                    else if (!string.IsNullOrEmpty(pointer.Child1EntityId) && !string.IsNullOrEmpty(pointer.Child2EntityId))
                     {
-                        if (int.TryParse(invKeyStr, out int invoiceKey) &&
-                            int.TryParse(itemKeyStr, out int invoiceItemKey))
-                        {
-                            supplierInvoiceItemKeys.Add(invoiceItemKey);
-                            supplierInvoiceKeysForItems.Add(invoiceKey);
-                        }
+                        int invoiceKey;
+                        int.TryParse(pointer.Child1EntityId, out invoiceKey);
+                        int invoiceItemKey;
+                        int.TryParse(pointer.Child2EntityId, out invoiceItemKey);
+
+                        supplierInvoiceItemKeys.Add(invoiceItemKey);
+                        supplierInvoiceKeysForItems.Add(invoiceKey);
                     }
                 }
-                else if (pointer.ParentEntityCode == "Claim")
+                else if(pointer.ParentEntityCode=="Claim")
                 {
-                    if (!string.IsNullOrEmpty(pointer.Child1EntityId) &&
-                        int.TryParse(pointer.Child1EntityId, out int creKey))
+                    if (!string.IsNullOrEmpty(pointer.Child1EntityId))
                     {
+                        int creKey;
+                        int.TryParse(pointer.Child1EntityId, out creKey);
                         claimsRelatedEntityKeys.Add(creKey);
                     }
                 }
+               
             }
 
 
             List<SupplierInvoicePM> supplierInvoicePMs = null;
             List<SupplierInvoiceItemPM> supplierInvoiceItemPMs = null;
             List<ClaimsRelatedEntityPM> crePMs = null;
-
             if (supplierInvoiceItemKeys.Count > 0)
             {
                 SupplierInvoiceItemQueryService invoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
-                supplierInvoiceItemPMs =
-                    invoiceItemQueryService.GetSupplierInvoiceItemsByCounterKeys(
-                        entityId, supplierInvoiceKeysForItems, supplierInvoiceItemKeys, tenant);
-
+                supplierInvoiceItemPMs = invoiceItemQueryService.GetSupplierInvoiceItemsByCounterKeys(entityId, supplierInvoiceKeysForItems, supplierInvoiceItemKeys, tenant);
                 supplierInvoiceKeys = supplierInvoiceKeys.Concat(supplierInvoiceKeysForItems).ToList();
             }
 
             if (supplierInvoiceKeys.Count > 0)
             {
-                LogMessagingUtil.Instance.AppendLine(
-                    "GetSupplierInvoicesByCounterKeys(entityId, supplierInvoiceKeys, tenant); "
-                    + entityId + " " + string.Join(",", supplierInvoiceKeys));
-
+              
                 SupplierInvoiceQueryService invoiceQueryService = new SupplierInvoiceQueryService(context);
-                supplierInvoicePMs =
-                    invoiceQueryService.GetSupplierInvoicesByCounterKeys(entityId, supplierInvoiceKeys, tenant);
+                supplierInvoicePMs = invoiceQueryService.GetSupplierInvoicesByCounterKeys(entityId, supplierInvoiceKeys, tenant);
             }
 
             if (claimsRelatedEntityKeys.Count > 0)
@@ -138,83 +109,86 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 crePMs = creQueryService.GetCREsByCounterKeys(entityId, claimsRelatedEntityKeys, tenant);
             }
 
-          
             foreach (CustomsDocumentsTicketPM ticket in ticketPMs)
             {
-                ticket.CustomsDocumentPointers =
-                    pointerPMs.Where(a => a.CustomsDocumentsTicketId == ticket.Id).ToList();
+                ticket.CustomsDocumentPointers = (from a in pointerPMs
+                                                  where a.CustomsDocumentsTicketId == ticket.Id
+                                                  select a).ToList();
 
-                if (supplierInvoicePMs != null || supplierInvoiceItemPMs != null)
+                if (supplierInvoicePMs != null || supplierInvoiceItemPMs!=null)
                 {
                     foreach (CustomsDocumentPointerPM pointerPM in ticket.CustomsDocumentPointers)
                     {
-                        string invKeyStr = IsSiiRequest(pointerPM) ? pointerPM.Child2EntityId : pointerPM.Child1EntityId;
-                        string lineKeyStr = IsSiiRequest(pointerPM) ? pointerPM.Child3EntityId : pointerPM.Child2EntityId;
-
-                        if (supplierInvoicePMs != null && string.IsNullOrEmpty(lineKeyStr))
+                        if (supplierInvoicePMs != null)
                         {
-                            SupplierInvoicePM invoicepm =
-                                supplierInvoicePMs.FirstOrDefault(
-                                    d => d.InvoiceCounterKey.ToString() == invKeyStr);
-
-                            if (invoicepm != null)
-                                ticket.ConnectedInvoicesSequences += "," + invoicepm.SequenceNumeric;
-                        }
-
-                        if (supplierInvoiceItemPMs != null && !string.IsNullOrEmpty(lineKeyStr))
-                        {
-                            SupplierInvoiceItemPM invoiceItempm =
-                                supplierInvoiceItemPMs.FirstOrDefault(
-                                    d => d.CounterKey.ToString() == invKeyStr &&
-                                         d.LineNumber.ToString() == lineKeyStr);
-
-                            if (invoiceItempm != null)
+                            if (string.IsNullOrEmpty(pointerPM.Child2EntityId))
                             {
-                                SupplierInvoicePM invoicepm =
-                                    supplierInvoicePMs?.FirstOrDefault(
-                                        d => d.InvoiceCounterKey == invoiceItempm.CounterKey);
-
-                                ticket.ConnectedInvoiceItemsSequences += "," + invoiceItempm.SequenceNumeric;
-
-                                if (invoicepm != null &&
-                                    (string.IsNullOrEmpty(ticket.ConnectedInvoicesSequences) ||
-                                     !ticket.ConnectedInvoicesSequences.Split(',')
-                                         .Contains(invoicepm.SequenceNumeric.ToString())))
+                                SupplierInvoicePM invoicepm = supplierInvoicePMs.FirstOrDefault(d => d.InvoiceCounterKey.ToString() == pointerPM.Child1EntityId);
+                                if (invoicepm != null)
                                 {
-                                    ticket.ConnectedInvoicesSequences =
-                                        string.IsNullOrEmpty(ticket.ConnectedInvoicesSequences)
-                                            ? invoicepm.SequenceNumeric.ToString()
-                                            : ticket.ConnectedInvoicesSequences + "," + invoicepm.SequenceNumeric;
+                                    ticket.ConnectedInvoicesSequences = ticket.ConnectedInvoicesSequences + "," + invoicepm.SequenceNumeric;
                                 }
                             }
                         }
+                        if (supplierInvoiceItemPMs != null)
+                        {
+                            SupplierInvoiceItemPM invoiceItempm = supplierInvoiceItemPMs.FirstOrDefault(d => d.CounterKey.ToString() == pointerPM.Child1EntityId && d.LineNumber.ToString() == pointerPM.Child2EntityId);
+                          
+                            if (invoiceItempm != null)
+                            {
+                                SupplierInvoicePM invoicepm = supplierInvoicePMs.FirstOrDefault(d => d.InvoiceCounterKey == invoiceItempm.CounterKey);
 
+                                ticket.ConnectedInvoiceItemsSequences = ticket.ConnectedInvoiceItemsSequences + "," + invoiceItempm.SequenceNumeric;
+                                bool exists = false;
+                                if (invoicepm != null)
+                                {
+                                    if (ticket.ConnectedInvoicesSequences != null)
+                                    {
+                                        string[] connectedInvoices = ticket.ConnectedInvoicesSequences.Split(',');
+                                        if (connectedInvoices.Contains(invoicepm.SequenceNumeric.ToString()))
+                                        {
+                                            exists = true;
+                                        }
+                                    }
+                                    if (!exists && ticket.ConnectedInvoicesSequences!=null && !ticket.ConnectedInvoicesSequences.Contains("," + invoicepm.SequenceNumeric + ",") && !ticket.ConnectedInvoicesSequences.StartsWith(invoicepm.SequenceNumeric+",") && !ticket.ConnectedInvoicesSequences.EndsWith(","+invoicepm.SequenceNumeric))
+                                    {
+                                        ticket.ConnectedInvoicesSequences = ticket.ConnectedInvoicesSequences + "," + invoicepm.SequenceNumeric;
+                                    }
+                                    else if (ticket.ConnectedInvoicesSequences == null)
+                                    {
+                                        ticket.ConnectedInvoicesSequences = invoicepm.SequenceNumeric.ToString();
+                                    }
+                                }
+                            }
+                        }
                         pointerPM.DocumentTypeCode = ticket.DocumentTypeCode;
                     }
+                    
                 }
                 else if (crePMs != null)
                 {
                     foreach (CustomsDocumentPointerPM pointerPM in ticket.CustomsDocumentPointers)
                     {
-                        ClaimsRelatedEntityPM crepm =
-                            crePMs.FirstOrDefault(
-                                d => d.EntityCounterKey.ToString() == pointerPM.Child1EntityId);
-
+                        ClaimsRelatedEntityPM crepm = crePMs.FirstOrDefault(d => d.EntityCounterKey.ToString() == pointerPM.Child1EntityId);
                         if (crepm != null)
-                            ticket.ConnectedCREsSequences += "," + crepm.EntityCounterKey;
-
+                        {
+                            ticket.ConnectedCREsSequences = ticket.ConnectedCREsSequences + "," + crepm.EntityCounterKey;
+                        }
                         pointerPM.DocumentTypeCode = ticket.DocumentTypeCode;
                     }
                 }
-
                 if (!string.IsNullOrEmpty(ticket.ConnectedInvoicesSequences))
+                {
                     ticket.ConnectedInvoicesSequences = ticket.ConnectedInvoicesSequences.TrimStart(',');
-
+                }
                 if (!string.IsNullOrEmpty(ticket.ConnectedInvoiceItemsSequences))
+                {
                     ticket.ConnectedInvoiceItemsSequences = ticket.ConnectedInvoiceItemsSequences.TrimStart(',');
-
+                }
                 if (!string.IsNullOrEmpty(ticket.ConnectedCREsSequences))
+                {
                     ticket.ConnectedCREsSequences = ticket.ConnectedCREsSequences.TrimStart(',');
+                }
 
                 if (!string.IsNullOrEmpty(ticket.DocumentsFilingId))
                 {
@@ -235,17 +209,25 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         ticket.SignersList = document.SignersList;
                     }
                 }
-            }
+              
 
+            }
             return ticketPMs;
         }
-
 
         public List<CustomsDocumentsTicketPM> GetCustomsDocumentsTickets(GetTicketsParams parameters, int tenant)
         {
             List<CustomsDocumentsTicket> tickets = repository.GetCustomsDocumentTickets(parameters, tenant);
             
-            List<CustomsDocumentsTicketPM> ticketPMs = (from a in tickets 
+            List<CustomsDocumentsTicketPM> ticketPMs = (from a in tickets
+                                                        //select new CustomsDocumentsTicketPM()
+                                                        //{
+                                                        //    Id = a.Id,
+                                                        //    DocumentTypeCode = a.DocumentTypeCode,
+                                                        //    Tenant = a.Tenant,
+                                                        //    DocumentsFilingId = a.DocumentsFilingId,
+                                                        //    RequestedCustomsDocId = a.RequestedCustomsDocId,
+                                                        //}
                                                         select this.GetEntityPM(a)
                                                         ).ToList();
             return ticketPMs;
@@ -321,32 +303,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
         
             return ticketPMs;
         }
-        public List<string> GetIsConnectDec(string documentsfilingid, string entityId)
-        {
-          return  repository.GetIsConnectDec(documentsfilingid, entityId);
-        }
-        public List<string> GetDocConnectTicket(string documentsfilingid, string entityId, int tenant)
-        {
-            return repository.GetDocConnectTicket(documentsfilingid, entityId, tenant);
-        }
-
-        public bool IsSendToCustomsAndNotConnectTicket(string documentsfilingid, string entityId, int tenant)
-        {
-            return repository.IsSendToCustomsAndNotConnectTicket(documentsfilingid, entityId, tenant);
-        }
-        public bool GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(string declarationId,string docTicketId)
-
-        {
-            return repository.GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(declarationId, docTicketId);
-        }
-
-        public int GetCountOfTicketsByDocFilingId(string documentsfilingid, int tenant)
-        {
-            if(string.IsNullOrEmpty(documentsfilingid)) {  return 0; }
-            return repository.GetCountOfTicketsByDocFilingId(documentsfilingid, tenant);
-        }
-        private static bool IsSiiRequest(CustomsDocumentPointerPM p) =>
-            string.Equals(p.Child1EntityCode, "SIIRequest", StringComparison.OrdinalIgnoreCase);
-
     }
 }

@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
     public class AddressTypeRepository : IRepository<AddressType>
     {
         ICommonDataContext Context;
+        public AddressTypeRepository()
+        {
+            Context = new CommonDataContext();
 
+        }
         public AddressTypeRepository(ICommonDataContext context)
         {
             Context = context;
@@ -71,11 +75,5 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
-
-        public IQueryable<AddressType> GetAll()
-        {
-            return context.AddressTypes;
-        }
-
     }
 }

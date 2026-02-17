@@ -1,10 +1,4 @@
-﻿.ag-hover-buttons{
-    visibility: hidden;
-}
-.ag-row:hover .ag-hover-buttons {
-    visibility: visible;
-}
-.EditableGrid .ag-header-cell {
+﻿.EditableGrid .ag-header-cell {
     text-align: left;
     text-indent: 5px;
     height: 24px;
@@ -17,13 +11,13 @@
     text-align: left;
     text-indent: 10px;
     height: 27px;
-    line-height: 27px;
+    line-height: 27px; 
     max-height: 27px;
     cursor: pointer;
     overflow: hidden;
 }
 .EditableGrid .Mask{
-    background-color:#DADADA;
+    background-color:#DADADA; 
 }
 .EditableGrid .ag-header-cell:hover {
     /*background: #cfcbcb !important;
@@ -98,7 +92,7 @@
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#DDE8F5' ,GradientType=0)";
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);*/
 }
-
+ 
 
 .EditableGrid .ag-cell {
     padding: 0px;
@@ -122,14 +116,14 @@
 .EditableGrid .EditableGridBody {
     top: 27px;
     /*bottom: 0;*/
-    min-width: Calc(100% - 2px);
+    min-width: Calc(100% - 2px); 
     /*overflow-x: hidden;*/
     /*background: pink;*/
     max-width: 100%;
     overflow: auto;
 
       bottom: 0;
-
+   
 }
 .EditableGrid .EditableGridBody {
     position: absolute;
@@ -158,10 +152,10 @@
     line-height: 51px;
     min-height: 51px;
 }
-
+ 
 .EditableGrid .EditableGridHeader, .EditableGrid .EditableGridBody {
     position: absolute;
-
+    
 }
 
 .EditableGridContainer .EditableGrid {
@@ -275,7 +269,7 @@ textarea {
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     display: none;
-
+    
 }
 
 input[type=number] {

@@ -10,7 +10,7 @@ using Logitude.BL.GlobalModel;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -19,10 +19,6 @@ using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel;
-using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -31,18 +27,27 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         bool isNewEntity;
         private int tenant;
         public Tenant Poco { get; set; }
-        public LogBoxTenantSetting LBtenantsettingPoco { get; set; }
+
+        //public int Tenant
+        //{
+        //    get { return tenant; }
+        //    set { tenant = value; }
+        //}
+
+        //public ICommonDataContext ObjectContext
+        //{
+        //    get { return objectContext; }
+        //    set { objectContext = value; }
+        //}
+
         private TenantPM entityPM;
         private ICommonDataContext objectContext;
         private TenantRepository entityRepository;
-        private LogBoxTenantSettingPM LBTenantSettingentityPM;
-        private LogBoxTenantSettingRepository LBsettingentityRepository;
         public TenantService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new TenantRepository(objectContext);
-            this.LBsettingentityRepository = new LogBoxTenantSettingRepository(objectContext);
         }
 
         public void Create(TenantPM theEntityPm)
@@ -50,7 +55,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.TenantVATManagement = true;
-            this.entityPM.UseNewTermsOfUse = SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development);
+
+            
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 this.entityPM.Id = TenantCounter.GetNumber();
@@ -58,24 +64,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 scope.Complete();
             }
 
-            PackageRepository packageRepository = new PackageRepository(0);
-            List<Package> packages = packageRepository.GetPackages().ToList();
-
-
-            string packageCode = "BUSN";
-            Setting setting;
-            using (TransactionScope setScope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 0, 0)))
-            {
-                SettingRepository settingRepository = new SettingRepository();
-                  setting = settingRepository.GetSingleSetting("1");
-                setScope.Complete();
-            }
-           
-
-
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
- 
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+                string packageCode = "BUSN";
                 if (setting.WorkEnvironment == "customs")
                 {
                     packageCode = "CUST";
@@ -87,8 +80,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
                 TenantManagementRepository tenantManagementRep = new TenantManagementRepository();
-
-                GlobalDB database = GetActiveDatabaseNumber("0");
+                GlobalDB database = GetActiveDatabaseNumber();
                 int version = globalTenantRepository.GetCurrentVersion();
                 GlobalTenant globalTenant = new GlobalTenant()
                 {
@@ -112,20 +104,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     TrialStartDate = DateTime.Now,
                     TrialEndDate = DateTime.Now.AddDays(31),
                     PackageCode = packageCode,
-                    NumberOfUsers = IsEmptyTotalDefaultNumberOfUsers(theEntityPm) ? 1 : theEntityPm.TotalDefaultNumberOfUsers,
-                    TotalNumberOfUsers = IsEmptyTotalDefaultNumberOfUsers(theEntityPm) ? 1 : theEntityPm.TotalDefaultNumberOfUsers,
+                    NumberOfUsers = 1,
                     SearchFields = globalTenant.Id + "," + globalTenant.CompanyName + ",1",
-                    AWBMessagesCCSTypeCode = "CHAMP",
-                    DPArchiveShipmentArrivalFilter = 3,
-                    DPArchiveShipmentDepartFilter = 3,
-                    DPArchiveShipmentCreateFilter = 12
-            };
-
-                Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
-                if (tenantPackage != null)
-                {
-                    tenantManagement.PackageName = tenantPackage.Name;
-                }
+                    AWBMessagesCCSTypeCode = "CHAMP",                   
+                };
 
                 if (packageCode == "IMPO")
                 {
@@ -139,72 +121,32 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     tenantManagement.TenantTypeCode = "FOR";
                     tenantManagement.Technology = "AG";
                     //theEntityPm.ExportQuotationsToIntegratedSystem = false;
-                }
-                
-                MapNewLogboxFromCloudTenantManagement(tenantManagement, theEntityPm);
-                
+                }            
+
                 tenantManagementRep.Add(tenantManagement);
                 tenantManagementRep.SubmitChanges();
-
-
                 scope.Complete();
             }
 
             this.Poco = new Tenant();
             this.Poco.Id = this.entityPM.Id;
-            this.LBtenantsettingPoco = new LogBoxTenantSetting();
-            this.LBtenantsettingPoco.Id = this.entityPM.Id;
+
             this.InitializeComponent();
 
-            if (!(setting.WorkEnvironment == "customs"))
-
-            {
-                TenantValidating.Validate(theEntityPm);
-            }
+            TenantValidating.Validate(theEntityPm);
             TenantTracing.Trace(theEntityPm, Poco, isNewEntity);
             TenantMapping.MapEntity(theEntityPm, Poco, isNewEntity);
 
             AesFunction aesFunction = new AesFunction();
             Poco.StorageEncryptionKey = aesFunction.GenerateAesKey();
-            
+
+
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
-            LBsettingentityRepository.Add(LBtenantsettingPoco);
-            LBsettingentityRepository.SubmitChanges();
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-            //    TenantManagementLicenseRepository tenantManagementLicenseRepository = new TenantManagementLicenseRepository();
-            //    TenantManagementLicense tenantManagementLicense = new TenantManagementLicense()
-            //    {
-            //        Id = IdCounter.GetNumber("TenantManagementLicense", Poco.Id),
-            //        Tenant = Poco.Id,
-            //        NumberOfUsers = 1,
-            //        PackageCode = packageCode,
-            //    };
-            //    tenantManagementLicenseRepository.Add(tenantManagementLicense);
-            //    tenantManagementLicenseRepository.SubmitChanges();
-
-            //    scope.Complete();
-            //}
-
             CreateDWHSettings();
+
         }
-
-        private static void MapNewLogboxFromCloudTenantManagement(TenantManagement tenantManagement, TenantPM newTenantPM)
-        {
-            if (!newTenantPM.IsNewLogboxFromCloud) return;
-
-            const string ShipperConsigneeTenantTypeCode = "SHC";
-            tenantManagement.TenantTypeCode = ShipperConsigneeTenantTypeCode;
-            tenantManagement.IsTrial = false;
-        }
-
-        private static bool IsEmptyTotalDefaultNumberOfUsers(TenantPM theEntityPm)
-        {
-            return theEntityPm.TotalDefaultNumberOfUsers == null || theEntityPm.TotalDefaultNumberOfUsers <= 0;
-        }
-
         public void Update(TenantPM theEntityPm)
         {
             string entityName = "TenantPM" + theEntityPm.Id;
@@ -220,16 +162,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             TenantMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-
-            this.LBtenantsettingPoco = LBsettingentityRepository.GetSingleLBTenant(theEntityPm.Id);
-            this.LBtenantsettingPoco.IsDocumentsArchive = theEntityPm.IsDocumentsArchive;
-            this.LBtenantsettingPoco.CustomerTenantShareImportFile = theEntityPm.CustomerTenantShareImportFile;
-            this.LBtenantsettingPoco.AutoArchiveOnInvoice = theEntityPm.AutoArchiveOnInvoice;
-            this.LBtenantsettingPoco.AutoArchiveOnPODExport = theEntityPm.AutoArchiveOnPODExport;
-            this.LBtenantsettingPoco.DocumentShareAsDefault = theEntityPm.DocumentShareAsDefault;
-
-            LBsettingentityRepository.Update(this.LBtenantsettingPoco);
-            LBsettingentityRepository.SubmitChanges();
         }
 
         private void InitializeComponent()
@@ -301,28 +233,33 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        public static GlobalDB GetActiveDatabaseNumber(string tenant)
+        public static GlobalDB GetActiveDatabaseNumber()
         {
             GlobalDBRepository globaldbRep = new GlobalDBRepository();
 
             List<GlobalDB> activeDbs = globaldbRep.GetActiveDataBases();
-
-            GlobalDB database = activeDbs.FirstOrDefault(db => db.Id == tenant);
+            GlobalDB database = null;
+            if (activeDbs.Count == 1)
+            {
+                database = activeDbs.FirstOrDefault();
+            }
+            if (activeDbs.Count > 1)
+            {
+                Random rand = new Random();
+                int number = rand.Next(activeDbs.Count);
+                database = activeDbs[number];
+            }
 
             return database;
         }
 
         private void CreateDWHSettings()
         {
-            var dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                return;
-            }
-            DWHSetting dWHSetting = new DWHSetting() { Tenant = entityPM.Id, ParentTenant = entityPM.Id, Server = null, Password = null, UserName = null, Catalog = null, IsParentTenant = false };
+            DWHSetting dWHSetting = new DWHSetting(){Tenant = entityPM.Id, ParentTenant = entityPM.Id, Server = null, Password = null,UserName = null,Catalog = null};
             DWHSettingRepository dWHSettingRepository = new DWHSettingRepository(dWHSetting.Tenant);
             dWHSettingRepository.Add(dWHSetting);
             dWHSettingRepository.SubmitChanges();
+
         }
     }
 }

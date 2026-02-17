@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class CrossDockEntryDataProvider:BaseDataProvider
+    public class CrossDockEntryDataProvider
     {
         public string CustomerName { get; set; }
         public string CustomerRef1 { get; set; }
@@ -38,55 +38,8 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeAddress { get; set; }
         public string ShipmentNumber { get; set; }
         public string EntryNumber { get; set; }
-        public string DestinationCountryName { get; set; }
-        public string DestinationCountryCode { get; set; }
-        public string DestinationPortCode { get; set; }
-        public string Trucker { get; set; }
-        public string BarCode { get; set; }
-        public List<EntryPackage> EntryPackages { get; set; }
-        public int NumberOfPackages { get; set; }
-        public string TenantName { get; set; }
-        public string LoggedUserName { get; set; }
-        public string LoggedUserEmail { get; set; }
-        public string GeneralDescriptionofGoods { get; set; }
-        public string EntryTruckerCode { get; set; }
-        public string EntryTruckerName { get; set; }
-        public string EntryTruckerReference { get; set; }
-        public string Notes { get; set; }
-        public string MainCarriageCarrierNumber { get; set; }
-        public string IncotermCode { get; set; }
-        public string IncotermName { get; set; }
-        public double? ValueofGoods { get; set; }
-        public string ValueofGoodsCurrency { get; set; }
-        public string FinalDestination { get; set; }
-        public string NotifyName { get; set; }
-        public string NotifyAddress { get; set; }
-        public string ShipmentField1 { get; set; }
-        public string ShipmentField2 { get; set; }
-        public string ShipmentField3 { get; set; }
-        public string ShipmentField4 { get; set; }
-        public string ShipmentField5 { get; set; }
-        public string ShipmentField6 { get; set; }
-        public string ShipmentField7 { get; set; }
-        public string ShipmentField8 { get; set; }
-        public string ShipmentField9 { get; set; }
-        public string ShipmentField10 { get; set; }
-        public string ProjectNumber { get; set; }
-        public string MasterProjectNumber { get; set; }
-        public string GrossWeightInKG { get; set; }
-        public string GrossWeightInLB { get; set; }
-        public double? VolumeInCBM { get; set; }
-        public double? VolumeInCBF { get; set; }
 
-        public string ConsigneeReference1 { get; set; }
-        public string ConsigneeReference2 { get; set; }
-        public string TruckerReference { get; set; }
-        public CrossDockEntryDataProvider ShallowCopy()
-        {
-            return (CrossDockEntryDataProvider)this.MemberwiseClone();
-        }
-
-
+        public List<EntryPackage> EntryPackages { get; set; }        
     }
 
     public class EntryPackage
@@ -111,11 +64,5 @@ namespace WebFreight.Web.DataProviders
         public string ChassisNumber { get; set; }
         public string RegistrationNumber { get; set; }
         public string CountryName { get; set; }
-        public int InStock { get; set; }
-        public string GrossWeightInKG { get; set; }
-        public string GrossWeightInLB { get; set; }
-        public double? VolumeInCBM { get; set; }
-        public double? VolumeInCBF { get; set; }
-        public string Location { get; set; }
     }
 }

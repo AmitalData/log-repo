@@ -6,10 +6,9 @@ import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { Component } from '@angular/core';
 import { DateTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'VDKFilterComponent',
     templateUrl: './VDKFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -88,110 +87,60 @@ export class VDKFilterComponent extends BaseComponent {
         this.FromDate = DateTool.GetCurrentDateAsUtc();
         this.FromDate.setMonth(this.FromDate.getMonth() - 1);
         this.ToDate = DateTool.GetCurrentDateAsUtc();
-        //this.RunReport(false);
+        this.RunReport(false);
     }
-    public IsSchedulerReport : boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ToDate":
-                    this.ToDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "BranchId":
-                    this.BranchId = queryFilterItem.FieldValue;
-                    break;   
-                case "CustomerId":
-                    this.CustomerId = queryFilterItem.FieldValue;
-                    break; 
-                case "EntityStatus":
-                    this.EntityStatus = queryFilterItem.FieldValue;
-                    break; 
-                case "SupplierId":
-                    this.SupplierId = queryFilterItem.FieldValue;
-                    break;
-                case "IncludeOperationalClose":
-                    this.IncludeOperationalClose = queryFilterItem.FieldValue;
-                    break;        
-               }
-            }
-    }
-    ValidateSelectedFilters() {
-        this.ValidationErrorsList = [];
-        if (this.IncludeOperationalClose) {
-            if (this.FromDate == null) {
-                this.ValidationErrorsList.push("From Date is required");
-            }
-            if (this.ToDate != null) {
-                if (this.FromDate > this.ToDate) {
-                    this.ValidationErrorsList.push("From Date cannot be greater than To Date");
-                }
-            }
-        }
 
-        else {
-            if (this.FromDate != null) {
-                if (this.FromDate > this.ToDate) {
-                    this.ValidationErrorsList.push("From Date cannot be greater than To Date");
-                }
-            }
-        }
-        return this.ValidationErrorsList.length == 0;
-    }
-    GetQueryFilterItems() {
-        this.queryFilterItems = new Array<QueryFilterItem>();
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItems.push(new QueryFilterItem("BranchId", this.BranchId, "String"));
-        this.queryFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId, "String"));
-        this.queryFilterItems.push(new QueryFilterItem("EntityStatus", this.EntityStatus, "String"));
-        this.queryFilterItems.push(new QueryFilterItem("SupplierId", this.SupplierId, "String"));
-        this.queryFilterItems.push(new QueryFilterItem("IncludeOperationalClose", this.IncludeOperationalClose, "boolean"));
-        return this.queryFilterItems;
-    }
     RunReport(isloading: boolean) {
         if (isloading) {
-           
+            this.ValidationErrorsList = [];
+            if (this.IncludeOperationalClose) {
+                if (this.FromDate == null) {
+                    this.ValidationErrorsList.push("From Date is required");
+                }
+                if (this.ToDate != null) {
+                    if (this.FromDate > this.ToDate) {
+                        this.ValidationErrorsList.push("From Date cannot be greater than To Date");
+                    }
+                }
+            }
 
-            if (this.ValidateSelectedFilters()) {
-                
+            else {
+                if (this.FromDate != null) {
+                    if (this.FromDate > this.ToDate) {
+                        this.ValidationErrorsList.push("From Date cannot be greater than To Date");
+                    }
+                }
+            }
+
+       
+
+            if (this.ValidationErrorsList.length == 0) {
+                this.queryFilterItems = new Array<QueryFilterItem>();
+
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "FromDate";
+                this.queryFilterItem.FieldValue = this.FromDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
+
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ToDate";
+                this.queryFilterItem.FieldValue = this.ToDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
+
+                this.queryFilterItems.push(new QueryFilterItem("BranchId", this.BranchId, "String"));
+                this.queryFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId, "String"));
+                this.queryFilterItems.push(new QueryFilterItem("EntityStatus", this.EntityStatus, "String"));
+                this.queryFilterItems.push(new QueryFilterItem("SupplierId", this.supplierId, "String"));
+                this.queryFilterItems.push(new QueryFilterItem("IncludeOperationalClose", this.IncludeOperationalClose, "boolean"));
 
                 this.reportFliter = new ReportFliter();
                 this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-                this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+                this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
                 this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
                 this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
                 this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;

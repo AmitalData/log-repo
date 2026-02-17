@@ -18,7 +18,7 @@ namespace Logitude.Accounting.Def.EntityPMs
     public partial class JournalLinePM : EntityPM
     {
         [DataMember]
-        public JournalActionTypeEnum ActionTypeCodeEnum
+        public MyJournalActionTypeEnum ActionTypeCodeEnum
         {
             get
             {
@@ -33,24 +33,8 @@ namespace Logitude.Accounting.Def.EntityPMs
                 //        this.ActionTypeCode = action.Code;
                 //    }
                 //}
-                var codeEnum = JournalActionTypeEnum.NotValid;
-                bool dueActionTypeCodeIsNull = true;//on onsert is null !!
-                if (dueActionTypeCodeIsNull)
-                {
-                    if (!string.IsNullOrWhiteSpace(this.ActionCode))
-                    {
-                        Enum.TryParse<JournalActionTypeEnum>(this.ActionCode, out codeEnum);
-                    }
-                    else 
-                    {
-                        Enum.TryParse<JournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
-                    }
-                    
-                }
-                else
-                {
-                    Enum.TryParse<JournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
-                }
+                var codeEnum = MyJournalActionTypeEnum.NotValid;
+                Enum.TryParse<MyJournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
                 return codeEnum;
             }
             set
@@ -76,7 +60,7 @@ namespace Logitude.Accounting.Def.EntityPMs
         public bool EnsureAllDecimalPrecisionIfChangeChangeUpdate()
         {
             var changed = false;
-            if (this.LocalAmount != Math.Round(this.LocalAmount, 2))
+            if (this.LocalAmount!= Math.Round(this.LocalAmount,2))
             {
                 this.LocalAmount = Math.Round(this.LocalAmount, 2);
                 changed = true;
@@ -94,7 +78,7 @@ namespace Logitude.Accounting.Def.EntityPMs
             }
             if (changed)
             {
-                if (this.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.None)
+                if (this.ChangeSetOp== Simplog.Server.Infrastructure.ChangeSetOperation.None)
                 {
                     this.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 }

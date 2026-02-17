@@ -1,16 +1,34 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+declare var window: any;
+import {Observable}     from 'rxjs/Rx';
+import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
+import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { ListComponentArgs } from '../../../Infrastructure/Args';
+
 import { ApiQueryFilters } from  '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from  '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityListService } from   '../../../Infrastructure/Services/EntityListService';
-import { SignStationExtendedListService, SignStationGroup} from   '../../../Customs/Services/ExtendedLists/SignStationExtendedListService';
+import { SignStationExtendedListService, SignStationList, SignStationGroup} from   '../../../Customs/Services/ExtendedLists/SignStationExtendedListService';
+   
+
+
+
+import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
+
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SignStationsComponent.html',
 })
+
+
+
+
 
 export class SignStationsComponent
     extends BaseComponent
@@ -30,7 +48,7 @@ export class SignStationsComponent
     _SignStationExtendedListService: SignStationExtendedListService = new SignStationExtendedListService();
     ValidationErrorsList: string[] = [];
     _SelectedStatusValue: string='';
-    _StatusList = ["Start", "תקין", "כשלון", "ממתין להזנת סיסמם", "כרטיס שגוי", "ללם הגדרה"];
+    _StatusList = ["Start", "תקין", "כשלון", "ממתין להזנת סיסמא", "כרטיס שגוי", "ללא הגדרה"];
 
 
     _AllNum: number = 0;
@@ -38,15 +56,14 @@ export class SignStationsComponent
     _BadCardSelectedNum: number = 0;
     _OKNum: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
-    
-     constructor() {
+    constructor() {
         super();
         this._entityListService = new EntityListService();
         this.BuildColumns()
     }
     Loaded: boolean = false;
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
 
 
             this._TranslationLoaded = true;
@@ -82,7 +99,7 @@ export class SignStationsComponent
     RefreshBtnClick() {
         this.IsSearchButtonEnabled = false;
         //this.CurrentSession.StartBusyIndicator("");
-        this.ValidationErrorsList =[];
+
         setTimeout(() => {
             this._SignStationExtendedListService
                 .GetSignStationGroupByStatus(this._SearchText)
@@ -94,9 +111,6 @@ export class SignStationsComponent
                     this._Waitingtoenterapassword = this.GetTotalOf("Waitingtoenterapassword");
                     this._Incorrectcard = this.GetTotalOf("IncorrectCard");
                     this._OK = this.GetTotalOf("OK");
-                },
-                    err => {
-                        this.ValidationErrorsList.push(err?.error?.ErrorMessage);
                 }
                 );
         }, 1);
@@ -112,7 +126,7 @@ export class SignStationsComponent
     _Incorrectcard: string;
     _OK: string;
     GetTotalOf(mystatus) {
-        //_StatusList = ["Start", "תקין", "כישלון", "ממתין להזנת סיסמם", "כרטיס שגוי", "ללם הגדרה"];
+        //_StatusList = ["Start", "תקין", "כישלון", "ממתין להזנת סיסמא", "כרטיס שגוי", "ללא הגדרה"];
         //_StatusList = ["Start", "OK", "Failure", "Waitingtoenterapassword", "Incorrectcard", "NoDefinition"];
         let tot = 0;
         this.SignStationGroupList.forEach(r => {
@@ -196,13 +210,13 @@ export class SignStationsComponent
         this.columns.push({
             FieldName: 'IsPersonalSignOn',
             DataTypeCode: 'string',
-            Display: 'ח. םישית',
+            Display: 'ח. אישית',
             Styles: { width: '60px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'IsPersonalSignOn',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
 
         });
 
@@ -215,14 +229,14 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'IsCompanySignOn',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
 
         });
         this.columns.push({
             FieldName: 'VersionByFeatures',
             DataTypeCode: 'string',
             Display: 'גרסה',
-            Styles: { width: '130px' },
+            Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'VersionByFeatures',
@@ -239,7 +253,7 @@ export class SignStationsComponent
             SortByName: 'LastSignAt'
             ,
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
         });
 
         this.columns.push({
@@ -251,7 +265,7 @@ export class SignStationsComponent
             ServerSideSortable: true,
             SortByName: 'Status',
             HtmlListComponentName: 'SignStationListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+            HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
 
 
         });
@@ -268,7 +282,7 @@ export class SignStationsComponent
         //    Styles: { width: '100px' },
         //    IsCustomTemplate: true,
         //    HtmlListComponentName: 'SignStationListTemplate',
-        //    HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/SignStationListTemplate',
+        //    HtmlListComponentUrl: './Customs/Components/ListTemplates/SignStationListTemplate',
         //});
 
 

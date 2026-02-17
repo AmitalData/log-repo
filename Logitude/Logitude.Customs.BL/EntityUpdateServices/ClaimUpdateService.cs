@@ -7,7 +7,7 @@ using Logitude.Customs.Data.EntityLists;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -155,7 +155,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 tapagPM.CustomerId = entityPM.CustomerId;
                 tapagPM.ReferantId = entityPM.ReferantId;
                 tapagPM.IsClosed = entityPM.IsClosed;
-                // tapagPM.CustomsBranchCode = entityPM.CustomsBranchCode;
                 tapagUpdateService.Update(tapagPM, false);
             }
         }
@@ -184,9 +183,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-          
-            UpdateUnifreight(entityPM);
-           
+            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+            if (setting.IsConnectedToUniFreight)
+            {
+                UpdateUnifreight(entityPM);
+            }
         }
 
         protected override void AfterUpdating(ClaimPM entityPM, EntityPM entityParentPM)

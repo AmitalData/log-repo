@@ -21,12 +21,6 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
         public string LogicalPackagesQuantityBalance { get; set; }
         public string PhysicalPackagesQuantityBalance { get; set; }
         public string Value { get; set; }
-        public string StorageEntryPortChargeBalance { get; set; }
-        public string StorageEntryPortChargeCurrencyType { get; set; }
-        public string StorageEntryTransportBalance { get; set; }
-        public string StorageEntryTransportCurrencyType { get; set; }
-        public string StorageEntryInsuranceBalance { get; set; }
-        public string StorageEntryInsuranceCurrencyType { get; set; }
         public List<BlockSpecialActivities> BlockSpecialActivitiesList { get; set; }
         public List<ActionActivities> ActionList { get; set; }
         public List<StorageAction> StorageActionList { get; set; }
@@ -57,7 +51,6 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
         public string StorageActionPackagesQuantity { get; set; }
         public string PackagesQuantityAfterStorageAction { get; set; }
         public string StorageReferenceType { get; set; }
-        public string CargoMovementReference { get; set; }
         public List<PackingDetails> PackingDetailsList { get; set; }
         public string StorageUnloadingExceptiontype { get; set; }
         public string StorageUnloadingExceptionTypeText { get; set; }

@@ -19,9 +19,6 @@ export class ArchiveListTemplate {
         this.rowData = rowData;
         this.fieldName = fieldName;
         this.Id = rowData["Id"];
-        this.value = false;
-        this.stringvalue = "hidden";
-        
         if (rowData[fieldName]) {
             var temp: boolean = rowData[fieldName];
             this.value = temp;

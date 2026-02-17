@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -35,15 +35,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            //this.Property(t => t.ObjectFieldCode)
-            //    .IsRequired()
-            //    .HasMaxLength(200)
-            //    .IsUnicode(false);
-
-            this.Property(t => t.ObjectFieldCode)
-               .HasMaxLength(200)
-               .IsUnicode(false);
-
             // Table & Column Mappings
             this.ToTable("RuleConditionFields");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -52,7 +43,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Operator).HasColumnName("Operator");
             this.Property(t => t.ObjectTableRuleId).HasColumnName("ObjectTableRuleId");
             this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId");
-            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode");
 
             // Relationships
             //this.HasRequired(t => t.ObjectField)

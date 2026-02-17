@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -11,13 +11,10 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     {
         [Key]
         public string Id { get; set; }
-        [Index(IsUnique = true)]
-        public string FieldCode { get; set; }
         public int Tenant { get; set; }
         public string FullNameTextCodeId { get; set; }
         public string ObjectTableId { get; set; }
         public string FieldName { get; set; }
-        public string ShortName { get; set; }
         public string Code { get; set; }
         public string DataTypeCode { get; set; }
         public int MaxLength { get; set; }
@@ -104,17 +101,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public bool DisplayOnLookUpLocal { get; set; }
 
-        public string FullNameTextCodeCode { get; set; }
-
-        public string HelpTextCodeCode { get; set; }
-
-        public string ListTextCodeCode { get; set; }
-
-        public string ShortNameTextCodeCode { get; set; }
-
-        public bool DisplayInAutomationAsEnitity { get; set; }
-        public string RecordType { get; set; }
-
         [ForeignKey("CustomerPermissionTypeCode")]
         public PermissionType CustomerPermissionType { get; set; }
 
@@ -172,20 +158,5 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string HtmlHeaderComponentName { get; set; }
         public string HtmlListComponentName { get; set; }
         public bool EnableFullscreenTextBox { get; set; }
-        public string AdditionalQuerySections { get; set; }
-        public bool DisplayInRequiredFields { get; set; }
-
-
-        public string LeftKey { get; set; }
-        public string RightKey { get; set; }
-        public bool IsForeignKey { get; set; }
-        public string ForeignEntity { get; set; }
-        public string NavigationPropertyName { get; set; }
-        public string DefaultAdditionalFilters { get; set; }
-        public bool ForMetaDataOnly { get; set; }
-        public bool IsListFilter { get; set; }
-
-        public string ObjectFieldDataMapping { get; set; }
-
     }
 }

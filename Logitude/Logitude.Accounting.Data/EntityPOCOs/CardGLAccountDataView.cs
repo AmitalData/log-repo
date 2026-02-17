@@ -48,7 +48,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public string Category5Id { get; set; }
         public bool? IsVATExempt { get; set; }
         public string DeductionFileNumber { get; set; }
-        public bool ExcludeFromDeductionReport { get; set; }
 
         // Card
         public string SalesmanUserId { get; set; }
@@ -78,8 +77,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public string ChartOfAccountsLocalName { get; set; }
         public string ChartOfAccountsEnglishName { get; set; }
         public string ChartOfAccountsCode { get; set; }
-        public string ConsolidationVat { get; set; }
-
 
     }
 }

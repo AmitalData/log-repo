@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -10,7 +10,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public CustomerFieldsUpdateSettingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CustomerFieldsUpdateSettingRepository(ICommonDataContext context)
         {

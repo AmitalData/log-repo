@@ -63,8 +63,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
                 .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
 
             fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
 
@@ -112,8 +110,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
                 .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
 
             fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
 
@@ -160,8 +156,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
                 .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
 
             fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
 
@@ -209,8 +203,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
                 .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
 
             fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
 
@@ -249,8 +241,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
                 .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
 
             fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
 
@@ -262,47 +252,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
         [TestMethod]
-        public void OnCreate_RemoveNewLine()
-        {
-            int tenant = 1;
-
-            //arrange
-            var journalPM = new JournalPM()
-            {
-                Tenant = tenant
-            };
-            var journalLinePM = new JournalLinePM()
-            {
-                Tenant = 2,
-                CurrencyCode = "USD",
-                CurrencyId = "",
-                Notes = "123" + Environment.NewLine + "456",
-            };
-            var currencyPM = new CurrencyPM() { Id = "1-1", Code = "USD", };
-            IAccountingContext mainContext = A.Fake<IAccountingContext>();
-
-            IJournalActionTypeListQueryService myIJournalActionTypeListQueryService =
-                A.Fake<IJournalActionTypeListQueryService>();
-
-            var fakeJournalUpdateOnCreatingLine = A.Fake<JournalLineOnUpdate>(
-                option => option.CallsBaseMethods()
-                    );
-
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
-                .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
-
-            fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
-
-
-            ///checke
-            Assert.AreEqual(journalLinePM.Notes, "123" + " " /*Environment.NewLine*/ + "456");
-
-        }
-
-        [TestMethod]
-        public void OnCreateRange_BadGLAccountId_debitDueVat_AccountIdBecomeNUll()
+        public void OnCreateRange_BadGLAccountId_AccountIdBecomeNUll()
         {
             int tenant = 1;
             var badCard="badCard!!!";
@@ -318,7 +268,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 2,
                 CurrencyCode = "USD",
                 CurrencyId = "",
-                 ActionTypeCodeEnum =  JournalActionTypeEnum.DebitAndCredit,
+
                 LocalAmount = 10.020202m,
                 ForeignAmount = 10.020201m,
 
@@ -343,8 +293,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 .Returns(null);
             A.CallTo(() => mVerifyGLAccountManager.GetByInternalNumberGLAccount(tenant, A<string>.Ignored))
                 .Returns(null);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { VATOutputGLAccountId = "Vat!!" });
 
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetIVerifyGLAccountManager())
@@ -356,20 +304,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
                 .Returns(currencyPM);
-
-            var myJournalActionTypeList = new JournalActionTypeList()
-            {
-                Id = "",
-                Tenant = tenant,
-                Code = JournalActionTypeEnum.DebitAndCredit.ToString(),
-                EnglishName = "Debit",
-
-
-                //1	????	Credit
-            };
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.JournalActionTypeListGetByCode(journalLinePM))
-                            .Returns(myJournalActionTypeList);
-
 
             fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
 
@@ -398,7 +332,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 2,
                 CurrencyCode = "USD",
                 CurrencyId = "",
-                 ActionTypeCodeEnum = JournalActionTypeEnum.DebitAndCredit,
+
                 LocalAmount = 10.020202m,
                 ForeignAmount = 10.020201m,
 
@@ -438,22 +372,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
                 .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
-
-
-            var myJournalActionTypeList = new JournalActionTypeList()
-            {
-                Id = "",
-                Tenant = tenant,
-                Code = JournalActionTypeEnum.DebitAndCredit.ToString(),
-                EnglishName = "Debit",
-
-
-                //1	זכות	Credit
-            };
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.JournalActionTypeListGetByCode(journalLinePM))
-                            .Returns(myJournalActionTypeList);
 
             fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
 
@@ -467,7 +385,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
         [TestMethod]
-        public void OnCreateRange_BadGLAccountIdWithGoodAccountNumberCardTypeIsMultiCredit_AccountIdUSDSplitTranslated()
+        public void OnCreateRange_BadGLAccountIdWithGoodAccountNumberCardTypeIsMulti_AccountIdUSDSplitTranslated()
         {
             int tenant = 1;
             var badCard = "badCard!!!";
@@ -484,7 +402,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 2,
                 CurrencyCode = "USD",
                 CurrencyId = "1-1",
-                 ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
+
                 LocalAmount = 10.020202m,
                 ForeignAmount = 10.020201m,
 
@@ -518,8 +436,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => mVerifyGLAccountManager.GetSingleGLAccount(CreditAccountUSD.Id))
                .Returns(CreditAccountUSD);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
 
 
             A.CallTo(() => mVerifyGLAccountManager
@@ -543,23 +459,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
                 .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
-
-
-
-            var myJournalActionTypeList = new JournalActionTypeList()
-            {
-                Id = "",
-                Tenant = tenant,
-                Code = JournalActionTypeEnum.Credit.ToString(),
-                EnglishName = "Credit" ,
-                 
-                 
-                //1	זכות	Credit
-            };
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.JournalActionTypeListGetByCode(journalLinePM))
-                            .Returns(myJournalActionTypeList);
 
             fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
 
@@ -568,115 +467,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             Assert.AreEqual(journalLinePM.CreditAccountId, CreditAccountUSD.Id);
             Assert.AreEqual(journalLinePM.ChangeSetOp,  Simplog.Server.Infrastructure.ChangeSetOperation.Update);
-            Assert.AreEqual(journalLinePM.DebitAccountId, badCard);
-
-        }
-
-        public void OnCreateRange_BadGLAccountIdWithGoodAccountNumberCardTypeIsMultiDebit_AccountIdUSDSplitTranslated()
-        {
-            int tenant = 1;
-            var badCard = "badCard!!!";
-            var expectedCreditCardID = "1-1-usd";
-            var expectedDeditCardID = "1-2-usd";
-            //arrange
-            var journalPM = new JournalPM()
-            {
-                Tenant = tenant,
-                Id = "1-3"
-
-            };
-            var journalLinePM = new JournalLinePM()
-            {
-                Tenant = 2,
-                CurrencyCode = "USD",
-                CurrencyId = "1-1",
-                ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
-                LocalAmount = 10.020202m,
-                ForeignAmount = 10.020201m,
-
-                CreditAccountNumber = "CreditAccountNumber",
-                DebitAccountNumber = "DebitAccountNumber",
-                CreditAccountId = badCard,
-                DebitAccountId = badCard,
-
-            };
-            var CreditAccount = new GLAccountPM() { Id = "1-1", Tenant = tenant, InternalNumber = "CreditAccountNumber", AccountTypeCode = "1", IsMultiCurrency = true };
-
-            var CreditAccountUSD = new GLAccountPM() { Id = expectedCreditCardID, Tenant = tenant, InternalNumber = "CreditAccountNumberUSD", AccountTypeCode = "1" };
-            var DebitAccount = new GLAccountPM() { Id = "1-2", Tenant = tenant, InternalNumber = "DebitAccountNumber", AccountTypeCode = "1" };
-            var DebitAccountUSD = new GLAccountPM() { Id = expectedDeditCardID, Tenant = tenant, InternalNumber = "expectedDeditUSD", AccountTypeCode = "1" };
-            
-            var currencyPM = new CurrencyPM() { Id = "1-1", Code = "USD", };
-            IAccountingContext mainContext = A.Fake<IAccountingContext>();
-
-            IJournalActionTypeListQueryService myIJournalActionTypeListQueryService =
-                A.Fake<IJournalActionTypeListQueryService>();
-
-            var fakeJournalUpdateOnCreatingLine = A.Fake<JournalLineOnUpdate>(
-                option => option.CallsBaseMethods()
-                    );
-            var mVerifyGLAccountManager =
-                A.Fake<VerifyGLAccountManager>(opt => opt.CallsBaseMethods());
-
-            A.CallTo(() => mVerifyGLAccountManager.GetSingleGLAccount(badCard))
-                .Returns(null);
-
-            A.CallTo(() => mVerifyGLAccountManager.GetSingleGLAccount(CreditAccount.Id))
-                .Returns(CreditAccount);
-
-            A.CallTo(() => mVerifyGLAccountManager.GetSingleGLAccount(CreditAccountUSD.Id))
-               .Returns(CreditAccountUSD);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
-
-
-            A.CallTo(() => mVerifyGLAccountManager
-            .GetRelatedCurrenciesAccount(CreditAccount.Id, 1))
-            .Returns(
-                new List<GLAccountCurrencyPM>() {
-                    new GLAccountCurrencyPM() {  CurrencyId =  currencyPM.Id, GLAccountId = expectedCreditCardID }
-                });
-
-
-
-            A.CallTo(() => mVerifyGLAccountManager.GetSingleGLAccount(DebitAccount.Id))
-                .Returns(DebitAccount);
-            A.CallTo(() => mVerifyGLAccountManager.GetByInternalNumberGLAccount(tenant, journalLinePM.CreditAccountNumber))
-                .Returns(CreditAccount);
-            A.CallTo(() => mVerifyGLAccountManager.GetByInternalNumberGLAccount(tenant, journalLinePM.DebitAccountNumber))
-                .Returns(DebitAccount);
-
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetIVerifyGLAccountManager())
-                .Returns(mVerifyGLAccountManager);
-
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
-                .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
-
-
-
-            var myJournalActionTypeList = new JournalActionTypeList()
-            {
-                Id = "",
-                Tenant = tenant,
-                Code = JournalActionTypeEnum.Debit.ToString(),
-                EnglishName = "Debit",
-
-
-                //1	זכות	Credit
-            };
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.JournalActionTypeListGetByCode(journalLinePM))
-                            .Returns(myJournalActionTypeList);
-
-            fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
-
-
-            ///checke
-
-            Assert.AreEqual(journalLinePM.DebitAccountId, expectedDeditCardID);
-            Assert.AreEqual(journalLinePM.ChangeSetOp, Simplog.Server.Infrastructure.ChangeSetOperation.Update);
-            Assert.AreEqual(journalLinePM.CreditAccountId, badCard);
+            Assert.AreEqual(journalLinePM.DebitAccountId, DebitAccount.Id);
 
         }
 
@@ -700,7 +491,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 2,
                 CurrencyCode = "USD",
                 CurrencyId = "",
-                 ActionTypeCodeEnum = JournalActionTypeEnum.DebitAndCredit,
+
                 LocalAmount = 10.020202m,
                 ForeignAmount = 10.020201m,
 
@@ -740,24 +531,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.GetSingleCurrencyByCode(1, "USD"))
                 .Returns(currencyPM);
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
-
-
-
-            var myJournalActionTypeList = new JournalActionTypeList()
-            {
-                Id = "",
-                Tenant = tenant,
-                Code = JournalActionTypeEnum.DebitAndCredit.ToString(),
-                EnglishName = "Debit",
-
-
-                //1	זכות	Credit
-            };
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.JournalActionTypeListGetByCode(journalLinePM))
-                            .Returns(myJournalActionTypeList);
-
 
             fakeJournalUpdateOnCreatingLine.OnUpdate(journalLinePM, journalPM);
 
@@ -787,7 +560,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             };
             var journalLinePM = new JournalLinePM()
             {
-                Tenant = tenant,
+                Tenant = 2,
                 CurrencyId = "",
                 ActionTypeCode = ActionTypeCode,
             };
@@ -809,8 +582,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 option => option.CallsBaseMethods()
                     );
 
-            A.CallTo(() => fakeJournalUpdateOnCreatingLine.getFullAccountingSettings(tenant))
-                .Returns(new FullAccountingSettingPM() { });
 
             A.CallTo(() => fakeJournalUpdateOnCreatingLine.JournalActionTypeListGetByCode(journalLinePM))
                 .Returns(myJournalActionTypeList);
@@ -820,10 +591,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             ///check
             Assert.AreEqual(journalLinePM.ActionTypeCode, myJournalActionTypeList.Code);
-            //Assert.AreEqual(journalLinePM.ActionCode, myJournalActionTypeList.Id);
-            Assert.AreEqual(journalLinePM.ActionId, myJournalActionTypeList.Id);
-            //Assert.AreEqual(journalLinePM.ActionId, myJournalActionTypeList.N);
-
+            Assert.AreEqual(journalLinePM.ActionCode, myJournalActionTypeList.Id);
+            
 
         }
   

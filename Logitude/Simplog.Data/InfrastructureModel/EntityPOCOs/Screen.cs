@@ -23,13 +23,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public bool IsReadOnly { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
-        public bool Inactive { get; set; }
-        public string SortedByFieldCode { get; set; }
-        public string SortedType { get; set; }
-        public string SearchFields { get; set; }
-        public string RelatedScreenCode { get; set; }
-        public bool IsHeaderScreen { get; set; }
+
         //[Include]
         //[Association("ObjectTableScreen", "ObjectTableId", "Id",IsForeignKey=true)]
 

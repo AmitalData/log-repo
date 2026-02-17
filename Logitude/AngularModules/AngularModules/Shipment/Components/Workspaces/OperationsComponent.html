@@ -1,18 +1,15 @@
-
-<table>
+﻿
+<table *ngIf="IsResourcesReady">
     <tr style="height:21px;" *ngIf="IsMenuVisible">
         <td>
-            <ul class="PagesMenu" *ngIf="IsResourcesReady">
-                <li id="{{'BOOK' | IdGeneratorAsyncPipe | async}}" *ngIf="IsBookingItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BOOK'" (click)="SelectedItem = 'BOOK'">Bookings</li>
+            <ul class="PagesMenu">
+                <li id="{{'BOOK' | IdGeneratorPipe}}" *ngIf="IsBookingItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BOOK'" (click)="SelectedItem = 'BOOK'">Bookings</li>
 
-                <li id="{{'SHIP' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'SHIP'" (click)="SelectedItem = 'SHIP'">Shipments</li>
+                <li id="{{'SHIP' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'SHIP'" (click)="SelectedItem = 'SHIP'">Shipments</li>
 
-                <li id="{{'SHMA' | IdGeneratorAsyncPipe | async}}" *ngIf="IsSharedManifestItemVisible" [class.SelectedPageMenu]="SelectedItem == 'SHMA'" (click)="SelectedItem = 'SHMA'">Shared Manifests</li>
+                <li id="{{'SHMA' | IdGeneratorPipe}}"  *ngIf="IsSharedManifestItemVisible" [class.SelectedPageMenu]="SelectedItem == 'SHMA'" (click)="SelectedItem = 'SHMA'">Shared Manifests</li>
 
-                <li id="{{'CNFU' | IdGeneratorAsyncPipe | async}}" *ngIf="IsContainersFUItemVisible" [class.SelectedPageMenu]="SelectedItem == 'CNFU'" (click)="SelectedItem = 'CNFU'">{{'Shipment.Features.ContainersFU' | TextCodeTranslationPipe}}</li>
-
-                <li id="{{'AMANAC' | IdGeneratorAsyncPipe | async}}" *ngIf="IsAMANACItemVisible" [class.SelectedPageMenu]="SelectedItem == 'AMANAC'" (click)="SelectedItem = 'AMANAC'">AMANAC</li>
-
+                <li id="{{'CNFU' | IdGeneratorPipe}}" *ngIf="IsContainersFUItemVisible" [class.SelectedPageMenu]="SelectedItem == 'CNFU'" (click)="SelectedItem = 'CNFU'">{{'Shipment.Features.ContainersFU' | TextCodeTranslationPipe}}</li>
             </ul>
         </td>
     </tr>
@@ -39,10 +36,6 @@
 
             <div class="CellContent" [hidden]="SelectedItem != 'CNFU'">
                 <div LocationDirective Code="CNFU"></div>
-            </div>
-
-            <div class="CellContent" [hidden]="SelectedItem != 'AMANAC'">
-                <div LocationDirective Code="AMANAC"></div>
             </div>
         </td>
     </tr>

@@ -8,7 +8,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {ContactInputTemplate} from './ContactInputTemplate';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SearchContactsComponent.html',
 })
 

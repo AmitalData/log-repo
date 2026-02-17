@@ -18,7 +18,7 @@ import {DeclarationCourierStatusPMService} from '../../../../Customs/Services/St
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CourierPendingReasonGeneralComponent.html',
 })
 

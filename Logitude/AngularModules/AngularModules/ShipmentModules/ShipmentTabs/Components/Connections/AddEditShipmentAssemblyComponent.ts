@@ -11,7 +11,7 @@ import {CardListService} from '../../../../Common/Services/StandardLists/CardLis
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditShipmentAssemblyComponent.html',
 })
 
@@ -89,7 +89,7 @@ export class AddEditShipmentAssemblyComponent extends BaseComponent {
         }
 
         else {
-            this.myCardListService.getSingle(this.ShipperId).subscribe((myResult:any) => {
+            this.myCardListService.getSingle(this.ShipperId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -108,7 +108,7 @@ export class AddEditShipmentAssemblyComponent extends BaseComponent {
         }
     }
     private LoadShipperCard() {
-        this.myCardListService.getSingle(this.ShipperId).subscribe((myResult:any) => {
+        this.myCardListService.getSingle(this.ShipperId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {

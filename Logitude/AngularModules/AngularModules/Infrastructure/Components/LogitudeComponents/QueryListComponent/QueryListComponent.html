@@ -157,7 +157,7 @@
         box-shadow: 0px 0px 4px 0px rgb(59, 179, 226) !important;
     }
 </style>
-<div tabindex="0" class="ToggleButton" [attr.id]="ControlId" style="margin: auto; width: 135px !important; background: transparent none repeat scroll 0 0;border: 1px solid #aaaaaa;border-radius: 3px;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
+<div tabindex="0" class="ToggleButton" [attr.id]="ControlId" style="margin: auto; width: 150px !important; background: transparent none repeat scroll 0 0;border: 1px solid #aaaaaa;border-radius: 3px;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
 
     <table class="ToggleButtonMain" style="border-radius: 3px;">
         <tr>
@@ -195,21 +195,21 @@
         <li *ngIf="NotSharedUserItemSource.length > 0" style="border-top: 1px solid #b7b7b7; border-bottom: 1px solid #e5f5ff; margin: 7px -2px;">
         </li>
 
-        <li  id="{{'ChooseNewView' | IdGeneratorAsyncPipe | async}}"  class="ActionButtonsParent TextTrimming" [class.ComboBoxItem]="LayoutDirection!='rtl'" [class.ComboBoxItemRTL]="LayoutDirection=='rtl'" style="margin-bottom: 4px;" *ngFor="let item of NotSharedUserItemSource" (click)="ItemClicked(item)" [class.Selected]="item === SelectedItem">
+        <li class="ActionButtonsParent TextTrimming" [class.ComboBoxItem]="LayoutDirection!='rtl'" [class.ComboBoxItemRTL]="LayoutDirection=='rtl'" style="margin-bottom: 4px;" *ngFor="let item of NotSharedUserItemSource" (click)="ItemClicked(item)" [class.Selected]="item === SelectedItem">
             <div>
                 <div [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                     <img (click)="ItemClicked(item)" [attr.src]="'./Images/Menu/Person.small.png'" width="18" style="margin-right:5px;margin-top:9px;position:relative;pointer-events:none;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" />
                 </div>
 
-                <div style="max-width:90px;" class="TextTrimming" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [style.padding-right]="LayoutDirection=='rtl' ? '15px' : ''">
-                    <span (click)="ItemClicked(item)" title="{{item[Binding] | TextCodeTranslationPipe}}" *ngIf="Binding != null" style="float:left;max-width:90px;" class="TextTrimming">{{item[Binding] | TextCodeTranslationPipe}}</span>
+                <div style="max-width:100px;" class="TextTrimming" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [style.padding-right]="LayoutDirection=='rtl' ? '15px' : ''">
+                    <span (click)="ItemClicked(item)" title="{{item[Binding] | TextCodeTranslationPipe}}" *ngIf="Binding != null" style="float:left;max-width:100px;" class="TextTrimming">{{item[Binding] | TextCodeTranslationPipe}}</span>
                 </div>
 
                 <div>
-                    <div  id="{{'DeleteButton' | IdGeneratorAsyncPipe | async}}" class="Button ActionButtons" (click)="DeleteButtonClicked(item)" style="width:18px;height:18px;margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                    <div class="Button ActionButtons" (click)="DeleteButtonClicked(item)" style="width:18px;height:18px;margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
                         <img src="./Images/Buttons/Delete.over.png" class="CenterCenter" style="margin-left:3px;margin-top:1px;" />
                     </div>
-                    <div  id="{{'ViewFiltersButton' | IdGeneratorAsyncPipe | async}}"  class="Button ActionButtons" (click)="EditButtonClicked(item)" style="width:18px;height:18px; margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                    <div class="Button ActionButtons" (click)="EditButtonClicked(item)" style="width:18px;height:18px; margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
                         <img src="./Images/Buttons/Edit.over.png" class="CenterCenter" style="margin-left:3px;margin-top:1px;" />
                     </div>
                 </div>
@@ -219,7 +219,7 @@
         <li *ngIf="SharedUserItemSource .length > 0" style="border-top: 1px solid #b7b7b7; border-bottom: 1px solid #e5f5ff; margin: 7px -2px;">
         </li>
 
-        <li  id="{{'ChooseView' | IdGeneratorAsyncPipe | async}}"  class="ActionButtonsParent TextTrimming" [class.ComboBoxItem]="LayoutDirection!='rtl'" [class.ComboBoxItemRTL]="LayoutDirection=='rtl'" style="margin-bottom: 4px;" *ngFor="let item of SharedUserItemSource" (click)="ItemClicked(item)" [class.Selected]="item === SelectedItem">
+        <li class="ActionButtonsParent TextTrimming" [class.ComboBoxItem]="LayoutDirection!='rtl'" [class.ComboBoxItemRTL]="LayoutDirection=='rtl'" style="margin-bottom: 4px;" *ngFor="let item of SharedUserItemSource" (click)="ItemClicked(item)" [class.Selected]="item === SelectedItem">
             <div>
                 <div title="Shared View" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                     <img (click)="ItemClicked(item)" [attr.src]="'./Images/Menu/Shared.png'" width="18" style="margin-right:5px;margin-top:9px;position:relative;pointer-events:none;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" />
@@ -230,7 +230,7 @@
                 </div>
 
                 <div>
-                    <div id="{{'EditButtons' | IdGeneratorAsyncPipe | async}}" class="Button ActionButtons" (click)="EditButtonClicked(item)" style="width:18px;height:18px; margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                    <div class="Button ActionButtons" (click)="EditButtonClicked(item)" style="width:18px;height:18px; margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
                         <img src="./Images/Buttons/Edit.over.png" class="CenterCenter" style="margin-left:3px;margin-top:1px;" />
                     </div>
                 </div>
@@ -238,8 +238,8 @@
         </li>
 
         <li [attr.id]="NewViewId" class="dropcontent" style="background-color:#DFECF7;height:30px;border-top:1px solid #AAAAAA;margin-top:3px;margin: -2px;border-radius: 0px 0px 4px 5px;" (click)="IgnoreMouseDown()">
-            <div id="{{'NewViewTab' | IdGeneratorAsyncPipe | async}}" style="margin:4px;background-color:transparent;" class="dropcontent">
-                <span id="{{'NewViewTabchoose' | IdGeneratorAsyncPipe | async}}" class="NewView" (click)="NewViewClicked()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">{{'General.O.NewView' | TextCodeTranslationPipe}}</span>
+            <div style="margin:4px;background-color:transparent;" class="dropcontent">
+                <span class="NewView" (click)="NewViewClicked()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">{{'General.O.NewView' | TextCodeTranslationPipe}}</span>
             </div>
         </li>
     </ul>

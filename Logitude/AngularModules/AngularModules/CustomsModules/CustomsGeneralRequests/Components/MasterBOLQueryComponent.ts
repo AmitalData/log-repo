@@ -20,7 +20,7 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 
 @Component({
     selector: 'MasterBOLQueryComponent',
-    
+    moduleId: module.id,
     templateUrl: './MasterBOLQueryComponent.html',
 })
 
@@ -283,7 +283,7 @@ export class MasterBOLQueryComponent
         currRequestParams.CustomFileNo = this.CustomFileNo;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לשטרי מטען", true)
             .then((res) => {
                 this.ResponseData = res;

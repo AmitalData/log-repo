@@ -1,8 +1,7 @@
-
+﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -17,20 +16,20 @@ import {WarehouseReleasePackagePM} from '../../EntityPMs/WarehouseReleasePackage
 @Injectable()
 export class WarehouseReleasePackagePMExtendedService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/WarehouseReleasePackageExtended';
     }
 
 
     GetWarehouseReleasePackagePMListsByWarehouseReleaseId(warehouseReleaseId: string, tenant: number) {
-        
-        
-        return this._http.get(this._apiUrl + "/getWarehouseReleasePackagePMListsByWarehouseReleaseId" + '?warehouseReleaseId=' + warehouseReleaseId +  '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/getWarehouseReleasePackagePMListsByWarehouseReleaseId" + '?warehouseReleaseId=' + warehouseReleaseId +  '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result:any = response;
+            var result = response.json();
             var entity: WarehouseReleasePackagePM;
             var warehouseReleasePackagePMLists: WarehouseReleasePackagePM[];
             warehouseReleasePackagePMLists = new Array<WarehouseReleasePackagePM>();
@@ -45,26 +44,9 @@ export class WarehouseReleasePackagePMExtendedService {
             return pmresponse;
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
-    GetWarehouseReleasePackagePMThatNotUsedForAnyEntityLists() {
-        
-        
-        return this._http.get(this._apiUrl + '/GetWarehouseReleasePackagePMThatNotUsedForAnyEntityLists', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result:any = response;
-            var entity: WarehouseReleasePackagePM;
-            var warehouseReleasePackagePMLists: WarehouseReleasePackagePM[];
-            warehouseReleasePackagePMLists = new Array<WarehouseReleasePackagePM>();
-            result.forEach((item) => {
-                entity = this.MapJsonToEntityPM(item);
-                warehouseReleasePackagePMLists.push(entity);
-            });
-            var pmresponse: ServiceResponse = new ServiceResponse();
-            pmresponse.Result = warehouseReleasePackagePMLists;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
-    }
 
 
     MapJsonToEntityPM(jsonPM: any) {

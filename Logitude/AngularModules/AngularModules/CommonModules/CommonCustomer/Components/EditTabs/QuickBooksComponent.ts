@@ -6,7 +6,7 @@ import {GetAccountingSystemWindowArgs} from '../../../../Common/Args';
 import {GlobalDomainService} from "../../../../Common/Services/GlobalDomainService"
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuickBooksComponent.html',
 })
 
@@ -147,7 +147,7 @@ export class QuickBooksComponent implements OnInit {
             if (this.searchText == null)
                 this.searchText = "";
             this.CurrentSession.StartBusyIndicator("Searching ..");           
-            this.GlobalDomainService.GetQuickBooksQueries(this.args, this.SearchText).subscribe((myResult:any) => {
+            this.GlobalDomainService.GetQuickBooksQueries(this.args, this.SearchText).subscribe(myResult => {
                 this.TempList = [];
                 this.CustomersListFilterd = [];
                 var list: Array<any> = myResult.Result;

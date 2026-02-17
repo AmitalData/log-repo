@@ -7,23 +7,25 @@ using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -45,7 +47,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-               
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
@@ -231,24 +232,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
 
-                    if (opportunityId == "null")
-                        opportunityId = null;
+                if (opportunityId == "null")
+                    opportunityId = null;
 
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("QuoteStage", "READ", authToken.Tenant);
 
-                    QuotesDomainService domainService = new QuotesDomainService();
-                    string[] Ids = quotesIds.Split(':');
-                    domainService.ConnectQuotesToOpportunity(opportunityId, Ids.ToList(), authToken.Tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("QuoteStage", "READ", authToken.Tenant);
 
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, true);
-                }
+                QuotesDomainService domainService = new QuotesDomainService();
+                string[] Ids = quotesIds.Split(':');
+                domainService.ConnectQuotesToOpportunity(opportunityId, Ids.ToList(), authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
             {
@@ -298,7 +296,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        public HttpResponseMessage PostQuoteAutomaticSubject(QuotePM entityPM)
+        public HttpResponseMessage PostQuoteAutomaticSubject(QuoteSubjectArgs args)
         {
             try
             {
@@ -308,14 +306,154 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("Quote", entityPM.Tenant, tenant);
                 SecurityUtility.CheckContactFeature("Quote", "READ", tenant);
 
-                QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
-                string mySubject = iSubjectService.GetSubject();
+                string mySubject = null;
+                bool isInlandDomestic = (args.DirectionId == "D" && args.TransportModeId == "I");
 
-                return Request.CreateResponse(HttpStatusCode.OK, mySubject);
+                AddressRepository addressRepository = new AddressRepository(tenant);
+
+                if (!string.IsNullOrEmpty(args.IncotermId))
+                {
+                    IncotermRepository incotermRepository = new IncotermRepository(tenant);
+                    Incoterm incoterm = incotermRepository.GetSingleIncoterm(args.IncotermId, tenant);
+                    if (incoterm != null)
+                    {
+                        mySubject = incoterm.Code;
+                    }
+                }
+
+                if (isInlandDomestic)
+                {
+                    #region
+                    if (!string.IsNullOrEmpty(args.FromPartnerAddressId))
+                    {
+                        Address myAddress = addressRepository.GetSingleAddress(args.FromPartnerAddressId, tenant);
+                        if (myAddress != null)
+                        {
+                            if (!string.IsNullOrEmpty(myAddress.City))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " " + myAddress.City;
+                            }
+
+                            else if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " " + myAddress.ZipCode;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(args.ToPartnerAddressId))
+                    {
+                        Address myAddress = addressRepository.GetSingleAddress(args.ToPartnerAddressId, tenant);
+                        if (myAddress != null)
+                        {
+                            if (!string.IsNullOrEmpty(myAddress.City))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " > " + myAddress.City;
+                            }
+
+                            else if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " > " + myAddress.ZipCode;
+                            }
+                        }
+                    }
+                    #endregion
+                }
+
+                else
+                {
+                    #region
+                    if (args.IncludePickUp)
+                    {
+                        if (!string.IsNullOrEmpty(args.PickUpAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(args.PickUpAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                if (!string.IsNullOrEmpty(myAddress.City))
+                                {
+                                    mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " " + myAddress.City;
+                                }
+
+                                else if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                                {
+                                    mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " " + myAddress.ZipCode;
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(args.FromAddressCity))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? args.FromAddressCity : mySubject + " " + args.FromAddressCity;
+                            }
+
+                            else if (!string.IsNullOrEmpty(args.FromAddressZipCode))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? args.FromAddressZipCode : mySubject + " " + args.FromAddressZipCode;
+                            }
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(args.FromPortId))
+                    {
+                        PortPM myPort = PortQuery.GetSinglePort(tenant, args.FromPortId, true);
+                        if (myPort != null)
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? myPort.Code : mySubject + " " + myPort.Code;
+                        }
+                    }
+
+                    if (args.IncludeDelivery)
+                    {
+                        if (!string.IsNullOrEmpty(args.DeliveryAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(args.DeliveryAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                if (!string.IsNullOrEmpty(myAddress.City))
+                                {
+                                    mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " > " + myAddress.City;
+                                }
+
+                                else if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                                {
+                                    mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " > " + myAddress.ZipCode;
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(args.ToAddressCity))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? args.ToAddressCity : mySubject + " > " + args.ToAddressCity;
+                            }
+
+                            else if (!string.IsNullOrEmpty(args.ToAddressZipCode))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? args.ToAddressZipCode : mySubject + " > " + args.ToAddressZipCode;
+                            }
+                        }
+                    }
+
+                    else if (!string.IsNullOrEmpty(args.ToPortId))
+                    {
+                        PortPM myPort = PortQuery.GetSinglePort(tenant, args.ToPortId, true);
+                        if (myPort != null)
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? myPort.Code : mySubject + " > " + myPort.Code;
+                        }
+                    }
+
+                    #endregion
+                }
+
+                args.Subject = mySubject;
+                return Request.CreateResponse(HttpStatusCode.OK, args);
             }
 
             catch (Exception ex)
@@ -377,9 +515,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     entityPM = new QuoteSettingPM()
                     {
-                        Tenant = tenant,
-                        AutomaticallyCloseDays = 30,
-                        QuoteExpirationDays = 30,
+                        Tenant = tenant
                     };
                 }
 
@@ -396,19 +532,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         CopyDelivery = myPOCO.CopyDelivery,
                         CopyChargesTypes = myPOCO.CopyChargesTypes,
                         CopyChargesCost = myPOCO.CopyChargesCost,
-                        CostChargesMust = myPOCO.CostChargesMust,
-
                         CopyChargesSale = myPOCO.CopyChargesSale,
                         EditMainCarriage = myPOCO.EditMainCarriage,
                         CopyAgent = myPOCO.CopyAgent,
                         CopyNotify = myPOCO.CopyNotify,
                         IsSaleAsCostCurrency = myPOCO.IsSaleAsCostCurrency,
-                        CopyExchangeRates = myPOCO.CopyExchangeRates,
-                        AutomaticallyCloseDays = myPOCO.AutomaticallyCloseDays,
-
-                        IsMultiCurrency = myPOCO.IsMultiCurrency,
-
-                        QuoteExpirationDays = myPOCO.QuoteExpirationDays,
                     };
                 }
 
@@ -431,8 +559,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("Quote", entityPM.Tenant, tenant);
 
                     if (entityPM != null)
                     {
@@ -518,13 +644,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 List<QuoteConnectedEntity> myResult = new List<QuoteConnectedEntity>();
-
+                
                 IShipmentsContext shipmentContext = ShipmentsContext.GetContext(tenant);
                 ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentContext);
-
-                var shipments = shipmentRepository
-                    .GetShipmentsByQuoteId(quoteId, tenant)
-                    .Select(item => new QuoteConnectedEntity
+                IQueryable<ShipmentDataView> myShipments = shipmentRepository.GetShipmentsByQuoteId(quoteId, tenant);
+                foreach (ShipmentDataView item in myShipments)
+                {
+                    myResult.Add(new QuoteConnectedEntity()
                     {
                         EntityId = item.Id,
                         EntityNumber = item.ShipmentNumber,
@@ -539,15 +665,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         To = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode,
                         GrossWeight = item.GrossWeight,
                         VolumeInKG = item.Volume,
-                    })
-                    .ToList();
-
-                myResult.AddRange(shipments);
+                    });
+                }
 
                 ICRMContext crmContext = CRMContext.GetContext(tenant);
                 TicketListQueryService listService = new TicketListQueryService(crmContext);
                 List<TicketList> myTickets = listService.GetTicketListByQuoteIdList(quoteId, tenant);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myTickets.Cast<object>().ToList());
 
                 foreach (TicketList item in myTickets)
@@ -587,29 +711,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-        public HttpResponseMessage GetDisconnectQuoteFromOpportunity(string quoteId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
-                QuoteService quoteService = new QuoteService(quotesContext, tenant);
-                QuotePM quotePM = quoteService.DisconnectQuoteFromOpportunity(quoteId);
-       
-                return Request.CreateResponse(HttpStatusCode.OK, quotePM);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
     }
 }
 

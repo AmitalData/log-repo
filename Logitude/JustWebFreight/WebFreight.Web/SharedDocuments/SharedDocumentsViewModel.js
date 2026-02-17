@@ -45,16 +45,10 @@
             type: 'GET',
             contentType: 'application/json',
 
-            success: function (result) {
-                let img = new Image();
-                img.onload = function () {
-                    var width = this.width > 200 ? "200px" : (this.width + "px");
+            success: function (result) {                
+                if (result != null) {
                     jQuery("#companyLogo").attr('src', result);
-                    jQuery("#companyLogo").css('width', width);
-                    jQuery("#companyLogoArea").css('width', width);
                 }
-                img.src = result;
-
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -81,8 +75,8 @@
                 if (shipmentPM) {
                     $.CurrentEntityPM = shipmentPM;
                     
-                    ko.applyBindings(BuildShipmentBackAreaViewModel(shipmentPM, "../"), document.getElementById("BackArea"));
-                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, "", "../"), document.getElementById("EntityHeaderArea"));
+                    ko.applyBindings(BuildShipmentBackAreaViewModel(shipmentPM, ""), document.getElementById("BackArea"));
+                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, ""), document.getElementById("EntityHeaderArea"));
 
                     $(".ShowOnDataControl").show();
                     $.SendContactActivity($.CurrentEmail, "Shipment", "Shipment Display", $.CurrentTenant, $.CurrentCardId);
@@ -133,6 +127,12 @@
                 if (result.length > 0) {
 
                     ko.applyBindings(BuildDocumentsTabPageViewModel(result, "", true), document.getElementById("DocumentsTabPageControl"));
+
+                    //$("#DocumentsListBox").kendoListView(
+                    //{
+                    //    dataSource: { data: result },
+                    //    template: kendo.template($("#DocumentListBoxItemDataTemplate").html())
+                    //});
                 }
 
                 else {

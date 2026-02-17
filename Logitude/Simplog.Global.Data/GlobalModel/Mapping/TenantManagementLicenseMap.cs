@@ -21,9 +21,6 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.PackageCode).HasColumnName("PackageCode");
             this.Property(t => t.NumberOfUsers).HasColumnName("NumberOfUsers");
-            this.Property(t => t.FreeUsers).HasColumnName("FreeUsers");
-            this.Property(t => t.Price).HasColumnName("Price");
-            this.Property(t => t.TotalPrice).HasColumnName("TotalPrice");
         }
     }
 }

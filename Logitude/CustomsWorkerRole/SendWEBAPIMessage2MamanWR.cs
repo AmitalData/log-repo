@@ -7,7 +7,7 @@ using Microsoft.ServiceBus.Messaging;
 //using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using System;
@@ -34,15 +34,6 @@ using System.Net.Http;
 using Logitude.Customs.BL.Messaging.Maman;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.CloseTables;
-using Logitude.Customs.BL.Messaging;
-using Logitude.Customs.BL.Messaging.ILOVS;
-using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
-using System.Web;
-using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
-using Logitude.Customs.Def.EntityPMs;
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.Data;
 
 namespace CustomsWorkerRole
 {
@@ -56,8 +47,6 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
     public class SendWEBAPIMessage2MamanWR
         : CustomsWorkerEntryPoint
     {
-        const int MaxRetries = 16;
-        
         QueueDescription _QueueDescription;
         QueueClient _QueueClient;
         public override void Run()
@@ -98,35 +87,19 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         private string _CommunicationLogId;
         private CommunicationLog _WaitingCommLog;
         private QueueResponse _ReceivedBrokeredMessage;
-        private string myClass;
-        public SendWEBAPIMessage2MamanWR()
-        {
 
-        }
         public override bool OnStart()
         {
             try
             {
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
-                DoneItemsInRange = new Dictionary<DateTime, int>();
-
-
-                this.myClass = this.GetType().Name;
-                int tenantConfig = SettingUtil.GetTenantDBFromConfig();
-                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
-                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
                 
-                if (CustomDbQueueService.SupportedRabbitMQList.Contains(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString()) && CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
-                {
-                    base.WorkerQueueType = WorkerQueueType.RabbitMQ;
-                }
-                else
-                {
-                    base.WorkerQueueType = WorkerQueueType.DB;
-                }
 
 
+                var myClass = this.GetType().Name;
+
+                
 
 
             }
@@ -155,22 +128,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 OnStart();
 
-                
-
-                switch (base.WorkerQueueType)
-                {
-
-                    case WorkerQueueType.RabbitMQ:
-                        WorkUntilPrcossesStop_RabbitMQ();
-                        break;
-                    case WorkerQueueType.DB:
-                    default:
-                        {
-                            WorkUntilQEmpty_Db();
-                        }
-                        break;
-                }
-                
+                WorkUntilQEmpty_Db();
 
 
             }
@@ -184,116 +142,53 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
         }
 
-        private void WorkUntilPrcossesStop_RabbitMQ()
-        {
-            var rabbitMQConsumerService = new RabbitMQConsumerService(myClass, SBQueueNames.SendWEBAPIMessage2MamanQ.ToString());
-            rabbitMQConsumerService.WorkUntilPrcossesStop_RabbitMQ(
-                (CustomDBQueueMessage customDBQueueMessage) =>
-                {
-                    _ReceivedBrokeredMessage= customDBQueueMessage.MyQueueResponse;
-
-                     _CommunicationLogId = customDBQueueMessage.Properties["CommunicationLogId"].ToString();
-                    int.TryParse(customDBQueueMessage.Properties["Tenant"].ToString(), out _Tenant);
-
-                    LogMessagingUtil.Instance
-                        .AppendLine("SendWEBAPIMessage2MamanWR:ProccessReceivedMessage()")
-                        .AppendLine("QUEUEMessageId:" + customDBQueueMessage.MessageId)
-                        .AppendLine("RetryNumber:" + customDBQueueMessage.Retries)
-                        .AppendLine("CommunicationLogId:" + _CommunicationLogId)
-                        .AppendLine(",Tenant" + _Tenant);
-
-                    //ProccessReceivedMessage();
-
-                    _Context = CommonDataContext.GetContext(_Tenant);
-                    _CommunicationLogRep = new CommunicationLogRepository(_Context);
-
-
-                    _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
-                    if (_WaitingCommLog == null)
-                    {
-                        var myEx = new Exception("GetSingleCommunicationLog(_CommunicationLogId:" + _CommunicationLogId + " , _Tenant:" + _Tenant.ToString() + ") == null");
-                        ExceptionHandler.HandleException(myEx, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
-                        return false;
-                    }
-
-
-                    PostWebAPIAnalyzeAndSaveCommDone(_CommunicationLogRep, _WaitingCommLog);
-
-                    return true;
-                },
-                base.LogDoneItemInMemory
-                );
-        }
-
         private void WorkUntilQEmpty_Db()
         {
-            while (!WorkerRoleServiceLocator.PleaseShutDown)
+            while (true)
             {
-                
-                try
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    _IQueueService = new DbQueueService();
+                    _IQueueService.InitializeQueue(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString(), 0);
+
+                    _ReceivedBrokeredMessage = _IQueueService.Receive();
+
+                    if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
                     {
-                        _IQueueService = new DbQueueService();
-                        _IQueueService.InitializeQueue(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString(), SettingUtil.GetTenantDBFromConfig());
-
-                        using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
-                        {
-                            _ReceivedBrokeredMessage = _IQueueService.Receive(nextRunDelayInSec: CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
-                            scopeRecive.Complete();
-                        }
-
-                        if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
-                        {
-                            QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "Sleep...");
-                            //Thread.Sleep(TimeSpan.FromSeconds(5));
-                            //Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
-                            Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
-                            break;
-                        }
-                        if (_ReceivedBrokeredMessage.RetryNumber > MaxRetries)
-                        {
-                            if (true)
-                            {
-                                _IQueueService.Complete();
-                            }
-                            else
-                            {
-                                _IQueueService.CompleteAsFailed();
-                            }                     
-                        }
-                        InitParams();
-
-                        ProccessReceivedMessage();
-                        scope.Complete();
+                        //Thread.Sleep(TimeSpan.FromSeconds(5));
+                        Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                        break;
                     }
-                }
-                finally
-                {
-                    PerformanceM.SleepMSAfterEachQueuePeek();
+
+                    
+                    ProccessReceivedMessage();
+                    scope.Complete();
                 }
             }
         }
 
 
 
-        
+
         public void ProccessReceivedMessage()
         {
-            //InitParams();
+
+            LogMessagingUtil.Instance.Clear();
+
+            _CommunicationLogId = _ReceivedBrokeredMessage.MessageValues["CommunicationLogId"].ToString();
+            int.TryParse(_ReceivedBrokeredMessage.MessageValues["Tenant"].ToString(), out _Tenant);
 
             LogMessagingUtil.Instance
                 .AppendLine("ProccessReceivedMessage()")
-                .AppendLine("QUEUEMessageId:" + _ReceivedBrokeredMessage.MessageId)
+                .AppendLine("QUEUEMessageId:"+_ReceivedBrokeredMessage.MessageId)
                 .AppendLine("RetryNumber:" + _ReceivedBrokeredMessage.RetryNumber)
-                .AppendLine("CommunicationLogId:" + _CommunicationLogId)
-                .AppendLine(",Tenant" + _Tenant);
-            QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), $"CommLog:{_CommunicationLogId},QId:{_ReceivedBrokeredMessage.MessageId}");
+                .AppendLine("CommunicationLogId:"+_CommunicationLogId)
+                .AppendLine(",Tenant"+_Tenant);
 
             _Context = CommonDataContext.GetContext(_Tenant);
             _CommunicationLogRep = new CommunicationLogRepository(_Context);
-
-
+            
+            
             _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
             if (_WaitingCommLog == null)
             {
@@ -304,80 +199,53 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 return;
             }
 
-
-
+            
+            
             try
             {
-                SentWAPIComm();
+                if (_ReceivedBrokeredMessage.RetryNumber < 5)
+                {
 
+                    LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
+                    
+                    PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception
+
+                    _IQueueService.Complete();
+                    this.LogDoneItemInMemory();
+                }
+                else
+                {
+                    LogMessagingUtil.Instance.AppendLine("RetryNumber >= 5>>> Failed ");
+                    _WaitingCommLog.CommunicationStatusTypeCode = "F";
+                    _IQueueService.Complete();
+                }
+                LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
+                _CommunicationLogRep.Update(_WaitingCommLog);
+                _CommunicationLogRep.SubmitChanges();
+                                
+
+                
             }
             catch (Exception exc)
             {
-
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(exc);
-                //ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
+                ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
                 _WaitingCommLog.Retries++;
-                if (_WaitingCommLog.Retries > MaxRetries)
-                {
-                    _WaitingCommLog.CommunicationStatusTypeCode = "F";
-                }
-                _WaitingCommLog.LastStatusDate = DateTime.Now;
-                _WaitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
 
-                var s = $" Retries:{_WaitingCommLog.Retries}  ProccessReceivedMessage()Exception:" + exc.Message;
-                s+= exc.StackTrace.ToString();
+                _WaitingCommLog.CommunicationStatusTypeCode = "F";
+
+                var s = "ProccessReceivedMessage()Exception:" + exc.Message;
                 _WaitingCommLog.ExceptionMessage = s.Substring(0, Math.Min(7999, s.Length));
                 _CommunicationLogRep.Update(_WaitingCommLog);
                 _CommunicationLogRep.SubmitChanges();
-                //_IQueueService.Delay(TimeSpan.FromMinutes(1));
+                _IQueueService.Delay(TimeSpan.FromMinutes(1));
                 //throw;
 
             }
         }
 
-        private void InitParams()
-        {
-            LogMessagingUtil.Instance.Clear();
+       
 
-            _CommunicationLogId = _ReceivedBrokeredMessage.MessageValues["CommunicationLogId"].ToString();
-            int.TryParse(_ReceivedBrokeredMessage.MessageValues["Tenant"].ToString(), out _Tenant);
-
-            LogMessagingUtil.Instance
-                .AppendLine("ProccessReceivedMessage()")
-                .AppendLine("QUEUEMessageId:" + _ReceivedBrokeredMessage.MessageId)
-                .AppendLine("RetryNumber:" + _ReceivedBrokeredMessage.RetryNumber)
-                .AppendLine("CommunicationLogId:" + _CommunicationLogId)
-                .AppendLine(",Tenant" + _Tenant);
-        }
-        
-        private void SentWAPIComm(bool forceRetryFromTester=false)
-        {
-            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < MaxRetries)
-            {
-                LastActivity = DateTime.UtcNow;
-                LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
-
-                PostWebAPIAnalyzeAndSaveCommDone(_CommunicationLogRep, _WaitingCommLog);//if failed throw exception
-                if (!forceRetryFromTester)
-                {
-                    _IQueueService.Complete();
-                }
-                
-                this.LogDoneItemInMemory();
-            }
-            else
-            {
-                LogMessagingUtil.Instance.AppendLine($"RetryNumber >= {MaxRetries}>>> Failed ");
-                _WaitingCommLog.CommunicationStatusTypeCode = "F";
-                _IQueueService.Complete();
-            }
-            LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
-            _CommunicationLogRep.Update(_WaitingCommLog);
-            _CommunicationLogRep.SubmitChanges();
-        }
-
-
-        private static bool PostWebAPIAnalyzeAndSaveCommDone(CommunicationLogRepository _CommunicationLogRep,CommunicationLog _WaitingCommLog)
+        private bool PostWebAPIAnalyzeAndSaveCommDone( )
         {
             try
             {
@@ -410,38 +278,17 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     throw new Exception("string.IsNullOrEmpty(waitingCommLog.LogSettings)");
                 }
                 var dataJson = System.Text.Encoding.UTF8.GetString(filedata.ToArray());
-                var courier2MamanCommSettings = JsonConvert.DeserializeObject<CourierWEBAPICommSettings>(_WaitingCommLog.LogSettings);
+                var courier2MamanCommSettings = JsonConvert.DeserializeObject<Courier2MamanCommSettings>(_WaitingCommLog.LogSettings);
                 if (courier2MamanCommSettings == null)
                 {
                     throw new Exception("(courierHawbMamanCommunicationLogSettings == null)");
                 }
                 LogMessagingUtil.Instance.AppendLine("courierHawbMamanCommunication DB is valid");
                 GWMessageECTHRData responeGWMessageECTHRData = null;
-                LogMessagingUtil.Instance.AppendLine($"Post {courier2MamanCommSettings.URIMethod}");
+                LogMessagingUtil.Instance.AppendLine($"Post {courier2MamanCommSettings.URIBaldarCreateECTHRMessgae}");
                 string webAPIResultString = null;
-                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-                var @intrface = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == courier2MamanCommSettings.MessageCode);
-
-                switch (@intrface.WEBAPICredentialType)
-                {
-                 
-                    case CourierWEBAPICredentialType.Bearer:
-                        {
-                            var service = new WebAPI2BearerMamanMessage(courier2MamanCommSettings);
-                            webAPIResultString = service.PostIt(dataJson);
-                        }
-                        break;
-                    case CourierWEBAPICredentialType.NetworkCredential:
-                        {
-                            var service = new WebAPINetworkCredentialMessage(courier2MamanCommSettings);
-                            webAPIResultString = service.PostIt(dataJson);
-                        }
-                        break;
-                    default:
-                        throw new Exception("@PostWebAPIAnalyzeAndSaveCommDone():intrface.WEBAPICredentialType IS UNKNOWN");
-                        break;
-                }
-                
+                var service = new WebAPI2BearerMamanMessage(courier2MamanCommSettings);
+                webAPIResultString = service.PostIt(dataJson);
                 LogMessagingUtil.Instance.AppendLine("webAPIResultString:" + webAPIResultString);
 
 
@@ -449,22 +296,29 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 //myWebAPICourierHawbMamanService.AnalyzeResponse(courier2MamanCommSettings, responeGWMessageECTHRData);
 
                 IWebAPIMessage2MamanAnalyzer analyzer = null;
-                
-
-
-                
-                if (!string.IsNullOrWhiteSpace(@intrface.ResponseCode))
+                switch (courier2MamanCommSettings.MessageCode)
                 {
-                    courier2MamanCommSettings.RqstCommLogID = _WaitingCommLog.Id;
-                    analyzer = new SetInAnalyzeQResponseService();
+                    case CustomsPartnerFtpDetails.InterfaceName_ECTHR:
+                        {
+                            analyzer = new CourierGWMessageECTHRDataMamanResponseService();
+                        }
+                        break;
+                    case CustomsPartnerFtpDetails.InterfaceName_ECSPCL:
+                        {
+                            analyzer = new CourierGWMessageECSpclMamanResponseService();
+                        }
+                        break;
+                    default:
+                        throw new Exception("Please register  ");
+                        break;
                 }
-                else
-                {
-                    throw new Exception("All send web api must have @intrface.ResponseCode ");
-                    ///analyzer = customsPartnerFtpDetails.GetResponseService(courier2MamanCommSettings.MessageCode);
-                }
+
 
                 analyzer.AnalyzeResponse(courier2MamanCommSettings, webAPIResultString);
+                
+
+                
+
 
 
 
@@ -480,27 +334,17 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
             catch (Exception e)
             {
-
+               
 
                 throw;
             }
             return true;
         }
 
-        public void DebugStep(string communicationLogId, string @interface, int tenant)
-        {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
-                _Tenant = tenant;
-                _CommunicationLogId = communicationLogId;
-                _Context = CommonDataContext.GetContext(_Tenant);
-                _CommunicationLogRep = new CommunicationLogRepository(_Context);
+        
 
-                _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
-                SentWAPIComm(true);
-                scope.Complete();
-            }
-        }
+      
+
     }
 
     public class WebAPI2BearerMamanMessage
@@ -509,175 +353,11 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         const string BEARER_TOKEN = "Bearer";
         const string agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
         //StringBuilder _StringBuilder = new StringBuilder();
-        private CourierWEBAPICommSettings _CourierHawbMamanCommunicationLogSettings;
+        private Courier2MamanCommSettings _CourierHawbMamanCommunicationLogSettings;
 
-        public WebAPI2BearerMamanMessage(CourierWEBAPICommSettings courierHawbMamanCommunicationLogSettings)
+        public WebAPI2BearerMamanMessage(Courier2MamanCommSettings courierHawbMamanCommunicationLogSettings)
         {
             this._CourierHawbMamanCommunicationLogSettings = courierHawbMamanCommunicationLogSettings;
-        }
-
-        public string PostIt(string dataJson)
-        {
-            string myResultString = "";
-            int retryCount = 2;
-            bool isSucceeded = false;
-            try
-            {
-                for (int attempt = 0; attempt < retryCount; attempt++)
-                {
-                    using (var client = new HttpClient())
-                    {
-                        try
-                        {
-                            client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes);
-
-                            var tokenManager = TokenManager.GetInstance(_CourierHawbMamanCommunicationLogSettings);
-                            var token = tokenManager.Token;
-
-                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Attempt {attempt + 1}: Token: {token.AccessToken}");
-
-                            // Prepare the request
-                            client.DefaultRequestHeaders.Add("User-Agent", agent);
-                            var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                            client.DefaultRequestHeaders.Add("Authorization", $"{token.Token_Type} {token.AccessToken}");
-
-                            LogMessagingUtil.Instance.AppendLine("URIBaldarCreateECTHRMessgae.PostAsync....");
-                            var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIMethod, content);
-                            Wait4Finsh(task, 3);
-
-                            var response = task.Result;
-
-                            if (response.IsSuccessStatusCode)
-                            {
-                                // If the request succeeds, return the result
-                                myResultString = response.Content.ReadAsStringAsync().Result;
-                                LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString}");
-                                isSucceeded = true;
-								return myResultString;  // Success, return the response
-                            }
-                            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-							{
-								NetCommonHelper.Logger.DevLog.Instance.WriteTrace("401 Unauthorized detected. Refreshing token...");
-                                tokenManager.RefreshToken();
-                            }
-                            else
-                            {
-								NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Request failed with status code: {response.StatusCode}");
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-							NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Attempt {attempt + 1} failed with exception: {ex.Message}");
-                            if (attempt == retryCount - 1)
-                            {
-                                throw new Exception($"An error occurred on the last retry: {ex.Message}");
-                            }
-                        }
-                    }
-                }
-
-				// After all attempts fail, throw an exception
-				throw new Exception("All retry attempts failed.");
-            }
-            catch (Exception ex)
-            {
-				// Log the basic exception message
-				NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"An error occurred: {ex.Message}");
-                if (ex.InnerException != null)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"Inner Exception: {ex.InnerException.Message}");
-                }
-                LogMessagingUtil.Instance.AppendLine($"An error occurred: {ex.Message}");
-                throw;
-            }
-            finally
-			{
-                if(!isSucceeded)
-				UpdateStatusDeclarationMamanSpecialActions(dataJson);
-			}
-        }
-		private void UpdateStatusDeclarationMamanSpecialActions(string dataJson)
-        {
-            try { 
-			dynamic jsonObject = JsonConvert.DeserializeObject(dataJson);
-            if (jsonObject?.SpSpclCode != "2")  return;
-			var declarationId = _CourierHawbMamanCommunicationLogSettings.DeclarationId;
-			var tenant = _CourierHawbMamanCommunicationLogSettings.Tenant;
-
-			var context = CustomContext.GetContext(tenant);
-			DeclarationMamanSpecialActionUpdateService service = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, IContext>(), tenant);
-			DeclarationMamanSpecialActionQueryService declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(tenant);
-            var declarationMamanSpecialActionPM = declarationMamanSpecialActionQueryService.GetSingle(declarationId, "2", false, false);
-                if (declarationMamanSpecialActionPM != null)
-                {
-                    declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = "2";
-                    declarationMamanSpecialActionPM.ChangeSetOp = ChangeSetOperation.Update;
-                    service.Update(declarationMamanSpecialActionPM, true);
-                }
-			}
-            catch(Exception ex)
-            {
-				NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"UpdateStatusDeclarationMamanSpecialActions: {ex.Message}");
-			}
-
-		}
-
-
-        private static void Wait4Finsh(Task
-          task, int TimeOutInMin)
-        {
-            try
-            {
-                var ts = Stopwatch.StartNew();
-                //task.Start();
-                while (ts.Elapsed < TimeSpan.FromMinutes(TimeOutInMin))
-                {
-                    task.Wait(TimeSpan.FromSeconds(1));
-                    if (task.IsCompleted)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-                if (!task.IsCompleted)
-                {
-                    task.Dispose();
-                    throw new Exception($"Timeout SendWEBAPIMessage2MamanWR {TimeOutInMin} Min ");
-
-                }
-            }
-            catch (AggregateException ae)
-            {
-                throw new Exception($"Exception(s) occurred during task execution: {string.Join(", ", ae.InnerExceptions.Select(inner => inner.Message))}");
-                throw;
-            }
-        }
-    }
-
-
-    class MyWebClient : WebClient
-    {
-        public const int TimeOutFromMinutes = 3;
-            
-
-        protected override WebRequest GetWebRequest(Uri uri)
-        {
-            WebRequest w = base.GetWebRequest(uri);
-            w.Timeout = (int)TimeSpan.FromMinutes(TimeOutFromMinutes).TotalMilliseconds;
-            return w;
-        }
-    }
-
-    public class WebAPINetworkCredentialMessage
-    {
-        private CourierWEBAPICommSettings _CourierCommunicationLogSettings;
-
-        public WebAPINetworkCredentialMessage(CourierWEBAPICommSettings courierHawbMamanCommunicationLogSettings)
-        {
-            this._CourierCommunicationLogSettings = courierHawbMamanCommunicationLogSettings;
         }
 
         public string PostIt(string dataJson)
@@ -686,42 +366,54 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             string access_token = "";
             string token_type = "";
-
+            
             try
             {
 
 
-               
+                using (var client = new HttpClient())
                 {
-                    //שם המשתמש: ovrs\crmamital
-                    //סיסמה: Amital123456
+                    //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
 
-                    var myCredentials = new NetworkCredential("", "", "");
-                    myCredentials.UserName = _CourierCommunicationLogSettings.username;//  @"ovrs\crmamital";
-                    myCredentials.Password = _CourierCommunicationLogSettings.password;// "Amital123456";
+                    var ADD = "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
+                    client.DefaultRequestHeaders.Add("User-Agent", agent);
 
+                    //var tokenUri = new Uri(new Uri(host), relativeUriToken);
+                    //webApiURI = @"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
+                    string tokenReq = "grant_type=password&username=f_moshe&Password=******";
+                    tokenReq = $"grant_type=password&username={_CourierHawbMamanCommunicationLogSettings.username}&Password={_CourierHawbMamanCommunicationLogSettings.password}";
+                    var content = new StringContent(tokenReq, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    LogMessagingUtil.Instance.AppendLine($"PostAsync({_CourierHawbMamanCommunicationLogSettings.URIToken}, {content})");
+                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIToken, content);
+                    Wait4Finsh(task, 1);
+                    myResultString = task.Result.Content.ReadAsStringAsync().Result;
+                    //{"access_token":"zkKDt-XnqqM5uoyDwrPxDPHb_vM5hplsUKr7sT5GA2w8Vpsl_HT5eBidUriiyw3Gn-Mne0NIq2LQO7MMT525GdrFutDzIQpRKR6c7oz2GbdSdGdEY3S3nfP0W7svtmShEeUx23SbW8ysLkyAnFP-IdQhvMs2lzxzHIDrnDqm_agwq54x9UiiDa5-9ZkEWBUrN83U4B5qddiYTU0whODGvrxEE9wyrQKoygG3Gi48gwv2_TI4H9yrd2Uys9l_jBivOsRRm1oXtyGsyIq9DwDn7pmcoxUjz-yNwm_hp18Y1qi4aXk1Z8IjeKRQl_8FMUg-","token_type":"bearer","expires_in":35999,"UserName":"F_unitedf","role":"General",".issued":"Mon, 12 Nov 2018 14:48:43 GMT",".expires":"Tue, 13 Nov 2018 00:48:43 GMT"}
+                    LogMessagingUtil.Instance.AppendLine($"PostAsyncResult ({myResultString})");
+                    dynamic d = JsonConvert.DeserializeObject(myResultString);
+                    access_token = d.access_token;
+                    token_type = d.token_type;
+                    //token_type=bearer
+                }
 
-                    
-                    using (var client = new MyWebClient())
-                    {
-                        
-                        client.UseDefaultCredentials = false;
-                        client.Credentials = myCredentials;
-                        client.Encoding = System.Text.Encoding.UTF8;
+                using (var client = new HttpClient())
+                {
+                    //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
 
-                        var dataString = dataJson;
-                        //client.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=UTF-8");
-                        client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                    //string webApiURI = host;//URI + "APIAuthentication";
+                    //webApiURI = "https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
+                    client.DefaultRequestHeaders.Add("User-Agent", agent);
+                    var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
+                    //Authorization: <type> <credentials>
 
-                        myResultString =
-                        client.UploadString(
-                            new Uri(_CourierCommunicationLogSettings.URIMethod /*@"http://81.218.57.34:9094/api/Courier/UpdateHawbStatus"*/), 
-                            "POST", 
-                            dataString);
-
-                        Console.WriteLine("success");
-                    }
-
+                    string credentials = "";
+                    //Authorization: Bearer O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY
+                    //credentials = "O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY";
+                    client.DefaultRequestHeaders.Add("Authorization", $"{token_type} {access_token}");
+                    LogMessagingUtil.Instance.AppendLine($"URIBaldarCreateECTHRMessgae.PostAsync....");
+                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIBaldarCreateECTHRMessgae, content);
+                    Wait4Finsh(task, 1);
+                    myResultString = task.Result.Content.ReadAsStringAsync().Result;
+                    LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString }");
 
                 }
 
@@ -735,167 +427,32 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 throw;
             }
         }
-       
-        public static void OVSUpdateHawbStatusTester()
+        private static void Wait4Finsh(Task
+          task, int TimeOutInMin)
         {
-            //שם המשתמש: ovrs\crmamital
-            //סיסמה: Amital123456
-
-            var myCredentials = new NetworkCredential("", "", "");
-            myCredentials.UserName = @"ovrs\crmamital";
-            myCredentials.Password = "Amital123456";
-
-
-            var postData = @"{""CourierCompanyVat"":""514193408"",""CourierHawbNumber"":""99994668068"",""CourierHawbDate"":""2019-02-12T00: 00:00"",""MawbPrefix"":""114"",""Mawb"":15381173,""Hawb"":""1514112"",""FlightNumber"":316,""FltDate"":null,""EstimatedArrivalDate"":""2018-12-24T20:00:00"",""PackageQuantity"":1,""Weight"":0.30,""GoodValueInUSD"":12.0,""Description"":""IBOX 2331"",""ImporterName"":""Kobi Cohen"",""ImporterAddress"":""Dekel 27 2nd avenu 13 ddk Tel Aviv ISRAEL"",""DistributionLine"":"""",""DistributionCompanyVat"":"""",""DistributorHP"":null,""DistributorName"":null,""DeclarationNumber"":""19041052508346"",""CustomsSuspention"":"""",""Preclearence"":false}";
-
-            using (var client = new MyWebClient())
+            var ts = Stopwatch.StartNew();
+            //task.Start();
+            while (ts.Elapsed < TimeSpan.FromMinutes(TimeOutInMin))
             {
-                client.UseDefaultCredentials = false;
-                client.Credentials = myCredentials;
-                var url = //"http://localhost:93/Api/Test";
-                    @"http://81.218.57.34:9094/api/Courier/SpecialActionReporting";
-                //var json = client.DownloadString(url);
-
-                var dataString = postData;//JsonConvert.SerializeObject(vm);
-                client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.UploadString(new Uri(@"http://81.218.57.34:9094/api/Courier/UpdateHawbStatus"), "POST", dataString);
-
-                Console.WriteLine("success");
+                task.Wait(TimeSpan.FromSeconds(1));
+                if (task.IsCompleted)
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
             }
+            if (!task.IsCompleted)
+            {
+                task.Dispose();
+                throw new Exception("Timeout SendWEBAPIMessage2MamanWR 2Min ");
 
-
+            }
         }
 
-        public static void OVSUpdateHawbStatusTesterNotWork()
-        {
-            //שם המשתמש: ovrs\crmamital
-            //סיסמה: Amital123456
-
-            var myCredentials = new NetworkCredential("", "", "");
-            myCredentials.UserName = @"ovrs\crmamital";
-            myCredentials.Password = "Amital123456";
-            //using (var client = new MyWebClient())
-            //{
-            //    client.UseDefaultCredentials = false;
-            //    client.Credentials = myCredentials;
-            //    var url = //"http://localhost:93/Api/Test";
-            //        @"http://81.218.57.34:9094/api/Courier/SpecialActionReporting";
-            //    var json = client.DownloadString(url);
-            //    Console.WriteLine("success");
-            //}
-
-
-
-
-
-
-
-            WebRequest request = WebRequest.Create(@"http://81.218.57.34:9094/api/Courier/UpdateHawbStatus");
-
-            request.Method = "POST";
-            request.UseDefaultCredentials = false;
-            request.PreAuthenticate = true;
-            request.Credentials = myCredentials;
-
-            // Create POST data and convert it to a byte array.
-            var postData = @"{""CourierCompanyVat"":""514193408"",""CourierHawbNumber"":""99376529290"",""CourierHawbDate"":""2019 - 02 - 12T00: 00:00"",""MawbPrefix"":""114"",""Mawb"":15381173,""Hawb"":""1514112"",""FlightNumber"":316,""FltDate"":null,""EstimatedArrivalDate"":""2018 - 12 - 24T20: 00:00"",""PackageQuantity"":1,""Weight"":0.30,""GoodValueInUSD"":12.0,""Description"":""IBOX 2331"",""ImporterName"":""Kobi Cohen"",""ImporterAddress"":""Dekel 27 2nd avenu 13 ddk Tel Aviv ISRAEL"",""DistributionLine"":"""",""DistributionCompanyVat"":"""",""DistributorHP"":null,""DistributorName"":null,""DeclarationNumber"":""19041052508346"",""CustomsSuspention"":"""",""Preclearence"":false}";
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-            // Set the ContentType property of the WebRequest.
-            request.ContentType = "application/x-www-form-urlencoded";
-            // Set the ContentLength property of the WebRequest.
-            request.ContentLength = byteArray.Length;
-            // Get the request stream.
-            Stream dataStream = request.GetRequestStream();
-            // Write the data to the request stream.
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            // Close the Stream object.
-            dataStream.Close();
-            // Get the response.
-            WebResponse response = request.GetResponse();
-            // Display the status.
-            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            // Get the stream containing content returned by the server.
-            dataStream = response.GetResponseStream();
-            // Open the stream using a StreamReader for easy access.
-            StreamReader reader = new StreamReader(dataStream);
-            // Read the content.
-            string responseFromServer = reader.ReadToEnd();
-            // Display the content.
-            //Console.WriteLine(responseFromServer);
-            // Clean up the streams.
-            reader.Close();
-            dataStream.Close();
-            response.Close();
-
-
-
-        }
-
-        public static void OVSSpecialActionReportingTester()
-        {
-            //שם המשתמש: ovrs\crmamital
-            //סיסמה: Amital123456
-
-            var myCredentials = new NetworkCredential("", "", "");
-            myCredentials.UserName = @"ovrs\crmamital";
-            myCredentials.Password = "Amital123456";
-            //using (var client = new MyWebClient())
-            //{
-            //    client.UseDefaultCredentials = false;
-            //    client.Credentials = myCredentials;
-            //    var url = //"http://localhost:93/Api/Test";
-            //        @"http://81.218.57.34:9094/api/Courier/SpecialActionReporting";
-            //    var json = client.DownloadString(url);
-            //    Console.WriteLine("success");
-            //}
-
-
-
-
-
-
-
-            WebRequest request = WebRequest.Create(@"http://81.218.57.34:9094/api/Courier/SpecialActionReporting");
-
-            request.Method = "POST";
-            request.UseDefaultCredentials = false;
-            request.PreAuthenticate = true;
-            request.Credentials = myCredentials;
-
-            // Create POST data and convert it to a byte array.
-            var postData = @"{""MessageType"":""C"",""CourierCompanyVat"":""61340333"",""CourierHawbNumber"":""514193408"",""CourierHawbDate"":""2019 - 01 - 31T00: 00:00"",""SpecialActionCode"":""2"",""LabelText1"":"""",""LabelText2"":"""",""LabelText3"":"""",""LabelText4"":"""",""LabelText5"":""""}";
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-            // Set the ContentType property of the WebRequest.
-            request.ContentType = "application/x-www-form-urlencoded";
-            // Set the ContentLength property of the WebRequest.
-            request.ContentLength = byteArray.Length;
-            // Get the request stream.
-            Stream dataStream = request.GetRequestStream();
-            // Write the data to the request stream.
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            // Close the Stream object.
-            dataStream.Close();
-            // Get the response.
-            WebResponse response = request.GetResponse();
-            // Display the status.
-            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            // Get the stream containing content returned by the server.
-            dataStream = response.GetResponseStream();
-            // Open the stream using a StreamReader for easy access.
-            StreamReader reader = new StreamReader(dataStream);
-            // Read the content.
-            string responseFromServer = reader.ReadToEnd();
-            // Display the content.
-            //Console.WriteLine(responseFromServer);
-            // Clean up the streams.
-            reader.Close();
-            dataStream.Close();
-            response.Close();
-
-
-
-        }
-
+        
     }
 
 }

@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, OnInit, Input, ViewEncapsulation} from '@angular/core'
+import {Component, Output, EventEmitter, OnInit, AfterViewInit, ViewEncapsulation} from '@angular/core'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {DashBoardFilters} from '../../../Infrastructure/DataContracts/Dashboard/DashboardFilters';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -21,12 +21,14 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 declare var  makeAmBarChart, makePieChart;
 
 @Component({
-    selector: 'ActivityStatusDetails',
+    selector: 'ActivityStatusDetailsComponent',
+    moduleId: module.id,
     templateUrl: './ActivityStatusDetailsComponent.html',
     encapsulation: ViewEncapsulation.None,
+
 })
 
-export class ActivityStatusDetailsComponent extends BaseComponent implements OnInit {
+export class ActivityStatusDetailsComponent extends BaseComponent implements OnInit  {
 
     private CurrentDirectionAndTransportModeChart: any;
     private CurrentCustomersChart: any;
@@ -34,8 +36,8 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     public CountriesDashboardLegendId: string;
     public CustomersDashboardLegendId: string;
     public DirectionAndtransportModeLegendId: string;
+
     private CurrentSession = SessionLocator.SelectedSession;
-    @Output() BackButtonClickedEvent = new EventEmitter();
     constructor() {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -43,22 +45,13 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         this.ShipmentsQuantityByTimeDashboardId = this.ShipmentsQuantityByTimeDashboardId + this.CurrentSession.GetChartId();
         this.CountriesDashboardId = this.CountriesDashboardId + this.CurrentSession.GetChartId();
         this.CustomersDashboardId = this.CustomersDashboardId + this.CurrentSession.GetChartId();
-        this.CountriesDashboardLegendId = "CountriesDashboardLegendId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");
-        this.CustomersDashboardLegendId = "CustomersDashboardLegendId_" + this.CurrentSession.GetNewId("CustomersDashboardLegendId");
+        this.CountriesDashboardLegendId = "CountriesDashboardLegendId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");        
+        this.CustomersDashboardLegendId = "CustomersDashboardLegendId_" + this.CurrentSession.GetNewId("CustomersDashboardLegendId");        
         this.DirectionAndtransportModeLegendId = "DirectionAndtransportModeLegendId_" + this.CurrentSession.GetNewId("DirectionAndtransportModeLegendId");
     }
 
-    _show: boolean = false;
-    @Input('Show') set Show(value) {
-        if (value && !this._show) {
-            this.FillFilters();
-        }
-        this._show = value;
 
-    }
-    get Show() {
-        return this._show;
-    }
+   
 
     public TenantPM: TenantPM;
     FilterList: DashBoardFilters[] = [];
@@ -69,30 +62,32 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     public CustomersDashboardId: string = "CustomersDashboardId_";
     public DataContext: ActivityStatusDetailsComponent = this;
     public FinalShipmentData: any;
-    
-    public topCountries: any = 10;
+    public topCustomers: any=10;
+    public topCountries: any=10;
+
     public get TopCountries() { return this.topCountries; }
     public set TopCountries(value: any) { this.topCountries = value; }
 
-    public topCustomers: any = 10;
     public get TopCustomers() { return this.topCustomers; }
     public set TopCustomers(value: any) {
-        this.topCustomers = value;
+    this.topCustomers = value;
+        
     }
 
     public includeOthersCountries: any = true;
+
     public get IncludeOthersCountries() { return this.includeOthersCountries; }
     public set IncludeOthersCountries(value: boolean) {
-        this.includeOthersCountries = value;
-        this.LoadShipmentsByTop10Countries();
+    this.includeOthersCountries = value;
+    this.LoadShipmentsByTop10Countries();
     }
-
     public includeOthersCustomers: any = false;
+
     public get IncludeOthersCustomers() { return this.includeOthersCustomers; }
     public set IncludeOthersCustomers(value: any) {
-        this.includeOthersCustomers = value;
+    this.includeOthersCustomers = value;
 
-        this.LoadCustomers();
+    this.LoadCustomers();
     }
 
     public FinalDirectionAndTransportData: any;
@@ -102,10 +97,10 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     public NoShipmentsQuantityByTime: boolean = false;
     public NoDirectionAndTransportMode: boolean = false;
     public NoCountries: boolean = false;
-    public NoCustomers: boolean = false;
+    public NoCustomers: boolean = false;    
     public barChartData: any[] = [{
         data: [], label: '', scaleShowVerticalLines: false,
-    }];
+}];
 
     private selectedDirectionFilterShipment: string = "All";
     get SelectedDirectionFilterShipment() { return this.selectedDirectionFilterShipment; }
@@ -120,7 +115,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             }
         }
     }
-
+    
     private selectedTransportFilterShipment: string = "All";
     get SelectedTransportFilterShipment() { return this.selectedTransportFilterShipment; }
     set SelectedTransportFilterShipment(newValue: string) {
@@ -184,7 +179,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.SelectedDirectionFilterShipment, this.SelectedTransportFilterShipment).subscribe((myResult: any) => {
+                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.SelectedDirectionFilterShipment, this.SelectedTransportFilterShipment).subscribe(myResult => {
                     this.FinalShipmentData = myResult;
                     this.CommonFiltersShipment();
                 });
@@ -192,40 +187,40 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         }
         else {
             var days = this.ComputeDays();
-            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id).subscribe((myResult: any) => {
+            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id).subscribe(myResult => {
                 this.FinalShipmentData = myResult;
                 this.CommonFiltersShipment();
-            });
-        }
+            });          
+        }        
     }
 
     LoadDirectionAndTransportmode() {
         var service = new DashboardDomainService();
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetShipmentByDirectionAndTransmodeCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate).subscribe((myResult: any) => {
+                service.GetShipmentByDirectionAndTransmodeCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate).subscribe(myResult => {
                     this.FinalDirectionAndTransportData = myResult;
                     this.CommonFiltersDirectionAndTransportMode();
                 });
-
+              
             }
         }
         else {
             var days = this.ComputeDays();
 
-            service.GetShipmentByDirectionAndTransmode(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, null).subscribe((myResult: any) => {
+            service.GetShipmentByDirectionAndTransmode(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, null).subscribe(myResult => {
                 this.FinalDirectionAndTransportData = myResult;
                 this.CommonFiltersDirectionAndTransportMode();
-            });
+            });           
         }
     }
 
     LoadShipmentsByTop10Countries() {
         var service = new DashboardDomainService();
         if (this.SelectedTimeRangeItem.Index == "-1") {
-            if (this.ActivityFromDate != null && this.ActivityToDate != null) {
+            if (this.ActivityFromDate != null && this.ActivityToDate != null) {                        
                 var dtf: DirectionTransportFilter = this.GetCurrentDirectionTransmodeFilterItemCountries();
-                service.GetShipmentsByTop10CountriesDashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, "", dtf.FilterDirectionID, dtf.FilterTransportID).subscribe((myResult: any) => {
+                service.GetShipmentsByTop10CountriesDashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, "", dtf.FilterDirectionID, dtf.FilterTransportID).subscribe(myResult => {
                     this.FinalCountriesData = myResult;
                     var countriesFilterdList: List<GroupByClass> = FunctionsCRM.getCountriesFilterdList(this.FinalCountriesData, parseInt(this.SelectedShowItem.Index), this.TopCountries, this.IncludeOthersCountries);
                     this.fillCountriesPie(countriesFilterdList);
@@ -233,16 +228,16 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             }
         }
         else {
-            this.CommonFiltersCountries();
+            this.CommonFiltersCountries();        
         }
     }
 
 
     LoadCustomers() {
         if (this.SelectedTimeRangeItem.Index == "-1") {
-            if (this.ActivityFromDate != null && this.ActivityToDate != null) {
+            if (this.ActivityFromDate != null && this.ActivityToDate != null) {                              
                 var service = new DashboardDomainService();
-                service.GetTop10DashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe((myResult: any) => {
+                service.GetTop10DashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe(myResult => {
                     this.FinalCustomersData = myResult;
                     this.FillCustomersPie();
                 });
@@ -254,20 +249,20 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
     }
 
-    LoadQuires() {
+    LoadQuires() {        
         this.LoadActivityStatus();
         this.LoadDirectionAndTransportmode();
         this.LoadShipmentsByTop10Countries();
         this.LoadCustomers();
 
-
+      
     }
 
 
     CommonFiltersCustomers() {
         var service = new DashboardDomainService();
         var days = this.ComputeDays();
-        service.GetTop10DashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe((myResult: any) => {
+        service.GetTop10DashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe(myResult => {
             this.FinalCustomersData = myResult;
             this.FillCustomersPie();
         });
@@ -280,7 +275,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             var measurmentFilteredList: List<GroupByClass> = FunctionsCRM.getCustomersFilterdList(directionFilteredList, parseInt(this.SelectedShowItem.Index));
             var pieChartLabels = [];
             var pieChartData = [];
-            var fullData = [];
+            var fullData = [];         
 
             measurmentFilteredList.getAll() != null ? measurmentFilteredList.getAll().forEach(element => {
                 if (element.YField != 0) {
@@ -288,7 +283,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
                     pieChartLabels.push(element.XField);
                     pieChartData.push(element.YField);
                 }
-            }) : null;
+            }):null;
 
 
 
@@ -301,7 +296,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
                 this.CurrentCustomersChart.clear();
                 this.CurrentCustomersChart = null;
             }
-            if (!flagEmpty) {
+            if (!flagEmpty) {              
                 this.CurrentCustomersChart = makePieChart(this.CustomersDashboardId, fullData, false, true, this.CustomersDashboardLegendId);
                 this.NoCustomers = false;
 
@@ -309,11 +304,11 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
             else {
                 try {
-                    //   var elm = document.getElementById(this.CustomersDashboardId);
+                 //   var elm = document.getElementById(this.CustomersDashboardId);
                 }
                 catch (exc) { }
 
-                //  elm.innerHTML = "";
+              //  elm.innerHTML = "";
                 this.NoCustomers = true;
 
             }
@@ -321,7 +316,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         }
 
     }
-
+    
     GetCurrentDirectionTransmodeFilterItemShipment() {
         var transmodeId: string = "";
         var directionId: string = "";
@@ -335,7 +330,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             transmodeId = "";
         else
             transmodeId = this.SelectedTransportFilterShipment;
-
+        
         var filterItem: DirectionTransportFilter = new DirectionTransportFilter("", directionId, transmodeId);
 
 
@@ -390,7 +385,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     CommonFiltersDirectionAndTransportMode() {
         if (this.SelectedTimeRangeItem.Index != "-1") {
             var byMonthData: List<DashBoardClass> = this.FinalDirectionAndTransportData != null ? this.FinalDirectionAndTransportData : []
-
+          
             var measurmentFilteredList: List<GroupByClass> = FunctionsCRM.getMeasurmentFilterListForDirectionAndTransmode(parseInt(this.SelectedShowItem.Index), byMonthData, parseInt(this.SelectedTimeRangeItem.Index), null);
             this.FillDirectionPie(measurmentFilteredList);
         }
@@ -412,7 +407,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
                             obj.YField = item.SumChargeableWeight != null ? item.SumChargeableWeight : 0;
 
                             break;
-                        }
+                        }   
 
 
                     case 2:
@@ -453,17 +448,17 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
                 }
                 FilteredList.add(obj);
-            }) : null;
+            }):null;
             this.FillDirectionPie(FilteredList);
         }
-
+               
     }
 
     CommonFiltersCountries() {
         var days = this.ComputeDays();
         var dtf: DirectionTransportFilter = this.GetCurrentDirectionTransmodeFilterItemCountries();
-        var service = new DashboardDomainService();
-        service.GetShipmentsByTop10CountriesDashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, "", dtf.FilterDirectionID, dtf.FilterTransportID).subscribe((myResult: any) => {
+        var service = new DashboardDomainService();      
+        service.GetShipmentsByTop10CountriesDashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, "", dtf.FilterDirectionID, dtf.FilterTransportID).subscribe(myResult => {
             this.FinalCountriesData = myResult;
             var countriesFilterdList: List<GroupByClass> = FunctionsCRM.getCountriesFilterdList(this.FinalCountriesData, parseInt(this.SelectedShowItem.Index), this.TopCountries, this.IncludeOthersCountries);
             this.fillCountriesPie(countriesFilterdList);
@@ -471,7 +466,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     }
 
     fillCountriesPie(data: List<GroupByClass>) {
-        var fullData = [];
+        var fullData = [];         
         var pieChartLabels = [];
         var pieChartData = [];
 
@@ -481,7 +476,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
                 pieChartLabels.push(element.XField);
                 pieChartData.push(element.YField);
             }
-        }) : null;
+        }):null;
 
 
 
@@ -496,23 +491,23 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             this.CurrentCountriesChart = null;
         }
         if (!flagEmpty) {
-
-            this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId);
+         
+            this.CurrentCountriesChart=makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId);
 
             this.NoCountries = false;
 
         }
 
-        else {
+        else {        
             this.NoCountries = true;
         }
     }
-
+        
     FillDirectionPie(data: List<GroupByClass>) {
 
         var pieChartLabels = [];
         var pieChartData = [];
-        var fullData = [];
+        var fullData = [];         
 
         data.getAll() != null ? data.getAll().forEach(element => {
             if (element.YField != 0) {
@@ -522,7 +517,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
                 pieChartLabels.push(element.XField);
                 pieChartData.push(element.YField);
             }
-        }) : null;
+        }):null;
 
 
 
@@ -535,22 +530,22 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             this.CurrentDirectionAndTransportModeChart.clear();
             this.CurrentDirectionAndTransportModeChart = null;
         }
-        if (!flagEmpty) {
+        if (!flagEmpty) {          
             this.CurrentDirectionAndTransportModeChart = makePieChart(this.DirectionAndTransportModeDashboardId, fullData, false, true, this.DirectionAndtransportModeLegendId);
             this.NoDirectionAndTransportMode = false;
         }
 
-        else {
+        else {       
             this.NoDirectionAndTransportMode = true;
         }
     }
-
+    
     CommonFiltersShipment() {
 
         var showIndex: number = parseInt(this.SelectedShowItem.Index);
         var timeIndex: number = parseInt(this.SelectedTimeRangeItem.Index);
 
-        var byMonthData: List<DashBoardClass> = this.FinalShipmentData != null ? this.FinalShipmentData : new List<DashBoardClass>();
+        var byMonthData: List<DashBoardClass> = this.FinalShipmentData != null ? this.FinalShipmentData : new List<DashBoardClass> ();
         var dtf: DirectionTransportFilter = this.GetCurrentDirectionTransmodeFilterItemShipment();
         var directionFilteredList: List<DashBoardClass> = FunctionsCRM.getDirectionFilteredList(dtf, byMonthData);
 
@@ -581,78 +576,78 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             var monthQuartersList: List<GroupByClass> = FunctionsCRM.getmonthQuartersList(timeIndex, measurmentFilteredList, null);
             this.FillBars(monthQuartersList);
         }
-        else {
-            var FilteredList: List<GroupByClass> = new List<GroupByClass>();
+        else {            
+                var FilteredList: List<GroupByClass> = new List<GroupByClass>();
             this.FinalShipmentData != null ? this.FinalShipmentData.items.forEach((item: DashBoardClass) => {
-                var obj: GroupByClass = new GroupByClass();
-                obj.XField = item.DateRange;
-                switch (parseInt(this.SelectedShowItem.Index)) {
-                    case 0:
-                        {
-                            obj.YField = item.Total != null ? item.Total : 0;
-                            break;
-                        }
+                    var obj: GroupByClass = new GroupByClass();
+                    obj.XField = item.DateRange;
+                    switch (parseInt(this.SelectedShowItem.Index)) {
+                        case 0:
+                            {
+                                obj.YField = item.Total != null ? item.Total : 0;
+                                break;
+                            }
 
-                    case 1:
-                        {
-                            obj.YField = item.SumChargeableWeight != null ? item.SumChargeableWeight : 0;
+                        case 1:
+                            {
+                                obj.YField = item.SumChargeableWeight != null ? item.SumChargeableWeight : 0;
 
-                            break;
-                        }
-
-
-                    case 2:
-                        {
-                            obj.YField = item.SumGrossWeight != null ? item.SumGrossWeight : 0;
-
-                            break;
-                        }
-
-                    case 3:
-                        {
-                            obj.YField = item.TotalProfitInLocalCurrency != null ? item.TotalProfitInLocalCurrency : 0;
-
-                            break;
-                        }
+                                break;
+                            }
 
 
-                    case 4:
-                        {
-                            obj.YField = item.TotalProfitInProfitCurrency != null ? item.TotalProfitInProfitCurrency : 0;
+                        case 2:
+                            {
+                                obj.YField = item.SumGrossWeight != null ? item.SumGrossWeight : 0;
 
-                            break;
-                        }
+                                break;
+                            }
 
-                    case 5:
-                        {
-                            obj.YField = item.ReceivablesInLocalCurrency != null ? item.ReceivablesInLocalCurrency : 0;
+                        case 3:
+                            {
+                                obj.YField = item.TotalProfitInLocalCurrency != null ? item.TotalProfitInLocalCurrency : 0;
 
-                            break;
-                        }
-
-                    case 6:
-                        {
-                            obj.YField = item.ReceivablesInProfitCurrency != null ? item.ReceivablesInProfitCurrency : 0;
-                            break;
-                        }
+                                break;
+                            }
 
 
-                }
-                FilteredList.add(obj);
-            }) : null;
+                        case 4:
+                            {
+                                obj.YField = item.TotalProfitInProfitCurrency != null ? item.TotalProfitInProfitCurrency : 0;
+
+                                break;
+                            }
+
+                        case 5:
+                            {
+                                obj.YField = item.ReceivablesInLocalCurrency != null ? item.ReceivablesInLocalCurrency : 0;
+
+                                break;
+                            }
+
+                        case 6:
+                            {
+                                obj.YField = item.ReceivablesInProfitCurrency != null ? item.ReceivablesInProfitCurrency : 0;
+                                break;
+                            }
 
 
-            this.FillBars(FilteredList);
+                    }
+                    FilteredList.add(obj);
+                }):null;
 
-        }
+
+                this.FillBars(FilteredList);
+                                   
+        }        
     }
-
+   
 
     FilterSelectedChangeShow(item) {
 
         this.SelectedShowItem = item;
         this.CommonFiltersShipment();
-
+        
         this.CommonFiltersDirectionAndTransportMode();
 
         this.LoadShipmentsByTop10Countries();
@@ -660,7 +655,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
     }
     FillBars(data: List<GroupByClass>) {
-
+       
         var i = 0;
         var index = 0;
         var Graphs = Graphs = [{
@@ -678,7 +673,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         }];
         var max = 0;
 
-
+       
         var DataProvider = [];
         this.barChartData[0].data = [];
         this.barChartLabels = [];
@@ -696,55 +691,55 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             if (element.YField > max)
                 max = element.YField;
             i++;
-        }) : null;
+        }):null;
 
-        var barChartColors: any[] = [
+       var barChartColors: any[] = [
             {
-                backgroundColor: "rgb(73,165,191)" /*Safari 5.1-6*/
-
-                ,
-                borderColor: "rgba(147,206,222,1)",
+               backgroundColor:"rgb(73,165,191)" /*Safari 5.1-6*/
+               
+               ,
+               borderColor: "rgba(147,206,222,1)",
 
 
                 borderWidth: 2
-            }
+           }
 
-
-
-
+       
+          
+           
         ]
-        var flagEmpty = true;
-        this.barChartData[0].data.forEach(p => {
-            if (p != "0")
-                flagEmpty = false;
-        });
-        if (!flagEmpty) {
+       var flagEmpty = true;
+       this.barChartData[0].data.forEach(p => {
+           if (p != "0")
+               flagEmpty = false;
+       });
+       if (!flagEmpty) {
 
 
-            makeAmBarChart(this.ShipmentsQuantityByTimeDashboardId, Graphs, DataProvider, max);
+           makeAmBarChart(this.ShipmentsQuantityByTimeDashboardId, Graphs, DataProvider, max);
 
-            this.NoShipmentsQuantityByTime = false;
+           this.NoShipmentsQuantityByTime = false;
 
-        }
+       }
 
-        else {
-            try {
-                var elm = document.getElementById(this.ShipmentsQuantityByTimeDashboardId);
-                elm.innerHTML = "";
-            }
-            catch (exc) { }
-            this.NoShipmentsQuantityByTime = true;
+       else {
+           try {
+               var elm = document.getElementById(this.ShipmentsQuantityByTimeDashboardId);
+               elm.innerHTML = "";
+           }
+           catch (exc) { }
+           this.NoShipmentsQuantityByTime = true;
 
-        }
+       }             
     }
     FillFilters() {
         this.FillDateTypeFilterList();
         this.FillShowFilterList();
         this.FillTimeRangeFilterList();
-        this.LoadQuires();
+        this.LoadQuires(); 
     }
     ngOnInit() {
-        this.FillFilters();
+        this.FillFilters();               
     }
     public DateTypeFilterList: DashBoardFilters[];
     public TimeRangeFilterList: DashBoardFilters[];
@@ -809,7 +804,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
             this.FilterSelectedShow();
         }
-    }
+    }    
     FilterSelectedShow() {
         this.CommonFiltersShipment();
         this.CommonFiltersDirectionAndTransportMode();
@@ -866,7 +861,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             this.activityFromDate = value;
             this.SelectedTimeRangeItem = this.TimeRangeFilterList[4];
             LastFilterClass.UpdateFilter(this.filterControlNameSpace, "DetailsActivityFromDate", (value == null ? null : ServiceHelper.GetDateString(value)));
-            //  this.LoadQuires();
+          //  this.LoadQuires();
         }
     }
 
@@ -877,7 +872,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             this.activityToDate = value;
             this.SelectedTimeRangeItem = this.TimeRangeFilterList[4];
             LastFilterClass.UpdateFilter(this.filterControlNameSpace, "DetailsActivityToDate", (value == null ? null : ServiceHelper.GetDateString(value)));
-            // this.LoadQuires();
+           // this.LoadQuires();
         }
     }
 
@@ -909,13 +904,17 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             Todate.setMonth(Todate.getMonth() - 12);
             this.activityToDate = Todate;
         }
-
+       
         return days;
 
     }
+ 
+    @Output()
+    public logoff = new EventEmitter();
 
-    BackButtonClicked() {        
-        this.BackButtonClickedEvent.emit("back");
+    BackButtonClicked() {
+        this.logoff.emit();
+
     }
 
     CountriesTopValueChanged(flag) {
@@ -928,22 +927,26 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
             this.TopCountries = 0;
 
         this.LoadShipmentsByTop10Countries();
-
+                
     }
 
-    CustomersTopValueChanged(flag) {
+    CustomersTopValueChanged(flag){
         if (flag)
             this.TopCustomers = this.TopCustomers + 1;
-        else
+        else 
             this.TopCustomers = this.TopCustomers - 1;
 
         if (this.TopCustomers < 0)
             this.TopCustomers = 0;
-
+        
         this.LoadCustomers();
 
     }
     Change() {
         console.log("Fired2");
     }
+
+ 
+
+
 }

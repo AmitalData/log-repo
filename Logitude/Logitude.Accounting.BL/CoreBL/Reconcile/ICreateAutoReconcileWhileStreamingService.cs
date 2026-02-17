@@ -12,6 +12,6 @@ namespace Logitude.Accounting.BL.CoreBL
             JournalPM JournalPM,
             List<LedgerTransactionPM> myNewLedgerTransactionsWithCounters
             );
-        void CreateAutoReconcileWhileStreaming(bool CheckINprogress);
+        void CreateAutoReconcileWhileStreaming();
     }
 }

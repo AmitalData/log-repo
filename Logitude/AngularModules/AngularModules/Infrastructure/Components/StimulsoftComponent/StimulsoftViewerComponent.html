@@ -1,11 +1,12 @@
-
+﻿
 <style>
     .container {
         position: relative;
         text-align: center;
         display: block;
-        overflow-y: auto;
-        overflow-x: hidden;
+
+        overflow-y:auto;
+        overflow-x :hidden;
     }
 
 
@@ -19,39 +20,46 @@
 
 
 
-    input[type="number"]:hover {
-        -moz-appearance: none;
-        -webkit-appearance: none;
-    }
+   input[type="number"]:hover  {
+     -moz-appearance:none;
+     -webkit-appearance:none;
+   
 
-    input[type=number]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        -webkit-appearance: none;
-        cursor: pointer;
-        display: block;
-        width: 8px;
-        color: #333;
-        text-align: center;
-        position: relative;
-    }
+}
 
-        input[type=number]::-webkit-inner-spin-button:before,
-        input[type=number]::-webkit-inner-spin-button:after {
-            content: "^";
-            position: absolute;
-            right: 0;
-            font-family: monospace;
-        }
+     input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    cursor:pointer;
+    display:block;
+    width:8px;
+    color: #333;
+    text-align:center;
+    position:relative;
+}
 
-        input[type=number]::-webkit-inner-spin-button:before {
-            top: 0px;
-        }
+input[type=number]::-webkit-inner-spin-button:before,
+input[type=number]::-webkit-inner-spin-button:after {
+    content: "^";
+    position:absolute;
+    right: 0;
+    font-family:monospace;
+}
 
-        input[type=number]::-webkit-inner-spin-button:after {
-            bottom: 0px;
-            -webkit-transform: rotate(180deg);
-        }
+input[type=number]::-webkit-inner-spin-button:before {
+    top:0px;
+}
+
+input[type=number]::-webkit-inner-spin-button:after {
+    bottom:0px;
+    -webkit-transform: rotate(180deg);
+}
+
+
+
+
+
 </style>
 <div style="border :1px solid gray">
 
@@ -60,7 +68,7 @@
         <table>
             <tr>
 
-                <td [hidden]="IsSchedulerReport" style="width:16px"><div style="width:16px"></div></td>
+                <td style="width:16px"><div style="width:16px"></div></td>
 
                 <td *ngIf="IsShowExportPrinttoPDF" style="width:68px;vertical-align:middle;">
                     <button [disabled]="!IsEditingEnabled" style="width:68px" class="Button" (click)="PrintToPDF()">
@@ -83,20 +91,20 @@
                                     <div></div>
                                 </td>
 
-
-
+                               
+                                
                             </tr>
                         </table>
 
                     </button>
-
+                  
                 </td>
 
                 <td style="width:7px"><div style="width:7px"></div></td>
 
 
                 <td *ngIf="IsShowExportMicrosoftExcel" style="width:80px;vertical-align:middle;">
-                    <div id="{{'SaveExcelToggleButton' | IdGeneratorAsyncPipe | async}}" style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
+                    <div style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
                         <div sstyle="background-color:#D1D6D8">
 
                             <table class="LeftCenter">
@@ -118,18 +126,18 @@
                                         <div></div>
                                     </td>
 
-                                    <td style="width:10px">
+                                    <td  style="width:10px">
 
 
                                         <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
                                         <div style="float:right;left:-65px;width:140px" class="ToggleButtonMenu">
 
-                                            <button id="{{'SaveExcelFileButton' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" (click)="SaveToExcelFile()">
+                                            <button [disabled]="!IsEditingEnabled" (click)="SaveToExcelFile()">
                                                 <div>Excel File</div>
                                             </button>
 
 
-                                            <button id="{{'SaveAdvancedExcelFileButton' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" (click)="SaveToExcelFileAdvancedButtonClick()">
+                                            <button [disabled]="!IsEditingEnabled" (click)="SaveToExcelFileAdvancedButtonClick()">
                                                 <div>Excel File (Advanced)</div>
                                             </button>
 
@@ -159,19 +167,7 @@
 
                 <td *ngIf="IsShowSendButton" style="width:7px"><div style="width:7px"></div></td>
 
-                <td  style="width:30px">
-                    <button class="Button" style="height:22px;width:22px;"  (click)="ExportToExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
-                </td>
-                <td  style="width:7px"><div style="width:7px"></div></td>
-
-                <td  style="width:190px"><ComboBox id="{{'ReportsTemplatesComboBox' | IdGeneratorAsyncPipe | async}}" style="width:190px;height:22px;display:inline" 
-                    (SelectedItemChanged)="ReportExcelTemplatesChange($event)" 
-                    [ItemsSource]="ExcelReportsTemplatesLists" 
-                    [SelectedItem]="SelectedExcelReportsTemplateList" 
-                    [Binding]="'Description'"></ComboBox>
-                </td>
-
-                <td  style="width:7px"><div style="width:7px"></div></td>
+     
 
                 <td *ngIf="IsShowSendButton" style="width:80px;vertical-align:middle;">
                     <div style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
@@ -185,7 +181,7 @@
 
                                     <td style="width:22px">
                                         <img style="width:22px;height:22px;margin-right:-3px" src="./Images/BlueSend.png" />
-
+                            
                                     </td>
 
                                     <td style="width:2px">
@@ -238,100 +234,19 @@
                     </div>
                 </td>
 
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsSchedulerReport" style="width:40px"><div style="width:40px"></div></td>
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsEnableReportTemplateExcel" style="width:60px"><div style="width:60px">Template:</div></td>
-
-                <td *ngIf="IsEnableReportTemplateExcel" style="width:150px;vertical-align:middle;">
-                    <div style="width:150px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
-                        <div sstyle="background-color:#D1D6D8">
-
-                            <table class="LeftCenter">
-                                <tr>
-                                    <td style="width:5px">
-                                        <div style="width:5px"></div>
-                                    </td>
-
-                                    <td style="width:30px">
-                                        <span>{{TemplateTypeName}}</span>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width:10px">
-
-
-                                        <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
-                                        <div style="float:right;width:140px" class="ToggleButtonMenu">
-
-                                            <button (click)="ReportTypeClick('R','Stimulsoft Template')">
-                                                <div>PDF Template</div>
-                                            </button>
-
-
-                                            <button (click)="ReportTypeClick('E','Excel Template')">
-                                                <div>Excel Template</div>
-                                            </button>
-
-
-                                        </div>
-
-                                    </td>
-                                    <td style="width:5px">
-                                        <div style="width:5px"></div>
-                                    </td>
-                                </tr>
-                            </table>
-
-
-
-
-
-                        </div>
-
-
-
-
-
-
-                    </div>
-                </td>
-
-
-
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:40px"><div style="width:40px"></div></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:60px"><div style="width:60px">Template:</div></td>
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:190px"><ComboBox id="{{'ReportsTemplatesComboBox' | IdGeneratorAsyncPipe | async}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event,false)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
-
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsRefreshReportsTemplateList" style="width:190px"><ComboBox style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && IsRefreshReportsTemplateList" style="width:190px"><ComboBox style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
+                
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
 
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:100px"><div style="width:100px"><span style="font-size:11px" class="hyperlink" (click)="ManagementReport()">Manage Templates</span></div></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:100px"><div style="width:100px"><span style="font-size:11px"  class="hyperlink" (click)="ManagementReport()">Manage Templates</span></div></td>
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:40px"><div style="width:40px"></div></td>
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:120px"><div style="width:60px">Message Template:</div></td>
-
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:7px"><div style="width:7px"></div></td>
-
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:190px"><ComboBox id="{{'MessageTemplatesComboBox' | IdGeneratorAsyncPipe | async}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="MessageTemplatesChange($event)" [ItemsSource]="MessageTemplatesLists" [SelectedItem]="SelectedMessageTemplateList" [Binding]="'Description'"></ComboBox></td>
-
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;vertical-align:central">
-
-                    <div class="EditButton" (click)="EditMessageTemplate(SelectedMessageTemplateList)" style="display:inline;width:18px;">
-
-                        <IconButton [disabled]="MessageTemplatesLists && MessageTemplatesLists.length == 0" [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
-
-                    </div>
-
-                </td>
-
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central">
-
-                    <IconButton [disabled]="false" [Name]="'Add'" [IsSmall]="true" (click)="AddMessageTemplate()"></IconButton>
-
-                </td>
                 <td *ngIf="IsShowShiftToolbar">
                     <div>
                         <table>
@@ -351,14 +266,10 @@
 
 
                 <td *ngIf="IsShowShiftToolbar">
-                    <div style="width:570px;float: right;vertical-align:middle">
+                    <div style="width:440px;float: right;vertical-align:middle">
 
                         <table style="float: right;">
                             <tr>
-
-                                <td style="width:60px;"><span>Font Size:</span></td>
-                                <td style="width:60px;"><ComboBox style="width:60px;height:22px;display:inline" (SelectedItemChanged)="FontSizeSelectedItemChanged($event)" [ItemsSource]="FontSizeLists" [SelectedItem]="SelectedFontSize"></ComboBox></td>
-                                <td style="width:10px;"><span></span></td>
                                 <td style="width:25px">  <img style="margin-top:0px;width:25px;height:20px;vertical-align:middle;" src="./Images/Two_headed_arrow_Ver.png" /></td>
 
                                 <td style="width:70px;"><span>Vertical Shift</span></td>
@@ -395,36 +306,27 @@
     </div>
 
     <div [attr.id]="PreviewStimualDivId" style="text-align:center;background-color:#CBCFD4;" [style.width]="ScreenWidth" [style.height]="ScreenHeight" class="container">
-        <img *ngIf="IsShowStimulImage" src={{ImageUrl}}  [style.margin-left]="ImageMargeLeft" style="position:relative;float: left;margin-top:15px;margin-bottom:15px;border:1px solid #FFD700;border-radius:5px" [style.display]="Imagevisibility" [style.min-width]="ImageWidth" [style.min-height]="ImageHeight" [style.width]="ImageWidth" [style.height]="ImageHeight">
+        <img src={{ImageUrl}} alt="Norway" [style.margin-left]="ImageMargeLeft"  style="position:relative;float: left;margin-top:15px;margin-bottom:15px;border:1px solid #FFD700;border-radius:5px" [style.display]="Imagevisibility" [style.min-width]="ImageWidth" [style.min-height]="ImageHeight" [style.width]="ImageWidth" [style.height]="ImageHeight">
+        <div [style.margin-left]="ImageMargeLeft"  [style.display]="Imagevisibility" style="margin-top:15px;margin-bottom:15px;" class="topleft" [attr.id]="ViewerContentDivId"></div>
 
-        <div   *ngIf="!IsShowStimulImage" style="width:100%;height:100%;">
-           <div style="height:47%"></div>
-          <div  style="text-align:center;vertical-align:central;font-size:15px">The report is too large to preview. Please use Print/Save buttons to download it. </div>  
-        </div>
-
-
-
-
-        <div *ngIf="IsShowStimulImage" [style.margin-left]="ImageMargeLeft" [style.display]="Imagevisibility" style="margin-top:15px;margin-bottom:15px;" class="topleft" [attr.id]="ViewerContentDivId"></div>
-
-        <div *ngIf="IsShowStimulImage" [style.display]="Imagevisibility" style="display:block;height:15px"></div>
+        <div [style.display]="Imagevisibility" style="display:block;height:15px"></div>
 
     </div>
 
     <div [style.display]="Footervisibility" style="display:block;border-top:1px solid gray;height:30px;background-color:#D1D6D8;text-align:left;vertical-align:central">
-        <table style="width:250px;vertical-align:central;height:30px; margin-right: 120px;">
+        <table style="width:250px;vertical-align:central;height:30px;">
             <tr style="vertical-align:central">
 
 
 
                 <td [attr.title]="'Go to the first page of a report '">
 
-                    <div><button (click)="GoToFirstPage()" [disabled]="!GoToFirstPageButtonEnable" style="height:25px;width:100%;"> <img style="margin-top:0px;width:17px;height:15px;vertical-align:middle;" [src]="LayoutDirection !== 'rtl' ? './Images/Icons/GoToLastPageIcon.png' : './Images/Icons/GoToFirstPageIcon.png'" /></button></div>
+                    <div><button (click)="GoToFirstPage()" [disabled]="!GoToFirstPageButtonEnable" style="height:25px;width:100%;"> <img style="margin-top:0px;width:17px;height:15px;vertical-align:middle;" src="./Images/Icons/GoToFirstPageIcon.png" /></button></div>
                 </td>
 
                 <td [attr.title]="'Go to the Previous page of a report'" style="border-right:1px solid gray;">
 
-                    <div><button (click)="PreviousPage()" [disabled]="!PreviouseButtonEnable" style="height:25px;width:100%;"> <img style="margin-top:-2px;width:13px;height:15px;vertical-align:middle;" [src]="LayoutDirection !== 'rtl' ? './Images/Icons/Next.png' : './Images/Icons/Previous.png'" /></button></div>
+                    <div><button (click)="PreviousPage()" [disabled]="!PreviouseButtonEnable" style="height:25px;width:100%;"> <img style="margin-top:-2px;width:13px;height:15px;vertical-align:middle;" src="./Images/Icons/Previous.png" /></button></div>
                 </td>
 
                 <td>
@@ -432,13 +334,14 @@
 
                 </td>
 
+
                 <td [attr.title]="'Go to the next page of a report'" style="border-left:1px solid gray">
-                    <div><button [disabled]="!NextButtonEnable" style="height:25px;width:100%;" (click)="NextPage()"> <img style="margin-top:-2px;width:13px;height:15px;vertical-align:middle;" [src]="LayoutDirection !== 'rtl' ? './Images/Icons/Previous.png' : './Images/Icons/Next.png'"  /></button></div>
+                    <div><button [disabled]="!NextButtonEnable" style="height:25px;width:100%;" (click)="NextPage()"> <img style="margin-top:-2px;width:13px;height:15px;vertical-align:middle;" src="./Images/Icons/Next.png" /></button></div>
                 </td>
 
                 <td [attr.title]="'Go to the last page of a report '" style="border-right:1px solid gray;">
 
-                    <div><button [disabled]="!GoToLastPageButtonEnable" style="height:25px;width:100%;" (click)="GoToLastPage()"> <img style="margin-top:0px;width:17px;height:15px;vertical-align:middle;"  [src]="LayoutDirection !== 'rtl' ? './Images/Icons/GoToFirstPageIcon.png' : './Images/Icons/GoToLastPageIcon.png'" /></button></div>
+                    <div><button [disabled]="!GoToLastPageButtonEnable" style="height:25px;width:100%;" (click)="GoToLastPage()"> <img style="margin-top:0px;width:17px;height:15px;vertical-align:middle;" src="./Images/Icons/GoToLastPageIcon.png" /></button></div>
                 </td>
 
             </tr>

@@ -1,6 +1,10 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -9,18 +13,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Server.Tools.StorageService;
-using System.Web;
-using Logitude.SystemLogs;
-using Logitude.BL.Helpers;
-using Simplog.Data.InvoiceModel.Repositories;
 
 namespace Logitude.BL.InvoiceModel.EntityOtherServices
 {
@@ -33,8 +31,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private string myVATExemptTempCard;
         private string myAccountingSystemCode;
         private bool isDropBox = false;
-        public bool UsingFTP = false;
-        public string FTPDetailId;
 
         public ARPaymentMessageHelper(int tenant)
         {
@@ -49,13 +45,12 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
             }
         }
-        public ARPaymentMessageHelper(List<ARPayment> allEntities, string filename, int tenant,  bool isDropBox = false, bool isFTP = false)
+        public ARPaymentMessageHelper(List<ARPayment> allEntities, string filename, int tenant,  bool isDropBox = false)
         {
             this.tenant = tenant;
             this.filename = filename;
             this.allEntities = allEntities;
             this.isDropBox = isDropBox;
-            this.UsingFTP = isFTP;
 
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(tenant);
             AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
@@ -64,7 +59,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myVATableTempCard = accountingSetting.ReceivableVATableTempCard;
                 myVATExemptTempCard = accountingSetting.ReceivableVATExemptTempCard;
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
-                FTPDetailId = accountingSetting.TransferFTPDetailId;
             }
         }
 
@@ -102,7 +96,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         {
             ARPaymentRoot log = new ARPaymentRoot();
             log.Paymnets = new List<ARPaymnetElement>();
-
+            
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             List<string> allPaymentIds = allEntities.Select(s => s.Id).ToList();
             List<CreditCardType> creditCardTypes = (from d in invoiceContext.CreditCardTypes where d.Tenant == tenant select d).ToList();
@@ -115,9 +109,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                                                           select d).ToList();
 
             List<ARInvoice> allInvoices = (from d in invoiceContext.ARInvoicePayments
-                                           where d.Tenant == tenant
-                                           && allPaymentIds.Contains(d.ARPaymentId)
-                                           select d.ARInvoice).ToList();
+                                                          where d.Tenant == tenant
+                                                          && allPaymentIds.Contains(d.ARPaymentId)
+                                                          select d.ARInvoice).ToList();
 
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             List<string> allAddressesId = allEntities.Select(s => s.BillToAddressId).ToList();
@@ -179,8 +173,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Card billTo = CardRepository.GetSingleCard(item.BillToId, tenant, true);
                 if (billTo != null)
                 {
-                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
-                    paymentElement.Card.AccountingCard = accountingSystemHelper.GetGenericCreditAccount(billTo.Id, item.PaymentCurrencyId, tenant, false);
+                    paymentElement.Card.AccountingCard = billTo.ReceivablesAccountingCard;
                     paymentElement.Card.IntercompanyCode = billTo.ExternalId2;
                     paymentElement.Card.Name = billTo.EnglishName;
                     paymentElement.Card.Code = billTo.Code;
@@ -194,7 +187,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         paymentElement.Card.City = address.City;
                         paymentElement.Card.ZipCode = address.ZipCode;
                         paymentElement.Card.Country = address.Country == null ? "" : address.Country.EnglishName;
-                        paymentElement.Card.CountryCode = address.Country == null ? "" : address.Country.Code;
                     }
                     paymentElement.Card.VatNumber = billTo.VatNumber;
                 }
@@ -205,16 +197,15 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 paymentElement.Invoices = new List<ARPaymentInvoiceElement>();
                 List<string> myInvoicesIds = allInvoicesPayments.Where(d => d.ARPaymentId == item.Id).Select(s => s.ARInvoiceId).ToList();
 
-                foreach (ARInvoice myline in allInvoices.Where(d => myInvoicesIds.Contains(d.Id)))
+                foreach (ARInvoice myline in allInvoices.Where(d=> myInvoicesIds.Contains(d.Id)))
                 {
                     string lineType = invoiceTypes.Where(d => d.Code == myline.ARInvoiceTypeCode).FirstOrDefault().Name;
 
-                    double linePaidAmount = 0;
 
+                    double linePaidAmount = 0;
                     ARInvoicePayment myARInvoicePayment = allInvoicesPayments.Where(d => d.ARPaymentId == item.Id && d.ARInvoiceId == myline.Id).FirstOrDefault();
-                    if (myARInvoicePayment != null)
-                    {
-                        if (myARInvoicePayment.ForeignAmount != null)
+                    if(myARInvoicePayment != null) {
+                        if(myARInvoicePayment.ForeignAmount != null)
                         {
                             linePaidAmount = Math.Round(myARInvoicePayment.ForeignAmount.Value, 2);
                         }
@@ -227,22 +218,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         PaidAmount = linePaidAmount,
                     };
 
-
                     paymentElement.Invoices.Add(invoiceElement);
                 }
 
-                #endregion
-
-                #region BankAccount
-                BankAccountLiteRepository bankAccountRepository = new BankAccountLiteRepository(tenant);
-                paymentElement.PaymentBankAccount = new ARPaymnetBankAccountElement();
-                BankAccountLite bankAccount = bankAccountRepository.GetSingleBankAccountLite(item.BankAccountLiteId, tenant);
-                if (bankAccount != null)
-                {
-                    paymentElement.PaymentBankAccount.AccountNumber = bankAccount.AccountNumber;
-                    paymentElement.PaymentBankAccount.BankName = bankAccount.EnglishName;
-                    paymentElement.PaymentBankAccount.BankCode = bankAccount.BankCode;
-                }
                 #endregion
 
                 log.Paymnets.Add(paymentElement);
@@ -286,14 +264,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 this.BulidDropBoxXMLLFile(bytearray);
             }
-
-            else if (this.UsingFTP && !string.IsNullOrEmpty(this.FTPDetailId))
-            {
-                this.BuildFile_ViaFTP(bytearray);
-            }
-
             else
             {
+                Stream blbstr = null;
                 if (bytearray != null)
                 {
                     string[] fileProps = fileName.Split('.');
@@ -308,6 +281,19 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     };
                     Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                     storageservice.Write(bytearray, fileInfo);
+
+                    //CloudBlobContainer blobContainer = null;
+                    //blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
+                    //blobContainer.CreateIfNotExists();
+
+                    //CloudBlockBlob blobfile = blobContainer.GetBlockBlobReference(fileName);
+
+                    //using (blbstr = blobfile.OpenWrite())
+                    //{
+                    //    StringBuilder stringbuilder = new StringBuilder();
+                    //    Encoding encoding = new UTF8Encoding();
+                    //    blbstr.Write(bytearray, 0, bytearray.Length);
+                    //}
                 }
             }
         }
@@ -323,65 +309,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 entityId = payment.Id;
             }
             var commLog = helper.CreateDropBoxCommunicationLog(tenant, objectTableId, bytearray, this.filename, "ARPayments", "AP Payment",entityId);
-        }
-
-        private string myDocumentId;
-        private string myDocumentFolder;
-        private string myDocumentExtension;
-        private string myCommunicationLogId;
-        private void BuildFile_ViaFTP(byte[] myByteArray)
-        {
-            ObjectTableRepository repo = new ObjectTableRepository(tenant);
-            string objectTableId = repo.GetObjectTableIdByName("ARPayment");
-            string FTPFileName = "";
-
-            AccountingTranferViaFTPHelper helper = new AccountingTranferViaFTPHelper(tenant, objectTableId, FTPDetailId);
-            var payment = this.allEntities.FirstOrDefault();
-            var entityId = "";
-            if (payment != null)
-            {
-                entityId = payment.Id;
-                FTPFileName = ("ARPayment_" + payment.PaymentNo).ToLower();
-            }
-
-            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode);
-
-            this.myDocumentId = helper.DocumentId;
-            this.myDocumentFolder = helper.DocumentFolder;
-            this.myDocumentExtension = helper.DocumentExtension;
-            this.myCommunicationLogId = commLog.Id;
-
-            BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = myDocumentId,
-                FolderName = myDocumentFolder,
-                Extension = myDocumentExtension,
-                Tenant = tenant,
-                FileSize = myByteArray.Length,
-            };
-
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            storageservice.Write(myByteArray, fileInfo);
-
-            try
-            {
-                //helper.Test(commLog, tenant);
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue(commLog.QueueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
-            }
-
-            catch (Exception ex)
-            {
-                string ip = "";
-
-                if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                {
-                    ip = HttpContext.Current.Request.UserHostAddress;
-                }
-
-                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "AR Payment Transfer", null, ip);
-            }
         }
         #endregion
     }
@@ -419,7 +346,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
         [XmlElement(ElementName = "BillTo")]
         public ARPaymnetCardElement Card { get; set; }
-        public ARPaymnetBankAccountElement PaymentBankAccount { get; set; }
 
         [XmlArray("Invoices")]
         [XmlArrayItem("Invoice")]
@@ -437,7 +363,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string City { get; set; }
         public string ZipCode { get; set; }
         public string Country { get; set; }
-        public string CountryCode { get; set; }
         public string VatNumber { get; set; }
     }
 
@@ -446,13 +371,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string InvoiceType { get; set; }
         public string InvoiceNumber { get; set; }
         public double PaidAmount { get; set; }
-    }
-
-    public class ARPaymnetBankAccountElement
-    {
-        public string AccountNumber { get; set; }
-        public string BankName { get; set; }
-        public string BankCode { get; set; }
     }
     #endregion
 }

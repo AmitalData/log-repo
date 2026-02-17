@@ -1,4 +1,4 @@
-
+﻿
 
 
 
@@ -84,7 +84,7 @@
                     </td>
 
                     <td style="width: 200px;">
-                        <input [attr.data-cy]="'Email'" type="text" [(ngModel)]="Email"/>
+                        <input type="text" [(ngModel)]="Email"/>
                     </td>
 
                     <td>
@@ -131,7 +131,7 @@
 
 
                     <td style="width: 57px;">
-                        <button [attr.data-cy]="'Cancel'" class="Button" (click)="OnCancel()">{{CancelButtonLabel}}</button>
+                        <button class="Button" (click)="OnCancel()">{{CancelButtonLabel}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -140,7 +140,7 @@
 
 
                     <td style="width: 57px;" *ngIf="!InvitationSent">
-                        <button [attr.data-cy]="'Send'" class="RedButton" (click)="OnSendInvitaion()">Send</button>
+                        <button class="RedButton" (click)="OnSendInvitaion()">Send</button>
                     </td>
                 </tr>
             </table>

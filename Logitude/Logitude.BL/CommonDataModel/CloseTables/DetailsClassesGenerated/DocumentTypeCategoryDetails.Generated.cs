@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs; 
 using Simplog.Data.CommonDataModel;
 
@@ -40,13 +40,6 @@ namespace Logitude.BL.CommonDataModel
                 Code = "P", 
                 SearchFields = "P,Operational Documents", 
                 Name = "Operational Documents", 
-			});
-			 
-            all.Add(new DocumentTypeCategoryDetails()
-            {    
-                Code = "E", 
-                Name = "Export Customs", 
-                SearchFields = "E,Export Customs", 
 			});
 			
             return all;

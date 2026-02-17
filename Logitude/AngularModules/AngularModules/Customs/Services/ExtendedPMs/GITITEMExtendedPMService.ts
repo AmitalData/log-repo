@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -11,10 +10,10 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { GITITEMDto } from '../../EntityPMs/Extended/GITITEMDto';
 
 export class GITITEMExtendedPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GITITEM';
     }
 
@@ -24,9 +23,11 @@ export class GITITEMExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pm = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
 
 
                 var entity: GITITEMDto;
@@ -39,13 +40,13 @@ export class GITITEMExtendedPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     insert546(entityPM: GITITEMDto) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -58,8 +59,8 @@ export class GITITEMExtendedPMService {
             //    mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
             return this._http.post(this._apiUrl, JSON.stringify(entityPM),
-                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: GITITEMDto;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -68,21 +69,21 @@ export class GITITEMExtendedPMService {
 
                         return serviceResponse;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             //}
             //else {
 
             //    serviceResponse.HasError = true;
             //    serviceResponse.ErrorsArray = errorsArray;
 
-            //    return of(serviceResponse);
+            //    return Observable.of(serviceResponse);
             //}
         });
     }
 
     //insert(entityPM: GITITEMDto) {
 
-    //    return defer(() => {
+    //    return Observable.defer(() => {
 
     //        var authHeader = new Headers();
     //        authHeader.append('Token', SessionInfo.Token);
@@ -98,7 +99,7 @@ export class GITITEMExtendedPMService {
     //            JSON.stringify(entityPM),
     //            { headers: authHeader })
     //            .map((res) => {
-    //                var pm = res;
+    //                var pm = res.json();
     //                if (pm) {
     //                    var mappedResult: GITITEMDto;
     //                    mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -107,14 +108,14 @@ export class GITITEMExtendedPMService {
 
     //                return serviceResponse;
 
-    //            }),catchError(ServiceHelper.HandleServiceError));
+    //            }).catch(ServiceHelper.HandleServiceError);
 
     //    });
     //}
 
     insert(GITITEMDtoList: GITITEMDto[]) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -128,8 +129,9 @@ export class GITITEMExtendedPMService {
                 .post(
                     this._apiUrl + '/PostGITITEMPMList',
                     JSON.stringify(GITITEMDtoList),
-                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    //var pm = res;
+                    { headers: authHeader })
+                .map((res) => {
+                    //var pm = res.json();
                     //if (pm) {
                     //    var mappedResult: GITITEMDto[];
                     //    mappedResult = this.MapJsonToEntityPM(pm, true, GITITEMDtoList);
@@ -138,14 +140,14 @@ export class GITITEMExtendedPMService {
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
 
         });
     }
 
     update(entityPM: GITITEMDto) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -162,8 +164,8 @@ export class GITITEMExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: GITITEMDto;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -171,13 +173,13 @@ export class GITITEMExtendedPMService {
                         }
                         return serviceResponse;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
             }
         });
 

@@ -11,7 +11,7 @@ import {BusinessProcessQueuePMInitService} from '../../../../Infrastructure/Enti
 
 @Component({
     selector: 'QueueNewComponent',
-    
+    moduleId: module.id,
     templateUrl: './QueueNewComponent.html',
 })
 

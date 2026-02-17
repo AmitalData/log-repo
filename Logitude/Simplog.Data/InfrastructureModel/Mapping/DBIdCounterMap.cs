@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -14,8 +14,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             // Properties
             this.Property(t => t.TableName)
                 .IsRequired()
-                .HasMaxLength(100)
-                .IsUnicode(true);
+                .HasMaxLength(50)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("DBIdCounters");

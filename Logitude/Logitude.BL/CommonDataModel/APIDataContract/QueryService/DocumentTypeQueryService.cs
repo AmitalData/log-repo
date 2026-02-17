@@ -26,14 +26,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
         }
 
 
-        public DocumentType GetDocumentTypeById(string Id, int Tenant, string ComputingPartnerName = "")
+        public DocumentType GetDocumentTypeById(string Id, int Tenant)
         {
             try
             {
 
 
                 var temp = query.GetSinglePM(Id, Tenant);
-                return DocumentTypeDataMapping(temp, Tenant,ComputingPartnerName);
+                return DocumentTypeDataMapping(temp, Tenant);
             }
             catch (Exception ex)
             {
@@ -78,7 +78,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-        public DocumentTypePM DocumentTypeDataMappingAndValidatin(DocumentType MyEntity, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public DocumentTypePM DocumentTypeDataMappingAndValidatin(DocumentType MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
@@ -131,19 +131,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-        public DocumentTypePM GetDocumentTypeCodeById(string Id, int Tenant)
-        {
-            try
-            {                
-                return query.GetSinglePM(Id, Tenant);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
 
     }
-}
+}

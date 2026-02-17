@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -16,7 +16,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
         {
             modifiation.InActive = entityPM.InActive;
             modifiation.QuotationDefaultTemplateId = entityPM.QuotationDefaultTemplateId;
-            modifiation.RoutingRQuoteDefaultTemplateId = entityPM.RoutingRQuoteDefaultTemplateId;
+            
         }
     }
 }

@@ -32,8 +32,9 @@ using System.Threading.Tasks;
                 AmitalDebuggerUtil.MyDebuggerLevel = AmitalDebuggerLevel.Information;
                 AmitalDebuggerUtil.MyDebuggerLevel = AmitalDebuggerLevel.Verbose;
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"to filter Debug try this
+                Debug.WriteLine(@"to filter Debug try this
 AmitalDebuggerUtil.MyDebuggerLevel = AmitalDebuggerLevel.Information;");
+               System.Diagnostics.Debugger.Break();
             }
             if (AmitalDebuggerUtil.MyDebuggerLevel < CurrentBreak)
             {

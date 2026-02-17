@@ -6,7 +6,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {FontTool, DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './StockWindowComponent.html',
 })

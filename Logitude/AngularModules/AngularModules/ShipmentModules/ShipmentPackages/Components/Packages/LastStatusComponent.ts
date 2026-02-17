@@ -1,14 +1,12 @@
-
 import {Component} from '@angular/core';
 import {INTRAWebService} from '../../../../Shipment/Services/INTRAWebService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { LastStatusItem } from '../../../../Shipment/EntityPMs/LastStatusItem'
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './LastStatusComponent.html',
 })
 
@@ -18,15 +16,14 @@ export class LastStatusComponent {
     public ValidationErrorsList: string[] = [];
     public ItemsSource: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsUsingVirtuallization: boolean = false;
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
     }
 
     SetWindowArgs(args: any) {
-        this.SetIsUsingVirtuallization();
         this.ShipmentId = args["ShipmentId"];
         this.ContainerId = args["ContainerId"];
+
         var myService = new INTRAWebService();
         myService.GetContainerStatuses(this.ShipmentId, this.ContainerId).subscribe((myResponse: ServiceResponse) => {
 
@@ -39,7 +36,7 @@ export class LastStatusComponent {
 
             else {
 
-                var items: any[] = myResponse.Result.filter(a => a.StatusSource == "INT");
+                var items: any[] = myResponse.Result;
 
                 items.forEach(item => {
                     itemsSource.push(new LastStatusItem(item));
@@ -53,15 +50,47 @@ export class LastStatusComponent {
             }
         });
     }
-    SetIsUsingVirtuallization() {
-        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
-        if (hasGridVirtuallizationToggleFeature) {
-            this.IsUsingVirtuallization = true;
-        }
-    }
+
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 }
 
+class LastStatusItem {
+    public StatusName: string;
+    public EventDate: Date;
+    public ReceivingDate: Date;
+    public LocationCode: string;
+    public DepartureDate: Date;
+    public ArrivalDate: Date;
+    public SortingValue: number = 0;
+    public VesselName: string;
+    public VoyageNumber: string;
+    public DepartureDateInfo: string;
+    public ArrivalDateInfo: string;
+    constructor(item:any) {
+        if (item) {
 
+            this.StatusName = item.StatusName;
+            this.EventDate = item.EventDate;
+            this.ReceivingDate = item.ReceivingDate;
+            this.LocationCode = item.LocationCode;
+            this.DepartureDate = item.DepartureDate;
+            this.ArrivalDate = item.ArrivalDate;
+            this.VesselName = item.VesselName;
+            this.VoyageNumber = item.VoyageNumber;
+
+            if (this.DepartureDate && item.TimeOfDepartureInfo) {
+                this.DepartureDateInfo = item.TimeOfDepartureInfo == "E" ? "(expected)" : "(actual)";
+            }
+
+            if (this.ArrivalDate && item.TimeOfArrivalInfo) {
+                this.ArrivalDateInfo = item.TimeOfArrivalInfo == "E" ? "(expected)" : "(actual)";
+            }
+
+            if (this.EventDate) {
+                this.SortingValue = DateTool.GetDateParts(this.EventDate).DateTicks;
+            }
+        }
+    }
+}

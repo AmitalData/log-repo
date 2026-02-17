@@ -3,30 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Logitude.Accounting.BL.CoreBL;
 using System.Linq;
 using Logitude.Accounting.Data.Repositories;
-using Logitude.Server.Tools.Helpers;
-using FakeItEasy;
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
     [TestClass]
     public class YearTransferUnitTest
     {
-
-        [TestInitialize]
-        public void TestInitialize1()
-        {
-            var textCodeTranslatorFake = A.Fake<ITextCodeTranslator>();
-            A.CallTo(() => textCodeTranslatorFake.Translate(A<string>.Ignored, A<int>.Ignored))
-                .ReturnsLazily(
-                (string textCodeCode, int tenant) =>
-                {
-                    return textCodeCode;
-                }
-            );
-            YearTransferService.OverrideITextCodeTranslator = textCodeTranslatorFake;
-        }
-
-
         [TestMethod]
         public void YearTransfer_ok()
         {
@@ -79,26 +61,26 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 );
             Assert.IsNotNull(journal);
 
-            //Assert.AreEqual(journal.AccountingEntityReference, "YearTransfer");
+            Assert.AreEqual(journal.AccountingEntityReference, "YearTransfer");
             Assert.IsNotNull(journal.JournalLines);
             Assert.AreEqual(journal.JournalLines.Count, 2);
 
-            Assert.AreEqual(journal.JournalLines[0].ActionTypeCodeEnum, Logitude.Accounting.Def.EntityPMs.JournalActionTypeEnum.Debit);
+            Assert.AreEqual(journal.JournalLines[0].ActionTypeCodeEnum, Logitude.Accounting.Def.EntityPMs.MyJournalActionTypeEnum.Debit);
             Assert.AreEqual(journal.JournalLines[0].ForeignAmount, -150M);
             Assert.AreEqual(journal.JournalLines[0].LocalAmount, -400M);
             Assert.AreEqual(journal.JournalLines[0].DebitAccountId, getRevenueExpenseId());
 
-            Assert.AreEqual(journal.JournalLines[1].ActionTypeCodeEnum, Logitude.Accounting.Def.EntityPMs.JournalActionTypeEnum.Credit);
+            Assert.AreEqual(journal.JournalLines[1].ActionTypeCodeEnum, Logitude.Accounting.Def.EntityPMs.MyJournalActionTypeEnum.Credit);
             Assert.AreEqual(journal.JournalLines[1].ForeignAmount, -150M);
             Assert.AreEqual(journal.JournalLines[1].LocalAmount, -400M);
             Assert.AreEqual(journal.JournalLines[1].CreditAccountId, ExpenseAcc);
 
 
             var CreditAmmount =
-           journal.JournalLines.Where(r => r.ActionTypeCodeEnum == Logitude.Accounting.Def.EntityPMs.JournalActionTypeEnum.Credit).Sum(r => r.LocalAmount);
+           journal.JournalLines.Where(r => r.ActionTypeCodeEnum == Logitude.Accounting.Def.EntityPMs.MyJournalActionTypeEnum.Credit).Sum(r => r.LocalAmount);
 
             var DebitAmmount =
-           journal.JournalLines.Where(r => r.ActionTypeCodeEnum == Logitude.Accounting.Def.EntityPMs.JournalActionTypeEnum.Debit).Sum(r => r.LocalAmount);
+           journal.JournalLines.Where(r => r.ActionTypeCodeEnum == Logitude.Accounting.Def.EntityPMs.MyJournalActionTypeEnum.Debit).Sum(r => r.LocalAmount);
             Assert.IsTrue(DebitAmmount == CreditAmmount, "Expected DebitAmmount == CreditAmmount");
         }
 

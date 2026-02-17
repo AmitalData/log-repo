@@ -42,35 +42,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     select a).ToList();
         }
 
-        public List<ShipmentPickUpDelivery> GetShipmentDeliveryByShipmentId(string shipmentId, int tenant)
-        {
-            return (from a in context.ShipmentPickUpDeliveries
-                    where a.ShipmentId == shipmentId && a.Tenant == tenant && a.PickUpDeliveryTypeCode == "DELV"
-                    select a).ToList();
-        }
-
-        public ShipmentPickUpDelivery GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(string standaloneShipmentId, int tenant)
-        {
-            return (from record in context.ShipmentPickUpDeliveries 
-                    where record.StandaloneShipmentId == standaloneShipmentId && record.Tenant == tenant 
-                    select record).FirstOrDefault();
-        }
-
-        public string GetSingleShipmentPIdByStandaloneShipmentId(string standaloneShipmentId, int tenant)
-        {
-            string shipmentId = null;
-            ShipmentPickUpDelivery shipmentPickUpDelivery = (from record in context.ShipmentPickUpDeliveries
-                                                             where record.StandaloneShipmentId == standaloneShipmentId && record.Tenant == tenant
-                                                             select record).FirstOrDefault();
-
-            if(shipmentPickUpDelivery != null)
-            {
-                shipmentId = shipmentPickUpDelivery.ShipmentId;
-            }
-
-            return shipmentId;
-        }
-
         public void Add(ShipmentPickUpDelivery entity)
         {
             context.ShipmentPickUpDeliveries.Add(entity);

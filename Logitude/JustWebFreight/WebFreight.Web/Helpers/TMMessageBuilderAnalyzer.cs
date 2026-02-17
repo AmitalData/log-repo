@@ -6,10 +6,6 @@ using Microsoft.VisualStudio.Services.WebApi;
 using Microsoft.VisualStudio.Services.WebApi.Patch.Json;
 using Microsoft.VisualStudio.Services.WebApi.Patch;
 using Logitude.Server.Tools.QueueService;
-using System.Transactions;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Helpers
 {
@@ -28,7 +24,7 @@ namespace WebFreight.Web.Helpers
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = GetPersonalKey(); 
+            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
             int workItemId = wi;
             // new VssOAuthAccessTokenCredential(personalAccessToken)
             VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("logitudo@live.com", personalAccessToken));
@@ -40,7 +36,7 @@ namespace WebFreight.Web.Helpers
             {
                 // Get the specified work item
                 WorkItem workitem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
-                if (IsUpdatingTaskEffort(workitem))
+                if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Task" || workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Bug")
                 {
                     //completedWork = workitem.Fields.Where(a => a.Key == "Microsoft.VSTS.Scheduling.CompletedWork").Select(a => a).FirstOrDefault();
                     JsonPatchDocument patchDocument = new JsonPatchDocument();
@@ -63,36 +59,5 @@ namespace WebFreight.Web.Helpers
                 }
             }
         }
-        private bool IsUpdatingTaskEffort(WorkItem workitem)
-        {
-            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Task")
-                return true;
-
-            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Bug")
-                return true;
-
-            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Product Backlog Item")
-                return true;
-
-            return false;
-        }
-        private string GetPersonalKey()
-        {
-            string personalAccessKey = "";
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-                if (setting != null)
-                {
-                    personalAccessKey = setting.TMPersonalAccessToken;
-                }
-
-                scope.Complete();
-            }
-
-            return personalAccessKey;
-        }
-
     }
 }

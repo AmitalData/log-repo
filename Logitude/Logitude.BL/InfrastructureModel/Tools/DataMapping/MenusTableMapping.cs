@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -18,10 +18,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             menusTable.FeatureId = menusTablePM.FeatureId;
             menusTable.Code = menusTablePM.Code;
             menusTable.HtmlView = menusTablePM.HtmlView;
-            menusTable.FeatureUniqeCode = menusTablePM.FeatureUniqeCode;
-            menusTable.QuerySection = menusTablePM.QuerySection;
-
-
         }
     }
 }

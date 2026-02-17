@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'AccountingTransferComponent',
-    
+    moduleId: module.id,
     templateUrl: './AccountingTransferComponent.html',
 })
 
@@ -350,13 +350,10 @@ export class AccountingTransferComponent   {
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
-            logWindow.Height = 570;
+            logWindow.Height = 570;            
             logWindow.Title = logWindowTitle;
             logWindow.WindowArgs = transferTypeCode;
             logWindow.Show('./Invoice/Components/Workspaces/Windows/NewTransferComponent');
-            logWindow.WindowClosed.subscribe(s => {
-                this.LoadDataCount();
-            });
         }
     }
     RecalculateExternalClicked(args: string) {

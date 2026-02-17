@@ -1,10 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
-using Logitude.BL.GlobalModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools;
@@ -13,10 +10,10 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -39,8 +36,7 @@ namespace CommunicationWorkerRole
         IQueueService queue;
         string URI = "";//"http://localhost:9996/api/CustomerTenantAccessRequestApprovalController";//// controller
 
-        public CustomerTenantAccessWorkerRole
-            ()
+        public CustomerTenantAccessWorkerRole()
         {
             IGlobalContext objectContext = GlobalContext.GetContext();
             SettingRepository SettingRepository = new SettingRepository(objectContext);
@@ -77,7 +73,7 @@ namespace CommunicationWorkerRole
         }
 
         string Token;
-        public override void Run()
+        public override async void AsyncRun()
         {
             try
             {
@@ -93,9 +89,8 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = client.PostAsync(AuthURI, content);
-                    result.Wait();
-                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
+                    var result = await client.PostAsync(AuthURI, content);
+                    var tempUser = result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -110,8 +105,6 @@ namespace CommunicationWorkerRole
                         LastActivity = DateTime.UtcNow;
                         int tenant = 0;
                         int CustomerTenant = 0;
-                        bool IsCustomsActivated = false ;
-                        bool IsExportActivated = false;
 
 
                         if (response != null && response.MessageId != null)
@@ -119,9 +112,7 @@ namespace CommunicationWorkerRole
                             string Id = response.MessageValues["Id"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
                             int.TryParse(response.MessageValues["CustomerTenant"], out CustomerTenant);
-                            bool.TryParse(response.MessageValues["IsCustomsActivated"], out IsCustomsActivated);
-                            bool.TryParse(response.MessageValues["IsExportActivated"], out IsExportActivated);
-                            string CorrelationId = response.MessageId;
+                            string CorrelationId = response.MessageValues["CorrelationId"].ToString();
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
                             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                             APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
@@ -177,19 +168,11 @@ namespace CommunicationWorkerRole
                                     client.DefaultRequestHeaders.Add("Token", Token);
                                     client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
-                                     
-                                     
-
                                     CustomerTenantAccessRequestAM customerTenantAccessRequest = new CustomerTenantAccessRequestAM()
                                     {
                                         CustomerTenant = CustomerTenant,
-                                        PartnerTenant = tenant,
-                                        IsExportActivated = IsExportActivated,
-                                        IsCustomsActivated = IsCustomsActivated
+                                        PartnerTenant = tenant
                                     };
-
-                                    //UpdateCustomerTenantAccessRequests(customerTenantAccessRequest);
-
                                     var serializedObject = JsonConvert.SerializeObject(customerTenantAccessRequest);
                                     LogPM.Subject = "Start To Send Response To Importer By CustomerTenantAccessRequestApproval Controller";
                                     if (IsNewLog)
@@ -199,9 +182,8 @@ namespace CommunicationWorkerRole
                                     var msg = "Start Sending Response To Importer Tenant " + DateTime.Now;
                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(customerTenantAccessRequest), null, null, "");
                                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                    var result = client.PutAsync(URI + "CustomerTenantAccessRequestApproval", content);
-                                    result.Wait();
-                                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                    var result = await client.PutAsync(URI + "CustomerTenantAccessRequestApproval", content);
+                                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                     {
                                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                         HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
@@ -216,12 +198,10 @@ namespace CommunicationWorkerRole
 
                                             //}
                                             TenantRepository TenantRep = new TenantRepository(tenant);
-                                            LogBoxTenantSettingRepository LBTenantRep = new LogBoxTenantSettingRepository(tenant);
                                             var MainTenant = TenantRep.GetSingleTenant(tenant);
-                                            var LBTenant = LBTenantRep.GetSingleLBTenant(tenant);
-                                            Contact LogBoxUser = contactRepository.GetSingleContact(LBTenant.LogBoxAdminUserId, tenant);
+                                            Contact LogBoxUser = contactRepository.GetSingleContact(MainTenant.LogBoxAdminUserId, tenant);
                                             var domain = "@logbox.co.il";
-                                            if (LogBoxUser != null && !string.IsNullOrEmpty(LogBoxUser.Email))
+                                            if (!string.IsNullOrEmpty(LogBoxUser.Email))
                                             {
                                                 var EmailParts = LogBoxUser.Email.Split('@');
                                                 if (EmailParts.Length == 2)
@@ -258,7 +238,7 @@ namespace CommunicationWorkerRole
                                             {
                                                 Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
                                             }
-
+                                            
                                         }
                                         queue.Complete();
                                         CustomerTenantAccessRepository repo = new CustomerTenantAccessRepository(tenant);
@@ -267,13 +247,13 @@ namespace CommunicationWorkerRole
                                         repo.Update(CTA);
                                         repo.SubmitChanges();
                                         LogPM.Status = "D";
-                                        var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
+                                        var ResponseData = result.Content.ReadAsStringAsync().Result;
                                         var Donemsg = "Response Sent To Importer Successfully " + DateTime.Now;
                                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
                                     }
                                     else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                     {
-                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
                                         if (EXC != null)
                                         {
                                             var Failmsg = EXC.ErrorType + " Fail To Send Response To Importer Tenant " + DateTime.Now;
@@ -354,33 +334,6 @@ namespace CommunicationWorkerRole
             }
            
         }
-
-        private void UpdateCustomerTenantAccessRequests(CustomerTenantAccessRequestAM customerTenantAccessRequest)
-        {
-            CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(customerTenantAccessRequest.PartnerTenant);
-            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(customerTenantAccessRequest.PartnerTenant); 
-
-            List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestForwarderIdsByTenant(customerTenantAccessRequest.CustomerTenant);
-            List<string> forwarderIds = hybridPartnerQuery.GetPartnersForRequest(customerTenantAccessRequest.PartnerTenant, customerTenantAccessRequestIds);
-            IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestByTenantAndForwarderIds(customerTenantAccessRequest.CustomerTenant, forwarderIds);
-  
-            UpdateCustomerTenantAccessRequestsList(customerTenantAccessRequest, customerTenantAccessRequestList);
-             
-        }
-
-        private void UpdateCustomerTenantAccessRequestsList(CustomerTenantAccessRequestAM customerTenantAccessRequest, IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList)
-        {
-            ICommonDataContext context = CommonDataContext.GetContext(customerTenantAccessRequest.PartnerTenant);
-            CustomerTenantAccessRequestService customerTenantAccessRequestService = new CustomerTenantAccessRequestService(context, customerTenantAccessRequest.CustomerTenant);
-
-            foreach (var request in customerTenantAccessRequestList)
-            {
-                request.IsCustoms = customerTenantAccessRequest.IsCustomsActivated;
-                request.IsExport = customerTenantAccessRequest.IsExportActivated;
-                customerTenantAccessRequestService.Update(request);
-            }
-        }
- 
         private void ConnectClient()
         {
             try

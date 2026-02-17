@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
-using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -26,27 +25,10 @@ namespace Logitude.Customs.Data.Repsitories
         public string GetIdByCode(int tenant, string code)
         {
             if (String.IsNullOrWhiteSpace(code)) return "";
-
-            // fix the teudat zeut length
-            code = code.PadLeft(9, '0');
-
-            return
-                   (
-                  from rec in context.Clients
-                  where rec.Code== code && rec.Tenant == tenant
-                  select rec.Id
-                  )
-                  .FirstOrDefault();
-        }
-
-        public string GetIdByCodeOrPassport(int tenant, string code, string passport)
-        {
-            // if (String.IsNullOrWhiteSpace(code)) return "";
-            code = code.PadLeft(9, '0');
             return
                   (
                   from rec in context.Clients
-                  where (rec.Code == code || (rec.PassportNumber == passport && !string.IsNullOrEmpty(passport))) && rec.Tenant == tenant
+                  where rec.Code== code && rec.Tenant == tenant
                   select rec.Id
                   )
                   .FirstOrDefault();
@@ -58,7 +40,7 @@ namespace Logitude.Customs.Data.Repsitories
             return
                   (
                   from rec in context.Clients
-                  where (rec.PassportNumber == passportNumber && rec.PassportCountryCode == passportCountryCode) && rec.Tenant == tenant
+                  where (rec.PassportNumber == passportNumber || rec.PassportCountryCode == passportCountryCode) && rec.Tenant == tenant
                   select rec.Id
                   )
                   .FirstOrDefault();
@@ -66,37 +48,13 @@ namespace Logitude.Customs.Data.Repsitories
 
         public Client GetSingleClientByCode(string code, int Tenant)
         {
-            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             Client client = (from a in context.Clients
                              where a.Code == code
-                             && a.Tenant == Tenant
                              select a).FirstOrDefault();
             return client;
 
         }
-        public List<Client> GetClientsByCodes(List<string> codes, int tenant)
-        {
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
-
-            if (codes == null || codes.Count == 0)
-                return new List<Client>();
-
-            codes = codes
-                .Where(c => !string.IsNullOrWhiteSpace(c))
-                .Select(c => c.Trim())
-                .Distinct()
-                .ToList();
-
-            if (codes.Count == 0)
-                return new List<Client>();
-
-            return (from a in context.Clients
-                    where a.Tenant == tenant && codes.Contains(a.Code)
-                    select a).ToList();
-        }
-
 
         public List<Client> GetAllLocalClients(int tenant)
         {
@@ -105,24 +63,6 @@ namespace Logitude.Customs.Data.Repsitories
                   where !string.IsNullOrEmpty(rec.Code) && rec.Tenant == tenant
                   select rec
                   ).ToList();
-        }
-        public List<Client> GetAllLocalClientsIsConcurrencyGUID(int tenant)
-        {
-            return (
-                  from rec in context.Clients
-                  where !string.IsNullOrEmpty(rec.Code) && rec.Tenant == tenant
-                  select rec
-                  ).ToList();
-        }
-
-        public List<Client> GetAllClientsPOAExpire(int tenant)
-        {
-            var date = DateTime.Now.AddDays(30);
-            var clients = from client in context.Clients
-                               where !string.IsNullOrEmpty(client.Code) && client.Tenant == tenant && client.IsExportPoaActive == true && (client.IsPOAExpireReminderSent == null || client.IsPOAExpireReminderSent == false)
-                               where !context.ClientsPoas.Any(poa=>poa.ClientId == client.Id && date <= poa.EndDate)
-                               select client;
-            return clients.ToList();
         }
     }
 

@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,19 +26,20 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Transactions;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Devart.Data.Linq;
 using System.ServiceModel.DomainServices.Server;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
@@ -142,26 +143,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                             default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
                         }
                     }
-                    List<ProductItemPM> productItemsChangeSet = entityPM.CustomerProductItems.ToList();
-                    foreach (ProductItemPM itemPM in productItemsChangeSet)
-                    {
-                        switch (itemPM.ChangeSetOp)
-                        {
-                            case ChangeSetOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
-                            case ChangeSetOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
 
-                            case ChangeSetOperation.Update:
-                                {
-                                    itemPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    itemPM.HTSCodeChangeSet = itemPM.HTSCodes.ToList();
-                                    break;
-                                }
 
-                            default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
-                        }
-                    }
-
-                    service.SetChangeSet(entityPM.SalesNotes.ToList(), productsChangeSet, entityPM.CustomerCompetitors.ToList(), entityPM.CustomerAdditionalServices.ToList(), entityPM.CustomerSalesmanByProducts.ToList(), entityPM.CustomerAccountManagerByProducts.ToList(), entityPM.CustomerCustomsAgentByProducts.ToList(), entityPM.CustomerForwarderByProducts.ToList(), entityPM.CustomerMediatorByProducts.ToList(), entityPM.CardExternalCodeByCurrencies.ToList(), productItemsChangeSet);
+                    service.SetChangeSet(entityPM.SalesNotes.ToList(), productsChangeSet, entityPM.CustomerCompetitors.ToList(), entityPM.CustomerAdditionalServices.ToList(), entityPM.CustomerSalesmanByProducts.ToList(), entityPM.CustomerAccountManagerByProducts.ToList(), entityPM.CustomerCustomsAgentByProducts.ToList(), entityPM.CustomerForwarderByProducts.ToList(), entityPM.CustomerMediatorByProducts.ToList(), entityPM.CardExternalCodeByCurrencies.ToList());
                     service.Update();
 
                     //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);

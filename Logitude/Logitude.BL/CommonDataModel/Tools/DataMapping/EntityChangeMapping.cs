@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,18 +43,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.SetSLAAutomationSsucceedXml = entityPM.SetSLAAutomationSsucceedXml;
             entityPOCO.FollowUpAutomationFailedXml = entityPM.FollowUpAutomationFailedXml;
             entityPOCO.FollowUpAutomationSsucceedXml = entityPM.FollowUpAutomationSsucceedXml;
-
-            entityPOCO.QueuedTaskAutomationFailedXml = entityPM.QueuedTaskAutomationFailedXml;
-            entityPOCO.QueuedTaskAutomationSsucceedXml = entityPM.QueuedTaskAutomationSsucceedXml;
-            entityPOCO.SendInterfaceAutomationFailedXml = entityPM.SendInterfaceAutomationFailedXml;
-            entityPOCO.SendInterfaceAutomationSsucceedXml = entityPM.SendInterfaceAutomationSsucceedXml;
-            entityPOCO.SendDocumentAutomationFailedXml = entityPM.SendDocumentAutomationFailedXml;
-            entityPOCO.SendDocumentAutomationSsucceedXml = entityPM.SendDocumentAutomationSsucceedXml;
-            entityPOCO.OnUpdateDocumentAutomationFailedXml = entityPM.OnUpdateDocumentAutomationFailedXml;
-            entityPOCO.OnUpdateDocumentAutomationSsucceedXml = entityPM.OnUpdateDocumentAutomationSsucceedXml;
-
-            entityPOCO.CreateTaskAutomationFailedXml = entityPM.CreateTaskAutomationFailedXml;
-            entityPOCO.CreateTaskAutomationSsucceedXml = entityPM.CreateTaskAutomationSsucceedXml;
 
 
         }

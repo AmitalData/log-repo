@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Validators;
@@ -63,8 +63,6 @@ namespace WebFreight.Web.WcfApi
                         if (country != null)
                         {
                             entityPM.CountryId = country.Id;
-                            entityPM.CountryCode = country.Code;
-
                         }
                         else
                         {

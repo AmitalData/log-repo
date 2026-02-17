@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Web;
 using System;
@@ -17,7 +17,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public StateRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public StateRepository(int tenant)
         {
@@ -33,12 +36,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.States.Include("Country") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
-
-        public State GetSingleStateByCodeAndCountry(string code,string country, int tenant)
-        {
-            return (from record in context.States where record.Code == code && record.CountryId == country && record.Tenant == tenant select record).FirstOrDefault();
-        }
-
 
         public State GetSingleStateByCode(string code, int tenant)
         {

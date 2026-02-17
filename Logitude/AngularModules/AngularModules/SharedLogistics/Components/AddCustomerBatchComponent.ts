@@ -28,7 +28,7 @@ import {CustomerTenantAccessPMService} from '../../Common/Services/StandardPMs/C
 import {CustomerTenantAccessCardsBatchPMService} from '../../Common/Services/StandardPMs/CustomerTenantAccessCardsBatchPMService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddCustomerBatchComponent',
     templateUrl: './AddCustomerBatchComponent.html',
 })

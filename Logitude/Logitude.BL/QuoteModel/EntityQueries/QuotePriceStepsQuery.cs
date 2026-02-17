@@ -42,7 +42,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                        QuoteChargeId = a.QuoteChargeId,
                        Step = a.Step,
                        MarkupValue = a.MarkupValue,
-                       MeasurementUnit = "Kg",
                    };
         }
 
@@ -60,7 +59,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                        QuoteChargeId = a.QuoteChargeId,
                        Step = a.Step,
                        MarkupValue = a.MarkupValue,
-
                    };
         }
 
@@ -78,7 +76,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         Step = a.Step,
                         MarkupValue = a.MarkupValue,
                         QuoteChargeId = a.QuoteChargeId,
-                        MeasurementUnit = "Kg",
                     }).ToList();
         }
 
@@ -95,27 +92,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         QuoteId = a.QuoteId,
                         Step = a.Step,
                         MarkupValue = a.MarkupValue,
-                        MeasurementUnit = "Kg",
                     }).FirstOrDefault();
         }
-
-        public QuotePriceStepsPM GetSinglePM(string id , int tenant)
-        {
-            return (from a in repository.context.QuotePriceSteps
-                    where a.Id == id
-                    select new QuotePriceStepsPM()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        CostUnitPrice = a.CostUnitPrice,
-                        SaleUnitPrice = a.SaleUnitPrice,
-                        QuoteId = a.QuoteId,
-                        Step = a.Step,
-                        MarkupValue = a.MarkupValue,
-                        MeasurementUnit = "Kg",
-                    }).FirstOrDefault();
-        }
-
-
     }
 }

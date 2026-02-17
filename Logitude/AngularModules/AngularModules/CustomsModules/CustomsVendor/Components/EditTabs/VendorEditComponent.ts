@@ -13,19 +13,15 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 import {CustomsVendorPM} from '../../../../Customs/EntityPMs/CustomsVendorPM';
-import { VendorGeneralTabComponent } from './General/VendorGeneralTabComponent';
-import { VendorCurrencyTabComponent } from './VendorCurrency/VendorCurrencyTabComponent';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './VendorEditComponent.html',
     providers: [EntityArgs],
 
 })
 
 export class VendorEditComponent extends BaseComponent {
-  public right: any;
-
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public EntityPM: CustomsVendorPM;
     public ObjectTableName: string = "Customs.CustomsVendor";
@@ -38,7 +34,7 @@ export class VendorEditComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
-      
+        this.BuildTabs();
     }
 
     SetWindowArgs(args: any) {
@@ -49,7 +45,6 @@ export class VendorEditComponent extends BaseComponent {
 
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.CustomsVendor";
-        this.BuildTabs()
     }
 
     //#region Tabs Code
@@ -60,9 +55,6 @@ export class VendorEditComponent extends BaseComponent {
         this.TabsItemsSource.push(new TabItem("COMMUNICATION", "Customs.Vendor.TH.Communications"));
         this.TabsItemsSource.push(new TabItem("EVENTS", "Customs.Vendor.TH.Events"));
         this.TabsItemsSource.push(new TabItem("REQUESTSHEET", "General.MH.CustomsRequestsSheets"));
-        if(!this.IsNewEntity) {
-          this.TabsItemsSource.push(new TabItem("VENDORCURRENCY", "Customs.CustomsVendor.TH.VendorCurrency"));
-        }
 
         this.timerToken = setTimeout(() => {
             this.SelectedTabCode = "General"; // to ensure the component was painted
@@ -79,11 +71,10 @@ export class VendorEditComponent extends BaseComponent {
         }
     }
 
-    public GENERAL: VendorGeneralTabComponent = null;
+    private GENERAL: any = null;
     private COMMUNICATION: any = null;
     private EVENTS: any = null;
     private REQUESTSHEET: any = null;
-    private VENDORCURRENCY: VendorCurrencyTabComponent = null;
 
     private CustomsRequestsSheets: any = null;
 
@@ -123,7 +114,7 @@ export class VendorEditComponent extends BaseComponent {
                     case "COMMUNICATION": {
                         if (this.COMMUNICATION == null) {
 
-                            this.entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response:any) => {
+                            this.entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe(response => {
                                 SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationsTabComponent", myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.COMMUNICATION = cmpRef.instance;
@@ -162,25 +153,6 @@ export class VendorEditComponent extends BaseComponent {
 
 
                                 });
-
-
-                        }
-                        break;
-                    }
-                    case "VENDORCURRENCY": {
-
-                        if (this.VENDORCURRENCY == null) {
-                            this.entityResourceService.getEntityResourceByTableName("Customs.VendorCurrency").subscribe((response:any) => {
-                                    SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsVendor/Components/EditTabs/VendorCurrency/VendorCurrencyTabComponent',
-                                    myLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        this.VENDORCURRENCY = cmpRef.instance;
-                                        this.VENDORCURRENCY.SetTabArgs({ EntityPM: this.EntityPM, IsNewEntity: this.IsNewEntity });
-                                        this.VENDORCURRENCY.FillValidationErrorList.subscribe((response: any) => {
-                                            this.ValdationErrorList = response;
-                                        });
-                                    });
-                            });
 
 
                         }

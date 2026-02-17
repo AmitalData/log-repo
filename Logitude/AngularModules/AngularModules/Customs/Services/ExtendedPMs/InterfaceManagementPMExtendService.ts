@@ -1,8 +1,7 @@
 ﻿
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -13,10 +12,10 @@ import { DeclarationPM } from '../../EntityPMs/DeclarationPM';
 @Injectable()
 
 export class InterfaceManagementPMExtendService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InterfaceManagementPMExtend';
     }
 
@@ -26,12 +25,12 @@ export class InterfaceManagementPMExtendService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleInterfaceManagementwithDefinition?code=' + code + '&tenant=' + tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleInterfaceManagementwithDefinition?code=' + code + '&tenant=' + tenant.toString(), { headers: authHeader }).map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                // serviceResponse.Result = response;
+                // serviceResponse.Result = response.json();
 
-                var pm = response;
+                var pm = response.json();
 
                 var entity: InterfaceManagementPM;
                 if (pm) {
@@ -43,7 +42,7 @@ export class InterfaceManagementPMExtendService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
 
     }
@@ -51,7 +50,7 @@ export class InterfaceManagementPMExtendService {
         //CancellRequestInProgress(Id: string, Tenant: number) {
 
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -65,19 +64,21 @@ export class InterfaceManagementPMExtendService {
             //var mappedEntity: InterfaceManagementPM;
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-            return defer(() => {
+            return Observable.defer(() => {
                 return this._http
                     .put(
                     this._apiUrl + '/PutInterfaceManagementPM/',
                     JSON.stringify(mappedEntity),
-                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    { headers: authHeader }
+                    )
+                    .map(response => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();
-                        var pm = response;
+                        var pm = response.json();
                         serviceResponse.Result = pm;
 
                         return serviceResponse;
                     })
-                    ,catchError(ServiceHelper.HandleServiceError));
+                    .catch(ServiceHelper.HandleServiceError);
             }
 
             );

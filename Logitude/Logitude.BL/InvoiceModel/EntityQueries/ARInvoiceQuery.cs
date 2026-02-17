@@ -1,41 +1,28 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InvoiceModel.CustomFilters;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Enums;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.DataContracts.Models;
 using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.IdentityModel.Metadata;
-using System.Linq;
+using Logitude.Accounting.Data.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
     public class ARInvoiceQuery
     {
         public ARInvoiceRepository repository;
-        private Tenant tenantPoco;
-        private const string InterestReportInvoiceTypeCode = "IT";
+
         public ARInvoiceQuery()
         {
             repository = new ARInvoiceRepository();
@@ -55,82 +42,27 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             ARInvoicePM entityPM = null;
 
-            ARInvoice entityPOCO = repository.context
-                                             .ARInvoices
-                                             .Include("Status")
-                                             .Include("ARInvoiceType")
-                                             .Include("ProfitCurrency")
-                                             .Include("InvoiceCurrency")
-                                             .Include("Status")
-                                             .Include("LocalCurrency")
-                                             .Include("BillTo")
-                                             .Include("TransferStatus")
-                                             .Include("ApprovedByUser")
-                                             .Include("ApprovedByUser.Contact")
-                                             .Include("SalesmanUser")
-                                             .Include("SalesmanUser.Contact")
-                                             .Include("SATInvoiceStatus")
-                                             .Include("SATTransferStatus")
-                                             .Include("Branch")
-                                             .Include("ARInvoicesSignedStatus")
-                                               .Include("Confirmation")
-                                             .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
+            ARInvoice entityPOCO =
+                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus")
+                 where a.Id == id && a.Tenant == tenant
+                 select a).FirstOrDefault();
 
             if (entityPOCO != null)
             {
-                entityPM = GetSingleMappedEntityPM(entityPOCO, true);
+                entityPM = this.GetSingleMappedEntityPM(entityPOCO, true);
             }
 
             return entityPM;
         }
 
-        public ARInvoicePM GetSinglePMForInterest(string id, int tenant)
-        {
-            ARInvoicePM entityPM =
-               (from a in repository.context.ARInvoices
-                where a.Id == id && a.Tenant == tenant
-                select new ARInvoicePM()
-                {
-                    Id = a.Id,
-                    InvoiceNumber = a.InvoiceNumber,
-                    Tenant = a.Tenant,
-                    MainEntityReference = a.MainEntityReference
-                }).FirstOrDefault();
-            if (entityPM != null)
-            {
-                entityPM = SetJournalFields(entityPM);
-                entityPM = SetLineFields(entityPM);
-            }
 
-            return entityPM;
-        }
 
-        private ARInvoicePM SetJournalFields(ARInvoicePM entityPM)
-        {
-            JournalRepository rep = new JournalRepository(entityPM.Tenant);
-            JournalEntity journal = rep.GetJournalByARInvoiceEntity(entityPM.Id, entityPM.Tenant);
-            if (journal != null)
-            {
-                entityPM.JournalId = journal.JournalId;
-                entityPM.JournalNumber = journal.JournalNumber;
-            }
-
-            return entityPM;
-        }
-        private ARInvoicePM SetLineFields(ARInvoicePM entityPM)
-        {
-            var invoiceLineRepository = new ARInvoiceLineRepository(repository.context);
-            var arInvoiceLineQuery = new ARInvoiceLineQuery(invoiceLineRepository);
-            entityPM.InvoiceLines = arInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(entityPM.Id, entityPM.Tenant);
-
-            return entityPM;
-        }
 
         public ARInvoice GetSingleARInvoice(string id, int tenant)
         {
 
             ARInvoice entityPOCO =
-                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
+                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus")
                  where a.Id == id && a.Tenant == tenant
                  select a).FirstOrDefault();
 
@@ -138,29 +70,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPOCO;
         }
 
-
-        public ARInvoice GetSingle(string id, int tenant)
-        {
-            return repository.context.ARInvoices
-                .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
-        }
-        public bool CheckARInvoiceByExternalAccountingEnityId(string externalEntityId, int tenant)
-        {
-
-            return
-                  (from a in repository.context.ARInvoices
-                   where a.ExternalAccountingEntityId == externalEntityId && a.Tenant == tenant
-                   select a).Any();
-
-
-
-        }
         public ARInvoicePM GetSingleInvoiceByInvoiceNumber(string invoiceNumber, int tenant)
         {
             ARInvoicePM entityPM = null;
 
             ARInvoice entityPOCO =
-                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch")
+                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
                  where a.InvoiceNumber == invoiceNumber && a.Tenant == tenant
                  select a).FirstOrDefault();
 
@@ -172,38 +87,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPM;
         }
 
-        public string GetSingleInvoiceIdByInvoiceNumber(string invoiceNumber, int tenant)
-        {
-            ARInvoice entityPOCO =
-                (from a in repository.context.ARInvoices
-                 where a.InvoiceNumber == invoiceNumber && a.Tenant == tenant
-                 select a).FirstOrDefault();
-            if (entityPOCO == null)
-            {
-                return null;
-            }
-            else
-            {
-                return entityPOCO.Id;
-            }
-        }
-
-
-        public string GetCheckInvoiceId(string invoiceId, int tenant)
-        {
-            ARInvoice entityPOCO =
-                (from a in repository.context.ARInvoices
-                 where a.Id == invoiceId && a.Tenant == tenant
-                 select a).FirstOrDefault();
-            if (entityPOCO == null)
-            {
-                return null;
-            }
-            else
-            {
-                return entityPOCO.Id;
-            }
-        }
+      
 
 
         public ARInvoicePM GetReadyForTransferOrErrorInTransferInvoicePM(int tenant)
@@ -212,12 +96,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARInvoice entityPOCO = null;
 
             IQueryable<ARInvoice> iQueryable_Data =
-                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch")
+                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
                  where a.Tenant == tenant
                  && a.TransferTries < 5
                  && a.StatusCode != "DR"
                  && a.StatusCode != "VD"
-                 && a.StatusCode != "PR"
                  select a);
 
             entityPOCO = (from d in iQueryable_Data where d.TransferStatusCode == "RD" select d).FirstOrDefault();
@@ -235,7 +118,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPM;
         }
 
-        public List<MoneyStatusClass> GetMoneyStatusForTenant(string type, int lastMonths, int lastDays, int tenant, int selectedIndex, int currencyindex)
+        public List<MoneyStatusClass> GetMoneyStatusForTenant(string type,int lastMonths, int lastDays, int tenant, int selectedIndex, int currencyindex)
         {
             int months = 0;
             DateTime lastDate;
@@ -254,8 +137,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             IQueryable<ARPayment> payments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARPayment>(new QueryOperations(), repository.context.ARPayments.Where(t => t.Tenant == tenant), tenant);
 
             List<MoneyStatusClass> datalistInvoice = (from a in invoices
-                                                      where a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= lastDate && a.Tenant == tenant
-                                                     && !a.IsConstituentInvoice
+                                                      where a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= lastDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
                                                       group a by new
                                                       {
                                                           a.InvoiceDate.Value.Day,
@@ -274,7 +156,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                  ).ToList();
 
             List<MoneyStatusClass> datalistPayment = (from a in payments
-                                                      where a.RegisterDate >= lastDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR"  && a.StatusCode != "PR"
+                                                      where a.RegisterDate >= lastDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR" //&& !a.IsClosed
                                                       group a by new
                                                       {
                                                           a.RegisterDate.Value.Day,
@@ -375,6 +257,34 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                         #endregion
 
+                        #region by 6 months
+                        //datalist2 = (from a in datalist
+                        //             group a by new
+                        //             {
+
+                        //                 a.month,
+                        //                 a.year,
+                        //                 a.DataType,
+                        //             } into inv
+                        //             orderby inv.Key.year, inv.Key.month
+                        //             select new MoneyStatusClass()
+                        //             {
+                        //                 DateRange = inv.Key.month.ToString() + "/" + inv.Key.year.ToString(),
+
+                        //                 month = inv.Key.month,
+                        //                 year = inv.Key.year,
+                        //                 TotalAmount = inv.Sum(d => d.TotalAmount),
+                        //                 DataType = inv.Key.DataType,
+                        //             }).ToList();
+                        //if (datalist2.Count < 6)
+                        //{
+                        //    datalist2 = FillEmptyDates(datalist2, -5);
+                        //    datalist2 = (from a in datalist2
+                        //                 orderby a.year, a.month
+                        //                 select a).ToList();
+                        //}
+                        //break;
+                        #endregion
                     }
                 case 3:
                     {
@@ -476,7 +386,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return datalist2;
         }
 
-        public List<MoneyStatusClass> GetMoneyStatusForTenantCustom(string type, DateTime? ToDate, DateTime? FromDate, int tenant)
+        public List<MoneyStatusClass> GetMoneyStatusForTenantCustom(string type, DateTime? ToDate , DateTime? FromDate, int tenant)
         {
             bool AddYearFlag = false;
             if (FromDate.Value.Year != ToDate.Value.Year)
@@ -488,7 +398,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             IQueryable<ARPayment> payments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARPayment>(new QueryOperations(), repository.context.ARPayments.Where(t => t.Tenant == tenant), tenant);
 
             List<MoneyStatusClass> datalistInvoice = (from a in invoices
-                                                      where a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= FromDate && a.Tenant == tenant
+                                                      where a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= FromDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
                                                       group a by new
                                                       {
                                                           a.InvoiceDate.Value.Day,
@@ -504,13 +414,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                           year = inv.Key.Year,
                                                           TotalAmount = currencyindex == 1 ? inv.Sum(d => d.AmountInLocalCurrency) : inv.Sum(d => d.AmountInProfitCurrency),
                                                           DataType = "Invoices",
-                                                          FullDate = inv.Key.InvoiceDate,
+                                                          FullDate=inv.Key.InvoiceDate,
 
                                                       }
                                                  ).ToList();
 
             List<MoneyStatusClass> datalistPayment = (from a in payments
-                                                      where a.RegisterDate >= FromDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR" && a.StatusCode != "PR"
+                                                      where a.RegisterDate >= FromDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR" //&& !a.IsClosed
                                                       group a by new
                                                       {
                                                           a.RegisterDate.Value.Day,
@@ -547,7 +457,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             {
                 dates.Add(dt);
                 string DatePeriod = dt.Value.Day + "/" + dt.Value.Month + (AddYearFlag == true ? "/" + dt.Value.Year + "" : "");
-
+              
                 if (iteration != 0)
                 {
                     var oldDate = dates[iteration - 1].Value.Day + "/" + dates[iteration - 1].Value.Month + (AddYearFlag == true ? "/" + dates[iteration - 1].Value.Year + "" : ""); ;
@@ -559,14 +469,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     Entity1.FullDate = dt;
                     Entity1.DateRange = newDate;
                     Entity1.DataType = "Invoices";
-                    Listt.Add(newDate + "I", Entity1);
+                    Listt.Add(newDate+"I", Entity1);
                     var Entity2 = new MoneyStatusClass();
                     Entity2.linePrimary = 0;
                     Entity2.TotalAmount = 0;
                     Entity2.FullDate = dt;
                     Entity2.DateRange = newDate;
                     Entity2.DataType = "Payments";
-                    Listt.Add(newDate + "P", Entity2);
+                    Listt.Add(newDate+"P", Entity2);
 
                 }
 
@@ -612,7 +522,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     {
                         Listt[NewDatePeriod].TotalAmount += d.TotalAmount;
                         Listt[NewDatePeriod].DataType = d.DataType;
-                    }
+                       }
                 }
 
                 else if (count >= 2 ? d.FullDate <= dates[1] : false)
@@ -1024,6 +934,34 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                         #endregion
 
+                        #region by 6 months
+                        //datalist2 = (from a in datalist
+                        //             group a by new
+                        //             {
+
+                        //                 a.month,
+                        //                 a.year,
+                        //                 a.DataType,
+                        //             } into inv
+                        //             orderby inv.Key.year, inv.Key.month
+                        //             select new MoneyStatusClass()
+                        //             {
+                        //                 DateRange = inv.Key.month.ToString() + "/" + inv.Key.year.ToString(),
+
+                        //                 month = inv.Key.month,
+                        //                 year = inv.Key.year,
+                        //                 TotalAmount = inv.Sum(d => d.TotalAmount),
+                        //                 DataType = inv.Key.DataType,
+                        //             }).ToList();
+                        //if (datalist2.Count < 6)
+                        //{
+                        //    datalist2 = FillEmptyDates(datalist2, -5);
+                        //    datalist2 = (from a in datalist2
+                        //                 orderby a.year, a.month
+                        //                 select a).ToList();
+                        //}
+                        //break;
+                        #endregion
                     }
                 case 3:
                     {
@@ -1187,7 +1125,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public List<DebtorsClass> GetDebtorExposure(int tenant, int currencyIndex)
         {
             IQueryable<ARInvoicePM> invoiceList = (from a in repository.context.ARInvoices
-                                                   where a.Tenant == tenant && (a.StatusCode != "DR" && a.StatusCode != "PR" && a.IsConstituentInvoice != true && a.StatusCode != "LL" && a.StatusCode != "VD" && a.IsClosed == false)
+                                                   where a.Tenant == tenant && (a.StatusCode != "DR" && a.IsConstituentInvoice != true && a.StatusCode != "LL" && a.StatusCode != "VD" && a.IsClosed == false)
                                                    select new ARInvoicePM()
                                                    {
                                                        AmountDue = a.AmountDue,
@@ -1230,48 +1168,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return datalist;
         }
 
-        public List<DebtorsClass> GetDebtorsExposureForGridControl(int tenant, int currencyIndex, bool isBranchRestricted)
-        {
-            if (FeatureToggleHelper.HasFeatureToggle("QPI", tenant))
-                return GetDebtorsExposureForGridControl_NewStyle(tenant, currencyIndex, isBranchRestricted);
-            else
-                return GetDebtorsExposureForGridControl_OldStyle(tenant, currencyIndex);
-        }
-        private List<DebtorsClass> GetDebtorsExposureForGridControl_NewStyle(int tenant, int currencyIndex, bool isBranchRestricted)
-        {
-            var currentDate = DateTime.Now.AddMonths(-3);
-            if (!repository.context.ARPayments.Any(x => x.CreateDate >= currentDate)) return new List<DebtorsClass>();
-
-            List<string> allowedBranchesIds = new List<string>();
-            if (isBranchRestricted) allowedBranchesIds = BranchPermitionsFilter.GetAllowedLoggedUserBranches(tenant);
-
-            return (from a in repository.context.ARInvoices.Include("BillTo")
-                    where a.Tenant == tenant
-                    && a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL" && a.StatusCode != "PR"
-                    && !a.IsAutoCredit
-                    && !a.IsCancelled
-                    && !a.IsClosed
-                    && (!isBranchRestricted || allowedBranchesIds.Contains(a.BranchId))
-                    group a by new
-                    {
-                        a.BillTo.EnglishName,
-                        a.BillToId,
-                        a.BillTo.PartnerTypeId,
-                    } into gr
-                    orderby gr.Key.EnglishName
-                    select new DebtorsClass()
-                    {
-                        Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
-                        DebtorName = gr.Key.EnglishName,
-                        DebtorId = gr.Key.BillToId,
-                        Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
-                        DebtorType = gr.Key.PartnerTypeId,
-                    }).OrderByDescending(d => d.Outstanding).Take(10).ToList();
-        }
-        private List<DebtorsClass> GetDebtorsExposureForGridControl_OldStyle(int tenant, int currencyIndex)
+        public List<DebtorsClass> GetDebtorsExposureForGridControl(int tenant, int index)
         {
             List<ARInvoicePM> invoiceList = (from a in repository.context.ARInvoices
-                                             where a.Tenant == tenant && (a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && a.IsClosed == false)
+                                             where a.Tenant == tenant && (a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && a.IsClosed == false)
                                              select new ARInvoicePM()
                                              {
                                                  AmountDueInLocalCurrency = a.AmountDueInLocalCurrency,
@@ -1292,7 +1192,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             {
                 Card billto = CardRepository.GetSingleCard(invoice.BillToId, invoice.Tenant, true);
                 invoice.BillToName = billto.EnglishName;
-                invoice.BillToLocalName = billto.LocalName;
                 invoice.BillToType = billto.PartnerTypeId;
             }
 
@@ -1307,10 +1206,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                            orderby gr.Key.BillToName
                                            select new DebtorsClass()
                                            {
-                                               Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
+                                               Outstanding = index == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
                                                DebtorName = gr.Key.BillToName,
                                                DebtorId = gr.Key.BillToId,
-                                               Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
+                                               Overdue = index == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
                                                DebtorType = gr.Key.BillToType,
                                            }).ToList();
 
@@ -1357,15 +1256,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             DateTime nowdate = TenantServerConfigration.GetCurrentDateTime(tenant);
             IQueryable<ARInvoice> invoiceList = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), repository.context.ARInvoices.Where(t => t.Tenant == tenant), tenant);
 
-            List<string> allowedStatuses = new List<string>() { "AD", "PP", "NT" };
-            invoiceList = invoiceList.Where(a => a.BillToId == customerid && a.Tenant == tenant && allowedStatuses.Contains(a.StatusCode) && a.DueDate < nowdate && !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled);
-
             double? invoicedue = (from a in invoiceList
-                                  where a.ARInvoiceTypeCode != "CD"
+                                  where a.BillToId == customerid && a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "PD" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.DueDate < nowdate && !a.IsAutoCredit && a.ARInvoiceTypeCode != "CD" && !a.IsCancelled
                                   select a.AmountDueInLocalCurrency).Sum();
 
             double? autoCredit = (from a in invoiceList
-                                  where a.ARInvoiceTypeCode == "CD"
+                                  where a.BillToId == customerid && a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "PD" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.DueDate < nowdate && !a.IsAutoCredit && a.ARInvoiceTypeCode == "CD"
                                   select a.AmountDueInLocalCurrency).Sum();
 
             double? result = invoicedue != null ? invoicedue : 0;
@@ -1379,7 +1275,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public int GetReadyForTransferInvoicesCount(int tenant)
         {
             int invoicesCount = (from a in repository.context.ARInvoices
-                                 where a.Tenant == tenant && (a.TransferStatusCode == "RD" || a.TransferStatusCode == "ET") && a.TransferTries < 5 && a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD"
+                                 where a.Tenant == tenant && (a.TransferStatusCode == "RD" || a.TransferStatusCode == "ET") && a.TransferTries < 5 && a.StatusCode != "DR" && a.StatusCode != "VD"
                                  select a).Count();
             return invoicesCount;
         }
@@ -1388,8 +1284,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            var query = from a in repository.context.ARInvoices.Include("InvoiceCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch").Include("Confirmation")
-                        where a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && !a.IsClosed
+            var query = from a in repository.context.ARInvoices.Include("InvoiceCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
+                        where a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && !a.IsClosed
                         select new ARInvoiceList()
                         {
                             AmountInInvoiceCurrency = a.AmountInInvoiceCurrency,
@@ -1420,12 +1316,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             UpdatedByUserId = a.UpdatedByUserId,
                             BranchId = a.BranchId,
                             IsPrinted = a.IsPrinted,
-                            HasDoc = a.DocumentFilingId != null ? true : false,
                             BillToName = a.BillTo == null ? "" : a.BillTo.EnglishName,
-                            BillToLocalName = a.BillTo == null ? "" : a.BillTo.LocalName,
-                            BillToDisplayNumber = a.BillTo == null ? "" : a.BillTo.GLAccountDisplayNumber,
-                            BillToCity = a.BillTo == null ? "" : a.BillTo.CityName,
-                            BillToCountry = a.BillTo == null ? "" : a.BillTo.CountryName,
                             BillToCode = a.BillTo == null ? "" : a.BillTo.Code,
                             InvoiceCurrencyCode = a.InvoiceCurrency == null ? null : a.InvoiceCurrency.Code,
                             CustomerRef = a.CustomerRef,
@@ -1435,15 +1326,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             TransferTries = a.TransferTries,
                             TransferError = a.TransferError,
                             IsTransferStarted = a.IsTransferStarted,
-                            IsApprovalFailed = a.IsApprovalFailed,
-                            ApprovalInProgress = a.ApprovalInProgress,
                             TransferStatusCode = a.TransferStatusCode,
                             TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
                             AccountingExternalCode = a.AccountingExternalCode,
                             ReadyForTransfer = a.TransferStatusCode == "RD" ? true : false,
                             PaymentTermExternalId = a.PaymentTermExternalId,
                             MainEntityId = a.MainEntityId,
-                            MasterEntityId = a.MainEntityId,
                             MainEntityReference = a.MainEntityReference,
                             IsDueDateColorRed = (a.DueDate == null || a.StatusCode == "PD") ? false : (a.DueDate.Value < todayDate ? true : false),
                             IsExpectedPaymentDateColorRed = (a.ExpectedPaymentDate == null || a.StatusCode == "PD") ? false : (a.ExpectedPaymentDate.Value < todayDate ? true : false),
@@ -1452,7 +1340,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ApprovedByUserId = a.ApprovedByUserId,
                             ApprovedByUserName = a.ApprovedByUser == null ? null : (a.ApprovedByUser.Contact == null ? null : a.ApprovedByUser.Contact.EnglishName),
                             OperationalDate = a.OperationalDate,
-                            DateForInterest = a.DateForInterest,
+                            DateForVATInterest = a.DateForVATInterest,
                             SplitJournalByCurrency = a.SplitJournalByCurrency,
                             IsExternalEntity = a.IsExternalEntity,
                             IsGeneralInvoice = a.IsGeneralInvoice,
@@ -1463,8 +1351,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             RelatedInvoice = a.RelatedInvoice,
                             MetodoPagoCode = a.MetodoPagoCode,
                             UsoCFDICode = a.UsoCFDICode,
-                            RegimenFiscalCode = a.RegimenFiscalCode,
-                            PeriodCode = a.PeriodCode,
                             SATTransferStatusCode = a.SATTransferStatusCode,
                             SATTransferStatusName = a.SATTransferStatus != null ? a.SATTransferStatus.Name : null,
                             SATInvoiceStatusCode = a.SATInvoiceStatusCode,
@@ -1474,24 +1360,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BankAccountLiteId = a.BankAccountLiteId,
                             IsMultiCurrency = a.IsMultiCurrency,
                             TotalAmountForTaxReport = a.TotalAmountForTaxReport,
-                            TotalVAT = a.TotalVAT,
-                            TotaVatableAmountForTaxReport = a.TotaVatableAmountForTaxReport,
+                            TotalVAT =a.TotalVAT,
+                            TotaVatableAmountForTaxReport =a.TotaVatableAmountForTaxReport,
                             SATApprovalDate = a.SATApprovalDate,
                             IsFullAccounting = a.IsFullAccounting,
                             ARInvoiceStockId = a.ARInvoiceStockId,
-                            BranchName = a.Branch == null ? null : a.Branch.EnglishName,
-                            CreatedByPartner = a.CreatedByPartner,
-                            RegionalTaxId = a.RegionalTaxId,
-                            RegionalTaxPercentage = a.RegionalTaxPercentage,
-                            PaidDate = a.PaidDate,
-                            PaidStatus = a.PaidStatus,
-                            PartnerId = a.PartnerId,
-                            GlobalTaxCalculation = a.GlobalTaxCalculation,
-                            PaymentReferences = a.PaymentReferences,
-                            SATCancelReasonCode = a.SATCancelReasonCode,
-                            TotalAmountNotForTaxReport = (a.SubTotalInLocalCurrency ?? 0)
-                                                         - (double)(a.TotalAmountForTaxReport ?? 0),
-                            ReferenceDate = a.ReferenceDate,
                         };
 
             return query;
@@ -1506,12 +1379,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            HashSet<string> invoiceStatusCodes = new HashSet<string>();
-            invoiceStatusCodes.Add("DR");
-            invoiceStatusCodes.Add("LL");
-            invoiceStatusCodes.Add("PR");
 
-            var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("Confirmation").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch").Include("ARInvoicesSignedStatus")
+            var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus")
                          select new ARInvoiceList()
                          {
                              IsClosed = entity.IsClosed,
@@ -1526,8 +1395,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              InternalNotes = entity.InternalNotes,
                              InvoiceCurrencyId = entity.InvoiceCurrencyId,
                              InvoiceDate = entity.InvoiceDate,
-                             InvoiceNumber = invoiceStatusCodes.Contains(entity.StatusCode) ? "Draft: " + entity.DraftNumber : entity.InvoiceNumber,
-                             DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? "Draft: " + entity.DraftNumber : entity.Id,
+                             InvoiceNumber = entity.StatusCode != "DR" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
+                             DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id,
                              StatusCode = entity.StatusCode,
                              StatusName = entity.Status == null ? "" : entity.Status.Name,
                              InvoiceCurrencyExchangeRate = entity.InvoiceCurrencyExchangeRate,
@@ -1535,7 +1404,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsAutoCredit = entity.IsAutoCredit,
                              IsCancelled = entity.IsCancelled,
                              IssuedByUserId = entity.IssuedByUserId,
-                          
                              LocalCurrencyId = entity.LocalCurrencyId,
                              PrintNotes = entity.PrintNotes,
                              PrintByUserId = entity.PrintByUserId,
@@ -1544,10 +1412,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SubTotalInLocalCurrency = entity.SubTotalInLocalCurrency,
                              Tenant = entity.Tenant,
                              BillToName = entity.BillTo.EnglishName,
-                             BillToLocalName = entity.BillTo.LocalName,
-                             BillToDisplayNumber = entity.BillTo.GLAccountDisplayNumber,
-                             BillToCity = entity.BillTo == null ? "" : entity.BillTo.CityName,
-                             BillToCountry = entity.BillTo == null ? "" : entity.BillTo.CountryName,
                              BillToCode = entity.BillTo.Code,
                              BillToPartnerName = entity.BillTo.PartnerType.Name,
                              BillToPartnerId = entity.BillTo.PartnerTypeId,
@@ -1563,13 +1427,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              Sent = entity.Sent,
                              PaymentTermId = entity.PaymentTermId,
                              PaymentTermName = entity.PaymentTerm != null ? entity.PaymentTerm.EnglishName : null,
-                             ConfirmationNumberStatusName = entity.Confirmation != null ? entity.Confirmation.LocalName : null,
-                             ConfirmationNumber= entity.ConfirmationNumber,
                              IsInvoiceNumberManuallySet = entity.IsInvoiceNumberManuallySet,
                              AmountDue = entity.AmountDue,
                              ExpectedPaymentDate = entity.ExpectedPaymentDate,
                              IsPrinted = entity.IsPrinted,
-                             HasDoc = entity.DocumentFilingId != null ? true : false,
                              ProfitCurrencyCode = entity.ProfitCurrency != null ? entity.ProfitCurrency.Code : null,
                              AmountDueInLocalCurrency = entity.AmountDueInLocalCurrency,
                              AmountDueInProfitCurrency = entity.AmountDueInProfitCurrency,
@@ -1595,23 +1456,22 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TransferTries = entity.TransferTries,
                              TransferError = entity.TransferError,
                              IsTransferStarted = entity.IsTransferStarted,
-                             IsApprovalFailed = entity.IsApprovalFailed,
-                             ApprovalInProgress = entity.ApprovalInProgress,
                              TransferStatusCode = entity.TransferStatusCode,
                              TransferStatusName = entity.TransferStatus == null ? "" : entity.TransferStatus.Name,
                              AccountingExternalCode = entity.AccountingExternalCode,
                              ReadyForTransfer = entity.TransferStatusCode == "RD" ? true : false,
                              PaymentTermExternalId = entity.PaymentTermExternalId,
                              MainEntityId = entity.MainEntityId,
-                             MasterEntityId = entity.MainEntityId,
                              MainEntityReference = entity.MainEntityReference,
+                             IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
+                             IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
                              UpdateDate = entity.UpdateDate,
                              UpdatedByUserId = entity.UpdatedByUserId,
                              ApprovedDate = entity.ApprovedDate,
                              ApprovedByUserId = entity.ApprovedByUserId,
                              ApprovedByUserName = entity.ApprovedByUser == null ? null : (entity.ApprovedByUser.Contact == null ? null : entity.ApprovedByUser.Contact.EnglishName),
                              OperationalDate = entity.OperationalDate,
-                             DateForInterest = entity.DateForInterest,
+                             DateForVATInterest = entity.DateForVATInterest,
                              SplitJournalByCurrency = entity.SplitJournalByCurrency,
                              IsExternalEntity = entity.IsExternalEntity,
                              IsGeneralInvoice = entity.IsGeneralInvoice,
@@ -1624,8 +1484,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              CreditedByARInvoiceTypeCode = entity.CreditedByARInvoice == null ? null : entity.CreditedByARInvoice.ARInvoiceTypeCode,
                              MetodoPagoCode = entity.MetodoPagoCode,
                              UsoCFDICode = entity.UsoCFDICode,
-                             RegimenFiscalCode = entity.RegimenFiscalCode,
-                             PeriodCode = entity.PeriodCode,
                              SATTransferStatusCode = entity.SATTransferStatusCode,
                              SATTransferStatusName = entity.SATTransferStatus != null ? entity.SATTransferStatus.Name : null,
                              SATInvoiceStatusCode = entity.SATInvoiceStatusCode,
@@ -1640,219 +1498,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SATApprovalDate = entity.SATApprovalDate,
                              IsFullAccounting = entity.IsFullAccounting,
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
-                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
-                             CreatedByPartner = entity.CreatedByPartner,
-                             RegionalTaxId = entity.RegionalTaxId,
-                             RegionalTaxPercentage = entity.RegionalTaxPercentage,
-                             PaidDate = entity.PaidDate,
-                             PaidStatus = entity.PaidStatus,
-                             IsFromInterestBatchInvoice = entity.IsFromInterestBatchInvoice,
-                             PartnerId = entity.PartnerId,
-                             ShipmentsNumbers = entity.ShipmentsNumbers,
-                             MasterNumbers = entity.MasterNumbers,
-                             MasterShipmentNumbers = entity.MasterShipmentNumbers,
-                             HouseNumbers = entity.HouseNumbers,
-                             GlobalTaxCalculation = entity.GlobalTaxCalculation,
-                             PaymentReferences = entity.PaymentReferences,
-                             SATCancelReasonCode = entity.SATCancelReasonCode,
-                             TotalExamptFortaxReport = entity.TotalExamptFortaxReport,
-                          
-                             ConcurrencyGUID = entity.ConcurrencyGUID,
-                             DocumentTemplateId = entity.DocumentTemplateId,
-                             TotalAmountNotForTaxReport =
-                                 (entity.SubTotalInLocalCurrency ?? 0)
-                                 - (double)(entity.TotalAmountForTaxReport ?? 0),
-                             IsSigned= entity.IsSigned,
-                             IsSignedName= entity.ARInvoicesSignedStatus == null ? null: entity.ARInvoicesSignedStatus.LocalName,
-                             ReferenceDate = entity.ReferenceDate,
-
                          };
 
             return result;
         }
 
-        public IQueryable<ARInvoiceList> GetDigitalIQueryableEntityList(IQueryable<ARInvoice> iQueryable, int tenant = 0)
-        {
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            string[] invoiceStatusCodes = { "DR", "LL", "PR" };
-
-            var result = iQueryable.Include("BillTo")
-                                    .Include("BillTo.PartnerType")
-                                    .Include("CreatedByUser.Contact").Include("InvoiceCurrency")
-                                    .Include("Status")
-                                    .Include("ARInvoiceType")
-                                    .Include("IssuedByUser.Contact")
-                                    .Include("PrintByUser.Contact")
-                                    .Include("PaymentTerm")
-                                    .Include("ProfitCurrency")
-                                    .Include("LocalCurrency")
-                                    .Include("TransferStatus")
-                                    .Include("ApprovedByUser")
-                                    .Include("ApprovedByUser.Contact")
-                                    .Include("SalesmanUser")
-                                    .Include("SalesmanUser.Contact")
-                                    .Include("CreditedByARInvoice")
-                                    .Include("SATInvoiceStatus")
-                                    .Include("SATTransferStatus")
-                                    .Include("Branch")
-                                    .Include("Confirmation")
-                                    .Select(entity =>   new ARInvoiceList()
-                                    {
-                                         IsClosed = entity.IsClosed,
-                                         BillToAddressId = entity.BillToAddressId,
-                                         BillToId = entity.BillToId,
-                                         VatNumber = entity.VatNumber,
-                                         CancelledByARInvoiceId = entity.CancelledByARInvoiceId,
-                                         DueDate = entity.DueDate,
-                                         AmountInInvoiceCurrency = entity.AmountInInvoiceCurrency,
-                                         AmountInLocalCurrency = entity.AmountInLocalCurrency,
-                                         Id = entity.Id,
-                                         InternalNotes = entity.InternalNotes,
-                                         InvoiceCurrencyId = entity.InvoiceCurrencyId,
-                                         InvoiceDate = entity.InvoiceDate,
-                                         InvoiceNumber = invoiceStatusCodes.Contains(entity.StatusCode) ? "Draft: " + entity.DraftNumber : entity.InvoiceNumber,
-                                         DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? "Draft: " + entity.DraftNumber : entity.Id,
-                                         StatusCode = entity.StatusCode,
-                                         StatusName = entity.Status == null ? "" : entity.Status.Name,
-                                         InvoiceCurrencyExchangeRate = entity.InvoiceCurrencyExchangeRate,
-                                         ARInvoiceTypeCode = entity.ARInvoiceTypeCode,
-                                         IsAutoCredit = entity.IsAutoCredit,
-                                         IsCancelled = entity.IsCancelled,
-                                         IssuedByUserId = entity.IssuedByUserId,
-                                        ConfirmationNumberStatus = entity.ConfirmationNumberStatus,
-                                        LocalCurrencyId = entity.LocalCurrencyId,
-                                         PrintNotes = entity.PrintNotes,
-                                         PrintByUserId = entity.PrintByUserId,
-                                         PrintDate = entity.PrintDate,
-                                         SubTotalInInvoiceCurrency = entity.SubTotalInInvoiceCurrency,
-                                         SubTotalInLocalCurrency = entity.SubTotalInLocalCurrency,
-                                         Tenant = entity.Tenant,
-                                         BillToName = entity.BillTo.EnglishName,
-                                        BillToLocalName = entity.BillTo.LocalName,
-                                        BillToDisplayNumber = entity.BillTo.GLAccountDisplayNumber,
-                                        BillToCity = entity.BillTo == null ? "" : entity.BillTo.CityName,
-                                         BillToCountry = entity.BillTo == null ? "" : entity.BillTo.CountryName,
-                                         BillToCode = entity.BillTo.Code,
-                                         BillToPartnerName = entity.BillTo.PartnerType.Name,
-                                         BillToPartnerId = entity.BillTo.PartnerTypeId,
-                                         CreateDate = entity.CreateDate,
-                                         CreatedByUserName = entity.CreatedByUser.Contact.EnglishName,
-                                         InvoiceCurrencyCode = entity.InvoiceCurrency.Code,
-                                         ARInvoiceTypeName = entity.ARInvoiceType.Name,
-                                         CreatedByUserId = entity.CreatedByUserId,
-                                         IssuedByUserName = entity.IssuedByUser != null ? entity.IssuedByUser.Contact.EnglishName : null,
-                                        ConfirmationNumberStatusName = entity.Confirmation != null ? entity.Confirmation.Name : null,
-
-                                        LocalCurrencyCode = entity.LocalCurrency.Code,
-                                         SearchFields = entity.SearchFields,
-                                         PrintByUserName = entity.PrintByUser != null ? entity.PrintByUser.Contact.EnglishName : null,
-                                         Sent = entity.Sent,
-                                         PaymentTermId = entity.PaymentTermId,
-                                         PaymentTermName = entity.PaymentTerm != null ? entity.PaymentTerm.EnglishName : null,
-                                         IsInvoiceNumberManuallySet = entity.IsInvoiceNumberManuallySet,
-                                         AmountDue = entity.AmountDue,
-                                         ExpectedPaymentDate = entity.ExpectedPaymentDate,
-                                         IsPrinted = entity.IsPrinted,
-                                         HasDoc = entity.DocumentFilingId != null ? true : false,
-                                         ProfitCurrencyCode = entity.ProfitCurrency != null ? entity.ProfitCurrency.Code : null,
-                                         AmountDueInLocalCurrency = entity.AmountDueInLocalCurrency,
-                                         AmountDueInProfitCurrency = entity.AmountDueInProfitCurrency,
-                                         Field1 = entity.Field1,
-                                         Field2 = entity.Field2,
-                                         Field3 = entity.Field3,
-                                         Field4 = entity.Field4,
-                                         Field5 = entity.Field5,
-                                         Field6 = entity.Field6,
-                                         Field7 = entity.Field7,
-                                         Field8 = entity.Field8,
-                                         Field9 = entity.Field9,
-                                         Field10 = entity.Field10,
-                                         DebitAccount = entity.DebitAccount,
-                                         AmountInProfitCurrency = entity.AmountInProfitCurrency,
-                                         HouseNumber = entity.HouseNumber,
-                                         MasterNumber = entity.MasterNumber,
-                                         Description = entity.Description,
-                                         CustomerRef = entity.CustomerRef,
-                                         IsConstituentInvoice = entity.IsConstituentInvoice,
-                                         IsConsolidationInvoice = entity.IsConsolidationInvoice,
-                                         ConsolidationInvoiceId = entity.ConsolidationInvoiceId,
-                                         TransferTries = entity.TransferTries,
-                                         TransferError = entity.TransferError,
-                                         IsTransferStarted = entity.IsTransferStarted,
-                                        IsApprovalFailed = entity.IsApprovalFailed,
-                                        ApprovalInProgress = entity.ApprovalInProgress,
-                                         TransferStatusCode = entity.TransferStatusCode,
-                                         TransferStatusName = entity.TransferStatus == null ? "" : entity.TransferStatus.Name,
-                                         AccountingExternalCode = entity.AccountingExternalCode,
-                                         ReadyForTransfer = entity.TransferStatusCode == "RD" ? true : false,
-                                         PaymentTermExternalId = entity.PaymentTermExternalId,
-                                         MainEntityId = entity.MainEntityId,
-                                         MasterEntityId = entity.MainEntityId,
-                                         MainEntityReference = entity.MainEntityReference,
-                                         IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
-                                         IsDigitalDueDateColorRed = (entity.DueDate == null || entity.PaidStatus == "Paid") ? false : (entity.DueDate.Value < todayDate ? true : false),
-                                         IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
-                                         UpdateDate = entity.UpdateDate,
-                                         UpdatedByUserId = entity.UpdatedByUserId,
-                                         ApprovedDate = entity.ApprovedDate,
-                                         ApprovedByUserId = entity.ApprovedByUserId,
-                                         ApprovedByUserName = entity.ApprovedByUser == null ? null : (entity.ApprovedByUser.Contact == null ? null : entity.ApprovedByUser.Contact.EnglishName),
-                                         OperationalDate = entity.OperationalDate,
-                                         DateForInterest = entity.DateForInterest,
-                                         SplitJournalByCurrency = entity.SplitJournalByCurrency,
-                                         IsExternalEntity = entity.IsExternalEntity,
-                                         IsGeneralInvoice = entity.IsGeneralInvoice,
-                                         SATPaymentMethodCode = entity.SATPaymentMethodCode,
-                                         SalesmanUserId = entity.SalesmanUserId,
-                                         SalesmanUserName = entity.SalesmanUser == null ? null : (entity.SalesmanUser.Contact == null ? null : entity.SalesmanUser.Contact.EnglishName),
-                                         IsCustomsChargesOnly = entity.IsCustomsChargesOnly,
-                                         RelatedInvoice = entity.RelatedInvoice,
-                                         CreditedByARInvoiceId = entity.CreditedByARInvoiceId,
-                                         CreditedByARInvoiceTypeCode = entity.CreditedByARInvoice == null ? null : entity.CreditedByARInvoice.ARInvoiceTypeCode,
-                                         MetodoPagoCode = entity.MetodoPagoCode,
-                                         UsoCFDICode = entity.UsoCFDICode,
-                                         RegimenFiscalCode = entity.RegimenFiscalCode,
-                                         PeriodCode = entity.PeriodCode,
-                                         SATTransferStatusCode = entity.SATTransferStatusCode,
-                                         SATTransferStatusName = entity.SATTransferStatus != null ? entity.SATTransferStatus.Name : null,
-                                         SATInvoiceStatusCode = entity.SATInvoiceStatusCode,
-                                         SATInvoiceStatusName = entity.SATInvoiceStatus != null ? entity.SATInvoiceStatus.Name : null,
-                                         TransmissionError = entity.TransmissionError,
-                                         Intercompany = entity.Intercompany,
-                                         BankAccountLiteId = entity.BankAccountLiteId,
-                                         IsMultiCurrency = entity.IsMultiCurrency,
-                                         TotalAmountForTaxReport = entity.TotalAmountForTaxReport,
-                                         TotalVAT = entity.TotalVAT,
-                                         TotaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport,
-                                         SATApprovalDate = entity.SATApprovalDate,
-                                         IsFullAccounting = entity.IsFullAccounting,
-                                         IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
-                                         BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
-                                         CreatedByPartner = entity.CreatedByPartner,
-                                         RegionalTaxId = entity.RegionalTaxId,
-                                         RegionalTaxPercentage = entity.RegionalTaxPercentage,
-                                         PaidDate = entity.PaidDate,
-                                         PaidStatus = entity.PaidStatus,
-                                         IsFromInterestBatchInvoice = entity.IsFromInterestBatchInvoice,
-                                         PartnerId = entity.PartnerId,
-                                         ShipmentsNumbers = entity.ShipmentsNumbers,
-                                         MasterNumbers = entity.MasterNumbers,
-                                         MasterShipmentNumbers = entity.MasterShipmentNumbers,
-                                         HouseNumbers = entity.HouseNumbers,
-                                         GlobalTaxCalculation = entity.GlobalTaxCalculation,
-                                         PaymentReferences = entity.PaymentReferences,
-                                         SATCancelReasonCode = entity.SATCancelReasonCode,
-                                         TotalExamptFortaxReport = entity.TotalExamptFortaxReport,
-                                         DocumentTemplateId = entity.DocumentTemplateId,
-                                         ConcurrencyGUID = entity.ConcurrencyGUID,
-                                         ReferenceDate = entity.ReferenceDate,
-                                    });
-            return result;
-        }
-
         public List<ARInvoicePM> GetInvoicesByCustomer(string customerId, int tenant)
         {
-            List<ARInvoicePM> invoices = (from a in repository.context.ARInvoices.Include("BillTo").Include("InvoiceCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch")
+            List<ARInvoicePM> invoices = (from a in repository.context.ARInvoices.Include("BillTo").Include("InvoiceCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
                                           where a.BillToId == customerId && a.Tenant == tenant
                                           select new ARInvoicePM()
                                           {
@@ -1886,7 +1539,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               IsAutoCredit = a.IsAutoCredit,
                                               IsCancelled = a.IsCancelled,
                                               IssuedByUserId = a.IssuedByUserId,
-                                             
                                               LocalCurrencyId = a.LocalCurrencyId,
                                               PrintNotes = a.PrintNotes,
                                               PrintByUserId = a.PrintByUserId,
@@ -1908,13 +1560,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               UpdatedByUserId = a.UpdatedByUserId,
                                               BranchId = a.BranchId,
                                               IsPrinted = a.IsPrinted,
-                                              HasDoc = a.DocumentFilingId != null ? true : false,
                                               DebitAccount = a.DebitAccount,
                                               BillToName = a.BillTo == null ? "" : a.BillTo.EnglishName,
-                                              BillToLocalName = a.BillTo == null ? "" : a.BillTo.LocalName,
-                                              BillToDisplayNumber = a.BillTo == null ? "" : a.BillTo.GLAccountDisplayNumber,
-                                              BillToCity = a.BillTo == null ? "" : a.BillTo.CityName,
-                                              BillToCountry = a.BillTo == null ? "" : a.BillTo.CountryName,
                                               BillToCode = a.BillTo == null ? "" : a.BillTo.Code,
                                               BillToPartnerTypeId = a.BillTo == null ? "" : a.BillTo.PartnerTypeId,
                                               InvoiceCurrencyCode = a.InvoiceCurrency != null ? a.InvoiceCurrency.Code : null,
@@ -1925,8 +1572,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               TransferTries = a.TransferTries,
                                               TransferError = a.TransferError,
                                               IsTransferStarted = a.IsTransferStarted,
-                                              IsApprovalFailed = a.IsApprovalFailed,
-                                              ApprovalInProgress = a.ApprovalInProgress,
                                               TransferStatusCode = a.TransferStatusCode,
                                               TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
                                               AccountingExternalCode = a.AccountingExternalCode,
@@ -1936,7 +1581,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               ApprovedByUserId = a.ApprovedByUserId,
                                               ApprovedByUserName = a.ApprovedByUser == null ? null : (a.ApprovedByUser.Contact == null ? null : a.ApprovedByUser.Contact.EnglishName),
                                               OperationalDate = a.OperationalDate,
-                                              DateForInterest = a.DateForInterest,
+                                              DateForVATInterest = a.DateForVATInterest,
                                               SplitJournalByCurrency = a.SplitJournalByCurrency,
                                               IsExternalEntity = a.IsExternalEntity,
                                               IsGeneralInvoice = a.IsGeneralInvoice,
@@ -1948,8 +1593,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               RelatedInvoice = a.RelatedInvoice,
                                               MetodoPagoCode = a.MetodoPagoCode,
                                               UsoCFDICode = a.UsoCFDICode,
-                                              RegimenFiscalCode = a.RegimenFiscalCode,
-                                              PeriodCode = a.PeriodCode,
                                               SATTransferStatusCode = a.SATTransferStatusCode,
                                               SATInvoiceStatusCode = a.SATInvoiceStatusCode,
                                               TransmissionError = a.TransmissionError,
@@ -1963,29 +1606,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               IsFullAccounting = a.IsFullAccounting,
                                               ARInvoiceStockId = a.ARInvoiceStockId,
                                               IsInvoiceNumberFromStock = a.IsInvoiceNumberFromStock,
-                                              BranchName = a.Branch == null ? null : a.Branch.EnglishName,
-                                              CreatedByPartner = a.CreatedByPartner,
-                                              RegionalTaxId = a.RegionalTaxId,
-                                              RegionalTaxPercentage = a.RegionalTaxPercentage,
-                                              PaidDate = a.PaidDate,
-                                              PaidStatus = a.PaidStatus,
-                                              PartnerId = a.PartnerId,
-                                              ShipmentsNumbers = a.ShipmentsNumbers,
-                                              MasterNumbers = a.MasterNumbers,
-                                              MasterShipmentNumbers = a.MasterShipmentNumbers,
-                                              HouseNumbers = a.HouseNumbers,
-                                              GlobalTaxCalculation = a.GlobalTaxCalculation,
-                                              PaymentReferences = a.PaymentReferences,
-                                              SATCancelReasonCode = a.SATCancelReasonCode,
-                                              TotalEquation = a.TotalEquation,
-                                              DocumentTemplateId = a.DocumentTemplateId,
-                                              IsSigned=a.IsSigned,
-                                              ReferenceDate = a.ReferenceDate,
                                           }).ToList();
             return invoices;
         }
 
-
+  
         private ARInvoicePM GetSingleMappedEntityPM(ARInvoice entityPOCO, bool withComposition)
         {
             ARInvoicePM entityPM = null;
@@ -1995,12 +1620,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             {
                 int tenant = entityPOCO.Tenant;
                 string entityId = entityPOCO.Id;
-                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
                 entityPM = new ARInvoicePM()
                 {
-                    StatusName = entityPOCO.Status?.Name,
-                    ARInvoiceTypeName = entityPOCO.ARInvoiceType?.Name,
                     ProfitCurrencyExchangeRate = entityPOCO.ProfitCurrencyExchangeRate,
                     ProfitCurrencyId = entityPOCO.ProfitCurrencyId,
                     SubTotalInInvoiceCurrency = entityPOCO.SubTotalInInvoiceCurrency,
@@ -2029,7 +1651,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsAutoCredit = entityPOCO.IsAutoCredit,
                     IsCancelled = entityPOCO.IsCancelled,
                     IssuedByUserId = entityPOCO.IssuedByUserId,
-                    ConfirmationNumberStatus = entityPOCO.ConfirmationNumberStatus,
                     LocalCurrencyId = entityPOCO.LocalCurrencyId,
                     PrintNotes = entityPOCO.PrintNotes,
                     PrintByUserId = entityPOCO.PrintByUserId,
@@ -2042,7 +1663,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     ExchangeRateDate = entityPOCO.ExchangeRateDate,
                     MainEntityReference = entityPOCO.MainEntityReference,
                     MainEntityId = entityPOCO.MainEntityId,
-                    MasterEntityId = entityPOCO.MainEntityId,
                     IsClosed = entityPOCO.IsClosed,
                     HouseNumber = entityPOCO.HouseNumber,
                     MasterNumber = entityPOCO.MasterNumber,
@@ -2052,7 +1672,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     UpdatedByUserId = entityPOCO.UpdatedByUserId,
                     BranchId = entityPOCO.BranchId,
                     IsPrinted = entityPOCO.IsPrinted,
-                    HasDoc = entityPOCO.DocumentFilingId != null ? true : false,
                     DebitAccount = entityPOCO.DebitAccount,
                     BillToId = entityPOCO.BillToId,
                     BillToAddressId = entityPOCO.BillToAddressId,
@@ -2063,36 +1682,32 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     TransferTries = entityPOCO.TransferTries,
                     TransferError = entityPOCO.TransferError,
                     IsTransferStarted = entityPOCO.IsTransferStarted,
-                    IsApprovalFailed = entityPOCO.IsApprovalFailed,
-                    ApprovalInProgress = entityPOCO.ApprovalInProgress,
                     TransferStatusCode = entityPOCO.TransferStatusCode,
                     TransferStatusName = entityPOCO.TransferStatus == null ? "" : entityPOCO.TransferStatus.Name,
                     AccountingExternalCode = entityPOCO.AccountingExternalCode,
-                    ReadyForTransfer = entityPOCO.TransferStatusCode == "RD",
+                    ReadyForTransfer = entityPOCO.TransferStatusCode == "RD" ? true : false,
                     PaymentTermExternalId = entityPOCO.PaymentTermExternalId,
                     ApprovedDate = entityPOCO.ApprovedDate,
                     ApprovedByUserId = entityPOCO.ApprovedByUserId,
-                    ApprovedByUserName = entityPOCO.ApprovedByUser?.Contact?.EnglishName,
+                    ApprovedByUserName = entityPOCO.ApprovedByUser == null ? null : (entityPOCO.ApprovedByUser.Contact == null ? null : entityPOCO.ApprovedByUser.Contact.EnglishName),
                     OperationalDate = entityPOCO.OperationalDate,
-                    DateForInterest = entityPOCO.DateForInterest,
+                    DateForVATInterest = entityPOCO.DateForVATInterest,
                     SplitJournalByCurrency = entityPOCO.SplitJournalByCurrency,
                     IsExternalEntity = entityPOCO.IsExternalEntity,
                     IsGeneralInvoice = entityPOCO.IsGeneralInvoice,
                     ExternalAccountingEntityId = entityPOCO.ExternalAccountingEntityId,
                     SATPaymentMethodCode = entityPOCO.SATPaymentMethodCode,
                     SalesmanUserId = entityPOCO.SalesmanUserId,
-                    SalesmanUserName = entityPOCO.SalesmanUser?.Contact?.EnglishName,
+                    SalesmanUserName = entityPOCO.SalesmanUser == null ? null : (entityPOCO.SalesmanUser.Contact == null ? null : entityPOCO.SalesmanUser.Contact.EnglishName),
                     TransmissionError = entityPOCO.TransmissionError,
                     IsCustomsChargesOnly = entityPOCO.IsCustomsChargesOnly,
                     RelatedInvoice = entityPOCO.RelatedInvoice,
                     MetodoPagoCode = entityPOCO.MetodoPagoCode,
                     UsoCFDICode = entityPOCO.UsoCFDICode,
-                    RegimenFiscalCode = entityPOCO.RegimenFiscalCode,
-                    PeriodCode = entityPOCO.PeriodCode,
                     SATTransferStatusCode = entityPOCO.SATTransferStatusCode,
                     SATInvoiceStatusCode = entityPOCO.SATInvoiceStatusCode,
-                    SATTransferStatusName = entityPOCO.SATTransferStatus?.Name,
-                    SATInvoiceStatusName = entityPOCO.SATInvoiceStatus?.Name,
+                    SATTransferStatusName = entityPOCO.SATTransferStatus != null ? entityPOCO.SATTransferStatus.Name : null,
+                    SATInvoiceStatusName = entityPOCO.SATInvoiceStatus != null ? entityPOCO.SATInvoiceStatus.Name : null,
                     Intercompany = entityPOCO.Intercompany,
                     BankAccountLiteId = entityPOCO.BankAccountLiteId,
                     IsMultiCurrency = entityPOCO.IsMultiCurrency,
@@ -2103,34 +1718,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsFullAccounting = entityPOCO.IsFullAccounting,
                     ARInvoiceStockId = entityPOCO.ARInvoiceStockId,
                     IsInvoiceNumberFromStock = entityPOCO.IsInvoiceNumberFromStock,
-                    DocumentFilingId = entityPOCO.DocumentFilingId,
-                    BranchName = entityPOCO.Branch?.EnglishName,
-                    CreatedByPartner = entityPOCO.CreatedByPartner,
-                    RegionalTaxId = entityPOCO.RegionalTaxId,
-                    RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
-                    PaidDate = entityPOCO.PaidDate,
-                    PaidStatus = entityPOCO.PaidStatus,
-                    IsFromInterestBatchInvoice= entityPOCO.IsFromInterestBatchInvoice,
-                    PartnerId = entityPOCO.PartnerId,
-                    ShipmentsNumbers = entityPOCO.ShipmentsNumbers,
-                    MasterNumbers = entityPOCO.MasterNumbers,
-                    MasterShipmentNumbers = entityPOCO.MasterShipmentNumbers,
-                    HouseNumbers = entityPOCO.HouseNumbers,
-                    GlobalTaxCalculation = entityPOCO.GlobalTaxCalculation,
-                    PaymentReferences = entityPOCO.PaymentReferences,
-                    SATCancelReasonCode = entityPOCO.SATCancelReasonCode,
-                    BillToGLAccountId = entityPOCO.BillToGLAccountId,
-                    IsDigitalDueDateColorRed = (entityPOCO.DueDate == null || entityPOCO.PaidStatus == "Paid") ? false : (entityPOCO.DueDate.Value < todayDate ? true : false),
-                    TotalEquation = entityPOCO.TotalEquation,
-                    SATXML = entityPOCO.SATXML,
-                    DocumentTemplateId = entityPOCO.DocumentTemplateId,
-                    TransferStatusCode_Original = entityPOCO.TransferStatusCode,
-                    IsTransferStarted_Original = entityPOCO.IsTransferStarted,
-                    TransferError_Original = entityPOCO.TransferError,
-                    IsSigned=entityPOCO.IsSigned,
-                    ConfirmationNumber=entityPOCO.ConfirmationNumber,
-                    ConfirmationNumberStatusName = entityPOCO.Confirmation != null ? entityPOCO.Confirmation.LocalName : null,
-                    ReferenceDate = entityPOCO.ReferenceDate,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2138,29 +1725,22 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
 
-                var myCardRepository = new CardRepository(myCommonContext);
-
-                var myBillTo = myCardRepository.GetSingleCard(entityPOCO.BillToId, tenant);
-                SetInterestReportFields(entityPM);
-
+                // Include Bill To is not enough to get customer data
+                CardRepository myCardRepository = new CardRepository(myCommonContext);
+                Card myBillTo = myCardRepository.GetSingleCard(entityPOCO.BillToId, tenant);
                 if (myBillTo != null)
                 {
                     entityPM.BillToName = myBillTo.EnglishName;
-                    entityPM.BillToLocalName = myBillTo.LocalName;
-                    entityPM.BillToDisplayNumber = myBillTo.GLAccountDisplayNumber;
                     entityPM.BillToCode = myBillTo.Code;
                     entityPM.BillToPartnerTypeId = myBillTo.PartnerTypeId;
                     entityPM.IsBillToAllowConsolidation = myBillTo.EnableConsolidationInvoices;
-                    entityPM.BillToContactId = myBillTo.PrimaryContactId;
 
                     if (myBillTo.Customer != null)
                     {
                         if (myBillTo.Customer.AccountManagerUserId != null)
                         {
-                            var myContactRepository = new ContactRepository(myCommonContext);
-
-                            var myContact = myContactRepository.GetSingleContact(myBillTo.Customer.AccountManagerUserId, tenant);
-
+                            ContactRepository myContactRepository = new ContactRepository(myCommonContext);
+                            Contact myContact = myContactRepository.GetSingleContact(myBillTo.Customer.AccountManagerUserId, tenant);
                             if (myContact != null)
                             {
                                 entityPM.BillToAccountManagerName = myContact.EnglishName;
@@ -2172,11 +1752,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         entityPM.BillToCreditLimitOpenBalance = myBillTo.Customer.CreditLimitOpenBalance;
                         entityPM.BillToCreditLimitWarningPercentage = myBillTo.Customer.CreditLimitWarningPercentage;
                         entityPM.BillToBlockNewInvoiceCreation = myBillTo.Customer.BlockNewInvoiceCreation;
-                        entityPM.BillToIsCustomer = myBillTo.Customer.IsCustomer;
                         entityPM.BillToCreditLimitActualAmount = this.GetCustomerCreditLimitActualAmount(entityPOCO.BillToId, tenant);
 
                         double? ActualBalance = 0;
-
                         if (entityPM.BillToCreditLimitOpenBalance != null)
                         {
                             ActualBalance += entityPM.BillToCreditLimitOpenBalance;
@@ -2193,8 +1771,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     else if (myBillTo.PartnerTypeId == "AG")
                     {
                         AgentRepository myRepository = new AgentRepository(myCommonContext);
-                        Agent myAgent = myRepository.GetSingleAgent(tenant, entityPOCO.BillToId);
-
+                        Agent myAgent = myRepository.GetSingleAgent(tenant, entityPOCO.Id);
                         if (myAgent != null)
                         {
                             entityPM.BillToIsCreditLimitEnabled = myAgent.IsCreditLimitEnabled;
@@ -2205,93 +1782,61 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 if (withComposition)
                 {
-                    var invoiceLineRepository = new ARInvoiceLineRepository(repository.context);
-                    var invoiceEntityRepository = new ARInvoiceEntityRepository(repository.context);
-                    var arInvoicePaymentRepository = new ARInvoicePaymentRepository(repository.context);
-                    var myTotalVATRepository = new ARInvoiceTotalVATRepository(repository.context);
-                    var arInvoiceLineQuery = new ARInvoiceLineQuery(invoiceLineRepository);
-                    var arInvoiceEntityQuery = new ARInvoiceEntityQuery(invoiceEntityRepository);
-                    var arInvoicePaymentQuery = new ARInvoicePaymentQuery(arInvoicePaymentRepository);
-                    var myTotalVATQuery = new ARInvoiceTotalVATQuery(myTotalVATRepository);
+                    ARInvoiceLineRepository invoiceLineRepository = new ARInvoiceLineRepository(repository.context);
+                    ARInvoiceEntityRepository invoiceEntityRepository = new ARInvoiceEntityRepository(repository.context);
+                    ARInvoicePaymentRepository arInvoicePaymentRepository = new ARInvoicePaymentRepository(repository.context);
+                    ARInvoiceTotalVATRepository myTotalVATRepository = new ARInvoiceTotalVATRepository(repository.context);
+                    ARInvoiceLineQuery arInvoiceLineQuery = new ARInvoiceLineQuery(invoiceLineRepository);
+                    ARInvoiceEntityQuery arInvoiceEntityQuery = new ARInvoiceEntityQuery(invoiceEntityRepository);
+                    ARInvoicePaymentQuery arInvoicePaymentQuery = new ARInvoicePaymentQuery(arInvoicePaymentRepository);
+                    ARInvoiceTotalVATQuery myTotalVATQuery = new ARInvoiceTotalVATQuery(myTotalVATRepository);
 
                     entityPM.InvoiceLines = arInvoiceLineQuery.GetInvoiceLinePMsByInvoiceId(entityId, tenant);
-                    if (IsAccountingActivated(tenant))
-                        entityPM.InvoiceLines = arInvoiceLineQuery.GetGLAccountLocalNameAndDisplayNumber(entityPM.InvoiceLines, entityId, tenant);
                     entityPM.InvoiceEntities = arInvoiceEntityQuery.GetInvoiceEntityPMsForInvoice(entityId, tenant);
                     entityPM.InvoicePayments = arInvoicePaymentQuery.GetARInvoicePaymentPMsForInvoice(entityId, tenant);
                     entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(entityId, tenant).ToList();
 
                     if (entityPM.IsConsolidationInvoice)
                     {
-                        entityPM.ConstituentInvoices = repository.context
-                                                                 .ARInvoices
-                                                                 .Where(d => d.Tenant == tenant
-                                                                             && d.IsConstituentInvoice == true
-                                                                             && d.ConsolidationInvoiceId == entityPM.Id)
-                                                                 .Select(d => new ConstituentPM
-                                                                 {
-                                                                     Id = d.Id,
-                                                                     Tenant = d.Tenant,
-                                                                     ConsolidationInvoiceId = d.ConsolidationInvoiceId,
-                                                                     InvoiceNumber = d.InvoiceNumber,
-                                                                     CustomerRef = d.CustomerRef,
-                                                                     MasterNumber = d.MasterNumber,
-                                                                     HouseNumber = d.HouseNumber,
-                                                                     MainEntityReference = d.MainEntityReference,
-                                                                     AmountInInvoiceCurrency = d.AmountInInvoiceCurrency,
-                                                                     SubTotalInInvoiceCurrency = d.SubTotalInInvoiceCurrency,
-                                                                     ConcurrencyGUID = d.ConcurrencyGUID,
-                                                                 }).ToList();
-
-                        var ids = entityPM.ConstituentInvoices
-                                          .Select(a => a.Id)
-                                          .ToList();
-
-                        var totalValts = myTotalVATQuery
-                                         .GetTotalVATsByInvoicesIds(ids, tenant)
-                                         .GroupBy(a => a.ARInvoiceId)
-                                         .ToDictionary(a => a.Key,
-                                                       x => x.Sum(a => a.InvoiceCurrencyVatableAmount));
-
-                        foreach (var item in entityPM.ConstituentInvoices)
-                        {
-                            item.TotalVATs = totalValts.ContainsKey(item.Id)
-                                             ? totalValts[item.Id]
-                                             : 0.00;
-                        }
+                        entityPM.ConstituentInvoices = (from d in repository.context.ARInvoices
+                                                        where d.Tenant == tenant
+                                                        && d.IsConstituentInvoice == true
+                                                        && d.ConsolidationInvoiceId == entityPM.Id
+                                                        select new ConstituentPM()
+                                                        {
+                                                            Id = d.Id,
+                                                            Tenant = d.Tenant,
+                                                            ConsolidationInvoiceId = d.ConsolidationInvoiceId,
+                                                        }).ToList();
                     }
-
                 }
 
-                var myPaymentTermRepository = new PaymentTermRepository(myCommonContext);
-                var paymentTerm = myPaymentTermRepository.GetSinglePaymentTerm(entityPOCO.PaymentTermId, tenant);
-
+                PaymentTermRepository myPaymentTermRepository = new PaymentTermRepository(myCommonContext);
+                PaymentTerm paymentTerm = myPaymentTermRepository.GetSinglePaymentTerm(entityPOCO.PaymentTermId, tenant);
                 if (paymentTerm != null)
                 {
                     entityPM.PaymentTermName = paymentTerm.EnglishName;
                 }
 
                 Currency currency = CurrencyRepository.GetSingleCurrency(entityPOCO.InvoiceCurrencyId, tenant, true);
-                entityPM.InvoiceCurrencyCode = currency?.Code;
+                entityPM.InvoiceCurrencyCode = currency != null ? currency.Code : null;
 
                 Currency localCurrency = CurrencyRepository.GetSingleCurrency(entityPOCO.LocalCurrencyId, tenant, true);
-                entityPM.LocalCurrencyCode = localCurrency?.Code;
+                entityPM.LocalCurrencyCode = localCurrency != null ? localCurrency.Code : null;
 
                 Currency profitCurrency = CurrencyRepository.GetSingleCurrency(entityPOCO.ProfitCurrencyId, tenant, true);
-                entityPM.ProfitCurrencyCode = profitCurrency?.Code;
+                entityPM.ProfitCurrencyCode = profitCurrency != null ? profitCurrency.Code : null;
 
                 ARInvoiceStatusRepository myARInvoiceStatusRepository = new ARInvoiceStatusRepository(repository.context);
                 ARInvoiceStatus invoicestatus = myARInvoiceStatusRepository.GetSingleARInvoiceStatus(entityPOCO.StatusCode);
-                entityPM.StatusName = invoicestatus?.Name;
+                entityPM.StatusName = invoicestatus != null ? invoicestatus.Name : null;
 
                 ARInvoiceTransferStatusRepository myARInvoiceTransferStatusRepository = new ARInvoiceTransferStatusRepository(repository.context);
                 ARInvoiceTransferStatus transferStatus = myARInvoiceTransferStatusRepository.GetSingleARInvoiceTransferStatus(entityPOCO.TransferStatusCode);
-                entityPM.TransferStatusName = transferStatus?.Name;
+                entityPM.TransferStatusName = transferStatus != null ? transferStatus.Name : null;
 
-                var shipment = new ShipmentRepository(tenant).GetSingleForARInvoiceByIdAndTenant(entityPOCO.MainEntityId, tenant);
-                entityPM.MainEntityStatus = shipment?.EntityStatus?.Name;
-                entityPM.AgentReference1 = shipment?.AgentReference1;
-                entityPM.AgentReference2 = shipment?.AgentReference2;
+                ShipmentRepository myShipmentRepository = new ShipmentRepository(tenant);
+                entityPM.MainEntityStatus = myShipmentRepository.GetShipmentStatusName(entityPOCO.MainEntityId, tenant);
 
                 if (entityPM.IsAutoCredit)
                 {
@@ -2317,14 +1862,23 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }
                 }
 
+                foreach (ARInvoiceEntityPM invEntity in entityPM.InvoiceEntities)
+                {
+                    entityPM.ConnectedEntityReferences = entityPM.ConnectedEntityReferences + "," + invEntity.EntityReference;
+                }
+
+                if (entityPM.ConnectedEntityReferences != null)
+                {
+                    entityPM.ConnectedEntityReferences = entityPM.ConnectedEntityReferences.TrimStart(',');
+                }
+
+                //Full Accounting 
                 TenantRepository tenantRepository = new TenantRepository(myCommonContext);
                 Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
                 if (tenantPOCO != null && tenantPOCO.AccountingActivated)
                 {
-                    var rep = new JournalRepository(tenant);
-
-                    var journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id, "2", tenant);
-
+                    JournalRepository rep = new JournalRepository(tenant);
+                    JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, tenant);
                     if (journal != null)
                     {
                         entityPM.JournalId = journal.JournalId;
@@ -2360,61 +1914,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return securedEntityPM;
         }
 
-        private void SetInterestReportFields(ARInvoicePM invoice)
-        {
-            InterestReport interestReport = new InterestReport();
-            if (invoice.ARInvoiceTypeCode == InterestReportInvoiceTypeCode && IsAccountingActivated(invoice.Tenant))
-            {
-                InterestReportRepository interestReportRepository = new InterestReportRepository(invoice.Tenant);
-                interestReport = interestReportRepository.GetSingleByARInvoiceId(invoice.Id, invoice.Tenant);
-            }
-            if (interestReport != null)
-            {
-                invoice.InterestReportNumber = interestReport.ReportNumber;
-                invoice.InterestReportId = interestReport.Id;
-            }
-        }
-
-        public InterestReport GetInterestReport(ARInvoice invoice)
-        {
-            InterestReport interestReport = null;
-            if (invoice.ARInvoiceTypeCode == InterestReportInvoiceTypeCode && IsAccountingActivated(invoice.Tenant))
-            {
-                InterestReportRepository interestReportRepository = new InterestReportRepository(invoice.Tenant);
-                interestReport = interestReportRepository.GetSingleByARInvoiceId(invoice.Id, invoice.Tenant);
-            }
-            return interestReport;
-        }
-
-
-        private bool IsAccountingActivated(int tenant)
-        {
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            tenantPoco = tenantRepository.GetSingleTenant(tenant);
-            return tenantPoco.AccountingActivated;
-        }
-
-        public IQueryable<ARInvoice> GetAllInterestInvoices(DateTime fromDate, DateTime toDate, bool ShowPrintedInvoice, int tenant)
-        {
-            var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode == "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate select a);
-            if (!ShowPrintedInvoice)
-            {
-                result = result.Where(s => s.IsSigned != ARInvoiceSignedStatusValues.SignedAndSentByEmail);
-            }
-            return result;
-        }
-
-        public List<string> GetInterestInvoiceNumbersByIds(List<string> ARInvoiceIds, int tenant)
-        {
-            var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode == "IT" && ARInvoiceIds.Contains(a.Id) select a.InvoiceNumber).ToList();
-
-            return result;
-        }
         public IQueryable<ARInvoiceList> GetInvoiceListByTenant(int tenant)
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            var result = from entity in repository.context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch").Include("Confirmation")
+            var result = from entity in repository.context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
                          where entity.Tenant == tenant && entity.StatusCode != "LL"
                          select new ARInvoiceList()
                          {
@@ -2430,8 +1934,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              InternalNotes = entity.InternalNotes,
                              InvoiceCurrencyId = entity.InvoiceCurrencyId,
                              InvoiceDate = entity.InvoiceDate,
-                             InvoiceNumber = entity.StatusCode != "DR" && entity.StatusCode != "LL" && entity.StatusCode != "PR" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
-                             DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? "Draft: " + entity.DraftNumber : entity.Id,
+                             InvoiceNumber = entity.StatusCode != "DR" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
+                             DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id,
                              StatusCode = entity.StatusCode,
                              StatusName = entity.Status == null ? "" : entity.Status.Name,
                              InvoiceCurrencyExchangeRate = entity.InvoiceCurrencyExchangeRate,
@@ -2439,8 +1943,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsAutoCredit = entity.IsAutoCredit,
                              IsCancelled = entity.IsCancelled,
                              IssuedByUserId = entity.IssuedByUserId,
-                             ConfirmationNumberStatus = entity.ConfirmationNumberStatus,
-
                              LocalCurrencyId = entity.LocalCurrencyId,
                              PrintNotes = entity.PrintNotes,
                              PrintByUserId = entity.PrintByUserId,
@@ -2449,10 +1951,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SubTotalInLocalCurrency = entity.SubTotalInLocalCurrency,
                              Tenant = entity.Tenant,
                              BillToName = entity.BillTo.EnglishName,
-                             BillToLocalName = entity.BillTo.LocalName,
-                             BillToDisplayNumber = entity.BillTo.GLAccountDisplayNumber,
-                             BillToCity = entity.BillTo == null ? "" : entity.BillTo.CityName,
-                             BillToCountry = entity.BillTo == null ? "" : entity.BillTo.CountryName,
                              BillToCode = entity.BillTo.Code,
                              BillToPartnerName = entity.BillTo.PartnerType.Name,
                              BillToPartnerId = entity.BillTo.PartnerTypeId,
@@ -2462,8 +1960,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ARInvoiceTypeName = entity.ARInvoiceType.Name,
                              CreatedByUserId = entity.CreatedByUserId,
                              IssuedByUserName = entity.IssuedByUser != null ? entity.IssuedByUser.Contact.EnglishName : null,
-                             ConfirmationNumberStatusName = entity.Confirmation != null ? entity.Confirmation.Name : null,
-
                              LocalCurrencyCode = entity.LocalCurrency.Code,
                              SearchFields = entity.SearchFields,
                              PrintByUserName = entity.PrintByUser != null ? entity.PrintByUser.Contact.EnglishName : null,
@@ -2474,7 +1970,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              AmountDue = entity.AmountDue,
                              ExpectedPaymentDate = entity.ExpectedPaymentDate,
                              IsPrinted = entity.IsPrinted,
-                             HasDoc = entity.DocumentFilingId != null ? true : false,
                              ProfitCurrencyCode = entity.ProfitCurrency != null ? entity.ProfitCurrency.Code : null,
                              AmountDueInLocalCurrency = entity.AmountDueInLocalCurrency,
                              AmountDueInProfitCurrency = entity.AmountDueInProfitCurrency,
@@ -2500,15 +1995,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TransferTries = entity.TransferTries,
                              TransferError = entity.TransferError,
                              IsTransferStarted = entity.IsTransferStarted,
-                             IsApprovalFailed = entity.IsApprovalFailed,
-                             ApprovalInProgress = entity.ApprovalInProgress,
                              TransferStatusCode = entity.TransferStatusCode,
                              TransferStatusName = entity.TransferStatus == null ? "" : entity.TransferStatus.Name,
                              AccountingExternalCode = entity.AccountingExternalCode,
                              ReadyForTransfer = entity.TransferStatusCode == "RD" ? true : false,
                              PaymentTermExternalId = entity.PaymentTermExternalId,
                              MainEntityId = entity.MainEntityId,
-                             MasterEntityId = entity.MainEntityId,
                              MainEntityReference = entity.MainEntityReference,
                              IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
                              IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
@@ -2519,7 +2011,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ApprovedByUserId = entity.ApprovedByUserId,
                              ApprovedByUserName = entity.ApprovedByUser == null ? null : (entity.ApprovedByUser.Contact == null ? null : entity.ApprovedByUser.Contact.EnglishName),
                              OperationalDate = entity.OperationalDate,
-                             DateForInterest = entity.DateForInterest,
+                             DateForVATInterest = entity.DateForVATInterest,
                              SplitJournalByCurrency = entity.SplitJournalByCurrency,
                              IsExternalEntity = entity.IsExternalEntity,
                              IsGeneralInvoice = entity.IsGeneralInvoice,
@@ -2529,8 +2021,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsCustomsChargesOnly = entity.IsCustomsChargesOnly,
                              MetodoPagoCode = entity.MetodoPagoCode,
                              UsoCFDICode = entity.UsoCFDICode,
-                             RegimenFiscalCode = entity.RegimenFiscalCode,
-                             PeriodCode = entity.PeriodCode,
                              SATTransferStatusCode = entity.SATTransferStatusCode,
                              SATTransferStatusName = entity.SATTransferStatus != null ? entity.SATTransferStatus.Name : null,
                              SATInvoiceStatusCode = entity.SATInvoiceStatusCode,
@@ -2546,28 +2036,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsFullAccounting = entity.IsFullAccounting,
                              ARInvoiceStockId = entity.ARInvoiceStockId,
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
-                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
-                             CreatedByPartner = entity.CreatedByPartner,
-                             SATXML = entity.SATXML,
-                             RegionalTaxId = entity.RegionalTaxId,
-                             RegionalTaxPercentage = entity.RegionalTaxPercentage,
-                             PaidDate = entity.PaidDate,
-                             PaidStatus = entity.PaidStatus,
-                             PartnerId = entity.PartnerId,
-                             PartnerName = entity.Partner.EnglishName,
-                             GlobalTaxCalculation = entity.GlobalTaxCalculation,
-                             PaymentReferences = entity.PaymentReferences,
-                             SATCancelReasonCode = entity.SATCancelReasonCode,
-                             DocumentTemplateId = entity.DocumentTemplateId,
-                             TotalAmountNotForTaxReport = (entity.SubTotalInLocalCurrency ?? 0)
-                                                          - (double)(entity.TotalAmountForTaxReport ?? 0),
-                             ReferenceDate = entity.ReferenceDate,
                          };
 
             return result;
         }
 
-        public double? GetCustomerCreditLimitActualAmount(string myCustomerId, int tenant, string invoiceId = null)
+        public double? GetCustomerCreditLimitActualAmount(string myCustomerId, int tenant)
         {
             double? myResult = 0;
 
@@ -2577,30 +2051,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-                double? sumOfAmountDue = 0;
-
-                if (invoiceId == null)
-                {
-                    sumOfAmountDue = (from d in myContext.ARInvoices
-                                      where d.Tenant == tenant
-                                      && d.BillToId == myCustomerId
-                                      && d.StatusCode != "VD"
-                                      && d.StatusCode != "AR"
-                                      && d.StatusCode != "LL"
-                                      select d).Sum(s => s.AmountDueInLocalCurrency);
-                }
-
-                else
-                {
-                    sumOfAmountDue = (from d in myContext.ARInvoices
-                                      where d.Tenant == tenant
-                                      && d.BillToId == myCustomerId
-                                      && d.StatusCode != "VD"
-                                      && d.StatusCode != "AR"
-                                      && d.StatusCode != "LL"
-                                      && d.Id != invoiceId
-                                      select d).Sum(s => s.AmountDueInLocalCurrency);
-                }
+                double? sumOfAmountDue = (from d in myContext.ARInvoices
+                                          where d.Tenant == tenant
+                                          && d.BillToId == myCustomerId
+                                          && d.StatusCode != "VD"
+                                          && d.StatusCode != "AR"
+                                          && d.StatusCode != "LL"
+                                          select d).Sum(s => s.AmountDueInLocalCurrency);
 
                 double? sumOfOpenAmount = (from d in myContext.ARPayments
                                            where d.Tenant == tenant
@@ -2647,323 +2104,5 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return pms;
         }
 
-        public string GetARinvoiceTypeCode(string id, int tenant)
-        {
-            ARInvoice invoice = (from a in repository.context.ARInvoices
-                                 where a.Id == id && a.Tenant == tenant
-                                 select a).FirstOrDefault();
-            return invoice != null ? invoice.ARInvoiceTypeCode : null;
-        }
-
-        public List<ARInvoiceList> GetInvoiceSequenceStatus(int tenant, DateTime fromDate, DateTime toDate)
-        {
-            try
-            {
-                List<ARInvoiceList> results = new List<ARInvoiceList>();
-                string strConnString = TenantServerConfigration.GetDbConnection(tenant);
-
-                using (SqlConnection connection = new SqlConnection(strConnString))
-                {
-                    connection.Open();
-                    var command = connection.CreateCommand();
-                    command.CommandText = "usp_GetInvoiceSequenceStatus";
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("@Tenant", tenant);
-                    command.Parameters.AddWithValue("@FromDate", fromDate);
-                    command.Parameters.AddWithValue("@ToDate", toDate);
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var result = new ARInvoiceList
-                            {
-                                InvoiceSeries = reader["Series"] != DBNull.Value ? (string)reader["Series"] : null,
-                                InvoiceNumberPart = reader["InvoiceNumberPart"] != DBNull.Value ? (string)reader["InvoiceNumberPart"] : null,
-                                InvoiceNumber = reader["OriginalInvoiceNumber"] != DBNull.Value ? (string)reader["OriginalInvoiceNumber"] : null,
-                                SequenceStatus = reader["SequenceStatus"] != DBNull.Value ? (string)reader["SequenceStatus"] : null,
-                                InvoiceDate = (DateTime)reader["InvoiceDate"]
-                            };
-                            results.Add(result);
-                        }
-                    }
-                    connection.Close();
-                }
-
-                return results;
-            }
-
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
-        #region Digital Portal 
-
-        public IQueryable<ARInvoice> GetByFiltersForDashBoard(GeneralFilters newFilters)
-        {
-            var tenant = newFilters.Tenant;
-            var myTenantRepository = new TenantRepository(tenant);
-            var myTenant = myTenantRepository.GetSingleTenant(tenant);
-
-            var filters = new ApiQueryFilters()
-            {
-                Filter1Value = newFilters.CardId,
-                Filter2Value = newFilters.CardType
-            };
-
-            var queryOperations = new QueryOperations()
-            {
-                ObjectTableName = "ARInvoice",
-                PageIndex = newFilters.PageIndex,
-                PageSize = newFilters.PageSize,
-                QuerySection = "ARInvoices",
-                SortByColumnName = newFilters.SortBy,
-                SortDirectin = newFilters.SortDirection
-            };
-
-            queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
-            queryOperations.SetFilter("IsConstituentInvoice", false, false, "Equals", null, false);
-
-            var cardFilterValues = newFilters.CardId;
-            if (!string.IsNullOrWhiteSpace(cardFilterValues))
-            {
-                var cardBillToIds = GetCardBillToId(newFilters.CardId, tenant);
-                if (cardBillToIds.Any())
-                {
-                    cardFilterValues = cardFilterValues + "," + string.Join(",", cardBillToIds);
-                    queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "InList", null, false);
-                }
-
-                queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
-            }
-
-            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", tenant);
-
-            if (newFilters.AdditionalFilters.Any())
-            {
-                foreach (var filter in newFilters.AdditionalFilters)
-                {
-                    var field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-
-                    if (field != null)
-                    {
-                        string valuestring1 = filter.FieldValue?.ToString();
-                        object value1 = FieldValueResolver.GetFieldDataValue(field, valuestring1);
-                        string valuestring2 = filter.FieldValue2?.ToString();
-                        object value2 = FieldValueResolver.GetFieldDataValue(field, valuestring2);
-                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
-                    }
-                    else
-                    {
-                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                    }
-                }
-            }
-
-            var genericFilter = new GenericFilter();
-            var MyContext = InvoiceContext.GetContext(tenant);
-
-            var nonListQueryOperation = new QueryOperations
-            {
-                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
-            };
-
-            var listQueryOperation = new QueryOperations
-            {
-                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
-            };
-
-            var aRInvoiceRepository = new ARInvoiceRepository(MyContext);
-            var aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
-
-            var entityPocos = aRInvoiceRepository.GetARInvoices(tenant);
-
-            entityPocos = aRInvoiceRepository.FilterInvoicesStatusesForList(entityPocos);
-
-            var customfilters = new ARInvoiceCustomFilter(tenant);
-            entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-            entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
-            return entityPocos;
-        }
-
-        public IQueryable<ARInvoiceList> GetByFilters(GeneralFilters newFilters)
-        {
-            var tenant = newFilters.Tenant;
-            var myTenantRepository = new TenantRepository(tenant);
-            var myTenant = myTenantRepository.GetSingleTenant(tenant);
-
-            var filters = new ApiQueryFilters()
-            {
-                Filter1Value = newFilters.CardId,
-                Filter2Value = newFilters.CardType
-            };
-
-            var queryOperations = new QueryOperations()
-            {
-                ObjectTableName = "ARInvoice",
-                PageIndex = newFilters.PageIndex,
-                PageSize = newFilters.PageSize,
-                QuerySection = "ARInvoices",
-                SortByColumnName = newFilters.SortBy,
-                SortDirectin = newFilters.SortDirection
-            };
-
-            queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
-            queryOperations.SetFilter("IsConstituentInvoice", false, false, "Equals", null, false);
-
-            var cardFilterValues = newFilters.CardId;
-            if (!string.IsNullOrWhiteSpace(cardFilterValues))
-            {
-                var cardBillToIds = GetCardBillToId(newFilters.CardId, tenant);
-                if (cardBillToIds.Any())
-                {
-                    cardFilterValues = cardFilterValues + "," + string.Join(",", cardBillToIds);
-                    queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "InList", null, false);
-                }
-
-                queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
-            }
-
-            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", tenant);
-
-            if (newFilters.AdditionalFilters.Any())
-            {
-                foreach (var filter in newFilters.AdditionalFilters)
-                {
-                    var field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-
-                    if (field != null)
-                    {
-                        string valuestring1 = filter.FieldValue?.ToString();
-                        object value1 = FieldValueResolver.GetFieldDataValue(field, valuestring1);
-                        string valuestring2 = filter.FieldValue2?.ToString();
-                        object value2 = FieldValueResolver.GetFieldDataValue(field, valuestring2);
-                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
-                    }
-                    else
-                    {
-                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                    }
-                }
-            }
-
-            var genericFilter = new GenericFilter();
-            var MyContext = InvoiceContext.GetContext(tenant);
-
-            var nonListQueryOperation = new QueryOperations
-            {
-                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
-            };
-
-            var listQueryOperation = new QueryOperations
-            {
-                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
-            };
-
-            var aRInvoiceRepository = new ARInvoiceRepository(MyContext);
-            var aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
-
-            var entityPocos = aRInvoiceRepository.GetARInvoices(tenant);
-
-            entityPocos = aRInvoiceRepository.FilterInvoicesStatusesForList(entityPocos);
-
-            var customfilters = new ARInvoiceCustomFilter(tenant);
-            entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-            entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
-
-            var entityLists = aRInvoiceQuery.GetDigitalIQueryableEntityList(entityPocos, tenant);
-
-            entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
-
-            if (!string.IsNullOrWhiteSpace(queryOperations.SortByColumnName) && !string.IsNullOrWhiteSpace(queryOperations.SortDirectin))
-            {
-                ObjectField objectField = ARInvoiceObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
-
-                if (objectField != null)
-                {
-                    var sortClass = new GenericSort();
-
-                    if (!objectField.IsCustom)
-                    {
-                        switch (objectField.DataTypeCode.ToLower())
-                        {
-                            case "text":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "double":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, double>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "datetime":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, DateTime>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "integer":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, int>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "lookup":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
-                                    break;
-                                }
-                            case "boolean":
-                                {
-                                    entityLists = sortClass.GetSorterQuery<ARInvoiceList, bool>(queryOperations, entityLists);
-                                    break;
-                                }
-                            default:
-                                {
-                                    entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
-                                    break;
-                                }
-                        }
-                    }
-                    else
-                    {
-                        entityLists = sortClass.GetSorterQuery<ARInvoiceList, string>(queryOperations, entityLists);
-                    }
-                }
-            }
-            else
-            {
-                entityLists = entityLists.OrderByDescending(d => d.InvoiceDate);
-            }
-
-            return entityLists;
-        }
-
-        public List<string> GetCardBillToId(string cardId, int tenant)
-        {
-            CardRepository cardRepository = new CardRepository(tenant);
-            var cardBillToIds = cardRepository.GetBillToCardById(cardId, tenant);
-            return cardBillToIds;
-        }
-
-        public bool CheckIfArInvoiceCanBeReconcilied(string aRInvoiceId, int tenant, ARInvoiceLineRepository aRInvoiceLineRepository = null)
-        {
-            var arInvoiceIsMultiCurrency = repository.GetARInvoiceById(tenant, aRInvoiceId).Select(a => a.IsMultiCurrency).FirstOrDefault();
-            if (arInvoiceIsMultiCurrency)
-            {
-                if (aRInvoiceLineRepository == null)
-                {
-                    aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
-                }
-                var arinvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByInvoiceId(aRInvoiceId, tenant);
-                var arinvoiceLinesCurrencies = arinvoiceLines.Select(x => x.ForiegnCurrencyId).Distinct().ToList();
-                return arinvoiceLinesCurrencies.Count > 1 ? false : true;
-            }
-            return true;
-        }
-
-        #endregion Digital Portal 
     }
 }

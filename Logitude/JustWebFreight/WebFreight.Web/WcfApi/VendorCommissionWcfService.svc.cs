@@ -5,7 +5,7 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -52,7 +52,6 @@ namespace WebFreight.Web.WcfApi
                     ICustomContext objectContext = CustomContext.GetContext(entityPM.Tenant);
 
                     CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(objectContext);
-                    ModificationAndDiscountTypeQueryService modificationAndDiscountTypeQueryService = new ModificationAndDiscountTypeQueryService(objectContext);
                     VendorCommissionUpdateService service = new VendorCommissionUpdateService(objectContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                     VendorCommissionQueryService vendorCommissionQueryService = new VendorCommissionQueryService(objectContext);
 
@@ -63,56 +62,44 @@ namespace WebFreight.Web.WcfApi
                     CustomerRepository customerRepository = new CustomerRepository(commonContext);
                     Customer customer = customerRepository.GetSingleCustomerByCode(entityPM.CustomerId, entityPM.Tenant, false);
 
-                    string modificationsTypeCode = null;
-                    if (string.IsNullOrEmpty(entityPM.ModificationsTypeCode))
+                    if (vendor != null && customer != null)
                     {
-                        modificationsTypeCode = "I10";
+                    VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id, false, false);
+
+
+
+                    if (vendorCommission == null)
+                    {
+
+                            vendorCommission = new VendorCommissionPM()
+                        {
+                            VendorId = vendor.Id,
+                            CustomerId = customer.Id,
+                            Tenant = entityPM.Tenant,
+                            CommisionPercentage = entityPM.CommisionPercentage,
+                            ChangeSetOp = ChangeSetOperation.Insert
+                        };
+
+
+                        service.Update(vendorCommission, true);
                     }
                     else
                     {
-                        ModificationAndDiscountTypePM modificationAndDiscountTypePM = modificationAndDiscountTypeQueryService.GetSingle(entityPM.ModificationsTypeCode, false, true);
-                        if (modificationAndDiscountTypePM != null)
-                        {
-                            modificationsTypeCode = modificationAndDiscountTypePM.Code;
-                        }
+                        vendorCommission.CommisionPercentage = entityPM.CommisionPercentage;
+                        vendorCommission.ChangeSetOp = ChangeSetOperation.Update;
+                        service.Update(vendorCommission, true);
                     }
 
-                    if (vendor != null && customer != null && modificationsTypeCode != null)
-                    {
-                        VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id, modificationsTypeCode, false, false);
 
-                        if (vendorCommission == null)
-                        {
-                            vendorCommission = new VendorCommissionPM()
-                            {
-                                VendorId = vendor.Id,
-                                CustomerId = customer.Id,
-                                Tenant = entityPM.Tenant,
-                                CommisionPercentage = entityPM.CommisionPercentage,
-                                ModificationsTypeCode = modificationsTypeCode,
-                                ChangeSetOp = ChangeSetOperation.Insert
-                            };
-
-
-                            service.Update(vendorCommission, true);
-                        }
-                        else
-                        {
-                            vendorCommission.CommisionPercentage = entityPM.CommisionPercentage;
-                            vendorCommission.ChangeSetOp = ChangeSetOperation.Update;
-                            service.Update(vendorCommission, true);
-                        }
-
-
-                        response.Result = vendorCommission.VendorId;
+                    response.Result = vendorCommission.VendorId;
 
                     }
                     else
                     {
                         response.HasError = true;
-                        if (customer == null && vendor == null && modificationsTypeCode == null)
+                        if (customer == null && vendor == null)
                         {
-                            response.ErrorMessage = "Customer,Vendor and Modifications Type are not found";
+                            response.ErrorMessage = "Customer and vendor  are not found";
                         }
 
                         else if (vendor == null)
@@ -123,10 +110,7 @@ namespace WebFreight.Web.WcfApi
                         {
                             response.ErrorMessage = "Customer is not found";
                         }
-                        else if (modificationsTypeCode == null)
-                        {
-                            response.ErrorMessage = "Modifications Type is not found";
-                        }
+
 
 
                     }
@@ -197,7 +181,7 @@ namespace WebFreight.Web.WcfApi
                     CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(objectContext);
                     VendorCommissionUpdateService service = new VendorCommissionUpdateService(objectContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                     VendorCommissionQueryService vendorCommissionQueryService = new VendorCommissionQueryService(objectContext);
-                    ModificationAndDiscountTypeQueryService modificationAndDiscountTypeQueryService = new ModificationAndDiscountTypeQueryService(objectContext);
+
 
                     CustomsVendorPM vendor = vendorQueryService.GetVendorByNumber(entityPM.VendorId, entityPM.Tenant);
                     ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
@@ -205,23 +189,11 @@ namespace WebFreight.Web.WcfApi
                     CustomerRepository customerRepository = new CustomerRepository(commonContext);
                     Customer customer = customerRepository.GetSingleCustomerByCode(entityPM.CustomerId, entityPM.Tenant, false);
 
-                    string modificationsTypeCode = null;
-                    if (string.IsNullOrEmpty(entityPM.ModificationsTypeCode))
+                    if (vendor != null && customer != null)
                     {
-                        modificationsTypeCode = "I10";
-                    }
-                    else
-                    {
-                        ModificationAndDiscountTypePM modificationAndDiscountTypePM = modificationAndDiscountTypeQueryService.GetSingle(entityPM.ModificationsTypeCode, false, true);
-                        if (modificationAndDiscountTypePM != null)
-                        {
-                            modificationsTypeCode = modificationAndDiscountTypePM.Code;
-                        }
-                    }
+                        VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id, false, false);
 
-                    if (vendor != null && customer != null && modificationsTypeCode != null)
-                    {
-                        VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id, modificationsTypeCode, false, false);
+
 
                         if (vendorCommission != null)
                         {
@@ -230,7 +202,6 @@ namespace WebFreight.Web.WcfApi
                             {
                                 VendorId = vendor.Id,
                                 CustomerId = customer.Id,
-                                ModificationsTypeCode = modificationsTypeCode,
                                 Tenant = entityPM.Tenant,
                                 CommisionPercentage = entityPM.CommisionPercentage,
                                 ChangeSetOp = ChangeSetOperation.Delete
@@ -238,7 +209,7 @@ namespace WebFreight.Web.WcfApi
 
 
                             service.Update(vendorCommission, true);
-                            response.Result = vendorCommission.VendorId;
+                    response.Result = vendorCommission.VendorId;
                         }
                         else
                         {
@@ -246,14 +217,17 @@ namespace WebFreight.Web.WcfApi
                         }
 
 
+                       
+
                     }
                     else
                     {
                         response.HasError = true;
-                        if (customer == null && vendor == null && modificationsTypeCode == null)
+                        if (customer == null && vendor == null)
                         {
-                            response.ErrorMessage = "Customer,Vendor and Modifications Type are not found";
+                            response.ErrorMessage = "Customer and vendor  are not found";
                         }
+
                         else if (vendor == null)
                         {
                             response.ErrorMessage = "vendor is not found";
@@ -262,10 +236,8 @@ namespace WebFreight.Web.WcfApi
                         {
                             response.ErrorMessage = "Customer is not found";
                         }
-                        else if (modificationsTypeCode == null)
-                        {
-                            response.ErrorMessage = "Modifications Type is not found";
-                        }
+
+
 
                     }
 
@@ -307,7 +279,7 @@ namespace WebFreight.Web.WcfApi
             }
         }
 
-
-
+     
+     
     }
 }

@@ -68,13 +68,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                 }
             }
-            entityPM.CargoTypeCodeForExport = entityPOCO.CargoTypeCode;
-            if (entityPOCO.StorageSiteCode != null)
-            {
-                entityPM.DeliverySiteCode = entityPOCO.StorageSiteCode;
-                entityPM.StorageSiteCodeExport = entityPOCO.StorageSiteCode;
-
-            }
         }
     }
 

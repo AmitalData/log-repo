@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef, ChangeDetectorRef, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityNotePM} from '../../../../CRM/EntityPMs/ActivityNotePM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -16,29 +16,25 @@ import {DocsOutDataViewModel} from '../../../../InfrastructureModules/Infrastruc
 import {CommunicationLogPMViewModel} from '../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/CommunicationLogPMViewModel';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ActivityGeneralTabComponent.html',
 })
 
-export class ActivityGeneralTabComponent extends BaseComponent implements AfterViewInit {
+export class ActivityGeneralTabComponent extends BaseComponent {
     public EntityPM: ActivityPM = new ActivityPM();
     public ObjectTableName: string = "Activity";
     public ActivityNotesObslist: ActivityNoteItem [];
     public DataContext = this;
 
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.ActivityNotesObslist = [];
+        this.RunComponent();
         this.Listen();
     }
-
-    ngAfterViewInit() {
-        this.LoadChildComponent();
-    }
-
     private Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -58,6 +54,30 @@ export class ActivityGeneralTabComponent extends BaseComponent implements AfterV
                     this.ActivityInputTemplate.SetFieldsEnabled();
                 }
             });
+        }
+    }
+
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
 

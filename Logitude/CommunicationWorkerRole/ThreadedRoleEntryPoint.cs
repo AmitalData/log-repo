@@ -38,20 +38,6 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Resolvers;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.Repositories;
-using Stimulsoft.Base;
-using System.Xml;
-using System.Xml.Linq;
-using WebFreight.Web.Helpers;
-using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.Customs.BL.Messaging.Amital;
-using Simplog.Server.Infrastructure.Interfaces;
-using Logitude.Server.Tools.Interfaces;
-using CommunicationWorkerRole.Stimulsoft.fonts;
-using Newtonsoft.Json;
-using Logitude.Server.Tools.TreeFilterQuery;
-using WebFreight.Web.GlobalModel;
 
 namespace CommunicationWorkerRole
 {
@@ -63,82 +49,35 @@ namespace CommunicationWorkerRole
         //private WorkerEntryPoint[] Workers;
         List<WorkerEntryPoint> workers;
         protected EventWaitHandle EventWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-        string BatchServicesParam = "";
-        string IgnoredBatchServicesParam = "";
-        bool IgnoreServices = false;
-        bool IsManagedProcess = false;
-        const int HalfHourInSeconds= 1800;
-       
-
-        public ThreadedRoleEntryPoint()
-        {
-
-        }
-
-        public ThreadedRoleEntryPoint(string BatchServices, string IgnoredBatchServices)
-        {
-            IsManagedProcess = true;
-            BatchServicesParam = BatchServices;
-            IgnoredBatchServicesParam = IgnoredBatchServices;
-            if (!string.IsNullOrEmpty(IgnoredBatchServices))
-            {
-                IgnoreServices = true;
-            }
-
-
-        }
-
+        //public static string DeploymentStage = "Dev";//Dev//Test1//Simplog//logitudetest3//amital//logitudetest2
+        //public static string ChampEnv = "TEST";//PROD//TEST
+        //
         public override void Run()
         {
             try
             {
-                string threadsNames = "";
                 foreach (WorkerEntryPoint worker in workers)
-                {
-                    Thread myThread = new Thread(worker.ProtectedRun) { Name = worker.ThreadName };
-                    worker.CurrentThread = myThread;
-                    threads.Add(myThread);
-                }
-
+                    threads.Add(new Thread(worker.ProtectedRun) { Name = worker.ThreadName });
 
                 foreach (Thread thread in threads)
-                {
                     thread.Start();
-                    threadsNames = threadsNames + " | " + thread.Name;
-                }
-            
-                ExceptionHandler.HandleException(new Exception("Started Threads:" + threadsNames), DateTime.Now, 0, null, "WorkerRole Monitor" + "|" + getWorkerRoleName(), null, System.Environment.MachineName);
-                threadsNames = "";
-                string currnetInactiveThreadsNames = "";
-                int secondsTimer = 0;
+
                 batchServiceLogTimer.Elapsed += batchServiceLogTimer_Elapsed;
                 batchServiceLogTimer.Interval = 30000;
                 batchServiceLogTimer.Start();
                 while (!EventWaitHandle.WaitOne(0))
                 {
                     // WWB: Restart Dead Threads
-                    currnetInactiveThreadsNames = "";
                     for (Int32 i = 0; i < threads.Count; i++)
                     {
                         if (!threads[i].IsAlive)
                         {
-                            currnetInactiveThreadsNames = currnetInactiveThreadsNames + " | "+ threads[i].Name;
-                            threads[i] = new Thread(workers[i].Run) { Name = threads[i].Name };                   
+                            threads[i] = new Thread(workers[i].Run);
                             threads[i].Start();
                         }
                     }
-                    if(secondsTimer >= HalfHourInSeconds && threadsNames == currnetInactiveThreadsNames && !string.IsNullOrEmpty(currnetInactiveThreadsNames)) // if half hour elaspsed and still the in active threads the same we will write record in DB each half an hour to not fill the logs
-                    {
-                        ExceptionHandler.HandleException(new Exception("InActive Threads:" + currnetInactiveThreadsNames), DateTime.Now, 0, null, "WorkerRole Monitor" + "|" + getWorkerRoleName(), null, System.Environment.MachineName);
-                        secondsTimer = 0;
-                    }
-                    if (threadsNames != currnetInactiveThreadsNames &&  !string.IsNullOrEmpty(currnetInactiveThreadsNames) )
-                    {
-                        ExceptionHandler.HandleException(new Exception("InActive Threads:" + currnetInactiveThreadsNames), DateTime.Now, 0, null, "WorkerRole Monitor" + "|" + getWorkerRoleName(), null, System.Environment.MachineName);
-                        threadsNames = currnetInactiveThreadsNames;
-                    }
+
                     EventWaitHandle.WaitOne(1000);
-                    secondsTimer++;
                 }
             }
             catch (SystemException e)
@@ -156,7 +95,7 @@ namespace CommunicationWorkerRole
         public override bool OnStart()
         {
 
-            AddStimulsoftFonts();
+
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
 
@@ -168,10 +107,6 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.Id = setting.Id;
                 LogitudeSettings.ChampEnv = setting.ChampEnv;
                 LogitudeSettings.ChampURL = setting.ChampURL;
-                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
-                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
-                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
-                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
                 LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
                 LogitudeSettings.DeploymentStage = setting.DeploymentStage;
                 LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
@@ -190,27 +125,18 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
                 LogitudeSettings.GLSHKEnv = setting.GLSHKEnv;
                 LogitudeSettings.GLSHKURL = setting.GLSHKURL;
-                LogitudeSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
-                LogitudeSettings.OITenantNumber = setting.OITenantNumber;
-                LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
+                //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
                 if (LogitudeSettings.IsCostomsDeploy)
                 {
+                    //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
                     LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
-
+                    
                 }
                 LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
                 {
                     if (DateTime.Now > stopLogAt) return;
-                    if (err)
-                    {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
-                    }
-                    else
-                    {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess);
-                    }
-                    //Logger.LogMe(mess, err, suffix);
+                    Logger.LogMe(mess, err, suffix);
                 });
                 LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
                 LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
@@ -229,29 +155,15 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
                 LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
                 LogitudeSettings.EmailSendingQuota = setting.EmailSendingQuota;
-                LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
-                LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
                 //LogitudeSettings.ABMProductId = setting.ABMProductId;
 
             }
-
-            ReportHelper.AddStimulsoftLicenseKey();
-            if (BatchServicesParam.Contains("SATInterface"))
-            {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11;
-
-            }
-            else
-            {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            }
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             StartStatic();
             ContainerAccessor.InitContainer();
             ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
             ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
-            ContainerAccessor.RegisterTypeFactory<IAddManualTraceEventsHelper, AddManualTraceEventsHelper>("AddManualTraceEventsHelper", new AddManualTraceEventsHelper());
 
             LoggedContactResolver.RegisterLoggedContactUtil();
             DateTimeUtilResolver.RegisterDateTimeUtil();
@@ -260,36 +172,7 @@ namespace CommunicationWorkerRole
 
 
             AccountingRegistrations.Register();
-            InfraRegistrationHelper.Register();
-
-            Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
-
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                createAmitalRestrictOwnerModelService = () =>
-                {
-                    var amitalRestrictOwnerService = new AmitalRestrictOwnerService();
-                    return amitalRestrictOwnerService;
-                };
-            }
-            Func<int> getTenantFromToken = () =>
-            {
-
-                return 0;
-
-            };
-
-
-            InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature,
-               () => (new ByteCompressorUtil()) as IByteCompressorUtil,
-               new IISManager(),
-               () => (new HtmlEditorHelper()) as IHtmlEditorHelper,
-               () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService,
-               () => (new EntityGetReflectorService()) as IEntityGetReflectorService,
-               () => (new TreeFilterQueryService()) as ITreeFilterQueryService
-               );
-
-
+            
 
 
 
@@ -300,129 +183,29 @@ namespace CommunicationWorkerRole
                 he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
             }
-            bool toTest = false;
+            bool toTest=false;
             if (toTest)
             {
                 TestBatch();
-                workers = new List<WorkerEntryPoint>();
-                return base.OnStart();
             }
-
+            
             UpdateRunningWR();
-
+            
             aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
             aTimer.Interval = 30000;
             aTimer.Enabled = true;
 
-            //try
-            //{
-
-            SetWorkerRoleName();
-
-
-            //HttpContext.Current.Items.Add("workerrolename", xmlnode.v);
-
-            //} 
-            //catch(Exception ex)
-            //{
-            //    throw new ex
-            //}
-
-
+            
+          
             return base.OnStart();
 
             //throw (new InvalidOperationException());
         }
-        private static string[] ActiveWorkers = { };
-        public static void SetWorkerRoleName()
-        {
-            DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-            string filePath = Path.Combine(directoryInfo.FullName, "WorkerRoleName.xml");
-            XElement workerRoleNameElement = XElement.Load(filePath);
-            var nameElement = workerRoleNameElement.Element("WorkerName");
-            LogitudeSettings.WorkerRoleName = nameElement.Value;
 
-            var automaticBreakPointElement = workerRoleNameElement.Element("AutomaticBreakPoint");
-            bool automaticBreakPoint;
-            if (automaticBreakPointElement != null)
-                bool.TryParse(automaticBreakPointElement.Value, out automaticBreakPoint);
-            else
-            {
-                string automaticBreakPointStr = System.Configuration.ConfigurationManager.AppSettings.Get("AutomaticBreakPoint");
-                bool.TryParse(automaticBreakPointStr, out automaticBreakPoint);
-            }
-
-            var activeWorkersElement = workerRoleNameElement.Element("ActiveWorkers");
-            if(activeWorkersElement != null)
-            {
-                string activeWorkersStr = activeWorkersElement.Value;
-                if (!string.IsNullOrEmpty(activeWorkersStr))
-                {
-                    ActiveWorkers = activeWorkersStr.Split(',');
-                }
-            }
-
-            LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = automaticBreakPoint;
-
-            if (Debugger.IsAttached && LogitudeSettings.WorkerRoleName == "production")
-            {
-                
-                throw new Exception("Production worker role should not be run in Debug mode! To debug the worker role in production please use a custom worker name");// 
-            }
-        }
-        public static string getWorkerRoleName()
-        {
-            return LogitudeSettings.WorkerRoleName;
-        }
-        private void AddStimulsoftFonts()
-        {
-            try
-            {
-                StimulsoftFontsService.AddFonts();
-            }
-            catch (Exception e) {
-                File.WriteAllText("logex.json", JsonConvert.SerializeObject(e));
-            }
-        }
         private void TestBatch()
         {
-
-            try
-            {
-                List<string> Last_journalBufferKeys = null;
-                //var myWorker = new Logitude.Accounting.BL.CoreBL.JournalApproveService.JournalApproveWorker();
-                //myWorker.WorkUntilQEmptyQueueDB();
-
-                //Logitude.Accounting.BL.CoreBL.JournalApproveService.WorkWithoutQueue(1051, null, ref Last_journalBufferKeys);
-
-                var batchTaskExecutionWR = new BatchTaskExecutionWR();
-                var dic = new Dictionary<string, string>();
-                //{"BatchTaskExecutionId":"1-7167","Tenant":"1071"}-QueueDefinitionCode ='batchtaskexecutionqueue'
-                dic.Add("BatchTaskExecutionId", "1-3620");
-                dic.Add("Tenant", "18");
-                batchTaskExecutionWR.SupressStartThread = true;
-                batchTaskExecutionWR.ExecuteQueue(new Logitude.Server.Tools.QueueService.QueueResponse() { MessageValues = dic });
-                //var myEmailsWorkerRole = new EmailsWorkerRole("EmailQueue","itzik");
-                //var context = CommonDataContext.GetContext(989);
-                //var communicationLogRep = new CommunicationLogRepository(context);
-                //var cl = communicationLogRep.GetSingleCommunicationLog(id: "1-1075543", tenant: 989);
-
-                //myEmailsWorkerRole.SendWaitingCommunicationLog(cl);
-                /////BatchAccountingLoadTestTask();
-                ///            }
-            }
-            catch (Exception)
-            {
-
-
-            }
-
-        }
-
-        private static void BatchAccountingLoadTestTask()
-        {
             string s =
-                            @"<?xml version=""1.0"" encoding=""utf-16""?><BatchAccountingLoadArg xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""><Tenant>1051</Tenant>";
+                @"<?xml version=""1.0"" encoding=""utf-16""?><BatchAccountingLoadArg xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""><Tenant>1051</Tenant>";
             //s+="<ActionType>CreateCustomers</ActionType>";
             s += "<ActionType>CreateJournalEvery</ActionType>";
             s += @"<Amount>10</Amount>
@@ -443,27 +226,15 @@ namespace CommunicationWorkerRole
 
         private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
         {
-            SetWorkerRoleName();
             UpdateRunningWR();
         }
         List<BatchServicesDefinitionPM> BatchServicesDefinitions;
         private void UpdateRunningWR()
         {
-
-
-            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp; 
-            if (IsManagedProcess)
-            {
-                BatchServicesDefinitionsTemp = GetManagedProcessActiveBatchServiceDef();
-            }
-            else
-            {
-                BatchServicesDefinitionsTemp = GetActiveBatchServiceDef();
-            }
-         
-          RemoveSchedular(BatchServicesDefinitionsTemp);
             
-
+            BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
+            BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
+            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
             if (BatchServicesDefinitions == null)
             {
                 BatchServicesDefinitions = BatchServicesDefinitionsTemp;
@@ -471,18 +242,27 @@ namespace CommunicationWorkerRole
             }
             else
             {
-                if (!ISSameList(BatchServicesDefinitions, BatchServicesDefinitionsTemp))
+                if (!ISSameList(BatchServicesDefinitions,BatchServicesDefinitionsTemp))
                 {
                     foreach (Thread thread in threads)
                     {
                         thread.Abort();
                     }
-                  
+                        //while (thread.IsAlive)
+                           
+
+                    // WWB: Check To Make Sure The Threads Are
+                    // Not Running Before Continuing
+                    //foreach (Thread thread in threads)
+                    //{
+                    //    while (thread.IsAlive)
+                    //        Thread.Sleep(10);
+                    //}
+                       
 
                     // WWB: Tell The Workers To Stop Looping
                     foreach (WorkerEntryPoint worker in workers)
-                    {
-                        //worker.MaxWorkingTimeInMinutes = 0;
+                    { 
                         worker.OnStop();
                     }
 
@@ -493,12 +273,10 @@ namespace CommunicationWorkerRole
                         threads.Add(new Thread(worker.ProtectedRun) { Name = worker.ThreadName });
 
                     foreach (Thread thread in threads)
-                    {
                         thread.Start();
-                    }
 
                 }
-            }
+            } 
         }
 
         private void StartWorkerRoles(List<BatchServicesDefinitionPM> BatchServicesDefinitions)
@@ -507,54 +285,24 @@ namespace CommunicationWorkerRole
             var tst = false;
             if (tst)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "LogMessagesWorkerRole" || r.ClassName == "CustomsSchedularWR").ToList();
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "BatchTaskExecutionWR").ToList();
             }
-            var reportsTest = false;
-
-            if (reportsTest)
-            {
-                
-                   BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "AccountingJournalApproveWR").ToList();
-            }
-            
-            if(ActiveWorkers != null && ActiveWorkers.Length > 0)
-            {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => ActiveWorkers.Contains(r.Code)).ToList();
-            }
-
             foreach (var Service in BatchServicesDefinitions)
             {
-                try
+                for (int i = 0; i < Service.NumberOfThreads; i++)
                 {
-                    for (int i = 0; i < Service.NumberOfThreads; i++)
+                    List<object> args = new List<object>();
+                    if (!string.IsNullOrEmpty(Service.Parameter1))
                     {
-                        List<object> args = new List<object>();
-                        if (!string.IsNullOrEmpty(Service.Parameter1))
-                        {
-                            args.Add(Service.Parameter1);
-                        }
-                        if (!string.IsNullOrEmpty(Service.Parameter2))
-                        {
-                            args.Add(Service.Parameter2 == "null" ? null : Service.Parameter2);
-                        }
-                        object[] ArrArgs = args.ToArray();
-                        var classname = (Service.ClassName == "CustomsSchedularWR" ? "SchedularWorkerRole" : (Service.ClassName == "ReportExecutionLogWR" ? "ReportExecutionLogWorkerRole" : Service.ClassName));
-                        try
-                        {
-                            var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + classname), ArrArgs) as WorkerEntryPoint;
-                            Item.MaxWorkingTimeInMinutes = Service.MaxWorkingTimeInMinutes;
-                            workers.Add(Item);
-                        }
-                        catch (Exception ex)
-                        {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteError("Error creating instance for service: " + Service?.ClassName + " with args: " + string.Join(",", ArrArgs) + " - " + ex.ToString());
-                         }
-                       
+                        args.Add(Service.Parameter1);
                     }
-                }
-                catch(Exception ex)
-                {
-                    ExceptionHandler.HandleException(ex, DateTime.UtcNow, 0, "", "WorkerRole", "ThreadedRoleEntryPoint :  Creating Instance for service: "+ Service?.ClassName, null);
+                    if (!string.IsNullOrEmpty(Service.Parameter2))
+                    {
+                        args.Add(Service.Parameter2 == "null" ? null : Service.Parameter2);
+                    }
+                    object[] ArrArgs = args.ToArray();
+                    var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + Service.ClassName), ArrArgs) as WorkerEntryPoint;
+                    workers.Add(Item);
                 }
             }
             int into = 0;
@@ -562,17 +310,7 @@ namespace CommunicationWorkerRole
             {
                 into++;
                 worker.OnStart();
-            }
-        }
-
-        private static void RemoveSchedular(List<BatchServicesDefinitionPM> BatchServicesDefinitions)
-        {
-            if (Debugger.IsAttached && LogitudeSettings.WorkerRoleName.ToLower() != "development")
-            {
-                var schedularWorkerRole = BatchServicesDefinitions.FirstOrDefault(b => b.ClassName == "SchedularWorkerRole");
-                if (schedularWorkerRole != null)
-                    BatchServicesDefinitions.Remove(schedularWorkerRole);
-            }
+            } 
         }
 
         public bool ISSameList(List<BatchServicesDefinitionPM> aListA, List<BatchServicesDefinitionPM> aListB)
@@ -581,7 +319,7 @@ namespace CommunicationWorkerRole
             {
                 return false;
             }
-
+               
             foreach (var item in aListB)
             {
                 if (aListA.Where(a => a.ClassName == item.ClassName && a.InActive == item.InActive && a.NumberOfThreads == item.NumberOfThreads).Count() == 0)
@@ -592,70 +330,19 @@ namespace CommunicationWorkerRole
 
             return true;
         }
-        private List<BatchServicesDefinitionPM> GetManagedProcessActiveBatchServiceDef()
-        {
-            var Services = new List<ServiceDefinition>();
-            if (IgnoreServices)
-            {
-                var TempServicesList = IgnoredBatchServicesParam.Split(',').ToList();
-                foreach (var item in TempServicesList)
-                {
-                    ServiceDefinition ServiceDef = new ServiceDefinition();
-                    ServiceDef.SarviceName = item;
-                    Services.Add(ServiceDef);
-                }
-            }
-            else
-            {
-                var temp = BatchServicesParam.Split(';');
-                foreach (var item in temp)
-                {
-                    var ServiceParams = item.Split('-');
-                    ServiceDefinition ServiceDef = new ServiceDefinition();
-                    ServiceDef.SarviceName = ServiceParams[0];
-                    if (ServiceParams.Length > 1)
-                    {
-                        var MaxWorkingTimeInMinutesParam = ServiceParams[1];
-                        if (temp != null)
-                        {
-                            ServiceDef.MaxWorkingTimeInMinutes = int.Parse(MaxWorkingTimeInMinutesParam.Split('~')[1]);
-                        }
 
-                    }
+        //public List<BatchServicesDefinitionPM> ChangedThreads(List<BatchServicesDefinitionPM> OrigionalList, List<BatchServicesDefinitionPM> NewList)
+        //{ 
+        //    foreach (var item in NewList)
+        //    {
+        //        if (OrigionalList.Where(a => a.ClassName == item.ClassName && a.InActive == item.InActive && a.NumberOfThreads == item.NumberOfThreads).Count() == 0)
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-                    Services.Add(ServiceDef);
-                }
-            }
-         
-
-            BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
-            BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
-            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();
-          
-            if (IgnoreServices)
-            {
-                BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => !Services.Select(s => s.SarviceName).Contains(a.Code)).ToList();
-            }
-            else
-            {
-                BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => Services.Select(s => s.SarviceName).Contains(a.Code)).ToList();
-            }
-            RemoveSchedular(BatchServicesDefinitionsTemp);
-          
-            return BatchServicesDefinitionsTemp;
-        }
-        private List<BatchServicesDefinitionPM> GetActiveBatchServiceDef()
-        {
-           
-
-            BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
-            BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
-            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();
-                                                                                                                                           
-
-
-            return BatchServicesDefinitionsTemp;
-        }
+        //    return true;
+        //}
 
         public override void OnStop()
         {
@@ -689,7 +376,24 @@ namespace CommunicationWorkerRole
         /// <returns></returns>
         public static string GetQueueByEnviroment(string queueName)
         {
-            return Simplog.Server.Infrastructure.WebFreightEntryPoint.GetQueueByEnviroment(queueName);
+            if (LogitudeSettings.DeploymentStage == "Dev")
+            {
+                queueName = Environment.MachineName + "_" + queueName;
+            }
+            else if (LogitudeSettings.DeploymentStage == "customs")
+            {
+                queueName = "customs" + "_" + queueName;
+            }
+            else if (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "amitalstorage")
+            {
+                queueName = "Production" + "_" + queueName;
+            }
+            else
+            {
+                queueName = "Test" + "_" + queueName;
+            }
+
+            return queueName;
         }
 
         public static void StartStatic()
@@ -700,16 +404,12 @@ namespace CommunicationWorkerRole
 
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
-
+              
                 SettingRepository settingRepository = new SettingRepository();
                 Setting setting = settingRepository.GetSingleSetting("1");
                 LogitudeSettings.Id = setting.Id;
                 LogitudeSettings.ChampEnv = setting.ChampEnv;
                 LogitudeSettings.ChampURL = setting.ChampURL;
-                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
-                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
-                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
-                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
                 LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
                 LogitudeSettings.DeploymentStage = setting.DeploymentStage;
                 LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
@@ -730,13 +430,10 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.GLSHKURL = setting.GLSHKURL;
                 LogitudeSettings.ABMProductId = setting.ABMProductId;
                 LogitudeSettings.AzureFolderName = setting.AzureFolderName;
-                LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
-                LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
-
-
-
+                //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
                 if (LogitudeSettings.IsCostomsDeploy)
                 {
+                    //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
                     LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
                 }
                 LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
@@ -746,11 +443,9 @@ namespace CommunicationWorkerRole
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
                 LogitudeSettings.DatabaseManagementSystem = dbms;
 
-
+                
 
             }
-
-            SetWorkerRoleName();
 
             if (LogitudeSettings.IsCostomsDeploy)
             {
@@ -758,19 +453,10 @@ namespace CommunicationWorkerRole
                 he.DateTimeFormat.DateSeparator = ".";
                 he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
-
-                LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;
-
-                LogitudeSettings.WorkerRoleName = LogitudeSettings.WorkerRoleName?? "production";
-            }
-            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
-            List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
-            foreach (var item in globalTenants)
-            {
-                globalDBs.Add(item.Id, item.GlobalDBId);
             }
 
-            CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache, globalDBs);//Where is the cache (Why as usuall i neeed to do averything ?!?)
+
+            CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache);//Where is the cache (Why as usuall i neeed to do averything ?!?)
         }
 
         public void StartLogging()
@@ -781,7 +467,33 @@ namespace CommunicationWorkerRole
                 foreach (WorkerEntryPoint worker in workers)
                 {
                     worker.LogStatisticInDB();
-                   
+                    //if (!string.IsNullOrEmpty(worker.ThreadId))
+                    //{
+                    //    BatchServiceLogParams logParams = new BatchServiceLogParams()
+                    //    {
+                    //        BatchServiceCode = worker.BatchServiceCode,
+                    //        CreateDate = DateTime.UtcNow,
+                    //        Id = worker.ThreadId,
+                    //        LastActivity = worker.LastActivity,
+                    //        NumberOfDoneItems = worker.NumberOfDoneItems,
+                    //        CPU = worker.CPU
+                    //    };
+
+                    //    if (worker.DoneItemsInRange != null)
+                    //    {
+                    //        DateTime currentDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, DateTime.UtcNow.Minute, 0);
+
+                    //        int doneItemsInOneMinute = worker.DoneItemsInRange.Where(d => d.Key <= currentDate && d.Key > currentDate.AddMinutes(-1)).Sum(d => d.Value);
+                    //        int doneItemsInFiveMinutes = worker.DoneItemsInRange.Where(d => d.Key <= currentDate && d.Key > currentDate.AddMinutes(-5)).Sum(d => d.Value);
+                    //        int doneItemsInOneHour = worker.DoneItemsInRange.Where(d => d.Key <= currentDate && d.Key > currentDate.AddMinutes(-60)).Sum(d => d.Value);
+
+                    //        logParams.DoneItemsInFiveMinutes = doneItemsInFiveMinutes;
+                    //        logParams.DoneItemsInOneHour = doneItemsInOneHour;
+                    //        logParams.DoneItemsInOneMinute = doneItemsInOneMinute;
+                    //    }
+
+                    //    BatchServicesLogger.Log(logParams);
+                    //}
                 }
 
                 batchServiceLogTimer.Start();
@@ -842,11 +554,5 @@ namespace CommunicationWorkerRole
 
 
         }
-    }
-
-    public class ServiceDefinition
-    {
-        public string SarviceName { get; set; }
-        public int MaxWorkingTimeInMinutes { get; set; }
     }
 }

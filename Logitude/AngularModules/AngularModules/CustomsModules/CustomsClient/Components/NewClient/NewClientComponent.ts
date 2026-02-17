@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ClientPM} from '../../../../Customs/EntityPMs/ClientPM';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -14,11 +15,10 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { CustomSendOptionsArgs, SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Component({
     selector: 'NewClientComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewClientComponent.html',
 })
 
@@ -43,8 +43,8 @@ export class NewClientComponent
         this.UIProperties.SetEnabled("PassportTypeCode", "Customs.Client", false);
         this.UIProperties.SetEnabled("PassportNumber", "Customs.Client", false);
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
             });
         });
     }
@@ -230,7 +230,7 @@ export class NewClientComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לשליפת לקוח", false)
             .then((res) => {
                 this.ResponseData = res;

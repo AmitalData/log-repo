@@ -27,7 +27,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
     selector: 'RecallSuppliersFromFileComponent',
-    
+    moduleId: module.id,
     templateUrl: './RecallSuppliersFromFileComponent.html',
 })
 
@@ -124,7 +124,7 @@ export class RecallSuppliersFromFileComponent
     //    else {
     //        if (this.IsUploadInProgress) {
     //            this.IsUploadCanceled = true;
-    //            this._imageLibraryService.CancelUpload(this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe((result:any) => {
+    //            this._imageLibraryService.CancelUpload(this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(result => {
     //                this.IsUploadInProgress = false;
     //                this.IsUploadDone = false;
     //                this.IsUploadCanceled = true;
@@ -153,7 +153,7 @@ export class RecallSuppliersFromFileComponent
             this.FileExtension = temp[temp.length - 1];
             this.FileName = file.name.replace("." + this.FileExtension, "");
 
-            if (this.FileExtension.toLowerCase() != "csv") {
+            if (this.FileExtension != "csv") {
                 this.ShowMessage("חובה קובץ CSV");
                 return;
             }
@@ -204,9 +204,10 @@ export class RecallSuppliersFromFileComponent
     SendRecallMessageToServer(filter: ImageParameter) {
         this.ProgressBarPercentText = "0%";
         
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(filter.Key, 5, true);
+
         this._VendorMessagesService.PutRecallSuppliersFromFileRequest(filter).subscribe((myServiceResponse: ServiceResponse) => {
             console.log("[Send] Response/PutRecallSuppliersFromFileRequest : ", myServiceResponse.Result);
             var response = myServiceResponse.Result;

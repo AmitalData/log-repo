@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,6 @@ using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Counters;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
 
 namespace WebFreight.Web.Helpers
 {
@@ -168,22 +167,16 @@ namespace WebFreight.Web.Helpers
                         Notes = oldCountry.Notes,
                         LocalName = oldCountry.LocalName,
                         SearchFields = oldCountry.SearchFields,
-                        IsNorthAmerica = oldCountry.IsNorthAmerica,
-                        IsGreaterChina = oldCountry.IsGreaterChina,
-                        HasCitiesList = oldCountry.HasCitiesList,
                     };
 
                     countryRepository.Add(country);
                     countryRepository.SubmitChanges();
-
-
                 }
 
                 newPort = new Port()
                 {
                     Id = IdCounter.GetNumber("Port", tenant).ToString(),
                     Code = port.Code,
-                    CombinedCode = port.CombinedCode,
                     EnglishName = port.EnglishName,
                     LocalName = port.LocalName,
                     Tenant = tenant,
@@ -197,16 +190,10 @@ namespace WebFreight.Web.Helpers
                     Longtitude = port.Longtitude,
                     SearchFields = port.SearchFields,
                     Notes = port.Notes,
-                    CountryCode = port.CountryCode,
-                    CountryName = port.CountryName,
-                    StateCode = port.StateCode,
-                    StateName = port.StateName,
-                    PortTimeZoneCode = port.PortTimeZoneCode,
                 };
 
                 portRepository.Add(newPort);
                 portRepository.SubmitChanges();
-                RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
 
                 TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
             }

@@ -21,7 +21,7 @@ namespace WebFreight.Web.TopicQueues
         {
             //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
             string subscribtionName = Environment.MachineName;//roleId[roleId.Length - 1];
-            subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(), StorageAcountDetails.DataCacheTopicName, subscribtionName);
+            subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), StorageAcountDetails.DataCacheTopicName, subscribtionName);
         }
 
         public void HandleTopicMessages()

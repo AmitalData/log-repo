@@ -10,7 +10,7 @@ import {PostsArgs} from '../../Infrastructure/DataContracts/PostsArgs';
 import {AppTool} from '../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SocialPeopleComponent',
     templateUrl: './SocialPeopleComponent.html',
     providers: [EntityListService],

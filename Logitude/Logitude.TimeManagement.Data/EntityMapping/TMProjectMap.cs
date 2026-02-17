@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data;
@@ -57,13 +57,9 @@ namespace Logitude.TimeManagement.Data.EntityMapping
 
             this.Property(t => t.IsProrated).HasColumnName("IsProrated");
 
-            this.Property(t => t.ExternalProjectNumber).HasColumnName("ExternalProjectNumber").HasMaxLength(25).IsUnicode(false);
+            this.Property(t => t.ExternalProjectNumber).HasColumnName("ExternalProjectNumber").HasMaxLength(10).IsUnicode(false);
 
             this.Property(t => t.ExcludeFromProrating).HasColumnName("ExcludeFromProrating");
-
-            this.Property(t => t.DayOffTypeCode).HasColumnName("DayOffTypeCode").HasMaxLength(3).IsUnicode(false);
-
-            this.Property(t => t.BlockedForDataEntry).HasColumnName("BlockedForDataEntry");
         }
     }
 }

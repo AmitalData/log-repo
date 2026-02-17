@@ -1,1 +1,0 @@
-update ScreenModifications set ScreenCode =(select Screens.Code from Screens where Id=ScreenModifications.ScreenId)

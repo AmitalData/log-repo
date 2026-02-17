@@ -80,8 +80,6 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string ChassisNumber  { get; set; }
        [DataMember]
        public string RegistrationNumber  { get; set; }
-       [DataMember]
-       public string ReleaseNumber  { get; set; }
    }
 
 }

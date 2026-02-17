@@ -32,8 +32,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsAutoComplete { get; set; }
         public string SortingByObjectField { get; set; }
         public string DBTableName { get; set; }
-        public string DBTableShortName { get; set; }
-
         public int CustomFieldsCount { get; set; }
         public bool HasCustomFields { get; set; }
         public string DescriptionTextCodeId { get; set; }
@@ -66,27 +64,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string NameField { get; set; }
 
         public bool DisableSearchBox { get; set; }
-        public bool AllowedInTicket { get; set; }
+        public bool AllowedInQueues { get; set; }
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
-        public bool IsTabsHidden { get; set; }
-        public string ParentObjectTableName { get; set; }
-        public bool AvailableInCustomization { get; set; }
-        public string ParentObjectTableId { get; set; }
-        public bool IsCustom { get; set; }
-        public string Description { get; set; }
-        public string DefaultText { get; set; }
-        public string DefaultTextPlural { get; set; }
-        public bool SupportSubEntity { get; set; }
-        public bool ApplyGenericCustomFields { get; set; }
-        public string FullNameTextCodeId { get; set; }
-        public string FullNameTextCodeCode { get; set; }
-        public string FullNameTextCodeDefaultText { get; set; }
-        public bool AvailableInDocumentTypes { get; set; }
-		public bool IsLock { get; set; }
-		public string RelatedEntity { get; set; }
-		public string ThisKey { get; set; }
-		public string RelatedKey { get; set; }
-        public bool ShowFastSearch { get; set; }
-    }
+		public string DisplayName { get; set; }
+	}
 }

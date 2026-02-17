@@ -11,7 +11,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.BL.EntityPMs; 
 using Logitude.CRM.Data;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {

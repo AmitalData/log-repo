@@ -20,6 +20,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool InActive { get; set; }
         public string Notes { get; set; }
         public string SupportNotes { get; set; }
+        public string BillToId { get; set; }
         public string Website { get; set; }
         public string SalesmanUserId { get; set; }
         public string PaymentTermId { get; set; }
@@ -39,6 +40,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CollectorName { get; set; }
         public string ClassifierName { get; set; }
         public string VatTypeId { get; set; }
+        public string BillToName { get; set; }
         public string Field1 { get; set; }
         public string Field2 { get; set; }
         public string Field3 { get; set; }
@@ -49,57 +51,13 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Field8 { get; set; }
         public string Field9 { get; set; }
         public string Field10 { get; set; }
-        public string Field11 { get; set; }
-        public string Field12 { get; set; }
-        public string Field13 { get; set; }
-        public string Field14 { get; set; }
-        public string Field15 { get; set; }
-        public string Field16 { get; set; }
-        public string Field17 { get; set; }
-        public string Field18 { get; set; }
-        public string Field19 { get; set; }
-        public string Field20 { get; set; }
-        public string Field21 { get; set; }
-        public string Field22 { get; set; }
-        public string Field23 { get; set; }
-        public string Field24 { get; set; }
-        public string Field25 { get; set; }
-        public string Field26 { get; set; }
-        public string Field27 { get; set; }
-        public string Field28 { get; set; }
-        public string Field29 { get; set; }
-        public string Field30 { get; set; }
-        public string Field31 { get; set; }
-        public string Field32 { get; set; }
-        public string Field33 { get; set; }
-        public string Field34 { get; set; }
-        public string Field35 { get; set; }
-        public string Field36 { get; set; }
-        public string Field37 { get; set; }
-        public string Field38 { get; set; }
-        public string Field39 { get; set; }
-        public string Field40 { get; set; }
-        public string Field41 { get; set; }
-        public string Field42 { get; set; }
-        public string Field43 { get; set; }
-        public string Field44 { get; set; }
-        public string Field45 { get; set; }
-        public string Field46 { get; set; }
-        public string Field47 { get; set; }
-        public string Field48 { get; set; }
-        public string Field49 { get; set; }
-        public string Field50 { get; set; }
         public string RankCode { get; set; }
         public string RankName { get; set; }
-        public string TeamName { get; set; }
         public int? SharedLogisticsInvitationStatusCode { get; set; }
         public string SharedLogisticsInvitationStatusName { get; set; }
-        public int? CargoTrackingInvitationStatusCode { get; set; }
-        public string CargoTrackingInvitationStatusName { get; set; }
         public bool IsActiveForMobile { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public DateTime? InvitationDate { get; set; }
-        public DateTime? CargoTrackingInvitationDate { get; set; }
         public string IndustryName { get; set; }
         public string LeadDescription { get; set; }
         public string ClassifierId { get; set; }
@@ -133,8 +91,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? FirstShipmentDate { get; set; }
         public DateTime? FirstInvoiceDate { get; set; }
         public DateTime? LastOpportunityDate { get; set; }
-        public string LastOpportunitySubject { get; set; }
-        public string LastOpportunityStatus { get; set; }
         public DateTime? LastMeetingDate { get; set; }
         public DateTime? LastCallDate { get; set; }
         public DateTime? LastQuoteDate { get; set; }
@@ -142,7 +98,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool EnableConsolidationInvoices { get; set; }
         public bool ActivityWatch { get; set; }
         public string RankId { get; set; }
-        public string TeamId { get; set; }
         public string IndustryId { get; set; }
         public string LeadSourceId { get; set; }
         public string InvoiceCurrencyCode { get; set; }
@@ -163,7 +118,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SATForeignRFC { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
-        public string RegimenFiscalCode { get; set; }
         public string ZipCode { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
@@ -178,16 +132,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ActivatedByUserName { get; set; }
         public string SetAsInactiveByName { get; set; }
         public string ActivationRequestedByUserName { get; set; }
-        public string LeadSourceName { get; set; }
-        public string CreatedByPartner { get; set; }
-        public string StateName { get; set; }
-        public string GLAccountId { get; set; }
-        public string GLAccountDisplayNumber { get; set; }
-        public bool IsAutonomy { get; set; }
-        public string BillToId { get; set; }
-        public string BillToName { get; set; }
-        public string SATCustomerName { get; set; }
-        public DateTime? LastLoginDateViaPC { get; set; }
-        public DateTime? LastLoginDateViaMobile { get; set; }
     }
 }

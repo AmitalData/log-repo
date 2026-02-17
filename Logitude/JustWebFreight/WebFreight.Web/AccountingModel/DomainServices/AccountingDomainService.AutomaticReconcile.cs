@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
@@ -96,7 +96,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
         //    if (accountingContext == null)
         //    {
-        //        accountingContext = AccountingContext.GetContext(tenant);//entityPm.Tenant);
+        //        accountingContext = AccountingContext.GetContext(0);//entityPm.Tenant);
         //    }
 
 
@@ -113,7 +113,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         //    var sssss = this.ChangeSet.ChangeSetEntries;
         //    if (accountingContext == null)
         //    {
-        //        accountingContext = AccountingContext.GetContext(tenant);//currententityPm.Tenant);
+        //        accountingContext = AccountingContext.GetContext(0);//currententityPm.Tenant);
         //    }
         //    //currententityPm.MarkAsChanged = true;
 

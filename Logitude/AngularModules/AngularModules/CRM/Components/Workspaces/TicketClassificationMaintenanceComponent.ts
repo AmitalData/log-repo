@@ -12,7 +12,7 @@ import {CRMTool} from '../../Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow'; 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TicketClassificationMaintenanceComponent.html',
 })
 

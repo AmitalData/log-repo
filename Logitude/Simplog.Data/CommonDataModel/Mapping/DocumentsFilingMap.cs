@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -93,10 +93,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            this.Property(t => t.ReceivedByByContactId)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-
             this.Property(t => t.StatusCode)
                .HasMaxLength(4)
                .IsUnicode(false);
@@ -119,12 +115,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             .IsUnicode(false);
 
             this.Property(t => t.DepartmentId)
-
+           
              .HasMaxLength(15)
              .IsUnicode(false);
 
             this.Property(t => t.BranchId)
-
+               
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
@@ -154,10 +150,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
            .HasMaxLength(40)
            .IsUnicode(false);
 
-            this.Property(t => t.ComputedCustomerDocumentId)
-           .HasMaxLength(40)
-           .IsUnicode(false);
-
             this.Property(t => t.SecurityId)
                 .HasMaxLength(60)
                 .IsUnicode(false);
@@ -178,14 +170,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.IsDigitalSignRequired)
                 .IsRequired();
-
-            this.Property(t => t.ReceivedByPartner)
-           .HasMaxLength(25)
-           .IsUnicode(false);
-
-            this.Property(t => t.BillToId)
-          .HasMaxLength(60)
-          .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("DocumentsFilings");
@@ -208,7 +192,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.HasCopies).HasColumnName("HasCopies");
-            this.Property(t => t.CancellSignRequest).HasColumnName("CancellSignRequest");
+            this.Property(t => t.CancellSignRequest).HasColumnName("CancellSignRequest"); 
             this.Property(t => t.Received).HasColumnName("Received");
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
@@ -216,10 +200,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.ReceivedDate).HasColumnName("ReceivedDate");
             this.Property(t => t.ReceivedByUserId).HasColumnName("ReceivedByUserId");
-            this.Property(t => t.ReceivedByByContactId).HasColumnName("ReceivedByByContactId");
+
             this.Property(t => t.StatusCode).HasColumnName("StatusCode");
 
-
+          
 
             this.Property(t => t.EntityReference).HasColumnName("EntityReference");
             this.Property(t => t.ExternalEntityName).HasColumnName("ExternalEntityName");
@@ -238,7 +222,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SignersList).HasColumnName("SignersList");
             this.Property(t => t.SecurityId).HasColumnName("SecurityId");
             this.Property(t => t.LastVersion).HasColumnName("LastVersion");
-
+        
             this.Property(t => t.IsRequested).HasColumnName("IsRequested");
             this.Property(t => t.SignRequestByUserEmail).HasColumnName("SignRequestByUserEmail");
             this.Property(t => t.OrigionalDocumentId).HasColumnName("OrigionalDocumentId");
@@ -251,11 +235,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsDigitalSignRequired).HasColumnName("IsDigitalSignRequired");
             this.Property(t => t.BackedupExternally).HasColumnName("BackedupExternally");
             this.Property(t => t.LastBackupDate).HasColumnName("LastBackupDate");
-            this.Property(t => t.IsTransferdToQBO).HasColumnName("IsTransferdToQBO");
-            this.Property(t => t.ReceivedByPartner).HasColumnName("ReceivedByPartner");
-			this.Property(t => t.IsFromCloud).HasColumnName("IsFromCloud");
-            this.Property(t => t.FileDataMD5Hash).HasColumnName("FileDataMD5Hash");
-
 
             this.HasOptional(t => t.Document)
                 .WithMany()
@@ -286,30 +265,26 @@ namespace Simplog.Data.CommonDataModel.Mapping
                .WithMany()
                .HasForeignKey(d => d.UpdatedByUserId);
 
-            this.HasOptional(t => t.ReceivedByUser)
-              .WithMany()
-              .HasForeignKey(d => d.ReceivedByUserId);
+              this.HasOptional(t => t.ReceivedByUser)
+                .WithMany()
+                .HasForeignKey(d => d.ReceivedByUserId);
 
-            this.HasOptional(t => t.ReceivedByByContact)
-               .WithMany()
-               .HasForeignKey(d => d.ReceivedByByContactId);
-
-            this.HasOptional(t => t.DocumentStatus)
+              this.HasOptional(t => t.DocumentStatus)
              .WithMany()
              .HasForeignKey(d => d.StatusCode);
 
-            this.HasOptional(t => t.Branch).WithMany().HasForeignKey(d => d.BranchId);
+              this.HasOptional(t => t.Branch).WithMany().HasForeignKey(d => d.BranchId);
 
-            this.HasOptional(t => t.Department).WithMany().HasForeignKey(d => d.DepartmentId);
+              this.HasOptional(t => t.Department).WithMany().HasForeignKey(d => d.DepartmentId);
 
-            this.HasOptional(t => t.Folder)
-              .WithMany()
-              .HasForeignKey(d => d.FolderId);
+              this.HasOptional(t => t.Folder)
+                .WithMany()
+                .HasForeignKey(d => d.FolderId);
 
 
-            this.HasOptional(t => t.DeletedByUser)
-              .WithMany()
-              .HasForeignKey(d => d.DeletedByUserId);
+              this.HasOptional(t => t.DeletedByUser)
+                .WithMany()
+                .HasForeignKey(d => d.DeletedByUserId);
 
         }
     }

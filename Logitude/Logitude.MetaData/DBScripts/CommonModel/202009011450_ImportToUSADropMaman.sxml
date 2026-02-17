@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Common">
-  <Sql Version="1">
-    <![CDATA[
-   
-      delete from CustomsInterfaces where code = 'CMN'
-    ]]>
-  </Sql>
-  <Oracle Version="1"></Oracle>
-</Script>

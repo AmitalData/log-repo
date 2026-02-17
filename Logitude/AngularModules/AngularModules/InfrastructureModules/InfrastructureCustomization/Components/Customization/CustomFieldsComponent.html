@@ -1,8 +1,7 @@
-
-<style>
-    .Disabled {
-        pointer-events: none;
-        opacity: 0.5;
+﻿<style>
+    .Disabled{
+        pointer-events:none;
+        opacity:0.5;
     }
 </style>
 <table>
@@ -12,12 +11,10 @@
                 <tr style="height: 20px;">
                     <td>
                         <table>
-                            <tr>
-                                <td>
-                                    <div></div>
-                                </td>
-                                <td *ngIf="!this.IsCustomFieldsMenue" style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
-                                    <IconButton *ngIf="!IsPartner" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled && AllowCustomFields" (click)="AddCustomField()"></IconButton> <!--(click)="DataContext.AddPackageItemMethod()" [disabled]="!DataContext.IsEditingEnabled"-->
+                            <tr> 
+                                <td><div></div></td>
+                                <td style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
+                                    <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled" (click)="AddCustomField()"></IconButton> <!--(click)="DataContext.AddPackageItemMethod()" [disabled]="!DataContext.IsEditingEnabled"-->
                                 </td>
                             </tr>
                         </table>
@@ -28,64 +25,61 @@
                 </tr>
 
                 <tr>
-                    <td [style.height]="AllowCustomFields? '100%': '80px'">
+                    <td style="height: 100%;">
                         <div class="MediaFill" style="overflow-x: hidden;">
-                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CustomFieldsCollection">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CustomFieldsCollection" >
 
                                 <!-- FieldName -->
                                 <log-column [header]="'Code'" [width]="'95'" [Alignment]="'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming">
-                                                <span>{{item.Code}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming">
+                                            <span>{{item.Code}}</span>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- FieldName -->
                                 <log-column [header]="'Field Name'" [width]="'95'" [Alignment]="'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming">
-                                                <span>{{item.FullNameTextCodeCode | TextCodeTranslationPipe}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming">
+                                            <span>{{item.FullNameTextCodeCode | TextCodeTranslationPipe}}</span>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- DataType -->
-                                <log-column [header]="'Data Type'" [width]="'80'" [Alignment]="'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming">
-                                                <span>{{item.DataTypeName}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                <log-column [header]="'Data Type'" [width]="'80'" [Alignment]="'left'" >
+                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" >
+                                            <span>{{item.DataTypeCode}}</span>
+                                        </div> 
+                                    </log-cell-template>
                                 </log-column>
-
+                                 
                                 <!-- Buttons -->
                                 <log-column [width]="'30'" [Alignment]="'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true">
-                                            <IconButton [DataCy]="item.FullNameTextCodeCode" [Name]="'edit'" [IsSmall]="true"
-                                                        style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="EditLine(item)"></IconButton>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template [IgnoreMods]="true" template="let item">
+                                        <IconButton [Name]="'edit'" [IsSmall]="true"
+                                                    style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="EditLine(item)"></IconButton>
+                                    </log-cell-template>
                                 </log-column>
 
                             </logitude-edit-grid>
                         </div>
                     </td>
                 </tr>
-                <tr *ngIf="!AllowCustomFields">
-                    <td style="vertical-align: top">
-                        <div style="display: table; margin: 0 auto">
-                            <label>
-                                Custom Fields are not supported on this object
-                            </label>
-                        </div>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td><div></div></td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelClicked()">Close</button>
                     </td>
                 </tr>
             </table>

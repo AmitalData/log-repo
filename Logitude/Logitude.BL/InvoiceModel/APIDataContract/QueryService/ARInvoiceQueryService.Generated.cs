@@ -10,24 +10,18 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel;
-using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.Repositories;
-using Syncfusion.XlsIO.FormatParser.FormatTokens;
 
-namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
+ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 { 
    public partial class ARInvoiceQueryService
    {
@@ -35,7 +29,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 		IInvoiceContext  context;
 		//ARInvoiceService service; 
 		
-		ARInvoiceQuery query;
+		ARInvoiceQuery query; 
 
         public ARInvoiceQueryService(int tenant)
         {
@@ -45,21 +39,21 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         }
 
 		
-		public ARInvoice GetARInvoiceById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public ARInvoice GetARInvoiceById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ARInvoice with Id " + Id + " doesn't exist");
 
-				return ARInvoiceDataMapping(temp,Tenant,ComputingPartnerName);
+				return ARInvoiceDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -70,22 +64,18 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
 				   
 				   var temp = new ARInvoice(); 
-				   temp.Id = MyEntityPM.Id; 
-
-			  
+				   temp.Id = MyEntityPM.Id;			  
 				   if(MyEntityPM.ARInvoiceTypeCode != null)
 				   {
 					   ARInvoiceTypeQueryService ARInvoiceTypeService0 = new ARInvoiceTypeQueryService(Tenant);
-					   					   temp.InvoiceType = ARInvoiceTypeService0.GetARInvoiceTypeByCode(MyEntityPM.ARInvoiceTypeCode,Tenant,ComputingPartnerName); 
+					   					   temp.InvoiceType = ARInvoiceTypeService0.GetARInvoiceTypeByCode(MyEntityPM.ARInvoiceTypeCode,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.BillToId != null)
 				   {
 					   CardQueryService CardService1 = new CardQueryService(Tenant);
-					   					   temp.BillTo = CardService1.CardCustomDataMapping(MyEntityPM.BillToId,Tenant,ComputingPartnerName); 
+					   					   temp.BillTo = CardService1.CardCustomDataMapping(MyEntityPM.BillToId,Tenant); 
 			       
 					   				   }
 				   
@@ -95,44 +85,36 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 				   temp.IsPrinted = MyEntityPM.IsPrinted;
 				   temp.MainEntityReference = MyEntityPM.MainEntityReference;
 				   temp.IsConstituentInvoice = MyEntityPM.IsConstituentInvoice;
-				   temp.IsConsolidationInvoice = MyEntityPM.IsConsolidationInvoice; 
-
-			  
+				   temp.IsConsolidationInvoice = MyEntityPM.IsConsolidationInvoice;			  
 				   if(MyEntityPM.InvoiceCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService2 = new CurrencyQueryService(Tenant);
-					   					   temp.InvoiceCurrency = CurrencyService2.CurrencyCustomDataMapping(MyEntityPM.InvoiceCurrencyId,Tenant,ComputingPartnerName); 
+					   					   temp.InvoiceCurrency = CurrencyService2.CurrencyCustomDataMapping(MyEntityPM.InvoiceCurrencyId,Tenant); 
 			       
 					   				   }
 				   
 				   temp.AmountInLocalCurrency = MyEntityPM.AmountInLocalCurrency;
-				   temp.CancelledByARInvoice = MyEntityPM.CancelledByARInvoiceId; 
-
-			  
+				   temp.CancelledByARInvoice = MyEntityPM.CancelledByARInvoiceId;			  
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
 					   UserQueryService UserService3 = new UserQueryService(Tenant);
-					   					   temp.CreatedByUser = UserService3.UserCustomDataMapping(MyEntityPM.CreatedByUserId,Tenant,ComputingPartnerName); 
+					   					   temp.CreatedByUser = UserService3.UserCustomDataMapping(MyEntityPM.CreatedByUserId,Tenant); 
 			       
 					   				   }
 				   
-				   temp.VATNumber = MyEntityPM.VatNumber; 
-
-			  
+				   temp.VATNumber = MyEntityPM.VatNumber;			  
 				   if(MyEntityPM.BillToAddressId != null)
 				   {
 					   AddressQueryService AddressService4 = new AddressQueryService(Tenant);
-					   					   temp.BillToAddress = AddressService4.AddressCustomDataMapping(MyEntityPM.BillToAddressId,Tenant,ComputingPartnerName); 
+					   					   temp.BillToAddress = AddressService4.AddressCustomDataMapping(MyEntityPM.BillToAddressId,Tenant); 
 			       
 					   				   }
 				   
-				   temp.PrintNotes = MyEntityPM.PrintNotes; 
-
-			  
+				   temp.PrintNotes = MyEntityPM.PrintNotes;			  
 				   if(MyEntityPM.IssuedByUserId != null)
 				   {
 					   UserQueryService UserService5 = new UserQueryService(Tenant);
-					   					   temp.IssuedByUser = UserService5.UserCustomDataMapping(MyEntityPM.IssuedByUserId,Tenant,ComputingPartnerName); 
+					   					   temp.IssuedByUser = UserService5.UserCustomDataMapping(MyEntityPM.IssuedByUserId,Tenant); 
 			       
 					   				   }
 				   
@@ -140,7 +122,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 				if(MyEntityPM.InvoiceLines != null && MyEntityPM.InvoiceLines.Count > 0)
 				{
 					 ARInvoiceLineQueryService ARInvoiceLineService6 = new ARInvoiceLineQueryService(Tenant);
-					 temp.ARInvoiceLines = ARInvoiceLineService6.ARInvoiceLineCustomDataMapping(MyEntityPM,MyEntityPM.InvoiceLines,Tenant,ComputingPartnerName);
+					 temp.ARInvoiceLines = ARInvoiceLineService6.ARInvoiceLineCustomDataMapping(MyEntityPM,MyEntityPM.InvoiceLines,Tenant);
 				}
 
 							 
@@ -150,52 +132,31 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
 				   temp.IsDraft = MyEntityPM.IsDraft;
 				   temp.ProfitCurrencyExchangeRate = MyEntityPM.ProfitCurrencyExchangeRate;
-				   temp.AmountInProfitCurrency = MyEntityPM.AmountInProfitCurrency; 
-				   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
-                   temp.InternalNotes = MyEntityPM.InternalNotes;
-				   temp.ReferenceDate = MyEntityPM.ReferenceDate;
-
-                if (MyEntityPM.TransferStatusCode != null)
+				   temp.AmountInProfitCurrency = MyEntityPM.AmountInProfitCurrency;			  
+				   if(MyEntityPM.TransferStatusCode != null)
 				   {
 					   ARInvoiceTransferStatusQueryService ARInvoiceTransferStatusService6 = new ARInvoiceTransferStatusQueryService(Tenant);
-					   					   temp.TransferStatus = ARInvoiceTransferStatusService6.GetARInvoiceTransferStatusByCode(MyEntityPM.TransferStatusCode,Tenant,ComputingPartnerName); 
+					   					   temp.TransferStatus = ARInvoiceTransferStatusService6.GetARInvoiceTransferStatusByCode(MyEntityPM.TransferStatusCode,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.BranchId != null)
 				   {
 					   BranchQueryService BranchService7 = new BranchQueryService(Tenant);
-					   					   temp.Branch = BranchService7.BranchCustomDataMapping(MyEntityPM.BranchId,Tenant,ComputingPartnerName); 
+					   					   temp.Branch = BranchService7.BranchCustomDataMapping(MyEntityPM.BranchId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.LocalCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService8 = new CurrencyQueryService(Tenant);
-					   					   temp.LocalCurrency = CurrencyService8.CurrencyCustomDataMapping(MyEntityPM.LocalCurrencyId,Tenant,ComputingPartnerName); 
+					   					   temp.LocalCurrency = CurrencyService8.CurrencyCustomDataMapping(MyEntityPM.LocalCurrencyId,Tenant); 
 			       
 					   				   }
 				   
 				   temp.Tenant = MyEntityPM.Tenant;
 				   temp.IsMultiCurrency = MyEntityPM.IsMultiCurrency;
-				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;
-				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;
-				   temp.BillToGLAccount = MyEntityPM.BillToGLAccountId;
-                   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
-                   temp.InternalNotes = MyEntityPM.InternalNotes;
-				   temp.ReferenceDate = MyEntityPM.ReferenceDate;
-
-                if (MyEntityPM.StatusCode != null)
-				   {
-					   ARInvoiceStatusQueryService ARInvoiceStatusService9 = new ARInvoiceStatusQueryService(Tenant);
-					   					   temp.Status = ARInvoiceStatusService9.GetARInvoiceStatusByCode(MyEntityPM.StatusCode,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   					
+				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -205,7 +166,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         } 
 
-		public ARInvoicePM ARInvoiceDataMappingAndValidatin(ARInvoice MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public ARInvoicePM ARInvoiceDataMappingAndValidatin(ARInvoice MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -214,514 +175,144 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
-					{   
+										   
+					if(temp == null)
+					{
 					    throw new ApplicationException("ARInvoice with Id " + MyEntity.Id + " doesn't exist");
 					} 
-				 
-										 
-					if(IsUpdate == true)
-					{
-					    
-					      temp.NewConcurrencyGUID = Guid.NewGuid().ToString(); 
-						
-					}
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-					   
-					    if(!string.IsNullOrEmpty(MyEntity.Id))
-					    {
-					        throw new ApplicationException("ARInvoice with provided key doesn't exist");
-						
-						}
-						//else
-						//{
-						//    temp.Id = MyEntity.Id;
-
-						//} 
-
-						
-					}
-					ARInvoiceTypeQueryService InvoiceTypeARInvoiceTypeService = new ARInvoiceTypeQueryService(Tenant);
+						temp.Id = MyEntity.Id;
+					}					ARInvoiceTypeQueryService InvoiceTypeARInvoiceTypeService = new ARInvoiceTypeQueryService(Tenant);
 					if(MyEntity.InvoiceType != null)
 					{
-						var myInvoiceTypePM = InvoiceTypeARInvoiceTypeService.ARInvoiceTypeDataMappingAndValidatin(MyEntity.InvoiceType,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myInvoiceTypePM != null)
-						{ 
-
+						var myInvoiceTypePM = InvoiceTypeARInvoiceTypeService.ARInvoiceTypeDataMappingAndValidatin(MyEntity.InvoiceType,Tenant,ComputingPartnerName);
+												if(myInvoiceTypePM != null)
+						{
+							temp.ARInvoiceTypeCode = myInvoiceTypePM.Code;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.ARInvoiceTypeCode = myInvoiceTypePM.Code;
-						  
-							}  
-
-							
-						} 
-
 					}
-
-					string paymentTermsId = "";
-					PaymentTermPM paymentTermPM = null;
-
-                    CardQueryService BillToCardService = new CardQueryService(Tenant);
+			
+										CardQueryService BillToCardService = new CardQueryService(Tenant);
 					if(MyEntity.BillTo != null)
 					{
 						var myBillToPM = BillToCardService.CardCustomDataMappingAndValidatin(MyEntity.BillTo,Tenant);
-						
-						if(myBillToPM != null)
+												if(myBillToPM != null)
 						{
-
-							paymentTermsId = myBillToPM.PaymentTermId;
-							if (paymentTermsId != null && !IsUpdate)
-							{
-								PaymentTermQuery paymentTermQuery = new PaymentTermQuery(Tenant);
-								paymentTermPM = paymentTermQuery.GetSinglePM(paymentTermsId, Tenant);
-
-                            }
-
-
-                            if (!IsUpdate)
-							{								
-								temp.BillToId = myBillToPM.Id;
-						  
-							}  
-
-							
-						} 
-
+							temp.BillToId = myBillToPM.Id;
+						}
+						 
 					}
-
-                    
-					if(!IsUpdate)
-					{							
-						temp.InvoiceNumber = MyEntity.InvoiceNumber;
-
-										}  
-
+			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.InvoiceDate = MyEntity.InvoiceDate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.PrintDate = MyEntity.PrintDate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.IsPrinted = MyEntity.IsPrinted;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.MainEntityReference = MyEntity.MainEntityReference;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.IsConstituentInvoice = MyEntity.IsConstituentInvoice;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.IsConsolidationInvoice = MyEntity.IsConsolidationInvoice;
-
-										}  
-
-					
-					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					temp.InvoiceNumber = MyEntity.InvoiceNumber;
+					temp.InvoiceDate = MyEntity.InvoiceDate;
+					temp.PrintDate = MyEntity.PrintDate;
+					temp.IsPrinted = MyEntity.IsPrinted;
+					temp.MainEntityReference = MyEntity.MainEntityReference;
+					temp.IsConstituentInvoice = MyEntity.IsConstituentInvoice;
+					temp.IsConsolidationInvoice = MyEntity.IsConsolidationInvoice;					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.InvoiceCurrency != null)
 					{
 						var myInvoiceCurrencyPM = InvoiceCurrencyCurrencyService.CurrencyCustomDataMappingAndValidatin(MyEntity.InvoiceCurrency,Tenant);
-						
-						if(myInvoiceCurrencyPM != null)
-						{ 
-
+												if(myInvoiceCurrencyPM != null)
+						{
+							temp.InvoiceCurrencyId = myInvoiceCurrencyPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.InvoiceCurrencyId = myInvoiceCurrencyPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.CancelledByARInvoiceId = MyEntity.CancelledByARInvoice;
-
-										}  
-
-					
-					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
+					temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
+					temp.CancelledByARInvoiceId = MyEntity.CancelledByARInvoice;					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
 						var myCreatedByUserPM = CreatedByUserUserService.UserCustomDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant);
-						
-						if(myCreatedByUserPM != null)
-						{ 
-
+												if(myCreatedByUserPM != null)
+						{
+							temp.CreatedByUserId = myCreatedByUserPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.CreatedByUserId = myCreatedByUserPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.VatNumber = MyEntity.VATNumber;
-
-										}  
-
-					
-					AddressQueryService BillToAddressAddressService = new AddressQueryService(Tenant);
+					temp.VatNumber = MyEntity.VATNumber;					AddressQueryService BillToAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.BillToAddress != null)
 					{
 						var myBillToAddressPM = BillToAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.BillToAddress,Tenant);
-						
-						if(myBillToAddressPM != null)
-						{ 
-
+												if(myBillToAddressPM != null)
+						{
+							temp.BillToAddressId = myBillToAddressPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.BillToAddressId = myBillToAddressPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.PrintNotes = MyEntity.PrintNotes;
-
-										}  
-
-					
-					UserQueryService IssuedByUserUserService = new UserQueryService(Tenant);
+					temp.PrintNotes = MyEntity.PrintNotes;					UserQueryService IssuedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.IssuedByUser != null)
 					{
 						var myIssuedByUserPM = IssuedByUserUserService.UserCustomDataMappingAndValidatin(MyEntity.IssuedByUser,Tenant);
-						
-						if(myIssuedByUserPM != null)
-						{ 
-
+												if(myIssuedByUserPM != null)
+						{
+							temp.IssuedByUserId = myIssuedByUserPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.IssuedByUserId = myIssuedByUserPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
-
-										}
-
-
-
-
-					if (MyEntity.ARInvoiceLines != null && MyEntity.ARInvoiceLines.Count > 0)
+					temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
+					if(MyEntity.ARInvoiceLines != null && MyEntity.ARInvoiceLines.Count > 0)
 					{
-						ARInvoiceLineQueryService ARInvoiceLineService10 = new ARInvoiceLineQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.InvoiceLines = ARInvoiceLineService10.ARInvoiceLineCustomDataMappingAndValidatin(MyEntity,MyEntity.ARInvoiceLines,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
+						ARInvoiceLineQueryService ARInvoiceLineService9 = new ARInvoiceLineQueryService(Tenant);
+						temp.InvoiceLines = ARInvoiceLineService9.ARInvoiceLineCustomDataMappingAndValidatin(MyEntity,MyEntity.ARInvoiceLines,Tenant,ComputingPartnerName);
 					}
 
-
-
-					if (!IsUpdate)
-					{							
-						temp.DueDate = MyEntity.DueDate;
-						if (temp.DueDate == null)
-						{
-
-							if (paymentTermPM != null && !IsUpdate)
-							{
-								DateTime? invoiceDueDate = GetExpectedDueDate(temp, paymentTermPM);
-								temp.DueDate = invoiceDueDate;
-							}
-							
-						}
-
-                    }  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.SubTotalInInvoiceCurrency = MyEntity.SubTotalInInvoiceCurrency;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.SubTotalInLocalCurrency = MyEntity.SubTotalInLocalCurrency;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.IsDraft = MyEntity.IsDraft;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ProfitCurrencyExchangeRate = MyEntity.ProfitCurrencyExchangeRate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;
-
-										}
-
-
-				    if (!IsUpdate)
-				    {
-					    temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
-
-				                        }
-
-                    if (!IsUpdate && MyEntity.IsUNFGeneralInvoice == true) // Manages both the UNF General Invoice and the UNF General Credit Note
-                {
-                    temp.InternalNotes = MyEntity.InternalNotes;
-
-                                        }
-
-                    if (!IsUpdate)
-                    {
-                        temp.MasterNumber = MyEntity.MasterNumber;
-
-                                        }
-
-
-
-                ARInvoiceTransferStatusQueryService TransferStatusARInvoiceTransferStatusService = new ARInvoiceTransferStatusQueryService(Tenant);
+								 
+					temp.DueDate = MyEntity.DueDate;
+					temp.SubTotalInInvoiceCurrency = MyEntity.SubTotalInInvoiceCurrency;
+					temp.SubTotalInLocalCurrency = MyEntity.SubTotalInLocalCurrency;
+					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
+					temp.IsDraft = MyEntity.IsDraft;
+					temp.ProfitCurrencyExchangeRate = MyEntity.ProfitCurrencyExchangeRate;
+					temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;					ARInvoiceTransferStatusQueryService TransferStatusARInvoiceTransferStatusService = new ARInvoiceTransferStatusQueryService(Tenant);
 					if(MyEntity.TransferStatus != null)
 					{
-						var myTransferStatusPM = TransferStatusARInvoiceTransferStatusService.ARInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myTransferStatusPM != null)
-						{ 
-
+						var myTransferStatusPM = TransferStatusARInvoiceTransferStatusService.ARInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName);
+												if(myTransferStatusPM != null)
+						{
+							temp.TransferStatusCode = myTransferStatusPM.Code;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.TransferStatusCode = myTransferStatusPM.Code;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
-					
-					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
+										BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
 						var myBranchPM = BranchBranchService.BranchCustomDataMappingAndValidatin(MyEntity.Branch,Tenant);
-						
-						if(myBranchPM != null)
-						{ 
-
+												if(myBranchPM != null)
+						{
+							temp.BranchId = myBranchPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.BranchId = myBranchPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
-					
-					CurrencyQueryService LocalCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+										CurrencyQueryService LocalCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.LocalCurrency != null)
 					{
 						var myLocalCurrencyPM = LocalCurrencyCurrencyService.CurrencyCustomDataMappingAndValidatin(MyEntity.LocalCurrency,Tenant);
-						
-						if(myLocalCurrencyPM != null)
-						{ 
-
+												if(myLocalCurrencyPM != null)
+						{
+							temp.LocalCurrencyId = myLocalCurrencyPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.LocalCurrencyId = myLocalCurrencyPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Tenant = MyEntity.Tenant;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
-
-										}
-
-
-
-                if (!IsUpdate)
-                {
-                    temp.CreditARInvoice = MyEntity.CreditARInvoice;
-
-                }
-
-
-                if (!IsUpdate)
-                {
-                    temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
-
-                }
-
-
-                //if (!IsUpdate)
-                //{
-                //    temp.InternalNotes = MyEntity.InternalNotes;
-
-                //}
-
-
-                if (!IsUpdate)
-					{							
-						temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.BillToGLAccountId = MyEntity.BillToGLAccount;
-
-										}  
-
-					
-					ARInvoiceStatusQueryService StatusARInvoiceStatusService = new ARInvoiceStatusQueryService(Tenant);
-					if(MyEntity.Status != null)
-					{
-						var myStatusPM = StatusARInvoiceStatusService.ARInvoiceStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myStatusPM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.StatusCode = myStatusPM.Code;
-						  
-							}  
-
-							
-						} 
-
-					}
-
-
-					if (!IsUpdate)
-					{
-						temp.ReferenceDate = MyEntity.ReferenceDate;
-
-					}
-
-                return temp;
+					temp.Tenant = MyEntity.Tenant;
+					temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
+					temp.CreditARInvoice = MyEntity.CreditARInvoice;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -729,73 +320,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw ex;
             } 
         }
-
-        private DateTime? GetExpectedDueDate(ARInvoicePM aRInvoicePM, PaymentTermPM myPaymentTerm)
-        {
-            DateTime? dueDate = null;
-
-
-
-			if (myPaymentTerm != null)
-			{
-				if (myPaymentTerm.IsManuallySet)
-				{
-					dueDate = null;
-				}
-
-				else
-				{
-					DateTime? myComparativeDate = null;
-
-					if (aRInvoicePM.IsConsolidationInvoice)
-					{
-						myComparativeDate = aRInvoicePM.InvoiceDate;
-					}
-
-					else
-					{
-						if (myPaymentTerm.FromDateTypeCode == "SHI")
-						{
-							myComparativeDate = aRInvoicePM.OperationalDate;
-
-							if (myComparativeDate == null)
-							{
-								myComparativeDate = aRInvoicePM.InvoiceDate;
-							}
-						}
-
-						else
-						{
-							myComparativeDate = aRInvoicePM.InvoiceDate;
-						}
-					}
-
-					if (myComparativeDate != null)
-					{
-						if (myPaymentTerm.EndOfMonth)
-						{
-							int year = myComparativeDate.Value.Year;
-							int month = myComparativeDate.Value.Month;
-							month += myPaymentTerm.NumberOfMonths;
-							if (month > 12)
-							{
-								month -= 12;
-								year += 1;
-							}
-							int daysInMonth = DateTime.DaysInMonth(year, month);
-
-							myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
-						}
-
-						dueDate = myComparativeDate.Value.AddDays(Convert.ToDouble(myPaymentTerm.Days));
-					}
-				}
-			}
-            
-
-            return dueDate;
-        }
-
-
-    }
+		 
+   }
 }

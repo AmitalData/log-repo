@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -41,8 +41,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         Description = a.Description,
                         Tenant = a.Tenant,
                         InActive = a.InActive,
-                        PartnerName = a.PartnerName,
-                        SearchFields = a.SearchFields
+                        PartnerName = a.PartnerName
                     });
         }
 
@@ -61,8 +60,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                            Description = a.Description,
                                            Tenant = a.Tenant,
                                            InActive = a.InActive,
-                                           PartnerName = a.PartnerName,
-                                           SearchFields = a.SearchFields
+                                           PartnerName = a.PartnerName
                                        }).FirstOrDefault();
 
 
@@ -85,8 +83,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              Description = a.Description,
                                              Tenant = a.Tenant,
                                              InActive = a.InActive,
-                                             PartnerName = a.PartnerName,
-                                             SearchFields = a.SearchFields
+                                             PartnerName = a.PartnerName
                                          }).FirstOrDefault();
 
             return entity;
@@ -107,8 +104,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         Description = a.Description,
                         Tenant = a.Tenant,
                         InActive = a.InActive,
-                        PartnerName = a.PartnerName,
-                        SearchFields = a.SearchFields
+                        PartnerName = a.PartnerName
                     });
         }
 
@@ -126,8 +122,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        Description = a.Description,
                        Tenant = a.Tenant,
                        InActive = a.InActive,
-                       PartnerName = a.PartnerName,
-                       SearchFields = a.SearchFields
+                       PartnerName = a.PartnerName
                    };
         }
     }

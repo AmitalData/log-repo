@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {LoginService, LoginParameters, LoginTokenParameter} from '../LoginService';
 import {Headers} from '@angular/http';
 import {SessionInfo} from '../SessionInfo';
-import {Tools} from '../Utilities/Tools'; 
+import {Tools} from '../Utilities/Tools';
 declare var showTenantsCombo, getselectedcompany, IsBrowserSupported, IsMobileDetected;
 
 @Component({
@@ -30,9 +30,7 @@ export class LoginComponent {
     public SampleLogoURL: string = "./Images/ApplicationLogo/Angular/AngularLogo.png";
     PasswordExpirationDateMessage: string;
     PasswordExpirationDateMessage2: string;
-    PasswordImage: string = "./Images/LoginScreen/password_eye_closed.png";
-    PasswordTitle: string = "Show";
-    PasswordWidth: number = 280;
+
     IsShowAreaCaptcha: boolean;
     CaptchaImageUrl: string;
     CaptchaTextValue: string;
@@ -272,21 +270,6 @@ export class LoginComponent {
         }
     }
 
-
-
-    InputPasswordType: string = "password";
-    ShowHidePasswordClick() {
-
-        var showHidePasswordImage = document.getElementById("ShowHidePasswordImageId");
-        if (showHidePasswordImage) {
-            this.PasswordImage = this.PasswordImage == "./Images/LoginScreen/password_eye.png" ? "./Images/LoginScreen/password_eye_closed.png" : "./Images/LoginScreen/password_eye.png";
-            this.InputPasswordType = this.InputPasswordType == "password" ? "text" : "password";
-            this.PasswordTitle = this.PasswordTitle == "Show" ? "Hide" : "Show";
-        }
-
-
-    }
-
     PasswordExpirationButtomClicked(type: string) {
 
         if (type == "Yes") {
@@ -294,7 +277,9 @@ export class LoginComponent {
             if (SessionInfo.MainLocation) {
                 SessionInfo.MainLocation.clear();
             }
-            this.LoadChangePasswordComponent();
+            Tools.DynamicLoader.Load("./Login/Components/" + SessionInfo.PlShortName + "ChangePasswordComponent", SessionInfo.MainLocation)
+                .then(cmpRef => {
+                });
         }
         else if (type == "No") {
             this.ComplateProcessLogin(this.UserDataPrompt, this.LoginParameters);
@@ -408,12 +393,14 @@ export class LoginComponent {
 
 
               
-                if (userData.MustChangePassword) {
+                 if (userData.MustChangePassword) {
                     SessionInfo.LoggedUserEmail = userData.UserName;
                     if (SessionInfo.MainLocation) {
                         SessionInfo.MainLocation.clear();
                     }
-                    this.LoadChangePasswordComponent();
+                    Tools.DynamicLoader.Load("./Login/Components/" + SessionInfo.PlShortName + "ChangePasswordComponent", SessionInfo.MainLocation)
+                        .then(cmpRef => {
+                        });
                 } else if (userData.PasswordExpirationDateMessage) {
 
                     if (userData.PasswordExpirationDateMessage.indexOf('days. Do') > -1) {
@@ -430,22 +417,29 @@ export class LoginComponent {
                 else {
                     this.errorMessage = "";
 
-                    if (userData.InValidCaptcha) {
-                        if (this.IsShowAreaCaptcha) {
-                            this.CaptchaTextValue = "";
-                        }
-                        this.IsShowAreaCaptcha = true;
-                        this.CaptchaImageUrl = userData.CaptchaImage;
-                    }
+                     if (userData.InValidCaptcha) {
+                         if (this.IsShowAreaCaptcha) {
+                             this.CaptchaTextValue = "";
+                         }
+                         this.IsShowAreaCaptcha = true;
+                         this.CaptchaImageUrl = userData.CaptchaImage;
+                     }
 
-                    this.errorMessage = "";
-                    if (userData.IpRestricted) this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";
-                    else if (userData.InActive) this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                    else if (userData.Unlicensed) this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                    else if (userData.InValidMailOrPassword) this.errorMessage = "Login failed! invalid user name or password.";
-                    else if (userData.InValidCaptcha && userData.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
-                    else this.errorMessage = "Login failed! invalid user name or password.";
 
+
+
+                         this.errorMessage = "";
+                         if (userData.IpRestricted) this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";
+                         else if (userData.InActive) this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                         else if (userData.Unlicensed) this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                         else this.errorMessage = "Login failed! invalid user name or password." + "<br/>";
+          
+                         if (userData.InValidCaptcha && userData.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
+
+
+
+
+             
                 }
 
             }
@@ -459,13 +453,6 @@ export class LoginComponent {
             this.HidePendingLoading = true;
         });
     }
-
-    LoadChangePasswordComponent() {
-        Tools.DynamicLoader.Load("./Login/Components/DSVChangePasswordComponent", SessionInfo.MainLocation)
-            .then(cmpRef => {
-            });
-    }
-
     SelectedCompany: any;
     TenantListChangeSelected(value) {
         this.SelectedCompany = this.TenantList.filter(d => d.Id == value)[0];
@@ -505,8 +492,6 @@ export class LoginComponent {
             this.HidePendingLoading = false;
         }
     }
-     
-     
     PostLoginData() {
         this.loginService.PostLoginData(this.LoginParams).subscribe(userData => {
 
@@ -534,24 +519,13 @@ export class LoginComponent {
                     }
                 }
 
-                 
+
                 if (userData.HtmlVersion) {
-                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1) {
-                        const isDSV = window.sessionStorage.getItem("IsDSV") == "true";
-                        AngularURL = "http://localhost:4200/?" + (isDSV ? "D" : "P") + data;
-                    }
-                    else {
-                        var version = userData.HtmlVersion;
-                        AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
-                    }
+                    var version = userData.HtmlVersion;
+                    AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
                 }
                 else {
-                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1) {
-                        const isDSV = window.sessionStorage.getItem("IsDSV") == "true";
-                        AngularURL = "http://localhost:4200/?" + (isDSV ? "D":"P") + data;
-                    }
-                    else
-                        AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
+                    AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
                 }
 
 
@@ -563,7 +537,8 @@ export class LoginComponent {
                         AngularURL = AngularURL.replace("&Tenant=" + externalTenant, "");
                     }
 
-                } 
+                }
+
                 document.location.href = AngularURL;
             }
 

@@ -1,6 +1,6 @@
 ﻿
 (function (jQuery) {
-    jQuery.Token = null;
+
     jQuery.CurrentTenant = null;
     jQuery.CurrentCardId = null;
     jQuery.CurrentCardType = null;
@@ -44,9 +44,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
 
@@ -75,9 +72,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
 
@@ -107,9 +101,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (invoicePM) {
 
@@ -132,16 +123,12 @@
                     LinesGridColumns.push({ title: "Amount", field: "Amount", width: 120, template: "<div class='k-numeric'>#= Amount #</div>" });
                     LinesGridColumns.push({ title: "VAT Type", field: "VATType", width: 130 });
 
-                    if (invoicePM.LocalCurrencyId != invoicePM.InvoiceCurrencyId || invoicePM.IsShowAmountLocalCurrencyColumnInSharedLogistics == false) {
+                    if (invoicePM.LocalCurrencyId != invoicePM.InvoiceCurrencyId) {
 
                         LinesGridColumns.push({ title: "Amount (" + invoicePM.InvoiceCurrencyCode + ")", field: "AmountInvoice", width: 120, template: "<div class='k-numeric'>#= AmountInvoice #</div>" });
                     }
 
-                    if (invoicePM.IsShowAmountLocalCurrencyColumnInSharedLogistics == true) {
-                        LinesGridColumns.push({ title: "Amount (" + invoicePM.LocalCurrencyCode + ")", field: "AmountLocal", width: 120, template: "<div class='k-numeric'>#= AmountLocal #</div>" });
-                    }
-
-  
+                    LinesGridColumns.push({ title: "Amount (" + invoicePM.LocalCurrencyCode + ")", field: "AmountLocal", width: 120, template: "<div class='k-numeric'>#= AmountLocal #</div>" });
 
                     $.each(invoicePM.InvoiceLines, function (index, item) {
 
@@ -200,9 +187,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (paymentsList) {
 
@@ -249,8 +233,7 @@
     });
 
     $("#BackButton").click(function () {
-        //parent.history.back();
-        window.history.go(-1);
+        parent.history.back();
         return false;
     });
 
@@ -262,9 +245,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
                 window.localStorage.setItem("Token", "");
@@ -296,20 +276,13 @@
 
         $(".ShowOnDataControl").hide();
 
-        $.Token = $("#TokenInput").val();
-        var linkQuery = $("#LoginInput").val();
+        var hash = $(location).attr('href');
+        var dataParam = hash.split('=');
+        var linkQuery = dataParam[1];
         var linkParameters = null;
-
-        if ($.trim($.Token) == "") {
-            var link = $(location).attr('href');
-            var linkArray = link.split('=')
-            linkQuery = linkArray[1];
-        }
-
         if (linkQuery && linkQuery.indexOf('%3A') > -1) {
             linkParameters = linkQuery.split('%3A')
         }
-
         else {
             linkParameters = linkQuery.split(':')
         }

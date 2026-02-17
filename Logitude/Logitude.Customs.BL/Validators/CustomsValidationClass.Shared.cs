@@ -27,7 +27,7 @@ namespace Logitude.Customs.BL.Validators
                     tenant = (int)tenantProp.GetValue(context.ObjectInstance, null);
                 }else
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("using default tenant (0) !!!");
+                    Debug.WriteLine("using default tenant (0) !!!");
                 }
             }
             else

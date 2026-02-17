@@ -17,13 +17,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
     
         public string SearchFields { get; set; }
         public string QuotationDefaultTemplateId { get; set; }
-        public string RoutingRQuoteDefaultTemplateId { get; set; }
+
 
         [ForeignKey("QuotationDefaultTemplateId")]
         public virtual QuoteTemplate QuoteTemplate { get; set; }
 
-        [ForeignKey("RoutingRQuoteDefaultTemplateId")]
-        public virtual QuoteTemplate RoutingRQuoteDefaultTemplate { get; set; }
+
 
 
     }

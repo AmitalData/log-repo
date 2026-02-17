@@ -85,15 +85,15 @@ namespace Logitude.CustomsMessaging.Dca
                     }
 
                 }
-                catch (Exception ex)
+                catch
                 {
-                    this.ErrorMessage = "<TCustomsResponse>.DeserilazeObject fail -the XSD not valid !!!(ask itzik to refresh XSD ): " + ex.Message;
+                    this.ErrorMessage = "<TCustomsResponse>.DeserilazeObject fail -the XSD not valid !!!(ask itzik to refresh XSD )";
                     return;
                 }
                 
                 string externalId = //GetExternalId(_SelectedFile);
                     _DCAFileModel.OurRefExtrenalId;
-                if (externalId != myESBResponseParser.ResponseHeader.ExternalId && externalId + "_EX" != myESBResponseParser.ResponseHeader.ExternalId )
+                if (externalId != myESBResponseParser.ResponseHeader.ExternalId)
                 {
 
                     this.ErrorMessage = ("Exception:it must be GetExternalId(selectedFile) (" + externalId + ")  == myESBResponseParser.ResponseHeader.ExternalId (" + myESBResponseParser.ResponseHeader.ExternalId + ")") + _DCAFileModel.ErrorMessage;

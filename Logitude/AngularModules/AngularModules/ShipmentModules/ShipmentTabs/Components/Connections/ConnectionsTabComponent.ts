@@ -5,21 +5,17 @@ import {ShipmentDomainService, ShipmentConnectedEntity} from '../../../../Shipme
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {WarehouseEntryPM} from '../../../../Warehouse/EntityPMs/WarehouseEntryPM';
+import {WarehouseReleasePM} from '../../../../Warehouse/EntityPMs/WarehouseReleasePM';
 import {AppTool, DateTool, FontTool} from '../../../../Infrastructure/Tools'
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ShipmentAssemblyPM} from '../../../../Shipment/EntityPMs/ShipmentAssemblyPM';
-import { WarehouseHelper } from '../../../../Warehouse/Helpers/WarehouseHelper';
-import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
-import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
-import { WarehouseReleaseListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleaseListExtendedService';
-import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
-import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ConnectionsTabComponent.html',
 })
 
@@ -27,8 +23,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public EntityPM: ShipmentPM;
     public ObjectTableName: string;
     private myDomainService: ShipmentDomainService;
-    warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
-    warehouseReleaseListExtendedService: WarehouseReleaseListExtendedService;
+
     public IsNoDataTextVisible: boolean = false;
 
     public ItemsSource: ShipmentConnectedEntityItem[] = [];
@@ -38,7 +33,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public MastersItemsSource: ShipmentConnectedEntityItem[];
     public CustomFilesItemsSource: ShipmentConnectedEntityItem[];
     public TicketsItemsSource: ShipmentConnectedEntityItem[];
-    public PickupDeliveryItemsSource: ShipmentConnectedEntityItem[];
 
     public IsWarehouseEntryVisible: boolean = false;
     public IsNewWarehouseEntryVisible: boolean = false;
@@ -46,20 +40,11 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public IsNewWarehouseReleaseVisible: boolean = false;
     public IsAssembliesVisivle: boolean = false;
     public IsDisconnectQuoteVisible: boolean = false;
-    public IsMasterGridVisible: boolean = false;
-    public IsNewMasterVisible: boolean = false;
-    public DisableNewWarehouseEntryButton: boolean = false;
-    public DisableNewWarehouseReleaseButton: boolean = false;
-    public IsStandaloneShipmentVisible: boolean = false;
-    public IsAddingStandaloneWithPickUpDeliveryOnlyVisible: boolean = false;
-
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.myDomainService = new ShipmentDomainService();
-        this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
-        this.warehouseReleaseListExtendedService = new WarehouseReleaseListExtendedService();
 
         if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "Module")) {
             if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
@@ -81,16 +66,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             this.IsDisconnectQuoteVisible = true;
         }
 
-        if (this.EntityPM.ShipmentLevelCode == "H") {
-            this.IsMasterGridVisible = true;
-
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "NEWMASTERFROMHOUSE")) {
-                this.IsNewMasterVisible = true;
-            }
-        }
-
-        this.SetIsStandaloneShipmentVisible();
-        this.SetIsStandaloneWithPickupDeliveryOnlyVisible();
         this.Listen();
         this.LoadData();
     }
@@ -110,36 +85,24 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
-    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent) {
+
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-
-                    if (this.IsNewWarehouseEntryRequested) {
-                        this.ShowWarehouseScreen("Entry");
-                    }
-
-                    else if (this.IsNewWarehouseReleaseRequested) {
-                        this.ShowWarehouseScreen("Release");
-                    }
-
-                    else if (this.isNewMasterClicked) {
-                        this.RunNewMasterWizard();
-                    }
-
+                    if (this.IsNewWarehouseEntryRequested) this.ShowWarehouseScreen("Entry");
+                    else if (this.IsNewWarehouseReleaseRequested) this.ShowWarehouseScreen("Release");
                     else {
                         this.LoadData();
                         this.FillAssemblies();
                     }
                 }
-
                 this.IsOpenWarehouseEntryScreen = false;
                 this.IsOpenWarehouseReleaseScreen = false;
                 this.IsNewWarehouseEntryRequested = false;
                 this.IsNewWarehouseReleaseRequested = false;
-                this.isNewMasterClicked = false;
+
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -155,15 +118,12 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     this.LoadData();
                     this.FillAssemblies();
                 }
-            });            
+            });
         }
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.TabSelectedEvent);
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);
-        AppTool.KillEventEmitter(this.LoadCompletedEvent);
-        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     LoadData() {
@@ -178,52 +138,15 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             }
             this.CurrentSession.StopBusyIndicator();
         });
-        if (this.EntityPM.IsCFSWarehouse && this.EntityPM.DirectionId == "I") {
-            this.SetIsCFSWarehouseProperities();
-        }
-
     }
-
-    SetIsCFSWarehouseProperities() {
-        this.DisableNewWarehouseEntryButton = false;
-        this.DisableNewWarehouseReleaseButton = false;
-        this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-            var warehouseEntries = serviceResponse.Result;
-            if (warehouseEntries && warehouseEntries.length > 0) {
-                this.DisableNewWarehouseEntryButton = true;
-            }
-        });
-        this.warehouseReleaseListExtendedService.getActiveWarehouseReleaseListsByShipmentId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((serviceResponse: ServiceResponse) => {
-            var warehouseRelease = serviceResponse.Result;
-            if (warehouseRelease && warehouseRelease.length > 0) {
-                this.DisableNewWarehouseReleaseButton = true;
-            }
-        });
-    }
-
-    SetIsStandaloneShipmentVisible() {
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAS")[0];
-        if (featureToggle && this.EntityPM.IsStandalonePickupDelivery) {
-            this.IsStandaloneShipmentVisible = true;
-        }
-    }
-
-    SetIsStandaloneWithPickupDeliveryOnlyVisible() {
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OPD")[0];
-        if (featureToggle) {
-            this.IsAddingStandaloneWithPickUpDeliveryOnlyVisible = true;
-        }
-    }
-
 
     public EntriesGridHeight: number = 90;
     public ReleasesGridHeight: number = 90;
     public AssembliesGridHeight: number = 90;
     public TicketsGridHeight: number = 90;
-    public PickupDeliveryGridHeight: number = 90;
-
 
     public IsQuoteGridVisible: boolean = false;
+    public IsMasterGridVisible: boolean = false;
     public IsCustomFileGridVisible: boolean = false;
     public IsTicketsGridVisible: boolean = false;
     private FillItemSources(list: ShipmentConnectedEntity[]) {
@@ -234,7 +157,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         this.MastersItemsSource = [];
         this.CustomFilesItemsSource = [];
         this.TicketsItemsSource = [];
-        this.PickupDeliveryItemsSource = [];
 
         list.forEach(item => {
             this.ItemsSource.push(new ShipmentConnectedEntityItem(item, this));
@@ -246,16 +168,15 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         this.MastersItemsSource = this.ItemsSource.filter(d => d.EntityType == "Master");
         this.CustomFilesItemsSource = this.ItemsSource.filter(d => d.EntityType == "Custom File");
         this.TicketsItemsSource = this.ItemsSource.filter(d => d.EntityType == "Ticket");
-        this.PickupDeliveryItemsSource = this.ItemsSource.filter(d => d.EntityType == "PickUp" || d.EntityType == "Delivery");
 
         this.IsQuoteGridVisible = this.QuotesItemsSource.length == 0 ? false : true;
+        this.IsMasterGridVisible = this.MastersItemsSource.length == 0 ? false : true;
         this.IsCustomFileGridVisible = this.CustomFilesItemsSource.length == 0 ? false : true;
         this.IsTicketsGridVisible = this.TicketsItemsSource.length == 0 ? false : true;
 
         this.EntriesGridHeight = this.ComputeGridHeight(this.WarehouseEntriesItemsSource);
         this.ReleasesGridHeight = this.ComputeGridHeight(this.WarehouseReleasesItemsSource);
         this.TicketsGridHeight = this.ComputeGridHeight(this.TicketsItemsSource);
-        this.PickupDeliveryGridHeight = this.ComputeGridHeight(this.PickupDeliveryItemsSource);
     }
 
     private ComputeGridHeight(list: any[]): number {
@@ -287,34 +208,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: item.EntityId, ObjectTableName: item.ObjectTableName, BackButtonLabel: myBackButtonLabel, EntityParentPM: this.EntityPM });
-
-                let isEditComponentSaved = false;
-                cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (item.EntityType == "PickUp" || item.EntityType == "Delivery") {
-                        this.entityArgs.EditComponent.EntityId = this.EntityPM.Id;
-                        this.entityArgs.EditComponent.ReloadEntityPM();
-                    }
-                    else {
-                        if (isEditComponentSaved) {
-                            if (item.ObjectTableName == "WarehouseRelease" || item.ObjectTableName == "WarehouseEntry") {
-                                this.EntityPM.IsDirty = true;
-                                this.CurrentSession.CurrentEditComponent.SaveChanges();
-                            }
-                            else
-                                this.entityArgs.EditComponent.ReloadEntityPM();
-                        }
-                    }
-                });
-                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
-                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
             });
     }
 
@@ -353,9 +246,8 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     ShowWarehouseScreen(widnowName: string) {
         var windowArgs: any = {};
         windowArgs.ShipmentPM = this.EntityPM;
-        windowArgs.ConnectedTo = "Shipment";
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1030;
+        logWindow.Width = 960;
         logWindow.Height = 620;
         logWindow.Title = widnowName == "Release" ? "New Cross Dock Release" : "New Cross Dock Entry";
         if (this.EntityPM) {
@@ -427,21 +319,8 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     }
 
     DisconnectQuote() {
-        var isPayablesConnectedToInvoice = this.EntityPM.ShipmentPayables.filter(f => (f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT') && f.QuoteChargeId != null ).length > 0;
-        var isReceivablesConnectedToInvoice = this.EntityPM.ShipmentReceivables.filter(f => (f.ShipmentReceivableLineStatusCode == 'ACCT' || f.ShipmentReceivableLineStatusCode == 'DRFT') && f.QuoteChargeId != null).length > 0;
-        if (isPayablesConnectedToInvoice || isReceivablesConnectedToInvoice) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 450;
-            messageWindow.Show("Can't disconnect the quote, some payable or receivable lines are connected to invoices.");
-        }
-        else {
-            this.DisconnectShipmentReceivablesPayables();
-        }
-    }
-    DisconnectShipmentReceivablesPayables() {
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Disconnecting the quote will cause the receivables and payables generated from this quote to be deleted from this shipment. Please confirm.");
-        confirmWindow.Width = 450;
+        confirmWindow.Show("After disconnecting the quote from the shipment you will not be able to generate Receivables / Payables from this quote");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.myDomainService.DisconnectQuote(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -454,106 +333,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                         }
                     }
                 });
-            }
-        });
-    }
-    private isNewMasterClicked: boolean = false;
-    NewMasterButtonClicked() {
-        this.myDomainService.CheckIfHouseConnectedToMaster(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                var result: boolean = myResponse.Result;
-
-                if (result) {
-                    var messageWindow = new MessageWindow();
-                    messageWindow.Show("House shipment already connected to a Master, in order to connect to another please disconnect it first");
-                }
-
-                else {
-                    this.ProceedToNewMaster();
-                }                
-            }
-        }); 
-    }
-    private ProceedToNewMaster() {
-        if (this.EntityPM.IsDirty) {
-            this.isNewMasterClicked = true;
-            this.entityArgs.EditComponent.SaveChanges();
-        }
-
-        else {
-            this.RunNewMasterWizard();
-        }
-    }
-    private RunNewMasterWizard() {
-        var args = new NewShipmentComponentArgs();
-        args.IsMasterCreatedFromHouse = true;
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 570;
-        logWindow.WindowArgs = args;
-        logWindow.Title = "New Master";
-        logWindow.Show('./Shipment/Components/NewShipment/NewMasterComponent');
-
-        logWindow.ComponentLoaded.subscribe(cmp => {
-            var myShipmentTypeId = this.EntityPM.ShipmentTypeId;
-            if (this.EntityPM.ShipmentTypeName) {
-                if (this.EntityPM.ShipmentTypeName.toLowerCase().indexOf("my groupage") > -1) {
-                    if (this.EntityPM.TransportModeId == "O") {
-                        myShipmentTypeId = "LCLD"
-                    }
-
-                    else {
-                        myShipmentTypeId = "LTL"
-                    }
-                }
-            }
-
-            cmp.DirectionId = this.EntityPM.DirectionId;
-            cmp.TransportModeId = this.EntityPM.TransportModeId;
-            cmp.ShipmentTypeId = myShipmentTypeId;
-            cmp.MainCarriageFromPortId = this.EntityPM.FromPortId;
-            cmp.MainCarriageToPortId = this.EntityPM.ToPortId;
-            cmp.SalesmanUserId = this.EntityPM.SalesmanUserId;
-            cmp.EntityPM.BranchId = this.EntityPM.BranchId;
-            cmp.EntityPM.DepartmentId = this.EntityPM.DepartmentId;
-            cmp.EntityPM.SCI = this.EntityPM.SCI;
-            cmp.EntityPM.MasterCreatedFromHouseId = this.EntityPM.Id;
-            logWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    //this.isMasterCreated = true;
-                    this.entityArgs.EditComponent.ReloadEntityPM();
-                }
-            });
-        });
-    }
-
-    DisconnectStandaloneShipmentClicked() {
-        if (this.EntityPM.ShipmentPackages != null && this.EntityPM.ShipmentPackages.length > 0) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Disconnecting this standalone shipment will cause the package(s) to be deleted from the shipment. Please confirm.");
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.DisconnectStandaloneShipment();
-                }
-            });
-        }
-        else {
-            this.DisconnectStandaloneShipment();
-        }
-    }
-
-    DisconnectStandaloneShipment() {
-        this.CurrentSession.StartBusyIndicator("Disconnecting...");
-        this.myDomainService.DisconnectStandaloneShipment(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-    
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-                    this.entityArgs.EditComponent.ReloadEntityPM();
-                    this.LoadData();
-                }
-                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -576,7 +355,6 @@ class ShipmentConnectedEntityItem {
     get OpenDate() { return this.myEntity.OpenDate; }
     get AcceptedDate() { return this.myEntity.AcceptedDate; }
     get Salesman() { return this.myEntity.Salesman; }
-    get ExpirationDate() { return this.myEntity.ExpirationDate; }
 
     public EntityDate: Date;
     public Foreground: string;

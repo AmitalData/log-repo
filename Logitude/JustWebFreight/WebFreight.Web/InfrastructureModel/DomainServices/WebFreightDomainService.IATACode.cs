@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceModel.DomainServices.Server;
 using System.Xml.Serialization;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.DataContracts;
@@ -206,7 +206,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
 
             if (objectContext == null)
             {
-                objectContext = WebFreightContext.GetContext(  0);
+                objectContext = WebFreightContext.GetContext(0);
             }
 
             IATACodeService service = new IATACodeService(objectContext, entityPM);

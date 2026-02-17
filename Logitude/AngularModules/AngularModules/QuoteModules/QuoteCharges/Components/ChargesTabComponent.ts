@@ -1,22 +1,21 @@
-import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {QuoteUtilities} from '../../../Quote/Utilities/QuoteUtilities';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirective';
 
 @Component({
-  selector: 'ChargesTabComponent',
+    selector: 'ChargesTabComponent',
 
-  template:
+    template:
     `
             <table>
                 <tr>
                     <td>
                         <div class="MediaFill">
-                            <div ChildDirective></div>
+                            <div #Child></div>
                         </div>
                     </td>
                 </tr>
@@ -24,57 +23,59 @@ import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirectiv
     `,
 })
 
-export class ChargesTabComponent implements AfterViewInit, OnDestroy {
-  public EntityPM: QuotePM = null;
-  public ObjectTableName: string = "Quote";
-  @ViewChild(ChildDirective) Child: ChildDirective;
-  constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
-    this.EntityPM = entityArgs.EntityPM;
-    this.Listen();
-  }
+export class ChargesTabComponent implements OnInit, OnDestroy {
+    public EntityPM: QuotePM = null;
+    public ObjectTableName: string = "Quote";
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
+        this.EntityPM = entityArgs.EntityPM;
 
-  private isLCL: boolean = false;
-  private LoadCompletedEvent: any = null;
-  Listen() {
-    if (this.entityArgs.EditComponent) {
-      this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-        if (isLoadSuccess) {
-          this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-          this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+        this.Listen();
+    }
 
-          this.SelectTab();
+    private isLCL: boolean = false;
+    private LoadCompletedEvent: any = null;
+    Listen() {
+        if (this.entityArgs.EditComponent) {            
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+
+                    this.SelectTab();
+                }
+            });            
         }
-      });
     }
-  }
-  ngOnDestroy() {
-    AppTool.KillEventEmitter(this.LoadCompletedEvent);
-  }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
 
-  ngAfterViewInit() {
-    this.entityResourceService.getEntityResourceByTableName("QuoteCharge").subscribe((res1: any) => {
-      this.entityResourceService.getEntityResourceByTableName("QuotePriceSteps").subscribe((res2: any) => {
-        this.entityResourceService.getEntityResourceByTableName("TarrifHeader").subscribe((res3: any) => {
-          this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
-          this.SelectTab();
-        });
-      });
-    });
-  }
+    ngOnInit() {
+        this.entityResourceService.getEntityResourceByTableName("QuoteCharge").subscribe((res1: any) => {
+            this.entityResourceService.getEntityResourceByTableName("QuotePriceSteps").subscribe((res2: any) => {
+                this.entityResourceService.getEntityResourceByTableName("TarrifHeader").subscribe((res3: any) => {
 
-  private SelectTab() {
-    this.Child.Location.clear();
-
-    if (this.isLCL) {
-      SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/LCLChargesComponent', this.Child.Location)
-        .then(cmpRef => {
+                    this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+                    this.SelectTab();                   
+                });
+            });
         });
     }
 
-    else {
-      SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/FCLChargesComponent', this.Child.Location)
-        .then(cmpRef => {
-        });
+    private SelectTab() {
+        this.viewContainerRef.clear();
+
+        if (this.isLCL) {
+            SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/LCLChargesComponent', this.viewContainerRef)
+                .then(cmpRef => {                    
+                });
+        }
+
+        else {
+            SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/FCLChargesComponent', this.viewContainerRef)
+                .then(cmpRef => {                   
+                });
+        }
     }
-  }
 }

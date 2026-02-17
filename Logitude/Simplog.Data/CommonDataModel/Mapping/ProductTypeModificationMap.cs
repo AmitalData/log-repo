@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -21,26 +21,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsRequired()
                 .IsUnicode(false);
 
-
-            this.Property(d => d.RoutingRQuoteDefaultTemplateId)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-
-            this.Property(d => d.QuotationDefaultTemplateId)
-     .HasMaxLength(15)
-     .IsUnicode(false);
-
             this.ToTable("ProductTypeModifications");
             this.Property(t => t.ProductTypeCode).HasColumnName("ProductTypeCode");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.InActive).HasColumnName("InActive");
-
-            this.Property(t => t.RoutingRQuoteDefaultTemplateId).HasColumnName("RoutingRQuoteDefaultTemplateId");
-
-            this.Property(t => t.QuotationDefaultTemplateId).HasColumnName("QuotationDefaultTemplateId");
-            this.Property(t => t.CostTariffUse).HasColumnName("CostTariffUse");
-            this.Property(t => t.SaleTariffUse).HasColumnName("SaleTariffUse");
-
 
             this.HasRequired(t => t.ProductType)
                 .WithMany()

@@ -7,7 +7,7 @@ import {BookingPM} from '../../../EntityPMs/BookingPM';
 
 @Component({
     selector: 'GeneralDetailsTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './GeneralDetailsTabComponent.html',
 })
 

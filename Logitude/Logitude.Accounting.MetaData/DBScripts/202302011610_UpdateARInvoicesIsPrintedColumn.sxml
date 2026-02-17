@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Accounting" TargetTableName="ARInvoices" Env="local,test,cloud">
-  <Sql Version="1">
-    <![CDATA[
-	   UPDATE ARInvoices
-     SET IsPrinted = 1
-     where IsFullAccounting = 1 AND DocumentFilingId is not null AND IsExternalEntity = 1 
-     ]]>
-  </Sql>
-</Script>

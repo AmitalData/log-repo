@@ -5,7 +5,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -111,7 +111,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 EntityId = shipmentId,
                                 DocumentTypeId = documentTypeId,
                                 ObjectTableId = objectTableId,
-                                CreatedByUserId = userId,  
+                                CreatedByUserId = userId,  //System@logitudeworld.com
                                 CreateDate = DateTime.Now,
                                 OwnerId = userId,
                                 UpdatedByUserId = userId,

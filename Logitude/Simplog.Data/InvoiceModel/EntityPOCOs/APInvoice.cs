@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
 {
@@ -33,7 +33,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public bool IsClosed { get; set; }
         public string ProfitCurrencyId { get; set; }
         public double? ProfitCurrencyExchangeRate { get; set; }
-        public double? AmountInProfitCurrency { get; set; }
+        public double? AmountInProfitCurrency { get; set; }               
         public string UpdatedByUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string MainEntityId { get; set; }
@@ -48,8 +48,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string MasterNumber { get; set; }
         public string Description { get; set; }
         public string CreditAccount { get; set; }
-        public int TransferTries { get; set; }
-        public string TransferError { get; set; }
+        public int TransferTries { get; set; }	
+        public string TransferError { get; set; }        
         public bool IsTransferStarted { get; set; }
         public string AccountingExternalCode { get; set; }
         public string PaymentTermExternalId { get; set; }
@@ -61,17 +61,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? AccountingDate { get; set; }
         public bool IsExternalEntity { get; set; }
         public bool IsGeneralInvoice { get; set; }
-        public string Field1 { get; set; }
-        public string Field2 { get; set; }
-        public string Field3 { get; set; }
-        public string Field4 { get; set; }
-        public string Field5 { get; set; }
-        public string Field6 { get; set; }
-        public string Field7 { get; set; }
-        public string Field8 { get; set; }
-        public string Field9 { get; set; }
-        public string Field10 { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
         public string ExternalAccountingEntityId { get; set; }
         [ForeignKey("TransferStatusCode")]
         public virtual APInvoiceTransferStatus TransferStatus { get; set; }
@@ -109,29 +98,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string VendorGLAccountId { get; set; }
 
         public DateTime? FirstApproveDate { get; set; }
-
-        public string CreatedByPartner { get; set; }
-
-        public bool TotalVATOnly { get; set; }
-
-        public DateTime? PaidDate { get; set; }
-
-        public string ShipmentsNumbers { get; set; }
-
-        public string MasterNumbers { get; set; }
-        public string MasterShipmentNumbers { get; set; }
-        public string HouseNumbers { get; set; }
-        public string GlobalTaxCalculation { get; set; }
-
-        [ForeignKey("GlobalTaxCalculation")]
-        public virtual QBOGlobalTaxCalculation QBOGlobalTaxCalculation { get; set; }
-        public string ConcurrencyGUID { get; set; }
-        public bool IsEquipment { get; set; }
-        public string ConnectedPaymentsNumbers { get; set; }
-        public string TotalEquation { get; set; }
-        public string ConfirmationNumber { get; set; }
-        public bool IsPrepaidExpenses { get; set; }
-
 
     }
 }

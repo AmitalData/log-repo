@@ -7,6 +7,7 @@ import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
+import { CourierMasterService } from '../../../../Customs/Services/Others/CourierMasterService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
 import { ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -23,7 +24,7 @@ import {CustomBankList} from '../../../../Customs/EntityLists/CustomBankList';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'GetInternalBankComponent',
     templateUrl: './GetInternalBankComponent.html',
 })

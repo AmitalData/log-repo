@@ -1,14 +1,13 @@
-declare var jQuery, SetHtmlToFrame, GetHtmlFromFrame, getHTMLID: any, RegisterCustomFroalaEditorButtom: any;
+﻿declare var jQuery, SetHtmlToFrame, GetHtmlFromFrame, getHTMLID: any, RegisterCustomFroalaEditorButtom: any;
 import {Component, ElementRef, OnInit, AfterViewInit, EventEmitter, Output, ChangeDetectorRef} from '@angular/core';
 import {FroalaEditorSetting} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/FroalaEditorSetting';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {AppTool, FileLoader} from '../../Tools';
-import { FroalaEditorImageService } from 'Infrastructure/Services/FroalaEditorImageService';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'FroalaEditor',
     templateUrl: './FroalaEditorComponent.html',
@@ -25,20 +24,9 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
     Id: string;
     PreviewDivId: string;
     IsDisableMode: boolean = false;
-    UseNormalPreview: boolean = false;
-    private FroalaEditorImageService: FroalaEditorImageService;
-
     @Output() FroalaReady: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(elementRef: ElementRef, private cd: ChangeDetectorRef) {
         this.elementRef = elementRef;
-        this.InitializeFroalaEditorImageService();
-    }
-
-    private InitializeFroalaEditorImageService() {
-        this.FroalaEditorImageService = new FroalaEditorImageService();
-        this.FroalaEditorImageService.OnImageSelect.subscribe((image: string) =>{
-            this.InSertHtml(image);
-        });
     }
 
     ngOnInit() {
@@ -51,7 +39,6 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
         if (this.EditorfroalaSetting.IsDisableEdit) {
             this.IsDisableMode = true;
-            this.UseNormalPreview = this.EditorfroalaSetting.UseNormalPreview;
         }
     }
 
@@ -64,13 +51,6 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
         this.ShowEditor();
     }
 
-    public RefreshMode() {
-        this.IsDisableMode = false;
-        if (this.EditorfroalaSetting.IsDisableEdit) {
-            this.IsDisableMode = true;
-        }
-    }
-
     public ShowEditor(height: number = this.EditorfroalaSetting.Height) {
         if (this.EditorfroalaSetting.HtmlString) this.HtmlString = this.EditorfroalaSetting.HtmlString;
         if (!this.HtmlString) this.HtmlString = "";
@@ -78,159 +58,82 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
         //  this.HtmlString = this.CheckHtmlStyle(this.HtmlString);
 
 
-        if (!this.UseNormalPreview) {
 
-            //Froala Editor
-            var HtmlID = getHTMLID(this.Id);
+        //Froala Editor
+        var HtmlID = getHTMLID(this.Id);
 
-            RegisterCustomFroalaEditorButtom(this);
-
-
-            var froalakey: string = ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting?.WorkEnvironment == "cloud" ? "8A-9pwkamE5f1kG4ok==" : "ubd1wxffppaxjuE-11A2C-9rs==";
+        RegisterCustomFroalaEditorButtom(this);
 
 
-            if (HtmlID.data('froala.editor')) HtmlID.froalaEditor('destroy');
-
-            HtmlID.froalaEditor({
-                allowedImageTypes: ["jpeg", "jpg", "png"],
-                toolbarButtons: this.GetToolbarButtons(),
-                toolbarButtonsMD: this.GetToolbarButtonsMD(),
-                toolbarButtonsSM: this.GetToolbarButtonsSM(),
-                toolbarButtonsXS: this.GetToolbarButtonsXS(),
-                imageEditButtons: ["imageAlign","imageRemove","|","-","imageDisplay","imageStyle","imageAlt","imageSize"],               
-                lineBreakerTags: ['table', 'hr', 'form'],
-                pluginsEnabled: null,
-                height: height,
-                heightMax: height,
-                iframe: true,
-                charCounterCount: false,
-                inlineMode: false,
-                zIndex: -1,
-                direction: '',
-                key: froalakey,
-                useClasses: false,
-                fontSizeSelection: true,
-                fontFamilySelection: true,
-                fontFamily: {
-                    "Arial": 'Arial',
-                    "Arial Black": 'Arial Black',
-                    "Times New Roman": 'Times New Roman',
-                    "Calibri": 'Calibri',
-                    "Impact": 'Impact',
-                    "Georgia": 'Georgia',
-                    "Tahoma": 'Tahoma',
-                    "Verdana": 'Verdana',
-                    "Comic Sans MS": 'Comic Sans MS',
-                    "Courier New": 'Courier New',
-                    "Lucida Sans Unicode": 'Lucida Sans Unicode',
-                    "Trebuchet MS": 'Trebuchet MS',
-
-                    "Century Gothic": 'Century Gothic',
-                    "Garamond": 'Garamond',
-                    "Perpetua": 'Perpetua',
-                    "Lucida Bright": 'Lucida Bright',
-
-                },
-                tableStyles: {
-                    All: 'All',
-                    Box: 'Box',
-                    None: 'None',
-                    Red: 'Border red',
-                    Blue: 'Border blue',
-                    DarkBlue: 'Border dark blue',
-                    //Green: 'Border green',
-                    //Yellow: 'Border yellow',
-                    Brown: 'Border brown',
-                    Maroon: 'Border maroon',
-
-                    Black: 'Border Black',
-                    Gray: 'Border gray',
-                    LightGray: 'Border light gray',
-
-                    White: 'Border white',
-
-                },
-                //scrollableContainer: '#' + this.Id,
-
-                tableMultipleStyles: true,
-
-                tableCellStyles: {
-                    BorderLeft: 'Remove border left',
-                    BorderRight: 'Remove border right',
-                    BorderBottom: 'Remove border bottom',
-                    BorderTop: 'Remove border top',
-                },
+        var froalakey: string = ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "cloud" ? "8A-9pwkamE5f1kG4ok==" : "ubd1wxffppaxjuE-11A2C-9rs==";
 
 
-                lineHeights: {
-                    Default: '',
-                    '0.2': '0.2',
-                    '0.5': '0.5',
-                    Single: '1',
-                    '1.15': '1.15',
-                    '1.5': '1.5',
-                    Double: '2'
-                },
+        if (HtmlID.data('froala.editor')) HtmlID.froalaEditor('destroy');
 
-            });
-            
-            HtmlID.froalaEditor('html.set', this.HtmlString);
+        HtmlID.froalaEditor({
+            allowedImageTypes: ["jpeg", "jpg", "png"],
+            toolbarButtons: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'rightToLeft', 'leftToRight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak'],
 
-            if (this.IsDisableMode) {
+            toolbarButtonsMD: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'rightToLeft', 'leftToRight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak'],
+            toolbarButtonsSM: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak'],
+            toolbarButtonsXS: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak'],
+            lineBreakerTags: ['table', 'hr', 'form'],
+            pluginsEnabled: null,
+            height: height,
+            heightMax: height,
+            iframe: true,
+            charCounterCount: false,
+            inlineMode: false,
+            zIndex: -1,
+            direction: '',
+            key: froalakey,
+            useClasses: false,
 
-                HtmlID.froalaEditor('edit.off');
-                HtmlID.froalaEditor('toolbar.hide');
-            }
-        }
+            tableStyles: {
+                All: 'All',
+                Box: 'Box',
+                None: 'None',
+                Red: 'Border red',
+                Blue: 'Border blue',
+                DarkBlue: 'Border dark blue',
+                //Green: 'Border green',
+                //Yellow: 'Border yellow',
+                Brown: 'Border brown',
+                Maroon: 'Border maroon',
 
-        else {
-            SetHtmlToFrame(this.PreviewDivId, this.HtmlString);
+                Black: 'Border Black',
+                Gray: 'Border gray',
+                LightGray: 'Border light gray',
+
+                White: 'Border white',
+
+            },
+            //scrollableContainer: '#' + this.Id,
+
+            tableMultipleStyles: true,
+
+            tableCellStyles: {
+                BorderLeft: 'Remove border left',
+                BorderRight: 'Remove border right',
+                BorderBottom: 'Remove border bottom',
+                BorderTop: 'Remove border top',
+            },
+
+
+
+
+        });
+
+        HtmlID.froalaEditor('html.set', this.HtmlString);
+
+        if (this.IsDisableMode) {
+
+            HtmlID.froalaEditor('edit.off');
+            HtmlID.froalaEditor('toolbar.hide');
         }
 
         this.EditorfroalaSetting.FroalaEditorIsReady = true;
 
-
-    }
-
-    private GetToolbarButtonsXS() {
-        var toolbarButtonsXS = this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'alignRight', 'alignLeft'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'alignRight', 'alignLeft', 'InsertImage'];
-        this.AddPageBreak(toolbarButtonsXS);
-        this.AddLineHeight(toolbarButtonsXS);
-
-        return toolbarButtonsXS;
-    }
-
-    private GetToolbarButtonsSM() {
-        var toolbarButtonsSM = this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'alignRight', 'alignLeft'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'alignRight', 'alignLeft', 'InsertImage'];
-        this.AddPageBreak(toolbarButtonsSM);
-        this.AddLineHeight(toolbarButtonsSM);
-
-        return toolbarButtonsSM;
-    }
-
-    private GetToolbarButtonsMD() {
-        var toolbarButtonsMD = this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'alignRight', 'alignLeft'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'insertLink', 'alignRight', 'alignLeft', 'InsertImage'];
-        this.AddPageBreak(toolbarButtonsMD);
-        this.AddLineHeight(toolbarButtonsMD);  
-
-        return toolbarButtonsMD;
-    }
-
-    private GetToolbarButtons() {
-        var toolbarButtons = this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'alignRight', 'alignLeft'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'insertLink', 'alignRight', 'alignLeft', 'InsertImage'];
-        this.AddPageBreak(toolbarButtons);
-        this.AddLineHeight(toolbarButtons);
-
-        return toolbarButtons;
-    }
-
-    private AddPageBreak(toolbarButtons: string[]) {
-        if (this.EditorfroalaSetting.PageType != "Send" && !this.EditorfroalaSetting.RemovePageBreak)
-            toolbarButtons.push('PageBreak');
-    }
-
-    private AddLineHeight(toolbarButtons: string[]) {
-        toolbarButtons.push('lineHeight');
     }
 
     getHtml() {
@@ -239,19 +142,11 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
         var HtmlID = getHTMLID(this.Id);
         if (this.EditorfroalaSetting.FroalaEditorIsReady) {
-
-            if (!this.UseNormalPreview) {
-
-                if (HtmlID) {
-                    html = HtmlID.froalaEditor('html.get');
-                }
-                else html = this.HtmlString;
-                this.EditorfroalaSetting.HtmlString = html;
-            } else {
-                html = GetHtmlFromFrame(this.PreviewDivId);
-                this.EditorfroalaSetting.HtmlString = html;
+            if (HtmlID) {
+                html = HtmlID.froalaEditor('html.get');
             }
-
+            else html = this.HtmlString;
+            this.EditorfroalaSetting.HtmlString = html;
         }
 
         return html;
@@ -260,20 +155,17 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
 
     SetHtml(html: string) {
+
         this.HtmlString = this.EditorfroalaSetting.HtmlString = html;
+        //  this.HtmlString = this.CheckHtmlStyle(this.HtmlString);
+
         if (this.EditorfroalaSetting.FroalaEditorIsReady) {
-            if (!this.UseNormalPreview) {
-                var HtmlID = getHTMLID(this.Id);
-                if (HtmlID) {
-                    HtmlID.froalaEditor('html.set', html);
-                }
-
-            } else {
-                var element = document.getElementById(this.PreviewDivId);
-                if (element) SetHtmlToFrame(this.PreviewDivId, html);
+            var HtmlID = getHTMLID(this.Id);
+            if (HtmlID) {
+                HtmlID.froalaEditor('html.set', html);
             }
-
         }
+
     }
 
 
@@ -296,20 +188,15 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
         }
     }
 
-    public InsertImageClick() {
-        if (this.IsDisableMode || !this.EditorfroalaSetting.FroalaEditorIsReady) return;
-        this.FroalaEditorImageService.ShowImageLibraryWindow();
-    }
 
     public DestroyfroalaEditor() {
 
-        if (!this.UseNormalPreview) {
-            if (this.EditorfroalaSetting.FroalaEditorIsReady) {
-                var HtmlID = getHTMLID(this.Id);
 
-                if (HtmlID && HtmlID.data('froala.editor')) {
-                    HtmlID.froalaEditor('destroy');
-                }
+        if (this.EditorfroalaSetting.FroalaEditorIsReady) {
+            var HtmlID = getHTMLID(this.Id);
+
+            if (HtmlID && HtmlID.data('froala.editor')) {
+                HtmlID.froalaEditor('destroy');
             }
         }
 

@@ -5,8 +5,6 @@ using System.Linq;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
 
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
@@ -32,18 +30,6 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public WebhookKeys GetSingleWebhookKeys(string id,int Tenant)
         {
             WebhookKeys item = context.WebhookKeys.Where(d => d.Id == id && d.Tenant == Tenant).FirstOrDefault();
-            string entityName = "WebhookKey" + id;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && item != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, item, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    item = (WebhookKeys)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
             return item;
         }
 
@@ -51,18 +37,6 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public IQueryable<WebhookKeys> GetWebhookKeys(int Tenant)
         {
             IQueryable<WebhookKeys> items = context.WebhookKeys.Where(d => d.Tenant == Tenant);
-            string entityName = "WebhookKeys";
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && items != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, items, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    items = (IQueryable<WebhookKeys>)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
             return items;
         }
         
@@ -72,19 +46,6 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public WebhookKeys GetSingleWebhookKeyByAccessKey(string key)
         {
             WebhookKeys item = context.WebhookKeys.Where(d => d.AccessKey == key).FirstOrDefault();
-
-            string entityName = "WebhookKey" + key;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && item != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, item, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    item = (WebhookKeys)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
             return item;
         }
 
@@ -92,21 +53,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public IQueryable<WebhookKeys> GetAllWebhookKeyss()
         {
-            IQueryable<WebhookKeys> items = from a in context.WebhookKeys
-                                            select a;
-            string entityName = "AllWebhookKeys";
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && items != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, items, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    items = (IQueryable<WebhookKeys>)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            return items;
+            return from a in context.WebhookKeys
+                   select a;
         }
 
 

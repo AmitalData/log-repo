@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -25,11 +25,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<SprintList> GetList(QueryOperations queryOperations, int tenant ){
-		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
-		 }
-
-        public List<SprintList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
+        public List<SprintList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -41,9 +37,9 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             iQueryable = filter.GetFilteredQuery<Sprint>(nonListQueryOperation, iQueryable);
 
@@ -52,7 +48,6 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
             IQueryable<SprintList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<SprintList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<SprintList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -110,7 +105,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderByDescending(d => d.FromDate);
+                                query2 = query2.OrderBy(d => d.Id);
                                 break;
                             }
                     }
@@ -119,7 +114,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderByDescending(d => d.FromDate);
+                query2 = query2.OrderBy(d => d.Id);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -149,14 +144,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
            
         }
 
-
-		
-        public int GetListCount(QueryOperations queryOperations, int tenant ){
-		 		  return GetListCount(queryOperations,tenant, new TreeFilterQueryArgs());
-
-		 }
-
-        public int GetListCount(QueryOperations queryOperations, int tenant  ,TreeFilterQueryArgs treeFilterQueryArgs )
+        public int GetListCount(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -168,24 +156,20 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
 			iQueryable = filter.GetFilteredQuery<Sprint>(nonListQueryOperation, iQueryable);
-
-
 
             IQueryable<SprintList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<SprintList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<SprintList>(query2, treeFilterQueryArgs);
-
             int count = query2.Count();
             return count;
         }
 
-
+      
     }
 }
 	 

@@ -45,14 +45,12 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string DistributorCode { get; set; }
         public string PersonalId { get; set; }
         public bool IsTwoFactorAuthenticationEnabled { get; set; }
-        public int? SecurityLevel { get; set; }
 
         public string DocumentFilingInbox { get; set; }
 
         public string EmployeeGroupCustomFilter { get; set; }
         public bool ShowLocalNameInLOV { get; set; }
         public string UserRoles { get; set; }
-        public bool AdditionalPackagesOnly { get; set; }
 
         private List<string> groupId = new List<string>();
         public List<string> GroupId 
@@ -67,6 +65,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
             }
             set { groupId = value; }
         }
-        public string SignatureImageId { get; set; }
-    }     
+    }
 }

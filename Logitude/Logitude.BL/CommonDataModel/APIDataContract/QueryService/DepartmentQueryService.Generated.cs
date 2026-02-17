@@ -10,14 +10,11 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -42,40 +39,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Department GetDepartmentById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public Department GetDepartmentById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Department with Id " + Id + " doesn't exist");
 
-				return DepartmentDataMapping(temp,Tenant,ComputingPartnerName);
+				return DepartmentDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
-                throw ex;
-            }
-        }
-		
-		public Department GetDepartmentByCode(string Code,int Tenant,  string ComputingPartnerName = "")
-        { 
-		    try
-            {
-				 
-				
-				var temp = query.GetSinglePMByCode(Code, Tenant);				
-				 if (temp == null)
-                    throw new ApplicationException("Department with Code " + Code + " doesn't exist");
 
-				return DepartmentDataMapping(temp,Tenant,ComputingPartnerName);
-			}
-
-            catch (Exception ex)
-            {
                 throw ex;
             }
         }
@@ -89,10 +67,7 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
 				   temp.EnglishName = MyEntityPM.EnglishName;
-				   temp.DirectionId = MyEntityPM.DirectionId;
-                   temp.LocalName = MyEntityPM.LocalName;
-				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Department");  					
+				   temp.LocalName = MyEntityPM.LocalName;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -102,7 +77,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public DepartmentPM DepartmentDataMappingAndValidatin(Department MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public DepartmentPM DepartmentDataMappingAndValidatin(Department MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -111,96 +86,22 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					if (!string.IsNullOrEmpty(MyEntity.Code))
+										   
+					if(temp == null)
 					{
-						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
+					    throw new ApplicationException("Department with Id " + MyEntity.Id + " doesn't exist");
 					} 
-					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
-					{
-                        if(string.IsNullOrEmpty(ComputingPartnerName))
-                            throw new ApplicationException("ComputingPartnerCode is required");
-						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Department");
-					    if(string.IsNullOrEmpty(MyCode))
-						{
-						  throw new ApplicationException("Department with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
-						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant );
-						
-						
-					}
-					
-					
-			  	   if(temp == null)
-					{   
-					    throw new ApplicationException("Department with Code " + MyEntity.Code + " doesn't exist");
-					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-					   
-					    if(!string.IsNullOrEmpty(MyEntity.Id))
-					    {
-					        throw new ApplicationException("Department with provided key doesn't exist");
-						
-						}
-						//else
-						//{
-						//    temp.Id = MyEntity.Id;
-
-						//} 
-
-						
+						temp.Id = MyEntity.Id;
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
-					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{								
-							temp.Code = MyEntity.Code;
-								
-						
-						}  
-
-						
+						temp.Code = MyEntity.Code;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.EnglishName = MyEntity.EnglishName;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalName = MyEntity.LocalName;
-
-										}
-
-					if (!IsUpdate)
-					{
-						temp.DirectionId = MyEntity.DirectionId;
-					}
-
-					if(string.IsNullOrEmpty(temp.Code))
-					{
-					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-						{								
-							temp.Code = MyEntity.PartnerCode;
-								
-						
-						}  
-
-						
-					}					   
-					return temp;
+					temp.EnglishName = MyEntity.EnglishName;
+					temp.LocalName = MyEntity.LocalName;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -208,8 +109,6 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

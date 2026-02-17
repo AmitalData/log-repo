@@ -48,32 +48,17 @@
 
                 <tr style="vertical-align:top;height:30px">
                     <td style="width:5px"><div></div></td>
-                    <td style="width:150px;">  <LogLabel [Text]="'Margin Left'" [DataContext]="DataContext"></LogLabel></td>
+                    <td style="width:150px;">  <LogLabel [Text]="'Margin Left:'" [DataContext]="DataContext"></LogLabel></td>
                     <td style="width:180px"><LogTextBox style="width:180px"  [HideColumns]="true" [ObjectFieldName]="'QuoteTemplatePDFMarginLeft'" [ObjectTableName]="'QuoteTemplateSetting'" [DataContext]="DataContext"></LogTextBox></td>
                     <td><div style="text-align:left"><span style="text-align:left;margin-left:5px">{{'QuoteTemplate.S.px' | TextCodeTranslationPipe}}</span></div></td>
                 </tr>
 
                 <tr style="vertical-align:top;height:30px">
                     <td style="width:5px"><div></div></td>
-                    <td style="width:150px;">  <LogLabel [Text]="'Margin Right'" [DataContext]="DataContext"></LogLabel></td>
+                    <td style="width:150px;">  <LogLabel [Text]="'Margin Right:'" [DataContext]="DataContext"></LogLabel></td>
                     <td style="width:180px;"><LogTextBox  [HideColumns]="true" style="width:180px" [ObjectFieldName]="'QuoteTemplatePDFMarginRight'" [ObjectTableName]="'QuoteTemplateSetting'" [DataContext]="DataContext"></LogTextBox></td>
                     <td><div style="text-align:left"><span style="text-align:left;margin-left:5px" >{{'QuoteTemplate.S.px' | TextCodeTranslationPipe}} </span></div></td>
                 </tr>
-
-                <tr style="vertical-align:top;height:30px">
-                    <td style="width:5px"><div></div></td>
-                    <td style="width:150px;">  <LogLabel [Text]="'QuoteTemplate.S.QuoteTemplatePDFMarginTop' | TextCodeTranslationPipe" [DataContext]="DataContext"></LogLabel></td>
-                    <td style="width:180px"><LogTextBox style="width:180px" [HideColumns]="true" [ObjectFieldName]="'QuoteTemplatePDFMarginTop'" [ObjectTableName]="'QuoteTemplateSetting'" [DataContext]="DataContext"></LogTextBox></td>
-                    <td><div style="text-align:left"><span style="text-align:left;margin-left:5px">{{'QuoteTemplate.S.px' | TextCodeTranslationPipe}}</span></div></td>
-                </tr>
-
-                <tr style="vertical-align:top;height:30px">
-                    <td style="width:5px"><div></div></td>
-                    <td style="width:150px;">  <LogLabel [Text]="'QuoteTemplate.S.QuoteTemplatePDFMarginBottom' | TextCodeTranslationPipe" [DataContext]="DataContext"></LogLabel></td>
-                    <td style="width:180px"><LogTextBox style="width:180px" [HideColumns]="true" [ObjectFieldName]="'QuoteTemplatePDFMarginBottom'" [ObjectTableName]="'QuoteTemplateSetting'" [DataContext]="DataContext"></LogTextBox></td>
-                    <td><div style="text-align:left"><span style="text-align:left;margin-left:5px">{{'QuoteTemplate.S.px' | TextCodeTranslationPipe}}</span></div></td>
-                </tr>
-
 
 
                 <tr *ngIf="IsShowIsCopiedAtSignup"  style="vertical-align:top;height:30px">

@@ -27,7 +27,7 @@ import {CodeNameClass} from '../../../Infrastructure/DataContracts/CodeNameClass
 import {ChartingDataClass} from '../../../Infrastructure/DataContracts/Dashboard/ChartingDataClass';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TicketsComponent.html',
 })
 
@@ -265,7 +265,7 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
     // Queries
     LoadQueriesCounts() {
         var myService: CRMDomainService = new CRMDomainService();
-        myService.GetTicketsCounts(this.OwnerId, this.EmployeeGroupId).subscribe((myResult:any) => {
+        myService.GetTicketsCounts(this.OwnerId, this.EmployeeGroupId).subscribe(myResult => {
             if (myResult != null) {
                 this.AllOpenCount = myResult.MyOpenDataCount > 1000 ? "1000+" : myResult.MyOpenDataCount.toString();
                 this.SLAFailureCount = myResult.SLA_Failures > 1000 ? "1000+" : myResult.SLA_Failures.toString();
@@ -378,7 +378,7 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
     public RecentTicketsList: TicketList[] = [];
     LoadRecentTickets() {
         var crmService: CRMDomainService = new CRMDomainService();
-        crmService.GetRecentTickets(null, null).subscribe((myResult:any) => {
+        crmService.GetRecentTickets(null, null).subscribe(myResult => {
             if (myResult == null) {
                 this.RecentTicketsList = [];
                 this.RecentTicketsCount = 0;
@@ -490,7 +490,7 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         //filters.GetCount = false;
-        this.myTicketListService.getByFilters(filters).subscribe((myResult:any) => {
+        this.myTicketListService.getByFilters(filters).subscribe(myResult => {
             this.TopTicketsList = [];
             this.TopTicketsCount = 0;
 
@@ -754,8 +754,8 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
             listArgs.ObjectTableName = "Ticket";
             listArgs.DisplayTitle = "All Tickets By Shipment";
             listArgs.BackButtonTitle = "Tickets";
-            this._entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
-                this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe(response => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -880,7 +880,7 @@ export class TicketsComponent extends BaseComponent implements OnInit, AfterView
 
                         var service: CRMDomainService = new CRMDomainService();
                         if (employeeGroupLinesdIds != null && employeeGroupLinesdIds.length > 0) {
-                            service.GetUsersByEmployeeGroupIds(myIds).subscribe((myResult:any) => {
+                            service.GetUsersByEmployeeGroupIds(myIds).subscribe(myResult => {
                                 var myResponse: ServiceResponse = myResult;
                                 if (!myResponse.HasError) {
                                     loadedUsersList = myResponse.Result.sort((a, b) => { return (a.EnglishName.toLowerCase() === b.EnglishName.toLowerCase()) ? 0 : (a.EnglishName.toLowerCase() < b.EnglishName.toLowerCase()) ? -1 : 1 }); 

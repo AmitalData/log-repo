@@ -6,7 +6,7 @@ import {BaseComponent} from '../../Components/LogitudeComponents/BaseComponent';
 @Component({
     selector: "TimeInput",
     inputs: ["TextAlign", "IsShowText", "IsNew", "Disabled", "TotalMinutes", "FocusOnMe"],
-    
+    moduleId: module.id,
     templateUrl: './TimeInput.html',
 })
 

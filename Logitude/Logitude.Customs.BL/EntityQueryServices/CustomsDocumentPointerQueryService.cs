@@ -38,7 +38,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DocPM.Tenant = docPtr.Tenant;
                 DocPM.ParentEntityCode = docPtr.ParentEntityCode;
                 DocPM.ParentEntityId = docPtr.ParentEntityId;
-                DocPM.OriginEntity = docPtr.OriginEntity;
                 DocPM.Child1EntityCode = docPtr.Child1EntityCode;
                 DocPM.Child1EntityId = docPtr.Child1EntityId;
                 DocPM.Child2EntityCode = docPtr.Child2EntityCode;
@@ -124,16 +123,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.CheckIfDocumentPointerExistsForConstraint(child1EntityId, child1EntityCode, tenant);
         }
 
-        public List<CustomsDocumentPointer> GetCustomsDocumentPointerList(GetTicketsParams parameters, int tenant)
+        public IQueryable<CustomsDocumentPointer> GetCustomsDocumentPointerList(GetTicketsParams parameters, int tenant)
         {
             return repository.GetCustomsDocumentPointerList(parameters, tenant);         
             
-        }
-
-        public IQueryable<CustomsDocumentPointer> GetCustomsDocumentPointerListParentOnly(GetTicketsParams parameters, int tenant)
-        {
-            return repository.GetCustomsDocumentPointerListParentOnly(parameters, tenant);
-
         }
 
         public List<CustomsDocumentPointerPM> GetCustomDocumentPoinersForItems(string parentEntityId, string invCounterKey, string itemLineNumbers, int tenant)
@@ -151,54 +144,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pointerPms;
         }
 
-
-        public List<CustomsDocumentPointerPM> GetCustomsDocumentPointersByParentIdAndSentCustoms(string parentEntityId, int tenant)
-        {
-            IQueryable<CustomsDocumentPointer> pointers = repository.GetCustomsDocumentPointersByParentIdAndSentCustoms(parentEntityId, tenant);
-
-            List<CustomsDocumentPointerPM> pointerPm = (from a in pointers
-                                                  select new CustomsDocumentPointerPM()
-                                                  {
-                                                      Id = a.Id,
-                                                      Tenant = a.Tenant,
-                                                      ParentEntityCode = a.ParentEntityCode,
-                                                      ParentEntityId = a.ParentEntityId,
-                                                      Child1EntityCode = a.Child1EntityCode,
-                                                      Child1EntityId = a.Child1EntityId,
-                                                      Child2EntityCode = a.Child2EntityCode,
-                                                      Child2EntityId = a.Child2EntityId,
-                                                      Child3EntityCode = a.Child3EntityCode,
-                                                      Child3EntityId = a.Child3EntityId,
-                                                      CustomsDocumentsTicketId = a.CustomsDocumentsTicketId,
-                                                      OriginEntity = a.OriginEntity,
-
-                                                  }).ToList();
-            return pointerPm;
-        }
-
-        public CustomsDocumentPointerPM GetCustomDocumentPoinersForClosingData(string parentEntityId, int tenant,string documentFilingId)
-		{
-			IQueryable<CustomsDocumentPointer> pointers = repository.GetCustomDocumentPoinersForClosingData(parentEntityId, tenant, documentFilingId);
-
-			CustomsDocumentPointerPM pointerPm = (from a in pointers
-														 select new CustomsDocumentPointerPM()
-														 {  
-                                                             Id = a.Id,
-															 Tenant = a.Tenant,
-                                                             ParentEntityCode=a.ParentEntityCode,
-															 ParentEntityId = a.ParentEntityId,
-                                                             Child1EntityCode=a.Child1EntityCode,
-															 Child1EntityId = a.Child1EntityId,
-															 Child2EntityCode = a.Child2EntityCode,
-															 Child2EntityId = a.Child2EntityId,
-															 Child3EntityCode = a.Child3EntityCode,
-															 Child3EntityId = a.Child3EntityId,
-                                                             CustomsDocumentsTicketId = a.CustomsDocumentsTicketId,
-                                                             OriginEntity = a.OriginEntity,
-															
-														 }).FirstOrDefault();
-			return pointerPm;
-		}
-
-	}
+    }
 }

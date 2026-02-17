@@ -36,14 +36,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          UpdateDate = a.UpdateDate,
                                                          Type = a.Type,
                                                          BLNumber = a.BLNumber,
-                                                         FromPushPage = a.FromPushPage,
-														 System = a.System,
-                                                         IsClosed = a.IsClosed,
-                                                         Method = a.Method,
-                                                         OriginalResponse = a.OriginalResponse,
-                                                         ApiStatus = a.ApiStatus
-                                                         
-											   }).FirstOrDefault();
+                                                         FromPushPage = a.FromPushPage
+                                                     }).FirstOrDefault();
 
               
             return myResult;
@@ -64,12 +58,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage,
-												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   FromPushPage = a.FromPushPage
                                                }).FirstOrDefault();
 
 
@@ -91,12 +80,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage,
-												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   FromPushPage = a.FromPushPage
                                                }).FirstOrDefault();
 
 
@@ -118,22 +102,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage,
-												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   FromPushPage = a.FromPushPage
                                                }).ToList();
 
 
             return myResult;
         }
 
-        public OceanInsightsRequestPM GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(string ScacCode, string ContainerNo, int Tenant,string System="")
+        public OceanInsightsRequestPM GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(string ScacCode, string ContainerNo, int Tenant)
         {
             OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-                                               where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode && a.Tenant == Tenant && ((string.IsNullOrEmpty(System) && string.IsNullOrEmpty(a.System)) || a.System== System) && !a.IsClosed
+                                               where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode && a.Tenant == Tenant
                                                select new OceanInsightsRequestPM()
                                                {
                                                    Id = a.Id,
@@ -145,22 +124,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage,
-												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   FromPushPage = a.FromPushPage
                                                }).FirstOrDefault();
 
 
             return myResult;
         }
 
-        public OceanInsightsRequestPM GetSinglePMByOceanInsightsByCareierScacBLNoTenant(string CarrierScac, string BLNumber, int Tenant,string System="")
+        public OceanInsightsRequestPM GetSinglePMByOceanInsightsByCareierScacBLNoTenant(string CarrierScac, string BLNumber, int Tenant)
         {
             OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-                                               where a.BLNumber == BLNumber && a.SCACCode == CarrierScac && a.Tenant == Tenant && ((string.IsNullOrEmpty(System) && string.IsNullOrEmpty(a.System)) || a.System == System) && !a.IsClosed
+                                               where a.BLNumber == BLNumber && a.SCACCode == CarrierScac && a.Tenant == Tenant
                                                select new OceanInsightsRequestPM()
                                                {
                                                    Id = a.Id,
@@ -172,73 +146,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
+                                                   FromPushPage = a.FromPushPage
                                                }).FirstOrDefault();
 
 
             return myResult;
         }
 
-
-		public OceanInsightsRequestPM GetSinglePMByOceanInsightsByScacCodeContainerNo(string ScacCode, string ContainerNo)
-		{
-			OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-											   where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode
-											   select new OceanInsightsRequestPM()
-											   {
-												   Id = a.Id,
-												   ContainerNumber = a.ContainerNumber,
-												   CreateDate = a.CreateDate,
-												   OceanInsigntId = a.OceanInsigntId,
-												   SCACCode = a.SCACCode,
-												   Tenant = a.Tenant,
-												   UpdateDate = a.UpdateDate,
-												   Type = a.Type,
-												   BLNumber = a.BLNumber,
-												   FromPushPage = a.FromPushPage,
-												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
-                                               }).FirstOrDefault();
-
-
-			return myResult;
-		}
-
-		public OceanInsightsRequestPM GetSinglePMByOceanInsightsByCareierScacBLNo(string CarrierScac, string BLNumber)
-		{
-			OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-											   where a.BLNumber == BLNumber && a.SCACCode == CarrierScac
-											   select new OceanInsightsRequestPM()
-											   {
-												   Id = a.Id,
-												   ContainerNumber = a.ContainerNumber,
-												   CreateDate = a.CreateDate,
-												   OceanInsigntId = a.OceanInsigntId,
-												   SCACCode = a.SCACCode,
-												   Tenant = a.Tenant,
-												   UpdateDate = a.UpdateDate,
-												   Type = a.Type,
-												   BLNumber = a.BLNumber,
-												   FromPushPage = a.FromPushPage,
-												   System = a.System,
-                                                   IsClosed = a.IsClosed,
-                                                   Method = a.Method,
-                                                   OriginalResponse = a.OriginalResponse,
-                                                   ApiStatus = a.ApiStatus
-                                               }).FirstOrDefault();
-
-
-			return myResult;
-		}
-
-		public List<OceanInsightsRequestPM> GetOceanInsightsRequestPMs(int tenant)
+        public List<OceanInsightsRequestPM> GetOceanInsightsRequestPMs(int tenant)
         {
             List<OceanInsightsRequestPM> myResult = (from a in repository.Context.OceanInsightsRequests
                                                      where a.Tenant == tenant 
@@ -253,12 +168,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          UpdateDate = a.UpdateDate,
                                                          Type = a.Type,
                                                          BLNumber = a.BLNumber,
-                                                         FromPushPage = a.FromPushPage,
-														 System = a.System,
-                                                         IsClosed = a.IsClosed,
-                                                         Method = a.Method,
-                                                         OriginalResponse = a.OriginalResponse,
-                                                         ApiStatus = a.ApiStatus
+                                                         FromPushPage = a.FromPushPage
                                                      }).ToList(); 
             return myResult;
         }

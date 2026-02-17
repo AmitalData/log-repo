@@ -1,4 +1,4 @@
-import {SessionLocator} from '../../../Utilities/SessionLocator';
+﻿import {SessionLocator} from '../../../Utilities/SessionLocator';
 import {Component, ElementRef, OnInit, ViewContainerRef} from '@angular/core';
 
 @Component({
@@ -8,13 +8,11 @@ import {Component, ElementRef, OnInit, ViewContainerRef} from '@angular/core';
                <span><span style="text-overflow: ellipsis" *ngIf="noComponent">{{col.Display}}</span></span>
             
                <!--</div>-->`,
-    inputs: ['colDef', 'htmlListHeaderUrl']
+    inputs: ['colDef']
 })
 
 export class ListHeaderTemplateComponent implements OnInit {
-  public col: any;
 
-    public htmlListHeaderUrl: string;
     public colDef: any;
 
     constructor(private _elementRef: ElementRef, private _ViewContainerRef: ViewContainerRef) {
@@ -24,15 +22,19 @@ export class ListHeaderTemplateComponent implements OnInit {
     public noComponent: boolean;
 
     ngOnInit() {
-        if (this.colDef.ColumnHeaderTemplateName) {
-            this.noComponent = false;
-            
-            if (this.colDef.ColumnHeaderTemplateName === "TransportModeHeaderTemplate") {
-                SessionLocator.DynamicLoader.Load("./Shipment/Components/ListHeaderTemplates/TransportModeListHeaderTemplate", this._ViewContainerRef);
-            }
 
+        if (this.colDef.ColumnHeaderTemplateName && this.colDef.ColumnHeaderTemplateName) {
+            this.noComponent = false;
+            //console.log("htmlHeaderComponent is -----> ", this.htmlHeaderComponent);
+            if (this.colDef.ColumnHeaderTemplateName === "TransportModeHeaderTemplate") {
+
+                SessionLocator.DynamicLoader.Load("./Shipment/Components/ListHeaderTemplates/TransportModeListHeaderTemplate", this._ViewContainerRef);
+
+            }
             if (this.colDef.ColumnHeaderTemplateName === "DirectionHeaderTemplate") {
+
                 SessionLocator.DynamicLoader.Load("./Shipment/Components/ListHeaderTemplates/DirectionListHeaderTemplate", this._ViewContainerRef);
+
             }
 
             if (this.colDef.ColumnHeaderTemplateName === "ARInvoiceIsPrintedHeaderTemplate") {
@@ -42,40 +44,11 @@ export class ListHeaderTemplateComponent implements OnInit {
             if (this.colDef.ColumnHeaderTemplateName === "ARInvoiceSentHeaderTemplate") {
                 SessionLocator.DynamicLoader.Load("./Invoice/Components/ListHeaderTemplates/ARInvoiceSentHeaderTemplate", this._ViewContainerRef);
             }
-            if (this.colDef.ColumnHeaderTemplateName === "ActionListHeaderTemplate") {
-                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsListTemplates/Components/ListHeaderTemplates/ActionListHeaderTemplate", this._ViewContainerRef);
-            }
-            if (this.colDef.ColumnHeaderTemplateName === "ArrivalDateListHeaderTemplate") {
-                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsListTemplates/Components/ListHeaderTemplates/ArrivalDateListHeaderTemplate", this._ViewContainerRef);
-            }
-            if (this.colDef.ColumnHeaderTemplateName === "TransportModeListHeaderTemplate") {
-                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsListTemplates/Components/ListHeaderTemplates/TransportModeListHeaderTemplate", this._ViewContainerRef);
-            }
-            if (this.colDef.ColumnHeaderTemplateName === "BlackTransportModeListHeaderTemplate") {
-                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsListTemplates/Components/ListHeaderTemplates/BlackTransportModeListHeaderTemplate", this._ViewContainerRef);
-            }
-            if (this.colDef.ColumnHeaderTemplateName === "StartWorkingListHeaderTemplate") {
-                SessionLocator.DynamicLoader.Load("./Common/Components/Templates/ListHeaderTemplates/StartWorkingListHeaderTemplate", this._ViewContainerRef);
-            }
-            if (this.colDef.ColumnHeaderTemplateName === "EnglishNameListHeaderTemplate") {
-                SessionLocator.DynamicLoader.Load("./Common/Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate", this._ViewContainerRef);
-            } 
-            if (this.colDef.ColumnHeaderTemplateName === "CityNameListHeaderTemplate") {
-                SessionLocator.DynamicLoader.Load("./Common/Components/Templates/ListHeaderTemplates/CityNameListHeaderTemplate", this._ViewContainerRef);
-            } 
-            if (this.colDef.ColumnHeaderTemplateName === "CodeListHeaderTemplate") {
-                SessionLocator.DynamicLoader.Load("./Common/Components/Templates/ListHeaderTemplates/CodeListHeaderTemplate", this._ViewContainerRef);
-            }
-            if (this.htmlListHeaderUrl) {
-                SessionLocator.DynamicLoader.Load(this.htmlListHeaderUrl, this._ViewContainerRef)
-                    .then((res) => {
-                        res.instance.setVariables();
-                    });
-            }
         }
-        
         else {
             this.noComponent = true;
         }
+
     }
+
 }

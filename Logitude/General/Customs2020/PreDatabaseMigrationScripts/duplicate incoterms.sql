@@ -1,6 +1,0 @@
---delete from INCOTERMS where rowid not in(
---select min(rowid)
---from   INCOTERMS
---group  by code,tenant);
---/
---ALTER TABLE "INCOTERMS" ADD CONSTRAINT "UQ_INCOTERMS_TENANT_CODE" UNIQUE("TENANT","CODE");

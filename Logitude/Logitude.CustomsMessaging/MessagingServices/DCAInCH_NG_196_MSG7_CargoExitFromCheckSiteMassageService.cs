@@ -1,6 +1,5 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -32,13 +31,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get { return "196"; }
         }
-        protected override CH_NG_196_MSG7_CargoExitFromCheckSite GetFakeCustomsResponse(GenericRequestParams requestParamsData)
-        {
 
-            var myFake_DCAInCH_NG_196_MSG7_CargoExitFromCheckSite = new Fake_DCAInCH_NG_196_MSG7_CargoExitFromCheckSite();
-            return myFake_DCAInCH_NG_196_MSG7_CargoExitFromCheckSite.GetFakeCustomsResponse(requestParamsData);
-
-        }
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(CH_NG_196_MSG7_CargoExitFromCheckSite customsResponse)
         {
             var tableName = "Customs.PhysicalCheck";

@@ -1,9 +1,9 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -20,7 +20,6 @@ using System.Windows.Forms;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.IO;
-using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Update
 {
@@ -244,8 +243,6 @@ namespace Logitude.Update
 
 
                     };
-                    UpdatePortSearchFieldService.Update(NewPort);
-
                     AmitalPortsRepository.Add(NewPort);
                 }
 
@@ -263,123 +260,92 @@ namespace Logitude.Update
 
             #endregion
         }
-        private void CopyDocumentTypes(CommonDataContext sourceContext, CommonDataContext destContext, WebFreightContext sourceWebFreightContext, WebFreightContext destWebFreightContext)
+        private void CopyDocumentTypes(CommonDataContext Logitudecontext, CommonDataContext Amitalcontext, WebFreightContext LogitudeWebFreightContext, WebFreightContext AmitalWebFreightContext)
         {
             #region DocumentTypes + Template
 
-            DocumentTypeRepository SourceDocumentTypeRepository = new DocumentTypeRepository(sourceContext);
-            DocumentTypeRepository DestinationDocumentTypeRepository = new DocumentTypeRepository(destContext);
-            DocumentTypeTemplateRepository SourceDocumentTypeTemplateRepository = new DocumentTypeTemplateRepository(sourceContext);
-            DocumentTypeTemplateRepository DestinationDocumentTypeTemplateRepository = new DocumentTypeTemplateRepository(destContext);
-            ObjectTableRepository SourceObjectTabelRepository = new ObjectTableRepository(sourceWebFreightContext);
-            ObjectTableRepository DestinationObjectTabelRepository = new ObjectTableRepository(destWebFreightContext);
-            UserRepository DestinationUserRepository = new UserRepository(destContext);
-            var SourceDocumentTypes = SourceDocumentTypeRepository.GetDocumentTypes(0).Where(d=>d.InActive == false);
-            var DestinationDocumentTypes = DestinationDocumentTypeRepository.GetDocumentTypes(0);
-            var SourceObjectTables = SourceObjectTabelRepository.GetObjectsByTenant(0);
-            var DestinationObjectTables = DestinationObjectTabelRepository.GetObjectsByTenant(0);
+            DocumentTypeRepository LogitudeDocumentTypeRepository = new DocumentTypeRepository(Logitudecontext);
+            DocumentTypeRepository AmitalDocumentTypeRepository = new DocumentTypeRepository(Amitalcontext);
+            DocumentTypeTemplateRepository LogitudeDocumentTypeTemplateRepository = new DocumentTypeTemplateRepository(Logitudecontext);
+            DocumentTypeTemplateRepository AmitalDocumentTypeTemplateRepository = new DocumentTypeTemplateRepository(Amitalcontext);
+            ObjectTableRepository LogitudeObjectTabelRepository = new ObjectTableRepository(LogitudeWebFreightContext);
+            ObjectTableRepository AmitalObjectTabelRepository = new ObjectTableRepository(AmitalWebFreightContext);
+            UserRepository AmitalUserRepository = new UserRepository(Amitalcontext);
+            var LogitudeDocumentTypes = LogitudeDocumentTypeRepository.GetDocumentTypes(0);
+            var AmitalDocumentTypes = AmitalDocumentTypeRepository.GetDocumentTypes(0);
+            var LogitudeObjectTables = LogitudeObjectTabelRepository.GetObjectsByTenant(0);
+            var AmitalObjectTables = AmitalObjectTabelRepository.GetObjectsByTenant(0);
 
-            int c1 = SourceDocumentTypes.Count();
-            int c2 = DestinationDocumentTypes.Count();
-
-            var DestinationSystemUser = DestinationUserRepository.GetSingleUserByEmail("system@tenant0.com", 0, false);
-
-           
-
+            var AmitalSystemUser = AmitalUserRepository.GetSingleUserByEmail("system@tenant0.com", 0, false);
             //system@tenant0.com,System,99999999
-            foreach (var item in SourceDocumentTypes)
+            foreach (var item in LogitudeDocumentTypes)
             {
-                var DestinationItem = DestinationDocumentTypes.Where(a => a.Code == item.Code).FirstOrDefault();
-                if (DestinationItem == null)
+                string DocTypeId = IdCounter.GetNumber("DocumentType", 0);
+                var LogitudeObjectTable = LogitudeObjectTables.FirstOrDefault(t => t.Id == item.ObjectTableId); //ObjectTabelRepository.GetSingleObjectTableById(item.ObjectTableId, item.Tenant);
+                var AmitalObjectTable = AmitalObjectTables.FirstOrDefault(t => t.Name == LogitudeObjectTable.Name);//AmitalObjectTabelRepository.GetObjectTableByName(LogitudeObjectTable.Name, item.Tenant, false);
+                var AmitalItem = AmitalDocumentTypes.Where(a => a.Code == item.Code).FirstOrDefault();
+                var LogitudeDocumentTypeHtmlTemplate = LogitudeDocumentTypeTemplateRepository.GetSingleDocumentTypeTemplateByTenant(item.DocumentTypeDefaultHTMLTemplateId, item.Tenant);
+                var LogitudeDocumentTypeReportTemplate = LogitudeDocumentTypeTemplateRepository.GetSingleDocumentTypeTemplateByTenant(item.DocumentTypeDefaultHTMLTemplateId, item.Tenant);
+                DocumentTypeTemplate AmitalDocumentTypeHtmlTemplate = null;
+                DocumentTypeTemplate AmitalDocumentTypeReportTemplate = null;
+                if (LogitudeDocumentTypeHtmlTemplate != null)
                 {
-                    string DocTypeId = IdCounter.GetNumber("DocumentType", 0);
-                    var SourceObjectTable = SourceObjectTables.FirstOrDefault(t => t.Id == item.ObjectTableId); //ObjectTabelRepository.GetSingleObjectTableById(item.ObjectTableId, item.Tenant);
-                    var DestinationObjectTable = DestinationObjectTables.FirstOrDefault(t => t.Name == SourceObjectTable.Name);//AmitalObjectTabelRepository.GetObjectTableByName(LogitudeObjectTable.Name, item.Tenant, false);
-                    var SourceDocumentTypeHtmlTemplate = SourceDocumentTypeTemplateRepository.GetSingleDocumentTypeTemplateByTenant(item.DocumentTypeDefaultHTMLTemplateId, item.Tenant);
-                    var SourceDocumentTypeReportTemplate = SourceDocumentTypeTemplateRepository.GetSingleDocumentTypeTemplateByTenant(item.DocumentTypeDefaultHTMLTemplateId, item.Tenant);
-                    DocumentTypeTemplate AmitalDocumentTypeHtmlTemplate = null;
-                    DocumentTypeTemplate AmitalDocumentTypeReportTemplate = null;
-                    if (SourceDocumentTypeHtmlTemplate != null)
+                    AmitalDocumentTypeHtmlTemplate = new DocumentTypeTemplate()
                     {
-                        AmitalDocumentTypeHtmlTemplate = new DocumentTypeTemplate()
-                        {
-                            CountryCode = SourceDocumentTypeHtmlTemplate.CountryCode,
-                            Description = SourceDocumentTypeHtmlTemplate.Description,
-                            DocumentTypeId = DocTypeId,
-                            EditorTool = SourceDocumentTypeHtmlTemplate.EditorTool,
-                            HorizontalShift = SourceDocumentTypeHtmlTemplate.HorizontalShift,
-                            Id = IdCounter.GetNumber("DocumentTypeTemplate", 0),
-                            InActive = SourceDocumentTypeHtmlTemplate.InActive,
-                            InternalRemarks = SourceDocumentTypeHtmlTemplate.InternalRemarks,
-                            IsCopiedAtSignup = SourceDocumentTypeHtmlTemplate.IsCopiedAtSignup,
-                            IsEnabledForCustomers = SourceDocumentTypeHtmlTemplate.IsEnabledForCustomers,
-                            Language = SourceDocumentTypeHtmlTemplate.Language,
-                            LastUpdateDate = SourceDocumentTypeHtmlTemplate.LastUpdateDate,
-                            LastUpdatedByUserId = DestinationSystemUser.Id,
-                            OriginalTemplateId = SourceDocumentTypeHtmlTemplate.OriginalTemplateId,
-                            Subject = SourceDocumentTypeHtmlTemplate.Subject,
-                            TemplateBody = SourceDocumentTypeHtmlTemplate.TemplateBody,
-                            TemplateType = SourceDocumentTypeHtmlTemplate.TemplateType,
-                            Tenant = SourceDocumentTypeHtmlTemplate.Tenant,
-                            VerticalShift = SourceDocumentTypeHtmlTemplate.VerticalShift,
-                            BCC = SourceDocumentTypeHtmlTemplate.BCC,
-                            CC = SourceDocumentTypeHtmlTemplate.CC,
-                            From = SourceDocumentTypeHtmlTemplate.From,
-                            TemplateTechnologyCode = SourceDocumentTypeHtmlTemplate.TemplateTechnologyCode,
-                            TemplateBodyHtml = SourceDocumentTypeHtmlTemplate.TemplateBodyHtml,
-                            TemplateFooterHeight = SourceDocumentTypeHtmlTemplate.TemplateFooterHeight,
-                            TemplateFooterHtml = SourceDocumentTypeHtmlTemplate.TemplateFooterHtml,
-                            TemplateBodyjson = SourceDocumentTypeHtmlTemplate.TemplateBodyjson,
-                            TemplateHeaderHeight = SourceDocumentTypeHtmlTemplate.TemplateHeaderHeight,
-                            TemplateHeaderHtml = SourceDocumentTypeHtmlTemplate.TemplateHeaderHtml,
-                            IsSystem = SourceDocumentTypeHtmlTemplate.IsSystem,
+                        CountryCode = LogitudeDocumentTypeHtmlTemplate.CountryCode,
+                        Description = LogitudeDocumentTypeHtmlTemplate.Description,
+                        DocumentTypeId = DocTypeId,
+                        EditorTool = LogitudeDocumentTypeHtmlTemplate.EditorTool,
+                        HorizontalShift = LogitudeDocumentTypeHtmlTemplate.HorizontalShift,
+                        Id = IdCounter.GetNumber("DocumentTypeTemplate", 0),
+                        InActive = LogitudeDocumentTypeHtmlTemplate.InActive,
+                        InternalRemarks = LogitudeDocumentTypeHtmlTemplate.InternalRemarks,
+                        IsCopiedAtSignup = LogitudeDocumentTypeHtmlTemplate.IsCopiedAtSignup,
+                        IsEnabledForCustomers = LogitudeDocumentTypeHtmlTemplate.IsEnabledForCustomers,
+                        Language = LogitudeDocumentTypeHtmlTemplate.Language,
+                        LastUpdateDate = LogitudeDocumentTypeHtmlTemplate.LastUpdateDate,
+                        LastUpdatedByUserId = AmitalSystemUser.Id,
+                        OriginalTemplateId = LogitudeDocumentTypeHtmlTemplate.OriginalTemplateId,
+                        Subject = LogitudeDocumentTypeHtmlTemplate.Subject,
+                        TemplateBody = LogitudeDocumentTypeHtmlTemplate.TemplateBody,
+                        TemplateType = LogitudeDocumentTypeHtmlTemplate.TemplateType,
+                        Tenant = LogitudeDocumentTypeHtmlTemplate.Tenant,
+                        VerticalShift = LogitudeDocumentTypeHtmlTemplate.VerticalShift
 
+                    };
+                    AmitalDocumentTypeTemplateRepository.Add(AmitalDocumentTypeHtmlTemplate);
+                }
 
-
-                        };
-                        DestinationDocumentTypeTemplateRepository.Add(AmitalDocumentTypeHtmlTemplate);
-                    }
-
-                    if (SourceDocumentTypeReportTemplate != null)
+                if (LogitudeDocumentTypeReportTemplate != null)
+                {
+                    AmitalDocumentTypeReportTemplate = new DocumentTypeTemplate()
                     {
-                        AmitalDocumentTypeReportTemplate = new DocumentTypeTemplate()
-                        {
-                            CountryCode = SourceDocumentTypeReportTemplate.CountryCode,
-                            Description = SourceDocumentTypeReportTemplate.Description,
-                            DocumentTypeId = DocTypeId,
-                            EditorTool = SourceDocumentTypeReportTemplate.EditorTool,
-                            HorizontalShift = SourceDocumentTypeReportTemplate.HorizontalShift,
-                            Id = IdCounter.GetNumber("DocumentTypeTemplate", 0),
-                            InActive = SourceDocumentTypeReportTemplate.InActive,
-                            InternalRemarks = SourceDocumentTypeReportTemplate.InternalRemarks,
-                            IsCopiedAtSignup = SourceDocumentTypeReportTemplate.IsCopiedAtSignup,
-                            IsEnabledForCustomers = SourceDocumentTypeReportTemplate.IsEnabledForCustomers,
-                            Language = SourceDocumentTypeReportTemplate.Language,
-                            LastUpdateDate = SourceDocumentTypeReportTemplate.LastUpdateDate,
-                            LastUpdatedByUserId = DestinationSystemUser.Id,
-                            //OriginalTemplateId = LogitudeDocumentTypeReportTemplate.OriginalTemplateId,
-                            Subject = SourceDocumentTypeReportTemplate.Subject,
-                            TemplateBody = SourceDocumentTypeReportTemplate.TemplateBody,
-                            TemplateType = SourceDocumentTypeReportTemplate.TemplateType,
-                            Tenant = SourceDocumentTypeReportTemplate.Tenant,
-                            VerticalShift = SourceDocumentTypeReportTemplate.VerticalShift,
-                            BCC = SourceDocumentTypeReportTemplate.BCC,
-                            CC = SourceDocumentTypeReportTemplate.CC,
-                            From = SourceDocumentTypeReportTemplate.From,
-                            TemplateTechnologyCode = SourceDocumentTypeReportTemplate.TemplateTechnologyCode,
-                            TemplateBodyHtml = SourceDocumentTypeReportTemplate.TemplateBodyHtml,
-                            TemplateFooterHeight = SourceDocumentTypeReportTemplate.TemplateFooterHeight,
-                            TemplateFooterHtml = SourceDocumentTypeReportTemplate.TemplateFooterHtml,
-                            TemplateBodyjson = SourceDocumentTypeReportTemplate.TemplateBodyjson,
-                            TemplateHeaderHeight = SourceDocumentTypeReportTemplate.TemplateHeaderHeight,
-                            TemplateHeaderHtml = SourceDocumentTypeReportTemplate.TemplateHeaderHtml,
-                            IsSystem = SourceDocumentTypeHtmlTemplate.IsSystem,
+                        CountryCode = LogitudeDocumentTypeReportTemplate.CountryCode,
+                        Description = LogitudeDocumentTypeReportTemplate.Description,
+                        DocumentTypeId = DocTypeId,
+                        EditorTool = LogitudeDocumentTypeReportTemplate.EditorTool,
+                        HorizontalShift = LogitudeDocumentTypeReportTemplate.HorizontalShift,
+                        Id = IdCounter.GetNumber("DocumentTypeTemplate", 0),
+                        InActive = LogitudeDocumentTypeReportTemplate.InActive,
+                        InternalRemarks = LogitudeDocumentTypeReportTemplate.InternalRemarks,
+                        IsCopiedAtSignup = LogitudeDocumentTypeReportTemplate.IsCopiedAtSignup,
+                        IsEnabledForCustomers = LogitudeDocumentTypeReportTemplate.IsEnabledForCustomers,
+                        Language = LogitudeDocumentTypeReportTemplate.Language,
+                        LastUpdateDate = LogitudeDocumentTypeReportTemplate.LastUpdateDate,
+                        LastUpdatedByUserId = AmitalSystemUser.Id,
+                        //OriginalTemplateId = LogitudeDocumentTypeReportTemplate.OriginalTemplateId,
+                        Subject = LogitudeDocumentTypeReportTemplate.Subject,
+                        TemplateBody = LogitudeDocumentTypeReportTemplate.TemplateBody,
+                        TemplateType = LogitudeDocumentTypeReportTemplate.TemplateType,
+                        Tenant = LogitudeDocumentTypeReportTemplate.Tenant,
+                        VerticalShift = LogitudeDocumentTypeReportTemplate.VerticalShift
 
-                        };
-                        DestinationDocumentTypeTemplateRepository.Add(AmitalDocumentTypeReportTemplate);
-                    }
+                    };
+                    AmitalDocumentTypeTemplateRepository.Add(AmitalDocumentTypeReportTemplate);
+                }
 
-
+                if (AmitalItem == null)
+                {
                     DocumentType NewDocumentType = new DocumentType()
                     {
                         Code = item.Code,
@@ -413,25 +379,17 @@ namespace Logitude.Update
                         IsReadOnly = item.IsReadOnly,
                         LimitedPrintCopyId = item.LimitedPrintCopyId,
                         Name = item.Name,
-                        ObjectTableId = DestinationObjectTable.Id,
+                        ObjectTableId = AmitalObjectTable.Id,
                         Subject = item.Subject,
                         TemplateFormatCode = item.TemplateFormatCode,
-                      
-                        DocumentsDataProvider = item.DocumentsDataProvider,
-                        PrintingFieldsScreenCode = item.PrintingFieldsScreenCode,
-                        OrderBy = item.OrderBy,
-                        OnPrintPopulateDateFieldName = item.OnPrintPopulateDateFieldName,
-                        OnSendPopulateDateFieldName = item.OnSendPopulateDateFieldName,
-                        OnUploadPopulateDateFieldName = item.OnUploadPopulateDateFieldName,
-
 
 
                     };
-                    DestinationDocumentTypeRepository.Add(NewDocumentType);
+                    AmitalDocumentTypeRepository.Add(NewDocumentType);
 
                     //DocumentTypeCopy
-                    DocumentTypeCopyRepository LogitudeDocumentTypeCopyRepository = new DocumentTypeCopyRepository(sourceContext);
-                    DocumentTypeCopyRepository AmitalDocumentTypeCopyRepository = new DocumentTypeCopyRepository(destContext);
+                    DocumentTypeCopyRepository LogitudeDocumentTypeCopyRepository = new DocumentTypeCopyRepository(Logitudecontext);
+                    DocumentTypeCopyRepository AmitalDocumentTypeCopyRepository = new DocumentTypeCopyRepository(Amitalcontext);
                     var LogitudeDocumentTypeCopies = LogitudeDocumentTypeCopyRepository.GetDocumentTypeCopiesByDocumentTypeIdTenant(item.Id, item.Tenant);
 
 
@@ -446,7 +404,7 @@ namespace Logitude.Update
                             Name = item2.Name,
                             DocumentTypeId = NewDocumentType.Id,
                             IndexOrder = item2.IndexOrder,
-                            IsSelectedByDefault = item2.IsSelectedByDefault, 
+                            IsSelectedByDefault = item2.IsSelectedByDefault,
 
                         };
                         AmitalDocumentTypeCopyRepository.Add(NewDocumentTypeCopy);
@@ -455,8 +413,8 @@ namespace Logitude.Update
 
 
                     //DocumentTypeCustomField
-                    DocumentTypeCustomFieldRepository LogitudeDocumentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(sourceContext);
-                    DocumentTypeCustomFieldRepository AmitalDocumentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(destContext);
+                    DocumentTypeCustomFieldRepository LogitudeDocumentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(Logitudecontext);
+                    DocumentTypeCustomFieldRepository AmitalDocumentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(Amitalcontext);
                     var LogitudeDocumentTypeCustomFields = LogitudeDocumentTypeCustomFieldRepository.GetDocumentTypeCusotmFieldsByDocumentTypeId(item.Id, item.Tenant);
 
 
@@ -485,8 +443,8 @@ namespace Logitude.Update
 
                 }
             }
-            DestinationDocumentTypeRepository.SubmitChanges();
-            DestinationDocumentTypeTemplateRepository.SubmitChanges();
+            AmitalDocumentTypeRepository.SubmitChanges();
+            AmitalDocumentTypeTemplateRepository.SubmitChanges();
 
 
 
@@ -979,8 +937,6 @@ namespace Logitude.Update
 
 
                     };
-                    UpdatePortSearchFieldService.Update(NewPort);
-
                     AmitalPortsRepository.Add(NewPort);
                 }
 
@@ -1097,7 +1053,6 @@ namespace Logitude.Update
                                     Signature = oldContact.Signature,
                                     SignatureHtml = oldContact.SignatureHtml,
                                     UserType = oldContact.UserType,
-                                    DigitalPortalLanguage = oldContact.DigitalPortalLanguage
                                 };
 
                                 CardContact cardContact = new CardContact()
@@ -1292,40 +1247,12 @@ namespace Logitude.Update
                     Name = logitudeChargesGroup.Name,
                     LocalName = logitudeChargesGroup.LocalName,
                     SearchFields = logitudeChargesGroup.SearchFields,
-                    ViewOrder = logitudeChargesGroup.ViewOrder,
                 };
 
                 AmitalChargesGroupRepository.Add(amitalChargesGroup);
             }
 
             return amitalChargesGroup;
-        }
-
-        
-        private void btnCopyDocumentTypes_Click_1(object sender, EventArgs e)
-        {
-            //logbox-global,logboxadmin,London2015!London2015!,logboxdbs.database.windows.net
-            //Global,sa,Saas256,amitaldata.cloudapp.net
-            if (!string.IsNullOrEmpty(txtSourceConnStr.Text) && !string.IsNullOrEmpty(txtDestinationConnStr.Text))
-            {
-                DbConnection Logitudeconnection = DatabaseInitializer.GetConnection(txtSourceConnStr.Text);
-                CommonDataContext Logitudecontext = new CommonDataContext(Logitudeconnection);
-                WebFreightContext LogitudeWebFreightContext = new WebFreightContext(Logitudeconnection);
-
-                DbConnection Amitalconnection = DatabaseInitializer.GetConnection(txtDestinationConnStr.Text);
-                CommonDataContext Amitalcontext = new CommonDataContext(Amitalconnection);
-                WebFreightContext AmitalWebFreightContext = new WebFreightContext(Amitalconnection);
-
-
-
-                this.CopyDocumentTypes(Logitudecontext, Amitalcontext, LogitudeWebFreightContext, AmitalWebFreightContext);
-
-                MessageBox.Show("Copy finished successfully");
-            }
-            else
-            {
-                MessageBox.Show("Please fill the source and destination connection strings");
-            }
         }
     }
 }

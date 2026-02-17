@@ -31,8 +31,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
             get { return _CurrencyTypeId; }
             set { _CurrencyTypeId = value; FirePropertyChanged("CurrencyTypeId"); }
         }
-        public Boolean UpdateAllTenants { get; set; }
-
-        ///public int Tenant { get; set; }
+       ///public int Tenant { get; set; }
     }
 }

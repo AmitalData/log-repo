@@ -52,48 +52,10 @@
             height: 18px;
             float: right;
         }
-
-
-        .errors-box{
-            border-radius: 8px;
-            padding: 5px 10px;
-            background: rgb(249 224 224);
-            border: 1px solid #c15757;
-            color: #420000;
-            height: 110px;
-            overflow: auto;
-        }
-
-
-        .errors-box li{
-            margin-bottom: 10px;
-
-            white-space: -moz-pre-wrap !important;
-            white-space: -webkit-pre-wrap;
-            white-space: -pre-wrap;
-            white-space: -o-pre-wrap;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            word-break: break-word;
-            white-space: normal;
-
-        }
 </style>
 <table>
 
-    <tr *ngIf="Errors.length>0">
-        <td colspan="2" style="text-align:start;">
-           <!-- <ValidationSummary [ItemsSource]="Errors" [SingleLine]="true"></ValidationSummary> -->
-           <div class="errors-box">
-               <ul style="width: 440px;">
-                   <li *ngFor="let error of Errors" >{{error}}</li>
-               </ul>
-           </div>
-           <button class="RedButton" style="width: 70px;display: block;width: 70px;margin: 0 auto; margin-top: 22px;"  (click)="CloseWindow()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
-        </td>
-    </tr>
-
-    <tr *ngIf="Errors.length==0">
+    <tr>
         <td colspan="2" style="text-align:center;">
 
             <!-- Label -->

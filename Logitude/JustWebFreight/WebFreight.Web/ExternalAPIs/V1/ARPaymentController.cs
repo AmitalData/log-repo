@@ -5,13 +5,12 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,9 +21,6 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
-using Logitude.SystemLogs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Accounting.Def.EntityPMs;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -34,15 +30,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         public HttpResponseMessage GetSingleARPayment(string id, string number)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
             try
             {
 
-                 int tenant = authToken.Tenant;
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("ARPayment", authToken.Tenant);
+
 
                 ARPaymentQueryService Service = new ARPaymentQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
@@ -55,24 +50,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     Result = Service.GetARPaymentByNumber(number, tenant);
                 }
-                Result.PaymentInvoices = null;
+
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
-              {
-                //ExceptionHandler.HandleException
-                //ExceptionHandler.HandleException(ex, DateTime.Now, authToken.Tenant , authToken.Email , "", "AuthenticationController : PostLoginData", null);
-
-                //var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                string exceptionMessage = ex.Message+ Environment.NewLine+ex.StackTrace;
-                if (ex.InnerException != null)
-                {
-                    exceptionMessage += Environment.NewLine + "inner1: " + ex.InnerException.Message + Environment.NewLine + ex.InnerException.StackTrace;
-                }
-                    
-                    
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, exceptionMessage);//(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
 
@@ -90,9 +75,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticateAccessibleAPI("ARPayment", authToken.Tenant);
-
-                        int tenant = authToken.Tenant;
+                        int tenant = entity.Tenant;
 
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 
@@ -101,47 +84,27 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARPayment>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
 
-                        IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
-                        ARPaymentQueryService mappingService = new ARPaymentQueryService(tenant);
-                        entity = mappingService.SetARPaymentSystemUser(entity);
-                        JournalPM journalPM = mappingService.GetARPaymentExistingJournalPM(entity);
-                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
-                        entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
-                        entityPM.Tenant = tenant;
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(entity.Tenant);
+                        ARPaymentQueryService mappingService = new ARPaymentQueryService(entity.Tenant);
+                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, entity.Tenant);
+                       
+                        entityPM.Tenant = entity.Tenant;
                         entityPM.SetApproved = true;
                         entityPM.IsExternalEntity = true;
-                        if (entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true && journalPM != null && String.IsNullOrEmpty(journalPM.Id))
-                        {
-                            entityPM.JournalId = journalPM.Id;
-                            entityPM.JournalNumber = journalPM.JournalNumber;
-                            entityPM.ExternalAccountingEntityId = journalPM.Id;
-                        }
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo,entityPM.Id, entityPM.Tenant);
-                        
-                        ARPaymentService service = new ARPaymentService(MyContext, tenant);
+                       
+                        ARPaymentService service = new ARPaymentService(MyContext, entity.Tenant);
                         entityPM = mappingService.SetARPaymentPMFields(entityPM);
-                        entityPM = mappingService.MapAPPaymentChequeFieldsToARPayment(entity, entityPM);
-                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
-                        {
-                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
-                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
-                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
-
-                        }
                         service.Create(entityPM);
-                      
+
                        
 
-                        entity = mappingService.ARPaymentDataMapping(entityPM, tenant);
-
-                        APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARPayment", entityPM.Id, "ARPayment API", tenant);
+                        entity = mappingService.ARPaymentDataMapping(entityPM, entity.Tenant);
+                        APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARPayment", entityPM.Id, "ARPayment API", entity.Tenant);
 
                         scope.Complete();
-                        if (entityPM.AccountingPaymentMethodCode == "CA")
-                        {
-                            entity.ARPaymentCheques = null;
-                        }
-                        entity.PaymentInvoices = null;
+
+
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
                 }
@@ -178,8 +141,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                        SecurityUtility.AuthenticateAccessibleAPI("ARPayment", authToken.Tenant);
-
                         if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARPayment>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
@@ -194,24 +155,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             throw new ApplicationException("ARPayment with number " + entity.PaymentNo + " doesn't exist");
                         }
                         entity.Id = payment.Id;
-                        entity = mappingService.SetARPaymentSystemUser(entity);
-                        JournalPM journalPM = mappingService.GetARPaymentExistingJournalPM(entity);
-                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
+                       ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
                         entityPM.IsExternalEntity = true;
-                        if (entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true && journalPM != null && String.IsNullOrEmpty(journalPM.Id))
-                        {
-                            entityPM.JournalId = journalPM.Id;
-                            entityPM.JournalNumber = journalPM.JournalNumber;
-                            entityPM.ExternalAccountingEntityId = journalPM.Id;
-                        }
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo, entityPM.Id, entityPM.Tenant);
-                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
-                        {
-                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
-                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
-                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
 
-                        }
                         ARPaymentService service = new ARPaymentService(MyContext, tenant);
                         service.Update(entityPM, true);
 
@@ -219,7 +166,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         scope.Complete();
 
-                        entity.PaymentInvoices = null;
+
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
                 }

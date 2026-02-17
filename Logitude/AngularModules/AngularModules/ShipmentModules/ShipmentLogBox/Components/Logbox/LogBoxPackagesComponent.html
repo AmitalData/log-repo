@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .emptyticket {
         border: 1px solid #8C8C8C;
@@ -102,104 +102,53 @@
                     <table>
                         <tr class="SimpleGridHeaderRow">
                             <td style="width: 25px; max-width: 25px;padding-right: 4px;"></td>
-                            <td *ngIf="!IsPackageList" style="width: 130px; max-width: 130px;padding-right: 4px;">Container Type</td>
-                            <td *ngIf="IsPackageList" style="width: 130px; max-width: 130px;padding-right: 4px;">Package Type</td>
+                            <td style="width: 130px; max-width: 130px;padding-right: 4px;">Container Type</td>
                             <td style="width: 80px; max-width: 80px;padding-right: 4px;">Pieces</td>
-                            <td *ngIf="!IsPackageList" style="width: 140px; max-width: 140px;padding-right: 4px;">Container #</td>
-                            <td *ngIf="!IsPackageList" style="width: 80px; max-width: 80px;padding-right: 4px;">Seal</td>
+                            <td style="width: 140px; max-width: 140px;padding-right: 4px;">Container #</td>
+                            <td style="width: 80px; max-width: 80px;padding-right: 4px;">Seal</td>
                             <td style="width: 90px; max-width: 90px;padding-right: 4px;">Volume</td>
                             <td style="width: 90px; max-width: 90px;padding-right: 4px;">Gross Weight</td>
                             <td></td>
                             <!--<td class="LastChild">
-                    <div></div>
-                </td>-->
+                        <div></div>
+                    </td>-->
                         </tr>
                     </table>
                 </div>
 
-                <div class="SimpleGridViewBody" style="bottom:25px;" *ngIf="!this.showShipmentOrderPackages">
+                <div class="SimpleGridViewBody" style="bottom:25px;">
                     <table> 
-                        <ng-container *ngIf="this.ShipmentPM && this.ShipmentPM.ShipmentPackages.length != 0">
-                            <tr class="SimpleGridViewRow bg" *ngFor="let item of ShipmentPM.ShipmentPackages; let i=index;">
+                        <tr class="SimpleGridViewRow bg" *ngFor="let item of ShipmentPM.ShipmentPackages; let i=index;">
+                            
+                            <td class="CellStretched  TextTrimming" style="width: 25px; max-width: 25px;padding-left: 4px;">
+                               <img src="./Images/CellIcons/Container.png" class="CenterCenter" />
+                            </td>
+                            <td class="CellStretched  TextTrimming" style="width: 130px; max-width: 130px;padding-left: 4px;">
+                                {{item.PackageTypeName }}
+                            </td>
 
-                                <td class="CellStretched  TextTrimming" style="width: 25px; max-width: 25px;padding-left: 4px;">
-                                    <img src="./Images/CellIcons/Container.png" class="CenterCenter" />
-                                </td>
-                                <td class="CellStretched  TextTrimming" style="width: 130px; max-width: 130px;padding-left: 4px;">
-                                    {{item.PackageTypeName }}
-                                </td>
+                            <td class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
+                                {{item.Quantity}}
+                            </td>
 
-                                <td class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
-                                    {{item.Quantity}}
-                                </td>
+                            <td class="CellStretched  TextTrimming" style="width: 140px; max-width: 140px;padding-left: 4px;">
+                                {{item.ContainerNumber}}
+                            </td>
 
-                                <td *ngIf="!IsPackageList" class="CellStretched  TextTrimming" style="width: 140px; max-width: 140px;padding-left: 4px;">
-                                    {{item.ContainerNumber}}
-                                </td>
+                            <td class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
+                                {{item.ShipperSeal}}
+                            </td>
 
-                                <td *ngIf="!IsPackageList" class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
-                                    {{item.ShipperSeal}}
-                                </td>
+                            <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; padding-left: 4px;">
+                                {{item.Volume  | NumbersPipe:'N3'}}
+                            </td> 
+                            <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; padding-left: 4px;">
+                                {{item.Weight  | NumbersPipe:'N3'}}
+                            </td> 
+                            <td><div></div></td>
 
-                                <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; padding-left: 4px;">
-                                    {{item.Volume  | NumbersPipe:'N3'}}
-                                </td>
-                                <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; padding-left: 4px;">
-                                    {{item.Weight  | NumbersPipe:'N3'}}
-                                </td>
-                                <td><div></div></td>
-
-                            </tr>
-                        </ng-container>
-                            <tr *ngIf="ShipmentPM.ShipmentPackages && ShipmentPM.ShipmentPackages.length == 0">
-                                <td colspan="5" style="height:60px;text-align:center;">
-                                    <span style="font-size:13px;">No {{Title}} Data yet</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="5">
-                                    <div></div>
-                                </td>
-                            </tr>
-                    </table>
-                </div>
-
-                <div class="SimpleGridViewBody" style="bottom:25px;" *ngIf="this.showShipmentOrderPackages">
-                    <table>
-                        <ng-container *ngIf="this.ShipmentPM && this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length !=0">
-
-                            <tr class="SimpleGridViewRow bg" *ngFor="let item of ShipmentPM.ShipmentOrderPackages; let i=index;">
-
-                                <td class="CellStretched  TextTrimming" style="width: 25px; max-width: 25px;padding-left: 4px;">
-                                    <img src="./Images/CellIcons/Container.png" class="CenterCenter" />
-                                </td>
-                                <td class="CellStretched  TextTrimming" style="width: 130px; max-width: 130px;padding-left: 4px;">
-                                    {{item.PackageTypeName }}
-                                </td>
-
-                                <td class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
-                                    {{item.Quantity}}
-                                </td>
-
-                                <td *ngIf="!IsPackageList" class="CellStretched  TextTrimming" style="width: 140px; max-width: 140px;padding-left: 4px;">
-                                    {{item.ContainerNumber}}
-                                </td>
-
-                                <td *ngIf="!IsPackageList" class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
-                                </td>
-
-                                <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; padding-left: 4px;">
-                                    {{item.Volume  | NumbersPipe:'N3'}}
-                                </td>
-                                <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; padding-left: 4px;">
-                                    {{item.GrossWeight  | NumbersPipe:'N3'}}
-                                </td>
-                                <td><div></div></td>
-
-                            </tr>
-
-                        </ng-container>
-                        <tr *ngIf="this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0">
+                        </tr> 
+                        <tr *ngIf="ShipmentPM.ShipmentPackages && ShipmentPM.ShipmentPackages.length == 0">
                             <td colspan="5" style="height:60px;text-align:center;">
                                 <span style="font-size:13px;">No {{Title}} Data yet</span>
                             </td>
@@ -211,7 +160,6 @@
                         </tr>
                     </table>
                 </div>
-
             </div>
         </td>
     </tr>
@@ -222,7 +170,7 @@
     <tr style="height:1px;">
         <td>
             <div style="float:right;margin-left:10px;">
-                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;">Close</button>
             </div> 
         </td>
     </tr>

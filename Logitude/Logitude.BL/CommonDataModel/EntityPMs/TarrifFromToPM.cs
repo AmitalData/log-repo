@@ -21,6 +21,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         //Dummy
         public string PortCode { get; set; }
         public string CountryCode { get; set; }
-        public ChangeSetOperation ChangeSetOp { get; set; }
+        public ChangeSetOperation changeOp { get; set; }
     }
 }

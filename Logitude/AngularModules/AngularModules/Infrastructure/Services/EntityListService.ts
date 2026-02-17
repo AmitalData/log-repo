@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {Injectable} from '@angular/core';
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {ServiceHelper} from '../Utilities/ServiceHelper';
@@ -13,8 +13,12 @@ export class EntityListService {
 
     getCount(objectTableName: string) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        
-        let servicelink = this.GetServiceLink(table);
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ListService";
+        var servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
 
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
@@ -24,49 +28,35 @@ export class EntityListService {
     }
 
     getAll(objectTableName: string) {
-        let table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        let servicelink = this.GetServiceLink(table);
+        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ListService";
+        var servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
+
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
-                if (table.IsCustom) {
-                    resolve(service.getAllByObjectTableId(table.Id));
-                    return;
-                }
                 resolve(service.getAll());
             });
         });
     }
 
-     GetServiceLink(table: any, methodName: string = null) {
-        let objectTableName = table.Name;
-        let type = table.ObjectTableTypeCode == "MD" ? "Reference" : "Data";
-        if (table?.IsCustom) {
-            return './Infrastructure/Services/StandardLists/' + type + 'CustomObjectListService';
-        }
+    getByFilters(objectTableName: string, filters: ApiQueryFilters, MethodName: string = null) {
+        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         if (objectTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
         }
-        let moduleName = table.ClientModuleName;
-        let servicename = objectTableName + "ListService";
-        let servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
-
-        if (methodName != null) {
-            if (methodName.indexOf('Customs.') > -1) {
-                methodName = methodName.split('.')[1];
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ListService";
+        var servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
+        if (MethodName != null) {
+            if (MethodName.indexOf('Customs.') > -1) {
+                MethodName = MethodName.split('.')[1];
             }
-            let moduleName = table.ClientModuleName;
-            let servicename = methodName + "ListService";
+            servicename = MethodName + "ListService";
             servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
-        }
-        return servicelink;
-    }
-
-    getByFilters(objectTableName: string, filters: ApiQueryFilters, MethodName: string = null) {
-        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        let servicelink = this.GetServiceLink(table, MethodName);
-
-        if (table.IsCustom) {
-            filters.addAdditionalFilter("ObjectTableName", objectTableName, null, null, "Equals", false, false, false, "string");
         }
 
         return new Promise((resolve, reject) => {
@@ -79,8 +69,19 @@ export class EntityListService {
 
     getByCompactFilters(objectTableName: string, filters: ApiQueryFilters, MethodName: string = null) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-
-        let servicelink = this.GetServiceLink(table, MethodName);
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ListService";
+        var servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
+        if (MethodName != null) {
+            if (MethodName.indexOf('Customs.') > -1) {
+                MethodName = MethodName.split('.')[1];
+            }
+            servicename = MethodName + "ListService";
+            servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
+        }
 
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
@@ -147,22 +148,8 @@ export class EntityListService {
             });
         });
     }
-    getARPyamentChequesListAsLedgerTransactions(objectTableName: string,  filters: ApiQueryFilters) {
-        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        if (objectTableName.indexOf('Customs.') > -1) {
-            objectTableName = objectTableName.split('.')[1];
-        }
-        var moduleName = table.ClientModuleName;
-        var servicename = objectTableName + "ExtendedListService";
-        var servicelink = './' + moduleName + '/Services/ExtendedLists/' + servicename;
-        return new Promise((resolve, reject) => {
-            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
-                resolve(service.GetARPyamentChequesListAsLedgerTransactions( filters));
-            });
-        });
-    }
 
-    getReconciliationsByFilter(objectTableName: string, accountId: string, filters: ApiQueryFilters) {
+    getExternalReoncilioationsByFilter(objectTableName: string, bankAccountId: string, filters: ApiQueryFilters) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         if (objectTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
@@ -172,23 +159,7 @@ export class EntityListService {
         var servicelink = './' + moduleName + '/Services/ExtendedLists/' + servicename;
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
-                resolve(service.getReconciliationsByFilter(accountId,filters));
-            });
-        });
-    }
-
-    getExternalReoncilioationsByFilter(objectTableName: string, objectTableId: string, entityId: string, filters: ApiQueryFilters)
-    {
-        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        if (objectTableName.indexOf('Customs.') > -1) {
-            objectTableName = objectTableName.split('.')[1];
-        }
-        var moduleName = table.ClientModuleName;
-        var servicename = objectTableName + "ExtendedListService";
-        var servicelink = './' + moduleName + '/Services/ExtendedLists/' + servicename;
-        return new Promise((resolve, reject) => {
-            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
-                resolve(service.getExternalReoncilioationsByFilter(objectTableId, entityId, filters));
+                resolve(service.getExternalReoncilioationsByFilter(bankAccountId, filters));
             });
         });
     }
@@ -219,8 +190,8 @@ export class EntityListService {
     //        var R: string = myTableName.toLowerCase();
     //        var myServiceName = myTableName + "ListService";
 
-    //        switch (R) {
-    //            case "address":
+    //        switch (R) {                                
+    //            case "address":                
     //            case "branch":
     //            case "card":
     //            case "chargestype":
@@ -249,7 +220,12 @@ export class EntityListService {
 
     getSingleFromCache(key: string, objectTableName: string, filters: ApiQueryFilters) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        let servicelink = this.GetServiceLink(table);
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ListService";
+        var servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
 
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
@@ -260,7 +236,13 @@ export class EntityListService {
 
     getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        let servicelink = this.GetServiceLink(table);
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ListService";
+        var servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
+
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                 try {
@@ -276,7 +258,16 @@ export class EntityListService {
 
     getSingle(key: string, objectTableName: string, MethodName: string = null) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        let servicelink = this.GetServiceLink(table, MethodName);
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ListService";
+        var servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
+        if (MethodName != null) {
+            servicename = MethodName + "ListService";
+            servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
+        }
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                 resolve(service.getSingle(key));
@@ -307,9 +298,9 @@ export class EntityListService {
     }
 
     getDWDimByFilters(objectTableName: string, filters: ApiQueryFilters) {
-
+          
         var servicelink = './Infrastructure/Services/ExtendedPMs/DWQueryBuilderService';
-
+         
 
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
@@ -317,4 +308,4 @@ export class EntityListService {
             });
         });
     }
-}
+} 

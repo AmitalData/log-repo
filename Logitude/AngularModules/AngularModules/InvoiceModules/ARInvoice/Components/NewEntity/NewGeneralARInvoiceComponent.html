@@ -1,9 +1,9 @@
-
+﻿
 <table>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" ></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
 
@@ -11,10 +11,9 @@
         <td>
             <table *ngIf="IsResourcesReady">
 
-                <tr class="FormFieldRow" *ngIf="IsAccountingActivated">
-                    <td style="width:140px;">
-                        <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [TextCode]="'ARInvoice.F.PartnerType'"></LogLabel>
-                        <!--<label style="padding-left: 10px;">{{'ARInvoice.F.PartnerType' | TextCodeTranslationPipe}}</label>-->
+                <!--<tr class="FormFieldRow">
+                    <td style="width:110px;">
+                        <label>{{'ARInvoice.F.PartnerType' | TextCodeTranslationPipe}}</label>
                     </td>
 
                     <td style="width:230px;">
@@ -34,7 +33,7 @@
                     <td>
                         <div></div>
                     </td>
-                </tr>
+                </tr>-->
 
                 <!-- BillToId -->
                 <tr class="FormFieldRow">
@@ -42,21 +41,14 @@
                         <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td style="width:230px;">
+                    <td  style="width:230px;">
                         <LogLov [ObjectFieldName]="'BillToId'"
                                 [SelectedValue]="BillToId"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Card'"
-                                [DependencyFilter1Value]="BillToDependencyValue1"
-                                [DependencyFilter2Value]="BillToDependencyValue2"
-                                [DependencyFilter1IsList]="BillToDependencyValue1IsList"
-                                [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                [CustomizedWidth]="BillToLovSizeForFullAccounting"
-                                [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
+                                [DependencyFilter1Value]="BillToDependencyProperty1"
+                                [DependencyFilter1IsList]="BillToDependencyProperty1IsList">
                         </LogLov>
                     </td>
 
@@ -246,44 +238,6 @@
                     </td>
                 </tr>
 
-                <!-- BranchId -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td>
-                        <LogLov [ObjectFieldName]="'BranchId'"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [SelectedValue]="BranchId"
-                                [LookUpTableName]="'Branch'">
-                        </LogLov>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- PrintNotes -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'PrintNotes'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'PrintNotes'" [Text]="PrintNotes"
-                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-
                 <tr>
                     <td colspan="3">
                         <div></div>
@@ -303,7 +257,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'cancel-AddARInvoice' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -311,7 +265,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'ok-addArInvoice' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

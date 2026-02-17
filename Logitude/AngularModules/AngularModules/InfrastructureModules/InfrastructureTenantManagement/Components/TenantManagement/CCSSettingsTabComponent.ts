@@ -15,10 +15,9 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 declare var UploadPortsFile, ArrayBufferToBase64: any;
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-
+    moduleId: module.id,
     selector: 'CCSSettingsTabComponent',
     templateUrl: './CCSSettingsTabComponent.html',
 })
@@ -46,8 +45,8 @@ export class CCSSettingsTabComponent extends BaseComponent {
                 this.LoadAirlines();
             });
         }
-    }
-
+    }   
+    
     public IsEditingAllowed: boolean = false;
     public AllowAirlinesIsEnabled: boolean = true;
     public RestrictedLabel: string = "";
@@ -70,7 +69,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
         this.IsEditingAllowed = this.isTenantManagementEditable;
         this.AllowAirlinesIsEnabled = allowAirlinesEnabled;
 
-        this.UIProperties.SetEnabled("TTY", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("TTY", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("PIMA", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("AWBMessagesCCSTypeCode", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("IsCargonautEnabled", this.ObjectTableName, this.isTenantManagementEditable);
@@ -85,8 +84,6 @@ export class CCSSettingsTabComponent extends BaseComponent {
     private SetUIProperties_SetRequires() {
         //this.UIProperties.SetRequires("TTY", TargetEntityName, entityPM, false);
         this.UIProperties.SetRequired("PIMA", this.ObjectTableName, false);
-
-
 
         if (this.AWBMessagesCCSTypeCode == "CHAMP") {
             //if (string.IsNullOrEmpty(TTY))
@@ -140,7 +137,6 @@ export class CCSSettingsTabComponent extends BaseComponent {
         }
     }
 
-
     get IsEAWBOnlyDemo() { return this.EntityPM.IsEAWBOnlyDemo; }
     set IsEAWBOnlyDemo(newValue: boolean) {
         if (this.EntityPM.IsEAWBOnlyDemo != newValue) {
@@ -185,7 +181,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
 
         this.AllowedAirline(entity, true);
     }
-
+    
     LoadPortsClicked() {
         document.getElementById(this.PortsFileHtmlId).click();
     }
@@ -224,7 +220,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
     }
 
     ImportPorts(data: any) {
-
+        
 
     }
 
@@ -244,7 +240,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
             this.LoadZeroTenantAirlines();
         }
     }
-
+    
     private myZeroTenantAirlines: AirlineList[];
     private LoadZeroTenantAirlines() {
         this.myZeroTenantAirlines = [];
@@ -258,9 +254,9 @@ export class CCSSettingsTabComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(this.TenantZeroSearchText)) {
             filters.addAdditionalFilter("SearchFields", this.TenantZeroSearchText, null, null, "Contains", true, true, false, "string");
         }
-
+        
         this.myService.GetAirlinesByFiltersAndTenant(filters, 0).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
+               if (!myResponse.HasError) {
                 this.myZeroTenantAirlines = myResponse.Result;
 
                 if (this.myZeroTenantAirlines.length > 0) {
@@ -276,7 +272,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
     }
 
     private myCurrentTenantAirlines: AirlineList[];
-    public LoadCurrentTenantAirlines() {
+    private LoadCurrentTenantAirlines() {
         this.myCurrentTenantAirlines = [];
 
         this.myService.GetAirlinesForRequestedTenant(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -289,15 +285,15 @@ export class CCSSettingsTabComponent extends BaseComponent {
             }
         });
     }
-
+    
     private BuildItemsSource() {
         this.ItemsSource = [];
 
         var list: TenantManagementAirlineItem[] = [];
 
         this.myZeroTenantAirlines.forEach(tenantZeroItem => {
-            var myTenantItem: AirlineList = this.myCurrentTenantAirlines.filter(d => d.Code.toLowerCase() == tenantZeroItem.Code.toLowerCase())[0];
-            list.push(new TenantManagementAirlineItem(myTenantItem, tenantZeroItem, this.EntityPM, this));
+            var myTenantItem: AirlineList = this.myCurrentTenantAirlines.filter(d => d.Code == tenantZeroItem.Code)[0];
+            list.push(new TenantManagementAirlineItem(myTenantItem, tenantZeroItem, this.EntityPM));
         });
 
         list.sort((a, b) => { return (a.IsRegistered === b.IsRegistered) ? 0 : (a.IsRegistered > b.IsRegistered) ? -1 : 1 }).forEach(item => {
@@ -338,24 +334,8 @@ export class CCSSettingsTabComponent extends BaseComponent {
 
         this.myService.AllowAirline(isAllowed, item.Code, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-
-            }
-        });
-    }
-
-    EditTTYClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Edit TTY";
-        logWindow.Width = 350;
-        logWindow.Height = 200;
-        logWindow.WindowArgs = { EntityPM: this.EntityPM};
-        logWindow.Show('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditTTYComponent');
-        logWindow.ComponentLoaded.subscribe(comp => {
-            logWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    this.TTY = comp.EntityPM.TTY;
-                }
-            });
+                
+            }            
         });
     }
 }
@@ -382,7 +362,7 @@ export class TenantManagementAirlineItem extends BaseComponent {
     private partnersService: PartnersDomainService;
     public DataContext: TenantManagementAirlineItem = this;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(myTenantItem: AirlineList, tenantZeroItem: AirlineList, entityPM: TenantManagementPM, public fatherComponent: CCSSettingsTabComponent) {
+    constructor(myTenantItem: AirlineList, tenantZeroItem: AirlineList, entityPM: TenantManagementPM) {
         super();
         this.currenctAirline = myTenantItem;
         this.zeroAirline = tenantZeroItem;
@@ -486,7 +466,6 @@ export class TenantManagementAirlineItem extends BaseComponent {
             this.CurrentSession.StartBusyIndicator("Request Airline...");
             this.partnersService.RegistrationRequested(newValue, this.tenantAirlineId, this.zeroAirline.Id, this.entityPM.Id, this.entityPM.AWBMessagesCCSTypeCode).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    this.fatherComponent.LoadCurrentTenantAirlines();
                     this.CurrentSession.StopBusyIndicator();
                 }
                 else {

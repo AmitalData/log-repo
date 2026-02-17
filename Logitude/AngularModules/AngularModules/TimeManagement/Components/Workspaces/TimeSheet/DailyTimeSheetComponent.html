@@ -58,9 +58,9 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td style="width: 1px;color: #D8770E">
-                                        {{ExpirationDateTokenOfTimeManagement_Msg}}
-                                    </td>
+                                    <!--<td style="width: 1px;">
+                                        <button class="Button" (click)="ProrateButtonClicked()">Prorate</button>
+                                    </td>-->
 
                                     <td>
                                         <div></div>
@@ -89,7 +89,7 @@
                                             <LogLabel [Text]="'Location'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogLabel>
                                         </td>
 
-                                        <td style="width:220px;">
+                                        <td style="width:165px;">
                                             <LocationsFilter (SelectedValueChanged)="SelectedLocationFilter = $event" [SelectedValue]="SelectedLocationFilter"></LocationsFilter>
                                         </td>
 
@@ -188,12 +188,10 @@
                                             </button>
                                         </td>
 
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td style="height:25px;width:25px; vertical-align: middle;">
-                                            <button class="Button" style="height:25px;width:25px;" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                                        <td *ngIf="false" style="width: 80px;">
+                                            <button class="Button" style="height:25px;width:25px;" (click)="CalculationButtonClicked()">
+                                                Calculation
+                                            </button>
                                         </td>
 
                                         <td style="width:5px;">
@@ -236,7 +234,7 @@
                                     </tr>
                                 </table>
                             </div>
-
+                            
                         </td>
                     </tr>
 
@@ -252,154 +250,125 @@
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemSource">
 
                                     <!-- ProjectName -->
-                                    <log-column [width]="'200'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.ProjectName' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate>
-                                                <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    {{item.ProjectName}}
-                                                </div>
-                                                <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogLov [FocusOnMe]="'true'"
-                                                            [DataContext]="item.DataContext"
-                                                            [ObjectTableName]="'TMEmployeeTime'"
-                                                            [ObjectFieldName]="'ProjectId'"
-                                                            [SelectedValue]="item.ProjectId"
-                                                            [DependencyFilter1Value]="false"
-                                                            [LookUpTableName]="'TMProject'" (SelectedItemChanged)="item.Project = $event"
-                                                            [HideColumns]="true">
-                                                    </LogLov>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.ProjectName' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.ProjectName}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [FocusOnMe]="'true'"
+                                                        [DataContext]="item.DataContext"
+                                                        [ObjectTableName]="'TMEmployeeTime'"
+                                                        [ObjectFieldName]="'ProjectId'"
+                                                        [SelectedValue]="item.ProjectId"
+                                                        [LookUpTableName]="'TMProject'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Date -->
                                     <log-column *ngIf="SelectedDateFilter == 'P'" [Alignment]="'left'" [width]="'120'" [header]="'Date'">
-                                        <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate>
-                                                {{item.DateOfWork|  DateTimePipe:'SD'}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            {{item.DateOfWork|  DateTimePipe:'SD'}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Location  -->
                                     <log-column [Alignment]="'left'" [width]="'120'" [header]="'Location'">
-                                        <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate>
-                                                <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    {{item.LocationName}}
-                                                </div>
-                                                <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogLov [FocusOnMe]="'true'" [ObjectFieldName]="'LocationCode'"
-                                                            [DataContext]="item.DataContext"
-                                                            [ObjectTableName]="'TMEmployeeTime'"
-                                                            [SelectedValue]="itemLocationCode"
-                                                            [LookUpTableName]="'TMLocation'"
-                                                            [HideColumns]="true">
-                                                    </LogLov>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            {{item.LocationName}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Hours -->
                                     <log-column [width]="'120'" [Alignment]="'center'" [header]="'Hours'">
-                                        <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate>
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: center;">
-                                                    {{item.TimeInMinutes | MinutesToTimePipe}}
-                                                </div>
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: center;">
+                                                {{item.TimeInMinutes | MinutesToTimePipe}}
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <TimeInput [FocusOnMe]="true" [TotalMinutes]="item.TimeInMinutes" (TotalMinutesChanged)="item.TimeInMinutes = $event" [InputValue]="item.DayDateFormat" [DisplayValue]="item.DayDateFormat" (Changed)="item.DayDateFormat = $event"></TimeInput>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <TimeInput [FocusOnMe]="true" [TotalMinutes]="item.TimeInMinutes" (TotalMinutesChanged)="item.TimeInMinutes = $event" [InputValue]="item.DayDateFormat" [DisplayValue]="item.DayDateFormat" (Changed)="item.DayDateFormat = $event"></TimeInput>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- WINumber -->
                                     <log-column [width]="'120'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.WINumber' | TextCodeTranslationPipe ">
-                                        <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [TabIndex]="-1">
-                                                <Hyperlink [FontSize]="14" (click)="item.ViewWI(item.WINumber)" [Text]="item.WINumber"></Hyperlink>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <Hyperlink [FontSize]="14" (click)="item.ViewWI(item.WINumber)" [Text]="item.WINumber"></Hyperlink>
+                                        </log-cell-template>
                                     </log-column>
 
 
                                     <!-- SprintId -->
-                                    <log-column [width]="'200'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.SprintId' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate>
-                                                <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    {{item.SprintName}}
-                                                </div>
-                                                <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogLov [FocusOnMe]="'true'"
-                                                            [DataContext]="item.DataContext"
-                                                            [ObjectTableName]="'TMEmployeeTime'"
-                                                            [ObjectFieldName]="'SprintId'"
-                                                            [SelectedValue]="item.SprintId" [IsDecendingSort]="true"
-                                                            [LookUpTableName]="'Sprint'"
-                                                            [DependencyFilter1Value]="false"
-                                                            [HideColumns]="true">
-                                                    </LogLov>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.SprintId' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.SprintName}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [FocusOnMe]="'true'"
+                                                        [DataContext]="item.DataContext"
+                                                        [ObjectTableName]="'TMEmployeeTime'"
+                                                        [ObjectFieldName]="'SprintId'"
+                                                        [SelectedValue]="item.SprintId"
+                                                        [LookUpTableName]="'Sprint'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
 
                                     <!-- Description -->
                                     <log-column [width]="'250'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.Description' | TextCodeTranslationPipe ">
-                                        <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate>
-                                                <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    {{item.Description}}
-                                                </div>
-                                                <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Description'" [Text]="item.Description" [DataContext]="item.DataContext" [ObjectTableName]="'TMEmployeeTime'" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.Description}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Description'" [Text]="item.Description" [DataContext]="item.DataContext" [ObjectTableName]="'TMEmployeeTime'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Tool -->
                                     <log-column [width]="'80'" [Alignment]="'center'" [header]="''">
-                                        <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate>
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:18px;">
-                                                                <div style="width: 18px; height: 18px;">
-                                                                    <IconButton [Title]="'Copy'" [Name]="'copy'" [IsSmall]="true" (click)="CopyLineClicked(item)"></IconButton>
-                                                                </div>
-                                                            </td>
-                                                            <td style="width:2px;">
-                                                                <div></div>
-                                                            </td>
-                                                            <td style="width:18px;">
-                                                                <div style="width: 18px; height: 18px;">
-                                                                    <IconButton [Title]="'Delete'" [Name]="'Delete'" [IsSmall]="true" (click)="DeleteLineClicked(item)"></IconButton>
-                                                                </div>
-                                                            </td>
-                                                            <td style="width:2px;">
-                                                                <div></div>
-                                                            </td>
-                                                            <td style="width:18px;">
-                                                                <div style="width: 18px; height: 18px;">
-                                                                    <IconButton [Title]="'Edit'" [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:18px;">
+                                                            <div style="width: 18px; height: 18px;">
+                                                                <IconButton [Title]="'Copy'" [Name]="'copy'" [IsSmall]="true" (click)="CopyLineClicked(item)"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:2px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:18px;">
+                                                            <div style="width: 18px; height: 18px;">
+                                                                <IconButton [Title]="'Delete'" [Name]="'Delete'" [IsSmall]="true" (click)="DeleteLineClicked(item)"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:2px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:18px;">
+                                                            <div style="width: 18px; height: 18px;">
+                                                                <IconButton [Title]="'Edit'" [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

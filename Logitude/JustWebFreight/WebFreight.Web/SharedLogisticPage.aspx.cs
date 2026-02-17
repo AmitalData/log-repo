@@ -12,63 +12,14 @@ namespace WebFreight.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.InitStoredItems();
+            
+            string userdata = Request.QueryString["userdata"];
 
-            bool isAuthenticated = HttpContext.Current.Request.IsAuthenticated || !string.IsNullOrEmpty(TokenInput.Value) ? true : false;
-
-            if (!isAuthenticated)
+            if (!HttpContext.Current.Request.IsAuthenticated)
             {
                 HttpContext.Current.Response.Redirect("login.aspx");
             }
-        }
 
-        private void InitStoredItems()
-        {
-            string token = Request["Token"];
-            string loginData = Request["LoginData"];
-
-            if (string.IsNullOrEmpty(token))
-            {
-                token = this.GetSessionValue("Token");
-            }
-
-            else
-            {
-                this.Session.Add("Token", token);
-            }
-
-            if (string.IsNullOrEmpty(loginData))
-            {
-                loginData = this.GetSessionValue("LoginData");
-            }
-
-            else
-            {
-                this.Session.Add("LoginData", loginData);
-            }
-
-            TokenInput.Value = token;
-            LoginInput.Value = loginData;
-        }
-
-        private string GetSessionValue(string itemKey)
-        {
-            string output = null;
-
-            foreach (string key in Session.Keys)
-            {
-                if (key == itemKey)
-                {
-                    if(Session[key] != null)
-                    {
-                        output = Session[key].ToString();
-                        break;
-                    }
-                }
-
-            }
-
-            return output;
         }
     }
 }

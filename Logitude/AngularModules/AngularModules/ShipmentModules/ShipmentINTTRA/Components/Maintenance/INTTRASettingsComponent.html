@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -31,7 +31,7 @@
                                                             <LogLabel [ObjectFieldName]="'INTTRASettingModeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td style="width: 280px;">
+                                                        <td style="width: 300px;">
                                                             <table>
                                                                 <tr>
                                                                     <td>
@@ -61,10 +61,9 @@
                                                         </td>
 
                                                         <td style="padding-left: 5px;">
-                                                            <div data-cy="OutSettingsHostActions">
-                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('Out')" [IsEnabled]="OutSettingsId"></IconButton>
+                                                            <div>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('Out')" [IsEnabled]="OutSettingsId != null"></IconButton>
                                                                 <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddFTPClicked('Out')"></IconButton>
-                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteFTPClicked('Out')" [IsEnabled]="OutSettingsId"></IconButton>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -80,10 +79,9 @@
                                                         </td>
 
                                                         <td style="padding-left: 5px;">
-                                                            <div data-cy="InSettingsHostActions">
-                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('In')" [IsEnabled]="InSettingsId"></IconButton>
+                                                            <div>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('In')" [IsEnabled]="InSettingsId != null"></IconButton>
                                                                 <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddFTPClicked('In')"></IconButton>
-                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteFTPClicked('In')" [IsEnabled]="InSettingsId"></IconButton>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -196,15 +194,15 @@
                                                                     {{item.EnglishName}}
                                                                 </td>
 
-                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;" [attr.data-cy]="item.EnglishName + '_INTTRAId'">
+                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;">
                                                                     <LogTextBox [ObjectFieldName]="'INTTRAId'" [ObjectTableName]="'Branch'" [DataContext]="item" [Text]="item.INTTRAId" [HideColumns]="true"></LogTextBox>
                                                                 </td>
 
-                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;" [attr.data-cy]="item.EnglishName + '_INTTRAAlias'">
+                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;">
                                                                     <LogTextBox [ObjectFieldName]="'INTTRAAlias'" [ObjectTableName]="'Branch'" [DataContext]="item" [Text]="item.INTTRAAlias" [HideColumns]="true"></LogTextBox>
                                                                 </td>
 
-                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;" [attr.data-cy]="item.EnglishName + '_INTTRAContact'">
+                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;">
                                                                     <LogLov [ObjectFieldName]="'INTTRAContactId'"
                                                                             [ObjectTableName]="'Branch'"
                                                                             [SelectedValue]="item.INTTRAContactId"
@@ -260,11 +258,13 @@
                                                         <td style="width: 60px; min-width: 60px; max-width: 60px;">Code</td>
                                                         <td style="width: 200px; min-width: 200px; max-width: 200px;">Name</td>
 
-                                                        <td *ngFor="let branch of Branches" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                        <td *ngFor="let branch of Branches" style="width: 120px; min-width: 120px; max-width: 120px;">
                                                             {{branch.EnglishName}}
                                                         </td>
 
-                                                        <td>Updates Shipments Dates</td>
+                                                        <td class="LastChild">
+                                                            <div></div>
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -293,10 +293,10 @@
                                                             </table>
                                                         </td>
 
-                                                        <td *ngFor="let itemCarrier of item.Carriers; let i = index" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                        <td *ngFor="let itemCarrier of item.Carriers" style="width: 120px; min-width: 120px; max-width: 120px;">
                                                             <div class="MediaFill">
                                                                 <div class="MediaFillRelative">
-                                                                    <div class="CenterCenter" style="width: 16px; height: 16px;" [attr.data-cy]="item.Code + '_' + Branches[i].EnglishName + '_Registration'">
+                                                                    <div class="CenterCenter" style="width: 16px; height: 16px;">
                                                                         <CheckBox [IsChecked]="itemCarrier.IsRegistered" (Checked)="itemCarrier.IsRegistered = $event"></CheckBox>
                                                                     </div>
                                                                 </div>
@@ -304,13 +304,7 @@
                                                         </td>
 
                                                         <td>
-                                                            <div class="MediaFill">
-                                                                <div class="MediaFillRelative">
-                                                                    <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                                                        <CheckBox [IsChecked]="item.UpdatesShipmentsDates" (Checked)="item.UpdatesShipmentsDates = $event"></CheckBox>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <div></div>
                                                         </td>
                                                     </tr>
 

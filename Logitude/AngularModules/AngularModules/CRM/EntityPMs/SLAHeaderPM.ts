@@ -149,19 +149,11 @@ export class SLAHeaderPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
-    private searchFields: string;
-    public get SearchFields() { return this.searchFields; }
-    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
 
     public OldEntityPM: SLAHeaderPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -169,7 +161,6 @@ export class SLAHeaderPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "SLAHeader");
            
         }
-       }
     }
 
     private MyClone: SLAHeaderPM;

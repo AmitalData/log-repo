@@ -1,16 +1,22 @@
+﻿
+declare var System: any;
 declare var window: any;
+import {Observable}     from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 import {Component, OnInit, Output}  from '@angular/core';
 import {BackUpService} from '../../../../Infrastructure/Services/WebServices/BackUpService';
+
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { interval } from 'rxjs';
-import { timeInterval } from 'rxjs/operators';
+import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: 'DatabaseBackup',
-    
+    moduleId: module.id,
 
     templateUrl: './DatabaseBackupComponent.html',
 
@@ -46,17 +52,17 @@ export class DatabaseBackupComponent implements OnInit {
 
     }
 
-  BackUpTimer() {
-    return interval(10000).pipe(timeInterval());
+    BackUpTimer() {
+        return Observable.interval(10000).timeInterval();
     }
 
   
     StartBackUpTimer() {
 
-        this.Backupsub = this.BackUpTimer().subscribe((res:any) => {
+        this.Backupsub = this.BackUpTimer().subscribe(res => {
 
             if (!this.IsStopTimer) {
-                this._backUpService.CheckIfDatabaseBackupIsBuilt(SessionInfo.LoggedUserTenant).subscribe((res: ServiceResponse) => {
+                this._backUpService.CheckIfDatabaseBackupIsBuilt(SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var result = pmResponse.Result;
@@ -84,7 +90,7 @@ export class DatabaseBackupComponent implements OnInit {
        
         this.PreparingTextBlock = TextCodeTranslator.Translate("General.M.PreparingYourData");
 
-        this._backUpService.SetDatabaseDataBackupNotReady(SessionInfo.LoggedUserTenant).subscribe((res: ServiceResponse) => {
+        this._backUpService.SetDatabaseDataBackupNotReady(SessionInfo.LoggedUserTenant).subscribe(res => {
 
       
             this.IsShowProgressLoading = true;
@@ -99,7 +105,7 @@ export class DatabaseBackupComponent implements OnInit {
 
 
     BackUpForClientDataTables() {
-        this._backUpService.BackUpForClientData(SessionInfo.LoggedUserTenant).subscribe((res: ServiceResponse) => {
+        this._backUpService.BackUpForClientData(SessionInfo.LoggedUserTenant).subscribe(res => {
 
             var result = res;
             this.StartBackUpTimer();

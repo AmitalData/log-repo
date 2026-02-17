@@ -15,7 +15,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'NewBankAccountComponent',
-    
+    moduleId: module.id,
     providers: [EntityListService],
     templateUrl: './NewBankAccountComponent.html',
 })
@@ -137,13 +137,6 @@ public isRTL: boolean = false;
             this.EntityPM.EnglishName = value;
         }
     }
-
-    get CurrencyId() { return this.EntityPM.CurrencyId; }
-    set CurrencyId(value: string) {
-        if (this.EntityPM.CurrencyId != value) {
-            this.EntityPM.CurrencyId = value;
-        }
-    }
     //#endregion
 
     OkButtonClicked() {
@@ -177,9 +170,7 @@ public isRTL: boolean = false;
     }
 
     SubmitChanges() {
-        this.CurrentSession.StartBusyIndicatorSaving();
-        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
-            this.CurrentSession.StopBusyIndicator();
+        this.myService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -188,7 +179,7 @@ public isRTL: boolean = false;
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-              
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

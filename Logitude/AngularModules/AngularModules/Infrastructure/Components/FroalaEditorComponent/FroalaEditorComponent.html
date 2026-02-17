@@ -1,9 +1,5 @@
-
-
+﻿
 <style>
-
-
-
     .CustomToolBar {
         color: #222222;
         background: #ffffff;
@@ -33,17 +29,23 @@
     }
 </style>
 
+<!--style="border:1px solid gray;"-->
+<!--<head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com">
+</head>-->  
+  
+
 
 <table>
     <tr>
         <td>
 
-            <div *ngIf="!UseNormalPreview" [attr.id]="Id"></div>
-
-            <div class="CustomToolBar" [style.height]="PreviewDivHeight" style="vertical-align:top;margin-top:-7px" *ngIf="IsDisableMode && UseNormalPreview">
+            <div [attr.id]="Id"></div>
+            <!--<div class="CustomToolBar" [style.height]="PreviewDivHeight" style="vertical-align:top;margin-top:-7px" *ngIf="IsDisableMode">
                 <iframe [style.height]="PreviewDivHeight2" style="margin:0px;overflow-y:auto; overflow-x :hidden;vertical-align:top;width:100%;" [attr.id]="PreviewDivId">
+
                 </iframe>
-            </div>
+            </div>-->
         </td>
     </tr>
 </table>

@@ -94,24 +94,6 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public int TotalQuantity  { get; set; }
        [DataMember]
        public string ChargeableWeightUnitCode  { get; set; }
-       [DataMember]
-       public string ConnectedTo  { get; set; }
-       [DataMember]
-       public string FromPortId  { get; set; }
-       [DataMember]
-       public string ToPortId  { get; set; }
-       [DataMember]
-       public string CustomerAddressId  { get; set; }
-       [DataMember]
-       public decimal TotalVolumetricWeight  { get; set; }
-       [DataMember]
-       public double? Ratio  { get; set; }
-       [DataMember]
-       public string TruckerId  { get; set; }
-       [DataMember]
-       public string TruckerReference  { get; set; }
-       [DataMember]
-       public string MasterShipmentNumber  { get; set; }
    }
 
 }

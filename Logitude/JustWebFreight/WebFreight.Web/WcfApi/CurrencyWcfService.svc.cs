@@ -7,7 +7,7 @@ using System.ServiceModel.Activation;
 using System.Text;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Validators;
@@ -16,8 +16,7 @@ using WebFreight.Web.Security;
 using Logitude.Server.Tools;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityQueries;
+
 namespace WebFreight.Web.WcfApi
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "CurrencyWcfService" in code, svc and config file together.
@@ -25,53 +24,6 @@ namespace WebFreight.Web.WcfApi
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class CurrencyWcfService : ICurrencyWcfService
     {
-        public List<CurrencyList> GetList(ApiSearchFilters filters, int tenant, ref Response response)
-        {
-            if (CacheManager.CacheWrapper == null)
-            {
-                CacheManager.CacheWrapper = new MockCacheWrapper();
-            }
-
-            try
-            {
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Currency", "READ", tenant);
-
-                List<Logitude.BL.CommonDataModel.EntityLists.CurrencyList> result = new List<Logitude.BL.CommonDataModel.EntityLists.CurrencyList>();
-                CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
-
-                IQueryable<Currency> currencies = currencyRepository.GetCurrencies(tenant);
-
-
-
-                if (!string.IsNullOrEmpty(filters.SearchFields))
-                {
-                    currencies = currencies.Where(s => s.SearchFields.Contains(filters.SearchFields));
-                }
-                
-                currencies = currencies.OrderByDescending(d => d.Code).Skip(filters.Skip).Take(filters.Take);
-                CurrencyQuery CurrencyQuery = new CurrencyQuery(currencyRepository);
-                result = CurrencyQuery.GetIQueryableEntityList(currencies).ToList();
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                response = new Response();
-                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
-                response.HasError = true;
-                response.ErrorMessage = ex.Message;
-                response.InnerErrorMessage = ex.InnerException != null ? ex.InnerException.Message : null;
-                if (!string.IsNullOrEmpty(ex.StackTrace))
-                {
-                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
-                }
-
-                return null;
-
-            }
-        }
-
         public Response Upsert(CurrencyPM entityPM, bool batch)
         {
             if (CacheManager.CacheWrapper == null)

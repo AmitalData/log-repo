@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomsInterfaceRepository repository;
 
-
+        public CustomsInterfaceQuery()
+        {
+            repository = new CustomsInterfaceRepository();
+        }
 
         public CustomsInterfaceQuery(int tenant)
         {
@@ -27,7 +30,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         
         public IQueryable<CustomsInterfaceList> GetIQueryableEntityList(IQueryable<CustomsInterface> iQueryable)
         {
-            var result = from entity in iQueryable where !entity.InActive
+            var result = from entity in iQueryable
                          select new CustomsInterfaceList()
                          {
                              Code = entity.Code,

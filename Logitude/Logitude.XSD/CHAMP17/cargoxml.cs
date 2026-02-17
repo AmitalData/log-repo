@@ -7045,11 +7045,11 @@ namespace CHAMP17 {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.champ.aero/GCCS/CargoXML")]
     public partial class ShippersLoadAndCount {
         
-        private string sLACField;
+        private int sLACField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string SLAC {
+        public int SLAC {
             get {
                 return this.sLACField;
             }

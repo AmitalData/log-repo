@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.DataContract
 {
@@ -39,10 +38,7 @@ namespace Logitude.Accounting.BL.DataContract
 
         public string OppositGLAccount { get; set; }
         public string LedgerTransactionId { get; set; }
-        public string AccountingEntityReferenceType { get; set; }
-        public LedgerTransaction _LedgerTransaction { get; set; }
-        public Journal _Journal { get; set; }
-        public Journal _CancelledJournal { get; set; }
+
     }
 
     public class B110Data

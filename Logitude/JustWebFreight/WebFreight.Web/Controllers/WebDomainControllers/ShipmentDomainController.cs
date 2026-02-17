@@ -1,16 +1,12 @@
-﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.CRM.Data;
@@ -20,15 +16,18 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
+using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Logitude.WarehouseLib.Data;
+using Logitude.WarehouseLib.Data.EntityLists;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
 using Logitude.XSD.Artemus;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -45,7 +44,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -56,42 +54,15 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
-using System.Xml.Serialization;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Security;
 using WebFreight.Web.ShipmentsModel.DomainServices;
-using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
-using Newtonsoft.Json;
-using Logitude.Infrastructure.BL.EntityPMs;
-using Logitude.Infrastructure.Data;
-using Logitude.Infrastructure.BL.EntityUpdateServices;
-using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class ShipmentDomainController : ApiController
     {
-        public HttpResponseMessage GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string loggedUserEmail = authToken.Email;
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                var limitWarningMsg = ShipmentValidating.GetCustomerCreditLimitDetails(customerId, quoteId, isBuildFromQuote, tenant);
-                
-                return Request.CreateResponse(HttpStatusCode.OK, limitWarningMsg);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
         public HttpResponseMessage GetRecentShipments()
         {
             try
@@ -188,8 +159,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     bool hasExpDepNotTransmittedFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ExpectedDeparturesNotTransmitted", tenant);
                     bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
                     bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
-                    bool hasEBookingInProgressFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.EBookingInProgress", tenant);
-                    bool hasPendingApprovalDocumentsFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.PendingApprovalDocuments", tenant);
 
                     //ShipmentsSummary myResult= RunStoredProcedureClass.GetShipmentsCounts(tenant, myDirectionId, myTransportModeId, loggedUserEmail, hasETDFeature, hasFollowupsFeature);
 
@@ -203,7 +172,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
-                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature, hasPendingApprovalDocumentsFeature);
+                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -280,14 +249,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCheckHousesOpenAmounts(string masterId)
+        public HttpResponseMessage CheckHousesOpenAmounts(string masterId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentsDomainService shipmentDomainService = new ShipmentsDomainService();
                 var myResult = shipmentDomainService.CheckHousesOpenAmounts(masterId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -351,8 +319,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        [ActionName("PostValidateShipmentMasterArgs")]
         public HttpResponseMessage PostValidateShipmentMasterArgs(ValidateShipmentMasterArgs args)
         {
             try
@@ -362,30 +328,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(myTenant);
 
-                try
+                bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(args.ShipmentId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
+                if (isFieldExists)
                 {
-                    ShipmentMasterIsUsedValidator validator = new ShipmentMasterIsUsedValidator();
-
-                    validator.Validate(new ShipmentMasterIsUsedValidatorArgs()
-                    {
-                        Tenant = myTenant,
-                        ShipmentId = args.ShipmentId,
-                        BookingId = args.BookingId,
-                        DirectionId = args.DirectionId,
-                        TransportModeId = args.TransportModeId,
-                        ShipmentLevelCode = args.ShipmentLevelCode,
-                        Master = args.Master,
-                        AirlinePrefix = args.AirlinePrefix,
-                        IsCancelled = args.IsCancelled,
-                        OperationalDate = args.OperationalDate,
-                    });
+                    myResult = "Master field already used in another Shipment";
                 }
 
-                catch (Exception ex)
+                else
                 {
-                    myResult = ex.Message;
+                    isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherBooking(args.BookingId, args.Master, args.AirlinePrefix, args.DirectionId, args.TransportModeId, args.ShipmentLevelCode, args.IsCancelled, myTenant);
+                    if (isFieldExists)
+                    {
+                        myResult = "Master field already used in another Booking";
+                    }
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -566,7 +522,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 OpenDate = myQuote.OpenDate,
                                 AcceptedDate = myQuote.AcceptedDate,
                                 Salesman = salesman,
-                                ExpirationDate = myQuote.ExpirationDate,
                             });
                         }
                     }
@@ -574,7 +529,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ICRMContext crmContext = CRMContext.GetContext(tenant);
                     TicketListQueryService listService = new TicketListQueryService(crmContext);
                     List<TicketList> myTickets = listService.GetTicketListByShipmentIdList(shipmentId, tenant);
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myTickets.Cast<object>().ToList());
 
                     foreach (TicketList item in myTickets)
@@ -588,104 +543,30 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             EntityStatus = crmContext.TicketStages.Where(d => d.Id == item.StageId).FirstOrDefault().Name,
                         });
                     }
-
-                    var standaloneShipmentDetails = this.GetStandaloneShipmentDetails(myShipment);
-                    if (standaloneShipmentDetails != null)
-                        myResult.AddRange(standaloneShipmentDetails);
-
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        private List<ShipmentConnectedEntity> GetStandaloneShipmentDetails(Shipment myShipment)
-        {
-            if (!myShipment.IsStandalonePickupDelivery)
-            {
-                return null;
-            }
-
-            int tenant = myShipment.Tenant;
-            string standaloneShipmentId = myShipment.Id;
-            List<ShipmentConnectedEntity> shipmentConnectedEntityDetails = new List<ShipmentConnectedEntity>();
-            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
-            ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(standaloneShipmentId, tenant);
-
-            if(shipmentPickUpDelivery == null)
-            {
-                return null;
-            }
-
-            shipmentConnectedEntityDetails.Add(new ShipmentConnectedEntity()
-            {
-                EntityId = shipmentPickUpDelivery.ShipmentId,
-                Reference = shipmentPickUpDelivery.PickUpDeliveryNumber,
-                EntityType = shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK" ? "PickUp" : "Delivery",
-                ObjectTableName = "Shipment",
-            });
-
-            return shipmentConnectedEntityDetails;
-        }
-        public HttpResponseMessage GetDisconnectStandaloneShipment(string shipmentId)
+        public HttpResponseMessage GetShipmentsQueriesCounts(int tenant, string transportModeId, string directionId, string SearchFilter, string serviceContextUser, string TypeCode = null)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
 
-                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(shipmentsContext);
-                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(shipmentId, tenant);
-                if (shipmentPickUpDelivery != null)
-                {
-                    shipmentPickUpDelivery.StandaloneShipmentId = null;
-                    shipmentPickUpDelivery.StandaloneShipmentId = null;
-                    shipmentPickUpDelivery.StandaloneShipmentNumber = null;
-                    shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
-                }
-
-                ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
-                shipmentPM.IsStandalonePickupDelivery = false;
-                shipmentPM.ParentShipmentNumber = null;
-                shipmentPM.ParentShipmentDirectionId = null;
-                shipmentPM.ParentShipmentType = null;
-                shipmentPM.ForwarderStandaloneShipmentId = null;
-                shipmentPM.StandalonePickupDeliveryId = null;
-                ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, authToken.Email);
-                shipmentService.Update();
-                return Request.CreateResponse(HttpStatusCode.OK, true);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        
-        public HttpResponseMessage GetShipmentsQueriesCounts([FromUri] ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
 
-                SecurityUtility.AuthenticationOnTenant(shipmentsQueriesCountsArgs.Tenant);
-                SecurityUtility.CheckContactFeature("Shipment", "READ", shipmentsQueriesCountsArgs.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentsQueriesCountsArgs.Tenant);
-                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, directionId, SearchFilter, serviceContextUser, TypeCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -792,49 +673,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        public HttpResponseMessage GetShipmentReceivablePMsByShipmentId(string shipmentId, int tenant)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("", authToken.Tenant, tenant);
-
-                ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(tenant);
-                List<ShipmentReceivablePM> shipmentReceivablePMs = shipmentReceivableQuery.GetShipmentReceivablePMsByShipmentId(shipmentId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, shipmentReceivablePMs);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage GetMasterConnectedHouseShipments(string entityId, int tenant)
-        {
-            try
-            {
-                //used in sharedmasterdocumentspage dont add security
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-                //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant); 
-
-                IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
-                ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(myContext);
-                List<Shipment> housesShipments = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(entityId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, housesShipments);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
         public HttpResponseMessage GetActivityStatus(string type, int lastMonths, int lastDays, int currentTenant, string customerid)
         {
             try
@@ -1222,7 +1060,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);      
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Master", "READ", tenant);
                 var myResult = shipmentQuery.GetShipmentPMsByMasterIdAndTenant(masterId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1344,8 +1184,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                       ShipmentType = !string.IsNullOrEmpty(f.ShipmentTypeName) ? f.ShipmentTypeName + " " + f.ShipmentLevelName : f.ShipmentLevelName,
                                                       CreateDateTime = f.CreateDateTime,
                                                       Shipper = f.ShipperName,
-                                                      ShipperCountryCode = f.ShipperCountryCode,
-                                                      ConsigneeCountryCode = f.ConsigneeCountryCode,
                                                       Consignee = f.ConsigneeName,
                                                       DirectionId = f.DirectionId,
                                                       DirectionName = f.DirectionName,
@@ -1374,7 +1212,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                       BranchName = f.BranchName,
                                                       CustomerName = f.CustomerName,
                                                       GrossWeightInKG = f.GrossWeightInKG,
-                                                      GrossWeightPerStorageDays= f.GrossWeightPerStorageDays,
                                                       ShipmentLevelCode = f.ShipmentLevelCode,
                                                       ShipmentLevelName = f.ShipmentLevelName,
                                                       VolumetricWeight = f.VolumetricWeight,
@@ -1420,7 +1257,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetSingleShipmentPMWithoutComposition(string id, bool includePackages)
+        public HttpResponseMessage GetSingleShipmentPMWithoutComposition(string id)
         {
             try
             {
@@ -1432,7 +1269,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM myResult = shipmentQuery.GetSinglePMWithoutComposition(id, tenant, includePackages);
+                ShipmentPM myResult = shipmentQuery.GetSinglePMWithoutComposition(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -1477,7 +1314,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -1582,10 +1418,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
-                List<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ").ToList();
+                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ");
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -1603,7 +1438,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 string fileName = "aes.txt";
 
                 FlatFileHelper helper = new FlatFileHelper(tenant);
@@ -1625,7 +1460,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentCustomsTransmissionQuery query = new ShipmentCustomsTransmissionQuery(tenant);
                 var temp = query.GetShipmentCustomsTransmissionPMsByShipmentId(shipmentId, tenant);
                 List<ShipmentCustomsTransmissionPM> result = new List<ShipmentCustomsTransmissionPM>();
@@ -1649,7 +1483,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 string xmlString1 = @"
                         <AMSResponse>
@@ -1733,26 +1566,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
                 ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
                 Shipment myShipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
-                string loggedContactId = null;
                 if (myShipment != null)
                 {
-                    #region Update Quote
-                    IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
-                    QuoteRepository quoteRepository = new QuoteRepository(quotesContext);
-                    QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(quotesContext);
+                    QuoteRepository quoteRepository = new QuoteRepository(tenant);
                     Quote myQuote = quoteRepository.GetSingleQuote(myShipment.QuoteId, tenant);
-                    QuoteComputedField quoteComputedField = quoteComputedFieldRepository.GetSingleQuoteComputedField(myShipment.QuoteId, tenant);
                     if (myQuote != null)
                     {
                         if (myQuote.UsageCount == 1)
                         {
                             myQuote.UsageCount = null;
-                            if (quoteComputedField != null)
-                            {
-                                quoteComputedField.ConnectedToShipment = false;
-                                quoteComputedFieldRepository.Update(quoteComputedField);
-                                quoteComputedFieldRepository.SubmitChanges();
-                            }
                         }
 
                         else
@@ -1766,6 +1588,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         quoteRepository.SubmitChanges();
 
                         ContactQuery contactQuery = new ContactQuery(tenant);
+                        string loggedContactId = null;
                         ContactPM contact = contactQuery.GetContactByEmailOnly(authToken.Email, tenant);
                         if (contact != null)
                         {
@@ -1782,23 +1605,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             Notes = "Disconnected from Shipment#: " + myShipment.ShipmentNumber,
                         });
                     }
-                    #endregion
 
                     ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(shipmentsContext);
                     ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(shipmentsContext);
 
                     List<ShipmentReceivable> receivables = receivableRepository.GetShipmentReceivablesByShipmentId(myShipment.Id, tenant);
-                    List<ShipmentReceivable> originalReceivables = receivables.Where(a => string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
-                    receivables = receivables.Where(a => !string.IsNullOrEmpty(a.QuoteChargeId)).ToList();                    
-
                     List<ShipmentPayable> payables = payableRepository.GetShipemntPayablesByShipmentId(myShipment.Id, tenant);
-                    List<ShipmentPayable> originalPayables = payables.Where(a => string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
-                    payables = payables.Where(a => !string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
+
                     if (receivables.Count > 0)
                     {
                         foreach (ShipmentReceivable item in receivables)
                         {
-                            receivableRepository.Remove(item);
+                            item.IsFromQuote = false;
+                            item.QuoteChargeId = null;
+                            item.QuoteSaleMinAmount = null;
+                            item.QuoteSaleMaxAmount = null;
+                            receivableRepository.Update(item);
                         }
                     }
 
@@ -1806,32 +1628,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         foreach (ShipmentPayable item in payables)
                         {
-                            payableRepository.Remove(item);
+                            item.IsFromQuote = false;
+                            item.QuoteChargeId = null;
+                            item.QuoteCostMinAmount = null;
+                            item.QuoteCostMaxAmount = null;
+
+                            payableRepository.Update(item);
                         }
                     }
 
-                    myShipment.OpenReceivablesInLocalCurrency = originalReceivables.Sum(s => s.TotalAmountLocal);
-                    myShipment.OpenReceivablesInProfitCurrency = originalReceivables.Sum(s => s.AmountInProfitCurrency);
-                    myShipment.OpenPayablesInLocalCurrency = originalPayables.Sum(s => s.OpenAmountInLocalCurrency);
-                    myShipment.OpenPayablesInProfitCurrency = originalPayables.Sum(s => s.OpenAmountInProfitCurrency);
-                    myShipment.ProfitInLocalCurrency = (myShipment.OpenReceivablesInLocalCurrency - myShipment.OpenPayablesInLocalCurrency) == null ? 0 : (double)(myShipment.OpenReceivablesInLocalCurrency - myShipment.OpenPayablesInLocalCurrency);
-                    myShipment.ProfitInProfitCurrency = myShipment.OpenReceivablesInProfitCurrency - myShipment.OpenPayablesInProfitCurrency;
                     myShipment.QuoteId = null;
-                    myShipment.QuoteNumber = null;
-                    myShipment.QuoteFreightExpirationDate = null;
                     shipmentRepository.Update(myShipment);
 
                     shipmentsContext.SaveChanges();
-
-                    EventTracer.CreateTraceEvent(new EventTracerArgs()
-                    {
-                        Tenant = tenant,
-                        EventTypeCode = "DTQT",
-                        UserId = loggedContactId,
-                        EntityId = myShipment.Id,
-                        ObjectTableName = "Shipment",
-                        Notes = "Disconnected from Quote#: " + myQuote.QuoteNumber,
-                    });
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, true);
@@ -1851,8 +1660,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    IShipmentsContext iContext = ShipmentsContext.GetContext(authToken.Tenant);
+                    
+                    IShipmentsContext iContext = ShipmentsContext.GetContext(0);
                     ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
 
@@ -1895,15 +1704,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetDownloadShipmentPackages(string shipmentNumber, string shipmentId)
+        public HttpResponseMessage GetDownloadShipmentPackages(string shipmentId)
         {
             try
             {
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
-
+                
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
                 PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
 
@@ -1913,7 +1723,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ExportToExcelHelper helper = new ExportToExcelHelper();
                 byte[] data = this.ExportShipmentPackagesToExcel(shipmentPackages, packageTypes, tenant);
 
-                string fileName = "Shipment-" + shipmentNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
+                string fileName = "Shipment" + shipmentId +  DateTime.Now.ToShortDateString();
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
@@ -1922,12 +1732,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     Extension = "xls",
                     Tenant = tenant,
                     FileSize = data.Length,
+
                 };
 
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                 storageservice.Write(data, fileInfo);
 
-                return Request.CreateResponse(HttpStatusCode.OK, fileName);
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);                
             }
 
             catch (Exception ex)
@@ -1935,83 +1746,76 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public byte[] ExportShipmentPackagesToExcel(List<ShipmentPackage> shipmentPackages, List<PackageType> packageTypes, int tenant)
         {
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
-            ExcelEngine excelEngine = new ExcelEngine();
-            IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
-
-            IWorksheet sheet1 = workbook.Worksheets[0];
-            sheet1.Name = "Packages";
-            sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
-            sheet1.Range["A1:I1"].CellStyle.Font.Size = 10;
-            sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
-            sheet1.Range["A1:I1"].CellStyle.Font.Color = ExcelKnownColors.White;
-            sheet1.Range["A1:I1"].CellStyle.Color = System.Drawing.Color.Gray;
-            sheet1.Range["A1:I1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
-            sheet1.Range["A1:G1"].ColumnWidth = 15;
-            sheet1.Range["H1:I1"].ColumnWidth = 17;
-
-            DataTable dataTable1 = new DataTable();
-            dataTable1.Columns.Add("Container Type");
-            dataTable1.Columns.Add("Container #");
-            dataTable1.Columns.Add("Volume");
-            dataTable1.Columns.Add("Gross Weight");
-            dataTable1.Columns.Add("Tare");
-            dataTable1.Columns.Add("Shipper Seal");
-            dataTable1.Columns.Add("Carrier Seal");
-            dataTable1.Columns.Add("Marks & Numbers");
-            dataTable1.Columns.Add("Description");
-
-            IWorksheet sheet2 = workbook.Worksheets[1];
-            sheet2.Name = "Package Types";
-            sheet2.Range["A1"].CellStyle.Font.Bold = true;
-            sheet2.Range["A1"].CellStyle.Font.Size = 11;
-            sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
-            sheet2.Range["A1"].CellStyle.Font.Color = ExcelKnownColors.White;
-            sheet2.Range["A1"].CellStyle.Color = System.Drawing.Color.Gray;
-            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
-            List<ExcelPackageType> types = new List<ExcelPackageType>();
-            if (packageTypes != null && packageTypes.Count > 0)
-            {
-                types = (from a in packageTypes
-                         where a.IsContainer == true
-                         select new ExcelPackageType()
-                         {
-                             Code = a.Code,
-                         }).ToList();
-            }
 
             if (shipmentPackages != null && shipmentPackages.Count > 0)
             {
-                foreach (ShipmentPackage package in shipmentPackages)
-                {
-                    DataRow row = dataTable1.NewRow();
-                    row[0] = package.PackageType == null ? null : package.PackageType.Code;
-                    row[1] = package.ContainerNumber;
-                    row[2] = package.Volume;
-                    row[3] = package.Weight;
-                    row[4] = package.Tare;
-                    row[5] = package.ShipperSeal;
-                    row[6] = package.CarrierSeal;
-                    row[7] = package.MarksAndNumbers;
-                    row[8] = package.Description;
-                    dataTable1.Rows.Add(row);
-                }
+                List<ExcelPackage> packages = (from a in shipmentPackages
+                                               select new ExcelPackage()
+                                               {
+                                                   ContainerType = a.PackageType == null ? null : a.PackageType.Code,
+                                                   ContainerNumber = a.ContainerNumber,
+                                                   Volume = a.Volume,
+                                                   GrossWeight = a.Weight,
+                                                   Tare = a.Tare,
+                                                   ShipperSeal = a.ShipperSeal,
+                                                   CarrierSeal = a.CarrierSeal,
+                                                   MarksAndNumbers = a.MarksAndNumbers,
+                                                   Description = a.Description,
+                                               }).ToList();
+
+                List<ExcelPackageType> types = (from a in packageTypes
+                                                where a.IsContainer == true
+                                                select new ExcelPackageType()
+                                                {
+                                                    Code = a.Code,
+                                                }).ToList();
+
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
+                
+                //Packages
+                IWorksheet sheet1 = workbook.Worksheets[0];
+                sheet1.Name = "Packages";
+                sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
+                sheet1.Range["A1:I1"].CellStyle.Font.Size = 11;
+                sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
+
+                sheet1.Range["A1:G1"].ColumnWidth = 15;
+                sheet1.Range["H1:I1"].ColumnWidth = 17;
+
+                string packagesRange = "A2:A" + (packages.Count() + 1);
+
+                sheet1.Range[packagesRange].DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
+                sheet1.Range[packagesRange].DataValidation.IsSuppressDropDownArrow = false;
+
+                sheet1.Range["A1"].Text = "Container Type";
+                sheet1.Range["B1"].Text = "Container #";
+                sheet1.Range["D1"].Text = "Gross Weight";
+                sheet1.Range["F1"].Text = "Shipper Seal";
+                sheet1.Range["G1"].Text = "Carrier Seal";
+                sheet1.Range["H1"].Text = "Marks & Numbers";
+
+                DataTable dataTable1 = this.ConvertToDataTable(packages);
+                sheet1.ImportDataTable(dataTable1, true, 1, 1);
+
+                //Package Types
+                IWorksheet sheet2 = workbook.Worksheets[1];
+                sheet2.Name = "Package Types";
+                sheet2.Range["A1"].CellStyle.Font.Bold = true;
+                sheet2.Range["A1"].CellStyle.Font.Size = 11;
+                sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
+                DataTable dataTable2 = this.ConvertToDataTable(types);
+                sheet2.ImportDataTable(dataTable2, true, 1, 1);
+                string typesRange = "A2:A" + (types.Count() + 1);
+
+                workbook.Version = ExcelVersion.Excel2007;
+                workbook.SaveAs(memory);
             }
-
-            sheet1.Range["A2:A80"].DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
-            sheet1.Range["A2:A80"].DataValidation.IsSuppressDropDownArrow = false;
-
-            DataTable dataTable2 = this.ConvertToDataTable(types);
-
-            sheet1.ImportDataTable(dataTable1, true, 1, 1);
-            sheet2.ImportDataTable(dataTable2, true, 1, 1);
-
-            workbook.SaveAs(memory);
 
             return memory.ToArray();
         }
@@ -2019,7 +1823,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
             DataTable table = new DataTable();
-
             foreach (PropertyDescriptor prop in properties)
             {
                 table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
@@ -2030,10 +1833,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 DataRow row = table.NewRow();
                 foreach (PropertyDescriptor prop in properties)
                 {
-                    if (table.Columns.Contains(prop.Name))
-                    {
-                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-                    }
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
                 }
 
                 table.Rows.Add(row);
@@ -2052,10 +1852,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
-                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
-                const string cancelledEntityStatusCode = "CAEA";
-                IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant).Where(entry => entry.StatusCode != cancelledEntityStatusCode);
-
+                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);  
+                IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant);
+               
                 bool myResult = false;
                 if (warehouseEntries.Count() > 0)
                 {
@@ -2065,14 +1864,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (!myResult)
                 {
                     WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext);
-                    const string cancelledReleaseStatusCode = "CARE";
-                    IQueryable<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant).Where(release => release.StatusCode != cancelledReleaseStatusCode);
+                    IQueryable<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant);
 
                     if (warehouseReleases.Count() > 0)
                     {
                         myResult = true;
                     }
-                }
+                }                
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -2081,1326 +1879,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-        [ActionName("PostUploadExcelFile")]
-        public HttpResponseMessage PostUploadExcelFile(ExcelPackageFilter filter)
-        {
-            try
-            {
-                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                filter.Tenant = authToken.Tenant;
-                byte[] fileData = Convert.FromBase64String(filter.FileData);
-
-                System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
-                ExcelEngine excelEngine = new ExcelEngine();
-                IApplication application = excelEngine.Excel;
-                IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
-                IWorksheet sheet = workbook.Worksheets[0];
-
-                List<ExcelPackage> packagesResult = this.BuildPackagesExcelLines(sheet, authToken.Tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, packagesResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        private List<ExcelPackage> BuildPackagesExcelLines(IWorksheet sheet, int tenant)
-        {
-            List<ExcelPackage> myResult = new List<ExcelPackage>();
-
-            PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
-            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
-            {
-                String[] rowData = new String[sheet.Columns.Count()];
-                ExcelPackage excelPackage = new ExcelPackage();
-
-                for (int i = 0; i < sheet.Columns.Count(); i++)
-                {
-                    rowData[i] = row.Cells[i].Value2.ToString();
-                }
-
-                if (rowData.Length > 0)
-                {
-                    if (!string.IsNullOrEmpty(rowData[0]))
-                    {
-                        string packageTypeCode = rowData[0].Trim();
-
-                        PackageType packageType = packageTypeRepository.GetSinglePackageTypeByCode(packageTypeCode, tenant, true);
-                        if (packageType != null)
-                        {
-                            excelPackage.ContainerTypeId = packageType.Id;
-                            excelPackage.ContainerTypeCode = packageType.Code;
-                            excelPackage.ContainerTypeName = packageType.EnglishName;
-                            excelPackage.IsRefrigerated = packageType.IsRefrigerated;
-                        }
-
-                        else
-                        {
-                            excelPackage.HasErrors = true;
-                        }
-                    }
-
-                    else
-                    {
-                        excelPackage.HasErrors = true;
-                    }
-                }
-
-                if (rowData.Length > 1)
-                {
-                    if (!string.IsNullOrEmpty(rowData[1]))
-                    {
-                        string containerNumber = rowData[1].Trim();
-
-                        if (containerNumber.Length > 20)
-                        {
-                            excelPackage.ContainerNumber = containerNumber.Substring(0, 20).ToUpper();
-                        }
-
-                        else
-                        {
-                            excelPackage.ContainerNumber = containerNumber.ToUpper();
-                        }
-                    }
-                }
-
-                if (rowData.Length > 2)
-                {
-                    if (!string.IsNullOrEmpty(rowData[2]))
-                    {
-                        string volume = rowData[2].Trim();
-                        if (this.IsNumber(volume))
-                        {
-                            excelPackage.Volume = Convert.ToDouble(volume);
-                        }
-
-                        else
-                        {
-                            excelPackage.HasErrors = true;
-                        }
-                    }
-                }
-
-                if (rowData.Length > 3)
-                {
-                    if (!string.IsNullOrEmpty(rowData[3]))
-                    {
-                        string grossWeight = rowData[3].Trim();
-                        if (this.IsNumber(grossWeight))
-                        {
-                            excelPackage.GrossWeight = Convert.ToDouble(grossWeight);
-                        }
-
-                        else
-                        {
-                            excelPackage.HasErrors = true;
-                        }
-                    }
-
-                    else
-                    {
-                        excelPackage.HasErrors = true;
-                    }
-                }
-
-                if (rowData.Length > 4)
-                {
-                    if (!string.IsNullOrEmpty(rowData[4]))
-                    {
-                        string tare = rowData[4].Trim();
-                        if (this.IsNumber(tare))
-                        {
-                            excelPackage.Tare = Convert.ToDouble(tare);
-                        }
-                    }
-                }
-
-                if (rowData.Length > 5)
-                {
-                    if (!string.IsNullOrEmpty(rowData[5]))
-                    {
-                        string shipperSeal = rowData[5].Trim();
-
-                        if (shipperSeal.Length > 15)
-                        {
-                            excelPackage.ShipperSeal = shipperSeal.Substring(0, 15);
-                        }
-
-                        else
-                        {
-                            excelPackage.ShipperSeal = shipperSeal;
-                        }
-                    }
-                }
-
-                if (rowData.Length > 6)
-                {
-                    if (!string.IsNullOrEmpty(rowData[6]))
-                    {
-                        string carrierSeal = rowData[6].Trim();
-
-                        if (carrierSeal.Length > 15)
-                        {
-                            excelPackage.CarrierSeal = carrierSeal.Substring(0, 15);
-                        }
-
-                        else
-                        {
-                            excelPackage.CarrierSeal = carrierSeal;
-                        }
-                    }
-                }
-
-                if (rowData.Length > 7)
-                {
-                    if (!string.IsNullOrEmpty(rowData[7]))
-                    {
-                        string marks = rowData[7].Trim();
-
-                        if (marks.Length > 350)
-                        {
-                            excelPackage.MarksAndNumbers = marks.Substring(0, 350);
-                        }
-
-                        else
-                        {
-                            excelPackage.MarksAndNumbers = marks;
-                        }
-                    }
-                }
-
-                if (rowData.Length > 8)
-                {
-                    if (!string.IsNullOrEmpty(rowData[8]))
-                    {
-                        string description = rowData[8].Trim();
-
-                        if (description.Length > 2000)
-                        {
-                            excelPackage.Description = description.Substring(0, 2000);
-                        }
-
-                        else
-                        {
-                            excelPackage.Description = description;
-                        }
-                    }
-                }
-
-                myResult.Add(excelPackage);
-            }
-
-            return myResult;
-        }
-        private bool IsNumber(string text)
-        {
-            bool isNumber = false;
-
-            if (!string.IsNullOrEmpty(text))
-            {
-                double value;
-                if (Double.TryParse(text, out value))
-                {
-                    isNumber = true;
-                }
-            }
-
-            return isNumber;
-        }
-
-        public HttpResponseMessage GetIfHouseConnectedToMaster(string houseId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                Shipment houseShipment = shipmentRepository.GetSingleShipment(houseId, tenant);
-                bool myResult = false;
-
-                if (houseShipment != null)
-                {
-                    if (!string.IsNullOrEmpty(houseShipment.MasterShipmentDataId))
-                    {
-                        myResult = true;
-                    }
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetBlockForTransfer(string allIdsString, string entityCode)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string loggedUserEmail = authToken.Email;
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                if (!string.IsNullOrEmpty(allIdsString))
-                {
-                    List<string> ids = allIdsString.Split('.').ToList();
-                    if (ids.Count > 0)
-                    {
-                        ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                        List<Shipment> shipments = this.GetFilteredShipments(ids, entityCode, tenant, shipmentRepository);
-                        this.BlockShipmentsForTransfer(shipments, shipmentRepository);
-                    }
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, true);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        private List<Shipment> GetFilteredShipments(List<string> ids, string entityCode, int tenant, ShipmentRepository shipmentRepository)
-        {
-            List<Shipment> shipments = new List<Shipment>();
-            shipments = shipmentRepository.GetShipmentsListFromIdList(ids, tenant);
-
-            if (entityCode == "Air")
-            {
-                shipments = shipments.Where(d => d.TransportModeId == "A").ToList();
-            }
-
-            else if (entityCode == "Ocean")
-            {
-                shipments = shipments.Where(d => d.TransportModeId == "O").ToList();
-            }
-
-            return shipments;
-        }
-        private void BlockShipmentsForTransfer(List<Shipment> shipments, ShipmentRepository shipmentRepository)
-        {
-            foreach (Shipment item in shipments)
-            {
-                item.LocalCustomsTransmissionsStatusCode = "BLOK";
-                shipmentRepository.Update(item);
-            }
-
-            shipmentRepository.SubmitChanges();
-        }
-
-        public HttpResponseMessage GetSetAMANACStartDate(string entityCode, string myStartDateString)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        int tenant = authToken.Tenant;
-
-                        SecurityUtility.AuthenticationOnTenant(tenant);
-
-                        CustomsInterfaceSettingRepository customsInterfaceSettingRepository = new CustomsInterfaceSettingRepository(tenant);
-                        CustomsInterfaceSetting customsInterfaceSetting = customsInterfaceSettingRepository.GetSingleCustomsInterfaceSetting(tenant, tenant);
-
-                        if (myStartDateString == "null")
-                        {
-                            myStartDateString = null;
-                        }
-
-                        DateTime? myStartDate = DateHelper.GetDate(myStartDateString);
-                        this.UpdateAMANACStartDates(customsInterfaceSetting, myStartDate, entityCode, customsInterfaceSettingRepository);
-
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, true);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
-        private void UpdateAMANACStartDates(CustomsInterfaceSetting customsInterfaceSetting, DateTime? startDate, string entityCode, CustomsInterfaceSettingRepository customsInterfaceSettingRepository)
-        {
-            switch (entityCode)
-            {
-                case "Air":
-                    {
-                        customsInterfaceSetting.AMCAirStartDate = startDate;
-                        break;
-                    }
-
-                case "Ocean":
-                    {
-                        customsInterfaceSetting.AMCOceanStartDate = startDate;
-                        break;
-                    }
-            }
-
-            customsInterfaceSettingRepository.Update(customsInterfaceSetting);
-            customsInterfaceSettingRepository.SubmitChanges();
-        }
-
-        public HttpResponseMessage GetOnStartDateEntitiesIds(string entityCode, string myStartDateString)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                List<string> myResult = new List<string>();
-
-                if (myStartDateString == "null")
-                {
-                    myStartDateString = null;
-                }
-
-                DateTime? myStartDate = DateHelper.GetDate(myStartDateString);
-
-                if (SecurityUtility.CheckTableContactFeature("Shipment", "READ", tenant))
-                {
-                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                    IQueryable<Shipment> iQueryable_Data = shipmentRepository.GetShipments(tenant);
-                    iQueryable_Data = iQueryable_Data.Where(d => !d.IsOperationalClosed && !d.IsAccountingClosed && !d.IsCancelled);
-
-                    switch (entityCode)
-                    {
-                        case "Air":
-                            {
-                                iQueryable_Data = iQueryable_Data.Where(d => d.TransportModeId == "A");
-                                break;
-                            }
-
-                        case "Ocean":
-                            {
-                                iQueryable_Data = iQueryable_Data.Where(d => d.TransportModeId == "O");
-                                break;
-                            }
-                    }
-
-                    iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<Shipment>(new QueryOperations(), iQueryable_Data, tenant);
-                    iQueryable_Data = iQueryable_Data.Where(d => d.LocalCustomsTransmissionsStatusCode == "NSEN");
-
-                    if (myStartDate != null)
-                    {
-                        myStartDate = myStartDate.Value.Date;
-                        iQueryable_Data = iQueryable_Data.Where(d => DbFunctions.TruncateTime(d.CreateDateTime) < myStartDate);
-                    }
-
-                    myResult = iQueryable_Data.Select(s => s.Id).ToList();
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetSendToAMANAC(string shipmentId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                ShipmentRepository shipmentRepository = new ShipmentRepository(authToken.Tenant);
-                ShipmentDataView shipment = shipmentRepository.GetSingleShipmentDataView(shipmentId, authToken.Tenant);
-
-                string fileName = "";
-                if (shipment != null)
-                {
-                    string transferType = shipment.TransportModeId == "O" ? "AMOS" : "AMAS"; 
-
-                    List<ShipmentDataView> shipments = new List<ShipmentDataView>();
-                    shipments.Add(shipment);
-
-                    fileName = "Shipment-" + shipment.ShipmentNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(authToken.Tenant));
-                    CustomsTransferService customsTransferService = new CustomsTransferService(shipments, fileName, transferType, authToken.Tenant);
-                    customsTransferService.Transfer();
-                }
-                
-                return Request.CreateResponse(HttpStatusCode.OK, fileName);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetMarkShipmentAsBlocked(string shipmentId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
-
-                if (shipment != null)
-                {
-                    shipment.LocalCustomsTransmissionsStatusCode = "BLOK";
-                    shipmentRepository.Update(shipment);
-                    shipmentRepository.SubmitChanges();
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage GetUnblockedShipment(string shipmentId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
-
-                if (shipment != null)
-                {
-                    shipment.LocalCustomsTransmissionsStatusCode = "NSEN";
-                    shipmentRepository.Update(shipment);
-                    shipmentRepository.SubmitChanges();
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetShipmentsTransferSummary()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ShipmentTransferSummary myResult = new ShipmentTransferSummary();
-
-                if (SecurityUtility.CheckTableContactFeature("Shipment", "READ", tenant))
-                {
-                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                    IQueryable<Shipment> shipments = shipmentRepository.GetShipments(tenant);
-
-                    shipments = shipments.Where(d => !d.IsCancelled && !d.IsAccountingClosed && !d.IsOperationalClosed && d.TransportModeId != "I");
-                    shipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<Shipment>(new QueryOperations(), shipments, tenant);
-
-                    myResult.BlockedOceanShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "O").Count();
-                    myResult.BlockedAirShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "A").Count();
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetRebuildTransferFile(string entityId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string loggedUserEmail = authToken.Email;
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
-
-                CustomsTransferHeaderRepository entityRepository = new CustomsTransferHeaderRepository(myContext);
-                CustomsTransferHeader entityPoco = entityRepository.GetSingleEntity(entityId, tenant);
-
-                if (entityPoco != null)
-                {
-                    List<string> shipmentsIdsList = (from a in myContext.CustomsTransferLines
-                                                     where a.Tenant == tenant
-                                                     && a.CustomsTransferHeaderId == entityId
-                                                     select a.ShipmentId).ToList();
-
-                    ShipmentRepository shipmentRepository = new ShipmentRepository(myContext);
-                    List<ShipmentDataView> shipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIdsList, tenant);                    
-                    CustomsTransferService customsTransferService = new CustomsTransferService(shipments, entityPoco.FileName, entityPoco.CustomsTransferTypeCode, tenant);
-                    customsTransferService.Transfer();
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, true);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        [ActionName("PostValidateAMANACShipmentsBeforeExporting")]
-        public HttpResponseMessage PostValidateAMANACShipmentsBeforeExporting(CustomsTransferHeaderPM myEntity)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int myTenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(myTenant);
-                SecurityUtility.AuthenticationOnEntityTenant("",myEntity.Tenant,myTenant);
-                if (myEntity.CustomsTransferLines.Count > 0)
-                {
-                    List<string> ids = myEntity.CustomsTransferLines.Select(s => s.ShipmentId).ToList();
-                    ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
-                    List<ShipmentDataView>shipments = shipmentRepository.GetShipmentsFromIdList(ids, myTenant);
-
-                    foreach (ShipmentDataView item in shipments)
-                    {
-                        CustomsTransferLinePM myLine = myEntity.CustomsTransferLines.Where(d => d.ShipmentId == item.Id).FirstOrDefault();
-                        if (myLine != null)
-                        {
-                            if (myEntity.CustomsTransferTypeCode == "AMAS")
-                            {
-                                if (string.IsNullOrEmpty(item.AirlinePrefix) || string.IsNullOrEmpty(item.Master)
-                                || string.IsNullOrEmpty(item.MainCarriageFromPortCode) || string.IsNullOrEmpty(item.MainCarriageFromPortName)
-                                || string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortCode) || string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortName)
-                                || string.IsNullOrEmpty(item.MainCarriageCarrierCode) || string.IsNullOrEmpty(item.MainCarriageCarrierName)
-                                || item.NumberOfPackages == null || item.NumberOfPackages == 0
-                                || item.GrossWeight == null || item.GrossWeight == 0
-                                || (item.DirectionId == "E" && string.IsNullOrEmpty(item.ShipperId))
-                                || (item.DirectionId == "I" && string.IsNullOrEmpty(item.ConsigneeId)))
-                                {
-                                    myLine.HasError = true;
-                                    myLine.ErrorText = this.BuildAMANACErrorText(item, myEntity.CustomsTransferTypeCode);
-                                }
-                            }
-
-                            else
-                            {
-                                if (string.IsNullOrEmpty(item.MainCarriageVesselName)
-                                || string.IsNullOrEmpty(item.House)
-                                || string.IsNullOrEmpty(item.MainCarriageCarrierNumber)
-                                || string.IsNullOrEmpty(item.MainCarriageCarrierId)
-                                || (item.DirectionId == "E" && string.IsNullOrEmpty(item.ShipperId))
-                                || (item.DirectionId == "I" && string.IsNullOrEmpty(item.ConsigneeId)))
-                                {
-                                    myLine.HasError = true;
-                                    myLine.ErrorText = this.BuildAMANACErrorText(item, myEntity.CustomsTransferTypeCode);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, myEntity);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        private string BuildAMANACErrorText(ShipmentDataView item, string type)
-        {
-            string myResult = "";
-
-            if (item.DirectionId == "E" && string.IsNullOrEmpty(item.ShipperId))
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing Shipper";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing Shipper";
-                }
-            }
-
-            if (item.DirectionId == "I" && string.IsNullOrEmpty(item.ConsigneeId))
-            {
-                if (string.IsNullOrEmpty(myResult))
-                {
-                    myResult = "Missing Consignee";
-                }
-                else
-                {
-                    myResult = myResult + ", Missing Consignee";
-                }
-            }
-
-            if (type == "AMAS")
-            {
-                if (!string.IsNullOrEmpty(item.AirlinePrefix) && !string.IsNullOrEmpty(item.Master))
-                {
-                    // nothing
-                }
-                else
-                {
-                    if(string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
-                    {
-                        if (string.IsNullOrEmpty(myResult))
-                        {
-                            myResult = "Missing Master B/L";
-                        }
-                        else
-                        {
-                            myResult = myResult + ", Missing Master B/L";
-                        }
-                    }
-
-                    else
-                    {
-                        if (string.IsNullOrEmpty(myResult))
-                        {
-                            myResult = "Invalid Master B/L";
-                        }
-                        else
-                        {
-                            myResult = myResult + ", Invalid Master B/L";
-                        }
-                    }
-                }
-
-                if (string.IsNullOrEmpty(item.MainCarriageFromPortCode))
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Origin Airport Code";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Origin Airport Code";
-                    }
-                }
-
-                if (string.IsNullOrEmpty(item.MainCarriageFromPortName))
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Origin Airport";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Origin Airport";
-                    }
-                }
-
-                if (string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortCode))
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Destination Airport Code";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Destination Airport Code";
-                    }
-                }
-
-                if (string.IsNullOrEmpty(item.MainCarriageFinalDestinationPortName))
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Destination Airport";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Destination Airport";
-                    }
-                }
-
-                if (string.IsNullOrEmpty(item.MainCarriageCarrierName))
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Airline";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Airline";
-                    }
-                }
-
-                if (item.NumberOfPackages == null || item.NumberOfPackages == 0)
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Pieces";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Pieces";
-                    }
-                }
-
-                if (item.GrossWeight == null || item.GrossWeight == 0)
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Gross Weight";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Gross Weight";
-                    }
-                }
-            }
-            
-            else
-            {
-                if (string.IsNullOrEmpty(item.MainCarriageVesselName))
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Vessel";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Vessel";
-                    }
-                }
-
-                if (string.IsNullOrEmpty(item.House))
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing House";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing House";
-                    }
-                }
-
-                if (string.IsNullOrEmpty(item.MainCarriageCarrierNumber))
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Voyage";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Voyage";
-                    }
-                }
-
-                if (string.IsNullOrEmpty(item.MainCarriageCarrierId))
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        myResult = "Missing Carrier";
-                    }
-                    else
-                    {
-                        myResult = myResult + ", Missing Carrier";
-                    }
-                }
-            }
-
-            return myResult;
-        }
-
-        public HttpResponseMessage GetPickupDeliveryValidForInlandDomestic(string pickupDeliveryId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                bool isValid = true;
-                ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
-                ShipmentPickUpDelivery pickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, pickupDeliveryId);
-
-                if(pickUpDelivery != null)
-                {
-                    List<DomesticCountry> iDomesticCountries = this.GetDomesticCountries(pickUpDelivery, tenant);
-
-                    if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
-                    {
-                        bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
-                        bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
-                        bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
-
-                        if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
-                        {
-                            isValid = false;
-                        }
-                    }
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, isValid);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
-        private List<DomesticCountry> GetDomesticCountries(ShipmentPickUpDelivery pickUpDelivery, int tenant)
-        {
-            List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
-            switch (pickUpDelivery.PickUpDeliveryFromTypeCode)
-            {
-                case "PART":
-                    {
-                        AddDomesticAddress(iDomesticCountries, pickUpDelivery.FromAddressId, tenant);
-                        break;
-                    }
-
-                case "PORT":
-                    {
-                        AddDomesticPort(iDomesticCountries, pickUpDelivery.FromPortId, tenant);
-                        break;
-                    }
-
-                case "CASL":
-                    {
-                        AddDomesticCountry(iDomesticCountries, pickUpDelivery.FromAddressCountryId, tenant);
-                        break;
-                    }
-            }
-
-            switch (pickUpDelivery.PickUpDeliveryToTypeCode)
-            {
-                case "PART":
-                    {
-                        AddDomesticAddress(iDomesticCountries, pickUpDelivery.ToAddressId, tenant);
-                        break;
-                    }
-
-                case "PORT":
-                    {
-                        AddDomesticPort(iDomesticCountries, pickUpDelivery.ToPortId, tenant);
-                        break;
-                    }
-
-                case "CASL":
-                    {
-                        AddDomesticCountry(iDomesticCountries, pickUpDelivery.ToAddressCountryId, tenant);
-                        break;
-                    }
-            }
-
-            return iDomesticCountries;
-        }
-        private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iAddressId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
-                {
-                    AddressRepository addressRepository = new AddressRepository(iTenant);
-                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
-
-                    if (iAddress != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iAddress.Id + "A",
-                            CountryId = iAddress.CountryId,
-                            CountryIsEC = iAddress.Country.EC,
-                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
-                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
-
-                        });
-                    }
-                }
-            }
-        }
-        private static void AddDomesticCountry(List<DomesticCountry> iDomesticCountries, string iCountryId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iCountryId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iCountryId).Any())
-                {
-                    CountryRepository countryRepository = new CountryRepository(iTenant);
-                    Country iCountry = countryRepository.GetSingleCountry(iCountryId, iTenant);
-
-                    if (iCountry != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iCountry.Id + "C",
-                            CountryId = iCountry.Id,
-                            CountryIsEC = iCountry.EC,
-                            CountryIsNorthAmerica = iCountry.IsNorthAmerica,
-                            CountryIsGreaterChinese = iCountry.IsGreaterChina,
-                        });
-                    }
-                }
-            }
-        }
-        private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iPortId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iPortId).Any())
-                {
-                    PortPM iPort = PortQuery.GetSinglePort(iTenant, iPortId, true);
-
-                    if (iPort != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iPort.Id + "P",
-                            CountryId = iPort.CountryId,
-                            CountryIsEC = iPort.CountryEC,
-                            CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
-                            CountryIsGreaterChinese = iPort.CountryIsGreaterChinese,
-                        });
-                    }
-                }
-            }
-        }
-
-        public HttpResponseMessage GetIfShipmentPackageConnectedToPickUpDeliveryPackage(string containerId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(tenant);
-                var shipmentPickUpDeliveryPackage = shipmentPickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(containerId,tenant);
-                var result = shipmentPickUpDeliveryPackage.Count == 0 ? false : true;
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetShipmentsForMultipleAPInvoice(string invoiceId, string vendorId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        string loggedUserEmail = authToken.Email;
-                        int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
-
-                        ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                        List<ShipmentList> myResult = shipmentQuery.GetShipmentsForMultipleAPInvoice(invoiceId, vendorId, tenant);                      
-                        
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
-
-        public HttpResponseMessage GetIfShipmentPackagesConnectedToStandAloneShipmentPackage(string shipmentId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                ShipmentQuery query = new ShipmentQuery(tenant);
-                bool result = query.IsShipmentPackagesConnectedToStandAlonePackage(shipmentId,tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
-        public HttpResponseMessage GetFilteredForwarderShipmentPackages(string shipmentId, string stanAloneShipmentId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                ShipmentQuery query = new ShipmentQuery(tenant);
-                var result = query.GetFilteredForwarderShipmentPackages(shipmentId, tenant, stanAloneShipmentId);
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        private CountryRepository countryRepository;
-        private StateRepository stateRepository;
-        private int myTenant;
-        public HttpResponseMessage GetAddressFromUnassignedXML(string shipmentId, string fieldName)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                myTenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(myTenant);
-                countryRepository = new CountryRepository(myTenant);
-                stateRepository = new StateRepository(myTenant);
-
-                IQueryable<ShipmentUnassignedField> shipmentUnassignedFields = this.GetShipmentUnassignedField(shipmentId);
-                ShipmentUnassignedField myUnassignedField = shipmentUnassignedFields.Where(d => d.FieldName == fieldName).FirstOrDefault();
-
-                AddressList myResult = null;
-                if (!string.IsNullOrEmpty(myUnassignedField.ReceivedData))
-                {
-                    Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address = LogitudeXmlSerializer.DeserializeObject<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address>(myUnassignedField.ReceivedData);
-                    myResult = this.CreateAddressList(address);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        private IQueryable<ShipmentUnassignedField> GetShipmentUnassignedField(string shipmentId)
-        {
-            ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(myTenant);
-            return shipmentUnassignedFieldRepository.GetShipmentUnassignedFieldsByShipmentId(shipmentId, myTenant);
-        }
-        private AddressList CreateAddressList(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address)
-        {
-            string countryId = this.GetCountryId(address);
-            string stateId = this.GetStateId(address);
-
-            return new AddressList()
-            {
-                Name = address.Name,
-                City = address.City,
-                CountryId = countryId,
-                CountryCode = address.Country == null ? null : address.Country.Code,
-                StateId = stateId,
-                Address1 = address.Address1,
-                Address2 = address.Address2,
-                ZipCode = address.ZipCode,
-                PhoneNumber = address.PhoneNumber,
-                FaxNumber = address.FaxNumber,
-            };
-        }
-        private string GetCountryId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address)
-        {
-            if(address.Country == null)
-            {
-                return null;
-            }
-
-            Country country = countryRepository.GetSingleCountryByCode(address.Country.Code, myTenant);
-            if(country == null)
-            {
-                return null;
-            }
-
-            return country.Id;
-        }
-        private string GetStateId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address)
-        {
-            if (address.State == null)
-            {
-                return null;
-            }
-
-            State state = stateRepository.GetSingleStateByCode(address.State.Code, myTenant);
-            if (state == null)
-            {
-                return null;
-            }
-
-            return state.Id;
-        }
-
-        public HttpResponseMessage GetShipmentsForAutomaticRequest()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                myTenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(myTenant);
-
-                List<ShipmentsForAutomaticRequest> myResult = this.GetShipmentsForAutomaticRequest(myTenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        private List<ShipmentsForAutomaticRequest> GetShipmentsForAutomaticRequest(int tenant)
-        {
-            List<ShipmentsForAutomaticRequest> myResult = new List<ShipmentsForAutomaticRequest>();
-            myTenant = tenant;
-            ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
-
-            List<string> supportedCarriers = this.GetVizionCarriers();
-
-            DateTime myDateFilter = DateTime.Now.AddDays(14);
-
-            IQueryable<ContainerTrackingRequest> previousReqesuts = shipmentRepository.context.ContainerTrackingRequests
-            .Where(e => e.Tenant == myTenant && e.Status == "Active");
-
-            IQueryable<Shipment> myShipments = shipmentRepository.GetShipmentsWithoutIncludes(myTenant);
-            myShipments = myShipments.Where(d => !previousReqesuts.Where(r => !string.IsNullOrEmpty(r.Master) && string.IsNullOrEmpty(r.ContainerId)).Select(s => s.ShipmentId).Contains(d.Id));
-
-            return (from shipment in myShipments
-                    join sm in shipmentRepository.context.ShipmentMasterDatas
-                    on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
-                    from master in shipmentJoin.DefaultIfEmpty()
-                    join sc in shipmentRepository.context.Containers
-                    on shipment.Id equals sc.ShipmentId into containerJoin
-                    from container in containerJoin.DefaultIfEmpty()
-                    where shipment.NumberOfContainers > 0
-                    && (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "MyGO")
-                    && !shipment.IsCancelled
-                    && !shipment.IsOperationalClosed
-                    && master.MainCarriageATA == null
-                    && master.MainCarriageETA != null
-                    && master.MainCarriageETA >= DateTime.Now
-                    && master.MainCarriageETA <= myDateFilter
-                    && !string.IsNullOrEmpty(container.ContainerNumber)
-                    && supportedCarriers.Contains(master.MainCarriageCarrierCard.ShippingLine.SCACCode)
-                    && !previousReqesuts.Where(r => !string.IsNullOrEmpty(r.ContainerId)).Select(s => s.ContainerId).Contains(container.Id)
-                    select new ShipmentsForAutomaticRequest()
-                    {
-                        ShipmentId = shipment.Id,
-                        ShipmentNumber = shipment.ShipmentNumber,
-                        NumberOfContainers = shipment.NumberOfContainers,
-                    }).Distinct().ToList();
-        }
-        private List<string> GetVizionCarriers()
-        {
-            VizionService vizionService = new VizionService();
-            List<VizionCarrier> supportedCarriers = vizionService.GetAllCarriers();
-            return supportedCarriers.Select(s => s.scac).ToList();
-        }
-
-        public HttpResponseMessage GetSendVizionAutomaticRequests(string request)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                myTenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(myTenant);
-
-                BatchTaskExecutionPM batchPrintTask = CreateBatchTask(request);
-                IInfrastructureContext MyContext = InfrastructureContext.GetContext(myTenant);
-                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), myTenant);
-                bteUpdateService.Update(batchPrintTask, true);
-
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-                queueservice.Send(new Dictionary<string, string>()
-                {
-                    { "BatchTaskExecutionId", batchPrintTask.Id },
-                    { "Tenant", myTenant.ToString() }
-                }, myTenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, batchPrintTask.Id);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        private BatchTaskExecutionPM CreateBatchTask(string xmlParameters)
-        {
-            return new BatchTaskExecutionPM()
-            {
-                Subject = "Container Tracking - Pilot Customer",
-                Tenant = myTenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                ClassName = "WebFreight.Web.Helpers.VizionPilotCustomerDataGenerator,WebFreight.Web",
-                CreateDate = DateTime.Now,
-                PrametersXml = xmlParameters,
-                StatusCode = "C",
-                ProgressPercentage = 0
-            };
         }
     }
 }
 
 public class ExcelPackage
 {
-    public string ContainerTypeId { get; set; }
-    public string ContainerTypeCode { get; set; }
-    public string ContainerTypeName { get; set; }
+    public string ContainerType { get; set; }
     public string ContainerNumber { get; set; }
     public double? Volume { get; set; }
     public double? GrossWeight { get; set; }
@@ -3409,22 +1894,6 @@ public class ExcelPackage
     public string CarrierSeal { get; set; }
     public string MarksAndNumbers { get; set; }
     public string Description { get; set; }
-    public bool IsRefrigerated { get; set; }
-    public bool HasErrors { get; set; }
-}
-
-public class ExcelPackageFilter
-{
-    public int Tenant { get; set; }
-    public string FileData{ get; set; }
-    public string ShipmentId{ get; set; }
-}
-
-public class ExcelPackageTextCodeFilter
-{
-    public int Tenant { get; set; }
-    public string FileData { get; set; }
-    public string LanguageCode { get; set; }
 }
 
 public class ExcelPackageType
@@ -3444,10 +1913,4 @@ public class ShipmentConnectedEntity
     public DateTime? OpenDate { get; set; }
     public DateTime? AcceptedDate { get; set; }
     public string Salesman { get; set; }
-    public DateTime? ExpirationDate { get; set; }
-}
-public class ShipmentTransferSummary
-{
-    public int BlockedOceanShipmentsCount { get; set; }
-    public int BlockedAirShipmentsCount { get; set; }
 }

@@ -1,13 +1,8 @@
-
+﻿
             <table>
-                
-            <tr>
-                <td  class="CellStretch">
-                        <!-- Refresh Button -->
-                        <div>
-                            <span float-start style="padding: 0 15px;padding-top: 2px;"></span>
-                            <IconButton [Name]="'refresh'" (click)="RefreshButtonClick()"></IconButton>
-                        </div>
+
+                <tr>
+                    <td  class="CellStretch">
                         <div class="SimpleGridView">
                             <div class="SimpleGridViewHeader">
                                 <table>
@@ -16,15 +11,11 @@
 
                                         <td style="width: 70px; min-width: 70px;max-width:70px">Tenant</td>
                                         <td style="width: 230px; min-width: 230px;max-width:230px">Tenant Name</td>
-                                        <td style="width: 110px; min-width: 110px;max-width:110px">Failed Threshold</td>
-                                        <td style="width: 110px; min-width: 110px;max-width:110px">Waiting Threshold</td>
-                                        <td style="width: 110px; min-width: 110px;max-width:110px">Hybrid Failed</td>
-                                        <td style="width: 110px; min-width: 110px;max-width:110px">Hybrid Waiting</td>
-                                        <td style="width: 140px; min-width: 140px;max-width:140px">Last Update Date Time</td>
-                                        <td style="width: 140px; min-width: 140px;max-width:140px">Last Queue Date Time</td>
-                                        <td style="width: 110px; min-width: 110px;max-width:110px">Version Number</td>
-                                        <td style="width: 140px; min-width: 140px;max-width:140px">Version Date</td> 
-
+                                        <td style="width: 150px; min-width: 150px;max-width:150px">Failed Threshold</td>
+                                        <td style="width: 150px; min-width: 150px;max-width:150px">Waiting Threshold</td>
+                                        <td style="width: 190px; min-width: 190px;max-width:190px">Last Update Date Time</td>
+                                        <td style="width: 100%; min-width: 100%;"></td>
+                                        
                                     </tr>
 
 
@@ -39,7 +30,7 @@
                                     <tr class="SimpleGridViewRow RowHover" *ngFor="let item of HybridTenantStateLists">
                                         <td>
                                             <table>
-                                                <tr [class.RowSelected]="item === SelectedHybridTenantStateList">
+                                                <tr [class.RowSelected]="item === SelectedHybridTenantStateList" >
 
                                                     <td class="GridViewCell" style="width: 70px; min-width: 70px;max-width:70px">
 
@@ -51,40 +42,25 @@
                                                         <div [attr.title]="item.TenantName">{{item.TenantName}}</div>
                                                     </td>
 
-                                                    <td class="GridViewCell" style="width: 110px; min-width: 110px;max-width:110px ">
-                                                        <div [style.color]="item.FailedQueueTextColor">{{item.FailedQueue}}</div>
+                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
+                                                        <div  [style.color]="item.FailedQueueTextColor">{{item.FailedQueue}}</div> 
                                                     </td>
 
-                                                    <td class="GridViewCell" style="width: 110px; min-width: 110px;max-width:110px ">
-                                                        <div [style.color]="item.WaitingQueueTextColor">{{item.WaitingQueue}}</div>
-                                                    </td>
-
-                                                    <td class="GridViewCell" style="width: 110px; min-width: 110px;max-width:110px ">
-                                                        <div [style.color]="item.WaitingQueueTextColor">{{item.HybridFailedQueue}}</div>
-                                                    </td>
-
-                                                    <td class="GridViewCell" style="width: 110px; min-width: 110px;max-width:110px ">
-                                                        <div [style.color]="item.WaitingQueueTextColor">{{item.HybridWaitingQueue}}</div>
+                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
+                                                        <div [style.color]="item.WaitingQueueTextColor">{{item.WaitingQueue}}</div> 
                                                     </td>
 
 
-                                                    <td class="GridViewCell" style="width: 140px; min-width: 140px;max-width:140px">
+                                                    <td class="GridViewCell" style="width: 190px; min-width: 190px;max-width:190px">
                                                         <div [style.color]="item.LastUpdateDateTimeTextColor">{{item.LastUpdateDateTime | DateTimeToDatePipe}} {{item.LastUpdateDateTime | DateTimeToTimePipe}} </div>
                                                     </td>
 
-                                                    <td class="GridViewCell" style="width: 140px; min-width: 140px;max-width:140px">
-                                                        <div>{{item.LastQueueDateTime | DateTimeToDatePipe}} {{item.LastQueueDateTime | DateTimeToTimePipe}} </div>
+                                                    <td class="GridViewCell" style="position: relative;width:100%">
+                                                        <div>
+                                                            
+                                                        </div>
                                                     </td>
 
-                                                    <td class="GridViewCell" style="width: 110px; min-width: 110px;max-width:110px"> 
-                                                        <div [attr.title]="item.VersionNumber">{{item.VersionNumber}}</div>
-                                                    </td>
-
-                                                    <td class="GridViewCell" style="width: 140px; min-width: 140px;max-width:140px">
-                                                        <div>{{item.VersionDate | DateTimeToDatePipe}} {{item.VersionDate | DateTimeToTimePipe}} </div>
-                                                    </td>
-
-                                                     
                                                 </tr>
                                                 <tr><td colspan="4"></td></tr>
                                             </table>
@@ -126,3 +102,4 @@
                 </tr>
 
             </table>
+    

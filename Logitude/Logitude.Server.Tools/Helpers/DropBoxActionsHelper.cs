@@ -9,10 +9,10 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using System;
@@ -156,7 +156,7 @@ namespace Logitude.Server.Tools.Helpers
 
                                 if (idx == numChunks - 1)
                                 {
-                                    await client.Files.UploadSessionFinishAsync(cursor, new CommitInfo(folder + "/" + fileName),null, memStream);
+                                    await client.Files.UploadSessionFinishAsync(cursor, new CommitInfo(folder + "/" + fileName), memStream);
                                 }
                             }
 
@@ -166,7 +166,7 @@ namespace Logitude.Server.Tools.Helpers
 
                                 if (idx == numChunks - 1)
                                 {
-                                    await client.Files.UploadSessionFinishAsync(cursor, new CommitInfo(folder + "/" + fileName),null, memStream);
+                                    await client.Files.UploadSessionFinishAsync(cursor, new CommitInfo(folder + "/" + fileName), memStream);
                                 }
 
                                 else
@@ -311,7 +311,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
                
             }
             catch (Exception ex)

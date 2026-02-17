@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -35,7 +35,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             List<string> allowedPackages = new List<string>();
             string email = HttpContext.Current.User.Identity.Name;
-            Logitude.BL.Security.ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
+            ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
             if (inf != null)
             {
                 allowedPackages = inf.PackagesCodes;

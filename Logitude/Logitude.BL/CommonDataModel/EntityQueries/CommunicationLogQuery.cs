@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -17,7 +17,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CommunicationLogRepository repository;
 
-
+        public CommunicationLogQuery()
+        {
+            repository = new CommunicationLogRepository(); 
+        }
 
         public CommunicationLogQuery(int tenant)
         {
@@ -76,18 +79,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ChildEntityId = a.ChildEntityId,
                         ChildObjectTableId = a.ChildObjectTableId,
                         SecurityId = a.ExternalDocument.SecurityId,
-                        
+                        LogSettings = a.LogSettings,
                         IsBodySecured = a.IsSecured,
                         EmailDeliveryError = a.EmailDeliveryError,
                         ResponseDocumentId = a.ResponseDocumentId,
-                        UniqueNumber = a.UniqueNumber,
-                        WasAnalyzed = a.WasAnalyzed,
                     }).FirstOrDefault();
         }
 
-        public List<CommunicationLogPM> GetCommunicationLogPMsByEntityId(string entityId, int tenant)
+        public IQueryable<CommunicationLogPM> GetCommunicationLogPMsByEntityId(string entityId, int tenant)
         {
-            List<CommunicationLogPM> commlogs = (from a in repository.context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("ObjectTable")
+            IQueryable<CommunicationLogPM> commlogs = (from a in repository.context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("ObjectTable")
                                                        where a.Tenant == tenant && a.EntityId == entityId
                     select new CommunicationLogPM()
                     {
@@ -132,13 +133,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ReplyToList = a.ReplyToList,
                         ChildEntityId = a.ChildEntityId,
                         ChildObjectTableId = a.ChildObjectTableId,
-                      
+                        LogSettings = a.LogSettings,
                         IsBodySecured = a.IsSecured,
                         EmailDeliveryError = a.EmailDeliveryError,
                         ResponseDocumentId = a.ResponseDocumentId,
-                        UniqueNumber = a.UniqueNumber,
-                        WasAnalyzed = a.WasAnalyzed,
-                    }).ToList();
+                    });
 
             List<string> contactIds = new List<string>();
             foreach (CommunicationLogPM item in commlogs)
@@ -225,12 +224,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ReplyToList=a.ReplyToList,
                         ChildEntityId = a.ChildEntityId,
                         ChildObjectTableId = a.ChildObjectTableId,
-                        
+                        LogSettings = a.LogSettings,
                         IsBodySecured = a.IsSecured,
                         EmailDeliveryError = a.EmailDeliveryError,
                         ResponseDocumentId = a.ResponseDocumentId,
-                        UniqueNumber = a.UniqueNumber,
-                        WasAnalyzed = a.WasAnalyzed,
                     });
         }
 
@@ -282,12 +279,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                           ReplyToList= f.ReplyToList,
                                                           ChildEntityId = f.ChildEntityId,
                                                           ChildObjectTableId = f.ChildObjectTableId,
-                                                        
+                                                          LogSettings = f.LogSettings,
                                                           IsBodySecured = f.IsSecured,
                                                           EmailDeliveryError = f.EmailDeliveryError,
                                                           ResponseDocumentId = f.ResponseDocumentId,
-                                                          UniqueNumber = f.UniqueNumber,
-                                                          WasAnalyzed = f.WasAnalyzed,
                                                       };
             return result;
         }
@@ -295,57 +290,56 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         private CommunicationLogList GetMyEL(CommunicationLog f)
         {
             var my = new CommunicationLogList()
-            {
+                                                     {
+                                                         
+                                                         Id = f.Id,
+                                                         Tenant = f.Tenant,
+                                                         CC = f.CC,
+                                                         CreateDate = f.CreateDate,
+                                                         DoneDate = f.DoneDate,
+                                                         EntityId = f.EntityId,
+                                                         InOut = f.InOut == "I" ? "In" : "Out",
+                                                         CommunicationLogTypeCode = f.CommunicationLogTypeCode,
+                                                         CommunicationStatusTypeCode = f.CommunicationStatusTypeCode,
+                                                         Subject = f.Subject,
+                                                         To = f.To,
+                                                         From = f.From,
+                                                         CommunicationLogTypeName = f.CommunicationLogType.Name,
+                                                         CommunicationStatusTypeName = f.CommunicationStatusType.Name,
+                                                         ObjectTableId = f.ObjectTableId,
+                                                         DocumentId = f.DocumentId,
+                                                         DocumentInId = f.DocumentsFilingId,
+                                                         DocumentOutId = f.DocumentOutId,
+                                                         CreatedByUserId = f.CreatedByUserId,
+                                                         Retries = f.Retries,
+                                                         BCC = f.BCC,
+                                                         LastStatusDate = f.LastStatusDate,
+                                                         CreatedByUserName =f.CreatedByUser!=null?(f.CreatedByUser.Contact!=null? f.CreatedByUser.Contact.EnglishName:null):null,
+                                                         ObjectTableName =f.ObjectTable!=null? f.ObjectTable.Name:null,
+                                                         SearchFields = f.SearchFields,
+                                                         EntityReference = f.EntityReference,
+                                                         ExceptionMessage = f.ExceptionMessage,
+                                                         CorrelationID = f.CorrelationID,
+                                                         Logs = f.Logs,
+                                                         CreateDateUTC = f.CreateDateUTC,
+                                                         DoneDateUTC = f.DoneDateUTC,
+                                                         LastStatusDateUTC = f.LastStatusDateUTC,
+                                                         NextTryDateTime = f.NextTryDateTime,
+                                                         NextTryDateTimeUTC = f.NextTryDateTimeUTC,
+                                                         Priority = f.Priority,
+                                                         QueueName = f.QueueName,
+                                                         MessageLockId = f.MessageLockId,
+                                                         TenantName = f.CurrentTenant == null ? null : f.CurrentTenant.Company,
+                                                         AWBNumber = f.AWBNumber,
+                                                         ReplyToList = f.ReplyToList,
+                                                         ChildEntityId = f.ChildEntityId,
+                                                         ChildObjectTableId = f.ChildObjectTableId,
+                                                         LogSettings = f.LogSettings,
+                                                         IsBodySecured = f.IsSecured,
+                                                         EmailDeliveryError = f.EmailDeliveryError,
+                                                         ResponseDocumentId =f.ResponseDocumentId,
 
-                Id = f.Id,
-                Tenant = f.Tenant,
-                CC = f.CC,
-                CreateDate = f.CreateDate,
-                DoneDate = f.DoneDate,
-                EntityId = f.EntityId,
-                InOut = f.InOut == "I" ? "In" : "Out",
-                CommunicationLogTypeCode = f.CommunicationLogTypeCode,
-                CommunicationStatusTypeCode = f.CommunicationStatusTypeCode,
-                Subject = f.Subject,
-                To = f.To,
-                From = f.From,
-                CommunicationLogTypeName = f.CommunicationLogType.Name,
-                CommunicationStatusTypeName = f.CommunicationStatusType.Name,
-                ObjectTableId = f.ObjectTableId,
-                DocumentId = f.DocumentId,
-                DocumentInId = f.DocumentsFilingId,
-                DocumentOutId = f.DocumentOutId,
-                CreatedByUserId = f.CreatedByUserId,
-                Retries = f.Retries,
-                BCC = f.BCC,
-                LastStatusDate = f.LastStatusDate,
-                CreatedByUserName = f.CreatedByUser != null ? (f.CreatedByUser.Contact != null ? f.CreatedByUser.Contact.EnglishName : null) : null,
-                ObjectTableName = f.ObjectTable != null ? f.ObjectTable.Name : null,
-                SearchFields = f.SearchFields,
-                EntityReference = f.EntityReference,
-                ExceptionMessage = f.ExceptionMessage,
-                CorrelationID = f.CorrelationID,
-                Logs = f.Logs,
-                CreateDateUTC = f.CreateDateUTC,
-                DoneDateUTC = f.DoneDateUTC,
-                LastStatusDateUTC = f.LastStatusDateUTC,
-                NextTryDateTime = f.NextTryDateTime,
-                NextTryDateTimeUTC = f.NextTryDateTimeUTC,
-                Priority = f.Priority,
-                QueueName = f.QueueName,
-                MessageLockId = f.MessageLockId,
-                TenantName = f.CurrentTenant == null ? null : f.CurrentTenant.Company,
-                AWBNumber = f.AWBNumber,
-                ReplyToList = f.ReplyToList,
-                ChildEntityId = f.ChildEntityId,
-                ChildObjectTableId = f.ChildObjectTableId,
-
-                IsBodySecured = f.IsSecured,
-                EmailDeliveryError = f.EmailDeliveryError,
-                ResponseDocumentId = f.ResponseDocumentId,
-                UniqueNumber = f.UniqueNumber,
-                WasAnalyzed = f.WasAnalyzed,
-            };
+                                                     };
 
             if (f.CreatedByUser != null && f.CreatedByUser.Contact != null)
             {
@@ -403,12 +397,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            ReplyToList = a.ReplyToList,
                                                            ChildEntityId = a.ChildEntityId,
                                                            ChildObjectTableId = a.ChildObjectTableId,
-                                                          
+                                                           LogSettings = a.LogSettings,
                                                            IsBodySecured = a.IsSecured,
                                                            EmailDeliveryError = a.EmailDeliveryError,
                                                            ResponseDocumentId = a.ResponseDocumentId,
-                                                           UniqueNumber = a.UniqueNumber,
-                                                           WasAnalyzed = a.WasAnalyzed,
                                                        });
             return commlogs;
         }
@@ -461,12 +453,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            ReplyToList = a.ReplyToList,
                                                            ChildEntityId = a.ChildEntityId,
                                                            ChildObjectTableId = a.ChildObjectTableId,
-                                                          
+                                                           LogSettings = a.LogSettings,
                                                            IsBodySecured = a.IsSecured,
                                                            EmailDeliveryError = a.EmailDeliveryError,
                                                            ResponseDocumentId = a.ResponseDocumentId,
-                                                           UniqueNumber = a.UniqueNumber,
-                                                           WasAnalyzed = a.WasAnalyzed,
                                                        });
             return commlogs;
         }

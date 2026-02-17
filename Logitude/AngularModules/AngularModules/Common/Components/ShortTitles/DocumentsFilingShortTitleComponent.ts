@@ -3,7 +3,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentsFilingPM} from '../../EntityPMs/DocumentsFilingPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "./DocumentsFilingShortTitleComponent.html",
 })
 

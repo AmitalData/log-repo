@@ -24,7 +24,7 @@ import { CustomMessageProgressComponent } from '../../../CustomsModules/CustomsC
 
 @Component({
     selector: 'ImporterDeclarationComponent',
-    
+    moduleId: module.id,
     templateUrl: './ImporterDeclarationComponent.html',
 })
 
@@ -118,7 +118,6 @@ export class ImporterDeclarationComponent
 
     SetIsByExpireDate(newValue: boolean) {
         this.IsByExpireDate = newValue;
-        this.IsByType = !newValue;
     }
 
     get IsByExpireDate() { return this.RequestParams.IsByExpireDate; }
@@ -133,7 +132,6 @@ export class ImporterDeclarationComponent
 
     SetIsByType(newValue: boolean) {
         this.IsByType = newValue;
-        this.IsByExpireDate = !newValue;
     }
 
     get IsByType() { return this.RequestParams.IsByType; }
@@ -369,11 +367,10 @@ export class ImporterDeclarationComponent
         }
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לתצהיר יבואן", true)
             .then((res) => {
                 this.ResponseData = res;
-                this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {

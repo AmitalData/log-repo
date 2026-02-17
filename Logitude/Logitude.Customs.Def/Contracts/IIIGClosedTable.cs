@@ -20,7 +20,7 @@ namespace Logitude.Customs.Def.Contracts
     
     public interface ICanUpdateClosedTable<TEntityPM>
     {
-        void Update(TEntityPM entityPM, bool commit, TimeSpan? transactionTimeout = null);
+        void Update(TEntityPM entityPM, bool commit);
     }
 
 

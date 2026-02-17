@@ -9,18 +9,15 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ReportsDomainService} from '../../Services/ReportsDomainService';
 import {UserListService} from '../../../Common/Services/StandardLists/UserListService';
 import {CodeNameClass} from './CodeNameClass';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'CustomerAdditionalServicesFilterComponent',
     templateUrl: './CustomerAdditionalServicesFilterComponent.html',
     inputs: ['ReportsPreview']
 })
 
 export class CustomerAdditionalServicesFilterComponent extends BaseComponent implements OnInit {
-  public SelectedITemUsers: any;
-
     public ReportsPreview: ReportsPreviewComponent;
     reportFliter: ReportFliter;
     public FilterdAdditionalService: any;
@@ -56,7 +53,7 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
         this.CustomerStatusList.push(new CodeNameClass("ACT", "Active"));
         this.CustomerStatusList.push(new CodeNameClass("POT", "Potential"));
 
-        this.selectedCustomerStatus =this.selectedCustomerStatus || this.CustomerStatusList.filter(d => d.Code == "ALL")[0];
+        this.selectedCustomerStatus = this.CustomerStatusList.filter(d => d.Code == "ALL")[0];
     }
 
     private selectedCustomerStatus: CodeNameClass;
@@ -212,11 +209,11 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
             this.UsersFilterList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
         }
     }  
-  indexBusinessUnit: number=0;
+
     BuildBusinessUnitFilterList(myResult: any) {
         var item: CodeNameClass = new CodeNameClass();
-        item.Code = "M";
 
+        item.Code = "M";
         item.Name = "My Records";
         this.BusniessItemSource.push(item);
         myResult.forEach((i) => {
@@ -232,10 +229,9 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
         item.Code = "A";
         item.Name = "All Records";
         this.BusniessItemSource.push(item);
-        this.SelectedBusniessUnitChanged( this.BusniessItemSource[this.indexBusinessUnit]);
+        this.SelectedBusniessUnitChanged( this.BusniessItemSource[0]);
     }
-    AdditionalServiceSelectedValue:string
-
+     
     fillcombo(arr: any) {
         this.FilterdAdditionalService = [];
 
@@ -253,10 +249,7 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
             }
         });
 
-        this.FilterdAdditionalService.sort((a: CodeNameClass, b: CodeNameClass) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });    
-        this.FilterdAdditionalService.forEach((item: any) => {
-            item.Checked = this.SelectedItem == "NotAll" && this.AdditionalServiceSelectedValue.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id);
-        });
+        this.FilterdAdditionalService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });    
     }
 
     public IsAll: boolean = true;
@@ -314,62 +307,8 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
         this.SelectedItem = item;
     }    
     public ValidationErrorsList: string[];
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "AdditionalServices":{
-                    this.SelectedItem =  queryFilterItem.FieldValue=="All"?"All":"NotAll"; 
-                    this.AdditionalServiceSelectedValue= queryFilterItem.FieldValue;
-                }
-                    break;
-                case "BusinessUnitId":{
-                    if(!queryFilterItem.FieldValue)
-                       this.indexBusinessUnit=1;
-                    break;
-         }
-                case "SalesmanUserId":
-                    this.ListOfValuesUserId += queryFilterItem.FieldValue;
-                    break;
-                case "ServiceType":{
-                    this.IsAll = queryFilterItem.FieldValue === "All";
-                    this.IsInUse = queryFilterItem.FieldValue === "In Use";
-                    this.IsPotential = !this.IsAll && !this.IsInUse;
-                    break;
-                }
-                case "CustomerStatus":{
-                   this.BuildCustomerStatusFilters();
-                    this.SelectedCustomerStatus = this.CustomerStatusList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
-                    break;
-                } 
-                   
-               
-            }
-    
-           
-    
-        }
-    }
-    ValidateSelectedFilters() {
+
+    RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
 
         if (!this.SelectedCustomerStatus) {
@@ -377,16 +316,63 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
         }
 
 
-        return this.ValidationErrorsList.length == 0;
-    }
-    RunReport(isloading: boolean) {
-       
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
 
-        if (this.ValidateSelectedFilters()) {
-            
+            var myAdditionalServices: string = "";
+
+            if (this.SelectedItem == "All") {
+                myAdditionalServices = "All";
+            }
+
+            else {
+                this.FilterdAdditionalService.forEach((i) => {
+                    if (i.Checked) {
+                        myAdditionalServices += i.Id + ",";
+                    }
+                });
+            }
+
+            if (this.SelectedCustomerStatus.Code == "ALL") {
+                this.SelectedCustomerStatus.Code = "";
+            }
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "AdditionalServices";
+            this.queryFilterItem.FieldValue = myAdditionalServices;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "BusinessUnitId";
+            this.queryFilterItem.FieldValue = this.BusinessUnitId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "SalesmanUserId";
+            this.queryFilterItem.FieldValue = this.SalesmanUserId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ServiceType";
+            this.queryFilterItem.FieldValue = this.ServiceType;
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CustomerStatus";
+            this.queryFilterItem.FieldValue = this.SelectedCustomerStatus.Code;
+            this.queryFilterItems.push(this.queryFilterItem);
+
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -394,60 +380,5 @@ export class CustomerAdditionalServicesFilterComponent extends BaseComponent imp
             this.reportFliter.ProcessType = "GenerateReport";
             this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
         }
-    }
-    GetQueryFilterItems() {
-        this.queryFilterItems = new Array<QueryFilterItem>();
-
-        var myAdditionalServices: string = "";
-
-        if (this.SelectedItem == "All") {
-            myAdditionalServices = "All";
-        }
-
-        else {
-            this.FilterdAdditionalService.forEach((i) => {
-                if (i.Checked) {
-                    myAdditionalServices += i.Id + ",";
-                }
-            });
-        }
-
-        if (this.SelectedCustomerStatus.Code == "ALL") {
-            this.SelectedCustomerStatus.Code = "";
-        }
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "AdditionalServices";
-        this.queryFilterItem.FieldValue = myAdditionalServices;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "BusinessUnitId";
-        this.queryFilterItem.FieldValue = this.BusinessUnitId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "SalesmanUserId";
-        this.queryFilterItem.FieldValue = this.SalesmanUserId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ServiceType";
-        this.queryFilterItem.FieldValue = this.ServiceType;
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "CustomerStatus";
-        this.queryFilterItem.FieldValue = this.SelectedCustomerStatus.Code;
-        this.queryFilterItems.push(this.queryFilterItem);
-        return this.queryFilterItems;
     }
 }

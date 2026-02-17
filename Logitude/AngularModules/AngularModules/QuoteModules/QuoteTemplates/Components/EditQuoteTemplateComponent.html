@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
 
 .QuoteTemplateSettingButton:hover:not(:disabled) {
@@ -91,11 +91,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
                                                                             <td style="width: 45px;">
                                                                                 <div [style.opacity]="IsDisableEditButton?'0.5':'1'" [style.pointer-events]="IsDisableEditButton?'none':'all'" class="ToggleButton" tabindex="0">
-                                                                                    <label id="{{'MainAdd' | IdGeneratorAsyncPipe | async}}" style="left: 5px;">{{'QuoteTemplate.B.Add' | TextCodeTranslationPipe}} </label>
+                                                                                    <label  style="left: 5px;">{{'QuoteTemplate.B.Add' | TextCodeTranslationPipe}} </label>
                                                                                     <img style="right: 5px;margin-top:1px" src="./Images/ToggleIcon.png" />
                                                                                 
                                                                                     <div  class="ToggleButtonMenu">
-                                                                                        <button id="{{'AddSection' | IdGeneratorAsyncPipe | async}}" [disabled]="IsDisableEditButton"  (click)="AddEditSection(null)" >
+                                                                                        <button [disabled]="IsDisableEditButton"  (click)="AddEditSection(null)" >
                                                                                              
                                                                                             {{'QuoteTemplate.B.Section' | TextCodeTranslationPipe}}
                                                                                         </button>
@@ -158,7 +158,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                                          
                                                                                         <td class="CellStretched" style="width:93px;position:relative">
                                                                                             <div *ngIf="!item.IsSection && !item.IsPagebrackSession " style="vertical-align:central;margin-top:2px">
-                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px" class="QuoteTemplateSettingButton" id="{{'Setting' | IdGeneratorAsyncPipe | async}}" attr.data-cy="{{'Setting_' + item.DisplayName}}" (click)="EditSectionButtonClicked(item)" >
+                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px" class="QuoteTemplateSettingButton" (click)="EditSectionButtonClicked(item)">
 
                                                                                                     <span><img style="margin-top:-1px"  src="./Images/Buttons/SettingGray.png" /></span>
                                                                                                     <span>{{'QuoteTemplate.B.Settings' | TextCodeTranslationPipe}} </span>
@@ -168,11 +168,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                                             </div>
 
                                                                                             <div *ngIf="item.IsSection && !item.IsPagebrackSession" style="vertical-align:central;margin-top:2px;width:80px;">
-                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px;margin-top:2px" id="{{'EditSection2' | IdGeneratorAsyncPipe | async}}"  attr.data-cy="{{'Setting_' + item.DisplayName}}" class="QuoteTemplateSettingButton" (click)="EditSectionButtonClicked(item)">
+                                                                                                <button   [disabled] = "IsDisableEditButton" style="display:inline;width:80px;margin-top:2px" class="QuoteTemplateSettingButton" (click)="EditSectionButtonClicked(item)">
                                                                                                     <table>
                                                                                                         <tr>
-                                                                                                            <td style="width:20px;"><img src="./Images/Buttons/EditBlack.png" /></td>
-                                                                                                            <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}}</td>
+                                                                                                            <td style="width:20px;"><img   src="./Images/Buttons/EditBlack.png" /></td>
+                                                                                                            <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </td>
                                                                                                             <td></td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -192,9 +192,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                                                                                             <div [style.opacity]="IsDisableEditButton?'0.5':'1'" [style.pointer-events]="IsDisableEditButton?'none':'all'" *ngIf="item.IsShowArrowUpDown" class="CenterCenter" style="width:100%;vertical-align:middle;">
                                                                                                 <!--QuoteTemplate.B.Down-->
                                                                                                 <!--QuoteTemplate.B.Up-->
-                                                                                                <img  (click)="ArrowUpButtonClicked(item)" title="{{'QuoteTemplate.B.Up' | TextCodeTranslationPipe}}" style="width:14px;height:18px;min-height:18px;cursor:pointer;background:transparent;border:none;box-shadow:none;margin-top:6px;" src="./Images/Icons/ArrowUp.png" />
+                                                                                                <img  (click)="ArrowUpButtonClicked(item)" title="{{'QuoteTemplate.B.Up' | TextCodeTranslationPipe}}" style="width:20px;height:20px;margin-top:4px;" src="./Images/arrow-up-n.png" />
 
-                                                                                                <img  (click)="ArrowDownButtonClicked(item)" title="{{'QuoteTemplate.B.Down' | TextCodeTranslationPipe}}"  style="width:14px;height:18px;min-height:18px;cursor:pointer;background:transparent;border:none;box-shadow:none;margin-top:6px;" src="./Images/Icons/ArrowDown.png" />
+                                                                                                <img  (click)="ArrowDownButtonClicked(item)" title="{{'QuoteTemplate.B.Down' | TextCodeTranslationPipe}}"  style="width:20px;height:20px;margin-top:4px;margin-left:-10px" src="./Images/arrow-down-n.png" />
                                                                                             </div>
 
 
@@ -373,7 +373,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()"  id="{{'Save' | IdGeneratorAsyncPipe | async}}">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'QuoteTemplate.B.Save' | TextCodeTranslationPipe}} </button>
                     </td>
                 </tr>
             </table>

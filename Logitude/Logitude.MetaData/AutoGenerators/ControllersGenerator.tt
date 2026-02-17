@@ -22,12 +22,12 @@ this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 
  
 GenerateAllControllers("../EntityFiles/CommonDataModel","../.../JustWebFreight/WebFreight.Web/Controllers","CommonDataContext","CommonDataModel");
-GenerateAllControllers("../EntityFiles/ShipmentsModel","../.../JustWebFreight/WebFreight.Web/Controllers","ShipmentsContext","ShipmentsModel");
-GenerateAllControllers("../EntityFiles/InfrastructureModel","../.../JustWebFreight/WebFreight.Web/Controllers","WebFreightContext","InfrastructureModel");
-
-GenerateAllControllers("../EntityFiles/GlobalModel","../.../JustWebFreight/WebFreight.Web/Controllers","GlobalContext","GlobalModel");
-GenerateAllControllers("../EntityFiles/InvoiceModel","../.../JustWebFreight/WebFreight.Web/Controllers","InvoiceContext","InvoiceModel");
-GenerateAllControllers("../EntityFiles/QuoteModel","../.../JustWebFreight/WebFreight.Web/Controllers","QuotesContext","QuoteModel");
+//GenerateAllControllers("../EntityFiles/ShipmentsModel","../.../JustWebFreight/WebFreight.Web/Controllers","ShipmentsContext","ShipmentsModel");
+//GenerateAllControllers("../EntityFiles/InfrastructureModel","../.../JustWebFreight/WebFreight.Web/Controllers","WebFreightContext","InfrastructureModel");
+//
+//GenerateAllControllers("../EntityFiles/GlobalModel","../.../JustWebFreight/WebFreight.Web/Controllers","GlobalContext","GlobalModel");
+//GenerateAllControllers("../EntityFiles/InvoiceModel","../.../JustWebFreight/WebFreight.Web/Controllers","InvoiceContext","InvoiceModel");
+//GenerateAllControllers("../EntityFiles/QuoteModel","../.../JustWebFreight/WebFreight.Web/Controllers","QuotesContext","QuoteModel");
 //
  //
 

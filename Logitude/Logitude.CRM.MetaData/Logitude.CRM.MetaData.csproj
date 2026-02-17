@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.CRM.MetaData</RootNamespace>
     <AssemblyName>Logitude.CRM.MetaData</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -18,14 +17,12 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,14 +30,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\All Projects\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,17 +45,17 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -96,9 +93,9 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Data.Global</Name>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
@@ -114,10 +111,6 @@
     <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="app.config" />
     <None Include="AutoGenerators\ContextGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -127,61 +120,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CRMClassesGenerator.cs</LastGenOutput>
     </None>
-    <None Include="DBOthers\Procedures\usp_DeleteCRMRecords.dxml" />
-    <None Include="DBOthers\Procedures\usp_DeleteTicketsRecords.dxml" />
-    <None Include="DBScripts\202205101347_FillOpportunityNumberOfQuotes.sxml" />
-    <None Include="DBScripts\FixFeatureBusinessUnitProperty.sxml" />
-    <None Include="DBTables\Activity.dxml" />
-    <None Include="DBTables\ActivityEmailRecipient.dxml" />
-    <None Include="DBTables\ActivityInvitee.dxml" />
-    <None Include="DBTables\ActivityNote.dxml" />
-    <None Include="DBTables\ActivityOwnerHistory.dxml" />
-    <None Include="DBTables\ActivityPriority.dxml" />
-    <None Include="DBTables\ActivityStatus.dxml" />
-    <None Include="DBTables\ActivityTimeType.dxml" />
-    <None Include="DBTables\ActivityType.dxml" />
-    <None Include="DBTables\CallType.dxml" />
-    <None Include="DBTables\Correspondence.dxml" />
-    <None Include="DBTables\CorrespondencesAttachment.dxml" />
-    <None Include="DBTables\CRMFilterSetting.dxml" />
-    <None Include="DBTables\EmployeeGroup.dxml" />
-    <None Include="DBTables\EmployeeGroupLine.dxml" />
-    <None Include="DBTables\EscalationActionTimeIndicator.dxml" />
-    <None Include="DBTables\EscalationPreDefinition.dxml" />
-    <None Include="DBTables\Occasion.dxml" />
-    <None Include="DBTables\OccasionInvitee.dxml" />
-    <None Include="DBTables\OccasionStatus.dxml" />
-    <None Include="DBTables\OccasionType.dxml" />
-    <None Include="DBTables\Opportunity.dxml" />
-    <None Include="DBTables\OpportunityAdditionalService.dxml" />
-    <None Include="DBTables\OpportunityClosingReason.dxml" />
-    <None Include="DBTables\OpportunityCompetitor.dxml" />
-    <None Include="DBTables\OpportunityCompetitorProduct.dxml" />
-    <None Include="DBTables\OpportunityProduct.dxml" />
-    <None Include="DBTables\OpportunityProductLocation.dxml" />
-    <None Include="DBTables\OpportunityStage.dxml" />
-    <None Include="DBTables\OpportunityType.dxml" />
-    <None Include="DBTables\Questionnaire.dxml" />
-    <None Include="DBTables\QuestionnaireAnswer.dxml" />
-    <None Include="DBTables\QuestionnaireAnswerLine.dxml" />
-    <None Include="DBTables\QuestionnaireQuestion.dxml" />
-    <None Include="DBTables\OpportunityAnalytic.dxml" />
-    <None Include="DBTables\Rating.dxml" />
-    <None Include="DBTables\SLAEscalation.dxml" />
-    <None Include="DBTables\SLAEscalationRecepient.dxml" />
-    <None Include="DBTables\SLAHeader.dxml" />
-    <None Include="DBTables\SLALine.dxml" />
-    <None Include="DBTables\Stage.dxml" />
-    <None Include="DBTables\SupportMailbox.dxml" />
-    <None Include="DBTables\Ticket.dxml" />
-    <None Include="DBTables\TicketClassification.dxml" />
-    <None Include="DBTables\TicketCreatedByType.dxml" />
-    <None Include="DBTables\TicketEscalation.dxml" />
-    <None Include="DBTables\TicketSeverity.dxml" />
-    <None Include="DBTables\TicketSource.dxml" />
-    <None Include="DBTables\TicketStage.dxml" />
-    <None Include="DBTables\TicketType.dxml" />
-    <None Include="DBTables\TimeUnit.dxml" />
     <None Include="EntityFiles\Activity.lxml" />
     <None Include="EntityFiles\ActivityEmailRecipient.lxml" />
     <None Include="EntityFiles\ActivityInvitee.lxml" />
@@ -196,12 +134,6 @@
     <None Include="EntityFiles\EmployeeGroupLine.lxml" />
     <None Include="EntityFiles\EscalationActionTimeIndicator.lxml" />
     <None Include="EntityFiles\EscalationPreDefinition.lxml" />
-    <None Include="EntityFiles\OccasionInvitee.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\Occasion.lxml" />
-    <None Include="EntityFiles\OccasionStatus.lxml" />
-    <None Include="EntityFiles\OccasionType.lxml" />
     <None Include="EntityFiles\Opportunity.lxml" />
     <None Include="EntityFiles\OpportunityAdditionalService.lxml" />
     <None Include="EntityFiles\OpportunityClosingReason.lxml" />
@@ -231,7 +163,6 @@
     </None>
     <None Include="EntityFiles\SLALine.lxml" />
     <None Include="EntityFiles\Stage.lxml" />
-    <None Include="EntityFiles\SupportMailbox.lxml" />
     <None Include="EntityFiles\Ticket.lxml" />
     <None Include="EntityFiles\TicketClassification.lxml" />
     <None Include="EntityFiles\Correspondence.lxml">
@@ -246,9 +177,6 @@
     <None Include="EntityFiles\TimeUnit.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\OccasionContact.lxml">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -258,10 +186,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

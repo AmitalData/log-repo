@@ -51,17 +51,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 else
                 {
 
-                    if (requestParams.LoggingEntityReference == "E"|| requestParams.DeclarationNumber.Substring(2,2)=="98"|| requestParams.DeclarationNumber.Substring(2, 2) == "97")
-                    {
-                        var messagingService = new DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService();
-                        responseData = messagingService.Send(requestParams);
-                    }
-                    else
-                    {
-                        // use messageing service
-                        var messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
-                        responseData = messagingService.Send(requestParams);
-                    }
+                    // use messageing service
+                    var messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
+                    responseData = messagingService.Send(requestParams);
+
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
@@ -167,6 +160,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
     }
 }

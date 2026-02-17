@@ -4,7 +4,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {MeasurementPM} from '../../../EntityPMs/MeasurementPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './MeasurementGeneralComponent.html',
 })
 

@@ -20,17 +20,16 @@ import {CurrencyListService} from '../../../../Common/Services/StandardLists/Cur
 import {RatesTableListService} from '../../../../Infrastructure/Services/StandardLists/RatesTableListService';
 //import {List} from '../../../../Infrastructure/DataContracts/Dashboard/List';
 import {AppTool} from '../../../../Infrastructure/Tools';
+import {ReconcileEventManager} from '../../../Utilities/ReconcileEventManager';
 import {BankAccountExtendedListService} from '../../../Services/ExtendedLists/BankAccountExtendedListService';
 import {BankAccountSummary} from '../../../DataContracts/AccountingSummery';
 import {PaymentChequeSummary} from '../../../DataContracts/AccountingSummery';
 import {PaymentChequeExtendedListService} from '../../../Services/ExtendedLists/PaymentChequeExtendedListService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { BankDepositSummary } from '../../../DataContracts/AccountingSummery';
-import { CashBookSummary } from '../../../DataContracts/AccountingSummery';
 
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './BanksPageComponent.html',
 })
 
@@ -46,8 +45,6 @@ export class BanksPageComponent {
     public RecentBankDepositCount: number = 0;
     _BankAccountSummary: BankAccountSummary = new BankAccountSummary();
     paymentChequeSummary: PaymentChequeSummary = new PaymentChequeSummary();
-    bankDepositSummary: BankDepositSummary = new BankDepositSummary();
-    cashBookSummary: CashBookSummary = new CashBookSummary();
     screenHeight: number = 0;
     get ScreenHeight() { return this.screenHeight; }
     set ScreenHeight(value: number) {
@@ -55,8 +52,7 @@ export class BanksPageComponent {
     }
 
 
-    //#region Queries Features
-    LoadBankPageMENUVisibility: boolean = false;
+    //#region Queries Features 
     public TodayDepositsVisibility: boolean = false;
     public cashDepositsVisibility: boolean = false;
     public chequeDepositVisibility: boolean = false;
@@ -67,7 +63,7 @@ export class BanksPageComponent {
     txt_chequeDeposit: string = TextCodeTranslator.Translate('BankDeposit.Q.chequeDeposit');
 
     public isRTL: boolean = false;
-    chartId: string = "";
+    chartId: string = ""; 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
       this.chartId = "CashBookChart_" + this.CurrentSession.GetChartId();
@@ -81,7 +77,6 @@ export class BanksPageComponent {
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => { });
-        this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ExternalReconciliationLine").subscribe((response: any) => { });
         this.LoadTenantCurrency();
         this.LoadAllScreenData();
@@ -96,14 +91,14 @@ export class BanksPageComponent {
         this.ScreenHeight = this.getScreenHeight();
 
     }
-
+    
     LoadAllScreenData() {
         this.LoadRecentBankDeposits();
         this.SetQueriesVisibility();
         this.LoadTenantCurrency();
         this.LoadChartData();
         this.LoadQueriesCounts();
-
+   
     }
 
     SetQueriesVisibility() {
@@ -111,31 +106,18 @@ export class BanksPageComponent {
         this.cashDepositsVisibility = FeatureLocator.HasFeaturePermession("BankDeposit", "CashBankDeposit") ? true : false;
         this.chequeDepositVisibility = FeatureLocator.HasFeaturePermession("BankDeposit", "ChequeBankDeposit") ? true : false;
         this.TodayDepositsVisibility = FeatureLocator.HasFeaturePermession("BankDeposit", "TodayBankDeposit") ? true : false;
-        this.LoadBankPageMENUVisibility = FeatureLocator.HasFeaturePermession("ReconcileExternalPage", "LOADBANKPAGEMENU") ? true : false;
     }
 
     LoadQueriesCounts() {
-        this._BankAccountExtendedListService.GetBankAccountsSummary().subscribe((myResult:BankAccountSummary) => {
+        this._BankAccountExtendedListService.GetBankAccountsSummary().subscribe(myResult => {
             if (myResult != null) {
                 this._BankAccountSummary.AllBankAccountsCount = myResult.AllBankAccountsCount > 1000 ? "1000+" : myResult.AllBankAccountsCount.toString();
             }
         });
 
-        this.myBankDepositService.GetBankDepositsSummary().subscribe((myResult:BankDepositSummary) => {
+        this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe(myResult => {
             if (myResult != null) {
-                this.bankDepositSummary.TodaysDepositCount = myResult.TodaysDepositCount > 1000 ? "1000+" : myResult.TodaysDepositCount.toString();
-            }
-        });
-
-        this.myCashBookExtendedListService.GetCashBookSummary().subscribe((myResult:CashBookSummary) => {
-            if (myResult != null) {
-                this.cashBookSummary.AllCashbookCount = myResult.AllCashbookCount > 1000 ? "1000+" : myResult.AllCashbookCount.toString();
-                this.cashBookSummary.CashCashbookCount = myResult.CashCashbookCount > 1000 ? "1000+" : myResult.CashCashbookCount.toString();
-
-                this.cashBookSummary.ChequeCashbookCount = myResult.ChequeCashbookCount > 1000 ? "1000+" : myResult.ChequeCashbookCount.toString();
-
-
-
+                this.paymentChequeSummary.AllPaymenChequesCount = myResult.AllPaymentChequesCount > 1000 ? "1000+" : myResult.AllPaymentChequesCount.toString();
             }
         });
     }
@@ -240,7 +222,7 @@ export class BanksPageComponent {
             });
         }
     }
-
+    
     EditBankDeposit(entity: any) {
         if (entity != null) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -262,10 +244,12 @@ export class BanksPageComponent {
     RunNewCashBookWizard() {
         var windowTitle = "New Cashbook";
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewCashbook");
+
         var logWindow = new LogitudeWindow();
         logWindow.Width = 530;
         logWindow.Height = 400;
         logWindow.Title = windowTitle;
+        //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewCashBookComponent');
     }
@@ -346,7 +330,7 @@ export class BanksPageComponent {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
-        logWindow.Height = 500;
+        logWindow.Height = 400;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
@@ -355,9 +339,9 @@ export class BanksPageComponent {
     LoadBankPagesFromFile() {
         var logWindow = new LogitudeWindow();
         logWindow.IsShowCloseButton = true;
-        logWindow.Width = 900;
+        logWindow.Width = 500;
         logWindow.Height = 400;
-        logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.LoadBankPage");
+        logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.BankPagesFromFile");
         logWindow.WindowArgs = {};
         logWindow.WindowClosed.subscribe(($event: any) => {
 
@@ -445,7 +429,7 @@ export class BanksPageComponent {
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewPaymentCheque");
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 650;
+        logWindow.Width = 600;
         logWindow.Height = 500;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
@@ -486,12 +470,12 @@ export class BanksPageComponent {
                             }
                         });
                     }
-
+                    
                 }
             }
         });
 
-
+        
     }
 
     ConvertToLocal(foreignAmount: number, currencyId) {
@@ -593,7 +577,7 @@ export class BanksPageComponent {
         }];
 
         // Graph Properties
-        var Graphs = Graphs =
+        var Graphs = Graphs = 
         //#endregion
 
 
@@ -612,7 +596,7 @@ export class BanksPageComponent {
             var name = "";
             if (element.CashBookTypeCode == "1") { // 1-cash
                 name = (useLocal ? "מזומן" : "Cash") + " (" + element.CurrencyCode + ")";
-            } else if (element.CashBookTypeCode == "2") { // 2-cheque
+            } else if (element.CashBookTypeCode == "2") { // 2-cheque 
               name = (useLocal ? "המחאות" :"Cheque") + " (" + element.CurrencyCode + ")";
                 isCheque = true;
             } else {
@@ -640,7 +624,7 @@ export class BanksPageComponent {
     BarClicking() {
         if (BarClick() != null) {
             this.OnBarClick(BarClick());
-
+            
         }
 
     }
@@ -679,7 +663,7 @@ export class BanksPageComponent {
                         });
                     });
             }
-
+            
         }
     }
 

@@ -2,8 +2,8 @@ declare var window: any;
 import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import {CodeNameClass} from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import {AppTool} from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
@@ -15,16 +15,13 @@ import {PackageListService} from '../../../../Common/Services/StandardLists/Pack
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {TenantManagementList} from '../../../../Infrastructure/EntityLists/TenantManagementList';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { TenantLoginPolicyPMService } from '../../../../Common/Services/StandardPMs/TenantLoginPolicyPMService';
-import { TenantLoginPolicyPM } from '../../../../Common/EntityPMs/TenantLoginPolicyPM';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { TraceEventExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
 @Component({
-
+    moduleId: module.id,
     selector: 'TenantManagementGeneralTabComponent',
     templateUrl: './TenantManagementGeneralTabComponent.html',
 })
@@ -39,39 +36,14 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public BluesnapEAWBSContractIdFilterItems: ApiQueryFilters;
     public BluesnapCRMContractIdFilterItems: ApiQueryFilters;
     public BluesnapInttraStockContractIdFilterItems: ApiQueryFilters;
-    public IsMainAdditionalPackageApplied: boolean = false;
-    private tenantLoginPolicyPMService: TenantLoginPolicyPMService;
-    private CurrentSession = SessionLocator.SelectedSession;
-    public isRTL: boolean = false;
-    public IsLogBoxTenant: boolean = false;
 
-    private headerColor = "";
-    get HeaderColor() {
-        return this.headerColor;
-    }
-    set HeaderColor(newValue: string) {
-        if (this.EntityPM.HeaderColor != newValue) {
-            this.headerColor = newValue;
-            this.EntityPM.IsDirty = true;
-            this.EntityPM.HeaderColor = newValue;
-        }
-    }
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = this.entityArgs.EntityPM;
-        this.headerColor = this.EntityPM.HeaderColor;
-        this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
         this.iGlobalDomainService = new GlobalDomainService();
-        this.tenantLoginPolicyPMService = new TenantLoginPolicyPMService();
-
-        if (this.IsLogBoxEnvironment()){
-            this.IsLogBoxTenant = true;
-            this.LoadTenantLoginPolicy();
-        }
-
         this.LoadParentTenants();
         this.Listen();
+
         this.BluesnapContractIdFilterItems = new ApiQueryFilters();
         this.BluesnapContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "BA", null, null, "Equals", false, false, false, "string", false, true);
 
@@ -88,9 +60,11 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.BluesnapInttraStockContractIdFilterItems = new ApiQueryFilters();
         this.BluesnapInttraStockContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "INTS", null, null, "Equals", false, false, false, "string", false, true);
 
-        this.InitializePackageSetting();
+
     }
 
+    private SessionEvent: any = null;
+    private TabChangedEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
@@ -99,12 +73,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    if (this.IsTenantLoginPolicyPMChanged) this.SaveTenantLoginPolicy();
-
-                    this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
-                    this.BuildPackagesList();
-                    this.BuildAddOnsList();
-                    this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
@@ -112,10 +80,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
-                    this.BuildPackagesList();
-                    this.BuildAddOnsList();
-                    this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
@@ -142,7 +106,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.SetUIProperties_Distributor();
         this.SetUIProperties_NumberOfUsers();
         this.SetUIProperties_ManageLicencesPerUser();
-        this.SetUIProperties_ScheduledTasksLimitPerReport();
 
         if (this.isTenantManagementEditable) {
             this.SetUIProperties_PaymentFailure();
@@ -151,8 +114,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SetUIProperties_Plimus();
             this.SetUIProperties_TemporalPackage();
             this.SetUIProperties_TenantType();
-            this.SetUIProperties_ParentTenant();
-            this.SetUIProperties_TotalPrice();
+            this.SetUIProperties_ParentTenant();         
         }
 
         else {
@@ -164,7 +126,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("TTY", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsAWBStockPrepaid", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsINTTRAStockPrepaid", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("IsContainerTrackingPrepaid", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsActive", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsSystemSupportEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsDistributorSupportEnabled", this.ObjectTableName, false);
@@ -192,35 +153,22 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("TenantTypeCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("TenantConnectedToAirlineCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsParentTenant", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);
         }
 
         if (SessionLocator.Tenant == 0) {
             this.UIProperties.SetEnabled("IsSystemSupportEnabled", this.ObjectTableName, false);
         }
     }
-
-    IsLogBoxEnvironment() {
-        var deploymentStage = ObjectsLocator.GlobalSetting?.DeploymentStage ? ObjectsLocator.GlobalSetting?.DeploymentStage.toString().toLowerCase() : "";
-
-        return (deploymentStage == "logboxwe1" || deploymentStage == "test2" || deploymentStage == "logboxpre" || ObjectsLocator.GlobalSetting?.WorkEnvironment == "cloud") ? true : false;
-    }
-
-
-
     private SetUIProperties_NumberOfUsers() {
         var isEditable = false;
 
         if (this.isTenantManagementEditable) {
-            if (this.MainAdditionalPackageApplied || !this.IsMultiPackage) {
+            if (!this.IsMultiPackage) {
                 isEditable = true;
             }
         }
 
-        this.UIProperties.SetEnabled("PackageCode", this.ObjectTableName, isEditable);
         this.UIProperties.SetEnabled("NumberOfUsers", this.ObjectTableName, isEditable);
-        this.UIProperties.SetEnabled("FreeUsers", this.ObjectTableName, isEditable);
-        this.UIProperties.SetEnabled("LicensePrice", this.ObjectTableName, true);
     }
     private SetUIProperties_Distributor() {
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -268,17 +216,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("TrialEndDate", this.ObjectTableName, false);
         }
     }
-
-    private SetUIProperties_ScheduledTasksLimitPerReport() {
-
-        if (AppTool.IsNullOrEmpty(this.ScheduledTasksLimitPerReport)) {
-            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, true);
-        } else {
-            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, false);
-        };
-
-    }
-
     private SetUIProperties_IsRecurring() {
         if (this.EntityPM.IsRecurring) {
             this.UIProperties.SetRequired("RecurringPeriodCode", "TenantManagement", AppTool.IsNullOrEmpty(this.RecurringPeriodCode));
@@ -287,7 +224,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         else {
             this.UIProperties.SetRequired("RecurringPeriodCode", "TenantManagement", false);
             this.UIProperties.SetEnabled("RecurringPeriodCode", "TenantManagement", false);
-        }
+        }        
     }
     private SetUIProperties_TemporalPackage() {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.TemporalPackageCode)) {
@@ -362,16 +299,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         else {
             this.UIProperties.SetEnabled("IsParentTenant", this.ObjectTableName, true);
         }
-
-        this.UIProperties.SetEnabled("NoPaymentForChildTenants", this.ObjectTableName, this.IsParentTenant);
-    }
-    SetUIProperties_TotalPrice() {
-        this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);
-
-        this.PackagesList.filter(d => !d.IsMainPackage).forEach(item => {
-            item.SetUIProperties_TotalPrice();
-        });
-    }
+    }    
 
     private CloseBillingFields(close: boolean) {
         this.UIProperties.SetEnabled("IsRecurring", "TenantManagement", !close);
@@ -386,7 +314,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.UIProperties.SetEnabled("PaymentCurrencyCode", "TenantManagement", !close);
     }
 
-    private IsTenantManagementEditable () {
+    private IsTenantManagementEditable() {
         var myResult = false;
 
         if (FeatureLocator.HasFeaturePermession("TenantManagement", "EnableTenantManagementEdit")) {
@@ -404,71 +332,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 this.BuildParentTenantsList(myList);
             }
         });
-    }
-
-    IsTenantLoginPolicyPMChanged: boolean = false;
-
-    private keepUserLoggedIn: boolean = false;
-    get KeepUserLoggedIn() {
-        if (this.tenantLoginPolicyPM) {
-            this.keepUserLoggedIn = this.tenantLoginPolicyPM.KeepUserLoggedIn;
-        }
-        return this.keepUserLoggedIn;
-    }
-    set KeepUserLoggedIn(value: boolean) {
-        if (this.tenantLoginPolicyPM) {
-            this.keepUserLoggedIn = value;
-
-            if (this.tenantLoginPolicyPM.KeepUserLoggedIn != value) {
-                this.tenantLoginPolicyPM.KeepUserLoggedIn = value;
-                this.IsTenantLoginPolicyPMChanged = true;
-                this.EntityPM.IsDirty = true;
-            }
-        }
-    }
-
-    IsNewTenantLoginPolicy: boolean = false;
-    public tenantLoginPolicyPM: TenantLoginPolicyPM = null;
-    LoadTenantLoginPolicy() {
-
-        this.tenantLoginPolicyPMService.get(SessionLocator.Tenant).subscribe((response: any) => {
-            if (!response.HasError) {
-                if (response.Result) {
-                    this.tenantLoginPolicyPM = response.Result;
-                } else {
-                    this.tenantLoginPolicyPM = this.tenantLoginPolicyPMService.GetNewEntityPM();
-                    this.tenantLoginPolicyPM.Tenant = SessionLocator.Tenant;
-                    this.tenantLoginPolicyPM.LoginPolicyCode = "NOREST";
-                    this.tenantLoginPolicyPM.IsEnabledForSpecificUsers = false;
-                    this.tenantLoginPolicyPM.TwoFactorInternalIPs = "";
-                    this.tenantLoginPolicyPM.AllowedIPs = "";
-                    this.tenantLoginPolicyPM.ExcludeInternalIPs = false;
-                    this.tenantLoginPolicyPM.SessionTimeout = 999;
-                    this.IsNewTenantLoginPolicy = true;
-                }
-            }
-            });
-    }
-
-    SaveTenantLoginPolicy() {
-        //this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        if (this.IsNewTenantLoginPolicy) {
-            this.tenantLoginPolicyPMService.insert(this.tenantLoginPolicyPM).subscribe((response: any) => {
-                //this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                this.IsNewTenantLoginPolicy = false;
-                this.tenantLoginPolicyPM = response.Result;
-                this.IsTenantLoginPolicyPMChanged = false;
-            });
-        }
-        else {
-            this.tenantLoginPolicyPMService.update(this.tenantLoginPolicyPM).subscribe((response: any) => {
-                //this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                this.IsTenantLoginPolicyPMChanged = false;
-                
-                const notes = `keep loged user change from ${!this.tenantLoginPolicyPM.KeepUserLoggedIn} to ${this.tenantLoginPolicyPM.KeepUserLoggedIn}`;
-                new TraceEventExtendedPMService().CreateTraceEvent(0, this.EntityPM.Id.toString(), "TenantManagement", "CRMG",  SessionLocator.LoggedUserPM.Email, notes).subscribe();
-            });
-        }
     }
 
     //Parent Tenant
@@ -526,22 +389,11 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             }
         }
     }
-
-    get NoPaymentForChildTenants() { return this.EntityPM.NoPaymentForChildTenants; }
-    set NoPaymentForChildTenants(newValue: boolean) {
-        if (this.EntityPM.NoPaymentForChildTenants != newValue) {
-            this.EntityPM.NoPaymentForChildTenants = newValue;
-        }
-    }
-
+    
     get IsParentTenant() { return this.EntityPM.IsParentTenant; }
     set IsParentTenant(newValue: boolean) {
         if (this.EntityPM.IsParentTenant != newValue) {
             this.EntityPM.IsParentTenant = newValue;
-
-            if (!newValue) {
-                this.NoPaymentForChildTenants = false;
-            }
 
             this.SetUIProperties_ParentTenant();
 
@@ -595,20 +447,13 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-    get IsContainerTrackingPrepaid() { return this.EntityPM.IsContainerTrackingPrepaid; }
-    set IsContainerTrackingPrepaid(newValue: boolean) {
-        if (this.EntityPM.IsContainerTrackingPrepaid != newValue) {
-            this.EntityPM.IsContainerTrackingPrepaid = newValue;
-        }
-    }
-
     get ManageLicencesPerUser() { return this.EntityPM.ManageLicencesPerUser; }
     set ManageLicencesPerUser(newValue: boolean) {
         if (this.EntityPM.ManageLicencesPerUser != newValue) {
             this.EntityPM.ManageLicencesPerUser = newValue;
         }
     }
-
+    
     get ManagesRegisteredAgent() { return this.EntityPM.ManagesRegisteredAgent; }
     set ManagesRegisteredAgent(newValue: boolean) {
         if (this.EntityPM.ManagesRegisteredAgent != newValue) {
@@ -637,28 +482,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-    get ScheduledTasksLimitPerReport() { return this.EntityPM.ScheduledTasksLimitPerReport; }
-    set ScheduledTasksLimitPerReport(newValue) {
-        if (this.EntityPM.ScheduledTasksLimitPerReport != newValue) {
-            this.EntityPM.ScheduledTasksLimitPerReport = newValue;
-
-        }
-    }
-
-    get WhatsAppMessagingPhoneNumber() { return this.EntityPM.WhatsAppMessagingPhoneNumber; }
-    set WhatsAppMessagingPhoneNumber(newValue) {
-        if (this.EntityPM.WhatsAppMessagingPhoneNumber != newValue) {
-            this.EntityPM.WhatsAppMessagingPhoneNumber = newValue;
-
-        }
-    }
-    get MinutsTimeOutSession() { return this.EntityPM.MinutsTimeOutSession; }
-    set MinutsTimeOutSession(newValue) {
-        if (this.EntityPM.MinutsTimeOutSession != newValue) {
-            this.EntityPM.MinutsTimeOutSession = newValue;
-
-        }
-    }
     get DistributorCode() { return this.EntityPM.DistributorCode; }
     set DistributorCode(newValue: string) {
         if (this.EntityPM.DistributorCode != newValue) {
@@ -751,7 +574,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             }
         }
     }
-
+    
     get SilverlightEndDate() { return this.EntityPM.SilverlightEndDate; }
     set SilverlightEndDate(newValue: Date) {
         if (this.EntityPM.SilverlightEndDate != newValue) {
@@ -764,20 +587,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set ChangeHeaderColor(newValue: boolean) {
         if (this.EntityPM.ChangeHeaderColor != newValue) {
             this.EntityPM.ChangeHeaderColor = newValue;
-        }
-    }
-
-    get IsTestTenant() { return this.EntityPM.IsTestTenant; }
-    set IsTestTenant(newValue: boolean) {
-        if (this.EntityPM.IsTestTenant != newValue) {
-            this.EntityPM.IsTestTenant = newValue;
-        }
-    }
-
-    get IsHybrid() { return this.EntityPM.IsHybrid; }
-    set IsHybrid(newValue: boolean) {
-        if (this.EntityPM.IsHybrid != newValue) {
-            this.EntityPM.IsHybrid = newValue;
         }
     }
 
@@ -838,6 +647,31 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     }
 
     //Subscription Details
+    get IsMultiPackage() { return this.EntityPM.IsMultiPackage; }
+    set IsMultiPackage(newValue: boolean) {
+        if (this.EntityPM.IsMultiPackage != newValue) {
+            this.EntityPM.IsMultiPackage = newValue;
+
+            this.SetUIProperties_NumberOfUsers();
+            this.SetUIProperties_ManageLicencesPerUser();
+        }
+    }
+
+    get NumberOfUsers() { return this.EntityPM.NumberOfUsers; }
+    set NumberOfUsers(newValue: number) {
+        if (this.EntityPM.NumberOfUsers != newValue) {
+            this.EntityPM.NumberOfUsers = newValue;
+        }
+    }
+
+    get FreeUsers() { return this.EntityPM.FreeUsers; }
+    set FreeUsers(newValue: number) {
+        if (this.EntityPM.FreeUsers != newValue) {
+            this.EntityPM.FreeUsers = newValue;
+        }
+    }
+
+
     get BluesnapContractQTYs() { return this.EntityPM.BluesnapContractQTY; }
     set BluesnapContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapContractQTY != newValue) {
@@ -847,6 +681,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
 
     }
+
 
     get BluesnapInttraStockContractQTYs() { return this.EntityPM.BluesnapInttraStockContractQTY; }
     set BluesnapInttraStockContractQTYs(newValue: number) {
@@ -858,6 +693,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
     }
 
+
     get BluesnapCRMContractQTYs() { return this.EntityPM.BluesnapCRMContractQTY; }
     set BluesnapCRMContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapCRMContractQTY != newValue) {
@@ -866,6 +702,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapCRMContractQTY = newValue;
         }
     }
+
 
     get BluesnapEAWBContractQTYs() { return this.EntityPM.BluesnapEAWBContractQTY; }
     set BluesnapEAWBContractQTYs(newValue: number) {
@@ -876,6 +713,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+
     get BluesnapEAWBSContractQTYs() { return this.EntityPM.BluesnapEAWBSContractQTY; }
     set BluesnapEAWBSContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapEAWBSContractQTY != newValue) {
@@ -885,12 +723,26 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+
     get BluesnapOneTimeContractQTYs() { return this.EntityPM.BluesnapOneTimeContractQTY; }
     set BluesnapOneTimeContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapOneTimeContractQTY != newValue) {
             if (newValue == null)
                 newValue = 0;
             this.EntityPM.BluesnapOneTimeContractQTY = newValue;
+        }
+    }
+
+    
+
+    get PackageCode() { return this.EntityPM.PackageCode; }
+    set PackageCode(newValue: string) {
+        if (this.EntityPM.PackageCode != newValue) {
+            this.EntityPM.PackageCode = newValue;
+
+            if (newValue == "EAWB") {
+                this.IsAWBStockPrepaid = true;
+            }
         }
     }
 
@@ -924,11 +776,10 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 logeWindow.WindowClosed.subscribe(s => {
                     if (s) {
                         this.BuildPackagesList();
-                        this.ComputePackagesTotals();
                     }
                 });
             });
-        }
+        } 
     }
 
     public PackagesList: PackageItem[];
@@ -942,83 +793,17 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
 
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe((result:any) => {
+        service.getAllFromCache().subscribe(result => {
             var allPackages = result.Result;
-
-            if (this.MainAdditionalPackageApplied) {
-                var mainPackage: TenantManagementLicensePM = new TenantManagementLicensePM(null);
-                mainPackage.PackageCode = this.PackageCode;
-                mainPackage.FreeUsers = this.FreeUsers;
-                mainPackage.NumberOfUsers = this.NumberOfUsers;
-                mainPackage.Price = this.LicensePrice;
-                mainPackage.TotalPrice = this.TotalPrice;
-                this.PackagesList.push(new PackageItem(mainPackage, this, false, true));
-            }
-
+            
             this.EntityPM.TenantManagementLicenses.forEach(item => {
                 var list: PackageList = allPackages.filter(d => d.Code == item.PackageCode)[0];
                 if (list != null) {
                     this.PackagesList.push(new PackageItem(item, this, false));
                 }
             });
-        });
-    }
-
-    public PackagesTotalNumberOfUsers: number = 0;
-    public PackagesTotalFreeUsers: number = 0;
-    public PackagesTotalPrice: number = 0;
-    public PackagesTotalTotalPrice: number = 0;
-    ComputePackagesTotals() {
-        var myList = this.PackagesList.filter(d => !d.IsMainPackage);
-
-        this.PackagesTotalNumberOfUsers = ArrayTool.Sum(myList, "NumberOfUsers");
-        this.PackagesTotalFreeUsers = ArrayTool.Sum(myList, "FreeUsers");
-        this.PackagesTotalPrice = ArrayTool.Sum(myList, "Price");
-        this.PackagesTotalTotalPrice = ArrayTool.Sum(myList, "TotalPrice");
-
-        if (this.IsMainAdditionalPackage) {
-            if (this.IsMultiPackage) {
-                if (this.NumberOfUsers) {
-                    this.PackagesTotalNumberOfUsers += this.NumberOfUsers;
-                }
-
-                if (this.FreeUsers) {
-                    this.PackagesTotalFreeUsers += this.FreeUsers;
-                }
-
-                if (this.TotalPrice) {
-                    this.PackagesTotalTotalPrice += this.TotalPrice;
-                }
-
-                this.TotalPaymentamount = this.PackagesTotalTotalPrice;
-                this.TotalNumberOfUsers = this.PackagesTotalNumberOfUsers;
-                this.TotalFreeUsers = this.PackagesTotalFreeUsers;
-            }
-
-            else {
-                this.TotalNumberOfUsers = this.NumberOfUsers;
-                this.TotalFreeUsers = this.FreeUsers;
-                this.TotalPaymentamount = this.TotalPrice;
-            }
-        }
-
-        else {
-            if (!this.IsMultiPackage) {
-                this.TotalNumberOfUsers = this.NumberOfUsers;
-                this.TotalFreeUsers = this.FreeUsers;
-                this.PackagesTotalPrice = this.LicensePrice;
-                this.TotalPaymentamount = this.TotalPrice;
-            }
-
-            else {
-                this.TotalPaymentamount = this.PackagesTotalTotalPrice;
-                this.TotalNumberOfUsers = this.PackagesTotalNumberOfUsers;
-                this.TotalFreeUsers = this.PackagesTotalFreeUsers;
-            }
-        }
-
-        this.AveragePrice = AppTool.Round((this.TotalPaymentamount / this.TotalNumberOfUsers), 3);
-    }
+        });        
+    } 
 
     public AddOnsList: AddOnItem[];
     private BuildAddOnsList() {
@@ -1031,7 +816,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
 
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe((result:any) => {
+        service.getAllFromCache().subscribe(result => {
             var allPackages = result.Result;
 
             this.EntityPM.AddOns.forEach(item => {
@@ -1046,6 +831,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     EditAddOn(itemViewModel: AddOnItem) {
         this.entityResourceService.getEntityResourceByTableName("TenantAddOn").subscribe((res1: any) => {
             itemViewModel.SetOldData();
+
             var logeWindow = new LogitudeWindow();
             logeWindow.Title = "Edit Add-On";
             logeWindow.DataContext = itemViewModel;
@@ -1073,36 +859,22 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 this.BuildAddOnsList();
             }
         });
-    }
+    } 
 
     EditPackage(itemViewModel: PackageItem) {
-        var logeWindow = new LogitudeWindow();
-        logeWindow.Title = "Edit Package";
+        this.entityResourceService.getEntityResourceByTableName("TenantManagementLicense").subscribe((res1: any) => {
+            itemViewModel.SetOldData();
 
-        if (itemViewModel.IsMainPackage) {
-            logeWindow.WindowArgs = this.EntityPM;
+            var logeWindow = new LogitudeWindow();
+            logeWindow.Title = "Edit Package";
+            logeWindow.DataContext = itemViewModel;
             logeWindow.Show("./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditLicenceComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.BuildPackagesList();
-                    this.ComputePackagesTotals();
                 }
             });
-        }
-
-        else {
-            this.entityResourceService.getEntityResourceByTableName("TenantManagementLicense").subscribe((res1: any) => {
-                itemViewModel.SetOldData();
-                logeWindow.DataContext = itemViewModel;
-                logeWindow.Show("./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditLicenceComponent");
-                logeWindow.WindowClosed.subscribe(s => {
-                    if (s) {
-                        this.BuildPackagesList();
-                        this.ComputePackagesTotals();
-                    }
-                });
-            });
-        }
+        });
     }
     DeletePackage(itemViewModel: PackageItem) {
         var confirmWindow = new ConfirmWindow();
@@ -1118,10 +890,9 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 this.EntityPM.RemoveTenantManagementLicensePM(itemViewModel.EntityPM);
 
                 this.BuildPackagesList();
-                this.ComputePackagesTotals();
             }
         });
-    }
+    } 
 
     get IsEditable() {
         var isEditable: boolean = false;
@@ -1148,7 +919,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.SetUIProperties_IsTrial();
         this.SetUIProperties_PaymentFailure();
     }
-
+    
     get RecurringPeriodCode() { return this.EntityPM.RecurringPeriodCode; }
     set RecurringPeriodCode(newValue: string) {
         if (this.EntityPM.RecurringPeriodCode != newValue) {
@@ -1200,7 +971,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         if (this.EntityPM.PaymentChannelCode != newValue) {
             this.EntityPM.PaymentChannelCode = newValue;
 
-            this.SetUIProperties_Plimus();
+            this.SetUIProperties_Plimus(); 
         }
     }
 
@@ -1225,6 +996,13 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+    get LicensePrice() { return this.EntityPM.LicensePrice; }
+    set LicensePrice(newValue: number) {
+        if (this.EntityPM.LicensePrice != newValue) {
+            this.EntityPM.LicensePrice = newValue;
+        }
+    }
+
     get BluesnapContractId() {
         return this.EntityPM.BluesnapContractId;
     }
@@ -1233,6 +1011,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapContractId = newValue;
         }
     }
+
+
 
     get BluesnapCRMContractId() {
         return this.EntityPM.BluesnapCRMContractId;
@@ -1243,6 +1023,9 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+
+
+
     get BluesnapEAWBContractId() {
         return this.EntityPM.BluesnapEAWBContractId;
     }
@@ -1251,6 +1034,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapEAWBContractId = newValue;
         }
     }
+
+
 
     get BluesnapEAWBSContractId() {
         return this.EntityPM.BluesnapEAWBSContractId;
@@ -1261,6 +1046,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+
+
     get BluesnapOneTimeContract() {
         return this.EntityPM.BluesnapOneTimeContract;
     }
@@ -1270,6 +1057,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+
     get BluesnapInttraStockContractId() {
         return this.EntityPM.BluesnapInttraStockContractId;
     }
@@ -1278,6 +1066,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapInttraStockContractId = newValue;
         }
     }
+
+    
 
     get BillingByLogitude() { return this.EntityPM.BillingByLogitude; }
     set BillingByLogitude(newValue: boolean) {
@@ -1339,170 +1129,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             }
         }
     }
-
-    InitializePackageSetting() {
-        if (this.MainAdditionalPackageApplied) {
-            this.IsSingleMultiPackage = false;
-            this.IsMainAdditionalPackage = true;
-        }
-
-        else {
-            this.isSingleMultiPackage = true;
-            this.IsMainAdditionalPackage = false;
-        }
-    }
-
-    get IsMultiPackage() { return this.EntityPM.IsMultiPackage; }
-    set IsMultiPackage(newValue: boolean) {
-        if (this.EntityPM.IsMultiPackage != newValue) {
-            this.EntityPM.IsMultiPackage = newValue;
-
-            this.ComputePackagesTotals();
-
-            this.SetUIProperties_NumberOfUsers();
-            this.SetUIProperties_ManageLicencesPerUser();
-        }
-    }
-
-    private isSingleMultiPackage: boolean = false;
-    get IsSingleMultiPackage() { return this.isSingleMultiPackage; }
-    set IsSingleMultiPackage(value: boolean) {
-        if (this.isSingleMultiPackage != value) {
-            this.isSingleMultiPackage = value;
-        }
-    }
-
-    private isMainAdditionalPackage: boolean = false;
-    get IsMainAdditionalPackage() { return this.isMainAdditionalPackage; }
-    set IsMainAdditionalPackage(value: boolean) {
-        if (this.isMainAdditionalPackage != value) {
-            this.isMainAdditionalPackage = value;
-        }
-    }
-
-    SetMainAdditionalPackageApplied(value: boolean) {
-        this.IsSingleMultiPackage = null;
-        this.IsMainAdditionalPackage = null;
-
-        if (value == true) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("After saving with Main/Additional mode can't go back to Single/Multi mode");
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.IsSingleMultiPackage = false;
-                    this.IsMainAdditionalPackage = true;
-                    this.MainAdditionalPackageApplied = true;
-                }
-
-                else {
-                    this.IsSingleMultiPackage = true;
-                    this.IsMainAdditionalPackage = false;
-                    this.MainAdditionalPackageApplied = false;
-                }
-
-                this.BuildPackagesList();
-                this.SetUIProperties_NumberOfUsers();
-            });
-        }
-
-        else {
-            this.IsSingleMultiPackage = true;
-            this.IsMainAdditionalPackage = false;
-            this.MainAdditionalPackageApplied = false;
-            this.SetUIProperties_NumberOfUsers();
-            this.BuildPackagesList();
-        }
-    }
-
-    get MainAdditionalPackageApplied() { return this.EntityPM.MainAdditionalPackageApplied; }
-    set MainAdditionalPackageApplied(newValue: boolean) {
-        if (this.EntityPM.MainAdditionalPackageApplied != newValue) {
-            this.EntityPM.MainAdditionalPackageApplied = newValue;
-            this.SetUIProperties_NumberOfUsers();
-        }
-    }
-
-    get PackageCode() { return this.EntityPM.PackageCode; }
-    set PackageCode(newValue: string) {
-        if (this.EntityPM.PackageCode != newValue) {
-            this.EntityPM.PackageCode = newValue;
-
-            if (newValue == "EAWB") {
-                this.IsAWBStockPrepaid = true;
-            }
-        }
-    }
-
-    get TotalNumberOfUsers() { return this.EntityPM.TotalNumberOfUsers; }
-    set TotalNumberOfUsers(newValue: number) {
-        if (this.EntityPM.TotalNumberOfUsers != newValue) {
-            this.EntityPM.TotalNumberOfUsers = newValue;
-        }
-    }
-
-    get TotalFreeUsers() { return this.EntityPM.TotalFreeUsers; }
-    set TotalFreeUsers(newValue: number) {
-        if (this.EntityPM.TotalFreeUsers != newValue) {
-            this.EntityPM.TotalFreeUsers = newValue;
-        }
-    }
-
-    get AveragePrice() { return this.EntityPM.AveragePrice; }
-    set AveragePrice(newValue: number) {
-        if (this.EntityPM.AveragePrice != newValue) {
-            this.EntityPM.AveragePrice = newValue;
-        }
-    }
-
-    get TotalPaymentamount() { return this.EntityPM.TotalPaymentamount; }
-    set TotalPaymentamount(newValue: number) {
-        if (this.EntityPM.TotalPaymentamount != newValue) {
-            this.EntityPM.TotalPaymentamount = newValue;
-        }
-    }
-    get NumberOfUsers() { return this.EntityPM.NumberOfUsers; }
-    set NumberOfUsers(newValue: number) {
-        if (this.EntityPM.NumberOfUsers != newValue) {
-            this.EntityPM.NumberOfUsers = newValue;
-            this.ComputeTotalPrice();
-            this.ComputePackagesTotals();
-        }
-    }
-
-    get FreeUsers() { return this.EntityPM.FreeUsers; }
-    set FreeUsers(newValue: number) {
-        if (this.EntityPM.FreeUsers != newValue) {
-            this.EntityPM.FreeUsers = newValue;
-            this.ComputePackagesTotals();
-        }
-    }
-
-    get LicensePrice() { return this.EntityPM.LicensePrice; }
-    set LicensePrice(newValue: number) {
-        if (this.EntityPM.LicensePrice != newValue) {
-            this.EntityPM.LicensePrice = newValue;
-            this.ComputeTotalPrice();
-            this.ComputePackagesTotals();
-        }
-    }
-
-    get TotalPrice() { return this.EntityPM.TotalPrice; }
-    set TotalPrice(newValue: number) {
-        if (this.EntityPM.TotalPrice != newValue) {
-            this.EntityPM.TotalPrice = newValue;
-            this.ComputePackagesTotals();
-        }
-    }
-
-    ComputeTotalPrice() {
-        if (this.NumberOfUsers && this.LicensePrice) {
-            this.TotalPrice = this.NumberOfUsers * this.LicensePrice;
-        }
-
-        else {
-            this.TotalPrice = null;
-        }
-    }
 }
 
 export class PackageItem extends BaseComponent{
@@ -1510,20 +1136,13 @@ export class PackageItem extends BaseComponent{
     public TenantManagementPM: TenantManagementPM;
     public ObjectTableName: string = "TenantManagementLicense";
     public IsNew: boolean;
-    public IsMainPackage: boolean;
-    constructor(entity: TenantManagementLicensePM, public fatherComponent: TenantManagementGeneralTabComponent, isNew: boolean, isMainPackage: boolean = false) {
+    constructor(entity: TenantManagementLicensePM, public fatherComponent: TenantManagementGeneralTabComponent, isNew: boolean) {
         super();
         this.EntityPM = entity;
         this.IsNew = isNew;
-        this.IsMainPackage = isMainPackage;
         this.TenantManagementPM = fatherComponent.EntityPM;
-        this.SetUIProperties_NumberOfUsers();
-        this.SetUIProperties_TotalPrice();
-        this.GetPackageName();
-    }
 
-    SetUIProperties_TotalPrice() {
-        this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);
+        this.GetPackageName();
     }
 
     private old_PackageCode: string;
@@ -1551,44 +1170,6 @@ export class PackageItem extends BaseComponent{
     set NumberOfUsers(newValue: number) {
         if (this.EntityPM.NumberOfUsers != newValue) {
             this.EntityPM.NumberOfUsers = newValue;
-            this.SetUIProperties_NumberOfUsers();
-            this.ComputeTotalPrice();
-        }
-    }
-    private SetUIProperties_NumberOfUsers() {
-        //this.UIProperties.SetRequired("NumberOfUsers", this.ObjectTableName, AppTool.IsNullOrZero(this.NumberOfUsers));
-
-    }
-
-    get FreeUsers() { return this.EntityPM.FreeUsers; }
-    set FreeUsers(newValue: number) {
-        if (this.EntityPM.FreeUsers != newValue) {
-            this.EntityPM.FreeUsers = newValue;
-        }
-    }
-
-    get Price() { return this.EntityPM.Price; }
-    set Price(newValue: number) {
-        if (this.EntityPM.Price != newValue) {
-            this.EntityPM.Price = newValue;
-            this.ComputeTotalPrice();
-        }
-    }
-
-    get TotalPrice() { return this.EntityPM.TotalPrice; }
-    set TotalPrice(newValue: number) {
-        if (this.EntityPM.TotalPrice != newValue) {
-            this.EntityPM.TotalPrice = newValue;
-        }
-    }
-
-    ComputeTotalPrice() {
-        if (this.NumberOfUsers && this.Price) {
-            this.TotalPrice = this.NumberOfUsers * this.Price;
-        }
-
-        else {
-            this.TotalPrice = null;
         }
     }
 
@@ -1600,37 +1181,19 @@ export class PackageItem extends BaseComponent{
         }
     }
 
-    get Background() {
-        if (this.IsMainPackage) {
-            return "#DFECF7";
-        }
-
-        else {
-            return "white";
-        }
-    }
-
-    public PackageNameDisplay: string;
     private GetPackageName() {
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe((result:any) => {
+        service.getAllFromCache().subscribe(result => {
             var allPackages = result.Result;
 
             var list: PackageList = allPackages.filter(d => d.Code == this.PackageCode)[0];
             if (list != null) {
                 this.PackageName = list.Name;
-
-                if (this.IsMainPackage) {
-                    this.PackageNameDisplay = list.Name + " (Main)";
-                }
-
-                else {
-                    this.PackageNameDisplay = list.Name;
-                }
             }
         });
-    }
+    }    
 }
+
 export class AddOnItem extends BaseComponent {
     public EntityPM: TenantAddOnPM;
     public TenantManagementPM: TenantManagementPM;
@@ -1673,7 +1236,7 @@ export class AddOnItem extends BaseComponent {
 
     private GetPackageName() {
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe((result:any) => {
+        service.getAllFromCache().subscribe(result => {
             var allPackages = result.Result;
 
             var list: PackageList = allPackages.filter(d => d.Code == this.PackageCode)[0];

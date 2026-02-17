@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .GrayBox {
         height: 70px;
@@ -204,7 +204,7 @@
                                                 <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
                                             </div>
                                         </div>
-                                        <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="width: 100%;text-align:center">
+                                        <div *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="width: 100%;text-align:center">
                                             <div class="DisbleBox">
                                                 {{DisplayOnlyMessage}}
                                             </div>
@@ -239,7 +239,7 @@
                                             </ul>
                                         </td>
 
-                                        <td style="width: 20px;"></td>
+                                       <td style="width: 20px;"></td>
 
                                         <!-- LevelSelection Filters-->
                                         <td style="width: 30px;">
@@ -258,21 +258,9 @@
                                             </ul>
                                         </td>
                                         <td style="width:5px"></td>
-                                        <td style="width: 160px;" *ngIf="LevelSelectionFilterSelectedValue=='Invoice'">
+                                        <td style="width: 160px;">
                                             <ComboBox *ngIf="LevelSelectionFilterSelectedValue=='Invoice'" style="width:150px;" [ItemsSource]="InvoicesNumbersList"
                                                       (SelectedItemChanged)="InvoicesSelectionChanged($event)" [Binding]="'InvoiceNumber'"></ComboBox>
-                                        </td>
-                                        <td style="width:5px"></td>
-
-
-                                        <td style="width:80px">
-                                            <button *ngIf="TaxExemptCode92" (click)="SaveBeforeUpdate()" [disabled]="DeclarationPM.Direction == 'E'?isDisableBtn92:IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור 92 גורף</button>
-                                        </td>
-
-                                        <td style="width:5px"></td>
-
-                                        <td  style="width:80px">
-                                            <button *ngIf="DeclarationPM.Direction != 'E'" (click)="CreateCertificateForCustomsItems()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">הוספת אישור</button>
                                         </td>
                                         <td></td>
                                         <td style="width: 30px;">
@@ -280,7 +268,7 @@
                                         </td>
                                     </tr>
                                     <tr style="height:5px"></tr>
-                                    <tr>
+                                    <tr >
                                         <td colspan="2">
                                             <table>
                                                 <tr>
@@ -294,15 +282,15 @@
                                                                 (SelectedItemChanged)="ConfirmationType = $event"
                                                                 [HideColumns]="true"
                                                                 [SelectedValue]="ConfirmationTypeCode"
-                                                                [QueryFilterItems]="ConfirmationTypesFilterItems">
-
+                                                                 [QueryFilterItems]= "ConfirmationTypesFilterItems">
+                                                            
                                                         </LogLov>
                                                     </td>
 
                                                 </tr>
                                             </table>
                                         </td>
-                                       
+                                        
                                     </tr>
                                 </table>
                             </div>
@@ -456,28 +444,28 @@
                                             <tr style="height:35px">
                                                 <td style="width:5px"></td>
                                                 <td style="height:25px;width:35px; ">
-                                                    <div *ngIf="IsCheckBoxVisible">
+                                                    <div *ngIf="IsCheckBoxVisible" >
                                                         <div class="Button" style="width: 29px;height:25px;">
                                                             <!--<span style="width:5px"></span>-->
                                                             <!--<div class="LogitudeCheckBox" >
-                    <input [attr.id]="ControlId" type="checkbox"  [checked]="IsChecked" (click)="OnClick()" />
+                <input [attr.id]="ControlId" type="checkbox"  [checked]="IsChecked" (click)="OnClick()" />
 
-                </div>-->
-                                                            <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected" [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event "></CheckBox>
+            </div>-->
+                                                            <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"  [IsEnabled]="!IsDisplayOnly"  (Checked)="IsSelected = $event "></CheckBox>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td style="width:5px"></td>
                                                 <td style="width:75px;">
-                                                    <button *ngIf="IsVisible && dataCount>0" (click)="CreateMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Create' | TextCodeTranslationPipe}}</button>
+                                                    <button *ngIf="IsVisible" (click)="CreateMethod()"  [disabled]="IsDisplayOnly"  class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Create' | TextCodeTranslationPipe}}</button>
                                                 </td>
-                                                <!-- <td style="width:5px"></td>-->
+                                               <!-- <td style="width:5px"></td>-->
                                                 <td style="width:75px;">
-                                                    <button *ngIf="IsVisible && dataCount>0" (click)="MoveMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Move' | TextCodeTranslationPipe}}</button>
+                                                    <button *ngIf="IsVisible" (click)="MoveMethod()"  [disabled]="IsDisplayOnly"  class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Move' | TextCodeTranslationPipe}}</button>
                                                 </td>
-                                                <!--   <td style="width:5px"></td>-->
+                                             <!--   <td style="width:5px"></td>-->
                                                 <td style="width:90px">
-                                                    <div *ngIf="IsVisible && dataCount>0" style="width: 100%;text-align:center;  height:30px;">
+                                                    <div *ngIf="IsVisible"  style="width: 100%;text-align:center;  height:30px;">
                                                         <div class="DisbleBox">
 
                                                             {{SelectedItemsCountText}}
@@ -487,10 +475,6 @@
                                                     </div>
                                                 </td>
                                                 <td></td>
-                                                <td style="width:130px">
-                                                    <!--SearchTextBox [PlaceHolder]="'Customs.CustomsDocument.SupplierInvoiceItem' | TextCodeTranslationPipe" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>-->
-                                                    <SearchTextBox [PlaceHolder]="'פרט מכס/מספר פריט'" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
-                                                </td>
                                             </tr>
                                         </table>
                                     </td>

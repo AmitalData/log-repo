@@ -28,7 +28,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 var defaultRecord = deltaList.FirstOrDefault();
                 if (deltaList.FirstOrDefault(rec => !rec.Tenant.Equals(defaultRecord.Tenant)) != null)
                 {
-                    throw new ApplicationException("in 1 tenent only ");
+                    throw new Exception("in 1 tenent only ");
                 }
                 var inshureNoDuplicateKeys_MayBeCrash = deltaList.ToDictionary(rec => string.Concat(rec.AccountId,rec.DateTypeCode, rec.Year, rec.Month, rec.CurrencyId));
                 var orderDeltaList = deltaList.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.DateTypeCode).ThenBy(rec => rec.Year).ThenBy(rec => rec.Month).ThenBy(rec => rec.CurrencyId);

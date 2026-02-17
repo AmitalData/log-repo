@@ -4,7 +4,7 @@ import { AirlinePM } from '../../../../Common/EntityPMs/AirlinePM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AirlineDocsInTabComponent.html',
 })
 

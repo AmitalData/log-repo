@@ -33,15 +33,7 @@ namespace WebFreight.Web.DataProviders
 
         public decimal? TotalForeignCloseBalance { get; set; }
         public bool CurrencyDetailed { get; set; }
-        public string DetailedVendorsAccounts { get; set; }
-        public string DetailedCustomersAccounts { get; set; }
-        public string Category { get; set; }
-        public bool DontShowCardsWith0Balance { get; set; }
-        public DateTime? FromDate { get; set; }
-        public DateTime? ToDate { get; set; }
-        public string ChartOfAccountsTypeEnglish { get; set; }
-        public string ChartOfAccountsEnglish { get; set; }
-        public string GLAccountEnglish { get; set; }
+
 
     }
 
@@ -53,9 +45,6 @@ namespace WebFreight.Web.DataProviders
         public string ChartOfAccountType { get; set; }
         public string Number { get; set; }
         public string Name { get; set; }
-        public string AccountDisplayNumber { get; set; }
-        public string AccountName { get; set; }
-
         public string ParentId { get; set; }
         public decimal? Balance { get; set; }
         public decimal? LocalOpenBalance { get; set; }
@@ -72,16 +61,6 @@ namespace WebFreight.Web.DataProviders
         public decimal? ForeignCredit { get; set; }
 
         public decimal? ForeignCloseBalance { get; set; }
-        public string ChartofAccountCode { get; set; }
-        public string ChartofAccountLocalName { get; set; }
-        public string ChartofAccountTypeCode { get; set; }
-        public string ChartofAccountTypeLocalName { get; set; }
-        public int? ChartOfAccountTypeOrder { get; set; }
-        public string CurrencyCode { get; set; }
-        public string ChartOfAccountsTypeEnglish { get; set; }
-        public string ChartOfAccountsEnglish { get; set; }
-        public string GLAccountEnglish { get; set; }
-        public string EnglishName { get; set; }
 
     }
     public class ExpenseList

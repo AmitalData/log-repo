@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.XSD.FSR;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -60,8 +60,6 @@ namespace WebFreight.Web.Controllers.WebServices
                 string loggedUserEmail = authToken.Email;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, tenant);
 
                 FSRManager fSRManager = new FSRManager(tenant, loggedUserEmail);
                 FSRResultClass myResult = fSRManager.SendShipmentFSR(entityPM);

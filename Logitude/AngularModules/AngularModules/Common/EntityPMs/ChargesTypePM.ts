@@ -15,15 +15,13 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
 
-export class ChargesTypePM extends ObjectCustomFieldPM {
+export class ChargesTypePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		  super("ChargesType");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -67,16 +65,6 @@ export class ChargesTypePM extends ObjectCustomFieldPM {
     private chargesGroupId: string;
     public get ChargesGroupId() { return this.chargesGroupId; }
     public set ChargesGroupId(newValue: string) { if (this.chargesGroupId != newValue) { this.chargesGroupId = newValue; this.MarkAsDirty("ChargesGroupId"); } }
-       
-	 
-    private quoteChargesGroupCode: string;
-    public get QuoteChargesGroupCode() { return this.quoteChargesGroupCode; }
-    public set QuoteChargesGroupCode(newValue: string) { if (this.quoteChargesGroupCode != newValue) { this.quoteChargesGroupCode = newValue; this.MarkAsDirty("QuoteChargesGroupCode"); } }
-       
-	 
-    private quoteChargesGroupId: string;
-    public get QuoteChargesGroupId() { return this.quoteChargesGroupId; }
-    public set QuoteChargesGroupId(newValue: string) { if (this.quoteChargesGroupId != newValue) { this.quoteChargesGroupId = newValue; this.MarkAsDirty("QuoteChargesGroupId"); } }
        
 	 
     private measurementId: string;
@@ -189,11 +177,6 @@ export class ChargesTypePM extends ObjectCustomFieldPM {
     public set PayableDebitAccountExternalId(newValue: string) { if (this.payableDebitAccountExternalId != newValue) { this.payableDebitAccountExternalId = newValue; this.MarkAsDirty("PayableDebitAccountExternalId"); } }
        
 	 
-    private quoteGroupSectionID: string;
-    public get QuoteGroupSectionID() { return this.quoteGroupSectionID; }
-    public set QuoteGroupSectionID(newValue: string) { if (this.quoteGroupSectionID != newValue) { this.quoteGroupSectionID = newValue; this.MarkAsDirty("QuoteGroupSectionID"); } }
-       
-	 
     private receivableCreditAccountExternalId: string;
     public get ReceivableCreditAccountExternalId() { return this.receivableCreditAccountExternalId; }
     public set ReceivableCreditAccountExternalId(newValue: string) { if (this.receivableCreditAccountExternalId != newValue) { this.receivableCreditAccountExternalId = newValue; this.MarkAsDirty("ReceivableCreditAccountExternalId"); } }
@@ -274,16 +257,6 @@ export class ChargesTypePM extends ObjectCustomFieldPM {
     public set ReceivableCreditGLAccountId(newValue: string) { if (this.receivableCreditGLAccountId != newValue) { this.receivableCreditGLAccountId = newValue; this.MarkAsDirty("ReceivableCreditGLAccountId"); } }
        
 	 
-    private recCreditGLAcountLocalName: string;
-    public get RecCreditGLAcountLocalName() { return this.recCreditGLAcountLocalName; }
-    public set RecCreditGLAcountLocalName(newValue: string) { if (this.recCreditGLAcountLocalName != newValue) { this.recCreditGLAcountLocalName = newValue; this.MarkAsDirty("RecCreditGLAcountLocalName"); } }
-       
-	 
-    private payDebitGLAcountLocalName: string;
-    public get PayDebitGLAcountLocalName() { return this.payDebitGLAcountLocalName; }
-    public set PayDebitGLAcountLocalName(newValue: string) { if (this.payDebitGLAcountLocalName != newValue) { this.payDebitGLAcountLocalName = newValue; this.MarkAsDirty("PayDebitGLAcountLocalName"); } }
-       
-	 
     private isExpense: boolean;
     public get IsExpense() { return this.isExpense; }
     public set IsExpense(newValue: boolean) { if (this.isExpense != newValue) { this.isExpense = newValue; this.MarkAsDirty("IsExpense"); } }
@@ -350,84 +323,11 @@ export class ChargesTypePM extends ObjectCustomFieldPM {
     public set IsDrop(newValue: boolean) { if (this.isDrop != newValue) { this.isDrop = newValue; this.MarkAsDirty("IsDrop"); } }
        
 	 
-    private receivablesDefaultCurrencyId: string;
-    public get ReceivablesDefaultCurrencyId() { return this.receivablesDefaultCurrencyId; }
-    public set ReceivablesDefaultCurrencyId(newValue: string) { if (this.receivablesDefaultCurrencyId != newValue) { this.receivablesDefaultCurrencyId = newValue; this.MarkAsDirty("ReceivablesDefaultCurrencyId"); } }
-       
-	 
-    private payablesDefaultCurrencyId: string;
-    public get PayablesDefaultCurrencyId() { return this.payablesDefaultCurrencyId; }
-    public set PayablesDefaultCurrencyId(newValue: string) { if (this.payablesDefaultCurrencyId != newValue) { this.payablesDefaultCurrencyId = newValue; this.MarkAsDirty("PayablesDefaultCurrencyId"); } }
-       
-	 
-    private payableDebitGLAcountLocalName: string;
-    public get PayableDebitGLAcountLocalName() { return this.payableDebitGLAcountLocalName; }
-    public set PayableDebitGLAcountLocalName(newValue: string) { if (this.payableDebitGLAcountLocalName != newValue) { this.payableDebitGLAcountLocalName = newValue; this.MarkAsDirty("PayableDebitGLAcountLocalName"); } }
-       
-	 
-    private payableDebitGLAcountNumber: string;
-    public get PayableDebitGLAcountNumber() { return this.payableDebitGLAcountNumber; }
-    public set PayableDebitGLAcountNumber(newValue: string) { if (this.payableDebitGLAcountNumber != newValue) { this.payableDebitGLAcountNumber = newValue; this.MarkAsDirty("PayableDebitGLAcountNumber"); } }
-       
-	 
-    private receivableCreditGLAcountLocalName: string;
-    public get ReceivableCreditGLAcountLocalName() { return this.receivableCreditGLAcountLocalName; }
-    public set ReceivableCreditGLAcountLocalName(newValue: string) { if (this.receivableCreditGLAcountLocalName != newValue) { this.receivableCreditGLAcountLocalName = newValue; this.MarkAsDirty("ReceivableCreditGLAcountLocalName"); } }
-       
-	 
-    private receivableCreditGLAcountNumber: string;
-    public get ReceivableCreditGLAcountNumber() { return this.receivableCreditGLAcountNumber; }
-    public set ReceivableCreditGLAcountNumber(newValue: string) { if (this.receivableCreditGLAcountNumber != newValue) { this.receivableCreditGLAcountNumber = newValue; this.MarkAsDirty("ReceivableCreditGLAcountNumber"); } }
-       
-	 
-    private applyRegionalTax: boolean;
-    public get ApplyRegionalTax() { return this.applyRegionalTax; }
-    public set ApplyRegionalTax(newValue: boolean) { if (this.applyRegionalTax != newValue) { this.applyRegionalTax = newValue; this.MarkAsDirty("ApplyRegionalTax"); } }
-       
-	 
-    private hasPickup: boolean;
-    public get HasPickup() { return this.hasPickup; }
-    public set HasPickup(newValue: boolean) { if (this.hasPickup != newValue) { this.hasPickup = newValue; this.MarkAsDirty("HasPickup"); } }
-       
-	 
-    private hasDelivery: boolean;
-    public get HasDelivery() { return this.hasDelivery; }
-    public set HasDelivery(newValue: boolean) { if (this.hasDelivery != newValue) { this.hasDelivery = newValue; this.MarkAsDirty("HasDelivery"); } }
-       
-	 
-    private isDirectionRestricted: boolean;
-    public get IsDirectionRestricted() { return this.isDirectionRestricted; }
-    public set IsDirectionRestricted(newValue: boolean) { if (this.isDirectionRestricted != newValue) { this.isDirectionRestricted = newValue; this.MarkAsDirty("IsDirectionRestricted"); } }
-       
-	 
-    private isActiveInExport: boolean;
-    public get IsActiveInExport() { return this.isActiveInExport; }
-    public set IsActiveInExport(newValue: boolean) { if (this.isActiveInExport != newValue) { this.isActiveInExport = newValue; this.MarkAsDirty("IsActiveInExport"); } }
-       
-	 
-    private isActiveInImport: boolean;
-    public get IsActiveInImport() { return this.isActiveInImport; }
-    public set IsActiveInImport(newValue: boolean) { if (this.isActiveInImport != newValue) { this.isActiveInImport = newValue; this.MarkAsDirty("IsActiveInImport"); } }
-       
-	 
-    private isActiveInDomestic: boolean;
-    public get IsActiveInDomestic() { return this.isActiveInDomestic; }
-    public set IsActiveInDomestic(newValue: boolean) { if (this.isActiveInDomestic != newValue) { this.isActiveInDomestic = newValue; this.MarkAsDirty("IsActiveInDomestic"); } }
-       
-	 
-    private isActiveInDrop: boolean;
-    public get IsActiveInDrop() { return this.isActiveInDrop; }
-    public set IsActiveInDrop(newValue: boolean) { if (this.isActiveInDrop != newValue) { this.isActiveInDrop = newValue; this.MarkAsDirty("IsActiveInDrop"); } }
-       
-	 
 
     public OldEntityPM: ChargesTypePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -435,7 +335,6 @@ export class ChargesTypePM extends ObjectCustomFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ChargesType");
            
         }
-	 }
     }
     private MyClone: ChargesTypePM;
 

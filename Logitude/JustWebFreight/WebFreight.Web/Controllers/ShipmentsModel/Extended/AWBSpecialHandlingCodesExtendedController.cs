@@ -10,7 +10,7 @@ using WebFreight.Web.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -34,7 +34,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     SecurityUtility.AuthenticationOnTenant(0);
                     SecurityUtility.CheckContactFeature("AWBSpecialHandlingCode", "NEW", 0);
 
-                    IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
+                    IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
                     AWBSpecialHandlingCodeService service = new AWBSpecialHandlingCodeService(objectContext, entityPM);
                     service.Create();
 
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         CacheManager.CacheWrapper.Invalidate(entityPmName);
                     }
 
-                    IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
+                    IShipmentsContext objectContext = ShipmentsContext.GetContext(0);
                     AWBSpecialHandlingCodeService service = new AWBSpecialHandlingCodeService(objectContext, entityPM);
                     service.Update();
 

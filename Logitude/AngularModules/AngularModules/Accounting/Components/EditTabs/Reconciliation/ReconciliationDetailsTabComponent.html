@@ -143,8 +143,7 @@
                             <div style="padding: 4px; width: 250px;" float-end>
                                 <SearchTextBox [ObjectTableName]="'ReconciliationLine'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                             </div>
-                            <div>
-                                <IconButton style="padding: 5px 0 0 0;" [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'"  [Left]="isRTL ? 3:-3"   (click)="ExportToExcelClick()"></IconButton>
+                            <div style="width: 30px;" float-end>
                                 <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
                             </div>
                         </td>
@@ -152,18 +151,76 @@
 
                     <!-- Lines -->
                     <tr>
-                        <td style="height: 100%;">
-                            <div class="GeneratedGridContainer">
-                                <logitude-grid-v2 GridWidth="100%"
-                                               GridHeight="100%"
-                                               [ObjectTable]="'ReconciliationLine'"
-                                               [dataSource]="DataSource"
-                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                               [columns]="columns"
-                                               [autoLoad]="true"
-                                               [QueryChangeEvent]="onQueryChangeEvent"
-                                               [IsCustomTemplate]="true">
-                                </logitude-grid-v2>
+                        <td style="height: 100%; padding-bottom: 75px;">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr class="SimpleGridHeaderRow">
+                                            <td style="width: 100px; max-width: 100px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.CreateDate' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 90px; max-width: 90px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.JournalNumber' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 100px; max-width: 100px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.DueDate' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px;padding-right:5px;padding-left:5px">{{AmountText}}</td>
+                                            <td style="width: 110px; max-width: 110px;padding-right:5px;padding-left:5px">{{'Accounting.General.O.ReconciliationAmount' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.Reference1' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.Reference2' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.Reference3' | TextCodeTranslationPipe}}</td>
+                                            <td style="border-right: 1px solid #D1D3D4;;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.Notes' | TextCodeTranslationPipe}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table *ngIf="EntityPM">
+                                        <tr *ngIf="NoRows"><td class="CenterCenter NoRows">No Cheques in the Cashbook</td></tr>
+
+                                        <tr class="SimpleGridViewRow" *ngFor="let item of ItemSource; let i=index;" [class.bg]="item.OddEven">
+
+                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
+                                                {{item.Line.CreateDate | DateTimeToDatePipe }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 90px; max-width: 90px">
+                                                <a href="javascript:;" (click)="OpenJournal(item.Line.JournalId)">{{item.Line.JournalNumber}}</a>
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
+                                                {{item.Line.DueDate | DateTimeToDatePipe }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px;text-align: right; color:#00a192;" [class.red]="item.Line.ForeignAmountDebit > 0">
+                                                {{item.TransactionAmount| NumbersPipe:'N2' }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right; color:#00a192;" [class.red]="item.Line.ReconciliationAmount<0">
+                                                {{item.Line.ReconciliationAmount | NumbersPipe:'N2' }}  {{item.Line.CurrencySign}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Line.Reference1}}
+                                            </td>
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Line.Reference2}}
+                                            </td>
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Line.Reference3}}
+                                            </td>
+
+                                            <td class="CellStretched">
+                                                {{item.Line.Notes}}
+                                            </td>
+
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="5">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </td>
                     </tr>

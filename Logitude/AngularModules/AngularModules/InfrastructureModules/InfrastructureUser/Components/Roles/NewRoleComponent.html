@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -23,8 +23,7 @@
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Role'"
                                 [DependencyFilter1Value]="false"
-                                [DependencyFilter2Value]="true"
-                                [QueryFilterItems]="ParentRoleQueryFilters">
+                                [DependencyFilter2Value]="true">
                         </LogLov>
                     </td>
 
@@ -56,12 +55,6 @@
                     </td>
                 </tr>
 
-                <tr style="height:5px;">                    
-                    <td colspan="4">
-                        <div></div>
-                    </td>
-                </tr>
-
                 <!-- Description -->
                 <tr class="FormFieldRow" style="height: 100px;">
                     <td>
@@ -72,21 +65,7 @@
                         <div class="MediaFill">
                             <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </div>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td colspan="2">
-                        <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                    </td>
+                    </td>                    
 
                     <td>
                         <div></div>

@@ -17,8 +17,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.ToTable("ARInvoicePayments");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-            this.Property(t => t.LocalAmount).HasColumnName("LocalAmount").IsRequired();
-            this.Property(t => t.ForeignAmount).HasColumnName("ForeignAmount").IsRequired();
+            this.Property(t => t.LocalAmount).HasColumnName("LocalAmount");
+            this.Property(t => t.ForeignAmount).HasColumnName("ForeignAmount");
             this.Property(t => t.PaymentAmount).HasColumnName("PaymentAmount");
             this.Property(t => t.ARPaymentId).HasColumnName("ARPaymentId");
             this.Property(t => t.ARInvoiceId).HasColumnName("ARInvoiceId");

@@ -79,11 +79,6 @@ namespace Logitude.XSD
             {
                 summaryDetailsItem.NatureOfGoods = Context.DescriptionOfGoods;
 
-                if(!string.IsNullOrEmpty(Context.SLAC))
-                {
-                    summaryDetailsItem.NatureOfGoods += Environment.NewLine + "SLAC: " + Context.SLAC;
-                }
-
                 if (Context.DescriptionOfGoodsTextList.Count > 0)
                 {
                     summaryDetailsItem.FreeTextDescriptionOfGoods = new string[1] { Context.DescriptionOfGoodsTextList.FirstOrDefault() };
@@ -175,7 +170,7 @@ namespace Logitude.XSD
             return myXSDElement;
         }
 
-        public CHAMP17.ConsolidationList GetChampFHL5(bool isMultiHS = false)
+        public CHAMP17.ConsolidationList GetChampFHL5()
         {
             CHAMP17.ConsolidationList myXSDElement = new CHAMP17.ConsolidationList();
 
@@ -238,11 +233,6 @@ namespace Logitude.XSD
             {
                 summaryDetailsItem.NatureOfGoods = Context.DescriptionOfGoods;
 
-                if (!string.IsNullOrEmpty(Context.SLAC))
-                {
-                    summaryDetailsItem.NatureOfGoods += Environment.NewLine + "SLAC: " + Context.SLAC;
-                }
-
                 if (Context.DescriptionOfGoodsTextList.Count > 0)
                 {
                     summaryDetailsItem.FreeTextDescriptionOfGoods = new string[1] { Context.DescriptionOfGoodsTextList.FirstOrDefault() };
@@ -287,11 +277,7 @@ namespace Logitude.XSD
 
             if (!string.IsNullOrEmpty(Context.MainHarmonize))
             {
-                if (isMultiHS)
-                    summaryDetailsItem.HarmonisedTariffScheduleInformation = new string[3] { Context.MainHarmonize, "5555555", "7845100" };
-
-                else
-                    summaryDetailsItem.HarmonisedTariffScheduleInformation = new string[1] { Context.MainHarmonize };
+                summaryDetailsItem.HarmonisedTariffScheduleInformation = new string[1] { Context.MainHarmonize };
             }
 
             summaryDetailsList.Add(summaryDetailsItem);

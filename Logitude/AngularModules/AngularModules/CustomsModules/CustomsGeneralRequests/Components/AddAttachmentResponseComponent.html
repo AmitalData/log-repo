@@ -1,202 +1,215 @@
 ﻿<style>
-    .MyTB {
-        width: 240px;
-        padding-right: 6px;
+    .MyTB{
+        width: 240px; padding-right: 6px;
     }
 </style>
 <div>
 
     <!-- AddAttachmentResponseComponent  view-->
     <!--[CustomSendOptionsButtonIsDisable]="CustomSendOptionsButtonIsDisable"-->
-    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false" [IsShowCustomResponseContent]="false"
-        [IsShowCustomToolBar]="false">
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            [IsShowCustomResponseContent]="false"
+                            [IsShowCustomToolBar]="false">
         <div class="class-request-content">
-            <div style="width: 300px; height:190px; ">
+            <div style="width: 300px; height:190px; " >
                 <!--<fieldset disabled>-->
 
-                <table *ngIf="ResponseData?.HasException != true">
+                    <table *ngIf="ResponseData?.HasException != true"
+                           >
 
-                    <tr style="width: 100%;height:25px;">
-                        <td colspan="4" style="width: 300px; font-size: 13px; color: green;">
-                            {{'Customs.AddAttachmentResponse.O.SuccessMessgae'| TextCodeTranslationPipe}}
-                        </td>
-                    </tr>
+                        <tr style="width: 100%;height:25px;">
+                            <td colspan="4" style="width: 300px; font-size: 13px; color: green;">
+                                {{'Customs.AddAttachmentResponse.O.SuccessMessgae'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
 
-                    <tr class="FormFieldRow">
-                        <td style="width: 100px">
-                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'DocumentNumber'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [TextCode]="'Customs.AddAttachmentResponse.O.DocumentNumber'">
+                        <tr class="FormFieldRow">
+                            <td style="width: 100px">
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'DocumentNumber'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.AddAttachmentResponse.O.DocumentNumber'">
 
-                            </LogLabel>
-                        </td>
-                        <td style="width:10px"></td>
+                                </LogLabel>
+                            </td>
+                            <td style="width:10px"></td>
 
-                        <td class="MyTB">
-                            <LogTextBox [InputType]="'text'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-                                [ObjectFieldName]="'DocumentNumber'" [Text]="DocumentNumber"></LogTextBox>
-                        </td>
+                            <td class="MyTB">
+                                <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [ObjectFieldName]="'DocumentNumber'"
+                                            [Text]="DocumentNumber"></LogTextBox>
+                            </td>
 
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
 
-                    <tr class="FormFieldRow">
-                        <td style="width: 100px">
-                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CustomDocument'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [TextCode]="'Customs.AddAttachmentResponse.O.CustomDocument'">
+                        <tr class="FormFieldRow">
+                            <td style="width: 100px">
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'CustomDocument'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.AddAttachmentResponse.O.CustomDocument'">
 
-                            </LogLabel>
-                        </td>
-                        <td style="width:10px"></td>
+                                </LogLabel>
+                            </td>
+                            <td style="width:10px"></td>
 
-                        <td class="MyTB">
-                            <LogTextBox [InputType]="'text'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-                                [ObjectFieldName]="'CustomDocument'" [Text]="CustomDocument"></LogTextBox>
-                        </td>
+                            <td class="MyTB">
+                                <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [ObjectFieldName]="'CustomDocument'"
+                                            [Text]="CustomDocument"></LogTextBox>
+                            </td>
 
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
 
-                    <tr class="FormFieldRow">
-                        <td style="width: 100px">
-                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CustomRecievedDate'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [TextCode]="'Customs.AddAttachmentResponse.O.CustomRecievedDate'">
+                        <tr class="FormFieldRow">
+                            <td style="width: 100px">
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'CustomRecievedDate'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.AddAttachmentResponse.O.CustomRecievedDate'">
 
-                            </LogLabel>
-                        </td>
-                        <td style="width:10px"></td>
+                                </LogLabel>
+                            </td>
+                            <td style="width:10px"></td>
 
-                        <td class="MyTB">
-                            <LogTextBox [InputType]="'text'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-                                [ObjectFieldName]="'CustomRecievedDate'" [Text]="CustomRecievedDate"></LogTextBox>
-                        </td>
+                            <td class="MyTB">
+                                <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [ObjectFieldName]="'CustomRecievedDate'"
+                                            [Text]="CustomRecievedDate"></LogTextBox>
+                            </td>
 
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-
-                    <tr class="FormFieldRow">
-                        <td style="width: 100px">
-                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Remarks'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [TextCode]="'Customs.AddAttachmentResponse.O.Remarks'">
-
-                            </LogLabel>
-                        </td>
-                        <td style="width:10px"></td>
-
-                        <td class="MyTB">
-                            <LogTextBox [InputType]="'text'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ObjectFieldName]="'Remarks'"
-                                [Text]="Remarks"></LogTextBox>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
 
 
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
+                        <tr class="FormFieldRow">
+                            <td style="width: 100px">
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'Remarks'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.AddAttachmentResponse.O.Remarks'">
+
+                                </LogLabel>
+                            </td>
+                            <td style="width:10px"></td>
+
+                            <td class="MyTB">
+                                <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [ObjectFieldName]="'Remarks'"
+                                            [Text]="Remarks"></LogTextBox>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>  
 
 
-                <table *ngIf="ResponseData?.HasException == true">
-
-                    <tr style="width: 100%;height:25px;">
-                        <td colspan="4" style="width: 300px; font-size: 13px; color: red;">
-                            {{'Customs.AddAttachmentResponse.O.ErrorMessgae'| TextCodeTranslationPipe}}
-                        </td>
-                    </tr>
-
-                    <tr class="FormFieldRow">
-                        <td style="width: 100px">
-                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'DocumentNumber'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [TextCode]="'Customs.AddAttachmentResponse.O.DocumentNumber'">
-
-                            </LogLabel>
-                        </td>
-                        <td style="width:10px"></td>
-
-                        <td class="MyTB">
-                            <LogTextBox [InputType]="'text'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-                                [ObjectFieldName]="'DocumentNumber'" [Text]="DocumentNumber"></LogTextBox>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <tr class="FormFieldRow">
-                        <td style="width: 100px">
-                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ErrorCode'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [TextCode]="'Customs.AddAttachmentResponse.O.ErrorCode'">
-
-                            </LogLabel>
-                        </td>
-                        <td style="width:10px"></td>
-
-                        <td class="MyTB">
-                            <LogTextBox [InputType]="'text'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ObjectFieldName]="'ErrorCode'"
-                                [Text]="ErrorCode"></LogTextBox>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
-                    <tr style="height: 80px;">
-                        <td style="width: 100px">
-                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ErrorRemarks'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [TextCode]="'Customs.AddAttachmentResponse.O.ErrorRemarks'">
-
-                            </LogLabel>
-                        </td>
-                        <td style="width:10px"></td>
-
-                        <td style="width: 240px; height:80px; padding-top: 6px; padding-right: 6px;">
-                            <div
-                                style="width: 100%; height:100%; text-align:center; border: 1px solid #AAAAAA; border-radius: 5px;">
-                                <textarea [disabled]="false"
-                                    style="box-shadow:none; background: #faf5c0;color: black;opacity: 1;">{{ErrorRemarks}}</textarea>
-                            </div>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+                        <tr><td></td><td></td></tr>
+                    </table>
 
 
+                    <table *ngIf="ResponseData?.HasException == true">
+
+                        <tr style="width: 100%;height:25px;">
+                            <td colspan="4" style="width: 300px; font-size: 13px; color: red;">
+                                {{'Customs.AddAttachmentResponse.O.ErrorMessgae'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+
+                        <tr class="FormFieldRow">
+                            <td style="width: 100px">
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'DocumentNumber'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.AddAttachmentResponse.O.DocumentNumber'">
+
+                                </LogLabel>
+                            </td>
+                            <td style="width:10px"></td>
+
+                            <td class="MyTB">
+                                <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [ObjectFieldName]="'DocumentNumber'"
+                                            [Text]="DocumentNumber"></LogTextBox>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr class="FormFieldRow">
+                            <td style="width: 100px">
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'ErrorCode'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.AddAttachmentResponse.O.ErrorCode'">
+
+                                </LogLabel>
+                            </td>
+                            <td style="width:10px"></td>
+
+                            <td class="MyTB">
+                                <LogTextBox [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [ObjectFieldName]="'ErrorCode'"
+                                            [Text]="ErrorCode"></LogTextBox>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 80px;">
+                            <td style="width: 100px">
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'ErrorRemarks'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [TextCode]="'Customs.AddAttachmentResponse.O.ErrorRemarks'">
+
+                                </LogLabel>
+                            </td>
+                            <td style="width:10px"></td>
+
+                            <td style="width: 240px; height:80px; padding-top: 6px; padding-right: 6px;">
+                                <div style="width: 100%; height:100%; text-align:center; border: 1px solid #AAAAAA; border-radius: 5px;">
+                                    <textarea [disabled]="false" style="box-shadow:none; background: #faf5c0;">{{ErrorRemarks}}</textarea>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
 
 
+           
 
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
+
+                        <tr><td></td><td></td></tr>
+                    </table>
 
                 <!--</fieldset>-->
             </div>
@@ -204,13 +217,12 @@
 
 
 
-
+       
 
 
         <div class="class-response-ToolBar" style="height:22px;">
             <div style="width: 57px;margin-left:10px;float: left;">
-                <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' |
-                    TextCodeTranslationPipe}}</button>
+                <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
             </div>
         </div>
 

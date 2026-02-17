@@ -20,7 +20,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool ActivateCustomsManagementInShipments { get; set; }
         public string ArtemusOutSettingsId { get; set; }
         public string ArtemusInSettingsId { get; set; }
-        public DateTime? AMCAirStartDate { get; set; }
-        public DateTime? AMCOceanStartDate { get; set; }
     }
 }

@@ -19,10 +19,9 @@ import {ContactPM} from '../../../../Common/EntityPMs/ContactPM';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import { UserArgs} from '../../../../Infrastructure/Args';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './GettingStartedComponent.html',
 })
 
@@ -32,12 +31,8 @@ export class GettingStartedComponent extends BaseComponent {
     public VideosObslist: HelpResourceArgs[] = [];
     public HowToObslist: HelpResourceArgs[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    public ReleaseDateString: string;
     constructor() {
         super();
-
-        this.ReleaseDateString = ObjectsLocator.GlobalSetting.ReleaseDateString;
-
         this.LoadData();
         this.CheckFeatures1();
         this.CheckFeatures2();
@@ -112,50 +107,50 @@ export class GettingStartedComponent extends BaseComponent {
     public AddAirlineVisibility: boolean = false;
     public AddShippingLineVisibility: boolean = false;
     CheckFeatures1() {
-        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERS")) {
+        if (FeatureLocator.HasFeaturePermession("Customer", "Module")) {
             this.CustomerInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "AGENTS")) {
+        if (FeatureLocator.HasFeaturePermession("Agent", "Module")) {
             this.AgentInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "USERS")) {
+        if (FeatureLocator.HasFeaturePermession("User", "Module")) {
             this.UserInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "PORTS")) {
+        if (FeatureLocator.HasFeaturePermession("Port", "Module")) {
             this.PortInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "AIRLINES")) {
+        if (FeatureLocator.HasFeaturePermession("Airline", "Module")) {
             this.AirlineInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "SHIPPINGLINES")) {
+        if (FeatureLocator.HasFeaturePermession("ShippingLine", "Module")) {
             this.ShippingLineInfoVisibility = true;
         }
-        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERS")) {
+        if (FeatureLocator.HasFeaturePermession("Customer", "Module")) {
             if (FeatureLocator.HasFeaturePermession("Customer", "NEW") && FeatureLocator.HasFeaturePermession("Customer", "NEWCUSTOMER")) {
                 this.AddCustomerVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("General", "AGENTS")) {
+        if (FeatureLocator.HasFeaturePermession("Agent", "Module")) {
             if (FeatureLocator.HasFeaturePermession("Agent", "NEW") && FeatureLocator.HasFeaturePermession("Agent", "NEWAGENT")) {
                 this.AddAgentVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("General", "USERS")) {
+        if (FeatureLocator.HasFeaturePermession("User", "Module")) {
             if (FeatureLocator.HasFeaturePermession("User", "NEW") && FeatureLocator.HasFeaturePermession("User", "NEWUSER")) {
                 this.AddUserVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("General", "PORTS")) {
+        if (FeatureLocator.HasFeaturePermession("Port", "Module")) {
             if (FeatureLocator.HasFeaturePermession("Port", "NEW") && FeatureLocator.HasFeaturePermession("Port", "NEWPORT")) {
                 this.AddPortVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("General", "AIRLINES")) {
+        if (FeatureLocator.HasFeaturePermession("Airline", "Module")) {
             if (FeatureLocator.HasFeaturePermession("Airline", "NEW") && FeatureLocator.HasFeaturePermession("Airline", "NEWAIRLINE")) {
                 this.AddAirlineVisibility = true;
             }
         }
-        if (FeatureLocator.HasFeaturePermession("General", "SHIPPINGLINES")) {
+        if (FeatureLocator.HasFeaturePermession("ShippingLine", "Module")) {
             if (FeatureLocator.HasFeaturePermession("ShippingLine", "NEW") && FeatureLocator.HasFeaturePermession("ShippingLine", "NEWSHIPPINGLINE")) {
                 this.AddShippingLineVisibility = true;
             }
@@ -254,7 +249,7 @@ export class GettingStartedComponent extends BaseComponent {
     }
 
     // Data Management 
-    public New(entity: string) {
+    private New(entity: string) {
         switch (entity) {
             case "User": { this.RunNewEntity(entity, "./InfrastructureModules/InfrastructureUser/Components/NewUserComponent"); break; }
             case "Agent": { this.RunNewEntity(entity, "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent"); break; }
@@ -266,7 +261,7 @@ export class GettingStartedComponent extends BaseComponent {
         }
     }
     private RunNewEntity(objectTableName: string, path: string) {
-        this._entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(objectTableName).subscribe(response => {
             var str = TextCodeTranslator.Translate("General.O.NewEntity");
             str = str.replace("%Entity", TextCodeTranslator.TranslateTable(objectTableName));
             var logWindow = new LogitudeWindow();
@@ -280,7 +275,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
     private RunImportEntity(objectTableName: string) {
-        this._entityResourceService.getEntityResourceByTableName(objectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(objectTableName, 0).subscribe(response => {
             var windowTitle = "Add " + objectTableName;
             var logWindow = new LogitudeWindow();
             var args: ImportEntityArgs = new ImportEntityArgs();
@@ -319,7 +314,7 @@ export class GettingStartedComponent extends BaseComponent {
                 objectTabelId = objectTablePM.Id;
             }
             if (!AppTool.IsNullOrEmpty(objectTabelId)) {
-                this._entityResourceService.getEntityResourceByTableName(entity).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName(entity).subscribe(response => {
                     this.ViewQuery(objectTabelId, entity);
                 });
             }
@@ -405,7 +400,7 @@ export class GettingStartedComponent extends BaseComponent {
 
     // System Info
     SystemInfoClicked() {
-        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(tenantResp => {
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Width = 800;
@@ -426,7 +421,7 @@ export class GettingStartedComponent extends BaseComponent {
         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/CompanyAddress/CompanyAddressSettingsComponent');
     }
     SystemDefaultsClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
             var windowTitle = "System Defaults ";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 850;
@@ -443,15 +438,13 @@ export class GettingStartedComponent extends BaseComponent {
         logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/Counters/CountersComponent');
     }
     CompanyLogoClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 740;
         logitudeWindow.Height = 585;
         logitudeWindow.DataContext = this;
         logitudeWindow.Title = "Logo Definition";
         logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/UploadImage/UploadLogoComponent');
-    });
-}
+    }
     SystemCurrenciesClick() {
         var windowTitle = "System Currencies";
         var logWindow = new LogitudeWindow();
@@ -466,7 +459,7 @@ export class GettingStartedComponent extends BaseComponent {
         logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingSettingsComponent');
     }
     LocalSettingsClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
             var windowTitle = "Local Settings";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 750;
@@ -477,7 +470,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
     InvoiceSettingsClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
             var windowTitle = "Invoice Settings";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 750;
@@ -488,7 +481,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
     AirlineSettingsClick() {
-        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe(response => {
             var windowTitle = "Airline Settings";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 650;
@@ -499,7 +492,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
     SignatureClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
             var windowArgs: any = {};
             windowArgs.DataViewModel = this;
             windowArgs.PageType = "Signature";
@@ -520,7 +513,7 @@ export class GettingStartedComponent extends BaseComponent {
         logitudeWindow.Width = 600;
         logitudeWindow.Height = 400;
         logitudeWindow.Title = "Change User Password";
-        this._entityResourceService.getEntityResourceByTableName("User").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("User").subscribe(response => {
             logitudeWindow.DataContext = this;
             logitudeWindow.Show('./InfrastructureModules/InfrastructureUser/Components/PersonalSettings/ChangePasswordComponent');
         });
@@ -557,12 +550,11 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
 
-    ViewAllResources() {
+    private ViewAllResources() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "View All");
-        var url = ServiceHelper.GetLogitudeURL() + 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx';
-        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }]
-        ServiceHelper.OpenWindowWithParams(url, params);
-
+        var uri = 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx?tempId=' + SessionInfo.DocumentDownloadToken;
+        var navigate = ServiceHelper.GetLogitudeURL() + uri;
+        window.open(navigate);
     }
 }
 
@@ -577,16 +569,11 @@ export class HelpResourceArgs {
     get HowToContent() { return this.entity.Name; }
     get Code() { return this.entity.Code; }
     get IsNew() { return this.entity.IsNew; }
-
     private HowToMethod() {
-        if (this.entity.Type == "REL")
-            ServiceLocator.SendTotangoUserActivity("How-To", "View Release Notes");
-
         ServiceLocator.SendTotangoUserActivity("Help Center", "How-To");
-        var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx?id=' + this.entity.Code;
-        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }, { name: "Code", value: this.Code } ]
-        ServiceHelper.OpenWindowWithParams(url, params);
 
+        var uri = "/WebPages/HowToDownloadPage.aspx?id=" + this.Code;
+        window.open(ServiceHelper.GetLogitudeURL() + uri);
     }
     private NafigateToURL() {
         window.open(this.Uri);

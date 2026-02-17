@@ -9,7 +9,7 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -19,9 +19,6 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -40,6 +37,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
+
         public AgentService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -84,16 +82,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM = entityPM;
             this.isNewEntity = true;
 
-            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) || this.entityPM.IsHybrid  ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
+            this.entityPM.Id = IdCounter.GetNumber("Card", entityPM.Tenant).ToString();
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
                 PartnerTypeId = "AG",
-                SharedLogisticsInvitationStatusCode = 1,
-                CargoTrackingInvitationStatusCode = 1,
-                UploadingUniqueKey = entityPM.UploadingUniqueKey,
+                SharedLogisticsInvitationStatusCode = 1
             };
 
             this.entityPOCO = new Agent()
@@ -104,6 +100,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
 
+            AgentValidating.Validate(entityPM);
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {
@@ -126,26 +123,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             AgentMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-            AgentValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Agent", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<AgentPM> { entityPM }.Cast<object>().ToList() }).Update();
-            
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if(!LogitudeSettings.IsCostomsDeploy)
-            //if (dbms != "oracle")
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
-            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
             }
-            AddCardKafkaQueueMessage();
         }
 
         public void Update(AgentPM entityPM, bool mapComposition = false)
@@ -161,6 +150,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             this.InitializeComponent();
 
+            AgentValidating.Validate(entityPM);
 
             if (CacheManager.CacheWrapper != null)
             {
@@ -179,26 +169,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();
+
             if (!entityPM.IsHybrid)
             {
                 AgentTracing.Trace(entityPM, entityPOCO, isNewEntity);
             }
 
             AgentMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-            AgentValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Agent", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<AgentPM> { entityPM }.Cast<object>().ToList() }).Update();
 
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
-            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
-            AddCardKafkaQueueMessage();
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Agent");
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
         }
 
         private void InitializeComponent()
@@ -212,12 +196,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid)
                 {
-                    var counterAdditionalParameters = new Dictionary<string, string>
-                    {
-                        ["[B]"] = "AG",
-                        ["[BranchName]"] = "AG"
-                    };
-                    entityPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ? TableCounter.GetNumber(tenant, "CADC", "AG", null, counterAdditionalParameters, true) :  CodeCounter.GetNumber("Agent", entityPM.Tenant).ToString();
+                    entityPM.Code = CodeCounter.GetNumber("Agent", entityPM.Tenant).ToString();
                 }
 
                 if (!string.IsNullOrEmpty(entityPM.TenantAddressId))
@@ -296,11 +275,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
             }
-            entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
-           entityCard.SendingInterestReport = entityPM.Card!=null? entityPM.Card.SendingInterestReport: entityCard.SendingInterestReport;
-            entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
-            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-
         }
 
         private void ComputeContactFields()
@@ -349,7 +323,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-      
+
         private void CreateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("CardExternalCodeByCurrency", tenant).ToString();
@@ -371,7 +345,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CardExternalCodeByCurrencyMapping.MapEntity(itemPM, itemPoco, true);
             cardExternalCodeByCurrencyRepository.Add(itemPoco);
         }
-
         private void UpdateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             CardExternalCodeByCurrency itemPoco = cardExternalCodeByCurrencyRepository.GetSingleCardExternalCodeByCurrency(itemPM.Id, tenant);
@@ -388,7 +361,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-     
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();
@@ -413,7 +385,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             itemContactPM.CardId = this.entityPM.Id;
             itemContactPM.CompanyName = this.entityPM.EnglishName;
-            itemContactPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             if (itemContactPM.IsCreatedWithPartner)
             {
@@ -504,23 +475,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     #endregion
                 }
-                else
-                {
-                    Contact newContact = contactRepository.GetSingleContact(itemContactPM.Id, itemContactPM.Tenant);
-
-                    ContactMapping.MapEntity(itemContactPM, newContact, isNewEntity);
-                    contactRepository.Update(newContact);
-                }
-
-                if (isNewEntity)
-                {
-                    if (itemContactPM.SetAsPrimaryForCard)
-                    {
-                        entityPM.PrimaryContactId = itemContactPM.Id;
-                        entityPM.PrimaryContactPhone = itemContactPM.BusinessPhone;
-                        entityPM.PrimaryContactName = itemContactPM.EnglishName;
-                    }
-                }
 
                 CardContact newCardContact = new CardContact()
                 {
@@ -582,26 +536,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
-        }
-
-        private void AddCardKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Card" },
-                { "EntityId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
         }
 
         public void Submit()

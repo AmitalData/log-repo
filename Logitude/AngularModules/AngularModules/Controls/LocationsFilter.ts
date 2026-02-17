@@ -21,10 +21,6 @@ import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
         <li style=" width: 40px;" (click)="itemClicked('C')" (mouseover)="itemMouseOver('C')" (mouseleave)="itemMouseLeave('C')" [class.SelectedFilter]="SelectedValue === 'C'" title="Client">
           Client
         </li>
-         <li style=" width: 50px;" (click)="itemClicked('D')" (mouseover)="itemMouseOver('D')" (mouseleave)="itemMouseLeave('D')" [class.SelectedFilter]="SelectedValue === 'D'" title="Day Off">
-          Day Off
-        </li>
-
     </ul>
     `
 })
@@ -34,8 +30,6 @@ export class LocationsFilter {
     public FilterId_H: string;
     public FilterId_O: string;
     public FilterId_I: string;
-    public FilterId_D: string;
-
     @Output() SelectedValueChanged = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -44,7 +38,6 @@ export class LocationsFilter {
             this.FilterId_O = "LocationFilter_O_-1_-1";
             this.FilterId_H = "LocationFilter_H_-1_-1";
             this.FilterId_I = "LocationFilter_C_-1_-1";
-            this.FilterId_D = "LocationFilter_D_-1_-1";
         }
 
         else {
@@ -53,7 +46,6 @@ export class LocationsFilter {
             this.FilterId_O = "LocationFilter_O_" + idIndex;
             this.FilterId_H = "LocationFilter_H_" + idIndex;
             this.FilterId_I = "LocationFilter_C_" + idIndex;
-            this.FilterId_D = "LocationFilter_D_" + idIndex;
         }
     }
 

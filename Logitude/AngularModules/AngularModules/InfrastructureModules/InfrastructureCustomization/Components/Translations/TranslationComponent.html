@@ -1,5 +1,4 @@
-
-<table>
+﻿<table>
     <tr>
         <td>
             <table>
@@ -39,9 +38,7 @@
                                 <td colspan="3">
                                     <table>
                                         <tr>
-                                            <td>
-                                                <div></div>
-                                            </td>
+                                            <td><div></div></td>
 
                                             <td style="width:60px;" class="Value"> Search:</td>
 
@@ -49,18 +46,14 @@
                                                 <SearchBox (TextChanged)="OnSearchTextChanged($event)"></SearchBox>
                                             </td>
 
-                                            <td style="width:5px;">
-                                                <div></div>
-                                            </td>
+                                            <td style="width:5px;"><div></div></td>
 
                                             <td style="width:80px;" class="Value"> Count: {{Count}}</td>
 
-                                            <td style="width:10px;">
-                                                <div></div>
-                                            </td>
+                                            <td style="width:10px;"><div></div></td>
                                         </tr>
                                     </table>
-                                </td>
+                                </td>                                
                             </tr>
                         </table>
                     </td>
@@ -77,68 +70,60 @@
 
                                 <!-- Code -->
                                 <log-column [width]="'350'" [header]="'Code'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <label *ngIf="SearchText">
-                                                {{(item.Code).slice(0,((item.Code).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.Code).slice(((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.Code).slice((((item.Code).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                            </label>
+                                    <log-cell-template template="let item" #logcelltemplate>                                        
+                                        <label *ngIf="SearchText">
+                                            {{(item.Code).slice(0,((item.Code).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.Code).slice(((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.Code).slice((((item.Code).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.Code).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
+                                        </label>
 
-                                            <label *ngIf="!SearchText">{{item.Code}}</label>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        <label *ngIf="!SearchText">{{item.Code}}</label>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Default Name -->
                                 <log-column [width]="'350'" [header]="'Default Name'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <label *ngIf="SearchText">
-                                                {{(item.DefaultText).slice(0,((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.DefaultText).slice(((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.DefaultText).slice((((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                            </label>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <label *ngIf="SearchText">
+                                            {{(item.DefaultText).slice(0,((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.DefaultText).slice(((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.DefaultText).slice((((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
+                                        </label>
 
-                                            <label *ngIf="!SearchText">{{item.DefaultText}}</label>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        <label *ngIf="!SearchText">{{item.DefaultText}}</label>
+                                    </log-cell-template>
                                 </log-column>
-
+                                
                                 <!-- Display Label (Singluar) -->
                                 <log-column [width]="'200'" [header]="'Display Label (Singluar)'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
 
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" class="TextTrimming" [attr.title]="item.TranslatedText">
-                                                <label *ngIf="SearchText">
-                                                    {{(item.TranslatedText).slice(0,((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedText).slice(((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedText).slice((((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                                </label>
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" class="TextTrimming" [attr.title]="item.TranslatedText">
+                                            <label *ngIf="SearchText">
+                                                {{(item.TranslatedText).slice(0,((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedText).slice(((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedText).slice((((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
+                                            </label>
 
-                                                <label *ngIf="!SearchText">{{item.TranslatedText}}</label>
-                                            </div>
+                                            <label *ngIf="!SearchText">{{item.TranslatedText}}</label>
+                                        </div>
 
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [NoObjectField]="true" [ObjectFieldName]="'TranslatedText'" [Text]="item.TranslatedText" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [NoObjectField]="true" [ObjectFieldName]="'TranslatedText'" [Text]="item.TranslatedText" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Display Label (Plural) -->
                                 <log-column [width]="'200'" [header]="'Display Label (Plural)'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
 
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" class="TextTrimming" [attr.title]="item.TranslatedTextPlural">
-                                                <label *ngIf="SearchText">
-                                                    {{(item.TranslatedTextPlural).slice(0,((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedTextPlural).slice(((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedTextPlural).slice((((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                                </label>
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" class="TextTrimming" [attr.title]="item.TranslatedTextPlural">
+                                            <label *ngIf="SearchText">
+                                                {{(item.TranslatedTextPlural).slice(0,((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedTextPlural).slice(((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedTextPlural).slice((((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
+                                            </label>
 
-                                                <label *ngIf="!SearchText">{{item.TranslatedTextPlural}}</label>
-                                            </div>
+                                            <label *ngIf="!SearchText">{{item.TranslatedTextPlural}}</label>
+                                        </div>
 
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [NoObjectField]="true" [ObjectFieldName]="'TranslatedTextPlural'" [Text]="item.TranslatedTextPlural" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [NoObjectField]="true" [ObjectFieldName]="'TranslatedTextPlural'" [Text]="item.TranslatedTextPlural" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                             </logitude-edit-grid>
@@ -153,17 +138,13 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                    <td>
-                        <div></div>
-                    </td>
+                    <td><div></div></td>
 
                     <td style="width: 57px;">
                         <button class="Button" (click)="CancelClicked()">Cancel</button>
                     </td>
 
-                    <td style="width:5px;">
-                        <div></div>
-                    </td>
+                    <td style="width:5px;"><div></div></td>
 
                     <td style="width: 57px;">
                         <button class="RedButton" (click)="SaveClicked()">Save</button>

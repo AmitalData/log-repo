@@ -1,13 +1,10 @@
-import {NewSLAComponent} from './Components/SLA/NewSLAComponent';
+﻿import {NewSLAComponent} from './Components/SLA/NewSLAComponent';
 import {SLAMainWindowComponent} from './Components/SLA/SLAMainWindowComponent';
 import {AddEditEscalationComponent} from './Components/SLA/AddEditEscalationComponent';
 import {BlockedCustomerComponent} from './Components/BlockedCustomer/BlockedCustomerComponent';
 import {NewBusinessHourAndHolidaysComponent} from './Components/BusinessHour/NewBusinessHourAndHolidaysComponent';
 import {AddEditBusinessHourHolidayComponent} from './Components/BusinessHour/AddEditBusinessHourHolidayComponent';
-import { TicketSettingsComponent } from './Components/TicketSettings/TicketSettingsComponent';
-import { SupportMailBoxComponent } from './Components/SupportMailBox/SupportMailBoxComponent';
-import { AddEditSupportMailBoxComponent } from './Components/SupportMailBox/AddEditSupportMailBoxComponent';
-
+import {TicketSettingsComponent} from './Components/TicketSettings/TicketSettingsComponent';
 //Questionnaire
 import { AddEditQuestionnaireComponent } from './Components/Questionnaire/AddEditQuestionnaireComponent';
 import { AddEditQuestionnaireQuestionComponent } from './Components/Questionnaire/AddEditQuestionnaireQuestionComponent';
@@ -27,8 +24,6 @@ export const Components =
         AddEditQuestionnaireQuestionComponent,
         QuestionnaireAnswersComponent,
         AddEditPickListComponent,
-        SupportMailBoxComponent,
-        AddEditSupportMailBoxComponent,
     ];
 
 export class ModuleDeclarations {
@@ -47,9 +42,7 @@ export class ModuleDeclarations {
             case "AddEditQuestionnaireComponent": { myResult = AddEditQuestionnaireComponent; break; }
             case "AddEditQuestionnaireQuestionComponent": { myResult = AddEditQuestionnaireQuestionComponent; break; }
             case "QuestionnaireAnswersComponent": { myResult = QuestionnaireAnswersComponent; break; }
-            case "AddEditPickListComponent": { myResult = AddEditPickListComponent; break; }
-            case "SupportMailBoxComponent": { myResult = SupportMailBoxComponent; break; }
-            case "AddEditSupportMailBoxComponent": { myResult = AddEditSupportMailBoxComponent; break; }
+            case "AddEditPickListComponent": { myResult = AddEditPickListComponent; break; }  
         }
 
         return myResult;

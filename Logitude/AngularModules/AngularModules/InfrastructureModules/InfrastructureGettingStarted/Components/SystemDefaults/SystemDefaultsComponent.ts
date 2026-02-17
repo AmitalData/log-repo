@@ -1,4 +1,5 @@
-import {Component, } from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -14,11 +15,10 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    selector: 'SystemDefaultsComponent',   
+    selector: 'SystemDefaultsComponent',
+    moduleId: module.id,
     templateUrl: './SystemDefaultsComponent.html',
 })
 
@@ -29,13 +29,9 @@ export class SystemDefaultsComponent extends BaseComponent{
     public TenantPm: TenantPM = new TenantPM();
     public IsVisibile: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public HasDefaultRatiosFeature: boolean = false;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-
-        this.HasDefaultRatiosFeature = FeatureLocator.HasFeaturePermession('General', 'DefaultRatios');
-
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
             this.LoadTenantPMMethod();
         });
     }
@@ -47,7 +43,6 @@ export class SystemDefaultsComponent extends BaseComponent{
         var myService: TenantPMService = new TenantPMService();
         myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
             this.TenantPm = response.Result;
-
             this.LoadCachedLists();
             this.IsVisibile = true;
 
@@ -75,7 +70,7 @@ export class SystemDefaultsComponent extends BaseComponent{
             this.UIProperties.SetVisibility("AgentId", "Tenant",  true);
         }
 
-        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+        if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
             this.SetUIPropertiesHitVisible();
         }
     }
@@ -107,27 +102,15 @@ export class SystemDefaultsComponent extends BaseComponent{
         this.UIProperties.SetEnabled("LocalCustomsCode", "Tenant", false);
         this.UIProperties.SetEnabled("AgentId", "Tenant", false);
         this.UIProperties.SetEnabled("CustomerId", "Tenant", false);
-        this.UIProperties.SetEnabled("CustomerTenantShareCustomsFile", "Tenant", false);
+        this.UIProperties.SetEnabled("IsCustomerTenantShare", "Tenant", false);
         this.UIProperties.SetEnabled("CustomerTenantShareImportFile", "Tenant", false);
         this.UIProperties.SetEnabled("CustomerTenantShareExportFile", "Tenant", false);
 
         this.UIProperties.SetEnabled("RegulatedAgentRegimeActivated", "Tenant", false);
         this.UIProperties.SetEnabled("RegulatedAgentNumber", "Tenant", false);
-
-        this.UIProperties.SetEnabled("DimensionsUnitCode", "Tenant", false);
-        this.UIProperties.SetEnabled("TemperatureUnitCode", "Tenant", false);
-        this.UIProperties.SetEnabled("SCACCode", "Tenant", false);
-        this.UIProperties.SetEnabled("CBSA", "Tenant", false);
-        this.UIProperties.SetEnabled("CAAT", "Tenant", false);
-        this.UIProperties.SetEnabled("FMCNumber", "Tenant", false);
-
-        this.UIProperties.SetEnabled("IsNotesRightToLeftEnabled", "Tenant", false);
-        this.UIProperties.SetEnabled("AllowCustomersInAgentsLOV", "Tenant", false);
-        this.UIProperties.SetEnabled("AllowAgentInCustomersLOV", "Tenant", false);
-
     }
     SetUIProperties_DemoAgent() {
-        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
+        if (this.TenantPm.Id == 65) {
             this.UIProperties.SetEnabled("AgentId", "Tenant", false);
         }
         else {
@@ -141,7 +124,7 @@ export class SystemDefaultsComponent extends BaseComponent{
         var isEditingEnabled: boolean = true;
         var isFieldEnabled: boolean = false;
 
-        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
+        if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
             isEditingEnabled = false;
         }
 
@@ -185,7 +168,7 @@ export class SystemDefaultsComponent extends BaseComponent{
     // region Tenant 65
     get DemoMessageVisibility() {
         var result = false;
-        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
+        if (this.TenantPm.Id == 65) {
             result = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
@@ -425,20 +408,6 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
-    get CBSA() { return this.TenantPm.CBSA; }
-    set CBSA(value: string) {
-        if (this.TenantPm.CBSA != value) {
-            this.TenantPm.CBSA = value;
-        }
-    }
-
-    get CAAT() { return this.TenantPm.CAAT; }
-    set CAAT(value: string) {
-        if (this.TenantPm.CAAT != value) {
-            this.TenantPm.CAAT = value;
-        }
-    }
-
     get FMCNumber() { return this.TenantPm.FMCNumber; }
     set FMCNumber(value: string) {
         if (this.TenantPm.FMCNumber != value) {
@@ -474,10 +443,10 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
-    get CustomerTenantShareCustomsFile() { return this.TenantPm.CustomerTenantShareCustomsFile; }
-    set CustomerTenantShareCustomsFile(value: boolean) {
-        if (this.TenantPm.CustomerTenantShareCustomsFile != value) {
-            this.TenantPm.CustomerTenantShareCustomsFile = value;
+    get IsCustomerTenantShare() { return this.TenantPm.IsCustomerTenantShare; }
+    set IsCustomerTenantShare(value: boolean) {
+        if (this.TenantPm.IsCustomerTenantShare != value) {
+            this.TenantPm.IsCustomerTenantShare = value;
         }
     }
 
@@ -506,13 +475,6 @@ export class SystemDefaultsComponent extends BaseComponent{
     set AllowAgentInCustomersLOV(value: boolean) {
         if (this.TenantPm.AllowAgentInCustomersLOV != value) {
             this.TenantPm.AllowAgentInCustomersLOV = value;
-        }
-    }
-
-    get AllowCustomersInAgentsLOV() { return this.TenantPm.AllowCustomersInAgentsLOV; }
-    set AllowCustomersInAgentsLOV(value: boolean) {
-        if (this.TenantPm.AllowCustomersInAgentsLOV != value) {
-            this.TenantPm.AllowCustomersInAgentsLOV = value;
         }
     }
 
@@ -549,14 +511,6 @@ export class SystemDefaultsComponent extends BaseComponent{
     get AllowAgentInCustomersLOVVisible() {
         var result = false;
         if (FeatureLocator.HasFeaturePermession("General", "AllowAgentInCustomersLOV")) {
-            result = true;
-        }
-        return result;
-    }
-
-    get AllowCustomersInAgentsLOVVisible() {
-        var result = false;
-        if (FeatureLocator.HasFeaturePermession("General", "AllowCustomersInAgentsLOV")) {
             result = true;
         }
         return result;
@@ -619,7 +573,8 @@ export class SystemDefaultsComponent extends BaseComponent{
 
     get CustomerTenantShareExportFileVisible() {
         var result = false;
-        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
+        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES") && FeatureToggle) {
             result = true;
         }
 
@@ -635,16 +590,6 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
 
         return result;
-    }
-
-    ViewRatioSettingsClicked() {
-        var windowTitle = "Default Ratios Settings ";
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 600;
-        logWindow.Height = 400;
-        logWindow.Title = windowTitle;
-        logWindow.DataContext = this;
-        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/SystemDefaults/DefaultRatiosComponent');
     }
 
     //Commands 

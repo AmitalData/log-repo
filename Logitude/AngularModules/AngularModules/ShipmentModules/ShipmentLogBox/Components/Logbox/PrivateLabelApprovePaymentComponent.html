@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .emptyticket {
         border: 1px solid #8C8C8C;
@@ -7,7 +7,7 @@
         height: 164px;
         background: white;
         margin: 5px;
-        /*margin-left: 15px;*/
+        margin-left: 15px;
         float: left;
     }
 
@@ -15,11 +15,6 @@
             background: #8C8C8C;
             cursor: pointer;
         }
-
-    .selectedemptyticket {
-        background: #8C8C8C;
-        cursor: pointer;
-    }
 
     .infoColor {
         background: -moz-linear-gradient(50.55% 126.37% 91.55deg,rgba(255, 255, 255, 1) 0%,rgba(242, 242, 242, 1) 51.84%,rgba(212, 212, 212, 1) 100%);
@@ -69,110 +64,191 @@
         overflow: hidden;
     }
     .Disable {
-        opacity:0.5;
-        pointer-events:none;
+       opacity:0.5;
+       pointer-events:none;
     }
-    .tooltip {
-        position: relative;
-        display: inline-block;
-    }
+   .tooltip {
+    position: relative;
+    display: inline-block;
+    
+}
 
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 350px;
-            background-color: #6A8299;
-            color: #fff;
-            text-align: left;
-            border-radius: 6px;
-            padding: 5px 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 0;
-            right: 110%;
-            margin-left: 5px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 350px;
+    background-color: #6A8299;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: 110%;
+    margin-left: 5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
 
-            .tooltip .tooltiptext::after {
-                content: "";
-                position: absolute;
-                top: 80%;
-                left: 98%;
-                margin-left: 5px;
-                border-width: 5px;
-                border-style: solid;
-                border-color: transparent transparent transparent #6A8299;
-            }
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 80%;
+    left: 98%;
+    margin-left: 5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #6A8299;
+}
 
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
 </style>
 <table>
     <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
         <td>
-            <div [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'" class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
+           <div class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
         </td>
     </tr>
     <tr>
         <td>
-            <table [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'">
-                <tr style="height:50px;">
-                    <td style="width:185px; max-width: 185px;">
+            <table style="direction:rtl;">
+                <!--<tr style="height: 10px;">
+                    <td style="height: 10px;">
+                        <div style="float:right;">אישור היבואן להגשת הצהרת יבוא למכס</div>
+                    </td>
+                    <td style="height: 10px;">
+                        <div style="float:left;">DSV</div>
+                    </td>
+                </tr>-->
+                <tr style="height:150px;border-top:1px solid #BCBEC0;">
+                    <td>
                         <table>
                             <tr>
                                 <td>
-                                    <table style="height:50px">
+                                    <table style="height:150px">
                                         <tr>
-                                            <td style="height: 22px;width:220px;">
+                                            <td style="height: 22px;width:150px;">
                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                    {{'Shipment.O.DeclarationNo' | TextCodeTranslationPipe}}
+                                                    מספר תיק עמילות
                                                 </label>
                                             </td>
-                                            <td style="height: 22px;min-width:140px;">
+                                            <td style="height: 22px;">
                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                    <span *ngIf="DeclarationNo">{{DeclarationNo}}</span>
-                                                    <span *ngIf="!DeclarationNo">---</span>
+                                                    {{CustomsFileNo}}
                                                 </label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="height: 22px;width:220px;">
+                                            <td style="height: 22px;width:150px;">
                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                    {{'Shipment.O.GoodsValue' | TextCodeTranslationPipe}}
+                                                    מספר הצהרה
                                                 </label>
                                             </td>
-                                            <td style="height: 22px;min-width:140px;">
+                                            <td style="height: 22px;">
                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                    <span *ngIf="GoodsValue">{{GoodsValue}}</span>
-                                                    <span *ngIf="!GoodsValue">---</span>
+                                                    {{DeclarationNo}}
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 22px;width:150px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    תאור טובין
+                                                </label>
+                                            </td>
+                                            <td style="height: 22px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    {{MishgorDescOfGoods1}}
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 22px;width:150px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    ערך סחורה בש"ח
+                                                </label>
+                                            </td>
+                                            <td style="height: 22px;">
+                                                <label style="padding-left:10px;color: blue;text-decoration: underline;cursor:pointer;" (click)="GoodsValueClick()">
+                                                    {{GoodsValue}}
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 22px;width:150px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    ערך סחורה בסיף
+                                                </label>
+                                            </td>
+                                            <td style="height: 22px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    {{CifValue}}
                                                 </label>
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
                                 <td>
-                                    <table style="height:50px">
+                                    <table style="height:150px">
                                         <tr>
-                                            <td style="height: 22px;width:220px;">
-                                                <div></div>
+                                            <td style="height: 22px;width:150px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    סה"כ מיסים לתשלום
+                                                </label>
                                             </td>
                                             <td style="height: 22px;">
-                                                <div></div>
+                                                <label style="padding-left:10px;color: blue;text-decoration: underline;cursor:pointer;" (click)="TotalTaxClick()">
+                                                    {{TotalTax}}
+                                                </label>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="height: 22px;width:220px;padding-left:50px;">
+                                            <td style="height: 22px;width:150px;">
                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                    {{'Shipment.O.TotalTax' | TextCodeTranslationPipe}}
+                                                    מספרכם
                                                 </label>
                                             </td>
-                                            <td style="height: 22px;min-width:140px;">
-                                                <label style="padding-left:10px;color: blue;text-decoration: underline;cursor:pointer;" (click)="TotalTaxClick()">
-                                                    <span *ngIf="TotalTax">{{TotalTax}}</span>
-                                                    <span *ngIf="!TotalTax">0</span>
+                                            <td style="height: 22px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    {{CustomerReference1}}
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 22px;width:150px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    נמל מוצא
+                                                </label>
+                                            </td>
+                                            <td style="height: 22px;">
+                                                <img *ngIf="EntityPm && EntityPm.MainCarriageFromPortCode != '---'" [title]="EntityPm.MainCarriageFromPortName" src="{{EntityPm.MainCarriageFromPortCountryCode | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
+                                                <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{EntityPm ? EntityPm.MainCarriageFromPortCode : ''}} </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 22px;width:150px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    כמות
+                                                </label>
+                                            </td>
+                                            <td style="height: 22px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    {{MishgorPackageQuantity}}
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 22px;width:150px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    משקל
+                                                </label>
+                                            </td>
+                                            <td style="height: 22px;">
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                    {{MishgorPackageWeight}}
                                                 </label>
                                             </td>
                                         </tr>
@@ -182,11 +258,12 @@
                         </table>
                     </td>
                 </tr>
-                <tr style="min-height: 458px;height: 100%;border: 1px solid #BCBEC0;border-radius: 4px;">
-                    <td style="overflow-y: auto;overflow-x: hidden;width:185px;top:1px;bottom:4px;position:relative;vertical-align:top" class="MediaFill">
-                        <div style="height: 562px;">
-                            <div *ngFor="let item of externalDocs let i = index" style="overflow-y:auto;overflow-x:hidden;">
-                                <div (click)="SelectTicket(item)" class="emptyticket" [class.selectedemptyticket]="item == SelectedTicket" style="max-width:164px;margin-top:10px;direction:ltr;" [style.float]="Language == 'HB' ? 'right' : 'left'">
+                <tr style="min-height: 458px;height: 73%;">
+                    <td style="/* min-height: 458px; *//* height: 73%; */top: 150px;bottom: 8px;overflow-y: auto;overflow-x: hidden;" class="MediaFill">
+                        <div style="overflow-y:auto;overflow-x:hidden;border: 1px solid #BCBEC0;border-radius: 4px;">
+                            <div *ngFor="let item1 of externalDocs" style="padding:5px;float:right;width:100%;">
+                                <span style="font-size:16px;border-bottom:1px solid #BCBEC0;color:#1B90CB;width:100%;float:left;">{{item1.key}}</span>
+                                <div *ngFor="let item of item1.value let i = index" class="emptyticket" style="max-width:164px;margin-top:10px;direction:ltr;float:right;">
                                     <table *ngIf="!item.hasFile" style="height:162px;">
                                         <tr>
                                             <td style="height:40px;">
@@ -253,46 +330,11 @@
                                         </tr>
                                     </table>
                                 </div>
-                                <!--</div>-->
-                            </div>
-                        </div>
-                    </td>
-                    <td [style.width.px]="Language == 'HB' ? 534 : 530">
-                        <div style="height:100%;" *ngIf="SelectedTicket">
-                            <div style="height:100%">
-                                <table *ngIf="IsPDF">
-                                    <tr>
-                                        <td>
-                                            <iframe [src]="IFrameURI | SafePipe" style="width:100%;height:99%;margin-bottom:5px;">Loading...</iframe>
-                                        </td>
-                                    </tr>
-
-                                </table>
-                                <table *ngIf="!IsPDF">
-                                    <tr>
-                                        <td><div></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <table>
-                                                <tr>
-                                                    <td style="height:1px;text-align:center;">
-                                                        <span style="font-size: 21px;color:gray;">Preview is available for PDF files only</span>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><div></div></td>
-                                    </tr>
-
-                                </table>
                             </div>
                         </div>
                     </td>
                 </tr>
-                <tr style="height:3px;">
+                <tr>
                     <td>
                         <div></div>
                     </td>
@@ -302,21 +344,33 @@
     </tr>
     <tr style="height:1px;">
         <td>
-            <div style="margin-left:7px;margin-top:9px;" [style.float]="Language == 'HB' ? 'left' : 'right'">
-                <button class="RedButton" [class.Disable]="DimApproveButton == true || DimDenyButton == true" (click)="DenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Deny Declaration">{{'Shipment.O.DenyDeclaration' | TextCodeTranslationPipe}}</button>
+            <div style="float:left;margin-left:10px;">
+                <button class="RedButton" [class.Disable]="DimApproveButton == true || DimDenyButton == true" (click)="DenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Deny Declaration">דחה הצהרה</button>
             </div>
-            <div style="margin-left:3px;margin-top:9px;" [style.float]="Language == 'HB' ? 'left' : 'right'">
-                <button class="GreenButton" [class.Disable]="DimApproveButton == true || IsAccepted == false || DimDenyButton == true" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Approve Declaration">{{'Shipment.O.ApproveDeclaration' | TextCodeTranslationPipe}}</button>
+            <div style="float:left;margin-left:10px;">
+                <button class="GreenButton" [class.Disable]="DimApproveButton == true || IsAccepted == false || DimDenyButton == true" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Approve Declaration">אשר הצהרה</button>
             </div>
-            <div style="margin-left:4px;margin-top:9px;" [style.float]="Language == 'HB' ? 'left' : 'right'">
-                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Close">{{'Shipment.O.Close' | TextCodeTranslationPipe}}</button>
+            <div style="float:left;margin-left:10px;">
+                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Close">סגור</button>
             </div>
-            <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="width:420px;margin-right: 5px;" [style.float]="Language == 'HB' ? 'right' : 'left'">
-                <LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="margin-top:2px;" [style.float]="Language == 'HB' ? 'right' : 'left'"></LogCheckBox>
-                <label *ngIf="Language == 'HB'" style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא,</label><br *ngIf="Language == 'HB'" />
-                <label *ngIf="Language == 'HB'" style="margin-right: 24px;">  לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>
-                <label *ngIf="Language != 'HB'" style="margin-left:-10px;">I Declare that I accept all data and documents content and</label><br *ngIf="Language != 'HB'" />
-                <label *ngIf="Language != 'HB'" style="margin-left: 24px;"> approve sending it to Customs.</label><!--<br *ngIf="Language != 'HB'" />-->
+            <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:left;width:370px;margin-right: 5px;direction: rtl;">
+                <LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="float:right;margin-top:2px;"></LogCheckBox>
+                <label style="margin-right:-10px;">אני הח"מ מצהיר/ה בזה כי אני מיודע/ת לגבי הטובין וכן לגבי </label><br />
+                <label style="margin-right:23px;"> הצרופות המוגשות למכס</label>
+                <!--<input type="checkbox" for="Cancel" [(ngModel)]="ShowDeleted" />
+                 <label style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא,</label><br />
+                <label style="margin-right:23px;">לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>-->
+                
+            </div>
+            <div style="float:right;width:25px;margin-right: 5px;direction: rtl;" class="tooltip">
+                <div class="tooltiptext">
+                    <table>
+                        <tr><td> I, the undersigned, hereby declare that I am aware of the</td></tr>
+                        <tr><td> goods and of the attachments submitted to Customs in </td></tr>
+                        <tr><td> the attached declaration</td></tr>
+                    </table>
+                </div>
+                <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
             </div>
         </td>
     </tr>

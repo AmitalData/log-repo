@@ -100,8 +100,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public bool IsCustomerView { get; set; }
         [DataMember]
-        public bool IsCustomerUploadPermission { get; set; }
-        [DataMember]
         public bool IsHybrid { get; set; }
 
         [DataMember]
@@ -137,21 +135,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsOceanDigitalSignRequired { get; set; }
         [DataMember]
         public bool IsInlandDigitalSignRequired { get; set; }
-
-
-        [DataMember]
-        public string OnSendPopulateDateFieldName { get; set; }
-
-        [DataMember]
-        public string OnUploadPopulateDateFieldName { get; set; }
-
-        [DataMember]
-        public string OnPrintPopulateDateFieldName { get; set; }
-
-
-
-
-
 
 
         private List<DocumentTypeCustomFieldPM> documentTypeCustomFields;
@@ -213,15 +196,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsSystemAdditionalPrintingFields { get; set; }
         [DataMember]
         public string PrintingFieldsScreenCode { get; set; }
-
-
-        [DataMember]
-        public bool AddedManually { get; set; }
-        [DataMember]
-        public string CopyName { get; set; }
-
-
-
-
     }
 }

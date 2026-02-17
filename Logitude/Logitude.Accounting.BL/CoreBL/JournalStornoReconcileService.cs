@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (result != null)
                 {
 
-                    throw new ApplicationException(result.ErrorMessage);
+                    throw new Exception(result.ErrorMessage);
                     return false;
                 }
             }

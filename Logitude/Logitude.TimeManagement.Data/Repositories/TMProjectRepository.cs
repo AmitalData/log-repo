@@ -39,24 +39,6 @@ namespace Logitude.TimeManagement.Data.Repositories
         }
 
 
-        public string GetTMActiveProjectByNumber(string number, int tenant)
-        {
-            string projectId = null;
-            var project = (from d in context.TMProjects
-                           where d.Tenant == tenant
-                           && d.ProjectNumber == number && d.BlockedForDataEntry==false
-                           select d).FirstOrDefault();
-
-            if (project != null)
-            {
-                projectId = project.Id;
-
-            }
-            return projectId;
-
-        }
-
-
         public List<string> GetInnerTMProjectByNumber(string number, int tenant)
         {
             List<string> list = (from d in context.TMProjects

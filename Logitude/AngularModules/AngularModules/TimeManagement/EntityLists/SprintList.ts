@@ -16,7 +16,6 @@ export class SprintList {
 	FromDate: Date;
 	ToDate: Date;
 	Name: string;
-	IsCompleted: boolean;
 	
 }
  

@@ -28,17 +28,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool HideTree { get; set; }
         public bool CannotFilter { get; set; }
         public string HelpText { get; set; }
-        public bool IsCustom { get; set; }
-        public string OriginalObjectFieldCode { get; set; }
-        public string ViewFieldDisplayName { get; set; }
-        public bool DontDisplayInView { get; set; }
-
-        public string FullNameTextCodeDefaultText { get; set; }
-        public string DimensionDataViewName { get; set; }
-        public bool IsMultipleSelection { get; set; }
-        public bool UseUnitSelection { get; set; }
-        public string RecordType { get; set; }
-
 
     }
 }

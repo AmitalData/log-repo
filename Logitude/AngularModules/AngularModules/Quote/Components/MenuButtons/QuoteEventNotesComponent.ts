@@ -6,7 +6,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuoteEventNotesComponent.html',
 })
 
@@ -18,8 +18,6 @@ export class QuoteEventNotesComponent extends BaseComponent {
     public ShowClosingReason: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsConvertQuoteType: boolean = false;
-    public ShowClosingReasonNotes: boolean = false;
-
     constructor() {
         super();
     }
@@ -29,30 +27,21 @@ export class QuoteEventNotesComponent extends BaseComponent {
         this.NotesHeader = args.NotesHeader;
         this.ShowClosingReason = args.ShowClosingReason;
         this.IsConvertQuoteType = args.IsConvertQuoteType;
-        this.ShowClosingReasonNotes = args.ShowClosingReasonNotes;
         this.EventNote = null;
         this.Clone();
     }
 
 
-    get QuoteClosingReasonId() { return this.EntityPM.QuoteClosingReasonId; }
-    set QuoteClosingReasonId(value: string) {
-        if (this.EntityPM.QuoteClosingReasonId != value) {
-            this.EntityPM.QuoteClosingReasonId = value;
+    get QuoteClosingReasonCode() { return this.EntityPM.QuoteClosingReasonCode; }
+    set QuoteClosingReasonCode(value: string) {
+        if (this.EntityPM.QuoteClosingReasonCode != value) {
+            this.EntityPM.QuoteClosingReasonCode = value;
         }
     }
 
     get EventNote() { return this.EntityPM.EventNote; }
     set EventNote(value: string) {
         if (this.EntityPM.EventNote != value) {
-            this.EntityPM.EventNote = value;
-        }
-    }
-
-    get QuoteClosingReasonNotes() { return this.EntityPM.QuoteClosingReasonNotes; }
-    set QuoteClosingReasonNotes(value: string) {
-        if (this.EntityPM.QuoteClosingReasonNotes != value) {
-            this.EntityPM.QuoteClosingReasonNotes = value;
             this.EntityPM.EventNote = value;
         }
     }
@@ -70,7 +59,6 @@ export class QuoteEventNotesComponent extends BaseComponent {
     private Clone() {
         this.myCloner = new Cloner(this.EntityPM);
         this.myCloner.AddField('EventNote');
-        this.myCloner.AddField('QuoteClosingReasonNotes');
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {

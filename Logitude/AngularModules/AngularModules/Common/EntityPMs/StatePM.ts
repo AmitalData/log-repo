@@ -20,7 +20,7 @@ export class StatePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -85,11 +85,6 @@ export class StatePM {
     public set ComputedLocalName(newValue: string) { if (this.computedLocalName != newValue) { this.computedLocalName = newValue; this.MarkAsDirty("ComputedLocalName"); } }
        
 	 
-    private qBOTransactionLocationCode: string;
-    public get QBOTransactionLocationCode() { return this.qBOTransactionLocationCode; }
-    public set QBOTransactionLocationCode(newValue: string) { if (this.qBOTransactionLocationCode != newValue) { this.qBOTransactionLocationCode = newValue; this.MarkAsDirty("QBOTransactionLocationCode"); } }
-       
-	 
     private countryCode: string;
     public get CountryCode() { return this.countryCode; }
     public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
@@ -104,10 +99,7 @@ export class StatePM {
     public OldEntityPM: StatePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -115,7 +107,6 @@ export class StatePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "State");
            
         }
-	 }
     }
     private MyClone: StatePM;
 

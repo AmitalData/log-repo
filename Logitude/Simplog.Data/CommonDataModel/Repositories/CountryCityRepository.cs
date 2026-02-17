@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
- 
+        public CountryCityRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CountryCityRepository(int tenant)
         {
@@ -97,11 +100,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public CountryCity GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
-        }
-
-        public CountryCity GetSingleCountryCityByNameAndCountry(string cityName, string countryId, int tenant)
-        {
-            return (from record in context.CountryCities where record.EnglishName == cityName && record.CountryId == countryId && record.Tenant == tenant select record).FirstOrDefault();
         }
     }
 }

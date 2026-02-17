@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .SectionTitle {
         height: 20px;
@@ -14,11 +14,11 @@
     <table>
 
         <tr class="TabTitleRow">
-            <td colspan="4">{{'Warehouse.TH.General' | TextCodeTranslationPipe}}</td>
+            <td colspan="4">{{'Warehouse.TH.Stack' | TextCodeTranslationPipe}}</td>
         </tr>
 
         <tr style="height:1px;">
-            <td style="width: 400px;">
+            <td style="width: 340px;">
                 <table>
                     <!-- Code -->
                     <tr class="FormFieldRow">
@@ -69,42 +69,16 @@
                             <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
-                        <td colspan="2">
-                            <table class="FixedTable">
-                                <tr>
-                                    <td style="width: 165px;">
-                                        <LogLov [ObjectFieldName]="'TypeCode'"
-                                                [SelectedValue]="TypeCode"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'WarehouseType'"
-                                                [HideColumns]="true">
-                                        </LogLov>
-                                    </td>
-
-                                    <td style="width: 2px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 18px;vertical-align:central;" *ngIf="TypeCode == 'CFS'">
-                                        <HelpIcon style="width: 18px;height:18px;" [HideHeader]="true" [Text]="'CFS means one entry and one release'"></HelpIcon>
-                                    </td>
-
-                                    <td style="width: 2px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 90px;vertical-align:central;">
-                                        <div>
-                                            <span *ngIf="IsStoragePricingVisible" class="hyperlink" (click)="StorageDefaultsClicked()">Storage Defaults</span>
-                                        </div>                                        
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
+                        <td>
+                            <LogLov [ObjectFieldName]="'TypeCode'"
+                                    [SelectedValue]="TypeCode"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'WarehouseType'">
+                            </LogLov>
+                        </td>
+                        <td>
+                            <div></div>
                         </td>
                     </tr>
 
@@ -165,13 +139,12 @@
                             <div></div>
                         </td>
                     </tr>
+
                 </table>
             </td>
-
-            <td style="width:30px;">
+            <td style="width:20px;">
                 <div></div>
             </td>
-
             <td style="width: 330px;">
                 <table>
                     <!-- Notes -->
@@ -201,12 +174,10 @@
                     </tr>
                 </table>
             </td>
-
             <td>
                 <div></div>
             </td>
         </tr>
-
         <tr>
             <td colspan="4">
                 <div></div>

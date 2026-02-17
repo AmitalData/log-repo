@@ -35,8 +35,6 @@ import {CustomerForwarderByProductPM} from './CustomerForwarderByProductPM';
 import {CustomerMediatorByProductPM} from './CustomerMediatorByProductPM';
 
 import {CardExternalCodeByCurrencyPM} from './CardExternalCodeByCurrencyPM';
-
-import {ProductItemPM} from './ProductItemPM';
 import {CustomerPMCustomCode} from '../EntityPMCustomCode/CustomerPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -44,15 +42,13 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
 
-export class CustomerPM extends ObjectCustomFieldPM {
+export class CustomerPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		  super("Customer");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -183,11 +179,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set ReceivablesAccountingCard(newValue: string) { if (this.receivablesAccountingCard != newValue) { this.receivablesAccountingCard = newValue; this.MarkAsDirty("ReceivablesAccountingCard"); } }
        
 	 
-    private eORInumber: string;
-    public get EORInumber() { return this.eORInumber; }
-    public set EORInumber(newValue: string) { if (this.eORInumber != newValue) { this.eORInumber = newValue; this.MarkAsDirty("EORInumber"); } }
-       
-	 
     private payablesAccountingCard: string;
     public get PayablesAccountingCard() { return this.payablesAccountingCard; }
     public set PayablesAccountingCard(newValue: string) { if (this.payablesAccountingCard != newValue) { this.payablesAccountingCard = newValue; this.MarkAsDirty("PayablesAccountingCard"); } }
@@ -206,11 +197,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
     private rankId: string;
     public get RankId() { return this.rankId; }
     public set RankId(newValue: string) { if (this.rankId != newValue) { this.rankId = newValue; this.MarkAsDirty("RankId"); } }
-       
-	 
-    private teamId: string;
-    public get TeamId() { return this.teamId; }
-    public set TeamId(newValue: string) { if (this.teamId != newValue) { this.teamId = newValue; this.MarkAsDirty("TeamId"); } }
        
 	 
     private vatTypeId: string;
@@ -313,11 +299,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set RankName(newValue: string) { if (this.rankName != newValue) { this.rankName = newValue; this.MarkAsDirty("RankName"); } }
        
 	 
-    private teamName: string;
-    public get TeamName() { return this.teamName; }
-    public set TeamName(newValue: string) { if (this.teamName != newValue) { this.teamName = newValue; this.MarkAsDirty("TeamName"); } }
-       
-	 
     private rankCode: string;
     public get RankCode() { return this.rankCode; }
     public set RankCode(newValue: string) { if (this.rankCode != newValue) { this.rankCode = newValue; this.MarkAsDirty("RankCode"); } }
@@ -343,14 +324,59 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set ImageDetailId(newValue: string) { if (this.imageDetailId != newValue) { this.imageDetailId = newValue; this.MarkAsDirty("ImageDetailId"); } }
        
 	 
+    private field1: CustomFieldClass;
+    public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "Customer");} return this.field1; }
+    public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }
+       
+	 
+    private field2: CustomFieldClass;
+    public get Field2() {if(!this.field2){ this.field2 = new CustomFieldClass(null, "Field2", "Customer");} return this.field2; }
+    public set Field2(newValue: CustomFieldClass) {  this.field2 = newValue; this.MarkAsDirty("Field2");  }
+       
+	 
+    private field3: CustomFieldClass;
+    public get Field3() {if(!this.field3){ this.field3 = new CustomFieldClass(null, "Field3", "Customer");} return this.field3; }
+    public set Field3(newValue: CustomFieldClass) {  this.field3 = newValue; this.MarkAsDirty("Field3");  }
+       
+	 
+    private field4: CustomFieldClass;
+    public get Field4() {if(!this.field4){ this.field4 = new CustomFieldClass(null, "Field4", "Customer");} return this.field4; }
+    public set Field4(newValue: CustomFieldClass) {  this.field4 = newValue; this.MarkAsDirty("Field4");  }
+       
+	 
+    private field5: CustomFieldClass;
+    public get Field5() {if(!this.field5){ this.field5 = new CustomFieldClass(null, "Field5", "Customer");} return this.field5; }
+    public set Field5(newValue: CustomFieldClass) {  this.field5 = newValue; this.MarkAsDirty("Field5");  }
+       
+	 
+    private field6: CustomFieldClass;
+    public get Field6() {if(!this.field6){ this.field6 = new CustomFieldClass(null, "Field6", "Customer");} return this.field6; }
+    public set Field6(newValue: CustomFieldClass) {  this.field6 = newValue; this.MarkAsDirty("Field6");  }
+       
+	 
+    private field7: CustomFieldClass;
+    public get Field7() {if(!this.field7){ this.field7 = new CustomFieldClass(null, "Field7", "Customer");} return this.field7; }
+    public set Field7(newValue: CustomFieldClass) {  this.field7 = newValue; this.MarkAsDirty("Field7");  }
+       
+	 
+    private field8: CustomFieldClass;
+    public get Field8() {if(!this.field8){ this.field8 = new CustomFieldClass(null, "Field8", "Customer");} return this.field8; }
+    public set Field8(newValue: CustomFieldClass) {  this.field8 = newValue; this.MarkAsDirty("Field8");  }
+       
+	 
+    private field9: CustomFieldClass;
+    public get Field9() {if(!this.field9){ this.field9 = new CustomFieldClass(null, "Field9", "Customer");} return this.field9; }
+    public set Field9(newValue: CustomFieldClass) {  this.field9 = newValue; this.MarkAsDirty("Field9");  }
+       
+	 
+    private field10: CustomFieldClass;
+    public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "Customer");} return this.field10; }
+    public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
+       
+	 
     private sharedLogisticsInvitationStatusName: string;
     public get SharedLogisticsInvitationStatusName() { return this.sharedLogisticsInvitationStatusName; }
     public set SharedLogisticsInvitationStatusName(newValue: string) { if (this.sharedLogisticsInvitationStatusName != newValue) { this.sharedLogisticsInvitationStatusName = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusName"); } }
-       
-	 
-    private cargoTrackingInvitationStatusName: string;
-    public get CargoTrackingInvitationStatusName() { return this.cargoTrackingInvitationStatusName; }
-    public set CargoTrackingInvitationStatusName(newValue: string) { if (this.cargoTrackingInvitationStatusName != newValue) { this.cargoTrackingInvitationStatusName = newValue; this.MarkAsDirty("CargoTrackingInvitationStatusName"); } }
        
 	 
     private isActiveForMobile: boolean;
@@ -366,11 +392,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
     private invitationDate: Date;
     public get InvitationDate() { return this.invitationDate; }
     public set InvitationDate(newValue: Date) { if (this.invitationDate != newValue) { this.invitationDate = newValue; this.MarkAsDirty("InvitationDate"); } }
-       
-	 
-    private cargoTrackingInvitationDate: Date;
-    public get CargoTrackingInvitationDate() { return this.cargoTrackingInvitationDate; }
-    public set CargoTrackingInvitationDate(newValue: Date) { if (this.cargoTrackingInvitationDate != newValue) { this.cargoTrackingInvitationDate = newValue; this.MarkAsDirty("CargoTrackingInvitationDate"); } }
        
 	 
     private isHybrid: boolean;
@@ -566,14 +587,7 @@ export class CustomerPM extends ObjectCustomFieldPM {
     private primaryContactPhone: string;
     public get PrimaryContactPhone() { return this.primaryContactPhone; }
     public set PrimaryContactPhone(newValue: string) { if (this.primaryContactPhone != newValue) { this.primaryContactPhone = newValue; this.MarkAsDirty("PrimaryContactPhone"); } }
-
-	 
- 
        
-	 
-   
-	 
-   
 	 
     private customerStatusName: string;
     public get CustomerStatusName() { return this.customerStatusName; }
@@ -583,11 +597,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
     private primaryContactId: string;
     public get PrimaryContactId() { return this.primaryContactId; }
     public set PrimaryContactId(newValue: string) { if (this.primaryContactId != newValue) { this.primaryContactId = newValue; this.MarkAsDirty("PrimaryContactId"); } }
-       
-	 
-    private phone: string;
-    public get Phone() { return this.phone; }
-    public set Phone(newValue: string) { if (this.phone != newValue) { this.phone = newValue; this.MarkAsDirty("Phone"); } }
        
 	 
     private readyForActivationDate: Date;
@@ -655,9 +664,9 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set IsCustomerAllowed(newValue: boolean) { if (this.isCustomerAllowed != newValue) { this.isCustomerAllowed = newValue; this.MarkAsDirty("IsCustomerAllowed"); } }
        
 	 
-    private card: any;
+    private card: string;
     public get Card() { return this.card; }
-    public set Card(newValue: any) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
+    public set Card(newValue: string) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
        
 	 
      
@@ -785,16 +794,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set LastOpportunityDate(newValue: Date) { if (this.lastOpportunityDate != newValue) { this.lastOpportunityDate = newValue; this.MarkAsDirty("LastOpportunityDate"); } }
        
 	 
-    private lastOpportunitySubject: string;
-    public get LastOpportunitySubject() { return this.lastOpportunitySubject; }
-    public set LastOpportunitySubject(newValue: string) { if (this.lastOpportunitySubject != newValue) { this.lastOpportunitySubject = newValue; this.MarkAsDirty("LastOpportunitySubject"); } }
-       
-	 
-    private lastOpportunityStatus: string;
-    public get LastOpportunityStatus() { return this.lastOpportunityStatus; }
-    public set LastOpportunityStatus(newValue: string) { if (this.lastOpportunityStatus != newValue) { this.lastOpportunityStatus = newValue; this.MarkAsDirty("LastOpportunityStatus"); } }
-       
-	 
     private firstInvoiceDate: Date;
     public get FirstInvoiceDate() { return this.firstInvoiceDate; }
     public set FirstInvoiceDate(newValue: Date) { if (this.firstInvoiceDate != newValue) { this.firstInvoiceDate = newValue; this.MarkAsDirty("FirstInvoiceDate"); } }
@@ -844,15 +843,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public get LogBoxActivated() { return this.logBoxActivated; }
     public set LogBoxActivated(newValue: boolean) { if (this.logBoxActivated != newValue) { this.logBoxActivated = newValue; this.MarkAsDirty("LogBoxActivated"); } }
        
-    private bankBranch: string;
-    public get BankBranch() { return this.bankBranch; }
-    public set BankBranch(newValue: string) { if (this.bankBranch != newValue) { this.bankBranch = newValue; this.MarkAsDirty("BankBranch"); } }
-       
-    private bankCodeId: boolean;
-    public get BankCodeId() { return this.bankCodeId; }
-    public set BankCodeId(newValue: boolean) { if (this.bankCodeId != newValue) { this.bankCodeId = newValue; this.MarkAsDirty("BankCodeId"); } }
-       
-	 
 	 
      
 	private customerProducts: CustomerProductPM[];
@@ -1250,42 +1240,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
         }
     }
 	    //public CardExternalCodeByCurrencies: Array<CardExternalCodeByCurrencyPMPM>= [];
-      
-	private customerProductItems: ProductItemPM[];
-    get  CustomerProductItems() {
-        if (this.customerProductItems == null) {
-            this.customerProductItems = [];
-        }
-
-        return this.customerProductItems;
-    }
-    set  CustomerProductItems(newValue: ProductItemPM[]) {
-        if (this.customerProductItems != newValue) {
-            this.customerProductItems = newValue;
-        }
-    }
-    public AddProductItemPM(item: ProductItemPM) {
-        if (item != null) {
-            var index = this.CustomerProductItems.indexOf(item);
-            if (index == -1) {
-
-                item.EntityParentPM = this;
-
-                this. CustomerProductItems.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveProductItemPM(item: ProductItemPM) {
-        if (item != null) {
-            var index = this.CustomerProductItems.indexOf(item);
-            if (index > -1) {
-                this. CustomerProductItems.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-	    //public CustomerProductItems: Array<ProductItemPMPM>= [];
      private isLogBox: boolean;
     public get IsLogBox() { return this.isLogBox; }
     public set IsLogBox(newValue: boolean) { if (this.isLogBox != newValue) { this.isLogBox = newValue; this.MarkAsDirty("IsLogBox"); } }
@@ -1304,11 +1258,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
     private creditLimitAmount: number;
     public get CreditLimitAmount() { return this.creditLimitAmount; }
     public set CreditLimitAmount(newValue: number) { if (this.creditLimitAmount != newValue) { this.creditLimitAmount = newValue; this.MarkAsDirty("CreditLimitAmount"); } }
-       
-	 
-    private insuredcreditLimit: number;
-    public get InsuredcreditLimit() { return this.insuredcreditLimit; }
-    public set InsuredcreditLimit(newValue: number) { if (this.insuredcreditLimit != newValue) { this.insuredcreditLimit = newValue; this.MarkAsDirty("InsuredcreditLimit"); } }
        
 	 
     private creditLimitOpenBalance: number;
@@ -1361,11 +1310,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
-    private regimenFiscalCode: string;
-    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
-    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
-       
-	 
     private customerTenant: number;
     public get CustomerTenant() { return this.customerTenant; }
     public set CustomerTenant(newValue: number) { if (this.customerTenant != newValue) { this.customerTenant = newValue; this.MarkAsDirty("CustomerTenant"); } }
@@ -1381,94 +1325,16 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set BillingAddressId(newValue: string) { if (this.billingAddressId != newValue) { this.billingAddressId = newValue; this.MarkAsDirty("BillingAddressId"); } }
        
 	 
-    private pickupDeliveryAddressId: string;
-    public get PickupDeliveryAddressId() { return this.pickupDeliveryAddressId; }
-    public set PickupDeliveryAddressId(newValue: string) { if (this.pickupDeliveryAddressId != newValue) { this.pickupDeliveryAddressId = newValue; this.MarkAsDirty("PickupDeliveryAddressId"); } }
-       
-	 
     private gLAccountId: string;
     public get GLAccountId() { return this.gLAccountId; }
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
-       
-	 
-    private createdByPartner: string;
-    public get CreatedByPartner() { return this.createdByPartner; }
-    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
-       
-	 
-    private storageFreeDays: number;
-    public get StorageFreeDays() { return this.storageFreeDays; }
-    public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
-       
-	 
-    private accountingVATSplit: boolean;
-    public get AccountingVATSplit() { return this.accountingVATSplit; }
-    public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
-       
-	 
-    private uploadingUniqueKey: string;
-    public get UploadingUniqueKey() { return this.uploadingUniqueKey; }
-    public set UploadingUniqueKey(newValue: string) { if (this.uploadingUniqueKey != newValue) { this.uploadingUniqueKey = newValue; this.MarkAsDirty("UploadingUniqueKey"); } }
-       
-	 
-    private gLAccountNumber: string;
-    public get GLAccountNumber() { return this.gLAccountNumber; }
-    public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
-       
-	 
-    private isAutonomy: boolean;
-    public get IsAutonomy() { return this.isAutonomy; }
-    public set IsAutonomy(newValue: boolean) { if (this.isAutonomy != newValue) { this.isAutonomy = newValue; this.MarkAsDirty("IsAutonomy"); } }
-       
-	 
-    private addLogboxCustomerQueue: boolean;
-    public get AddLogboxCustomerQueue() { return this.addLogboxCustomerQueue; }
-    public set AddLogboxCustomerQueue(newValue: boolean) { if (this.addLogboxCustomerQueue != newValue) { this.addLogboxCustomerQueue = newValue; this.MarkAsDirty("AddLogboxCustomerQueue"); } }
-       
-	 
-    private importLocalCustomerGroupId: string;
-    public get ImportLocalCustomerGroupId() { return this.importLocalCustomerGroupId; }
-    public set ImportLocalCustomerGroupId(newValue: string) { if (this.importLocalCustomerGroupId != newValue) { this.importLocalCustomerGroupId = newValue; this.MarkAsDirty("ImportLocalCustomerGroupId"); } }
-       
-	 
-    private exportLocalCustomerGroupId: string;
-    public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
-    public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
-       
-	 
-    private sATCustomerName: string;
-    public get SATCustomerName() { return this.sATCustomerName; }
-    public set SATCustomerName(newValue: string) { if (this.sATCustomerName != newValue) { this.sATCustomerName = newValue; this.MarkAsDirty("SATCustomerName"); } }
-       
-	 
-    private lastLoginDateViaPC: Date;
-    public get LastLoginDateViaPC() { return this.lastLoginDateViaPC; }
-    public set LastLoginDateViaPC(newValue: Date) { if (this.lastLoginDateViaPC != newValue) { this.lastLoginDateViaPC = newValue; this.MarkAsDirty("LastLoginDateViaPC"); } }
-       
-	 
-    private lastLoginDateViaMobile: Date;
-    public get LastLoginDateViaMobile() { return this.lastLoginDateViaMobile; }
-    public set LastLoginDateViaMobile(newValue: Date) { if (this.lastLoginDateViaMobile != newValue) { this.lastLoginDateViaMobile = newValue; this.MarkAsDirty("LastLoginDateViaMobile"); } }
-       
-	 
-    private isPotential: boolean;
-    public get IsPotential() { return this.isPotential; }
-    public set IsPotential(newValue: boolean) { if (this.isPotential != newValue) { this.isPotential = newValue; this.MarkAsDirty("IsPotential"); } }
-       
-	 
-    private contactForAccounting: string;
-    public get ContactForAccounting() { return this.contactForAccounting; }
-    public set ContactForAccounting(newValue: string) { if (this.contactForAccounting != newValue) { this.contactForAccounting = newValue; this.MarkAsDirty("ContactForAccounting"); } }
        
 	 
 
     public OldEntityPM: CustomerPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -1477,7 +1343,6 @@ export class CustomerPM extends ObjectCustomFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customer");
            
         }
-	 }
     }
     private MyClone: CustomerPM;
 
@@ -1489,4 +1354,4 @@ export class CustomerPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -17,7 +17,7 @@ import {GroupByClass} from '../../../Infrastructure/DataContracts/Dashboard/Grou
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SharedManifestsWork',
     templateUrl: './SharedManifestsWorkSpaces.html',
     providers: [SharedAgentManifestService],
@@ -184,7 +184,7 @@ export class SharedManifestsWorkSpaces extends BaseComponent {
 
     LoadDataSummary() {
 
-        this._sharedAgentManifestService.getAgentSharedManifestsWorkspaceSummary().subscribe((res:any) => {
+        this._sharedAgentManifestService.getAgentSharedManifestsWorkspaceSummary().subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -321,7 +321,7 @@ export class SharedManifestsWorkSpaces extends BaseComponent {
         var days = this.ComputeDays();
         this.BarData = [];
 
-        this._sharedAgentManifestService.GetAgentSharedManifestsForDashBoard(0, days, +this.SelectedTimeRangeItem.Index).subscribe((myResult:any) => {
+        this._sharedAgentManifestService.GetAgentSharedManifestsForDashBoard(0, days, +this.SelectedTimeRangeItem.Index).subscribe(myResult => {
 
             this.BarData = myResult.Result;
             var groupedData: GroupByClass[] = [];

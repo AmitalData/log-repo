@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -32,11 +31,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string EventTypeCategoryCode { get; set; }
         public string SearchFields { get; set; }
         public bool AllowedInAutomation { get; set; }
-        public string CustomField { get; set; }
 
-        public DateTime? UpdateDate { get; set; }
-
-        
         [ForeignKey("CustomerRoleId")]
         public Role CustomerRole { get; set; }
 
@@ -51,11 +46,5 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         [ForeignKey("EventTypeCategoryCode")]
         public virtual EventTypeCategory EventTypeCategory { get; set; }
-
-        public bool IsStatusNotModified { get; set; }
-        public string EventTrigger { get; set; }
-
-        public int? Weight { get; set; }
-
     }
 }

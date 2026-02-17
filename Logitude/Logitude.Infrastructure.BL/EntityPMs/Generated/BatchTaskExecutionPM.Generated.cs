@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -181,31 +181,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-
-        private bool notDisplayInMenu;
-
-
-        [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-        [DataMember]
-        public bool NotDisplayInMenu
-        {
-
-            get
-            {
-                return notDisplayInMenu;
-            }
-            set
-            {
-                if (notDisplayInMenu != value)
-                {
-                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "NotDisplayInMenu", OldValue = notDisplayInMenu, NewValue = value, PropertyType = "string" };
-                    NotifyPropertyChanged(values);
-                    notDisplayInMenu = value;
-                }
-
-            }
-        }
-        private string statusCode ;
+	  private string statusCode ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
@@ -435,7 +411,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	    }
+   }
    
 }
 	 

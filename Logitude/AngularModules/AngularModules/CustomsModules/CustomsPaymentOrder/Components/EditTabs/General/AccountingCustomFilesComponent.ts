@@ -1,6 +1,6 @@
 declare var window: any;
 
-import { Directive, ChangeDetectorRef, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
+import { Directive, ChangeDetectorRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
@@ -13,7 +13,7 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 
 @Component({
     selector: 'AccountingCustomFilesComponent',
-    
+    moduleId: module.id,
     templateUrl: './AccountingCustomFilesComponent.html',
 })
 
@@ -25,8 +25,7 @@ export class AccountingCustomFilesComponent
     public DataContext: any = this;
     public Tab: LogTab;
     public IsDisplayOnly: boolean = false;
-    public IsFromDeclarationData: boolean = false;
-    
+
     AccountingCustomFilesList: any[];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
@@ -38,8 +37,7 @@ export class AccountingCustomFilesComponent
 
     }
 
-    SetWindowArgs(accountingCustomFilesList) {
-        this.IsFromDeclarationData = accountingCustomFilesList.IsFromDeclarationData;
+    SetWindowArgs(accountingCustomFilesList: any[]) {
         accountingCustomFilesList.forEach((item) => {
             this.AccountingCustomFilesList.push(item);
         });

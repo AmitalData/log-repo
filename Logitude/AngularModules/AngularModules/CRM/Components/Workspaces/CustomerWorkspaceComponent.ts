@@ -15,10 +15,9 @@ import {BusinessUnitList} from '../../../Common/EntityLists/BusinessUnitList';
 import {UserList} from '../../../Common/EntityLists/UserList';
 import {CustomerList} from '../../../Common/EntityLists/CustomerList';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerWorkspaceComponent.html',
 })
 
@@ -33,27 +32,9 @@ export class CustomerWorkspaceComponent extends BaseComponent {
         super();
         this.SearchBoxWatermark = TextCodeTranslator.Translate("Card.F.SearchFields");
         this.InitializeServices();
-        this.SetQueriesVisibility();
         this.LoadNonFilteredQueries();
         this.BuildDecreasedShipmentsFilters();
         this.InitializeFilters();
-    }
-
-    public IsMyCustomersSalesmanQueryVisible: boolean = false;
-    public IsMyCustomersAccontManagerQueryVisible: boolean = false;
-    public IsWaitingForActivationQueryVisible: boolean = false;
-    public IsPotentialCustomersQueryVisible: boolean = false;
-    public IsActiveCustomersQueryVisible: boolean = false;
-    public IsInactiveCustomersQueryVisible: boolean = false;
-    public IsAllCustomersQueryVisible: boolean = false;
-    private SetQueriesVisibility() {
-        this.IsMyCustomersSalesmanQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.MyCustomers") ? true : false;
-        this.IsMyCustomersAccontManagerQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "MYCUSTOMRERSASACCMNGR") ? true : false;
-        this.IsWaitingForActivationQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.ReadyCustomers") ? true : false;
-        this.IsPotentialCustomersQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.PotentialCustomers") ? true : false;
-        this.IsActiveCustomersQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.ActiveCustomers") ? true : false;
-        this.IsInactiveCustomersQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.InactiveCustomers") ? true : false;
-        this.IsAllCustomersQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "CUSTOMERS") ? true : false;
     }
 
     private filterName_RecordsType: string = "RecordsType";
@@ -380,8 +361,10 @@ export class CustomerWorkspaceComponent extends BaseComponent {
         this.DecreasedShipmentsDataTypeList.push(new CodeNameClass("C", "Chargeable Weight"));
 
         // TimeRange
-        var last1MonthDateTime = new Date(new Date().setMonth(new Date().getMonth() - 1));
-        var last2MonthDateTime = new Date(new Date().setMonth(new Date().getMonth() - 2));
+        var todayDateTime = DateTool.GetCurrentDateAsUtc();
+        var last1MonthDateTime = DateTool.GetDateByMonth(-1);
+        var last2MonthDateTime = DateTool.GetDateByMonth(-2);
+
         var date1Formats: DateFormats = DateTool.GetDateFormats(last1MonthDateTime);
         var date2Formats: DateFormats = DateTool.GetDateFormats(last2MonthDateTime);
         var last1MonthLabel: string = date1Formats.MonthName + " " + date1Formats.DateParts.Year;
@@ -459,7 +442,7 @@ export class CustomerWorkspaceComponent extends BaseComponent {
     public Customers_Active: number;
     public Customers_Inactive: number;
     private LoadQueriesCounts() {
-        this.myPartnersDomainService.GetCustomersCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
+        this.myPartnersDomainService.GetCustomersCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: CRMSummary = myResponse.Result;
@@ -514,7 +497,7 @@ export class CustomerWorkspaceComponent extends BaseComponent {
 
         var myStartDateTime = DateTool.GetDateByMonth(-1);
 
-        this.myPartnersDomainService.GetCustomersDecreasedShipments(dateTypeCode, myStartDateTime, timeRange, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
+        this.myPartnersDomainService.GetCustomersDecreasedShipments(dateTypeCode, myStartDateTime, timeRange, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: CompareDataClass[] = myResponse.Result;

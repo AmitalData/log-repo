@@ -19,7 +19,6 @@ namespace Logitude.TimeManagement.Data
    
        	 IDbSet<Sprint> Sprints { get; }
 		 IDbSet<TMBudget> TMBudgets { get; }
-		 IDbSet<TMDayOffType> TMDayOffTypes { get; }
 		 IDbSet<TMEmployeeTime> TMEmployeeTimes { get; }
 		 IDbSet<TMLocation> TMLocations { get; }
 		 IDbSet<TMOfficeHour> TMOfficeHours { get; }

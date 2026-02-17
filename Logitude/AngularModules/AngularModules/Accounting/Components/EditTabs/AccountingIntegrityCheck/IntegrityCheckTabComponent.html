@@ -1,9 +1,4 @@
 <style>
-    .excel  {    
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 10px;
-    }
 </style>
 <table>
     <tr>
@@ -52,38 +47,30 @@
                                     <td style="width:15px;">
                                         <div></div>
                                     </td>
-                                    <td style="width: 40px">
-                                        <div *ngIf="ShouldFix">
+                                    <td  style="width: 40px">
+                                        <div *ngIf="HasException">
                                             <button style="display: inline-block;width:100px;" class="Button" [disabled]="Fixing" (click)="RunService()"> {{'Accounting.General.O.Fix'  | TextCodeTranslationPipe}}</button>
                                         </div>
                                     </td>
                                     <td style="width: 10px"></td>
 
                                 </tr>
-                                <tr>
+
+                                <tr >
                                     <!-- ResultXML -->
                                     <td style="vertical-align:top;width: 130px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                         <LogLabel [ObjectFieldName]="'ResultXML'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
+                                            [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td colspan="7" style="vertical-align: top" [style.text-align]="isRTL ? 'right' : 'left'">
                                         <div style="width: 650px;">
                                             <LogTextBox [ObjectFieldName]="'ResultXML'" [InputType]="'nText'" [DataContext]="DataContext"
-                                                        [RowsCount]="30" [ObjectTableName]="ObjectTableName" [IsMultiline]="true"
-                                                        [HideColumns]="true"></LogTextBox>
+                                            [RowsCount]="30" [ObjectTableName]="ObjectTableName" [IsMultiline]="true"
+                                            [HideColumns]="true"></LogTextBox>
                                         </div>
                                     </td>
 
-                                    <td style="width:15px;">
-                                        <div></div>
-                                    </td>
-                                    <td style="width: 40px;vertical-align: top" [style.text-align]="isRTL ? 'right' : 'left'">
-                                        <div>
-                                            <button [disabled]="entityPM.StatusCode != '3'" style="display: inline-block;width:100px;" class="Button" (click)="ViewResultXMLButtonClicked()">View</button>
-                                            <IconButton class="excel" [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="false"></IconButton>
-                                        </div>
-                                    </td>
                                     <td>
                                         <div></div>
                                     </td>

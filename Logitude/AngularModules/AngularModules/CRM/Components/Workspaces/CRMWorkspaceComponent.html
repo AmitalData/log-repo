@@ -18,11 +18,11 @@
                 <tr>
                     <td colspan="2">
                         <ul class="PagesMenu">
-                            <li id="{{'CRMOVE' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'OVE'" (click)="SelectedItem = 'OVE'">Overview</li>
-                            <li id="{{'CRMCUS' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'CUS'" (click)="SelectedItem = 'CUS'">{{'General.MH.Customers' | TextCodeTranslationPipe}}</li>
-                            <li id="{{'CRMQUT' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'QUT'" (click)="SelectedItem = 'QUT'">{{'General.MH.Quotes' | TextCodeTranslationPipe}}</li>
-                            <li id="{{'CRMACT' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'ACT'" (click)="SelectedItem = 'ACT'">Activities</li>
-                            <li id="{{'CRMOPP' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'OPP'" (click)="SelectedItem = 'OPP'">Opportunities</li>
+                            <li id="{{'CRMOVE' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'OVE'" (click)="SelectedItem = 'OVE'">Overview</li>
+                            <li id="{{'CRMCUS' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'CUS'" (click)="SelectedItem = 'CUS'">{{'General.MH.Customers' | TextCodeTranslationPipe}}</li>
+                            <li id="{{'CRMQUT' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'QUT'" (click)="SelectedItem = 'QUT'">{{'General.MH.Quotes' | TextCodeTranslationPipe}}</li>
+                            <li id="{{'CRMACT' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'ACT'" (click)="SelectedItem = 'ACT'">Activities</li>
+                            <li id="{{'CRMOPP' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'OPP'" (click)="SelectedItem = 'OPP'">Opportunities</li>
                             <li style="width:100px;" [class.SelectedPageMenu]="SelectedItem == 'CON'" (click)="SelectedItem = 'CON'" *ngIf="IsContactsVisible">
                                 <table>
                                     <tr>
@@ -36,8 +36,7 @@
                                     </tr>
                                 </table>
                             </li>
-
-                            <li id="{{'CRMDAS' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'DAS'" (click)="SelectedItem = 'DAS'">Dashboard</li>
+                            <li [class.SelectedPageMenu]="SelectedItem == 'DAS'" (click)="SelectedItem = 'DAS'">Dashboard</li>
                         </ul>
                     </td>
 

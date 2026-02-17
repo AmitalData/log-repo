@@ -1,3 +1,0 @@
-npx Cypress Run --env Email=ahmada@logitudeworld.com,Tenant=951 CYPRESS_Password=!Aa112233
-
-npm i -g as-a

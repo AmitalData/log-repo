@@ -12,8 +12,5 @@ namespace Unifreight.BL.EntityPMs
         public long FILENO { get; set; }
 
         public string REMARK { get; set; }
-
-        public int? AQOPERATION { get; set; }
-
     }
 }

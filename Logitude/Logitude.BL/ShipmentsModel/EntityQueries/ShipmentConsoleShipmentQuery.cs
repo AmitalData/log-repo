@@ -67,13 +67,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     NumberOfContainers = item.NumberOfContainers,
                     IsFCL = ((item.TransportModeId == "O" && item.ShipmentTypeId == "FCLD") || (item.TransportModeId == "I" && item.ShipmentTypeId == "FTL")),
                     IsLCL = (item.TransportModeId == "A" || (item.TransportModeId == "O" && item.ShipmentTypeId == "LCLD") || (item.TransportModeId == "I" && item.ShipmentTypeId == "LTL")),
-                    GrossWeightPerStorageDays = item.GrossWeightPerStorageDays,
-                    House = item.House,
-                    DescriptionOfGoods = item.DescriptionOfGoods,
-                    PreForwardingFromPortId = item.PreForwardingFromPortId,
-                    PreForwardingToPortId = item.PreForwardingToPortId,
-                    OnForwardingFromPortId = item.OnForwardingFromPortId,
-                    OnForwardingToPortId = item.OnForwardingToPortId,
                 };
 
                 if (consoleShipmentPM.IsFCL)
@@ -166,22 +159,5 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
         }
-
-        public List<Shipment> GetMasterConnectedHouseShipments(string entityId, int tenant)
-        {
-            List<Shipment> allConnectedHouses = myRepository.GetHouseShipmentsForMaster(entityId, tenant);
-
-            return allConnectedHouses;
-        }
-
-
-        public IQueryable<Shipment> GetDigitalPortalMasterConnectedHouseShipments(string entityId, int tenant)
-        {
-            var allConnectedHouses = myRepository.GetDigitalPortalHouseShipmentsForMaster(entityId, tenant);
-
-            return allConnectedHouses;
-        }
-
-        
     }
 }

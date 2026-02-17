@@ -5,7 +5,7 @@ using Logitude.BookingLib.Data.Repositories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -24,7 +24,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         {
             this.myFVA = (CHAMP17.ScheduleAndAvailabilityInformationAnswer)myEnvelope.Item;
 
-            this.myRequestDetails = XSDHelper.GetFlightsSchedulesRequestDetails(myFVA.ScheduleAndAvailabilityInformationRequestDetails, iCommonContext, myTenant);
+            this.myRequestDetails = XSDHelper.GetFlightsSchedulesRequestDetails(myFVA.ScheduleAndAvailabilityInformationRequestDetails, myCommonContext, myTenant);
         }
 
         private void AnalyzeMessageQueue_FVA(FlightsSchedulesRequest myRequest, FlightsSchedulesRequestRepository myRequestRepository)
@@ -85,13 +85,13 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             {
                 hasResponse = true;
 
-                if (iCommonContext == null)
+                if (myCommonContext == null)
                 {
-                    iCommonContext = CommonDataContext.GetContext(myTenant);
+                    myCommonContext = CommonDataContext.GetContext(myTenant);
                 }
 
-                PortRepository myPortRepository = new PortRepository(iCommonContext);
-                CardRepository myCardRepository = new CardRepository(iCommonContext);
+                PortRepository myPortRepository = new PortRepository(myCommonContext);
+                CardRepository myCardRepository = new CardRepository(myCommonContext);
 
                 int myResultNumber = 1;                
                 CHAMP17.ScheduleInformation[] myScheduleInformation = myFVA.ScheduleInformation;

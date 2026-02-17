@@ -1,19 +1,13 @@
+﻿
+
 <style>
     .FlipImgHoriz {
         transform: rotate(180deg);
     }
-
-    .DeleteIconButton {
-        display: none;
-    }
-
-    .TapagNumberListItem:hover:not(:first-child) .DeleteIconButton {
-        display: block !important;
-    }
 </style>
 
 
-<table>
+<table> 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
@@ -37,19 +31,12 @@
                                     <tr>
                                         <td style="vertical-align: top;">
                                             <ul>
-                                                <li class="DefaultMenuItem" *ngFor="let item of TabsItemsSource"
-                                                    (click)="SelectedTabCode = item.code"
-                                                    [class.SelectedMenuItem]="item.code === SelectedTabCode"
+                                                <li class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.code" [class.SelectedMenuItem]="item.code === SelectedTabCode"
                                                     [style.text-align]='right'>
                                                     <!--<img *ngIf="item != SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '10px;'} : {'left': '10px;'}" />
                                 <img *ngIf="item == SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSelectedSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '11px;'} : {'left': '11px;'}" />-->
-                                                    <div
-                                                        style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px; right: 5px; padding-left: 5px;">
-                                                        {{item.textCode | TextCodeTranslationPipe}}</div>
-                                                    <img *ngIf="SelectedTabCode == item.code"
-                                                        class="LeftCenter FlipImgHoriz"
-                                                        src="./Images/SelectedMenuArrow.png"
-                                                        style="margin-right: -1px;" />
+                                                    <div style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px; right: 5px; padding-left: 5px;">{{item.textCode | TextCodeTranslationPipe}}</div>
+                                                    <img *ngIf="SelectedTabCode == item.code" class="LeftCenter FlipImgHoriz" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
 
                                                     <!--<img class="RightCenter" *ngIf="SelectedTabCode == item.code" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px" />
 
@@ -98,113 +85,31 @@
 
                                             <!-- MOREDATA -->
                                             <div class="MediaStretch" [hidden]="SelectedTabCode != 'MOREDATA'">
-
+                                                
                                                 <table style="vertical-align:top;height:40px">
-                                                    <tr>
+                                                    <tr >
                                                         <td class="FieldRow" style="width:150px">
-                                                            <LogLabel [ObjectFieldName]="'FacilitationTypeCode'"
-                                                                [ObjectTableName]="'Customs.Client'"
-                                                                [DataContext]="DataContext"></LogLabel>
+                                                            <LogLabel [ObjectFieldName]="'FacilitationTypeCode'" [ObjectTableName]="'Customs.Client'" [DataContext]="DataContext"></LogLabel>
 
                                                         </td>
                                                         <td style="width:10px"></td>
                                                         <td style="width:150px">
 
                                                             <LogLov [ObjectFieldName]="'FacilitationTypeCode'"
-                                                                [ObjectTableName]="'Customs.Client'"
-                                                                [DataContext]="DataContext"
-                                                                [LookUpTableName]="'Customs.FacilitationType'"
-                                                                [HideColumns]="true"
-                                                                [SelectedValue]="FacilitationTypeCode">
+                                                                    [ObjectTableName]="'Customs.Client'"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Customs.FacilitationType'"
+                                                                    [HideColumns]="true"
+                                                                    [SelectedValue]="FacilitationTypeCode">
                                                             </LogLov>
                                                         </td>
 
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-
-
+                                                        <td><div></div></td>
                                                     </tr>
-                                                    <tr *ngIf="isLoad && this.CurrentEntity?.ClientIndications.length > 0">
-                                                        <td class="FieldRow" style="width:150px">           
-                                                                <LogLabel [Text]="'Customs.ClientIndication.O.IndicationExpOrImp' | TextCodeTranslationPipe"
-                                                                [NoObjectField]="true"
-                                                                [DataContext]="DataContext"></LogLabel>
-
-                                                        </td>
-                                                        <td style="width:10px"></td>
-                                                        <td style="width: 25px;"><IconButton *ngIf="!IsDisplayOnly" [IsSmall]="true" [Name]="'flag'" (click)="ShowClientIndication()" [IsIconOnly]="true" style="float:right;"></IconButton></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2" colspan="3">
-                                                            <div
-                                                                style="height: 200px; overflow-x: hidden; overflow-y: auto; float: right;width: 100%; padding-top: 10px;">
-                                                                <ul *ngIf="tapagNumberName">
-                                                                    <li class="TapagNumberListItem"
-                                                                        style="text-align: right; height:25px;"
-                                                                        *ngFor="let item of ClientsTapagList">
-                                                                        <div
-                                                                            style="width: 98px; text-align: right; height: 100%;float: right; padding-top: 10px">
-                                                                            <LogLabel
-                                                                                [ObjectTableName]="'Customs.ClientsTapag'"
-                                                                                [ObjectFieldName]="tapagNumberName"
-                                                                                [DataContext]="DataContext"></LogLabel>
-
-                                                                        </div>
-                                                                        <div
-                                                                            style="width: 35px; text-align: center; height: 100%;float: right; padding-top: 10px;right: 40px;">
-                                                                            {{item.ClientsTapagNumber}}
-                                                                        </div>
-                                                                        <div [class.disabled]="IsDisplayOnly"
-                                                                            style="position: relative; width: 48%; text-align: center; height: 100%;float: right; padding-top: 3px;right: 26px;">
-
-                                                                            <LogTextBox
-                                                                                [ObjectFieldName]="'TapagNumber'"
-                                                                                [InputType]="'text'"
-                                                                                [ObjectTableName]="'Customs.ClientsTapag'"
-                                                                                [DataContext]="item"
-                                                                                [HideColumns]="true">
-                                                                            </LogTextBox>
-
-                                                                            <div class="DeleteIconButton"
-                                                                                style="width:30px">
-                                                                                <IconButton [IsSmall]="true"
-                                                                                    [Name]="'Delete'"
-                                                                                    [IsIconOnly]="true"
-                                                                                    (click)="item.DeleteTapagNumberButtonClicked()"
-                                                                                    style="position: absolute;top: 6px;left: 20px;">
-                                                                                </IconButton>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </li>
-                                                                </ul>
-                                                                <div style="clear: both;"></div>
-                                                            </div>
-
-                                                        </td>
-
-                                                        <div
-                                                            style="vertical-align:top;padding-top:15px; padding-right: 13px; float: right; ">
-                                                            <IconButton [IsSmall]="true" [Name]="'Add'"
-                                                                (click)="AddTapagNumberButtonClicked()"
-                                                                [IsEnabled]="AddTapagEnabled"></IconButton>
-                                                        </div>
-                                                    </tr>
-
-
                                                 </table>
+                                            
+                                            </div>
 
-                                            </div>
-                                            <!-- CLIENTPOA -->
-                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'CLIENTPOA'">
-                                                <div LocationDirective Code="CLIENTPOA"></div>
-                                            </div>
-                                            <!-- ITEMS -->
-                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'ITEMS'">
-                                                <div LocationDirective Code="ITEMS"></div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -224,8 +129,7 @@
         </td>
 
         <td style="width: 57px;vertical-align: bottom;">
-            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel'
-                |TextCodeTranslationPipe}}</button>
+            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
         </td>
 
         <td style="width: 10px;vertical-align: bottom;">
@@ -233,14 +137,12 @@
         </td>
 
         <td style="width: 57px;vertical-align: bottom;" *ngIf="!isNewClient">
-            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Save' |
-                TextCodeTranslationPipe}}</button>
+            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
         </td>
 
         <td style="width:110px;  vertical-align: bottom;" *ngIf="isNewClient">
             <custom-send-options #MyCustomSendOptionsComponent
-                [CustomSendOptionsButtonCanForcePersonalSign]="CustomSendOptionsButtonCanForcePersonalSign"
-                (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+                                 [CustomSendOptionsButtonCanForcePersonalSign]="CustomSendOptionsButtonCanForcePersonalSign" (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
             <!--   <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>-->
         </td>
     </tr>

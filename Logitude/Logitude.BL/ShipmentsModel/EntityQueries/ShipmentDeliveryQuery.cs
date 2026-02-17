@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -82,10 +81,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyDeliveryContainerPartnerId = entityPOCO.EmptyDeliveryContainerPartnerId,
                     EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                     TransportModeCode = entityPOCO.TransportModeCode,
-                    ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
-                    ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
-                    StandaloneShipmentId = entityPOCO.StandaloneShipmentId,
-                    StandaloneShipmentNumber = entityPOCO.StandaloneShipmentNumber,
                 };
 
                 ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);
@@ -284,25 +279,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     entityPM.ToAddressCity_Dummy = entityPOCO.ToAddressCity;
                 }
                 #endregion
-
-
-                new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
-                {
-                    Tenant = tenant,
-                    EntityId = entityPM.ShipmentId,
-                    ObjectTableName = "Shipment",
-                    ChildObjectTableName = "ShipmentPickUpDelivery",
-                    ChildEntityId = entityPM?.Id,
-                    ChildEntities = new List<object>() { entityPM }.ToList(),
-                });
             }
 
             return entityPM;
         }
 
-        public List<ShipmentDeliveryPM> GetShipmentDeliveryPMsByTenantAndShipment(string shipmentId, int tenant, bool getEmptyContainerReturn=false, bool byLocalName = false)
+        public List<ShipmentDeliveryPM> GetShipmentDeliveryPMsByTenantAndShipment(string shipmentId, int tenant, bool getEmptyContainerReturn=false)
         {
-            IQueryable<ShipmentPickUpDelivery> iQueryable = (from d in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode").Include("PackageType").Include("Responsibility")
+            IQueryable<ShipmentPickUpDelivery> iQueryable = (from d in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode")
                                                              where d.ShipmentId == shipmentId && d.Tenant == tenant
                                                              select d);
 
@@ -333,9 +317,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      TrailerNumber = entityPOCO.TrailerNumber,
                                                      CarrierId = entityPOCO.CarrierId,
                                                      CarrierCode = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.Code,
-                                                     CarrierName = entityPOCO.CarrierCard == null ? null : byLocalName? entityPOCO.CarrierCard.LocalName: entityPOCO.CarrierCard.EnglishName,
-                                                     CarrierTypeName = entityPOCO.CarrierCard == null || entityPOCO.CarrierCard.PartnerType == null ? null : entityPOCO.CarrierCard.PartnerType.Name,
-                                                     CarrierLocalName = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.LocalName != null ? entityPOCO.CarrierCard.LocalName: entityPOCO.CarrierCard.EnglishName,
+                                                     CarrierName = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.EnglishName,
                                                      CarrierWebSite = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.Website,
                                                      CarrierNumber = entityPOCO.CarrierNumber,                                                     
                                                      PickUpDeliveryTypeCode = entityPOCO.PickUpDeliveryTypeCode,
@@ -350,7 +332,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      FromAddressId = entityPOCO.FromAddressId,
                                                      FromAddress = entityPOCO.FromAddress,
                                                      FromAddressCity = entityPOCO.FromAddressCity,
-                                                     FromAddressCityId = entityPOCO.FromAddressCityId,
                                                      FromAddressZipCode = entityPOCO.FromAddressZipCode,
                                                      FromAddressCountryId = entityPOCO.FromAddressCountryId,
                                                      PickUpDeliveryToTypeCode = entityPOCO.PickUpDeliveryToTypeCode,
@@ -363,7 +344,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      ToAddressId = entityPOCO.ToAddressId,
                                                      ToAddress = entityPOCO.ToAddress,
                                                      ToAddressCity = entityPOCO.ToAddressCity,
-                                                     ToAddressCityId = entityPOCO.ToAddressCityId,
                                                      ToAddressZipCode = entityPOCO.ToAddressZipCode,
                                                      ToAddressCountryId = entityPOCO.ToAddressCountryId,
                                                      EmptyPickupContainerPartnerId = entityPOCO.EmptyPickupContainerPartnerId,
@@ -372,24 +352,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                                                      TransportModeCode = entityPOCO.TransportModeCode,
                                                      TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
-                                                     ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
-                                                     ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
-                                                     StandaloneShipmentId = entityPOCO.StandaloneShipmentId,
-                                                     StandaloneShipmentNumber = entityPOCO.StandaloneShipmentNumber,
-                                                     ResponsibilityCode = entityPOCO.ResponsibilityCode,
-                                                     Responsibility = entityPOCO.Responsibility != null ? entityPOCO.Responsibility.LocalName: null,
-                                                     PackageTypeCode = entityPOCO.PackageTypeCode,
-                                                     PackageTypeName = entityPOCO.PackageType != null ? entityPOCO.PackageType.LocalName : null,
-                                                     Quantity = entityPOCO.Quantity,
-                                                     GrossWeight = entityPOCO.GrossWeight,
-                                                     Volume = entityPOCO.Volume,
-                                                     CustomerChargeableWeight = entityPOCO.CustomerChargeableWeight,
-                                                     TruckerChargeableWeight = entityPOCO.TruckerChargeableWeight,
-                                                     DeliveryContact = entityPOCO.DeliveryContact,
-                                                     DescriptionOfGoods = entityPOCO.DescriptionOfGoods,
-                                                     Commodity = entityPOCO.Commodity,
-                                                     CreateDate = entityPOCO.CreateDate,
-                                                 }).OrderBy(a => a.Id).ToList();
+                                                 }).ToList();
 
             if (dataList.Count > 0)
             {
@@ -400,11 +363,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CountryRepository countryRepository = new CountryRepository(tenant);
                 CardRepository cardRepository = new CardRepository(tenant);
 
-                string shipmentNumber = repository.context.Shipments.Where(d => d.Id == shipmentId && d.Tenant == tenant).FirstOrDefault()?.ShipmentNumber;
                 foreach (ShipmentDeliveryPM item in dataList)
                 {
                     item.ShipmentPickUpDeliveryPackages = packagesQuery.GetShipmentPickUpDeliveryPackages(item.Id, tenant);
-                    //this.GetPickUpDeliveryIndexes(item, shipmentNumber);
 
                     #region From PART
                     if (item.PickUpDeliveryFromTypeCode == "PART")
@@ -429,7 +390,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 string location = "";
 
-                                if ((address.IsLocalLanguage || byLocalName) && !string.IsNullOrEmpty(card.LocalName))
+                                if (address.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
                                 {
                                     location = card.LocalName + Environment.NewLine;
                                 }
@@ -524,7 +485,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 string location = "";
 
-                                if ((address.IsLocalLanguage || byLocalName) && !string.IsNullOrEmpty(card.LocalName))
+                                if (address.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
                                 {
                                     location = card.LocalName + Environment.NewLine;
                                 }
@@ -598,15 +559,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
-
-            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
-            {
-                Tenant = tenant,
-                EntityId = shipmentId,
-                ObjectTableName = "Shipment",
-                ChildObjectTableName = "ShipmentPickUpDelivery",
-                ChildEntities = dataList.Cast<object>().ToList()
-            });
             return dataList;
         }
 
@@ -672,9 +624,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                            EmptyDeliveryContainerPartnerId = entity.EmptyDeliveryContainerPartnerId,
                                                            EmptyDeliveryDepotReference = entity.EmptyDeliveryDepotReference,
                                                            TransportModeCode = entity.TransportModeCode,
-                                                           ParentPickUpDeliveryId = entity.ParentPickUpDeliveryId,
-                                                           ChildDeliveryIndex = entity.ChildDeliveryIndex,
-                                                           StandaloneShipmentId = entity.StandaloneShipmentId,
                                                        }).ToList();            
 
             if (dataList.Count() > 0)
@@ -938,10 +887,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                                                          TransportModeCode = entityPOCO.TransportModeCode,
                                                          TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
-                                                         ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
-                                                         ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
-                                                         StandaloneShipmentId = entityPOCO.StandaloneShipmentId,
-                                                         StandaloneShipmentNumber = entityPOCO.StandaloneShipmentNumber,
                                                      }).FirstOrDefault();
 
             if (shipmentDeliveryPM!=null)
@@ -952,6 +897,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 AddressRepository addressRepository = new AddressRepository(tenant);
                 CountryRepository countryRepository = new CountryRepository(tenant);
                 CardRepository cardRepository = new CardRepository(tenant);
+
 
                 shipmentDeliveryPM.ShipmentPickUpDeliveryPackages = packagesQuery.GetShipmentPickUpDeliveryPackages(shipmentDeliveryPM.Id, tenant);
 
@@ -1144,9 +1090,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentDeliveryPM.ToAddressCity_Dummy = shipmentDeliveryPM.ToAddressCity;
                 }
                 #endregion
+
             }
 
             return shipmentDeliveryPM;
         }
+
+
     }
 }

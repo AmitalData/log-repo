@@ -2,20 +2,14 @@ import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFieldPM';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "ShipmentShortTitleComponent.html",
 })
 
 export class ShipmentShortTitleComponent {
-    public CustomerRankName: string = null;
     public EntityPM: ShipmentPM;
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
 
@@ -27,7 +21,6 @@ export class ShipmentShortTitleComponent {
     }
     
     private LoadCompletedEvent: any = null;
-    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent) {
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -35,18 +28,11 @@ export class ShipmentShortTitleComponent {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.BuildComponent();
                 }
-            });
-
-            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-                if (s == "ShipmentPartnersChanged") {
-                    this.ComputeUnassigedValidationVisibility();
-                }
-            });
+            });            
         }
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
-        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     public Background: string;
@@ -58,11 +44,10 @@ export class ShipmentShortTitleComponent {
     public RankSource1: string;
     public RankSource2: string;
     public RankSource3: string;
-    public IsRankVisible: boolean = false;   
-    public IsUnassigedValidationVisible: boolean = false;
-    public UnassigedValidationMessage: string;
+    public IsRankVisible: boolean = false;
+    //public IsCancelled: boolean = false;
+
     private BuildComponent() {
-        this.ComputeUnassigedValidationVisibility();
 
         if (this.EntityPM.ShipmentLevelCode == "C") {
             this.Background = "rgba(35, 172, 214, 0.15)";
@@ -118,32 +103,4 @@ export class ShipmentShortTitleComponent {
     }
 
     get IsCancelled() { return this.EntityPM.IsCancelled; }
-
-    ComputeUnassigedValidationVisibility() {
-        this.IsUnassigedValidationVisible = false;
-        this.UnassigedValidationMessage = null;
-
-        if (this.EntityPM.HasUnassignedData && FeatureLocator.HasFeaturePermession("Shipment", "UpdateUnassignedData")) {
-            var myList: ShipmentUnassignedFieldPM[] = this.EntityPM.ShipmentUnassignedFields.filter(s => AppTool.IsNullOrEmpty(s.ReplacedDataId));
-
-            if (myList.length > 0) {
-                this.IsUnassigedValidationVisible = true;
-                this.UnassigedValidationMessage = "Some fields contain unassigned data, would you like to update them?";
-            }            
-        }
-    }
-
-    UpdateUnassigedDataClicked() {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.WindowArgs = this.EntityPM;
-        logitudeWindow.Height = 600;
-        logitudeWindow.Width = 950;
-        logitudeWindow.Title = "Unassiged Data Management - " + this.EntityPM.ShipmentNumber;
-        logitudeWindow.Show("./Shipment/Components/UnassigedData/UpdateUnassigedDataComponent");
-        logitudeWindow.WindowClosed.subscribe(s => {
-            if (s == "ok") {
-                this.ComputeUnassigedValidationVisibility();
-            }
-        });
-    }
 }

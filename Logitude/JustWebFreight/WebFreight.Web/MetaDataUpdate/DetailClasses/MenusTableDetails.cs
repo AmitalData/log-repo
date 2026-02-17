@@ -13,9 +13,5 @@
         public string FeatureId { get; set; }
         public string Code { get; set; }
         public string HtmlView { get; set; }
-        public string FeatureUniqeCode { get; set; }
-        public string QuerySection { get; set; }
-
-
     }
 }

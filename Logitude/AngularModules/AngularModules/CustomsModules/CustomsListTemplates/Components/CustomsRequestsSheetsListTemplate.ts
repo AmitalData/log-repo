@@ -17,7 +17,7 @@ import { ResponseDataBase } from '../../../Customs/DataContract/ResponseData/Res
 import { CustomsRequestsSheetPM } from '../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomsRequestsSheetsListTemplate.html',
 })
 
@@ -28,17 +28,14 @@ export class CustomsRequestsSheetsListTemplate {
     ReAnalyzeButtonIsEnabled: boolean = false;
     ReAnalyzeButtonVisibility: boolean = false;
     CancleButtonOpacity: string = "1";
-    isReAnAnalysis: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
     }
 
 
-    setVariables(customsRequestsSheet: any, fieldName: string, AdditionalDataCustom:any) {
+    setVariables(customsRequestsSheet: any, fieldName: string) {
         ///console.log(rowData);
-        this.isReAnAnalysis = AdditionalDataCustom;
-        
         this._CustomsRequestsSheet = customsRequestsSheet;
         this.fieldName = fieldName;
 
@@ -84,7 +81,9 @@ export class CustomsRequestsSheetsListTemplate {
 
     ShowFormatedResponse(RequestComminicationId, InterfaceTypeCode) {
         ///alert("ShowFormatedResponse(id)" + RequestComminicationId);
-         let customsRequestMenuService = new CustomsRequestMenuService();
+
+
+        let customsRequestMenuService = new CustomsRequestMenuService();
         customsRequestMenuService.ShowModalByIdAndIntreface(RequestComminicationId, InterfaceTypeCode, this._CustomsRequestsSheet.RequestDescription);
 
 
@@ -106,13 +105,12 @@ export class CustomsRequestsSheetsListTemplate {
     }
     IsCancelled: boolean = false;
     public CancleRequestMethod(id: string) {
-        
         //CancleButtonVisibility = Visibility.Collapsed;
         //FirePropertyChanged("CancleButtonVisibility");
         this.IsCancelled = true;
         //FirePropertyChanged("IsCancelled");
         this.CD.detectChanges();
-        if (this.ShowBusyIndicator())  this.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         var mappedEntity = new CustomsRequestsSheetPM();
         mappedEntity.Id = id;
         mappedEntity.RequestStatusCode = "99";
@@ -120,17 +118,15 @@ export class CustomsRequestsSheetsListTemplate {
         myCustomsRequestSheetExtendedPMService.PostSetCustomsRequestSheetStatus(mappedEntity)
             .subscribe((r: ServiceResponse) => {
 
-                if (this.ShowBusyIndicator())  this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (r.Result) {
                     //alert(r.Result);
                     this.IsCancelled = false;
-                    if (this.ShowBusyIndicator()) {
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Width = 400;
-                        messageWindow.Height = 150;
-                        messageWindow.Title = "Cancelled Customs Request Sheet Failed !!";
-                        messageWindow.Show(r.Result);
-                    }
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 150;
+                    messageWindow.Title = "Cancelled Customs Request Sheet Failed !!";
+                    messageWindow.Show(r.Result);
                 } else {
                     this._CustomsRequestsSheet.RequestStatusCode = "6";
                     this._CustomsRequestsSheet.RequestStatusName = "מבוטלת";
@@ -140,12 +136,6 @@ export class CustomsRequestsSheetsListTemplate {
             );
         //InvokeOperation < string > op = context.SetCustomsRequestSheetStatus(Id, customsRequestsSheetList.Tenant, "99");
         //op.Completed += op_Completed;
-    }
-    ShowBusyIndicator() {
-        if ((this.fieldName == "CancleRequest" || this.fieldName == "ReAnalyze") && this.isReAnAnalysis==true) {
-            return false;
-        }
-        return true;
     }
     CanShowFormatedResponseCommand(): boolean {
         if (this._CustomsRequestsSheet.RequestStatusCode == "99" ||
@@ -164,7 +154,7 @@ export class CustomsRequestsSheetsListTemplate {
     OnShowLogclick() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 1000;
-        logitudeWindow.Height = 700;
+        logitudeWindow.Height = 900;
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = this._CustomsRequestsSheet;
@@ -176,24 +166,22 @@ export class CustomsRequestsSheetsListTemplate {
 
 
         this.CD.detectChanges();
-        if (this.ShowBusyIndicator())  this.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
 
         var myCustomsRequestSheetExtendedPMService = new CustomsRequestSheetExtendedPMService();
         myCustomsRequestSheetExtendedPMService.PostSetCustomsRequestSheetStatus
         myCustomsRequestSheetExtendedPMService.PostCustomsRequestSheetReQueue(this._CustomsRequestsSheet)
             .subscribe((r: ServiceResponse) => {
 
-                if (this.ShowBusyIndicator())    this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (r.Result) {
                     //alert(r.Result);
                     this.IsCancelled = false;
-                    if (this.ShowBusyIndicator()) {
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Width = 400;
-                        messageWindow.Height = 150;
-                        messageWindow.Title = "Cancelle Customs Request Sheet Failed !!";
-                        messageWindow.Show(r.Result);
-                    }
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 150;
+                    messageWindow.Title = "Cancelle Customs Request Sheet Failed !!";
+                    messageWindow.Show(r.Result);
                 } else {
 
                     this._CustomsRequestsSheet.RequestStatusName = "תשובה תקינה";
@@ -204,15 +192,5 @@ export class CustomsRequestsSheetsListTemplate {
 
 
             });
-    }
-    
-    Copy2Clipboard() {    
-        var valueToCopy = this._CustomsRequestsSheet.CorrelationId;
-        var tempTextArea = document.createElement("textarea");
-        tempTextArea.value = valueToCopy;
-        document.body.appendChild(tempTextArea);
-        tempTextArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempTextArea); 
     }
 }

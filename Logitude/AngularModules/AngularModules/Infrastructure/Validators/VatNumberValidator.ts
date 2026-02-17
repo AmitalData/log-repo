@@ -1,4 +1,4 @@
-import {AppTool, FormatTool} from '../Tools';
+﻿import {AppTool, FormatTool} from '../Tools';
 import {InfraSettings} from '../Utilities/InfraSettings';
 
 export class VatNumberValidator {
@@ -45,32 +45,29 @@ export class VatNumberValidator {
         }
     }
     public static ValidateVatMandatory(args: VATValidatorArgs) {
+        if (args.IsCustomer) {
+            if (AppTool.IsNullOrEmpty(args.VATNumber)) {
+                if (InfraSettings.TenantPM.VatMandatoryTypeCode != "MNT") {
+                    var isValidatingField = false;
 
-        var myTenant = InfraSettings.TenantPM;
-        if (!myTenant.ApplyVATForAllPartners && !args.IsCustomer) {
-            return;
-        }
-        if (AppTool.IsNullOrEmpty(args.VATNumber)) {
-            if (InfraSettings.TenantPM.VatMandatoryTypeCode != "MNT") {
-                var isValidatingField = false;
+                    if (args.PartnerTypeId == "PO") {
+                        if (args.SetReady) {
+                            isValidatingField = true;
+                        }
 
-                if (args.PartnerTypeId == "PO") {
-                    if (args.SetReady) {
+                        if (InfraSettings.TenantPM.VatMandatoryForPotentialCustomers) {
+                            isValidatingField = true;
+                        }
+                    }
+
+                    else {
                         isValidatingField = true;
                     }
 
-                    if (InfraSettings.TenantPM.VatMandatoryForPotentialCustomers) {
-                        isValidatingField = true;
-                    }
-                }
-
-                else {
-                    isValidatingField = true;
-                }
-
-                if (isValidatingField) {
-                    if (InfraSettings.TenantPM.VatMandatoryTypeCode == "MFA") {
-                        args.Errors.push("VAT Number is required");
+                    if (isValidatingField) {
+                        if (InfraSettings.TenantPM.VatMandatoryTypeCode == "MFA") {
+                            args.Errors.push("VAT Number is required");
+                        }
                     }
 
                     else if (InfraSettings.TenantPM.VatMandatoryTypeCode == "MSC") {
@@ -80,7 +77,6 @@ export class VatNumberValidator {
                     }
                 }
             }
-        
         }
     }
 }

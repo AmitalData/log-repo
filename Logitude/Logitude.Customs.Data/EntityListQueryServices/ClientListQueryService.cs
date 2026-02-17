@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -16,73 +16,58 @@ using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.CustomFilters;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{
+{ 
 
     public partial class ClientListQueryService
     {
-        private IQueryable<ClientList> GetIqueryableList(IQueryable<Client> iQueryable)
+	    private IQueryable<ClientList> GetIqueryableList(IQueryable<Client> iQueryable)
         {
-            string[] InActiveStatues = { "40", "50", "60" };
-
-            var qclientpoas = (from clientsPoas in context.ClientsPoas
-                               where clientsPoas.Client.IsExportPoaActive != null && clientsPoas.PoaAuthorizationType == "200" && DateTime.Now >= clientsPoas.StartDate && DateTime.Now <= clientsPoas.EndDate && !InActiveStatues.Contains(clientsPoas.PoaStatus)
-                               group clientsPoas by new { clientsPoas.ClientId }
-                              into newgroup
-                               select new
-                               {
-                                   newgroup.Key.ClientId,
-                               });
-
-
             IQueryable<ClientList> query = (from a in iQueryable
-                                            join d in qclientpoas
-                                            on a.Id equals d.ClientId into EmpCont
-                                            from ed in EmpCont.DefaultIfEmpty()
                                             select new ClientList()
-                                            {
-                                                Id = a.Id,
-                                                Code = a.Code,
-                                                SearchFields = a.SearchFields,
-                                                Tenant = a.Tenant,
-                                                ClientTypeSpecificCode = a.ClientTypeSpecificCode,
-                                                IsActive = a.IsActive,
-                                                DunsNumber = a.DunsNumber,
-                                                EnglishBirthPlace = a.EnglishBirthPlace,
-                                                EnglishCorporationName = a.EnglishCorporationName,
-                                                EnglishFatherName = a.EnglishFatherName,
-                                                EnglishFirstName = a.EnglishFirstName,
-                                                EnglishLastName = a.EnglishLastName,
-                                                FullName = a.FullName,
-                                                GenderCode = a.GenderCode,
-                                                LocalCorporationName = a.LocalCorporationName,
-                                                LocalFirstName = a.LocalFirstName,
-                                                LocalLastName = a.LocalLastName,
-                                                PassportCountryCode = a.PassportCountryCode,
-                                                PassportExpirationDate = a.PassportExpirationDate,
-                                                PassportFirstName = a.PassportFirstName,
-                                                PassportIssueDate = a.PassportIssueDate,
-                                                PassportLastName = a.PassportLastName,
-                                                PassportNumber = a.PassportNumber,
-                                                PassportTypeCode = a.PassportTypeCode,
-                                                ClientTypeSpecificName = a.CustomerTypeGeneral == null ? null : a.CustomerTypeGeneral.LocalName,
-                                                GenderName = a.Gender == null ? null : a.Gender.LocalName,
-                                                PassportCountryName = a.Country == null ? null : a.Country.LocalName,
-                                                PassportTypeName = a.PassportType == null ? null : a.PassportType.LocalName,
-                                                BirthDate = a.BirthDate,
-                                                IsImporter = a.IsImporter,
-                                                IsExporter = a.IsExporter,
-                                                FacilitationTypeCode = a.FacilitationTypeCode,
-                                                NationalIdentificationNumber = a.NationalIdentificationNumber,
-                                                IsExportPoaActive = a.IsExportPoaActive != null ? (ed.ClientId != null) : a.IsExportPoaActive,
+                                                       {
+                                                         Id= a.Id,
+                                                         Code = a.Code,
+                                                         SearchFields = a.SearchFields,
+                                                         Tenant = a.Tenant,
+                                                         ClientTypeSpecificCode = a.ClientTypeSpecificCode,
+                                                         IsActive = a.IsActive,
+                                                         DunsNumber = a.DunsNumber,
+                                                         EnglishBirthPlace =a.EnglishBirthPlace,
+                                                         EnglishCorporationName =a.EnglishCorporationName,
+                                                         EnglishFatherName = a.EnglishFatherName,
+                                                         EnglishFirstName = a.EnglishFirstName,
+                                                         EnglishLastName = a.EnglishLastName,
+                                                         FullName = a.FullName,
+                                                         GenderCode = a.GenderCode,
+                                                         LocalCorporationName = a.LocalCorporationName,
+                                                         LocalFirstName= a.LocalFirstName,
+                                                         LocalLastName = a.LocalLastName,
+                                                         PassportCountryCode = a.PassportCountryCode,
+                                                         PassportExpirationDate = a.PassportExpirationDate,
+                                                         PassportFirstName = a.PassportFirstName,
+                                                         PassportIssueDate = a.PassportIssueDate,
+                                                         PassportLastName = a.PassportLastName,
+                                                         PassportNumber = a.PassportNumber,
+                                                         PassportTypeCode = a.PassportTypeCode,
+                                                         ClientTypeSpecificName = a.CustomerTypeGeneral == null ? null : a.CustomerTypeGeneral.LocalName,
+                                                         GenderName = a.Gender == null ? null : a.Gender.LocalName,
+                                                         PassportCountryName = a.Country == null ? null : a.Country.LocalName,
+                                                         PassportTypeName = a.PassportType == null ? null : a.PassportType.LocalName,
+                                                         BirthDate = a.BirthDate,
+                                                         IsImporter = a.IsImporter,
+                                                         IsExporter = a.IsExporter,
+                                               
 
-                                            });
+
+                                                       });
             return query;
-        }
+		}
 
         private IQueryable<Client> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Client> iQueryable, int tenant)
         {
             ClientCustomFilters filters = new ClientCustomFilters();
             iQueryable = filters.GetFilteredQuery(queryOperations, iQueryable);
+
             return iQueryable;
         }
 
@@ -94,7 +79,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                  {
                                      Id = a.Id,
                                      Code = a.Code,
-                                     // SearchFields = a.SearchFields,
+                                    // SearchFields = a.SearchFields,
                                      Tenant = a.Tenant,
                                      ClientTypeSpecificCode = a.ClientTypeSpecificCode,
                                      IsActive = a.IsActive,
@@ -157,7 +142,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                  }).FirstOrDefault();
             return client;
         }
-    }
+	}
 
 
 }
+	

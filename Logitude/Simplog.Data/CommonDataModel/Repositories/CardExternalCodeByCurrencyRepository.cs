@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
@@ -19,7 +19,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
+        public CardExternalCodeByCurrencyRepository()
+        {
+            commonDataContext = new CommonDataContext();
 
+        }
 
         public CardExternalCodeByCurrencyRepository(int tenant)
         {
@@ -27,9 +31,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
-        public IQueryable<CardExternalCodeByCurrency> GetCardExternalCodeByCurrencies(int tenant)
+        public IQueryable<CardExternalCodeByCurrency> GetCardExternalCodeByCurrencies()
         {
-            return (from record in context.CardExternalCodeByCurrencies.Include("Currency") where record.Tenant == tenant select record);
+            return context.CardExternalCodeByCurrencies;
         }
 
      
@@ -51,13 +55,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.CardExternalCodeByCurrencies.Include("Currency") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();          
         }
-        public CardExternalCodeByCurrency GetSingleCardExternalCodeByCurrencyAndTenant(string cardId, string currencyId, int tenant)
-        {
-            return (from record in context.CardExternalCodeByCurrencies.Include("Currency") where record.CardId == cardId && record.CurrencyId == currencyId && record.Tenant == tenant select record).FirstOrDefault();
-        }
 
-
-
+   
+      
         public void Add(CardExternalCodeByCurrency entity)
         {
             context.CardExternalCodeByCurrencies.Add(entity);

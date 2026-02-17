@@ -1,4 +1,4 @@
-
+﻿
 import {FroalaEditorComponent} from '../../../../../Infrastructure/Components/FroalaEditorComponent/FroalaEditorComponent';
 
 export class FroalaEditorSetting {
@@ -10,8 +10,7 @@ export class FroalaEditorSetting {
       PageType: string;
       HtmlString: string;
       FroalaEditorIsReady: boolean;
-      UseNormalPreview: boolean;
-      RemovePageBreak: boolean;
+
 
 
 }

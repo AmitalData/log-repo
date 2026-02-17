@@ -14,7 +14,7 @@
 
     .FlipImgHoriz {
         transform: rotate(180deg);
-    } 
+    }
 </style>
 
 <div class="MediaFillAbsolute MarginAbsolute10" style="background: white;">
@@ -52,17 +52,13 @@
                                                     <tr>
                                                         <td>
                                                             <ul>
-                                                                <!-- SelectedMenuItem -->
-                                                                <li class="DefaultMenuItem" id="{{item.TextCode | IdGeneratorAsyncPipe | async}}" [style.pointer-events]="pointerEvents" *ngFor="let item of MainMenuItems"
+                                                                <li class="DefaultMenuItem" id="{{item.TextCode | IdGeneratorPipe}}" [style.pointer-events]="pointerEvents" *ngFor="let item of MainMenuItems"
                                                                     (click)="SelectionChanged(item)"
-
-                                                                    [ngStyle]="(item === SelectedMenu) && hasMainTabHighlightColor? privateLabelClass : ''"
-                                                                    [class.SelectedMenuItem]="(item === SelectedMenu) && !hasMainTabHighlightColor"
-                                                                   
+                                                                    [class.SelectedMenuItem]="item === SelectedMenu"
                                                                     [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
                                                                     <img [attr.title]="item.TextCode | TextCodeTranslationPipe" *ngIf="item != SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px'} : {'left': '5px'}" />
                                                                     <img [attr.title]="item.TextCode | TextCodeTranslationPipe" *ngIf="item == SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSelectedSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '6px'} : {'left': '6px'}" />
-                                                                    <div [hidden]="IsMainSidebarCollapsed" style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '18px','padding-right':'0px'} : {'left': '18px'}"><span [ngStyle]="(item === SelectedMenu) &&  hasMainTabHighlightColor ? {'color': 'white','text-shadow':'none'} : ''">{{item.TextCode | TextCodeTranslationPipe}}</span></div>
+                                                                    <div [hidden]="IsMainSidebarCollapsed" style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '18px','padding-right':'0px'} : {'left': '18px'}">{{item.TextCode | TextCodeTranslationPipe}}</div>
                                                                     <img *ngIf="item == SelectedMenu" [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
                                                                 </li>
                                                             </ul>

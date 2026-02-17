@@ -16,8 +16,6 @@ import {ShipmentOrderPackagePM} from '../../Shipment/EntityPMs/ShipmentOrderPack
 import {VatTypeList} from '../../Common/EntityLists/VatTypeList';
 import {VatTypeListService} from '../../Common/Services/StandardLists/VatTypeListService';
 import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
-import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
-import { PackageAmountCalculator } from '../../Infrastructure/Utilities/PackageAmountCalculator';
 
 export class QuoteUtilities {
     public static IsQuoteEditEnabled(entityPM: QuotePM) {
@@ -99,41 +97,38 @@ export class QuoteUtilities {
                 entityPM.Ratio = AppTool.GetRatio(entityPM.DirectionId, entityPM.TransportModeId, entityPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
             }
 
-            if (entityPM.PickupDeliveryRatio == null) {
-                entityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(entityPM.ShipmentTypeId);
-            }
-
+            entityPM.QuotePackages.forEach((item) => {
+                item.Volume = AppTool.ComputePackageVolume(item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
+                item.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(item.Quantity, item.Width, item.Height, item.Length, item.Volume, item.GrossWeight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
+            });
+            
             if (entityPM.QuotePackages.length == 0) {
                 entityPM.NumberOfPackages = null;
                 entityPM.GrossWeight = null;
                 entityPM.Volume = null;
                 entityPM.VolumetricWeight = null;
                 entityPM.ChargeableWeight = null;
-                entityPM.PickupDeliveryVolumetricWeight = null;
-                entityPM.PickupDeliveryChargeableWeight = null;
-            }           
+            }
 
             else {                
                 var myVolume: number = 0;
                 var myQuantity: number = 0;
                 var myVolumetricWeight: number = 0;
                 var myGrossWeight: number = 0;
-
+                
                 entityPM.QuotePackages.forEach((item) => {
-                    item.Volume = PackageAmountCalculator.ComputeVolume(item.Volume, item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
-                    item.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.Volume, item.GrossWeight, entityPM.Ratio, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
+                    if (item.Volume != null) {
+                        myVolume += item.Volume;
+                    }
 
                     if (item.Quantity != null) {
                         myQuantity += item.Quantity;
-                    }
-
-                    if (item.Volume != null) {
-                        myVolume += item.Volume;
                     }
                     
                     if (item.VolumetricWeight != null) {
                         myVolumetricWeight += item.VolumetricWeight;
                     }
+
                     if (item.GrossWeight != null) {
                         myGrossWeight += item.GrossWeight;
                     }
@@ -142,10 +137,8 @@ export class QuoteUtilities {
                 entityPM.Volume = myVolume;
                 entityPM.NumberOfPackages = myQuantity;
                 entityPM.VolumetricWeight = myVolumetricWeight;
-                entityPM.PickupDeliveryVolumetricWeight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, entityPM.Volume, entityPM.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.PickupDeliveryCWeightUnitCode);
                 entityPM.GrossWeight = myGrossWeight;
                 entityPM.ChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.VolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
-                entityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.PickupDeliveryVolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.PickupDeliveryCWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
             }
         }
     }
@@ -175,25 +168,7 @@ export class QuoteUtilities {
             }
         }
     }
-    public static OnQuotePickupDeliveryRatioChanged(entityPM: QuotePM) {
-        if (entityPM) {
-            if (entityPM.PickupDeliveryRatio == null) {
-                entityPM.PickupDeliveryRatio = AppTool.GetPickupDeliveryRatio(entityPM.ShipmentTypeId);
-            }
 
-            if (entityPM.QuotePackages.length == 0) {
-                entityPM.NumberOfPackages = null;
-                entityPM.GrossWeight = null;
-                entityPM.PickupDeliveryVolumetricWeight = null;
-                entityPM.PickupDeliveryChargeableWeight = null;
-            }
-
-            else {
-                entityPM.PickupDeliveryVolumetricWeight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, entityPM.Volume, entityPM.GrossWeight, entityPM.PickupDeliveryRatio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.PickupDeliveryCWeightUnitCode);
-                entityPM.PickupDeliveryChargeableWeight = AppTool.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.PickupDeliveryVolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.PickupDeliveryCWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
-            }
-        }
-    }
     public static CopyQuote(entityPM: QuotePM, copiedEntityPM: QuotePM) {
         entityPM.DirectionId = copiedEntityPM.DirectionId;
         entityPM.TransportModeId = copiedEntityPM.TransportModeId;
@@ -201,21 +176,21 @@ export class QuoteUtilities {
         entityPM.BranchId = copiedEntityPM.BranchId;
         entityPM.DepartmentId = copiedEntityPM.DepartmentId;
         entityPM.QuoteTypeCode = copiedEntityPM.QuoteTypeCode;
+        entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
+        entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
         entityPM.IncotermId = copiedEntityPM.IncotermId;
         entityPM.MoveTypeId = copiedEntityPM.MoveTypeId;
         entityPM.IsByKG = copiedEntityPM.IsByKG;
         entityPM.IsByContainer = copiedEntityPM.IsByContainer;
         entityPM.BaseShipmentNumber = copiedEntityPM.QuoteNumber;
+        entityPM.IsAutomaticallyClosed = copiedEntityPM.IsAutomaticallyClosed;
+        entityPM.AutomaticallyCloseDate = copiedEntityPM.AutomaticallyCloseDate;
+        entityPM.AutomaticallyCloseDays = copiedEntityPM.AutomaticallyCloseDays;
         entityPM.VolumeUnitCode = copiedEntityPM.VolumeUnitCode;
         entityPM.DimensionsUnitCode = copiedEntityPM.DimensionsUnitCode;
         entityPM.GrossWeightUnitCode = copiedEntityPM.GrossWeightUnitCode;
-        entityPM.ChargeableWeightInKG = copiedEntityPM.ChargeableWeightInKG;
-        entityPM.VolumeInCBM = copiedEntityPM.VolumeInCBM;
         entityPM.ChargeableWeightUnitCode = copiedEntityPM.ChargeableWeightUnitCode;
         entityPM.Ratio = copiedEntityPM.Ratio;
-        entityPM.PickupDeliveryRatio = copiedEntityPM.PickupDeliveryRatio;
-        entityPM.PickupDeliveryVolumetricWeight = copiedEntityPM.PickupDeliveryVolumetricWeight;
-        entityPM.PickupDeliveryChargeableWeight = copiedEntityPM.PickupDeliveryChargeableWeight;
         entityPM.DimFactor = copiedEntityPM.DimFactor;
         entityPM.IsDangerous = copiedEntityPM.IsDangerous;
         entityPM.DescriptionOfGoods = copiedEntityPM.DescriptionOfGoods;
@@ -242,35 +217,33 @@ export class QuoteUtilities {
         entityPM.IsChargesByVAT = copiedEntityPM.IsChargesByVAT;
         entityPM.GrossWeightEdited = copiedEntityPM.GrossWeightEdited;
         entityPM.ChargeableWeightEdited = copiedEntityPM.ChargeableWeightEdited;
-        entityPM.IsSaleCurrencySameAsCost = copiedEntityPM.IsSaleCurrencySameAsCost;
-        entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
-        entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
-        entityPM.IsFixedPrice = copiedEntityPM.IsFixedPrice;
-        entityPM.ShipmentSubTypeId = copiedEntityPM.ShipmentSubTypeId;
-        entityPM.MainCarriageCarrierId = copiedEntityPM.MainCarriageCarrierId;
-        entityPM.TransitTime = copiedEntityPM.TransitTime;
-        entityPM.ProfitCurrencyId = copiedEntityPM.ProfitCurrencyId;
-        entityPM.ProfitExchangeRate = copiedEntityPM.ProfitExchangeRate;
-        entityPM.IsMultiCurrency = copiedEntityPM.IsMultiCurrency;
 
-        if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I") {
-            entityPM.InlandDomesticFromZipCode = copiedEntityPM.InlandDomesticFromZipCode;
-            entityPM.InlandDomesticToZipCode = copiedEntityPM.InlandDomesticToZipCode;
-            entityPM.InlandDomesticFromCity = copiedEntityPM.InlandDomesticFromCity;
-            entityPM.InlandDomesticToCity = copiedEntityPM.InlandDomesticToCity;
-            entityPM.InlandDomesticFromCountryId = copiedEntityPM.InlandDomesticFromCountryId;
-            entityPM.InlandDomesticToCountryId = copiedEntityPM.InlandDomesticToCountryId;
-            entityPM.InlandDomesticFromTypeCode = copiedEntityPM.InlandDomesticFromTypeCode;
-            entityPM.InlandDomesticToTypeCode = copiedEntityPM.InlandDomesticToTypeCode;
-            entityPM.MainCarriageFromPortAddress = copiedEntityPM.MainCarriageFromPortAddress;
-            entityPM.MainCarriageToPortAddress = copiedEntityPM.MainCarriageToPortAddress;
-            entityPM.FromPortId = copiedEntityPM.FromPortId;
-            entityPM.ToPortId = copiedEntityPM.ToPortId;
-            entityPM.FromPartnerId = copiedEntityPM.FromPartnerId;
-            entityPM.FromPartnerAddressId = copiedEntityPM.FromPartnerAddressId;
-            entityPM.ToPartnerId = copiedEntityPM.ToPartnerId;
-            entityPM.ToPartnerAddressId = copiedEntityPM.ToPartnerAddressId;
-        }
+        //entityPM.ShipperId = copiedEntityPM.ShipperId;
+        //entityPM.ShipperContactId = copiedEntityPM.ShipperContactId;
+        //entityPM.ShipperReference1 = copiedEntityPM.ShipperReference1;
+        //entityPM.ShipperReference2 = copiedEntityPM.ShipperReference2;
+        //entityPM.ShipperNote = copiedEntityPM.ShipperNote;
+        //entityPM.ShipperMainAddressId = copiedEntityPM.ShipperMainAddressId;
+        //entityPM.ShipperPickAddressId = copiedEntityPM.ShipperPickAddressId;
+
+        //entityPM.ConsigneeId = copiedEntityPM.ConsigneeId;
+        //entityPM.ConsigneeContactId = copiedEntityPM.ConsigneeContactId;
+        //entityPM.ConsigneeReference1 = copiedEntityPM.ConsigneeReference1;
+        //entityPM.ConsigneeReference2 = copiedEntityPM.ConsigneeReference2;
+        //entityPM.ConsigneeNote = copiedEntityPM.ConsigneeNote;
+        //entityPM.ConsigneeMainAddressId = copiedEntityPM.ConsigneeMainAddressId;
+        //entityPM.ConsigneePickAddressId = copiedEntityPM.ConsigneePickAddressId;
+
+        //entityPM.FromPort = copiedEntityPM.FromPort;
+        //entityPM.FromPortCountry = copiedEntityPM.FromPortCountry;
+        //entityPM.FromPortId = copiedEntityPM.FromPortId;
+        //entityPM.FromPortName = copiedEntityPM.FromPortName;
+        //entityPM.ToPort = copiedEntityPM.ToPort;
+        //entityPM.ToPortCountry = copiedEntityPM.ToPortCountry;
+        //entityPM.ToPortId = copiedEntityPM.ToPortId;
+        //entityPM.ToPortName = copiedEntityPM.ToPortName;
+
+        entityPM.MainCarriageCarrierId = copiedEntityPM.MainCarriageCarrierId;
     }
     public static CopyQuotePackages(entityPM: QuotePM, copiedEntityPM: QuotePM) {
         copiedEntityPM.QuotePackages.forEach(item => {
@@ -285,7 +258,7 @@ export class QuoteUtilities {
             newPackage.Height = item.Height;
             newPackage.Length = item.Length;
             newPackage.Width = item.Width;
-            newPackage.VolumetricWeight = item.VolumetricWeight;
+
             entityPM.AddQuotePackagePM(newPackage);
         });
     }
@@ -327,20 +300,13 @@ export class QuoteUtilities {
             newChargePM.CostMinAmount = item.CostMinAmount;
             newChargePM.SaleMinAmount = item.SaleMinAmount;
             newChargePM.SaleMaxAmount = item.SaleMaxAmount;
-            newChargePM.MarkUpValue = item.MarkUpValue;
-            newChargePM.ContainerType1MarkUpValue = item.ContainerType1MarkUpValue;
-            newChargePM.ContainerType2MarkUpValue = item.ContainerType2MarkUpValue;
-            newChargePM.ContainerType3MarkUpValue = item.ContainerType3MarkUpValue;
-            newChargePM.ContainerType4MarkUpValue = item.ContainerType4MarkUpValue;
-            newChargePM.ContainerType5MarkUpValue = item.ContainerType5MarkUpValue;
-            newChargePM.MarkUpText = item.MarkUpText;
-            newChargePM.ContainerType1MarkUpText = item.ContainerType1MarkUpText;
-            newChargePM.ContainerType2MarkUpText = item.ContainerType2MarkUpText;
-            newChargePM.ContainerType3MarkUpText = item.ContainerType3MarkUpText;
-            newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
-            newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
+            newChargePM.MarkUpValue = 0;
+            newChargePM.ContainerType1MarkUpValue = 0;
+            newChargePM.ContainerType2MarkUpValue = 0;
+            newChargePM.ContainerType3MarkUpValue = 0;
+            newChargePM.ContainerType4MarkUpValue = 0;
+            newChargePM.ContainerType5MarkUpValue = 0;
             newChargePM.MarkUpTypeCode = "F";
-            newChargePM.MarkUpCurrencyId = item.MarkUpCurrencyId;
             newChargePM.ContainerType1MarkUpTypeCode = "F";
             newChargePM.ContainerType2MarkUpTypeCode = "F";
             newChargePM.ContainerType3MarkUpTypeCode = "F";
@@ -349,16 +315,6 @@ export class QuoteUtilities {
             newChargePM.IsChargeBySteps = item.IsChargeBySteps;                       
             newChargePM.ChargesGroupCode = item.ChargesGroupCode;
             newChargePM.Notes = item.Notes;
-
-            if (oldEntityPM.IsChargesByVAT) {
-                newChargePM.VatTypeId = item.VatTypeId;
-                newChargePM.VatTypeName = item.VatTypeName;
-                newChargePM.VatAmount = item.VatAmount;
-                newChargePM.VatPercentage = item.VatPercentage;
-                newChargePM.VatIsMultiPercentage = item.VatIsMultiPercentage;
-                newChargePM.ExternalVATCard = item.ExternalVATCard; 
-            }
-
             if (isCopyCost) {
                 newChargePM.CostUnitPrice = item.CostUnitPrice;
                 newChargePM.CostQuantity = item.CostQuantity;
@@ -385,12 +341,6 @@ export class QuoteUtilities {
                 newChargePM.ContainerType3MarkUpValue = item.ContainerType3MarkUpValue;
                 newChargePM.ContainerType4MarkUpValue = item.ContainerType4MarkUpValue;
                 newChargePM.ContainerType5MarkUpValue = item.ContainerType5MarkUpValue;
-                newChargePM.MarkUpText = item.MarkUpText;
-                newChargePM.ContainerType1MarkUpText = item.ContainerType1MarkUpText;
-                newChargePM.ContainerType2MarkUpText = item.ContainerType2MarkUpText;
-                newChargePM.ContainerType3MarkUpText = item.ContainerType3MarkUpText;
-                newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
-                newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
                 newChargePM.MarkUpTypeCode = item.MarkUpTypeCode;
                 newChargePM.ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode;
                 newChargePM.ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode;
@@ -404,6 +354,16 @@ export class QuoteUtilities {
                 newChargePM.SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice;
                 newChargePM.SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice;
                 newChargePM.SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice;
+
+                if (oldEntityPM.IsChargesByVAT) {
+                    newChargePM.VatTypeId = item.VatTypeId;
+                    newChargePM.VatTypeName = item.VatTypeName;
+                    newChargePM.VatAmount = item.VatAmount;
+                    newChargePM.VatPercentage = item.VatPercentage;
+                    newChargePM.VatIsMultiPercentage = item.VatIsMultiPercentage;
+                    newChargePM.ExternalVATCard = item.ExternalVATCard;
+                }
+
                 newChargePM.SaleTotalAmount = item.SaleTotalAmount;
                 newChargePM.SaleTotalAmountLocal = item.SaleTotalAmountLocal;
             }
@@ -529,27 +489,12 @@ export class QuoteUtilities {
         shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
         shipmentPM.FreightPrepaidCollectId = SessionLocator.TenantPM.ExportFreightPrepaidCollectId;
         shipmentPM.OtherPrepaidCollectId = SessionLocator.TenantPM.ExportOtherPrepaidCollectId;
-        shipmentPM.ShipmentTypeId = entityPM.ShipmentTypeId;
+        shipmentPM.ShipmentTypeId = (entityPM.TransportModeId == "A") ? null : entityPM.ShipmentTypeId;
         shipmentPM.ValueOfGoods = entityPM.ValueOfGoods;
         shipmentPM.ValueOfGoodsCurrencyId = entityPM.ValueOfGoodsCurrencyId;
         shipmentPM.MoveTypeId = entityPM.MoveTypeId;
-        shipmentPM.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
 
         //Partners
-        shipmentPM.ShipperNotExporterId = entityPM.ShipperNotExporterId;
-        shipmentPM.ShipperNotExporterContactId = entityPM.ShipperNotExporterContactId;
-        shipmentPM.ShipperNotExporterName = entityPM.ShipperNotExporterName;
-        shipmentPM.ShipperNotExporterNote = entityPM.ShipperNotExporterNote;
-        shipmentPM.ShipperNotExporterReference1 = entityPM.ShipperNotExporterReference;
-        shipmentPM.ShipperNotExporterAddressId = entityPM.ShipperNotExporterAddressId;
-
-        shipmentPM.ConsigneeNotImporterId = entityPM.ConsigneeNotImporterId;
-        shipmentPM.ConsigneeNotImporterContactId = entityPM.ConsigneeNotImporterContactId;
-        shipmentPM.ConsigneeNotImporterName = entityPM.ConsigneeNotImporterName;
-        shipmentPM.ConsigneeNotImporterNote = entityPM.ConsigneeNotImporterNote;
-        shipmentPM.ConsigneeNotImporterReference = entityPM.ConsigneeNotImporterReference;
-        shipmentPM.ConsigneeNotImporterAddressId = entityPM.ConsigneeNotImporterAddressId;
-
         shipmentPM.ShipperId = entityPM.ShipperId;
         shipmentPM.ShipperContactId = entityPM.ShipperContactId;
         shipmentPM.ShipperName = entityPM.ShipperName;
@@ -590,24 +535,12 @@ export class QuoteUtilities {
         shipmentPM.Notify1Name = entityPM.NotifyName;
         shipmentPM.Notify1AddressId = entityPM.NotifyAddressId;
         shipmentPM.Notify1ContactId = entityPM.NotifyContactId;
-        shipmentPM.Notify1Reference = entityPM.NotifyReference1;
-        shipmentPM.Notify1Reference2 = entityPM.NotifyReference2;
 
         //Routing
         shipmentPM.MainCarriageFromPartnerId = entityPM.FromPartnerId;
         shipmentPM.MainCarriageFromAddressId = entityPM.FromPartnerAddressId;
         shipmentPM.MainCarriageToPartnerId = entityPM.ToPartnerId;
         shipmentPM.MainCarriageToAddressId = entityPM.ToPartnerAddressId;
-        shipmentPM.InlandDomesticFromZipCode = entityPM.InlandDomesticFromZipCode;
-        shipmentPM.InlandDomesticToZipCode = entityPM.InlandDomesticToZipCode;
-        shipmentPM.InlandDomesticFromCity = entityPM.InlandDomesticFromCity;
-        shipmentPM.InlandDomesticToCity = entityPM.InlandDomesticToCity;
-        shipmentPM.InlandDomesticFromCountryId = entityPM.InlandDomesticFromCountryId;
-        shipmentPM.InlandDomesticToCountryId = entityPM.InlandDomesticToCountryId;
-        shipmentPM.InlandDomesticFromTypeCode = entityPM.InlandDomesticFromTypeCode;
-        shipmentPM.InlandDomesticToTypeCode = entityPM.InlandDomesticToTypeCode;
-        shipmentPM.MainCarriageFromPortAddress = entityPM.MainCarriageFromPortAddress;
-        shipmentPM.MainCarriageToPortAddress = entityPM.MainCarriageToPortAddress;
 
         shipmentPM.MainCarriageFromPortId = entityPM.FromPortId;
         shipmentPM.MainCarriageToPortId = entityPM.ToPortId;
@@ -615,15 +548,11 @@ export class QuoteUtilities {
         shipmentPM.ToPortId = entityPM.ToPortId;
         shipmentPM.MainCarriageCarrierId = entityPM.MainCarriageCarrierId;
         shipmentPM.MainCarriageFinalDestinationPortId = entityPM.ToPortId;
-        shipmentPM.MainCarriageETA = entityPM.ETA;
-        shipmentPM.MainCarriageETD = entityPM.ETD;
 
         //Measurments
         shipmentPM.VolumeUnitCode = entityPM.VolumeUnitCode;
         shipmentPM.DimensionsUnitCode = entityPM.DimensionsUnitCode;
         shipmentPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
-        shipmentPM.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
-        shipmentPM.VolumeInCBM = entityPM.VolumeInCBM;
         shipmentPM.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
         shipmentPM.BookingVolume = entityPM.Volume;
         shipmentPM.OrderVolumetricWeight = entityPM.VolumetricWeight;
@@ -697,25 +626,4 @@ export class QuoteUtilities {
 
         return shipmentPM;
     }
-
-    public static IsPriceCheckVisible(entityPM: QuotePM) {
-        var myResult = false;
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
-        if (featureToggle  != null && FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A" || this.IsLCLQuote(entityPM)) && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
-            myResult = true;
-        }
-        return myResult;
-    }
-
-    public static IsAllowingMultipleFreightCharges(quotePM: QuotePM) {
-        var myResult = false;
-        var numberOfFreightQuoteCharges = quotePM.QuoteCharges?.filter(d => d.ChargesGroupCode == "FRT").length;
-        if (quotePM.TransportModeId == "I") {
-            if (numberOfFreightQuoteCharges > 1) {
-                myResult = true;
-            }
-        }
-
-        return myResult;
-    } 
 }

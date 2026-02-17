@@ -19,7 +19,7 @@ import { LuhnAlgorithm } from '../../../Customs/Utilities/LuhnAlgorithm';
 
 @Component({
     selector: 'CustomItemLegalDemands',
-    
+    moduleId: module.id,
     templateUrl: './CustomItemLegalDemandsQueryComponent.html',
 })
 
@@ -237,7 +237,7 @@ export class CustomItemLegalDemandsQueryComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), true)
+            .ShowProgressBar(currRequestParams.PBId, TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

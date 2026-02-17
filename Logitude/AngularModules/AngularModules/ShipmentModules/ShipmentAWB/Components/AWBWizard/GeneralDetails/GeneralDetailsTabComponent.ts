@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -8,7 +8,7 @@ import {AppTool, FormatTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'GeneralDetailsTabComponent',
     templateUrl: './GeneralDetailsTabComponent.html',    
@@ -314,373 +314,326 @@ export class GeneralDetailsTabComponent extends BaseComponent {
         this.Wizard.ValidateScreen_GEN();
     }
     private Validate() {
-        if (!this.Wizard.IsImportWizard) {
-            this.Validate_AWBAccountingInformation();
-            this.Validate_AWBHandlingInformation();
-            this.Validate_AWBComments();
-            this.Validate_AWBSpecialHandlingCodes();
-            this.Validate_SCI();
-            this.Validate_MainHarmonize();
-            this.Validate_AWBDeclaredValueForCarriage();
-            this.Validate_AWBDeclaredValueForCustoms();
-            this.Validate_AWBInsurrenceValue();
-            this.Validate_AWBCarrierTarrifReference();
-            this.Validate_ReferenceNumber();
-            this.Validate_SupplementaryShipmentInformation1();
-            this.Validate_SupplementaryShipmentInformation2();
-            this.Validate_AWBSignature();
-            this.Validate_AWBPlace();
-        }
+        this.Validate_AWBAccountingInformation();
+        this.Validate_AWBHandlingInformation();
+        this.Validate_AWBComments();
+        this.Validate_AWBSpecialHandlingCodes();
+        this.Validate_SCI();
+        this.Validate_MainHarmonize();
+        this.Validate_AWBDeclaredValueForCarriage();
+        this.Validate_AWBDeclaredValueForCustoms();
+        this.Validate_AWBInsurrenceValue();
+        this.Validate_AWBCarrierTarrifReference();
+        this.Validate_ReferenceNumber();
+        this.Validate_SupplementaryShipmentInformation1();
+        this.Validate_SupplementaryShipmentInformation2();
+        this.Validate_AWBSignature();
+        this.Validate_AWBPlace();
     }
     private Validate_AWBAccountingInformation() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
+        var isValid = true;
 
-            if (this.Wizard.IsFWB) {
-                if (!AppTool.IsNullOrEmpty(this.AWBAccountingInformation)) {
-                    if (!FormatTool.IsTextFormatted(this.AWBAccountingInformation)) {
+        if (this.Wizard.IsFWB) {
+            if (!AppTool.IsNullOrEmpty(this.AWBAccountingInformation)) {
+                if (!FormatTool.IsTextFormatted(this.AWBAccountingInformation)) {
+                    isValid = false;
+                }
+            }
+        }
+
+        if (isValid) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBAccountingInformation")[0];
+            if (myFieldRule != null) {
+                if (!ShipmentTool.IsAdvancedAccountingInformation(this.EntityPM)) {
+                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBAccountingInformation)) {
                         isValid = false;
                     }
                 }
             }
-
-            if (isValid) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBAccountingInformation")[0];
-                if (myFieldRule != null) {
-                    if (!ShipmentTool.IsAdvancedAccountingInformation(this.EntityPM)) {
-                        if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBAccountingInformation)) {
-                            isValid = false;
-                        }
-                    }
-                }
-            }
-
-            this.ShowWarning_AWBAccountingInformation = !isValid;
         }
+
+        this.ShowWarning_AWBAccountingInformation = !isValid;
     }
     private Validate_AWBHandlingInformation() {
-        if (!this.Wizard.IsImportWizard) {
+        var isValid = true;
 
-            var isValid = true;
-
-            if (this.Wizard.IsFWB) {
-                if (!AppTool.IsNullOrEmpty(this.AWBHandlingInformation)) {
-                    if (!FormatTool.IsTextFormatted(this.AWBHandlingInformation)) {
-                        isValid = false;
-                    }
-                }
-            }
-
-            if (isValid) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBHandlingInformation")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBHandlingInformation)) {
+        if (this.Wizard.IsFWB) {
+            if (!AppTool.IsNullOrEmpty(this.AWBHandlingInformation)) {
+                if (!FormatTool.IsTextFormatted(this.AWBHandlingInformation)) {
                     isValid = false;
                 }
             }
-
-            this.ShowWarning_AWBHandlingInformation = !isValid;
         }
+
+        if (isValid) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBHandlingInformation")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBHandlingInformation)) {
+                isValid = false;
+            }
+        }
+
+        this.ShowWarning_AWBHandlingInformation = !isValid;
     }
     private Validate_AWBComments() {
-        if (!this.Wizard.IsImportWizard) {
+        var isValid = true;
 
-            var isValid = true;
-
-            if (this.Wizard.IsFWB) {
-                if (!AppTool.IsNullOrEmpty(this.AWBComments)) {
-                    if (!FormatTool.IsTextFormatted(this.AWBComments)) {
-                        isValid = false;
-                    }
-                }
-            }
-
-            if (isValid) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBComments")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBComments)) {
+        if (this.Wizard.IsFWB) {
+            if (!AppTool.IsNullOrEmpty(this.AWBComments)) {
+                if (!FormatTool.IsTextFormatted(this.AWBComments)) {
                     isValid = false;
                 }
             }
-
-            this.ShowWarning_AWBComments = !isValid;
         }
+
+        if (isValid) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBComments")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBComments)) {
+                isValid = false;
+            }
+        }
+
+        this.ShowWarning_AWBComments = !isValid;
     }
     private Validate_AWBSpecialHandlingCodes() {
-        if (!this.Wizard.IsImportWizard) {
 
+        var isValid = true;
 
-            var isValid = true;
+        if (this.EntityPM.IsDangerous) {
+            isValid = false;
 
-            if (this.EntityPM.IsDangerous) {
+            if (this.AWBSpecialHandlingCodeId1 != null) {
+                isValid = true;
+            }
+
+            else if (this.AWBSpecialHandlingCodeId2 != null) {
+                isValid = true;
+            }
+
+            else if (this.AWBSpecialHandlingCodeId3 != null) {
+                isValid = true;
+            }
+
+            else if (this.AWBSpecialHandlingCodeId4 != null) {
+                isValid = true;
+            }
+
+            else if (this.AWBSpecialHandlingCodeId5 != null) {
+                isValid = true;
+            }
+
+            else if (this.AWBSpecialHandlingCodeId6 != null) {
+                isValid = true;
+            }
+
+            else if (this.AWBSpecialHandlingCodeId7 != null) {
+                isValid = true;
+            }
+
+            else if (this.AWBSpecialHandlingCodeId8 != null) {
+                isValid = true;
+            }
+
+            else if (this.AWBSpecialHandlingCodeId9 != null) {
+                isValid = true;
+            }
+        }        
+
+        if (isValid) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBSpecialHandlingCodeId1")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId1)) {
                 isValid = false;
-
-                if (this.AWBSpecialHandlingCodeId1 != null) {
-                    isValid = true;
-                }
-
-                else if (this.AWBSpecialHandlingCodeId2 != null) {
-                    isValid = true;
-                }
-
-                else if (this.AWBSpecialHandlingCodeId3 != null) {
-                    isValid = true;
-                }
-
-                else if (this.AWBSpecialHandlingCodeId4 != null) {
-                    isValid = true;
-                }
-
-                else if (this.AWBSpecialHandlingCodeId5 != null) {
-                    isValid = true;
-                }
-
-                else if (this.AWBSpecialHandlingCodeId6 != null) {
-                    isValid = true;
-                }
-
-                else if (this.AWBSpecialHandlingCodeId7 != null) {
-                    isValid = true;
-                }
-
-                else if (this.AWBSpecialHandlingCodeId8 != null) {
-                    isValid = true;
-                }
-
-                else if (this.AWBSpecialHandlingCodeId9 != null) {
-                    isValid = true;
-                }
             }
-
-            if (isValid) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBSpecialHandlingCodeId1")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId1)) {
-                    isValid = false;
-                }
-            }
-
-            if (isValid) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBSpecialHandlingCodeId2")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId2)) {
-                    isValid = false;
-                }
-            }
-
-            if (this.Wizard.IsFWB) {
-                if (isValid) {
-                    var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBSpecialHandlingCodeId3")[0];
-                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId3)) {
-                        isValid = false;
-                    }
-                }
-
-                if (isValid) {
-                    var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBSpecialHandlingCodeId4")[0];
-                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId4)) {
-                        isValid = false;
-                    }
-                }
-
-                if (isValid) {
-                    var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBSpecialHandlingCodeId5")[0];
-                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId5)) {
-                        isValid = false;
-                    }
-                }
-
-                if (isValid) {
-                    var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBSpecialHandlingCodeId6")[0];
-                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId6)) {
-                        isValid = false;
-                    }
-                }
-
-                if (isValid) {
-                    var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBSpecialHandlingCodeId7")[0];
-                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId7)) {
-                        isValid = false;
-                    }
-                }
-
-                if (isValid) {
-                    var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBSpecialHandlingCodeId8")[0];
-                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId8)) {
-                        isValid = false;
-                    }
-                }
-
-                if (isValid) {
-                    var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBSpecialHandlingCodeId9")[0];
-                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId9)) {
-                        isValid = false;
-                    }
-                }
-            }
-
-            this.ShowWarning_AWBSpecialHandlingCodes = !isValid;
         }
+
+        if (isValid) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBSpecialHandlingCodeId2")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId2)) {
+                isValid = false;
+            }
+        }
+
+        if (this.Wizard.IsFWB) {
+            if (isValid) {
+                var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBSpecialHandlingCodeId3")[0];
+                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId3)) {
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBSpecialHandlingCodeId4")[0];
+                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId4)) {
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBSpecialHandlingCodeId5")[0];
+                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId5)) {
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBSpecialHandlingCodeId6")[0];
+                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId6)) {
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBSpecialHandlingCodeId7")[0];
+                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId7)) {
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBSpecialHandlingCodeId8")[0];
+                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId8)) {
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBSpecialHandlingCodeId9")[0];
+                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBSpecialHandlingCodeId9)) {
+                    isValid = false;
+                }
+            }
+        }
+
+        this.ShowWarning_AWBSpecialHandlingCodes = !isValid;
     }
     private Validate_SCI() {
-        if (!this.Wizard.IsImportWizard) {
+        var isValid = true;
 
-            var isValid = true;
-
-            var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "SCI")[0];
-            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.SCI)) {
-                isValid = false;
-            }
-
-            this.ShowWarning_SCI = !isValid;
+        var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "SCI")[0];
+        if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.SCI)) {
+            isValid = false;
         }
+
+        this.ShowWarning_SCI = !isValid;
     }
     private Validate_MainHarmonize() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
+        var isValid = true;
 
-            if (this.Wizard.IsFWB) {
-                if (!AppTool.IsNullOrEmpty(this.MainHarmonize)) {
-                    isValid = false;
+        if (this.Wizard.IsFWB) {
+            if (!AppTool.IsNullOrEmpty(this.MainHarmonize)) {
+                isValid = false;
 
-                    if (this.MainHarmonize.length >= 6 && this.MainHarmonize.length <= 18) {
-                        if (FormatTool.IsAlphaNumeric(this.MainHarmonize)) {
-                            isValid = true;
-                        }
+                if (this.MainHarmonize.length >= 6 && this.MainHarmonize.length <= 18) {
+                    if (FormatTool.IsAlphaNumeric(this.MainHarmonize)) {
+                        isValid = true;
                     }
                 }
             }
-
-            if ((this.Wizard.IsFWB || this.Wizard.IsFHL) && AppTool.IsNullOrEmpty(this.MainHarmonize)) {
-                if (this.EntityPM.ToCountryIsEC
-                    || this.EntityPM.Transshipment1ToCountryIsEC
-                    || this.EntityPM.Transshipment2ToCountryIsEC
-                    || this.EntityPM.Transshipment3ToCountryIsEC)
-                    isValid = false;                    
-            }
-
-            this.ShowWarning_MainHarmonize = !isValid;
         }
+
+        this.ShowWarning_MainHarmonize = !isValid;
     }
     private Validate_AWBDeclaredValueForCarriage() {
-        if (!this.Wizard.IsImportWizard) {
+        var isValid = true;
 
-            var isValid = true;
-
-            if (!FormatTool.Validate_DeclaredCarriage(this.AWBDeclaredValueForCarriage)) {
-                isValid = false;
-            }
-
-            this.ShowWarning_AWBDeclaredValueForCarriage = !isValid;
+        if (!FormatTool.Validate_DeclaredCarriage(this.AWBDeclaredValueForCarriage)) {
+            isValid = false;
         }
+
+        this.ShowWarning_AWBDeclaredValueForCarriage = !isValid;
     }
     private Validate_AWBDeclaredValueForCustoms() {
-        if (!this.Wizard.IsImportWizard) {
+        var isValid = true;
 
-            var isValid = true;
-
-            if (!FormatTool.Validate_DeclaredCustoms(this.AWBDeclaredValueForCustoms)) {
-                isValid = false;
-            }
-
-            this.ShowWarning_AWBDeclaredValueForCustoms = !isValid;
+        if (!FormatTool.Validate_DeclaredCustoms(this.AWBDeclaredValueForCustoms)) {
+            isValid = false;
         }
+
+        this.ShowWarning_AWBDeclaredValueForCustoms = !isValid;
     }
     private Validate_AWBInsurrenceValue() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
+        var isValid = true;
 
-            if (!FormatTool.Validate_DeclaredInsurrence(this.AWBInsurrenceValue)) {
-                isValid = false;
-            }
-
-            this.ShowWarning_AWBInsurrenceValue = !isValid;
+        if (!FormatTool.Validate_DeclaredInsurrence(this.AWBInsurrenceValue)) {
+            isValid = false;
         }
+
+        this.ShowWarning_AWBInsurrenceValue = !isValid;
     }
     private Validate_AWBCarrierTarrifReference() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
+        var isValid = true;
 
-            var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBCarrierTarrifReference")[0];
-            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.AWBCarrierTarrifReference)) {
+        var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBCarrierTarrifReference")[0];
+        if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.AWBCarrierTarrifReference)) {
+            isValid = false;
+        }
+
+        this.ShowWarning_AWBCarrierTarrifReference = !isValid;
+    }
+    private Validate_ReferenceNumber() {
+        var isValid = true;
+
+        if (this.Wizard.IsFWB) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "ReferenceNumber")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.ReferenceNumber)) {
+                isValid = false;
+            }
+        }
+
+        this.ShowWarning_ReferenceNumber = !isValid;
+    }
+    private Validate_SupplementaryShipmentInformation1() {
+        var isValid = true;
+
+        if (this.Wizard.IsFWB) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "SupplementaryShipmentInformation1")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.SupplementaryShipmentInformation1)) {
+                isValid = false;
+            }
+        }
+
+        this.ShowWarning_SupplementaryShipmentInformation1 = !isValid;
+    }
+    private Validate_SupplementaryShipmentInformation2() {
+        var isValid = true;
+
+        if (this.Wizard.IsFWB) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "SupplementaryShipmentInformation1")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.SupplementaryShipmentInformation1)) {
+                isValid = false;
+            }
+        }
+
+        this.ShowWarning_SupplementaryShipmentInformation2 = !isValid;
+    }
+    private Validate_AWBSignature() {
+        var isValid = true;
+
+        if (this.Wizard.IsFWB) {
+            if (AppTool.IsNullOrEmpty(this.AWBSignature)) {
                 isValid = false;
             }
 
-            this.ShowWarning_AWBCarrierTarrifReference = !isValid;
-        }
-    }
-    private Validate_ReferenceNumber() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
-
-            if (this.Wizard.IsFWB) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "ReferenceNumber")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.ReferenceNumber)) {
-                    isValid = false;
-                }
+            else if (!FormatTool.IsTextFormatted(this.AWBSignature)) {
+                isValid = false;
             }
-
-            this.ShowWarning_ReferenceNumber = !isValid;
         }
-    }
-    private Validate_SupplementaryShipmentInformation1() {
-        if (!this.Wizard.IsImportWizard) {
 
-            var isValid = true;
-
-            if (this.Wizard.IsFWB) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "SupplementaryShipmentInformation1")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.SupplementaryShipmentInformation1)) {
-                    isValid = false;
-                }
-            }
-
-            this.ShowWarning_SupplementaryShipmentInformation1 = !isValid;
-        }
-    }
-    private Validate_SupplementaryShipmentInformation2() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
-
-            if (this.Wizard.IsFWB) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "SupplementaryShipmentInformation1")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.SupplementaryShipmentInformation1)) {
-                    isValid = false;
-                }
-            }
-
-            this.ShowWarning_SupplementaryShipmentInformation2 = !isValid;
-        }
-    }
-    private Validate_AWBSignature() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
-
-            if (this.Wizard.IsFWB) {
-                if (AppTool.IsNullOrEmpty(this.AWBSignature)) {
-                    isValid = false;
-                }
-
-                else if (!FormatTool.IsTextFormatted(this.AWBSignature)) {
-                    isValid = false;
-                }
-            }
-
-            this.ShowWarning_AWBSignature = !isValid;
-        }
+        this.ShowWarning_AWBSignature = !isValid;
     }
     private Validate_AWBPlace() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
+        var isValid = true;
 
-            if (this.Wizard.IsFWB) {
-                if (AppTool.IsNullOrEmpty(this.AWBPlace)) {
-                    isValid = false;
-                }
-
-                else if (!FormatTool.IsTextFormatted(this.AWBPlace)) {
-                    isValid = false;
-                }
+        if (this.Wizard.IsFWB) {
+            if (AppTool.IsNullOrEmpty(this.AWBPlace)) {
+                isValid = false;
             }
 
-            this.ShowWarning_AWBPlace = !isValid;
+            else if (!FormatTool.IsTextFormatted(this.AWBPlace)) {
+                isValid = false;
+            }
         }
+
+        this.ShowWarning_AWBPlace = !isValid;
     }
 
     // Properties

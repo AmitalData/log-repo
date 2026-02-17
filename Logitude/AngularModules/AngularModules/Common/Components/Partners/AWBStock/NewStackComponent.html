@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -71,11 +71,17 @@
                                             </td>
 
                                             <td style="width: 120px;">
-                                              <RadioButton [Name]="'NumberOrAmountRadio'" [IsChecked]="IsByNumber" (Checked)="SetIsByNumber(true)" [Text]="'MAWBStack.O.ByEndNumber' | TextCodeTranslationPipe"></RadioButton>
+                                                <div class="RadioButton">
+                                                    <input id="ByEndNumberRadio" type="radio" name="ByTypeRadio" [checked]="IsByNumber" (click)="SetIsByNumber(true)" />
+                                                    <label for="ByEndNumberRadio">{{'MAWBStack.O.ByEndNumber' | TextCodeTranslationPipe}}</label>
+                                                </div>
                                             </td>
 
                                             <td>
-                                              <RadioButton [Name]="'NumberOrAmountRadio'" [IsChecked]="!IsByNumber" (Checked)="SetIsByNumber(false)" [Text]="'MAWBStack.O.ByAmount' | TextCodeTranslationPipe"></RadioButton>
+                                                <div class="RadioButton">
+                                                    <input id="ByAmountRadio" type="radio" name="ByTypeRadio" [checked]="!IsByNumber" (click)="SetIsByNumber(false)" />
+                                                    <label for="ByAmountRadio">{{'MAWBStack.O.ByAmount' | TextCodeTranslationPipe}}</label>
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
@@ -123,39 +129,37 @@
 
                 <tr style="border: 1px solid #AAAAAA; border-top:0;">
                     <td style="padding: 2px;">
-                      <div class="MediaFill">
                         <div class="SimpleGridView">
-                          <div class="SimpleGridViewHeaderDark">
-                            <table>
-                              <tr>
-                                <td style="width: 120px;">{{'MAWBStack.F.Number' | TextCodeTranslationPipe}}</td>
-                                <td class="LastChild">
-                                  <div></div>
-                                </td>
-                              </tr>
-                            </table>
-                          </div>
+                            <div class="SimpleGridViewHeaderDark">
+                                <table>
+                                    <tr>
+                                        <td style="width: 120px;">{{'MAWBStack.F.Number' | TextCodeTranslationPipe}}</td>
+                                        <td class="LastChild">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                          <div class="SimpleGridViewBody">
-                            <table>
-                              <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-                                <td class="GridViewCell" style="width: 120px;">
-                                  <div>{{item.Number | PaddingPipe:'L':8:'0'}}</div>
-                                </td>
-                                <td>
-                                  <div></div>
-                                </td>
-                              </tr>
+                            <div class="SimpleGridViewBody">
+                                <table>
+                                    <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                        <td class="GridViewCell" style="width: 120px;">
+                                            <div>{{item.Number | PaddingPipe:'L':8:'0'}}</div>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
 
-                              <tr>
-                                <td colspan="2">
-                                  <div></div>
-                                </td>
-                              </tr>
-                            </table>
-                          </div>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                      </div>                        
                     </td>
                 </tr>
             </table>
@@ -171,7 +175,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CancelAddStock' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelClicked()">Cancel</button>
+                        <button class="Button" (click)="CancelClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -179,7 +183,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OkAddStock' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

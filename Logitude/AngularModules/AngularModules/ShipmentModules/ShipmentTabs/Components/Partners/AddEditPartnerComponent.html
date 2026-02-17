@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .PartnerTemplateRow, .PartnerTemplateRow td, .PartnerTemplateRow td div, .PartnerTemplateRow td span {
         color: #6E7172;
@@ -279,13 +279,8 @@
                                                                                 [ObjectTableName]="ObjectTableName"
                                                                                 [DataContext]="DataContext"
                                                                                 [LookUpTableName]="'Contact'"
-                                                                                [DependencyFilter1Value]="DataContext.PartnerId"
-                                                                                [HideLastColumn] ="true">
+                                                                                [DependencyFilter1Value]="DataContext.PartnerId">
                                                                         </LogLov>
-                                                                    </td>
-
-                                                                    <td style="width: 20px;" data-cy="AddContact">
-                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="DataContext.AddContact()" [IsEnabled]="DataContext.IsEditingEnabled && DataContext.PartnerId"></IconButton>
                                                                     </td>
 
                                                                     <td>
@@ -401,7 +396,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'PartnerCancelbtn' | IdGeneratorAsyncPipe | async}}" (mousedown)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" id="{{'PartnerCancelbtn' | IdGeneratorPipe}}" (mousedown)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -409,7 +404,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" id="{{'PartnerOKbtn' | IdGeneratorAsyncPipe | async}}" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" id="{{'PartnerOKbtn' | IdGeneratorPipe}}" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

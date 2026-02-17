@@ -64,11 +64,6 @@ export class SprintPM {
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
-    private isCompleted: boolean;
-    public get IsCompleted() { return this.isCompleted; }
-    public set IsCompleted(newValue: boolean) { if (this.isCompleted != newValue) { this.isCompleted = newValue; this.MarkAsDirty("IsCompleted"); } }
-       
-	 
 
     public OldEntityPM: SprintPM;
 		

@@ -24,10 +24,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             this.repository = repository;
         }
 
-        public AWBAdditionalHandlingInfoPM GetSinglePM(string id, int tenant)
+        public AWBAdditionalHandlingInfoPM GetSingleAWBInformationPM(string id)
         {
             return (from a in repository.Context.AWBAdditionalHandlingInfos
-                    where a.Id == id && a.Tenant == tenant
+                    where a.Id == id
                     select new AWBAdditionalHandlingInfoPM()
                     {
                         Id = a.Id,

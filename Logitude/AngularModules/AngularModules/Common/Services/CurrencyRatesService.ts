@@ -1,23 +1,33 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import { TenantPM } from '../EntityPMs/TenantPM';
-import { RatesTablePM } from '../../Infrastructure/EntityPMs/RatesTablePM';
-import { TenantPMService } from './StandardPMs/TenantPMService';
+import {RatesTablePM} from '../../Infrastructure/EntityPMs/RatesTablePM';
+import {Observable} from 'rxjs/Rx';
 
-import { defer, of } from 'rxjs';
-import { CurrencyRatePM } from 'Infrastructure/EntityPMs/CurrencyRatePM';
+export class LastRate {
+    Id: string;
+    Tenant: number;
+    ForeignCurrencyId: string;
+    ForeignCurrencyCode: string;
+    ForeignCurrencyName: string;
+    BaseCurrencyId: string;
+    BaseCurrencyCode: string;
+    ValueDate: Date;
+    LogDateTime: Date;
+    Rate: number;
+    HistoryCount: number;
+}
 
 @Injectable()
 
 export class CurrencyRatesService {
     private _apiUrl: string;
-    private _http: HttpClient;
+    private _http: Http;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/currencyrates';
     }
 
@@ -27,10 +37,10 @@ export class CurrencyRatesService {
 
         var url = this._apiUrl + '/getall?baseCurrencyId=' + baseCurrencyId + '&dateString=' + ServiceHelper.GetDateString(date);
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<LastRate> = [];
 
                 for (var key in allLists) {
@@ -43,20 +53,21 @@ export class CurrencyRatesService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetCurrenciesExchangeRateByValueDate(currencyId: string, loadingDate: Date,calculateRateAccordingNumberUnit = false) {
+
+    GetCurrenciesExchangeRateByValueDate(currencyId: string, loadingDate: Date) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetCurrenciesExchangeRateByValueDate?currencyId=' + currencyId + '&dateString=' + ServiceHelper.GetDateString(loadingDate)+"&calculateRateAccordingNumberUnit="+calculateRateAccordingNumberUnit;
+        var url = this._apiUrl + '/GetCurrenciesExchangeRateByValueDate?currencyId=' + currencyId + '&dateString=' + ServiceHelper.GetDateString(loadingDate);
 
-        return defer(() => {
+        return Observable.defer(() => {
 
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<LastRate> = [];
 
                 for (var key in allLists) {
@@ -73,50 +84,20 @@ export class CurrencyRatesService {
 
                 return serviceResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
-    GetCurrenciesExchangeRateByCurrencyId(currencyId: string,pageSize:Number,pageIndex:Number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetCurrenciesExchangeRateByCurrencyId?currencyId=' + currencyId + '&pageSize=' + pageSize + '&pageIndex=' + pageIndex;
-
-        return defer(() => {
-
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var serviceResponse: ServiceResponse = new ServiceResponse();;
-                serviceResponse = response as ServiceResponse;
-                var allLists = serviceResponse.Result;
-                var _mappedListsArray: Array<LastRate> = [];
-
-                for (var key in allLists) {
-
-                    var entity: LastRate;
-                    entity = this.MapJsonToEntityList(allLists[key]);
-                    _mappedListsArray.push(entity);
-
-                }
-
-                serviceResponse.Count = serviceResponse.Count;
-                serviceResponse.Result = _mappedListsArray;
-
-                return serviceResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
     GetRatesByValueDate(currencyId: string, date: Date) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetRatesByValueDate?currencyId=' + currencyId + '&dateString=' + ServiceHelper.GetDateString(date);
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<RatesTablePM> = [];
 
                 for (var key in allLists) {
@@ -132,37 +113,23 @@ export class CurrencyRatesService {
 
                 return serviceResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
-    UpdateAccountingCurrency(entityPM: AccountingCurrencyHelper) {
-        return defer(() => {
+    InsertListOfRatesTable(ratesTables: LastRate[]) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
+        var url = this._apiUrl + '/GetInsertListOfRatesTable?ratesTables=' + ratesTables;
 
-            var mappedEntity: AccountingCurrencyHelper = this.MapJsonToAccountingCurrencyHelper(entityPM, false);
-
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
-
-                var myPMService = new TenantPMService();
-
-                var mappedResult: TenantPM;
-                if (myJsonResult) {
-                    mappedResult = myPMService.MapJsonToEntityPM(myJsonResult);
-                }
-
-                var myResponse = new ServiceResponse();
-                myResponse.Result = mappedResult;
-                return myResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
+    
     MapJsonToEntityList(jsonList: any) {
         var entityList: LastRate;
         entityList = new LastRate();
@@ -187,108 +154,4 @@ export class CurrencyRatesService {
 
         return entityList;
     }
-    MapJsonToAccountingCurrencyHelper(jsonPM: any, getCallMap: boolean = true, entity: AccountingCurrencyHelper = null) {
-        if (!entity) {
-            entity = new AccountingCurrencyHelper();
-        }
-
-        var jsonPMKeys = Object.keys(jsonPM);
-
-        for (var key in jsonPMKeys) {
-            var property = jsonPMKeys[key];
-
-            if (property === "TenantPM") {
-
-                var myPMService = new TenantPMService();
-
-                entity.TenantPM = myPMService.MapJsonToEntityPM(jsonPM[property], getCallMap);
-            }
-
-            else if (property === "LastRates") {
-
-                entity.LastRates = new Array<LastRate>();
-
-                for (var item in jsonPM.LastRates) {
-                    var jItem = jsonPM.LastRates[item];
-
-                    var newItemPM: LastRate = this.MapJsonToEntityList(jItem);
-
-                    entity.LastRates.push(newItemPM);
-                }
-            }
-
-            else {
-                entity[property] = jsonPM[property];
-            }
-        }
-
-        return entity;
-    }
-
-    GetProfitCurrencyLastRate(baseCurrencyId: string, profitCurrencyId: string, loadingDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetProfitCurrencyLastRate?baseCurrencyId=' + baseCurrencyId + '&profitCurrencyId=' + profitCurrencyId + '&dateString=' + ServiceHelper.GetDateString(loadingDate);
-
-        return defer(() => {
-
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
-                var _mappedList: LastRate;
-
-                if (allLists) {
-                    _mappedList = this.MapJsonToEntityList(allLists);
-                }
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = _mappedList;
-                return serviceResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    PostChangeCurrency(args: ChangeCurrencyArgs) {
-        return defer(() => {
-            return this._http.post(this._apiUrl + "/PostChangeCurrency", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-                pmresponse.Result = result;
-                return pmresponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-}
-
-export class LastRate {
-    Id: string;
-    Tenant: number;
-    ForeignCurrencyId: string;
-    ForeignCurrencyCode: string;
-    ForeignCurrencyName: string;
-    BaseCurrencyId: string;
-    BaseCurrencyCode: string;
-    ValueDate: Date;
-    LogDateTime: Date;
-    Rate: number;
-    Unit: number;
-    HistoryCount: number;
-    UpdatedByUserId: string;
-    UpdatedByUserNameName: string; 
-    CurrencyRates: CurrencyRatePM[];
-}
-export class AccountingCurrencyHelper {
-    TenantPM: TenantPM;
-    LastRates: LastRate[];
-}
-
-export class ChangeCurrencyArgs {
-    NewCurrencyId: string;
-    NewCurrencyCode: string;
-    Type: string;
-    ProfitCurrencyRate: number;
-    LastRates: LastRate[];
 }

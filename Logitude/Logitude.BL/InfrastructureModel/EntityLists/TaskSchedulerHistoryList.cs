@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,8 +23,5 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public DateTime? EndDateTimeUTC { get; set; }
         public string LogType { get; set; }
         public string LogFirstLine { get; set; }
-        public double Duration { get; set; }
-
-        public string LogDocumentId { get; set; }
     }
 }

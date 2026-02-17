@@ -1,8 +1,7 @@
-
+﻿
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -10,16 +9,13 @@ import { CustomsRequestsSheetPM } from '../../EntityPMs/CustomsRequestsSheetPM';
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { DeclarationPM } from '../../EntityPMs/DeclarationPM';
-
-declare const window: any;
-
 @Injectable()
 
 export class CustomsRequestSheetExtendedPMService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
     }
 
@@ -27,7 +23,8 @@ export class CustomsRequestSheetExtendedPMService {
     PostSetCustomsRequestSheetStatus(mappedEntity: CustomsRequestsSheetPM){
     //CancellRequestInProgress(Id: string, Tenant: number) {
 
-        return defer(() => {
+
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -41,19 +38,21 @@ export class CustomsRequestSheetExtendedPMService {
             //var mappedEntity: CustomsRequestsSheetPM;
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-            return defer(() => {
+            return Observable.defer(() => {
                 return this._http
                     .post(
                     this._apiUrl + '/PostSetCustomsRequestSheetStatus/',
                     JSON.stringify(mappedEntity),
-                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    { headers: authHeader }
+                    )
+                    .map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response;
+                    var requestSheets = response.json();
                     serviceResponse.Result = requestSheets;
                     
                     return serviceResponse;
                     })
-                    ,catchError(ServiceHelper.HandleServiceError));
+                    .catch(ServiceHelper.HandleServiceError);
             }
 
             );
@@ -62,17 +61,6 @@ export class CustomsRequestSheetExtendedPMService {
 
         );
 
-    }
-    GetRequestDescription(id: string) {
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-            return this._http.get(this._apiUrl + '/GetRequestDescription/?' + '&id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map((response: ServiceResponse) => {
-                var serviceResponse: ServiceResponse = response;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
     }
 
     
@@ -80,7 +68,7 @@ export class CustomsRequestSheetExtendedPMService {
         //CancellRequestInProgress(Id: string, Tenant: number) {
 
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -94,19 +82,21 @@ export class CustomsRequestSheetExtendedPMService {
             //var mappedEntity: CustomsRequestsSheetPM;
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-            return defer(() => {
+            return Observable.defer(() => {
                 return this._http
                     .post(
                     this._apiUrl + '/PostCustomsRequestSheetReQueue/',
                     JSON.stringify(mappedEntity),
-                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    { headers: authHeader }
+                    )
+                    .map(response => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();
-                        var requestSheets = response;
+                        var requestSheets = response.json();
                         serviceResponse.Result = requestSheets;
 
                         return serviceResponse;
                     })
-                    ,catchError(ServiceHelper.HandleServiceError));
+                    .catch(ServiceHelper.HandleServiceError);
             }
 
             );
@@ -116,42 +106,6 @@ export class CustomsRequestSheetExtendedPMService {
         );
 
     }
-
-    GetGeneralRequestInProgress(interfaceTypeCode: string, objectTableId2: string, entityId2: string, tenant: number) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetGeneralRequestInProgressByEntity2/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + objectTableId2 + '&entityId2=' + entityId2 + '&customFileNo=' + "", ServiceHelper.GetHttpHeaders())
-                .pipe(map(response => {
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response;
-                    serviceResponse.Result = requestSheets;
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    async getRequestsInProgress(interfaceTypeCode: string , tenant: number, displayOnlyMode: boolean, tableName: string = '', entityId: string = '', tableName2: string = '', entityId2: string = '', customFileNo: string = ''): Promise<CustomsRequestsSheetPM[]> {
-        const tableId: string = tableName ? window.ObjectTables.filter(d => d.Name === tableName)[0].Id : '';
-        const tableId2: string = tableName2 ? window.ObjectTables.filter(d => d.Name === tableName2)[0].Id : '';
-        const url: string = this._apiUrl + '/GetRequestInProgress';
-
-        const response: any = await this._http.get(url, {
-            params: {
-                tenant: '' + tenant,
-                interfaceTypeCode: interfaceTypeCode,
-                objectTableId1: tableId,
-                entityId1: entityId,
-                objectTableId2: tableId2,
-                entityId2: entityId2,
-                customFileNo: customFileNo,
-                displayOnlyMode: ''+ displayOnlyMode
-            },
-            headers: ServiceHelper.GetHttpHeaders().headers
-        }).toPromise()
-
-        return response;
-    }
-
     MapJsonToEntityPM(jsonPM: any) {
 
         var entityPM: CustomsRequestsSheetPM;
@@ -166,6 +120,7 @@ export class CustomsRequestSheetExtendedPMService {
 
         return entityPM;
     }
-   
+
+
 
 }

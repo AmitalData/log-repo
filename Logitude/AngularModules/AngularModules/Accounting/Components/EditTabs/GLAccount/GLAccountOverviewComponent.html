@@ -137,7 +137,7 @@
     }
 
     .red {
-        color: #dd2626 !important;
+        color: #b63d3d !important;
     }
 
     .Last-Labels {
@@ -257,17 +257,17 @@
         user-select: none;
         display: inline-block;
         font-size: 16px;
-        width: 160px;
+        width: 180px;
     }
     .credit-limit-row .amount{
         direction: ltr;
-        width: 180px;
+        width: 170px;
         height: 20px;
         display: inline-block;
         font-size: 16px;
+        color:green;
         padding: 0 5px;
         text-align: right;
-        font-family: sans-serif;
     }
     .credit-limit-row .link{
         user-select: none;
@@ -289,11 +289,12 @@
     .credit-limit-row .progress{
         position: relative;
         display: inline-block;
-        width: 145px;
+        width: 180px;
     }
     .credit-limit-row .progress > progress {
         height: 30px;
         width: 100%;
+        border: 1px solid #a0d548;
         border-radius: 8px;
 
     }
@@ -301,22 +302,17 @@
         user-select: none;
         /* color: #676767; */
         color: black;
-        /* width: 100%; */
+        width: 100%;
         position: absolute;
         top: 7px;
-        /* padding: 0 20px; */
-        text-align: center;
-        min-width: 50px;
+        padding: 0 20px;
         /* text-shadow: 1px 1px 1px black; */
     }
     progress[value]{
         -webkit-appearance: none;
         appearance: none;
     }
-    .green > progress{
-        border: 1px solid #a0d548;
-    }
-    .green  progress[value]::-webkit-progress-value{
+    progress[value]::-webkit-progress-value{
 
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9dd53a+0,a1d54f+50,80c217+51,7cbc0a+100;Green+Gloss+%231 */
         background: #9dd53a; /* Old browsers */
@@ -325,21 +321,7 @@
         background: linear-gradient(to bottom, #9dd53a 0%,#a1d54f 50%,#80c217 51%,#7cbc0a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9dd53a', endColorstr='#7cbc0a',GradientType=0 ); /* IE6-9 */
 
-        border-radius: 4px;
-
-    }
-    .red  > progress{
-        border: 1px solid #d85d6e !important;
-    }
-    .red  progress[value]::-webkit-progress-value{
-        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f85032+0,f16f5c+50,f6290c+51,f02f17+71,e73827+100;Red+Gloss+%231 */
-        background: #f85032; /* Old browsers */
-        background: -moz-linear-gradient(top,  #f85032 0%, #f16f5c 50%, #f6290c 51%, #f02f17 71%, #e73827 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top,  #f85032 0%,#f16f5c 50%,#f6290c 51%,#f02f17 71%,#e73827 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom,  #f85032 0%,#f16f5c 50%,#f6290c 51%,#f02f17 71%,#e73827 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#e73827',GradientType=0 ); /* IE6-9 */
-
-        border-radius: 4px;
+        border-radius: 7px;
 
     }
     .credit-limit-row .progress:hover{
@@ -348,50 +330,12 @@
     progress[value]::-webkit-progress-bar{
 
         background: rgb(243, 243, 243);
-        border-radius: 6px;
+        border-radius: 7px;
     }
     .fnt-sz-14{
         font-size: 14px !important;
     }
-    .small-tooltip-body {
-    transition: 0.1s ease-out;
-    z-index: 999;
-    padding: 2px;
-    width: auto;
-    border-radius: 4px;
-    border: 1px solid #cacaca;
-    background: #f2f2f2;
-    background: -moz-linear-gradient(top, #f2f2f2 0%, #ffffff 100%);
-    background: -webkit-linear-gradient(top, #f2f2f2 0%,#ffffff 100%);
-    background: linear-gradient(to bottom, #f2f2f2 0%,#ffffff 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#ffffff',GradientType=0 );
-    -webkit-box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.42);
-    -moz-box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.42);
-    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.42);
-    visibility: hidden;
-    display: none;
-  }
 
-  .popup-arrow {
-    background: url('./Images/LOV/popup-arrow.png') no-repeat center;
-    height: 10px;
-    display: block;
-    position: absolute;
-    width: 12px;
-    bottom: -10px;
-    left: 2px;
-    z-index: 9999;
-    -ms-transform: rotate(180deg); /* IE 9 */
-    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-    transform: rotate(180deg);
-  }
-
-  .tooltip-text {
-    width: auto;
-    padding: 4px;
-    font-size: 14px;
-    color: #4F4F4F;
-  }
 </style>
 <table>
     <tr>
@@ -412,7 +356,7 @@
 
 
                                     <!-- balance -->
-                                    <div class="content-no-header" style="height: 150px;">
+                                    <div class="content-no-header" style="height: 90px;">
                                         <table class="labels-table" style="table-layout: fixed;">
                                             <tr>
                                                 <td class="header-labels">{{ 'GLAccounts.O.AccountingBalance' |
@@ -423,54 +367,23 @@
                                                     TextCodeTranslationPipe }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="amount-labels" >{{
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.BalanceInLocalCurrency<=0">{{
                                                     (GLAccountMoreData.BalanceInLocalCurrency
                                                     ?GLAccountMoreData.BalanceInLocalCurrency:0) | NumbersPipe:'N2' }}</td>
-                                                <td class="amount-labels">{{
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.LocalBalanceInDue<=0">{{
                                                     (GLAccountMoreData.LocalBalanceInDue?GLAccountMoreData.LocalBalanceInDue:0)
                                                     | NumbersPipe:'N2' }}</td>
                                                 <td class="amount-labels" style="color: black;">{{
                                                     GLAccountOpenTransactionsCount }}</td>
                                             </tr>
                                             <tr>
-                                                <td><a id="{{'DispalyTransactions' | IdGeneratorAsyncPipe | async}}" style="font-size: 12px;" (click)="DisplayTransactionsLinkClicked()">{{
+                                                <td><a style="font-size: 12px;" (click)="DisplayTransactionsLinkClicked()">{{
                                                         'GLAccounts.O.DispalyTransactions' | TextCodeTranslationPipe }}</a></td>
                                                 <td style="font-size: 12px;">{{ 'GLAccounts.O.NextDueDate' |
                                                     TextCodeTranslationPipe }}: {{GLAccountMoreData.NextDueDate |
                                                     DateTimePipe:'SD'}}</td>
                                                 <td><a style="font-size: 12px;" (click)="ReconcileLinkClicked()">{{
                                                         'GLAccounts.O.Reconcile' | TextCodeTranslationPipe }}</a></td>
-                                            </tr>
-                                            <tr style="height:10px"></tr>
-
-                                            <tr  *ngIf="IsFollowUpVisible && this.EntityPM.AccountTypeCode == '2'">
-                                              <td colspan="3">
-                                                  <table>
-                                                      <tr>
-                                                          <td style="width:150px;font-size:11px;">
-                                                              {{ 'GLAccountFollowUpData.F.FollowUpDate' |  TextCodeTranslationPipe }}
-                                                          </td>
-                                                          <td style="width:150px">
-                                                              <LogDatePicker [ObjectFieldName]="'GLAccountFollowUpDate'" [ObjectTableName]="ObjectTableName"
-                                                                             [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                          </td>
-                                                          <td></td>
-                                                      </tr>
-                                                      <tr style="height:5px"></tr>
-                                                      <tr>
-                                                          <td style="width:150px;font-size:11px">
-                                                              {{ 'GLAccountFollowUpData.F.FollowUpRemarks' |  TextCodeTranslationPipe }}
-                                                          </td>
-                                                          <td>
-                                                              <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'GLAccountFollowUpRemarks'"
-                                                                   [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
-                                                                    [DataContext]="DataContext"></LogTextBox>
-
-                                                          </td>
-                                                          <td></td>
-                                                      </tr>
-                                                  </table>
-                                              </td>
                                             </tr>
                                         </table>
                                     </div>
@@ -483,7 +396,7 @@
                                         <IconButton [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Add'"
                                             (click)="OpenAccountingNote(null)"></IconButton>
                                     </div>
-                                    <div class="content" style="padding: 5px 0;height: calc(100% - 150px);overflow: scroll ;">
+                                    <div class="content" style="padding: 5px 0;height: calc(100% - 120px);overflow: auto;">
                                         <ul *ngIf="!isNotesLoading && accountingNotesList.length > 0" class="accounting-notes-list">
 
                                             <li *ngFor="let note of accountingNotesList" [attr.title]="GetNoteTitle(note)">
@@ -512,8 +425,6 @@
 
                                 </div>
 
-
-
                                 <!-- Widget: Last 10 transactions -->
                                 <div float-start class="widget" style="">
                                     <div class="header">
@@ -534,7 +445,7 @@
                                                 <!-- SourceType -->
                                                 <div style="color:white;padding: 10px 5px 2px 5px;    font-size: 11px;">
                                                     <span title="{{transaction['SourceType']}}" [class]="'SourceTypeIcon color-' + transaction['SourceTypeCode']"
-                                                        (click)="OpenSource(transaction, transaction['SourceId'])" style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;color:white !important;">{{GetIconText(transaction)}}</span>
+                                                        (click)="OpenSource(transaction['SourceId'])" style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;color:white !important;">{{GetIconText(transaction)}}</span>
                                                 </div>
                                                 <div style="width: 50px;padding: 9px 0;    font-size: 11px;">
                                                     <a href="javascript:;" (click)="OpenSource(transaction, transaction['SourceId'])">
@@ -546,7 +457,7 @@
                                                     {{ transaction.AccountingDate | DateTimePipe:'SD' }}
                                                 </div>
                                                 <div class="TextTrimming" style="width: 110px;    font-size: 12px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;"
-                                                [class.red]="transaction.LocalAmountCredit!=0" >
+                                                    [class.red]='transaction.LocalAmountDebit==0'>
                                                     {{ GetTransAmount(transaction) | NumbersPipe:'N2' }}
                                                 </div>
 
@@ -562,7 +473,7 @@
                                     </div>
                                 </div>
 
-                                <div float-start class="widget"></div>
+                                <div float-start class="widget">3</div>
 
                                 <!-- Widget: Aging Details -->
                                 <div float-start class="widget" style="position: relative;">
@@ -620,147 +531,85 @@
 
                                         <!-- 1 -->
                                         <div class="credit-limit-row" style="height: 45px;">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start style="padding-top: 5px;">
-                                                 {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                                {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div *ngIf="!IsCreditNotDefined()" style="font-weight: bold;" class="amount tooltip-CreditLimit" float-start style="padding-top: 5px;font-weight: bold;font-size: 18px;text-align: right;cursor: pointer;">
-                                                <div style="float:left">
-                                                    <div float-end style="height:20px;position:relative;top:3px">
-                                                        <LogToolTip [bottom]="5" *ngIf="accountCardlist && accountCardlist.length > 1" [name]="'CreditLimit'" [direction]="isRTL?'bottomleft':'bottomright'"
-                                                                    [mode]="'Warning'" [title]="''">
-                                                            {{GLaccountConnectedMoreOneCardText}}
-                                                        </LogToolTip>
-                                                    </div>
-                                                    <div float-end  style="height:20px;">
-                                                        <LogToolTip text-start *ngIf="IsInsuredCreditLimitDefined()" [bottom]="5" [name]="'InsuredCreditLimit'" [direction]="isRTL?'bottomright':'bottomleft'"
-                                                                    [mode]="'Info'">
-                                                            <span float-end>{{'GLAccount.O.AmountIsInsured' | TextCodeTranslationPipe}}</span>
-                                                            <span float-end>&nbsp;</span>
-                                                            <span float-end>{{InsuredCreditLimit }}</span>
-                                                        </LogToolTip>
-                                                    </div>
-                                                </div>
-
-                                                {{CreditLimitAmount | NumbersPipe:'N2'}}
-
-                                            </div>
-                                            <div *ngIf="!IsCreditNotDefined()" class="progress green" float-end>
+                                            <div class="progress" [style.float]="isRTL ? 'left' : 'right'">
                                                 <progress [attr.value]="creditPercentage" max="100"></progress>
-                                                <div class="percentage-label"
-                                                    [style.width.%]="creditPercentage>100?100:creditPercentage"
-                                                    [style.color]="creditPercentage>100?'white':'black'" >{{ (creditPercentage?creditPercentage:0) | NumbersPipe:'N2'}}%</div>
+                                                <div class="percentage-label">{{ (creditPercentage?creditPercentage:0) | NumbersPipe:'N2'}}%</div>
                                             </div>
-                                            <div *ngIf="IsCreditNotDefined()" style="font-size: 16px; color: #ef1703;font-weight: bold;">
-                                                  {{ 'GLAccount.O.NoCreditDefined' | TextCodeTranslationPipe }}
-
-                                            </div>
-
                                         </div>
 
                                         <!-- 2 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.AccountingBalance' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="amount" float-start style="text-align: right;" >
-                                                {{(GLAccountMoreData.BalanceInLocalCurrency?GLAccountMoreData.BalanceInLocalCurrency:0) | NumbersPipe:'N2'}}
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                                {{GLAccountMoreData.BalanceInLocalCurrency | NumbersPipe:'N2'}}
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;"  (click)="CardIndexClicked()" float-start text-end >
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;"  (click)="CardIndexClicked()" float-start [style.text-align]="isRTL ? 'left' : 'right'" >
                                                 {{ 'GLAccounts.O.CardIndex' | TextCodeTranslationPipe }}
                                             </a>
                                         </div>
 
                                         <!-- 3 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.FutureChequesToday' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="amount" float-start style="text-align: right;" >
-                                                {{(TotalOpenChequesInLocalCur? TotalOpenChequesInLocalCur:0) | NumbersPipe:'N2'}}
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                                {{GLAccountMoreData.TotalOpenChequesInLocalCur | NumbersPipe:'N2'}}
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked(GLAccountMoreData.AccountId)" float-start text-start >
-                                                {{ 'GLAccounts.O.NotRepaid' | TextCodeTranslationPipe }}
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked()" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                                {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </a>
                                         </div>
 
                                         <!-- 4 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.FutureCheques' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="amount" float-start style="text-align: right;" >
-                                                <LogToolTip
-                                                        *ngIf="externalTransactionsTotal > 0"
-                                                        [bottom]="5"
-                                                        [float]="'none'"
-                                                        [direction]="!showLocal? 'topright':'topleft'"
-                                                        [name]="'ExternalTransactionsWarning'"
-                                                        [mode]="'Warning'"
-                                                        [title]="''">
-                                                        {{ 'GLAccount.O.ThereIsExternalTrans' | TextCodeTranslationPipe }}
-                                                    </LogToolTip>
-
-                                                {{
-                                                    ((GLAccountMoreData.TotFutureOpenChequesInLocalCur?GLAccountMoreData.TotFutureOpenChequesInLocalCur:0))
-                                                    | NumbersPipe:'N2'}}
-
-
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                                {{GLAccountMoreData.TotFutureOpenChequesInLocalCur | NumbersPipe:'N2'}}
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayFutureChequelistClicked(GLAccountMoreData.AccountId)" float-start text-start >
-                                                {{ 'GLAccounts.O.FutureCheque' | TextCodeTranslationPipe }}
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                                <!-- {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }} -->
                                             </a>
                                         </div>
 
                                         <!-- 5 -->
-                                        <div class="credit-limit-row" >
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                        <div class="credit-limit-row" style="">
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.TotalOpenShipments' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div    class="amount" float-start style="text-align: right;cursor: pointer;">
-                                                <div      style="font-weight: bold;" class="amount tooltip-OpenShipments" float-start style="padding-top: 5px;font-weight: bold;font-size: 18px;text-align: right;">
-                                                    <LogToolTip [bottom]="5" [float]="'none'" *ngIf="accountCardlist && accountCardlist.length > 1"  [direction]="!showLocal? 'topright':'topleft'" [name]="'OpenShipments'"
-                                                        [mode]="'Warning'" [title]="''">
-                                                        {{GLaccountConnectedMoreOneCardText}}
-                                                    </LogToolTip>
-                                                    {{OpenShipments | NumbersPipe:'N2'}}
-                                                </div>
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                                <!-- 132,538 -->
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" *ngIf="AmitalBrowserInUse && accountCardlist?.length > 0" 
-                                                (click)="DisplayOpenFilesClicked(accountCardlist)" class="float-start text-start" >
-                                                {{ ('GLAccounts.Q.DisplayOpenFiles' | TextCodeTranslationPipe) || 'Display Open Files' }}
-                                            </a>
+                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                                {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
+                                            </div> a-->
                                         </div>
 
 
                                         <!-- 6 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" style="padding-top: 7px;" [class.fnt-sz-14]="!showLocal" float-start text-start >
-                                                {{ 'GLAccount.O.CreditStatus ' | TextCodeTranslationPipe }}
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                                {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div style="font-weight: bold;font-size: 18px;text-align: right;
-                                                        border-top: 1px solid darkgray; padding-top: 8px;"
-                                                class="amount" float-start >
-                                                {{creditStatusAmount | NumbersPipe:'N2'}}
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                                {{accountCardlist.CreditLimitAmount | NumbersPipe:'N2'}}
                                             </div>
-                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
+                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </div> a-->
-                                        </div>
-
-                                            <!-- 7 -->
-                                        <div class="credit-limit-row" >
-                                            <div class="label TextTrimming"  style="font-weight: bold;padding-top: 7px;" [class.fnt-sz-14]="!showLocal" float-start text-start>
-                                                {{ 'GLAccount.O.TotalObligo' | TextCodeTranslationPipe }}
-                                            </div>
-                                            <div style="text-align: right; padding-top: 8px;"class="amount" float-start >
-                                                    {{GetTotalObligo() | NumbersPipe:'N2'}}
-                                            </div>
                                         </div>
 
                                     </div>
                                 </div>
 
-                                <div float-start class="widget"></div>
+                                <div float-start class="widget">6</div>
                             </div>
                         </td>
                     </tr>

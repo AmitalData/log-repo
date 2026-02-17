@@ -19,15 +19,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(NotificationPM entityPM, Server.Tools.EntityPM entityParentPM)
         {
-
-            NotificationDefinitionQueryService notificationDefinitionQueryService = new NotificationDefinitionQueryService(entityPM.Tenant);
-            var notificationDefinition = notificationDefinitionQueryService.GetSingle(entityPM.NotificationDefinitionCode, false, true);
-
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-            var declaration = declarationQueryService.GetSingle(entityPM.EntityId, false, true);
-
-            if (notificationDefinition != null && !notificationDefinition.ActiveInExport && declaration != null && declaration.Direction == "E") 
-                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
             entityPM.Id = IdCounter.GetNumber("Customs.Notification", entityPM.Tenant);
             entityPM.BadjCount = true;
 

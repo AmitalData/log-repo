@@ -26,7 +26,7 @@ export class DocumentTypePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -171,11 +171,6 @@ export class DocumentTypePM {
     public set IsCustomerView(newValue: boolean) { if (this.isCustomerView != newValue) { this.isCustomerView = newValue; this.MarkAsDirty("IsCustomerView"); } }
        
 	 
-    private isCustomerUploadPermission: boolean;
-    public get IsCustomerUploadPermission() { return this.isCustomerUploadPermission; }
-    public set IsCustomerUploadPermission(newValue: boolean) { if (this.isCustomerUploadPermission != newValue) { this.isCustomerUploadPermission = newValue; this.MarkAsDirty("IsCustomerUploadPermission"); } }
-       
-	 
     private isHybrid: boolean;
     public get IsHybrid() { return this.isHybrid; }
     public set IsHybrid(newValue: boolean) { if (this.isHybrid != newValue) { this.isHybrid = newValue; this.MarkAsDirty("IsHybrid"); } }
@@ -216,57 +211,11 @@ export class DocumentTypePM {
     public set LimitedPrintCopyId(newValue: string) { if (this.limitedPrintCopyId != newValue) { this.limitedPrintCopyId = newValue; this.MarkAsDirty("LimitedPrintCopyId"); } }
        
 	 
-    private isAgentSharedInMaster: boolean;
-    public get IsAgentSharedInMaster() { return this.isAgentSharedInMaster; }
-    public set IsAgentSharedInMaster(newValue: boolean) { if (this.isAgentSharedInMaster != newValue) { this.isAgentSharedInMaster = newValue; this.MarkAsDirty("IsAgentSharedInMaster"); } }
-       
-	 
-    private isAgentSharedInDirect: boolean;
-    public get IsAgentSharedInDirect() { return this.isAgentSharedInDirect; }
-    public set IsAgentSharedInDirect(newValue: boolean) { if (this.isAgentSharedInDirect != newValue) { this.isAgentSharedInDirect = newValue; this.MarkAsDirty("IsAgentSharedInDirect"); } }
-       
-	 
-    private isAgentSharedInHouse: boolean;
-    public get IsAgentSharedInHouse() { return this.isAgentSharedInHouse; }
-    public set IsAgentSharedInHouse(newValue: boolean) { if (this.isAgentSharedInHouse != newValue) { this.isAgentSharedInHouse = newValue; this.MarkAsDirty("IsAgentSharedInHouse"); } }
-       
-	 
-    private sharedDocumentTypeCopyId: string;
-    public get SharedDocumentTypeCopyId() { return this.sharedDocumentTypeCopyId; }
-    public set SharedDocumentTypeCopyId(newValue: string) { if (this.sharedDocumentTypeCopyId != newValue) { this.sharedDocumentTypeCopyId = newValue; this.MarkAsDirty("SharedDocumentTypeCopyId"); } }
-       
-	 
-    private isAirDigitalSignRequired: boolean;
-    public get IsAirDigitalSignRequired() { return this.isAirDigitalSignRequired; }
-    public set IsAirDigitalSignRequired(newValue: boolean) { if (this.isAirDigitalSignRequired != newValue) { this.isAirDigitalSignRequired = newValue; this.MarkAsDirty("IsAirDigitalSignRequired"); } }
-       
-	 
-    private isOceanDigitalSignRequired: boolean;
-    public get IsOceanDigitalSignRequired() { return this.isOceanDigitalSignRequired; }
-    public set IsOceanDigitalSignRequired(newValue: boolean) { if (this.isOceanDigitalSignRequired != newValue) { this.isOceanDigitalSignRequired = newValue; this.MarkAsDirty("IsOceanDigitalSignRequired"); } }
-       
-	 
-    private isInlandDigitalSignRequired: boolean;
-    public get IsInlandDigitalSignRequired() { return this.isInlandDigitalSignRequired; }
-    public set IsInlandDigitalSignRequired(newValue: boolean) { if (this.isInlandDigitalSignRequired != newValue) { this.isInlandDigitalSignRequired = newValue; this.MarkAsDirty("IsInlandDigitalSignRequired"); } }
-       
-	 
-    private onSendPopulateDateFieldName: string;
-    public get OnSendPopulateDateFieldName() { return this.onSendPopulateDateFieldName; }
-    public set OnSendPopulateDateFieldName(newValue: string) { if (this.onSendPopulateDateFieldName != newValue) { this.onSendPopulateDateFieldName = newValue; this.MarkAsDirty("OnSendPopulateDateFieldName"); } }
-       
-	 
-    private onUploadPopulateDateFieldName: string;
-    public get OnUploadPopulateDateFieldName() { return this.onUploadPopulateDateFieldName; }
-    public set OnUploadPopulateDateFieldName(newValue: string) { if (this.onUploadPopulateDateFieldName != newValue) { this.onUploadPopulateDateFieldName = newValue; this.MarkAsDirty("OnUploadPopulateDateFieldName"); } }
-       
-	 
-    private onPrintPopulateDateFieldName: string;
-    public get OnPrintPopulateDateFieldName() { return this.onPrintPopulateDateFieldName; }
-    public set OnPrintPopulateDateFieldName(newValue: string) { if (this.onPrintPopulateDateFieldName != newValue) { this.onPrintPopulateDateFieldName = newValue; this.MarkAsDirty("OnPrintPopulateDateFieldName"); } }
-       
-	 
-     
+    private fileName: string;
+    public get FileName() { return this.fileName; }
+    public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
+
+
 	private documentTypeCustomFields: DocumentTypeCustomFieldPM[];
     get  DocumentTypeCustomFields() {
         if (this.documentTypeCustomFields == null) {
@@ -345,41 +294,52 @@ export class DocumentTypePM {
     private orderBy: number;
     public get OrderBy() { return this.orderBy; }
     public set OrderBy(newValue: number) { if (this.orderBy != newValue) { this.orderBy = newValue; this.MarkAsDirty("OrderBy"); } }
-       
-	 
-    private fileName: string;
-    public get FileName() { return this.fileName; }
-    public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
-       
-	 
+
+
+    private sharedDocumentTypeCopyId: string;
+    public get SharedDocumentTypeCopyId() { return this.sharedDocumentTypeCopyId; }
+    public set SharedDocumentTypeCopyId(newValue: string) { if (this.sharedDocumentTypeCopyId != newValue) { this.sharedDocumentTypeCopyId = newValue; this.MarkAsDirty("SharedDocumentTypeCopyId"); } }
+
+    private isAgentSharedInHouse: boolean;
+    public get IsAgentSharedInHouse() { return this.isAgentSharedInHouse; }
+    public set IsAgentSharedInHouse(newValue: boolean) { if (this.isAgentSharedInHouse != newValue) { this.isAgentSharedInHouse = newValue; this.MarkAsDirty("IsAgentSharedInHouse"); } }
+
+    private isAgentSharedInMaster: boolean;
+    public get IsAgentSharedInMaster() { return this.isAgentSharedInMaster; }
+    public set IsAgentSharedInMaster(newValue: boolean) { if (this.isAgentSharedInMaster != newValue) { this.isAgentSharedInMaster = newValue; this.MarkAsDirty("IsAgentSharedInMaster"); } }
+
+    private isAgentSharedInDirect: boolean;
+    public get IsAgentSharedInDirect() { return this.isAgentSharedInDirect; }
+    public set IsAgentSharedInDirect(newValue: boolean) { if (this.isAgentSharedInDirect != newValue) { this.isAgentSharedInDirect = newValue; this.MarkAsDirty("IsAgentSharedInDirect"); } }
+
+    private isAirDigitalSignRequired: boolean;
+    public get IsAirDigitalSignRequired() { return this.isAirDigitalSignRequired; }
+    public set IsAirDigitalSignRequired(newValue: boolean) { if (this.isAirDigitalSignRequired != newValue) { this.isAirDigitalSignRequired = newValue; this.MarkAsDirty("IsAirDigitalSignRequired"); } }
+
+    private isOceanDigitalSignRequired: boolean;
+    public get IsOceanDigitalSignRequired() { return this.isOceanDigitalSignRequired; }
+    public set IsOceanDigitalSignRequired(newValue: boolean) { if (this.isOceanDigitalSignRequired != newValue) { this.isOceanDigitalSignRequired = newValue; this.MarkAsDirty("IsOceanDigitalSignRequired"); } }
+
+    private isInlandDigitalSignRequired: boolean;
+    public get IsInlandDigitalSignRequired() { return this.isInlandDigitalSignRequired; }
+    public set IsInlandDigitalSignRequired(newValue: boolean) { if (this.isInlandDigitalSignRequired != newValue) { this.isInlandDigitalSignRequired = newValue; this.MarkAsDirty("IsInlandDigitalSignRequired"); } }
+
+
     private isSystemAdditionalPrintingFields: boolean;
     public get IsSystemAdditionalPrintingFields() { return this.isSystemAdditionalPrintingFields; }
     public set IsSystemAdditionalPrintingFields(newValue: boolean) { if (this.isSystemAdditionalPrintingFields != newValue) { this.isSystemAdditionalPrintingFields = newValue; this.MarkAsDirty("IsSystemAdditionalPrintingFields"); } }
-       
-	 
+
+
     private printingFieldsScreenCode: string;
     public get PrintingFieldsScreenCode() { return this.printingFieldsScreenCode; }
     public set PrintingFieldsScreenCode(newValue: string) { if (this.printingFieldsScreenCode != newValue) { this.printingFieldsScreenCode = newValue; this.MarkAsDirty("PrintingFieldsScreenCode"); } }
-       
-	 
-    private addedManually: boolean;
-    public get AddedManually() { return this.addedManually; }
-    public set AddedManually(newValue: boolean) { if (this.addedManually != newValue) { this.addedManually = newValue; this.MarkAsDirty("AddedManually"); } }
-       
-	 
-    private copyName: string;
-    public get CopyName() { return this.copyName; }
-    public set CopyName(newValue: string) { if (this.copyName != newValue) { this.copyName = newValue; this.MarkAsDirty("CopyName"); } }
-       
-	 
+
+
 
     public OldEntityPM: DocumentTypePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -387,7 +347,6 @@ export class DocumentTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentType");
            
         }
-	 }
     }
     private MyClone: DocumentTypePM;
 

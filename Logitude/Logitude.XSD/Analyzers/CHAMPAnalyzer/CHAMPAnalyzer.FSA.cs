@@ -1,5 +1,4 @@
-﻿using Logitude.BL.DataContracts;
-using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BookingLib.BL.EntityPMs;
 using Logitude.BookingLib.BL.EntityUpdateServices;
@@ -9,10 +8,10 @@ using Logitude.BookingLib.Data.Repositories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -55,18 +54,13 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     myMaster = "0" + myMaster;
                 }
             }
-
-            if (!string.IsNullOrEmpty(myPrefix) && !string.IsNullOrEmpty(myMaster))
-            {
-                myLongMaster = myPrefix + "-" + myMaster;
-            }
         }
 
         private void AnalyzeMessageQueue_FSA(ShipmentPM entityPM, IShipmentsContext myContext)
         {
             entityPM.IsUpdatedByChampAnalyzer = true;
 
-            PortRepository portRepository = new PortRepository(iCommonContext);
+            PortRepository portRepository = new PortRepository(myCommonContext);
             //DocumentRepository documentrepository = new DocumentRepository(myCommonContext);
 
             string myFromPortCode = null;
@@ -168,7 +162,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         LogDate = TenantServerConfigration.GetCurrentDateTime(myTenant),
                         Location = null,
                         AirlineName = null,
-                        CommonContext = iCommonContext,
+                        CommonContext = myCommonContext,
                         ShipmentContext = myContext
                     });
 
@@ -234,7 +228,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         {
                             Tenant = myTenant,
                             AirlineName = entityPM.MainCarriageCarrierName,
-                            CommonContext = iCommonContext,
+                            CommonContext = myCommonContext,
                             ShipmentContext = myContext,
                             EntityId = entityPM.Id,
                             EventDate = myStatusContext.EventDate,
@@ -266,10 +260,10 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         }
         private void AnalyzeMessageQueue_FSA(BookingPM entityPM, IBookingContext myContext, AnalyzeQueue analyzeQueue)
         {
-            PortRepository portRepository = new PortRepository(iCommonContext);
-            DocumentRepository documentrepository = new DocumentRepository(iCommonContext);
+            PortRepository portRepository = new PortRepository(myCommonContext);
+            DocumentRepository documentrepository = new DocumentRepository(myCommonContext);
             BookingAnswerRepository bookingAnswerRepository = new BookingAnswerRepository(myContext);
-            AirlineRepository airlineRepository = new AirlineRepository(iCommonContext);
+            AirlineRepository airlineRepository = new AirlineRepository(myCommonContext);
 
             entityPM.FMAAcknowledgementReason = null;
             entityPM.FNAReason = null;
@@ -860,7 +854,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         private void CreateCarrierStatus(StatusParams statusParams)
         {
             PortRepository portRepository = new PortRepository(statusParams.CommonContext);
-            Port fromPort = portRepository.GetAirlinePortByCode(statusParams.Tenant, statusParams.FromPortCode, true);
+            Port fromPort = portRepository.GetSinglePortByCode(statusParams.Tenant, statusParams.FromPortCode, true);
 
             if (fromPort == null)
             {
@@ -871,7 +865,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 }
             }
 
-            Port toPort = portRepository.GetAirlinePortByCode(statusParams.Tenant, statusParams.ToPortCode, true);
+            Port toPort = portRepository.GetSinglePortByCode(statusParams.Tenant, statusParams.ToPortCode, true);
             if (toPort == null)
             {
                 Port portZero = portRepository.GetPortsByNameOrCode(statusParams.ToPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
@@ -881,7 +875,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 }
             }
 
-            Port locationPort = portRepository.GetAirlinePortByCode(statusParams.Tenant, statusParams.Location, true);
+            Port locationPort = portRepository.GetSinglePortByCode(statusParams.Tenant, statusParams.Location, true);
             ShipmentCarrierStatusRepository reposioty = new ShipmentCarrierStatusRepository(statusParams.Tenant);
 
             string recordInfo = statusParams.Tenant.ToString() + (fromPort != null ? fromPort.Id : null) + (toPort != null ? toPort.Id : null) + statusParams.AirlineName + statusParams.Details + statusParams.StatusCode + statusParams.FlightNumber + statusParams.Partial + statusParams.Pieces + statusParams.Weight + statusParams.EntityId;
@@ -1236,7 +1230,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
             Port newPort;
             Port port = portRepository.GetSinglePort(0, entityId);
-            newPort = portRepository.GetAirlineSinglePortByCodeCountryCode(tenant, port.Code, port.Country.Code, false);
+            newPort = portRepository.GetSinglePortByCodeCountryCode(tenant, port.Code, port.Country.Code, false);
             Country country = null;
 
             if (newPort == null)
@@ -1305,8 +1299,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                 portRepository.Add(newPort);
                 portRepository.SubmitChanges();
-                RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
-
             }
 
             if (country == null)

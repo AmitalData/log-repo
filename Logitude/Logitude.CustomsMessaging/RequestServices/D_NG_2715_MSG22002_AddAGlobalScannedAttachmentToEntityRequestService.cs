@@ -25,8 +25,6 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.CustomsMessaging.MessagingServices;
 using Unifreight.Data.AmitalModel.Repsitories;
-using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -74,8 +72,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (!string.IsNullOrWhiteSpace(requestParams.DocumentsTicketId))
             {
                 _CustomsDocumentsTicketPM = customsDocumentsTicketQueryService.GetSingle(requestParams.DocumentsTicketId, true, false);
-               
-
                 CustomsDocumentPointerPM customsDocumentPointerPM = _CustomsDocumentsTicketPM.CustomsDocumentPointers.FirstOrDefault();
                 if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId))
                 {
@@ -89,17 +85,10 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId) && !_IsSendAnywayWithoutAttachment)
             {
-                if (false)//unable to cancel the CRS  - cause crash !!!
-                {
-                    ToCancelSheetAfterGetRequest = true;
-                    LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs").AppendLine("_ToCancelSheetAfterGetRequest = true;");
-                    return new D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntity();
-                }
-                else
-                {
-                    //use that !!!
-                    throw new BusinessErrorException("Customs Document already sent to Customs");
-                }
+                ToCancelSheetAfterGetRequest = true;
+                LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs").AppendLine("_ToCancelSheetAfterGetRequest = true;");
+                return new D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntity();
+                //throw  new BusinessErrorException("Customs Document already sent to Customs");
             }
 
             this.MyRequestSheetParam = new RequestSheetParam();
@@ -109,7 +98,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             string requestDescription = "שליחת צרופה " + _CustomsDocumentPM.ExternalAttachmentId;
 
             //Get document details
-            req.Attachment = customsDocumentQueryService.GetAttachment(_CustomsDocumentPM.DocumentId, _CustomsDocumentPM.Tenant, _CustomsDocumentPM);
+            req.Attachment = GetAttachment();
 
             // If the document is required by customs- get connected entity details (By getting document pointer details)
             // If the document is required it will be linked to only one pointer
@@ -144,6 +133,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             return req;
         }
 
+
+
         private ConnectedEntity GetRelatedEntity()
         {
             var relatedEntity = new ConnectedEntity();
@@ -160,7 +151,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                         this.MyRequestSheetParam.EntityId1 = myDeclarationPM.Id;
 
-                        relatedEntity.entityType = (myDeclarationPM.DeclarationTypeCode == "2") ? 11188 : ((myDeclarationPM.DeclarationTypeCode == "3") ? 10404 : 1055);
+                        relatedEntity.entityType = 1055;
                         relatedEntity.entityIdKey1 = myDeclarationPM.DeclarationNumber;
                         if (customsDocumentPointerPM.Child1EntityCode == "SupplierInvoice" && customsDocumentPointerPM.Child1EntityId != null)
                         {
@@ -221,15 +212,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                         relatedEntity.entityIdKey1 = myCustomsCollateralPM.CollateralRequestNumber;
                     }
                 }
-                else if (customsDocumentPointerPM.ParentEntityCode == "Vehicle")
-                {
-                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Vehicle");
-                    this.MyRequestSheetParam.EntityId1 = customsDocumentPointerPM.ParentEntityId;
-                }
-                if(!string.IsNullOrEmpty(customsDocumentPointerPM.OriginEntity))
-                {
-                    relatedEntity.entityType = Convert.ToInt32(customsDocumentPointerPM.OriginEntity);
-                }
             }
 
             return relatedEntity;
@@ -253,39 +235,82 @@ namespace Logitude.CustomsMessaging.RequestServices
                         relatedEntity.entityIdKey1 = myCustomsCollateralPM.CollateralRequestNumber;
                     }
                 }
-                else if (customsDocumentPointerPM.ParentEntityCode == "Claim")
-                {
-                    var myClaimQueryService = new ClaimQueryService(_Context);
-                    var myClaimPM = myClaimQueryService.GetSingle(customsDocumentPointerPM.ParentEntityId, true, false);
-                    if (myClaimPM != null)
-                    {
-                        this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Claim");
-                        this.MyRequestSheetParam.EntityId1 = myClaimPM.Id;
-                        if (customsDocumentPointerPM.Child1EntityCode == "ClaimsRelatedEntity" && customsDocumentPointerPM.Child1EntityId != null)
-                        {
-                            int child1EntityId = 0;
-                            int.TryParse(customsDocumentPointerPM.Child1EntityId, out child1EntityId);
-                            ClaimsRelatedEntityPM claimsRelatedEntityPM = myClaimPM.ClaimsRelatedEntities.FirstOrDefault(si => si.EntityCounterKey == child1EntityId);
-                            if (!string.IsNullOrEmpty(claimsRelatedEntityPM.TapagNumber))
-                            {
-                                relatedEntity.entityType = 1008;
-                                relatedEntity.entityIdKey1 = claimsRelatedEntityPM.TapagNumber;
-                                if (claimsRelatedEntityPM.Numeral != null)
-                                {
-                                    relatedEntity.entityIdKey2 = claimsRelatedEntityPM.Numeral.ToString();
-                                }
-                            }
-                        }
-                    }
-                }
-                else if (customsDocumentPointerPM.ParentEntityCode == "Vehicle")
-                {
-                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Vehicle");
-                    this.MyRequestSheetParam.EntityId1 = customsDocumentPointerPM.ParentEntityId;
-                }
             }
 
             return relatedEntity;
+        }
+
+        private Attachment GetAttachment()
+        {
+            byte[] byteArray = null;
+            var documentrepository = new DocumentRepository(_CustomsDocumentPM.Tenant);
+            var document = documentrepository.GetSingleDocument(_CustomsDocumentPM.Tenant,
+                //_CustomsDocumentPM.DocumentsFilingId
+                _CustomsDocumentPM.DocumentId
+                );
+            if (document == null)
+            {
+                throw new BusinessErrorException(" CustomsDocument.DocumentId is missing ");
+            }
+            if (!CustomsRequestsSheetDomainModelService<D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>.GetBlob(document.Tenant, document, out byteArray))
+            {
+                throw new BusinessErrorException("Unable to get Bolb Of " + _CustomsDocumentPM.DocumentsFilingId);
+            }
+
+            if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId) && _IsSendAnywayWithoutAttachment)
+            {
+
+                var attachmentOnly = new Attachment();
+                attachmentOnly.externalAttachmentID = _CustomsDocumentPM.ExternalAttachmentId;
+                attachmentOnly.IsAttachment = "false";
+                return attachmentOnly;
+            }
+
+            var attachment = new Attachment();
+            attachment.AdditionalData = GetAttachmentAdditionalData(_CustomsDocumentPM.CustomsDocumentMetaDataValues);
+            attachment.attachmentID = "false";
+            attachment.content = byteArray;
+            attachment.externalAttachmentID = _CustomsDocumentPM.ExternalAttachmentId;
+            attachment.Remark = _CustomsDocumentPM.DocumentRemarks;
+            attachment.documentType = _CustomsDocumentPM.DocumentTypeCode;
+            var bolbName = document.GetBlobUrl("");
+            if (!String.IsNullOrWhiteSpace(bolbName))
+            {
+                bolbName = System.IO.Path.GetFileName(bolbName);
+            }
+            attachment.fileName = bolbName;
+            attachment.IsAttachment = "true";
+            return attachment;
+        }
+
+        private AttachmentAdditionalData[] GetAttachmentAdditionalData(List<CustomsDocumentMetaDataValuePM> customsDocumentMetaDataList)
+        {
+            var AdditionalDataList = new List<AttachmentAdditionalData>();
+            foreach (var customsDocumentMetaData in customsDocumentMetaDataList)
+            {
+                var AdditionalData = new AttachmentAdditionalData();
+                int fieldId;
+                if (int.TryParse(customsDocumentMetaData.MetaDataTypeCode, out fieldId))
+                {
+                    if (!String.IsNullOrWhiteSpace(customsDocumentMetaData.MetaDataValue))
+                    {
+                        AdditionalData.fieldID = fieldId;
+                        //if (customsDocumentMetaData.MetaDataTypeCode == "55")
+                        //{
+                        //    AdditionalData.fieldData = DateExt.GetToDay();
+                        //}
+                        //else
+                        //{
+                        //    AdditionalData.fieldData = customsDocumentMetaData.MetaDataValue;
+                        //}
+                        AdditionalData.fieldData = customsDocumentMetaData.MetaDataValue;
+                        AdditionalDataList.Add(AdditionalData);
+                    }
+                }
+
+            }
+
+            return AdditionalDataList.ToArray();
         }
 
         public static byte[] stringToBase64ByteArray(String input)
@@ -297,7 +322,6 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
         void ShrinkCustomRequest(D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntity customRequest)
         {
-            if (customRequest.Attachment == null || customRequest.Attachment.IsAttachment == "false") return;
             var MD5Hash = MD5HashUtil.GetMD5Hash(customRequest.Attachment.content);
             customRequest.Attachment.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);
 
@@ -305,19 +329,6 @@ namespace Logitude.CustomsMessaging.RequestServices
         public override Action<D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntity> GetActionShrinkCustomRequest()
         {
             return ShrinkCustomRequest;
-        }
-
-
-        public override void OnRequestFail(D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam requestParams)
-        {
-            var myQueryService = new CustomsDocumentQueryService(_Context);
-            var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(_Context, new Dictionary<string, IContext>(), requestParams.Tenant);
-            var myCustomsDocumentPM = myQueryService.GetSingle(requestParams.DocumentsFilingId, true, false);
-            myCustomsDocumentPM.DocumentStatusCode = "2";
-            myCustomsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
-
-            myCustomsDocumentUpdateService.Update(myCustomsDocumentPM, true);
-            base.OnRequestFail(requestParams);
         }
     }
 

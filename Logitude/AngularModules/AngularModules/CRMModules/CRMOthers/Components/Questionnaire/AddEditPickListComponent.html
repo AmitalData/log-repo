@@ -1,5 +1,4 @@
-
-<table style="height:100%;vertical-align:top">
+﻿<table style="height:100%;vertical-align:top">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -12,13 +11,8 @@
             <table>
                 <tr>
                     <td style="width:10px"></td>
-                    <td style="width:100px">
-                        Code
-                        <div></div>
-                    </td>
-                    <td>
-                        <input [disabled]="!IsNewMode" style="width:150px;height:22px;" type="text" [(ngModel)]="PickListCode" />
-                    </td>
+                    <td   style="width:100px">Code<div></div></td>
+                    <td><input [disabled]="!IsNewMode" style="width:150px;height:22px;" type="text" [(ngModel)]="PickListCode" /></td>
                     <td></td>
                 </tr>
             </table>
@@ -28,7 +22,7 @@
     <tr style="height:10px;vertical-align:top;">
         <td></td>
     </tr>
-
+          
     <tr style="height:100%;vertical-align:top;">
 
         <td>
@@ -36,49 +30,46 @@
                 <tr>
 
                     <td>
-                        <logitude-edit-grid (SelectedItemChanged)="rowChanged($event)" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemsSource">
+                        <logitude-edit-grid (SelectedItemChanged)="rowChanged($event)"  [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemsSource">
 
 
                             <!-- Quantity -->
-                            <log-column style="border-right:0px solid white" [width]="'652'" [header]="'Value'">
-                                <ng-template let-item>
-                                    <log-cell-template  #logcelltemplate>
+                            <log-column  style="border-right:0px solid white" [width]="'652'" [header]="'Value'">
+                                <log-cell-template template="let item" #logcelltemplate>
 
-                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align: left;">
-                                            {{item.Value}}
-                                        </div>
+                                    <div  *ngIf="logcelltemplate.IsDisplayMode" style="text-align: left;">
+                                        {{item.Value}}
+                                    </div>
 
-                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Value'" [Text]="item.Value" [DataContext]="item" [ObjectTableName]="'CustomPickList'" [HideColumns]="true"></LogTextBox>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
+                                    <div  *ngIf="logcelltemplate.IsEditMode">
+                                        <LogTextBox  [FocusOnMe]="'true'" [ObjectFieldName]="'Value'" [Text]="item.Value" [DataContext]="item" [ObjectTableName]="'CustomPickList'" [HideColumns]="true"></LogTextBox>
+                                    </div>
+                                </log-cell-template>
                             </log-column>
 
 
                             <log-column>
-                                <ng-template let-item>
-                                    <log-cell-template  [TabIndex]="-1">
-                                        <div style="height: 100%;width:100%; position: relative;">
-                                            <div class="LeftCenter" style="height: 20px;">
-                                                <table>
-                                                    <tr>
-
-                                                        <td>
-                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemovePickListClicked(item)"></IconButton>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                <log-cell-template template="let item" [TabIndex]="-1">
+                                    <div style="height: 100%;width:100%; position: relative;">
+                                        <div class="LeftCenter" style="height: 20px;">
+                                            <table>
+                                                <tr>
+                                                   
+                                                    <td>
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true"  (click)="RemovePickListClicked(item)" ></IconButton>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
-                                    </log-cell-template>
-                                </ng-template>
+                                    </div>
+                                </log-cell-template>
                             </log-column>
+
 
                         </logitude-edit-grid>
 
 
-
+                   
 
 
 
@@ -90,24 +81,18 @@
 
                         <table>
                             <tr style="height:22px">
-                                <td>
-                                    <div>
-                                        <button [disabled]="!PickListCode" class="Button" (click)="AddPickListClicked()">Add</button>
-                                    </div>
-                                </td>
+                                <td><div><button  [disabled]="!PickListCode" class="Button" (click)="AddPickListClicked()">Add</button></div></td>
 
                             </tr>
-
+                         
                             <tr>
-                                <td>
-                                    <div></div>
-                                </td>
+                                <td><div></div></td>
                             </tr>
                         </table>
 
 
                     </td>
-
+                 
                 </tr>
             </table>
         </td>

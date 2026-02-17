@@ -10,22 +10,28 @@ export class EditAppointments {
         this.Generator = new GeneralFunctions();
     }
     public EditAppointment(appointmentNo: string) {
+
         this.EditAppointmentGeneralTab(appointmentNo);
         this.Helper.WaitByIdAndClick('Activity-SaveClose');
-        this.Helper.WaitBusyIndicator();
+this.Helper.WaitBusyIndicator();
 
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.invisibilityOf(element(by.id('Activity.B.MarkAsComplete'))), 100000).then(a => {
-        });
+
+var EC = protractor.ExpectedConditions;
+browser.wait(EC.invisibilityOf(element(by.id('Activity.B.MarkAsComplete'))), 100000).then(a => {
+});
+
     }
+
+
     EditAppointmentGeneralTab(appointmentDesc: string) {
-        this.Helper.WaitByIdAndFill('Activity_Subject', 'Edit ' + appointmentDesc + ' : Potractor ...');
+        this.Helper.WaitByIdAndFill('Activity_Subject', 'Edit Subject for '+ appointmentDesc);
         this.Helper.WaitByIdAndFill('Activity_Location', 'Ramallah');
+    
+        this.Helper.WaitByIdAndFill('Activity_OwnerId', 'ra');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
+    
+        this.Helper.WaitByIdAndFill('Activity_Description',  'Edit Description for '+appointmentDesc);
 
-        this.Helper.WaitByIdAndFill('Activity_OwnerId', 'Protractor user');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        this.Helper.WaitByIdAndFill('Activity_Description', 'Edit Description for ' + appointmentDesc);
     }
 
 }

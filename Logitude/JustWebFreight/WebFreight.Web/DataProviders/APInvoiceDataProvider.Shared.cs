@@ -71,39 +71,6 @@ namespace WebFreight.Web.DataProviders
         public string ReleasingAgentAddress { get; set; }
         public string BranchAddress { get; set; }
 
-        public double? ExchangeRate { get; set; }
-        public string MasterNumber { get; set; }
-
-        public double? TotalChargeableWeight { get; set; }
-        public double? TotalReceivablesSum { get; set; }
-        public double? TotalProfit { get; set; }
-        public double? TotalVat { get; set; }
-        public double? TotalPayable { get; set; }
-        public double? TotalFreight { get; set; }
-        public double? TotalOtherCharges { get; set; }
-        public string APInvoiceField1 { get; set; }
-        public string APInvoiceField2 { get; set; }
-        public string APInvoiceField3 { get; set; }
-        public string APInvoiceField4 { get; set; }
-        public string APInvoiceField5 { get; set; }
-        public string APInvoiceField6 { get; set; }
-        public string APInvoiceField7 { get; set; }
-        public string APInvoiceField8 { get; set; }
-        public string APInvoiceField9 { get; set; }
-        public string APInvoiceField10 { get; set; }
-
-        public DateTime? FirstPickupETD { get; set; }
-        public DateTime? FirstPickupETA { get; set; }
-        public DateTime? LastDeliveryETD { get; set; }
-        public DateTime? LastDeliveryETA { get; set; }
-        public string ShipperPhoneNumber { get; set; }
-        public string ConsigneePhoneNumber { get; set; }
-        public string FirstPickupTrucker{ get; set; }
-        public string LastDeliveryTrucker{ get; set; }
-        public string PackageTypes { get; set; }
-
-        public string PickUpAddress_New { get; set; }
-        public string DeliveryAddress_New { get; set; }
         public List<APReportInvoiceLine> APInvoiceLinesList { get; set; }
         public List<APTotalVat> APTotalVatList { get; set; }
         public List<APInvoiceMultipleEntity> APInvoiceMultipleEntityList { get; set; }
@@ -121,7 +88,6 @@ namespace WebFreight.Web.DataProviders
         public string ForeignCurrency { get; set; }
         public double? InvoiceAmount { get; set; }
         public double? OpenAmount { get; set; }
-        public string Notes { get; set; }
     }
 
     public class APTotalVat
@@ -141,23 +107,5 @@ namespace WebFreight.Web.DataProviders
         public double? OpenAmount { get; set; }
         public double? Total { get; set; }
         public double? TotalVAT { get; set; }
-        public string LongMaster { get; set; }
-
-        public DateTime? OperationalDate { get; set; }
-        public string MainCarriageOrigin { get; set; }
-        public string MainCarriageFinalDestination { get; set; }
-        public double? ChargeableWeight { get; set; }
-        public string Currency { get; set; }
-        public double? TotalReceivables { get; set; }
-        public double? Profit { get; set; }
-        public double? FreightAccounted { get; set; }
-        public double? OtherChargesAccounted { get; set; }
-        public double? PayablesAccounted { get; set; }
-        public double? GrossweightinKG { get; set; }
-        public double? VolumeinCBM { get; set; }
-        public double? TotalAmountinLocalCurrency { get; set; }
-
-
-
     }
 }

@@ -1,11 +1,10 @@
-import {AddEditFCLChargeComponent} from './Components/AddEditFCLChargeComponent';
+﻿import {AddEditFCLChargeComponent} from './Components/AddEditFCLChargeComponent';
 import {AddEditLCLChargeComponent} from './Components/AddEditLCLChargeComponent';
 import {AddEditPriceStepComponent} from './Components/AddEditPriceStepComponent';
 import {ChargesTabComponent} from './Components/ChargesTabComponent';
 import {FCLChargesComponent} from './Components/FCLChargesComponent';
 import {LCLChargesComponent} from './Components/LCLChargesComponent';
 import {QuoteVATDetailsComponent} from './Components/QuoteVATDetailsComponent';
-import { SelectBreaksComponent } from './Components/SelectBreaksComponent';
 
 export const Components =
     [
@@ -16,7 +15,6 @@ export const Components =
         FCLChargesComponent,
         LCLChargesComponent,
         QuoteVATDetailsComponent,
-        SelectBreaksComponent, 
     ];
 
 export class ModuleDeclarations {
@@ -32,8 +30,6 @@ export class ModuleDeclarations {
             case "FCLChargesComponent": { myResult = FCLChargesComponent; break; }
             case "LCLChargesComponent": { myResult = LCLChargesComponent; break; }
             case "QuoteVATDetailsComponent": { myResult = QuoteVATDetailsComponent; break; }
-            case "SelectBreaksComponent": { myResult = SelectBreaksComponent; break; } 
-                 
         }
 
         return myResult;

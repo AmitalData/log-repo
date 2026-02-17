@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 
 namespace WebFreight.Web.Helpers.Quickbooks
@@ -16,10 +15,7 @@ namespace WebFreight.Web.Helpers.Quickbooks
 
        public QuickbooksHelper(string Tenant) {
             this.Tenant = Tenant;
-
-            int tenantInt = 0;
-            Int32.TryParse(Tenant, out tenantInt);
-            service = new ARInvoiceHelper(tenantInt);
+            service = new ARInvoiceHelper();
         }
 
         public List<Intuit.Ipp.Data.Customer> GetQuickBooksOnlineCustomersByText(String sql)
@@ -38,12 +34,6 @@ namespace WebFreight.Web.Helpers.Quickbooks
         public string QBOSQL(string CardName, string SearchField, string SearchText, bool ReceivableCard, bool PayableCard, string LogitudeCardName)
         {
             string query = "";
-
-            if (SearchText.Contains('&'))
-            {
-                SearchText.Replace('&', '%');
-            }
-
             if (ReceivableCard)
                 query = "Select * from Customer where displayName like '%" + SearchText + "%' STARTPOSITION 1 MAXRESULTS 21 ";
             else if (PayableCard)

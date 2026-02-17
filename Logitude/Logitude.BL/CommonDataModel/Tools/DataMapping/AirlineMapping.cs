@@ -2,12 +2,11 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
-using Logitude.BL.CommonDataModel.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -77,8 +76,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.LocalName = entityPM.LocalName;
             entityCard.PaymentTermId = entityPM.PaymentTermId;
             entityCard.ReceivablesAccountingCard = entityPM.ReceivablesAccountingCard;
-            entityCard.AccountingVATSplit = entityPM.AccountingVATSplit;
-            entityCard.BillToId = entityPM.BillToId;
             entityCard.PayablesAccountingCard = entityPM.PayablesAccountingCard;
             entityCard.VatNumber = entityPM.VatNumber;
             entityCard.Notes = entityPM.Remark;            
@@ -97,18 +94,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
-            entityCard.ImageDetailId = entityPM.ImageDetailId;
-            entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
-            entityCard.SATCustomerName = entityPM.SATReceptorName;
-            entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
-            entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
-            entityCard.SingleInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.SingleInvoiceTemplateId : null;
-            entityCard.CustomsInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.CustomsInvoiceTemplateId : null;
-            entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;
-            entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
-            entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
-            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-
 
             if (!entityPM.IsFirstContactToAdd)
             {

@@ -8,69 +8,24 @@ using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Transactions;
-using System.Threading;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.Mapping;
 using Simplog.Data.ShipmentsModel.Mapping;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
-using System.Linq;
+//using WebFreight.Web.QuoteModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel
 {
     public class WebFreightContext : DbContextBase, IWebFreightContext
     {
-        private static readonly object OverrideLock = new object();
-        private static Func<int, IWebFreightContext> _getContextOverride;
-        private static Func<int, IWebFreightContext> _getSecondaryContextOverride;
-
-        public static IDisposable OverrideGetContext(Func<int, IWebFreightContext> factory)
-        {
-            if (factory == null)
-            {
-                throw new ArgumentNullException(nameof(factory));
-            }
-
-            lock (OverrideLock)
-            {
-                var previous = _getContextOverride;
-                _getContextOverride = factory;
-                return new OverrideScope(() =>
-                {
-                    lock (OverrideLock)
-                    {
-                        _getContextOverride = previous;
-                    }
-                });
-            }
-        }
-
-        public static IDisposable OverrideGetSecondaryContext(Func<int, IWebFreightContext> factory)
-        {
-            if (factory == null)
-            {
-                throw new ArgumentNullException(nameof(factory));
-            }
-
-            lock (OverrideLock)
-            {
-                var previous = _getSecondaryContextOverride;
-                _getSecondaryContextOverride = factory;
-                return new OverrideScope(() =>
-                {
-                    lock (OverrideLock)
-                    {
-                        _getSecondaryContextOverride = previous;
-                    }
-                });
-            }
-        }
-
         public WebFreightContext()
             : base("LogitudeStr")
         {
@@ -92,29 +47,9 @@ namespace Simplog.Data.InfrastructureModel
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
-        public static IWebFreightContext GetSecondaryContext(int tenant)
-        {
-            var overrideFactory = _getSecondaryContextOverride;
-            if (overrideFactory != null)
-            {
-                return overrideFactory(tenant);
-            }
 
-            GlobalDB currentDb;
-            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
-            WebFreightContext context = new WebFreightContext(connection);
-            return context;
-        }
         public static IWebFreightContext GetContext(int tenant)
         {
-            var overrideFactory = _getContextOverride;
-            if (overrideFactory != null)
-            {
-                return overrideFactory(tenant);
-            }
-
             GlobalDB currentDb;
             //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             //{
@@ -122,17 +57,10 @@ namespace Simplog.Data.InfrastructureModel
 
             // }
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context;
-        }
-        public  DbContextTransaction GetSnapshotTransaction()
-        {
-            return Database.BeginTransaction(System.Data.IsolationLevel.Snapshot);
-
         }
         public override LogitudeDBSchema LogitudeDBSchema
         {
@@ -168,6 +96,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -237,7 +166,6 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new EntityLastUpdateMap());
             modelBuilder.Configurations.Add(new EntityStatuMap());
             modelBuilder.Configurations.Add(new EventTypeMap());
-            modelBuilder.Configurations.Add(new EventRemarkMap());
             modelBuilder.Configurations.Add(new FeatureMap());
             modelBuilder.Configurations.Add(new FeatureTypeMap());
             modelBuilder.Configurations.Add(new FHLStatuMap());
@@ -250,7 +178,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new ImageDetailMap());
             modelBuilder.Configurations.Add(new ImageLibraryMap());
 
-
+            
             modelBuilder.Configurations.Add(new IncotermMap());
             modelBuilder.Configurations.Add(new InsideShipmentPackageMap());
 
@@ -301,8 +229,6 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new RankMap());
             modelBuilder.Configurations.Add(new RateClassMap());
             modelBuilder.Configurations.Add(new RatesTableMap());
-            modelBuilder.Configurations.Add(new AdditionalCurrencyRateMap());
-            modelBuilder.Configurations.Add(new CurrencyRateMap());
             modelBuilder.Configurations.Add(new RestrictionMap());
             modelBuilder.Configurations.Add(new RoleFeatureMap());
             modelBuilder.Configurations.Add(new RoleMap());
@@ -375,7 +301,6 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new AccountingTransferTypeMap());
             modelBuilder.Configurations.Add(new EventTypeCategoryMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
-            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
             //modelBuilder.Configurations.Add(new AgingReportInvoiceDataViewMap());
@@ -402,7 +327,6 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new CustomerStatusMap());
             modelBuilder.Configurations.Add(new CustomerSizeMap());
             modelBuilder.Configurations.Add(new ObjectTableLastUpdateMap());
-            modelBuilder.Configurations.Add(new EntityStatusTypeMap());
 
             // InboundEmails
             modelBuilder.Configurations.Add(new InboundEmailsMap());
@@ -427,7 +351,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new TaskSchedulerHistoryMap());
             modelBuilder.Configurations.Add(new DWObjectTableMap());
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
-
+            
 
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWSubQueryMap());
@@ -437,23 +361,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
-            //modelBuilder.Configurations.Add(new SchedulerLogsMap());
-            modelBuilder.Configurations.Add(new SchedulerProcedureMap());
-            modelBuilder.Configurations.Add(new WorkerRoleNameMap());
-            modelBuilder.Configurations.Add(new QueryExportExecutionLogMap());
-            modelBuilder.Configurations.Add(new ChildEntitiesCustomFieldMap());
-            modelBuilder.Configurations.Add(new ScreenSectionMap());
-            modelBuilder.Configurations.Add(new TabModificationMap());
-            modelBuilder.Configurations.Add(new CustomChildObjectMap());
-            modelBuilder.Configurations.Add(new DataCustomObjectMap());
-            modelBuilder.Configurations.Add(new ReferenceCustomObjectMap());
-            modelBuilder.Configurations.Add(new DeploymentPackageMap());
-            modelBuilder.Configurations.Add(new DeploymentPackagesVersionMap());
-            modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
-            modelBuilder.Configurations.Add(new DeploymentPackageExecutionLogMap());
-            modelBuilder.Configurations.Add(new SearchIndexMap());
-            modelBuilder.Configurations.Add(new SearchIndexTenantHistoryMap());
-
+            modelBuilder.Configurations.Add(new SchedulerLogsMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -534,7 +442,7 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public DbSet<TextCode> TextCodes
+        public IDbSet<TextCode> TextCodes
         {
             get;
             set;
@@ -546,8 +454,7 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public IQueryable<ObjectField> ObjectFields { get { return ObjectFieldsDbSet.Where(x => !x.ForMetaDataOnly); } }
-        public DbSet<ObjectField> ObjectFieldsDbSet
+        public IDbSet<ObjectField> ObjectFields
         {
             get;
             set;
@@ -577,28 +484,12 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public IDbSet<AdditionalCurrencyRate> AdditionalCurrencyRates
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<CurrencyRate> CurrencyRates
-        {
-            get;
-            set;
-        }
-
         public IDbSet<EventType> EventType
         {
             get;
             set;
         }
-       /* public IDbSet<EventRemark> EventRemark
-        {
-            get;
-            set;
-        }*/
+
         public IDbSet<TraceEvent> TraceEvent
         {
             get;
@@ -695,11 +586,7 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-        public IDbSet<QuoteChargesGroup> QuoteChargesGroups
-        {
-            get;
-            set;
-        }
+
         public IDbSet<VolumeUnit> VolumeUnits
         {
             get;
@@ -840,7 +727,7 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-        public IDbSet<ImageLibrary> ImageLibraries
+    public IDbSet<ImageLibrary> ImageLibrarys
         {
             get;
             set;
@@ -931,32 +818,7 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        //public IDbSet<SchedulerLogs> SchedulerLogs
-        //{
-        //    get;
-        //    set;
-        //}
-
-        public IDbSet<SchedulerProcedure> SchedulerProcedures
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<ChildEntitiesCustomField> ChildEntitiesCustomFields
-        {
-            get;
-            set;
-        }
-
-
-        public IDbSet<ScreenSection> ScreenSections
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<CustomChildObject> CustomChildObjects
+        public IDbSet<SchedulerLogs> SchedulerLogs
         {
             get;
             set;
@@ -976,9 +838,9 @@ namespace Simplog.Data.InfrastructureModel
         {
             //try
             //{
-            DetectChanges();
+                DetectChanges();
 
-            return base.SaveChanges();
+                return base.SaveChanges();
             //}
             //catch (DbEntityValidationException ex) //itzik
             //{
@@ -1124,107 +986,6 @@ namespace Simplog.Data.InfrastructureModel
         {
             get;
             set;
-        }
-
-        public IDbSet<RuleUpdateHistory> RuleUpdateHistories
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<WorkerRoleName> WorkerRoleNames
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<EntityStatusType> EntityStatusTypes
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<TabModification> TabsModifications
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<DataCustomObject> DataCustomObjects
-        {
-            get;
-            set;
-        }
-        public IDbSet<ReferenceCustomObject> ReferenceCustomObjects
-        {
-            get;
-            set;
-        }
-        public IDbSet<DeploymentPackage> DeploymentPackages
-        {
-            get;
-            set;
-        }
-        public IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions
-        {
-            get;
-            set;
-        }
-        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects
-        {
-            get;
-            set;
-        }
-        public IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<EventRemark> EventRemarks
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<SearchIndex> SearchIndexes
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<SearchIndexTenantHistory> SearchIndexTenantHistories
-        {
-            get;
-            set;
-        }
-
-        private sealed class OverrideScope : IDisposable
-        {
-            private Action _onDispose;
-
-            public OverrideScope(Action onDispose)
-            {
-                _onDispose = onDispose ?? throw new ArgumentNullException(nameof(onDispose));
-            }
-
-            public void Dispose()
-            {
-                var action = Interlocked.Exchange(ref _onDispose, null);
-                action?.Invoke();
-            }
         }
     }
 }

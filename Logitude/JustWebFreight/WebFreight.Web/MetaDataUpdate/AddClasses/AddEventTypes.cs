@@ -1,19 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Server.Tools.Counters;
-using System;
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddEventTypes
     {
-        public static void AddEventType(EventTypeDetails eventTypeDetails, EventTypeRepository eventTypeRepository, Dictionary<string, EventType> tenantEventTypes,int contextTenant=0)
+        public static void AddEventType(EventTypeDetails eventTypeDetails, EventTypeRepository eventTypeRepository, Dictionary<string, EventType> tenantEventTypes)
         {
             if (tenantEventTypes.Keys.Contains(eventTypeDetails.Code+eventTypeDetails.ObjectTableId))
             {
@@ -37,8 +36,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 eventType.IsAgentView = eventTypeDetails.IsAgentView;
                 eventType.IsSharedLogisticsEnabled = eventTypeDetails.IsSharedLogisticsEnabled;
                 eventType.AllowedInAutomation = eventTypeDetails.AllowedInAutomation;
-                eventType.UpdateDate = DateTime.Now;
-
                 eventTypeRepository.Update(eventType);
             }
 
@@ -46,7 +43,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 EventType newEventType = new EventType()
                 {
-                    Id = IdCounter.GetNumber("EventType", contextTenant).ToString(),
+                    Id = IdCounter.GetNumber("EventType", eventTypeDetails.Tenant).ToString(),
                     Tenant = eventTypeDetails.Tenant,
                     ShortView = eventTypeDetails.ShortView,
                     ObjectTableId = eventTypeDetails.ObjectTableId,
@@ -67,9 +64,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     IsAgentView = eventTypeDetails.IsAgentView,
                     IsSharedLogisticsEnabled = eventTypeDetails.IsSharedLogisticsEnabled,
                     AllowedInAutomation = eventTypeDetails.AllowedInAutomation,
-                    UpdateDate = DateTime.Now,
-
-                };
+            };
 
                 eventTypeRepository.Add(newEventType);
             }

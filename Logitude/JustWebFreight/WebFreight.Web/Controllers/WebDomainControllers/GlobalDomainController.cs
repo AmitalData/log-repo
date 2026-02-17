@@ -1,5 +1,4 @@
-﻿using Devart.Data.Oracle;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityLists;
 using Logitude.BL.GlobalModel.EntityPMs;
@@ -8,10 +7,8 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.SystemLogs.POCOs;
 using Logitude.SystemLogs.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -21,8 +18,6 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -39,74 +34,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class GlobalDomainController : ApiController
     {
-        public HttpResponseMessage GetTenantManagmentTTY(string tty, int id)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                if (string.IsNullOrEmpty(tty))
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, "");
-                }
-
-                IGlobalContext objectContext = GlobalContext.GetContext();
-                TenantManagementRepository entityRepository = new TenantManagementRepository(objectContext);
-                IQueryable<TenantManagement> iQueryable = entityRepository.GetAllTenants();
-                var duplicationMsg = "";
-                var tenantManagmentWithTTY = iQueryable.Where(d => d.TTY == tty && d.Id != id).ToList();
-                if (tenantManagmentWithTTY != null && tenantManagmentWithTTY.Count() > 0)
-                {
-                    var tenantsWithTheSameTTY = String.Join(",", tenantManagmentWithTTY.Select(a => a.Id));
-                    duplicationMsg = "This PIMA is already used by another tenant (" + tenantsWithTheSameTTY + "), confirm using it again.";
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, duplicationMsg);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage GetCheckDigitalPortalAddsOn(int tenant)
-        {
-            try
-            {
-                TenantAddOnRepository tenantAddOnRepository = new TenantAddOnRepository(tenant);
-                var digitalPortalPackageCode = "DGP";
-                var addOn = tenantAddOnRepository.GetSingleTenantAddOnByPackageCode(digitalPortalPackageCode, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, addOn);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetCheckInttraAddsOn()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                TenantAddOnRepository tenantAddOnRepository = new TenantAddOnRepository(tenant);
-                var inttraPackageCode = "INTTR";
-                var addOn = tenantAddOnRepository.GetSingleTenantAddOnByPackageCode(inttraPackageCode, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, addOn);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
         public HttpResponseMessage GetMessagingStockTenantsList(int tenant)
         {
             try
@@ -116,18 +43,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IGlobalContext objectContext = GlobalContext.GetContext();
 
                 List<TenantManagementList> myResult = (from d in objectContext.TenantManagements.Include("GlobalTenant")
-                                                       where
-                                                       (d.IsAWBStockPrepaid || d.IsINTTRAStockPrepaid)
-                                                       &&
-                                                       (d.GlobalTenant != null && d.GlobalTenant.IsActive)
-                                                       select new TenantManagementList()
-                                                       {
-                                                           Id = d.Id,
-                                                           Name = d.Name,
-                                                           PackageCode = d.PackageCode,
-                                                           IsAWBStockPrepaid = d.IsAWBStockPrepaid,
-                                                           IsINTTRAStockPrepaid = d.IsINTTRAStockPrepaid,
-                                                       }).ToList();
+                                                        where
+                                                        (d.IsAWBStockPrepaid || d.IsINTTRAStockPrepaid)
+                                                        &&
+                                                        (d.GlobalTenant != null && d.GlobalTenant.IsActive)
+                                                        select new TenantManagementList()
+                                                        {
+                                                            Id = d.Id,
+                                                            Name = d.Name,
+                                                            PackageCode = d.PackageCode,
+                                                            IsAWBStockPrepaid = d.IsAWBStockPrepaid,
+                                                            IsINTTRAStockPrepaid = d.IsINTTRAStockPrepaid,
+                                                        }).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -186,15 +113,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
                         myResult.DeploymentStage = mySetting.DeploymentStage;
                         myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
-                        myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
-                        myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
-                        myResult.ReleaseDateString = mySetting.ReleaseDateString;
-                        myResult.DNSZone = mySetting.DNSZone;
-                        myResult.CustomURL = mySetting.CustomURL;
+
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
                             myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
-                            myResult.ProductMessage = LogitudeSettings.ProductMessage;
                         }
                     }
 
@@ -242,79 +164,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
         }
-
-        public HttpResponseMessage GetGlobalSettingWithOutToken()
-        {
-            try
-            {
-              
-                   
-                    JSGlobalSettings myResult = new JSGlobalSettings();
-
-                    SettingRepository mySettingRepository = new SettingRepository();
-                    Setting mySetting = mySettingRepository.GetSingleSetting("1");
-                if (mySetting != null)
-                {
-                    myResult.Id = mySetting.Id;
-                    myResult.LogitudeURL = mySetting.LogitudeURL;
-                    myResult.LogoCode = mySetting.LogoCode;
-                    myResult.WorkEnvironment = mySetting.WorkEnvironment;
-                    myResult.SameUserLoginEnabled = mySetting.SameUserLoginEnabled;
-                    myResult.LayoutDirection = mySetting.LayoutDirection;
-                    myResult.ReportsRunUsingWR = mySetting.ReportsRunUsingWR;
-                    myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
-                    myResult.DeploymentStage = mySetting.DeploymentStage;
-                    myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
-                    myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
-                    myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
-                    myResult.ReleaseDateString = mySetting.ReleaseDateString;
-                    myResult.DNSZone = mySetting.DNSZone;
-                    myResult.CustomURL = mySetting.CustomURL;
-                    if (LogitudeSettings.IsCostomsDeploy)
-                    {
-                        myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
-                        myResult.ProductMessage = LogitudeSettings.ProductMessage;
-                    }
-
-                }
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
-
-            }
-
-            catch (Exception e)
-            {
-                try
-                {
-               
-                       
-
-                        JSGlobalSettings myResult = new JSGlobalSettings();
-
-                        SettingRepository mySettingRepository = new SettingRepository();
-                        Setting mySetting = mySettingRepository.GetSingleSetting("1");
-                        if (mySetting != null)
-                        {
-                            myResult.Id = mySetting.Id;
-                            myResult.LogitudeURL = mySetting.LogitudeURL;
-                            myResult.LogoCode = mySetting.LogoCode;
-                            myResult.WorkEnvironment = mySetting.WorkEnvironment;
-                            myResult.SameUserLoginEnabled = mySetting.SameUserLoginEnabled;
-                            myResult.LayoutDirection = mySetting.LayoutDirection;
-                            myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
-                        }
-
-                       
-                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                 
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-        }
-
         public HttpResponseMessage GetPrivateLableById(string Id)
         {
             try
@@ -402,32 +251,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 IGlobalContext context = new GlobalContext();
                 GlobalDomainService globalDomainService = new GlobalDomainService(context);
-                IQueryable<HelpResource> result = globalDomainService.GetAllHelpResources(tenant);
-                result = result.Where(d => !d.Inactive);
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetReleaseHelpResources()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                IGlobalContext context = new GlobalContext();
-                GlobalDomainService globalDomainService = new GlobalDomainService(context);
-                IQueryable<HelpResource> result = globalDomainService.GetReleaseHelpResources(tenant);
-                result = result.Where(d => !d.Inactive);
+                var result = globalDomainService.GetAllHelpResources(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
@@ -442,24 +268,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 //using (TransactionScope scope = TransactionFactory.GetTransaction())
                 //{
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenantManagementRepository);
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                    TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenantManagementRepository);
 
-                TenantManagement entityPOCO = tenantManagementRepository.GetTenantManagementByConnectedArline(code);
-                TenantManagementPM myResult = null;
+                    TenantManagement entityPOCO = tenantManagementRepository.GetTenantManagementByConnectedArline(code);
+                    TenantManagementPM myResult = null;
 
-                if (entityPOCO != null)
-                {
-                    myResult = tenantManagementQuery.GetSinglePM(entityPOCO.Id);
-                }
-
-                //scope.Complete();
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    if (entityPOCO != null)
+                    {
+                        myResult = tenantManagementQuery.GetSinglePM(entityPOCO.Id);
+                    }
+                    
+                    //scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 //}
             }
 
@@ -477,7 +303,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
-
+                
                 List<BatchServicesDefinitionPM> myResult = this.GetAllBatchServices(filterByDateCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -524,62 +350,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             List<BatchServicesDefinitionPM> TempList = new List<BatchServicesDefinitionPM>();
 
             IQueryable<BatchServicesDefinitionPM> result = (from a in repository.context.BatchServicesDefinitions
-                                                            select new BatchServicesDefinitionPM()
-                                                            {
-                                                                ClassName = a.ClassName,
-                                                                Code = a.Code,
-                                                                InActive = a.BatchServicesDefinitionMods.InActive,
-                                                                NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
-                                                                Parameter1 = a.Parameter1,
-                                                                Parameter2 = a.Parameter2,
-                                                                QueueDefinitionCode = a.QueueDefinitionCode
-                                                            });
-            string connectionString = TenantServerConfigration.GetDbConnection(0);
-            var FaildDataTable = new DataTable();
-            var WaitingDataTable = new DataTable();
+                          select new BatchServicesDefinitionPM()
+                          {
+                              ClassName = a.ClassName,
+                              Code = a.Code,
+                              InActive = a.BatchServicesDefinitionMods.InActive,
+                              NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
+                              Parameter1 = a.Parameter1,
+                              Parameter2 = a.Parameter2
+                          });
 
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                using (OracleConnection DBConnection = new OracleConnection(connectionString))
-                {
-                    DBConnection.Open();
-                    OracleCommand commandWaitingData = new OracleCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= TO_DATE('" + filterByDate.Value.ToShortDateString() + "', 'DD/MM/YYYY') and Status = 0 group by QueueDefinitionCode ", DBConnection);
-                    OracleCommand commandFaildData = new OracleCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= TO_DATE('" + filterByDate.Value.ToShortDateString() + "', 'DD/MM/YYYY') and Status = -1 group by QueueDefinitionCode ", DBConnection);
-                    OracleDataReader reader = commandWaitingData.ExecuteReader();
-                    WaitingDataTable.Load(reader);
-                    reader = commandFaildData.ExecuteReader();
-                    FaildDataTable.Load(reader);
-                    reader.Close();
-                }
-            }
-            else
-            {
-                using (SqlConnection DBConnection = new SqlConnection(connectionString))
-                {
-                    DBConnection.Open();
-                    SqlCommand commandWaitingData = new SqlCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' and Status = 0 group by QueueDefinitionCode ", DBConnection);
-                    SqlCommand commandFaildData = new SqlCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' and Status = -1 group by QueueDefinitionCode ", DBConnection);
-                    SqlDataReader reader = commandWaitingData.ExecuteReader();
-                    WaitingDataTable.Load(reader);
-                    reader = commandFaildData.ExecuteReader();
-                    FaildDataTable.Load(reader);
-                    reader.Close();
-                }
-            }
-
-            var FaildQueueMessageCounts = (from DataRow dr in FaildDataTable.Rows
-                                           select new QueueMessagesDetails()
-                                           {
-                                               Count = Convert.ToInt32(dr["FCount"]),
-                                               QueueMessageCode = dr["QueueDefinitionCode"].ToString()
-                                           }).ToList();
-            var WaitingQueueMessageCounts = (from DataRow dr in WaitingDataTable.Rows
-                                             select new QueueMessagesDetails()
-                                             {
-                                                 Count = Convert.ToInt32(dr["WCount"]),
-                                                 QueueMessageCode = dr["QueueDefinitionCode"].ToString()
-                                             }).ToList();
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 BatchServicesLogRepository Repo = new BatchServicesLogRepository();
@@ -591,20 +371,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int DoneItemsInOneHour = 0;
                     int DoneItemsInOneMinute = 0;
                     int NumberOfDoneItems = 0;
-                    int WaitingItems = 0;
-                    int FailedItems = 0;
                     DateTime? LActivity = null;
 
                     foreach (BatchServicesLog Log in Logs)
                     {
-                        var FaildQueueMessage = FaildQueueMessageCounts.Where(a => a.QueueMessageCode == item.QueueDefinitionCode).FirstOrDefault();
-                        var WaitingQueueMessage = WaitingQueueMessageCounts.Where(a => a.QueueMessageCode == item.QueueDefinitionCode).FirstOrDefault();
                         item.CPU = Log.CPU;
                         DoneItemsInFiveMinutes += Log.DoneItemsInFiveMinutes;
                         DoneItemsInOneHour += Log.DoneItemsInOneHour;
                         DoneItemsInOneMinute += Log.DoneItemsInOneMinute;
-                        WaitingItems = WaitingQueueMessage != null ? WaitingQueueMessage.Count : 0;//Log.WaitingItems;
-                        FailedItems = FaildQueueMessage != null ? FaildQueueMessage.Count : 0;//Log.FailedItems;
                         NumberOfDoneItems += Log.NumberOfDoneItems != null ? (int)Log.NumberOfDoneItems : 0;
 
                         if (Log.LastActivity > LActivity && LActivity != null)
@@ -621,8 +395,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     item.DoneItemsInOneHour = DoneItemsInOneHour;
                     item.DoneItemsInOneMinute = DoneItemsInOneMinute;
                     item.NumberOfDoneItems = NumberOfDoneItems;
-                    item.WaitingItems = WaitingItems;
-                    item.FailedItems = FailedItems;
                     item.LastActivity = LActivity;
                     TempList.Add(item);
                 }
@@ -660,7 +432,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IGlobalContext objectContext = GlobalContext.GetContext();
                 TenantManagementRepository repository = new TenantManagementRepository(objectContext);
@@ -709,7 +480,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TenantManagementPM entityPM = tenantManagementQuery.GetSinglePM(id);
 
                 TenantManagementJS myResult = new TenantManagementJS();
-                bool isLogboxSystem = CheckIsLogboxSystem();
 
                 if (entityPM != null)
                 {
@@ -727,10 +497,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         TrialEndDate = entityPM.TrialEndDate,
                         TrialStartDate = entityPM.TrialStartDate,
                         BluesnapAccount = entityPM.BluesnapAccount,
-                        PaymentChannelCode = entityPM.PaymentChannelCode,
                         BluesnapContractId = entityPM.BluesnapContractId,
                         ChangeHeaderColor = entityPM.ChangeHeaderColor,
-                        HeaderColor = entityPM.HeaderColor,
                         IsCargonautEnabled = entityPM.IsCargonautEnabled,
                         IsDEXXConnectionEnabled = entityPM.IsDEXXConnectionEnabled,
                         IsEAWBOnlyDemo = entityPM.IsEAWBOnlyDemo,
@@ -741,20 +509,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         IsTrial = entityPM.IsTrial,
                         ManageLicencesPerUser = entityPM.ManageLicencesPerUser,
                         ManagesRegisteredAgent = entityPM.ManagesRegisteredAgent,
-                        NumberOfUsers = entityPM.NumberOfUsers == null ? 0 : entityPM.NumberOfUsers.Value,
-                        NumberOfFreeUsers = entityPM.FreeUsers == null ? 0 : entityPM.FreeUsers.Value,
+                        NumberOfUsers = entityPM.NumberOfUsers,
                         PaidDaysLeft = entityPM.PaidDaysLeft,
                         PaymentFailure = entityPM.PaymentFailure,
-                        PrivateLabelId = isLogboxSystem ? null : entityPM.PrivateLabelId,
+                        PrivateLabelId = entityPM.PrivateLabelId,
                         SuspendDate = entityPM.SuspendDate,
                         SuspendDaysLeft = entityPM.SuspendDaysLeft,
                         TemporalPackageCode = entityPM.TemporalPackageCode,
                         PackagesCodes_BS = entityPM.PackagesCodes_BS,
                         PackagesCodes_PK = entityPM.PackagesCodes_PK,
                         TrailDaysLeft = entityPM.TrailDaysLeft,
-                        TenantManagementLicenses = entityPM.TenantManagementLicenses,
-                        CountryName = entityPM.CountryName,
-                        BluesnapContractQTY = entityPM.BluesnapContractQTY,
+                         TenantManagementLicenses = entityPM.TenantManagementLicenses,
+                         CountryName=entityPM.CountryName,
+                         BluesnapContractQTY=entityPM.BluesnapContractQTY,
                         BluesnapCRMContractQTY = entityPM.BluesnapCRMContractQTY,
                         BluesnapEAWBContractQTY = entityPM.BluesnapEAWBContractQTY,
                         BluesnapEAWBSContractQTY = entityPM.BluesnapEAWBSContractQTY,
@@ -763,14 +530,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId,
                         BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId,
                         BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract,
-                        BluesnapInttraStockContractId = entityPM.BluesnapInttraStockContractId,
-                        BluesnapInttraStockContractQTY = entityPM.BluesnapInttraStockContractQTY,
-                        MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied,
-                        CustomerURL = entityPM.CustomerURL,
-                        IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid,
-						MinutsTimeOutSession = entityPM.MinutsTimeOutSession,
-
-					};
+                        BluesnapInttraStockContractId=entityPM.BluesnapInttraStockContractId,
+                        BluesnapInttraStockContractQTY=entityPM.BluesnapInttraStockContractQTY,
+                    };
 
                     if (entityPM.PaymentFailure)
                     {
@@ -851,6 +613,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                         scope.Complete();
                     }
+
+
+
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -861,85 +626,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        public HttpResponseMessage GetOceanInsightGlobalSetting()
-        {
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-
-                    OceanInsightGlobalSetting oceanInsightGlobalSetting = new OceanInsightGlobalSetting();
-
-                    SettingRepository mySettingRepository = new SettingRepository();
-                    Setting setting = mySettingRepository.GetSingleSetting("1");
-                    if (setting != null)
-                    {
-                        oceanInsightGlobalSetting.OITenantNumber = setting.OITenantNumber;
-                        oceanInsightGlobalSetting.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
-                        oceanInsightGlobalSetting.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
-
-                    }
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, oceanInsightGlobalSetting);
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetUpdateOceanInsightGlobalSetting(int oITenantNumber, string amitalCloudEnvironmentURL, string amitalCloudLogitudeTenantPrimaryKey)
-        {
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-
-                    SettingRepository mySettingRepository = new SettingRepository();
-                    Setting setting = mySettingRepository.GetSingleSetting("1");
-                    if (setting != null)
-                    {
-                        setting.OITenantNumber = oITenantNumber;
-                        setting.AmitalCloudEnvironmentURL = amitalCloudEnvironmentURL;
-                        setting.AmitalCloudLogitudeTenantPrimaryKey = amitalCloudLogitudeTenantPrimaryKey;
-                        mySettingRepository.Update(setting);
-                        mySettingRepository.SubmitChanges();
-                        LogitudeSettings.OITenantNumber = oITenantNumber;
-                        LogitudeSettings.AmitalCloudEnvironmentURL = amitalCloudEnvironmentURL;
-                        LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = amitalCloudLogitudeTenantPrimaryKey;
-                    }
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, "");
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        private static bool CheckIsLogboxSystem()
-        {
-            bool isLogboxSystem = false;
-            string url = SecurityUtility.getLoggedDomain();
-            if (url.Contains("system.logbox.co.il") || url.Contains("pre.logbox.co.il") || url.Contains("test.logitudeworld.com")) //Test env acts Like Logbox
-                isLogboxSystem = true;
-            return isLogboxSystem;
-        }
-
-       
     }
 
     public class JSGlobalSettings
@@ -952,16 +638,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool SameUserLoginEnabled { get; set; }
         public string LayoutDirection { get; set; }
         public string ProductInfo { get; internal set; }
-        public string ProductMessage { get; internal set; }
         public bool ReportsRunUsingWR { get; set; }
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }
         public string ReleaseNotesURL { get; set; }
-        public string LogitudeDemoTenants { get; set; }
-        public DateTime? TMPersonalAccessExpirationDate { get; set; }
-        public string ReleaseDateString { get; set; }
-        public string DNSZone { get; set; }
-        public string CustomURL { get; set; }
     }
 
     public class TenantManagementJS
@@ -992,15 +672,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public DateTime? ExpirationDate { get; set; }
         public bool ManageLicencesPerUser { get; set; }
         public bool ChangeHeaderColor { get; set; }
-        public string HeaderColor { get; set; }
         public int TrailDaysLeft { get; set; }
         public int PaidDaysLeft { get; set; }
         public int SuspendDaysLeft { get; set; }
         public int NumberOfUsers { get; set; }
-        public int NumberOfFreeUsers { get; set; }
         public string BluesnapContractId { get; set; }
         public string BluesnapAccount { get; set; }
-        public string PaymentChannelCode { get; set; }
         public string BluesnapCRMContractId { get; set; }
         public string BluesnapEAWBContractId { get; set; }
         public string BluesnapEAWBSContractId { get; set; }
@@ -1019,13 +696,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string PackageName { get; set; }
         public string TemporalPackageCode { get; set; }
         public string CountryName { get; set; }
-        public bool MainAdditionalPackageApplied { get; set; }
-        public bool IsContainerTrackingPrepaid { get; set; }
-        public string CustomerURL { get; set; }
-		public int? MinutsTimeOutSession { get; set; }
 
-
-		private List<string> packagesCodes_PK;
+        private List<string> packagesCodes_PK;
         public List<string> PackagesCodes_PK
         {
             get
@@ -1081,18 +753,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 tenantManagementLicenses = value;
             }
         }
-    }
-
-    public class QueueMessagesDetails
-    {
-        public string QueueMessageCode { get; set; }
-        public int Count { get; set; }
-    }
-
-    public class OceanInsightGlobalSetting
-    {
-        public int OITenantNumber { get; set; }
-        public string AmitalCloudEnvironmentURL { get; set; }
-        public string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
     }
 }

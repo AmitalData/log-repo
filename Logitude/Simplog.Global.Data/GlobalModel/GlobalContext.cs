@@ -1,12 +1,20 @@
-using Devart.Data.Oracle.Entity.Configuration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Helpers;
-using Simplog.Global.Data.GlobalModel.Mapping;
-using Simplog.Server.Infrastructure;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.Entity.Core.EntityClient;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Mapping;
+using Simplog.Server.Infrastructure;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Infrastructure;
+using System.Data;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Helpers;
+
 namespace Simplog.Global.Data.GlobalModel
 {
     public class GlobalContext : DbContextBase, IGlobalContext
@@ -14,7 +22,7 @@ namespace Simplog.Global.Data.GlobalModel
         public GlobalContext()
             : base("LogitudeGlobalStr")
         {
-            Database.SetInitializer<GlobalContext>(null);
+            Database.SetInitializer<GlobalContext>(new MigrateDatabaseToLatestVersion<GlobalContext, Simplog.Global.Data.Migrations.Configuration>());
         }
         public GlobalContext(DbConnection connection)
             : base(connection, true)
@@ -30,13 +38,6 @@ namespace Simplog.Global.Data.GlobalModel
                                                          //var migrator = new DbMigrator(configuration);
 
             //migrator.Update();
-        }
-
-        public GlobalContext(string nameOrConnectionString) : base(nameOrConnectionString)
-        {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.AutoDetectChangesEnabled = false;
-            Database.SetInitializer<GlobalContext>(null);
         }
 
         public void SetAsModified(object entity)
@@ -60,17 +61,13 @@ namespace Simplog.Global.Data.GlobalModel
             {
                 dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
             }
+            if (dbConnectionInfo.Contains("Main"))
+            { }
             dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
-            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-            {
-                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool);
-                return new GlobalContext(connection);
-            }
-            else
-            {
-                dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo, ConnectionLifetime, suppressPool);
-                return new GlobalContext(dbConnectionInfo);
-            }
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool);
+            GlobalContext context = new GlobalContext(connection);
+
+            return context;
         }
 
         public static GlobalContext GetContextByDBId(string dbId)
@@ -109,7 +106,7 @@ namespace Simplog.Global.Data.GlobalModel
         {
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = OracleEntityProviderConfig.Instance;
+                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 //config.QueryOptions.CaseInsensitiveComparison = true;
                 //config.QueryOptions.CaseInsensitiveLike = true;
@@ -141,7 +138,6 @@ namespace Simplog.Global.Data.GlobalModel
             modelBuilder.Configurations.Add(new PaymentCurrencyMap());
             modelBuilder.Configurations.Add(new AutoSignupEmailMap());
             modelBuilder.Configurations.Add(new BluesnapContractMap());
-            modelBuilder.Configurations.Add(new BluesnapTransactionMap());
             modelBuilder.Configurations.Add(new BluesnapContractTypeMap());
             modelBuilder.Configurations.Add(new AWBMessagesCCSTypeMap());
             modelBuilder.Configurations.Add(new MobileNotificationLogMap());
@@ -162,9 +158,6 @@ namespace Simplog.Global.Data.GlobalModel
             modelBuilder.Configurations.Add(new CaptchaKeyMap());
             modelBuilder.Configurations.Add(new InvalidEmailResetPasswordMap());
             modelBuilder.Configurations.Add(new WebhookKeysMap());
-            modelBuilder.Configurations.Add(new AuthenticationTokenMap());
-            //Was Missing
-            modelBuilder.Configurations.Add(new BatchServicesDefinitionMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -210,7 +203,6 @@ namespace Simplog.Global.Data.GlobalModel
         public IDbSet<PasswordResetRequest> PasswordResetRequests { get; set; }
         public IDbSet<PaymentCurrency> PaymentCurrencies { get; set; }
         public IDbSet<BluesnapContract> BluesnapContracts { get; set; }
-        public IDbSet<BluesnapTransaction> BluesnapTransactions { get; set; }
         public IDbSet<BluesnapContractType> BluesnapContractTypes { get; set; }
         public IDbSet<AutoSignupEmail> AutoSignupEmails { get; set; }
         public IDbSet<AWBMessagesCCSType> AWBMessagesCCSTypes { get; set; }
@@ -232,8 +224,8 @@ namespace Simplog.Global.Data.GlobalModel
         public IDbSet<CaptchaKey> CaptchaKeys { get; set; }
         public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; set; }
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys { get; set; }
-        public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
+
+
+
     }
 }

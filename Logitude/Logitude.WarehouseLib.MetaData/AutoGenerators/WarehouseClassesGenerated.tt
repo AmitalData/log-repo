@@ -57,13 +57,13 @@ GenerateAllListQueryServices("../EntityFiles","../../Logitude.WarehouseLib.Data/
 GenerateAllUpdateClasses("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","WarehouseModel");
 GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","WarehouseLibUpdateClass");
 GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.WarehouseLib.BL/CLoseTables");
-//GenerateAllDomainServices("../EntityFiles","../../JustWebFreight/WebFreight.Web/WarehouseModel","WarehouseContext","Logitude.WarehouseLib","WarehousesDomainService");
+//GenerateAllDomainServices("../EntityFiles","../.../JustWebFreight/WebFreight.Web/WarehouseModel","WarehouseContext","Logitude.WarehouseLib","WarehousesDomainService");
 
 
 
 // ---------------------------- typedscript generated files
 
-	GenerateAllControllers("../EntityFiles","../../JustWebFreight/WebFreight.Web/Controllers","WarehouseContext","Logitude.WarehouseLib","WarehouseModel");
+	GenerateAllControllers("../EntityFiles","../.../JustWebFreight/WebFreight.Web/Controllers","WarehouseContext","Logitude.WarehouseLib","WarehouseModel");
  
 
 // Generate Commmon TS files---------------------------------------------------------------------------------------------------------------

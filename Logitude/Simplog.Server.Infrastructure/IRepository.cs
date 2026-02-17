@@ -1,5 +1,4 @@
 using Simplog.Server.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +18,6 @@ namespace Simplog.Server.Infrastructure
         TEntity GetSingle(EntityKeyFields entityKeys);
 
         //why not ?? IQueryable<TEntity> GetAll();
-
+        
     }
 }

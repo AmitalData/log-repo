@@ -8,7 +8,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
@@ -23,7 +23,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         bool isNewEntity;
         private int tenant;
         public Screen Poco { get; set; }
-        private int tenantZero = 0;
+
         public IWebFreightContext ObjectContext
         {
             get { return objectContext; }
@@ -64,12 +64,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleScreen(theEntityPm.Id);
 
-            ScreenModification mod = this.Poco.Tenant == tenantZero ? entityRepository.GetScreenModificationByScreen(theEntityPm.Id, theEntityPm.UserTenant) : null;
+            ScreenModification mod = entityRepository.GetScreenModificationByScreen(theEntityPm.Id, theEntityPm.UserTenant);
             if ((this.Poco.NumberOfColumns != theEntityPm.NumberOfColumns) || (this.Poco.NumberOfRows != theEntityPm.NumberOfRows))
             {
-                if (mod == null && this.Poco.Tenant == tenantZero)
+                if (mod == null)
                 {
-                    mod = new ScreenModification() { Tenant = theEntityPm.UserTenant, ScreenCode = theEntityPm.Code, Id = IdCounter.GetNumber("ScreenModification", theEntityPm.Tenant), };
+                    mod = new ScreenModification() { Tenant = theEntityPm.UserTenant, ScreenId = theEntityPm.Id, Id = IdCounter.GetNumber("ScreenModification", theEntityPm.Tenant), };
                     this.ObjectContext.ScreenModifications.Add(mod);
                 }
             }

@@ -152,8 +152,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             var myFilter = new int[] { 0, 30 };
             //var controller = new CommunicationLogStepController();
             //List<CommunicationLogStepList> myResult = controller.GetCommunicationLogStepsDocumentData(mainInterfaceCode, communicationLogId, tenant, myFilter, false);
-            var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
-            stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, myFilter,false,false);
+            var communicationLogStepQuery = new CommunicationLogStepQuery();
+            stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, myFilter);
             return stepLIstOut;
         }
 
@@ -267,19 +267,11 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     theValCell.Value = GetValue(rec, colMetadata.PropName);
                     break;
             }
-            //theValCell.IndentLevel = 1;
-            ExcelHAlign myHorizontalAlignment = ExcelHAlign.HAlignGeneral;
-            Enum.TryParse<ExcelHAlign>(colMetadata.ExcelHAlign.ToString(), out myHorizontalAlignment);
-            theValCell.HorizontalAlignment = myHorizontalAlignment;
 
         }
 
         private string GetValue(object src, string propName)
         {
-            if (src.GetType().GetProperty(propName)==null)
-            {
-                return string.Empty;
-            }
             var val = src.GetType().GetProperty(propName).GetValue(src, null);
             val = val ?? string.Empty;
             return val.ToString();
@@ -308,7 +300,7 @@ rgb(27, 144, 203)
         }
         protected string TranslateText(string code)
         {
-            return TextCodesTranslator.TranslateText(code, this.Tenant,true);
+            return TextCodesTranslator.TranslateText(code, this.Tenant);
         }
 
         protected void AddEditBoxBorder(IRange myRange)
@@ -614,15 +606,9 @@ rgb(27, 144, 203)
             myLastCol.Borders[ExcelBordersIndex.EdgeRight].ColorRGB = this.SectionBorder;
         }
 
-        protected IRange SetSubHeader(IRange lastRange, string Text,int? the1stColumn=null)
+        protected IRange SetSubHeader(IRange lastRange, string Text)
         {
-            int col = lastRange.Column;
-            if (the1stColumn.GetValueOrDefault()> 0)
-            {
-                col = the1stColumn.GetValueOrDefault();
-            }
-             
-            var currHeader = _MainWorksheet[lastRange.LastRow + 2, col, lastRange.LastRow + 2, ReportWidth / 10 - 2];
+            var currHeader = _MainWorksheet[lastRange.LastRow + 2, lastRange.Column, lastRange.LastRow + 2, ReportWidth / 10 - 2];
             currHeader.Merge();
             currHeader[currHeader.Row, currHeader.Column].Text = Text;// "תנועות אשראי";
             currHeader[currHeader.Row, currHeader.Column].VerticalAlignment = ExcelVAlign.VAlignCenter;
@@ -630,7 +616,7 @@ rgb(27, 144, 203)
 
             currHeader[currHeader.Row, currHeader.Column].CellStyle.Font.RGBColor = //this.ResultHeaderColor;
                 this.SectionBorder;
-            currHeader[currHeader.Row, currHeader.Column].IndentLevel = 0;
+            currHeader[currHeader.Row, currHeader.Column].IndentLevel = 3;
             return currHeader;
         }
     }
@@ -641,22 +627,12 @@ rgb(27, 144, 203)
         public string Header { get; internal set; }
         public int length { get; internal set; }
         public string PropName { get; internal set; }
-        public ExcelHAlignEnum ExcelHAlign { get; internal set; }
     }
     public enum GridColumnTypeEnum
     {
         Object = 0,
         Number,
-        Text,
-        TrueFalse
-    }
-
-    public enum ExcelHAlignEnum
-    {
-        HAlignGeneral = 0,
-        HAlignLeft = 1,
-        HAlignCenter = 2,
-        HAlignRight = 3,
+        Text
     }
 
     public class LabelEditBox : GridColumnMetaData

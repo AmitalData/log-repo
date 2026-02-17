@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
@@ -39,6 +39,5 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CountryId { get; set; }
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }
-        public string ContainerEntityId { get; set; }
     }
 }

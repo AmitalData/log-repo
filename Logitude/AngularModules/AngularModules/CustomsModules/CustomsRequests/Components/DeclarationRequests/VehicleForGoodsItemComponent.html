@@ -38,39 +38,33 @@
                                         <log-column [header]="'Customs.ExportDeclarationDataQuery.F.CargoIdentityQualifierID' | TextCodeTranslationPipe"
                                                     [width]="'90'" [Alignment]="'right'"
                                                     [binding]="'CargoIdentityQualifierID'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming RightCenter">
                                                     <span>{{item.CargoIdentityQualifierID}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- RichbitNumber -->
                                         <log-column [header]="'Customs.ExportDeclarationDataQuery.F.RichbitNumber' | TextCodeTranslationPipe"
                                                     [binding]="'RichbitNumber'"
                                                     [width]="'100'" [Alignment]="'right'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.RichbitNumber}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- VehicleExternalIDNum -->
                                         <log-column [header]="'Customs.ExportDeclarationDataQuery.F.VehicleExternalID' | TextCodeTranslationPipe"
                                                     [binding]="'VehicleExternalIDNum'"
                                                     [width]="'100'" [Alignment]="'right'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.VehicleExternalIDNum}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>

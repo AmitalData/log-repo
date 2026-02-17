@@ -14,15 +14,13 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-
 
 export class AgentSharedManifestPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -71,97 +69,70 @@ export class AgentSharedManifestPM {
     public get ManifestSL() { return this.manifestSL; }
     public set ManifestSL(newValue: any) { if (this.manifestSL != newValue) { this.manifestSL = newValue; this.MarkAsDirty("ManifestSL"); } }
        
-	 
+
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
+   
+
+
     private transportModeId: string;
     public get TransportModeId() { return this.transportModeId; }
     public set TransportModeId(newValue: string) { if (this.transportModeId != newValue) { this.transportModeId = newValue; this.MarkAsDirty("TransportModeId"); } }
-       
-	 
-    private grossWeight: number;
-    public get GrossWeight() { return this.grossWeight; }
-    public set GrossWeight(newValue: number) { if (this.grossWeight != newValue) { this.grossWeight = newValue; this.MarkAsDirty("GrossWeight"); } }
-       
-	 
-    private chargeableWeight: number;
-    public get ChargeableWeight() { return this.chargeableWeight; }
-    public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
-       
-	 
-    private tEU: number;
-    public get TEU() { return this.tEU; }
-    public set TEU(newValue: number) { if (this.tEU != newValue) { this.tEU = newValue; this.MarkAsDirty("TEU"); } }
-       
-	 
-    private packagesQuantity: number;
-    public get PackagesQuantity() { return this.packagesQuantity; }
-    public set PackagesQuantity(newValue: number) { if (this.packagesQuantity != newValue) { this.packagesQuantity = newValue; this.MarkAsDirty("PackagesQuantity"); } }
-       
-	 
-    private shipmentTypeId: string;
-    public get ShipmentTypeId() { return this.shipmentTypeId; }
-    public set ShipmentTypeId(newValue: string) { if (this.shipmentTypeId != newValue) { this.shipmentTypeId = newValue; this.MarkAsDirty("ShipmentTypeId"); } }
-       
-	 
+
     private agentId: string;
     public get AgentId() { return this.agentId; }
     public set AgentId(newValue: string) { if (this.agentId != newValue) { this.agentId = newValue; this.MarkAsDirty("AgentId"); } }
-       
-	 
+
+
     private directionId: string;
     public get DirectionId() { return this.directionId; }
     public set DirectionId(newValue: string) { if (this.directionId != newValue) { this.directionId = newValue; this.MarkAsDirty("DirectionId"); } }
-       
-	 
+
+
     private fromPortId: string;
     public get FromPortId() { return this.fromPortId; }
     public set FromPortId(newValue: string) { if (this.fromPortId != newValue) { this.fromPortId = newValue; this.MarkAsDirty("FromPortId"); } }
-       
-	 
+
+
     private toPortId: string;
     public get ToPortId() { return this.toPortId; }
     public set ToPortId(newValue: string) { if (this.toPortId != newValue) { this.toPortId = newValue; this.MarkAsDirty("ToPortId"); } }
-       
-	 
+
+
     private statusCode: string;
     public get StatusCode() { return this.statusCode; }
-    public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
-       
-	 
-    private routing: string;
-    public get Routing() { return this.routing; }
-    public set Routing(newValue: string) { if (this.routing != newValue) { this.routing = newValue; this.MarkAsDirty("Routing"); } }
-       
-	 
-    private statusName: string;
-    public get StatusName() { return this.statusName; }
-    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
-       
-	 
-    private transportModeName: string;
-    public get TransportModeName() { return this.transportModeName; }
-    public set TransportModeName(newValue: string) { if (this.transportModeName != newValue) { this.transportModeName = newValue; this.MarkAsDirty("TransportModeName"); } }
-       
-	 
-    private shipmentLevelCode: string;
-    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
-    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
-       
-	 
-    private shipmentLevelName: string;
-    public get ShipmentLevelName() { return this.shipmentLevelName; }
-    public set ShipmentLevelName(newValue: string) { if (this.shipmentLevelName != newValue) { this.shipmentLevelName = newValue; this.MarkAsDirty("ShipmentLevelName"); } }
-       
-	 
+    public set StatusCode(newValue: string) { if (this.searchFields != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
+
+
+
+    private grossWeight: number;
+    public get GrossWeight() { return this.grossWeight; }
+    public set GrossWeight(newValue: number) { if (this.grossWeight != newValue) { this.grossWeight = newValue; this.MarkAsDirty("GrossWeight"); } }
+
+
+
+    private chargeableWeight: number;
+    public get ChargeableWeight() { return this.chargeableWeight; }
+    public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
+
+
+    private tEU: number;
+    public get TEU() { return this.tEU; }
+    public set TEU(newValue: number) { if (this.tEU != newValue) { this.tEU = newValue; this.MarkAsDirty("TEU"); } }
+
+
+    private packagesQuantity: number;
+    public get PackagesQuantity() { return this.packagesQuantity; }
+    public set PackagesQuantity(newValue: number) { if (this.packagesQuantity != newValue) { this.packagesQuantity = newValue; this.MarkAsDirty("PackagesQuantity"); } }
+
     private cancelledBySenderAgent: boolean;
     public get CancelledBySenderAgent() { return this.cancelledBySenderAgent; }
     public set CancelledBySenderAgent(newValue: boolean) { if (this.cancelledBySenderAgent != newValue) { this.cancelledBySenderAgent = newValue; this.MarkAsDirty("CancelledBySenderAgent"); } }
-       
-	 
+
+
+
+    
      
 	private sharedManifestTranslations: SharedManifestTranslationPM[];
     get  SharedManifestTranslations() {
@@ -181,10 +152,7 @@ export class AgentSharedManifestPM {
     public OldEntityPM: AgentSharedManifestPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -192,7 +160,6 @@ export class AgentSharedManifestPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AgentSharedManifest");
            
         }
-	 }
     }
     private MyClone: AgentSharedManifestPM;
 

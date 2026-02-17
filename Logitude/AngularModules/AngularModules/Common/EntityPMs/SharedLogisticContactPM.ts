@@ -1,4 +1,4 @@
-
+﻿
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 export class SharedLogisticContactPM {
@@ -73,38 +73,6 @@ export class SharedLogisticContactPM {
     private lastLoginDate: string;
     public get LastLoginDate() { return this.lastLoginDate; }
     public set LastLoginDate(newValue: string) { this.lastLoginDate = newValue; this.MarkAsDirty(); }
-
-    private isCargoTrackingInvitation: boolean;
-    public get IsCargoTrackingInvitation() { return this.isCargoTrackingInvitation; }
-    public set IsCargoTrackingInvitation(newValue: boolean) { this.isCargoTrackingInvitation = newValue; this.MarkAsDirty(); }
-
-    private templateId: string;
-    public get TemplateId() { return this.templateId; }
-    public set TemplateId(newValue: string) { this.templateId = newValue; this.MarkAsDirty(); }
-
-    private isDigitalPortal: boolean;
-    public get IsDigitalPortal() { return this.isDigitalPortal; }
-    public set IsDigitalPortal(newValue: boolean) { this.isDigitalPortal = newValue; this.MarkAsDirty(); }
-
-    private hTMLTemplate: string;
-    public get HTMLTemplate() { return this.hTMLTemplate; }
-    public set HTMLTemplate(newValue: string) { this.hTMLTemplate = newValue; this.MarkAsDirty(); }
-
-    private toEmail: string;
-    public get ToEmail() { return this.toEmail; }
-    public set ToEmail(newValue: string) { this.toEmail = newValue; this.MarkAsDirty(); }
-
-    private subject: string;
-    public get Subject() { return this.subject; }
-    public set Subject(newValue: string) { this.subject = newValue; this.MarkAsDirty(); }
-
-    private cc: string;
-    public get Cc() { return this.cc; }
-    public set Cc(newValue: string) { this.cc = newValue; this.MarkAsDirty(); }
-
-    private bcc: string;
-    public get Bcc() { return this.bcc; }
-    public set Bcc(newValue: string) { this.bcc = newValue; this.MarkAsDirty(); }
 
     public OldEntityPM: SharedLogisticContactPM;
 

@@ -20,7 +20,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string GlobalZoneName { get; set; }
         public string SearchFields { get; set; }
         public bool HasCitiesList { get; set; }
-        public bool IsNorthAmerica { get; set; }
-        public bool IsGreaterChina { get; set; }
     }
 }

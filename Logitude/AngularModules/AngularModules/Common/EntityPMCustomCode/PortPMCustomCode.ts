@@ -1,10 +1,9 @@
-import {PortPM} from '../EntityPMs/PortPM';
+﻿import {PortPM} from '../EntityPMs/PortPM';
 import { IncotermListService } from '../../Common/Services/StandardLists/IncotermListService';
 import { StateList } from '../../Common/EntityLists/StateList';
 import { StateListService } from '../../Common/Services/StandardLists/StateListService';
 import { CountryList } from '../../Common/EntityLists/CountryList';
 import { CountryListService } from '../../Common/Services/StandardLists/CountryListService';
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 
 export class PortPMCustomCode {
     public static ObjectTableName = "Port";
@@ -13,11 +12,10 @@ export class PortPMCustomCode {
     public static State: StateList; 
 
     public static ApplyEntityChanged(propertyName: string, entityPM: PortPM) {
-        this.entityPM = entityPM;      
-
+        this.entityPM = entityPM;
         if (propertyName == "CountryId" && entityPM.CountryId) {
             var countryService = new CountryListService();
-            countryService.getSingleFromCache(entityPM.CountryId).subscribe((response:any) => {
+            countryService.getSingleFromCache(entityPM.CountryId).subscribe(response => {
                 if (response.Result) {
                     this.Country = response.Result;
                     this.OnCountryChanged(this.Country);
@@ -27,7 +25,7 @@ export class PortPMCustomCode {
         if (propertyName == "StateId") {
             if (entityPM.StateId) {
                 var stateService = new StateListService();
-                stateService.getSingleFromCache(entityPM.StateId).subscribe((response:any) => {
+                stateService.getSingleFromCache(entityPM.StateId).subscribe(response => {
                     if (response.Result) {
                         this.State = response.Result;
                         this.OnStateChanged(this.State);

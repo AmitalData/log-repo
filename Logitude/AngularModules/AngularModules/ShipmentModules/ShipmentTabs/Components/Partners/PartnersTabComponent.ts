@@ -16,16 +16,13 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {NewEntityArgs} from '../../../../Infrastructure/Args';
-import { AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import {AppTool} from '../../../../Infrastructure/Tools';
 import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
 import {AddEditPartnerArgs} from '../../../../Shipment/Args';
-import { ShipmentTool, ShipmentGenerator} from '../../../../Shipment/Tools';
-import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
-import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { ShipmentUnassignedFieldPM } from '../../../../Shipment/EntityPMs/ShipmentUnassignedFieldPM';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {ShipmentTool} from '../../../../Shipment/Tools';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './PartnersTabComponent.html',
 })
 
@@ -34,21 +31,9 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     public ObjectTableName: string;
     public ItemsCollection: PartnerItem[];
     private CurrentSession = SessionLocator.SelectedSession;
-    public AllRates: LastRate[] = [];
-    public IsUnassigedValidationVisible: boolean = false;    
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
-        this.ObjectTableName = this.entityArgs.ObjectTableName;        
-        this.IsUnassigedValidationVisible = false;
-
-        if (this.EntityPM.HasUnassignedData && FeatureLocator.HasFeaturePermession("Shipment", "UpdateUnassignedData")) {
-            var myList: ShipmentUnassignedFieldPM[] = this.EntityPM.ShipmentUnassignedFields.filter(s => AppTool.IsNullOrEmpty(s.ReplacedDataId));
-
-            if (myList.length > 0) {
-                this.IsUnassigedValidationVisible = true;
-            }
-        }
-
+        this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.InitializeServices();
         this.Listen();
     }
@@ -62,10 +47,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "AWBWizardClosed") {
-                    this.UpdateScreen();
-                }
-
-                else if (s == "ShipmentUnassignedDataChanged") {
                     this.UpdateScreen();
                 }
             });
@@ -108,7 +89,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     ngOnInit() {        
         if (this.EntityPM != null) {
             this.UpdateScreen();
-            this.LoadAllRates();
         }
     }
 
@@ -188,20 +168,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
         if (this.EntityPM.ReleasingAgentId != null) {
             this.ItemsCollection.push(new PartnerItem(this, "REAGT"));
         }
-
-        if (this.EntityPM.TruckerId != null) {
-            this.ItemsCollection.push(new PartnerItem(this, "TRUCK"));
-        }
-    }
-
-    LoadAllRates() {
-        var todayDate: Date = DateTool.GetCurrentDateAsUtc();
-        var myCurrencyRatesService: CurrencyRatesService = new CurrencyRatesService();
-        myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.AllRates = myResponse.Result;
-            }
-        });
     }
 
     get ShowAddPartners() {
@@ -210,7 +176,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     get IsEditDisabled() {
         return SessionLocator.TenantPM.IsHybrid ? true : false;
     }
-    public IsAddDisabled_TRUCK: boolean = false;
+   
     public IsAddDisabled_SHIPR: boolean = false;
     public IsAddDisabled_CONSI: boolean = false;
     public IsAddDisabled_AGENT: boolean = false;
@@ -242,7 +208,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
         this.IsAddDisabled_CLERN = this.EntityPM.CustomClearancePointId == null ? false : true;
         this.IsAddDisabled_CONSL = this.EntityPM.ConsolidatorId == null ? false : true;
         this.IsAddDisabled_REAGT = this.EntityPM.ReleasingAgentId == null ? false : true;
-        this.IsAddDisabled_TRUCK = this.EntityPM.TruckerId == null ? false : true;
     }
 
     AddPartner(myCode: string) {
@@ -255,18 +220,14 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             case "CLERN": { myWindowTitle = "Add Custom Clearance Point"; break }
             case "CONSL": { myWindowTitle = "Add Consolidator"; break }
             case "REAGT": { myWindowTitle = "Add Releasing Agent"; break }
-            case "TRUCK": { myWindowTitle = "Add Trucker"; break }
-
             default: {
                 myWindowTitle = TextCodeTranslator.Translate("Shipment.S.Partners.Add" + newPartnerItem.FullCode);
                 break;
-
             }
         }
 
         this.RunAddEditPartner(newPartnerItem, myWindowTitle);       
-    };            
-
+    };
     EditPartner(myPartnerItem: PartnerItem) {
 
         var myWindowTitle: string;
@@ -275,8 +236,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             case "CLERN": { myWindowTitle = "Edit Custom Clearance Point"; break }
             case "CONSL": { myWindowTitle = "Edit Consolidator"; break }
             case "REAGT": { myWindowTitle = "Edit Releasing Agent"; break }
-            case "TRUCK": { myWindowTitle = "Edit Trucker"; break }
-
             default: {
                 myWindowTitle = TextCodeTranslator.Translate("Shipment.S.Partners.Edit" + myPartnerItem.FullCode);
                 break;
@@ -303,8 +262,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             confirmWindow.Show(TextCodeTranslator.Translate("Shipment.M.DeleteThisPartner"));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    this.DeleteUassignedPartners(myPartnerItem.Code);
-                    this.DeleteCustomAgentPartners(myPartnerItem.Code, myPartnerItem.PartnerId);
                     if (myPartnerItem.IsCustomer) {
                         this.SetDefaultCustomer();
                     }
@@ -325,55 +282,6 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             });
         }
     }
-
-    private deletedCustomsPartnersIds: string;
-    private DeleteCustomAgentPartners(code: string, partnerId) {
-        if (code == "CSAEX" || code == "CSAIM") {
-            if (AppTool.IsNullOrEmpty(this.deletedCustomsPartnersIds)) {
-                this.deletedCustomsPartnersIds = partnerId;
-            }
-
-            else {
-                if (this.deletedCustomsPartnersIds.indexOf(partnerId) == -1) {
-                    this.deletedCustomsPartnersIds = this.deletedCustomsPartnersIds + "," + partnerId;
-                }
-            }
-
-            SessionLocator.ChangedShipmentPartnersIds = this.deletedCustomsPartnersIds;
-
-            if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff && d.VendorId == partnerId).length > 0) {
-                this.CurrentSession.FireEvent("UpdateCustomsCharges");
-            }
-        }
-    }
-
-    DeleteUassignedPartners(code: string) {
-        if (!["CONSI", "SHIPR", "SHPNT", "CONNT"].includes(code))
-            return;
-
-        if (code == "SHIPR") {
-            this.RemoveUnassignedPartner("Shipper");
-        }
-
-        else if (code == "CONSI") {
-            this.RemoveUnassignedPartner("Consignee");
-        }
-
-        else if (code == "SHPNT") {
-            this.RemoveUnassignedPartner("ShipperNotExporter");
-        }
-
-        else if (code == "CONNT") {
-            this.RemoveUnassignedPartner("ConsigneeNotImporter");
-        }
-    }
-    RemoveUnassignedPartner(fieldName : string ) {
-        var shipperUnassigned = this.EntityPM.ShipmentUnassignedFields.find(x => x.FieldName == fieldName);
-        if (shipperUnassigned != null) {
-            this.EntityPM.RemoveShipmentUnassignedFields(shipperUnassigned);
-        }
-    }
-    
     SetDefaultCustomer() {
         if (this.EntityPM.ShipmentLevelCode == "C") {
             this.EntityPM.CustomerId = null;
@@ -499,17 +407,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
                 });
             }
         }
-
-        this.UpdateVatAmountsOfShipmentReceivables();
     }
-
-    private UpdateVatAmountsOfShipmentReceivables() {
-        var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-        this.EntityPM.ShipmentReceivables.forEach(item => {
-            Generator.CalculateReceivableVatAmount(item);
-        });
-    }
-
     UpdateSalesmanClicked() {
         if (this.SalesmanUpdated) {
             this.EntityPM.SalesmanUserId = this.UpdateSalesmanId;
@@ -526,11 +424,6 @@ export class PartnerItem extends BaseComponent {
     public EntityPM: ShipmentPM;
     public Code: string;
     public ObjectTableName: string = "Shipment";
-    public IsInlandDomestic: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
-    public IsPartnerUnassigned: boolean = false;
-    public IsEditPartnerEnabled: boolean = false;
-    public PartnerHeaderClassName: string = "Title";
     constructor(public fatherComponent: PartnersTabComponent, typeCode: string) {
         super();
         this.EntityPM = fatherComponent.EntityPM;
@@ -540,12 +433,6 @@ export class PartnerItem extends BaseComponent {
         this.SetRemoveButtonVisibility();
         this.GetPartnerAddress();
         this.GetPartnerContact();
-        this.SetIsPartnerUnassigned();
-        this.SetEditPartnerEnabled();
-
-        if (this.EntityPM != null) {
-           this.IsInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
-        }
     }
 
     public IsEditingEnabled: boolean = true;
@@ -588,78 +475,15 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { this.PartnerIndex = 13; this.FullCode = "CustomClearancePoint"; break }
             case "CONSL": { this.PartnerIndex = 14; this.FullCode = "Consolidator"; break }
             case "REAGT": { this.PartnerIndex = 15; this.FullCode = "ReleasingAgent"; break }
-            case "TRUCK": { this.PartnerIndex = 15; this.FullCode = "Trucker"; break }
         }
 
         this.PartnerTypeName = TextCodeTranslator.Translate("Shipment.F." + this.FullCode + "Id");
-    }
-
-    SetIsPartnerUnassigned() {
-        this.IsPartnerUnassigned = false;
-
-        if (this.fatherComponent.IsUnassigedValidationVisible) {
-            switch (this.Code) {
-                case "SHIPR": {
-                    if (this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Shipper" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0) {
-                        this.IsPartnerUnassigned = true;
-                        this.PartnerHeaderClassName = "Unassigned";
-                    }
-                    break
-                }
-
-                case "CONSI": {
-                    if (this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Consignee" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0) {
-                        this.IsPartnerUnassigned = true;
-                        this.PartnerHeaderClassName = "Unassigned";
-                    }
-                    break
-                }
-
-                case "SHPNT": {
-                    if (this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "ShipperNotExporter" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0) {
-                        this.IsPartnerUnassigned = true;
-                        this.PartnerHeaderClassName = "Unassigned";
-                    }
-                    break
-                }
-
-                case "CONNT": {
-                    if (this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "ConsigneeNotImporter" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0) {
-                        this.IsPartnerUnassigned = true;
-                        this.PartnerHeaderClassName = "Unassigned";
-                    }
-                    break
-                }
-            }
-        }
-    }
-
-    SetEditPartnerEnabled() {
-        this.IsEditPartnerEnabled = SessionLocator.TenantPM.IsHybrid ? false : true;
-
-        switch (this.Code) {
-            case "CONSI":
-            case "SHIPR":
-            case "SHPNT":
-            case "CONNT":
-                {
-                    if (this.IsPartnerUnassigned) {
-                        this.IsEditPartnerEnabled = false;
-                    }
-                    break
-                }
-        }
     }
 
     get CardDependencyProperty1() {
         var myResult: string = null;
 
         switch (this.Code) {
-            case "TRUCK":
-                {
-                    myResult = "TR";
-                    break;
-                }
             case "SHIPR":
             case "CONSI":
             case "CSTMR":
@@ -668,36 +492,18 @@ export class PartnerItem extends BaseComponent {
 
                     if (this.EntityPM.ShipmentLevelCode == "C") {
                         myResult = "AG";
-
-                        if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
-                            myResult = "CS,AG";
-                        }
                     }
 
                     else {
                         if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
                             myResult = "CS,AG";
                         }
-
-                        if (this.IsInlandDomestic) {
-                            myResult = myResult + ",WH";
-                        }
                     }
 
-                    break;
+                    break
                 }
 
             case "AGENT":
-                {
-                    myResult = "AG";
-
-                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
-                        myResult = "CS,AG";
-                    }
-
-                    break;
-                }
-
             case "ISSAG":
             case "FRTFR":
             case "COLOD":
@@ -709,7 +515,7 @@ export class PartnerItem extends BaseComponent {
             case "CSAEX":
             case "CSAIM":
                 {
-                    myResult = "CG,AG";
+                    myResult = "CG";
                     break;
                 }
 
@@ -723,13 +529,9 @@ export class PartnerItem extends BaseComponent {
 
             case "SHPNT":
             case "CONNT":
-                {
-                    myResult = "AG,CS";
-                    break;
-                }
             case "CONSL":
                 {
-                    myResult = "AG,CS,SG";
+                    myResult = "AG,CS";
                     break;
                 }
 
@@ -755,32 +557,13 @@ export class PartnerItem extends BaseComponent {
             case "CONSI":
             case "CSTMR":
                 {
-                    if (this.EntityPM.ShipmentLevelCode == "C") {
-                        if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
-                            myResult = true;
-                        }
-                    }
-
-                    else {
+                    if (this.EntityPM.ShipmentLevelCode != "C") {
                         if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
                             myResult = true;
                         }
-
-                        if (this.IsInlandDomestic) {
-                            myResult = true;
-                        }
                     }
 
-                    break;
-                }
-
-            case "AGENT":
-                {
-                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
-                        myResult = true;
-                    }
-
-                    break;
+                    break
                 }
 
             case "REAGT":
@@ -789,8 +572,6 @@ export class PartnerItem extends BaseComponent {
             case "SHPNT":
             case "CONNT":
             case "CONSL":
-            case "CSAEX":
-            case "CSAIM":
                 {
                     myResult = true;
                     break;
@@ -823,19 +604,12 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.EntityPM.CustomClearancePointName; }
             case "CONSL": { return this.EntityPM.ConsolidatorName; }
             case "REAGT": { return this.EntityPM.ReleasingAgentName; }
-            case "TRUCK": { return this.EntityPM.TruckerName; }
             default: { return null; }
         }
     }
     set Name(newValue: string) {
         switch (this.Code) {
-            case "TRUCK": {
-                if (this.EntityPM.TruckerName != newValue) {
-                    this.EntityPM.TruckerName = newValue
-                }
 
-                break;
-            }
             case "SHIPR": {
                 if (this.EntityPM.ShipperName != newValue) {
                     this.EntityPM.ShipperName = newValue
@@ -981,19 +755,12 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.EntityPM.CustomClearancePointNote; }
             case "CONSL": { return this.EntityPM.ConsolidatorNote; }
             case "REAGT": { return this.EntityPM.ReleasingAgentNote; }
-            case "TRUCK": { return this.EntityPM.TruckerNote; }
             default: { return null; }
         }
     }
     set Note(newValue: string) {
         switch (this.Code) {
-            case "TRUCK": {
-                if (this.EntityPM.TruckerNote != newValue) {
-                    this.EntityPM.TruckerNote = newValue
-                }
 
-                break;
-            }
             case "SHIPR": {
                 if (this.EntityPM.ShipperNote != newValue) {
                     this.EntityPM.ShipperNote = newValue
@@ -1124,35 +891,12 @@ export class PartnerItem extends BaseComponent {
     }
 
     get IsCustomer() {
-        return (this.PartnerId == this.EntityPM.CustomerId && this.PartnerCustomerTypeCode == this.EntityPM.ShipmentCustomerTypeCode) ? true : false;
+        return (this.PartnerId == this.EntityPM.CustomerId) ? true : false;
     }
 
     SetAsCustomer() {
-        if (this.EntityPM.CustomerId != this.PartnerId && this.EntityPM.ShipmentProductItems.length > 0) {
-            if (ShipmentTool.IsShipmentProductItemsEmpty(this.EntityPM.ShipmentProductItems)) {
-                this.ContinueChangeCustomer();
-            }
 
-            else {
-                this.ShowDeleteProductItemsConfirmation();
-            }
-        }
-
-        else {
-            this.ContinueChangeCustomer();
-        }
-    }
-    private ShowDeleteProductItemsConfirmation() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("All product items in this shipment will be deleted");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.EntityPM.ShipmentProductItems = [];
-                this.ContinueChangeCustomer();                
-            }
-        });
-    }
-    private ContinueChangeCustomer() {
+        //|| this.CardDependencyProperty1 != "CS"
         if (this.EntityPM.ShipmentLevelCode == "C") {
             this.EntityPM.CustomerName = null;
             this.EntityPM.CustomerNote = null;
@@ -1192,14 +936,11 @@ export class PartnerItem extends BaseComponent {
                 case "CLERN": { this.EntityPM.ShipmentCustomerTypeCode = "CCP"; break; }
                 case "CONSL": { this.EntityPM.ShipmentCustomerTypeCode = "CSD"; break; }
                 case "REAGT": { this.EntityPM.ShipmentCustomerTypeCode = "REA"; break; }
-                case "TRUCK": { this.EntityPM.ShipmentCustomerTypeCode = "TRK"; break; }
-
                 default: { this.EntityPM.ShipmentCustomerTypeCode = "OTH"; break; }
             }
         }
 
         this.fatherComponent.OnCustomerChanged();
-        this.CurrentSession.FireEvent("ShipmentCustomerChanged");
     }
 
     public IsRemoveButtonVisible: boolean = false;
@@ -1243,30 +984,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return "CustomClearancePointId"; }
             case "CONSL": { return "ConsolidatorId"; }
             case "REAGT": { return "ReleasingAgentId"; }
-            case "TRUCK": { return "TruckerId"; }
             default: { return null; }
-        }
-    }
-
-    get PartnerCustomerTypeCode() {
-        switch (this.Code) {
-            case "SHIPR": { return "SHI"; }
-            case "CONSI": { return "CON"; }
-            case "AGENT": { return "AGT"; }            
-            case "ISSAG": { return "IGT"; }
-            case "CSAEX": { return "CAE"; }
-            case "CSAIM": { return "CAI"; }
-            case "NOTF1": { return "NT1"; }
-            case "NOTF2": { return "NT2"; }
-            case "SHPNT": { return "SNE"; }
-            case "CONNT": { return "CNI"; }
-            case "FRTFR": { return "FOR"; }
-            case "COLOD": { return "COL"; }
-            case "CLERN": { return "CCP"; }
-            case "CONSL": { return "CSD"; }
-            case "REAGT": { return "REA"; }
-            case "TRUCK": { return "TRK";}
-            default: { return "OTH"; }
         }
     }
 
@@ -1288,7 +1006,6 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.CustomClearancePointId; }
             case "CONSL": { return this.ConsolidatorId; }
             case "REAGT": { return this.ReleasingAgentId; }
-            case "TRUCK": { return this.TruckerId; }
             default: { return null; }
         }
     }
@@ -1309,18 +1026,7 @@ export class PartnerItem extends BaseComponent {
             case "COLOD": { this.ColoaderId = newValue; break; }
             case "CLERN": { this.CustomClearancePointId = newValue; break; }
             case "CONSL": { this.ConsolidatorId = newValue; break; }
-            case "REAGT": { this.ReleasingAgentId = newValue; break; }
-            case "TRUCK": { this.TruckerId = newValue; break; }
-        }
-    }
-
-    get TruckerId() {
-        return this.EntityPM.TruckerId;
-    }
-    set TruckerId(newValue: string) {
-        if (this.EntityPM.TruckerId != newValue) {
-            this.EntityPM.TruckerId = newValue;
-            this.GetPartnerCard();
+            case "REAGT": { this.ReleasingAgentId = newValue; break;}
         }
     }
 
@@ -1382,7 +1088,7 @@ export class PartnerItem extends BaseComponent {
     set CustomAgentExportId(newValue: string) {
         if (this.EntityPM.CustomAgentExportId != newValue) {
             this.EntityPM.CustomAgentExportId = newValue;
-            this.GetPartnerCard();            
+            this.GetPartnerCard();
         }
     }
 
@@ -1505,7 +1211,6 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return "CustomClearancePointAddressId"; }
             case "CONSL": { return "ConsolidatorAddressId"; }
             case "REAGT": { return "ReleasingAgentAddressId"; }
-            case "TRUCK": { return "TruckerAddressId"; }
             default: { return null; }
         }
     }
@@ -1528,7 +1233,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.CustomClearancePointAddressId; }
             case "CONSL": { return this.ConsolidatorAddressId; }
             case "REAGT": { return this.ReleasingAgentAddressId; }
-            case "TRUCK": { return this.TruckerAddressId; }
+
             default: { return null; }
         }
     }
@@ -1550,18 +1255,10 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { this.CustomClearancePointAddressId = newValue; break; }
             case "CONSL": { this.ConsolidatorAddressId = newValue; break; }
             case "REAGT": { this.ReleasingAgentAddressId = newValue; break; }
-            case "TRUCK": { this.TruckerAddressId = newValue; break; }
+
         }
     }
-    get TruckerAddressId() {
-        return this.EntityPM.TruckerAddressId;
-    }
-    set TruckerAddressId(newValue: string) {
-        if (this.EntityPM.TruckerAddressId != newValue) {
-            this.EntityPM.TruckerAddressId = newValue;
-            this.GetPartnerAddress();
-        }
-    }
+
     get ShipperAddressId() {
         return this.EntityPM.ShipperAddressId;
     }
@@ -1720,7 +1417,7 @@ export class PartnerItem extends BaseComponent {
             this.GetPartnerAddress();
         }
     }
-
+    
     // ContactId
     get PartnerContactIdProperty() {
         switch (this.Code) {
@@ -1740,7 +1437,6 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return "CustomClearancePointContactId"; }
             case "CONSL": { return "ConsolidatorContactId"; }
             case "REAGT": { return "ReleasingAgentContactId"; }
-            case "TRUCK": { return "TruckerContactId"; }
             default: { return null; }
         }
     }
@@ -1763,7 +1459,7 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { return this.CustomClearancePointContactId; }
             case "CONSL": { return this.ConsolidatorContactId; }
             case "REAGT": { return this.ReleasingAgentContactId; }
-            case "TRUCK": { return this.TruckerContactId; }
+
             default: { return null; }
         }
     }
@@ -1785,17 +1481,6 @@ export class PartnerItem extends BaseComponent {
             case "CLERN": { this.CustomClearancePointContactId = newValue; break; }
             case "CONSL": { this.ConsolidatorContactId = newValue; break; }
             case "REAGT": { this.ReleasingAgentContactId = newValue; break; }
-            case "TRUCK": { this.TruckerContactId = newValue; break; }
-        }
-    }
-
-    get TruckerContactId() {
-        return this.EntityPM.TruckerContactId;
-    }
-    set TruckerContactId(newValue: string) {
-        if (this.EntityPM.TruckerContactId != newValue) {
-            this.EntityPM.TruckerContactId = newValue;
-            this.GetPartnerContact();
         }
     }
 
@@ -1948,13 +1633,12 @@ export class PartnerItem extends BaseComponent {
             this.GetPartnerContact();
         }
     }
-
+    
     // Reference1
     get HasReference1() {
         var myResult: boolean = false;
 
         switch (this.Code) {
-            case "TRUCK":
             case "SHIPR":
             case "CONSI":
             case "AGENT":
@@ -1994,9 +1678,8 @@ export class PartnerItem extends BaseComponent {
             case "REAGT": { return "ReleasingAgentReference1"; }
             case "NOTF1": { return "Notify1Reference"; }
             case "NOTF2": { return "Notify2Reference"; }
-            case "SHPNT": { return "ShipperNotExporterReference1"; }
+            case "SHPNT": { return "ShipperNotExporterReference"; }
             case "CONNT": { return "ConsigneeNotImporterReference"; }
-            case "TRUCK": { return "TruckerReference1"; }
             default: { return null; }
         }
     }
@@ -2016,9 +1699,8 @@ export class PartnerItem extends BaseComponent {
             case "REAGT": { return this.ReleasingAgentReference1; }
             case "NOTF1": { return this.Notify1Reference; }
             case "NOTF2": { return this.Notify2Reference; }
-            case "SHPNT": { return this.ShipperNotExporterReference1; }
+            case "SHPNT": { return this.ShipperNotExporterReference; }
             case "CONNT": { return this.ConsigneeNotImporterReference; }
-            case "TRUCK": { return this.TruckerReference1; }
             default: { return null; }
         }
     }
@@ -2038,18 +1720,8 @@ export class PartnerItem extends BaseComponent {
             case "REAGT": { this.ReleasingAgentReference1 = newValue; break; }
             case "NOTF1": { this.Notify1Reference = newValue; break; }
             case "NOTF2": { this.Notify2Reference = newValue; break; }
-            case "SHPNT": { this.ShipperNotExporterReference1 = newValue; break; }
+            case "SHPNT": { this.ShipperNotExporterReference = newValue; break; }
             case "CONNT": { this.ConsigneeNotImporterReference = newValue; break; }
-            case "TRUCK": { this.TruckerReference1 = newValue; break; }
-        }
-    }
-
-    get TruckerReference1() {
-        return this.EntityPM.TruckerReference1;
-    }
-    set TruckerReference1(newValue: string) {
-        if (this.EntityPM.TruckerReference1 != newValue) {
-            this.EntityPM.TruckerReference1 = newValue;
         }
     }
 
@@ -2164,13 +1836,6 @@ export class PartnerItem extends BaseComponent {
         }
     }
 
-    get Notify1Reference2() { return this.EntityPM.Notify1Reference2; }
-    set Notify1Reference2(value: string) {
-        if (this.EntityPM.Notify1Reference2 != value) {
-            this.EntityPM.Notify1Reference2 = value;
-        }
-    }
-
     get Notify2Reference() { return this.EntityPM.Notify2Reference; }
     set Notify2Reference(value: string) {
         if (this.EntityPM.Notify2Reference != value) {
@@ -2178,10 +1843,10 @@ export class PartnerItem extends BaseComponent {
         }
     }
 
-    get ShipperNotExporterReference1() { return this.EntityPM.ShipperNotExporterReference1; }
-    set ShipperNotExporterReference1(value: string) {
-        if (this.EntityPM.ShipperNotExporterReference1 != value) {
-            this.EntityPM.ShipperNotExporterReference1 = value;
+    get ShipperNotExporterReference() { return this.EntityPM.ShipperNotExporterReference; }
+    set ShipperNotExporterReference(value: string) {
+        if (this.EntityPM.ShipperNotExporterReference != value) {
+            this.EntityPM.ShipperNotExporterReference = value;
         }
     }
 
@@ -2197,14 +1862,11 @@ export class PartnerItem extends BaseComponent {
         var myResult: boolean = false;
 
         switch (this.Code) {
-            case "TRUCK":
             case "SHIPR":
             case "CONSI":
             case "AGENT":
-            case "REAGT":
+            case"REAGT":
             case "CSTMR":
-            case "NOTF1":
-            case "SHPNT":
                 {
                     myResult = true;
                 }
@@ -2219,9 +1881,6 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return "AgentReference2"; }
             case "CSTMR": { return "CustomerReference2"; }
             case "REAGT": { return "ReleasingAgentReference2"; }
-            case "NOTF1": { return "Notify1Reference2"; }
-            case "SHPNT": { return "ShipperNotExporterReference2"; }
-            case "TRUCK": { return "TruckerReference2"; }
             default: { return null; }
         }
     }
@@ -2232,9 +1891,6 @@ export class PartnerItem extends BaseComponent {
             case "AGENT": { return this.AgentReference2; }
             case "CSTMR": { return this.CustomerReference2; }
             case "REAGT": { return this.ReleasingAgentReference2; }
-            case "NOTF1": { return this.Notify1Reference2; }
-            case "SHPNT": { return this.ShipperNotExporterReference2; }
-            case "TRUCK": { return this.TruckerReference2; }
             default: { return null; }
         }
     }
@@ -2244,20 +1900,7 @@ export class PartnerItem extends BaseComponent {
             case "CONSI": { this.ConsigneeReference2 = newValue; break; }
             case "AGENT": { this.AgentReference2 = newValue; break; }
             case "CSTMR": { this.CustomerReference2 = newValue; break; }
-            case "REAGT": { this.ReleasingAgentReference2 = newValue; break; }
-            case "NOTF1": { this.Notify1Reference2 = newValue; break; }
-            case "SHPNT": { this.ShipperNotExporterReference2; }
-            case "TRUCK": { this.TruckerReference2; }
-
-        }
-    }
-
-    get TruckerReference2() {
-        return this.EntityPM.TruckerReference2;
-    }
-    set TruckerReference2(newValue: string) {
-        if (this.EntityPM.TruckerReference2 != newValue) {
-            this.EntityPM.TruckerReference2 = newValue;
+            case "REAGT": { this.ReleasingAgentReference2 = newValue; break;  }
         }
     }
 
@@ -2303,13 +1946,6 @@ export class PartnerItem extends BaseComponent {
     set ReleasingAgentReference2(newValue: string) {
         if (this.EntityPM.ReleasingAgentReference2 != newValue) {
             this.EntityPM.ReleasingAgentReference2 = newValue;
-        }
-    }
-
-    get ShipperNotExporterReference2() { return this.EntityPM.ShipperNotExporterReference2; }
-    set ShipperNotExporterReference2(value: string) {
-        if (this.EntityPM.ShipperNotExporterReference2 != value) {
-            this.EntityPM.ShipperNotExporterReference2 = value;
         }
     }
 
@@ -2516,14 +2152,13 @@ export class PartnerItem extends BaseComponent {
 
         else {
             var myPerspective: string = null;
-            var myComponentPath: string = null;
-            var isAgentPartner: boolean = this.IsAgentPartner();
+            var myComponentPath: string = null;            
 
-            if (isAgentPartner) {
+            if (this.CardDependencyProperty1 == "AG") {
                 myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
             }
 
-            else if (this.Code == "CLERN") {
+            else if (this.CardDependencyProperty1 == "WH") {
                 myComponentPath = "./CommonModules/CommonPartners/Components/NewEntity/NewWarehouseComponent";
             }
 
@@ -2533,7 +2168,7 @@ export class PartnerItem extends BaseComponent {
 
             else {
                 myComponentPath = "./CommonModules/CommonCustomer/Components/NewEntity/NewCustomerComponent";
-
+                
                 if (!this.IsCustomer) {
                     myPerspective = "ShippersAndConsignees";
                 }
@@ -2610,7 +2245,6 @@ export class PartnerItem extends BaseComponent {
                                             objectTableName = "Warehouse";
                                             break;
                                         }
-                                    case "TR": { objectTableName = "Trucker"; break; }
                                 }
 
                                 if (objectTableName != null) {
@@ -2661,19 +2295,7 @@ export class PartnerItem extends BaseComponent {
             }
         }
     }
-    IsAgentPartner(): boolean {
-        if (this.Code == "AGENT") {
-            return true;
-        }
 
-        else if (this.Code == "COLOD") {
-            return true;
-        }
-
-        else if (this.Code == "FRTFR") {
-            return true;
-        }
-    }
     // Add|Edit Address
     AddAddressClicked() {
 
@@ -2694,8 +2316,8 @@ export class PartnerItem extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Partners/AddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     this.AddressId = null;
@@ -2718,8 +2340,8 @@ export class PartnerItem extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Partners/AddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
 
@@ -2763,55 +2385,17 @@ export class PartnerItem extends BaseComponent {
                         var myPartnerId = cmp.CurrentPartnerId;
                         var myAddressId = cmp.CurrentAddressId;
 
-                        if (isNewPartner) {
-                            if (this.IssuingCarrierAgentId != myPartnerId) {
-                                this.IssuingCarrierAgentId = myPartnerId;
-                            }
-
-                            else {
-                                this.EntityPM.IssuingCarrierAddressId = myAddressId;
-                                this.GetPartnerCard();
-                            }
+                        if (this.IssuingCarrierAgentId != myPartnerId) {
+                            this.IssuingCarrierAgentId = myPartnerId;
                         }
 
                         else {
-
-                            if (this.Name != cmp.CardEnglishName) {
-                                this.Name = cmp.CardEnglishName;
-                            }
-
-                            if (this.IssuingCarrierAddressId != myAddressId) {
-                                this.IssuingCarrierAddressId = myAddressId;
-                            }
-
-                            else {
-                                this.GetPartnerAddress();
-                            }
-                        }
+                            this.EntityPM.IssuingCarrierAddressId = myAddressId;
+                            this.GetPartnerCard();
+                        } 
                     }
                 });
             });
-        }
-    }
-
-    AddContact() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 570;
-        logWindow.Title = "New Contact";
-        var args = new ContactInputTemplateArgs();
-        args.CustomerId = this.PartnerId;
-        args.CardDependencyProperty1 = this.CardDependencyProperty1;
-        args.CustomerLable = this.PartnerTypeName;
-        args.ComponentName = "Partners";
-        logWindow.WindowArgs = args;
-        logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewContactComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewContactWindowClosed($event));
-    }
-
-    OnNewContactWindowClosed(arg: any) {
-        if (arg != 'cancel') {
-            this.ContactId = arg;
         }
     }
 }

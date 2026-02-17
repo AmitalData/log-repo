@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
@@ -29,8 +29,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskSchedulerHistory.TaskId = TaskSchedulerHistoryPM.TaskId;
             TaskSchedulerHistory.LogFirstLine = TaskSchedulerHistoryPM.LogFirstLine;
             TaskSchedulerHistory.LogType = TaskSchedulerHistoryPM.LogType;
-
-            TaskSchedulerHistory.LogDocumentId = TaskSchedulerHistoryPM.LogDocumentId;
         }
     }
 }

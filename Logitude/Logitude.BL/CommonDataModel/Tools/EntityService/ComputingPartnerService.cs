@@ -5,12 +5,11 @@ using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
-using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -37,16 +36,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityRepository = new ComputingPartnerRepository(objectContext);
             this.computingPartnerTableRepository = new ComputingPartnerTableRepository(objectContext);
             this.GetLoggedContact();
-        }
-
-        public ComputingPartnerService(ICommonDataContext objectContext, ComputingPartnerPM entityPM, string loggedContactId)
-        {
-            this.tenant = entityPM.LoggedTenantId;
-            this.entityPM = entityPM;
-            this.objectContext = objectContext;
-            this.entityRepository = new ComputingPartnerRepository(objectContext);
-            this.computingPartnerTableRepository = new ComputingPartnerTableRepository(objectContext);
-            this.loggedContactId = loggedContactId;
         }
 
         private void GetLoggedContact()
@@ -127,9 +116,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         this.UpdatePartnerTables();
                         this.ComputingPartnerNameValidation(entityPM);
-
-                        ComputingPartnerTracing.Trace(entityPM, Poco, isNewEntity);
-                        
                         ComputingPartnerMapping.MapEntity(entityPM, Poco, isNewEntity);
 
                         entityRepository.Add(Poco);
@@ -183,9 +169,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         this.UpdatePartnerTables();
                         this.ComputingPartnerNameValidation(entityPM);
-
-                        ComputingPartnerTracing.Trace(entityPM, Poco, isNewEntity);
-
                         ComputingPartnerMapping.MapEntity(entityPM, Poco, isNewEntity);
 
                         entityRepository.Update(Poco);

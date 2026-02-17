@@ -1,7 +1,8 @@
-
+﻿
 // import the packages  
 import {  Injectable,EventEmitter} from '@angular/core';
-import { Observable, Subject } from "rxjs";
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 
 // declare the global variables  
@@ -21,6 +22,7 @@ export class SignalRGeneralService {
     private startingSubject = new Subject<any>();
 
     constructor() {
+        debugger;
         // Constructor initialization  
         this.connectionEstablished = new EventEmitter<Boolean>();
         this.messageReceived = new EventEmitter<ChannelEvent>();
@@ -73,6 +75,7 @@ export class SignalRGeneralService {
         });
     }
     private registerOnServerEvents(): void {
+        debugger;
         this.proxy.on('onEvent', (ev: ChannelEvent) => {
             console.log('received in SignalRService: ' + JSON.stringify(ev.Data));
             this.messageReceived.emit(ev);

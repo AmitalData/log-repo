@@ -39,12 +39,5 @@ namespace WebFreight.Web.DataProviders
         public string Notes { get; set; }
         public double? AccountedAmount { get; set; }
         public double? OpenAmount { get; set; }
-
-        public DateTime? FinalArrivalDate { get; set; }
-        public string TruckContainerNumber { get; set; }
-        public double? AccountedAmountInForeignCurrency { get; set; }
-        public double? OpenAmountInForeignCurrency { get; set; }
-        public string ForeignCurrency { get; set; }
-        public double? ExpectedAmount { get; set; }
     }    
 }

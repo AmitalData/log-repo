@@ -1,4 +1,4 @@
-import {NewARPaymentComponent} from './Components/NewEntity/NewARPaymentComponent';
+﻿import {NewARPaymentComponent} from './Components/NewEntity/NewARPaymentComponent';
 import {ARPaymentGeneralTabComponent} from './Components/EditTabs/ARPaymentGeneralTabComponent';
 import {ARPaymentDetailsTabComponent} from './Components/EditTabs/ARPaymentDetailsTabComponent';
 import {ARPaymentDocsInTabComponent} from './Components/EditTabs/ARPaymentDocsInTabComponent';
@@ -7,9 +7,7 @@ import {ARPaymentTransferTabComponent} from './Components/EditTabs/ARPaymentTran
 import {ARPaymentTransferTemplate} from './Components/NewEntity/ARPaymentTransferTemplate';
 import {EditMultiCurrency} from './Components/EditTabs/EditMultiCurrency';
 import {ARPaymentDetailsFullAccountingTab} from './Components/EditTabs/ARPaymentDetailsFullAccountingTab';
-import {CancelARPaymentComponent} from './Components/Other/CancelARPaymentComponent';
-import { ARPaymentMultiChequesComponent } from './Components/Other/ARPaymentMultiChequesComponent';
-import { ARPaymentMultiBankTransfersComponent } from './Components/Other/ARPaymentMultiBankTransfersComponent';
+
 export const Components =
     [
         NewARPaymentComponent,
@@ -21,9 +19,6 @@ export const Components =
         EditMultiCurrency,
         ARPaymentGeneralTabComponent,
         ARPaymentDetailsFullAccountingTab,
-        CancelARPaymentComponent,
-        ARPaymentMultiChequesComponent,
-        ARPaymentMultiBankTransfersComponent
     ];
 
 export class ModuleDeclarations {
@@ -40,10 +35,7 @@ export class ModuleDeclarations {
             case "ARPaymentTransferTemplate": { myResult = ARPaymentTransferTemplate; break; }
             case "EditMultiCurrency": { myResult = EditMultiCurrency; break; }
             case "ARPaymentGeneralTabComponent": { myResult = ARPaymentGeneralTabComponent; break; }
-            case "CancelARPaymentComponent": { myResult = CancelARPaymentComponent; break; }
             case "ARPaymentDetailsFullAccountingTab": { myResult = ARPaymentDetailsFullAccountingTab; break; }
-            case "ARPaymentMultiChequesComponent": { myResult = ARPaymentMultiChequesComponent; break; }
-            case "ARPaymentMultiBankTransfersComponent": { myResult = ARPaymentMultiBankTransfersComponent; break; }
         }
 
         return myResult;

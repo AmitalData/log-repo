@@ -4,7 +4,7 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -105,7 +105,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void UpdateRoleFeature()
         {
-            RoleFeature myRoleFeature = roleFeatureRepository.GetRoleFeatureByRoleAndFeatureUCode(entityPM.RoleId, entityPM.FeatureUniqeCode, entityPM.RoleTenant);
+            RoleFeature myRoleFeature = roleFeatureRepository.GetRoleFeatureByRoleAndFeature(entityPM.RoleId, entityPM.Id, entityPM.RoleTenant);
 
             if (entityPM.AccessLevelCode == "NO")
             {       
@@ -131,7 +131,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Tenant = entityPM.RoleTenant,
                     IsDeleted = false,
                     FeatureAccessLevelCode = entityPM.AccessLevelCode,
-                    FeatureUniqeCode = entityPM.FeatureUniqeCode,
                 };
 
                 roleFeatureRepository.Add(myRoleFeature);
@@ -141,8 +140,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 myRoleFeature.IsDeleted = false;
                 myRoleFeature.FeatureAccessLevelCode = entityPM.AccessLevelCode;
-                myRoleFeature.FeatureUniqeCode = entityPM.FeatureUniqeCode;
-
                 roleFeatureRepository.Update(myRoleFeature);
             }
         }
@@ -160,8 +157,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         Tenant = entityPM.RoleTenant,
                         IsDeleted = true,
                         FeatureAccessLevelCode = entityPM.AccessLevelCode,
-                        FeatureUniqeCode = entityPM.FeatureUniqeCode,
-
                     };
 
                     roleFeatureRepository.Add(myRoleFeature);
@@ -171,8 +166,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     myRoleFeature.IsDeleted = true;
                     myRoleFeature.FeatureAccessLevelCode = entityPM.AccessLevelCode;
-                    myRoleFeature.FeatureUniqeCode = entityPM.FeatureUniqeCode;
-
                     roleFeatureRepository.Update(myRoleFeature);
                 }
             }
@@ -190,7 +183,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (entityPM.IsAdded)
             {
-                PackageFeature instanceDb = packageFeatureRepository.GetSinglePackageFeatureByPackageAndFeatureUCode(entityPM.PackageCode, entityPM.FeatureUniqeCode, tenant);
+                PackageFeature instanceDb = packageFeatureRepository.GetSinglePackageFeatureByPackageAndFeature(entityPM.PackageCode, entityPM.Id, tenant);
                 if (instanceDb == null)
                 {
                     PackageFeature newPackageFeature = new PackageFeature()
@@ -198,8 +191,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         Id = IdCounter.GetNumber("PackageFeature", tenant).ToString(),
                         PackageCode = entityPM.PackageCode,
                         FeatureId = entityPM.Id,
-                        Tenant = tenant,
-                        FeatureUniqeCode = entityPM.FeatureUniqeCode
+                        Tenant = tenant
                     };
 
                     packageFeatureRepository.Add(newPackageFeature);
@@ -208,7 +200,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (entityPM.IsRemoved)
             {
-                PackageFeature packageFeature = packageFeatureRepository.GetSinglePackageFeatureByPackageAndFeatureUCode(entityPM.PackageCode, entityPM.FeatureUniqeCode, tenant);
+                PackageFeature packageFeature = packageFeatureRepository.GetSinglePackageFeatureByPackageAndFeature(entityPM.PackageCode, entityPM.Id, tenant);
                 if (packageFeature != null)
                 {
                     packageFeatureRepository.Remove(packageFeature);

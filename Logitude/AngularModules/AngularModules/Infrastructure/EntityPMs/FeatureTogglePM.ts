@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class FeatureTogglePM {
-      
+
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-                    this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -84,34 +84,11 @@ export class FeatureTogglePM {
     public set CreatedByUser(newValue: string) { if (this.createdByUser != newValue) { this.createdByUser = newValue; this.MarkAsDirty("CreatedByUser"); } }
        
 	 
-    private toggleDescription: string;
-    public get ToggleDescription() { return this.toggleDescription; }
-    public set ToggleDescription(newValue: string) { if (this.toggleDescription != newValue) { this.toggleDescription = newValue; this.MarkAsDirty("ToggleDescription"); } }
-       
-	 
-    private isMultiTenant: boolean;
-    public get IsMultiTenant() { return this.isMultiTenant; }
-    public set IsMultiTenant(newValue: boolean) { if (this.isMultiTenant != newValue) { this.isMultiTenant = newValue; this.MarkAsDirty("IsMultiTenant"); } }
-       
-	 
-    private fromTenantNumber: number;
-    public get FromTenantNumber() { return this.fromTenantNumber; }
-    public set FromTenantNumber(newValue: number) { if (this.fromTenantNumber != newValue) { this.fromTenantNumber = newValue; this.MarkAsDirty("FromTenantNumber"); } }
-       
-	 
-    private toTenantNumber: number;
-    public get ToTenantNumber() { return this.toTenantNumber; }
-    public set ToTenantNumber(newValue: number) { if (this.toTenantNumber != newValue) { this.toTenantNumber = newValue; this.MarkAsDirty("ToTenantNumber"); } }
-       
-	 
 
     public OldEntityPM: FeatureTogglePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -119,7 +96,6 @@ export class FeatureTogglePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FeatureToggle");
            
         }
-       }
     }
 
     private MyClone: FeatureTogglePM;

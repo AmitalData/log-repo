@@ -1,10 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.Server.Tools;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
-using System.Text.Json;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -19,7 +15,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             {
                 objectField.Code = objectFieldPM.FieldName;
             }
-            objectField.FieldCode = objectFieldPM.FieldCode;
             objectField.AutomaticField = objectFieldPM.AutomaticField;
             objectField.CanFilter = objectFieldPM.CanFilter;
             objectField.ConverterName = objectFieldPM.ConverterName;
@@ -41,7 +36,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.DisplayOnly = objectFieldPM.DisplayOnly;
             objectField.FullNameTextCodeId = objectFieldPM.FullNameTextCodeId;
             objectField.FieldName = objectFieldPM.FieldName;
-            objectField.ShortName = objectFieldPM.ShortName;
             objectField.ShortNameTextCodeId = objectFieldPM.ShortNameTextCodeId;
             objectField.HelpTextCodeId = objectFieldPM.HelpTextCodeId;
             objectField.AgentPermissionTypeCode = objectFieldPM.AgentPermissionTypeCode;
@@ -93,27 +87,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.DisplayInDocumentReferences = objectFieldPM.DisplayInDocumentReferences;
             objectField.CopyToDW = objectField.CopyToDW;
             objectField.EnableFullscreenTextBox = objectField.EnableFullscreenTextBox;
-            objectField.DisplayInAutomationAsEnitity = objectField.DisplayInAutomationAsEnitity;
-            objectField.RecordType = objectField.RecordType;
-            objectField.FullNameTextCodeCode = objectFieldPM.FullNameTextCodeCode;
-            objectField.ShortNameTextCodeCode = objectFieldPM.ShortNameTextCodeCode;
-            objectField.HelpTextCodeCode = objectFieldPM.HelpTextCodeCode;
-            objectField.ListTextCodeCode = objectFieldPM.ListTextCodeCode;
-            objectField.AdditionalQuerySections = objectFieldPM.AdditionalQuerySections;
-            objectField.DisplayInRequiredFields = objectFieldPM.DisplayInRequiredFields;
-            objectField.ObjectFieldDataMapping = objectFieldPM.ObjectFieldDataMapping;
-
-            objectField.LeftKey = objectFieldPM.LeftKey;
-            objectField.RightKey = objectFieldPM.RightKey;
-            objectField.IsForeignKey = objectFieldPM.IsForeignKey;
-            objectField.ForeignEntity = objectFieldPM.ForeignEntity;
-            objectField.NavigationPropertyName = objectFieldPM.NavigationPropertyName;
-            objectFieldPM.DefaultAdditionalFilters = GetDefaultAdditionalFilters(objectFieldPM);
-            objectField.DefaultAdditionalFilters = objectFieldPM.DefaultAdditionalFilters;
-            objectField.ForMetaDataOnly = objectFieldPM.ForMetaDataOnly;
-            objectField.IsListFilter = objectFieldPM.IsListFilter;
-            objectField.NumberOfDigits = objectFieldPM.NumberOfDigits;
-            objectField.DigitsAfterPoint = objectFieldPM.DigitsAfterPoint;
 
             if (objectFieldModification != null)
             {
@@ -129,18 +102,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
                 objectField.MaxLength = objectFieldPM.MaxLength;
                 objectField.MinLength = objectFieldPM.MinLength;
             }
-        }
-
-        private static string GetDefaultAdditionalFilters(ObjectFieldPM objectFieldPM)
-        {
-            QueryFilterItem defaultAdditionalTreeFilters = objectFieldPM.DefaultAdditionalTreeFilters;
-
-            if (defaultAdditionalTreeFilters == null)
-            {
-                return "";
-            }
-
-            return JsonSerializer.Serialize(defaultAdditionalTreeFilters);
         }
     }
 }

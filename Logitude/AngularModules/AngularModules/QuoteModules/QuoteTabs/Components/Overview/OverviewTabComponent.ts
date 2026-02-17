@@ -20,7 +20,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 
 @Component({
     selector: 'OverviewTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './OverviewTabComponent.html',
 })
 
@@ -100,10 +100,10 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("StageId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("StageDueDate", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("RatingCode", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("QuoteClosingReasonId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("QuoteClosingReasonCode", this.ObjectTableName, false);
 
-        var isClosingReasonVisibile = this.EntityPM.IsClosed && !AppTool.IsNullOrEmpty(this.QuoteClosingReasonId);
-        this.UIProperties.SetVisibility("QuoteClosingReasonId", this.ObjectTableName, isClosingReasonVisibile);
+        var isClosingReasonVisibile = this.EntityPM.IsClosed && !AppTool.IsNullOrEmpty(this.QuoteClosingReasonCode);
+        this.UIProperties.SetVisibility("QuoteClosingReasonCode", this.ObjectTableName, isClosingReasonVisibile);
 
         this.IsClosingReasonVisible = isClosingReasonVisibile;
     }
@@ -137,7 +137,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    get QuoteClosingReasonId() { return this.EntityPM.QuoteClosingReasonId; }
+    get QuoteClosingReasonCode() { return this.EntityPM.QuoteClosingReasonCode; }
 
     get ControlIsEnabled()
     {
@@ -196,7 +196,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;
 
-        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
             logWindow.Show('./CRMModules/CRMActivity/Components/NewEntity/NewActivityComponent');
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -234,7 +234,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
     }
     ViewEntity(entity) {
         if (!AppTool.IsNullOrEmpty(entity.Id)) {
-            this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

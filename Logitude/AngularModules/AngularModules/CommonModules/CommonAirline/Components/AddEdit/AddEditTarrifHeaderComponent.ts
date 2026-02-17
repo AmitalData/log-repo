@@ -25,7 +25,7 @@ import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditTarrifHeaderComponent.html',
 })
 
@@ -242,7 +242,7 @@ export class AddEditTarrifHeaderComponent extends BaseComponent {
 
      
            if (!this.IsNew) {
-            myService.update(this.EntityPM).subscribe((myResult:any) => {
+            myService.update(this.EntityPM).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
@@ -261,7 +261,7 @@ export class AddEditTarrifHeaderComponent extends BaseComponent {
         }
         else {
                this.EntityPM.CreateDate = DateTool.GetCurrentDateAsUtc();
-            myService.insert(this.EntityPM).subscribe((myResult:any) => {
+            myService.insert(this.EntityPM).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");

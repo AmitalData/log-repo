@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
@@ -14,6 +14,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
+        public AutomationRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public AutomationRepository(ICommonDataContext context)
         {
@@ -98,7 +102,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             List<Automation> currentAutomations = new List<Automation>();
             if (tenant != 0)
             {
-                
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(automationListName) == null)
                     {
 
@@ -120,8 +125,21 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         currentAutomations = (List<Automation>)CacheManager.CacheWrapper.Get(automationListName);
                     }
-                
-           
+                }
+                else
+                {
+
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+
+                        currentAutomations  = (from a in this.context.Automations
+                                             where a.Tenant == tenant && a.ObjectTableId == objectTableId && !a.Inactive
+                                             select a).ToList();
+
+                        scope.Complete();
+                    }
+
+                }
             }
 
 
@@ -162,7 +180,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             Automation currentAutomation = null;
             if (tenant != 0)
             {
-               
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(automationListName) == null)
                     {
 
@@ -187,8 +206,21 @@ namespace Simplog.Data.CommonDataModel.Repositories
                        }
                     }
                    
-                
-             
+                }
+                else
+                {
+
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+
+                        currentAutomation = (from a in this.context.Automations
+                                             where a.Tenant == tenant && a.ObjectTableId == objectTableId && !a.Inactive && a.Id == automationId
+                                             select a).FirstOrDefault();
+
+                        scope.Complete();
+                    }
+
+                }
             }
 
 

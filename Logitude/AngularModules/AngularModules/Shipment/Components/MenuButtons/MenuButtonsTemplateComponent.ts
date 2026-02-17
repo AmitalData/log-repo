@@ -7,7 +7,7 @@ import {EntityPMService} from '../../../Infrastructure/Services/EntityPMService'
 import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './MenuButtonsTemplateComponent.html',
 })
 
@@ -87,7 +87,7 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
 
             this.CurrentSession.StartBusyIndicatorSaving();
             this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {
-                res.subscribe((response:any) => {
+                res.subscribe(response => {
 
                     this.CurrentSession.StopBusyIndicator();
 

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-    
+        public ShippingAgentRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public ShippingAgentRepository(ICommonDataContext context)
         {
@@ -82,12 +85,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public ShippingAgent GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
-        }
-        public ShippingAgent GetFirstSingleByName(string name, int tenant)
-        {
-            return (from record in context.ShippingAgents.Include("Card")
-                    where record.Card.EnglishName == name && record.Tenant == tenant
-                    select record).FirstOrDefault();
         }
     }
 }

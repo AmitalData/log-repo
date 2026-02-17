@@ -75,7 +75,7 @@ namespace CommunicationWorkerRole
    
                             }
 
-                            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
+                            if (LogitudeSettings.DeploymentStage != "Dev")
                             {
                                 string emailbody = "";
                                 if (!string.IsNullOrEmpty(message))
@@ -87,12 +87,13 @@ namespace CommunicationWorkerRole
                                      emailbody = "Updating tenant zero was completed successfully.";
                                 }
                                 str.AppendLine(emailbody);
-
+                                 
                                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                                 {
-                                    From = SettingUtil.Emails.FromNoReply,
-                                    To = SettingUtil.Emails.DeploymentTeam,
-                                    CC = SettingUtil.Emails.DevTeamManagers ,
+                                    From = "admin@fnarsoft.com",
+                                    To = "jalal@logitudeworld.com",
+                                    CC = "ahmada@logitudeworld.com;ahmadb@logitudeworld.com",
+                                    BCC = "",
                                     Subject = LogitudeSettings.DeploymentStage + " - Update completed successfully.",
                                     EmailBody = emailbody,
                                     Tenant = 0,
@@ -122,10 +123,51 @@ namespace CommunicationWorkerRole
                         if (upgradableTenants.Count > 0)
                         {
                             StringBuilder str1 = new StringBuilder();
-                            
-                            TenantsUpdateClass.UpdateTenants();
+                            foreach (GlobalTenant tenant in upgradableTenants)
+                            {
+                                if (tenant.Id != 0)//&&tenant.Id!=1&&tenant.Id!=2&&tenant.Id!=3
+                                {
+                                    try
+                                    {
+                                        long StartTime;
+                                        long EndTime;
 
-                            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
+                                        str1.AppendLine(DateTime.Now.ToString());
+
+                                        StartTime = System.DateTime.Now.Ticks;
+
+                                        TenantsUpdateClass.UpdateDataForTenant(tenant.Id, "");
+
+                                        EndTime = System.DateTime.Now.Ticks;
+
+                                         string Duration = Convert.ToString((EndTime - StartTime) / TimeSpan.TicksPerMillisecond);
+                                         string emailbody = "Updating tenant " + tenant.Id + " completed successfully. " + Duration;
+                                         str1.AppendLine(emailbody);
+                                        AzureLog.SaveLogsInStorage("Update Data for tenant:" + tenant.Id + " Completed successfully", "P", DateTime.Now, "", "", 0, "", "WorkerRole", null);
+                                    }
+
+                                    catch (Exception e)
+                                    {
+                                        GlobaltenantRep = new GlobalTenantRepository();
+                                        ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "WorkerRole",null);
+                                        string emailbody = "Updating tenant " + tenant.Id + " Failed!.";
+                                        str1.AppendLine(emailbody);
+
+                                        tenant.Version = -1;
+                                        GlobalTenant updatedTenant = GlobaltenantRep.GetGlobalTenantsByTenant(tenant.Id);
+                                        updatedTenant.Version = -1;
+                                        GlobaltenantRep.Update(updatedTenant);
+                                        GlobaltenantRep.SubmitChanges();
+
+                                        if (LogitudeSettings.DeploymentStage == "Dev")
+                                        {
+                                            //throw e;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (LogitudeSettings.DeploymentStage != "Dev")
                             {
                                 string machineInfo = !string.IsNullOrEmpty(Environment.MachineName) ? Environment.MachineName : "";
                                 str1.AppendLine(machineInfo);
@@ -133,9 +175,10 @@ namespace CommunicationWorkerRole
 
                                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                                 {
-                                    From = SettingUtil.Emails.FromNoReply,
-                                    To = SettingUtil.Emails.DeploymentTeam,
-                                    CC = SettingUtil.Emails.DevTeamManagers,
+                                    From = "admin@fnarsoft.com",
+                                    To = "jalal@logitudeworld.com",
+                                    CC = "",
+                                    BCC = "",
                                     Subject = "Update All Tenants History",
                                     EmailBody = str1.ToString(),
                                     Tenant = 0,

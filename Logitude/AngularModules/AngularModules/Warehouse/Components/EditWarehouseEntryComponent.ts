@@ -18,20 +18,18 @@ import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirectiv
 import {CardListService} from '../../Common/Services/StandardLists/CardListService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'EditWarehouseEntryComponent',
     templateUrl: './EditWarehouseEntryComponent.html',
+    providers: [TraceEventExtendedPMService],
 })
 
 
 export class EditWarehouseEntryComponent extends BaseComponent implements OnInit {
-  public ExpectedEntryDate: any;
-  public SpecialInstruction: any;
-  public Notes: any;
-
     public ValidationErrorsList: string[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     DataContext: any = this;
+    EventTypeCodeList: EventTypeClass[];
 
     warehouseEntryPM: WarehouseEntryPM;
     private myCardListService: CardListService;
@@ -44,7 +42,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     ExpectedEntryDateOldValue: Date;
 
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, public _traceEventExtendedPMService: TraceEventExtendedPMService ) {
         super();
         this.warehouseEntryPM = this.entityArgs.EntityPM;
         if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.ReceivedBy)) {
@@ -74,7 +72,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
 
     ) {
 
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry", 0).subscribe(response => {
             this.InitializeEditWarehouseEntry();
         });
 
@@ -84,30 +82,37 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     SaveCompletedEvent: any;
     LoadCompletedEvent: any;
     
-    SetUIProperties() {
-        var isCanceledEntry = this.warehouseEntryPM.StatusCode == "CAEA";
-        this.warehouseEntryPM.UIProperties.SetEnabled("ReceivedBy", this.ObjectTableName, !isCanceledEntry);
-        this.warehouseEntryPM.UIProperties.SetEnabled("EntryReference", this.ObjectTableName, !isCanceledEntry);
-        this.warehouseEntryPM.UIProperties.SetEnabled("Manufacturer", this.ObjectTableName, !isCanceledEntry);
-        this.warehouseEntryPM.UIProperties.SetEnabled("ExpectedEntryDate", this.ObjectTableName, !isCanceledEntry);
-        this.warehouseEntryPM.UIProperties.SetEnabled("SpecialInstruction", this.ObjectTableName, !isCanceledEntry);
-        this.warehouseEntryPM.UIProperties.SetEnabled("Notes", this.ObjectTableName, !isCanceledEntry);
-        this.UIProperties.SetEnabled("ActualEntryDate", this.ObjectTableName, !isCanceledEntry);
-        this.UIProperties.SetEnabled("WarehouseId", this.ObjectTableName, !isCanceledEntry);
-
-    }
 
     Listen() {
 
-        this.SetUIProperties();
 
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             if (this.SaveCompletedEvent == null) {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.SetUIProperties();
-                        this.CurrentSession.FireEvent("LoadEventTabData");
+                        this.EventTypeCodeList = [];
+                        this.warehouseEntryPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+
+                        //if (this.WarehouseEntryPackagesDetailsComponent) {
+                        //    var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, IsFromShipment: true, IsEditMode: true };
+                        //    this.WarehouseEntryPackagesDetailsComponent.ReloadComponent(windowArgs);
+                        //}
+
+                        this.EventTypeCodeList.push(new EventTypeClass("UPEN", null));
+
+                        if (this.warehouseEntryPM.ExpectedEntryDate != this.ExpectedEntryDateOldValue) {
+                            this.ExpectedEntryDateOldValue = this.warehouseEntryPM.ExpectedEntryDate;
+                            this.EventTypeCodeList.push(new EventTypeClass("EXEN", this.warehouseEntryPM.ExpectedEntryDate));
+                        }
+
+                        if (this.warehouseEntryPM.ActualEntryDate != this.ActualEntryDateOldValue) {
+                            this.ActualEntryDateOldValue = this.warehouseEntryPM.ActualEntryDate;
+                            this.EventTypeCodeList.push(new EventTypeClass("ENEN", this.warehouseEntryPM.ActualEntryDate));
+                        }
+
+
+                        this.UpdateEventType();
                     }
 
                 });
@@ -120,7 +125,6 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
                     }
                 });
             }
-
         }
 
     }
@@ -147,7 +151,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
      
             this.ExpectedEntryDateOldValue = this.warehouseEntryPM.ExpectedEntryDate;
             this.ActualEntryDateOldValue = this.warehouseEntryPM.ActualEntryDate;
-            this.SetCustomerUIProperties();
+            this.SetUIProperties();
             this.IsLoadPage = true;
         }
 
@@ -187,7 +191,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     //        clearTimeout(this.timerToken);
     //    }
 
-    //    if (this.Retries < 20) {
+    //    if (this.Retries < 3) {
     //        this.timerToken = setTimeout(() => this.RunComponent(), 1);
     //    }
     //}
@@ -244,13 +248,30 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
 
 
 
-    SetCustomerUIProperties() {
+    SetUIProperties() {
         this.warehouseEntryPM.UIProperties.SetEnabled("CustomerId", "WarehouseEntry", false);
         //this.warehouseEntryPM.UIProperties.SetEnabled("WarehouseId", "WarehouseEntry", false);
 
     }
 
  
+
+
+
+    UpdateEventType() {
+        if (this.EventTypeCodeList && this.EventTypeCodeList.length != 0) {
+            var traceEventArgs: EventTypeArgs = new EventTypeArgs();
+            traceEventArgs.EventTypeList = this.EventTypeCodeList;
+            traceEventArgs.Tenant = SessionLocator.Tenant;
+            traceEventArgs.ObjectTableId = this.ObjectTableId;
+            traceEventArgs.EntityId = this.warehouseEntryPM.Id;
+            traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
+            this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
+                this.CurrentSession.FireEvent("LoadEventTabData");
+            });
+        }      
+    }
+
     
     get ActualEntryDate() {
     var actualEntryDate: Date = null;
@@ -289,7 +310,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     }
     
 
-    SetActualDateClicked() {
+    SetActualDateClicked(fieldName: string) {
         this.ActualEntryDate = DateTool.GetDateParts(this.warehouseEntryPM.ExpectedEntryDate).DateObject;
     }
 }

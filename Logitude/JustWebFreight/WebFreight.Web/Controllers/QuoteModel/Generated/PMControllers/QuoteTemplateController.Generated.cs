@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -39,7 +39,6 @@ using Logitude.BL.QuoteModel;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.Tools.EntityService;
-
 
 namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 { 
@@ -90,7 +89,6 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplate", entityPM.Tenant, authToken.Tenant);
                 
                         IQuotesContext MyContext = QuotesContext.GetContext(entityPM.Tenant);
                         QuoteTemplateService service = new QuoteTemplateService(MyContext, entityPM.Tenant);
@@ -138,7 +136,6 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("QuoteTemplate", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplate", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "QuoteTemplate" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "QuoteTemplatePM" + entityPM.Id + entityPM.Tenant;

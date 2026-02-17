@@ -1,7 +1,6 @@
-import {Pipe} from '@angular/core';
+﻿import {Pipe} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {ControlsIdCounter} from '../../Infrastructure/Utilities/ControlsIdCounter';
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 
 @Pipe({ name: 'IdGeneratorPipe' })
 
@@ -10,9 +9,6 @@ export class IdGeneratorPipe {
 
         if (value) {
             value = AppTool.Replace(value, " ", "");
-            if (this.CheckIfIsProtractorRunning() == false) {
-                value = AppTool.Replace(value, ".", "");
-            }
         }
 
         var UnuieqDomId: string = value;
@@ -27,20 +23,6 @@ export class IdGeneratorPipe {
 
         return UnuieqDomId;
 
-    }
-
-    CheckIfIsProtractorRunning() {
-        if (SessionLocator.IsExternalParams) {
-            if (SessionLocator.ExternalParams) {
-                if (SessionLocator.ExternalParams.Menu) {
-                    var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
-                    if (menuName == "protractor") {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     private CheckIfExists(IdCom: string) {

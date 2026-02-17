@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PaymentTermRepository repository;
 
-
+        public PaymentTermQuery()
+        {
+            repository = new PaymentTermRepository(); 
+        }
         public PaymentTermQuery(int tenant)
         {
             repository = new PaymentTermRepository(tenant);
@@ -49,12 +52,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ComputedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
                     IsManuallySet = entityPOCO.IsManuallySet,
                     ExternalId = entityPOCO.ExternalId,
-                    EndOfMonth = entityPOCO.EndOfMonth,
-                    NumberOfMonths = entityPOCO.NumberOfMonths,
+                    CurrentMonth = entityPOCO.CurrentMonth,
                     FromDateTypeCode = entityPOCO.FromDateTypeCode,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
-                    Code = entityPOCO.Code,
                 };
             }
 
@@ -62,90 +63,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(entityPM, securedPm, "PaymentTerm", tenant);
 
             return securedPm;
-        }
-
-        public PaymentTermPM GetSinglePMByCode(string Code, int tenant)
-        {
-            PaymentTermPM entityPM = null;
-            PaymentTerm entityPOCO = repository.GetSinglePaymentTermByCode(Code, tenant);
-
-            if (entityPOCO != null)
-            {
-                entityPM = new PaymentTermPM()
-                {
-                    AddedManually = entityPOCO.AddedManually,
-                    Days = entityPOCO.Days,
-                    EnglishName = entityPOCO.EnglishName,
-                    Id = entityPOCO.Id,
-                    InActive = entityPOCO.InActive,
-                    LocalName = entityPOCO.LocalName,
-                    Tenant = entityPOCO.Tenant,
-                    DisplayInLOV = entityPOCO.DisplayInLOV,
-                    Description = entityPOCO.Description,
-                    LocalDescription = entityPOCO.LocalDescription,
-                    SearchFields = entityPOCO.SearchFields,
-                    ComputedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
-                    IsManuallySet = entityPOCO.IsManuallySet,
-                    ExternalId = entityPOCO.ExternalId,
-                    EndOfMonth = entityPOCO.EndOfMonth,
-                    NumberOfMonths = entityPOCO.NumberOfMonths,
-                    FromDateTypeCode = entityPOCO.FromDateTypeCode,
-                    CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
-                    CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
-                    Code = entityPOCO.Code,
-                };
-            }
-
-            PaymentTermPM securedPm = new PaymentTermPM();
-            SecuredMapping.GetMappedPM(entityPM, securedPm, "PaymentTerm", tenant);
-
-            return securedPm;
-        }
-
-        public PaymentTermPM GetSinglePMByExternalId(string externalId , int tenant)
-        {
-
-            PaymentTermPM entityPM = null;
-            PaymentTerm entityPOCO = repository.GetSinglePaymentTermByExternalId(externalId, tenant);
-
-            if (entityPOCO != null)
-            {
-                entityPM = new PaymentTermPM()
-                {
-                    AddedManually = entityPOCO.AddedManually,
-                    Days = entityPOCO.Days,
-                    EnglishName = entityPOCO.EnglishName,
-                    Id = entityPOCO.Id,
-                    InActive = entityPOCO.InActive,
-                    LocalName = entityPOCO.LocalName,
-                    Tenant = entityPOCO.Tenant,
-                    DisplayInLOV = entityPOCO.DisplayInLOV,
-                    Description = entityPOCO.Description,
-                    LocalDescription = entityPOCO.LocalDescription,
-                    SearchFields = entityPOCO.SearchFields,
-                    ComputedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
-                    IsManuallySet = entityPOCO.IsManuallySet,
-                    ExternalId = entityPOCO.ExternalId,
-                    EndOfMonth = entityPOCO.EndOfMonth,
-                    NumberOfMonths = entityPOCO.NumberOfMonths,
-                    FromDateTypeCode = entityPOCO.FromDateTypeCode,
-                    CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
-                    CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
-                    Code = entityPOCO.Code,
-                };
-            }
-
-            return entityPM;
-        }
-
-        public PaymentTerm GetSingleByDaysDifference(int daysDifference, int tenant)
-        {
-
-            PaymentTermPM entityPM = null;
-            PaymentTerm entityPOCO = repository.GetSingleByDaysDifference(daysDifference, tenant);
-            
-
-            return entityPOCO;
         }
 
         public IQueryable<PaymentTermPM> GetPaymenTermPMsByTenant(int tenant)
@@ -168,12 +85,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                                          IsManuallySet = a.IsManuallySet,
                                                          ExternalId = a.ExternalId,
-                                                         EndOfMonth = a.EndOfMonth,
-                                                         NumberOfMonths = a.NumberOfMonths,
+                                                         CurrentMonth = a.CurrentMonth,
                                                          FromDateTypeCode = a.FromDateTypeCode,
                                                          CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                                                          CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                                         Code = a.Code,
                                                      };
             return paymentTerms;
         }
@@ -198,12 +113,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                                          IsManuallySet = a.IsManuallySet,
                                                          ExternalId = a.ExternalId,
-                                                         EndOfMonth = a.EndOfMonth,
-                                                         NumberOfMonths = a.NumberOfMonths,
+                                                         CurrentMonth = a.CurrentMonth,
                                                          FromDateTypeCode = a.FromDateTypeCode,
                                                          CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                                                          CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                                         Code = a.Code,
                                                      };
             return paymentTerms;
         }
@@ -234,12 +147,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                              IsManuallySet = a.IsManuallySet,
                              ExternalId = a.ExternalId,
-                             EndOfMonth = a.EndOfMonth,
-                             NumberOfMonths = a.NumberOfMonths,
+                             CurrentMonth = a.CurrentMonth,
                              FromDateTypeCode = a.FromDateTypeCode,
                              CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                              CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                             Code = a.Code,
                          }).AsQueryable();
 
             IQueryable<PaymentTermPM> query2 = null;
@@ -288,12 +199,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              SearchFields = f.SearchFields,
                              IsManuallySet = f.IsManuallySet,
                              ExternalId =  f.ExternalId,
-                             EndOfMonth = f.EndOfMonth,
-                             NumberOfMonths = f.NumberOfMonths,
+                             CurrentMonth = f.CurrentMonth,
                              FromDateTypeCode = f.FromDateTypeCode,
                              CalculatedEnglishName = string.IsNullOrEmpty(f.EnglishName) ? f.LocalName : f.EnglishName,
                              CalculatedLocalName = string.IsNullOrEmpty(f.LocalName) ? f.EnglishName : f.LocalName,
-                             Code = f.Code,
                          };
 
           

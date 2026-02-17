@@ -16,13 +16,6 @@ update Shipments set MasterShipmentDataId = NULL where Tenant = @Tenant
 
 delete from FollowUps where Tenant = @Tenant
 
-delete from FlightsSchedulesResponses where Tenant = @Tenant
-delete from FlightsSchedulesRequests where Tenant = @Tenant
-delete from BookingAnswers where Tenant = @Tenant
-delete from BookingLastRequests where Tenant = @Tenant
-delete from BookingPackages where Tenant = @Tenant
-delete from Bookings where Tenant = @Tenant
-
 delete from QuotePriceSteps where Tenant = @Tenant
 delete from QuoteCharges where Tenant = @Tenant
 delete from QuoteDocumentVersions where Tenant = @Tenant
@@ -51,13 +44,6 @@ delete from MessagingStockUsageHistories where Tenant = @Tenant
 delete from ShipmentMasterDatas where Tenant = @Tenant
 delete from ShipmentComputedFields where Tenant = @Tenant
 delete from ShipmentAdditionalCloudDatas where Tenant = @Tenant
-
-delete from WarehouseEntryPackagesReleases where Tenant = @Tenant
-delete from WarehouseEntryPackages where Tenant = @Tenant
-delete from WarehouseReleasePackages where Tenant = @Tenant
-delete from WarehouseEntries where Tenant = @Tenant
-delete from WarehouseReleases where Tenant = @Tenant
-
 delete from Shipments where Tenant = @Tenant
 
 delete from ARInvoiceLines where Tenant = @Tenant

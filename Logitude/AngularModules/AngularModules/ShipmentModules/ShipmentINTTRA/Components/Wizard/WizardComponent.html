@@ -2,7 +2,7 @@
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="IsValidationSingleLine"></ValidationSummary>
         </td>
     </tr>
 
@@ -15,7 +15,7 @@
     </tr>
 
     <tr style="height: 1px;" *ngIf="ResultMessage">
-        <td attr.data-cy="{{'ResultMessage' | IdGeneratorAsyncPipe | async}}" style="text-align: center; vertical-align: middle; font-size: 14px; color: #009161;">
+        <td style="text-align: center; vertical-align: middle; font-size: 14px; color: #009161;">
             {{ResultMessage}}
         </td>
     </tr>
@@ -202,17 +202,6 @@
                                             </td>
                                         </tr>
 
-                                        <!-- IsINTTRAFROB -->
-                                        <tr class="FormFieldRow" *ngIf="IsINTTRAFROBVisible">
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'IsINTTRAFROB'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td>
-                                                <LogCheckBox [ObjectFieldName]="'IsINTTRAFROB'" [Checked]="IsINTTRAFROB" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                            </td>
-                                        </tr>
-
                                         <tr>
                                             <td colspan="2">
                                                 <div></div>
@@ -235,7 +224,7 @@
                                             </td>
 
                                             <td>
-                                                <div class="MediaFill" style="padding-top:3px">
+                                                <div class="MediaFill">
                                                     <LogTextBox [ObjectFieldName]="'INTTRAInstructions'" [Text]="INTTRAInstructions" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                                 </div>
                                             </td>
@@ -282,13 +271,13 @@
                     <td style="width: 57px;" *ngIf="SimulatorIsVisible">
                         <button class="Button" (click)="SimulateClicked()">Simulate</button>
                     </td>
-          
+
                     <td>
                         <div></div>
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -296,7 +285,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SendButtonClicked()" [disabled]="IsLimited">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="SendButtonClicked()" [disabled]="IsLimited">Send</button>
                     </td>
                 </tr>
             </table>

@@ -4,7 +4,6 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
-using Logitude.CustomsMessaging.FakeMessagingServices;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -31,14 +30,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public override string MainInterfaceCode { get { return "5101O_I"; } }
 
-        protected override DOC_NG_5101_GNMessageToAgent GetFakeCustomsResponse(GenericRequestParams requestParamsData)
-        {
-
-            var myFake_SendDOC_MSG5101_GNMessageToAgent = new Fake_SendDOC_MSG5101_GNMessageToAgent();
-            return myFake_SendDOC_MSG5101_GNMessageToAgent.GetFakeCustomsResponse(requestParamsData);
-
-
-        }
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DOC_NG_5101_GNMessageToAgent customsResponse)
         {
 

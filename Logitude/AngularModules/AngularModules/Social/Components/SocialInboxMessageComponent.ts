@@ -21,7 +21,7 @@ import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
 import {ConversationHeaderParticipantExtendedPMService} from '../Services/ExtendedPMs/ConversationHeaderParticipantExtendedPMService';
 @Component({
-    
+    moduleId: module.id,
     selector: 'SocialInboxMessageComponent',
     templateUrl: './SocialInboxMessageComponent.html',
 
@@ -177,7 +177,7 @@ export class SocialInboxMessageComponent implements OnInit {
         this.BusyIndicatorText = "Saving...";
         this.ShowBusyIndicator = true;
         this.IsChange = true;
-        this.conversationHeaderParticipantExtendedPMService.MakeConversationHeaderParticipantReadAndUnRead(item.ConversationHeaderId, SessionLocator.LoggedUserId, item.MarkAsReadLable).subscribe((res:any) => {
+        this.conversationHeaderParticipantExtendedPMService.MakeConversationHeaderParticipantReadAndUnRead(item.ConversationHeaderId, SessionLocator.LoggedUserId, item.MarkAsReadLable).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.ShowBusyIndicator = false;
             if (!pmResponse.HasError) {
@@ -228,7 +228,7 @@ export class SocialInboxMessageComponent implements OnInit {
                 this.BusyIndicatorText = "Saving...";
                 this.ShowBusyIndicator = true;
   
-                this.conversationHeaderParticipantExtendedPMService.DeleteConversationHeaderParticipant(item.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe((res:any) => {
+                this.conversationHeaderParticipantExtendedPMService.DeleteConversationHeaderParticipant(item.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     this.ShowBusyIndicator = false;
                     if (!pmResponse.HasError) {
@@ -282,7 +282,7 @@ export class SocialInboxMessageComponent implements OnInit {
                 item.EntityPM.IsWaitingForResponse = true;
             }
 
-            this.conversationHeaderPMService.update(item.EntityPM).subscribe((res:any) => {
+            this.conversationHeaderPMService.update(item.EntityPM).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 this.IsStartWaitingLoading = false;
 
@@ -344,7 +344,7 @@ export class SocialInboxMessageComponent implements OnInit {
             this.MessageFilters.PageIndex = this.PageIndex;
             this.MessageFilters.PageSize = this.PageSize;
 
-            this.conversationHeaderExtendedPMService.GetMessageByFiltered(this.MessageFilters).subscribe((res:any) => {
+            this.conversationHeaderExtendedPMService.GetMessageByFiltered(this.MessageFilters).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 this.IsLoadedMessages = true;
                 this.StopBusyIndicator();

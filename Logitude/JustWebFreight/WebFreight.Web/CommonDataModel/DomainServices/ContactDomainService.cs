@@ -27,9 +27,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
@@ -427,7 +427,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             contact.Position = contactPm.Position;
             contact.ExternalId = contactPm.ExternalId;
             contact.CreateDate = contactPm.CreateDate;
-            contact.DigitalPortalLanguage = contactPm.DigitalPortalLanguage;
         }
 
         public void InsertContact(ContactPM entityPM)

@@ -1,4 +1,4 @@
-﻿m<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MailgunWebPage.aspx.cs" Inherits="WebFreight.Web.MailgunWebPage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MailgunWebPage.aspx.cs" Inherits="WebFreight.Web.MailgunWebPage" %>
 
 <!DOCTYPE html>
 

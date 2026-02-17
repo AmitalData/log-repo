@@ -1,88 +1,66 @@
-
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren } from '@angular/core';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { AppTool, DateTool, FileLoader } from '../../../../Infrastructure/Tools';
+/// <reference path="../../../datacontracts/automationargs.ts" />
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import 'rxjs/add/operator/map';
+import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {AppTool, DateTool, FileLoader} from '../../../../Infrastructure/Tools';
 declare var System: any;
 declare var window: any;
-import { AutomationItemViewModel } from './ViewModel/AutomationItemViewModel';
-import { AutomationExtendedPMService } from '../../../../Common/Services/ExtendedPMs/AutomationExtendedPMService';
-import { AutomationPMService } from '../../../../Common/Services/StandardPMs/AutomationPMService';
-import { AutomationPM } from '../../../../Common/EntityPMs/AutomationPMExtended';
-import { ObjectFieldPM } from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
-import { AutomatedBackup, AutomationSetSLAValue } from '../../../../Infrastructure/DataContracts/AutomatedBackup';
-import { AutomationSendInterface } from '../../../../Infrastructure/DataContracts/AutomationSendInterface';
-import { AutomationSendDocument } from '../../../../Infrastructure/DataContracts/AutomationSendDocument';
-import { AutomationSetValue } from '../../../../Infrastructure/DataContracts/AutomationSetValue';
-import { EventTypeArgs } from '../../../../Infrastructure/DataContracts/EventTypeArgs';
-import { AutomationFollowUp } from '../../../../Infrastructure/DataContracts/AutomationFollowUp';
-import { EventTypeList } from '../../../../Infrastructure/EntityLists/EventTypeList';
-import { EventTypeListService } from '../../../../Infrastructure/Services/StandardLists/EventTypeListService';
-import { SLAHeaderListService } from '../../../../CRM/Services/StandardLists/SLAHeaderListService';
-import { SLAHeaderList } from '../../../../CRM/EntityLists/SLAHeaderList';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AutomationCondition } from '../../../../Infrastructure/DataContracts/AutomationCondition';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { DocumentTypeListService } from '../../../../Common/Services/StandardLists/DocumentTypeListService';
-import { DocumentTypeTemplatePMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
-import { AutomationHistoryExtendedPMService } from '../../../../Common/Services/ExtendedPMs/AutomationHistoryExtendedPMService';
-import { AutomationResultEmailRecipientExtendedService } from '../../../../Common/Services/ExtendedPMs/AutomationResultEmailRecipientExtendedService';
-import { DocumentTypeTemplatePM } from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
-import { AutomationHistoryPM } from '../../../../Common/EntityPMs/AutomationHistoryPM';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { AutomationResultEmailRecipientPM } from '../../../../Common/EntityPMs/AutomationResultEmailRecipientPM';
-import { AutomationsSettingsComponent } from '../../../../Infrastructure/Components/Maintenance/Automation/AutomationsSettingsComponent';
-import { DocumentTypeList } from '../../../../Common/EntityLists/DocumentTypeList';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { DocumentTypeTemplateViewModel } from '../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel';
-import { AutomationConditionViewModel } from './ViewModel/AutomationConditionViewModel';
-import { ResultEmailRecipientViewModel } from './ViewModel/ResultEmailRecipientViewModel';
-import { AutomationSetValueViewModel } from './ViewModel/AutomationSetValueViewModel';
-import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
-import { Guid } from '../../../../Infrastructure/Utilities/Guid';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { AutomationQueuedTask } from '../../../../Infrastructure/DataContracts/AutomationQueuedTask';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { AutomationArgs } from '../../../../Infrastructure/DataContracts/AutomationArgs';
-import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
-import {AutomationOnUpdateDocument} from '../../../../Infrastructure/DataContracts/AutomationOnUpdateDocument';
-import { UserList } from '../../../../Common/EntityLists/UserList';
-import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
-import { ChooseUserArgs } from '../../../../Infrastructure/Components/Maintenance/Automation/ChooseSpecificUserComponent';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { DocumentTypeCopyPMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeCopyPMExtendedService';
-import { DocumentCopiesViewModel } from '../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentCopiesViewModel';
-import { AutomationCreateTask } from '../../../DataContracts/AutomationCreateTask';
-import { QuoteTemplateListService } from '../../../../Quote/Services/StandardLists/QuoteTemplateListService';
-import { AutomationEvent } from 'Infrastructure/DataContracts/AutomationEvent';
-import { FieldValidator } from '../../../Validators/FieldValidator';
-
-
+import {AutomationItemViewModel} from './ViewModel/AutomationItemViewModel';
+import {AutomationExtendedPMService} from '../../../../Common/Services/ExtendedPMs/AutomationExtendedPMService';
+import {AutomationPMService} from '../../../../Common/Services/StandardPMs/AutomationPMService';
+import {AutomationPM} from '../../../../Common/EntityPMs/AutomationPMExtended';
+import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
+import {AutomatedBackup, AutomationSetSLAValue} from '../../../../Infrastructure/DataContracts/AutomatedBackup';
+import {AutomationSetValue} from '../../../../Infrastructure/DataContracts/AutomationSetValue';
+import {EventTypeArgs} from '../../../../Infrastructure/DataContracts/EventTypeArgs';
+import {AutomationFollowUp} from '../../../../Infrastructure/DataContracts/AutomationFollowUp';
+import {EventTypeList} from '../../../../Infrastructure/EntityLists/EventTypeList';
+import {EventTypeListService} from '../../../../Infrastructure/Services/StandardLists/EventTypeListService';
+import {SLAHeaderListService} from '../../../../CRM/Services/StandardLists/SLAHeaderListService';
+import {SLAHeaderList} from '../../../../CRM/EntityLists/SLAHeaderList';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {AutomationCondition} from '../../../../Infrastructure/DataContracts/AutomationCondition';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {DocumentTypeListService} from '../../../../Common/Services/StandardLists/DocumentTypeListService';
+import {DocumentTypeTemplatePMExtendedService} from '../../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
+import {AutomationHistoryExtendedPMService} from '../../../../Common/Services/ExtendedPMs/AutomationHistoryExtendedPMService';
+import {AutomationResultEmailRecipientExtendedService} from '../../../../Common/Services/ExtendedPMs/AutomationResultEmailRecipientExtendedService';
+import {DocumentTypeTemplatePM} from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
+import {AutomationHistoryPM} from '../../../../Common/EntityPMs/AutomationHistoryPM';
+import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {AutomationResultEmailRecipientPM} from '../../../../Common/EntityPMs/AutomationResultEmailRecipientPM';
+import {AutomationsSettingsComponent} from '../../../../Infrastructure/Components/Maintenance/Automation/AutomationsSettingsComponent';
+import {DocumentTypeList} from '../../../../Common/EntityLists/DocumentTypeList';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {DocumentTypeTemplateViewModel} from '../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel';
+import {AutomationConditionViewModel} from './ViewModel/AutomationConditionViewModel';
+import {ResultEmailRecipientViewModel} from './ViewModel/ResultEmailRecipientViewModel';
+import {AutomationSetValueViewModel} from './ViewModel/AutomationSetValueViewModel';
+import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
+import {Guid} from '../../../../Infrastructure/Utilities/Guid';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {CodeNameClass} from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import {AutomationQueuedTask} from '../../../../Infrastructure/DataContracts/AutomationQueuedTask';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
+import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 @Component({
-
+    moduleId: module.id,
     selector: 'AddEditAutomationsComponent',
     templateUrl: './AddEditAutomationsComponent.html',
-    providers: [DocumentTypeTemplatePMExtendedService, DocumentTypeCopyPMExtendedService, AutomationResultEmailRecipientExtendedService, AutomationExtendedPMService, AutomationHistoryExtendedPMService, EntityArgs],
+    providers: [DocumentTypeTemplatePMExtendedService, AutomationResultEmailRecipientExtendedService, AutomationExtendedPMService, AutomationHistoryExtendedPMService, EntityArgs],
 })
 
 export class AddEditAutomationsComponent extends BaseComponent implements OnInit {
     _documentTypeListService: DocumentTypeListService;
     AutomationSetSLAValue: AutomationSetSLAValue = new AutomationSetSLAValue();
     AutomationFollowUp: AutomationFollowUp = new AutomationFollowUp();
-    AutomationEvent: AutomationEvent = new AutomationEvent();
     AutomationQueuedTask: AutomationQueuedTask = new AutomationQueuedTask();
-
-    AutomationSendInterface: AutomationSendInterface = new AutomationSendInterface();
-
-    AutomationCreateTask: AutomationCreateTask = new AutomationCreateTask();
-
-    AutomationSendDocument: AutomationSendDocument = new AutomationSendDocument();
-    AutomationOnUpdateDocument: AutomationOnUpdateDocument = new AutomationOnUpdateDocument();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     ObjectFieldsLists: ObjectFieldPM[] = [];
     AllowedinAutomationConditionsFieldLists: ObjectFieldPM[] = [];
-    AutomationEmailRecipientFieldLists: AutomationEmailRecipientFieldItem[] = [];
+    AutomationEmailRecipientFieldLists: ObjectFieldPM[] = [];
     AutomationSetValuebjectFieldLists: ObjectFieldPM[] = [];
     AutomationHistoryLists: AutomationHistoryPM[];
     IsLoadPage: boolean = false;
@@ -99,26 +77,15 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     public ValidationErrorsList: string[];
     ResultCodeList: ResultCode[];
     DocumentTypeLists: DocumentTypeList[];
+    DocumentTypeSelected: DocumentTypeList;
     AllDocumentTypeLists: DocumentTypeList[] = [];
-
     DocumentTypeTemplateLists: DocumentTypeTemplateViewModel[];
-
-    DocumentTypeTemplateReportLists: any[];
-
-    public ShowDocumentsCopy: boolean = false;
-    public DocumentTypeCopyLists: DocumentCopiesViewModel[];
+    DocumentTypetTemplateSelected: DocumentTypeTemplateViewModel;
 
     DelayTime: number;
-    DelayTimeOp: string;
-    SelectedDelaytimeFieldCode: string;
     IsEnableAddTemplate: boolean = false;
-    IsEnableEditTemplate: boolean = false;
-
-    IsEnableEditReportTemplate: boolean = false;
-    IsEnableAddReportTemplate: boolean = false;
-
-
-
+    IsEnableEditTemplate: boolean = false;    
+    DelaytimeIndicator: string;
     CountDocumentSelection: string;
 
     AutomationCondationOrList: AutomationConditionViewModel[] = [];
@@ -149,7 +116,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     IsSelectedImmediatly: boolean = false;
     IsSelectedDelayed: boolean = false;
     IsLoadingComplete: boolean = false;
-
+    
     EventDocFollowUpTypeLists: EventTypeList[] = [];
     EventFollowUpTypeLists: EventTypeList[] = [];
     FollowUpTypeSelected: EventTypeList;
@@ -161,340 +128,112 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     FollowUpDateObjectFieldSelected: ObjectFieldPM;
 
     FollowUpOwnerId: string = "";
-    FollowOwnerObjectFieldCode: string = "";
+    FollowOwnerObjectFieldId: string = "";
 
     DateValue: string = "";
-
+  
     public FollowDateEscalationTime: number;
     public FollowDateEscalationActionTimeIndicatorCode: string = "";
-    public TimeUnits: CodeNameClass[] = [];
-    public TimeUnitOps: CodeNameClass[] = [];
-    public DelayTimeObjectFields: ObjectFieldPM[] = [];
+
     FollowUpNote: string = "";
     Code: string;
     IsShowAutomationCodeField: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    entityResourceService: EntityResourceService = new EntityResourceService();
-    IsShowSendInterfaceResult: boolean = false;
-    IsShowEventCreationResult: boolean = false;
-    IsShowCreateTaskResult: boolean = false;
-    IsTenantZero: boolean = false;
-    IsCustomerCareUser: boolean = false;
-    DisableTimeTypeSelector: boolean = false;
-    private quoteTemplateListService: QuoteTemplateListService;
-    public cyData: string;
-    public cyData2: string;
-    constructor(public _automationResultEmailRecipientExtendedService:
-
-        AutomationResultEmailRecipientExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public documentTypeCopyPMExtendedService: DocumentTypeCopyPMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
+    constructor(public _automationResultEmailRecipientExtendedService: AutomationResultEmailRecipientExtendedService,   public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
         super();
 
-        if (SessionLocator.TenantPM.Id == 0) {
-
-            this.IsShowAutomationCodeField = true;
-            this.IsTenantZero = true;
-        }
-
+        if (SessionLocator.TenantPM.Id == 0) this.IsShowAutomationCodeField = true;
 
         this._documentTypeListService = new DocumentTypeListService();
-
-        this.IsCustomerCareUser = SessionLocator.LoggedUserPM.IsCustomerCare;
-        if (FeatureLocator.HasFeaturePermession("Automation", "SENDINTERFACERESULT") && this.IsCustomerCareUser) {
-            this.IsShowSendInterfaceResult = true;
-        }
-
-        if (FeatureLocator.HasFeaturePermession("Automation", "CREATETASKRESULT")) {
-            this.IsShowCreateTaskResult = true;
-        }
-
-        if (FeatureLocator.HasFeaturePermession("Automation", "AutomationEventCreation")) {
-            this.IsShowEventCreationResult = true;
-        }
     }
-
+    
     ngOnInit() {
         this.DataContext.UIProperties.SetEnabled("FollowDateUniteCode", "Automation", false);
     }
-
-
 
     SLAHeaderSelected: SLAHeaderList;
     SLAHeaderLists: SLAHeaderList[];
     IsLoadEventFollowUp: boolean = false;
     IsLoadSLAHeaders: boolean = false;
     IsAutomationResultEmailAllActiveUsers: boolean = false;
-    AutomationItemClass: any;
+
     IsMasterShipment: boolean = false;
     SetWindowArgs(args: any) {
-        this.entityResourceService.getEntityResourceByTableName("Automation", 0).subscribe((response: any) => {
-            this.ObjectTableId = args.ObjectTableId;
-            this.DataViewModel = args.DataViewModel;
-            this.PageType = args.PageType;
-            this.CurrentEntityPM = args.AutomationPM;
-            this.Mode = args.Mode;
-            this.ObjectTableName = args.ObjectTableName;
-            this.IsNewEntity = args.IsNewEntity;
-            this.DelayedHtmlinputId = Guid.newGuid();
-            this.ImmediatlyHtmlinputId = Guid.newGuid();
-            this.InactiveKey = Guid.newGuid();
-            this.IsMasterShipment = args.IsMasterShipment;
-            this.entityArgs.EntityPM = this.CurrentEntityPM;
-            this.entityArgs.ObjectTableName = "Automation";
-            this.SLAHeaderLists = [];
-            this.AutomationItemClass = this.DataViewModel.AutomationItemClass;
-            this.BuildQueuedTaskFilters();
-            this.FillTimeUnits();
+        this.ObjectTableId = args.ObjectTableId;
+        this.DataViewModel = args.DataViewModel;
+        this.PageType = args.PageType;
+        this.CurrentEntityPM = args.AutomationPM;
+        this.Mode = args.Mode;
+        this.ObjectTableName = args.ObjectTableName;
+        this.IsNewEntity = args.IsNewEntity;
+        this.DelayedHtmlinputId = Guid.newGuid();
+        this.ImmediatlyHtmlinputId = Guid.newGuid();
+        this.InactiveKey = Guid.newGuid();
+        this.IsMasterShipment = args.IsMasterShipment;
+        this.entityArgs.EntityPM = this.CurrentEntityPM;
+        this.entityArgs.ObjectTableName = "Automation";
+        this.SLAHeaderLists = [];
 
-            var myService = new EventTypeListService();
-            myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+        this.BuildQueuedTaskFilters();
+
+        var myService = new EventTypeListService();
+        myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var lists: EventTypeList[] = myResponse.Result;
+                // this.EventFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && f.AllowedInAutomation == true);
+                this.EventFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && f.ManualActivatedFollowUp == true);
+                this.EventDocFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && (f.Code == "DOCO" || f.Code == "DOCI" ));
+       
+                if (!AppTool.IsNullOrEmpty(this.AutomationFollowUp.EventTypeId)) {
+                    this.FollowUpTypeSelected = this.EventFollowUpTypeLists.filter(d => d.Id == this.AutomationFollowUp.EventTypeId)[0];
+                }            
+            }
+
+            this.IsLoadEventFollowUp = true;
+        });
+        
+        if (this.ObjectTableName == "Ticket") {
+            var sLAHeaderListService = new SLAHeaderListService();
+            sLAHeaderListService.getAll().subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    var lists: EventTypeList[] = myResponse.Result;
-                    // this.EventFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && f.AllowedInAutomation == true);
-                    this.EventFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && f.ManualActivatedFollowUp == true);
-                    this.EventDocFollowUpTypeLists = lists.filter(f => f.ObjectTableId == this.ObjectTableId && (f.Code == "DOCO" || f.Code == "DOCI"));
-
-                    if (!AppTool.IsNullOrEmpty(this.AutomationFollowUp.EventTypeId)) {
-                        this.FollowUpTypeSelected = this.EventFollowUpTypeLists.filter(d => d.Id == this.AutomationFollowUp.EventTypeId)[0];
+                    if (myResponse.Result) {
+                        this.SLAHeaderLists = myResponse.Result.filter(d => d.Inactive == false);
+                        if (!AppTool.IsNullOrEmpty(this.AutomationSetSLAValue.SLAId)) {
+                            this.SLAHeaderSelected = this.SLAHeaderLists.filter(d => d.Id == this.AutomationSetSLAValue.SLAId)[0];
+                        }
                     }
                 }
 
-                this.IsLoadEventFollowUp = true;
+                this.IsLoadSLAHeaders = true;
             });
+        }
 
+        if (this.CurrentEntityPM.AutomatedDataBackup) {
 
-            if (this.ObjectTableName == "Ticket") {
-                var sLAHeaderListService = new SLAHeaderListService();
-                sLAHeaderListService.getAll().subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        if (myResponse.Result) {
-                            this.SLAHeaderLists = myResponse.Result.filter(d => d.Inactive == false);
-                            if (!AppTool.IsNullOrEmpty(this.AutomationSetSLAValue.SLAId)) {
-                                this.SLAHeaderSelected = this.SLAHeaderLists.filter(d => d.Id == this.AutomationSetSLAValue.SLAId)[0];
-                            }
-                        }
-                    }
+            this.AutomatedBackupClass = this.CurrentEntityPM.AutomatedDataBackup;
 
-                    this.IsLoadSLAHeaders = true;
-                });
-            }
+            this.Start();
+        }
+        else {
 
-            if (this.CurrentEntityPM.AutomatedDataBackup) {
-
-                this.AutomatedBackupClass = this.CurrentEntityPM.AutomatedDataBackup;
-
+            if (this.IsNewEntity) {
+                this.AutomatedBackupClass = new AutomatedBackup();
+                this.AutomatedBackupClass.Type = "Immeduiatly";
+                this.AutomatedBackupClass.DelaytimeIndicator = "OO";
+             
+                this.AutomatedBackupClass.Delaytime = 0;
+                this.AutomatedBackupClass.ResultCode = "EMAIL";
                 this.Start();
             }
             else {
-
-                if (this.IsNewEntity) {
-                    this.AutomatedBackupClass = new AutomatedBackup();
-                    this.AutomatedBackupClass.Type = "Immeduiatly";
-                    this.AutomatedBackupClass.DelaytimeIndicator = "OO";
-
-                    this.AutomatedBackupClass.Delaytime = 0;
-                    this.AutomatedBackupClass.DelaytimeOp = null;
-                    this.AutomatedBackupClass.SelectedDelaytimeFieldCode = null;
-                    this.AutomatedBackupClass.ResultCode = this.CurrentEntityPM.Type == "OnDocumentUpdate" ? "ONUPDATEDOCUMENT" : "EMAIL";
-                    this.Start();
-                }
-                else {
-                    this.LoadAutomationDataBackup();
-                }
-            }
-        });
-
-    }
-
-    FillTimeUnits() {
-        this.TimeUnits.push(new CodeNameClass("II", "Minutes"));
-        this.TimeUnits.push(new CodeNameClass("OO", "Hours"));
-        this.TimeUnits.push(new CodeNameClass("DD", "Days"));
-        this.TimeUnitOps.push(new CodeNameClass("NL", ""));
-        this.TimeUnitOps.push(new CodeNameClass("BF", "Before"));
-        this.TimeUnitOps.push(new CodeNameClass("AF", "After"));
-    }
-
-    private myUsersList: UserList[] = [];
-    private LoadUsers() {
-        var filters: ApiQueryFilters = new ApiQueryFilters();
-        filters.SortBy = "EnglishName";
-        filters.SortDirection = "Ascending";
-        filters.PageIndex = 0;
-        filters.PageSize = 1000;
-        filters.Tenant = SessionLocator.Tenant;
-
-        var userService: UserListService = new UserListService();
-        this.CurrentSession.StartBusyIndicator('Loading...');
-        userService.getByFilters(filters).subscribe((res: any) => {
-            this.CurrentSession.StopBusyIndicator();
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                this.myUsersList = pmResponse.Result;
-
-                if (!this.IsNewEntity) {
-                    this.SetSelectedNotifyBackValue();
-                }
-            }
-        });
-    }
-
-    public IsChooseUsersVisible: boolean = false;
-    public IsNotifyBackVisible: boolean = false;
-    public SelectedNotRequiredFields: ObjectFieldPM[] = [];
-    public NotifyBackValuesList: CodeNameClass[] = [];
-    private FillNotifyBackList() {
-        this.NotifyBackValuesList = [];
-
-        var obj: CodeNameClass = new CodeNameClass();
-        obj.Code = "SPF";
-        obj.Name = "Specific Users";
-        this.NotifyBackValuesList.push(obj);
-
-        this.EmailRecipientFieldLists.forEach(rec => {
-            if (rec.ObjectFieldPM && rec.ObjectFieldPM.IsRequiered == true) {
-                obj = new CodeNameClass();
-                obj.Code = rec.FieldCode;
-                obj.Name = rec.FullName;
-                this.NotifyBackValuesList.push(obj);
-            }
-        });
-    }
-
-    private SetSelectedNotifyBackValue() {
-        if (this.IsNewEntity) {
-            this.NotifyBackSelectedItem = this.NotifyBackValuesList.filter(d => d.Code == "SPF")[0];
-        }
-
-        else {
-            this.NotifyBackSelectedItem = this.NotifyBackValuesList.filter(d => d.Code == "SPF")[0];
-            this.AutomationResultEmailRecipientPMList.forEach(aut => {
-                if (aut.IsNotifyBack && aut.RecipientType == "Variable") {
-                    this.NotifyBackSelectedItem = this.NotifyBackValuesList.filter(d => d.Code == aut.RecipientValue)[0];
-                }
-            });
-        }
-    }
-
-    private notifyBackSelectedItem: CodeNameClass;
-    get NotifyBackSelectedItem() { return this.notifyBackSelectedItem; }
-    set NotifyBackSelectedItem(value: CodeNameClass) {
-        if (this.notifyBackSelectedItem != value) {
-            this.notifyBackSelectedItem = value;
-            this.IsChangeAutomation = true;
-
-            if (value.Code == "SPF") {
-                this.IsChooseUsersVisible = true;
-            }
-            else {
-                this.IsChooseUsersVisible = false;
+                this.LoadAutomationDataBackup();
             }
         }
-    }
-
-
-    private documentTypeTemplateReportSelected: any;
-    get DocumentTypeTemplateReportSelected() { return this.documentTypeTemplateReportSelected; }
-    set DocumentTypeTemplateReportSelected(value: any) {
-        if (this.documentTypeTemplateReportSelected != value) {
-            this.documentTypeTemplateReportSelected = value;
-            var reportTemplateId = value ? value.Id : null;
-            if (this.AutomatedBackupClass && this.AutomatedBackupClass.ReportTemplateId != reportTemplateId) {
-                this.AutomatedBackupClass.ReportTemplateId = reportTemplateId;
-                this.IsChangeAutomation = true;
-            }
-        }
-    }
-
-
-    private documentTypeCopySelected: DocumentCopiesViewModel;
-    get DocumentTypeCopySelected() { return this.documentTypeCopySelected; }
-    set DocumentTypeCopySelected(value: DocumentCopiesViewModel) {
-        if (this.documentTypeCopySelected != value) {
-            this.documentTypeCopySelected = value;
-            const documentCopyId = value ? value.Id : null;
-            if (this.AutomatedBackupClass && this.AutomatedBackupClass.DocumentCopyId != documentCopyId) {
-                this.AutomatedBackupClass.DocumentCopyId = documentCopyId;
-                this.IsChangeAutomation = true;
-            }
-        }
-    }
-
-    IsHaveDocumentDefultAttachments: boolean = false;
-    private documentTypeTemplateSelected: DocumentTypeTemplateViewModel;
-    get DocumentTypeTemplateSelected() { return this.documentTypeTemplateSelected; }
-    set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
-        if (this.documentTypeTemplateSelected != value) {
-            this.documentTypeTemplateSelected = value;
-            var templateId = value ? value.Id : null;
-
-            if (this.CurrentEntityPM && this.CurrentEntityPM.TemplateId != templateId) {
-                this.CurrentEntityPM.TemplateId = templateId;
-                this.IsChangeAutomation = true;
-            }
-          this.IsHaveDocumentDefultAttachments = this.documentTypeTemplateSelected.DocumentDefultAttachments && this.documentTypeTemplateSelected.DocumentDefultAttachments.length > 0 ? true : false;
-          
-        }
-    }
-
-
-
-
-    private documentTypeSelected: DocumentTypeList;
-    get DocumentTypeSelected() { return this.documentTypeSelected; }
-    set DocumentTypeSelected(value: DocumentTypeList) {
-        if (this.documentTypeSelected != value) {
-            this.documentTypeSelected = value;
-            var newValue = value ? value.Id : "";
-            var oldValue = this.CurrentEntityPM.DocumentTypeId;
-
-            if (this.CurrentEntityPM && newValue != oldValue) {
-                this.CurrentEntityPM.DocumentTypeId = newValue;
-                this.IsChangeAutomation = true;
-            }
-            this.IsEnableAddTemplate = true;
-
-            if (this.documentTypeSelected && this.documentTypeSelected.TemplateFormatCode == "P") {
-                this.IsEnableAddReportTemplate = true;
-            }
-        }
-        if (this.documentTypeSelected) {
-            this.LoadDocumentTypeTemplate(this.documentTypeSelected);
-        }
-
-    }
-
-
-
-
-
-
-
-
-
-
-    MyChoosenSpecificUsers: string = "";
-    ChooseUsers() {
-        var args = new ChooseUserArgs();
-        args.MyChoosenSpecificUsers = this.MyChoosenSpecificUsers;
-        args.AllUsers = this.myUsersList;
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Users List";
-        logWindow.Width = 725;
-        logWindow.Height = 520;
-        logWindow.WindowArgs = args;
-        logWindow.Show("./Infrastructure/Components/Maintenance/Automation/ChooseSpecificUserComponent");
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event != null) {
-                if ($event != this.MyChoosenSpecificUsers) this.IsChangeAutomation = true;
-                this.MyChoosenSpecificUsers = $event;
-            }
-        });
     }
 
     LoadAutomationDataBackup() {
         if (this.CurrentEntityPM && this.CurrentEntityPM.Id) {
-            this._automationExtendedPMService.getAutomationBackupDataById(this.CurrentEntityPM.Id, this.CurrentEntityPM.Tenant).subscribe((res: any) => {
+            this._automationExtendedPMService.getAutomationBackupDataById(this.CurrentEntityPM.Id, this.CurrentEntityPM.Tenant).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -505,40 +244,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             });
         }
     }
-
-    SetFilterDocumentType() {
-
-        this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut && a.TemplateFormatCode == "M");
-
-        if (this.ResultCodeSelected && (this.ResultCodeSelected.Code == "EMAIL" || this.ResultCodeSelected.Code == "SENDDOCUMENT")) {
-            this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut);
-        }
-
-
-        if (this.DocumentTypeLists && this.DocumentTypeLists.length > 0) {
-            if (this.CurrentEntityPM.DocumentTypeId) {
-                this.DocumentTypeSelected = this.DocumentTypeLists.filter(d => d.Id == this.CurrentEntityPM.DocumentTypeId)[0];
-            }
-
-            if (!this.DocumentTypeSelected) {
-                this.DocumentTypeSelected = this.DocumentTypeLists[0];
-                if (this.DocumentTypeSelected) {
-                    this.CurrentEntityPM.DocumentTypeId = this.DocumentTypeSelected.Id;
-                }
-            }
-
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-        }
-        else {
-            this.IsEnableAddTemplate = false;
-            this.IsEnableEditTemplate = false;
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-        }
-    }
-
-
-
+   
     LoadDocumentType() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.DocumentTypeLists = [];
@@ -549,7 +255,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         apiQueryFilters.Tenant = SessionLocator.Tenant;
         apiQueryFilters.ObjectTableName = this.ObjectTableName;
 
-        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res: any) => {
+        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.AllDocumentTypeLists = pmResponse.Result.filter(a => a.ObjectTableId == this.ObjectTableId && !a.InActive);
@@ -562,228 +268,126 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     }
                 }
 
-                this.SetFilterDocumentType();
+                this.DocumentTypeLists = this.AllDocumentTypeLists.filter(a => a.IsDocOut && a.TemplateFormatCode == "M");
+
+                if (this.DocumentTypeLists && this.DocumentTypeLists.length > 0) {
+                    if (this.CurrentEntityPM.DocumentTypeId) {
+                        this.DocumentTypeSelected = this.DocumentTypeLists.filter(d => d.Id == this.CurrentEntityPM.DocumentTypeId)[0];
+                    }
+
+                    if (!this.DocumentTypeSelected) {
+                        this.DocumentTypeSelected = this.DocumentTypeLists[0];
+                        if (this.DocumentTypeSelected) {
+                            this.CurrentEntityPM.DocumentTypeId = this.DocumentTypeSelected.Id;
+                        }
+                    }
+
+                    if (this.DocumentTypeSelected) {
+                        this.LoadDocumentTypeTemplate(this.DocumentTypeSelected);
+                    }
+
+                    else this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.IsEnableAddTemplate = true;
+                }
+                else {
+                    this.IsEnableAddTemplate = false;
+                    this.IsEnableEditTemplate = false;
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                }
             }
 
             else {
                 this.IsEnableAddTemplate = false;
                 this.IsEnableEditTemplate = false;
-
-                this.IsEnableAddReportTemplate = false;
-                this.IsEnableEditReportTemplate = false;
-
-
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
         });
     }
 
     LoadDocumentTypeTemplate(documentTypeList: DocumentTypeList) {
-        const automationDocumentCopyfeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ADC")[0];
-        if (this.ResultCodeSelected.Code == "SENDDOCUMENT" && this.ObjectTableName == "Shipment") this.ShowDocumentsCopy = true;
-        else this.ShowDocumentsCopy = documentTypeList.IsDocumentOneTimePrintLimited && automationDocumentCopyfeatureToggle != null;
+        this.DocumentTypeTemplateLists = [];
 
-        this.LoadDocumentTypeHTMLTemplate(documentTypeList);
-
-        var isMessage: boolean = documentTypeList.TemplateFormatCode == "M" ? true : false;
-        if (!isMessage) {
-            this.LoadDocumentReportTemplate(documentTypeList);
-            if (this.ShowDocumentsCopy)
-                this.LoadDocumentTypeCopies(documentTypeList);
-        }
-        else this.DocumentTypeTemplateReportSelected = null;
-    }
-
-
-    LoadDocumentTypeHTMLTemplate(documentTypeList: DocumentTypeList, documentTemplateId: string = null) {
-        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(documentTypeList.Id, "R", SessionLocator.Tenant).subscribe((res: any) => {
+        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.DocumentTypeTemplateLists = [];
-
-            if (!pmResponse.HasError && pmResponse.Result) {
+            if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
-
-                if (!this.IsTenantZero) {
-                    myResult = myResult.filter(d => d.AutomationId == this.CurrentEntityPM.Id || !d.AutomationId);
-                }
-
 
                 myResult.forEach((item) => {
                     this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
                 });
 
-                var selectedTemplate: any;
-
-
                 if (this.DocumentTypeTemplateLists && this.DocumentTypeTemplateLists.length > 0) {
-
-                    if (documentTemplateId) {
-                        selectedTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTemplateId)[0];
-
-                    }
-                    else if (this.CurrentEntityPM.TemplateId) {
-                        selectedTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == this.CurrentEntityPM.TemplateId)[0];
+                    if (this.CurrentEntityPM.TemplateId) {
+                        this.DocumentTypetTemplateSelected = this.DocumentTypeTemplateLists.filter(d => d.Id == this.CurrentEntityPM.TemplateId)[0];
                     }
 
-                    if (!selectedTemplate) {
-                        selectedTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTypeList.DocumentTypeDefaultHTMLTemplateId)[0];
-                        if (!selectedTemplate) {
-                            selectedTemplate = this.DocumentTypeTemplateLists[0];
+                    if (!this.DocumentTypetTemplateSelected) {
+                        this.DocumentTypetTemplateSelected = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTypeList.DocumentTypeDefaultHTMLTemplateId)[0];
+
+                        if (!this.DocumentTypetTemplateSelected) {
+                            this.DocumentTypetTemplateSelected = this.DocumentTypeTemplateLists[0];
+                        }
+
+                        if (this.DocumentTypetTemplateSelected) {
+                            this.CurrentEntityPM.TemplateId = this.DocumentTypetTemplateSelected.Id;
                         }
                     }
-
-                    this.DocumentTypeTemplateSelected = selectedTemplate;
-
 
                     this.IsEnableEditTemplate = true;
                 }
                 else {
                     this.IsEnableEditTemplate = false;
-                    this.DocumentTypeTemplateSelected = null;
+                    this.DocumentTypetTemplateSelected = null;
                 }
             }
         });
     }
 
-    IsQuotationDocument(documentTypeList: DocumentTypeList) {
-
-        return documentTypeList.Code == "QUOTE" ? true : false;
+    DocumentTypeListsValueChanged(item: DocumentTypeList) {
+        if (item != null) {
+            this.DocumentTypeSelected = item;
+            this.CurrentEntityPM.DocumentTypeId = item.Id;
+            this.LoadDocumentTypeTemplate(item);
+            this.IsChangeAutomation = true;
+        }
     }
 
-    DocumentTypeReportTemplateBinding: string = "";
-    LoadQuoteTemplates(documentTypeList: DocumentTypeList, reportTemplateId: string = null) {
-        this.DocumentTypeReportTemplateBinding = "Name";
-        if (this.quoteTemplateListService == null) this.quoteTemplateListService = new QuoteTemplateListService();
-        this.quoteTemplateListService.getAll().subscribe((res: any) => {
-            var pmResponse: ServiceResponse = res;
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.DocumentTypeTemplateReportLists = pmResponse.Result;
-            this.SetDocumentTemplateReportSelected(reportTemplateId);
-            this.IsEnableEditReportTemplate = this.DocumentTypeTemplateReportSelected ? true : false;
-        });
-
+    DocumentTypeTemplateListValueChanged(item: DocumentTypeTemplateViewModel) {
+        if (item != null) {
+            this.DocumentTypetTemplateSelected = item;
+            this.CurrentEntityPM.TemplateId = item.Id;
+            this.IsChangeAutomation = true;
+        }       
     }
-
-    LoadDocumentTypeTemplates(documentTypeList: DocumentTypeList, reportTemplateId: string = null) {
-        this.DocumentTypeReportTemplateBinding = "Description";
-        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(documentTypeList.Id, "S", SessionLocator.Tenant).subscribe((res: any) => {
-            var pmResponse: ServiceResponse = res;
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-            this.DocumentTypeTemplateReportLists = [];
-            if (!pmResponse.HasError) {
-                var myResult = pmResponse.Result;
-
-                myResult.forEach((item) => {
-                    this.DocumentTypeTemplateReportLists.push(new DocumentTypeTemplateViewModel(item));
-                });
-
-                this.SetDocumentTemplateReportSelected(reportTemplateId);
-                this.IsEnableEditReportTemplate = this.DocumentTypeTemplateReportSelected ? true : false;
+    
+    EditDocumentTemplate(item: DocumentTypeTemplateViewModel) {
+        if (item) {
+            if (this.DocumentTypetTemplateSelected) {
+                if (item.Id != this.DocumentTypetTemplateSelected.Id) {
+                    this.DocumentTypetTemplateSelected = item;
+                    this.CurrentEntityPM.TemplateId = item.Id;
+                }
             }
-        });
-    }
-
-    SetDocumentTemplateReportSelected(reportTemplateId: string) {
-        this.DocumentTypeTemplateReportSelected = null;
-
-        if (this.DocumentTypeTemplateReportLists && this.DocumentTypeTemplateReportLists.length > 0) {
-            var selectedTemplate: any;
-            var templateId = reportTemplateId ? reportTemplateId : (this.AutomatedBackupClass && this.AutomatedBackupClass.ReportTemplateId) ? this.AutomatedBackupClass.ReportTemplateId : "";
-            selectedTemplate = this.DocumentTypeTemplateReportLists.filter(d => d.Id == templateId)[0];
-            if (!selectedTemplate) selectedTemplate = this.DocumentTypeTemplateReportLists[0];
-            this.DocumentTypeTemplateReportSelected = selectedTemplate;
+            else {
+                this.DocumentTypetTemplateSelected = item;
+                this.CurrentEntityPM.TemplateId = item.Id;
+            }
         }
 
+        if (this.DocumentTypetTemplateSelected) {
 
-    }
-
-
-    LoadDocumentReportTemplate(documentTypeList: DocumentTypeList, reportTemplateId: string = null) {
-
-        if (this.IsQuotationDocument(documentTypeList)) {
-            this.LoadQuoteTemplates(documentTypeList, reportTemplateId);
-        } else this.LoadDocumentTypeTemplates(documentTypeList, reportTemplateId);
-
-    }
-
-
-    LoadDocumentTypeCopies(documentTypeList: DocumentTypeList) {
-        this.documentTypeCopyPMExtendedService.getDocumentTypeCopiesWithoutLimitedOneForAutomations(documentTypeList.Id, documentTypeList.LimitedPrintCopyId, SessionLocator.Tenant).subscribe((res: any) => {
-            var pmResponse: ServiceResponse = res;
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.DocumentTypeCopyLists = [];
-            if (!pmResponse.HasError) {
-                var myResult = pmResponse.Result;
-
-                myResult.forEach((item) => {
-                    this.DocumentTypeCopyLists.push(new DocumentCopiesViewModel(item, null, null, null, null, null, null, null));
-                });
-
-                if (this.DocumentTypeCopyLists && this.DocumentTypeCopyLists.length > 0) {
-                    const templateId = (this.AutomatedBackupClass && this.AutomatedBackupClass.DocumentCopyId) ? this.AutomatedBackupClass.DocumentCopyId : "";
-
-                    let selectedCopyTemplate = this.DocumentTypeCopyLists.filter(d => d.Id == templateId)[0];
-                    if (!selectedCopyTemplate) selectedCopyTemplate = this.DocumentTypeCopyLists[0];
-
-                    this.DocumentTypeCopySelected = selectedCopyTemplate;
-
-                    this.IsEnableEditReportTemplate = true;
-                }
-            }
-        });
-    }
-
-
-    OpenEditQuoteTemplateComponent(documentTemplate: any) {
-
-        var windowArgs: any = {};
-        var logWindow = new LogitudeWindow();
-        windowArgs.QuoteTemplateId = documentTemplate.Id;
-        logWindow.Title = documentTemplate.Name;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = window.innerWidth - 150;
-        logWindow.Height = window.innerHeight - 150;
-        logWindow.IsShowCloseButton = true;
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
-
-    }
-
-
-    AutomationDocumentTypeTemplateIds: string[] = [];
-
-    EditDocumentTemplate(documentTemplate: any) {
-
-        if (documentTemplate) {
-
-            if (this.IsQuotationDocument(this.DocumentTypeSelected) && !documentTemplate.EditorTool) {
-                this.OpenEditQuoteTemplateComponent(documentTemplate);
-                return;
-            }
-
-
-            var windowArgs: any = {};
-            windowArgs.DataViewModel = this;
-            windowArgs.TemplateId = documentTemplate.Id;
-            windowArgs.Tenant = documentTemplate.Tenant;
-            windowArgs.ObjectType = "DocumentTypeTemplateViewModel";
-            windowArgs.ObjectTableId = this.ObjectTableId;
-            windowArgs.EntityId = this.CurrentEntityPM.Id;
-            windowArgs.ChildObjectTableId = "";
-
-
-            if (documentTemplate && documentTemplate.EditorTool == "R") {
-
-                windowArgs.DocumentTypeTemplatePMLists = this.DocumentTypeTemplateLists;
+            if (this.DocumentTypetTemplateSelected && this.DocumentTypetTemplateSelected.EditorTool == "R") {
+                var windowArgs: any = {};
                 windowArgs.DataViewModel = this;
                 windowArgs.PageType = "Maintenance";
-                windowArgs.DontShowToField = true;
-
-                if (!this.IsTenantZero) {
-                    windowArgs.RequsetPageName = "Automation";
-                    windowArgs.AutomationId = this.CurrentEntityPM.Id;
-                }
+                windowArgs.TemplateId = this.DocumentTypetTemplateSelected.Id;
+                windowArgs.Tenant = this.DocumentTypetTemplateSelected.Tenant;
+                windowArgs.ObjectType = "DocumentTypeTemplateViewModel";
+                windowArgs.DocumentTypeTemplatePMLists = this.DocumentTypeTemplateLists;
+                windowArgs.ObjectTableId = this.ObjectTableId;
+                windowArgs.EntityId = this.CurrentEntityPM.Id;
+                windowArgs.ChildObjectTableId = "";
 
                 var widthwindow = window.innerWidth;
                 var heighthwindow = window.innerHeight;
@@ -792,55 +396,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 logWindow.Width = widthwindow - 100;
                 logWindow.Height = heighthwindow - 100;
                 logWindow.Title = "Edit Html Template";
-
-
-
-                if (this.AutomationDocumentTypeTemplateIds.filter(d => d == documentTemplate.Id)[0]) {
-                    windowArgs.RequsetPageName = "";
-                }
-
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
-                logWindow.WindowClosed.subscribe(($event: any) => {
-                    if ($event) {
-
-                        var documentTypeTemplate: any = this.DocumentTypeTemplateLists.filter(d => d.Id == $event)[0];
-                        if (!documentTypeTemplate) {
-                            this.AutomationDocumentTypeTemplateIds.push($event);
-                        }
-
-
-                        this.LoadDocumentTypeHTMLTemplate(this.DocumentTypeSelected, $event);
-
-                    }
-                });
-
-            }
-            else {
-
-                windowArgs.DocumentTypeTemplatePMLists = this.DocumentTypeTemplateReportLists;
-                var widthwindow = window.innerWidth;
-                var heighthwindow = window.innerHeight;
-                var logWindow = new LogitudeWindow();
-                logWindow.Width = widthwindow - 100;
-                logWindow.Height = heighthwindow - 100;
-                logWindow.Title = "Edit Print Template";
-                logWindow.IsShowCloseButton = true;
-                logWindow.WindowArgs = windowArgs;
-                window.designerClosed = false;
-                logWindow.Show("./Infrastructure/Components/StimulsoftDesigner/StimulsoftDesigner");
-
-                var pollTimer = window.setInterval(function () {
-                    if (window.sessionStorage.getItem("designerClosed")) { // !== is required for compatibility with Opera
-                        window.clearInterval(pollTimer);
-                        this.designerPopUpClosed();
-                    }
-                }, 200);
-
             }
         }
     }
-
+    
     AddDocumentTypeTemplate() {
         var windowArgs: any = {};
         windowArgs.DataViewModel = this;
@@ -849,7 +410,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         windowArgs.CurrentEntityPM = this.DocumentTypeSelected;
         windowArgs.DocumentTypeTemplateLists = this.DocumentTypeTemplateLists;
         windowArgs.TypeTab = "RichText";
-        windowArgs.AutomationId = !this.IsTenantZero ? this.CurrentEntityPM.Id : null;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 800;
@@ -862,49 +422,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             if ($event && this.DocumentTypeTemplateLists && this.DocumentTypeTemplateLists.length > 0) {
                 this.IsEnableEditTemplate = true;
             }
-
-            if ($event) {
-
-                this.AutomationDocumentTypeTemplateIds.push($event);
-
-            }
         });
     }
-
-
-    AddReportDocumentTypeTemplateButtonClicked() {
-        var windowArgs: any = {};
-        windowArgs.DataViewModel = this;
-        windowArgs.PageType = "Maintenance";
-        windowArgs.ObjectTableId = this.DocumentTypeSelected.ObjectTableId;;
-        windowArgs.CurrentEntityPM = this.DocumentTypeSelected;
-        windowArgs.DocumentTypeTemplateLists = this.DocumentTypeTemplateLists;
-        windowArgs.TypeTab = "Document";
-        windowArgs.RequestAreaName = "Automation";
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 800;
-        logitudeWindow.Height = 550;
-        logitudeWindow.Title = "New Print Template";
-        logitudeWindow.WindowArgs = windowArgs;
-        let addTemplateComponentPath: string = this.IsQuotationDocument(this.DocumentTypeSelected) ? "./QuoteModules/QuoteTemplates/Components/NewQuoteTemplateComponent" : "./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/NewReportTemplateComponent";
-
-
-
-        logitudeWindow.Show(addTemplateComponentPath);
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event) {
-                this.LoadDocumentReportTemplate(this.DocumentTypeSelected, $event);
-            }
-        });
-    }
-
-
-
-
-
-
-
-
 
     VeiwAutomationHositoryButtonClicked(item: AutomationHistoryPM) {
         var windowArgs: any = {};
@@ -912,7 +431,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         windowArgs.AutomationHistoryPM = item;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 820;
+        logWindow.Width = 700;
         logWindow.Height = 560;
         logWindow.IsShowCloseButton = true;
         logWindow.Title = "View Automation";
@@ -920,11 +439,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         logWindow.Show("./Infrastructure/Components/Maintenance/Automation/ViewAutomationHistoryComponent");
 
     }
-
+    
     UpdateCurrentAutomationHository(item: AutomationHistoryPM) {
         this.AutomationHistoryLists.filter(d => d.AutomationsId == item.AutomationsId && d.Version == item.Version)[0] = item;
     }
-
+    
     private selectedTabCode: string;
     get SelectedTabCode() { return this.selectedTabCode; }
     set SelectedTabCode(newValue: string) {
@@ -939,9 +458,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
             if (this.SelectedTabCode == "EVE") {
                 let locs = this.AllLocations.toArray().filter(f => f.Code == 'EVE');
-
                 let myLocation: LocationDirective = locs.filter(f => f.Code == "EVE")[0];
                 if (myLocation != null) {
+
                     if (this.PageChild_EVE == null) {
                         SessionLocator.DynamicLoader.Load('./Common/Components/Events/EventsTabComponent', myLocation.viewContainerRef)
                             .then(cmpRef => {
@@ -961,7 +480,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     LoadAutomationHistory() {
         if (this.CurrentEntityPM && !AppTool.IsNullOrEmpty(this.CurrentEntityPM.Id)) {
 
-            this._automationHistoryExtendedPMService.getAutomationHistoryesByAutomationId(this.CurrentEntityPM.Id, SessionLocator.Tenant).subscribe((res: any) => {
+            this._automationHistoryExtendedPMService.getAutomationHistoryesByAutomationId(this.CurrentEntityPM.Id, SessionLocator.Tenant).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -973,7 +492,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             });
         }
     }
-
+    
     private resultCodeSelected: ResultCode;
     get ResultCodeSelected() { return this.resultCodeSelected; }
     set ResultCodeSelected(newValue: ResultCode) {
@@ -981,8 +500,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.resultCodeSelected = newValue;
 
             this.SetQueuedTaskRequired();
-            this.SetFilterDocumentType();
-
         }
     }
 
@@ -990,8 +507,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     Start() {
         if (this.AutomatedBackupClass) {
             this.SelectedTabCode = "DET";
-            this.DelaytimeIndicator = this.TimeUnits.filter(timeUnit => timeUnit.Code == this.AutomatedBackupClass.DelaytimeIndicator)[0];
-            this.DelaytimeOpIndicator = this.TimeUnitOps.filter(timeUnitOp => timeUnitOp.Code == this.AutomatedBackupClass.DelaytimeOp)[0];
+            this.DelaytimeIndicator = this.AutomatedBackupClass.DelaytimeIndicator;
             this.ResultCodeList = [];
             this.AutomationSetValuebjectFieldLists = [];
             this.AutomationEmailRecipientFieldLists = [];
@@ -1001,7 +517,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.EntityContactVariable = [];
             this.ParticipantsList = [];
             this.AutomationHistoryLists = [];
-
+            
             this.ResultCodeList.push(new ResultCode("E-mail", "EMAIL"));
 
             if (this.ObjectTableName == "Ticket") {
@@ -1009,68 +525,15 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ResultCodeList.push(new ResultCode("Set SLA", "SETSLA"));
             }
 
-            if (this.ObjectTableName == "Container") {
-                this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
-            }
-
-            if (this.ObjectTableName == "APInvoice") {
-                this.AddSendDocumentToResultList();
-            }
-
-            if (this.ObjectTableName == "ARInvoice") {
-                this.AddSendInterfaceResult();
-            }
             //Masters and Houses
             if (this.ObjectTableName == "Shipment") {
                 this.ResultCodeList.push(new ResultCode("F/U Creation", "FOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Docs Out F/U Creation", "DOCOUTFOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Docs In F/U Creation", "DOCINFOLLOWUP"));
-                this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
-                
+
                 if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue")) {
                     this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
-                }
-
-                this.AddSendInterfaceResult();
-
-                if (this.IsShowCreateTaskResult) {
-                    this.ResultCodeList.push(new ResultCode("Create Task in Collaboration Tool", "CREATETASK"));
-                }
-
-                if (this.CurrentEntityPM.Type == "OnDocumentUpdate") {
-                    this.FillOnDocumentUpdateResults();
-                }
-            
-
-                if (this.IsShowEventCreationResult) {
-                    this.ResultCodeList.push(new ResultCode("Event Creation", "EVENTCREATION"));
-                }
-            
-
-                if (this.CurrentEntityPM.Type == "OnDocumentUpdate") {
-                    this.FillOnDocumentUpdateResults();
-                }
-
-                this.AddSendDocumentToResultList();
-                
-            }
-
-            //Quotes
-            if (this.ObjectTableName == "Quote") {
-                this.ResultCodeList.push(new ResultCode("F/U Creation", "FOLLOWUP"));
-                this.ResultCodeList.push(new ResultCode("Docs Out F/U Creation", "DOCOUTFOLLOWUP"));
-                this.ResultCodeList.push(new ResultCode("Docs In F/U Creation", "DOCINFOLLOWUP"));
-                this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
-            }
-
-            //WarehouseEntry
-            if (this.ObjectTableName == "WarehouseEntry") {
-                this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
-            }
-            
-            //WarehouseRelease
-            if (this.ObjectTableName == "WarehouseRelease") {
-                this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
+                }                
             }
 
             this.ResultCodeSelected = this.ResultCodeList.filter(d => d.Code == this.AutomatedBackupClass.ResultCode)[0];
@@ -1082,7 +545,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
             this.AutomationFollowUp.ObjectTableName = this.ObjectTableName;
             this.AutomationFollowUp.OwnerFieldType = "Field";
-
+            
             if ((this.ResultCodeSelected.Code == "FOLLOWUP" || this.ResultCodeSelected.Code == "DOCOUTFOLLOWUP" || this.ResultCodeSelected.Code == "DOCINFOLLOWUP") && this.AutomatedBackupClass.AutomationFollowUp) {
                 this.AutomationFollowUp.EventTypeId = this.AutomatedBackupClass.AutomationFollowUp.EventTypeId;
                 this.AutomationFollowUp.OwnerFieldType = this.AutomatedBackupClass.AutomationFollowUp.OwnerFieldType;
@@ -1109,7 +572,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     }
                 }
 
-                this.FollowOwnerObjectFieldCode = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.AutomationFollowUp.OwnerValue : "";
+                this.FollowOwnerObjectFieldId = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.AutomationFollowUp.OwnerValue : "";
                 this.FollowUpOwnerId = this.AutomationFollowUp.OwnerFieldType == "Specific" ? this.AutomationFollowUp.OwnerValue : "";
                 this.DateValue = this.AutomationFollowUp.DateValue;
                 this.FollowUpNote = this.AutomationFollowUp.NoteValue;
@@ -1129,9 +592,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.AutomationQueuedTask.TaskTimeUnitValue = this.AutomatedBackupClass.AutomationQueuedTask.TaskTimeUnitValue;
 
                 this.QueueId = this.AutomationQueuedTask.QueueId;
-                this.TeamId = this.AutomationQueuedTask.TeamId;
+                this.TeamId = this.AutomationQueuedTask.TeamId;                
                 this.TaskOwnerId = this.AutomationQueuedTask.TaskOwnerId;
-                this.TaskSubject = this.AutomationQueuedTask.TaskSubject;
+                this.TaskSubject = this.AutomationQueuedTask.TaskSubject;                
                 this.TaskDescription = this.AutomationQueuedTask.TaskDescription;
                 this.SelectedDueDateField = this.DueDateFieldList.filter(f => f.Code == this.AutomationQueuedTask.DateFieldValue)[0];
                 this.SelectedTaskOffsetType = this.TaskOffsetTypeList.filter(f => f.Code == this.AutomationQueuedTask.OffsetTypeValue)[0];
@@ -1142,9 +605,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (this.ResultCodeSelected.Code == "SETSLA") {
-                this.AutomationSetSLAValue.SLAId = this.AutomatedBackupClass.AutomationSetSLAValue ? this.AutomatedBackupClass.AutomationSetSLAValue.SLAId : "";
+                this.AutomationSetSLAValue.SLAId = this.AutomatedBackupClass.AutomationSetSLAValue ? this.AutomatedBackupClass.AutomationSetSLAValue.SLAId : "" ;
                 if (this.AutomationSetSLAValue) {
-                    if (this.SLAHeaderLists && this.IsLoadSLAHeaders) {
+                    if (this.SLAHeaderLists && this.IsLoadSLAHeaders ) {
                         if (!AppTool.IsNullOrEmpty(this.AutomationSetSLAValue.SLAId)) {
                             this.SLAHeaderSelected = this.SLAHeaderLists.filter(d => d.Id == this.AutomationSetSLAValue.SLAId)[0];
                         }
@@ -1158,7 +621,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
             if (!this.AutomationFollowUp.DateEscalationTime) {
                 this.AutomationFollowUp.DateEscalationTime = this.FollowDateEscalationTime = 0;
-            }
+            }       
 
             this.IsSelectedImmediatly = this.AutomatedBackupClass.Type == "Immeduiatly" ? true : false;
             this.IsSelectedDelayed = this.AutomatedBackupClass.Type == "Delayed" ? true : false;
@@ -1175,249 +638,38 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.IsAutomationResultEmailAllActiveUsers = this.AutomatedBackupClass.IsAutomationResultEmailAllActiveUsers;
             this.Code = this.CurrentEntityPM.Code;
             this.FillObjectField();
-            this.DelayTimeObjectFieldsIndicator = this.DelayTimeObjectFields.filter(delayTimeObjectFields => delayTimeObjectFields.FieldCode == this.AutomatedBackupClass.SelectedDelaytimeFieldCode)[0];
             this.LoadAutomationHistory();
             this.LoadDocumentType();
-            this.LoadNotifyBack();
-
-            if (this.AutomatedBackupClass.AutomationSendInterface && this.ResultCodeSelected.Code == "SENDINTERFACE") {
-                this.MapAutomationSendInterface();
-            }
-            if (this.AutomatedBackupClass.AutomationSendDocument && this.ResultCodeSelected.Code == "SENDDOCUMENT") {
-                this.MapAutomationSendDocument();
-            }
-
-            if (this.AutomatedBackupClass.AutomationOnUpdateDocument && this.ResultCodeSelected.Code == "ONUPDATEDOCUMENT") {
-                this.MapAutomationOnUpdateDocument();
-            }
-
-            if (this.AutomatedBackupClass.AutomationCreateTask && this.ResultCodeSelected.Code == "CREATETASK") {
-                this.MapAutomationCreateTask();
-            }
-
-            if (this.AutomatedBackupClass.AutomationEvent && this.ResultCodeSelected.Code == "EVENTCREATION") {
-                this.MapAutomationEvent();
-            }
-
-
-            this.LoadAuomationResultComponent(this.ResultCodeSelected.Code);
-
-
         }
 
         this.IsLoadingComplete = true;
     }
 
-    private AddSendDocumentToResultList() {
-        const documentSendFeatureToggle = this.ObjectTableName == "APInvoice" ? SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR")[0] : SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ABD")[0] ;
-        if (documentSendFeatureToggle != null)
-            this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
-    }
-
-    private AddSendInterfaceResult() {
-        if (this.IsShowSendInterfaceResult) {
-            this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
-        }
-        else if (this.AutomatedBackupClass.ResultCode == "SENDINTERFACE") {
-            this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
-            this.DisableTimeTypeSelector = true;
-        }
-    }
-
-    private MapAutomationEvent() {
-        this.AutomationEvent.EventTypeId = this.AutomatedBackupClass.AutomationEvent.EventTypeId;
-        this.AutomationEvent.NoteValue = this.AutomatedBackupClass.AutomationEvent.NoteValue;
-        this.AutomationEvent.ObjectTableName = this.ObjectTableName;
-        this.AutomationEvent.ObjectTableId = this.ObjectTableId;
-    }
-
-    FillOnDocumentUpdateResults() {
-        this.ResultCodeList = [];
-        this.ResultCodeList.push(new ResultCode("Send Document", "ONUPDATEDOCUMENT"));
-    }
-
-    MapAutomationSendInterface() {
-        this.AutomationSendInterface.ComputingPartnerId = this.AutomatedBackupClass.AutomationSendInterface.ComputingPartnerId;
-        this.AutomationSendInterface.Format = this.AutomatedBackupClass.AutomationSendInterface.Format;
-        this.AutomationSendInterface.FTBFolderId = this.AutomatedBackupClass.AutomationSendInterface.FTBFolderId;
-        this.AutomationSendInterface.FTPDetails = this.AutomatedBackupClass.AutomationSendInterface.FTPDetails;
-        this.AutomationSendInterface.InterfaceName = this.AutomatedBackupClass.AutomationSendInterface.InterfaceName;
-        this.AutomationSendInterface.SendVia = this.AutomatedBackupClass.AutomationSendInterface.SendVia;
-        this.AutomationSendInterface.WebHookDetails = this.AutomatedBackupClass.AutomationSendInterface.WebHookDetails;
-        this.AutomationSendInterface.AdvancedAutomationSendInterfaceDetails = this.AutomatedBackupClass.AutomationSendInterface.AdvancedAutomationSendInterfaceDetails;
 
 
-    }
+    DelaytimeIndicatorChange(value) {
 
-    MapAutomationCreateTask() {
-        this.AutomationCreateTask.AssigneeValue = this.AutomatedBackupClass.AutomationCreateTask.AssigneeValue;
-        this.AutomationCreateTask.OwnerValue = this.AutomatedBackupClass.AutomationCreateTask.OwnerValue;
-        this.AutomationCreateTask.TaskType = this.AutomatedBackupClass.AutomationCreateTask.TaskType;
-        this.AutomationCreateTask.EndDateValue = this.AutomatedBackupClass.AutomationCreateTask.EndDateValue;
-        this.AutomationCreateTask.EndDateTypeValue = this.AutomatedBackupClass.AutomationCreateTask.EndDateTypeValue;
-        this.AutomationCreateTask.OwnerFieldType = this.AutomatedBackupClass.AutomationCreateTask.OwnerFieldType;
-        this.AutomationCreateTask.AssigneeFieldType = this.AutomatedBackupClass.AutomationCreateTask.AssigneeFieldType;
-    }
+        if (value != null && value.Code != this.DelaytimeIndicator) {
+            var delayTime = this.DelayTime;
+            var delaytimeIndicator = this.DelaytimeIndicator;
 
-    MapAutomationSendDocument() {
-        this.AutomationSendDocument.FTBFolderId = this.AutomatedBackupClass.AutomationSendDocument.FTBFolderId;
-        this.AutomationSendDocument.FTPDetails = this.AutomatedBackupClass.AutomationSendDocument.FTPDetails;
-        this.AutomationSendDocument.SendVia = this.AutomatedBackupClass.AutomationSendDocument.SendVia;
-
-
-    }
-
-    MapAutomationOnUpdateDocument() {
-        this.AutomationOnUpdateDocument.ComputingPartnerId = this.AutomatedBackupClass.AutomationOnUpdateDocument.ComputingPartnerId;
-        this.AutomationOnUpdateDocument.FTPDetails = this.AutomatedBackupClass.AutomationOnUpdateDocument.FTPDetails;
-        this.AutomationOnUpdateDocument.SendVia = this.AutomatedBackupClass.AutomationOnUpdateDocument.SendVia;
-        this.AutomationOnUpdateDocument.DocumentTypeLists = this.AutomatedBackupClass.AutomationOnUpdateDocument.DocumentTypeLists;
-    }
-
-    RunAuomationResultComponent(resultCode: string) {
-        switch (resultCode) {
-            case "SENDINTERFACE":
-                this.LoadSendInterfaceResultComponent(resultCode);
-                break;
-            case "SENDDOCUMENT":
-                this.LoadSendDocumentResultComponent(resultCode);
-                break;
-            case "CREATETASK":
-                this.LoadCreateTaskResultComponent(resultCode);
-                break;
-            case "ONUPDATEDOCUMENT":
-                this.LoadOnUpdateDocumentResultComponent(resultCode);
-                break;
-            case "EVENTCREATION":
-                this.LoadEventCreationResultComponent(resultCode);
-                break;
-            case "ONUPDATEDOCUMENT":
-                this.LoadOnUpdateDocumentResultComponent(resultCode);
-                break;
-        }
-    }
-
-    LoadNotifyBack() {
-        this.LoadUsers();
-        this.FillNotifyBackList();
-        this.SetSelectedNotifyBackValue();
-    }
-
-
-
-    CheckIfAutomationResultHasLocations(resultCode: string) {
-
-        return (resultCode == "SENDINTERFACE" || resultCode == "SENDDOCUMENT" || resultCode == "CREATETASK" || resultCode == "EVENTCREATION"|| resultCode == "ONUPDATEDOCUMENT") ? true : false;
-
-    }
-
-    LoadAuomationResultComponent(resultCode: string) {
-
-        if (this.CheckIfAutomationResultHasLocations(resultCode)) {
-            if (this.AllLocations) {
-
-                if (this.AllLocations.length == 0) {
-                    this.RunComponentTimer(resultCode);
-                } else {
-                    let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
-                    if (myGeneratedComponentLocation) {
-                        this.RunAuomationResultComponent(resultCode);
-                    } else {
-                        this.RunComponentTimer(resultCode);
-
-                    }
-
-                }
-
+            var numOfMinutes = 1 * 60;
+            if (this.DelaytimeIndicator != "OO" && value.Code == "OO" && this.DelayTime >= 60) {
+                delayTime = this.DelayTime / numOfMinutes;
+          
             }
-            else {
-                this.RunComponentTimer(resultCode);
+            else if (this.DelaytimeIndicator != "II" && value.Code == "II") {
+                delayTime = this.DelayTime * numOfMinutes;
             }
+
+
+            this.DelaytimeIndicator = value.Code;
+            this.DelayTime = delayTime;
+            this.IsChangeAutomation = true;
+
         }
     }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer(resultCode: string) {
-        this.Retries++;
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.LoadAuomationResultComponent(resultCode), 1);
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    private delaytimeIndicator: CodeNameClass;
-    get DelaytimeIndicator() {
-        return this.delaytimeIndicator;
-    }
-    set DelaytimeIndicator(value: CodeNameClass) {
-
-        if (value != this.delaytimeIndicator) {
-
-            if (!this.delaytimeIndicator) {
-                this.delaytimeIndicator = value;
-            }
-            else {
-                var delayTime = this.DelayTime;
-                var numOfMinutes = 1 * 60;
-                var numOfhours = 1 * 24;
-                if (this.delaytimeIndicator.Code == "II") {
-                    if (value.Code == "OO" && this.DelayTime >= numOfMinutes) delayTime = (this.DelayTime / numOfMinutes);
-                    else if (value.Code == "DD" && this.DelayTime >= numOfMinutes * numOfhours) delayTime = (this.DelayTime / (numOfMinutes * numOfhours));
-                }
-                else if (this.delaytimeIndicator.Code == "OO") {
-                    if (value.Code == "II") delayTime = (this.DelayTime * numOfMinutes);
-                    else if (value.Code == "DD" && this.DelayTime >= 24) delayTime = (this.DelayTime / numOfhours);
-                }
-                else if (this.delaytimeIndicator.Code == "DD") {
-                    if (value.Code == "OO") delayTime = (this.DelayTime * numOfhours);
-                    else if (value.Code == "II") delayTime = (this.DelayTime * numOfhours * numOfMinutes);
-                }
-                this.DelayTime = delayTime;
-                this.delaytimeIndicator = value;
-                this.IsChangeAutomation = true;
-            }
-        }
-    }
-
-    private delaytimeOpIndicator: CodeNameClass;
-    get DelaytimeOpIndicator() {
-        return this.delaytimeOpIndicator;
-    }
-    set DelaytimeOpIndicator(value: CodeNameClass) {
-        if (value != this.delaytimeOpIndicator) {
-            this.delaytimeOpIndicator = value;
-            this.DelayTimeOp = value.Code;
-            if (value.Code == "NL") {
-                this.DelayTimeObjectFieldsIndicator = null;
-            }
-        }
-    }
-
-    private delayTimeObjectFieldsIndicator: ObjectFieldPM;
-    get DelayTimeObjectFieldsIndicator() {
-        return this.delayTimeObjectFieldsIndicator;
-    }
-    set DelayTimeObjectFieldsIndicator(value: ObjectFieldPM) {
-        if (value != this.delayTimeObjectFieldsIndicator) {
-            this.delayTimeObjectFieldsIndicator = value;
-            this.SelectedDelaytimeFieldCode = value?.FieldCode;
-        }
-    }
-
+    
     SelectDocumentTypes() {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
@@ -1441,13 +693,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     FillObjectField() {
-
         this.AllowedinAutomationConditionsFieldLists = [];
         this.AutomationEmailRecipientFieldLists = [];
         this.AutomationSetValuebjectFieldLists = [];
         this.FollowUpOwnerObjectFieldLists = [];
         this.ObjectFieldsLists = [];
-
 
         this.ObjectFieldsLists = window.ObjectFields.filter(f => f.ObjectTableId == this.ObjectTableId);
         this.ObjectFieldsLists.forEach((objectField) => {
@@ -1457,82 +707,45 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (objectField.AutomationEmailRecipient && (objectField.ObjectTable_LookUpTableName == "User" || objectField.ObjectTable_LookUpTableName == "Contact" || objectField.DataTypeCode == "Emails")) {
-
-                this.AutomationEmailRecipientFieldLists.push(new AutomationEmailRecipientFieldItem(objectField));
+                this.AutomationEmailRecipientFieldLists.push(objectField);
             }
 
-            if (objectField.CanAutomateSetValue || objectField.IsCustom) this.AutomationSetValuebjectFieldLists.push(objectField);
+            if (objectField.CanAutomateSetValue && !objectField.IsCustom) this.AutomationSetValuebjectFieldLists.push(objectField);
 
             if (objectField.FieldName == "CreatedByUserId" || objectField.FieldName == "SalesmanUserId" || objectField.FieldName == "UpdatedByUserId" || objectField.FieldName == "AccountManagerUserId") {
                 this.FollowUpOwnerObjectFieldLists.push(objectField);
-            }
-
-            if (this.ObjectTableName == "Quote") {
-                if (objectField.FieldName == "ETA" || objectField.FieldName == "ETD" || objectField.FieldName == "StartDate" || objectField.FieldName == "AutomaticallyCloseDate" || objectField.FieldName == "ExpirationDate") {
-                    this.FollowUpDateObjectFieldLists.push(objectField);
-                }
             }
 
             if (objectField.FieldName == "MainCarriageETD" || objectField.FieldName == "MainCarriageATD" || objectField.FieldName == "MainCarriageFinalDestinationETA" || objectField.FieldName == "MainCarriageFinalDestinationATA") {
                 this.FollowUpDateObjectFieldLists.push(objectField);
             }
 
-            if ((objectField.DataTypeCode == "Date" || objectField.DataTypeCode == "DateTime") && objectField.ObjectTableId == this.CurrentEntityPM.ObjectTableId && (objectField.AllowedinAutomationConditions || objectField.IsCustom)) {
-                this.DelayTimeObjectFields.push(objectField);
-            }
-
             if (this.ObjectTableName == "Ticket") {
                 if (objectField.FieldName == "SLAId") {
-                    this.AutomationSetSLAValue.ObjectFieldCode = objectField.FieldCode;
+                    this.AutomationSetSLAValue.ObjectFieldId = objectField.Id;
                 }
-                //    this.AddCustomObjectFieldToAutomationSetValuebjectFieldLists(objectField);
             }
         });
-
-        if (this.IsShownAllContactsRecipient()) {
-            this.AddAllContactsRecipient("CustomerId");
-        }
-        //Additional Automation Entity
-        //AutomationCondition
-        window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == this.ObjectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == this.ObjectTableName)[0]))).forEach((otherEntityObjectField) => {
-            window.ObjectFields.filter(f => f.AllowedinAutomationConditions || f.IsCustom == true && f.ObjectTableId == otherEntityObjectField.LookUpTableId).forEach((item) => {
-                this.AllowedinAutomationConditionsFieldLists.push(item);
-            });
-
-        });
-
-
-
-        //AutomationEmailRecipientFieldLists
-        if (this.ObjectTableName == "Ticket") {
-            window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == this.ObjectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == this.ObjectTableName)[0]))).forEach((otherEntityObjectField) => {
-                window.ObjectFields.filter(f => f.AutomationEmailRecipient == true && f.ObjectTableId == otherEntityObjectField.LookUpTableId && (f.ObjectTable_LookUpTableName == "User" || f.ObjectTable_LookUpTableName == "Contact" || f.DataTypeCode == "Emails")).forEach((item) => {
-                    this.AutomationEmailRecipientFieldLists.push(new AutomationEmailRecipientFieldItem(item, otherEntityObjectField.FieldCode));
-                });
-            });
-        }
-
-
 
         var specifiOwnerObjectField: ObjectFieldPM = new ObjectFieldPM();
         specifiOwnerObjectField.FullNameTextCodeDefaultText = "Specific";
-        specifiOwnerObjectField.FieldCode = "Specific";
+        specifiOwnerObjectField.Id = "Specific";
         specifiOwnerObjectField.FieldName = "Specific";
         this.FollowUpOwnerObjectFieldLists.push(specifiOwnerObjectField);
 
         if (this.FollowUpOwnerObjectFieldLists) {
 
             if (this.AutomationFollowUp.OwnerFieldType == "Specific") {
-                this.FollowUpOwnerObjectFieldSelected = this.FollowUpOwnerObjectFieldLists.filter(d => d.FieldCode == "Specific")[0];
+                this.FollowUpOwnerObjectFieldSelected = this.FollowUpOwnerObjectFieldLists.filter(d => d.Id == "Specific")[0];
             }
 
             else {
-                this.FollowUpOwnerObjectFieldSelected = this.FollowUpOwnerObjectFieldLists.filter(d => d.FieldCode == this.FollowOwnerObjectFieldCode)[0];
+                this.FollowUpOwnerObjectFieldSelected = this.FollowUpOwnerObjectFieldLists.filter(d => d.Id == this.FollowOwnerObjectFieldId)[0];
             }
         }
 
-        this.FollowUpDateObjectFieldSelected = this.FollowUpDateObjectFieldLists.filter(d => d.FieldCode == this.DateValue)[0];
-
+        this.FollowUpDateObjectFieldSelected = this.FollowUpDateObjectFieldLists.filter(d => d.Id == this.DateValue)[0];
+        
         if (this.AutomatedBackupClass) {
             this.BuildAutomationCondition();
             this.BuildAutomationSetValue();
@@ -1546,37 +759,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         else {
             this.IsLoadAutomationResultEmailRecipient = true;
         }
-
-
-
-
-
     }
-
-    private IsShownAllContactsRecipient() {
-        return (this.ObjectTableName == "Shipment" && !this.IsMasterShipment) || this.ObjectTableName == "Quote";
-    }
-
-    private AddAllContactsRecipient(fieldName: string) {
-
-        let cardObjectFieldPM: ObjectFieldPM = window.ObjectFields.filter(d => d.FieldName == fieldName && d.ObjectTableId == this.ObjectTableId)[0];
-        let allContactsObjectFieldPM: ObjectFieldPM = new ObjectFieldPM();
-        allContactsObjectFieldPM.FullNameTextCodeDefaultText = "All " + cardObjectFieldPM.FullNameTextCodeDefaultText + " Contacts";
-        allContactsObjectFieldPM.DataTypeCode = "AllCardContacts";
-        allContactsObjectFieldPM.FieldName = cardObjectFieldPM.FieldName;
-        allContactsObjectFieldPM.FieldCode = cardObjectFieldPM.FieldCode;
-        allContactsObjectFieldPM.Tenant = SessionLocator.Tenant;
-        allContactsObjectFieldPM.ObjectTableId = cardObjectFieldPM.ObjectTableId;
-        allContactsObjectFieldPM.ObjectTableName = cardObjectFieldPM.ObjectTableName;
-
-        this.AutomationEmailRecipientFieldLists.push(new AutomationEmailRecipientFieldItem(allContactsObjectFieldPM));
-    }
-
-    //   private AddCustomObjectFieldToAutomationSetValuebjectFieldLists(objectField: ObjectFieldPM) {
-    //       if (objectField.IsCustom) {
-    //           this.AutomationSetValuebjectFieldLists.push(objectField);
-    //       }
-    //  }
 
     IsViewCondition: boolean;
     BuildAutomationCondition() {
@@ -1590,21 +773,21 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 }
                 else if (item.ConditionType == "Or") {
                     this.AutomationCondationOrList.push(new AutomationConditionViewModel(item, this));
-                }
+                }         
             });
         }
     }
-
+    
     BuildAutomationSetValue() {
         this.AutomationSetValueLists = [];
-        var automationSetValueLists = this.AutomatedBackupClass?.AutomationSetValueLists == null ? null : JSON.parse(JSON.stringify(this.AutomatedBackupClass.AutomationSetValueLists));
+        var automationSetValueLists = this.AutomatedBackupClass.AutomationSetValueLists;
         if (automationSetValueLists) {
             automationSetValueLists.forEach((item) => {
                 this.AutomationSetValueLists.push(new AutomationSetValueViewModel(item, this));
             });
         }
     }
-
+    
     EntityContactVariable: string[];
     UserIds: string = "";
     OldUserIds: string = "";
@@ -1613,25 +796,18 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     LoadAutomationResultEmailRecipient() {
         this.EntityContactVariable = [];
         this.UserIds = "";
-
-        this._automationResultEmailRecipientExtendedService.getAutomationResultEmailRecipientByAutomationId(this.CurrentEntityPM.Id, SessionLocator.Tenant).subscribe((res: any) => {
+        
+        this._automationResultEmailRecipientExtendedService.getAutomationResultEmailRecipientByAutomationId(this.CurrentEntityPM.Id, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 myResult.forEach((item) => {
-                    if (item.RecipientType == "Fixed" && !item.IsNotifyBack) {
+                    if (item.RecipientType == "Fixed") {
 
                         if (!AppTool.IsNullOrEmpty(item.RecipientValue)) {
                             this.UserIds += (item.RecipientValue + ";");
                             this.OldUserIds += (item.RecipientValue + ";");
-                        }
-                    }
-                    else if (item.RecipientType == "Fixed" && item.IsNotifyBack) {
-
-                        this.MyChoosenSpecificUsers += ";" + item.RecipientValue;
-                    }
-                    else if (item.IsNotifyBack) {
-                        this.NotifyBackSelectedItem = this.NotifyBackValuesList.filter(d => d.Code == item.RecipientValue)[0];
+                        }                      
                     }
                     else {
                         this.EntityContactVariable.push(item.RecipientValue);
@@ -1645,19 +821,19 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.GenerateControlEntityContactVariable();
         });
     }
-
+    
     GenerateControlEntityContactVariable() {
         this.EmailRecipientFieldLists = [];
         this.AutomationEmailRecipientFieldLists.forEach((item) => {
             this.EmailRecipientFieldLists.push(new ResultEmailRecipientViewModel(item, this));
-        });
+          });
     }
 
     CloseButtonClicked() {
         this.CurrentSession.CurrentWindow.StopBusyIndicator();
         this.CurrentSession.CurrentWindow.Close("Cancel");
     }
-
+    
     AddAutomationConditionMethod(conditionType: string) {
         var automationConditionPM: AutomationCondition = new AutomationCondition();
 
@@ -1669,8 +845,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automationConditionPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.OperatorCode = "Equals";
-        automationConditionPM.ObjectFieldCode = "";
-
+        automationConditionPM.ObjectFieldId = "";
+        
         if (conditionType == "And") {
             this.AutomationCondationAndList.push(new AutomationConditionViewModel(automationConditionPM, this));
         }
@@ -1680,50 +856,18 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
-
-
     ResultCodeListValueChanged(value) {
-
-        this.ClearAutomationResult(this.ResultCodeSelected.Code);
-
         this.ResultCodeSelected = value;
         this.CurrentEntityPM.ResultCode = value.Code;
         this.IsChangeAutomation = true;
-
+       
         if (value.Code == "DOCOUTFOLLOWUP" || value.Code == "DOCINFOLLOWUP") {
             this.AutomationFollowUp.DocumentTypeLists = [];
             this.CountDocumentSelection = "no documents selected";
             this.FollowUpNote = "";
         }
-
-
-        if (this.HasFieldSetResult(value.Code)) {
-            this.AutomatedBackupClass.Type = "Immeduiatly";
-            this.IsSelectedImmediatly = true;
-            this.IsSelectedDelayed = false;
-            this.DelayTime = 0;
-            this.DelayTimeOp = null;
-            this.SelectedDelaytimeFieldCode = null;
-        }
-
-
-        this.LoadAuomationResultComponent(value.Code);
-
     }
-
-    private HasFieldSetResult(resultCode: string) {
-        return (resultCode == "FIELDSET" && (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote"));
-    }
-
-    ClearAutomationResult(resultCode: string) {
-        let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
-        if (myGeneratedComponentLocation != null) {
-            myGeneratedComponentLocation.viewContainerRef.clear();
-        }
-
-    }
-
-
+    
     get TypeWidth() {
         var result: number = 200;
 
@@ -1739,16 +883,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         return result;
     }
-
-    SelectedDelayedImmediatlRadioClcik(type: string) {
-        if (type == "Immeduiatly") {
+    
+    SelectedDelayedImmediatlRadioClcik(type:string) {
+        if ( type == "Immeduiatly") {
             this.AutomatedBackupClass.Type = "Immeduiatly";
             this.IsSelectedImmediatly = true;
             this.IsSelectedDelayed = false;
-            this.DelayTime = 0;
-            this.DelayTimeOp = null;
-            this.SelectedDelaytimeFieldCode = null;
-            this.IsChangeAutomation = true;
         }
 
         else {
@@ -1762,44 +902,43 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     ViewDelayAutomationconditionsButtonClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 820;
+        logWindow.Width = 700;
         logWindow.Height = 500;
         logWindow.IsShowCloseButton = true;
         logWindow.DataContext = this;
         logWindow.IsShowAutomationDelayTitle = true;
         logWindow.Show("./Infrastructure/Components/Maintenance/Automation/DelayAutomationconditionsComponent");
     }
-
+    
     AddAutomationSetValueButtonClick() {
         var automationSetValue: AutomationSetValue = new AutomationSetValue();
-        automationSetValue.ObjectFieldCode = "";
+        automationSetValue.ObjectFieldId = "";
         automationSetValue.OperatorCode = "SV";
         automationSetValue.Value = "";
         automationSetValue.FieldName = "";
-        automationSetValue.IsCustomField = false;
         this.AutomationSetValueLists.push(new AutomationSetValueViewModel(automationSetValue, this));
     }
 
     IsChangeCondition: boolean = false;
     IsChangeSetValue: boolean = false;
-    ParticipantsList: any[] = [];
+    ParticipantsList: any[] = []; 
 
 
     ExsitCode: string = "";
-    AutomationCodeValueChange() {
+    AutomationCodeValueChange(value) {
         if (this.Code && this.ExsitCode != this.Code) {
             this.ExsitCode = this.Code;
-            this._automationExtendedPMService.GetDoesAutomationCodeExist(this.Code).subscribe((res: any) => {
+            this._automationExtendedPMService.GetDoesAutomationCodeExist(this.Code).subscribe(res => {
 
-                var pmResponse: ServiceResponse = res;
-                if (!pmResponse.HasError) {
-                    var myResult = pmResponse.Result;
-                    if (myResult == true) {
-                        this.ValidationErrorsList = [];
-                        this.ValidationErrorsList.push("The code " + this.Code + " already exists");
-                    } else this.ValidationErrorsList = [];
-                }
-            });
+                    var pmResponse: ServiceResponse = res;
+                    if (!pmResponse.HasError) {
+                        var myResult = pmResponse.Result;
+                        if (myResult == true) {
+                            this.ValidationErrorsList = [];
+                            this.ValidationErrorsList.push("The code " + this.Code + " already exists");
+                        } else this.ValidationErrorsList = [];
+                    }
+                });
 
         }
 
@@ -1831,10 +970,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         var isFollowUp: boolean = this.IsFollowUp();
 
-
-
         if (isFollowUp) {
-            this.AutomationFollowUp.OwnerValue = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.FollowOwnerObjectFieldCode : this.FollowUpOwnerId;
+            this.AutomationFollowUp.OwnerValue = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.FollowOwnerObjectFieldId : this.FollowUpOwnerId;
             this.AutomationFollowUp.NoteValue = this.FollowUpNote;
             this.AutomationFollowUp.DateEscalationTime = this.FollowDateEscalationTime;
             this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode;
@@ -1853,9 +990,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 if (!AppTool.IsNullOrEmpty(this.AutomationFollowUp.EventTypeId)) {
                     var eventType: EventTypeList = this.EventDocFollowUpTypeLists.filter(d => d.Id == this.AutomationFollowUp.EventTypeId)[0];
                     if (eventType) this.AutomationFollowUp.EventTypeId = "";
-                    
                 }
-                
             }
 
             if (AppTool.IsNullOrEmpty(this.AutomationFollowUp.EventTypeId)) {
@@ -1875,9 +1010,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         }
 
-        if (this.CurrentEntityPM.ResultCode == "EVENTCREATION") {
-            this.SetAutomationEvent();
-        }
 
 
         if (this.CurrentEntityPM.ResultCode == "QUEUE") {
@@ -1901,50 +1033,28 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         if (this.AutomationCondationAndList.length == 0 && this.AutomationCondationOrList.length == 0 && this.CurrentEntityPM.Type == "OnUpdate") {
-            this.ValidationErrorsList.push("Please add at least one condition");
-        }
-
-        if (this.CurrentEntityPM.Type == "OnDocumentUpdate") {
-            this.ValidateOnDocumentUpdate();
+            this.ValidationErrorsList.push("Please add at least one condation");
         }
 
         if (this.CurrentEntityPM.ResultCode == "FIELDSET" && (!this.AutomationSetValueLists || (this.AutomationSetValueLists && this.AutomationSetValueLists.length == 0))) {
             this.ValidationErrorsList.push("Please add at least one set Value");
         }
 
-        if (this.ParticipantsList.length == 0 && this.EntityContactVariable.length == 0 && this.IsResultEmail) {
+        if (this.ParticipantsList.length == 0 && this.EntityContactVariable.length == 0 && this.CurrentEntityPM.ResultCode == "EMAIL") {
             if (!this.IsAutomationResultEmailAllActiveUsers) {
                 this.ValidationErrorsList.push("Please add at least one recipient");
             }
         }
 
-
-        if (this.AutomationCondationAndList.length > 0) {
-            this.AutomationCondationAndList.forEach((item) => {
-                if (((item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null) && (item.CurrentEntityPM.ObjectFieldType != "Boolean" &&
-                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY" && item.CurrentEntityPM.OperatorCode != "CHANGED")) ||
-                    (item.CurrentEntityPM.Value == null && (item.CurrentEntityPM.ObjectFieldType == "nText" || item.CurrentEntityPM.ObjectFieldType == "Text"))) {
-                    this.ValidationErrorsList.push("Field value is required");
-                }
-
-            })
-        }
-
-
-        if (this.AutomationCondationOrList.length > 0) {
-            this.AutomationCondationOrList.forEach((item) => {
-                if (((item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null) && (item.CurrentEntityPM.ObjectFieldType != "Boolean" &&
-                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY" && item.CurrentEntityPM.OperatorCode != "CHANGED")) ||
-                    (item.CurrentEntityPM.Value == null && (item.CurrentEntityPM.ObjectFieldType == "nText" || item.CurrentEntityPM.ObjectFieldType == "Text"))) {
-                    this.ValidationErrorsList.push("Field value is required");
-                }
-
-            })
-        }
-
         if (this.CurrentEntityPM.ResultCode == "FIELDSET" && this.AutomationSetValueLists && this.AutomationSetValueLists.length > 0) {
             this.AutomationSetValueLists.forEach((item) => {
-                this.AutomationSetValueValidation(item);
+                if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.Value)) {
+                    this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " field is required");
+                }
+
+                else if (item.CurrentEntityPM.Value.length > item.SelectedCustomField.MaxLength || item.CurrentEntityPM.Value.length < item.SelectedCustomField.MinLength) {
+                    this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must butween " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
+                }
             });
         }
 
@@ -1955,12 +1065,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.AutomatedBackupClass.Delaytime != this.DelayTime) {
             this.IsChangeAutomation = true;
         }
-        if (this.AutomatedBackupClass.DelaytimeOp != this.DelayTimeOp) {
-            this.IsChangeAutomation = true;
-        }
-        if (this.AutomatedBackupClass.SelectedDelaytimeFieldCode != this.SelectedDelaytimeFieldCode) {
-            this.IsChangeAutomation = true;
-        }
+
         if (this.CurrentEntityPM.ResultCode == "QUEUE") {
             if (AppTool.IsNullOrEmpty(this.QueueId)) {
                 this.ValidationErrorsList.push("Queue field is required");
@@ -1976,7 +1081,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         if (this.AutomatedBackupClass.Type == "Delayed") {
-            if (!this.DelayTime || this.DelayTime < 1) {
+            if (!this.DelayTime ||  this.DelayTime<1) {
                 this.ValidationErrorsList.push("Delay time must be greater than 0");
             }
         }
@@ -1984,19 +1089,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.IsShowAutomationCodeField && AppTool.IsNullOrEmpty(this.Code)) {
             this.ValidationErrorsList.push("Code field is required");
         }
-
-        if (this.CurrentEntityPM.ResultCode == "SENDINTERFACE" && this.AutomationSendInterface.SendVia == "FTP") {
-            this.ValidateFTPDetails(this.AutomationSendInterface.FTPDetails);
-        }
-
-        if (this.CurrentEntityPM.ResultCode == "SENDINTERFACE" && this.AutomationSendInterface.SendVia == "WEBHOOK") {
-            this.ValidateWebHookDetails(this.AutomationSendInterface.WebHookDetails);
-        }
-
-        if (this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" && this.AutomationSendDocument.SendVia == "FTP") {
-            this.ValidateFTPDetails(this.AutomationSendDocument.FTPDetails);
-        }
-
 
         if (this.ValidationErrorsList.length == 0) {
 
@@ -2006,9 +1098,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
             if (this.IsNewEntity) {
-
-                this.SaveDocumentTypeTemplates();
-                this._automationExtendedPMService.insert(this.CurrentEntityPM).subscribe((res: any) => {
+                this._automationExtendedPMService.insert(this.CurrentEntityPM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         ServiceLocator.SendTotangoUserActivity("Automation", "New Automation");
@@ -2019,24 +1109,17 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     }
 
                     else {
-
-
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                            this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
-                        }
-
-
                     }
                 });
             }
 
             else {
-                if (this.IsEntityConditionsChanged(isFollowUp)) {
+                if ((this.IsChangeCondition || this.IsChangeSetValue || this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) || (this.CurrentEntityPM.ResultCode == "SETSLA" && this.CheckIfAutomationSetSLAValueChange()) || (this.CurrentEntityPM.ResultCode == "QUEUE" && this.CheckIfAutomationQueuedTaskChange())) {
                     this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
                     this.CurrentEntityPM.Version += 1;
                     this.CurrentEntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-                    this._automationExtendedPMService.update(this.CurrentEntityPM).subscribe((res: any) => {
+                    this._automationExtendedPMService.update(this.CurrentEntityPM).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             ServiceLocator.SendTotangoUserActivity("Automation", "Edit Automation");
@@ -2044,15 +1127,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                             var myResult = pmResponse.Result;
                             this.CurrentEntityPM = myResult;
                             this.DataViewModel.RefreshAutomation(this.CurrentEntityPM, "Edit");
-
+                        
                             this.CloseButtonClicked();
 
                         }
                         else {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                                this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
-                            }
                         }
                     });
                 }
@@ -2062,170 +1142,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
-    private SetAutomationEvent() {
-        if (AppTool.IsNullOrEmpty(this.AutomationEvent.EventTypeId)) {
-            this.ValidationErrorsList.push("Event Type field is required");
-        }
-        if (!AppTool.IsNullOrEmpty(this.AutomationEvent.NoteValue) && this.AutomationEvent.NoteValue.length >= 4000) {
-            this.ValidationErrorsList.push("Notes Field must be less than 4000");
-        }
-    }
- 
-    ValidateOnDocumentUpdate() {
-        if (this.AutomationCondationAndList.length == 0 && this.AutomationCondationOrList.length == 0 && this.CurrentEntityPM.Type == "OnDocumentUpdate") {
-            this.ValidationErrorsList.push("Please add at least one condition");
-        }
-        if (this.CurrentEntityPM.ResultCode == "ONUPDATEDOCUMENT" && (!this.AutomationOnUpdateDocument || (this.AutomationOnUpdateDocument && !this.AutomationOnUpdateDocument.DocumentTypeLists) || (this.AutomationOnUpdateDocument && this.AutomationOnUpdateDocument.DocumentTypeLists && this.AutomationOnUpdateDocument.DocumentTypeLists.length == 0))) {
-            this.ValidationErrorsList.push("Please add at least one Document");
-        }
-        if (this.CurrentEntityPM.ResultCode == "ONUPDATEDOCUMENT" && this.AutomationOnUpdateDocument.SendVia == "FTP") {
-            this.ValidateFTPDetails(this.AutomationOnUpdateDocument.FTPDetails);
-        }
-    }
-
-    private AutomationSetValueValidation(item: AutomationSetValueViewModel) {
-        if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.Value)) {
-            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " field is required");
-            return;
-        }
-        
-        this.ValidateSetText(item);
-        this.ValidateSetNumber(item);
-    }
-
-
-    private ValidateSetText(item: AutomationSetValueViewModel) {
-        if (item.SelectedCustomField.DataTypeCode != "Text" && item.SelectedCustomField.DataTypeCode != "nText")
-            return;
-        if (this.IsNotValidAutomationSetValueText(item)) {
-            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must between " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
-            return;
-        }
-        if (this.IsNotValidAutomationSetFieldText(item)) {
-            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must between " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
-            return;
-        }
-    }
-
-    private ValidateSetNumber(item: AutomationSetValueViewModel) {
-        if (!(item.SelectedCustomField.DataTypeCode == "Decimal" && item.SelectedCustomField.IsCustom))
-            return;
-        if (this.IsNotValidAutomationSetValueNumber(item) || this.IsNotValidAutomationSetFieldNumber(item)) {
-            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " Length must be between 1 and " + item.SelectedCustomField.NumberOfDigits + ", and Decimal Digits must be between 0 and " + item.SelectedCustomField.DigitsAfterPoint);
-            return;
-        }
-
-    }
-
-    private IsNotValidAutomationSetFieldText(item: AutomationSetValueViewModel) {
-        if (item.SelectedOperator.Code != "SF")
-            return false;
-
-        if (item.AutomationHelper.ConditionMaxLength > item.SelectedCustomField.MaxLength || item.AutomationHelper.ConditionMinLength > item.SelectedCustomField.MinLength)
-            return true;
-
-
-        return false;
-    }
-
-    private IsNotValidAutomationSetValueText(item: AutomationSetValueViewModel) {
-        if (item.SelectedOperator.Code != "SV")
-            return false;
-
-        if (item.CurrentEntityPM.Value.length > item.SelectedCustomField.MaxLength || item.CurrentEntityPM.Value.length < item.SelectedCustomField.MinLength)
-            return true;
-
-        return false;
-    }
-
-    private IsNotValidAutomationSetFieldNumber(item: AutomationSetValueViewModel) {
-        if (item.SelectedOperator.Code != "SF")
-            return false;
-
-        if (item.AutomationHelper.ConditionNumberLength > item.SelectedCustomField.NumberOfDigits || item.AutomationHelper.ConditionDecimalDigits > item.SelectedCustomField.DigitsAfterPoint)
-            return true;
-
-
-        return false;
-    }
-
-    private IsNotValidAutomationSetValueNumber(item: AutomationSetValueViewModel) {
-        if (item.SelectedOperator.Code != "SV")
-            return false;
-        var fieldValidator = new FieldValidator();
-        return !fieldValidator.IsValidCustomNumberValue(item.SelectedCustomField, item.CurrentEntityPM.Value);
-    }
-
-    private IsEntityConditionsChanged(isFollowUp) {
-        return (this.IsChangeCondition || this.IsChangeSetValue ||
-            this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) ||
-            this.CheckIfAutomationSendDocumentChange() || this.CheckIfAutomationOnUpdateDocumentChange() ||
-            this.CheckIfAutomationSendInterFaceChange() ||
-            (this.CurrentEntityPM.ResultCode == "SETSLA" && this.CheckIfAutomationSetSLAValueChange()) ||
-            (this.CurrentEntityPM.ResultCode == "QUEUE" && this.CheckIfAutomationQueuedTaskChange() ||
-                (this.CurrentEntityPM.ResultCode == "CREATETASK" && this.CheckIfAutomationCreateTaskChange()));
-    }
-
-    private ValidateFTPDetails(ftpDetials) {
-        if (!ftpDetials || (ftpDetials && AppTool.IsNullOrEmpty(ftpDetials.Host))) {
-            this.ValidationErrorsList.push("FTP Details are missing. Please contact your administrator.");
-        }
-    }
-
-    private ValidateWebHookDetails(webHookDetials) {
-        if (!webHookDetials || (webHookDetials && AppTool.IsNullOrEmpty(webHookDetials.URL))) {
-            this.ValidationErrorsList.push("WebHook Details are missing. Please contact your administrator.");
-        }
-    }
-
-    public ShowMessage(message: string, title: string = "") {
-
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show(message);
-
-        if (title) {
-            messageWindow.Title = title;
-        }
-    }
-
-    CheckIfAutomationSendInterFaceChange() {
-        var isChange = false;
-        if (this.AutomatedBackupClass.AutomationSendInterface) {
-            isChange = this.AutomatedBackupClass.AutomationSendInterface.IsChanged;
-        }
-        return isChange;
-    }
-
-    CheckIfAutomationSendDocumentChange() {
-        var isChange = false;
-        if (this.AutomatedBackupClass.AutomationSendDocument) {
-            isChange = this.AutomatedBackupClass.AutomationSendDocument.IsChanged;
-        }
-        return isChange;
-    }
-
-
-    CheckIfAutomationOnUpdateDocumentChange() {
-        var isChange = false;
-        if (this.AutomatedBackupClass.AutomationOnUpdateDocument) {
-            isChange = this.AutomatedBackupClass.AutomationOnUpdateDocument.IsChanged;
-        }
-        return isChange;
-    }
-    
-    
-    
 
     SaveAutomationResultEmailRecipientLists() {
 
-        if (this.IsResultEmail) { this.CurrentEntityPM.AutomationResultEmailRecipientLists = this.BuildAutomationResultEmailRecipient(); }
+        if (this.CurrentEntityPM.ResultCode == "EMAIL") this.CurrentEntityPM.AutomationResultEmailRecipientLists = this.BuildAutomationResultEmailRecipient();
     }
 
-
-    SaveDocumentTypeTemplates() {
-
-        if (this.ResultCodeSelected.Code == "EMAIL" && !this.IsTenantZero) { this.CurrentEntityPM.DocumentTypeTemplateIds = this.AutomationDocumentTypeTemplateIds }
-    }
 
     IsFollowUp() {
 
@@ -2238,97 +1160,57 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         var value: string = event ? event.Id : "";
         this.AutomationSetSLAValue.SLAId = value;
     }
-
+    
     BuildAutomationResultEmailRecipient() {
         var resultEmailRecipientPMLists: AutomationResultEmailRecipientPM[] = [];
 
-        this.ParticipantsList.forEach((userid) => {
-            if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == userid && !d.IsNotifyBack && (d.RecipientType == "Fixed"))[0]) {
-                var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM();
-                automationResultEmailRecipientPM.RecipientType = "Fixed";
-                automationResultEmailRecipientPM.RecipientValue = userid;
-                automationResultEmailRecipientPM.Tenant = SessionLocator.Tenant;
-                automationResultEmailRecipientPM.IsNotifyBack = false;
-                automationResultEmailRecipientPM.AutomationsId = this.CurrentEntityPM.Id;
-                resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
-            }
-        });
-
-
-
-        this.EntityContactVariable.forEach((fieldCode) => {
-            if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == fieldCode && !d.IsNotifyBack && (d.RecipientType == "Variable" || d.RecipientType == "Emails" || d.RecipientType == "AllCardContacts"))[0]) {
-                var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM()
-                automationResultEmailRecipientPM.RecipientType = automationResultEmailRecipientPM.RecipientType == "AllCardContacts" ? "AllCardContacts" : "Variable",
-                    automationResultEmailRecipientPM.RecipientValue = fieldCode,
+            this.ParticipantsList.forEach((userid) => {
+                if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == userid && (d.RecipientType == "Fixed"))[0]) {
+                    var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM();
+                    automationResultEmailRecipientPM.RecipientType = "Fixed";
+                    automationResultEmailRecipientPM.RecipientValue = userid;
                     automationResultEmailRecipientPM.Tenant = SessionLocator.Tenant;
-                automationResultEmailRecipientPM.AutomationsId = this.CurrentEntityPM.Id;
-                automationResultEmailRecipientPM.IsNotifyBack = false;
-                var automationEmailRecipientFieldItem: AutomationEmailRecipientFieldItem = this.AutomationEmailRecipientFieldLists.filter(d => d.ObjectFieldPM.FieldCode == fieldCode)[0];
-                if (automationEmailRecipientFieldItem != null) {
-                    var objectFieldPM = automationEmailRecipientFieldItem.ObjectFieldPM;
-                    automationResultEmailRecipientPM.PartnerObjectFieldCode = automationEmailRecipientFieldItem.PartnerObjectFieldCode;
-                    if (objectFieldPM.DataTypeCode == "Emails") automationResultEmailRecipientPM.RecipientType = "Emails";
-                    else if (objectFieldPM.DataTypeCode == "AllCardContacts") automationResultEmailRecipientPM.RecipientType = "AllCardContacts";
-
-                }
-
-                if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientType == automationResultEmailRecipientPM.RecipientType && d.RecipientValue == automationResultEmailRecipientPM.RecipientValue && d.IsNotifyBack == automationResultEmailRecipientPM.IsNotifyBack)[0]) {
+                    automationResultEmailRecipientPM.AutomationsId = this.CurrentEntityPM.Id;
                     resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
                 }
-            }
-        });
+            });
 
-        if (this.NotifyBackSelectedItem != null) {
-            if (this.NotifyBackSelectedItem.Code == "SPF") {
-                this.MyChoosenSpecificUsers.split(";").forEach(userId => {
-                    if (!AppTool.IsNullOrEmpty(userId) && !this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == userId && d.IsNotifyBack && (d.RecipientType == "Fixed"))[0]) {
-                        var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM();
-                        automationResultEmailRecipientPM.RecipientType = "Fixed";
-                        automationResultEmailRecipientPM.RecipientValue = userId;
+            this.EntityContactVariable.forEach((Id) => {
+                if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == Id && (d.RecipientType == "Variable" || d.RecipientType == "Emails"))[0]) {
+                    var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM()
+                    automationResultEmailRecipientPM.RecipientType = "Variable",
+                        automationResultEmailRecipientPM.RecipientValue = Id,
                         automationResultEmailRecipientPM.Tenant = SessionLocator.Tenant;
-                        automationResultEmailRecipientPM.IsNotifyBack = true;
-                        automationResultEmailRecipientPM.AutomationsId = this.CurrentEntityPM.Id;
+                    automationResultEmailRecipientPM.AutomationsId = this.CurrentEntityPM.Id
+
+                    var objectFieldPM: ObjectFieldPM = this.AutomationEmailRecipientFieldLists.filter(d => d.Id == Id)[0];
+                    if (objectFieldPM != null) {
+                        if (objectFieldPM.DataTypeCode == "Emails") {
+                            automationResultEmailRecipientPM.RecipientType = "Emails";
+                        }
+                    }
+
+                    if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientType == automationResultEmailRecipientPM.RecipientType && d.RecipientValue == automationResultEmailRecipientPM.RecipientValue)[0]) {
                         resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
                     }
-                });
-            }
-            else {
-                if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == this.NotifyBackSelectedItem.Code && d.IsNotifyBack && (d.RecipientType == "Variable" || d.RecipientType == "Emails" || d.RecipientType == "AllCardContacts"))[0]) {
-                    var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM();
-                    automationResultEmailRecipientPM.RecipientType = "Variable",
-                        automationResultEmailRecipientPM.RecipientValue = this.NotifyBackSelectedItem.Code,
-                        automationResultEmailRecipientPM.Tenant = SessionLocator.Tenant;
-                    automationResultEmailRecipientPM.AutomationsId = this.CurrentEntityPM.Id;
-                    automationResultEmailRecipientPM.IsNotifyBack = true;
-                    resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
                 }
-            }
-        }
-        this.AutomationResultEmailRecipientPMList.forEach((automationResultEmailRecipientPM) => {
+            });
 
-            if (automationResultEmailRecipientPM.RecipientType == "Fixed") {
-                if (!this.ParticipantsList.filter(d => d == automationResultEmailRecipientPM.RecipientValue)[0] && !automationResultEmailRecipientPM.IsNotifyBack) {
-                    resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
-                }
-                else if (!this.MyChoosenSpecificUsers.split(";").filter(d => d == automationResultEmailRecipientPM.RecipientValue)[0] && automationResultEmailRecipientPM.IsNotifyBack) {
-                    resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
-                }
-                else if (this.NotifyBackSelectedItem.Code != "SPF" && automationResultEmailRecipientPM.IsNotifyBack) {
-                    resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
-                }
-            }
+            this.AutomationResultEmailRecipientPMList.forEach((automationResultEmailRecipientPM) => {
 
-            else {
-                if (this.EntityContactVariable.indexOf(automationResultEmailRecipientPM.RecipientValue) == -1 && !automationResultEmailRecipientPM.IsNotifyBack) {
-                    resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
+                if (automationResultEmailRecipientPM.RecipientType == "Fixed") {
+                    if (!this.ParticipantsList.filter(d => d == automationResultEmailRecipientPM.RecipientValue)[0]) {
+                        resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
+                    }
                 }
-                else if (this.NotifyBackSelectedItem.Code.indexOf(automationResultEmailRecipientPM.RecipientValue) == -1 && automationResultEmailRecipientPM.IsNotifyBack) {
-                    resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
-                }
-            }
-        });
 
+                else {
+                    if (this.EntityContactVariable.indexOf(automationResultEmailRecipientPM.RecipientValue) == -1) {
+                        resultEmailRecipientPMLists.push(automationResultEmailRecipientPM);
+                    }
+                }
+            });
+        
 
         return resultEmailRecipientPMLists;
 
@@ -2354,6 +1236,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             automationConditionList.push(item.CurrentEntityPM);
         });
 
+
         if (this.CurrentEntityPM.ResultCode == "FIELDSET") {
             this.AutomationSetValueLists.forEach((item) => {
                 automationSetValuelist.push(item.CurrentEntityPM);
@@ -2371,9 +1254,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.Version = this.CurrentEntityPM.Version;
         automatedBackup.UpdateDate = this.CurrentEntityPM.UpdateDate;
         automatedBackup.Delaytime = this.DelayTime;
-        automatedBackup.DelaytimeOp = this.DelayTimeOp;
-        automatedBackup.SelectedDelaytimeFieldCode = this.SelectedDelaytimeFieldCode;
-        automatedBackup.DelaytimeIndicator = this.DelaytimeIndicator.Code;
+        automatedBackup.DelaytimeIndicator = this.DelaytimeIndicator;
         automatedBackup.Type = this.AutomatedBackupClass.Type;
         automatedBackup.DelayAautomationConditionLists = this.AutomatedBackupClass.DelayAautomationConditionLists;
         automatedBackup.AautomationConditionLists = automationConditionList;
@@ -2381,16 +1262,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.AutomationSetValueLists = this.CurrentEntityPM.ResultCode == "FIELDSET" ? automationSetValuelist : null;
         automatedBackup.AutomationSetSLAValue = this.CurrentEntityPM.ResultCode == "SETSLA" ? this.AutomationSetSLAValue : null;
         automatedBackup.AutomationQueuedTask = this.CurrentEntityPM.ResultCode == "QUEUE" ? this.AutomationQueuedTask : null;
-        automatedBackup.AutomationSendInterface = this.CurrentEntityPM.ResultCode == "SENDINTERFACE" ? this.AutomationSendInterface : null;
-        automatedBackup.AutomationSendDocument = this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" ? this.AutomationSendDocument : null;
-        automatedBackup.ReportTemplateId = this.CurrentEntityPM.ResultCode == "EMAIL" || (this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" && this.ObjectTableName == "Shipment") ? this.AutomatedBackupClass.ReportTemplateId : null;
-        automatedBackup.DocumentCopyId = this.CurrentEntityPM.ResultCode == "EMAIL" || (this.CurrentEntityPM.ResultCode == "SENDDOCUMENT" && this.ObjectTableName == "Shipment") ? this.AutomatedBackupClass.DocumentCopyId : null;
-        automatedBackup.AutomationCreateTask = this.CurrentEntityPM.ResultCode == "CREATETASK" ? this.AutomationCreateTask : null;
-        automatedBackup.AutomationOnUpdateDocument = this.CurrentEntityPM.ResultCode == "ONUPDATEDOCUMENT" ? this.AutomationOnUpdateDocument : null;
-
-
         automatedBackup.AutomationFollowUp = this.IsFollowUp() ? this.AutomationFollowUp : null;
-        automatedBackup.AutomationEvent = this.CurrentEntityPM.ResultCode == "EVENTCREATION" ? this.AutomationEvent : null;
         this.CurrentEntityPM.AutomatedDataBackup = automatedBackup;
     }
 
@@ -2407,25 +1279,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
         return isChange;
     }
-
-    CheckIfAutomationCreateTaskChange() {
-        var isChange: boolean = false;
-        if (this.CurrentEntityPM.ResultCode == "CREATETASK") {
-
-            if (this.AutomatedBackupClass.AutomationCreateTask) {
-                if (this.AutomatedBackupClass.AutomationCreateTask.AssigneeValue != this.AutomationCreateTask.AssigneeValue) isChange = true;
-                if (this.AutomatedBackupClass.AutomationCreateTask.OwnerValue != this.AutomationCreateTask.OwnerValue) isChange = true;
-                if (this.AutomatedBackupClass.AutomationCreateTask.TaskType != this.AutomationCreateTask.TaskType) isChange = true;
-                if (this.AutomatedBackupClass.AutomationCreateTask.EndDateValue != this.AutomationCreateTask.EndDateValue) isChange = true;
-                if (this.AutomatedBackupClass.AutomationCreateTask.EndDateTypeValue != this.AutomationCreateTask.EndDateTypeValue) isChange = true;
-                if (this.AutomatedBackupClass.AutomationCreateTask.OwnerFieldType != this.AutomationCreateTask.OwnerFieldType) isChange = true;
-                if (this.AutomatedBackupClass.AutomationCreateTask.AssigneeFieldType != this.AutomationCreateTask.AssigneeFieldType) isChange = true;
-            } else isChange = true;
-        }
-        return isChange;
-    }
-
-
+    
     CheckIfAutomationFollowUpChange() {
         var isChange: boolean = false;
         if (this.AutomatedBackupClass.AutomationFollowUp) {
@@ -2466,39 +1320,39 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         return isChange;
     }
-
+    
     //Automation Follow Up    
     FollowUpTypeComboBoxChanged(value: any) {
         if (value) {
             this.AutomationFollowUp.EventTypeId = value.Id;
         }
     }
-
+    
     //Owner
     FollowUpOwnerObjectFieldComboBoxChanged(item: any) {
         this.FollowUpOwnerId = "";
         if (item) {
-            this.FollowOwnerObjectFieldCode = item.FieldCode;
+            this.FollowOwnerObjectFieldId = item.Id;
             this.AutomationFollowUp.OwnerFieldType = item.FieldName == "Specific" ? "Specific" : "Field";
         }
 
         this.FollowUpOwnerObjectFieldSelected = item;
     }
-
+    
     FollowUpOwnerValueChange(item: any) {
         if (item) {
             this.FollowUpOwnerId = item.Id;
-            this.FollowOwnerObjectFieldCode = "";
-            this.AutomationFollowUp.OwnerFieldType = "Specific";
+            this.FollowOwnerObjectFieldId = "";
+            this.AutomationFollowUp.OwnerFieldType = "Specific"; 
         }
-
+               
         else this.FollowUpOwnerId = "";
     }
-
+    
     //Date
     FollowUpDateObjectFieldComboBoxChanged(item: any) {
         if (item) {
-            this.DateValue = item.FieldCode;
+            this.DateValue = item.Id;
         } else this.DateValue = "";
 
         this.FollowUpDateObjectFieldSelected = item;
@@ -2512,107 +1366,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         else this.DataContext.UIProperties.SetEnabled("FollowDateEscalationTime", "Automation", true);
     }
-
-
-
-
-    
-    LoadSendInterfaceResultComponent(resultCode:string) {
-
-        if (this.AllLocations && this.AllLocations.length > 0) {
-            let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
-            if (myGeneratedComponentLocation != null) {
-                myGeneratedComponentLocation.viewContainerRef.clear();
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/SendInterfaceResultComponent', myGeneratedComponentLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.Run(this.AutomationSendInterface, this.ObjectTableName);
-
-                    });
-            }
-        }
-    }
-
-    LoadCreateTaskResultComponent(resultCode: string) {
-
-
-        let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
-        if (myGeneratedComponentLocation != null) {
-            myGeneratedComponentLocation.viewContainerRef.clear();
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/CreateTaskResultComponent', myGeneratedComponentLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.Run(this.AutomationCreateTask);
-
-                });
-        }
-
-    }
-
-    LoadEventCreationResultComponent(resultCode: string) {
-        let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
-        if (myGeneratedComponentLocation == null) {
-            return;
-        }
-        this.AutomationEvent.ObjectTableId = this.ObjectTableId;
-        this.AutomationEvent.ObjectTableName = this.ObjectTableName;
-        myGeneratedComponentLocation.viewContainerRef.clear();
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/EventCreationResultComponent', myGeneratedComponentLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.Run(this.AutomationEvent);
-
-            });
-
-    }
-
-    LoadSendDocumentResultComponent(resultCode: string) {
-
-        if (this.AllLocations && this.AllLocations.length > 0) {
-            let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
-            if (myGeneratedComponentLocation != null) {
-                myGeneratedComponentLocation.viewContainerRef.clear();
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent', myGeneratedComponentLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ObjectTableName = this.ObjectTableName;
-                        cmpRef.instance.Run(this.AutomationSendDocument);
-
-                    });
-            }
-        }
-    }
-
-    LoadOnUpdateDocumentResultComponent(resultCode: string) {
-        if (!this.AllLocations || (this.AllLocations && this.AllLocations.length <= 0)) return;
-        let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
-        if (myGeneratedComponentLocation == null) return;
-        myGeneratedComponentLocation.viewContainerRef.clear();
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/OnUpdateDocumentResultComponent', myGeneratedComponentLocation.viewContainerRef)
-            .then(cmpRef => { cmpRef.instance.Run(this.AutomationOnUpdateDocument, this.ObjectTableId); });
-    }
-
-
-
-
-    private isResultEmail: boolean;
-    get IsResultEmail() {
-        this.isResultEmail = false;
-        if (this.ResultCodeSelected) {
-            if (this.ResultCodeSelected.Code == "EMAIL" || (this.ResultCodeSelected.Code == "SENDINTERFACE" && this.AutomationSendInterface && this.AutomationSendInterface.SendVia == "EMAIL") || (this.ResultCodeSelected.Code == "SENDDOCUMENT" && this.AutomationSendDocument && this.AutomationSendDocument.SendVia == "EMAIL")) {
-                this.isResultEmail = true;
-            }
-        }
-        return this.isResultEmail;
-    }
-
-    private isSendDocument: boolean;
-    get IsSendDocument() {
-        this.isSendDocument = false;
-        if (this.ResultCodeSelected) {
-            if (this.ResultCodeSelected.Code == "SENDDOCUMENT") {
-                this.isSendDocument = true;
-            }
-        }
-        return this.isSendDocument;
-    }
-
 
     //Queued Task
     public IsQueueRequired: boolean = false;
@@ -2639,7 +1392,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     set QueueId(newValue: string) {
         if (this.queueId != newValue) {
             this.queueId = newValue;
-
+            
             this.SetQueuedTaskRequired();
         }
     }
@@ -2653,7 +1406,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.SetQueuedTaskRequired();
         }
     }
-
+    
     public TeamId: string;
     public TaskOffset: number;
     public TaskOwnerId: string;
@@ -2678,20 +1431,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 || item.FieldName == "OperationalDate" || item.FieldName == "OperationalCloseDate" || item.FieldName == "AccountingCloseDate" || item.FieldName == "FinalArrivalDate") {
                 var dateItem: CodeNameClass = new CodeNameClass(item.FieldName, item.FullNameTextCodeDefaultText);
                 this.DueDateFieldList.push(dateItem);
-            }
+            }            
         });
-
-        var quoteObjecttableId: string = window.ObjectTables.filter(f => f.Id == this.ObjectTableId)[0].Id;
-        var taskObjectFields: ObjectFieldPM[] = window.ObjectFields.filter(f => f.ObjectTableId == quoteObjecttableId && f.DataTypeCode == "DateTime");
-
-        taskObjectFields.forEach((item) => {
-            if (item.FieldName == "ETA" || item.FieldName == "ETD" || item.FieldName == "StartDate" || item.FieldName == "AutomaticallyCloseDate"
-                || item.FieldName == "ExpirationDate") {
-                var dateItem: CodeNameClass = new CodeNameClass(item.FieldName, item.FullNameTextCodeDefaultText);
-                this.DueDateFieldList.push(dateItem);
-            }
-        });
-
+        
         this.TaskOffsetTypeList.push(new CodeNameClass("B", "Before"));
         this.TaskOffsetTypeList.push(new CodeNameClass("A", "After"));
 
@@ -2731,22 +1473,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 class ResultCode {
     Code: string;
     Name: string;
-
-    constructor(name: string, code: string) {
+    
+    constructor(name: string, code : string) {
         this.Code = code;
         this.Name = name;
 
     }
-}
-
-export class AutomationEmailRecipientFieldItem {
-
-    PartnerObjectFieldCode: string;
-    ObjectFieldPM: ObjectFieldPM;
-    constructor(objectFieldPM: ObjectFieldPM, partnerObjectFieldCode: string = null) {
-        this.PartnerObjectFieldCode = partnerObjectFieldCode;
-        this.ObjectFieldPM = objectFieldPM;
-
-    }
-
 }

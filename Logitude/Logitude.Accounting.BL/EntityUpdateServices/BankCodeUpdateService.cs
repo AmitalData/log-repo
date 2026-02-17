@@ -9,16 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Simplog.Server.Infrastructure.Azure;
-using Microsoft.Practices.Unity;
-using Logitude.Server.Tools.StorageService;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.IO;
-using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -33,18 +25,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(BankCodePM entityPM)
         {
             entityPM.SearchFields = entityPM.Code + "," + entityPM.EnglishName + "," + entityPM.LocalName;
-            if(entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                BankCodeQueryService bankCodeQueryService = new BankCodeQueryService(entityPM.Tenant);
-                BankCodePM bankCode = bankCodeQueryService.GetSingleByCode(entityPM.Code, 0);
-                if (bankCode != null)
-                {
-                   entityPM.LogoId= GetLogogIdFromTenant0BankCode(bankCode, entityPM.Tenant);
-                  
-                }
-            }
         }
-      
+
         protected override void Trace(BankCodePM entityPM, BankCode entityPOCO, string changesXml)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -113,15 +95,5 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.Trace(entityPM, entityPOCO, changesXml);
         }
 
-       private string GetLogogIdFromTenant0BankCode(BankCodePM bankCode, int tenant)
-        {
-            ImageDetailRepository imageDetailRepository = new ImageDetailRepository(tenant);
-            ImageDetail image = imageDetailRepository.GetSingleImageDetail(bankCode.LogoId, 0);
-            UploadTool uploader = new UploadTool();
-            byte[] filedata = uploader.DownloadFile(image.Id, image.Extension, "images", 0);
-            string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
-            string ImageId = uploader.UploadImage(image.Id, filedata, filedata.Length, filedata.Length, blockIdlist, 0, tenant, image.Extension,null, null, image.Id);
-           return ImageId;
-        }
     }
 }

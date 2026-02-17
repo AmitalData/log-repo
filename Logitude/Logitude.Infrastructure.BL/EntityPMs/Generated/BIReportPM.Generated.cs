@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -388,122 +388,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private DateTime? lastRunDate ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? LastRunDate  
-	   {
-	    
-	     get
-		{
-		   return lastRunDate;
-		 }
-		 set
-		 {
-		   if(lastRunDate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunDate",OldValue=lastRunDate,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   lastRunDate=value;
-		   }
-			
-		 }
-	   }
-	  private string lastRunByUserName ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LastRunByUserName  
-	   {
-	    
-	     get
-		{
-		   return lastRunByUserName;
-		 }
-		 set
-		 {
-		   if(lastRunByUserName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunByUserName",OldValue=lastRunByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   lastRunByUserName=value;
-		   }
-			
-		 }
-	   }
-	  private string factTableName ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FactTableName  
-	   {
-	    
-	     get
-		{
-		   return factTableName;
-		 }
-		 set
-		 {
-		   if(factTableName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FactTableName",OldValue=factTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   factTableName=value;
-		   }
-			
-		 }
-	   }
-	  private string lastRunId ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LastRunId  
-	   {
-	    
-	     get
-		{
-		   return lastRunId;
-		 }
-		 set
-		 {
-		   if(lastRunId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunId",OldValue=lastRunId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   lastRunId=value;
-		   }
-			
-		 }
-	   }
-	  private bool availableForScheduling ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool AvailableForScheduling  
-	   {
-	    
-	     get
-		{
-		   return availableForScheduling;
-		 }
-		 set
-		 {
-		   if(availableForScheduling != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailableForScheduling",OldValue=availableForScheduling,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   availableForScheduling=value;
-		   }
-			
-		 }
-	   }
-	    }
+   }
    
 }
 	 

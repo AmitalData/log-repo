@@ -100,7 +100,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for WIDTH in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? WIDTH
+        public virtual global::System.Nullable<int> WIDTH
         {
             get
             {
@@ -115,14 +115,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _WIDTH;
+        private global::System.Nullable<int> _WIDTH;
 
 
         /// <summary>
         /// There are no comments for HEIGHT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? HEIGHT
+        public virtual global::System.Nullable<int> HEIGHT
         {
             get
             {
@@ -137,14 +137,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _HEIGHT;
+        private global::System.Nullable<int> _HEIGHT;
 
 
         /// <summary>
         /// There are no comments for LEFTDATA in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? LEFTDATA
+        public virtual global::System.Nullable<int> LEFTDATA
         {
             get
             {
@@ -159,14 +159,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _LEFTDATA;
+        private global::System.Nullable<int> _LEFTDATA;
 
 
         /// <summary>
         /// There are no comments for TOPDATA in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? TOPDATA
+        public virtual global::System.Nullable<int> TOPDATA
         {
             get
             {
@@ -181,14 +181,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _TOPDATA;
+        private global::System.Nullable<int> _TOPDATA;
 
 
         /// <summary>
         /// There are no comments for WIDTHDATA in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? WIDTHDATA
+        public virtual global::System.Nullable<int> WIDTHDATA
         {
             get
             {
@@ -203,14 +203,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _WIDTHDATA;
+        private global::System.Nullable<int> _WIDTHDATA;
 
 
         /// <summary>
         /// There are no comments for HEIGHTDATA in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? HEIGHTDATA
+        public virtual global::System.Nullable<int> HEIGHTDATA
         {
             get
             {
@@ -225,33 +225,10 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _HEIGHTDATA;
-
-
-        /// <summary>
-        /// There are no comments for QUETYPE in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string QUETYPE
-        {
-            get
-            {
-                return _QUETYPE;
-            }
-            set
-            {
-                if (_QUETYPE != value)
-                {
-                    _QUETYPE = value;
-                    OnPropertyChanged("QUETYPE");
-                }
-            }
-        }
-        private string _QUETYPE;
+        private global::System.Nullable<int> _HEIGHTDATA;
 
 
         #endregion
-
 
         #region INotifyPropertyChanged Members
 

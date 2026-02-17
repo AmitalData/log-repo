@@ -35,8 +35,6 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string CurrencyId  { get; set; }
        [DataMember]
-       public string PaymentTerms { get; set; }
-       [DataMember]
        public string RevenueExpenseType  { get; set; }
        [DataMember]
        public bool? IsControlAccount  { get; set; }
@@ -62,11 +60,7 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ReconcileMethodCode  { get; set; }
        [DataMember]
        public string ReconcileMethodName  { get; set; }
-        [DataMember]
-        public string ExchangeRateId { get; set; }
-        [DataMember]
-        public string ExchangeRateName { get; set; }
-        [DataMember]
+       [DataMember]
        public string ControlAccountId  { get; set; }
        [DataMember]
        public string ControlAccountName  { get; set; }
@@ -140,9 +134,7 @@ namespace Logitude.Accounting.Data.EntityLists
        public string LastActivityByUserName  { get; set; }
        [DataMember]
        public string VatNumber  { get; set; }
-        [DataMember]
-        public string CardCountryCode { get; set; }
-        [DataMember]
+       [DataMember]
        public string PaymentTermId  { get; set; }
        [DataMember]
        public string SalesmanUserId  { get; set; }
@@ -171,8 +163,6 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public bool ExcludeFromDeductionReport  { get; set; }
        [DataMember]
-       public string Parent  { get; set; }
-       [DataMember]
        public string DeductionTypeName  { get; set; }
        [DataMember]
        public string DeductionFileTypeCode  { get; set; }
@@ -192,171 +182,7 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? TotFutureOpenChequesInLocalCur  { get; set; }
        [DataMember]
        public string CardId  { get; set; }
-       [DataMember]
-       public string CreatedByUserId  { get; set; }
-       [DataMember]
-       public string UpdatedByUserId  { get; set; }
-       [DataMember]
-       public DateTime CreateDate  { get; set; }
-       [DataMember]
-       public DateTime UpdateDate  { get; set; }
-       [DataMember]
-       public string CreatedByUserName  { get; set; }
-       [DataMember]
-       public string UpdatedByUserName  { get; set; }
-       [DataMember]
-       public string CreatedByLocalName  { get; set; }
-       [DataMember]
-       public string UpdatedByLocalName  { get; set; }
-       [DataMember]
-       public bool AllowEditChequePayToName  { get; set; }
-       [DataMember]
-       public bool ActiveForInterest  { get; set; }
-       [DataMember]
-       public DateTime? InterestCalculationStartDate  { get; set; }
-       [DataMember]
-       public bool ActiveForInterestCreditInvoice  { get; set; }
-       [DataMember]
-       public decimal? InterestCreditLimit  { get; set; }
-        [DataMember]
-        public decimal? InterestOpenBalance { get; set; }
-       [DataMember]
-       public string NameForPrintingCheques  { get; set; }
-       [DataMember]
-       public bool Smallcashbook  { get; set; }
-       [DataMember]
-       public int? MinimumInterestInvoiceBilling  { get; set; }
-       [DataMember]
-       public string SalesmanName  { get; set; }
-       [DataMember]
-       public string CollectorName  { get; set; }
-       [DataMember]
-       public string SplitCurrencyAccount  { get; set; }
-       [DataMember]
-       public string ParentName  { get; set; }
-       [DataMember]
-       public string ParentCurrencyId  { get; set; }
-       [DataMember]
-       public bool ReportingAsAnotherDocument  { get; set; }
-       [DataMember]
-       public decimal? CreditAllotmentPercentage  { get; set; }
-       [DataMember]
-       public string Category1LocalName  { get; set; }
-       [DataMember]
-       public string Category2LocalName  { get; set; }
-       [DataMember]
-       public string Category3LocalName  { get; set; }
-       [DataMember]
-       public string Category4LocalName  { get; set; }
-       [DataMember]
-       public string Category5LocalName  { get; set; }
-       [DataMember]
-       public string RelatedGLAccount  { get; set; }
-       [DataMember]
-       public string ChartOfAccountsEnglishName  { get; set; }
-       [DataMember]
-       public string ChartOfAccountsTypeEnglishName  { get; set; }
-       [DataMember]
-       public string ChartOfAccountsTypeLocalName  { get; set; }
-       [DataMember]
-       public string ChartOfAccountsLocalName  { get; set; }
-       [DataMember]
-       public string CardsDataId  { get; set; }
-       [DataMember]
-       public string PaymentTermName  { get; set; }
-       [DataMember]
-       public decimal? Period0  { get; set; }
-       [DataMember]
-       public decimal? Period1  { get; set; }
-       [DataMember]
-       public decimal? Period2  { get; set; }
-       [DataMember]
-       public decimal? Period3  { get; set; }
-       [DataMember]
-       public decimal? Period4  { get; set; }
-       [DataMember]
-       public decimal? Period5  { get; set; }
-       [DataMember]
-       public decimal? PeriodPast  { get; set; }
-       [DataMember]
-       public decimal? PeriodFuture  { get; set; }
-       [DataMember]
-       public int? TotalOpenTransactions  { get; set; }
-       [DataMember]
-       public string LastReconciledBy  { get; set; }
-       [DataMember]
-       public string CardCollectorId { get; set; }
-       [DataMember]
-       public DateTime? LastReconcileDate  { get; set; }
-       [DataMember]
-       public double? CreditLimit  { get; set; }
-       [DataMember]
-       public string PaymentTerm  { get; set; }
-       [DataMember]
-       public decimal? TotalOpenShipments  { get; set; }
-       [DataMember]
-       public string Phone  { get; set; }
-       [DataMember]
-       public string Salesman  { get; set; }
-       [DataMember]
-       public string Collector  { get; set; }
-       [DataMember]
-       public DateTime? FollowupDate  { get; set; }
-       [DataMember]
-       public string FollowupNotes  { get; set; }
-       [DataMember]
-       public decimal? CalculatedAgingPeriod1  { get; set; }
-       [DataMember]
-       public decimal? CalculatedAgingPeriod2  { get; set; }
-       [DataMember]
-       public decimal? CalculatedAgingPeriod3  { get; set; }
-       [DataMember]
-       public string FirstPeriodsMonths  { get; set; }
-       [DataMember]
-       public string SecondPeriodsMonths  { get; set; }
-       [DataMember]
-       public string ThirdPeriodsMonths  { get; set; }
-       [DataMember]
-       public double? InsuredCreditLimit  { get; set; }
-       [DataMember]
-       public decimal? PostponedChequesCommission  { get; set; }
-       [DataMember]
-       public decimal? BalanceInForeignCurrency  { get; set; }
-       [DataMember]
-       public decimal? ForeignBalanceInDue  { get; set; }
-
-        [DataMember]
-        public bool IsSecurityLevelsEnabled { get; set; }
-        [DataMember]
-        public int? ChartOfAccountSecurityLevel { get; set; }
-        [DataMember]
-        public bool Access { get; set; }
-        [DataMember]
-        public bool IsMainGLAccount { get; set; }
-        [DataMember]
-        public bool IsSplitGLAccout { get; set; }
-        [DataMember]
-        public decimal? Obligo { get; set; }
-        [DataMember]
-        public decimal? CreditUsed { get; set; }
-        [DataMember]
-        public double? InsuredCreditPercentage { get; set; }
-        [DataMember]
-        public string DateFormat { get; set; }
-        [DataMember]
-       public string ContactId  { get; set; }
-        [DataMember]
-       public string ContactName  { get; set; }
-       [DataMember]
-       public string ContactEmail  { get; set; }
-       [DataMember]
-       public string ContactPhone  { get; set; }
-        [DataMember]
-        public DateTime? MarkDate { get; set; }
-
-        [DataMember]
-        public bool ForeignCurrencyInterest { get; set; }
-    }
+   }
 
 }
 	 

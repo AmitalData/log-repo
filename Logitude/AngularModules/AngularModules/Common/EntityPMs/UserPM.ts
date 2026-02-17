@@ -28,7 +28,7 @@ export class UserPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -173,11 +173,6 @@ export class UserPM {
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
-    private dontShowLocalLabels: boolean;
-    public get DontShowLocalLabels() { return this.dontShowLocalLabels; }
-    public set DontShowLocalLabels(newValue: boolean) { if (this.dontShowLocalLabels != newValue) { this.dontShowLocalLabels = newValue; this.MarkAsDirty("DontShowLocalLabels"); } }
-       
-	 
     private setAngularAsDefault: boolean;
     public get SetAngularAsDefault() { return this.setAngularAsDefault; }
     public set SetAngularAsDefault(newValue: boolean) { if (this.setAngularAsDefault != newValue) { this.setAngularAsDefault = newValue; this.MarkAsDirty("SetAngularAsDefault"); } }
@@ -288,14 +283,14 @@ export class UserPM {
     public set PersonalId(newValue: string) { if (this.personalId != newValue) { this.personalId = newValue; this.MarkAsDirty("PersonalId"); } }
        
 	 
-    private contact: any;
+    private contact: string;
     public get Contact() { return this.contact; }
-    public set Contact(newValue: any) { if (this.contact != newValue) { this.contact = newValue; this.MarkAsDirty("Contact"); } }
+    public set Contact(newValue: string) { if (this.contact != newValue) { this.contact = newValue; this.MarkAsDirty("Contact"); } }
        
 	 
-    private userLastLogin: any;
+    private userLastLogin: string;
     public get UserLastLogin() { return this.userLastLogin; }
-    public set UserLastLogin(newValue: any) { if (this.userLastLogin != newValue) { this.userLastLogin = newValue; this.MarkAsDirty("UserLastLogin"); } }
+    public set UserLastLogin(newValue: string) { if (this.userLastLogin != newValue) { this.userLastLogin = newValue; this.MarkAsDirty("UserLastLogin"); } }
        
 	 
      
@@ -476,44 +471,11 @@ export class UserPM {
     public set UserRoles(newValue: string) { if (this.userRoles != newValue) { this.userRoles = newValue; this.MarkAsDirty("UserRoles"); } }
        
 	 
-    private additionalPackagesOnly: boolean;
-    public get AdditionalPackagesOnly() { return this.additionalPackagesOnly; }
-    public set AdditionalPackagesOnly(newValue: boolean) { if (this.additionalPackagesOnly != newValue) { this.additionalPackagesOnly = newValue; this.MarkAsDirty("AdditionalPackagesOnly"); } }
-       
-	 
-    private securityLevel: number;
-    public get SecurityLevel() { return this.securityLevel; }
-    public set SecurityLevel(newValue: number) { if (this.securityLevel != newValue) { this.securityLevel = newValue; this.MarkAsDirty("SecurityLevel"); } }
-       
-	 
-    private layoutDirection: string;
-    public get LayoutDirection() { return this.layoutDirection; }
-    public set LayoutDirection(newValue: string) { if (this.layoutDirection != newValue) { this.layoutDirection = newValue; this.MarkAsDirty("LayoutDirection"); } }
-       
-	 
-    private signatureImageId: string;
-    public get SignatureImageId() { return this.signatureImageId; }
-    public set SignatureImageId(newValue: string) { if (this.signatureImageId != newValue) { this.signatureImageId = newValue; this.MarkAsDirty("SignatureImageId"); } }
-       
-	 
-    private isHRUser: boolean;
-    public get IsHRUser() { return this.isHRUser; }
-    public set IsHRUser(newValue: boolean) { if (this.isHRUser != newValue) { this.isHRUser = newValue; this.MarkAsDirty("IsHRUser"); } }
-       
-	 
-    private disableCachedData: boolean;
-    public get DisableCachedData() { return this.disableCachedData; }
-    public set DisableCachedData(newValue: boolean) { if (this.disableCachedData != newValue) { this.disableCachedData = newValue; this.MarkAsDirty("DisableCachedData"); } }
-       
-	 
 
     public OldEntityPM: UserPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -521,7 +483,6 @@ export class UserPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "User");
            
         }
-	 }
     }
     private MyClone: UserPM;
 

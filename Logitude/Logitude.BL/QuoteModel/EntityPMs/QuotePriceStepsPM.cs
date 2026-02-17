@@ -29,10 +29,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string QuoteChargeId { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
-
-        public string MeasurementUnit { get; set; }
-
-
-   
     }
 }

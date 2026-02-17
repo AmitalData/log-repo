@@ -38,6 +38,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public string PreviousChartOfAccountsId { get; set; }
         public DateTime? PreviousChartOfAccountsChangeDate { get; set; }
         public string CustomerGLAccountId { get; set; }
+    //    public decimal? BalanceInLocalCurrency { get; set; }
         public bool? RevaluationEnabled { get; set; }
         public string ParentAccountId { get; set; }
         public string Category1Id { get; set; }
@@ -54,8 +55,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public DateTime? LastActivityDate { get; set; }
         public string LastActivityTypeName { get; set; }
         public string LastActivityByUserName { get; set; }
-        public bool ExcludeFromDeductionReport { get; set; }
-        
 
         // Card
         public string SalesmanUserId { get; set; }
@@ -84,12 +83,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public string ChartOfAccountsEnglishName { get; set; }
         public string ChartOfAccountsCode { get; set; }
 
-
-        // More Data: dummy fields
-        public decimal? BalanceInLocalCurrency { get; set; }
-
-        public decimal? LocalBalanceInDue { get; set; }
-        public DateTime? NextDueDate { get; set; }
+    //    public decimal? LocalBalanceInDue { get; set; }
+    //    public DateTime? NextDueDate { get; set; }
 
     }
 }

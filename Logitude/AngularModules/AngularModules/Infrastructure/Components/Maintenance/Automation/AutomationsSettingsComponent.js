@@ -57,7 +57,7 @@ export var AutomationsSettingsComponent = (function () {
     };
     AutomationsSettingsComponent.prototype.LoadAutomationsList = function () {
         var _this = this;
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this.AutomationList = [];
         this._automationExtendedPMService.getAutomationesByObjectTableId(this.ObjectTableId, SessionLocator.Tenant).subscribe(function (res) {
             var pmResponse = res;
@@ -69,7 +69,7 @@ export var AutomationsSettingsComponent = (function () {
                 });
                 _this.RefreshAutomationList("OnCreate");
                 _this.RefreshAutomationList("OnUpdate");
-                SessionLocator.SelectedSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     };
@@ -195,7 +195,7 @@ export var AutomationsSettingsComponent = (function () {
         this.ScheduleAutomationTabTitle = "Schedule (" + this.ScheduleAutomationList.length.toString() + ")";
     };
     AutomationsSettingsComponent.prototype.CloseButtonClicked = function () {
-        SessionLocator.SelectedSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     };
     AutomationsSettingsComponent.prototype.SaveButtonClicked = function () {
         var automations = this.AutomationList.filter(function (d) { return d.EntityPM.IsDirty; });
@@ -208,14 +208,14 @@ export var AutomationsSettingsComponent = (function () {
                     automationsPMList.push(item.EntityPM);
                 }
             });
-            SessionLocator.SelectedSession.CurrentWindow.StartBusyIndicator("Saving...");
+            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             this._automationExtendedPMService.putAuomationList(automationsPMList).subscribe(function (res) {
-                SessionLocator.SelectedSession.CurrentWindow.StopBusyIndicator();
-                SessionLocator.SelectedSession.CloseCurrentWindow();
+                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                SessionLocator.CurrentSession.CloseCurrentWindow();
             });
         }
         else
-            SessionLocator.SelectedSession.CloseCurrentWindow();
+            SessionLocator.CurrentSession.CloseCurrentWindow();
     };
     AutomationsSettingsComponent.prototype.ArrowUpAutomationButtonClicked = function (item, type) {
         if (item != null) {

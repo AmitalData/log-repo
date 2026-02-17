@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
    
-    public partial class JournalStatusType
+    public class JournalStatusType
     {
 
 	    

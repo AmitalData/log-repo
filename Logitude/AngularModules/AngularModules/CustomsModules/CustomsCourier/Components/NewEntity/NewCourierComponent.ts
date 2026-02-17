@@ -8,10 +8,10 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../../Infrastructure/Tools';
-import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
+import {CourierMasterService} from '../../../../Customs/Services/Others/CourierMasterService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewCourierComponent.html',
 })
      
@@ -84,7 +84,7 @@ export class NewCourierComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
 
-            this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.AirlineId, this.HAWB, this.MAWB).subscribe((Result:any) => {
+            this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.AirlineId, this.HAWB, this.MAWB).subscribe(Result => {
                 var mm: ServiceResponse = Result;
                 if (!mm.HasError) {
                     if (!mm.Result) {
@@ -112,7 +112,7 @@ export class NewCourierComponent extends BaseComponent {
 
     SubmitChanges() {
         this.CurrentSession.StartBusyIndicator("");
-        this.CourierMasterPMService.insert(this.EntityPM).subscribe((Result:any) => {
+        this.CourierMasterPMService.insert(this.EntityPM).subscribe(Result => {
 
             var mm: ServiceResponse = Result;
             if (!mm.HasError) {

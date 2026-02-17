@@ -20,7 +20,6 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data; 
 using Logitude.WarehouseLib.Data.EntityMapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.WarehouseLib.Data
 {
@@ -96,8 +95,6 @@ namespace Logitude.WarehouseLib.Data
 				
 			modelBuilder.Entity<WarehouseRelease>().Property(x => x.TotalVolume).HasPrecision(18, 3);
 				
-			modelBuilder.Entity<WarehouseRelease>().Property(x => x.TotalVolumetricWeight).HasPrecision(18, 3);
-				
 			modelBuilder.Entity<WarehouseReleasePackage>().Property(x => x.Weight).HasPrecision(16, 3);
 				
 			modelBuilder.Entity<WarehouseReleasePackage>().Property(x => x.Volume).HasPrecision(16, 3);
@@ -119,6 +116,7 @@ namespace Logitude.WarehouseLib.Data
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -315,7 +313,6 @@ namespace Logitude.WarehouseLib.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
-			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -346,10 +343,7 @@ namespace Logitude.WarehouseLib.Data
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
 			modelBuilder.Configurations.Add(new CustomsShipperMap());
-            modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
-
-
-            #endregion
+			#endregion
 
             base.OnModelCreating(modelBuilder);
         }
@@ -424,12 +418,8 @@ namespace Logitude.WarehouseLib.Data
 	      get; set;
 	 
 	 }
-        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects
-        {
-            get; set;
-
-        }
-    }
+	  
+ }
 
 
 }

@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated
 
             try
             {
-                Authentication(tenant);
+                Authentication();
                 CustomerProductQuery query = new CustomerProductQuery(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, query.GetCustomerProductPMsByCustomerId(customerId, tenant));
             }
@@ -32,12 +32,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated
         }
 
 
-        private void Authentication(int tenant)
+        private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
+
         }
     }
 }

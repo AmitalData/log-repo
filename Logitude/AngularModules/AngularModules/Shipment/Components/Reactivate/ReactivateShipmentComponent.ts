@@ -4,7 +4,7 @@ import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import {ShipmentPMService} from '../../Services/StandardPMs/ShipmentPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ReactivateShipmentComponent.html',
 })
 
@@ -38,7 +38,7 @@ export class ReactivateShipmentComponent {
         // save
         var myService: ShipmentPMService = new ShipmentPMService();
 
-        myService.update(this.EntityPM).subscribe((myResult:any) => {
+        myService.update(this.EntityPM).subscribe(myResult => {
             this.CurrentSession.StopBusyIndicator();
             this.CurrentSession.CloseCurrentWindowEmit('OK');
         });        

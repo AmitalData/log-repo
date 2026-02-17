@@ -6,10 +6,9 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {AWBWizardOtherChargeItem} from './OtherChargesTabComponent';
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
-import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './AddEditOtherChargeComponent.html',
 })
@@ -20,7 +19,6 @@ export class AddEditOtherChargeComponent extends BaseComponent implements AfterV
     public ValidationErrorsList: string[] = [];
     public TenantZeroAirlineId: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    public MeasurementsQueryFilters: ApiQueryFilters;
     constructor() {
         super();
     }
@@ -30,18 +28,10 @@ export class AddEditOtherChargeComponent extends BaseComponent implements AfterV
         if (this.DataContext != null) {
             this.DataContext.SetUIProperties();
         }
-
         this.DataContext.IsWindowMode = true;
         this.ObjectTableName = dataContext.ObjectTableName;
         this.TenantZeroAirlineId = dataContext.ShipmentPM.TenantZeroAirlineId;
-
-        this.BuildQueryFilters(); 
         this.Clone();
-    }
-
-    private BuildQueryFilters() {
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
     }
 
     ngAfterViewInit() {

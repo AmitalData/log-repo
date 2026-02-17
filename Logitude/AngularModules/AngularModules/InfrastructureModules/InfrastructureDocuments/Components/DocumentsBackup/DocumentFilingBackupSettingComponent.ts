@@ -1,4 +1,5 @@
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -10,13 +11,12 @@ import {DocumentFilingBackupSettingPMService} from '../../../../Common/Services/
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'DocumentFilingBackupSettingComponent',
     templateUrl: './DocumentFilingBackupSettingComponent.html',
 })
 
 export class DocumentFilingBackupSettingComponent extends BaseComponent implements OnInit {
-    public ObjectTableName: string = null;
     IsLoad: boolean = false;
     documentFilingBackupSettingPMService: DocumentFilingBackupSettingPMService;
     DataContext: any = this;
@@ -38,7 +38,7 @@ export class DocumentFilingBackupSettingComponent extends BaseComponent implemen
     FTPDetailHost: string;
     FTPDetailId: string;
     LoadData() {
-        this.documentFilingBackupSettingPMService.get(SessionLocator.Tenant).subscribe((res:any) => {
+        this.documentFilingBackupSettingPMService.get(SessionLocator.Tenant).subscribe(res => {
             if (!res.HasError) {
                 this.documentFilingBackupSettingPM = res.Result;
                 if (!this.documentFilingBackupSettingPM) {
@@ -57,7 +57,7 @@ export class DocumentFilingBackupSettingComponent extends BaseComponent implemen
 
             this.FTPDetailId = this.documentFilingBackupSettingPM.FTPDetailId;
             if (!AppTool.IsNullOrEmpty(this.FTPDetailId)) {
-                this.myFTPService.get(this.FTPDetailId).subscribe((myResult:any) => {
+                this.myFTPService.get(this.FTPDetailId).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         var myEntity: any = myResponse.Result;
@@ -136,7 +136,7 @@ export class DocumentFilingBackupSettingComponent extends BaseComponent implemen
             if (this.ValidationErrorsList.length == 0) {
                 this.CurrentSession.StartBusyIndicatorSaving();
                 if (this.IsNewDocumentFilingBackupSetting) {
-                    this.documentFilingBackupSettingPMService.insert(this.documentFilingBackupSettingPM).subscribe((res:any) => {
+                    this.documentFilingBackupSettingPMService.insert(this.documentFilingBackupSettingPM).subscribe(res => {
                         this.CurrentSession.StopBusyIndicator();
                         if (!res.HasError) {
                             this.IsNewDocumentFilingBackupSetting = false;
@@ -151,7 +151,7 @@ export class DocumentFilingBackupSettingComponent extends BaseComponent implemen
 
 
                 } else {
-                    this.documentFilingBackupSettingPMService.update(this.documentFilingBackupSettingPM).subscribe((res:any) => {
+                    this.documentFilingBackupSettingPMService.update(this.documentFilingBackupSettingPM).subscribe(res => {
                         this.CurrentSession.StopBusyIndicator();
                         if (!res.HasError) {
                             this.CurrentSession.CloseCurrentWindow();

@@ -1,122 +1,98 @@
 ﻿import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map, takeWhile } from 'rxjs/operators';
-import { BehaviorSubject, defer, interval, of, Subject, Subscription } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse'; 
 import {ReportFliter} from '../../../Report/Components/Filters/ReportFliter';
-import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
-import { AppTool } from 'Infrastructure/Tools';
 
 @Injectable()
 export class ReportService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Report';
     }
 
-    GetReportListsByGroupId(groupId: string) {
+    GetReportListsByGroupId(groupId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '?groupId=' + groupId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '?groupId=' + groupId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
-    }
-
-    GetReportByCode(codeId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '/GetReportByCode?code=' + codeId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
     
-    GetPrepareSendReport(type: string, fileName: string,  tenant: number, displayName: string) {
+    GetPrepareSendReport(type: string, fileName: string,  tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetPrepareSendReport" + '?type=' + type + '&fileName=' + fileName  +  '&tenant=' + tenant + '&displayName=' + (displayName || ""),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetPrepareSendReport" + '?type=' + type + '&fileName=' + fileName  +  '&tenant=' + tenant, { headers: authHeader }).map(response => {
+
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
-    GetDataProviderProperties(code: string) {
+
+    GetCheckIfStimualReportIsBuilt(reportKey: string,  tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetDataProviderProperties" + '?code=' + code ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetCheckIfStimualReportIsBuilt" + '?reportKey=' + reportKey + '&tenant=' + tenant , { headers: authHeader }).map(response => {
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
-    }
-    
-
-   
-    GetCheckIfStimulSoftReportIsBliud(reportKey: string,  tenant: number) {
-
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetCheckIfStimulSoftReportIsBliud" + '?reportKey=' + reportKey + '&tenant=' + tenant ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     GetCheckIfReportsRunUsingWR() {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetCheckIfReportsRunUsingWR",ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetCheckIfReportsRunUsingWR", { headers: authHeader }).map(response => {
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
     
     GenerateReportMethod(filter: ReportFliter) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return defer(() => {
-            return this._http.put(this._apiUrl, JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl, JSON.stringify(filter), {
+                headers: authHeader,
+
+            }).map(response => {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = response;
+                pmresponse.Result = response.json();
                 return pmresponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
 
     }
-    
+
     GenerateReportForCustomerPotentialActual(filter: ReportFliter) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return defer(() => {
-            return this._http.put(this._apiUrl, JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl, JSON.stringify(filter), { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
                 var myResult = new CustomersDataProvider();
 
                 if (myJsonResult) {
@@ -132,49 +108,10 @@ export class ReportService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
         );
     }
-    GetExcel(reportKey:string,  reportName:string): Promise<any> {
-        const authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-    
-         reportKey = encodeURIComponent(reportKey);
-         reportName = encodeURIComponent(reportName);
-        
-        return defer(() => {
-            return this._http
-                .get(this._apiUrl +
-                    '/GetExcel' +
-                    '?reportKey=' +
-                    reportKey +
-                    '&reportName=' +
-                    reportName, {
-                    headers: ServiceHelper.GetHttpHeaders().headers,
-                    responseType: 'blob',
-                })
-                .pipe(
-                    map((response) => {
-                        return response;
-                    }),
-                    catchError(ServiceHelper.HandleServiceError)
-                );
-        }).toPromise() as Promise<any>;
-    }
-
-    GetPowerBIReports() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '/GetPowerBIReports',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
-    }
-
 }
 
 export class CustomersDataProvider {

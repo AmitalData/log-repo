@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
  
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-                                    AllowedInTicket =  false,
+			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -168,7 +168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   ObjectTable CustomPickListObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomPickList" && d.Tenant == 0).FirstOrDefault(); 
 
- 		 //  TextCode CustomPickListTextCode_CustomPickList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomPickList", DefaultText = "Custom Pick Lists",LocalDefaultText = null, ObjectTableId = CustomPickListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomPickListTextCode_CustomPickList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomPickList", DefaultText = "Custom Pick Lists",LocalDefaultText = null, ObjectTableId = CustomPickListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

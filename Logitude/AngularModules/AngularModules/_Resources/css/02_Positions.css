@@ -1,4 +1,4 @@
-td::before {
+﻿td::before {
     /*content: '';*/
 }
 
@@ -199,22 +199,6 @@ td {
     left: 0;
     top: 0;
     bottom: 0;
-    margin: auto;
-}
-
-.BottomCenter {
-    position: absolute;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-}
-
-.TopCenter {
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: 0;
     margin: auto;
 }
 

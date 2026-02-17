@@ -18,22 +18,19 @@ import { PackageTypeListService } from '../../Common/Services/StandardLists/Pack
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddEditWarehouseEntryPackagesAndContainers',
     templateUrl: './AddEditWarehouseEntryPackagesAndContainers.html',
     providers: [WarehouseEntryPackagePMExtendedService],
 })
 
 export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
-  public IsDependencyFilter2Value: any;
-  public WarehouseEntryPackage: any;
-
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-   
+    public WarningErrorsList: string[] = [];
     public ValidationErrorsList: string[];
     warehouseEntryPM: any;
     warehouseEntryPackageItem: WarehouseEntryPackageItem;
-
+    warehouseEntryPackagePM: WarehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
     ObjectTableName: string = "WarehouseEntryPackage";
     validator: ClassLevelValidator;
     public ContainerNumberWarning: string = null;
@@ -60,118 +57,104 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     }
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe(response => {
             this.Start(args);
         });
     }
 
     IsParentDirty: boolean = false;
     IsChildDirty: boolean = false;
-    public savedItem: WarehouseEntryPackageItem;
+    public savedItem: WarehouseEntryPackagePM;
     Start(args: any) {
         this.warehouseEntryPM = args.WarehouseEntryPM;
-        this.warehouseEntryPackageItem = args.WarehouseEntryPackageItem;
-
-
+        this.warehouseEntryPackagePM = args.WarehouseEntryPackagePM;
         this.AllPackageTypes = args.AllPackageTypes;
 
-        if (this.warehouseEntryPM && this.warehouseEntryPackageItem) {
+        if (this.warehouseEntryPM && this.warehouseEntryPackagePM) {
 
             this.ViewModelTrigger = args.ViewModelTrigger;
             this.IsNewEntity = args.IsNewEntity;
 
-
             if (this.IsNewEntity) {
-                this.warehouseEntryPackageItem.Instock = 0;
+                this.warehouseEntryPackagePM.Instock = 0;
+                this.warehouseEntryPackagePM.IsContainer = this.warehouseEntryPackagePM.IsContainer;
             }
             else {
-                if (this.warehouseEntryPackageItem.IsContainer) {
-                    if (this.warehouseEntryPackageItem.ContainerNumber) {
-                        this.warehouseEntryPackageItem.ValidateContainerNumber(this.warehouseEntryPackageItem.ContainerNumber);
+                if (this.warehouseEntryPackagePM.IsContainer) {
+                    if (this.warehouseEntryPackagePM.ContainerNumber) {
+                        this.ValidateContainerNumber(this.warehouseEntryPackagePM.ContainerNumber);
                     }
                 }
 
-                if (this.warehouseEntryPackageItem) {
-                    this.warehouseEntryPackageItem.ContainerNumberLostFocus(this.warehouseEntryPackageItem.ContainerNumber);
+                if (this.warehouseEntryPackagePM) {
+                    this.ContainerNumberLostFocus(this.warehouseEntryPackagePM.ContainerNumber);
                     this.IsParentDirty = this.warehouseEntryPM.IsDirty;
-                    this.IsChildDirty = this.warehouseEntryPackageItem.IsDirty;
+                    this.IsChildDirty = this.warehouseEntryPackagePM.IsDirty;
 
-
-                    this.savedItem = new WarehouseEntryPackageItem(new WarehouseEntryPackagePM(null),this);
-                    this.savedItem.PackageTypeId = this.warehouseEntryPackageItem.PackageTypeId;
-                    this.savedItem.ContainerNumber = this.warehouseEntryPackageItem.ContainerNumber;
-                    this.savedItem.Length = this.warehouseEntryPackageItem.Length;
-                    this.savedItem.Height = this.warehouseEntryPackageItem.Height;
-                    this.savedItem.Width = this.warehouseEntryPackageItem.Width;
-                    this.savedItem.Volume = this.warehouseEntryPackageItem.Volume;
-                    this.savedItem.Weight = this.warehouseEntryPackageItem.Weight;
-                    this.savedItem.Description = this.warehouseEntryPackageItem.Description;
-                    this.savedItem.Seal = this.warehouseEntryPackageItem.Seal;
-                    this.savedItem.Harmonize = this.warehouseEntryPackageItem.Harmonize;
-                    this.savedItem.Location = this.warehouseEntryPackageItem.Location;
-                    this.savedItem.Dimensions = this.warehouseEntryPackageItem.Dimensions;
-                    this.savedItem.Instock = this.warehouseEntryPackageItem.Instock;
-                    this.savedItem.Quantity = this.warehouseEntryPackageItem.Quantity;
-                    this.savedItem.Make = this.warehouseEntryPackageItem.Make;
-                    this.savedItem.Year = this.warehouseEntryPackageItem.Year;
-                    this.savedItem.ChassisNumber = this.warehouseEntryPackageItem.ChassisNumber;
-                    this.savedItem.RegistrationNumber = this.warehouseEntryPackageItem.RegistrationNumber;
-                    this.savedItem.CountryId = this.warehouseEntryPackageItem.CountryId;
-                    this.savedItem.Model = this.warehouseEntryPackageItem.Model;
-                    this.savedItem.Color = this.warehouseEntryPackageItem.Color;
-                    this.savedItem.ContainerNumberWarning = this.warehouseEntryPackageItem.ContainerNumberWarning;
-
-
-
-                    if (!this.warehouseEntryPackageItem.Quantity || this.warehouseEntryPackageItem.Quantity == 0) {
-                        this.warehouseEntryPackageItem.Instock = 0;
-                    }
-
+                    this.savedItem = new WarehouseEntryPackagePM(null);
+                    this.savedItem.PackageTypeId = this.warehouseEntryPackagePM.PackageTypeId;
+                    this.savedItem.ContainerNumber = this.warehouseEntryPackagePM.ContainerNumber;
+                    this.savedItem.Length = this.warehouseEntryPackagePM.Length;
+                    this.savedItem.Height = this.warehouseEntryPackagePM.Height;
+                    this.savedItem.Width = this.warehouseEntryPackagePM.Width;
+                    this.savedItem.Volume = this.warehouseEntryPackagePM.Volume;
+                    this.savedItem.Weight = this.warehouseEntryPackagePM.Weight;
+                    this.savedItem.Description = this.warehouseEntryPackagePM.Description;
+                    this.savedItem.Seal = this.warehouseEntryPackagePM.Seal;
+                    this.savedItem.Harmonize = this.warehouseEntryPackagePM.Harmonize;
+                    this.savedItem.Location = this.warehouseEntryPackagePM.Location;
+                    this.savedItem.Dimensions = this.warehouseEntryPackagePM.Dimensions;
+                    this.savedItem.Instock = this.warehouseEntryPackagePM.Instock;
+                    this.savedItem.Quantity = this.warehouseEntryPackagePM.Quantity;
+                    this.savedItem.Make = this.warehouseEntryPackagePM.Make;
+                    this.savedItem.Year = this.warehouseEntryPackagePM.Year;
+                    this.savedItem.ChassisNumber = this.warehouseEntryPackagePM.ChassisNumber;
+                    this.savedItem.RegistrationNumber = this.warehouseEntryPackagePM.RegistrationNumber;
+                    this.savedItem.CountryId = this.warehouseEntryPackagePM.CountryId;
+                    this.savedItem.Model = this.warehouseEntryPackagePM.Model;
+                    this.savedItem.Color = this.warehouseEntryPackagePM.Color;
+                    this.savedItem.ContainerNumberWarning = this.warehouseEntryPackagePM.ContainerNumberWarning;
                 }
             }
 
-
+            this.warehouseEntryPackageItem = new WarehouseEntryPackageItem(this.warehouseEntryPackagePM, this);
             this.IsLoadPage = true;
         }
     }
 
-
-    ComputeAndFullTotalPackage() {
-
-    }
     ResetPackageItem() {
         if (!this.IsNewEntity) {
-            if (this.warehouseEntryPackageItem && this.savedItem) {
-                this.warehouseEntryPackageItem.PackageTypeId = this.savedItem.PackageTypeId;
-                this.warehouseEntryPackageItem.ContainerNumber = this.savedItem.ContainerNumber;
-                this.warehouseEntryPackageItem.Length = this.savedItem.Length;
-                this.warehouseEntryPackageItem.Height = this.savedItem.Height;
-                this.warehouseEntryPackageItem.Width = this.savedItem.Width;
-                this.warehouseEntryPackageItem.Volume = this.savedItem.Volume;
-                this.warehouseEntryPackageItem.Weight = this.savedItem.Weight;
-                this.warehouseEntryPackageItem.Description = this.savedItem.Description;
-                this.warehouseEntryPackageItem.Seal = this.savedItem.Seal;
-                this.warehouseEntryPackageItem.Harmonize = this.savedItem.Harmonize;
-                this.warehouseEntryPackageItem.Location = this.savedItem.Location;
-                this.warehouseEntryPackageItem.Dimensions = this.savedItem.Dimensions;
-                this.warehouseEntryPackageItem.Instock = this.savedItem.Instock;
-                this.warehouseEntryPackageItem.Quantity = this.savedItem.Quantity;
-                this.warehouseEntryPackageItem.ContainerNumberWarning = this.savedItem.ContainerNumberWarning;
-                this.warehouseEntryPackageItem.Make = this.savedItem.Make;
-                this.warehouseEntryPackageItem.Year = this.savedItem.Year;
-                this.warehouseEntryPackageItem.ChassisNumber = this.savedItem.ChassisNumber;
-                this.warehouseEntryPackageItem.RegistrationNumber = this.savedItem.RegistrationNumber;
-                this.warehouseEntryPackageItem.CountryId = this.savedItem.CountryId;
-                this.warehouseEntryPackageItem.Model = this.savedItem.Model;
-                this.warehouseEntryPackageItem.Color = this.savedItem.Color;
+            if (this.warehouseEntryPackagePM && this.savedItem) {
+                this.warehouseEntryPackagePM.PackageTypeId = this.savedItem.PackageTypeId;
+                this.warehouseEntryPackagePM.ContainerNumber = this.savedItem.ContainerNumber;
+                this.warehouseEntryPackagePM.Length = this.savedItem.Length;
+                this.warehouseEntryPackagePM.Height = this.savedItem.Height;
+                this.warehouseEntryPackagePM.Width = this.savedItem.Width;
+                this.warehouseEntryPackagePM.Volume = this.savedItem.Volume;
+                this.warehouseEntryPackagePM.Weight = this.savedItem.Weight;
+                this.warehouseEntryPackagePM.Description = this.savedItem.Description;
+                this.warehouseEntryPackagePM.Seal = this.savedItem.Seal;
+                this.warehouseEntryPackagePM.Harmonize = this.savedItem.Harmonize;
+                this.warehouseEntryPackagePM.Location = this.savedItem.Location;
+                this.warehouseEntryPackagePM.Dimensions = this.savedItem.Dimensions;
+                this.warehouseEntryPackagePM.Instock = this.savedItem.Instock;
+                this.warehouseEntryPackagePM.Quantity = this.savedItem.Quantity;
+                this.warehouseEntryPackagePM.ContainerNumberWarning = this.savedItem.ContainerNumberWarning;
+                this.warehouseEntryPackagePM.Make = this.savedItem.Make;
+                this.warehouseEntryPackagePM.Year = this.savedItem.Year;
+                this.warehouseEntryPackagePM.ChassisNumber = this.savedItem.ChassisNumber;
+                this.warehouseEntryPackagePM.RegistrationNumber = this.savedItem.RegistrationNumber;
+                this.warehouseEntryPackagePM.CountryId = this.savedItem.CountryId;
+                this.warehouseEntryPackagePM.Model = this.savedItem.Model;
+                this.warehouseEntryPackagePM.Color = this.savedItem.Color;
             }
 
             if (this.warehouseEntryPM && !this.IsParentDirty && this.warehouseEntryPM.IsDirty) {
                 this.warehouseEntryPM.IsDirty = this.IsParentDirty;
             }
 
-            if (this.warehouseEntryPackageItem && !this.IsChildDirty && this.warehouseEntryPackageItem.IsDirty) {
-                this.warehouseEntryPackageItem.IsDirty = this.IsChildDirty;
+            if (this.warehouseEntryPackagePM && !this.IsChildDirty && this.warehouseEntryPackagePM.IsDirty) {
+                this.warehouseEntryPackagePM.IsDirty = this.IsChildDirty;
             }
         }
     }
@@ -184,7 +167,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     SaveButtonClicked() {
         this.ValidationErrorsList = [];
 
-        var errorsArray = this.validator.Validate("WarehouseEntryPackage", this.warehouseEntryPackageItem.EntityPM);
+        var errorsArray = this.validator.Validate("WarehouseEntryPackage", this.warehouseEntryPackagePM);
         if (errorsArray.length > 0) {
             errorsArray.forEach((item) => {
                 this.ValidationErrorsList.push(item);
@@ -192,7 +175,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            if (this.warehouseEntryPackageItem.IsDirty) {
+            if (this.warehouseEntryPackagePM.IsDirty) {
                 this.ComplateSave();
             }
 
@@ -204,20 +187,20 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
 
     ComplateSave() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-        this.warehouseEntryPackageItem.EntityPM.Dimensions = this.warehouseEntryPackageItem ? this.warehouseEntryPackageItem.Dimensions : "";
 
-        this.warehouseEntryPackageItem.PackageTypeName = "";
+        this.warehouseEntryPackagePM.Dimensions = this.warehouseEntryPackageItem ? this.warehouseEntryPackageItem.Dimensions : "";
+        this.warehouseEntryPackagePM.PackageTypeName = "";
 
-        this.warehouseEntryPackageItem.Instock = this.warehouseEntryPackageItem.Quantity;
+        this.warehouseEntryPackagePM.Instock = this.warehouseEntryPackagePM.Quantity;
 
         if (this.AllPackageTypes) {
-            var packageTypeList: PackageTypeList = this.AllPackageTypes.filter(d => d.Id == this.warehouseEntryPackageItem.PackageTypeId)[0];
-            if (packageTypeList) this.warehouseEntryPackageItem.PackageTypeName = packageTypeList.EnglishName;
+            var packageTypeList: PackageTypeList = this.AllPackageTypes.filter(d => d.Id == this.warehouseEntryPackagePM.PackageTypeId)[0];
+            if (packageTypeList) this.warehouseEntryPackagePM.PackageTypeName = packageTypeList.EnglishName;
         }
 
         if (this.IsNewEntity && this.ViewModelTrigger.WarehouseEntryPackagesLists) {
 
-            this.ViewModelTrigger.WarehouseEntryPackagesLists.push(this.warehouseEntryPackageItem.EntityPM);
+            this.ViewModelTrigger.WarehouseEntryPackagesLists.push(this.warehouseEntryPackagePM);
         }
 
         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -225,7 +208,30 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     }
 
     IsEnable: boolean = false;
+    ContainerNumberLostFocus(input: string) {
+        this.ValidateContainerNumber(input);
+    }
 
+    ValidateContainerNumber(input: string) {
+        var warnings: string[] = [];
+        var error = FormatTool.ValidateContainerNumber(input);
+
+        if (!AppTool.IsNullOrEmpty(error)) {
+            warnings.push(error);
+
+            if (AppTool.IsNullOrEmpty(this.warehouseEntryPackagePM.ContainerNumberWarning)) {
+                this.warehouseEntryPackagePM.ContainerNumberWarning = error;
+            }
+        }
+
+        else {
+            if (!AppTool.IsNullOrEmpty(this.warehouseEntryPackagePM.ContainerNumberWarning)) {
+                this.warehouseEntryPackagePM.ContainerNumberWarning = null;
+            }
+        }
+
+        this.WarningErrorsList = warnings;
+    }
 }
 
 export class WarehouseEntryPackageItem extends BaseComponent {
@@ -234,23 +240,18 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     VolumetricWeightLabel: string;
     GrossWeightLabel: string;
     DimensionsLabel: string;
-    ReleasesNumber: string;
-
-
-
-
     ObjectTableName: string = "WarehouseEntryPackage";
-    FatherComponent: any;
+    FatherComponent: AddEditWarehouseEntryPackagesAndContainers;
     DimensionsUnitCode: string;
     VolumeUnitCode: string;
     ChargeableWeightUnitCode: string;
     GrossWeightUnitCode: string;
     IsDependencyFilter2Value: boolean;
-    IsCFSWarehouse: boolean = false;
+    IsContainer: boolean = false;
     WarehouseEntryPM: WarehouseEntryPM;
     public IsVehicleDetails: boolean = false;
 
-    constructor(entity: WarehouseEntryPackagePM, public fatherComponent: any = null) {
+    constructor(entity: WarehouseEntryPackagePM, public fatherComponent: AddEditWarehouseEntryPackagesAndContainers = null) {
         super();
         this.FatherComponent = fatherComponent;
         this.EntityPM = entity;
@@ -259,15 +260,13 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.GrossWeightUnitCode = this.WarehouseEntryPM.GrossWeightUnitCode;
         this.ChargeableWeightUnitCode = this.WarehouseEntryPM.ChargeableWeightUnitCode;
         this.DimensionsUnitCode = this.WarehouseEntryPM.DimensionsUnitCode;
-        this.IsDependencyFilter2Value = this.EntityPM.IsContainer;
-        this.ReleasesNumber = this.EntityPM.ReleasesNumber;
-        this.IsCFSWarehouse = this.FatherComponent.IsCFSWarehouse;
-
+        this.IsDependencyFilter2Value = this.IsContainer = this.EntityPM.IsContainer;
         this.SetLabel();
         this.SetUIProperties();
         this.SetUIPropertiesOfCars(false);
         this.IsVehicleDetails = false;
     }
+
 
     SetLabel() {
         this.VolumeLabel = "Volume (" + this.VolumeUnitCode + ")";
@@ -276,20 +275,13 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.ChargeableWeightUnitCode + ")";
     }
 
-
-
-    IsVolumeEnabled: boolean = true;
-    IsGrossWeightEnabled: boolean = true;
-    IsDimensionEnabled: boolean = true;
-    IsQuantityEnabled: boolean = true;
     SetUIProperties() {
 
         if (this.EntityPM.IsContainer) {
-            if (!this.EntityPM.Id) {
+            if (this.FatherComponent.IsNewEntity) {
                 this.EntityPM.Quantity = 1;
             }
             this.UIProperties.SetEnabled("Quantity", "WarehouseEntryPackage", false)
-            this.IsQuantityEnabled = false;
 
         }
 
@@ -324,17 +316,11 @@ export class WarehouseEntryPackageItem extends BaseComponent {
             });
         }
 
-        this.IsVolumeEnabled = isVolumeEnabled; 
-        this.IsGrossWeightEnabled = isGrossWeightEnabled; 
-        this.IsDimensionEnabled = isDimensionEnabled; 
-
-
         this.UIProperties.SetEnabled("Height", this.ObjectTableName, isDimensionEnabled);
         this.UIProperties.SetEnabled("Width", this.ObjectTableName, isDimensionEnabled);
         this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
         this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
-        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, !this.IsCFSWarehouse);
         this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
     }
 
@@ -346,14 +332,10 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     }
 
     private ComputeVolumetricWeight() {
-      
+        var ratio = AppTool.GetRatio(this.WarehouseEntryPM.DirectionId, this.WarehouseEntryPM.TransportModeId, this.WarehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
 
-        this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.Weight, this.WarehouseEntryPM.Ratio, this.DimensionsUnitCode, this.VolumeUnitCode, this.GrossWeightUnitCode, this.ChargeableWeightUnitCode);
+        this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.Weight, ratio, this.DimensionsUnitCode, this.VolumeUnitCode, this.GrossWeightUnitCode, this.ChargeableWeightUnitCode);
     }
-
-    WarningErrorsList: string[] = [];
-
- 
 
 
     // Dimensions
@@ -361,10 +343,8 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     set Quantity(value: number) {
         if (this.EntityPM.Quantity != value) {
             this.EntityPM.Quantity = AppTool.Round(value, 0);
-            this.Instock = this.EntityPM.Quantity;
             this.ComputeVolume();
             this.SetUIProperties();
-            this.FatherComponent.ComputeAndFullTotalPackage();
         }
     }
 
@@ -374,7 +354,6 @@ export class WarehouseEntryPackageItem extends BaseComponent {
             this.EntityPM.Length = AppTool.Round(value, 2);
             this.ComputeVolume();
             this.SetUIProperties();
-            this.FatherComponent.ComputeAndFullTotalPackage();
         }
     }
 
@@ -384,7 +363,6 @@ export class WarehouseEntryPackageItem extends BaseComponent {
             this.EntityPM.Width = AppTool.Round(value, 2);
             this.ComputeVolume();
             this.SetUIProperties();
-            this.FatherComponent.ComputeAndFullTotalPackage();
         }
     }
 
@@ -394,7 +372,6 @@ export class WarehouseEntryPackageItem extends BaseComponent {
             this.EntityPM.Height = AppTool.Round(value, 2);
             this.ComputeVolume();
             this.SetUIProperties();
-            this.FatherComponent.ComputeAndFullTotalPackage();
         }
     }
 
@@ -428,12 +405,6 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         }
         return myDimensions;
     }
-    set Dimensions(value: string) {
-        if (this.EntityPM.Dimensions != value) {
-            this.EntityPM.Dimensions = value;
- 
-        }
-    }
 
     get Volume() { return this.EntityPM.Volume; }
     set Volume(value: number) {
@@ -441,7 +412,6 @@ export class WarehouseEntryPackageItem extends BaseComponent {
             this.EntityPM.Volume = AppTool.Round(value, 3);
             this.ComputeVolumetricWeight();
             this.SetUIProperties();
-            this.FatherComponent.ComputeAndFullTotalPackage();
         }
     }
 
@@ -450,7 +420,6 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         if (this.EntityPM.VolumetricWeight != value) {
             this.EntityPM.VolumetricWeight = AppTool.Round(value, 3);
             // this.fatherComponent.ComputeTotals();
-            this.FatherComponent.ComputeAndFullTotalPackage();
         }
     }
 
@@ -460,7 +429,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
 
         if (this.EntityPM.Weight != myValue) {
             this.EntityPM.Weight = myValue
-            this.FatherComponent.ComputeAndFullTotalPackage();
+
             //if (this.ShipmentPM.TransportModeId != "A") {
             //    this.UIProperties.SetRequired('Weight', this.ObjectTableName, AppTool.IsNullOrEmpty(this.Weight) ? true : false);
 
@@ -607,93 +576,4 @@ export class WarehouseEntryPackageItem extends BaseComponent {
             this.EntityPM.CountryId = value;
         }
     }
-
-    get PackageTypeName() { return this.EntityPM.PackageTypeName; }
-    set PackageTypeName(value: string) {
-        if (this.EntityPM.PackageTypeName != value) {
-            this.EntityPM.PackageTypeName = value;
-        }
-    }
-
-
-    get Instock() { return this.EntityPM.Instock; }
-    set Instock(value: number) {
-        if (this.EntityPM.Instock != value) {
-            this.EntityPM.Instock = value;
-         
-        }
-    }
-
-    get ContainerNumber() { return this.EntityPM.ContainerNumber; }
-    set ContainerNumber(value: string) {
-        if (this.EntityPM.ContainerNumber != value) {
-            this.EntityPM.ContainerNumber = value;
-        }
-    }
-    
-
-    get ContainerNumberWarning() { return this.EntityPM.ContainerNumberWarning; }
-    set ContainerNumberWarning(value: string) {
-        if (this.EntityPM.ContainerNumberWarning != value) {
-            this.EntityPM.ContainerNumberWarning = value;
-        }
-    }
-
-
-
-
-    
-    get IsContainer() { return this.EntityPM.IsContainer; }
-    set IsContainer(value: boolean) {
-        if (this.EntityPM.IsContainer != value) {
-            this.EntityPM.IsContainer = value;
-        }
-    }
-
-    
-
-
-    get IsDirty() { return this.EntityPM.IsDirty; }
-    set IsDirty(value: boolean) {
-        if (this.EntityPM.IsDirty != value) {
-            this.EntityPM.IsDirty = value;
-        }
-    }
-
-
-    get IsDisabled() { return this.EntityPM.Quantity != this.EntityPM.Instock ? true:false }
-
-
-
-    ContainerNumberLostFocus(input: string) {
-        this.ValidateContainerNumber(input);
-    }
-
-    ValidateContainerNumber(input: string) {
-        var warnings: string[] = [];
-        var error = FormatTool.ValidateContainerNumber(input);
-
-        if (!AppTool.IsNullOrEmpty(error)) {
-            warnings.push(error);
-
-            if (AppTool.IsNullOrEmpty(this.ContainerNumberWarning)) {
-                this.ContainerNumberWarning = error;
-            }
-        }
-
-        else {
-            if (!AppTool.IsNullOrEmpty(this.ContainerNumberWarning)) {
-                this.ContainerNumberWarning = null;
-            }
-        }
-
-   
-        this.WarningErrorsList = warnings;
-        
-
-    }
-
-
-
-
 }

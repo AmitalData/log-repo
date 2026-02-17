@@ -41,7 +41,7 @@ import {ReconcileExternalPageExtendedListService} from '../../../Services/Extend
 import {CurrencyPMService} from '../../../../Common/Services/StandardPMs/CurrencyPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ExternalRecoDetailsTabComponent.html',
 })
 
@@ -94,7 +94,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             this.ledgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse.Result) {
                     var result = serviceResponse.Result;
-                    var transaction = result; // get the data
+                    var transaction = result.Result; // get the data
                     this.openAmountCurrency = transaction ? transaction.CurrencyCode : "";
                     this.ledgerAmountHeader += " (" + this.openAmountCurrency + ")";
                     this.bankAmountHeader += " (" + this.openAmountCurrency + ")";
@@ -103,7 +103,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             });
         }
         else {
-            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult:any) => {
+            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult) => {
                 var currency = myResult.Result;
                 this.openAmountCurrency = currency ? currency.Code : "";
                 this.ledgerAmountHeader += " (" + this.openAmountCurrency + ")";
@@ -144,29 +144,22 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
     }
     GetBankLines(bankPageLinesIds, transactionsLinesIds) {
-        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult:ServiceResponse) => {
+        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult) => {
             var result = myResult.Result;
             var list = result.Result;
 
-            // Incapsulate transactions
-            var pageLines: BankLineModel[] = [];
-            for (var line of list) {
-                var pageLine = new BankLineModel(line, this, -1);
-                pageLines.push(pageLine);
-            }
-            //
-
             // 3- fil group hash
-            for (var recoLine of this.ExternalRecoPM.ExternalReconciliationLines) {
-                if (recoLine.ExternalPageLineId) {
-                    var item = pageLines.find(d => d.Id == recoLine.ExternalPageLineId);
-                    item.GroupHash = recoLine.GroupNumber;
+            for (var line of this.ExternalRecoPM.ExternalReconciliationLines) {
+                if (line.ExternalPageLineId) {
+                    var item = list.find(d => d.Id == line.ExternalPageLineId);
+                    item.GroupHash = line.GroupNumber;
                 }
             }
 
             // 4- sort
-            pageLines.sort((a, b) => { return (a.PageLinePM.GroupHash === b.PageLinePM.GroupHash) ? 0 : (a.PageLinePM.GroupHash < b.PageLinePM.GroupHash) ? -1 : 1 });
-            this.BankPageLines.InsertCollection(pageLines);
+            list.sort((a, b) => { return (a.GroupHash === b.GroupHash) ? 0 : (a.GroupHash < b.GroupHash) ? -1 : 1 });
+
+            this.BankPageLines.InsertCollection(list);
 
             this.GetLedgerLines(transactionsLinesIds);
         });
@@ -175,9 +168,9 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
         // 2- get ledger transactions lines
         if (transactionsLinesIds.length > 0) {
-            this.ledgerTransactionExtendedListService.getLedgerTransactionsByIds(transactionsLinesIds).subscribe((myResult: ServiceResponse) => {
+            this.ledgerTransactionExtendedListService.getLedgerTransactionsByIds(transactionsLinesIds).subscribe((myResult) => {
                 var result = myResult.Result;
-                var list = result;
+                var list = result.Result;
 
                 // Incapsulate transactions
                 var transactionsItems: TransactionLineModel[] = [];
@@ -197,6 +190,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
                 // 4- sort
                 transactionsItems.sort((a, b) => { return (a.GroupHash === b.GroupHash) ? 0 : (a.GroupHash < b.GroupHash) ? -1 : 1 });
+
                 this.TransactionsLines.InsertCollection(transactionsItems);
 
                 this.FillGroupHash();
@@ -230,8 +224,73 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
         // Type:    SourceTypeCode
         // Id:      SourceId
         // Display: SourceNumber
-        var tableName = AccountingEntityHelper.getEntityObjectTableName(type);
 
+        var tableName = "Journal";
+
+        switch (type) {
+
+            // 1-Journal
+            case '1': {
+                tableName = "Journal";
+                break;
+            }
+
+            // 2-ARInvoice
+            case '2': {
+                tableName = "ARInvoice";
+                break;
+            }
+
+            // 3-ARPayment
+            case '3': {
+                tableName = "ARPayment";
+
+                break;
+            }
+
+            // 4-APInvoice
+            case '4': {
+                tableName = "APInvoice";
+
+                break;
+            }
+
+            // 5-APPayment
+            case '5': {
+                tableName = "APPayment";
+
+                break;
+            }
+
+            // 6-Cheque Deposit
+            case '6': {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 7-Cash Deposit
+            case '7': {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 8-Revaluation
+            case '8': {
+                tableName = "Revaluation";
+
+                break;
+            }
+
+            // 9-PaymentCheque
+            case '9': {
+                tableName = "PaymentCheque";
+
+                break;
+            }
+
+        }
 
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
@@ -294,12 +353,6 @@ class TransactionLineModel extends BaseComponent {
 
         //#endregion
     }
-
-
-    get IsCredit(){
-        return this.LedgerTransactionPM.ForeignAmountCredit != 0;
-    }
-
 
     get GroupHash() { return this.LedgerTransactionPM.GroupHash };
     set GroupHash(value: number) { this.LedgerTransactionPM.GroupHash = value };
@@ -389,15 +442,15 @@ class TransactionLineModel extends BaseComponent {
         //
         // [i] copied from list template
         //
-        let gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
-        if (!AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)) {
+
+        if (!AppTool.IsNullOrEmpty(ReconcileEventManager.GLAccountReconcileMethodCode)) {
             // this code was copied to reconcile window, if it need change, please chenge it in reconcile window too
-            if (gLAccountReconcileMethodCode == "0") { // 0-local currency
+            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") { // 0-local currency
 
                 // local
                 return SessionLocator.TenantPM.CurrencySign;
 
-            } else if (gLAccountReconcileMethodCode == "1") { // 1-foreign currency
+            } else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") { // 1-foreign currency
 
                 // foreign
                 return this.ledgerTransaction.CurrencySign;
@@ -429,12 +482,6 @@ class BankLineModel extends BaseComponent {
         this.PageLinePM = pageLine;
         this.RowIndex = myRowIndex;
 
-    }
-
-
-
-    get IsCredit(){
-        return this.PageLinePM.CreditAmount != 0;
     }
 
     get GroupHash() { return this.pageLine.GroupHash };

@@ -1,4 +1,4 @@
-import {Component,ViewChildren,OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component,ViewChildren,OnInit} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
@@ -13,19 +13,11 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImageParameter';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { TermsofUseService } from '../../../../Infrastructure/Services/WebServices/TermsofUseService';
-import { TermsofUsePM } from '../../../../Common/EntityPMs/TermsofUsePM'; 
-import { HybridPartnerPM } from '../../../../Common/EntityPMs/HybridPartnerPM';
-import { getLocaleDateTimeFormat } from '@angular/common';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
-import { TenantManagmentPrivateLabelsListService } from '../../../../Infrastructure/Services/StandardLists/TenantManagmentPrivateLabelsListService';
 
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
-declare var querySelection, StringToBase64, resultToUnitArray: any;
+
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditPrivateLabelsComponent.html',
 })
 
@@ -35,587 +27,28 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     public ObjectTableName: string = "TenantManagmentPrivateLabels";
     public ValidationErrorsList: string[] = [];
     public IsNewEntity: boolean;
-    //private EntityId: string = null;
+    private EntityId: string = null;
     public DataImageMain: any;
     public DataImageSmall: any;
     private IsEditMode: boolean = false;
     LogoMainFileHtmlId: string = Guid.NewRandomString();
     LogoSmallFileHtmlId: string = Guid.NewRandomString();
 
-    mainColorOpacity: number = 100;
-    private mainColorCode: string;
-    wrongMainColor: boolean = false;
-
-    queryFiltersHighlightColorOpacity: number = 100;
-    private queryFiltersHighlightColorCode: string;
-    wrongQueryFiltersHighlightColor: boolean = false;
-
-    secondaryColorOpacity: number = 100;
-    private secondaryColorCode: string;
-    wrongSecondaryColor: boolean = false;
-
-    mainTabHighlightColorOpacity: number = 100;
-    private mainTabHighlightColorCode: string;
-    wrongMainTabHighlightColor: boolean = false;
-
-    documentTypeHighlightColorOpacity: number = 100;
-    private documentTypeHighlightColorCode: string;
-    wrongDocumentTypeHighlightColor: boolean = false;
-
-    public BackgroundImageId: string;
-    public LoginImageId: string;
-    public LoginProgressImageId: string;
-    public ForgetPasswordImageId: string;
-    public SelectedTabCode: string;
-
-    TermsofUsePMLists: TermsofUsePMViewModel[] = []; 
-    TermsofUseSelectedViewModel: TermsofUsePMViewModel;
-    private termsofUseService: TermsofUseService = new TermsofUseService(); 
-    private entityResourceService: EntityResourceService = new EntityResourceService();
-    private tenantManagmentPrivateLabelsListService: TenantManagmentPrivateLabelsListService = new TenantManagmentPrivateLabelsListService();
-    IsVisibile: boolean;
-    public EntityId: number;
-    public hybridPartner: HybridPartnerPM;
-    public ParentTenant: number;
-
-    public TermsOfUsePM: TermsofUsePM;
-    public AllActiveTenantManagementPrivateLabels: any[] = [];
-
-    VersionDocumentId: string = Guid.NewRandomString();
-
-
-    @ViewChildren(LocationDirective) public AllLocations: LocationDirective; 
+    @ViewChildren(LocationDirective) public AllLocations: LocationDirective;
     private CurrentSession = SessionLocator.SelectedSession;
-
-     
-
-
     constructor() {
         super();
-        this.SelectedTabCode = "TMM";
-        this.EntityPM = new TenantManagmentPrivateLabelsPM();
-        this.TermsOfUsePM = new TermsofUsePM();
-        this.hybridPartner = new HybridPartnerPM();
-         
+        this.EntityPM = new TenantManagmentPrivateLabelsPM();          
     }
-     
 
     ngOnInit() {
-        this.SelectedTabCode = "TMM";
         this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true);
-        this.StartLoadingData();
-        this.GetTermsOfUse();
- 
-    }
-
-    StartLoadingData() {
-        this.CurrentSession.StartBusyIndicator("Loading...");
-        this.tenantManagmentPrivateLabelsListService.getAll().subscribe((serviceResult: any) => {
-            if (serviceResult.HasError || !serviceResult.Result) {
-                this.HandleServiceResultError(serviceResult);
-                return;
-            }
-            this.AllActiveTenantManagementPrivateLabels = serviceResult.Result.filter(tenantManagementPrivateLabel => !tenantManagementPrivateLabel.InActive);
-            this.GetTermsOfUse();
-        });
-    }
-
-    private HandleServiceResultError(serviceResult: any) {
-        this.ValidationErrorsList = serviceResult.ErrorsArray;
-        this.CurrentSession.StopBusyIndicator();
-    }
-
-    // Upload Terms Of Use
-    OpenUpLoadTemplateFile() {
-        document.getElementById(this.VersionDocumentId).click();
-
-    }
-
-    FileName: string;
-    UpLoadTemplateFileMethod(event: any) {
-
-        var file = querySelection(this.VersionDocumentId);
-
-        if (file) {
-            var fileExtension = file.name.split('.')[1];
-            this.FileName = file.name.split('.')[0];
-
-            if (fileExtension) { 
-                if (!this.isPdfExtension(fileExtension)) {
-                    this.ShowMessage("File extension must be pdf");
-                } else {
-                    this.ConvertArrayBufferToBase64(file, this); 
-                }
-            } 
-        }
-
-    }
-
-    isPdfExtension(fileExtension: any) { 
-    return fileExtension.toLowerCase() == "pdf"
-}
-
-
-
-    ViewFile(item: TermsofUsePMViewModel) {
-
-            var documentName = item.DocumentId
-            DownloadManager.DownloadPage(documentName);
-
-    }
-
-
-    ConvertArrayBufferToBase64(file: any, viewmodel: any) {
-
-        var reader: FileReader = new FileReader();
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            var binary = '';
-            var bytes = new Uint8Array(resultToUnitArray(e));
-            var len = bytes.byteLength;
-            for (var i = 0; i < len; i++) {
-                binary += String.fromCharCode(bytes[i]);
-            }  
-            viewmodel.createTermsOfUse(window.btoa(binary));
-        };
-
-        reader.onerror = function (e) {
-
-        };
-        reader.readAsArrayBuffer(file);
-
- 
-    }
-
-    createTermsOfUse(file: any) {
-
-        var termsofUsePM = new TermsofUsePM();
-        termsofUsePM.FileData = file;
-        termsofUsePM.Date = new Date();
-        termsofUsePM.Tenant = 0;
-        termsofUsePM.VersionDocumentName = this.FileName;
-        termsofUsePM.PrivateLabelId = this.EntityPM.Id;
-
-        this.InsertTermsOfUse(termsofUsePM);
-         
-    }
-
-    private InsertTermsOfUse(termsofUsePM: TermsofUsePM) {
-        this.termsofUseService.insert(termsofUsePM).subscribe((res: any) => {
-
-            var response: ServiceResponse = res;
-            var response: ServiceResponse = res;
-            if (!response.HasError) {
-                var myResult = response.Result;
-                if (myResult) {
-                    this.TermsofUsePMLists.push(new TermsofUsePMViewModel(termsofUsePM));
-                }
-            }
-            else {
-                this.HandleServiceError(response)
-            }
-        });
-    }
-
-    public ShowMessage(message: string) {
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show(message);
-    }
-     
-    GetTermsOfUse() { 
-        this.termsofUseService.GetTermOfUseByPrivateLabeldId(this.EntityPM.Id).subscribe((res: any) => {
-
-                var serviceResponse: ServiceResponse = res;
-                if (!serviceResponse.HasError) {
-                    var result = serviceResponse.Result;
-                    if (result && result != null) {
-                        result.forEach((item) => {
-                            this.TermsofUsePMLists.push(new TermsofUsePMViewModel(item));
-                        });
-                    } 
-            }
-                else {
-                    this.HandleServiceError(serviceResponse)
-            }
-            this.CurrentSession.StopBusyIndicator();
-            });
-    }
-
- 
-    HandleServiceError(serviceResponse: ServiceResponse) {
-        if (!serviceResponse.ErrorsArray && serviceResponse.ErrorsArray.length ==0) {
-            return;
-        } 
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show(serviceResponse.ErrorsArray[0]);
-    
-      
-      
-    }
-
-
-    private InitializeImageIds() {
-        this.BackgroundImageId = this.EntityPM.BackgroundImageId;
-        this.LoginImageId = this.EntityPM.LoginImageId;
-        this.LoginProgressImageId = this.EntityPM.LoginProgressImageId;
-        this.ForgetPasswordImageId = this.EntityPM.ForgetPasswordImageId;
-    }
-
-    RemoveImage(name) {
-
-        switch (name) {
-            case "BackgroundImage": {
-                this.EntityPM.BackgroundImageId = null;
-                this.BackgroundImageId = null;
-                break;
-            }
-            case "LoginImage": {
-                this.EntityPM.LoginImageId = null;
-                this.LoginImageId = null;
-                break;
-            }
-            case "LoginProgressImage": {
-                this.EntityPM.LoginProgressImageId = null;
-                this.LoginProgressImageId = null;
-                break;
-            }
-            case "ForgetPasswordImage": {
-                this.EntityPM.ForgetPasswordImageId = null;
-                this.ForgetPasswordImageId = null;
-                break;
-            }
-            default: {
-                //statements; 
-                break;
-            }
-        }
-    }
-    private SetColorsFromEntity() {
-        this.setMainColor();
-        this.setSecondaryColor();
-        this.setMainTabHighlightColor();
-        this.setDocumentTypeHighlightColor();
-        this.SetQueryFiltersHighlightColor();
-    }
-
-
-    private setDocumentTypeHighlightColor() {
-        if (this.EntityPM.DocumentTypeHighlightColor) {
-            this.documentTypeHighlightColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.DocumentTypeHighlightColor);
-            this.documentTypeHighlightColorCode = this.ConvertRGBAToHexColor(this.EntityPM.DocumentTypeHighlightColor);
-        }
-    }
-
-    private setMainTabHighlightColor() {
-        if (this.EntityPM.MainTabHighlightColor) {
-            this.mainTabHighlightColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainTabHighlightColor);
-            this.mainTabHighlightColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainTabHighlightColor);
-        }
-    }
-
-    private setSecondaryColor() {
-        if (this.EntityPM.SecondaryColor) {
-            this.secondaryColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.SecondaryColor);
-            this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
-        }
-    }
-
-    private setMainColor() {
-        if (this.EntityPM.MainColor) {
-            this.mainColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainColor);
-            this.mainColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainColor);
-        }
-    }
-
-    private SetQueryFiltersHighlightColor() {
-        if (this.EntityPM.QueryFiltersHighlightColor) {
-            this.queryFiltersHighlightColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.QueryFiltersHighlightColor);
-            this.queryFiltersHighlightColorCode = this.ConvertRGBAToHexColor(this.EntityPM.QueryFiltersHighlightColor);
-        }
-    }
-
-    GetOpacityFromRGBA(rgba: string) {
-        var numbers = rgba.replace('rgba(', '').replace(')', '').replace(' ', '');
-        var splittedNumbers = numbers.split(',');
-        var opacity = parseFloat(splittedNumbers[3].trim());
-        return opacity * 100;
-    }
-
-    ConvertRGBAToHexColor(rgba: string) {
-        var numbers = rgba.replace('rgba(', '').replace(')', '').replace(' ', '');
-        var splittedNumbers = numbers.split(',');
-        var red = parseInt(splittedNumbers[0].trim());
-        var green = parseInt(splittedNumbers[1].trim());
-        var blue = parseInt(splittedNumbers[2].trim());
-        var opacity = parseInt(splittedNumbers[3].trim());
-
-        var r = red.toString(16);
-        var g = green.toString(16);
-        var b = blue.toString(16);
-
-        if (r.length == 1)
-            r = "0" + r;
-        if (g.length == 1)
-            g = "0" + g;
-        if (b.length == 1)
-            b = "0" + b;
-
-        return "#" + r + g + b;
-    }
-
-    ConvertHexToRGBColor(hex: string, alpha: number) {
-        if (hex && hex.length >= 7) {
-            const r = parseInt(hex.slice(1, 3), 16);
-            const g = parseInt(hex.slice(3, 5), 16);
-            const b = parseInt(hex.slice(5, 7), 16);
-
-            if (alpha) {
-                return `rgba(${r}, ${g}, ${b}, ${alpha / 100})`;
-            } else {
-                return `rgb(${r}, ${g}, ${b})`;
-            }
-        } else {
-            return 'rgba(0,0,0,1)';
-        }
-    }
-
-    get QueryFiltersHighlightColorOpacity() {
-        return this.queryFiltersHighlightColorOpacity;
-    }
-    set QueryFiltersHighlightColorOpacity(value: number) {
-        this.queryFiltersHighlightColorOpacity = value;
-        this.UpdateEntityQueryFiltersHighlightColor();
-    }
-
-    get MainColorOpacity() {
-        return this.mainColorOpacity;
-    }
-    set MainColorOpacity(value: number) {
-        this.mainColorOpacity = value;
-        this.UpdateEntityMainColor();
-    }
-
-    get MainTabHighlightColorOpacity() {
-        return this.mainTabHighlightColorOpacity;
-    }
-    set MainTabHighlightColorOpacity(value: number) {
-        this.mainTabHighlightColorOpacity = value;
-        this.UpdateEntityMainTabHighlightColor();
-    }
-
-    get DocumentTypeHighlightColorOpacity() {
-        return this.documentTypeHighlightColorOpacity;
-    }
-    set DocumentTypeHighlightColorOpacity(value: number) {
-        this.documentTypeHighlightColorOpacity = value;
-        this.UpdateEntityDocumentTypeHighlightColor();
-    }
-
-    private UpdateEntityQueryFiltersHighlightColor() {
-        this.EntityQueryFiltersHighlightColor = this.ConvertHexToRGBColor(this.QueryFiltersHighlightColorCode, this.QueryFiltersHighlightColorOpacity);
-    }
-
-    private UpdateEntityMainColor() {
-        this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
-    }
-
-    private UpdateEntityMainTabHighlightColor() {
-        this.EntityMainTabHighlightColor = this.ConvertHexToRGBColor(this.MainTabHighlightColorCode, this.MainTabHighlightColorOpacity);
-    }
-
-    private UpdateEntityDocumentTypeHighlightColor() {
-        this.EntityDocumentTypeHighlightColor = this.ConvertHexToRGBColor(this.DocumentTypeHighlightColorCode, this.DocumentTypeHighlightColorOpacity);
-    }
-
-
-
-    public get MainTabHighlightColorCode(): string {
-        return this.mainTabHighlightColorCode;
-    }
-    public set MainTabHighlightColorCode(hexColor: string) {
-        this.mainTabHighlightColorCode = hexColor;
-        this.ValidateMainTabHighlightColorCode(hexColor);
-        this.UpdateEntityMainTabHighlightColor();
-    }
-
-
-
-    public get DocumentTypeHighlightColorCode(): string {
-        return this.documentTypeHighlightColorCode;
-    }
-    public set DocumentTypeHighlightColorCode(hexColor: string) {
-        this.documentTypeHighlightColorCode = hexColor;
-        this.ValidateDocumentTypeHighlightColorCode(hexColor);
-        this.UpdateEntityDocumentTypeHighlightColor();
-    }
-
-
-     
-
-    public get QueryFiltersHighlightColorCode(): string {
-        return this.queryFiltersHighlightColorCode;
-    }
-    public set QueryFiltersHighlightColorCode(hexColor: string) {
-        this.queryFiltersHighlightColorCode = hexColor;
-        this.ValidatequeryFiltersHighlightColorCode(hexColor);
-        this.UpdateEntityQueryFiltersHighlightColor();
-    }
-
-
-    public get MainColorCode(): string {
-        return this.mainColorCode;
-    }
-    public set MainColorCode(hexColor: string) {
-        this.mainColorCode = hexColor;
-        this.ValidateMainColorCode(hexColor);
-        this.UpdateEntityMainColor();
-    }
-     
-    get SecondaryColorOpacity() {
-        return this.secondaryColorOpacity;
-    }
-    set SecondaryColorOpacity(value: number) {
-        this.secondaryColorOpacity = value;
-        this.UpdateEntitySecondaryColor();
-    }
-
-    private UpdateEntitySecondaryColor() {
-        this.EntitySecondaryColor = this.ConvertHexToRGBColor(this.SecondaryColorCode, this.SecondaryColorOpacity);
-    }
-
-    public get SecondaryColorCode(): string {
-        return this.secondaryColorCode;
-    }
-    public set SecondaryColorCode(hexColor: string) {
-        this.secondaryColorCode = hexColor;
-        this.ValidateSecondaryColorCode(hexColor);
-        this.UpdateEntitySecondaryColor();
-    }
-
-    ValidateHexCode(value: string, fieldName: string) {
-
-        const regex = new RegExp('^#([a-fA-F0-9]{6})$');
-        var valid: boolean = regex.test(value);
-        if ((!valid || value.length > 9 || value.length < 7) && value != null) {
-            this.UIProperties.SetValidity(fieldName, "TenantManagement", false, "this is not a valid hex code");
-            return false;
-        }
-        else {
-            this.UIProperties.SetValidity(fieldName, "TenantManagement", true, null);
-            return true;
-        }
-    }
-
-
-    private ValidateMainTabHighlightColorCode(hexColor: string) {
-        if (!this.ValidateHexCode(hexColor, "MainTabHighlightColorCode"))
-            this.wrongMainTabHighlightColor = true;
-        else
-            this.wrongMainTabHighlightColor = false;
-         
-    }
-
-     
-    private ValidateMainColorCode(hexColor: string) {
-        if (!this.ValidateHexCode(hexColor, "MainColorCode"))
-            this.wrongMainColor = true;
-        else
-            this.wrongMainColor = false;
-
-      //  this.UpdateEditComponentValidationErrors();
-    }
-
-    private ValidatequeryFiltersHighlightColorCode(hexColor: string) {
-        if (!this.ValidateHexCode(hexColor, "QueryFiltersHighlightColorCode"))
-            this.wrongQueryFiltersHighlightColor = true;
-        else
-            this.wrongQueryFiltersHighlightColor = false;
-
-        //  this.UpdateEditComponentValidationErrors();
-    }
-
-    private UpdateEditComponentValidationErrors() {
-        if (this.wrongMainColor ) {
-            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = false;
-            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['Please enter valid color hex code'];
-        } else {
-            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
-            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
-        }
-    }
-
-    get EntityQueryFiltersHighlightColor() {
-        return this.EntityPM.QueryFiltersHighlightColor;
-    }
-    set EntityQueryFiltersHighlightColor(value: string) {
-        this.EntityPM.QueryFiltersHighlightColor = value;
-
-    }
-
-    get EntityMainColor() {
-        return this.EntityPM.MainColor;
-    }
-    set EntityMainColor(value: string) {
-        this.EntityPM.MainColor = value;
-
-    } 
-
-    private ValidateDocumentTypeHighlightColorCode(hexColor: string) {
-        if (!this.ValidateHexCode(hexColor, "DocumentTypeHighlightColorCode"))
-            this.wrongDocumentTypeHighlightColor = true;
-        else
-            this.wrongDocumentTypeHighlightColor = false;
-
-    }
-
-
-    get EntityMainTabHighlightColor() {
-        return this.EntityPM.MainTabHighlightColor;
-    }
-    set EntityMainTabHighlightColor(value: string) {
-        this.EntityPM.MainTabHighlightColor = value;
-
-    }
-
-    get EntityDocumentTypeHighlightColor() {
-        return this.EntityPM.DocumentTypeHighlightColor;
-    }
-    set EntityDocumentTypeHighlightColor(value: string) {
-        this.EntityPM.DocumentTypeHighlightColor = value;
-
-    }
-
-    private ValidateSecondaryColorCode(hexColor: string) {
-        if (!this.ValidateHexCode(hexColor, "SecondaryColorCode"))
-            this.wrongSecondaryColor = true;
-        else
-            this.wrongSecondaryColor = false;
-
-        //  this.UpdateEditComponentValidationErrors();
-    }
-
-    get EntitySecondaryColor() {
-        return this.EntityPM.SecondaryColor;
-    }
-    set EntitySecondaryColor(value: string) {
-        this.EntityPM.SecondaryColor = value;
-
     }
 
     SetWindowArgs(windowArgs: any) {
         this.EntityPM = windowArgs.Entity;
         this.IsEditMode = true;
-        this.EntityId = +this.EntityPM.Id;
-
-        this.InitializeImageIds();
-        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
-            this.IsVisibile = true;
-            this.EntityPM = windowArgs.Entity; 
-        });
-
-
-
-        this.SetColorsFromEntity();
+       
         this.RunComponent();
     }
 
@@ -628,34 +61,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
-    }
-
-
-    BackgroundImageUploadedCompleted(imageId) {
-        this.BackgroundImageId = imageId;
-        this.EntityPM.BackgroundImageId = imageId;
-
-    } 
- 
-   LoginImageImageUploadedCompleted(imageId) {
-       this.LoginImageId = imageId;
-       this.EntityPM.LoginImageId = imageId;
-
-    }
-
-    LoginProgressImageUploadedCompleted(imageId) {
-        this.LoginProgressImageId = imageId;
-        this.EntityPM.LoginProgressImageId = imageId;
-
-    }
-
-    ForgetPasswordImageUploadedCompleted(imageId) {
-        this.ForgetPasswordImageId = imageId;
-        this.EntityPM.ForgetPasswordImageId = imageId;
-
     }
 
 
@@ -690,7 +98,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     UploadogoFileSmall(event: any) {
 
         var file: any = UploadLogoFile(this.LogoSmallFileHtmlId);
-        if (file && this.hasValidImageType(file)) {
+        if (file && (file.type == "image/jpeg" || file.type == "image/jpg")) {
             this.IsShowMessageComplate = false;
             this.IsShowProgressLoading = true;
             this.imageParameter = new ImageParameter();
@@ -703,7 +111,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     UploadogoFileMain(event: any) {
 
         var file: any = UploadLogoFile(this.LogoMainFileHtmlId);
-        if (file && this.hasValidImageType(file)) {
+        if (file && (file.type == "image/jpeg" || file.type == "image/jpg")) {
             this.imageParameter = new ImageParameter();
             this.imageParameter.Extension = file.type.split('/')[1];
             this.IsShowMessageComplate = false;
@@ -717,14 +125,10 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     MainLogoData: any;
     SmallLogoData: any;
 
-    private hasValidImageType(file: any) {
-        return (file.type == "image/jpeg" || file.type == "image/jpg" || file.type == "image/png");
-    }
-
     OpenUpLoadMainLogo() {
         document.getElementById(this.LogoMainFileHtmlId).click();
     }
- 
+
     OpenUpLoadSmallLogo() {
         document.getElementById(this.LogoSmallFileHtmlId).click();
     }
@@ -769,7 +173,6 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.imageParameter.Base64String = imageIndex == 1 ? this.MainLogoData : this.SmallLogoData;
         this.imageParameter.Width = 239;
         this.imageParameter.Height = 85 ;
-        this.imageParameter.KeepOriginalSize = true;
         service.PostImageAfterResize(this.imageParameter).subscribe((Result: ServiceResponse) => {
             if (!Result.HasError) {
                 var image = "data:image/" + "jpg" + ";base64," + Result.Result.Base64String;
@@ -826,27 +229,8 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
              this.EntityPM.PrivateLabelUrl = value;
 
          }
-    }
+     }
 
-    get PrivateLabelDomain() {
-        return this.EntityPM.PrivateLabelDomain;
-    }
-    set PrivateLabelDomain(value: string) {
-        if (value != this.EntityPM.PrivateLabelDomain) {
-            this.EntityPM.PrivateLabelDomain = value;
-
-        }
-    }
-
-    get FilingInboxDomain() {
-        return this.EntityPM.FilingInboxDomain;
-    }
-    set FilingInboxDomain(value: string) {
-        if (value != this.EntityPM.FilingInboxDomain) {
-            this.EntityPM.FilingInboxDomain = value;
-
-        }
-    }
    
 
      get ContactUsEmail() {
@@ -870,15 +254,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
                  this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true);                 
              }
          }
-    }
-
-    get DistributorCode() {
-        return this.EntityPM.DistributorCode;
-    }
-    set DistributorCode(value: string) {
-        if (value == this.EntityPM.DistributorCode) return;
-        this.EntityPM.DistributorCode = value;
-    }
+     }
 
      get ReceiveAllStatuses() {
          return this.EntityPM.ReceiveAllStatuses;
@@ -894,43 +270,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
      set InActive(value: boolean) {
          if (value != this.EntityPM.InActive)
              this.EntityPM.InActive = value;
-    }
-
-    get HasLogboxAccess() {
-        return this.EntityPM.HasLogboxAccess;
-    }
-    set HasLogboxAccess(value: boolean) {
-        if (value != this.EntityPM.HasLogboxAccess)
-            this.EntityPM.HasLogboxAccess = value;
-    }
-    get CreateShipmentsWithoutDocs() {
-        return this.EntityPM.CreateShipmentsWithoutDocs;
-    }
-    set CreateShipmentsWithoutDocs(value: boolean) {
-        if (value != this.EntityPM.CreateShipmentsWithoutDocs)
-            this.EntityPM.CreateShipmentsWithoutDocs = value;
-    }
-    get CreateOShipmentsWithoutDocs() {
-        return this.EntityPM.CreateOShipmentsWithoutDocs;
-    }
-    set CreateOShipmentsWithoutDocs(value: boolean) {
-        if (value != this.EntityPM.CreateOShipmentsWithoutDocs)
-            this.EntityPM.CreateOShipmentsWithoutDocs = value;
-    }
-    get IsCustomsActivated() {
-        return this.EntityPM.IsCustomsActivated;
-    }
-    set IsCustomsActivated(value: boolean) {
-        if (value != this.EntityPM.IsCustomsActivated)
-            this.EntityPM.IsCustomsActivated = value;
-    }
-    get IsExportActivated() {
-        return this.EntityPM.IsExportActivated;
-    }
-    set IsExportActivated(value: boolean) {
-        if (value != this.EntityPM.IsExportActivated)
-            this.EntityPM.IsExportActivated = value;
-    }
+     }
 
      get MainLogo() {
          return this.EntityPM.MainLogo;
@@ -951,58 +291,10 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
              this.EntityPM.SmallLogo = value;
          }
      }
-
-    get QueryFiltersHighlightColor() {
-        return this.EntityPM.QueryFiltersHighlightColor;
-    }
-
-    set QueryFiltersHighlightColor(value: string) {
-        if (value != this.EntityPM.QueryFiltersHighlightColor) {
-            this.EntityPM.QueryFiltersHighlightColor = value;
-        }
-    }
-
-    get MainColor() {
-        return this.EntityPM.MainColor;
-    }
-
-    set MainColor(value: string) {
-        if (value != this.EntityPM.MainColor) {
-            this.EntityPM.MainColor = value;
-        }
-    }
-
-    get MainTabHighlightColor() {
-        return this.EntityPM.MainTabHighlightColor;
-    }
-
-    set MainTabHighlightColor(value: string) {
-        if (value != this.EntityPM.MainTabHighlightColor) {
-            this.EntityPM.MainTabHighlightColor = value;
-        }
-    }
+   
 
 
-    get DocumentTypeHighlightColor() {
-        return this.EntityPM.DocumentTypeHighlightColor;
-    }
 
-    set DocumentTypeHighlightColor(value: string) {
-        if (value != this.EntityPM.DocumentTypeHighlightColor) {
-            this.EntityPM.DocumentTypeHighlightColor = value;
-        }
-    }
-
-
-    get SecondaryColor() {
-        return this.EntityPM.SecondaryColor;
-    }
-
-    set SecondaryColor(value: string) {
-        if (value != this.EntityPM.SecondaryColor) {
-            this.EntityPM.SecondaryColor = value;
-        }
-    }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -1012,11 +304,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.ValidationErrorsList = [];
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        this.ValidateSelectedHybridPartner(errors);
-        this.ValidateDirectionsOptions(errors);
-
-        this.ValidateColors(errors);
-
+        if (this.HybridPartnerId == null || this.HybridPartnerId == "") {
+            errors.push("Hybrid Partner Field is Required");
+        }
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {        
@@ -1053,47 +343,6 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     }
 
     private myCloner: Cloner;
-
-    private ValidateSelectedHybridPartner(errors: string[]) {
-        if (this.HybridPartnerId == null || this.HybridPartnerId == "") {
-            errors.push("Hybrid Partner Field is Required");
-            return;
-        }
-        if (!this.AllActiveTenantManagementPrivateLabels) return;
-        if (this.AllActiveTenantManagementPrivateLabels.some(tenantManagementPrivateLabel => tenantManagementPrivateLabel.HybridPartnerId == this.HybridPartnerId && tenantManagementPrivateLabel.Id != this.EntityPM.Id)) {
-            errors.push("This hybrid partner is used in another private label");
-            return;
-        }
-    }
-
-    private ValidateDirectionsOptions(errors: string[]) {
-        if (!this.IsCustomsActivated && !this.IsExportActivated) {
-            errors.push("You need to fill either Is Customs or Is Export Activated Fields");
-        }
-    }
-
-    private ValidateColors(errors: string[]) {
-        if (this.wrongMainColor) {
-            errors.push("Please Enter Valid Main Color");
-        }
-
-        if (this.wrongSecondaryColor) {
-            errors.push("Please Enter Valid Secondary Color");
-        }
-
-
-        if (this.wrongMainTabHighlightColor) {
-            errors.push("Please Enter Valid Main Tab Highlight Color");
-        }
-        if (this.wrongQueryFiltersHighlightColor) {
-            errors.push("Please Enter Valid Query Filters Highlight Color");
-        }
-
-        if (this.wrongDocumentTypeHighlightColor) {
-            errors.push("Please Enter Valid Document Type Highlight Color");
-        }
-    }
-
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('PackageCode');
@@ -1103,17 +352,4 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     private RejectChanges() {
         this.myCloner.RejectChanges();
     }
-}
-class TermsofUsePMViewModel {
-
-
-    Date: Date;
-    VersionNumber: number;
-    DocumentId: string;
-    constructor(item: TermsofUsePM) {
-        this.Date = item.Date;
-        this.VersionNumber = item.VersionNumber;
-        this.DocumentId = item.VersionDocumentId;
-    }
-
 }

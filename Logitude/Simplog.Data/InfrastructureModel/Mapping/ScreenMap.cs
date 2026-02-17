@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -28,27 +28,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.Name)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-
-            this.Property(t => t.Type)
-                .HasMaxLength(30)
-                .IsUnicode(false);
-
-            this.Property(t => t.SortedByFieldCode)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-
-            this.Property(t => t.SortedType)
-                .HasMaxLength(10)
-                .IsUnicode(false);
-
-            this.Property(t => t.SearchFields)
-                .HasMaxLength(1000)
-                .IsUnicode(true);
-
-            this.Property(t => t.RelatedScreenCode)
-                .HasMaxLength(100)
+                .HasMaxLength(40)
                 .IsUnicode(false);
 
             // Table & Column Mappings
@@ -61,12 +41,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.IsReadOnly).HasColumnName("IsReadOnly");
             this.Property(t => t.Name).HasColumnName("Name");
-            this.Property(t => t.Type).HasColumnName("Type");
-            this.Property(t => t.SortedByFieldCode).HasColumnName("SortedByFieldCode");
-            this.Property(t => t.SortedType).HasColumnName("SortedType");
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
-            this.Property(t => t.RelatedScreenCode).HasColumnName("RelatedScreenCode");
-            this.Property(t => t.IsHeaderScreen).HasColumnName("IsHeaderScreen");
+
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.Screens)

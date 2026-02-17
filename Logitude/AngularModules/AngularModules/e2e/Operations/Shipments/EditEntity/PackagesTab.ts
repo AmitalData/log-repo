@@ -14,37 +14,38 @@ export class PackagesTabComponent {
     this.Helper.WaitByIdAndClick('Shipment.TH.Packages');
     if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {
       this.Helper.WaitByIdAndClick('GenerateBTN');
-    }
-    
-    if (shipmentType == '') {
-      this.AddPackages('1', '100', '100', '100', '150', '8978965', 'Testing from protractor');
-      this.AddPackages('2', '50', '50', '50', '70', '22257', 'Testing from protractor 2 ');
-    }
-    else if (shipmentType == 'FCL' || shipmentType == 'FTL') {
-      this.AddContainer('PC1', 'ABCD1111117', '100', '111', 'Shipper Seal 1', 'Container 1 is Added', 'commod 1', 'Carrier seal 1');
-      this.AddContainer('PC2', 'FXYZ8985558', '50', '222', 'Shipper Seal 2', 'Container 2 is added', 'commod 2', 'Carrier seal 2');
-    }
-    else if (shipmentType == 'LCL' || shipmentType == 'LTL') {
-      this.AddLCL_LTLPackages('PP1', 'MKLE9998886', '1', '50', '50', '50', '100', 'Shipper Seal 1', 'First Package', 'Commod 1', 'Carrier Seal 1');
-      this.AddLCL_LTLPackages('PP2', 'DEWR9998876', '2', '70', '70', '70', '140', 'Shipper Seal 2', 'Sec Package', 'Commod 2', 'Carrier Seal 2');
-    }
-     else if (LogitudeShipType == 'M') {
 
-  
-     if (shipmentType == '') {
-      this.AddPackages('1', '100', '100', '100', '150', '8978965', 'Testing from protractor');
-      this.AddPackages('2', '50', '50', '50', '70', '22257', 'Testing from protractor 2 ');
-   }
-     else if (shipmentType == 'FCL' || shipmentType == 'FTL' || shipmentType == 'OG' || shipmentType == 'IG') {
-     this.AddContainer('PC1', 'ABCD1111117', '100', '111', 'Shipper Seal 1', 'Container 1 is Added', 'commod 1', 'Carrier seal 1');
-     this.AddContainer('PC2', 'FXYZ8985558', '50', '222', 'Shipper Seal 2', 'Container 2 is added', 'commod 2', 'Carrier seal 2');
-     }
-     else if (shipmentType == 'LCL' || shipmentType == 'LTL' ) {
-      this.AddLCL_LTLPackages('PP1', 'MKLE9998886', '1', '50', '50', '50', '100', 'Shipper Seal 1', 'First Package', 'Commod 1', 'Carrier Seal 1');
-     this.AddLCL_LTLPackages('PP2', 'DEWR9998876', '2', '70', '70', '70', '140', 'Shipper Seal 2', 'Sec Package', 'Commod 2', 'Carrier Seal 2');
-     }
+      if (shipmentType == '') {
+        this.AddPackages('1', '100', '100', '100', '150', '8978965', 'Testing from protractor');
+        this.AddPackages('2', '50', '50', '50', '70', '22257', 'Testing from protractor 2 ');
+      }
+      else if (shipmentType == 'FCL' || shipmentType == 'FTL') {
+        this.AddContainer('tk', 'ABCD1111117', '100', '111', 'Shipper Seal 1', 'Container 1 is Added', 'commod 1', 'Carrier seal 1');
+        this.AddContainer('ut', 'FXYZ8985558', '50', '222', 'Shipper Seal 2', 'Container 2 is added', 'commod 2', 'Carrier seal 2');
+      }
+      else if (shipmentType == 'LCL' || shipmentType == 'LTL') {
+        this.AddLCL_LTLPackages('bag', 'MKLE9998886', '1', '50', '50', '50', '100', 'Shipper Seal 1', 'First Package', 'Commod 1', 'Carrier Seal 1');
+        this.AddLCL_LTLPackages('bal', 'DEWR9998876', '2', '70', '70', '70', '140', 'Shipper Seal 2', 'Sec Package', 'Commod 2', 'Carrier Seal 2');
+      }
+    }
+    else if (LogitudeShipType == 'M') {
 
-     }
+      // this.AddPackages('1', '100', '100', '100', '150', '8978965', 'Testing from protractor');
+      // this.AddPackages('2', '50', '50', '50', '70', '22257', 'Testing from protractor');
+      if (shipmentType == '') {
+        this.AddPackages('1', '100', '100', '100', '150', '8978965', 'Testing from protractor');
+        this.AddPackages('2', '50', '50', '50', '70', '22257', 'Testing from protractor 2 ');
+      }
+      else if (shipmentType == 'FCL' || shipmentType == 'FTL') {
+        this.AddContainer('tk', 'ABCD1111117', '100', '111', 'Shipper Seal 1', 'Container 1 is Added', 'commod 1', 'Carrier seal 1');
+        this.AddContainer('ut', 'FXYZ8985558', '50', '222', 'Shipper Seal 2', 'Container 2 is added', 'commod 2', 'Carrier seal 2');
+      }
+      else if (shipmentType == 'LCL' || shipmentType == 'LTL') {
+        this.AddLCL_LTLPackages('bag', 'MKLE9998886', '1', '50', '50', '50', '100', 'Shipper Seal 1', 'First Package', 'Commod 1', 'Carrier Seal 1');
+        this.AddLCL_LTLPackages('bal', 'DEWR9998876', '2', '70', '70', '70', '140', 'Shipper Seal 2', 'Sec Package', 'Commod 2', 'Carrier Seal 2');
+      }
+
+    }
 
   }
 
@@ -66,10 +67,10 @@ export class PackagesTabComponent {
     this.Helper.WaitByIdAndClick('AddPackage');
 
     var containerTypeValue = this.Helper.WaitByIdAndFill('ShipmentPackage_PackageTypeId', containerType);
-    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentPackage_PackageTypeId', containerType);
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('ShipmentPackage_ContainerNumber', containerNo);
-     this.Helper.WaitByIdAndFill('ShipmentPackage_Weight', grossWeight);
+    this.Helper.WaitByIdAndFill('ShipmentPackage_Weight', grossWeight);
 
     this.Helper.WaitByIdAndFill('ShipmentPackage_Tare', tare);
     this.Helper.WaitByIdAndFill('ShipmentPackage_ShipperSeal', shipperSeal);
@@ -86,7 +87,7 @@ export class PackagesTabComponent {
     this.Helper.WaitByIdAndClick('AddPackage');
 
     var containerTypeValue = this.Helper.WaitByIdAndFill('ShipmentPackage_PackageTypeId', containerType);
-    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentPackage_PackageTypeId', containerType);
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('ShipmentPackage_ContainerNumber', containerNo);
 
@@ -101,7 +102,6 @@ export class PackagesTabComponent {
 
     this.Helper.WaitByIdAndFill('ShipmentPackage_CommodityNumber', commodityNumber);
 
-    this.Helper.WaitByIdAndClick('OkOceanPackage');
-  }
+    this.Helper.WaitByIdAndClick('OkOceanPackage');  }
 }
 

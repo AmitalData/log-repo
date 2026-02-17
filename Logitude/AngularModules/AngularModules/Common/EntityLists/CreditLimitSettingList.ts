@@ -13,26 +13,5 @@ export class CreditLimitSettingList {
 		InvoiceCreationWarning: boolean;
 		InvoiceCreationBlock: boolean;
 		ShipmentCreationBlock: boolean;
-		CustomersShipmentsBlock: boolean;
-		AgentsShipmentsBlock: boolean;
-		ShipperConsigneeShipmentBlock: boolean;
-		CustomsAgentsShipmentsBlock: boolean;
-		ShippingAgentsShipmentsBlock: boolean;
-		AirlinesShipmentsBlock: boolean;
-		ShippingLinesShipmentsBlock: boolean;
-		TruckersShipmentsBlock: boolean;
-		VendorsShipmentsBlock: boolean;
-		WarehousesShipmentsBlock: boolean;
-		CustomersInvoicesBlock: boolean;
-		AgentsInvoicesBlock: boolean;
-		ShipperConsigneeInvoiceBlock: boolean;
-		CustomsAgentsInvoicesBlock: boolean;
-		ShippingAgentsInvoicesBlock: boolean;
-		AirlinesInvoicesBlock: boolean;
-		ShippingLinesInvoicesBlock: boolean;
-		TruckersInvoicesBlock: boolean;
-		VendorsInvoicesBlock: boolean;
-		WarehousesInvoicesBlock: boolean;
-		ShipmentCreationWarning: boolean;
 	
 }

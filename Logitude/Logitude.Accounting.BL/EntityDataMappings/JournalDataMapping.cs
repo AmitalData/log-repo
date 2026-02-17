@@ -16,15 +16,13 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityKeys;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
-using Logitude.Server.Tools.Counters;
-using Logitude.Accounting.BL.CoreBL;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -40,20 +38,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
-                var journalNumber = CodeCounter.GetNumber(JournalUpdateOnCreating.GetCodeNumberJournal(), entityPM.Tenant).ToString();
-                entityPM.JournalNumber = journalNumber;
-                entityPOCO.JournalNumber = journalNumber;
-                string RegularJournal = "0";
-                if (entityPM.TypeCode == RegularJournal && entityPM.AccountingEntityReference == null) // Manual
-                {
-                    var accEntityReconciliation10 = GetAccountingEntityDetails();
-                    var bankAdjustment = "12";
-                    if (accEntityReconciliation10.Code != entityPM.AccountingEntityCode &&  entityPM.AccountingEntityCode != bankAdjustment)
-                    {
-                        entityPM.AccountingEntityReference = entityPM.JournalNumber;
-                        entityPOCO.AccountingEntityReference = entityPM.JournalNumber;
-                    }
-                }
             }
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ExternalNo);
@@ -92,18 +76,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPOCOProperties.Add(POCOPropertyNames.ExternalNo);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.AccountingEntityId);
 
-            ContactPM loggedUser = GetLoggedContact(entityPOCO.Tenant);
-            bool showLocal = !(bool)loggedUser?.DontShowLocal;
             
 
             if (entityPOCO.OriginalJournalId != null)
             {
                 accContext= accContext ??AccountingContext.GetContext(entityPOCO.Tenant);
-
-                JournalRepository journalRepository = new JournalRepository(entityPOCO.Tenant);
-                Journal journal = journalRepository.GetSingle(entityPOCO.OriginalJournalId, entityPOCO.Tenant);
-                
-                entityPM.OriginalJournalName = journal.JournalNumber;
+                JournalQueryService journalQueryService = new JournalQueryService(accContext);
+                JournalPM parent = journalQueryService.GetSingle(entityPOCO.OriginalJournalId, false, false);
+                entityPM.OriginalJournalName = parent.JournalNumber;
                
             }
                    
@@ -129,9 +109,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 accContext = accContext ?? AccountingContext.GetContext(entityPOCO.Tenant);
                 JournalTypeQueryService journalTypeQueryService = new JournalTypeQueryService(accContext);
                 JournalTypePM type = journalTypeQueryService.GetSingle(entityPOCO.TypeCode, false, true);
-                entityPM.TypeName = showLocal ? type.LocalName : type.EnglishName;
+                entityPM.TypeName = type.EnglishName;
             }
-
             if (entityPOCO.StatusCode != null)
             {
                 accContext = accContext ?? AccountingContext.GetContext(entityPOCO.Tenant);
@@ -140,10 +119,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.StatusName = type.EnglishName;
 
                 ContactPM user = GetLoggedContact(entityPOCO.Tenant);
-                entityPM.StatusName =  type.EnglishName;
-                
-                entityPM.StatusLocalName = type.LocalName;
 
+                if (user != null)
+                {
+                    entityPM.StatusLocalName = user.DontShowLocal ? type.EnglishName : type.LocalName;
+                }
+                else
+                {
+                    entityPM.StatusLocalName = type.EnglishName;
+                }
 
             }
 
@@ -151,14 +135,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.CreatedByUserId != null)
             {
                 ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
-                Contact userContact = GetCreatedByUserContactPM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
-
+                Contact userContact = ContactRepository.GetSingleContact(entityPOCO.CreatedByUserId, entityPOCO.Tenant, true);
                 contact = contact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM();
                 if (userContact != null)
                 {
                     entityPM.CreatedByUserName = contact.DontShowLocal ? userContact.EnglishName : userContact.LocalName;
                 }
-              
             }
 
 
@@ -175,23 +157,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         }
 
-        private AccountingEntityDetails GetAccountingEntityDetails() {
-            var myAccountingEntityDetails = new AccountingEntityDetails();
-            return myAccountingEntityDetails
-                .GetAll()
-                .FirstOrDefault(r => r.EnglishName == "Adjustment");
-        }
 
-        private Contact GetCreatedByUserContactPM(string id,int tenant)
-        {
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact userContact = contactRepository.GetSingleContactByIdAndTenant(id, tenant, true);
-            if (userContact == null)
-            {
-                userContact = contactRepository.GetSingleContactByIdAndTenant(id, 0, true);
-            }
-            return userContact;
-        }
+
         private static void BuildSearchFields(JournalPM entityPM, Journal poco, bool isNewEntity)
         {
             string result = "";

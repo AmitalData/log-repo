@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,14 +32,17 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                .IsUnicode(false);
 
             this.Property(t => t.Field1)
+               .IsRequired()
                .HasMaxLength(15)
                .IsUnicode(false);
 
             this.Property(t => t.Field2)
+               .IsRequired()
                .HasMaxLength(15)
                .IsUnicode(false);
 
             this.Property(t => t.Field3)
+               .IsRequired()
                .HasMaxLength(15)
                .IsUnicode(false);
 
@@ -56,7 +59,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Field1).HasColumnName("Field1"); 
             this.Property(t => t.Field2).HasColumnName("Field2");
             this.Property(t => t.Field3).HasColumnName("Field3");
-            this.Property(t => t.Tenant).HasColumnName("Tenant");
 
             this.HasRequired(t => t.QueueDefinition).WithMany().HasForeignKey(d => d.QueueDefinitionCode);
             //this.HasRequired(t => t.QueueMessage); 

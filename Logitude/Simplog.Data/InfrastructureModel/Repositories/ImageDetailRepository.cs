@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -67,13 +67,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return extension;
         }
 
-        public string GetImageExtensionbyIdForDigital(string id)
-        {
-            string extension = (from a in context.ImageDetails
-                                where a.Id == id
-                                select a.Extension).FirstOrDefault();
-            return extension;
-        }
 
         public List<ImageDetail> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {

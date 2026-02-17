@@ -16,7 +16,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -38,15 +38,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 
 using Logitude.Customs.Data.DataContracts;
-using Logitude.CustomsMessaging.Common.RequestParams;
-using Logitude.CustomsMessaging.MessagingServices;
-using System.Text.RegularExpressions;
-using Unifreight.Data.AmitalModel;
-using Unifreight.Data.AmitalModel.Repsitories;
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
-using WebFreight.Web.CustomWebServices.BL.XLSImport;
-using Logitude.Customs.Data.EntityKeys;
-using static WebFreight.Web.Controllers.CustomsModel.Extended.CourierMasterController;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -65,7 +56,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 SupplierInvoiceQueryService supplierInvoiceQuery = new SupplierInvoiceQueryService(customContext);
-                List<SupplierInvoicePM> supplierInvoices = supplierInvoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant,true);
+                List<SupplierInvoicePM> supplierInvoices = supplierInvoiceQuery.GetSupplierInvoicesForDeclaration(declarationId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, supplierInvoices);
             }
@@ -309,46 +300,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                                 deletedItem.DeletedSupplierInvoiceItemModVehicles.Add(deletedItemModVehicle);
                             }
-
-                            SuppInvoiceItemsAbachStatementQueryService suppInvoiceItemsAbachStatementQueryService = new SuppInvoiceItemsAbachStatementQueryService(MyContext);
-                            List< SuppInvoiceItemsAbachStatementPM > suppInvoiceItemsAbachStatementChangeSet = suppInvoiceItemsAbachStatementQueryService.GetSuppInvoiceItemsAbachStatementsForSupplierInvoiceWithSpecificKeys(item.DeclarationId, item.CounterKey,new List<int>{ item.LineNumber}, item.Tenant);
-                            foreach (SuppInvoiceItemsAbachStatementPM itemAbach in suppInvoiceItemsAbachStatementChangeSet)
-                            {
-                                SuppInvoiceItemsAbachStatementPM deletedItemAbach = new SuppInvoiceItemsAbachStatementPM()
-                                {
-                                    InvoiceCounterKey = itemAbach.InvoiceCounterKey,
-                                    DeclarationId = itemAbach.DeclarationId,
-                                     InvoiceItemLineNumber = itemAbach.InvoiceItemLineNumber,
-                                    Tenant = itemAbach.Tenant,
-                                    ChangeSetOp = ChangeSetOperation.Delete,
-                                    IsStatementInd= itemAbach.IsStatementInd,
-                                    SequenceNumeric= itemAbach.SequenceNumeric,
-                                    StatementTypeCode = itemAbach.StatementTypeCode
-                                };
-
-                                deletedItem.DeletedSuppInvoiceItemsAbachStatements.Add(deletedItemAbach);
-                            }
-
-
-                            SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(MyContext);
-                            List<SupplierInvoiceItemsPricePM> supplierInvoiceItemsPriceChangeSet = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(item.DeclarationId, item.CounterKey, new List<int> { item.LineNumber }, item.Tenant);
-                            foreach (SupplierInvoiceItemsPricePM itemPrice in supplierInvoiceItemsPriceChangeSet)
-                            {
-                                SupplierInvoiceItemsPricePM deletedItemPrice = new SupplierInvoiceItemsPricePM()
-                                {
-                                    InvoiceCounterKey = itemPrice.InvoiceCounterKey,
-                                    DeclarationId = itemPrice.DeclarationId,
-                                    InvoiceItemLineNumber = itemPrice.InvoiceItemLineNumber,
-                                    Tenant = itemPrice.Tenant,
-                                    ChangeSetOp = ChangeSetOperation.Delete,
-                                   AdditionalPrice= itemPrice.AdditionalPrice,
-                                   AdditionalPriceTypeCode= itemPrice.AdditionalPriceTypeCode,
-                                   LineNumber= itemPrice.LineNumber
-                                };
-
-                                deletedItem.DeletedSupplierInvoiceItemsPrices.Add(deletedItemPrice);
-                            }
-
                             // Vehicles
 
                             SupplierInvoiceItemVehicleQueryService supplierInvoiceItemVehicleQuery = new SupplierInvoiceItemVehicleQueryService(MyContext);
@@ -369,7 +320,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                     VehicleId = vehicle.VehicleId,
                                     VehicleTypeCode = vehicle.VehicleTypeCode,
                                     ExcludeFromInterface = vehicle.ExcludeFromInterface,
-                                    IdentifierID = vehicle.IdentifierID,                     
+
                                     ChangeSetOp = ChangeSetOperation.Delete,
                                 };
 
@@ -448,46 +399,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             entityPM.SupplierInvoiceModifications.Add(deletedItem);
 
                         }
-
-                        SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(MyContext);
-
-                        List<SupplierInvoicePaymentPM> supplierInvoicePaymentsChangeset = supplierInvoicePaymentQueryService.GetSupplierInvoicePaymentsForInvoice(entityPM.DeclarationId, entityPM.InvoiceCounterKey);//ChangeSet.GetAssociatedChanges(entityPM, d => d.SupplierInvoiceModifications).Cast<SupplierInvoiceModificationPM>().ToList();
-                        foreach (SupplierInvoicePaymentPM item in supplierInvoicePaymentsChangeset)
-                        {
-                            SupplierInvoicePaymentPM deletedItem = new SupplierInvoicePaymentPM()
-                            {
-                                InvoiceCounterKey = item.InvoiceCounterKey,
-                                DeclarationId = item.DeclarationId,
-                                ChangeSetOp = ChangeSetOperation.Delete,
-                                PaymentAmount = item.PaymentAmount,
-                                PaymentTypeCode = item.PaymentTypeCode,
-                                SequenceNumeric = item.SequenceNumeric,
-                                 Tenant = item.Tenant,
-                            };
-                            entityPM.DeletedSupplierInvoicePayments.Add(deletedItem);
-
-                        }
-
-                        SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(MyContext);
-
-                        List<SupplierInvoiceUCRPM> supplierInvoiceUCRsChangeset = supplierInvoiceUCRQueryService.GetSupplierInvoiceUCRsForInvoice(entityPM.DeclarationId, entityPM.InvoiceCounterKey);//ChangeSet.GetAssociatedChanges(entityPM, d => d.SupplierInvoiceModifications).Cast<SupplierInvoiceModificationPM>().ToList();
-                        foreach (SupplierInvoiceUCRPM item in supplierInvoiceUCRsChangeset)
-                        {
-                            SupplierInvoiceUCRPM deletedItem = new SupplierInvoiceUCRPM()
-                            {
-                                InvoiceCounterKey = item.InvoiceCounterKey,
-                                DeclarationId = item.DeclarationId,
-                                ChangeSetOp = ChangeSetOperation.Delete,
-                                 Tenant = item.Tenant,
-                                 AgentChargeID= item.AgentChargeID,
-                                 SequenceNumeric= item.SequenceNumeric,
-                                 SupplierChargeID = item.SupplierChargeID
-                            };
-                            entityPM.DeletedSupplierInvoiceUCRs.Add(deletedItem);
-
-                        }
-
-
                         #endregion
 
                         service.Update(entityPM, true);
@@ -687,7 +598,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
-        public HttpResponseMessage GetDocumentFilingIdForForInvoice(string declarationId, int counterkey, bool isOcr = false)
+        public HttpResponseMessage GetDocumentFilingIdForForInvoice(string declarationId, int counterkey)
         {
             try
             {
@@ -754,17 +665,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     {
                         resultDocumentFilingId = FirstDocument.Id;
                     }
-
-                    if (isOcr)
-                    {
-                        ServiceResponse resultDocIdAndCountOfTickets = new ServiceResponse();
-                        resultDocIdAndCountOfTickets.Result = resultDocumentFilingId;
-                        resultDocIdAndCountOfTickets.Count = ticketsQuery.GetCountOfTicketsByDocFilingId(resultDocumentFilingId, tenant);
-                        return Request.CreateResponse(HttpStatusCode.OK, resultDocIdAndCountOfTickets);
-
-                    }
-
                 }
+
                 
                 #region old code
                 ////
@@ -819,7 +721,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 //        // No document filing related to this ticket
                 //    }
                 //}
-                #endregion   
+                #endregion
                 return Request.CreateResponse(HttpStatusCode.OK, resultDocumentFilingId);
             }
 
@@ -852,137 +754,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage PostSendMultiUpdate(MultiUpdateRequestParams requestParamsData)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                var messagingService = new DCAInUCBMultiUpdate_MsgMessagingService();
-                string RequestInProgressList;
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData, out RequestInProgressList);
-                DataResult result = new DataResult();
-                result.RequestInProgressList = RequestInProgressList;
-                result.Message = sts;
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage PutExportSupplierInviocesFromFileRequest(int tenant, string declarationId, ImageParameter fileUploadParamerter)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
-                {
-                    byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
-                    string decodedString = Encoding.UTF8.GetString(data);
-                    var messagingService = new DCAInUCBCreateExportSupplierInvoicesFromFile_MsgMessagingService();
-                    
-                    var sts = messagingService.CreateCRS(tenant, declarationId, decodedString);
-                   
-                    return Request.CreateResponse(HttpStatusCode.OK, sts);
-                }
-                return Request.CreateResponse(HttpStatusCode.OK, "");
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage PutSupplierInvioceFromFileRequest(int tenant, string clientId, string partnerId, string declarationId,bool ignoreChecks, ImageParameter fileUploadParamerter)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
-                {
-                    byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
-                    string decodedString = Encoding.UTF8.GetString(data);
-
-                    if (!ignoreChecks)
-                    {
-                        List<string> classificationCodesNotValid = GetClassificationCodesNotValid(decodedString, tenant, declarationId);
-                        if (classificationCodesNotValid.Count > 0)
-                        {
-                            var res = "לא נמצא סיווג שמתאים ללקוח בתיק עבור הדגמים: \n";
-                            foreach (var item in classificationCodesNotValid)
-                            {
-                                res += item + "\n";
-                            }
-                            return Request.CreateResponse(HttpStatusCode.OK, res);
-                        }
-                    }
-
-                    var messagingService = new DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService();
-                    //partnerId = "METRO";
-                  
-                    var sts = messagingService.CreateCRS(tenant, clientId, partnerId, declarationId, decodedString);
-                   
-                    return Request.CreateResponse(HttpStatusCode.OK, sts);
-                }
-                return Request.CreateResponse(HttpStatusCode.OK, "");
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        private List<string> GetClassificationCodesNotValid(string decodedString, int tenant, string declarationId)
-        {
-            var classificationCodes = ReadClassificationCodesFromCsvFile(decodedString);
-
-            List<string> classificationCodesNotValid = new List<string>();
-            foreach (var item in classificationCodes)
-            {
-                var context = CustomContext.GetContext(tenant);
-                var amitalContext = AmitalContext.GetContext(tenant);
-                var declarationQueryService = new DeclarationQueryService(context);
-                DeclarationPM declarationPM = declarationQueryService.GetSingle(declarationId, true, false);
-                var re = new CTBCARMODRepository(amitalContext);
-                var classificationCode = re.GetSingle(declarationPM.CustomerCode, item)?.PRAT;
-                if (string.IsNullOrWhiteSpace(classificationCode))
-                {
-                    classificationCodesNotValid.Add(item);
-                }
-            }
-            return classificationCodesNotValid;
-        }
-
-        private List<string> ReadClassificationCodesFromCsvFile(string decodedString)
-        {
-            var lines = decodedString.Split(new string[] { "\n" }, StringSplitOptions.None).ToList();
-            List<string> classificationCodes = new List<string>();
-            for (int i = 1; i < lines.Count; i++)
-            {
-                if (string.IsNullOrWhiteSpace(lines[i])) continue;
-                string[] data = Regex.Split(lines[i], ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-
-                if (string.IsNullOrWhiteSpace(data[7]))
-                {
-                    throw new Exception("ClassificationCode cannot be null");
-                }
-
-                if (!classificationCodes.Contains(data[7]))
-                    classificationCodes.Add(data[7]);
-            }
-            return classificationCodes;
-        }
-
 
 
         //public HttpResponseMessage UpdateInvoiceVendorCommision(SupplierInvoicePM invoicePM)// string declarationId, int counterKey,string invoiceCurrency, decimal invoiceAmount, string vendorId, string customerId)
@@ -1050,107 +821,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
         //    }
         //}
-        public HttpResponseMessage PutUpdateSupplierInvoiceModifications([FromBody] SupplierInvoicePM[] invoicePMs)
-        {
-            try
-            {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.SupplierInvoice", "UPDATE", authToken.Tenant);
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                SupplierInvoiceUpdateService service = new SupplierInvoiceUpdateService(customContext, new Dictionary<string, IContext>(), authToken.Tenant);
 
-                foreach (var invoicePM in invoicePMs)
-                {
-                    SecurityUtility.AuthenticationOnEntityTenant("SupplierInvoice", invoicePM.Tenant, authToken.Tenant);
-                    //ICustomContext MyContext = CustomContext.GetContext(invoicePM.Tenant);
-                    //service.InitializeEntityPM(invoicePM);
-                    invoicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    service.Update(invoicePM, true);
-                }
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                return Request.CreateResponse(HttpStatusCode.OK, "");
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
-
-
-        public HttpResponseMessage PutMultiUpdateOCR( [FromBody] PutMultiUpdateOCRRequest requestParams)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                SupplierInvoiceQueryService supplierInvoiceQuery = new SupplierInvoiceQueryService(customContext);
-                var ans = supplierInvoiceQuery.UpdateSupplierInvoiceByOcrDefaults(requestParams?.DeclarationId, requestParams.SupplierInvoiceList, requestParams.SupplierInvioceItemCertificats, requestParams.SupplierInvioceExportDefault,tenant);
-                //   var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
-                return Request.CreateResponse(HttpStatusCode.OK, ans);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage DeletedSupplierInvoiceItemsConDeclars(string declarationId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
-
-
-
-                        ICustomContext MyContext = CustomContext.GetContext(tenant);
-
-                        var mySupplierInvoiceItemsConDeclarUpdateService = new SupplierInvoiceItemsConDeclarUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                        mySupplierInvoiceItemsConDeclarUpdateService.FastDeleteComposition(new DeclarationKeys() { Id = declarationId });
-
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
-        public class PutMultiUpdateOCRRequest
-        {
-            public SupplierInvioceItemCertificatPM[] SupplierInvioceItemCertificats { get; set; }
-            public SupplierInvioceExportDefaultPM SupplierInvioceExportDefault { get; set; }
-            public string DeclarationId { get; set; }
-            public string SupplierInvoiceList { get; set; }
-
-
-
-        }
 
     }
 }

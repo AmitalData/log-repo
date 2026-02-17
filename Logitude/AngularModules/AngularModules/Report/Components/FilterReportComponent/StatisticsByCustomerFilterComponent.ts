@@ -7,9 +7,8 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {AppTool} from '../../../Infrastructure/Tools';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({
-    
+    moduleId: module.id,
     selector: 'StatisticsByCustomerFilterComponent',
     templateUrl: './StatisticsByCustomerFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -54,7 +53,7 @@ export class StatisticsByCustomerFilterComponent extends BaseComponent {
         this.FromDate = this.SetDate(Year, month - 1, 1);
         this.ToDate = this.SetDate(Year, month, daysofmonth);
 
-        //this.RunReport(false);
+        this.RunReport(false);
     }
 
     public IsByCreateDate: boolean = true;
@@ -107,73 +106,8 @@ export class StatisticsByCustomerFilterComponent extends BaseComponent {
 
         }
     }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
 
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);                                      
-                    break;
-                case "ToDate":
-                    this.ToDate=new Date(queryFilterItem.FieldValue);
-                    break;
-                case "IsByCreateDate":{
-                    this.IsByCreateDate = queryFilterItem.FieldValue;
-                    this.IsOperationalDate = !queryFilterItem.FieldValue;
-
-                    break;                          
-
-                }
-                case "CustomerId":
-                        this.CustomerId = queryFilterItem.FieldValue;
-                        break; 
-                case "Direction":
-                        this.SelectedDirectionFilter = queryFilterItem.FieldValue;
-                        break;
-                case "TransportMode":
-                        this.SelectedTransportFilter = queryFilterItem.FieldValue;
-                        break;
-                        
-                case "ShipmentLevel":
-                        this.LevelCodeSelectedValue = queryFilterItem.FieldValue;
-                        break;
-                case "Currency":
-                        var currency = queryFilterItem.FieldValue.split(",");
-                        if (currency[1] == "profit") {
-                            this.SelectedCurrency = this.ProfitCurrencyCode;
-                        }
-                        else {
-                            this.SelectedCurrency = this.LocalCurrencyCode;
-                        }
-                        break;
-                case "IncludeOperationalClosed":
-                        this.IncludeClosed = queryFilterItem.FieldValue;
-                        break;
-            }
-    
-        }
-    }
-    ValidateSelectedFilters() {
+    RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
@@ -186,18 +120,91 @@ export class StatisticsByCustomerFilterComponent extends BaseComponent {
         if (this.FromDate > this.ToDate) {
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
         }
-        return this.ValidationErrorsList.length == 0;
-    }
 
-    RunReport(isloading: boolean) {
-      
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
 
-        if (this.ValidateSelectedFilters()) {
-           
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CustomerId";
+            this.queryFilterItem.FieldValue = this.CustomerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IsByCreateDate";
+            this.queryFilterItem.FieldValue = this.IsByCreateDate;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            if (this.SelectedDirectionFilter != "All") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "Direction";
+                this.queryFilterItem.FieldValue = this.SelectedDirectionFilter;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (this.SelectedTransportFilter != "All") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "TransportMode";
+                this.queryFilterItem.FieldValue = this.SelectedTransportFilter;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (this.LevelCodeSelectedValue != "All") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ShipmentLevel";
+                this.queryFilterItem.FieldValue = this.LevelCodeSelectedValue;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            var currency: string;
+            if (this.SelectedCurrency == this.LocalCurrencyCode) {
+                currency = this.LocalCurrencyCode + ",local";
+            }
+
+            else {
+                currency = this.ProfitCurrencyCode + ",profit";
+            }
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "Currency";
+            this.queryFilterItem.FieldValue = currency;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IncludeOperationalClosed";
+            this.queryFilterItem.FieldValue = this.IncludeClosed;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -214,88 +221,7 @@ export class StatisticsByCustomerFilterComponent extends BaseComponent {
             this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
         }
     }
-    GetQueryFilterItems() {
-        this.queryFilterItems = new Array<QueryFilterItem>();
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "CustomerId";
-        this.queryFilterItem.FieldValue = this.CustomerId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IsByCreateDate";
-        this.queryFilterItem.FieldValue = this.IsByCreateDate;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        if (this.SelectedDirectionFilter != "All") {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "Direction";
-            this.queryFilterItem.FieldValue = this.SelectedDirectionFilter;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-
-        if (this.SelectedTransportFilter != "All") {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "TransportMode";
-            this.queryFilterItem.FieldValue = this.SelectedTransportFilter;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-
-        if (this.LevelCodeSelectedValue != "All") {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ShipmentLevel";
-            this.queryFilterItem.FieldValue = this.LevelCodeSelectedValue;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-
-        var currency: string;
-        if (this.SelectedCurrency == this.LocalCurrencyCode) {
-            currency = this.LocalCurrencyCode + ",local";
-        }
-
-        else {
-            currency = this.ProfitCurrencyCode + ",profit";
-        }
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "Currency";
-        this.queryFilterItem.FieldValue = currency;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IncludeOperationalClosed";
-        this.queryFilterItem.FieldValue = this.IncludeClosed;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-        return  this.queryFilterItems;
-    }
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }

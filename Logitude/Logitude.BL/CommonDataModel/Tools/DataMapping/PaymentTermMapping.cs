@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -32,10 +32,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName;
             poco.IsManuallySet = entityPM.IsManuallySet;
             poco.ExternalId = entityPM.ExternalId;
-            poco.EndOfMonth = entityPM.EndOfMonth;
-            poco.NumberOfMonths = entityPM.NumberOfMonths;
+            poco.CurrentMonth = entityPM.CurrentMonth;
             poco.FromDateTypeCode = entityPM.FromDateTypeCode;
-            poco.Code = entityPM.Code;
         }
     }
 }

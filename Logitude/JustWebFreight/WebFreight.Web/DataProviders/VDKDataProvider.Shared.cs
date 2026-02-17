@@ -40,6 +40,10 @@ namespace WebFreight.Web.DataProviders
         public int? Pieces { get; set; }
         public string CommodityNumber { get; set; }
         public string ConsigneeAddress { get; set; }
-        public DateTime? ActualETA { get; set; }
+
+
     }
+
+
+
 }

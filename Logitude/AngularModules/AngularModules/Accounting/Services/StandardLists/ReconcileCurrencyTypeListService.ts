@@ -6,9 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -20,21 +19,24 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class ReconcileCurrencyTypeListService {
-	private _http: HttpClient;
+	private _http: Http;
     private _apiUrl: string;   
 	public static CachedData: Array<ReconcileCurrencyTypeList> = [];
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/reconcilecurrencytypeviews';  
     }
 
     getSingle(id: string) {
 
-        
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var list = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var list = response.json();
                     
                 var entity: ReconcileCurrencyTypeList;
 				if(list)
@@ -46,18 +48,22 @@ export class ReconcileCurrencyTypeListService {
                 serviceResponse.Result = entity;  
 
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));;
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
 
     getAll() {
- 
-       return defer(() => {
-           return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-              var allLists = response;
+	   var authHeader = new Headers();
+       authHeader.append('Token', SessionInfo.Token);
+       return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getall', {
+                headers: authHeader
+            }).map(response => {
+
+              var allLists = response.json();
               var _mappedListsArray: Array< ReconcileCurrencyTypeList> = [];
 		      if(allLists)
 			  {
@@ -74,7 +80,7 @@ export class ReconcileCurrencyTypeListService {
                 serviceResponse.Result = _mappedListsArray;  
 
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));;
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -109,15 +115,19 @@ export class ReconcileCurrencyTypeListService {
         if (addtionalFiltersValues) {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
- 
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return defer(() => {
-           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+	   return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.body;
+                serviceResponse = response.json();
                 var _mappedListsArray: Array< ReconcileCurrencyTypeList> = [];
 				if(serviceResponse.Result)
 				{
@@ -132,7 +142,7 @@ export class ReconcileCurrencyTypeListService {
 
                 serviceResponse.Result = _mappedListsArray;                  
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));;
+            }).catch(ServiceHelper.HandleServiceError);
         });        
     }
 
@@ -147,18 +157,17 @@ export class ReconcileCurrencyTypeListService {
 
         if (ReconcileCurrencyTypeListService.CachedData.length > 0) {
 
-            return defer(() => {
+            return Observable.defer(() => {
 
                 var filteredData = ReconcileCurrencyTypeListService.CachedData.filter(a => a.Id === id)[0];
 				serviceResponse.Result = filteredData; 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             });
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("ReconcileCurrencyType").pipe(
-                map((cachedJson:any) => {
+            return CachedDataManager.GetClosedTableData("ReconcileCurrencyType").map(cachedJson=> {
 
                 var _mappedListsArray: Array<ReconcileCurrencyTypeList> = [];
                 if (cachedJson) {
@@ -177,7 +186,7 @@ export class ReconcileCurrencyTypeListService {
 				serviceResponse.Result = filteredData; 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError)); 
+            }).catch(ServiceHelper.HandleServiceError);
 
         }
 
@@ -194,18 +203,17 @@ export class ReconcileCurrencyTypeListService {
 
         if (ReconcileCurrencyTypeListService.CachedData.length > 0) {
 
-            return defer(() => {
+            return Observable.defer(() => {
 
                 var filteredData = InfraGenericFilter.GetFilteredArray(ReconcileCurrencyTypeListService.CachedData, filters);
 				serviceResponse.Result = filteredData; 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             });
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("ReconcileCurrencyType").pipe(
-                map((cachedJson:any) => {
+            return CachedDataManager.GetClosedTableData("ReconcileCurrencyType").map(cachedJson=> {
 
                 var _mappedListsArray: Array<ReconcileCurrencyTypeList> = [];
                 if (cachedJson) {
@@ -224,7 +232,7 @@ export class ReconcileCurrencyTypeListService {
 				serviceResponse.Result = filteredData; 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError)); 
+            }).catch(ServiceHelper.HandleServiceError);
 
         }		 
     }

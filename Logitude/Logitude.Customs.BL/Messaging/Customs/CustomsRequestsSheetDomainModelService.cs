@@ -1,29 +1,22 @@
 ﻿using Logitude.AmitalMessaging.Utils;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Customs.BL.CloseTables;
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
-using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
-using Logitude.Customs.Data;
-using Logitude.Customs.Data.EntityMapping;
-using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.ClosedTable;
 using Logitude.Customs.Def.EntityPMs;
-using Logitude.Customs.Def.Messaging.Customs;
-using Logitude.CustomsMessaging.Common.Gen;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.Data;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.ExternalServices;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
 using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -33,7 +26,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -41,10 +33,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
-using Unifreight.BL.EntityQueryServices;
-using Logitude.Customs.Data.Repsitories;
-
-
+using System.Xml;
+using System.Xml.Serialization;
+using Logitude.Customs.Def.Messaging.Customs;
 
 //using Simplog.Infrastructure.SimplogUtilities;
 
@@ -119,87 +110,80 @@ namespace Logitude.Customs.BL.Messaging.Customs
         CustomsRequestsSheetDomainModelService(TRequestParams requestParams, RequestSheetParam reqSheetDetails, bool isInteractive)
             : this(requestParams.Tenant)//,requestParams.InterfaceTypeCode )
         {
-			DateTime stopLogAt = DateTime.MinValue;
-
-			string UntilDateyyyyMMdd = Environment.GetEnvironmentVariable("20240205T155633.LogUntilDateyyyyMMdd");
-
-			if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
-			{
-				stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
-													"yyyyMMdd",
-													CultureInfo.InvariantCulture,
-													DateTimeStyles.None);
-			}
-			// TODO: Complete member initialization
-			var sw = Stopwatch.StartNew();
+            // TODO: Complete member initialization
+            var sw = Stopwatch.StartNew();
             try
             {
                 this.IsInteractive = isInteractive;
                 CheckRequestParamsBase(requestParams);
-                SuppressSendIIGMessages(requestParams);
 
                 CheckMessageInContainer(requestParams.InterfaceTypeCode, requestParams.MainInterfaceCode);
-                
-                if (!requestParams.ignoreConcurrentKiller) ConcurrentKiller(requestParams, reqSheetDetails);//Leave the campground cleaner than the way you found it.” found it.
-
-                this.RequestParams = requestParams;            
-                InitMessageDefinition();
-                ThrowIfInterfaceNotActiveOrBelongOurCompanyType();
-
-                SendRequestVIA requestVIA = _RequestParams.RequestVIA;
-
-                bool avoidSign = false;
-                bool courierForceSign = Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("CFS", requestParams.Tenant);//'Courier Force Sign
-                if (CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType == "B"//Courier 
-                    && courierForceSign
-                    )
+                if (reqSheetDetails != null)
                 {
-                    var courierForceSignService = new CourierForceSignService();
-                    courierForceSignService.ApplyForceSign(ref requestParams);
-                }
-                else
-                {
-
-                    
-                    avoidSign = AvoidSign(_RequestParams);
-                    if (avoidSign)
+                    ///Task 40564: טיפול בשליחת בקשות בו זמנית CALL#311773
+                    bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                    if (tryConcurrentKiller) 
                     {
-                        _RequestParams.AvoidSign = true;
-                        if (_RequestParams.ForcePersonalSign)
+                        if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
                         {
-                            _RequestParams.ForcePersonalSign = false;
+
+                            string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
+                            var concurrentKiller = new ConcurrentKiller();
+                            concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
+                            bool ReleaseConcurrentKeyOn1stStep = true;
+                            if (!ReleaseConcurrentKeyOn1stStep)
+                            {
+                                Transaction.Current.TransactionCompleted +=
+                                    (sender, e) =>
+                                    {
+                                        if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
+                                        {
+                                            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
+                                        }
+                                    };
+                            }
                         }
                     }
-
-                }
-
-                if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
-                {
-                    var detail = (new SincroTestCaseDetails()).GetAllSincroTestCaseDetails()
-                        .First(r => r.Code == _RequestParams.TestCase.Code);
-                    if (detail.AvoidSign)
+                    var listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
+                        requestParams.Tenant, requestParams.InterfaceTypeCode,
+                    reqSheetDetails.ObjectTableId1, reqSheetDetails.EntityId1,
+                    reqSheetDetails.ObjectTableId2, reqSheetDetails.EntityId2,
+                    reqSheetDetails.CustomFileNo);
+                    if (listRequestInProgress != null)
                     {
-                        avoidSign = true;
+                        if (listRequestInProgress.Count > 0)
+                        {
+                            var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
+                            var text = //TranslateTextsClass.GetTranslation("Customs.General.RequestInProgress", "", null, null, this._Tenant);
+                                TranslateTextsClass.Translate("Customs.General.RequestInProgress", this._Tenant);
+                            text = String.Format(text, RequestInProgressInterfaceTypeName);
+                            NoteClientNoRequestSheet4U(requestParams, text);
+
+
+                            var ex = new CustomsRequestsSheetDomainModelServiceException(
+                            CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
+                                text, null);
+                            ex.SuppressExceptionTostring = true;
+                            throw ex;
+                        }
                     }
-
-
                 }
-
-                MessageController
-                    .BuildRealSteps(InterfaceTenantDefinitionManagement, ref requestVIA, _RequestParams.ForcePersonalSign, avoidSign, requestParams.ForceCompanySign);
+                this.RequestParams = requestParams;
+                InitMessageDefinition();
+                SendRequestVIA requestVIA = _RequestParams.RequestVIA;
+                MessageController.BuildRealSteps(InterfaceTenantDefinitionManagement, ref requestVIA, _RequestParams.ForcePersonalSign);
                 RequestParams.RequestVIA = requestVIA;
 
 
                 ThrowIfNoAvailablePersonalSignServer();
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetService CreateNew():interfaceTypeCode  " +
                     requestParams.InterfaceTypeCode);
 
 
                     this.CreateNewComm();
-                    this.CreateNewRequestSheet(requestParams);
+                    this.CreateNewRequestSheet();
                     this.BuildSteps();
 
                     requestParams.CustomsRequestsSheetId = this._MyCustomsRequestsSheetPM.Id;
@@ -217,7 +201,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
                     scope.Complete();
 
-
                 }
                 RequestSheetContext.Current.SetRSContext(requestParams);
 
@@ -227,18 +210,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 throw;
             }
-            catch (CourierForceSignException e)
-            {
-				NoteClientNoRequestSheet4U(requestParams, e.Message);
-                throw new
-                    CustomsRequestsSheetDomainModelServiceException(
-                    CustomsRequestsSheetDomainModelServiceException.WhereEnum.CourierForceSignException, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
-                     e.Message, e);
-            }
             catch (Exception e)
             {
-
-				NoteClientNoRequestSheet4U(requestParams, e.ToString());
+                NoteClientNoRequestSheet4U(requestParams, e.ToString());
                 throw new
                     CustomsRequestsSheetDomainModelServiceException(
                     CustomsRequestsSheetDomainModelServiceException.WhereEnum.CustomsRequestsSheetServiceException, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
@@ -251,294 +225,26 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
         }
 
-        private void ThrowIfInterfaceNotActiveOrBelongOurCompanyType()
-        {
-            bool throwIt = false;
-            string errorText = "";
-            if (!_InterfaceTenantDefinitionManagement.OverrideActive)
-            {
-                errorText = "!_InterfaceTenantDefinitionManagement.Active";
-                throwIt = true;
-            }
-            if (!_InterfaceTenantDefinitionManagement.InterfaceManagement.Active)
-            {
-                errorText = "!_InterfaceTenantDefinitionManagement.InterfaceManagement.Active";
-                throwIt = true;
-            }
-
-            if (!String.IsNullOrWhiteSpace(_InterfaceTenantDefinitionManagement.InterfaceManagement.InterfaceType))
-            {
-
-
-
-                var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
-                var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
-                if (customsSettingPM.CompanyType != _InterfaceTenantDefinitionManagement.InterfaceManagement.InterfaceType)
-                {
-                    throwIt = true;
-                    errorText = "customsSettingPM.CompanyType != _InterfaceTenantDefinitionManagement.InterfaceManagement.InterfaceType";
-                }
-            }
-            if (!throwIt)
-            {
-                return;
-            }
-            NoteClientNoRequestSheet4U(RequestParams, errorText);
-            var ex = new CustomsRequestsSheetDomainModelServiceException(
-               CustomsRequestsSheetDomainModelServiceException.WhereEnum.InterfaceNotActiveOrBelongOurCompanyType, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
-                   errorText, null);
-            ex.SuppressExceptionTostring = true;
-            throw ex;
-        }
-
-        private void ConcurrentKiller(TRequestParams requestParams, RequestSheetParam reqSheetDetails)
-        {
-            if (reqSheetDetails != null)
-            {
-                ///Task 40564: טיפול בשליחת בקשות בו זמנית CALL#311773
-                bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
-                if (tryConcurrentKiller)
-                {
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
-                    {
-                        if (!String.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
-                            !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId)
-
-                              &&
-                        // eitan: בקשת מכס אחת פר ישות בו זמנית -לא תתור במקביל 
-                        // itzik : CourierMaster מלבד בישות 
-                        // בשלב ראשון ב CUSTOMS יעבור ל PROD בהמשך 
-                        "Customs.CourierMaster" != ObjectTableRepository.GetSingleObjectTableById(requestParams.LoggingObjectTableId, requestParams.Tenant).Name
-                            )
-                        {
-                            string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
-                            LogMessagingUtil.Instance.AppendLine("lock in CustomsRequestsSheetDomainModelService.ConcurrentKiller():299 key: " + CRSKey);
-                            var concurrentKiller = new ConcurrentKiller();
-                            concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
-                            bool ReleaseConcurrentKeyOn1stStep = true;
-                            if (!ReleaseConcurrentKeyOn1stStep)
-                            {
-                                Transaction.Current.TransactionCompleted +=
-                                    (sender, e) =>
-                                    {
-                                        if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
-                                        {
-                                            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
-                                        }
-                                    };
-                            }
-
-                            string sAvoidInProgressSameInterfaceCodePerEntity = ConfigurationManager.AppSettings["20200805HD353811.AvoidInProgressSameInterfaceCodePerEntity"];
-                            if (!String.IsNullOrWhiteSpace(sAvoidInProgressSameInterfaceCodePerEntity))
-                            {
-                                AvoidInProgressSameInterfaceCodePerEntity(requestParams, reqSheetDetails);
-                            }
-
-                        }
-                    }
-                }
-                var listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
-                    requestParams.Tenant, requestParams.InterfaceTypeCode,
-                reqSheetDetails.ObjectTableId1, reqSheetDetails.EntityId1,
-                reqSheetDetails.ObjectTableId2, reqSheetDetails.EntityId2,
-                reqSheetDetails.CustomFileNo);
-                if (listRequestInProgress != null)
-                {
-                    if (requestParams.SplitterModeLetCreateMyType)
-                    {
-                        listRequestInProgress = listRequestInProgress.Where(r => r.InterfaceTypeCode != requestParams.InterfaceTypeCode).ToList();
-                    }
-
-                    if (listRequestInProgress.Count > 0)
-                    {
-                        if(listRequestInProgress.Any(r => r.InterfaceTypeCode == "DCAOCR") && requestParams.FutureSendDateTime.HasValue)
-                        {
-                            return;
-                        }
-                        var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
-                        var RequestInProgressInterfaceId = string.Join(",", listRequestInProgress.Select(request => request.Id.ToString()));
-
-                        ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName, RequestInProgressInterfaceId);
-                        return;
-                    }
-                }
-            }
-        }
-
-        private void AvoidInProgressSameInterfaceCodePerEntity(TRequestParams requestParams, RequestSheetParam reqSheetDetails)
-        {
-            var listSameInterfaceCodePerEntity_InProgress = _CustomsRequestsSheetQueryService.SameInterfaceCodePerEntity_InProgress(
-                                    requestParams.Tenant, requestParams.InterfaceTypeCode,
-                                reqSheetDetails.ObjectTableId1, reqSheetDetails.EntityId1,
-                                reqSheetDetails.CustomFileNo);
-            if (listSameInterfaceCodePerEntity_InProgress.Count > 0)
-            {
-                var RequestInProgressInterfaceTypeName = listSameInterfaceCodePerEntity_InProgress.First().InterfaceTypeName;
-                var RequestInProgressInterfaceId = listSameInterfaceCodePerEntity_InProgress.All(a => a.Id != null).ToString();
-
-                ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName, RequestInProgressInterfaceId);
-            }
-        }
-
-        private void ThrowRequestInProgress(TRequestParams requestParams, string RequestInProgressInterfaceTypeName, string RequestInProgressInterfaceId="")
-        {
-            var text = //TranslateTextsClass.GetTranslation("Customs.General.RequestInProgress", "", null, null, this._Tenant);
-                TranslateTextsClass.Translate("Customs.General.RequestInProgress", this._Tenant);
-            text = String.Format(text, RequestInProgressInterfaceTypeName);
-            NoteClientNoRequestSheet4U(requestParams, text);
-             var ex = new CustomsRequestsSheetDomainModelServiceException(
-            CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
-                text,
-                null);
-            ex.SuppressExceptionTostring = true;
-            ex.CustomsRequestsSheetId = RequestInProgressInterfaceId;
-            throw ex;
-        }
-
-        private bool AvoidSign(TRequestParams requestParams)
-        {
-            try
-            {
-                //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('FSN', 'Force Sign', 'Force Sign')
-                //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE)
-                //VALUES('FSN_3', '3', TO_TIMESTAMP('2022-06-01 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-06-01 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'FSN', '3', '0', 'FSN')
-                //if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", requestParams.Tenant))
-                //{
-                //    return false;
-                //}
-                FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
-
-
-                //SHOULD BE - 
-                //var sw = Stopwatch.StartNew();
-                //bool exist = ProxyUtil.SecurityUtilityCheckFeature("Customs.Declaration", "EscapeSign", requestParams.Tenant);
-                //Debug.WriteLine($"SecurityUtilityCheckFeature({sw.Elapsed})");
-                //if (exist)
-                //{
-                //    return true;
-                //}
-
-                //var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
-                //var feature = features.Features.FirstOrDefault(x => x.Code == "EscapeSign");
-                //if (feature != null)
-                //{
-                //    return true;
-                //}
-                
-                if (requestParams.MainInterfaceCode == "2715" //D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService
-                &&
-                String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId) &&
-                CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).CompanyType == "B")//Courier
-                {
-                    return true;//in courier CompanyType -AvoidSign
-                }
-                if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
-                {
-                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_Tenant);
-
-                    string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON", _Tenant);
-                    decimal defaultAmount = 0;
-                    var boolvar = (decimal.TryParse(defValue, out defaultAmount));
-                    if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
-                    {
-
-                   
-                        {
-                            var declarationQueryService = new DeclarationQueryService(_Tenant);
-                            var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
-
-                            if (declaration != null && declaration.IsCourierDeclaration)
-                            {
-                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_Tenant);
-                                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declaration.Id, true, false);
-                                if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
-                                {
-                                 }
-                                else
-                                {
-                                     LogMessagingUtil.Instance.AppendLine($"{defaultAmount} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD.GetValueOrDefault()} קטן מהגדרת המינימום");
-                                    return true;
-                                }
-                            }
-
-
-
-                        }
-
-                        return false;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-                return false;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
-        }
-
+        
         private static void NoteClientNoRequestSheet4U(TRequestParams requestParams, string text)
         {
             Simplog.Server.Infrastructure.Helpers.CacheManager.CacheWrapper
                 .Insert("Customs.General.RequestInProgressNoteClient," + requestParams.PBId, text);
         }
-      
+
         public string GetAvailableSignServer(out string personId, out SignQueueByType SignatureBy, out string noAvailableSignServerErrorText,
-            string OverrideSignStepName = null, string hsmStationContext = null)
+            string OverrideSignStepName = null)
         {
-            string availableSignServer = null;
+            string availableSignServer = "";
             noAvailableSignServerErrorText = personId = "";
 
             SignatureBy = //SignQueue.GetSignatureBy(_RequestParams.InterfaceTypeCode, _RequestParams.ForcePersonalSign);
                     this.CalcSignByFromStep(OverrideSignStepName);
             personId = SignQueue.Instance.GetUserPersonID(_RequestParams.LoggingUserId, _RequestParams.Tenant);
 
-            SignMethodByQueueEnum signMethodByQueueEnum = SignMethodByQueueEnum.None;
-            string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(_RequestParams.Tenant);
-            var dbSignQueueService = new SignQueueHybridDbService();
+            availableSignServer = SignQueue.Instance.
+                GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
 
-            var isExport = SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant, _RequestParams.DeclarationDirection);
-            var IsCloud = SignQueueHybridDbService.IsCloud(_RequestParams.Tenant);
-            var signQueueHSMService = new SignQueueHSMService();
-            
-            if (string.IsNullOrWhiteSpace(availableSignServer) &&
-                 (isExport ||
-                signQueueHSMService.IsHSMSign_IsOn(_RequestParams.Tenant, hsmStationContext)|| IsCloud) )
- 
-            {
-                (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
-                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId, IsCloud, hsmStationContext:hsmStationContext);
-                if (availableSignServer != null)
-                {
-                    if (signMethodByQueueEnum == SignMethodByQueueEnum.HybridDbSignQueue)
-                    {
-                        RequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                        RequestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
-                    }
-                    RequestParams.SignMethodByQueue = signMethodByQueueEnum.ToString();//"HybridDbSignQueue";
-                    RequestParams.SignByPersonalId = SignCertificateClass.GetPersonID(availableSignServer);
-                    RequestParams.SignQueueByCompanyOrPersonal = SignatureBy.ToString();
-                }
-
-
-
-            }
-            if (string.IsNullOrWhiteSpace(availableSignServer))
-            {
-                availableSignServer = SignQueue.Instance.
-                    GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
-
-                RequestParams.SignMethodByQueue = SignMethodByQueueEnum.MemorySignQueue.ToString();//"MemorySignQueue";
-
-            }
             if (string.IsNullOrWhiteSpace(availableSignServer))
             {
                 noAvailableSignServerErrorText = GetNoAvailableSignServerErrorText(personId, SignatureBy, RequestParams.InterfaceTypeCode);
@@ -574,8 +280,11 @@ namespace Logitude.Customs.BL.Messaging.Customs
         }
         void ThrowIfNoAvailablePersonalSignServer()
         {
-            var customsSettingsM = CustomsSettingQueryService.GetSettingByTenant(_RequestParams.Tenant);
-
+            //if (!IsInteractive)
+            //{
+            //    AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
+            //    return;
+            //}
             if (!SignQueue.Instance.IsPasiveSignMode())
             {
                 return;
@@ -584,30 +293,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 return;
             }
-            if (RequestParams.SignMethodByQueue == SignMethodByQueueEnum.HSMSignQueue.ToString()
-                &&
-                !string.IsNullOrWhiteSpace(RequestParams.SignByPersonalId)
-                )
-            {
-                return;//already checked !
-            }
-
             string personId = ""; string noAvailableSignServerErrorText = "";
             SignQueueByType signatureBy = SignQueueByType.None;
 
 
             var availableSignServer = GetAvailableSignServer(out personId, out signatureBy, out noAvailableSignServerErrorText,
-                MessageController.SignStepName, _RequestParams.HsmStationContext);
+                MessageController.SignStepName);
 
             switch (signatureBy)
             {
 
                 case SignQueueByType.SignQueueByPersonId:
-                    if (RequestParams.RequestVIA != SendRequestVIA.WebServiceInteractive && customsSettingsM?.CompanyType=="B")
-                    {
-                        //no need to check if have 
-                        return;
-                    }
                     break;
                 case SignQueueByType.None:
                 case SignQueueByType.SignQueueByCustomsAgentId:
@@ -767,10 +463,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
 
-        CustomsRequestsSheetDomainModelService(string customsRequestsSheetId, int tenant, OverrideControllerModel debugModel = null,string parentId=null)
+        CustomsRequestsSheetDomainModelService(string customsRequestsSheetId, int tenant, OverrideControllerModel debugModel = null)
             : this(tenant, debugModel)//,requestParams.InterfaceTypeCode )
         {
-            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("Seed1  ");
 
             try
             {
@@ -785,18 +480,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 if (MyCustomsRequestsSheetPM == null)
                 {
                     throw new Exception("Not found customsRequestsSheetId =" + customsRequestsSheetId);
-                }
-                else
-                {
-                    CustomsRequestsSheet currCustomsRequestsSheet = null;
-                  
-                        var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(tenant);
-                        currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(parentId, tenant);
-                    if (currCustomsRequestsSheet != null)
-                    {
-                        MyCustomsRequestsSheetPM.TenantPriority = currCustomsRequestsSheet.TenantPriority;
-                    }
-                    
                 }
                 if (MyCustomsRequestsSheetPM.RequestStatusEnum == SheetStatusEnum.Analyzed)
                 {
@@ -880,7 +563,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             out CustomsRequestsSheetDomainModelService<TRequestParams> customsRequestsSheetService,
             OverrideControllerModel debugModel = null,
             bool DcaReceivedCustomResponseCorrelation = false,
-            RequestSheetParam reqSheetDetails = null, string parentId = null)
+            RequestSheetParam reqSheetDetails = null)
         /*
 
 select * 
@@ -896,7 +579,6 @@ CommunicationLogSteps.CommunicationLogId= CommunicationLogs.id
             customsRequestsSheetService = null;
             try
             {
-                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("Seed2");
 
                 Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetService Retrive():customsRequestsSheetId  " + customsRequestsSheetId);
 
@@ -911,7 +593,7 @@ CommunicationLogSteps.CommunicationLogId= CommunicationLogs.id
                     false //true
                     );
                 if (customsRequestsSheetService.MyCustomsRequestsSheetPM != null)
-                {                   
+                {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Append("Is DCA Callback ???found customsRequestsSheetService.MyCustomsRequestsSheetPM");
                     if (customsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant != tenant)
                     {
@@ -972,7 +654,6 @@ After that Remove file  from DCA  .. ");
                 {
                     if (defaultRequestParamsFromCustomsResponse != null)
                     {
-                        defaultRequestParamsFromCustomsResponse.ParentId = parentId;
                         customsRequestsSheetService.Dispose();
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCA Recived - not callback  ");
                         //var reqSheetDetials = CustomsRequestsSheetService<TRequestParams>.GetSheetDetailsFromRequestParam(defaultRequestParamsFromCustomsResponse);
@@ -987,18 +668,9 @@ After that Remove file  from DCA  .. ");
                 {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCA Return - Callback  ");
                 }
-                customsRequestsSheetService = new CustomsRequestsSheetDomainModelService<TRequestParams>(customsRequestsSheetId, tenant, debugModel,parentId);
+                customsRequestsSheetService = new CustomsRequestsSheetDomainModelService<TRequestParams>(customsRequestsSheetId, tenant, debugModel);
                 Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("retieve success CustomsRequestsSheetService:" + customsRequestsSheetService.MyCustomsRequestsSheetPM.Id);
-                if(parentId != null&& customsRequestsSheetService?.MyCustomsRequestsSheetPM?.InterfaceTypeCode=="2715"&& customsRequestsSheetService?.MyCustomsRequestsSheetPM?.TenantPriority>0)
-                {
-                    ICustomContext _CustomContext = CustomContext.GetContext(tenant);
 
-                    CustomsRequestsSheetUpdateService _CustomsRequestsSheetUpdateService= new CustomsRequestsSheetUpdateService(_CustomContext, new Dictionary<string, IContext>(), tenant);
-                    customsRequestsSheetService.MyCustomsRequestsSheetPM.ChangeSetOp = ChangeSetOperation.Update;
-                    _CustomsRequestsSheetUpdateService.Update(customsRequestsSheetService.MyCustomsRequestsSheetPM, true);
-                }
-              
-              
 
             }
             catch (CustomsRequestsSheetDomainModelServiceException)
@@ -1041,7 +713,7 @@ After that Remove file  from DCA  .. ");
             if (string.IsNullOrWhiteSpace(requestParams.LoggingUserId))
             {
                 throw new Exception("LoggingUserId is must");
-            }         
+            }
             if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))
             {
                 var code = requestParams.MainInterfaceCode ?? "";
@@ -1105,89 +777,20 @@ After that Remove file  from DCA  .. ");
             }
         }
 
-        private static void SuppressSendIIGMessages(RequestParamsBase requestParams)
-        {
-            if (                
-                requestParams.RequestVIA == SendRequestVIA.DCABatch &&        
-                !String.IsNullOrEmpty(requestParams.DCAFileName)        
-                )
-            {
-                return;
-            }
-            var customsSettingsM = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-            if (
-                customsSettingsM.SuppressIIGMessageFromDate.HasValue &&
-                customsSettingsM.SuppressIIGMessageToDate.HasValue
-                )
-            {
-                if (
-                    customsSettingsM.SuppressIIGMessageFromDate <= DateTime.Now && 
-                    DateTime.Now < customsSettingsM.SuppressIIGMessageToDate
-                    )
-                {
-
-
-                    if (customsSettingsM.CompanyType == "B")
-                    { //Courier
-                        if (requestParams.FutureSendDateTime.HasValue)
-                        {
-                            if (requestParams.FutureSendDateTime <= customsSettingsM.SuppressIIGMessageToDate)
-                            {
-                                requestParams.FutureSendDateTime = customsSettingsM.SuppressIIGMessageToDate;
-                            }
-                        }
-                        else
-                        {
-                            requestParams.FutureSendDateTime = customsSettingsM.SuppressIIGMessageToDate;
-                        }
-                        switch (requestParams.RequestVIA)
-                        {
-                            case SendRequestVIA.Default:
-                            case SendRequestVIA.WebServiceInteractive:
-                                requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                                break;
-                            case SendRequestVIA.WebServiceBatch:
-                                break;
-                            case SendRequestVIA.DCABatch:
-                                break;
-                            default:
-                                break;
-                        }
-                        requestParams.RequestVIAChangeDue = requestParams.RequestVIAChangeDue ?? "";
-                        requestParams.RequestVIAChangeDue += $"{requestParams.FutureSendDateTime} המסרים למכס מושבתים-המסר נדחה עד לסיום תהליך ההסבה";
-
-                    }
-                    else
-                    {//customs
-                        throw new Exception($"{customsSettingsM.SuppressIIGMessageToDate} המסרים למכס מושבתים עד לסיום תהליך ההסבה");
-                    }
-
-                }
-            }
-        }
-
         public byte[] GetBolb(CustomsStepEnum customsRequestStep)
         {
-            LogMessagingUtilWR.Instance.AppendLine("GetBolb:S");
-            try
+            if (_BlobCach.ContainsKey(customsRequestStep))
             {
-                if (_BlobCach.ContainsKey(customsRequestStep))
-                {
-                    return _BlobCach[customsRequestStep];
-                }
-                byte[] ArryByte = null;
-                var communicationLogStep = GetCommunicationLogStep(customsRequestStep);
-                if (!GetBlob(communicationLogStep.Tenant, communicationLogStep.Document, out ArryByte))
-                {
-                    throw new Exception("GetBlob(" + communicationLogStep.Document.GetBlobUrl("") + ") not found");
-                }
-                _BlobCach.Add(customsRequestStep, ArryByte);
-                return ArryByte;
+                return _BlobCach[customsRequestStep];
             }
-            finally
+            byte[] ArryByte = null;
+            var communicationLogStep = GetCommunicationLogStep(customsRequestStep);
+            if (!GetBlob(communicationLogStep.Tenant, communicationLogStep.Document, out ArryByte))
             {
-                LogMessagingUtilWR.Instance.AppendLine("GetBolb:E");
+                throw new Exception("GetBlob(" + communicationLogStep.Document.GetBlobUrl("") + ") not found");
             }
+            _BlobCach.Add(customsRequestStep, ArryByte);
+            return ArryByte;
         }
         public void UpdateBolb(CustomsStepEnum customsRequestStep, Func<MemoryStream, MemoryStream> funcManupliateMemoryStream)
         {
@@ -1417,7 +1020,7 @@ After that Remove file  from DCA  .. ");
         public Exception FailStepRaiseCRSSExeption(Exception ee, string defaultMessage, RequestSheetParam myRequestSheetParam, MemoryStream memstream = null
             , Action OnFailAction = null)
         {
-             if (_MyCustomsRequestsSheetPM.RequestStatusEnum == SheetStatusEnum.Cancelled ||
+            if (_MyCustomsRequestsSheetPM.RequestStatusEnum == SheetStatusEnum.Cancelled ||
                     GetAccurateRequestStatusEnum() == SheetStatusEnum.Cancelled
                     ) //  RequestStatusCode
             {
@@ -1436,9 +1039,9 @@ After that Remove file  from DCA  .. ");
 
             var communicationLogStep = GetCommunicationLogStep();
             bool onlyOneChanceToSend = //20180718.ConcurrentKiller
-                (_CurrentCustomsRequestStepEnum == CustomsStepEnum.ReceivedCustomResponseCorrelation &&
+                _CurrentCustomsRequestStepEnum == CustomsStepEnum.ReceivedCustomResponseCorrelation &&
                 CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList()
-                .Contains(_RequestParams.InterfaceTypeCode) )||( _CurrentCustomsRequestStepEnum ==CustomsStepEnum.CustomRequest && _RequestParams.InterfaceTypeCode =="2755") ;
+                .Contains(_RequestParams.InterfaceTypeCode);
 
             if (!onlyOneChanceToSend && !this.IsInteractive && MessageController.ToRetry(_CurrentCustomsRequestStepEnum, communicationLogStep.Retries))
             {
@@ -1470,11 +1073,6 @@ After that Remove file  from DCA  .. ");
             }
 
 
-
-        }
-        public void SetTenantPriority(int? _TenantPriority)
-        {
-            MyCustomsRequestsSheetPM.TenantPriority = _TenantPriority;
 
         }
         public void SetCorrelationId(string _CorrelationId)
@@ -1515,7 +1113,7 @@ After that Remove file  from DCA  .. ");
             }
             else
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("this._InterfaceTenantDefinitionManagement  not init ???");
+                Debug.WriteLine("this._InterfaceTenantDefinitionManagement  not init ???");
             }
 
             var currRequestDescriptionIsNullOrDef = false;
@@ -1544,12 +1142,6 @@ After that Remove file  from DCA  .. ");
                 {
                     LogMessagingUtil.Instance.AppendLine("Set InterfaceManagement.Description :" + defDesc);
                     updateDesc = defDesc;
-                }
-                updateDesc = updateDesc ?? "";
-                if (updateDesc.Length > 120)
-                {
-                    LogMessagingUtil.Instance.AppendLine("RequestDescription.Substring(0, 119)!!!!!!!!!!!!!!");
-                    updateDesc = updateDesc.Substring(0, 119);
                 }
                 _CommunicationLog.Subject = MyCustomsRequestsSheetPM.RequestDescription = updateDesc;
             }
@@ -1599,7 +1191,6 @@ After that Remove file  from DCA  .. ");
             bool explictStopAndWrite = false;
             try
             {
-                LogMessagingUtil.Instance.AppendLine("EndStepWithoutTransactionScope");
 
                 var serverTime = TenantServerConfigration.GetCurrentDateTime(_Tenant);//DateTime.Now;20150909
                 CommunicationLogStep communicationLogStep = GetCommunicationLogStep();
@@ -1611,8 +1202,8 @@ After that Remove file  from DCA  .. ");
                     communicationLogStep.StartDate = serverTime;
                 }
                 communicationLogStep.EndDate = serverTime;
-                PerformanceM.LastInstance.RequestStartDate = communicationLogStep.StartDate;
-                PerformanceM.LastInstance.RequestEndDate = communicationLogStep.EndDate;
+
+
 
                 if (memstream != null)
                 {
@@ -1768,13 +1359,9 @@ After that Remove file  from DCA  .. ");
                 CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandAnalyzeResponseWR;
                 bool toContinueNextCommand = false;
                 bool raiseDifferentWR = false;
-                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-.AppendLine("before : if (!this.DualResponseHeaderStatusReturnAckSentResponseOnDCA) ");
                 if (!this.DualResponseHeaderStatusReturnAckSentResponseOnDCA)
                 {
                     toContinueNextCommand = EndStepToContinueNextCommand(out raiseDifferentWR);
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-.AppendLine("into : if (!this.DualResponseHeaderStatusReturnAckSentResponseOnDCA) ");
                     if (!toContinueNextCommand && !raiseDifferentWR)
                     {
                         nxtCustomsCommandEnum = CalcNextCommandSQ();
@@ -1788,8 +1375,6 @@ After that Remove file  from DCA  .. ");
                 {
                     if (requestSheetParam != null)
                     {
-                        LogMessagingUtil.Instance.AppendLine(" (requestSheetParam != null)");
-
                         this.UpdateConnectedEntitys(requestSheetParam);
                     }
                     explictStopAndWrite = EndStepWithoutTransactionScope(memstream, stepStatusEnum);
@@ -1812,14 +1397,10 @@ After that Remove file  from DCA  .. ");
                 //return EndStepToContinue(false);
                 if (toContinueNextCommand)
                 {
-                    LogMessagingUtil.Instance.AppendLine("if (toContinueNextCommand)2");
-
                     return true;
                 }
                 if (raiseDifferentWR)
                 {
-                    LogMessagingUtil.Instance.AppendLine("if (raiseDifferentWR)2");
-
                     var raiseDifferentWRexc = new CustomsRequestsSheetDomainModelServiceException(
                 CustomsRequestsSheetDomainModelServiceException.WhereEnum.ReuestSheet,
                 CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue, "EndStep():RequestParams.!SuppressSplitWR but CurrentWR.Value != _StartCustomsCommand ", null);
@@ -1832,88 +1413,43 @@ After that Remove file  from DCA  .. ");
                     {
                         var signStepName = this.GetSignStepName(true);
                         var personId = SignQueue.Instance.GetUserPersonID(this.MyCustomsRequestsSheetPM.RequestOwnerId, this.MyCustomsRequestsSheetPM.Tenant);
-                        var pmCustomsSetting = CustomsSettingQueryService.GetSettingByTenant(this.MyCustomsRequestsSheetPM.Tenant);
-                        //if (string.IsNullOrEmpty(RequestParams.SignMethodByQueue))
-                        //{
-                        //    throw new Exception("RequestParams.SignType is must !!");
-                        //}
-                        SignMethodByQueueEnum signMethodBy = SignMethodByQueueEnum.MemorySignQueue;
-                        if (!Enum.TryParse<SignMethodByQueueEnum>(RequestParams.SignMethodByQueue, out signMethodBy))
+                        var signQueueWebFormUrl = SignQueue.Instance
+                            .GetSignQueueWebFormUrl(
+                            _MyCustomsRequestsSheetPM.Tenant,
+                            personId,
+                            _MyCustomsRequestsSheetPM.Id, _MyCustomsRequestsSheetPM.InterfaceTypeCode, signStepName);
+                        try
                         {
-                            //throw new Exception("RequestParams.SignType is must !!");
+
+                            Task.Run(
+                                () =>
+                                {
+                                    Thread.Sleep(5000);
+                                    var uri = new Uri(signQueueWebFormUrl);
+                                    var client = new WebClient();
+                                    client.DownloadStringCompleted += (sender, e1) =>
+                                    {
+                                        /// var res = e1.Result;
+                                    };
+                                    client.DownloadStringAsync(uri);
+                                });
                         }
-                        switch (signMethodBy)
+                        catch (Exception)
                         {
-                        
-                            case SignMethodByQueueEnum.HybridDbSignQueue:
- 
-                                {
-                                    var signQueueHybridExportDBService = new CreateSignQueueHybridExportDBService();
-                                    signQueueHybridExportDBService.CreateQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
-                                }
-                                break;
-                            case SignMethodByQueueEnum.HSMSignQueue:
-                                {
-                                    LogMessagingUtil.Instance.AppendLine("case SignMethodByQueueEnum.MemorySignQueue:" + signMethodBy);
 
-                                    var signQueueHSMDBService = new CreateSignQueueHSMDBService();
-                                    signQueueHSMDBService.CreateQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
-                                }
-
-                                break;
-                        
-                            case SignMethodByQueueEnum.None:
-                            case SignMethodByQueueEnum.MemorySignQueue:
-                            default:
-                                {
-                                    LogMessagingUtil.Instance.AppendLine("case SignMethodByQueueEnum.MemorySignQueue:" + signMethodBy);
-
-                                    var signQueueWebFormUrl = SignQueue.Instance
-                                        .GetSignQueueWebFormUrl(
-                                        _MyCustomsRequestsSheetPM.Tenant,
-                                        personId,
-                                        _MyCustomsRequestsSheetPM.Id, _MyCustomsRequestsSheetPM.InterfaceTypeCode, signStepName);
-                                    try
-                                    {
-
-                                        Task.Run(
-                                            () =>
-                                            {
-                                                Thread.Sleep(5000);
-                                                var uri = new Uri(signQueueWebFormUrl);
-                                                var client = new WebClient();
-                                                client.DownloadStringCompleted += (sender, e1) =>
-                                                {
-                                            /// var res = e1.Result;
-                                                };
-                                                client.DownloadStringAsync(uri);
-                                            });
-                                    }
-                                    catch (Exception)
-                                    {
-
-                                        //throw;
-                                    }
-                                }
-                                break;
+                            //throw;
                         }
-                        LogMessagingUtil.Instance.AppendLine("end create sign step...");
 
                         createSBQMessage = false;
-                     }
+                    }
                 }
                 if (createSBQMessage)
                 {
-                    InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
-                    string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
-
-                    LogMessagingUtil.Instance.AppendLine("if (createSBQMessage)");
-
                     SBQMessageService.CreateBasic<CustomsCommandEnum>(
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id, null, queueDefinitionGroup);
+                            this.MyCustomsRequestsSheetPM.Id);
                 }
 
 
@@ -1967,11 +1503,7 @@ After that Remove file  from DCA  .. ");
 
             raiseDifferentWR = false;
             var toContinueNextCommand = true;
-            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-                .AppendLine("if (!CurrentWR.HasValue): " + !CurrentWR.HasValue);
             if (!CurrentWR.HasValue) return toContinueNextCommand;
-            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-              .AppendLine("if (!_StartCustomsCommand.HasValue):" + _StartCustomsCommand.HasValue);
             if (!_StartCustomsCommand.HasValue) return toContinueNextCommand;
 
 
@@ -1979,13 +1511,8 @@ After that Remove file  from DCA  .. ");
             var curVal = CurrentWR.GetValueOrDefault();
             if (!RequestParams.SuppressSplitWR)//the eblity to continue work 1 proccess without Split
             {
-                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-              .AppendLine("!RequestParams.SuppressSplitWR");
-
                 if (CurrentWR.Value != _StartCustomsCommand)
                 {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-           .AppendLine("if (CurrentWR.Value != _StartCustomsCommand) : CurrentWR.Value + "  + CurrentWR.Value + "_StartCustomsCommand:" + _StartCustomsCommand);
                     raiseDifferentWR = true;
                     //throw new BusinessErrorException("");
                     return false;
@@ -1994,15 +1521,10 @@ After that Remove file  from DCA  .. ");
                 toContinueNextCommand = false;
                 if (curVal == CustomsCommandEnum.CustomsCommandAnalyzeResponseWR)//End Step ,No more Steps
                 {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-.AppendLine("if (curVal == CustomsCommandEnum.CustomsCommandAnalyzeResponseWR):" + curVal);
-
                     toContinueNextCommand = true;
                 }
                 else if (curVal == CustomsCommandEnum.CustomsCommandSendDCAUploadStatusWR)//end Step - Wait to dca  In
                 {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-.AppendLine("else if (curVal == CustomsCommandEnum.CustomsCommandSendDCAUploadStatusWR):" + curVal);
                     toContinueNextCommand = true;
                 }
             }
@@ -2125,7 +1647,6 @@ After that Remove file  from DCA  .. ");
 
 
                 MyCustomsRequestsSheetPM.ChangeSetOp = ChangeSetOperation.Update;
-                _CustomsRequestsSheetUpdateService.CommLogStepCanCancelledAction = CommLogStepCanCancelled;
                 _CustomsRequestsSheetUpdateService.Update(MyCustomsRequestsSheetPM, true);
                 scope.Complete();
             }
@@ -2137,12 +1658,7 @@ After that Remove file  from DCA  .. ");
                 CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue
                     , "FailSheet" + curException.Message, curException);
         }
-        public static void CommLogStepCanCancelled(CustomsRequestsSheet entityPOCO,
-          CustomsRequestsSheetPM entityPM, DateTime? nowIs
-          )
-        {
-            LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetDomainModelService:CommLogStepCanCancelled :do nothing");
-        }
+
         private SheetStatusEnum GetRequestSheetStatusCodeDone(CustomsStepEnum step)
         {
             /*
@@ -2160,16 +1676,14 @@ After that Remove file  from DCA  .. ");
                     return SheetStatusEnum.Created;
                     break;
                 case CustomsStepEnum.CustomRequest:
-                    if (!_RequestParams.AvoidSign)
+
+                    //if (this._CommunicationLogStepList.Exists(rec => rec.StepNumber == (int)CustomsStepEnum.CustomRequestSign))
+                    if (InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByCustomsAgentId
+                        || InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByPersonId
+                        || _RequestParams.ForcePersonalSign)
                     {
-                        //if (this._CommunicationLogStepList.Exists(rec => rec.StepNumber == (int)CustomsStepEnum.CustomRequestSign))
-                        if (InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByCustomsAgentId
-                            || InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy == SignQueueByType.SignQueueByPersonId
-                            || _RequestParams.ForcePersonalSign)
-                        {
-                            return SheetStatusEnum.WaitingForSigning;
-                            break;
-                        }
+                        return SheetStatusEnum.WaitingForSigning;
+                        break;
                     }
                     return SheetStatusEnum.InProcess;
                     break;
@@ -2370,7 +1884,7 @@ After that Remove file  from DCA  .. ");
             return subject.ToString();
         }
 
-        private void CreateNewRequestSheet(TRequestParams requestParams)
+        private void CreateNewRequestSheet()
         {
             if (MyCustomsRequestsSheetPM != null)
             {
@@ -2383,24 +1897,7 @@ After that Remove file  from DCA  .. ");
             //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("selectedFile =" + selectedFile);
             //string externalId = "";// GetExternalId(selectedFile);
 
-            int? tenantPriority = null;
-            CustomsRequestsSheet currCustomsRequestsSheet = null;
-            if (requestParams != null)
-            {
-                var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(this._Tenant);
-                currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(requestParams.ParentId, this._Tenant);
-                tenantPriority = currCustomsRequestsSheet?.TenantPriority;
-            }
-            if(requestParams.TenantPriority > 0)
-            {
-                tenantPriority = requestParams.TenantPriority;
-            }
-            if (tenantPriority == null)
-            {
-                InterfaceTenantDefinitionQueryService interfaceTenantDefinitionQuery = new InterfaceTenantDefinitionQueryService(_CustomContext);
-                InterfaceTenantDefinitionPM interfaceTenantDefinitionPM = interfaceTenantDefinitionQuery.GetInterfaceDefWithPriorityFromCacheByTenatCode(this._Tenant, requestParams.InterfaceTypeCode);
-                tenantPriority = interfaceTenantDefinitionPM?.TenantPriority;
-            }
+
             MyCustomsRequestsSheetPM = new CustomsRequestsSheetPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -2414,8 +1911,6 @@ After that Remove file  from DCA  .. ");
                 RequestStatusEnum = SheetStatusEnum.Created,
                 RequestComminicationId = _CommunicationLog.Id,
                 //CustomFileNo = GetCustomFileNo(RequestParams)
-                TenantPriority = tenantPriority,
-                IsHSM = requestParams.SignMethodByQueue == SignMethodByQueueEnum.HSMSignQueue.ToString() ? true:false
 
             };
 
@@ -2550,7 +2045,6 @@ After that Remove file  from DCA  .. ");
 
         public string GetCustomsRequestXml()
         {
-
             var myArry = this.GetBolb(CustomsStepEnum.CustomRequest);
             string xml = Encoding.UTF8.GetString(myArry);
 
@@ -2862,7 +2356,7 @@ After that Remove file  from DCA  .. ");
         public string OnEndStepAppendLogToCommunicationLog { get; set; }
         public const bool InProgressFeatureIsOn = true;
 
-        public void ReAnalyzeStatusReceivedCreateQ(DateTime? futureSendDateTime = null)
+        public void ReAnalyzeStatusReceivedCreateQ()
         {
 
             CommunicationLogStep communicationLogStep = GetCommunicationLogStep(CustomsStepEnum.AnalyzeResponseData);
@@ -2878,30 +2372,12 @@ After that Remove file  from DCA  .. ");
             _CustomsRequestsSheetUpdateService.Update(MyCustomsRequestsSheetPM, true);
             _CommonContext.SaveChanges();
 
-            InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
-            string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
-
             CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandAnalyzeResponseWR;
             SBQMessageService.CreateBasic<CustomsCommandEnum>(
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id, futureSendDateTime, queueDefinitionGroup);
-        }
-
-
-        public void ReCreateNow()
-        {
-
-            InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
-            string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
-
-            CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandGetCustomRequestWR;
-            SBQMessageService.CreateBasic<CustomsCommandEnum>(
-                            nxtCustomsCommandEnum,
-                            this.MyCustomsRequestsSheetPM.Tenant,
-                            this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id, null, queueDefinitionGroup);
+                            this.MyCustomsRequestsSheetPM.Id);
         }
     }
 
@@ -2965,8 +2441,7 @@ After that Remove file  from DCA  .. ");
         public CustomsCommandEnum? CurrentCustomsCommandWR { get; set; }
 
         public string AggregateDCAAnalyzerLogger { get; set; }
-        public bool IsCustomsMessagingSheetWR { get; set; }
     }
 
-
+    
 }

@@ -25,7 +25,7 @@ import {ShipmentDeliveryPM} from '../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import {ShipmentPickUpDeliveryPackagePM} from '../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
 @Component({
-    
+    moduleId: module.id,
     selector: 'CopyFromReleasesPackagesComponent',
     templateUrl: './CopyFromReleasesPackagesComponent.html',
     providers: [WarehouseReleaseListExtendedService, WarehouseReleasePackagePMExtendedService],
@@ -65,7 +65,7 @@ export class CopyFromReleasesPackagesComponent implements OnInit {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.WarehouseReleaseLists = [];
         if (this.ShipmentPM != null) {
-            this._warehouseReleaseListExtendedService.getWarehouseReleaseListsByShipmentId(this.ShipmentPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
+            this._warehouseReleaseListExtendedService.getWarehouseReleaseListsByShipmentId(this.ShipmentPM.Id, SessionLocator.Tenant).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                // IsNoReleasePackage
@@ -108,7 +108,7 @@ export class CopyFromReleasesPackagesComponent implements OnInit {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Copy release Package...");
 
                 if (!item.IsLoad) {
-                    this._warehouseReleasePackagePMExtendedService.GetWarehouseReleasePackagePMListsByWarehouseReleaseId(item.Id, SessionLocator.Tenant).subscribe((res:any) => {
+                    this._warehouseReleasePackagePMExtendedService.GetWarehouseReleasePackagePMListsByWarehouseReleaseId(item.Id, SessionLocator.Tenant).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
            
                         if (!pmResponse.HasError) {

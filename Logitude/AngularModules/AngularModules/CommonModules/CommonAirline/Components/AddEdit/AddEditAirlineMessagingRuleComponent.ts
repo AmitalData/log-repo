@@ -17,7 +17,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditAirlineMessagingRuleComponent.html',
 })
 
@@ -76,7 +76,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
         }
     }
 
-    public RuleFieldsList: CodeNameClass[] = [];
+    public RuleFieldsList: CodeNameClass[];
     private LoadAllowedObjectFields() {
         var tableName: string;
 
@@ -93,19 +93,19 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
         }
 
         var service: EntityResourceService = new EntityResourceService();
-        service.getEntityResourceByTableName(tableName).subscribe((response:any) => {
+        service.getEntityResourceByTableName(tableName).subscribe(response => {
             var objectTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name == tableName)[0];
             var objectFields: ObjectFieldPM[] = window.ObjectFields.filter(d => d.ObjectTableId == objectTable.Id && d.AllowedInAirlineMessaging);
 
-            this.RuleFieldsList = [];
             if (objectFields.length > 0) {
+                this.RuleFieldsList = [];
 
                 objectFields.forEach((item) => {
-                    this.RuleFieldsList.push(new CodeNameClass(item.Id, item.FullNameTextCodeDefaultText, null, item.FieldCode));
+                    this.RuleFieldsList.push(new CodeNameClass(item.Id, item.FullNameTextCodeDefaultText));
                 });
 
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.RuleFieldCode)) {
-                    this.selectedRuleField = this.RuleFieldsList.filter(d => d.AdditionalField == this.RuleFieldCode)[0];
+                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.RuleFieldId)) {
+                    this.selectedRuleField = this.RuleFieldsList.filter(d => d.Code == this.RuleFieldId)[0];
                 }
             }
         });
@@ -117,8 +117,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
         if (this.selectedRuleField != value) {
             this.selectedRuleField = value;
 
-            this.RuleFieldId = value.Code;
-            this.RuleFieldCode = value.AdditionalField;
+            this.RuleFieldId = value.Code
         }
     }
 
@@ -135,13 +134,6 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
     set RuleFieldId(value: string) {
         if (this.EntityPM.RuleFieldId != value) {
             this.EntityPM.RuleFieldId = value;
-        }
-    }
-
-    get RuleFieldCode() { return this.EntityPM.RuleFieldCode; }
-    set RuleFieldCode(value: string) {
-        if (this.EntityPM.RuleFieldCode != value) {
-            this.EntityPM.RuleFieldCode = value;
         }
     }
 
@@ -187,7 +179,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
 
             if (this.IsNew) {
                 this.CurrentSession.StartBusyIndicatorSaving();
-                myService.insert(this.EntityPM).subscribe((Result:any) => {
+                myService.insert(this.EntityPM).subscribe(Result => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {
@@ -206,7 +198,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
 
             else {
                 this.CurrentSession.StartBusyIndicatorSaving();
-                myService.update(this.EntityPM).subscribe((Result:any) => {
+                myService.update(this.EntityPM).subscribe(Result => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {
@@ -230,7 +222,6 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('MessageTypeCode');
         this.myCloner.AddField('RuleFieldId');
-        this.myCloner.AddField('RuleFieldCode');
         this.myCloner.AddField('MaxSize');
         this.myCloner.AddField('IsMandatoryForSending');
         this.myCloner.AddField('InActive');

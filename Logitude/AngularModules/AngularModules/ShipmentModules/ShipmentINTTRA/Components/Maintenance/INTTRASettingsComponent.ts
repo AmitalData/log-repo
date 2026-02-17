@@ -12,7 +12,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './INTTRASettingsComponent.html',
 })
 
@@ -180,17 +180,6 @@ export class INTTRASettingsComponent extends BaseComponent {
             });
         } 
     }
-    DeleteFTPClicked(Code: string) {
-        if (Code == "Out") {
-            this.OutSettingsId = null;
-            this.OutSettingsHost = null;
-        }
-
-        else if (Code == "In") {
-            this.InSettingsId = null;
-            this.InSettingsHost = null;
-        }
-    }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -231,7 +220,7 @@ class RegistrationItem {
     public Notes: string;
     public ShippingLineId: string;
     public Carriers: RegistrationItemCarrier[] = [];
-    constructor(private line: INTTRASettingsHelperItem, private father: INTTRASettingsComponent) {
+    constructor(line: INTTRASettingsHelperItem, private father: INTTRASettingsComponent) {
         this.CompinedId = line.CompinedId;
         this.Code = line.Code;
         this.Name = line.Name;
@@ -246,13 +235,6 @@ class RegistrationItem {
 
             this.Carriers.push(new RegistrationItemCarrier(itemCarrier));
         });
-    }
-
-    get UpdatesShipmentsDates() { return this.line.UpdatesShipmentsDates; }
-    set UpdatesShipmentsDates(value: boolean) {
-        if (this.line.UpdatesShipmentsDates != value) {
-            this.line.UpdatesShipmentsDates = value;
-        }
     }
 }
 class RegistrationItemCarrier {

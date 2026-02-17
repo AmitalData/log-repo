@@ -17,8 +17,6 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string QuoteTemplateId { get; set; }
         public string QuoteCutomerTypeCode { get; set; }
         public string CustomerName { get; set; }
-        public string CustomerCode { get; set; }
-
         public string CustomerId { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
@@ -27,8 +25,6 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string ShipperId { get; set; }
         public string ShipperReference1 { get; set; }
         public string ShipperReference2 { get; set; }
-        public string ShipperCode { get; set; }
-
         public string Consignee { get; set; }
         public string ConsigneeId { get; set; }
         public string ConsigneeReference1 { get; set; }
@@ -40,30 +36,24 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public bool TotalPerContainer { get; set; }
         public string QuoteNumber { get; set; }
         public DateTime OpenDate { get; set; }
-        public DateTime? ExpirationDate { get; set; }
-        public DateTime? StartDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }        
 
         public string QuoteTypeName { get; set; }
         public string CarrierName { get; set; }
         public double? ChargeableWeight { get; set; }
-        public double? ChargeableWeightInKG { get; set; }
-        public double? PickupDeliveryChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
-        public double? VolumeInCBM { get; set; }
-        
+
         public string ShipmentType { get; set; }
         
         public string FromPort { get; set; }
         public string FromPortName { get; set; }
-        public string FromPortNameCode { get; set; }
         public string FromPortCountry { get; set; }
         public string FromCountryCode { get; set; }
         
         public string ToPort { get; set; }
         public string ToPortName { get; set; }
-        public string ToPortNameCode { get; set; }
         public string ToPortCountry { get; set; }
         public string ToCountryCode { get; set; }
 
@@ -130,8 +120,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string Routing { get; set; }
         public string LastQuoteActivityTypeName { get; set; }
         public string LastActivityByUserName { get; set; }
-        public DateTime LastQuoteActivityDate { get; set; }
-        public string QuoteClosingReasonId { get; set; }
+        public DateTime LastQuoteActivityDate { get; set; }       
         public string QuoteClosingReasonCode { get; set; }
         public string QuoteClosingReasonName { get; set; }
         public DateTime? SentDate { get; set; }
@@ -167,8 +156,6 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public int? AutomaticallyCloseDays { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
-        public string UpdatedByUser { get; set; }
-
         public string ProductCode { get; set; }
         public string IncotermCode { get; set; }
         public string TransitTime { get; set; }
@@ -184,76 +171,19 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string AgentName { get; set; }
         public double? TEU { get; set; }
         public bool IsSaleCurrencySameAsCost { get; set; }
-        public bool IsMultiCurrency { get; set; }
-
         public bool IsChargesByVAT { get; set; }
         public double? ValueOfGoods { get; set; }
 
         public bool IsQuoteDataExternal { get; set; }
         public bool IsQuoteDocumentExternal { get; set; }
         public string QuotationSections { get; set; }
-        public string ConsigneeNotImporterReference { get; set; }
+
         public string NotifyId { get; set; }
         public string NotifyAddressId { get; set; }
         public string NotifyContactId { get; set; }
         public string NotifyName { get; set; }
         public string NotifyNote { get; set; }
-        public string NotifyReference1 { get; set; }
-        public string NotifyReference2 { get; set; }
-
-        public string ConsigneeNotImporterId { get; set; }
-        public string ConsigneeNotImporterAddressId { get; set; }
-        public string ConsigneeNotImporterContactId { get; set; }
-        public string ConsigneeNotImporterName { get; set; }
-        public string ConsigneeNotImporterNote { get; set; }
-
-        public string ShipperNotExporterId { get; set; }
-        public string ShipperNotExporterAddressId { get; set; }
-        public string ShipperNotExporterContactId { get; set; }
-        public string ShipperNotExporterName { get; set; }
-        public string ShipperNotExporterNote { get; set; }
-
         public int? NumberOfFollowUps { get; set; }
         public bool IsDangerous { get; set; }
-
-        public string QuoteHTMLDocumentId { get; set; }
-
-
-        public string Field11 { get; set; }
-        public string Field12 { get; set; }
-        public string Field13 { get; set; }
-        public string Field14 { get; set; }
-        public string Field15 { get; set; }
-        public string Field16 { get; set; }
-        public string Field17 { get; set; }
-        public string Field18 { get; set; }
-        public string Field19 { get; set; }
-        public string Field20 { get; set; }
-        public DateTime? RequestDate { get; set; }
-        public double? EstimatedProfitInLocal { get; set; }
-        public double? EstimatedProfitInProfit { get; set; }
-        public string ShipmentSubTypeId { get; set; }
-        public string ShipmentSubTypeName { get; set; }
-        public double? PickupDeliveryVolumetricWeight { get; set; }
-        public string RegionalTaxId { get; set; }
-        public double? RegionalTaxPercentage { get; set; }
-        public int? PackagesQuantity { get; set; }
-        public string InlandDomesticFromCountryId { get; set; }
-        public string InlandDomesticToCountryId { get; set; }
-        public string TicketId { get; set; }
-
-        public string SpecialServicesTypeId { get; set; }
-        public bool IncludeInsurance { get; set; }
-        public bool IsStackable { get; set; }
-        public bool IncludeImportDutyCharges { get; set; }
-        public double? InsuranceValue { get; set; }
-        public string ValidByTypeCode { get; set; }
-        public string ValidByTypeName { get; set; }
-        public bool? ConnectedToOpportunity { get; set; }
-        public string QuoteClosingReasonNotes { get; set; }
-        public string DigitalPortalSearchFields { get; set; }
-        public string StageCode { get; set; }
-        public bool IsExpired { get; set; }
-
     }
 }

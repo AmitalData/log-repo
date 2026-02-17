@@ -20,12 +20,10 @@ using Logitude.Social.BL.Helpers;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
-
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -33,15 +31,6 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Microsoft.Practices.Unity;
-using Logitude.BL.DataContracts;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.BL.CommonDataModel.Helpers;
-using Logitude.BL.GlobalModel.EntityQueries;
-using Logitude.Server.Tools.CustomFields;
-using Logitude.Server.Tools.TreeFilterQuery.Expression;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -73,26 +62,34 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CustomerForwarderByProductRepository customerForwarderByProductRepository;
         private CustomerMediatorByProductRepository customerMediatorByProductRepository;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
-        private ProductItemRepository productItemRepository;
-        private HTSCodeRepository hTSCodeRepository;
-        private CardService cardService;
-        public const string DONT_CARE = "[DONT_CARE]"; // Used for Hybrid Customers to avoid clearing the ContactForAccounting of a contact when updating the customer    
         ContactService contactService;
-        HybridPartnerPM CurrentHybridPartner;
-        CustomerTenantAccessCardRepository customerTenantAccessCardRepository;
         public CustomerService(ICommonDataContext objectContext, CustomerPM entityPM)
         {
-            this.Initialization(objectContext, entityPM);
+
+            this.entityPM = entityPM;
+            this.tenant = entityPM.Tenant;
+            this.objectContext = objectContext;
+            this.entityRepository = new CustomerRepository(objectContext);
+            this.addressRepository = new AddressRepository(objectContext);
+            this.cardRepository = new CardRepository(objectContext);
+            this.contactRepository = new ContactRepository(objectContext);
+            this.cardContactRepository = new CardContactRepository(objectContext);
+            this.productRepository = new CustomerProductRepository(objectContext);
+            this.productLocationRepository = new CustomerProductLocationRepository(objectContext);
+            this.competitorsRepository = new CustomerCompetitorRepository(objectContext);
+            this.competitorProductsRepository = new CustomerCompetitorProductRepository(objectContext);
+            this.servicesRepository = new CustomerAdditionalServiceRepository(objectContext);
+            this.salesNoteRepository = new CustomerSalesNoteRepository(objectContext);
+            this.customerSalesmanByProductRepository = new CustomerSalesmanByProductRepository(objectContext);
+            this.customerAccountManagerByProductRepository = new CustomerAccountManagerByProductRepository(objectContext);
+            this.customerCustomsAgentByProductRepository = new CustomerCustomsAgentByProductRepository(objectContext);
+            this.customerForwarderByProductRepository = new CustomerForwarderByProductRepository(objectContext);
+            this.customerMediatorByProductRepository = new CustomerMediatorByProductRepository(objectContext);
+            this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            this.contactService = new ContactService(objectContext, tenant);
             this.GetLoggedContact();
-            this.SetHybridPartner(this.tenant);
         }
         public CustomerService(ICommonDataContext objectContext, CustomerPM entityPM, string loggedContactId)
-        {
-            this.Initialization(objectContext, entityPM);
-            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
-            this.SetHybridPartner(this.tenant);
-        }
-        private void Initialization(ICommonDataContext objectContext, CustomerPM entityPM)
         {
             this.entityPM = entityPM;
             this.tenant = entityPM.Tenant;
@@ -114,11 +111,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.customerForwarderByProductRepository = new CustomerForwarderByProductRepository(objectContext);
             this.customerMediatorByProductRepository = new CustomerMediatorByProductRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.productItemRepository = new ProductItemRepository(objectContext);
-            this.hTSCodeRepository = new HTSCodeRepository(objectContext);
             this.contactService = new ContactService(objectContext, tenant);
-            cardService = new CardService(objectContext, tenant);
-            this.customerTenantAccessCardRepository = new CustomerTenantAccessCardRepository(objectContext);
+            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
         }
         private void GetLoggedContact()
         {
@@ -128,7 +122,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             else
             {
-                string email = HttpContext.Current?.User?.Identity?.Name;
+                string email = HttpContext.Current.User.Identity.Name;
                 AuthenticationUtil.ResolveLoggingUserId(tenant);
                 this.loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
             }
@@ -137,12 +131,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
             }
-        }
-
-        private void SetHybridPartner(int myTenant)
-        {
-            HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(myTenant);
-            CurrentHybridPartner = HybridPartnerQuery.GetSinglePMByPartnerTenant(myTenant);
         }
 
         private List<CustomerSalesNotePM> salesNotesChangeSet;
@@ -155,9 +143,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private List<CustomerForwarderByProductPM> customerForwarderByProductChangeSet;
         private List<CustomerMediatorByProductPM> customerMediatorByProductChangeSet;
         private List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet;
-        private List<ProductItemPM> productItemsChangeSet;
-
-        public void SetChangeSet(List<CustomerSalesNotePM> salesNotesChangeSet, List<CustomerProductPM> productsChangeSet, List<CustomerCompetitorPM> competitorsChangeSet, List<CustomerAdditionalServicePM> servicesChangeSet, List<CustomerSalesmanByProductPM> customerSalesmanByProductsChangeSet, List<CustomerAccountManagerByProductPM> customerAccountManagerByProductChangeSet, List<CustomerCustomsAgentByProductPM> customerCustomsAgentByProductChangeSet, List<CustomerForwarderByProductPM> customerForwarderByProductChangeSet, List<CustomerMediatorByProductPM> customerMediatorByProductChangeSet, List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet, List<ProductItemPM> productItemsChangeSet)
+        public void SetChangeSet(List<CustomerSalesNotePM> salesNotesChangeSet, List<CustomerProductPM> productsChangeSet, List<CustomerCompetitorPM> competitorsChangeSet, List<CustomerAdditionalServicePM> servicesChangeSet, List<CustomerSalesmanByProductPM> customerSalesmanByProductsChangeSet, List<CustomerAccountManagerByProductPM> customerAccountManagerByProductChangeSet, List<CustomerCustomsAgentByProductPM> customerCustomsAgentByProductChangeSet, List<CustomerForwarderByProductPM> customerForwarderByProductChangeSet, List<CustomerMediatorByProductPM> customerMediatorByProductChangeSet, List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet)
         {
             this.salesNotesChangeSet = salesNotesChangeSet;
             this.productsChangeSet = productsChangeSet;
@@ -169,21 +155,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.customerForwarderByProductChangeSet = customerForwarderByProductChangeSet;
             this.customerMediatorByProductChangeSet = customerMediatorByProductChangeSet;
             this.cardExternalCodeByCurrencyChangeSet = cardExternalCodeByCurrencyChangeSet;
-            this.productItemsChangeSet = productItemsChangeSet;
         }
 
         public void Create()
-        {
+        {            
             this.isNewEntity = true;
-            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) || this.entityPM.IsHybrid ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
+            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
-                SharedLogisticsInvitationStatusCode = 1,
-                CargoTrackingInvitationStatusCode = 1,
-                UploadingUniqueKey = entityPM.UploadingUniqueKey,
+                SharedLogisticsInvitationStatusCode = 1
             };
 
             this.entityPOCO = new Customer()
@@ -206,12 +189,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity , null);
+                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity);
                 myTracingClass.Trace();
                 myTracingClass.TraceProducts(entityPM.CustomerProducts, isNewEntity);
                 myTracingClass.TraceCompetitors(entityPM.CustomerCompetitors, isNewEntity);
                 myTracingClass.TraceAdditionalServices(entityPM.CustomerAdditionalServices, isNewEntity);
-                myTracingClass.TraceProductItems(entityPM.CustomerProductItems, isNewEntity);
             }
 
             foreach (CustomerProductPM item in entityPM.CustomerProducts)
@@ -279,12 +261,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomerPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
-            }
+            } 
 
             if (!entityPM.IsHybrid)
             {
@@ -299,23 +280,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customer");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
-
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }
-            AddCardKafkaQueueMessage();
         }
 
         public void Update()
         {
-
+            
             this.isNewEntity = false;
 
             this.entityPOCO = entityRepository.GetSingleCustomer(entityPM.Id, tenant, false);
             this.entityCard = cardRepository.GetSingleCard(entityPM.Id, entityPM.Tenant);
-            var emailForSendingSingArinvoiceBackUp = entityCard?.EmailForSendingSingArinvoice ;
+
             this.InitializeComponent();
 
             CustomerValidating.Validate(entityPM, isNewEntity, this.objectContext);
@@ -372,14 +346,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     CacheManager.CacheWrapper.Invalidate(entityPmName);
                 }
-
-
-                entityPmName = "BasicCustomerPM" + entityPM.Id + entityPM.Tenant;
-
-                if (CacheManager.CacheWrapper.Get(entityPmName) != null)
-                {
-                    CacheManager.CacheWrapper.Invalidate(entityPmName);
-                }
             }
 
             this.UpdateProductsCollection();
@@ -392,35 +358,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateForwarderCollection();
             this.UpdateCustomerMediatorByProductCollection();
             this.UpdateCardExternalCodeByCurrencyCollection();
-            this.UpdateProductItemsCollection();
-
-
+            this.UpdateGLAccount(entityPM, entityPOCO);
             //var tenantQuery = new TenantQuery(entityPM.Tenant);
             //var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             if (!entityPM.IsHybrid && !entityPM.IsLogBox)
             {
-                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity , emailForSendingSingArinvoiceBackUp);
+                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity);
                 myTracingClass.Trace();
 
                 if (productsChangeSet != null)
                 {
-                    myTracingClass.TraceProducts(productsChangeSet, isNewEntity);
+                myTracingClass.TraceProducts(productsChangeSet, isNewEntity);
                 }
 
                 if (competitorsChangeSet != null)
                 {
-                    myTracingClass.TraceCompetitors(competitorsChangeSet, isNewEntity);
+                myTracingClass.TraceCompetitors(competitorsChangeSet, isNewEntity);
                 }
 
                 if (servicesChangeSet != null)
                 {
-                    myTracingClass.TraceAdditionalServices(servicesChangeSet, isNewEntity);
-                }
-
-                if (productItemsChangeSet != null)
-                {
-                    myTracingClass.TraceProductItems(productItemsChangeSet, isNewEntity);
-                }
+                myTracingClass.TraceAdditionalServices(servicesChangeSet, isNewEntity);
+            }
             }
 
             if (entityPM.SetReady && entityPOCO.CustomerStatusCode != "WAC")
@@ -475,7 +434,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
-            if (entityPM.AddLogboxCustomerQueue || ((entityPM.LogBoxActivated != entityPOCO.LogBoxActivated) || (entityPM.IsPrivateLabelCustomer != entityPOCO.IsPrivateLabelCustomer)))
+            if ((entityPM.LogBoxActivated != entityPOCO.LogBoxActivated) || (entityPM.IsPrivateLabelCustomer != entityPOCO.IsPrivateLabelCustomer))
             {
                 AddLogboxCustomerToQueue();
             }
@@ -485,10 +444,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
             cardRepository.SubmitChanges();
-            this.UpdateContactForAccounting();
 
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomerPM> { entityPM }.Cast<object>().ToList() }).Update();
-            cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityPM.Tenant);
             if (!entityPM.IsHybrid)
             {
                 ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPOCO.Tenant);
@@ -502,18 +458,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customer");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
-
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }
-            AddCardKafkaQueueMessage();
         }
 
         private void UpdateGLAccount(CustomerPM entityPM, Customer entityPOCO)
         {
-            if ((entityPOCO.Card != null && entityPOCO.Card.EnglishName != entityPM.EnglishName) || (entityPOCO.Card != null && entityPOCO.Card.LocalName != entityPM.LocalName))
+            if((entityPOCO.Card != null && entityPOCO.Card.EnglishName != entityPM.EnglishName) || (entityPOCO.Card != null && entityPOCO.Card.LocalName != entityPM.LocalName))
             {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
                 Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
@@ -527,7 +476,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     data.EntityId = entityPM.Id;
                     fullAccountingHelper.UpdateGLAccount(data);
                 }
-            }
+            }  
         }
 
         private void CreateGLAccount()
@@ -537,7 +486,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner)) 
+            if (LogitudeSettings.EnableHybridQueue)
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -574,7 +523,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddLogboxCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) )
+            if (LogitudeSettings.EnableHybridQueue)
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -597,9 +546,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     CustomerPM mappedpm = CustomerHybridMapping.MapEntityToHybrid(entityPM);
                     string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedpm);
-
-                    CustomerStatusQueueService customerStatusLogsService = new CustomerStatusQueueService(customerTenantAccessCardRepository, entityPOCO, entityPM);
-                    List<QueueTask> tasks = customerStatusLogsService.CreateQueueTasks();
+                    List<QueueTask> tasks = new List<QueueTask>();
+                    if (entityPM.IsPrivateLabelCustomer == true || entityPOCO.IsPrivateLabelCustomer == true)
+                    {
+                        tasks.Add(new QueueTask() { Action = "Customer.PrivateLabel", Parameters = new List<Parameter>() { new Parameter { Order = 1, Value = entityPM.Code }, new Parameter { Order = 3, Value = entityPM.IsPrivateLabelCustomer.ToString() }, new Parameter { Order = 4, Value = entityPM.CustomerTenant.ToString() } } });
+                    }
+                    else
+                    {
+                        tasks.Add(new QueueTask() { Action = "Customer.LogBoxActivated", Parameters = new List<Parameter>() { new Parameter { Order = 1, Value = entityPM.Code }, new Parameter { Order = 2, Value = entityPM.LogBoxActivated.ToString() } } });
+                    }
 
 
                     logParams.ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
@@ -621,19 +576,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     entityPM.CreatedByUserId = loggedContact.Id;
                     entityPM.UpdatedByUserId = loggedContact.Id;
-                }
-
+                }                  
+                
                 if (!entityPM.IsHybrid && (string.IsNullOrEmpty(entityPM.Code) || entityPM.Code == "new"))
                 {
-                    var counterAdditionalParameters = new Dictionary<string, string>
-                    {
-                        ["[B]"] = "CS",
-                        ["[BranchName]"] = "CS"
-                    };
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CustomerService InitializeComponent entityPM.Code:{entityPM.Code} tenant:{entityPM.Tenant}");
-                    entityPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(entityPM.Tenant, "CADC", "CS", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Customer", tenant).ToString();
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CustomerService InitializeComponent entityPM.Code:{entityPM.Code} tenant:{entityPM.Tenant}");
-
+                    entityPM.Code = CodeCounter.GetNumber("Customer", tenant).ToString();
                 }
 
                 this.CreatePotentialMainAddress();
@@ -644,7 +591,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 entityPM.UpdateDate = (entityPM.IsHybrid && entityPM.UpdateDate != null) ? entityPM.UpdateDate : TenantServerConfigration.GetCurrentDateTime(tenant);
                 if (loggedContact != null)
-                    entityPM.UpdatedByUserId = loggedContact.Id;
+                entityPM.UpdatedByUserId = loggedContact.Id;
             }
 
             this.SetCustomerStatus();
@@ -734,7 +681,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     entityCard.Address2 = entityPM.Address2_Potential;
                     entityCard.Phone = entityPM.PhoneNumber;
                     entityCard.ZipCode = entityPM.ZipCode_Potential;
-                    
 
                     if (entityPM.CountryId_Potential != null)
                     {
@@ -808,11 +754,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
             }
-            entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
-            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
-            entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
-            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-
         }
 
         private void ComputeContactFields()
@@ -1213,91 +1154,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-        private void UpdateProductItemsCollection()
-        {
-            if (productItemsChangeSet != null)
-            {
-                foreach (ProductItemPM itemPM in productItemsChangeSet)
-                {
-                    switch (itemPM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateCustomerProductItem(itemPM);
-                                break;
-                            }
 
-                        case ChangeSetOperation.Update:
-                            {
-                                this.UpdateCustomerProductItem(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteCustomerProductItem(itemPM);
-                                break;
-                            }
-
-                        default: { break; }
-                    }
-                }
-            }
-        }
-        private void UpdateContactForAccounting()
-        {
-            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction)) return;
-            ContactQuery entityQuery = new ContactQuery(entityPM.Tenant);
-            ContactRepository repository = new ContactRepository(objectContext);
-            var myResult = entityQuery.GetContactsbyCardId(entityPM.Id, entityPM.Tenant).ToList();
-            string newContactForAccounting = null;
-            string oldContactForAccounting = null;
-            foreach (var item in myResult)
-            {
-                if (entityPM.ContactForAccounting != DONT_CARE && item.ContactForAccounting == true && item.Id != entityPM.ContactForAccounting)
-                {
-                    var entity = repository.GetSingleContact(item.Id, entityPM.Tenant);
-
-                    if (entity != null)
-                    {
-                        entity.ContactForAccounting = false;
-                        oldContactForAccounting = entity.Id;
-                        repository.Update(entity);
-                    }
-                }
-                if (item.ContactForAccounting != true && item.Id == entityPM.ContactForAccounting)
-                {
-                    var entity = repository.GetSingleContact(item.Id, entityPM.Tenant);
-
-                    if (entity != null)
-                    {
-                        entity.ContactForAccounting = true;
-                        newContactForAccounting = entity.Id;
-                        repository.Update(entity);
-                    }
-                }
-            }
-            if (entityPM.ContactForAccounting == DONT_CARE) entityPM.ContactForAccounting = String.Empty;
-
-            repository.SubmitChanges();
-            if (string.IsNullOrEmpty(entityPM.Card.GLAccountId))
-                entityPM.Card.GLAccountId = cardRepository.GetSingleCard(entityPM.Card.Id, tenant)?.GLAccountId;
-
-            this.UpdateGLAccountWithOldAndNewContactForAccounting(oldContactForAccounting, newContactForAccounting);
-
-        }
-        private void UpdateGLAccountWithOldAndNewContactForAccounting(string excludeContactId , string includeContactId)
-        {
-            IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
-            glaccountUpdate.UpdateGLAccountWithAdditionalData(entityPM.Card.GLAccountId, entityPM.Card.Tenant, null, excludeContactId, includeContactId);
-        }
-
-        private void SaveGLAccountChanges(GLAccountPM accountPM)
-        {
-            IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
-            accountPM.ChangeSetOp = ChangeSetOperation.Update;
-            glaccountUpdate.Update(accountPM);
-        }
         private void CreateCustomerProduct(CustomerProductPM itemPM)
         {
             itemPM.CustomerId = this.entityPM.Id;
@@ -1811,119 +1668,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private void CreateCustomerProductItem(ProductItemPM itemPM)
-        {
-            itemPM.Id = IdCounter.GetNumber("ProductItem", tenant);
-            itemPM.CustomerId = this.entityPM.Id;
-            itemPM.Tenant = tenant;
-
-            ProductItem itemPoco = new ProductItem()
-            {
-                CustomerId = itemPM.CustomerId,
-                Tenant = tenant
-            };
-
-            ProductItemValidating.Validate(itemPM, entityPM);
-            ProductItemMapping.MapEntity(itemPM, itemPoco, true);
-            productItemRepository.Add(itemPoco);
-
-            if (itemPM.HTSCodes != null)
-            {
-                foreach (HTSCodePM hTSCodePM in itemPM.HTSCodes)
-                {
-                    this.CreateCustomerProductItemHTSCode(hTSCodePM, itemPM.Id);
-                }
-            }
-        }
-        private void UpdateCustomerProductItem(ProductItemPM itemPM)
-        {
-            ProductItem itemPoco = productItemRepository.GetSingleProductItem(itemPM.Id, tenant);
-            ProductItemValidating.Validate(itemPM, entityPM);
-            ProductItemMapping.MapEntity(itemPM, itemPoco, false);
-
-            if (itemPM.HTSCodeChangeSet != null)
-            {
-                foreach (HTSCodePM hTSCodePM in itemPM.HTSCodeChangeSet)
-                {
-                    switch (hTSCodePM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateCustomerProductItemHTSCode(hTSCodePM, itemPM.Id);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Update:
-                            {
-                                this.UpdateCustomerProductItemHTSCode(hTSCodePM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteCustomerProductItemHTSCode(hTSCodePM);
-                                break;
-                            }
-
-                        default: { break; }
-                    }
-                }
-            }
-
-            productItemRepository.Update(itemPoco);
-        }
-        private void DeleteCustomerProductItem(ProductItemPM itemPM)
-        {
-            ProductItem itemPoco = productItemRepository.GetSingleProductItem(itemPM.Id, tenant);
-
-            if (itemPoco != null)
-            {
-                List<HTSCode> hTSCodes = hTSCodeRepository.GetHTSCodes(itemPM.Id, tenant).ToList();
-
-                foreach (HTSCode hTSCode in hTSCodes)
-                {
-                    hTSCodeRepository.Remove(hTSCode);
-                }
-
-                productItemRepository.Remove(itemPoco);
-            }
-        }
-
-        private void CreateCustomerProductItemHTSCode(HTSCodePM itemPM, string itemId)
-        {
-            itemPM.Id = IdCounter.GetNumber("HTSCode", tenant);
-            itemPM.ItemId = itemId;
-            itemPM.Tenant = tenant;
-
-            HTSCode itemPoco = new HTSCode()
-            {
-                ItemId = itemPM.ItemId,
-                Tenant = tenant
-            };
-
-            HTSCodeMapping.MapEntity(itemPM, itemPoco, true);
-            hTSCodeRepository.Add(itemPoco);
-        }
-        private void UpdateCustomerProductItemHTSCode(HTSCodePM itemPM)
-        {
-            HTSCode itemPoco = hTSCodeRepository.GetSingleHTSCode(itemPM.Id, tenant);
-
-            if (itemPoco != null)
-            {
-                HTSCodeMapping.MapEntity(itemPM, itemPoco, false);
-                hTSCodeRepository.Update(itemPoco);
-            }
-        }
-        private void DeleteCustomerProductItemHTSCode(HTSCodePM itemPM)
-        {
-            HTSCode itemPoco = hTSCodeRepository.GetSingleHTSCode(itemPM.Id, tenant);
-
-            if (itemPoco != null)
-            {
-                hTSCodeRepository.Remove(itemPoco);
-            }
-        }
-
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();
@@ -1948,18 +1692,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             itemContactPM.CardId = this.entityPM.Id;
             itemContactPM.CompanyName = this.entityPM.EnglishName;
-            itemContactPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             if (itemContactPM.IsCreatedWithPartner)
             {
                 if (!string.IsNullOrEmpty(itemContactPM.Email))
                 {
                     itemContactPM.Id = entityPM.ExistedContactId;
-                }
-
-                if (string.IsNullOrEmpty(itemContactPM.Id) && itemContactPM.IsAPIContact)
-                {
-                    itemContactPM.Id = contactRepository.GetSingleContactByEmail(itemContactPM.Email, tenant, false)?.Id;
                 }
 
                 if (string.IsNullOrEmpty(itemContactPM.Id))
@@ -2043,21 +1781,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     #endregion
                 }
-                else
-                {
-                    Contact newContact = contactRepository.GetSingleContact(itemContactPM.Id, itemContactPM.Tenant);
-
-                    ContactMapping.MapEntity(itemContactPM, newContact, isNewEntity);
-                    contactRepository.Update(newContact);
-                }
 
                 if (isNewEntity)
                 {
                     if (itemContactPM.SetAsPrimaryForCard)
                     {
                         entityPM.PrimaryContactId = itemContactPM.Id;
-                        entityPM.PrimaryContactPhone = itemContactPM.BusinessPhone;
-                        entityPM.PrimaryContactName = itemContactPM.EnglishName;
                     }
                 }
 
@@ -2123,25 +1852,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private void AddCardKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Card" },
-                { "EntityId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
-        }
         public void Submit()
         {
             contactRepository.SubmitChanges();
@@ -2186,7 +1896,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             CustomerService service = new CustomerService(objectContext, entityPM);
-            service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), new List<CustomerSalesmanByProductPM>(), new List<CustomerAccountManagerByProductPM>(), new List<CustomerCustomsAgentByProductPM>(), new List<CustomerForwarderByProductPM>(), new List<CustomerMediatorByProductPM>(), new List<CardExternalCodeByCurrencyPM>(), new List<ProductItemPM>());
+            service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), new List<CustomerSalesmanByProductPM>(), new List<CustomerAccountManagerByProductPM>(), new List<CustomerCustomsAgentByProductPM>(), new List<CustomerForwarderByProductPM>(), new List<CustomerMediatorByProductPM>(), new List<CardExternalCodeByCurrencyPM>());
             service.OverrideLoggingUserId = LoggingUserId;
             service.Update();
 

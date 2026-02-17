@@ -25,7 +25,7 @@ import {VendorMessagesService} from '../../../../../Customs/Services/WebServices
 import {CustomsVendorPMService} from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddVendorCommunicationComponent.html',
 })
 
@@ -114,7 +114,7 @@ export class AddVendorCommunicationComponent extends BaseComponent {
         addParams.CommunicationDevices = [];
         addParams.CommunicationDevices.push(communicationResult);
 
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,addParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", true).then((res) => {
+        CustomMessageProgressComponent.ShowProgressBar(addParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", true).then((res) => {
             console.log("[Send] Response/ShowProgressBar : ", res);
         }).catch((err) => {
             this.ValidationErrorsList.push(err);

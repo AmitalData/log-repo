@@ -8,7 +8,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.WebServices;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.WebPages
@@ -47,7 +47,7 @@ namespace WebFreight.Web.WebPages
                     {
                         Uploader up = new Uploader();
                         var containername = StorageAcountDetails.GetCurrentContainer((int)tenant);
-                        byte[] _DatainByte = up.DownloadStaticFile(filename, containername.Name,(int)tenant);
+                        byte[] _DatainByte = up.DownloadStaticFile(filename, containername.Name);
 
                         if (_DatainByte != null)
                         {

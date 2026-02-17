@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using IsolationLevel = System.Transactions.IsolationLevel;
 
 namespace Simplog.Server.Infrastructure
 {
@@ -37,32 +36,21 @@ namespace Simplog.Server.Infrastructure
         FixedSizedQueue<string> _MyLogQueue = new FixedSizedQueue<string>(30);
         abstract public LogitudeDBSchema LogitudeDBSchema { get; }
 
-        public DbContextBase(DbConnection connection, DbCompiledModel model)
-: base(connection, model, contextOwnsConnection: false)
-        {
-            Database.Connection.StateChange += Connection_StateChange;
-        }
-
         public DbContextBase()
             : base()
         {
-            if (LogitudeSettings.DatabaseManagementSystem.Equals("oracle", StringComparison.OrdinalIgnoreCase))
+            var itzikHave2rememberToCheck = false;
+            if (itzikHave2rememberToCheck)
             {
-                var itzikHave2rememberToCheck = true;
-                if (itzikHave2rememberToCheck)
-                {
-                    //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
-                    (this as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-                }
+                (this as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = true; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
             }
 
-            Database.Connection.StateChange += Connection_StateChange;
+            
             ///this.Database.CommandTimeout = 240;
             InitLog();
         }
         public override int SaveChanges()
         {
-            bool suppressThrow = false;
             var saveChangeLogger = CreateLogger();
             var commandTimeout = this.Database.CommandTimeout;
             try
@@ -77,14 +65,7 @@ namespace Simplog.Server.Infrastructure
                 {
                     this.Database.CommandTimeout = to;
                 }
-                else if(ApplicationAppInfo.WorkerRoleCall)
-                {
-                    this.Database.CommandTimeout = 10; 
-                }
-                else if (!ApplicationAppInfo.WorkerRoleCall)
-                {
-                    this.Database.CommandTimeout = 15; 
-                }
+
                 var intSave = base.SaveChanges();
                 var testEx = false;
                 if (testEx)
@@ -97,10 +78,6 @@ namespace Simplog.Server.Infrastructure
             {
                 var e1 = ExceptionFormatDbEntityUtil.GetFormated(myDbEntityValidationException);
                 AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Information);
-                if (suppressThrow)
-                {
-                    return -999;
-                }
                 throw e1;
             }
             catch (DbUpdateException dbu)
@@ -115,11 +92,6 @@ namespace Simplog.Server.Infrastructure
                     }
                 }
                 //AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Error); 
-                if (suppressThrow)
-                {
-                    return -999;
-                }
-
                 throw dbu;
             }
             catch (Exception e)
@@ -133,11 +105,6 @@ namespace Simplog.Server.Infrastructure
                 {
                     AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
                 }
-                if (suppressThrow)
-                {
-                    return -999;
-                }
-
                 throw;
             }
 
@@ -168,7 +135,7 @@ namespace Simplog.Server.Infrastructure
                 myHeader += ":";
             }
             catch { }
-            return myHeader + "~" + mySaveLog + "~" + myStack; ;
+            return myHeader + mySaveLog + myStack; ;
 
 
 
@@ -240,25 +207,6 @@ namespace Simplog.Server.Infrastructure
         }
         private void InitLog()
         {
-/*#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached) // Double-check that a debugger is active
-            {
-                base.Database.Log = delegate (string s)
-                {
-                    if (s == Environment.NewLine)
-                    {
-                        return;
-                    }
-                    if (s.Contains("SELECT") || s.Contains("connection"))
-                    {
-                        Debug.WriteLine(base.GetType().Name + " ***** " + base.Database.Connection.ConnectionString);
-                    }
-                    Debug.WriteLine(s);
-                };
-            }
-#endif*/
-
-            //this.Database.Log += EnqueueLog;
             if (LogitudeSettings.DatabaseManagementSystem != "oracle")
             {
                 return;
@@ -267,20 +215,17 @@ namespace Simplog.Server.Infrastructure
             {
                 return;
             }
-
-
             if (DbContextBaseUtil.ToLog == null)
             {
                 DbContextBaseUtil.ToLog = false;
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"DbContextBase:ToLog:(Default:False due Memory Leak if not Disposed)Any time any place u can set: 
+                Debug.WriteLine(@"DbContextBase:ToLog:(Default:False due Memory Leak if not Disposed)Any time any place u can set: 
 Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 AmitalDebuggerUtil.Break();
             }
             Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog = Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog;
             if (DbContextBaseUtil.ToLog.GetValueOrDefault())
             {
-                Simplog.Server.Infrastructure.Helpers.TransactionFactory.RegisterTransactionCompleted();
                 this.Database.Log += EnqueueLog;
             }
 
@@ -293,7 +238,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 {
                     return;
                 }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
+                Debug.WriteLine(mess);
                 _MyLogQueue.Enqueue(mess);
             }
             catch (Exception)
@@ -308,13 +253,9 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         {
             try
             {
-
-
                 if (this.Database != null)
                 {
                     this.Database.Log -= EnqueueLog;
-                    Database.Connection.StateChange -= Connection_StateChange;
-
                 }
             }
             catch (Exception)
@@ -328,76 +269,17 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         public DbContextBase(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
-            Database.Connection.StateChange += Connection_StateChange;
             InitLog();
         }
         public DbContextBase(DbConnection existingConnection, bool contextOwnsConnection)
             : base(existingConnection, contextOwnsConnection)
         {
-            Database.Connection.StateChange += Connection_StateChange;
             InitLog();
         }
 
-        private void Connection_StateChange(object sender, StateChangeEventArgs args)
-        {
-            if (LogitudeSettings.System2RedirectFraction == 0)
-            {
-                return;
-            }
-            if (ApplySnapshotIsolation())
-            {
-                SetTransactionIsolationLevel(args);
-            }
-        }
-
-        private bool ApplySnapshotIsolation()
-        {
-            Random random = new Random();
-            var LuckyNumber = random.Next(1, 101);
-            return ((LuckyNumber % LogitudeSettings.System2RedirectFraction) == 0);
-        }
-
-        private void SetTransactionIsolationLevel(StateChangeEventArgs args)
-        {
-            if (args.CurrentState == ConnectionState.Open && args.OriginalState != ConnectionState.Open)
-            {
-               
-                    using (var command = Database.Connection.CreateCommand())
-                    {
-                        if (Transaction.Current == null)
-                        {
-                            command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
-                        }
-       
-                        else
-                        {
-                            switch (Transaction.Current.IsolationLevel)
-                            {
-                                case IsolationLevel.ReadCommitted:
-                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL READ COMMITTED";
-                                    break;
-                                case IsolationLevel.ReadUncommitted:
-                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED";
-                                    break;
-                                case IsolationLevel.Snapshot:
-                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
-                                    break;
-                                case IsolationLevel.Serializable:
-                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE";
-                                    break;
-                                default:
-                                    throw new ArgumentOutOfRangeException();
-                            }
-                            command.ExecuteNonQuery();
-                        }
-                }
-            }
-        }
-
- static string _UserSlashPass = null;
         public void ExecuteInSys(string mainConnectionString, List<string> unifreightTables, Func<string> GetConnetionStringFunc)
         {
-            var UserSlashPass = _UserSlashPass??GetConnetionStringFunc();
+            var UserSlashPass = GetConnetionStringFunc();
             var UserSlashPassList = new List<string>(UserSlashPass.Split(new char[] { '/' }));
 
             var main_ocsb = new OracleConnectionStringBuilder(mainConnectionString);
@@ -422,28 +304,9 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             {
                 foreach (var line in lines)
                 {
-
-                    try
-                    {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(line + " ;");
-                        OracleCommand myCommand = mySysConnection.CreateCommand(line);//"INSERT INTO Test.Dept(DeptNo, DName) Values(50, 'DEVELOPMENT')");
-                        myCommand.ExecuteNonQuery();
-
-                    }
-                    catch (Exception e)
-                    {
-
-                        Console.WriteLine(line);
-                        if (line.Contains(".GAQ"))
-                        {
-                            
-                        }
-                        else
-                        {
-                            throw new Exception(line, e);
-                        }
-                        
-                    }
+                    Debug.WriteLine(line + " ;");
+                    OracleCommand myCommand = mySysConnection.CreateCommand(line);//"INSERT INTO Test.Dept(DeptNo, DName) Values(50, 'DEVELOPMENT')");
+                    myCommand.ExecuteNonQuery();
                 }
 
             }
@@ -482,10 +345,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 Type type = //Type.GetType(typeName);
                             //item.GetType().Assembly.GetType(typeName);
                     this.GetType().Assembly.GetType(typeName);
-                if (type==null)
-                {
-                    throw new Exception($"Problem with DbSet<{typeName}> defintion .. Maybe namespace not  Unifreight.Data.AmitalModel.EntityPOCOs ");
-                }
+
                 string sql = this.Set(type).ToString();
 
                 var m = objectRegex.Match(sql);
@@ -587,7 +447,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
             private void LogMe(string mess)
             {
-                if (_StringBuilder == null)
+                if(_StringBuilder == null)
                     _StringBuilder = new StringBuilder();
                 if (mess == Environment.NewLine)
                 {
@@ -622,101 +482,6 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 LogMe(ExplainLog);
             }
         }
-
-
-        public Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
-        where returnType : struct
-        {
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sqlReturn1Row);
-            ////sqlReturn1Row = sqlReturn1Row.TrimEnd(" "[0]).TrimEnd(";"[0]);
-            using (var command = this.Database.Connection.CreateCommand())
-            {
-
-
-                if (this.Database.Connection.State != System.Data.ConnectionState.Open)
-                {
-                    this.Database.Connection.Open();
-                }
-                command.CommandText = sqlReturn1Row;
-
-
-                using (var dataReader = command.ExecuteReader(CommandBehavior.CloseConnection | CommandBehavior.SingleResult)
-                    )
-                {
-
-                    if (dataReader.FieldCount < 1)
-                    {
-                        return null;
-                    }
-
-                    if (!dataReader.Read())
-                    {
-                        return null;
-                    }
-                    if (dataReader.IsDBNull(0))
-                    {
-                        return null;
-                    }
-
-
-
-                    var ReturnValue = GetReturnTypeFromReader(dataReader);
-
-                    return ReturnValue;
-                }
-            }
-
-        }
-
-        public int ExecuteNonQuery(string sqlReturn1Row)
-        {
-
-
-
-
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sqlReturn1Row);
-
-
-
-            using (var connection =
-              new OracleConnection(
-                  /*"User Id=Scott;Password=tiger;Data Source=Ora;"*/
-                  this.Database.Connection.ConnectionString)
-            )
-            {
-                using (var command = new OracleCommand(sqlReturn1Row, connection))
-                {
-                    ///AddParams(command, MyParams);
-                    command.CommandType = CommandType.Text;
-                    int rowsAffected = command.ExecuteNonQuery();
-                    // todo get affected ????????????
-                    //For UPDATE, INSERT, and DELETE statements, the return value is the number of rows affected by the command. For all other types of statements, the return value is -1. If a rollback occurs, the return value is also -1.
-
-                    return rowsAffected;
-
-
-                }
-            }
-
-            //using (var command = this.Database.Connection.CreateCommand())
-            //{
-
-
-            //    if (this.Database.Connection.State != System.Data.ConnectionState.Open)
-            //    {
-            //        this.Database.Connection.Open();
-            //    }
-            //    command.CommandText = sqlReturn1Row;
-
-
-            //    int affect = command.ExecuteNonQuery();
-            //    return affect;
-
-            //}
-
-        }
-
-
     }
 
     public static class LogitudeExceptionExtU
@@ -775,7 +540,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         }
     }
 
-    public static class DbModelBuilderExt
+    static class DbModelBuilderExt
     {
 
 
@@ -784,7 +549,10 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             string ConnSchemaUserId)
         {
 
-          
+            if (LogitudeSettings.DatabaseManagementSystem != "oracle")
+            {
+                return;
+            }
             if (schema == LogitudeDBSchema.none)
             {
                 throw new Exception("LogitudeDBSchema.none !!?????");
@@ -941,22 +709,22 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             return oraCSB;
         }
 
-        public static string GetSchemaAMITAL_DB(int tenantSeed = 1)
+        public static string GetSchemaAMITAL_DB()
         {
             Devart.Data.Oracle.OracleConnectionStringBuilder csb = null;
             if (true)
             {
-                //const int DEFAULT_CUSTOMS_axiom_Tenant = 1;
+                const int DEFAULT_CUSTOMS_axiom_Tenant = 1;
                 string dbConnectionInfo = "";
                 if (LogitudeSettings.GetLogitudeCustomsSettingsMInject != null)
                 {
-                    dbConnectionInfo = LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenantSeed).UnfConnectionString;
+                    dbConnectionInfo = LogitudeSettings.GetLogitudeCustomsSettingsMInject(DEFAULT_CUSTOMS_axiom_Tenant).UnfConnectionString;
 
                 }
                 else
                 {
                     //using from filiing/OpenAccess service 
-                    dbConnectionInfo = LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject(tenantSeed);
+                    dbConnectionInfo = LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject(DEFAULT_CUSTOMS_axiom_Tenant);
                 }
                 csb = GetOracleConStrBuilder(dbConnectionInfo);
             }
@@ -998,9 +766,9 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
 
     public static class DbContextBaseSqlServerExt
-    //4 Accounting streaming 
+        //4 Accounting streaming 
     {
-
+        
 
         /// <summary> 
         /// Execute stored procedure with single table value parameter. 

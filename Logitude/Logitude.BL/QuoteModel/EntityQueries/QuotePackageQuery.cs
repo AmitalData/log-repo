@@ -5,7 +5,6 @@ using System.Web;
 using Simplog.Data.QuoteModel.Repositories;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.QuoteModel.EntityQueries
 {
@@ -24,32 +23,23 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         public QuotePackagePM GetSinglePM(string id, int tenant)
         {
             QuotePackagePM quotePackages = (from a in repository.context.QuotePackages.Include("PackageType")
-                                            where a.Tenant == tenant && a.Id == id
+                                                  where a.Tenant == tenant && a.Id == id
                                             select new QuotePackagePM()
-                                            {
-                                                Height = a.Height,
-                                                Id = a.Id,
-                                                Length = a.Length,
-                                                PackageTypeId = a.PackageTypeId,
-                                                PackageTypeName = a.PackageType != null ? a.PackageType.EnglishName : null,
-                                                Quantity = a.Quantity,
-                                                QuoteId = a.QuoteId,
-                                                Tenant = a.Tenant,
-                                                Volume = a.Volume,
-                                                GrossWeight = a.GrossWeight,
-                                                Width = a.Width,
-                                                VolumetricWeight = a.VolumetricWeight,
-                                            }).FirstOrDefault();
+                                                  {
+                                                      Height = a.Height,
+                                                      Id = a.Id,
+                                                      Length = a.Length,
+                                                      PackageTypeId = a.PackageTypeId,
+                                                      PackageTypeName = a.PackageType != null ? a.PackageType.EnglishName : null,
+                                                      Quantity = a.Quantity,                                                      
+                                                      QuoteId = a.QuoteId,
+                                                      Tenant = a.Tenant,
+                                                      Volume = a.Volume,
+                                                      GrossWeight = a.GrossWeight,
+                                                      Width = a.Width,
+                                                      VolumetricWeight = a.VolumetricWeight,
+                                                  }).FirstOrDefault();
 
-            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
-            {
-                Tenant = tenant,
-                EntityId = quotePackages.QuoteId,
-                ObjectTableName = "Quote",
-                ChildObjectTableName = "QuotePackage",
-                ChildEntityId = quotePackages?.Id,
-                ChildEntities = new List<object>() { quotePackages }.ToList()
-            });
             return quotePackages;
         }
 
@@ -70,7 +60,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                                  Volume = a.Volume,
                                                                  GrossWeight = a.GrossWeight,
                                                                  Width = a.Width,
-                                                                 VolumetricWeight = a.VolumetricWeight,                                                       };
+                                                                 VolumetricWeight = a.VolumetricWeight,
+                                                             };
             return quotePackages;
         }
 
@@ -130,15 +121,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
                 item.Dimensions = myDimensions;
             }
-
-            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
-            {
-                Tenant = tenant,
-                EntityId = quoteId,
-                ObjectTableName = "Quote",
-                ChildObjectTableName = "QuotePackage",
-                ChildEntities = myResult.Cast<object>().ToList()
-            });
 
             return myResult;
         }

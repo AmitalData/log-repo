@@ -99,9 +99,6 @@ export class ActivityList {
 	DueDateDateField: string;
 	BusinessProcessQueueName: string;
 	TeamName: string;
-	LeadSourceId: string;
-	LeadSourceName: string;
-	CustomerCode: string;
 	
 }
  

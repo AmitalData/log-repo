@@ -143,34 +143,11 @@ export class CorrespondencePM {
             this.attachments = newValue;
         }
     }
-    private contactImageDetailId: string;
-    public get ContactImageDetailId() { return this.contactImageDetailId; }
-    public set ContactImageDetailId(newValue: string) { if (this.contactImageDetailId != newValue) { this.contactImageDetailId = newValue; this.MarkAsDirty("ContactImageDetailId"); } }
-       
-	 
-    private contactDefaultColor: string;
-    public get ContactDefaultColor() { return this.contactDefaultColor; }
-    public set ContactDefaultColor(newValue: string) { if (this.contactDefaultColor != newValue) { this.contactDefaultColor = newValue; this.MarkAsDirty("ContactDefaultColor"); } }
-       
-	 
-    private contactIndexColor: number;
-    public get ContactIndexColor() { return this.contactIndexColor; }
-    public set ContactIndexColor(newValue: number) { if (this.contactIndexColor != newValue) { this.contactIndexColor = newValue; this.MarkAsDirty("ContactIndexColor"); } }
-       
-	 
-    private isContainsQuotationAttachment: boolean;
-    public get IsContainsQuotationAttachment() { return this.isContainsQuotationAttachment; }
-    public set IsContainsQuotationAttachment(newValue: boolean) { if (this.isContainsQuotationAttachment != newValue) { this.isContainsQuotationAttachment = newValue; this.MarkAsDirty("IsContainsQuotationAttachment"); } }
-       
-	 
 
     public OldEntityPM: CorrespondencePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -178,7 +155,6 @@ export class CorrespondencePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Correspondence");
            
         }
-       }
     }
 
     private MyClone: CorrespondencePM;

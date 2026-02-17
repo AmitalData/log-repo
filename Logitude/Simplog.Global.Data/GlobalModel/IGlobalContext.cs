@@ -1,4 +1,5 @@
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
@@ -24,7 +25,6 @@ namespace Simplog.Global.Data.GlobalModel
         IDbSet<PaymentCurrency> PaymentCurrencies { get; }
         IDbSet<AutoSignupEmail> AutoSignupEmails { get; }
         IDbSet<BluesnapContract> BluesnapContracts { get; }
-        IDbSet<BluesnapTransaction> BluesnapTransactions { get; }
         IDbSet<AWBMessagesCCSType> AWBMessagesCCSTypes { get; }
         IDbSet<ContactMobileDevice> ContactMobileDevices { get; }
         IDbSet<MobileNotificationLog> MobileNotificationLogs { get; }
@@ -46,9 +46,7 @@ namespace Simplog.Global.Data.GlobalModel
         IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; }
         IDbSet<WebhookKeys> WebhookKeys { get; }
         IDbSet<BluesnapContractType> BluesnapContractTypes { get; }
-        IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; }
-        IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys { get; }
-        IDbSet<AuthenticationToken> AuthenticationTokens { get; }
+
 
         string GetCurrentConnection();
         void SetAsModified(object entity);

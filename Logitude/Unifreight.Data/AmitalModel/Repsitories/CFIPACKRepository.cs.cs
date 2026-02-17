@@ -73,7 +73,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             context.SaveChanges();
         }
 
-        public List<CFIPACK> GetMulti(long FILENO)
+        public List<CFIPACK> GetMulti(int FILENO)
         {
             return (from a in context.CFIPACKs
                     where a.FILENO == FILENO

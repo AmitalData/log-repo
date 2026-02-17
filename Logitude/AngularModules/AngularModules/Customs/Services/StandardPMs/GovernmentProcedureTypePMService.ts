@@ -6,9 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -24,220 +23,231 @@ import {GovernmentProcedureTypePM} from '../../EntityPMs/GovernmentProcedureType
 @Injectable()
 
 export class GovernmentProcedureTypePMService {
-  private _http: HttpClient;
-  private _apiUrl: string;
-  constructor() {
-    this._http = ServiceHelper.HttpClient;
-    this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/governmentproceduretypes';
-  }
+ private _http: Http;
+ private _apiUrl: string;
+ constructor() {
+        this._http = ServiceHelper.Http;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/governmentproceduretypes';      
+    }
 
-  get(code: string) {
+ get(code: string) {
+         
+         
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();		
+		 return Observable.defer(() => {
+                return this._http.get(this._apiUrl+'/getsingle?'+'code=' + code, {
+                    headers: authHeader
+                }).map(response => {
+                    var pm = response.json();
 
+                   
+					
+                    var entity: GovernmentProcedureTypePM;
+					if(pm)
+					{
+                      entity = this.MapJsonToEntityPM(pm);
+                    }
 
-    var callTime = new Date();
-    return defer(() => {
-      return this._http.get(this._apiUrl + '/getsingle?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
-        .pipe(
-          map((response: HttpResponse<any>) => {
-            var pm = response.body;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+              
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GovernmentProcedureType", "GetSinglePM", 'code=' + code);
+				 
+                return serviceResponse;
 
+            }).catch(ServiceHelper.HandleServiceError);
+            });                    
+    }
 
+	 insert(entityPM: GovernmentProcedureTypePM) {
+ 
+        var callTime = new Date();        
+        return Observable.defer(() => {
 
-            var entity: GovernmentProcedureTypePM;
-            if (pm) {
-              entity = this.MapJsonToEntityPM(pm);
+                var authHeader = new Headers();
+                authHeader.append('Token', SessionInfo.Token);
+                authHeader.append('Content-Type', 'application/json');
+
+                var validator: ClassLevelValidator;
+                 
+                validator = new ClassLevelValidator();
+                 
+                var errorsArray = validator.Validate("Customs.GovernmentProcedureType", entityPM);
+                 
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+				 if (errorsArray.length == 0) {
+                    var mappedEntity: GovernmentProcedureTypePM;
+                    mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+				
+				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                        { headers: authHeader }).map((response) => {
+
+                            var pm = response.json();
+							if(pm)
+							{
+                               var mappedResult:  GovernmentProcedureTypePM;
+                               mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
+							   serviceResponse.Result = mappedResult;
+							}
+							
+
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GovernmentProcedureType", "SaveChanges", "");                    
+												 
+                            
+                            return serviceResponse;
+
+                        }).catch(ServiceHelper.HandleServiceError);
+                }
+                else {
+
+                    serviceResponse.HasError = true;
+                    serviceResponse.ErrorsArray = errorsArray;
+
+                    return Observable.of(serviceResponse);
+                   
+                }
             }
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            serviceResponse.Result = entity;
-
-            var servertime = response.headers.get('ServerExecutionTime');
-            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GovernmentProcedureType", "GetSinglePM", 'code=' + code);
-
-            return serviceResponse;
-
-          }), catchError(ServiceHelper.HandleServiceError));
-    });
-  }
-
-  insert(entityPM: GovernmentProcedureTypePM) {
-
-    var callTime = new Date();
-    return defer(() => {
-
-      var validator: ClassLevelValidator;
-
-      validator = new ClassLevelValidator();
-
-      var errorsArray = validator.Validate("Customs.GovernmentProcedureType", entityPM);
-
-
-      var serviceResponse: ServiceResponse;
-      serviceResponse = new ServiceResponse();
-      if (errorsArray.length == 0) {
-        var mappedEntity: GovernmentProcedureTypePM;
-        mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-        return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-          .pipe(
-            map((response: HttpResponse<any>) => {
-
-              var pm = response.body;
-              if (pm) {
-                var mappedResult: GovernmentProcedureTypePM;
-                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                serviceResponse.Result = mappedResult;
-              }
-
-
-              var servertime = response.headers.get('ServerExecutionTime');
-              PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GovernmentProcedureType", "SaveChanges", "");
-
-
-              return serviceResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-      }
-      else {
-
-        serviceResponse.HasError = true;
-        serviceResponse.ErrorsArray = errorsArray;
-
-        return of(serviceResponse);
-
-      }
+            );
     }
 
-    );
-  }
+    update(entityPM: GovernmentProcedureTypePM) {
 
-  update(entityPM: GovernmentProcedureTypePM) {
+            var callTime = new Date();         
+            return Observable.defer(() => {
 
-    var callTime = new Date();
-    return defer(() => {
+                var authHeader = new Headers();
+                authHeader.append('Token', SessionInfo.Token);
+                authHeader.append('Content-Type', 'application/json');
 
+                var validator: ClassLevelValidator;
+                 
+                validator = new ClassLevelValidator();
+               
+                var errorsArray = validator.Validate("Customs.GovernmentProcedureType", entityPM);
+                 
 
-      var validator: ClassLevelValidator;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+				 if (errorsArray.length == 0) {
+                    var mappedEntity: GovernmentProcedureTypePM;
+                    mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+				
+				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                        { headers: authHeader }).map((response) => {
+                 
 
-      validator = new ClassLevelValidator();
+                            var pm = response.json();
+							if(pm)
+							{
+                               var mappedResult:  GovernmentProcedureTypePM;
+                               mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
+							   serviceResponse.Result = mappedResult;
+							 }
+							 
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GovernmentProcedureType", "SaveChanges", "");                    
+					                           
+                            return serviceResponse;
 
-      var errorsArray = validator.Validate("Customs.GovernmentProcedureType", entityPM);
+                        }).catch(ServiceHelper.HandleServiceError);
+                }
+                else {
 
+                    serviceResponse.HasError = true;
+                    serviceResponse.ErrorsArray = errorsArray;
 
-      var serviceResponse: ServiceResponse;
-      serviceResponse = new ServiceResponse();
-      if (errorsArray.length == 0) {
-        var mappedEntity: GovernmentProcedureTypePM;
-        mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+                    return Observable.of(serviceResponse);
+                   
+                }
+            }
 
-        return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-          .pipe(
-            map((response: HttpResponse<any>) => {
+            );
 
-
-              var pm = response.body;
-              if (pm) {
-                var mappedResult: GovernmentProcedureTypePM;
-                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                serviceResponse.Result = mappedResult;
-              }
-
-              var servertime = response.headers.get('ServerExecutionTime');
-              PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GovernmentProcedureType", "SaveChanges", "");
-
-              return serviceResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-      }
-      else {
-
-        serviceResponse.HasError = true;
-        serviceResponse.ErrorsArray = errorsArray;
-
-        return of(serviceResponse);
-
-      }
     }
 
-    );
+   
 
-  }
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: GovernmentProcedureTypePM = null) {
 
-
-
-  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: GovernmentProcedureTypePM = null) {
-
-
-    if (!entityPM) {
-
-      entityPM = new GovernmentProcedureTypePM();
-    }
-
-    var customFields: Array<string> = [];
-    for (var i = 1; i < 11; i++) {
-      customFields.push("Field" + i);
-    }
-    var jsonPMKeys = Object.keys(jsonPM);
-
-    for (var key in jsonPMKeys) {
-      if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
-
-        continue;
-      }
-      var property = jsonPMKeys[key];
-
-      if (customFields.indexOf(property) > -1) {
-        if (jsonPM[property]) {
-          var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
-          entityPM[property] = customFieldClass;
+         
+        if (!entityPM) {
+            
+            entityPM = new GovernmentProcedureTypePM();
         }
-      }
-      else {
-        entityPM[property] = jsonPM[property];
-      }
 
+		var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+            var jsonPMKeys = Object.keys(jsonPM);
+
+            for (var key in jsonPMKeys) {
+			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+
+                continue;
+            }
+                var property = jsonPMKeys[key];
+				
+			  if(customFields.indexOf(property) > -1)
+                {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
+                entityPM[property] = jsonPM[property];
+            }
+                 
+            }
+			
+			 
+            entityPM.IsDirty = false;
+
+		if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+
+		}
+        else {
+
+            entityPM.OldEntityPM = null;
+        }
+
+        return entityPM;
     }
 
 
-    entityPM.IsDirty = false;
+	  public clone(jsonPM: any) {
+        var entityPM: any;
+        entityPM = {};
 
-    if (mapParent) {
-      entityPM.OldEntityPM = this.clone(entityPM);
+        var jsonPMKeys = Object.keys(jsonPM);
+        for (var key in jsonPMKeys) {
+            
+            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+                continue;
+            }
 
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+
+        }
+        return entityPM;
     }
-    else {
 
-      entityPM.OldEntityPM = null;
+	  public GetNewEntityPM() {		 
+		    var entityPM: GovernmentProcedureTypePM;
+			entityPM = new GovernmentProcedureTypePM();
+			return entityPM;
     }
-
-    return entityPM;
-  }
-
-
-  public clone(jsonPM: any) {
-    var entityPM: any;
-    entityPM = {};
-
-    var jsonPMKeys = Object.keys(jsonPM);
-    for (var key in jsonPMKeys) {
-
-      if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
-        continue;
-      }
-
-      var property = jsonPMKeys[key];
-      entityPM[property] = jsonPM[property];
-
-    }
-    return entityPM;
-  }
-
-  public GetNewEntityPM() {
-    var entityPM: GovernmentProcedureTypePM;
-    entityPM = new GovernmentProcedureTypePM();
-    return entityPM;
-  }
-
+		 
 
 }

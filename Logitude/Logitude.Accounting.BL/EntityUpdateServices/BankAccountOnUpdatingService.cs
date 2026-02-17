@@ -49,40 +49,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            
 
             entityPM.SearchFields = entityPM.AccountNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.BranchNumber;
-            if (!entityPM.ChequeCounter.HasValue)
-            {
-                var nextSerial = entityPM.ChequeCounterSerials.FirstOrDefault(c => !c.Inactive);
-                if (nextSerial != null)
-                {
-                    entityPM.ChequeCounter = nextSerial.ChequeCounterBegin;
-                    entityPM.ChequeCounterSeriesID = nextSerial.SeriesId;
-                }
-            }
-            else
-            {
-                var currentSerial = entityPM.ChequeCounterSerials?.FirstOrDefault(c => c.SeriesId == entityPM.ChequeCounterSeriesID);
-                if (currentSerial!=null &&currentSerial.Inactive)
-                {
-                    var nextSerial = entityPM.ChequeCounterSerials.FirstOrDefault(c => !c.Inactive && c.SeriesId > entityPM.ChequeCounterSeriesID);
-                    if (nextSerial != null)
-                    {
-                        entityPM.ChequeCounter = nextSerial.ChequeCounterBegin;
-                        entityPM.ChequeCounterSeriesID = nextSerial.SeriesId;
-                    }
-                }
-                else
-                {
-                    if (entityPM.ChequeCounter > currentSerial?.ChequeCounterEnd)
-                    {
-                        var nextSerial = entityPM.ChequeCounterSerials.FirstOrDefault(c => !c.Inactive && c.SeriesId > entityPM.ChequeCounterSeriesID);
-                        if (nextSerial != null)
-                        {
-                            entityPM.ChequeCounter = nextSerial.ChequeCounterBegin;
-                            entityPM.ChequeCounterSeriesID = nextSerial.SeriesId;
-                        }
-                    }
-                }
-            }
+
         }
 
         public virtual DateTime GetCurrentDateTime(int tenant)

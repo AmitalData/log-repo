@@ -1,253 +1,592 @@
+﻿<style>
+    .tab-footer {
+        background: white;
+        height: 55px;
+        border-top: 1px solid #d1d1d1;
+        margin-right: -1px;
+        padding: 7px 10px;
+    }
 
-<style>
-    .TabTitle > div{
-        font-size: 18px !important;
+    .orangeCircle {
+        background: #ff7920 !important;
     }
-    .DisbleBox {
-        display: inline-block;
-        border: 1px solid #ffd800;
-        border-radius: 5px;
-        background: #faf5c0;
-        padding: 2px 10px;
-        margin: 5px;
-        color: gray;
-        font-family: sans-serif;
+
+    .circleDraw {
+        background: #00b1e9;
+        margin: 0 auto;
+        margin-top: 7px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        display: block;
     }
+
+    .bg{
+        background: #d5eaf1;
+    }
+
+    .Disabled {
+        background: red;
+        opacity: 0.5;
+    }
+
+    .footer-title {
+        color: #1692ef;
+        font-size: 15px;
+    }
+
+    .footer-cell {
+        float: left;
+        padding: 5px;
+        margin: 0px 10px;
+        width: 150px;
+        text-align: center;
+        overflow: auto;
+    }
+
+    .footer-summery::before, .footer-summery::after {
+        clear: both;
+    }
+
+    .footer-summery {
+        height: 100%;
+        padding-left: 20px;
+    }
+
+    .border-left {
+        border-left: 1px solid #dadada;
+    }
+    .red{color: #d53737 !important;}
+
+    .SimpleGridHeaderRow{
+        pointer-events: none;
+    }
+
+    .SimpleGridViewRow:hover{
+        background: #f8f8f8;
+    }
+
+    .SimpleGridViewRow:hover .trashIcon{
+        display: block !important;
+    }
+
+    .trashIcon{
+        opacity: 0.6;
+    }
+
+    .trashIcon:hover{
+        opacity: 1;
+    }
+
+    .NoRows{
+        text-align: center;
+        color: #a0a0a0;
+        font-size: 15px;
+        font-style: italic;
+        font-family: verdana;
+        vertical-align: middle;
+        position: relative;
+        height: 100px;
+    }
+
+    /* Override ComboBox styles */
+    .ComboBox {
+        outline: none !important;
+        font-size: 11px !important;
+        color: #45494A !important;
+        -webkit-border-radius: 3px !important;
+        -moz-border-radius: 3px !important;
+        border-radius: 3px !important;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA !important;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA !important;
+        box-shadow: inset 0 0 3px #AAAAAA !important;
+    }
+
+    .slide-animation{
+        animation: animationFrames ease 0.5s;
+        animation-iteration-count: 1;
+        transform-origin: 50% 50%;
+        animation-fill-mode:forwards; /*when the spec is finished*/
+        -webkit-animation: animationFrames ease 0.5s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-transform-origin: 50% 50%;
+        -webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/
+        -moz-animation: animationFrames ease 0.5s;
+        -moz-animation-iteration-count: 1;
+        -moz-transform-origin: 50% 50%;
+        -moz-animation-fill-mode:forwards; /*FF 5+*/
+        -o-animation: animationFrames ease 0.5s;
+        -o-animation-iteration-count: 1;
+        -o-transform-origin: 50% 50%;
+        -o-animation-fill-mode:forwards; /*Not implemented yet*/
+        -ms-animation: animationFrames ease 0.5s;
+        -ms-animation-iteration-count: 1;
+        -ms-transform-origin: 50% 50%;
+        -ms-animation-fill-mode:forwards; /*IE 10+*/
+    }
+
+    @keyframes animationFrames{
+      0% {
+        opacity:0;
+        transform:  translate(0px,6px)  ;
+      }
+      100% {
+        opacity:1;
+        transform:  translate(0px,0px)  ;
+      }
+    }
+    @-moz-keyframes animationFrames{
+      0% {
+        opacity:0;
+        -moz-transform:  translate(0px,6px)  ;
+      }
+      100% {
+        opacity:1;
+        -moz-transform:  translate(0px,0px)  ;
+      }
+    }
+    @-webkit-keyframes animationFrames {
+      0% {
+        opacity:0;
+        -webkit-transform:  translate(0px,-6px)  ;
+      }
+      100% {
+        opacity:1;
+        -webkit-transform:  translate(0px,0px)  ;
+      }
+    }
+    @-o-keyframes animationFrames {
+      0% {
+        opacity:0;
+        -o-transform:  translate(0px,6px)  ;
+      }
+      100% {
+        opacity:1;
+        -o-transform:  translate(0px,0px)  ;
+      }
+    }
+    @-ms-keyframes animationFrames {
+      0% {
+        opacity:0;
+        -ms-transform:  translate(0px,6px)  ;
+      }
+      100% {
+        opacity:1;
+        -ms-transform:  translate(0px,0px)  ;
+      }
+    }
+
+    .Alert {
+        position: absolute;
+        top: 20px;
+        left: 0px;
+        right: 0px;
+        z-index: 10;
+        width: 400px;
+        height: 100px;
+        color: #717171;
+        text-align: center;
+        background: #f3f3f3;
+        border: 1px solid #c8c8c8;
+        border-radius: 12px;
+        padding: 5px;
+        margin: auto;
+        white-space: normal;
+        -webkit-box-shadow: 3px 3px 2px 0px rgba(50, 50, 50, 0.14);
+        -moz-box-shadow: 3px 3px 2px 0px rgba(50, 50, 50, 0.14);
+        box-shadow: 3px 3px 2px 0px rgba(50, 50, 50, 0.14);
+
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e6e6e6+0,ffffff+39,ffffff+100 */
+        background: #e6e6e6; /* Old browsers */
+        background: -moz-linear-gradient(top,  #e6e6e6 0%, #ffffff 39%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #e6e6e6 0%,#ffffff 39%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #e6e6e6 0%,#ffffff 39%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e6e6', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    }
+
+    .alert-close {
+        float: right;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #a78757;
+    }
+    .alert-title {
+        float: left;
+        position: absolute;
+        left: 15px;
+        top: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        color: #1b90d1;
+    }
+
+    .ConfirmIcon {
+        margin-top: 36px;
+        left: 20px;
+        width: 45px;
+        height: 45px;
+        line-height: 44px;
+        color: white;
+        font-size: 28px;
+        font-weight: bold;
+        font-family: Arial;
+        text-align: center;
+        vertical-align: middle;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#429b30+0,b8ddb8+100 */
+        background: #429b30; /* Old browsers */
+        background: -moz-linear-gradient(top,  #429b30 0%, #b8ddb8 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #429b30 0%,#b8ddb8 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #429b30 0%,#b8ddb8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#429b30', endColorstr='#b8ddb8',GradientType=0 ); /* IE6-9 */
+
+        }
+
+
+    .SaveAlert{
+        position: absolute;
+        top: 30px;
+        left: 0px;
+        right: 0px;
+        z-index: 10;
+
+        width: 350px;
+
+        color: #717171;
+        text-align: center;
+        background: #fff5ce;
+        border: 1px solid #ffd598;
+        border-radius: 6px;
+        padding: 5px;
+        margin: auto;
+        white-space: normal;
+
+        -webkit-box-shadow: 3px 3px 2px 0px rgba(50, 50, 50, 0.14);
+        -moz-box-shadow:    3px 3px 2px 0px rgba(50, 50, 50, 0.14);
+        box-shadow:         3px 3px 2px 0px rgba(50, 50, 50, 0.14);
+
+    }
+    .alert-close{
+        /*float: right;*/
+        position: absolute;
+        /*right: 5px;*/
+        top: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #a78757;
+    }
+
+
+    .exc-remark-button {
+        cursor: pointer;
+        width: 16px;
+        margin-right: 5px;
+        margin-top: 1px;
+        position: absolute;
+        top: 1px;
+        right: 0;
+    }
+
+        .exc-remark-button:hover {
+            background: #fdecd2;
+            border-radius: 50%;
+        }
+        .exc-remark-button-red:hover {
+            background: #fdd2d2;
+        }
+
+    .speech-bubble {
+        width: 200px;
+        height: 100px;
+        position: relative;
+        border-radius: .6em;
+        border: 1px solid #e8b26f;
+        background: #e8b26f;
+        cursor: default;
+        padding: 0px 10px;
+        padding-bottom: 6px;
+
+
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefff7+0,f2d4a4+100 */
+        background: #fefff7; /* Old browsers */
+        background: -moz-linear-gradient(top, #fefff7 0%, #f2d4a4 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #fefff7 0%,#f2d4a4 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #fefff7 0%,#f2d4a4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefff7', endColorstr='#f2d4a4',GradientType=0 ); /* IE6-9 */
+        box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.10196078431372549);
+    }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 16%;
+            width: 0;
+            height: 0;
+            border: 17px solid transparent;
+            border-top-color: #f2d4a5;
+            border-bottom: 0;
+            border-left: 0;
+            margin-left: -15px;
+            margin-bottom: -17px;
+        }
+
+        .speech-bubble .TooltipContent {
+            width: 100%;
+            text-align: right;
+            float: right;
+            white-space: normal;
+            word-break: break-all;
+            height: calc(100% - 30px);
+            line-height: 1.2;
+            font-size: 11px;
+            overflow: auto;
+        }
+
+    .CloseButtonWrapper {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+        .CloseButtonWrapper:hover {
+        }
+
+        .CloseButtonWrapper:active {
+        }
+
+    .CloseButton {
+        cursor: pointer;
+        background: url('./Images/Tab.X.Black.png') no-repeat;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 10px;
+        height: 10px;
+        font-size: 12px;
+        color: #717171;
+        border-radius: 50%;
+        opacity: 0.6;
+    }
+
+
+    .scroll1::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .scroll1::-webkit-scrollbar-track {
+      background: #ddd;
+        border-radius: 15px;
+    }
+
+    .scroll1::-webkit-scrollbar-thumb {
+      background: #818181;
+        border-radius: 15px;
+    }
+    .scroll1::-webkit-scrollbar:hover {
+      background: #818181;
+        border-radius: 15px;
+      width: 8px;
+
+    }
+
+    .red-bubble {
+        border: 1px solid #e86f6f;
+        background: #e86f6f;
+        background: #fefff7; /* Old browsers */
+        background: -moz-linear-gradient(top, #fefff7 0%, #fa8d8d 100%) !important; /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #fefff7 0%,#fa8d8d 100%) !important; /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #fefff7 0%,#fa8d8d 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefff7', endColorstr='#f2a4a4',GradientType=0 ) !important; /* IE6-9 */
+        box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.10196078431372549);
+    }
+        .red-bubble:after {
+                border-top-color: #f2a5a5;
+        }
+    .red-bubble .TooltipContent{
+        font-size: 12px !important;
+    }
+
+    /*end remark tooltip styles*/
+
 </style>
 
 <!-- Alert -->
+<!--<div class="alert-animation Alert">
+    <!--<div class="alert-close" (click)="CloseAlert()">×</div>-->
+    <!--<div class="alert-title">{{'Accounting.General.O.Reconciled' | TextCodeTranslationPipe}}</div>-->
+
+    <!--<div class="LeftCenter ConfirmIcon">&#10003;</div>-->
+
+    <!--<div style="padding: 43px 15px 10px 50px;font-size: 13px;">
+        {{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="RecoPM" href="#" (click)="OpenReco()"> {{RecoPM.Number }}</a> {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.
+    </div>
+
+
+</div>-->
+<!-- Alert -->
 <div *ngIf="showAlert && recoCallback" class="alert-animation SaveAlert"
      [style.text-align]="isRTL ? 'right' : 'left'"
-     style="min-width: 325px;width: fit-content;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;">
+     style="min-width: 325px;width: fit-content;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;" >
     <div class="alert-close" (click)="CloseAlert()" [style.right]="isRTL ? 'initial' : '5px'" [style.left]="isRTL ? '5px' : 'initial'" style="color: #439c47;text-decoration: underline;">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</div>
 
     <span *ngIf="!recoCallback.isSplitted">{{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="RecoPM" href="#" (click)="OpenReco()"> {{RecoPM.Number }}</a> {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.</span>
-    <span *ngIf="recoCallback.isSplitted">{{recoCallback.splittedRecoCount}} {{'Accounting.O.MultiRecoCreated' | TextCodeTranslationPipe}}.</span>
+    <span *ngIf="recoCallback.isSplitted" >{{recoCallback.splittedRecoCount}} {{'Accounting.O.MultiRecoCreated' | TextCodeTranslationPipe}}.</span>
+
 
 </div>
 
-<div *ngIf="showInternalReconcileAPPaymentAlert" class="alert-animation SaveAlert"
-     [style.text-align]="isRTL ? 'right' : 'left'"
-     style="min-width: 720px;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;">
-    <div class="alert-close" (click)="CloseGetInternalReconcileAPPaymentAlert()" [style.right]="isRTL ? 'initial' : '5px'"
-     [style.left]="isRTL ? '5px' : 'initial'"
-     style="color: #439c47;text-decoration: underline;">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</div>
-
-    <span>{{GetInternalReconcileAPPaymentAlertMessage()}}</span>
-</div>
 
 <table>
-    <tr style="height:10px"></tr>   
-    <tr><td style="width :10px"></td>
-        <td class="TabTitle">
-            <div float-start>{{openTransactionLabel}}</div>
-            <div style="padding: 0 3px;" float-start> - </div>
-            <div float-start>{{displayNumber}}</div>
-            <div style="padding: 0 3px;" float-start> - </div>
-            <div float-start>{{accountName}}</div>
-            <div style="padding: 0 3px;" float-start *ngIf="paymentTermName"> - </div>
-            <div float-start *ngIf="paymentTermName">{{paymentTermName}}</div>
-            <div style="padding: 0 3px;width :50px"float-start></div>
-            <div *ngIf="isFullAccounting" style="padding: 0 80%;font-size: 15px;display: flex;position: absolute;"float-start>{{NumberOfselectedlines}}/{{NumberOfFilteredlines}}</div>
-        </td>
-        <td>
-            <div style="width: 150px" [style.float]="isRTL ? 'left' : 'right'">
-                <button class="Button" [disabled]="IsMultiWithReconcileMethodCodeEqualOne && CurrencyId == null"
-                (click)="AutomaticReconcileButton()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button>
-            </div>
-        </td>
-
-        <td style="width: 100px; " [style.padding-left]="isRTL ? 'initial' : '15px'" [style.padding-right]="isRTL ? '15px' : 'initial'">
-            <div>{{'Accounting.General.O.Accordingto' | TextCodeTranslationPipe}}:</div>
-        </td>
-        <td style="width: 190px; padding: 5px;">
-            <div>
-                <LogLov [ObjectFieldName]="'AutomaticReconcileId'"
-                        [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"
-                        [DisplayMemberPath]="'LocalName'"
-                        [LookUpTableName]="'AutomaticReconcileMethod'"
-                        [SelectedValue]="AutomaticReconcileId"
-                        [HideColumns]="true"
-                        (SelectedItemChanged)="AutomaticReconcileChanged($event)">
-                </LogLov>
-
-            </div>
-        </td>
-    </tr>
     <!-- Validation Box-->
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="6">
+        <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-        </td>
-    </tr>
-    <tr *ngIf="yelloMessage!=''" style="height:1px;">
-        <td colspan="6">
-            <div  style="width: 100%;text-align:center">
-                <div class="DisbleBox">
-                {{yelloMessage}}<span style="padding: 0px 16px;">-</span>
-                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
-
-                </div>
-            </div>
         </td>
     </tr>
 
     <!-- Filter Fields -->
+    <tr style="height: 40px;">
+        <td style="">
+            <table>
+                <tr class="FormFieldRow">
 
-    <tr style="height: 30px;">
-        <td style="" colspan="6">
+                    <td style="">
+                        <table>
+                            <!-- Date -->
+                            <!--<tr class="FormFieldRow" style="display: none;">
+                                <td style="width: 110px;">
+                                    <LogLabel [Text]="'Date From'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                </td>
 
-            <div class="row">
-                <ul class="horizontal-list fixed">
+                                <td style="width: 220px;">
+                                    <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
 
-                    <li style="width: 80px; padding: 0 35px;"><CheckBox title="Select All" style="position: absolute; top: 12px;" [IsChecked]="isAllSelected"
-                        [IsEnabled]="IsCheckBoxEnabled" (Checked)="isAllSelected = $event"></CheckBox></li>
+                                <td style="width: 50px;"><div></div></td>
 
-                    <li style="width: 70px;"><LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext"></LogLabel></li>
+                                <td style="width: 50px;">To</td>
 
-                    <li style="width: 150px; " [style.padding-right]="isRTL ? 'initial' : '10px'"
-                    [style.padding-left]="isRTL ? '10px' : 'initial'"><LogLov [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext" [LookUpTableName]="'Currency'" [SelectedValue]="CurrencyId" 
-                        [HideColumns]="true" [QueryFilterItems]="CurrencyFilters">
-                    </LogLov></li>
+                                <td style="width: 180px;">
+                                    <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td><div></div></td>
+                            </tr>-->
 
-                    <li class="seperator" ></li>
+                            <tr class="FormFieldRow">
 
-                    <li><div class="toggle-button" [class.opened]="showMoreFilters"  (click)="showMoreFilters = !showMoreFilters">
-                        <img [attr.src]="areFiltersSelected ? './Images/FilterGrayTransUsed.png' : './Images/FilterGrayTrans.png'">
-                        <img [class.FlipImgVert]="showMoreFilters" src="./Images/FiltersOpen.png" style="margin-top: 2px;margin-left: 4px;">
-                    </div></li>
-                                     
-                    <li float-end>
-
-                        <div style="width: 250px; padding: 3px 4px;"  float-end>
-                            <SearchTextBox [ObjectTableName]="ObjectTableName"
-                                (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
-                        </div>
-                        <div float-end style="padding-top: 5px;">{{'Accounting.General.B.Search' | TextCodeTranslationPipe}}</div>
-                        <div style="width: 30px; padding: 3px 4px;"  float-end>
-                            <IconButton [Name]="'refresh'" (click)="ReloadScreen()"></IconButton>
-                        </div>
-                        <div [style.float]="isRTL ? 'left' : 'right'"  style="padding: 3px 4px;">
-                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'"  (click)="ExportToExcelClick()"></IconButton>
-                        </div>
-                        <div [style.float]="isRTL ? 'left' : 'right'" style="padding: 3px 4px">
-                            <div
-                              *ngIf="GLAccountPM && GLAccountPM.AccountTypeCode == '3'"
-                              [style.float]="isRTL ? 'right' : 'left'"
-                              style="margin: 3px 10px 0; height: 24px; display: flex"
-                            >
-                              <button
-                                class="Button"
-                                [disabled]="!EnableCreateAPPaymentButton"
-                                (click)="CreatePaymentButtonClicked()"
-                                style="width: fit-content"
-                              >
-                              {{'APPAyment.O.NewAPPaymentTitle' | TextCodeTranslationPipe}}
-                              </button>
-
-                              <div style="width: 10px"></div>
-
-                              <LogToolTip
-                                float-start
-                                [direction]="isRTL?'bottomright':'bottomleft'"
-                                [name]="'tooltip-reco'"
-                              >
-                                <div style="width: 300px; white-space: pre-line">
-                                  {{'APPayment.M.NewAPPaymentInfo' | TextCodeTranslationPipe}}
-                                </div>
-                              </LogToolTip>
-                            </div>
-                          </div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="row" *ngIf="showMoreFilters">
-                <ul class="horizontal-list">
-
-                    <!-- Date -->
-                    <li float-start style="padding-left: 20px;padding-top: 5px;">{{'Accounting.General.O.Date' | TextCodeTranslationPipe}}:</li>
-
-                    <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
-                        <ComboBox [ItemsSource]="DateTypes" [Binding]="'LocalName'" [SelectedItem]="SelectedDateType"
-                        (SelectedItemChanged)="SelectedDateType = $event"></ComboBox>
-                    </li>
-
-                    <li float-start style="padding: 0 5px;padding-top: 4px;width: 130px;">
-                        <ComboBox [ItemsSource]="DateFilterPresetsList" [Binding]="'LocalName'" [SelectedItem]="SelectedDatePreset"
-                            (SelectedItemChanged)="SelectedDatePreset = $event"></ComboBox>
-                    </li>
-                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 110px;">
-                        <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
-                            [SelectedDateValue]="FromDate" [ForceSubscribe]="true" [DataContext]="DataContext" [HideColumns]="true">
-                        </LogDatePicker>
-                    </li>
-                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 110px;">
-                        <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                            [NoObjectField]="true" [SelectedDateValue]="ToDate" [ForceSubscribe]="true"
-                            [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                    </li>
-
-                    <li float-start style="width: 40px;height: 100%;"></li>
-
-                    <!-- OpenAmount -->
-                    <li float-start style="padding-left: 20px;padding-top: 4px;">
-                        {{'LedgerTransaction.F.OpenAmount' | TextCodeTranslationPipe}}:</li>
-                    <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
-                        <ComboBox [ItemsSource]="Operators" [Binding]="'LocalName'"
-                            [SelectedItem]="OpenAmountSelectedOperator"
-                            (SelectedItemChanged)="OpenAmountSelectedOperator = $event"></ComboBox>
-                    </li>
-                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 100px;">
-                        <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
-                            [ObjectFieldName]="'OpenAmount'" [Text]="OpenAmount" [HideColumns]="true"
-                            (ValueChanged)="OpenAmountTextChanged($event)"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                    </li>
-
-                    <!-- ForeignAmount -->
-                    <li float-start style="padding-left: 20px;padding-top: 4px;">
-                        {{'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe}}:</li>
-                    <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
-                        <ComboBox [ItemsSource]="Operators" [Binding]="'LocalName'"
-                            [SelectedItem]="ForeignAmountSelectedOperator"
-                            (SelectedItemChanged)="ForeignAmountSelectedOperator = $event"></ComboBox>
-                    </li>
-                    <li float-start style="padding: 0 5px;padding-top: 2px;width: 100px;">
-                        <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true"
-                            [ObjectFieldName]="'ForeignAmount'" [Text]="ForeignAmount" [HideColumns]="true"
-                            (ValueChanged)="ForeignAmountTextChanged($event)"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                    </li>
-
-                    <!-- Reset Filters Button -->
-                    <li float-start style="padding: 0 15px;padding-top: 4px;">
-                        <IconButton *ngIf="areFiltersSelected" [Name]="'delete'" (click)="ResetFilters()">
-                        </IconButton>
-                    </li>
-
-                    <li float-start style="width: 20px;height: 100%;"></li>
+                                <!-- CurrencyId -->
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 150px; " [style.padding-right]="isRTL ? 'initial' : '10px'" [style.padding-left]="isRTL ? '10px' : 'initial'">
+                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Currency'"
+                                            [SelectedValue]="CurrencyId"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
 
 
+                                <td style="width: 50px;"><div></div></td>
+
+                                <!-- OpenAmount -->
+                                <td style="width: 120px; " [style.padding-right]="isRTL ? 'initial' : '10px'" [style.padding-left]="isRTL ? '10px' : 'initial'">
+                                    <LogLabel [ObjectFieldName]="'OpenAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 140px; " [style.padding-right]="isRTL ? 'initial' : '10px'" [style.padding-left]="isRTL ? '10px' : 'initial'">
+                                    <ComboBox [ItemsSource]="OperatorsList" [Binding]="'LocalName'" [SelectedItem]="SelectedOperator" (SelectedItemChanged)="SelectedOperator = $event"></ComboBox>
+                                </td>
+                                <td style="width: 140px;">
+                                    <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [HideColumns]="true"
+                                                (ValueChanged)="OpenAmountTextChanged($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                </td>
+
+                                <td><div></div></td>
+
+                                <td>
+                                    <div style="width: 150px" [style.float]="isRTL ? 'left' : 'right'">
+                                        <button class="Button" (click)="AutomaticReconcileButton()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button>
+                                    </div>
+                                </td>
+
+                                <td style="width: 100px; " [style.padding-left]="isRTL ? 'initial' : '15px'" [style.padding-right]="isRTL ? '15px' : 'initial'">
+                                    <div>{{'Accounting.General.O.Accordingto' | TextCodeTranslationPipe}}:</div>
+                                </td>
+                                <td style="width: 190px; padding: 5px;">
+                                    <div>
+                                        <LogLov [ObjectFieldName]="'AutomaticReconcileId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [DisplayMemberPath]="'LocalName'"
+                                                [LookUpTableName]="'AutomaticReconcileMethod'"
+                                                [HideColumns]="true"
+                                                (SelectedItemChanged)="AutomaticReconcileChanged($event)">
+                                        </LogLov>
+
+                                    </div>
+                                </td>
 
 
-                </ul>
-            </div>
+                            </tr>
+                            <tr><td><div></div></td></tr>
+                        </table>
+                    </td>
 
+                    <td><div></div></td>
 
+                </tr>
+
+                <!-- Search | Button -->
+                <tr class="FormFieldRow" >
+                    <td style="width: 100%;">
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;text-indent: 11;" [style.text-align]="isRTL ? 'right' : 'left'"  >{{'Accounting.General.B.Search' | TextCodeTranslationPipe}}: </td>
+                                <td style="width: 250px;">
+                                    <!--[PlaceHolder]="'Cheque No. / Bank Account'"-->
+                                    <div style="width: 250px;">
+                                        <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                    </div>
+                                </td>
+                                <td><div></div></td>
+
+                            </tr>
+                            <tr><td><div></div></td></tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <tr><td><div></div></td></tr>
+
+            </table>
         </td>
     </tr>
 
 
 
     <!-- .::(1)::. First Section Lines -->
-    <tr >
-        <td style="width :10px"></td>
-        <td style=" vertical-align: top;height: 100%;" colspan="4">
-            <div class="GeneratedGridContainer" style="height: calc(100% - 10px)">
+    <tr style="height: 240px;">
+        <!--*ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit"-->
+        <td style="padding-bottom: 3px; vertical-align: top;">
+
+            <div class="GeneratedGridContainer" style="height: calc(100% - 20px)">
                 <logitude-grid GridWidth="100%" GridHeight="100%"
                                [ObjectTable]="ObjectTableName"
                                [dataSource]="DataSource"
@@ -261,21 +600,15 @@
                                [ColumnsReady]="ColumnsReady"
                                [MarkIsChecked]="MarkIsChecked"
                                [CheckBoxFilterChanged]="CheckBoxFilterChanged"
-                               (SortInvoked)="OnSortInvoked($event)"
-                               (DataLoaded)="onDataLoaded()"
-                               [ChangeCheckBoxesState]="ChangeCheckBoxesState"
-                               (rowSelectedEvent)="onRowSelected($event)">
+                                (DataLoaded)="onDataLoaded()">
                 </logitude-grid>
             </div>
         </td>
-        <td style="width :10px"></td>
     </tr>
 
     <!-- Edit Grid -->
     <tr>
-        <td style="width :10px"></td>
-        <td colspan="4" style="height: 160px;"
-            [style.height]="IsAutoReconcile ? '100%' : ( getScreenHeight() < 670 ? '140px' : '180px')">
+        <td colspan="2" style="height: 100%;">
             <div class="CellContent">
 
                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
@@ -283,271 +616,185 @@
                                     [UseVirtuallization]="true">
 
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true">
-                                <img (click)="CheckBoxValueChanged(item)" class="trashIcon" title="Remove" style="cursor: pointer;" src="./Images/Trash-can.png" />
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" [IgnoreMods]="true">
+                            <img (click)="CheckBoxValueChanged(item)" class="trashIcon" title="Remove" style="cursor: pointer;" src="./Images/Trash-can.png" />
+                        </log-cell-template>
                     </log-column>
 
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'20'">
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" title="{{GetIndicatorText(item)}}">
-                                <div class="circleDraw" [class.orangeCircle]="(item.LocalAmountDebit != 0 && item.OpenAmount != item.OriginalAmount) || (item.LocalAmountCredit != 0 && item.OpenAmount != -1*item.OriginalAmount)"></div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" [IgnoreMods]="true"  title="{{GetIndicatorText(item)}}">
+                            <div class="circleDraw" [class.orangeCircle]="item.OpenAmount != item.OriginalAmount"></div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- AccountingDate -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.AccountingDate' | TextCodeTranslationPipe" [width]="'105'" [binding]="'AccountingDate'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                    <span>{{item.AccountingDate | DateTimeToDatePipe }}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.AccountingDate | DateTimeToDatePipe }}</span>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- DocumentDate -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.DocumentDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DocumentDate'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                    <span>{{item.DocumentDate | DateTimeToDatePipe }}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.DocumentDate | DateTimeToDatePipe }}</span>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- DueDate -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DueDate'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                    <span>{{item.DueDate | DateTimeToDatePipe }}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.DueDate | DateTimeToDatePipe }}</span>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Source -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Source' | TextCodeTranslationPipe" [width]="'100'" [binding]="'Source'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div class="TextTrimming" [style.text-align]="isRTL ? 'left' : 'left'">
-                                    <span title="{{item.SourceType}}" *ngIf="item.IconCode" (click)="OpenSource(item.SourceId,item.SourceTypeCode)"
-                                          [class]="'SourceTypeIcon color-' + item.SourceTypeCode">{{item.IconCode}}</span>
-                                    <a href="javascript:;" (click)="OpenSource(item.SourceId,item.SourceTypeCode)">{{item.SourceNumber}}</a>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div class="TextTrimming" [style.text-align]="isRTL ? 'left' : 'left'">
+                                <span title="{{item.SourceType}}" *ngIf="item.IconCode" (click)="OpenSource(item.SourceId,item.SourceTypeCode)"
+                                      [class]="'SourceTypeIcon color-' + item.SourceTypeCode">{{item.IconCode}}</span>
+                                <a href="javascript:;" (click)="OpenSource(item.SourceId,item.SourceTypeCode)">{{item.SourceNumber}}</a>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- OriginalAmount -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'Accounting.General.O.OriginalAmount' | TextCodeTranslationPipe" [width]="'115'" [binding]="'OriginalAmount'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.OpenAmount<0'>
-                                    <span>{{ item.OriginalAmount | NumbersPipe:'N2'  }} {{item.CalculateOriginalCurrency()}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.OpenAmount<0'>
+                                <span>{{ item.OriginalAmount | NumbersPipe:'N2'  }} {{item.CalculatOriginalCurruncy()}}</span>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- OpenAmount -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.OpenAmount' | TextCodeTranslationPipe" [width]="'100'" [binding]="'OpenAmount'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div style="direction: ltr; text-align: right; padding: 0px 2px;" >
-                                    <span>{{ item.OpenAmount | NumbersPipe:'N2'  }} {{item.OpenAmountCurrencySign}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.OpenAmount<0'>
+                                <span>{{ item.OpenAmount | NumbersPipe:'N2'  }} {{item.OpenAmountCurrencySign}}</span>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- AmountToReconcile -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.AmountToReconcile' | TextCodeTranslationPipe" [width]="'130'" [binding]="'AmountToReconcile'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div class="TextTrimming" style="text-align: right;padding-right: 5px;direction: ltr;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
-                                </div>
-                                <div *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox #AmountToReconcileTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"
-                                                [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [DataContext]="item"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"
-                                                (dblclick)="item.AutomaticallyFillAmountToReconciledblclick(logcelltemplate,AmountToReconcileTextBox)">
-                                            </LogTextBox>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div class="TextTrimming" style="text-align: right;padding-right: 5px;direction: ltr;" *ngIf="logcelltemplate.IsDisplayMode">
+                                <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"
+                                            [InputType]="'decimal'" [DigitsAfterPoint]="2" [DataContext]="item"
+                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Reference1 -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Reference1' | TextCodeTranslationPipe" [width]="'90'" [binding]="'Reference1'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                    <span>{{item.Reference1}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.Reference1}}</span>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Reference2 -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Reference2' | TextCodeTranslationPipe" [width]="'90'" [binding]="'Reference2'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                    <span>{{item.Reference2}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.Reference2}}</span>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Reference3 -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Reference3' | TextCodeTranslationPipe" [width]="'90'" [binding]="'Reference3'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                    <span>{{item.Reference3}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.Reference3}}</span>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- JournalNumber -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.JournalNumber' | TextCodeTranslationPipe" [width]="'80'" [binding]="'JournalNumber'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                    <a href="javascript:;" (click)="OpenJournal(item.JournalId)">{{item.JournalNumber}}</a>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <a href="javascript:;" (click)="OpenJournal(item.JournalId)">{{item.JournalNumber}}</a>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Notes -->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'250'" [binding]="'Notes'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <div [attr.title]="item.Notes" class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                    <span [attr.title]="item.Notes">{{item.Notes}}</span>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>
-
-                     <!-- InternalNote -->
-                      <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe">
-                        <ng-template let-item>
-                        <log-cell-template   #logcelltemplate>
-                            <table>
-                                <tr>
-                                    <td style="width:5px;">
-                                        <div></div>
-                                    </td>
-                                    <td style="width:16px;">
-                                        <img *ngIf="!item.InternalNote" style="vertical-align: middle; display: block;" src="./Images/Notes_notexists.png" />
-                                        <img *ngIf="item.InternalNote" style="vertical-align: middle; display: block;" src="./Images/Notes_exists.png" />
-                                    </td>
-                                    <td style="width:5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width:20px;height:20px;padding-left:1px;">
-                                        <IconButton [Name]="'Edit'" [IsSmall]="true"  [Left]="3" (click)="OpenLedgerTransactionInternalNote(item.LedgerTransactionPM);$event.stopPropagation()"></IconButton>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-                               </tr>
-                            </table>
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'90'" [binding]="'Notes'">
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                <span>{{item.Notes}}</span>
+                            </div>
                         </log-cell-template>
-                        </ng-template>
                     </log-column>
 
                     <!--  -->
                     <log-column [header]="''" [width]="'90'" [binding]="'button'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                <img *ngIf="!item.isLineValid" [title]="'Reconciliations.O.AmountMustBSmaller2OpenAmount' | TextCodeTranslationPipe"
-                                     style="padding-top: 2px;" class="exc-remark-button exc-remark-button-red" tabindex="-1" src="./Images/error-16.png" />
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                            <img *ngIf="!item.isLineValid" [title]="'Reconciliations.O.AmountMustBSmaller2OpenAmount' | TextCodeTranslationPipe"
+                                 style="padding-top: 2px;" class="exc-remark-button exc-remark-button-red" tabindex="-1" src="./Images/error-16.png" />
+                        </log-cell-template>
                     </log-column>
 
                 </logitude-edit-grid>
 
             </div>
         </td>
-        <td style="width :10px"></td>
     </tr>
 
     <!-- Footer -->
     <tr style="position: static; left: 0px; bottom: 40px; right: 0px;">
-        <td style="width :10px"></td>
-        <td colspan="4">
+        <td>
             <div class="tab-footer">
-
+                <div class="footer-title">
+                    {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}
+                </div>
                 <div class="footer-summery">
-                    <div class="footer-title">
-                        {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}
-                    </div>
-
                     <div class="footer-cell" [class.border-left]="isRTL" float-start style="text-align: right;">
-                        <div style="font-size: 15px;color:#740218;" class="notranslate">{{TotalCredit | NumbersPipe:'N2'}}</div>
+                        <div style="font-size: 15px; color:#0a7d4c;">{{TotalCredit | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Credit' | TextCodeTranslationPipe}} </div>
                     </div>
                     <div class="footer-cell" [class.border-left]="!isRTL" float-start text-start style="padding-left: 20px;">
-                        <div style="font-size: 15px;  color:#0a7d4c;" class="notranslate">{{TotalDebit | NumbersPipe:'N2'}}</div>
+                        <div style="font-size: 15px; color:#740218;">{{TotalDebit | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Debit' | TextCodeTranslationPipe}} </div>
                     </div>
 
                     <div class="footer-cell " float-start style="padding-left: 30px;">
-                        <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" class="notranslate">{{TotalDifference | NumbersPipe:'N2'}}</div>
+                        <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalsDeference!=0">{{TotalsDeference | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}} </div>
                     </div>
                 </div>
 
             </div>
         </td>
-        <td style="width :10px"></td>
     </tr>
-    
+
     <!-- Buttons -->
-    <tr>
-        <td colspan="10">
-            <table style="position: absolute; bottom: 10px;">
+    <tr style="">
+        <td colspan="4">
+            <table style="position: absolute; bottom: 10px;height: 28px;">
                 <tr>
                     <td>
                         <div></div>
                     </td>
-                    <td style="width:40px;" *ngIf="failedJournalsInReconcileProcess">
 
-                        <div style="margin-top: -30px;"> <span style="font-size: 15px;font-weight: bold;">{{'Reconciliation.O.FailedJournalInReconcileProcess' | TextCodeTranslationPipe}}</span></div>
-                
+                    <td style="width: 80px; padding-left: 5px;">
+                        <!--<button class="Button" [disabled]="!(SelectedLines.Length > 0 && TotalsDeference != 0)" (click)="AdjustButton()">{{'Accounting.General.O.Adjust' | TextCodeTranslationPipe}}</button>-->
                     </td>
-                
-
-                    <td style="width:20px;" *ngIf="failedJournalsInReconcileProcess">
-                
-                        <div>
-                
-                            <LogToolTip style="margin-top: -35px;" [float]="'left'" [mode]="'Info'" float-start [direction]="isRTL?'bottomleft':'bottomright'" *ngIf="failedJournalsInReconcileProcess">                        
-                                <div *ngFor="let journal of failedJournalList">
-                                    <a href="#" style="font-size:12px;display: block;" (click)="OpenJournal(journal.Id)">{{journal.JournalNumber}}</a>                          
-                                </div>
-                           </LogToolTip>
-                
-                        </div>
-                
-                    </td>
-                    
-                    <td style="width: 30%; padding-left: 5px;">
-                     </td>
                     <td style="width: 57px; padding-left: 5px;">
                         <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
@@ -565,7 +812,6 @@
                 </tr>
             </table>
         </td>
-        <td style="width :10px"></td>
     </tr>
 
 </table>

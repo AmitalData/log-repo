@@ -1,12 +1,12 @@
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
+import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
 import {CodeNameClass} from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({
-    
+    moduleId: module.id,
     selector: 'InvoicesRoutingsFilterComponent',
     templateUrl: './InvoicesRoutingsFilterComponent.html',
 })
@@ -32,7 +32,6 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
     public InvoiceCurrencyId: string;
     public shipmentTypeRadio: string;
     public CustomerId: string = null;
-    public PartnerId: string = null;
 
     InitilizeIds() {
         this.InvoiceDateId = "InvoiceDateId_" + this.CurrentSession.GetNewId("InvoiceDateId");        
@@ -85,11 +84,11 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
     }
 
 
-    FillInvoiceStatus(code : string = "") {
+    FillInvoiceStatus() {
         this.InvoiceStatusComboList.push(new CodeNameClass("", "All"));
         this.InvoiceStatusComboList.push(new CodeNameClass("PD", "Paid"));
         this.InvoiceStatusComboList.push(new CodeNameClass("AD", "Unpaid"));
-        this.InvoiceStatusSelectedItem = this.InvoiceStatusComboList.filter(d => d.Code == code)[0];
+        this.InvoiceStatusSelectedItem = this.InvoiceStatusComboList.filter(d => d.Code == "")[0];
     }
 
     public IsInvoiceDate: boolean = true;
@@ -163,85 +162,10 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-
-        if (this.IsSchedulerReport) {
-            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-        }
-        else {
-            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-        }
-
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ToDate":
-                    this.ToDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "IsLocalCurrency":
-                    this.IsLocalCurrency = queryFilterItem.FieldValue;
-                    break;
-                case "CustomerId":
-                    this.CustomerId = queryFilterItem.FieldValue;
-                    break;
-                case "PartnerId":
-                    this.PartnerId = queryFilterItem.FieldValue;
-                    break;
-                case "TransportModeCode":
-                    this.MySelectedTransportFilter = queryFilterItem.FieldValue;
-                    break;
-                case "DirectionCode":
-                    this.MySelectedDirectionFilter=queryFilterItem.FieldValue;
-                    break;
-                case "IncludeVoidInvoices":
-                    this.IncludeVoidInvoices =queryFilterItem.FieldValue;
-                    break;
-                case "IncludeDraftInvoices":
-                    this.IncludeWaiting = queryFilterItem.FieldValue;
-                    break;
-                case "InvoiceStatusCode":
-                    this.FillInvoiceStatus(queryFilterItem.FieldValue);
-                    break;
-                case "IsByInvoiceDate":
-                    this.ShipmentTypeRadio =queryFilterItem.FieldValue ?? "InvoiceDate";    
-                    break;
-              
-                
-
-
-            }
 
 
 
-        }
-    }
-
-    RunReport(isInteractive: boolean) {
-        if (this.ValidateSelectedFilters()) {
-            var reportFliter = new ReportFliter();
-            reportFliter.NumberOfPage = 1;
-            reportFliter.ProcessType = "GenerateReport";
-            reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-            reportFliter.IsInteractive = isInteractive;
-            this.RunReportEvent.emit(reportFliter);
-        }
-    }
-    
-    ValidateSelectedFilters(){
+    RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
         if (this.ToDate < this.FromDate) {
             this.ValidationErrorsList.push("From date must be less than to date");
@@ -250,98 +174,99 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
         if (!this.InvoiceStatusSelectedItem) {
             this.ValidationErrorsList.push("Invoice status field is required");
         }
-        return this.ValidationErrorsList.length === 0;
-    }
-    GetQueryFilterItems(){
-        this.queryFilterItems = new Array<QueryFilterItem>();
+        
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IsLocalCurrency";
-        this.queryFilterItem.FieldValue = this.IsLocalCurrency;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IsByInvoiceDate";
-        this.queryFilterItem.FieldValue = this.ShipmentTypeRadio =="InvoiceDate"?true:false;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "CustomerId";
-        this.queryFilterItem.FieldValue = this.CustomerId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "PartnerId";
-        this.queryFilterItem.FieldValue = this.PartnerId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        var DirectionFilter: string = null;
-        if (this.MySelectedDirectionFilter != "All")
-            DirectionFilter = this.MySelectedDirectionFilter;
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "DirectionCode";
-        this.queryFilterItem.FieldValue = DirectionFilter;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
 
 
-        var TransportMode: string = null;
-        if (this.MySelectedTransportFilter != "All")
-            TransportMode = this.MySelectedTransportFilter;
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "TransportModeCode";
-        this.queryFilterItem.FieldValue = TransportMode;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IsLocalCurrency";
+            this.queryFilterItem.FieldValue = this.IsLocalCurrency;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IsByInvoiceDate";
+            this.queryFilterItem.FieldValue = this.ShipmentTypeRadio =="InvoiceDate"?true:false;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CustomerId";
+            this.queryFilterItem.FieldValue = this.CustomerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            var DirectionFilter: string = null;
+            if (this.MySelectedDirectionFilter != "All")
+                DirectionFilter = this.MySelectedDirectionFilter;
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "DirectionCode";
+            this.queryFilterItem.FieldValue = DirectionFilter;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IncludeVoidInvoices";
-        this.queryFilterItem.FieldValue = this.IncludeVoidInvoices;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
+            var TransportMode: string = null;
+            if (this.MySelectedTransportFilter != "All")
+                TransportMode = this.MySelectedTransportFilter;
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "TransportModeCode";
+            this.queryFilterItem.FieldValue = TransportMode;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IncludeDraftInvoices";
-        this.queryFilterItem.FieldValue = this.IncludeWaiting;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "InvoiceStatusCode";
-        this.queryFilterItem.FieldValue = this.InvoiceStatusSelectedItem.Code;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IncludeVoidInvoices";
+            this.queryFilterItem.FieldValue = this.IncludeVoidInvoices;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
-        return this.queryFilterItems
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IncludeDraftInvoices";
+            this.queryFilterItem.FieldValue = this.IncludeWaiting;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "InvoiceStatusCode";
+            this.queryFilterItem.FieldValue = this.InvoiceStatusSelectedItem.Code;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+
+            
+
+            var reportFliter = new ReportFliter();
+            reportFliter.NumberOfPage = 1;
+            reportFliter.ProcessType = "GenerateReport";
+            reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.RunReportEvent.emit(reportFliter);
+
+        }
     }
 
     SetDate(year: number, month: number, day: number) {

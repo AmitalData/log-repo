@@ -18,6 +18,5 @@ export class StateList {
 		AddedManually: boolean;
 		CountryEnglishName: string;
 		CountryId: string;
-		QBOTransactionLocationCode: string;
 	
 }

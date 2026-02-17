@@ -48,10 +48,7 @@ export class CorrespondencesAttachmentPM {
     public OldEntityPM: CorrespondencesAttachmentPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -59,7 +56,6 @@ export class CorrespondencesAttachmentPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CorrespondencesAttachment");
            
         }
-       }
     }
 
     private MyClone: CorrespondencesAttachmentPM;

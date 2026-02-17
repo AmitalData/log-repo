@@ -20,7 +20,7 @@ export class ProductTypePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -60,19 +60,11 @@ export class ProductTypePM {
     public set DefaultTemplate(newValue: string) { if (this.defaultTemplate != newValue) { this.defaultTemplate = newValue; this.MarkAsDirty("DefaultTemplate"); } }
        
 	 
-    private routingRQuoteDefaultTemplateId: string;
-    public get RoutingRQuoteDefaultTemplateId() { return this.routingRQuoteDefaultTemplateId; }
-    public set RoutingRQuoteDefaultTemplateId(newValue: string) { if (this.routingRQuoteDefaultTemplateId != newValue) { this.routingRQuoteDefaultTemplateId = newValue; this.MarkAsDirty("RoutingRQuoteDefaultTemplateId"); } }
-       
-	 
 
     public OldEntityPM: ProductTypePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -80,7 +72,6 @@ export class ProductTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ProductType");
            
         }
-	 }
     }
     private MyClone: ProductTypePM;
 

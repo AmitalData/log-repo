@@ -83,13 +83,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         _MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPM(customResponse, _MyDeclarationPM.Consignments[0]);
                     }
-                    else
-                    {
-                        if (_MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count > 0)
-                        {
-                            _MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPMForInternalTransitions(customResponse, _MyDeclarationPM.Consignments[0]);
-                        }
-                    }
                 }
             }
             _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -133,14 +126,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationConsignmentPackage.LineNumber = count;
                     declarationConsignmentPackage.Tenant = Consignment.Tenant;
 
-                    if(Consignment.ConsignmentInternalTransitions != null  && Consignment.ConsignmentInternalTransitions.Count > 0)
-                    {
-                        declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
-                    }
-                    else
-                    {
-                        declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
-                    }
+                    declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
                     declarationConsignmentPackage.PackageTypeCode = package.PackingType;
                     if (quntity > 0)
                     {
@@ -177,14 +163,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationConsignmentPackage.LineNumber = count;
                 declarationConsignmentPackage.Tenant = Consignment.Tenant;
 
-                if (Consignment.ConsignmentInternalTransitions != null && Consignment.ConsignmentInternalTransitions.Count > 0)
-                {
-                    declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
-                }
-                else
-                {
-                    declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
-                }
+                declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
                 declarationConsignmentPackage.PackageTypeCode = lastPackage.PackingType;
                 if (quntity > 0)
                 {
@@ -201,113 +180,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return declarationConsignmentsPackagesPMList;
         }
 
-        private List<ConsignmentPackagePM> GetDeclarationConsignmentsPackagesPMForInternalTransitions(MN_NG_8241_Cargo_Message customResponse, ConsignmentPM Consignment)
-        {
-            var declarationConsignmentsPackagesPMList = new List<ConsignmentPackagePM>();
-
-            if (customResponse.CargoItem == null)
-            {
-                return declarationConsignmentsPackagesPMList;
-            }
-
-            ConsignmentPackagePM internalConsignmentPackagePM = null;
-            foreach (var consignmentPackageItem in Consignment.ConsignmentPackages)
-            {
-                if(consignmentPackageItem.PackageMeasureQualifierCode == "3")
-                {
-                    internalConsignmentPackagePM = consignmentPackageItem;
-                }
-            }
-
-            int count = 0;
-            string packtype = null;
-            decimal weight = 0;
-            int quntity = 0;
-            customResponse.CargoItem.OrderBy(ci => ci.PackingType);
-            //Array.Sort(customResponse.CargoItem);
-            foreach (var package in customResponse.CargoItem)
-            {
-                if (package.PackingType != packtype && packtype != null)
-                {
-                    if (internalConsignmentPackagePM == null)
-                    {
-                        count++;
-                        var declarationConsignmentPackage = new ConsignmentPackagePM();
-                        declarationConsignmentPackage.SequenceNumeric = count;
-                        declarationConsignmentPackage.ChangeSetOp = ChangeSetOperation.Insert;
-                        declarationConsignmentPackage.ConsignmentNumber = Consignment.ConsignmentNumber;
-                        declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
-                        declarationConsignmentPackage.LineNumber = count;
-                        declarationConsignmentPackage.Tenant = Consignment.Tenant;
-                        declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
-                        declarationConsignmentPackage.PackageTypeCode = package.PackingType;
-                        if (quntity > 0)
-                        {
-                            declarationConsignmentPackage.PackageQuantity = quntity;
-                        }
-
-                        if (weight > 0)
-                        {
-                            declarationConsignmentPackage.GrossMassMeasure = weight;
-                        }
-                        weight = 0;
-                        quntity = 0;
-                        declarationConsignmentsPackagesPMList.Add(declarationConsignmentPackage);
-                    }
-                    else
-                    {
-                        internalConsignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
-                        internalConsignmentPackagePM.PackageQuantity = quntity;
-                        internalConsignmentPackagePM.GrossMassMeasure = weight;
-                        declarationConsignmentsPackagesPMList.Add(internalConsignmentPackagePM);
-                    }
-                }
-                else
-                {
-                    if (package.grossMassMeasureWeight.HasValue)
-                    {
-                        weight = weight + package.grossMassMeasureWeight.Value;
-                    }
-                    quntity = quntity + package.Quantity;
-                }
-                packtype = package.PackingType;
-            }
-            var lastPackage = customResponse.CargoItem.Last();
-            if (weight > 0 || quntity > 0)
-            {
-                if (internalConsignmentPackagePM == null)
-                {
-                    count++;
-                    var declarationConsignmentPackage = new ConsignmentPackagePM();
-                    declarationConsignmentPackage.SequenceNumeric = count;
-                    declarationConsignmentPackage.ChangeSetOp = ChangeSetOperation.Insert;
-                    declarationConsignmentPackage.ConsignmentNumber = Consignment.ConsignmentNumber;
-                    declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
-                    declarationConsignmentPackage.LineNumber = count;
-                    declarationConsignmentPackage.Tenant = Consignment.Tenant;
-                    declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
-                    declarationConsignmentPackage.PackageTypeCode = lastPackage.PackingType;
-                    if (quntity > 0)
-                    {
-                        declarationConsignmentPackage.PackageQuantity = quntity;
-                    }
-
-                    if (weight > 0)
-                    {
-                        declarationConsignmentPackage.GrossMassMeasure = weight;
-                    }
-                    declarationConsignmentsPackagesPMList.Add(declarationConsignmentPackage);
-                }
-                else
-                {
-                    internalConsignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
-                    internalConsignmentPackagePM.PackageQuantity = quntity;
-                    internalConsignmentPackagePM.GrossMassMeasure = weight;
-                    declarationConsignmentsPackagesPMList.Add(internalConsignmentPackagePM);
-                }
-            }
-            return declarationConsignmentsPackagesPMList;
-        }
 
         T SetCodeTypeValue<T>(string val)
               where T : CodeType, new()

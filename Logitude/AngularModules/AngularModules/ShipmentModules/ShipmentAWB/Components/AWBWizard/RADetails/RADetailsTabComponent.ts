@@ -6,7 +6,7 @@ import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {DateTool} from '../../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'RADetailsTabComponent',
     templateUrl: './RADetailsTabComponent.html',
 })

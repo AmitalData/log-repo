@@ -1,8 +1,11 @@
-
+﻿
 <style>
+
     .SectionHeader sc td, .SectionHeader sc label {
         font-size: 13px;
     }
+
+
 </style>
 
 
@@ -30,7 +33,7 @@
 
                         <td *ngIf="false" style="width: 300px; vertical-align:middle;">
 
-                            <SearchBox [Watermark]="SearchText" [ObjectTableName]="'WarehouseEntry'" [IsQuickSearch]="true" (ItemClicked)="EditWarehouseEntry()"></SearchBox>
+                            <SearchBox [Watermark]="SearchText" [ObjectTableName]="'WarehouseEntry'" [IsQuickSearch]="true" (ItemClicked)="EditWarehouseEntry($event)"></SearchBox>
 
                         </td>
 
@@ -99,14 +102,14 @@
                                                 <div class="QueriesSection">
                                                     <div>Entries</div>
                                                     <div style="height:22px; width: 35px; position: absolute; top:0px; right:0px;">
-                                                        <button class="Button" (click)="NewEntryButtonclick()">New</button>
-                                                    </div>
+                                                        <button  class="Button" (click)="NewEntryButtonclick()">New</button>
+                                                    </div> 
                                                     <div style="height:5px"></div>
                                                     <div>
-                                                        <p *ngIf="CreatedEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('Created')">Expected Arrival  ({{WarehouseEntryCreatedQueryCount}})</p>
-                                                        <p *ngIf="EnteredEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('Entered')">Entered  ({{WarehouseEntryEnteredQueryCount}})</p>
+                                                        <p *ngIf="CreatedEntryQueriesVisibility" class="QueryLink"  (click)="ViewWarehouseEntryQuery('Created')">Created  ({{WarehouseEntryCreatedQueryCount}})</p>
+                                                        <p *ngIf="EnteredEntryQueriesVisibility" class="QueryLink"  (click)="ViewWarehouseEntryQuery('Entered')">Entered  ({{WarehouseEntryEnteredQueryCount}})</p>
                                                         <p *ngIf="NotConnectedToShipmentsEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('NotConnectedToShipments')">Not Connected to Shipments  ({{WarehouseEntryNotConnectedToShipmentsQueryCount}})</p>
-                                                        <p *ngIf="ConnectedToShipmentsEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('ConnectedToShipments')">Connected to Shipments  ({{WarehouseEntryConnectedToShipmentsQueryCount}})</p>
+                                                        <p *ngIf="ConnectedToShipmentsEntryQueriesVisibility"  class="QueryLink"  (click)="ViewWarehouseEntryQuery('ConnectedToShipments')">Connected to Shipments  ({{WarehouseEntryConnectedToShipmentsQueryCount}})</p>
                                                         <p *ngIf="AllEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('All')">All  ({{WarehouseEntryAllQueryCount}})</p>
 
                                                     </div>
@@ -125,16 +128,13 @@
                                                 </div>
 
 
-
+                                               
 
                                                 <div *ngIf="WarehouseReleaseVisibility" class="QueriesSection">
                                                     <div>Releases</div>
-                                                    <div *ngIf="IsNewReleaseVisible" style="height:22px; width: 35px; position: absolute; top:0px; right:0px;">
-                                                        <button class="Button" (click)="NewReleaseButtonclick()">New</button>
-                                                    </div>
                                                     <div style="height:5px"></div>
                                                     <div>
-                                                        <p *ngIf="CreatedReleaseQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('Created')">Expected Delivery  ({{WarehouseReleaseCreatedQueryCount}})</p>
+                                                        <p *ngIf="CreatedReleaseQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('Created')">Created  ({{WarehouseReleaseCreatedQueryCount}})</p>
                                                         <p *ngIf="ReleasedQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('Released')">Released  ({{WarehouseReleaseReleasedQueryCount}})</p>
                                                         <p *ngIf="CancledReleaseQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('Canceled')">Canceled  ({{WarehouseReleaseCanceledQueryCount}})</p>
                                                         <p *ngIf="AllReleaseQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('All')">All  ({{WarehouseReleaseAllQueryCount}})</p>
@@ -177,111 +177,111 @@
                             <table>
                                 <tr style="height: 50%;">
                                     <td>
+                                     
+
+                                            <div class="MediaFill">
+                                                <SectionBox [Scrolling]="true">
+                                                    <SectionHead>{{RecentWarehouseEntriesLists.length}} Recent Entries</SectionHead>
+                                                    <SectionBody>
+                                                        <ul>
+                                                            <li class="RecentEntityItem" *ngFor="let item of RecentWarehouseEntriesLists" (click)="EditWarehouseEntries(item)">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 2px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:80px; position: relative;" rowspan="2">
+                                                                            <div style="position: absolute; left: 3px; top: 3px; width: 20px; height: 20px;" title="{{item.ActivityTypeName}}">
+                                                                                <div *ngIf="item.ActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
+                                                                                <div *ngIf="item.ActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
+                                                                                <div *ngIf="item.ActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
+                                                                            </div>
+
+                                                                            <div style="position: absolute; left: 3px; bottom: 1px; color: #282E30;">{{item.ActivityDate | DateTimeToDatePipe}}</div>
+                                                                        </td>
+
+                                                                        <td style="width:100px; max-width: 100px;" class="TextTrimming">
+                                                                            <span [ngStyle]="{color: item.StatusName | StringToColorPipe}">{{item.StatusName}}</span>
+                                                                            <span [ngStyle]="{color: item.StatusName | StringToColorPipe}" style="margin-left: 5px;" *ngIf="item.StatusLocation">({{item.StatusLocation}})</span>
+                                                                        </td>
+
+                                                                        <td style="width: 3px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:115px; max-width: 115px;" class="TextTrimming">
+                                                                            <span>{{item.EntryReference}}</span>
+                                                          
+                                                                        </td>
+
+                                                                        <td style="width:200px; max-width: 200px;" class="TextTrimming">
+                                                                            <span *ngIf="item.CustomerName">{{item.CustomerName}}</span>
+                                                                            <!--<span *ngIf="!item.CustomerName">{{item.MainCarriageCarrierName}}</span>-->
+                                                                        </td>
+
+                                                                        <td style="width:7px; height: 100%;" rowspan="2">
+                                                                            <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
+                                                                        </td>
+
+                                                                        <td style="width:20px; height: 100%;">
+                                                                            <div title="{{item.DirectionName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                                <img class="CenterCenter" style="top: 2px;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 3px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="width: 2px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td [attr.title]="item.Routing"  style="width:100px; max-width: 100px;" class="TextTrimming">{{item.Routing}}</td>
+
+                                                                        <td style="width: 3px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:200px; max-width: 200px;" class="TextTrimming">
+                                                                            <span *ngIf="item.WarehouseName">{{item.WarehouseName}}</span>
+                                                                           
+                                                                        </td>
 
 
-                                        <div class="MediaFill">
-                                            <SectionBox [Scrolling]="true">
-                                                <SectionHead>{{RecentWarehouseEntriesLists.length}} Recent Entries</SectionHead>
-                                                <SectionBody>
-                                                    <ul>
-                                                        <li class="RecentEntityItem" *ngFor="let item of RecentWarehouseEntriesLists" (click)="EditWarehouseEntries(item)">
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width: 2px;">
-                                                                        <div></div>
-                                                                    </td>
+                                                                        <td style="color: #1B90CB">{{item.EntryNumber}}</td>
 
-                                                                    <td style="width:80px; position: relative;" rowspan="2">
-                                                                        <div style="position: absolute; left: 3px; top: 3px; width: 20px; height: 20px;" title="{{item.ActivityTypeName}}">
-                                                                            <div *ngIf="item.ActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
-                                                                            <div *ngIf="item.ActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
-                                                                            <div *ngIf="item.ActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
-                                                                        </div>
+                                                                        <td style="width:20px; height: 100%;">
+                                                                            <div title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                                <img class="CenterCenter" style="top: -2px;" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                                                            </div>
+                                                                        </td>
 
-                                                                        <div style="position: absolute; left: 3px; bottom: 1px; color: #282E30;">{{item.ActivityDate | DateTimeToDatePipe}}</div>
-                                                                    </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
 
-                                                                    <td style="width:100px; max-width: 100px;" class="TextTrimming">
-                                                                        <span [ngStyle]="{color: item.StatusName | StringToColorPipe}">{{item.StatusName}}</span>
-                                                                        <span [ngStyle]="{color: item.StatusName | StringToColorPipe}" style="margin-left: 5px;" *ngIf="item.StatusLocation">({{item.StatusLocation}})</span>
-                                                                    </td>
+                                                                        <td style="width: 3px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </li>
+                                                        </ul>
 
-                                                                    <td style="width: 3px;">
-                                                                        <div></div>
-                                                                    </td>
+                                                        <div *ngIf="IsNoDataVisible_RecentWarehouseEntries" class="NoDataText" style="top:5px;">No Recent Shipments</div>
+                                                    </SectionBody>
+                                                </SectionBox>
+                                            </div>
 
-                                                                    <td style="width:115px; max-width: 115px;" class="TextTrimming">
-                                                                        <span>{{item.EntryReference}}</span>
-
-                                                                    </td>
-
-                                                                    <td style="width:200px; max-width: 200px;" class="TextTrimming">
-                                                                        <span *ngIf="item.CustomerName">{{item.CustomerName}}</span>
-                                                                        <!--<span *ngIf="!item.CustomerName">{{item.MainCarriageCarrierName}}</span>-->
-                                                                    </td>
-
-                                                                    <td style="width:7px; height: 100%;" rowspan="2">
-                                                                        <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
-                                                                    </td>
-
-                                                                    <td style="width:20px; height: 100%;">
-                                                                        <div title="{{item.DirectionName}}" style="width: 100%; height: 100%; position:relative;">
-                                                                            <img class="CenterCenter" style="top: 2px;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
-                                                                        </div>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="width: 3px;">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td style="width: 2px;">
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td [attr.title]="item.Routing" style="width:100px; max-width: 100px;" class="TextTrimming">{{item.Routing}}</td>
-
-                                                                    <td style="width: 3px;">
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="width:200px; max-width: 200px;" class="TextTrimming">
-                                                                        <span *ngIf="item.WarehouseName">{{item.WarehouseName}}</span>
-
-                                                                    </td>
-
-
-                                                                    <td style="color: #1B90CB">{{item.EntryNumber}}</td>
-
-                                                                    <td style="width:20px; height: 100%;">
-                                                                        <div title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
-                                                                            <img class="CenterCenter" style="top: -2px;" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
-                                                                        </div>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="width: 3px;">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </li>
-                                                    </ul>
-
-                                                    <div *ngIf="IsNoDataVisible_RecentWarehouseEntries" class="NoDataText" style="top:5px;">No Recent Shipments</div>
-                                                </SectionBody>
-                                            </SectionBox>
-                                        </div>
-
-
+                        
 
                                     </td>
                                 </tr>
@@ -332,11 +332,17 @@
 
                                                                     <td style="width:200px; max-width: 200px;" class="TextTrimming">
                                                                         <span *ngIf="item.CustomerName">{{item.CustomerName}}</span>
-
+                                                       
                                                                     </td>
 
                                                                     <td style="width:7px; height: 100%;" rowspan="2">
                                                                         <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
+                                                                    </td>
+
+                                                                    <td style="width:20px; height: 100%;">
+                                                                        <div title="{{item.DirectionName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                            <img class="CenterCenter" style="top: 2px;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                                                        </div>
                                                                     </td>
 
                                                                     <td>
@@ -366,6 +372,12 @@
 
 
                                                                     <td style="color: #1B90CB">{{item.ReleaseNumber}}</td>
+
+                                                                    <td style="width:20px; height: 100%;">
+                                                                        <div title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                            <img class="CenterCenter" style="top: -2px;" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                                                        </div>
+                                                                    </td>
 
                                                                     <td>
                                                                         <div></div>

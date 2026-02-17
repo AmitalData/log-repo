@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {QuotePackagePM} from '../../../../Quote/EntityPMs/QuotePackagePM';
@@ -8,7 +8,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditPackageComponent.html',
 })
 
@@ -17,43 +17,11 @@ export class AddEditPackageComponent {
     public DataContext: QuotePackageItem;
     public ObjectTableName: string = "QuotePackage";
     public ValidationErrorsList: string[];
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.RunComponent();
-    }
-    private Retries: number = 0;
-    private timerToken: any;
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
 
-        else {
-            this.RunComponentTimer();
-        }
-    }
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
     }
 
-    LoadChildComponent() {
-        let screenCode: string = "QuotePackage.AdditionalFields";
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.HideLastColumn = true;
-                cmpRef.instance.LabelWidth = 120;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-            });
-    }
     SetDataContext(dataContext: QuotePackageItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
@@ -119,8 +87,6 @@ export class AddEditPackageComponent {
         this.myCloner.AddField('Height');
         this.myCloner.AddField('Volume');
         this.myCloner.AddField('VolumetricWeight');
-        this.myCloner.AddField('PickupDeliveryVolume');
-        this.myCloner.AddField('PickupDeliveryVolumetricWeight');
         this.myCloner.AddField('Weight');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);

@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -62,13 +62,6 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string BIReportFolderId { get; set; }
 	      
         public virtual BIReportFolder BIReportFolder { get; set; }
-        [Column("FactTableName")]
-	    public string FactTableName { get; set; }
-        [ForeignKey("LastRunDetail")]
-        [Column("LastRunId")]
-	    public string LastRunId { get; set; }
-	      
-        public virtual LastRunDetail LastRunDetail { get; set; }
     }
 }
 	 

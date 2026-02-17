@@ -23,7 +23,7 @@ import { CustomsAirlineListService } from '../../../Customs/Services/StandardLis
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditCustomsAirlineComponent.html',
 })
 
@@ -52,8 +52,8 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.CustomsAirline").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("Customs.CustomsAirline").subscribe(response => {
             });
 
 
@@ -69,12 +69,12 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
         this._CustomsAirlineList = WinArg.SelectedItem;
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.CustomsAirline").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("Customs.CustomsAirline").subscribe(response => {
                 this._CustomsAirlineExtendedPMService
                     .GetSingleCustomsAirlineByCodeAndPrefix
                     (this._CustomsAirlineList.AirlineCode, this._CustomsAirlineList.AirlinePrefix)
-                    .subscribe((rsp:any) => {
+                    .subscribe(rsp => {
                         this.EntityPM = rsp.Result;
                         this.CurrentSession.StopBusyIndicator();
                     });
@@ -118,10 +118,6 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
         this.EntityPM.InActive = newValue;
     }
 
-    public get UnloadPortCode() { return this.EntityPM.UnloadPortCode; }
-    public set UnloadPortCode(newValue: string) {
-        this.EntityPM.UnloadPortCode = newValue;
-    }
     //#endregion\
 
     OkButtonClicked() {
@@ -133,7 +129,7 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList = errors;
         } else {
-            this._CustomsAirlinePMService.insert(this.EntityPM).subscribe((myResult:any) => {
+            this._CustomsAirlinePMService.insert(this.EntityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

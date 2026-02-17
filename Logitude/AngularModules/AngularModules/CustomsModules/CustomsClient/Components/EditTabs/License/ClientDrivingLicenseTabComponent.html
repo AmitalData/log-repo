@@ -68,8 +68,7 @@
                                                         <!-- DrivingLicenseNumber -->
                                                         <log-column [header]="'Customs.ClientDrivingLicense.F.DrivingLicenseNumber' | TextCodeTranslationPipe"
                                                                     [width]="'160'" [Alignment]="'right'" [binding]="'DrivingLicenseNumber'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate  (CellClicked)="onCellSelected($event,item)">
+                                                            <log-cell-template template="let item" #logcelltemplate  (CellClicked)="onCellSelected($event,item)">
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.DrivingLicenseNumber}}</span>
                                                                 </div>
@@ -80,14 +79,12 @@
                                                                                 ></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- DrivingLicenseCountryID-->
                                                         <log-column [header]="'Customs.ClientDrivingLicense.F.DrivingLicenseCountryID' | TextCodeTranslationPipe"
                                                                     [width]="'120'" [Alignment]="'right'" [binding]="'DrivingLicenseCountryID'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate (CellClicked)="onCellSelected($event,item)">
+                                                            <log-cell-template template="let item" #logcelltemplate (CellClicked)="onCellSelected($event,item)">
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.DrivingLicenseCountryName}}</span>
                                                                 </div>
@@ -103,14 +100,12 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- DriverLicenseValidityDate -->
                                                         <log-column [header]="'Customs.ClientDrivingLicense.F.DriverLicenseValidityDate' | TextCodeTranslationPipe"
                                                                     [width]="'100'" [Alignment]="'right'" [binding]="'DriverLicenseValidityDate'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate (CellClicked)="onCellSelected($event,item)">
+                                                            <log-cell-template template="let item" #logcelltemplate (CellClicked)="onCellSelected($event,item)">
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.DriverLicenseValidityDate | DateTimeToDatePipe}}</span>
                                                                 </div>
@@ -120,17 +115,14 @@
                                                                                    [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true" (CellClicked)="onCellSelected($event,item)">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true" (CellClicked)="onCellSelected($event,item)">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveClientDrivingLicense(item)"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                           </logitude-edit-grid>
@@ -177,8 +169,7 @@
                                                         <!-- DriversLicenseTypeCode -->
                                                         <log-column [header]="'Customs.ClientDrivingLicenseType.F.DriversLicenseTypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'150'" [Alignment]="'right'" [binding]="'DriversLicenseTypeCode'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.DriversLicenseTypeCode}}</span>
                                                                 </div>
@@ -188,17 +179,14 @@
                                                                                 (LostFocus)="item.OnDriversLicenseLostFocus($event)"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                             <!-- Delete Button-->
                             <log-column [width]="'30'" [Alignment]="'right'">
-                              <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                              <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveClientDrivingLicenseType(item)"
                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                               </log-cell-template>
-</ng-template>
                             </log-column>
 
                           </logitude-edit-grid>

@@ -15,7 +15,7 @@ import {TranslationItem} from '../../../Common/Services/CommonDomainService';
 
 @Component({
     selector: 'TranslationDetailsComponent',
-    
+    moduleId: module.id,
     templateUrl: './TranslationDetailsComponent.html',
 })
 

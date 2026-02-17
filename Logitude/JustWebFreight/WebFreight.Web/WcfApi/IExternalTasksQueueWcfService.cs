@@ -1,5 +1,4 @@
-﻿//#define tzuri_req
-using Logitude.Server.Tools;
+﻿using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +17,6 @@ namespace WebFreight.Web.WcfApi
         string GetTaskFromQueue(int tenant, int priority);
         [OperationContract]
         Response MarkTaskAsDone(string communicationLogId, int tenant, int priority);
-
-        [OperationContract]
-        Response LGTQuery(string queryId, Dictionary<string, string> queryParams, int tenant);
-
-#if tzuri_req
-
-        [OperationContract]
-        string GetTaskByQueueDefinitionCode(int tenant, int priority,string queueDefinitionCode);
-        [OperationContract]
-        Response MarkTaskAsDoneByQueueDefinitionCode(string communicationLogId, int tenant, int priority, string queueDefinitionCode);
-#endif
+        
     }
 }

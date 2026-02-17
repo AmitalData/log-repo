@@ -26,11 +26,10 @@ import { InterfaceManagementList } from '../../../Customs/EntityLists/InterfaceM
 import { InterfaceManagementPMExtendService } from '../../../Customs/Services/ExtendedPMs/InterfaceManagementPMExtendService';
 
 import { InterfaceManagementListService } from '../../../Customs/Services/StandardLists/InterfaceManagementListService';
-import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditInterfaceManagementComponent.html',
 })
 
@@ -64,17 +63,9 @@ export class AddEditInterfaceManagementComponent
         super();
     }
     Loaded: boolean = false;
-    public InterfaceTypeList: CodeNameClass[];
     ngOnInit() {
-        this.InterfaceTypeList = [];
-        this.InterfaceTypeList.push(new CodeNameClass("", "הכל"));
-        this.InterfaceTypeList.push(new CodeNameClass("C", "עמילות"));
-        this.InterfaceTypeList.push(new CodeNameClass("B", "בלדרות"));
-        this.SelectedInterfaceType = this.InterfaceTypeList[0];
-        
-        //ערכים NULL==הכל, C==רק עמילות, B==רק בלדרות
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe(response => {
             });
        
 
@@ -82,25 +73,18 @@ export class AddEditInterfaceManagementComponent
         });
 
     }
-
-    private selectedInterfaceType: CodeNameClass;
-    get SelectedInterfaceType() { return this.selectedInterfaceType; }
-    set SelectedInterfaceType(val) {  this.selectedInterfaceType = val; }
     SetWindowArgs(WinArg) {
         ;
         this._TenantInterfaceManagementList = WinArg.SelectedItem;
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe(response => {
                 this._InterfaceManagementPMExtendService
                     .GetSingleInterfaceManagementwithDefinition
                     (this._TenantInterfaceManagementList.Code, SessionLocator.Tenant)
-                    .subscribe((rsp:any) => {
+                    .subscribe(rsp => {
                         this.entityPM = rsp.Result;
-                        if (!AppTool.IsNullOrEmpty(this.entityPM.InterfaceType)) {
-                            this.SelectedInterfaceType = this.InterfaceTypeList.filter(r => r.Code == this.entityPM.InterfaceType)[0];
-                        }
                         this.ValidScreen()
                         this.CurrentSession.StopBusyIndicator();
                     });
@@ -175,8 +159,6 @@ export class AddEditInterfaceManagementComponent
     get AllowRestore() { return this.entityPM != null ? this.entityPM.AllowRestore : false; }
     set AllowRestore(value) { this.entityPM.AllowRestore = value; }
 
-    get UseRabbitMQ() { return this.entityPM != null ? this.entityPM.UseRabbitMQ : false; }
-    set UseRabbitMQ(value) { this.entityPM.UseRabbitMQ = value; }
 
 
     get Description() { return this.entityPM != null ? this.entityPM.Description : null; }
@@ -220,37 +202,9 @@ export class AddEditInterfaceManagementComponent
     get TenantSendOptionsCode() { return this.entityPM != null ? this.entityPM.TenantSendOptionsCode : null; }
     set TenantSendOptionsCode(value) { this.entityPM.TenantSendOptionsCode = value; }
 
-    get EntityLockId() { return this.entityPM != null ? this.entityPM.EntityLockId : null; }
-    set EntityLockId(value) { this.entityPM.EntityLockId = value; }
-    
-    get SendTime() 
-    { 
-        if(this.entityPM.SendTime != null)
-        {
-            var sendTime = "2022-10-30T02:00:00.000Z"
-
-            if(this.entityPM.SendTime.length > 5)
-                this.entityPM.SendTime = this.entityPM.SendTime.substring(0,5);
-            var time = sendTime.replace("02:00",this.entityPM.SendTime);
-            return time;    
-        }
-        return  null; 
-    
-    }
-
-    set SendTime(value) 
-    {
-        if(AppTool.IsNullOrEmpty(value))
-            this.entityPM.SendTime = value
-        else{
-            var isoDateString = new Date(value).toISOString();
-            this.entityPM.SendTime =  isoDateString.substring(11,19);
-        }
-        
-    }
-
     //#endregion
-   
+
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -260,13 +214,9 @@ export class AddEditInterfaceManagementComponent
         if (IsNew) {
             return;
         }
-        this.ValidateSuperUser();
-        if (this.ValidationErrorsList.length > 0) {
-            return;
-        }
-       
+        
         this._InterfaceManagementPMExtendService.PutInterfaceManagementPM(this.entityPM)
-            .subscribe((resp:any) => {
+            .subscribe(resp => {
                 if (resp.HasError) {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(resp.ErrorsArray[0]);
@@ -275,15 +225,5 @@ export class AddEditInterfaceManagementComponent
                 this.CancelButtonClicked();
 
             });
-    }
-
-    private ValidateSuperUser() {
-        this.ValidationErrorsList = [];
-        if (this.TenantPriority > 99) {//super user
-            this.ValidationErrorsList.push("עדיפות מוגבלת ל 99")
-        }
-        if (this.TenantPriority <1) {
-            this.ValidationErrorsList.push("עדיפות מוגבלת מ 1")
-        }
     }
 }

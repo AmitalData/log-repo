@@ -20,7 +20,6 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data; 
 using Logitude.BookingLib.Data.EntityMapping;
-using Devart.Data.Oracle.Entity.Configuration;
 
 namespace Logitude.BookingLib.Data
 {
@@ -46,9 +45,7 @@ namespace Logitude.BookingLib.Data
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
             BookingContext context = new BookingContext(connection);
             return context;
         }
@@ -61,7 +58,7 @@ namespace Logitude.BookingLib.Data
 
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = OracleEntityProviderConfig.Instance;
+                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 
             }
@@ -141,6 +138,7 @@ namespace Logitude.BookingLib.Data
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -337,8 +335,6 @@ namespace Logitude.BookingLib.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
-            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
-
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -368,8 +364,8 @@ namespace Logitude.BookingLib.Data
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
-			modelBuilder.Configurations.Add(new CustomsShipperMap());
-			#endregion
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
+            #endregion
 
             base.OnModelCreating(modelBuilder);
         }
@@ -484,4 +480,4 @@ namespace Logitude.BookingLib.Data
  }
 
 
-}
+}

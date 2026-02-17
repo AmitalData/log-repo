@@ -11,11 +11,11 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {BookingTool} from '../../../Tools';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+
 @Component({
     selector: 'PackagesTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './PackagesTabComponent.html',
 })
 
@@ -29,15 +29,10 @@ export class PackagesTabComponent extends BaseComponent {
     public TabSummaryAreaHeight: number = 100;
     public TenantPM: TenantPM;
     public IsVisible: boolean = false;
-    private firstDigit: string = ",";
-    private secondDigit: string = ".";
-
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         super();
         this.TenantPM = InfraSettings.TenantPM;
-        this.setDigits();
-
     }
     
     InitTab(wizard: BookingWizardComponent) {
@@ -270,45 +265,12 @@ export class PackagesTabComponent extends BaseComponent {
             this.ItemsSource.push(itemViewModel);
             itemViewModel.SetUIProperties();
         })
-    }
-
-    private setDigits() {
-        this.firstDigit = ",";
-        this.secondDigit = ".";
-
-        //switch (SessionLocator.TenantPM.NumberFormatCode) {
-        //    case "CD": {
-        //        this.firstDigit = ",";
-        //        this.secondDigit = ".";
-        //        break;
-        //    }
-
-        //    case "DC": {
-        //        this.firstDigit = ".";
-        //        this.secondDigit = ",";
-        //        break;
-        //    }
-
-        //    case "AD": {
-        //        this.firstDigit = "'";
-        //        this.secondDigit = ".";
-        //        break;
-        //    }
-
-        //    default:
-        //        {
-        //            this.firstDigit = ",";
-        //            this.secondDigit = ".";
-        //            break;
-        //        }
-        //}
-    }
+    }    
 
     GrossWeightLostFocus(input: any) {
 
         var valueComputed: number = 0;
         var valueInserted: number = 0;
-
 
         this.EntityPM.BookingPackages.forEach((item) => {
             if (!AppTool.IsNullOrEmpty(item.Weight)) {
@@ -316,45 +278,17 @@ export class PackagesTabComponent extends BaseComponent {
             }
         });
 
-        // if (!AppTool.IsNullOrEmpty(input)) {
-        //     if (this.firstDigit == ".") {
-        //         if (!this.GrossWeightPasted) {
-        //             input = input.replace(/\./g, '');
-        //         }
-        //         input = input.replace(/,/g, ".");
-        //     }
-
-        //     else if (this.firstDigit == "'") {
-        //         input = input.replace(/'/g, '');
-        //     }
-        //     else {
-        //         input = AppTool.Replace(input, ",", "");
-        //     }
-        //     valueInserted = Number(input);
-        // }
+        if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
+            valueInserted = Number(input);
+        }
 
         valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = AppTool.GetNumberFromText(input);
+        valueInserted = valueInserted == 0 ? null : valueInserted;
         this.EntityPM.GrossWeightEdited = !(valueComputed == valueInserted);
         this.GrossWeight = valueInserted;
         this.ComputeTotals();
     }
-    private ChargeableWeightPasted: boolean = false;
-    ChargeableWeightPaste($event) {
-        this.ChargeableWeightPasted = true;
-    }
-
-
-    private GrossWeightPasted: boolean = false;
-    GrossWeightPaste($event) {
-        this.GrossWeightPasted = true;
-    }
-
-
-
-
-
-
 
     ChargeableWeightLostFocus(input: any) {
 
@@ -363,25 +297,13 @@ export class PackagesTabComponent extends BaseComponent {
 
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionCode, this.EntityPM.TransportModeCode);
 
-        // if (!AppTool.IsNullOrEmpty(input)) {
-        //     if (this.firstDigit == ".") {
-        //         if (!this.ChargeableWeightPasted) {
-        //             input = input.replace(/\./g, '');
-        //         }
-        //         input = input.replace(/,/g, ".");
-        //     }
-
-        //     else if (this.firstDigit == "'") {
-        //         input = input.replace(/'/g, '');
-        //     }
-        //     else {
-        //         input = AppTool.Replace(input, ",", "");
-        //     }
-        //     valueInserted = Number(input);
-        // }
+        if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
+            valueInserted = Number(input);
+        }
 
         valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = AppTool.GetNumberFromText(input);
+        valueInserted = valueInserted == 0 ? null : valueInserted;
         this.EntityPM.ChargeableWeightEdited = !(valueComputed == valueInserted);
         this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionCode, this.EntityPM.TransportModeCode);
         this.ComputeTotals();

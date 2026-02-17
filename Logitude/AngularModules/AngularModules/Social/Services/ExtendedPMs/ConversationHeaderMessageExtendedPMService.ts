@@ -1,8 +1,7 @@
-
+﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ConversationHeaderMessagePM} from '../../EntityPMs/ConversationHeaderMessagePM';
@@ -11,20 +10,21 @@ import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 @Injectable()
 
 export class ConversationHeaderMessageExtendedPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ConversationHeaderMessageExtended';
     }
 
 
     GetAllConversationMessageForHeaderQuery(conversationHeaderId: string, userId: string){
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetAllConversationMessageForHeaderQuery/?' + 'conversationHeaderId=' + conversationHeaderId + '&userId='  + userId, { headers: authHeader }).map(response => {
 
-        return this._http.get(this._apiUrl + '/GetAllConversationMessageForHeaderQuery/?' + 'conversationHeaderId=' + conversationHeaderId + '&userId='  + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result:any = response;
+            var result = response.json();
             var entity: ConversationHeaderMessagePM;
             var conversationHeaderMessagePMLists: ConversationHeaderMessagePM[];
             conversationHeaderMessagePMLists = new Array<ConversationHeaderMessagePM>();
@@ -38,7 +38,7 @@ export class ConversationHeaderMessageExtendedPMService {
             pmresponse.Result = conversationHeaderMessagePMLists;
             return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 

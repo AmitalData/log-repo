@@ -12,7 +12,7 @@ import {ARInvoiceSATStatus} from '../../Services/InvoiceDomainService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SendPaymentWindowComponent.html',
 })
 
@@ -71,6 +71,8 @@ export class SendPaymentWindowComponent {
         }
 
     }
+
+    
 
     public IsInvoicesValid: boolean = false;
     public IsInvoicesWarning: boolean = false;
@@ -143,23 +145,14 @@ export class SendPaymentWindowComponent {
                     this.CurrentSession.CurrentWindow.Close("");
                 }
                 else {
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                    //var messageWindow = new MessageWindow();
-                    //messageWindow.Show(response.ErrorsArray.toString());
-                    this.InvalidSendPayment(response.ErrorsArray.toString());
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show(response.ErrorsArray.toString());
                 }
             }
 
         });
     }
 
-    private InvalidSendPayment(errorsArray: string) {
-        this.IsInvoicesStatusVisible = false;
-        this.IsPaymentValid = false;
-        this.IsPaymentError = true;
-        this.PaymentErrorText = "Invalid";
-        this.ValidationErrorsList.push(errorsArray);
-    }
 }
 
 

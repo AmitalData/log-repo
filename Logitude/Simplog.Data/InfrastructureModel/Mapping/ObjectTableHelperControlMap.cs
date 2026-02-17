@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -35,9 +35,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.FeatureId)
                 .HasMaxLength(15)
                 .IsUnicode(false);
-            this.Property(t => t.FeatureUniqeCode)
-                .HasMaxLength(120)
-                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ObjectTableHelperControls");
@@ -47,13 +44,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
             this.Property(t => t.ControlPath).HasColumnName("ControlPath");
             this.Property(t => t.FeatureId).HasColumnName("FeatureId");
-            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
-
 
             // Relationships
-            //this.HasOptional(t => t.Feature)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.FeatureId);
+            this.HasOptional(t => t.Feature)
+                .WithMany()
+                .HasForeignKey(d => d.FeatureId);
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.ObjectTableHelperControls)
             //    .HasForeignKey(d => d.ObjectTableId);

@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs; 
 using Simplog.Data.CommonDataModel;
 
@@ -47,18 +47,18 @@ namespace Logitude.BL.CommonDataModel
 			 
             all.Add(new CustomsInterfaceDetails()
             {    
-                Code = "NO", 
-                SearchFields = "NO,None", 
-                InterfaceType = "NO", 
-                Name = "None", 
+                Code = "CMN", 
+                SearchFields = "CMN,Maman Courier", 
+                InterfaceType = "IM", 
+                Name = "Maman Courier", 
 			});
 			 
             all.Add(new CustomsInterfaceDetails()
             {    
-                Code = "AMC", 
-                Name = "AMANAC ( Mexico )", 
-                SearchFields = "AMC,AMANAC ( Mexico )", 
-                InterfaceType = "LO", 
+                Code = "NO", 
+                SearchFields = "NO,None", 
+                InterfaceType = "NO", 
+                Name = "None", 
 			});
 			
             return all;

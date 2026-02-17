@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -47,20 +47,12 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         }
                     }
 
-                    if (item.FieldName == "CardId" || item.FieldName == "CardCode")
+                    if (item.FieldName == "CardId")
                     {
                         string value = item.FieldValue as string;
-                        List<string> cardIds = GetCardIdsForList(item);
 
                         CardContactRepository repositry = new CardContactRepository(tenant);
-                        if (item.Operator == "InListExact")
-                        {
-                            queryableData = repositry.GetContactsByCardIds(cardIds);
-                        }
-                        else
-                        {
-                            queryableData = repositry.GetContactsByCardId(value);
-                        }
+                        queryableData = repositry.GetContactsByCardId(value);
                     }
 
                     if (item.FieldName == "ContactEmailAndNames")
@@ -68,12 +60,12 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         string value = item.FieldValue as string;
                         if (queryableData.Count() != 0)
                         {
-                            queryableData = queryableData.Where(d =>
+                            queryableData = queryableData.Where(d => 
                                 d.Email.ToUpper().Contains(value.ToUpper())
-                                ||
+                                || 
                                 d.EnglishName.ToUpper().Contains(value.ToUpper())
                                 ||
-                                d.LocalName.ToUpper().Contains(value.ToUpper())
+                                d.LocalName.ToUpper().Contains(value.ToUpper()) 
                                 );
                         }
                     }
@@ -81,7 +73,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                     if (item.FieldName == "UpcomingDates")
                     {
                         string tString = item.FieldValue as string;
-
+                        
                         DateTime? todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                         int currentDayOfYear = todayDate.Value.DayOfYear;
                         int day1 = currentDayOfYear - 5;
@@ -103,7 +95,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                     if (item.FieldName == "HasNoReminders")
                     {
                         queryableData = queryableData.Where(c => !c.BirthdayReminder);
-
+                     
                     }
 
                     if (item.FieldName == "UpcomingBirthdaysFilter")
@@ -182,41 +174,11 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                 queryableData = queryableData.Where(c => !emails.Contains(c.Email));
                             }
                         }
-                    }
-
-                    if (item.FieldName == "Occasion_ContactsQuery")
-                    {
-                        string value = item.FieldValue as string;
-                        if (!string.IsNullOrEmpty(value))
-                        {
-                            value = value.TrimEnd(',');
-                            var contactIds = value.Split(',');
-                            if (contactIds.Count() > 0)
-                            {
-                                queryableData = queryableData.Where(c => contactIds.Contains(c.Id));
-                            }
-                        }
-                    }
-
+                    }                    
                 }
             }
 
             return queryableData;
-        }
-
-        private List<string> GetCardIdsForList(QueryFilterItem item)
-        {
-            string value = item.FieldValue as string;
-
-            if (item.FieldName != "CardCode")
-            {
-                return value.Split(',').ToList();
-            }
-
-            PartnerTypeRepository partnerTypeRepository = new PartnerTypeRepository(tenant);
-            string partnerTypeId = partnerTypeRepository.GetSinglePartnerTypeByName(item.FieldValue2?.ToString())?.Id;
-            CardRepository cardRepository = new CardRepository(tenant);
-            return cardRepository.GetActiveCardsIdsByCodes(value.Split(new Char[] { ';', ',' })?.ToList(), partnerTypeId, tenant);
         }
     }
 }

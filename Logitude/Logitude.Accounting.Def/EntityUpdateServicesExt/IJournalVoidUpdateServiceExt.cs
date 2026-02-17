@@ -10,6 +10,5 @@ namespace Logitude.Accounting.Def.EntityUpdateServicesExt
     public interface IJournalVoidUpdateServiceExt
     {
         void Update(JournalPM journalPM, StornoOverrideM stornoOverrideM);
-
     }
 }

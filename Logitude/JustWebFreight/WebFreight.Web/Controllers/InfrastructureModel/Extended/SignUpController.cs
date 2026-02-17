@@ -2,9 +2,9 @@
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -70,10 +70,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        if (!signupInfo.IsCreateLogboxTenantFromCloud)
-                        {
-                            SecurityUtility.CheckContactFeature("General", "CREATETENANT", authToken.Tenant);
-                        }
+                        SecurityUtility.CheckContactFeature("General", "CREATETENANT", authToken.Tenant);
+
                         CreateNewTenant(signupInfo);
 
                         scope.Complete();
@@ -105,7 +103,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             byte[] bytearray = memstream.ToArray();
 
             SignUpHelper signUpHelper = new SignUpHelper();
-            signUpHelper.SendMessageToQueue(bytearray, signupInfo);
+            signUpHelper.SendMessageToQueue(bytearray);
         }
     }
 }

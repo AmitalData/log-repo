@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {CardList} from '../../../../../Common/EntityLists/CardList';
 import {AddressList} from '../../../../../Common/EntityLists/AddressList';
 import {CardListService} from '../../../../../Common/Services/StandardLists/CardListService';
@@ -14,22 +15,26 @@ import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {AddEditPartnerArgs} from '../../../../../Shipment/Args';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { AWBOCIPM } from '../../../../../Shipment/EntityPMs/AWBOCIPM';
+import {SessionInfo} from '../../../../../Infrastructure/Utilities/SessionInfo';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     selector: 'PartnersTabComponent',
     templateUrl: './AWBPartnersTabComponent.html',
 })
 
-export class AWBPartnersTabComponent extends BaseComponent{
+export class AWBPartnersTabComponent extends BaseComponent
+{
     public EntityPM: ShipmentPM;
     public Wizard: AWBWizardComponent;
     public DataContext: AWBPartnersTabComponent = this;
     public ObjectTableName: string;
     public LabelColumnWidth: number = 85;
     public PartnerBoxHeight: number = 200;
+    private IsFirstTime: boolean = true;
     private myCardListService: CardListService;
     constructor() {
         super();
@@ -38,7 +43,8 @@ export class AWBPartnersTabComponent extends BaseComponent{
 
     private InitializeServices() {
         if (this.myCardListService == null) {
-            this.myCardListService = new CardListService();            
+            this.myCardListService = new CardListService();
+            
         }
     }
 
@@ -46,7 +52,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
         this.Wizard = wizard;
         this.EntityPM = this.Wizard.EntityPM;
         this.ObjectTableName = this.Wizard.ObjectTableName;
-        this.SetIssuingCarrier();
         this.Listen();
         this.SetWarningInfo();
         this.SetLOVDependency();
@@ -98,9 +103,8 @@ export class AWBPartnersTabComponent extends BaseComponent{
         if (this.IsEditSHIEnabled) {
             this.IsEditSHIEnabled = isFieldFilled;
         }
-        if (!this.Wizard.IsImportWizard) {
-            this.UIProperties.SetRequired("ShipperId", this.ObjectTableName, !isFieldFilled);
-        }
+
+        this.UIProperties.SetRequired("ShipperId", this.ObjectTableName, !isFieldFilled);
         this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ShipperReference1", this.ObjectTableName, this.IsEditingEnabled);
     }
@@ -110,12 +114,8 @@ export class AWBPartnersTabComponent extends BaseComponent{
         if (this.IsEditCONEnabled) {
             this.IsEditCONEnabled = isFieldFilled;
         }
-        if (!this.Wizard.IsImportWizard) {
-            this.UIProperties.SetEnabled("ConsigneeId", this.ObjectTableName, this.IsEditingEnabled);
-        }
-        else {
-            this.UIProperties.SetRequired("ConsigneeId", this.ObjectTableName, !isFieldFilled);            
-        }
+
+        this.UIProperties.SetEnabled("ConsigneeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ConsigneeReference1", this.ObjectTableName, this.IsEditingEnabled);
     }
     private SetUIProperties_Notify1() {
@@ -128,31 +128,30 @@ export class AWBPartnersTabComponent extends BaseComponent{
         this.UIProperties.SetEnabled("Notify1Id", this.ObjectTableName, this.IsEditingEnabled);
     }
     private SetUIProperties_IssuingCarrier() {
-            var isAgentFieldEnabled = this.IsEditingEnabled;
-            if (isAgentFieldEnabled) {
-                isAgentFieldEnabled = this.EntityPM.ViaColoader ? true : false;
-            }
+        var isAgentFieldEnabled = this.IsEditingEnabled;
+        if (isAgentFieldEnabled) {
+            isAgentFieldEnabled = this.EntityPM.ViaColoader ? true : false;
+        }
 
-            if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
+        if (SessionLocator.TenantManagementJS.AWBMessagesCCSTypeCode == "GLSHK") {
+            this.ViaColoaderIsVisible = true;
+            this.ViaColoaderHeader = TextCodeTranslator.Translate("Shipment.S.Partners.IssuingCarrierColoader");
+        }
+
+        else {
+            if (SessionLocator.TenantManagementJS.PackageCode != "BUBK" && SessionLocator.TenantManagementJS.PackageCode != "EAWB" && SessionLocator.TenantManagementJS.PackageCode != "EACR") {
                 this.ViaColoaderIsVisible = true;
                 this.ViaColoaderHeader = TextCodeTranslator.Translate("Shipment.S.Partners.IssuingCarrierColoader");
             }
-
-            else {
-                if (SessionLocator.TenantManagementJS.PackageCode != "BUBK" && SessionLocator.TenantManagementJS.PackageCode != "EAWB" && SessionLocator.TenantManagementJS.PackageCode != "EACR") {
-                    this.ViaColoaderIsVisible = true;
-                    this.ViaColoaderHeader = TextCodeTranslator.Translate("Shipment.S.Partners.IssuingCarrierColoader");
-                }
-            }
-        if (!this.Wizard.IsImportWizard) {
-            this.UIProperties.SetEnabled("IssuingCarrierAgentId", this.ObjectTableName, isAgentFieldEnabled);
-            this.UIProperties.SetEnabled("IssuingCarrierAddressId", this.ObjectTableName, isAgentFieldEnabled);
-            this.UIProperties.SetEnabled("IssuingCarrierIATACode", this.ObjectTableName, isAgentFieldEnabled);
-            this.UIProperties.SetEnabled("CASSCode", this.ObjectTableName, isAgentFieldEnabled);
-            this.UIProperties.SetEnabled("IssuingCarrierReference1", this.ObjectTableName, this.IsEditingEnabled);
-            this.UIProperties.SetEnabled("ViaColoader", this.ObjectTableName, this.IsEditingEnabled);
         }
-    }
+
+        this.UIProperties.SetEnabled("IssuingCarrierAgentId", this.ObjectTableName, isAgentFieldEnabled);
+        this.UIProperties.SetEnabled("IssuingCarrierAddressId", this.ObjectTableName, isAgentFieldEnabled);
+        this.UIProperties.SetEnabled("IssuingCarrierIATACode", this.ObjectTableName, isAgentFieldEnabled);
+        this.UIProperties.SetEnabled("CASSCode", this.ObjectTableName, isAgentFieldEnabled);
+        this.UIProperties.SetEnabled("IssuingCarrierReference1", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("ViaColoader", this.ObjectTableName, this.IsEditingEnabled);
+    }   
 
     public IsBookingConnectWarningVisible: boolean = false;
     private SetWarningInfo() {
@@ -261,11 +260,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
         if (this.EntityPM.ShipmentLevelCode == "C") {
             myDependency = "AG";
             myDependencyIsList = false;
-            
-            if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
-                myDependency = "CS,AG";
-                myDependencyIsList = true;
-            }
         }
 
         else {
@@ -297,139 +291,216 @@ export class AWBPartnersTabComponent extends BaseComponent{
         this.Wizard.ValidateScreen_PAR();
     }
     private Validate() {
-        if (!this.Wizard.IsImportWizard) {
-            this.Validate_SHI();
-            this.Validate_CON();
-            this.Validate_AGT();
-            this.Validate_NTF();
-        }
+        this.Validate_SHI();
+        this.Validate_CON();
+        this.Validate_AGT();
+        this.Validate_NTF();        
     }
     private Validate_SHI() {
-        if (!this.Wizard.IsImportWizard) {
 
-            var warningMessage: string = "";
-            var showAddressWarning = false;
+        var warningMessage: string = "";
+        var showAddressWarning = false;
 
-            if (this.ShipperId == null) {
-                warningMessage = "Shipper is required";
+        if (this.ShipperId == null) {
+            warningMessage = "Shipper is required";
+        }
+
+        else {
+            if (this.ShipperAddressId == null) {
+                warningMessage = "Address is required";
             }
 
             else {
-                if (this.ShipperAddressId == null) {
-                    warningMessage = "Address is required";
-                }
+                var myAddressList = this.ShipperAddressList;
 
-                else {
-                    var myAddressList = this.ShipperAddressList;
+                if (myAddressList != null) {
+                    var myAddress1: string = AppTool.IsNullOrEmpty(myAddressList.Address1) ? null : myAddressList.Address1.trim();
+                    var myAddress2: string = AppTool.IsNullOrEmpty(myAddressList.Address2) ? null : myAddressList.Address2.trim();
+                    var myZipCode: string = AppTool.IsNullOrEmpty(myAddressList.ZipCode) ? null : myAddressList.ZipCode.trim();
+                    var myCity: string = AppTool.IsNullOrEmpty(myAddressList.City) ? null : myAddressList.City.trim();
+                    var myFaxNumber: string = AppTool.IsNullOrEmpty(myAddressList.FaxNumber) ? null : myAddressList.FaxNumber.trim();
+                    var myPhoneNumber: string = AppTool.IsNullOrEmpty(myAddressList.PhoneNumber) ? null : myAddressList.PhoneNumber.trim();
 
-                    if (myAddressList != null) {
-                        var myAddress1: string = AppTool.IsNullOrEmpty(myAddressList.Address1) ? null : myAddressList.Address1.trim();
-                        var myAddress2: string = AppTool.IsNullOrEmpty(myAddressList.Address2) ? null : myAddressList.Address2.trim();
-                        var myZipCode: string = AppTool.IsNullOrEmpty(myAddressList.ZipCode) ? null : myAddressList.ZipCode.trim();
-                        var myCity: string = AppTool.IsNullOrEmpty(myAddressList.City) ? null : myAddressList.City.trim();
-                        var myFaxNumber: string = AppTool.IsNullOrEmpty(myAddressList.FaxNumber) ? null : myAddressList.FaxNumber.trim();
-                        var myPhoneNumber: string = AppTool.IsNullOrEmpty(myAddressList.PhoneNumber) ? null : myAddressList.PhoneNumber.trim();
-
-                        if (!FormatTool.IsTextFormatted(myAddress1)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1" : warningMessage + ",Address1";
-                        }
-
-                        if (!FormatTool.IsTextFormatted(myAddress2)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address2" : warningMessage + ",Address2";
-                        }
-
-                        if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1 or Address2" : warningMessage + ",Address1 or Address2";
-                        }
-
-                        if (AppTool.IsNullOrEmpty(myAddressList.StateCode)) {
-                            if (this.Wizard.AllStates.filter(d => d.CountryId == myAddressList.CountryId).length > 0) {
-                                warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "State" : warningMessage + ",State";
-                            }
-                        }
-
-                        if (AppTool.IsNullOrEmpty(myCity)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
-                        }
-
-                        else if (!FormatTool.IsTextFormatted(myCity)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
-                        }
-
-                        if (AppTool.IsNullOrEmpty(myZipCode)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
-                        }
-
-                        else if (!FormatTool.IsTextFormatted(myZipCode)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
-                        }
-
-                        if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
-                            if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
-                                warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Phone Or Fax" : warningMessage + ",Phone Or Fax";
-                            }
-                        }
+                    if (!FormatTool.IsTextFormatted(myAddress1)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1" : warningMessage + ",Address1";
                     }
 
-                    if (!AppTool.IsNullOrEmpty(warningMessage)) {
-                        warningMessage += " is required";
+                    if (!FormatTool.IsTextFormatted(myAddress2)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address2" : warningMessage + ",Address2";
+                    }
+
+                    if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1 or Address2" : warningMessage + ",Address1 or Address2";
+                    }
+
+                    if (AppTool.IsNullOrEmpty(myAddressList.StateCode)) {
+                        if (this.Wizard.AllStates.filter(d => d.CountryId == myAddressList.CountryId).length > 0) {
+                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "State" : warningMessage + ",State";
+                        }
+                     }
+
+                    if (AppTool.IsNullOrEmpty(myCity)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
+                    }
+
+                    else if (!FormatTool.IsTextFormatted(myCity)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
+                    }
+
+                    if (AppTool.IsNullOrEmpty(myZipCode)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
+                    }
+
+                    else if (!FormatTool.IsTextFormatted(myZipCode)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
+                    }
+
+                    if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
+                        if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
+                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Phone Or Fax" : warningMessage + ",Phone Or Fax";
+                        }
                     }
                 }
 
                 if (!AppTool.IsNullOrEmpty(warningMessage)) {
-                    showAddressWarning = true;
+                    warningMessage += " is required";
                 }
             }
 
-            this.ShipperWarning = warningMessage;
-            this.ShowWarningShipperAddressId = showAddressWarning;
+            if (!AppTool.IsNullOrEmpty(warningMessage)) {
+                showAddressWarning = true;
+            }
         }
+
+        this.ShipperWarning = warningMessage;
+        this.ShowWarningShipperAddressId = showAddressWarning;
     }
     private Validate_CON() {
-        if (!this.Wizard.IsImportWizard) {
+        this.ShowWarningConsigneeId = this.ConsigneeId == null ? true : false;
 
-            this.ShowWarningConsigneeId = this.ConsigneeId == null ? true : false;
+        var warningMessage: string = "";
+        var showAddressWarning = false;
 
-            var warningMessage: string = "";
-            var showAddressWarning = false;
+        if (this.ConsigneeId == null) {
+            warningMessage = "Consignee is required";
+        }
 
-            if (this.ConsigneeId == null) {
-                warningMessage = "Consignee is required";
+        else {
+            if (this.ConsigneeAddressId == null) {
+                warningMessage = "Address is required";
             }
 
             else {
-                if (this.ConsigneeAddressId == null) {
+                var myAddressList = this.ConsigneeAddressList;
+
+                if (myAddressList != null) {
+                    var myAddress1: string = AppTool.IsNullOrEmpty(myAddressList.Address1) ? null : myAddressList.Address1.trim();
+                    var myAddress2: string = AppTool.IsNullOrEmpty(myAddressList.Address2) ? null : myAddressList.Address2.trim();
+                    var myZipCode: string = AppTool.IsNullOrEmpty(myAddressList.ZipCode) ? null : myAddressList.ZipCode.trim();
+                    var myCity: string = AppTool.IsNullOrEmpty(myAddressList.City) ? null : myAddressList.City.trim();
+                    var myFaxNumber: string = AppTool.IsNullOrEmpty(myAddressList.FaxNumber) ? null : myAddressList.FaxNumber.trim();
+                    var myPhoneNumber: string = AppTool.IsNullOrEmpty(myAddressList.PhoneNumber) ? null : myAddressList.PhoneNumber.trim();
+
+                    if (!FormatTool.IsTextFormatted(myAddress1)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1" : warningMessage + ",Address1";
+                    }
+
+                    if (!FormatTool.IsTextFormatted(myAddress2)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address2" : warningMessage + ",Address2";
+                    }
+
+                    if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1 or Address2" : warningMessage + ",Address1 or Address2";
+                    }
+
+                    if (AppTool.IsNullOrEmpty(myAddressList.StateCode)) {
+                        if (this.Wizard.AllStates.filter(d => d.CountryId == myAddressList.CountryId).length > 0) {
+                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "State" : warningMessage + ",State";
+                        }
+                    }
+
+                    if (AppTool.IsNullOrEmpty(myCity)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
+                    }
+
+                    else if (!FormatTool.IsTextFormatted(myCity)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
+                    }
+
+                    if (AppTool.IsNullOrEmpty(myZipCode)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
+                    }
+
+                    else if (!FormatTool.IsTextFormatted(myZipCode)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
+                    }
+
+                    if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
+                        if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
+                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Phone Or Fax" : warningMessage + ",Phone Or Fax";
+                        }
+                    }
+                }
+
+                if (!AppTool.IsNullOrEmpty(warningMessage)) {
+                    warningMessage += " is required";
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(warningMessage)) {
+                showAddressWarning = true;
+            }
+        }
+
+        this.ConsigneeWarning = warningMessage;
+        this.ShowWarningConsigneeAddressId = showAddressWarning;
+    }
+    private Validate_AGT() {
+        if (this.Wizard.IsFWB) {
+           
+            this.ShowWarningAgentId = this.IssuingCarrierAgentId == null ? true : false;
+            this.ShowWarningAgentAddressId = false;
+
+            this.ShowWarningAgentReference = false;
+            if (this.IssuingCarrierAgentId != null) {
+                if (this.ViaColoader) {
+                    if (this.Wizard.CCSTypeCode == "GLSHK") {
+                        if (AppTool.IsNullOrEmpty(this.IssuingCarrierReference1)) {
+                            this.ShowWarningAgentReference = true;
+                        }
+                    }
+                }
+            }
+
+            this.ShowWarningAgentIATA = false;
+            if (!AppTool.IsNullOrEmpty(this.IssuingCarrierIATACode)) {
+                if (!FormatTool.Validate_IATACode(this.IssuingCarrierIATACode)) {
+                    this.ShowWarningAgentIATA = true;
+                }
+            }
+
+            this.ShowWarningAgentCASS = false;
+            if (!AppTool.IsNullOrEmpty(this.CASSCode)) {
+                if (!FormatTool.Validate_CASSCode(this.CASSCode)) {
+                    this.ShowWarningAgentCASS = true;
+                }
+            }
+
+            var warningMessage: string = "";
+ 
+            if (this.IssuingCarrierAgentId == null) {
+                warningMessage = "Issuing Carrier Agent is required";
+            }
+
+            else {
+                if (this.IssuingCarrierAddressId == null) {
                     warningMessage = "Address is required";
                 }
 
                 else {
-                    var myAddressList = this.ConsigneeAddressList;
+                    if (this.IssuingCarrierAddressList != null) {
 
-                    if (myAddressList != null) {
-                        var myAddress1: string = AppTool.IsNullOrEmpty(myAddressList.Address1) ? null : myAddressList.Address1.trim();
-                        var myAddress2: string = AppTool.IsNullOrEmpty(myAddressList.Address2) ? null : myAddressList.Address2.trim();
-                        var myZipCode: string = AppTool.IsNullOrEmpty(myAddressList.ZipCode) ? null : myAddressList.ZipCode.trim();
-                        var myCity: string = AppTool.IsNullOrEmpty(myAddressList.City) ? null : myAddressList.City.trim();
-                        var myFaxNumber: string = AppTool.IsNullOrEmpty(myAddressList.FaxNumber) ? null : myAddressList.FaxNumber.trim();
-                        var myPhoneNumber: string = AppTool.IsNullOrEmpty(myAddressList.PhoneNumber) ? null : myAddressList.PhoneNumber.trim();
-
-                        if (!FormatTool.IsTextFormatted(myAddress1)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1" : warningMessage + ",Address1";
-                        }
-
-                        if (!FormatTool.IsTextFormatted(myAddress2)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address2" : warningMessage + ",Address2";
-                        }
-
-                        if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1 or Address2" : warningMessage + ",Address1 or Address2";
-                        }
-
-                        if (AppTool.IsNullOrEmpty(myAddressList.StateCode)) {
-                            if (this.Wizard.AllStates.filter(d => d.CountryId == myAddressList.CountryId).length > 0) {
-                                warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "State" : warningMessage + ",State";
-                            }
-                        }
+                        var myCity = AppTool.IsNullOrEmpty(this.IssuingCarrierAddressList.City) ? null : this.IssuingCarrierAddressList.City.trim();
 
                         if (AppTool.IsNullOrEmpty(myCity)) {
                             warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
@@ -437,20 +508,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
 
                         else if (!FormatTool.IsTextFormatted(myCity)) {
                             warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
-                        }
-
-                        if (AppTool.IsNullOrEmpty(myZipCode)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
-                        }
-
-                        else if (!FormatTool.IsTextFormatted(myZipCode)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
-                        }
-
-                        if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
-                            if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
-                                warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Phone Or Fax" : warningMessage + ",Phone Or Fax";
-                            }
                         }
                     }
 
@@ -460,162 +517,87 @@ export class AWBPartnersTabComponent extends BaseComponent{
                 }
 
                 if (!AppTool.IsNullOrEmpty(warningMessage)) {
-                    showAddressWarning = true;
+                    this.ShowWarningAgentAddressId = true;
                 }
             }
 
-            this.ConsigneeWarning = warningMessage;
-            this.ShowWarningConsigneeAddressId = showAddressWarning;
-        }
-    }
-    private Validate_AGT() {
-        if (!this.Wizard.IsImportWizard) {
-
-            if (this.Wizard.IsFWB) {
-
-                this.ShowWarningAgentId = this.IssuingCarrierAgentId == null ? true : false;
-                this.ShowWarningAgentAddressId = false;
-
-                this.ShowWarningAgentReference = false;
-                if (this.IssuingCarrierAgentId != null) {
-                    if (this.ViaColoader) {
-                        if (this.Wizard.CCSTypeCode == "GLSHK") {
-                            if (AppTool.IsNullOrEmpty(this.IssuingCarrierReference1)) {
-                                this.ShowWarningAgentReference = true;
-                            }
-                        }
-                    }
-                }
-
-                this.ShowWarningAgentIATA = false;
-                if (!AppTool.IsNullOrEmpty(this.IssuingCarrierIATACode)) {
-                    if (!FormatTool.Validate_IATACode(this.IssuingCarrierIATACode)) {
-                        this.ShowWarningAgentIATA = true;
-                    }
-                }
-
-                this.ShowWarningAgentCASS = false;
-                if (!AppTool.IsNullOrEmpty(this.CASSCode)) {
-                    if (!FormatTool.Validate_CASSCode(this.CASSCode)) {
-                        this.ShowWarningAgentCASS = true;
-                    }
-                }
-
-                var warningMessage: string = "";
-
-                if (this.IssuingCarrierAgentId == null) {
-                    warningMessage = "Issuing Carrier Agent is required";
-                }
-
-                else {
-                    if (this.IssuingCarrierAddressId == null) {
-                        warningMessage = "Address is required";
-                    }
-
-                    else {
-                        if (this.IssuingCarrierAddressList != null) {
-
-                            var myCity = AppTool.IsNullOrEmpty(this.IssuingCarrierAddressList.City) ? null : this.IssuingCarrierAddressList.City.trim();
-
-                            if (AppTool.IsNullOrEmpty(myCity)) {
-                                warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
-                            }
-
-                            else if (!FormatTool.IsTextFormatted(myCity)) {
-                                warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
-                            }
-                        }
-
-                        if (!AppTool.IsNullOrEmpty(warningMessage)) {
-                            warningMessage += " is required";
-                        }
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(warningMessage)) {
-                        this.ShowWarningAgentAddressId = true;
-                    }
-                }
-
-                this.AgentWarning = warningMessage;
-            }
+            this.AgentWarning = warningMessage;
         }
     }
     private Validate_NTF() {
-        if (!this.Wizard.IsImportWizard) {
 
-            var warningMessage: string = "";
-            var showAddressWarning = false;
+        var warningMessage: string = "";
+        var showAddressWarning = false;
 
-            if (this.Notify1Id != null) {
+        if (this.Notify1Id != null) {
 
-                if (this.Notify1AddressId == null) {
-                    warningMessage = "Address is required";
-                }
+            if (this.Notify1AddressId == null) {
+                warningMessage = "Address is required";
+            }
 
-                else {
-                    var myAddressList = this.Notify1AddressList;
-                    if (myAddressList != null) {
-                        var myAddress1: string = AppTool.IsNullOrEmpty(myAddressList.Address1) ? null : myAddressList.Address1.trim();
-                        var myAddress2: string = AppTool.IsNullOrEmpty(myAddressList.Address2) ? null : myAddressList.Address2.trim();
-                        var myZipCode: string = AppTool.IsNullOrEmpty(myAddressList.ZipCode) ? null : myAddressList.ZipCode.trim();
-                        var myCity: string = AppTool.IsNullOrEmpty(myAddressList.City) ? null : myAddressList.City.trim();
-                        var myFaxNumber: string = AppTool.IsNullOrEmpty(myAddressList.FaxNumber) ? null : myAddressList.FaxNumber.trim();
-                        var myPhoneNumber: string = AppTool.IsNullOrEmpty(myAddressList.PhoneNumber) ? null : myAddressList.PhoneNumber.trim();
+            else {
+                var myAddressList = this.Notify1AddressList;
+                if (myAddressList != null) {
+                    var myAddress1: string = AppTool.IsNullOrEmpty(myAddressList.Address1) ? null : myAddressList.Address1.trim();
+                    var myAddress2: string = AppTool.IsNullOrEmpty(myAddressList.Address2) ? null : myAddressList.Address2.trim();
+                    var myZipCode: string = AppTool.IsNullOrEmpty(myAddressList.ZipCode) ? null : myAddressList.ZipCode.trim();
+                    var myCity: string = AppTool.IsNullOrEmpty(myAddressList.City) ? null : myAddressList.City.trim();
+                    var myFaxNumber: string = AppTool.IsNullOrEmpty(myAddressList.FaxNumber) ? null : myAddressList.FaxNumber.trim();
+                    var myPhoneNumber: string = AppTool.IsNullOrEmpty(myAddressList.PhoneNumber) ? null : myAddressList.PhoneNumber.trim();
 
-                        if (!FormatTool.IsTextFormatted(myAddress1)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1" : warningMessage + ",Address1";
-                        }
+                    if (!FormatTool.IsTextFormatted(myAddress1)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1" : warningMessage + ",Address1";
+                    }
 
-                        if (!FormatTool.IsTextFormatted(myAddress2)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address2" : warningMessage + ",Address2";
-                        }
+                    if (!FormatTool.IsTextFormatted(myAddress2)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address2" : warningMessage + ",Address2";
+                    }
 
-                        if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1 or Address2" : warningMessage + ",Address1 or Address2";
-                        }
+                    if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Address1 or Address2" : warningMessage + ",Address1 or Address2";
+                    }
 
-                        if (AppTool.IsNullOrEmpty(myAddressList.StateCode)) {
-                            if (this.Wizard.AllStates.filter(d => d.CountryId == myAddressList.CountryId).length > 0) {
-                                warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "State" : warningMessage + ",State";
-                            }
-                        }
-
-                        if (AppTool.IsNullOrEmpty(myCity)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
-                        }
-
-                        else if (!FormatTool.IsTextFormatted(myCity)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
-                        }
-
-                        if (AppTool.IsNullOrEmpty(myZipCode)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
-                        }
-
-                        else if (!FormatTool.IsTextFormatted(myZipCode)) {
-                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
-                        }
-
-                        if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
-                            if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
-                                warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Phone Or Fax" : warningMessage + ",Phone Or Fax";
-                            }
+                    if (AppTool.IsNullOrEmpty(myAddressList.StateCode)) {
+                        if (this.Wizard.AllStates.filter(d => d.CountryId == myAddressList.CountryId).length > 0) {
+                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "State" : warningMessage + ",State";
                         }
                     }
 
-                    if (!AppTool.IsNullOrEmpty(warningMessage)) {
-                        warningMessage += " is required";
+                    if (AppTool.IsNullOrEmpty(myCity)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
+                    }
+
+                    else if (!FormatTool.IsTextFormatted(myCity)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "City" : warningMessage + ",City";
+                    }
+
+                    if (AppTool.IsNullOrEmpty(myZipCode)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
+                    }
+
+                    else if (!FormatTool.IsTextFormatted(myZipCode)) {
+                        warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Zip Code" : warningMessage + ",Zip Code";
+                    }
+
+                    if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
+                        if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
+                            warningMessage = AppTool.IsNullOrEmpty(warningMessage) ? "Phone Or Fax" : warningMessage + ",Phone Or Fax";
+                        }
                     }
                 }
 
                 if (!AppTool.IsNullOrEmpty(warningMessage)) {
-                    showAddressWarning = true;
+                    warningMessage += " is required";
                 }
             }
 
-            this.Notify1Warning = warningMessage;
-            this.ShowWarningNotify1AddressId = showAddressWarning;
+            if (!AppTool.IsNullOrEmpty(warningMessage)) {
+                showAddressWarning = true;
+            }
         }
+
+        this.Notify1Warning = warningMessage;
+        this.ShowWarningNotify1AddressId = showAddressWarning;
     }
 
     // Regualted Agent Field Changed
@@ -853,8 +835,8 @@ export class AWBPartnersTabComponent extends BaseComponent{
         }
     }
 
-    private consigneeEORINumber: string;
-    private GetConsigneeCard() {        
+    private GetConsigneeCard() {
+        
         if (this.ConsigneeId == null) {
             this.ConsigneeAddressId = null;
             this.ConsigneeReference1 = null;
@@ -862,7 +844,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
             this.EntityPM.ConsigneeName = null;
             this.EntityPM.ConsigneeNote = null;
             this.EntityPM.ConsigneeContactId = null;
-            this.consigneeEORINumber = null;
             this.Validate_CON();
             this.FireWizardEvent();
         }
@@ -871,7 +852,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
             this.LoadConsigneeCard();
         }
     }
-    
     private LoadConsigneeCard() {
         this.myCardListService.getSingle(this.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -882,7 +862,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
                         this.EntityPM.ConsigneeName = myCard.EnglishName;
                         this.EntityPM.ConsigneeNote = myCard.Notes;
                         this.EntityPM.ConsigneeContactId = myCard.PrimaryContactId;
-                        this.consigneeEORINumber = myCard.EORInumber;
                     }
 
                     if (this.isPartnerChanged_Consignee) {
@@ -920,7 +899,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
                         this.SetConsigneeAddress(myResponse.Result);
-                        this.CheckConsignee_OCI(myResponse.Result);
                     }
                 }
             });
@@ -975,26 +953,7 @@ export class AWBPartnersTabComponent extends BaseComponent{
         }
 
         this.Validate_CON();
-        this.FireWizardEvent();        
-    }
-
-    private CheckConsignee_OCI(consigneeAddress: AddressList) {
-        if (!consigneeAddress) return;
-        if (!consigneeAddress.CountryEC) return;
-        if (AppTool.IsNullOrEmpty(this.consigneeEORINumber)) return;
-
-        var OCIItem = new AWBOCIPM(null);
-        OCIItem.ShipmentId = this.EntityPM.Id;
-        OCIItem.Tenant = this.EntityPM.Tenant;
-        OCIItem.CountryId = this.EntityPM.ConsigneeCountryId;
-        OCIItem.AWBInformationCode = "CNE";
-        OCIItem.AWBCustomsInformationCode = "T";
-        OCIItem.SupplementaryCustomsInfo = this.consigneeEORINumber;
-
-        if (this.EntityPM.AWBOCIPMs.indexOf(OCIItem) == -1) {
-            this.EntityPM.AddOCI(OCIItem);
-            this.Wizard.RefreshTab("OCI");
-        }
+        this.FireWizardEvent();
     }
 
     // Notify1
@@ -1142,22 +1101,10 @@ export class AWBPartnersTabComponent extends BaseComponent{
     get IssuingCarrierAgentId() { return this.EntityPM.IssuingCarrierAgentId; }
     set IssuingCarrierAgentId(newValue: string) {
         if (this.EntityPM.IssuingCarrierAgentId != newValue) {
-                this.EntityPM.IssuingCarrierAgentId = newValue;
-                this.isPartnerChanged_Issuing = true;
-                this.SetUIProperties_IssuingCarrier();
-                this.GetIssuingCarrierCard();
-            
-        }
-    }
-
-    SetIssuingCarrier() {
-        if (this.Wizard.IsImportWizard) {
-            if (!AppTool.IsNullOrEmpty(this.IssuingCarrierAgentId) && AppTool.IsNullOrEmpty(this.EntityPM.AgentId)) {
-                this.EntityPM.AgentId = this.IssuingCarrierAgentId;
-            }
-            else if (!AppTool.IsNullOrEmpty(this.EntityPM.AgentId) && AppTool.IsNullOrEmpty(this.IssuingCarrierAgentId)) {
-                this.IssuingCarrierAgentId = this.EntityPM.AgentId;
-            }
+            this.EntityPM.IssuingCarrierAgentId = newValue;
+            this.isPartnerChanged_Issuing = true;
+            this.SetUIProperties_IssuingCarrier();
+            this.GetIssuingCarrierCard();
         }
     }
 

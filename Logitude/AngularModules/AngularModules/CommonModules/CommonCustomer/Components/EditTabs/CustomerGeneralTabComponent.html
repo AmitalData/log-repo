@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .SectionTitle {
         height: 20px;
@@ -89,7 +89,7 @@
         <tr style="height: 1px;" *ngIf="IsBlockMessageVisible">
             <td>
                 <div class="OrangeInfo" style="margin: 5px;">
-                    <label class="Value">Customer connected to Unifreight, updates allowed from Unifreight only</label>
+                    <label class="Value">Customer connected to uni-freight, updates allowed from Unifreight only</label>
                 </div>
             </td>
         </tr>
@@ -117,10 +117,6 @@
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
-
-                                                <td style="width: 18px;">
-                                                    <div></div>
-                                                </td>
                                             </tr>
 
                                             <!-- LocalName -->
@@ -131,10 +127,6 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
                                                 </td>
 
                                             </tr>
@@ -149,25 +141,6 @@
                                                     <LogTextBox [ObjectFieldName]="'VatNumber'" [Text]="VatNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
 
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                            </tr>
-
-                                            <!-- EORI number -->
-                                            <tr class="FormFieldRow" *ngIf="!IsAmitalCloudEnvironment">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'EORInumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogTextBox [ObjectFieldName]="'EORInumber'" [Text]="EORInumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                </td>
-
-                                                <td style="width: 18px;">
-                                                    <HelpIcon [Header]="'Customer.F.EORInumber' | TextCodeTranslationPipe" [Text]="'Customer.EORInumberHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
-                                                </td>
                                             </tr>
 
                                             <!-- PaymentTermId -->
@@ -185,9 +158,6 @@
                                                     </LogLov>
                                                 </td>
 
-                                                <td>
-                                                    <div></div>
-                                                </td>
                                             </tr>
 
                                             <!-- Website -->
@@ -199,9 +169,7 @@
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'Website'" [Text]="Website" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
+
                                             </tr>
 
                                             <!-- KnownConsignor -->
@@ -213,9 +181,7 @@
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'KnownConsignor'" [Text]="KnownConsignor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
+
                                             </tr>
 
                                             <!-- KCExpirationDate -->
@@ -227,33 +193,17 @@
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'KCExpirationDate'" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                 </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
 
-                                            <!--Storage Free Days-->
-                                            <tr class="FormFieldRow" *ngIf="IsCustomer && !IsAmitalCloudEnvironment">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'StorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogTextBox [ObjectFieldName]="'StorageFreeDays'" [Text]="StorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
                                             </tr>
 
                                             <tr style="height:10px;">
-                                                <td colspan="3">
+                                                <td colspan="2">
                                                     <div></div>
                                                 </td>
                                             </tr>
 
                                             <tr>
-                                                <td colspan="3">
+                                                <td colspan="2">
                                                     <table>
                                                         <tr style="height: 1px;">
                                                             <td class="SectionTitle">Additional Fields</td>
@@ -339,7 +289,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'LeadDescription'" [Text]="VatNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'LeadDescription'" [Text]="VatNumber" [ObjectTableName]="Customer" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                             </tr>
 
@@ -884,7 +834,7 @@
 
                                                         <!-- AccountManagerUserId -->
                                                         <tr class="FormFieldRow">
-                                                            <td style="width:130px;">
+                                                            <td style="width:145px;">
                                                                 <LogLabel [ObjectFieldName]="'AccountManagerUserId'" [ObjectTableName]="'Customer'" [DataContext]="DataContext"></LogLabel>
                                                             </td>
 
@@ -897,13 +847,13 @@
                                                                             [LookUpTableName]="'User'"
                                                                             [HideColumns]="true">
                                                                     </LogLov>
+
+                                                                    <div class="SplittedText" *ngIf="IsSplitted_AccountManager">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <div style="margin-left: 10px; width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_AccountManager" (click)="MoreButtonClicked('AccountManagerUserId')">{{AccountManagerMoreLabel}}</span>
-                                                                </div>
+                                                                <a *ngIf="IsMoreButtonVisible_AccountManager" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('AccountManagerUserId')">More</a>
                                                             </td>
                                                         </tr>
 
@@ -923,13 +873,13 @@
                                                                             [HideColumns]="true"
                                                                             [DependencyFilter3Value]="true">
                                                                     </LogLov>
+
+                                                                    <div class="SplittedText" *ngIf="IsSplitted_SalesmanUser">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <div style="margin-left: 10px; width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_Salesman" (click)="MoreButtonClicked('SalesmanUserId')">{{SalesmanMoreLabel}}</span>
-                                                                </div>
+                                                                <a *ngIf="IsMoreButtonVisible_Salesman" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('SalesmanUserId')">More</a>
                                                             </td>
                                                         </tr>
 
@@ -975,28 +925,6 @@
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                    <table *ngIf="ShowCustomerTeamField">
-                                                        <!-- TeamId -->
-                                                        <tr class="FormFieldRow">
-                                                            <td style="width:130px;">
-                                                                <LogLabel [ObjectFieldName]="'TeamId'" [ObjectTableName]="'Customer'" [DataContext]="DataContext"></LogLabel>
-                                                            </td>
-
-                                                            <td style="width:196px">
-                                                                <LogLov [ObjectFieldName]="'TeamId'"
-                                                                        [SelectedValue]="TeamId"
-                                                                        [ObjectTableName]="'Customer'"
-                                                                        [DataContext]="DataContext"
-                                                                        [IgnoreFeatureCheck]="true"
-                                                                        [LookUpTableName]="'CustomerTeam'">
-                                                                </LogLov>
-                                                            </td>
-
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
                                                 </td>
                                             </tr>
                                         </table>
@@ -1022,7 +950,7 @@
 
                                                         <!-- ForwarderId -->
                                                         <tr class="FormFieldRow">
-                                                            <td style="width:130px;">
+                                                            <td style="width:145px;">
                                                                 <LogLabel [ObjectFieldName]="'ForwarderId'" [ObjectTableName]="'Customer'" [DataContext]="DataContext"></LogLabel>
                                                             </td>
 
@@ -1035,13 +963,13 @@
                                                                             [LookUpTableName]="'Card'"
                                                                             [DependencyFilter1Value]="'AG'">
                                                                     </LogLov>
+
+                                                                    <div class="SplittedText" *ngIf="IsSplitted_Forwarder">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <div style="width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_Forwarder" (click)="MoreButtonClicked('ForwarderId')">{{ForwarderMoreLabel}}</span>
-                                                                </div>
+                                                                <a *ngIf="IsMoreButtonVisible_Forwarder" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('ForwarderId')">More</a>
                                                             </td>
                                                         </tr>
 
@@ -1060,13 +988,13 @@
                                                                             [LookUpTableName]="'Card'"
                                                                             [DependencyFilter1Value]="'CG'">
                                                                     </LogLov>
+
+                                                                    <div class="SplittedText" *ngIf="IsSplitted_CustomsAgent">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <div style="width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_CustomsAgent" (click)="MoreButtonClicked('CustomsAgentId')">{{CustomsAgentMoreLabel}}</span>
-                                                                </div>
+                                                                <a *ngIf="IsMoreButtonVisible_CustomsAgent" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('CustomsAgentId')">More</a>
                                                             </td>
                                                         </tr>
 
@@ -1085,13 +1013,13 @@
                                                                             [LookUpTableName]="'Card'"
                                                                             [DependencyFilter1Value]="'CS'">
                                                                     </LogLov>
+
+                                                                    <div class="SplittedText" *ngIf="IsSplitted_Mediator">Splitted By Product</div>
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <div style="width:1px;">
-                                                                    <span class="hyperlink" *ngIf="IsMoreButtonVisible_Mediator" (click)="MoreButtonClicked('MediatorId')">{{MediatorMoreLabel}}</span>
-                                                                </div>
+                                                                <a *ngIf="IsMoreButtonVisible_Mediator" style="font-size:x-small;color:blue;text-decoration:underline;margin-left:10px" (click)="MoreButtonClicked('MediatorId')">More</a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -1120,7 +1048,7 @@
 
                                                         <!-- Customer Rank -->
                                                         <tr class="FormFieldRow">
-                                                            <td style="width: 130px; padding-left: 10px;" class="Label">
+                                                            <td style="width: 145px; padding-left: 10px;" class="Label">
                                                                 Customer Rank:
                                                             </td>
 
@@ -1189,7 +1117,7 @@
                     </tr>
                 </table>
             </td>
-
+            
         </tr>
     </table>
 </div>

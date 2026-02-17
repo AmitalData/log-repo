@@ -1,5 +1,4 @@
-import { CustomFieldClass } from '../DataContracts/CustomFieldClass';
-import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
+﻿import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
 import {AppTool} from '../Tools'
 
 export class FieldValueResolver {
@@ -33,8 +32,8 @@ export class FieldValueResolver {
                  
                 case "Boolean":
                     {
-                        //const b = value?.toLowerCase() === "true" ? true : false;//Boolean(value);
-                        return value;
+                        var b: boolean = Boolean(value);
+                        return b;
                     }
                 
                 default:
@@ -70,7 +69,7 @@ export class FieldValueResolver {
 
             result = new Date();
             result.setUTCFullYear(year);
-            if (type == "Automation" || type == "TreeFilter") return this.GetDate(year, month-1,day, hour, minute, seconds);
+            if (type == "Automation") result.setUTCMonth(month - 1);
             else result.setUTCMonth(month);
             result.setUTCDate(day);
             result.setUTCHours(hour);
@@ -81,24 +80,9 @@ export class FieldValueResolver {
         return result;
     }
 
-    public static  GetDate(year: number, month: number, day: number, hour: number, minute: number, second: number) {
-        var date: Date = new Date();
-        date.setUTCDate(1);
-        date.setUTCFullYear(year);
-        date.setUTCMonth(month);
-        date.setUTCDate(day);
-        date.setUTCHours(hour);
-        date.setUTCMinutes(minute);
-        date.setUTCSeconds(second);
-        date.setUTCMilliseconds(0);
-        return date;
-    }
+
 
     public static GetFieldStringValue(field: ObjectFieldPM, value: any): string {
-
-        if (value && (value instanceof CustomFieldClass)) {
-            return value.ResolvedValue;
-        }
         if (field != null && value != null) {
             if (value.toString() == "") {
                 return null;
@@ -156,16 +140,16 @@ export class FieldValueResolver {
         var month: string, day, minuit, second, hour;
         if (date && date instanceof Date) {
             if (date.getMonth() < 10) {
-                month = "0" + (date.getMonth()).toString();
+                month = "0" + date.getMonth().toString();
             }
             else {
-                month = (date.getMonth()).toString();
+                month = date.getMonth().toString();
             }
-            if (date.getDate() < 10) {
-                day = "0" + date.getDate().toString();
+            if (date.getDay() < 10) {
+                day = "0" + date.getDay().toString();
             }
             else {
-                day = date.getDate().toString();
+                day = date.getDay().toString();
             }
             if (date.getHours() < 10) {
                 hour = "0" + date.getHours().toString();
@@ -225,7 +209,7 @@ export class FieldValueResolver {
         else {
             second = date.getUTCSeconds().toString();
         }
-        if (type == "Automation" || "TreeFilter") {
+        if (type == "Automation") {
             var newmonth = Number(month) + 1;
             if (newmonth < 10) month = "0" + newmonth.toString();
             else month = newmonth.toString();

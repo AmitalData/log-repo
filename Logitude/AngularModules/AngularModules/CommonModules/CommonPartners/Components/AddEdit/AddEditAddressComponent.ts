@@ -9,10 +9,9 @@ import {AddressValidator} from '../../../../Infrastructure/Validators/AddressVal
 import {PartnersDomainService, PartnerServicePM} from '../../../../Common/Services/PartnersDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import { AddressItem } from '../../../../InfrastructureModules/InfrastructureGettingStarted/Components/CompanyAddress/CompanyAddressSettingsComponent';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditAddressComponent.html',
 })
 
@@ -74,31 +73,30 @@ export class AddEditAddressComponent implements OnInit {
         }
     }
 
-    private errors: string[];
     private Validate() {
         var isValid = true;
-        this.errors = [];
+        var errors: string[] = [];
 
         if (this.EntityPM != null) {
             var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-
-            this.ValidateAddress();
+            
+            Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
             var isLanguageValid = AddressValidator.IsMainAddressEnglishCharacters(this.EntityPM);
             if (!isLanguageValid) {
-                this.errors.push("Main address does not allow non-english characters");
+                errors.push("Main address does not allow non-english characters");
             }
 
             if (this.EntityPM.AddressTypeId == "O") {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.Description)) {
-                    this.errors.push(msg.replace("%FieldName", "Description"));
+                    errors.push(msg.replace("%FieldName", "Description"));
                 }
             }
 
             if (this.DataContext.Country != null) {
                 if (this.DataContext.State == null) {
                     if (this.DataContext.Country.IsStateRequired) {
-                        this.errors.push(msg.replace("%FieldName", "State"));
+                        errors.push(msg.replace("%FieldName", "State"));
                     }
                 }
             }
@@ -108,13 +106,13 @@ export class AddEditAddressComponent implements OnInit {
                     if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "CS") {
                         if (SessionLocator.TenantPM.IsCustomerTelRequired) {
                             if (AppTool.IsNullOrEmpty(this.EntityPM.PhoneNumber)) {
-                                this.errors.push("Phone Number is required");
+                                errors.push("Phone Number is required");
                             }
                         }
 
                         if (SessionLocator.TenantPM.IsCustomerFaxRequired) {
                             if (AppTool.IsNullOrEmpty(this.EntityPM.FaxNumber)) {
-                                this.errors.push("Fax Number is required");
+                                errors.push("Fax Number is required");
                             }
                         }
                     }
@@ -122,52 +120,26 @@ export class AddEditAddressComponent implements OnInit {
                     else if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
                         if (SessionLocator.TenantPM.IsPotentialTelRequired) {
                             if (AppTool.IsNullOrEmpty(this.EntityPM.PhoneNumber)) {
-                                this.errors.push("Phone Number is required");
+                                errors.push("Phone Number is required");
                             }
                         }
 
                         if (SessionLocator.TenantPM.IsPotentialFaxRequired) {
                             if (AppTool.IsNullOrEmpty(this.EntityPM.FaxNumber)) {
-                                this.errors.push("Fax Number is required");
+                                errors.push("Fax Number is required");
                             }
                         }
                     }
                 }
             }
-            if (AppTool.IsNullOrEmpty(this.EntityPM.CountryId)) {
-                this.errors.push(msg.replace("%FieldName", "Country"));
-            }
         }
 
-        isValid = this.errors.length == 0 ? true : false;
-        this.ValidationErrorsList = this.errors;
+        isValid = errors.length == 0 ? true : false;
+        this.ValidationErrorsList = errors;
         return isValid;
     }
 
-    private ValidateAddress() {
-      if (this.DataContext.fatherComponent.Customer != null) {
-        var newPotentialAddressCity = this.EntityPM.City;
-        if (AppTool.IsNullOrEmpty(this.EntityPM.City) && this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
-            this.EntityPM.City = (AppTool.IsNullOrEmpty(this.EntityPM.City) ? " Potential city " : this.EntityPM.City);
-        }
-
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.errors); 
-
-        if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
-            this.EntityPM.City = newPotentialAddressCity;
-        } 
-
-        if(this.EntityPM.AddressTypeId == "P" && this.EntityPM.TruckerSettings.length != null && this.EntityPM.TruckerSettings.length > 0) {
-            for (var i = 0; i < this.EntityPM.TruckerSettings.length; i++) {
-                Validator.TryValidateObject(this.EntityPM.TruckerSettings[i], "TruckerSetting", this.errors);
-            }
-        }
-      }
-    }
-
     private LoadCompletedEvent: any = null;
-
-
     private Save() {
         var args = new PartnerServicePM();
         args.Tenant = this.EntityPM.Tenant;
@@ -241,10 +213,6 @@ export class AddEditAddressComponent implements OnInit {
         this.myCloner.AddField('FaxNumber');
         this.myCloner.AddField('ATTN');
         this.myCloner.AddField('InActive');
-        this.myCloner.AddField('CityId');
-        this.myCloner.AddField('TruckerId');
-        this.myCloner.AddField('TransportationInstructions');
-        this.myCloner.AddField('Responsibility');
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {

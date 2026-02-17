@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr style="height: 1px;">
         <td style="font-size:11px; font-family:Arial; color:gray;">
@@ -148,7 +148,7 @@
                                             [DependencyFilter1Value]="CountryId"
                                             [HideMaintenanceIcon]="true"
                                             [HideAdd]="true"
-                                            [HideEdit]="true"
+                                            [HideEdit]="true"                                            
                                             [HideAddLink]="true">
                                     </LogLov>
                                 </td>
@@ -252,70 +252,6 @@
                         </table>
                     </td>
 
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- DayLight Start Date -->
-                <tr *ngIf="ShowDayLightSettings" class="FormFieldRow">
-                    <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'DayLightStartDate'" [ObjectTableName]="'Tenant'" [DataContext]="DataContext"></LogLabel>
-                        <!--<label style="margin-left:10px;"> DayLight Start Date: </label>-->
-                    </td>
-
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width: 150px;">
-                                    <LogDatePicker [ObjectFieldName]="'DayLightStartDate'" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </table> 
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- DayLight End Date -->
-                <tr *ngIf="ShowDayLightSettings" class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'DayLightEndDate'" [ObjectTableName]="'Tenant'" [DataContext]="DataContext"></LogLabel>
-                        <!--<label style="margin-left:10px;"> DayLight End Date: </label>-->
-                    </td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width: 150px;">
-                                    <LogDatePicker [ObjectFieldName]="'DayLightEndDate'" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </table>
-                    </td> 
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- DayLight Offset  -->
-                <tr *ngIf="ShowDayLightSettings" class="FormFieldRow">
-                    <td>
-                        <!--<label> DayLight Offset: </label>-->
-                        <LogLabel [ObjectFieldName]="'DayLightOffset'" [ObjectTableName]="'Tenant'" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width: 150px;">
-                                    <LogTextBox [ObjectFieldName]="'DayLightOffset'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </table>
-                    </td> 
                     <td>
                         <div></div>
                     </td>

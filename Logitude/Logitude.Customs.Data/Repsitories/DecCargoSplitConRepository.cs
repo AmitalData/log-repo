@@ -30,16 +30,6 @@ namespace Logitude.Customs.Data.Repsitories
             (context as DbContextBase)
                 .DeleteWhere<DecCargoSplitCon>(rec => rec.DeclarationCargoSplitId == entityKeyFields.Id);
         }
-        public List<ConsignmentPackage> GetConsiPackageSequeList(string declarationId)
-        {
-            var ConsignmentPackagesSequenceNumerics = (from a in context.ConsignmentPackages
-
-                                              where a.DeclarationId == declarationId
-                                              select a).ToList();
-
-            return ConsignmentPackagesSequenceNumerics;
-
-        }
 
     }
 

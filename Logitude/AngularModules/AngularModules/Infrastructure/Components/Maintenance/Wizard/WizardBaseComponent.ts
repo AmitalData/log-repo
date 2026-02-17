@@ -24,7 +24,7 @@ import { ObjectsLocator } from '../../../Locators/ObjectsLocator';
 import { ObjectsUpdater } from '../../../Locators/ObjectsUpdater';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WizardBaseComponent.html',
 })
 
@@ -87,7 +87,7 @@ export class WizardBaseComponent extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -135,9 +135,8 @@ export class WizardBaseComponent extends BaseComponent {
                     }
 
                     this.PercentagePM = myPercentagePM;
-                   
+                    this.InitAgentObject();
                 }
-                this.InitAgentObject();
             }
         });
     }
@@ -395,7 +394,6 @@ export class WizardBaseComponent extends BaseComponent {
 
                 else {
                     this.TenantPM.AgentId = this.AgentPM.Id;
-                    this.AddressPM.CardId = this.AgentPM.Id;
                     this.SaveAddress();
                 }
             });
@@ -409,7 +407,6 @@ export class WizardBaseComponent extends BaseComponent {
 
                 else {
                     this.TenantPM.AgentId = this.AgentPM.Id;
-                    this.AddressPM.CardId = this.AgentPM.Id;
                     this.SaveAddress();
                 }
             });

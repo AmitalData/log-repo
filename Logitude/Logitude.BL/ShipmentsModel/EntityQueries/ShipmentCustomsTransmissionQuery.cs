@@ -58,7 +58,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Error = a.Error,
                         MessageCode = a.MessageCode,
                         StatusName = a.CustomsTransmissionsStatus != null ? a.CustomsTransmissionsStatus.Name : "",
-                        ByUserName = a.SendByUser != null ? a.SendByUser.Contact != null ? a.SendByUser.Contact.EnglishName : null : null,
+                        ByUserName = a.SendByUser != null ? a.SendByUser.Contact != null ? a.SendByUser.Contact.EnglishName : "" : "",
                     });
         }
 

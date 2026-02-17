@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 
 
@@ -23,7 +23,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
     
 
-
+        public CustomerTenantAccessQuery()
+        {
+            repository = new CustomerTenantAccessRepository();
+        }
 
         public CustomerTenantAccessQuery(int tenant)
         {
@@ -60,44 +63,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
                                                               CustomCompanyName = a.IsPrivateLabelCustomer == true ? a.CompanyName + " (Private Label Customer)" : a.CompanyName,
                                                               StockTypeCode = a.StockTypeCode,
+
                                                           };
 
-            List<CustomerTenantAccessList> customerTenantAccesses = GetConnectedCustomerTenantAccessCardsDetails(entity);
-            return customerTenantAccesses.AsQueryable();
-        }
 
-        private static List<CustomerTenantAccessList> GetConnectedCustomerTenantAccessCardsDetails(IQueryable<CustomerTenantAccessList> entity)
-        {
-            List<CustomerTenantAccessList> customerTenantAccesses = entity.ToList();
-
-            if(customerTenantAccesses == null || customerTenantAccesses.Count() == 0) return customerTenantAccesses;
-
-            int tenant = customerTenantAccesses[0].Tenant;
-            CustomerTenantAccessCardRepository customerTenantAccessCardRepository = new CustomerTenantAccessCardRepository(tenant);
-            List<CustomerTenantAccessCard> customerTenantAccessCards = customerTenantAccessCardRepository.GetAllCustomerTenantAccessCardByTenant(tenant).ToList();
-            customerTenantAccesses.ForEach(customerTenantAccess =>
-            {
-                MapConnectedCustomersCardsDetails(customerTenantAccess, customerTenantAccessCards);
-            });
-
-            return customerTenantAccesses;
-        }
-
-        private static void MapConnectedCustomersCardsDetails(CustomerTenantAccessList CustomerTenantAccess, List<CustomerTenantAccessCard> customerTenantAccessCards)
-        {
-            List<CustomerTenantAccessCard> selectedCustomerTenantAccessCards = customerTenantAccessCards.Where(customerTenantAccessCard => customerTenantAccessCard.CustomerTenantAccessId == CustomerTenantAccess.Id).ToList();
-            CustomerTenantAccess.IsCustom = selectedCustomerTenantAccessCards.Any(customerTenantAccessCard => customerTenantAccessCard.IsCustomsActivated);
-            CustomerTenantAccess.IsExport = selectedCustomerTenantAccessCards.Any(customerTenantAccessCard => customerTenantAccessCard.IsExportActivated);
-            selectedCustomerTenantAccessCards.ForEach(customerTenantAccessCard =>
-            {
-                if(!string.IsNullOrEmpty(customerTenantAccessCard?.Customer?.Card?.Code))
-                    CustomerTenantAccess.CustomersCodes += customerTenantAccessCard?.Customer?.Card?.Code + ", ";
-            });
-
-            if (!string.IsNullOrEmpty(CustomerTenantAccess.CustomersCodes) && CustomerTenantAccess.CustomersCodes.Length > 2)
-            {
-                CustomerTenantAccess.CustomersCodes = CustomerTenantAccess.CustomersCodes.Substring(0, CustomerTenantAccess.CustomersCodes.Length - 2);
-            }
+            return entity;
         }
 
         public CustomerTenantAccessPM GetSinglePM(string id, int tenant)
@@ -225,9 +195,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             select new CustomerTenantAccessInfo()
                                             {
                                                 HasAccess = true,
-                                                CustomerTenant = a.CustomerTenant,
-                                                IsCustomsActivated =  customerTenantAccessCardPM.IsCustomsActivated,
-                                                IsExportActivated = customerTenantAccessCardPM.IsExportActivated 
+                                                CustomerTenant = a.CustomerTenant
 
                                             }).FirstOrDefault();
             }

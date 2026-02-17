@@ -122,7 +122,6 @@ var ShipmentListClass = function () {
     this.LastLogDateLong = "";
 
     this.DeliveryDate = "";
-    this.NotesSharedWithCustomer = "";
     this.DeliveryDateVisibility = "collapse";
     this.MyPartnerVisibility = "collapse";
 };
@@ -144,35 +143,6 @@ var InvoiceListClass = function () {
     this.StatusColor = "#282E30";
 
 }
-
-
-var QuotesRequest = function () {
-
-    this.Id = "";
-    this.QuoteNumber = "";
-    this.CreateDate = "";
-    this.QuotationUpdateDate = "";
-    this.QuotationPreparedTickVisibility = "";
-    this.QuotationStatusColor = "";
-    this.DocumentSecurityId = "";
-    this.Feedback = "";
-    this.Comments = "";
-    this.DocumentId = "";
-    this.IsRejected = false;
-    this.IsApproved = false;
-    this.CommentsReadOnlyProperty = "";
-    this.OptionDisabledProperty = "";
-    this.ContactName = "";
-    this.OwnerName = "";
-    this.Subject = "";
-    this.Status = "";
-    this.ReferenceNumber = "";
-    this.PONumber = "";
-    this.Brand = "";
-
-}
-
-
 
 var CustomerListClass = function () {
 
@@ -534,8 +504,6 @@ function BuildShipmentBackAreaViewModel(shipment, PathPrefix) {
         {
             ShipmentNumber: ko.observable(shipment.ShipmentNumber),
             DirectionSRC: ko.observable(""),
-            noteSRC: ko.observable(""),
-        NotesSharedWithCustomer: ko.observable(shipment.NotesSharedWithCustomer),
             TransportSRC: ko.observable(""),
         };
 
@@ -577,10 +545,6 @@ function BuildShipmentBackAreaViewModel(shipment, PathPrefix) {
             break;
         }
     }
-    if (shipment.NotesSharedWithCustomer && shipment.NotesSharedWithCustomer.length > 0)
-        viewModel.noteSRC = '../HtmlHelpers/Images/Notes/Or.png';
-    else
-        viewModel.noteSRC = '../HtmlHelpers/Images/Notes/Rosie.png';
 
     return viewModel;
 }
@@ -610,7 +574,6 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
         ToCountySRC: ko.observable(""),        
 
         DeliveryDate: ko.observable(""),
-        //NotesSharedWithCustomer = ko.observable(""),
     };
 
     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I") {
@@ -746,7 +709,7 @@ function BuildDocumentsTabPageViewModel(documents, PathPrefix, showIsDigitallySi
     var GridDataSource = [];
 
     var iconTemplate = "";
-    iconTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadDocument(target)' style='width:25px; height:25px; vertical-align:middle; display: block; margin: auto; margin-left: -3px;'>";
+    iconTemplate += "<a id='#= Id #' href='#= Url #' target='_blank' OnClick='OnDownloadDocument()' style='width:25px; height:25px; vertical-align:middle; display: block; margin: auto; margin-left: -3px;'>";
     iconTemplate += "<img src='#= FileType #' style='width:25px; height:25px; vertical-align:middle; display: block; margin: auto;' />";
     iconTemplate += "</a>";
     GridColumns.push({ title: " ", field: "FileType", width: 35, template: iconTemplate });
@@ -770,7 +733,7 @@ function BuildDocumentsTabPageViewModel(documents, PathPrefix, showIsDigitallySi
     }
 
     var linkTemplate = "";
-    linkTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadDocument(target)'>";
+    linkTemplate += "<a id='#= Id #' href='#= Url #' target='_blank' OnClick='OnDownloadDocument()'>";
     linkTemplate += "<div style='cursor:pointer; font-size:11px; color:\\#27AAE1; text-align:right; padding-right: 10px;'>View</div>";
     linkTemplate += "</a>";
 
@@ -810,63 +773,6 @@ function BuildDocumentsTabPageViewModel(documents, PathPrefix, showIsDigitallySi
             data: GridDataSource
         }
     });
-
-    $("#DocumentsPageBusyIndicator").hide();
-}
-
-function BuildMasterDocumentsTabPageViewModel(entityId, documents, fileName, PathPrefix, securityKey) {
-
-    var GridColumns = [];
-    var GridDataSource = [];
-
-    var iconTemplate = "";
-    iconTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadDocument(target)' style='width:25px; height:25px; vertical-align:middle; display: block; margin: auto; margin-left: -3px;'>";
-    iconTemplate += "<img src='#= FileType #' style='width:20px; height:20px; vertical-align:middle; cursor:pointer; display: block; margin: auto;' />";
-    iconTemplate += "</a>";
-    GridColumns.push({ title: " ", field: "FileType", width: 25, template: iconTemplate });
-    GridColumns.push({ title: "Document Type", field: "FileName", width: 200 });
-    GridColumns.push({ title: "Description", field: "Name", width: 200 });
-
-    var linkTemplate = "";
-    linkTemplate += "<a id='#= Id #' target='#= Url #' OnClick='OnDownloadDocument(target)'>";
-    linkTemplate += "<div style='cursor:pointer; font-size:11px; color:\\#27AAE1; text-align:right; padding-right: 10px;'>View</div>";
-    linkTemplate += "</a>";
-
-    GridColumns.push({ title: " ", template: linkTemplate, width: 100 });
-
-    var downloadAllTemplate = "";
-    downloadAllTemplate += "<a id='" + entityId + "' target='" + fileName + "&securitykey=" + securityKey + "' OnClick='OnDownloadAllDocument(target,id)'>";
-    downloadAllTemplate += "<div style='cursor:pointer; font-size:13px; color:\\#27AAE1; text-align:right;'>Download All</div>";
-    downloadAllTemplate += "</a>";
-    GridColumns.push({ title: downloadAllTemplate });
-
-
-    $.each(documents, function (index, item) {
-
-        var itemId = $.trim(item.Id) == "" ? "" : item.Id;
-        var itemUrl = $.trim(item.Url) == "" ? "" : item.Url == null ? "" : item.Url.replace("../", PathPrefix);
-        var itemFileType = PathPrefix + "images/FileIcons/" + $.Convert.ToFileExtentionImage(item.FileExtension);
-        var itemFileName = $.trim(item.FileName) == "" ? "" : item.FileName;
-        var itemName = $.trim(item.Name) == "" ? "" : item.Name;
-
-        GridDataSource.push({
-            FileType: itemFileType,
-            FileName: itemFileName,
-            Name: itemName,
-            Id: itemId,
-            Url: itemUrl
-        });
-    });
-    var documentsGridId = "#DocumentsGrid" + entityId;
-
-    $(documentsGridId).kendoGrid(
-        {
-            columns: GridColumns,
-            dataSource: {
-                data: GridDataSource
-            }
-        });
-
 
     $("#DocumentsPageBusyIndicator").hide();
 }
@@ -1288,7 +1194,6 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
         });
     }
 
-    $("#RoutingsListBox").html("");
     $("#RoutingsListBox").kendoListView(
     {
         dataSource: { data: RoutingLegs },
@@ -1724,82 +1629,6 @@ function BuildInvoicesList(invoices, TenantDateTimeFormat) {
 
     return InvoicesList;
 }
-
-
-function BuildQuotesRequests(quotesRequests, tenantDateTimeFormat) {
-    var results = [];
-    $.each(quotesRequests, function (index, quotesRequest) {
-        var newQuotesRequest = GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat);
-        results.push(newQuotesRequest);
-    });
-
-    return results;
-
- 
-}
-
-function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
-
-    var newQuotesRequest = new QuotesRequest();
-    newQuotesRequest.Id = quotesRequest.Id;
-    newQuotesRequest.Feedback = quotesRequest.Feedback;
-    newQuotesRequest.Comments = quotesRequest.Comments == null ? "" : quotesRequest.Comments;
-    newQuotesRequest.CommentsReadOnlyProperty = quotesRequest.Comments == null ? "" : "readonly";
-    newQuotesRequest.OptionDisabledProperty = quotesRequest.Comments == null ? "" : "disabled";
-    newQuotesRequest.IsApproved = quotesRequest.Feedback == "Approved" ? "selected" : "";
-    newQuotesRequest.IsRejected = quotesRequest.Feedback == "Rejected" ? "selected" : "";
-    newQuotesRequest.CreateDate = $.Convert.ToShortDate(quotesRequest.CreateDate, tenantDateTimeFormat);
-    newQuotesRequest.QuoteNumber = $.trim(quotesRequest.QuoteNumber);
-    newQuotesRequest.ContactName = quotesRequest.ContactName;
-    newQuotesRequest.OwnerName = quotesRequest.OwnerName;
-    newQuotesRequest.Subject = quotesRequest.Subject;
-    newQuotesRequest.Status = quotesRequest.Status;
-    newQuotesRequest.ReferenceNumber = quotesRequest.ReferenceNumber;
-    newQuotesRequest.PONumber = quotesRequest.PONumber;
-    newQuotesRequest.Brand = quotesRequest.Brand;
-    if (quotesRequest.QuotationDocumentFiling) {
-        newQuotesRequest.QuotationDocumentFiling = quotesRequest.QuotationDocumentFiling;
-        newQuotesRequest.QuotationPreparedTickVisibility = "visible";
-        newQuotesRequest.QuotationUpdateDate = $.Convert.ToShortDate(quotesRequest.QuotationDocumentFiling.CreateDate, tenantDateTimeFormat);
-        newQuotesRequest.DocumentSecurityId = quotesRequest.QuotationDocumentFiling.SecurityId;
-        newQuotesRequest.DocumentId = quotesRequest.QuotationDocumentFiling.DocumentId;
-    }
-    else
-    {
-        newQuotesRequest.QuotationPreparedTickVisibility = "collapse";
-    }
-
-    newQuotesRequest.QuotationStatusColor = GetQuotationStatusColor(quotesRequest.Status); 
-
-    
-    return newQuotesRequest;
-}
-
-function GetQuotationStatusColor(quotesRequestStatus) {
-    switch (quotesRequestStatus) {
-        case "Request Received":
-            return "black";
-            break;
-        case "Quote Process":
-            return "yellowgreen";
-            break;
-        case "Pending Approval":
-            return "orange";
-            break;
-        case "Pending Decision":
-            return "orange";
-            break;
-        case "Approved":
-            return "green";
-            break;
-        case "Rejected":
-            return "red";
-            break;
-    }
-
-    return "black";
-}
-
 
 function BuildCustomersList(entities, TenantDateTimeFormat) {
 

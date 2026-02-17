@@ -1,58 +1,31 @@
-
+﻿
 <style>
     .FormFieldRow {
         height: 30px;
-    }
-    .disabled {
-        opacity: 0.5;
-        pointer-events: none;
     }
 </style>
 
 
 
-<div style="vertical-align:top;height:100%" *ngIf="DataContext">
+        <div style="vertical-align:top;height:100%" *ngIf="DataContext">
 
-    <table>
+            <table>
 
-        <tr class="FormFieldRow">
-            <td></td>
-            <td style="width:125px;vertical-align:central">
-                <LogLabel [Text]="'Procedure Code'" [ObjectFieldName]="'ProcedureCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-            </td>
-            <td style="width: 250px;">
-                <table>
-                    <tr>
-                        <td style="width: 115px;">
-                            <LogTextBox class="disabled" [HideColumns]="true"  [IsFreeText]="true" [ObjectFieldName]="'ProcedureCode'" [Text]="ProcedureCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                        </td>
-                        <td style="width: 20px; padding-left: 4px;">
-                            <span class="hyperlink"  (click)="ChooseCodeClicked()">
-                                <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
-                            </span>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            
-            <!--<td style="width:250px;">
-                <div style="height: 100%; width: 100%;">
-                    <LogLov [ObjectFieldName]="'ProcedureCode'"
-                            [SelectedValue]="ProcedureCode"
-                            [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [DisplayMemberPath]="'Name'"
-                            [LookUpTableName]="'SchedulerProcedure'"
-                            [DependencyFilter1Value]="false"
-                           >
-                    </LogLov>
-                </div>
-            </td>-->
+                <tr class="FormFieldRow">
+                    <td></td>
+                    <td style="width:125px;vertical-align:central">
+                        <LogLabel [ObjectFieldName]="'ServiceClassName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:250px;">
+                        <div style="height: 100%; width: 100%;">
+                            <LogTextBox [ObjectFieldName]="'ServiceClassName'" [Text]="DataContext.ServiceClassName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </div>
+                    </td>
 
-        </tr>
+                </tr>
 
-        <tr style="height:100%">
-            <td colspan="3"></td>
-        </tr>
-    </table>
-</div>
+                <tr style="height:100%">
+                    <td colspan="3"></td>
+                </tr>
+            </table>
+        </div>

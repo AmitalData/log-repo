@@ -55,15 +55,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 AgentMasavPaymentResult myAgentMasavPaymentResult = new AgentMasavPaymentResult();
                 myAgentMasavPaymentResult.PaymentProcess = agentMasavPaymentItem.paymentProcess.ToString();
                 myAgentMasavPaymentResult.PaymentProcessName = GetPaymentProcessName(agentMasavPaymentItem.paymentProcess.ToString());
-                //myAgentMasavPaymentResult.PaymentID = agentMasavPaymentItem.paymentID.ToString();
-                if (agentMasavPaymentItem.amount != agentMasavPaymentItem.PaymentMethodAmount)
-                {
-                    myAgentMasavPaymentResult.PaymentID = agentMasavPaymentItem.paymentID.ToString() + "-1";
-                }
-                else
-                {
-                    myAgentMasavPaymentResult.PaymentID = agentMasavPaymentItem.paymentID.ToString();
-                }
+                myAgentMasavPaymentResult.PaymentID = agentMasavPaymentItem.paymentID.ToString();
                 myAgentMasavPaymentResult.Amount = String.Format("{0:N2}", agentMasavPaymentItem.amount);
                 myAgentMasavPaymentResult.PaymentType = agentMasavPaymentItem.PaymentType.ToString();
                 myAgentMasavPaymentResult.PaymentTypeName = GetPaymentTypeName(agentMasavPaymentItem.PaymentType.ToString());
@@ -118,14 +110,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (relatedEntityItem.entityType == 1055 && !string.IsNullOrWhiteSpace(relatedEntityItem.entityIdKey1))
                             {
-                                string myCustomFileNo = declarationQueryService.GetCustomFileNoByDeclarationNumber(relatedEntityItem.entityIdKey1, requestParams.Tenant);
-                                
-                                if (!string.IsNullOrEmpty(myCustomFileNo))
+                                var myDeclarationId = declarationQueryService.GetIdByDeclarationNumber(relatedEntityItem.entityIdKey1, requestParams.Tenant);
+                                DeclarationPM myDeclarationPM = declarationQueryService.GetSingle(myDeclarationId, false, false);
+                                if (myDeclarationPM != null)
                                 {
-                                    relatedEntity.EntityIdExternalReferenceID = myCustomFileNo;
+                                    relatedEntity.EntityIdExternalReferenceID = myDeclarationPM.CustomFileNo;
                                     if (agentMasavPaymentItem.RelatedEntity.Count() == 1)
                                     {
-                                        myAgentMasavPaymentResult.EntityIdExternalReferenceID = myCustomFileNo;
+                                        myAgentMasavPaymentResult.EntityIdExternalReferenceID = myDeclarationPM.CustomFileNo;
                                     }
                                 }
                             }
@@ -151,16 +143,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.AgentMasavPaymentResultList = _MyAgentMasavPaymentResultList;
 
             // moran 1.11.15 - Task 16978 -->
-             GenericResponse responseData = new GenericResponse();
-             
-            var myCustomsAGTService = new CustomsAGTService(requestParams, customResponse.MasavSentDate.masavSentDate, this.MyResponseData);
-            responseData = myCustomsAGTService.CustomsAGT();
 
-			var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-			if (setting.IsConnectedToUniFreight)
+            //MemoryStream memorystream = new MemoryStream(requestParamsData);
+            //XmlSerializer serializer = new XmlSerializer(typeof(CustomFileCreditRequestParams));
+            //CustomFileCreditRequestParams requestParamsCredit = (CustomFileCreditRequestParams)serializer.Deserialize(memorystream);
+            GenericResponse responseData = new GenericResponse();
+
+            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+            if (setting.IsConnectedToUniFreight)
             {
-				    var genericResponseObj = responseData.GenericResponseObj.FirstOrDefault();					
-				    if (genericResponseObj == null)
+                //try
+                //{
+                    var myCustomsAGTService = new CustomsAGTService(requestParams, customResponse.MasavSentDate.masavSentDate, this.MyResponseData);
+                    responseData = myCustomsAGTService.CustomsAGT();
+
+                    var genericResponseObj = responseData.GenericResponseObj.FirstOrDefault();
+                    if (genericResponseObj == null)
                     {
                         throw new System.Exception("GenericResponse.GenericResponseObj is null ");
                     }
@@ -188,9 +186,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         LogMessagingUtil.Instance.AppendLine("CustomsAGTService>genericResponseObj>Message= " + genericResponseObj.Message);
                     }
+                //}
+                /*catch (System.Exception e)
+                {
+                    this.MyResponseData.Succeeded = false;
+                    this.MyResponseData.HasException = true;
+                    this.MyResponseData.UserMessage = this.MyResponseData.UserMessage + Environment.NewLine + e.ToString();
+                    throw e;
+                }*/
             }
-        
-           
             // moran 1.11.15 - Task 16978 <--
 
             this.MyRequestSheetParam = new RequestSheetParam();

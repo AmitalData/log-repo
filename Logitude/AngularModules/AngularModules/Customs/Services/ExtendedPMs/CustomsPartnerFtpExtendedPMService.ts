@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -12,10 +11,10 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomsPartnerFtpExtendedPMService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsPartnerFtpExtended';
     }
 
@@ -23,11 +22,11 @@ export class CustomsPartnerFtpExtendedPMService {
     //    var authHeader = new Headers();
     //    authHeader.append('Token', SessionInfo.Token);
 
-    //    return defer(() => {
-    //        return this._http.get(this._apiUrl + '/getAll?tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+    //    return Observable.defer(() => {
+    //        return this._http.get(this._apiUrl + '/getAll?tenant=' + tenant, { headers: authHeader }).map(response => {
 
 
-    //            var pmList :any[]= response;
+    //            var pmList :any[]= response.json();
 
     //            var entityList: CustomsPartnerFtpPM[];
     //            if (pmList) {
@@ -42,13 +41,13 @@ export class CustomsPartnerFtpExtendedPMService {
     //            serviceResponse.Result = entityList;
     //            return serviceResponse;
 
-    //        }),catchError(ServiceHelper.HandleServiceError));
+    //        }).catch(ServiceHelper.HandleServiceError);
     //    });
 
     //}
     delete(Id: string) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -58,9 +57,9 @@ export class CustomsPartnerFtpExtendedPMService {
             serviceResponse = new ServiceResponse();
 
             var mappedEntity: CustomsPartnerFtpPM;
-            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, { headers: authHeader }).map(response => {
 
-                var pm = response;
+                var pm = response.json();
                 if (pm) {
                     var mappedResult: CustomsPartnerFtpPM;
                     serviceResponse.Result = mappedResult;
@@ -68,7 +67,7 @@ export class CustomsPartnerFtpExtendedPMService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -76,7 +75,7 @@ export class CustomsPartnerFtpExtendedPMService {
     }
     GetScreenOption(tenant: number) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -86,9 +85,9 @@ export class CustomsPartnerFtpExtendedPMService {
             serviceResponse = new ServiceResponse();
 
             var mappedEntity: CustomsPartnerFtpPM;
-            return this._http.get(this._apiUrl + '/GetScreenOption/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetScreenOption/?' + 'tenant=' + tenant, { headers: authHeader }).map(response => {
 
-                var ScreenOption = response;
+                var ScreenOption = response.json();
                 if (ScreenOption) {
                     //var mappedResult: CustomsPartnerFtpPM;
                     serviceResponse.Result = ScreenOption;
@@ -96,7 +95,7 @@ export class CustomsPartnerFtpExtendedPMService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );

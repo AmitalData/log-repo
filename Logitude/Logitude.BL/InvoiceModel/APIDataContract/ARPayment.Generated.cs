@@ -12,12 +12,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 {
    
-    public partial class ARPayment
+    public class ARPayment
     {
 
 	    
@@ -66,20 +65,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string PaymentCurrencyCode { get; set; }
     
     public DateTime? CreateDate { get; set; }
-    
-    public List<ARPaymentInvoice> PaymentInvoices { get; set; }
-    
-    public List<ARPaymentCheque> ARPaymentCheques { get; set; }
-    
-    public string BankAccountNumber { get; set; }
-    
-    public string CancelationNotes { get; set; }
-    
-    public DateTime? AccountingCancelationDate { get; set; }
-    
-    public ARPaymentStatus Status { get; set; }
-    
-    public List<ARPaymentBankTranfer> ARPaymentBankTranfers { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

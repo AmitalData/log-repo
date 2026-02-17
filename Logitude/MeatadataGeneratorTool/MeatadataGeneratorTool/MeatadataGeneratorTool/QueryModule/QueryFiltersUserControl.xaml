@@ -60,11 +60,6 @@
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="Index Order :" />
-                        <TextBlock Height="25"
-                                   Margin="5"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   Text="Custom Predefined :" />
 
 
                         <TextBlock Height="25"
@@ -109,11 +104,6 @@
                                  VerticalAlignment="Center"
                                  Text="{Binding IndexOrder,
                                                 Mode=TwoWay}" />
-                        <CheckBox 
-                                Height="25"
-                                Margin="5"
-                                VerticalAlignment="Center"
-                                IsChecked="{Binding CustomPredefined, Mode=TwoWay}"/>
                         <TextBox Height="25"
                                  Margin="5"
                                  VerticalAlignment="Center"

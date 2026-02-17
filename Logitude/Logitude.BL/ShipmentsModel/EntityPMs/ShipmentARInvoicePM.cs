@@ -12,14 +12,13 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StatusName { get; set; }
         public string InvoiceNumber { get; set; }
         public string InvoiceTypeCode { get; set; }
-        public string InvoiceTypeName { get; set; }
         public DateTime? DueDate { get; set; }
         public DateTime? InvoiceDate { get; set; }
         public bool IsAutoCredit { get; set; }
         public bool IsCancelled { get; set; }
         public string InvoiceCurrencyId { get; set; }
         public string InvoiceCurrencyCode { get; set; }
-        public string InvoiceLocalCurrencyCode { get; set; }
+
         public double? AmountDue { get; set; }
         public double? AmountInLocalCurrency { get; set; }
         public double? AmountInProfitCurrency { get; set; }
@@ -28,7 +27,5 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsConsolidationInvoice { get; set; }
         public string ConsolidationInvoiceId { get; set; }
         public string ConsolidationInvoiceNumber { get; set; }
-        public string ReportUrl { get; set; }
-        public bool IsDigitalDueDateColorRed { get; set; }
     }
 }

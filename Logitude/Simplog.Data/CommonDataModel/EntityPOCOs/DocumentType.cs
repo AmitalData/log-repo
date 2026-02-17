@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
@@ -68,16 +68,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool IsSystemAdditionalPrintingFields { get; set; }
         public string PrintingFieldsScreenCode { get; set; }
-        public bool AddedManually { get; set; }
 
-        public string OnSendPopulateDateFieldName { get; set; }
-        public string OnUploadPopulateDateFieldName { get; set; }
-        public string OnPrintPopulateDateFieldName { get; set; }
-
-
-
-
-
+    
         [ForeignKey("CustomerRoleId")]
         public Role CustomerRole { get; set; }
         [ForeignKey("AgentRoleId")]
@@ -105,7 +97,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("DocumentTypeCategoryCode")]
         public virtual DocumentTypeCategory DocumentTypeCategory { get; set; }
 
-        public bool IsCustomerUploadPermission { get; set; }
+
         ////[Include]
         ////[Association("DocumentTypeFollowUpType", "FollowUpTypeId", "Id", IsForeignKey = true)]
         //public virtual FollowUpType FollowUpType { get; set; }

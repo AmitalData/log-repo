@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.DomainServices.Server;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.InfrastructureModel.DomainServices;
 using WebFreight.Web.Security;
@@ -85,7 +85,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             mawbStackQuery = new MAWBStackQuery(tenant);
             int skippedStacks = pageSize * (pageIndex - 1);
-            IQueryable<MAWBStackPM> query = mawbStackQuery.GetMAWBStackPMsByAirlineId(airlineId, tenant).OrderBy(a => a.InsertionDate);
+            IQueryable<MAWBStackPM> query = mawbStackQuery.GetMAWBStackPMsByAirlineId(airlineId, tenant).AsQueryable().OrderBy(a => a.InsertionDate);
             query = query.Skip(skippedStacks);
             query = query.Take(pageSize);
             return query;
@@ -97,7 +97,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
 
             mawbStackQuery = new MAWBStackQuery(tenant);
-            var query = mawbStackQuery.GetMAWBStackPMsByAirlineId(airlineId, tenant);
+            List<MAWBStackPM> query = mawbStackQuery.GetMAWBStackPMsByAirlineId(airlineId, tenant);
             return query.Count();
         }
 

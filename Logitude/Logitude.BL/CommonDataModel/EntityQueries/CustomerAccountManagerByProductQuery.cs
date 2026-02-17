@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
          CustomerAccountManagerByProductRepository repository;
 
-
+        public CustomerAccountManagerByProductQuery()
+        {
+            repository = new CustomerAccountManagerByProductRepository(); 
+            
+        }
 
         public CustomerAccountManagerByProductQuery(int tenant)
         {
@@ -60,7 +64,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                CustomerId = a.CustomerId,
                                                                Tenant = a.Tenant,
                                                                AccountManagerId = a.AccountManagerId,
-                                                               AccountManagerName = a.AccountManagerUser == null ? null : string.IsNullOrEmpty(a.AccountManagerUser.Contact.EnglishName)? a.AccountManagerUser.Contact.Name : a.AccountManagerUser.Contact.EnglishName,
+                                                             AccountManagerName = a.AccountManagerUser != null? a.AccountManagerUser.Contact.EnglishName : null,
                                                            }).ToList();
             return entityPMs;
         }

@@ -18,12 +18,6 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
-       [DataMember]
-       public double? DefaultWarningPercentage  { get; set; }
-       [DataMember]
-       public string AirDefaultStepsId  { get; set; }
-       [DataMember]
-       public string LCLDefaultStepsId  { get; set; }
    }
 
 }

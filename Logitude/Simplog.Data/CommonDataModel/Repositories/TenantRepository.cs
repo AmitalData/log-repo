@@ -4,7 +4,7 @@ using System.Linq;
 using System.ServiceModel.DomainServices.Server;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -19,7 +19,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public TenantRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public TenantRepository(int tenant)
         {
@@ -31,31 +34,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return this.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country");
         }
 
-        public List<int> GetAccountingActivatedTenants()
-        {
-            return this.context.Tenants.Where(r => r.AccountingActivated).Select(r=>r.Id).ToList();
-        }
-
-        public static Tenant GetSingleTenant(int id, bool getFromCache)
-        {
-            if (!getFromCache)
-            {
-                return GetSingleTenantReal(id, getFromCache);
-            }
-            string key = $"GetSingleTenant({id}, {getFromCache})";
-            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<Tenant>(key, () =>
-            {
-                return GetSingleTenantReal(id, getFromCache);// 
-            });
-
-        }
-        static Tenant GetSingleTenantReal(int id,bool getFromCache)
+        public static Tenant GetSingleTenant(int id,bool getFromCache)
         {
             string entityName = "Tenant" + id ;
             Tenant entity;
             if (getFromCache)
             {
-             
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(id);
@@ -73,8 +59,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (Tenant)CacheManager.CacheWrapper.Get(entityName);
                     }
-                
-          
+                }
+                else
+                {
+                    ICommonDataContext context = CommonDataContext.GetContext(id);
+                    entity = (from a in context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country") where a.Id == id select a).FirstOrDefault();
+                }
             }
             else 
             {
@@ -89,17 +79,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.Tenants where record.Id == id  select record.TenantEmailSendingQuota).FirstOrDefault();
         }
-        public bool GetTenantAccountingActivated(int id)
-        {
-            return (from record in context.Tenants where record.Id == id select record.AccountingActivated).FirstOrDefault();
-        }
+
         public  Tenant GetSingleTenantByIdAndTenant(int id, bool getFromCache)
         {
             string entityName = "Tenant" + id;
             Tenant entity;
             if (getFromCache)
             {
-               
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                      
@@ -117,8 +105,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (Tenant)CacheManager.CacheWrapper.Get(entityName);
                     }
-                
-           
+                }
+                else
+                {
+                    
+                    entity = (from a in context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country") where a.Id == id select a).FirstOrDefault();
+                }
             }
             else
             {
@@ -130,29 +122,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public  Tenant GetSingleTenant(int id)
         {
-            Tenant entity =  context.Tenants
-                                    .Include("PaymentTerm")
-                                    .Include("OtherChargesCurrency")
-                                    .Include("QuoteSaleCurrency")
-                                    .Include("AgentCard")
-                                    .Include("Currency")
-                                    .Include("ProfitCurrency")
-                                    .Include("FreightCurrency")
-                                    .Include("PasswordPolicy")
-                                    .Include("Address.Country")
-                                    .Include("Address.State")
-                                    .Include("CustomerCard")
-                                    .FirstOrDefault(a => a.Id == id);
+            Tenant entity = (from a in context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country").Include("Address.State").Include("CustomerCard") where a.Id == id select a).FirstOrDefault();                      
             return entity;
         }
 
 
         public Tenant GetSingleTenantWithOutIncluded(int id)
         {
-            Tenant entity = context.Tenants
-                                   .Include("Address.Country")
-                                   .Include("Address.State")
-                                   .FirstOrDefault(a => a.Id == id);
+            Tenant entity = (from a in context.Tenants where a.Id == id select a).FirstOrDefault();
             return entity;
         }
 
@@ -241,21 +218,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where ids.Contains(d.Id.ToString())
                     select d).ToList();
       
-        }
-
-        public string GetTenantVatNumberOnly(int id)
-        {
-            return (from a in context.Tenants where a.Id == id select a.VatNumber).FirstOrDefault();
-        }
-
-        public bool TenantExist(int id)
-        {
-            return context.Tenants.Any(a => a.Id == id);
-        }
-
-        public string GetLocalCurrencyFromTenant(int id)
-        {
-            return (from a in context.Tenants where a.Id == id select a.CurrencyId).FirstOrDefault();
         }
     }
 }

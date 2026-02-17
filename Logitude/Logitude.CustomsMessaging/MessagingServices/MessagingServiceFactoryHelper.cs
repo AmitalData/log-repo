@@ -5,10 +5,6 @@ using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using System.Diagnostics;
 using System.Linq;
-using Logitude.SystemLogs;
-using System;
-using Logitude.CustomsMessaging.RequestServices;
-
 namespace Logitude.CustomsMessaging.MessagingServices
 {
     public class MessagingServiceFactoryHelper
@@ -24,29 +20,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DF_MSG10000_ImportDeclarationMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                SaveDF_MSG2751_2757_TransshipmentDeclarationRequestMessagingService>
-                ((new SaveDF_MSG2751_2757_TransshipmentDeclarationRequestMessagingService()).MainInterfaceCode);
-            
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesMessagingService>
-                ((new SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService>
-                ((new DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DF_NG_2755_MSG12001_SubmitDeclarationMessagingService>
                 ((new DF_NG_2755_MSG12001_SubmitDeclarationMessagingService()).MainInterfaceCode);
 
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-        DF_NG_2751_MSG10000_ExportDeclarationMessagingService>
-        ((new DF_NG_2751_MSG10000_ExportDeclarationMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-    DCAInCC_MSG1_EntryExitToFromCustomsStorageSitesMessageMessagingService>
-    ((new DCAInCC_MSG1_EntryExitToFromCustomsStorageSitesMessageMessagingService()).MainInterfaceCode);
             //2715
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService>
@@ -111,11 +87,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInDF_NG_2470_DF_MSG16001_ReleaseGoodsMessagingService>
                 ((new DCAInDF_NG_2470_DF_MSG16001_ReleaseGoodsMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-               DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices>
-               ((new DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices()).MainInterfaceCode);
-
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInEV_NG_8219_MSG14100_ProceduralFaultCancelMassagingService>
@@ -227,10 +198,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                           ((new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                          DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService>
-                          ((new DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
               DF_NG_Web8332_FaultProceduralParamMessagingService>
               ((new DF_NG_Web8332_FaultProceduralParamMessagingService()).MainInterfaceCode);
 
@@ -299,17 +266,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DCAInDF_NG_5117_ImportDeclerationAmendmentReplyMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-          DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg>
-          ((new DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 TPG_8304_DeficitFileFilterParamMessagingService>
                 ((new TPG_8304_DeficitFileFilterParamMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInDE_NG_5108_DecisionMessageMessagingService>
-                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
 
             //<--- Yuval Chalup 23.06.2015 TASK-13278
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
@@ -380,10 +338,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new CLAIM_2340_ClaimRequestMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                CLAIM_5005_ContinuousRequestOnClaimFileMessagingService>
-                ((new CLAIM_5005_ContinuousRequestOnClaimFileMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInCLAIM_5115_ContinuousMessageMessagingServices>
                 ((new DCAInCLAIM_5115_ContinuousMessageMessagingServices()).MainInterfaceCode);
 
@@ -395,17 +349,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
               Unifreight_L2US01_US2L01_SivugMessagingService>
               ((new Unifreight_L2US01_US2L01_SivugMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-           DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService>
-           ((new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-           DCAInUCUDO_UpdateOpenDeclarationsMessagingService>
-           ((new DCAInUCUDO_UpdateOpenDeclarationsMessagingService()).MainInterfaceCode);
-
-
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
               DCAInUniDebug01_MsgMessagingService>
@@ -448,63 +391,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             ((new DCAInUCB1170_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                            DCAInUCBAC_MsgMessagingService>
-                            ((new DCAInUCBAC_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                        DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService>
-                        ((new DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB2750_MsgMessagingService>
                             ((new DCAInUCB2750_MsgMessagingService()).MainInterfaceCode);
 
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                            DCAInUCB2751_MsgMessagingService>
-                            ((new DCAInUCB2751_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInUCB2755E_MsgMessagingService>
-                ((new DCAInUCB2755E_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB2755_MsgMessagingService>
                             ((new DCAInUCB2755_MsgMessagingService()).MainInterfaceCode);
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInUCB8212_MsgMessagingService>
-                ((new DCAInUCB8212_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB8250_MsgMessagingService>
                             ((new DCAInUCB8250_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                            DCAInUCB2715_MsgMessagingService>
-                            ((new DCAInUCB2715_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                        DCAInUCBSendDelayForm_MsgMessagingService>
-                        ((new DCAInUCBSendDelayForm_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                           DCAInUCB2715SendNow_MsgMessagingService>
-                           ((new DCAInUCB2715SendNow_MsgMessagingService()).MainInterfaceCode);
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                          DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService>
-                          ((new DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService()).MainInterfaceCode);
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                         DCAInUCBUpsertSupplierInvioceByOcr_MsgMessagingService>
-                         ((new DCAInUCBUpsertSupplierInvioceByOcr_MsgMessagingService()).MainInterfaceCode);
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                            DCAInUCBStorageSite_MsgMessagingService>
-                            ((new DCAInUCBStorageSite_MsgMessagingService()).MainInterfaceCode);
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                           DCAInUCBMultiUpdate_MsgMessagingService>
-                           ((new DCAInUCBMultiUpdate_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                         DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService>
-                         ((new DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             MN_MSG8370_CargoSplitMessagingService>
@@ -518,171 +415,21 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices>
                             ((new DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices()).MainInterfaceCode);
 
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                            GP_1030_GatepassRequestMessageMessagingService>
-                            ((new GP_1030_GatepassRequestMessageMessagingService()).MainInterfaceCode);
-
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                            DCAInUCBStorageSite_MsgMessagingService>
-                            ((new DCAInUCBStorageSite_MsgMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInUCBUD2LT_MsgMessagingService>
-                ((new DCAInUCBUD2LT_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInUCBCTML_MsgMessagingService>
-                ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService>
-                ((new DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInUCBCreateExportSupplierInvoicesFromFile_MsgMessagingService>
-                ((new DCAInUCBCreateExportSupplierInvoicesFromFile_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInDE_NG_5108_DecisionMessageMessagingService>
-                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInDE_NG_5108_DecisionMessageMessagingService>
-                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DF_MSG2892_ImportDeclarationAmendmentMessagingService>
-                ((new DF_MSG2892_ImportDeclarationAmendmentMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-              DF_MSG2892_ImportDeclarationAmendmentMessagingService>
-              ((new DF_MSG2892_ImportDeclarationAmendmentMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-              DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService>
-              ((new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-              DF_MSG8235_ExportDeclarationAmendmentMessagingService>
-              ((new DF_MSG8235_ExportDeclarationAmendmentMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-              DF_MSG8235_ExportDeclarationAmendmentMessagingService>
-              ((new DF_MSG8235_ExportDeclarationAmendmentMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                SE_6001_SealUpdateMessagingService>
-                ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-              SaveCH_MSG_195_SearchResultsMessagingService>
-              ((new SaveCH_MSG_195_SearchResultsMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                SaveDF_MSG5002_DeclarationCancellationRequestMsgService>
-                ((new SaveDF_MSG5002_DeclarationCancellationRequestMsgService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-               DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService>
-               ((new DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-
-              DCAInUCB9999ReAnAnalysis_MsgMessagingService>
-              ((new DCAInUCB9999ReAnAnalysis_MsgMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-
-               DCAInUCSBondedDocument_MessagingService>
-               ((new DCAInUCSBondedDocument_MessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-              SaveCC_MSG2450_ContainerizationMessageMessagingService>
-              ((new SaveCC_MSG2450_ContainerizationMessageMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInUCBClosePending_MsgMessagingService>
-                ((new DCAInUCBClosePending_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-               DCAInUCAApproveAllPending_MsgMessagingService>
-               ((new DCAInUCAApproveAllPending_MsgMessagingService()).MainInterfaceCode);
-
-                  ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCI_CourierMastersConnectedMessagingService>
-                ((new DCI_CourierMastersConnectedMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-               DCAInUCAApproveAllPending_MsgMessagingService>
-               ((new DCAInUCAApproveAllPending_MsgMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                 DCAInUCBUCADPE_MsgMessagingService>
-                 ((new DCAInUCBUCADPE_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-             DCAInUCBUCADPE_MsgMessagingService>
-             ((new DCAInUCBUCADPE_MsgMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                NG_9100_MSG_OutgoingMessageRequestMessagingService>
-                ((new NG_9100_MSG_OutgoingMessageRequestMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService>
-                ((new DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService()).MainInterfaceCode);
-            
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService>
-                ((new DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService()).MainInterfaceCode);
-
-			ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-			   DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService>
-			   ((new DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService()).MainInterfaceCode);
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-           DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService>
-           ((new DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService()).MainInterfaceCode);
-
-
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-           DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService>
-           ((new DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService()).MainInterfaceCode);
-           
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-           DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService>
-           ((new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService()).MainInterfaceCode);
-        
-              ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-           DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService>
-           ((new DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService()).MainInterfaceCode);
-        
-            
-              ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-           GetDOC8318_Web_GetAttachmentMessagingService>
-           ((new GetDOC8318_Web_GetAttachmentMessagingService()).MainInterfaceCode);
-        
-            
-            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInUCB8373_MsgMessagingService>
-                ((new DCAInUCB8373_MsgMessagingService()).MainInterfaceCode);
         }
         public static void InitContainer()
         {
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("this method its to enshur static constractor is up ");
+            Debug.WriteLine("this method its to enshur static constractor is up ");
         }
+        //public static void ResolveAndExecute(string mainInterfaceCode, int tenant, string correlationId,
+        //    CustomsCommandEnum myCustomsCommandEnum)
+        //{
+        //    MessagingServiceFactoryHelper.InitContainer();
+        //    var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
+        //    anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
 
-        public static IMessagingServiceInterfaceType GetMessagingService(string mainInterfaceCode, string correlationId = "")
+        //}
+
+        public static IMessagingServiceInterfaceType GetMessagingService(string mainInterfaceCode,string correlationId="")
         {
             MessagingServiceFactoryHelper.InitContainer();
 
@@ -704,7 +451,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             return anaO;
 
-        }
+            }
         public static void ResolveAndExecute(string mainInterfaceCode, int tenant, string correlationId,
             CustomsCommandEnum myCustomsCommandEnum, OverrideControllerModel debugModel = null)
         {
@@ -729,21 +476,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var anaO = GetMessagingService(mainInterfaceCode, correlationId);
             if (anaO == null)
             {
-
+                
                 mainInterfaceCode = GetMainInteface(mainInterfaceCode);
 
                 anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             }
-            if (anaO == null)
-            {
-                throw new Exception("CustomsMessagingSheetWR: anaO==null >>ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + mainInterfaceCode);
-
-            }
 
             anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
-
+            
             anaO.MyOverrideControllerModel = debugModel;
-            if (anaO.MyOverrideControllerModel != null)
+            if (anaO.MyOverrideControllerModel!=null)
             {
                 anaO.MyOverrideControllerModel.CurrentCustomsCommandWR = anaO.CurrentCustomsCommandWR;
             }
@@ -752,14 +494,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var responseDataBase = resDat as Logitude.CustomsMessaging.Common.ResponseData.ResponseDataBase;
             if (responseDataBase != null && responseDataBase.HasException)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(responseDataBase.UserMessage);
+                Debug.WriteLine(responseDataBase.UserMessage);
             }
         }
 
 
         public static void ResolveAndReQueue(string mainInterfaceCode, int tenant, string correlationId,
-            //CustomsCommandEnum myCustomsCommandEnum, 
-            OverrideControllerModel debugModel = null,string parentId=null, DateTime? futureSendDateTime = null)
+          //CustomsCommandEnum myCustomsCommandEnum, 
+            OverrideControllerModel debugModel = null)
         {
             MessagingServiceFactoryHelper.InitContainer();
 
@@ -787,12 +529,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
             }
 
-
-            var resDat = anaO.ReQueue(tenant, correlationId,parentId, futureSendDateTime);
+            
+            var resDat = anaO.ReQueue(tenant, correlationId);
             var responseDataBase = resDat as Logitude.CustomsMessaging.Common.ResponseData.ResponseDataBase;
             if (responseDataBase != null && responseDataBase.HasException)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(responseDataBase.UserMessage);
+                Debug.WriteLine(responseDataBase.UserMessage);
             }
         }
 #if false
@@ -827,9 +569,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public static string GetMainInteface(string interfaceTypeCode)
         {
-
+            
             var interfaceManagementDetails = new InterfaceManagementDetails();
-            var requestinterface = interfaceManagementDetails.GetAll().FirstOrDefault(r => r.ResponseInterfaceCode == interfaceTypeCode);
+            var requestinterface= interfaceManagementDetails.GetAll().FirstOrDefault(r => r.ResponseInterfaceCode == interfaceTypeCode);
             if (requestinterface == null)
             {
                 throw new System.Exception("interfaceTypeCode: " + interfaceTypeCode + "  is not not registered  !!!!");

@@ -1,10 +1,10 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -395,7 +395,6 @@ namespace Logitude.XSD
             #region [12] RateDescription
 
             bool isHarmonizeExists = !string.IsNullOrEmpty(Context.MainHarmonize) ? true : false;
-            bool isSLACExists = !string.IsNullOrEmpty(Context.SLAC) ? true : false;
 
             if (Context.IsMultipleCommodities)
             {
@@ -602,30 +601,11 @@ namespace Logitude.XSD
                         listRateDescription.Add(listRateHarmonizeItem);
                     }
 
-                    if (isSLACExists)
-                    {
-                        CHAMP.RateDescriptionFullBody listRateSLACItem = new CHAMP.RateDescriptionFullBody()
-                        {
-                            RateDescriptionFullChoices = new CHAMP.RateDescriptionFullChoices()
-                            {
-                                RateDescriptionMainBody = new CHAMP.RateDescriptionMainBody()
-                                {
-                                    Item = new CHAMP.ShippersLoadAndCount()
-                                    {
-                                        SLAC = Context.SLAC,
-                                    },
-                                }
-                            }
-                        };
-
-                        listRateDescription.Add(listRateSLACItem);
-                    }
-
                     #endregion
 
                     myXSDElement.RateDescription = new CHAMP.RateDescription()
                     {
-                        RateDescriptionFullBody = listRateDescription.ToArray<CHAMP.RateDescriptionFullBody>(),                        
+                        RateDescriptionFullBody = listRateDescription.ToArray<CHAMP.RateDescriptionFullBody>(),
                     };
                 }
             }
@@ -862,25 +842,6 @@ namespace Logitude.XSD
 
                         listRateDescription.Add(listRateHarmonizeItem);
                     }
-
-                    if (isSLACExists)
-                    {
-                        CHAMP.RateDescriptionFullBody listRateSLACItem = new CHAMP.RateDescriptionFullBody()
-                        {
-                            RateDescriptionFullChoices = new CHAMP.RateDescriptionFullChoices()
-                            {
-                                RateDescriptionMainBody = new CHAMP.RateDescriptionMainBody()
-                                {
-                                    Item = new CHAMP.ShippersLoadAndCount()
-                                    {
-                                        SLAC = Context.SLAC,
-                                    },
-                                }
-                            }
-                        };
-
-                        listRateDescription.Add(listRateSLACItem);
-                    }
                     #endregion
 
                     myXSDElement.RateDescription = new CHAMP.RateDescription()
@@ -888,7 +849,7 @@ namespace Logitude.XSD
                         RateDescriptionFullBody = listRateDescription.ToArray<CHAMP.RateDescriptionFullBody>(),
                     };
                 }
-            }            
+            }
             #endregion
 
             #region [13] Other Charges
@@ -1212,7 +1173,7 @@ namespace Logitude.XSD
             return myXSDElement;
         }
 
-        public CHAMP17.AirWaybillData GetChampFWB17(bool isMultiHS = false)
+        public CHAMP17.AirWaybillData GetChampFWB17()
         {
             CHAMP17.AirWaybillData myXSDElement = new CHAMP17.AirWaybillData();
 
@@ -1541,8 +1502,6 @@ namespace Logitude.XSD
             #region [9] Notify1
             if (!string.IsNullOrEmpty(Context.Notify1Name))
             {
-                Context.FNANotifyDetails = Context.Notify1Name;
-
                 myXSDElement.AlsoNotify = new CHAMP17.Contact()
                 {
                     Name = new string[] { Context.Notify1Name },
@@ -1559,18 +1518,14 @@ namespace Logitude.XSD
                     },
                 };
 
-                Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1Address, Context.Notify1City, Context.Notify1CountryCode);
-
                 if (!string.IsNullOrEmpty(Context.Notify1ZipCode))
                 {
                     myXSDElement.AlsoNotify.CodedLocation.PostCode = Context.Notify1ZipCode;
-                    Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1ZipCode);
                 }
 
                 if (!string.IsNullOrEmpty(Context.Notify1StateCode))
                 {
                     myXSDElement.AlsoNotify.Location.StateOrProvince = Context.Notify1StateCode;
-                    Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1StateCode);
                 }
 
                 List<CHAMP17.ContactDetail> ContactDetails_Notify1 = new List<CHAMP17.ContactDetail>();
@@ -1584,7 +1539,6 @@ namespace Logitude.XSD
                     };
 
                     ContactDetails_Notify1.Add(itemDetail);
-                    Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1Phone);
                 }
 
                 if (!string.IsNullOrEmpty(Context.Notify1Fax))
@@ -1596,7 +1550,6 @@ namespace Logitude.XSD
                     };
 
                     ContactDetails_Notify1.Add(itemDetail);
-                    Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1Fax);
                 }
 
                 if (ContactDetails_Notify1.Count > 0)
@@ -1669,7 +1622,6 @@ namespace Logitude.XSD
 
             #region [12] RateDescription
 
-            bool isSLACExists = !string.IsNullOrEmpty(Context.SLAC) ? true : false;
             bool isHarmonizeExists = !string.IsNullOrEmpty(Context.MainHarmonize) ? true : false;
 
             if (Context.IsMultipleCommodities)
@@ -1766,6 +1718,17 @@ namespace Logitude.XSD
                                     ItemElementName = CHAMP17.ItemChoiceType1.ChargeAmount,
                                 };
                             }
+
+                            //if (!string.IsNullOrEmpty(Context.MainHarmonize))
+                            //{
+                            //    listRateTotalsItem.RateDescriptionFullChoices.RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
+                            //    {
+                            //        Item = new CHAMP17.HarmonisedCommodityCode()
+                            //        {
+                            //            HarmonisedCommodityCodeEntry = Context.MainHarmonize,
+                            //        }
+                            //    };
+                            //}
 
                             if (!string.IsNullOrEmpty(item.DescriptionOfGoods))
                             {
@@ -1874,25 +1837,6 @@ namespace Logitude.XSD
 
                         listRateDescription.Add(listRateHarmonizeItem);
                     }
-
-                    if (isSLACExists)
-                    {
-                        CHAMP17.RateDescriptionFullBody listRateSLACItem = new CHAMP17.RateDescriptionFullBody()
-                        {
-                            RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
-                            {
-                                RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
-                                {
-                                    Item = new CHAMP17.ShippersLoadAndCount()
-                                    {
-                                        SLAC = Context.SLAC,
-                                    },
-                                }
-                            }
-                        };
-
-                        listRateDescription.Add(listRateSLACItem);
-                    }
                     #endregion
 
                     myXSDElement.RateDescription = listRateDescription.ToArray<CHAMP17.RateDescriptionFullBody>();
@@ -1908,34 +1852,13 @@ namespace Logitude.XSD
                     int i = 0;
                     int RateDescriptionMaxOccurs = 11;
                     int DimensionsLinesMaxOccurs = RateDescriptionMaxOccurs - 1;
-                    int allValidPackagesCounts = Context.ShipmentPackages.Where(d => d.Length > 0 && d.Width > 0 && d.Height > 0).Count();
-                    
-                    int lines = 1;
-
-                    if (isSLACExists)
-                    {
-                        lines++;
-                        DimensionsLinesMaxOccurs -= 1;
-                    }
-
                     if (isHarmonizeExists)
                     {
-                        lines++;
                         DimensionsLinesMaxOccurs -= 1;
                     }
 
-                    if (allValidPackagesCounts > DimensionsLinesMaxOccurs)
-                    {
-                        lines = 11;
-                        DimensionsLinesMaxOccurs -= 1;
-                    }
-
-                    else
-                    {
-                        lines += allValidPackagesCounts;
-                    }
                     #region
-
+                   
                     #region First Totals Line
 
                     i += 1;
@@ -2028,59 +1951,14 @@ namespace Logitude.XSD
                     listRateDescription.Add(listRateTotalsItem);
                     #endregion
 
-                    #region NatureOfGoodsList
-                    int NatureOfGoodsMaxOccurs = RateDescriptionMaxOccurs - lines;
-
-                    foreach (string str in Context.NatureOfGoodsList)
-                    {
-                        if (NatureOfGoodsMaxOccurs > 0)
-                        {
-                            i += 1;
-
-                            CHAMP17.RateDescriptionFullBody listRateGoodsItem = new CHAMP17.RateDescriptionFullBody()
-                            {
-                                ChargeLineCount = new CHAMP17.ChargeLineCount()
-                                {
-                                    AWBRateLineNumber = i,
-                                },
-                            };
-
-                            if (Context.ShipmentLevelCode == "C")
-                            {
-                                listRateGoodsItem.RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
-                                {
-                                    RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
-                                    {
-                                        Item = new CHAMP17.Consolidation()
-                                        {
-                                            NatureAndQuantityOfGoods = str,
-                                        }
-                                    }
-                                };
-                            }
-
-                            else
-                            {
-                                listRateGoodsItem.RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
-                                {
-                                    RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
-                                    {
-                                        Item = new CHAMP17.GoodsDescription()
-                                        {
-                                            NatureAndQuantityOfGoods = str,
-                                        }
-                                    }
-                                };
-                            }
-
-                            listRateDescription.Add(listRateGoodsItem);
-                            NatureOfGoodsMaxOccurs--;
-                        }
-                    }
-                    #endregion
-
                     #region Dimensions
+                    int allValiePackagesCounts = Context.ShipmentPackages.Where(d => d.Length > 0 && d.Width > 0 && d.Height > 0).Count();
                     List<ShipmentPackage> allRemainingPackages = new List<ShipmentPackage>();
+
+                    if (allValiePackagesCounts > DimensionsLinesMaxOccurs)
+                    {
+                        DimensionsLinesMaxOccurs -= 1;
+                    }
 
                     foreach (ShipmentPackage package in Context.ShipmentPackages)
                     {
@@ -2175,74 +2053,61 @@ namespace Logitude.XSD
                     }
                     #endregion
 
-                    #region Harmonize
-                    if (isHarmonizeExists)
+                    #region NatureOfGoodsList
+
+                    foreach (string str in Context.NatureOfGoodsList)
                     {
-                        if (isMultiHS)
-                        {
-                            Random generator = new Random();
-                            int HSCount = 1;
-                            while (HSCount <= 3)
-                            {
-                                i += 1;
-
-                                CHAMP17.RateDescriptionFullBody listRateHarmonizeItem = new CHAMP17.RateDescriptionFullBody()
-                                {
-                                    ChargeLineCount = new CHAMP17.ChargeLineCount()
-                                    {
-                                        AWBRateLineNumber = i,
-                                    },
-
-                                    RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
-                                    {
-                                        RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
-                                        {
-                                            Item = new CHAMP17.HarmonisedCommodityCode()
-                                            {
-                                                HarmonisedCommodityCodeEntry = generator.Next(0, 1000000).ToString("D6"),
-                                            },
-                                        }
-                                    }
-                                };
-
-                                listRateDescription.Add(listRateHarmonizeItem);
-                                HSCount++;
-                            }
-                        }
-
-                        else
+                        if (listRateDescription.Count < DimensionsLinesMaxOccurs)
                         {
                             i += 1;
 
-                            CHAMP17.RateDescriptionFullBody listRateHarmonizeItem = new CHAMP17.RateDescriptionFullBody()
+                            CHAMP17.RateDescriptionFullBody listRateGoodsItem = new CHAMP17.RateDescriptionFullBody()
                             {
                                 ChargeLineCount = new CHAMP17.ChargeLineCount()
                                 {
                                     AWBRateLineNumber = i,
                                 },
+                            };
 
-                                RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
+                            if (Context.ShipmentLevelCode == "C")
+                            {
+                                listRateGoodsItem.RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
                                 {
                                     RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
                                     {
-                                        Item = new CHAMP17.HarmonisedCommodityCode()
+                                        Item = new CHAMP17.Consolidation()
                                         {
-                                            HarmonisedCommodityCodeEntry = Context.MainHarmonize,
-                                        },
+                                            NatureAndQuantityOfGoods = str,
+                                        }
                                     }
-                                }
-                            };
+                                };
+                            }
 
-                            listRateDescription.Add(listRateHarmonizeItem);
+                            else
+                            {
+                                listRateGoodsItem.RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
+                                {
+                                    RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
+                                    {
+                                        Item = new CHAMP17.GoodsDescription()
+                                        {
+                                            NatureAndQuantityOfGoods = str,
+                                        }
+                                    }
+                                };
+                            }
+
+                            listRateDescription.Add(listRateGoodsItem);
                         }
                     }
                     #endregion
 
-                    if (isSLACExists)
+                    #region Harmonize
+                    if (isHarmonizeExists)
                     {
                         i += 1;
 
-                        CHAMP17.RateDescriptionFullBody listRateSLACItem = new CHAMP17.RateDescriptionFullBody()
+                        CHAMP17.RateDescriptionFullBody listRateHarmonizeItem = new CHAMP17.RateDescriptionFullBody()
                         {
                             ChargeLineCount = new CHAMP17.ChargeLineCount()
                             {
@@ -2253,119 +2118,81 @@ namespace Logitude.XSD
                             {
                                 RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
                                 {
-                                    Item = new CHAMP17.ShippersLoadAndCount()
+                                    Item = new CHAMP17.HarmonisedCommodityCode()
                                     {
-                                        SLAC = Context.SLAC,
+                                        HarmonisedCommodityCodeEntry = Context.MainHarmonize,
                                     },
                                 }
                             }
                         };
 
-                        listRateDescription.Add(listRateSLACItem);
+                        listRateDescription.Add(listRateHarmonizeItem);
                     }
+                    #endregion
+
                     #endregion
 
                     myXSDElement.RateDescription = listRateDescription.ToArray<CHAMP17.RateDescriptionFullBody>();
                 }
             }
             #endregion
-            
+
             #region [13] Other Charges
             if (!Context.AsAgreedOtherCharges)
             {
-                List<FWBOtherChargesItem> dataItems = new List<FWBOtherChargesItem>();
-
-                if (Context.AWBPrintOnlies != null)
+                if (Context.AWBPrintOnlies != null && Context.AWBPrintOnlies.Count > 0)
                 {
+                    List<ShipmentAWBPrintOnly> otherChargesList = new List<ShipmentAWBPrintOnly>();
+
                     foreach (ShipmentAWBPrintOnly item in Context.AWBPrintOnlies)
                     {
                         if (!string.IsNullOrEmpty(item.IATACodeId) && !string.IsNullOrEmpty(item.PrepaidCollectId) && item.Amount != null && (item.DueTypeCode == "AG" || item.DueTypeCode == "CA"))
                         {
-                            dataItems.Add(new FWBOtherChargesItem()
-                            {
-                                IATACodeId = item.IATACodeId,
-                                DueTypeCode = item.DueTypeCode,
-                                PrepaidCollectId = item.PrepaidCollectId,
-                                Amount = item.Amount,
-                            });
+                            otherChargesList.Add(item);
                         }
                     }
-                }
 
-                if (Context.ShipmentPayables != null)
-                {
-                    foreach (ShipmentPayable item in Context.ShipmentPayables)
+                    if (otherChargesList.Count > 0)
                     {
-                        if (!string.IsNullOrEmpty(item.IATACodeId) && !string.IsNullOrEmpty(item.PrepaidCollectId) && item.ExpectedAmount != null && (item.DueTypeCode == "AG" || item.DueTypeCode == "CA"))
+                        IATACodeRepository iATACodeRepository = new IATACodeRepository(Context.Tenant);
+
+                        List<CHAMP17.OtherChargesBody> bodyList = new List<CHAMP17.OtherChargesBody>();
+
+                        foreach (ShipmentAWBPrintOnly item in otherChargesList)
                         {
-                            dataItems.Add(new FWBOtherChargesItem()
+                            string itemIATACode = "";
+                            IATACode iATACode = iATACodeRepository.GetSingleIATACode(item.IATACodeId);
+                            if (iATACode != null)
                             {
-                                IATACodeId = item.IATACodeId,
-                                DueTypeCode = item.DueTypeCode,
-                                PrepaidCollectId = item.PrepaidCollectId,
-                                Amount = item.ExpectedAmount,
-                            });
-                        }
-                    }
-                }
+                                itemIATACode = iATACode.Code;
+                            }
 
-                if (Context.ShipmentReceivables != null)
-                {
-                    foreach (ShipmentReceivable item in Context.ShipmentReceivables)
-                    {
-                        if (!string.IsNullOrEmpty(item.IATACodeId) && !string.IsNullOrEmpty(item.PrepaidCollectId) && item.TotalAmount != null && (item.DueTypeCode == "AG" || item.DueTypeCode == "CA"))
-                        {
-                            dataItems.Add(new FWBOtherChargesItem()
+                            decimal itemAmount = (decimal)item.Amount;
+                            string itemDueCode = (item.DueTypeCode.Length <= 1) ? item.DueTypeCode : item.DueTypeCode.Substring(0, 1);
+                            itemIATACode = (itemIATACode.Length <= 2) ? itemIATACode : itemIATACode.Substring(0, 2);
+
+                            CHAMP17.OtherChargeItems items = new CHAMP17.OtherChargeItems()
                             {
-                                IATACodeId = item.IATACodeId,
-                                DueTypeCode = item.DueTypeCode,
-                                PrepaidCollectId = item.PrepaidCollectId,
-                                Amount = item.TotalAmount,
-                            });
-                        }
-                    }
-                }
+                                ChargeAmount = itemAmount,
+                                EntitlementCode = itemDueCode,
+                                OtherChargeCode = itemIATACode,                                
+                            };
 
-                if (dataItems.Count > 0)
-                {
-                    IATACodeRepository iATACodeRepository = new IATACodeRepository(Context.Tenant);
+                            CHAMP17.OtherChargesBody body = new CHAMP17.OtherChargesBody()
+                            {
+                                ChargeLine = new CHAMP17.ChargeLine()
+                                {
+                                    PrepaidCollectIndicatorOfOtherCharges = item.PrepaidCollectId,
+                                },
 
-                    List<CHAMP17.OtherChargesBody> bodyList = new List<CHAMP17.OtherChargesBody>();
+                                OtherChargeItems = new CHAMP17.OtherChargeItems[] { items }
+                            };
 
-                    foreach (FWBOtherChargesItem item in dataItems)
-                    {
-                        string itemIATACode = "";
-                        IATACode iATACode = iATACodeRepository.GetSingleIATACode(item.IATACodeId);
-                        if (iATACode != null)
-                        {
-                            itemIATACode = iATACode.Code;
+                            bodyList.Add(body);
                         }
 
-                        decimal itemAmount = (decimal)item.Amount;
-                        string itemDueCode = (item.DueTypeCode.Length <= 1) ? item.DueTypeCode : item.DueTypeCode.Substring(0, 1);
-                        itemIATACode = (itemIATACode.Length <= 2) ? itemIATACode : itemIATACode.Substring(0, 2);
-
-                        CHAMP17.OtherChargeItems items = new CHAMP17.OtherChargeItems()
-                        {
-                            ChargeAmount = itemAmount,
-                            EntitlementCode = itemDueCode,
-                            OtherChargeCode = itemIATACode,                             
-                        };
-
-                        CHAMP17.OtherChargesBody body = new CHAMP17.OtherChargesBody()
-                        {
-                            ChargeLine = new CHAMP17.ChargeLine()
-                            {
-                                PrepaidCollectIndicatorOfOtherCharges = item.PrepaidCollectId,
-                            },
-
-                            OtherChargeItems = new CHAMP17.OtherChargeItems[] { items }
-                        };
-
-                        bodyList.Add(body);
+                        myXSDElement.OtherCharges = bodyList.ToArray<CHAMP17.OtherChargesBody>();
                     }
-
-                    myXSDElement.OtherCharges = bodyList.ToArray<CHAMP17.OtherChargesBody>();
                 }
             }
             #endregion
@@ -3497,9 +3324,9 @@ namespace Logitude.XSD
 
                     myXSDElement.RateDescription = listRateDescription.ToArray<GLSHK.RateDescDetail>();
                 }
-            }
+            }            
             #endregion
-            
+
             #region Other Charges
             if (!Context.AsAgreedOtherCharges)
             {
@@ -3960,13 +3787,5 @@ namespace Logitude.XSD
 
             return myXSDElement;
         }        
-
-        class FWBOtherChargesItem
-        {
-            public string IATACodeId { get; set; }
-            public string DueTypeCode { get; set; }
-            public string PrepaidCollectId { get; set; }
-            public double? Amount { get; set; }
-        }
     }
 }

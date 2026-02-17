@@ -35,9 +35,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             List<MenuButtonGroupPM> menubuttongruops;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                MenuButtonRepository menuButtonRep = new MenuButtonRepository(tenant);
+                MenuButtonRepository menuButtonRep = new MenuButtonRepository(0);
                 MenuButtonQuery menuButtonQuery = new MenuButtonQuery(menuButtonRep);
-                WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
+                WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
                 menubuttongruops = (from a in webFreightContext.MenuButtonGroups//repository.context.MenuButtonGroups
                                     where a.Tenant == 0&&a.ObjectTableId==objectTableId
                                     select new MenuButtonGroupPM()
@@ -64,9 +64,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             List<MenuButtonGroupPM> menubuttongruops;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                MenuButtonRepository menuButtonRep = new MenuButtonRepository(tenant);
+                MenuButtonRepository menuButtonRep = new MenuButtonRepository(0);
                 MenuButtonQuery menuButtonQuery = new MenuButtonQuery(menuButtonRep);
-                WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
+                WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
                 menubuttongruops = (from a in webFreightContext.MenuButtonGroups//repository.context.MenuButtonGroups
                                     where a.Tenant == 0//a.Tenant == tenant
                                     select new MenuButtonGroupPM()

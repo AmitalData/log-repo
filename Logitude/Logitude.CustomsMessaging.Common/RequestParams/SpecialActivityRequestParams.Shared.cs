@@ -15,10 +15,8 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public List<SampleRequestDetails> SampleRequestDetailsDataList { get; set; }
         public List<CurrentPackingDetails> CurrentPackingDetailsDataList { get; set; }
         public List<DesiredPackingDetails> DesiredPackingDetailsDataList { get; set; }
-        public OtherActivityDetails OtherActivityDetailsData { get; set; }
 
-        public string AppicationId { get; set; }
-         //////////////////////////////          General         //////////////////////////////
+        //////////////////////////////          General         //////////////////////////////
         public class GeneralDetails
         {
             public DateTime? ActivityRequestStartDate { get; set; }
@@ -131,13 +129,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
             //public int SampleValue { get; set; }
             public int? Weight { get; set; }
             public bool WeightSpecified { get; set; }
-        }
-
-        //////////////////////////////          Other Activity         //////////////////////////////
-        public class OtherActivityDetails
-        {
-            public string OtherActivityComment { get; set; }
-
         }
     }
 }

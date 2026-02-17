@@ -46,7 +46,7 @@ namespace CommunicationWorkerRole
                             catch (Exception ex)
                             {
                                 ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "TMQueueMessageBuilderWorkerRole", "", null);
-                                queueservice.CompleteAsFailed();
+                                queueservice.Complete();
                                 Thread.Sleep(10000);
                             }
                         }
@@ -59,7 +59,6 @@ namespace CommunicationWorkerRole
                     {
                         ConnectClient();
                         ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, null, "TMQueueMessageBuilderWorkerRole Run method", null, null);
-                        queueservice.CompleteAsFailed();
                         Thread.Sleep(10000);
                     }
                 }

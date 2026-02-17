@@ -16,9 +16,10 @@ export class TasksSchedulerList {
 		Name: string;
 		Description: string;
 		NextRunTime: Date;
+		LastRunTime: Date;
 		LastRunResult: string;
 		InActive: boolean;
-		ProcedureCode: string;
+		ServiceClassName: string;
 		TriggerType: string;
 		Satarday: boolean;
 		Sunday: boolean;
@@ -33,19 +34,7 @@ export class TasksSchedulerList {
 		IsLastRunError: boolean;
 		Type: string;
 		NextRunTimeUTC: Date;
+		LastRunTimeUTC: Date;
 		StartDateTimeUTC: Date;
-		LastRunEndTime: Date;
-		LastRunEndTimeUTC: Date;
-		LastRunStartTimeUTC: Date;
-		LastRunStartTime: Date;
-		Version: number;
-		Status: string;
-		Retries: number;
-		AverageRunTime: number;
-		EntityId: string;
-		Recepients: string;
-		ResultType: string;
-		Format: string;
-		AdvancedFormat: string;
 	
 }

@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.Validators
             //if (_DeclarationPM.PaymentDate.HasValue)
             if (_DeclarationPM != null)
             {
-                if (_DeclarationPM.PaymentDate.HasValue && ToUpdateWithPaymentDate != true && _DeclarationPM.Direction != "E")
+                if (_DeclarationPM.PaymentDate.HasValue && ToUpdateWithPaymentDate != true)
                 {
                     errorMessage = "Customs.General.O.NoPaymentDate";
                     if (!string.IsNullOrWhiteSpace(errorMessage))
@@ -368,30 +368,13 @@ namespace Logitude.Customs.BL.Validators
             ConstraintsInProgressCheck();
             FuturePaymentDoneCheck();
             //SubmitDeclarationAgainDoneCheck(); // Mirit 25/06/15 Task 14330 + Remarked by Yuval Chalup 02.08.2015 TASK-15145
-            CheckIsConvertedDeclaration(); // Mirit 02/12/15 Task 18508
-            CheckIsCloseDeclaration();
+            CheckIsCoverteedDeclaration(); // Mirit 02/12/15 Task 18508
         }
-
-        private void CheckIsCloseDeclaration()
-        {
-            if (this._DeclarationPM != null)
-            {
-                if (this._DeclarationPM.IsClose && _DeclarationPM.Direction != "E")
-                {
-                    var errorMessage = "Customs.Declaration.O.Closed";
-                    if (!string.IsNullOrWhiteSpace(errorMessage))
-                    {
-                        ErrorCode.Add(errorMessage);
-                    }
-                }
-            }
-        }
-
         //Yuval Chalup 18.11.2014 TASK-4240 --->
 
 
         //Check if it's a converted declaration (IsConvertedDeclaration=True)  // Mirit 02/12/15 Task 18508
-        public void CheckIsConvertedDeclaration()
+        public void CheckIsCoverteedDeclaration()
         {
 
             if (_DeclarationPM != null)

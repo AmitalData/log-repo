@@ -65,20 +65,9 @@ export class TaxDeductionReportMenuButtonsHandler {
                             }
 
                         case "DNPD":
-                               {
-                                if (this.EntityPM.StatusTypeCode != "3") {
-                                    button.IsDisabled = true;
-                                }
-                                else {
-                                    button.IsDisabled = false;
-                                }
-
-                                break;
-                              }
                         case "TXFL":
                             {
-                                if (this.EntityPM.StatusTypeCode != "3" || (this.EntityPM.ByMonth && 
-                                    !(this.EntityPM.FromMonth && new Date(this.EntityPM.FromMonth).getMonth() === 0 && this.EntityPM.Month && new Date(this.EntityPM.Month).getMonth() === 11))) {
+                                if (this.EntityPM.StatusTypeCode != "3") {
                                     button.IsDisabled = true;
                                 }
                                 else {
@@ -111,7 +100,7 @@ export class TaxDeductionReportMenuButtonsHandler {
                         myPrintHelper.ShowPrintControl();
                     }
 
-                    //this.documentTypeListExtendedService.getDocumentTypeListByCode("TDDP", this.EntityPM.Tenant).subscribe((myResult:any) => {
+                    //this.documentTypeListExtendedService.getDocumentTypeListByCode("TDDP", this.EntityPM.Tenant).subscribe(myResult => {
                     
                     //    var mm: ServiceResponse = myResult;
                     //    if (!mm.HasError) {
@@ -119,7 +108,7 @@ export class TaxDeductionReportMenuButtonsHandler {
 
                     //        if (this.documentType) {
 
-                    //            this.documentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.documentType.Id, this.objectTable.Id, this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResult:any) => {
+                    //            this.documentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.documentType.Id, this.objectTable.Id, this.EntityPM.Id, this.EntityPM.Tenant).subscribe(myResult => {
                                
                     //                var mm: ServiceResponse = myResult;
                     //                if (!mm.HasError) {
@@ -140,7 +129,7 @@ export class TaxDeductionReportMenuButtonsHandler {
                     //});
 
 
-                    //this._DocumentsFilingViewsExtService.get(this.EntityPM.Id, this.objectTable.Id).subscribe((myResult:any) => {
+                    //this._DocumentsFilingViewsExtService.get(this.EntityPM.Id, this.objectTable.Id).subscribe(myResult => {
                     //    console.log("[GetLastDocumentsFilingPM]", myResult);
                     //    var mm: ServiceResponse = myResult;
                     //    if (!mm.HasError) {
@@ -167,7 +156,7 @@ export class TaxDeductionReportMenuButtonsHandler {
               
 
 
-                        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.EntityPM.Id, this.objectTable.Id).subscribe((myResult:any) => {
+                        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.EntityPM.Id, this.objectTable.Id).subscribe(myResult => {
                             console.log("[GetLastDocumentsFilingPM]", myResult);
                             var mm: ServiceResponse = myResult;
                             if (!mm.HasError) {

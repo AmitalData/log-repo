@@ -11,8 +11,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(true);
             this.Property(t => t.DBConnection).IsRequired().HasMaxLength(512).IsUnicode(true);
-            this.Property(t => t.SharedDWConnection).HasMaxLength(512).IsUnicode(true);
-            this.Property(t => t.SecondaryAzureDBConnection).HasMaxLength(512).IsUnicode(true);
+            this.Property(t => t.SharedDWConnection).IsRequired().HasMaxLength(512).IsUnicode(true);
+            this.Property(t => t.SecondaryAzureDBConnection).IsRequired().HasMaxLength(512).IsUnicode(true);
 
             this.ToTable("GlobalDBs");
             this.Property(t => t.Id).HasColumnName("Id");

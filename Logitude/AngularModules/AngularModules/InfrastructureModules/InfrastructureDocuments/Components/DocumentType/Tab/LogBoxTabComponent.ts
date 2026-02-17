@@ -11,7 +11,7 @@ import { FormGroup, FormBuilder} from '@angular/forms';
 
 @Component({
     selector: 'LogBoxTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './LogBoxTabComponent.html', 
 })
 

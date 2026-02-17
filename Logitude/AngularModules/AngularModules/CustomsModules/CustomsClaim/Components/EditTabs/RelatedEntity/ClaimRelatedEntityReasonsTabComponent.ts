@@ -6,6 +6,7 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
+import { ClientAddressPM } from '../../../../../Customs/EntityPMs/ClientAddressPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
 import { ClaimsRelatedEntitiesReasonPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntitiesReasonPM';
 import { ClaimsRelatedEntsReasonsExpPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntsReasonsExpPM';
@@ -16,18 +17,18 @@ import { CustomsSettingListService } from '../../../../../Customs/Services/Stand
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { ClientMessagesService } from '../../../../../Customs/Services/WebServices/ClientMessagesService';
+import { ClientPMService } from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { ClaimRelatedEntReasonExpLineComponent } from './ClaimRelatedEntReasonExpComponent';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ClaimRelatedEntityReasonsTabComponent.html',
 })
 
 export class ClaimRelatedEntityReasonsTabComponent extends BaseComponent {
-  public IsDisplayOnly: boolean = false;
-
     public DataContext: ClaimRelatedEntityReasonsTabComponent = this;
     public EntityPM: ClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(new ClaimPM());
     public ClaimPM: ClaimPM = new ClaimPM();
@@ -132,7 +133,7 @@ export class ClaimRelatedEntityReasonsTabComponent extends BaseComponent {
 
         if (this.ClaimsRelatedEntityReasonslist != null && this.ClaimsRelatedEntityReasonslist.Length >= 6) {
             this.ValidationErrors = [];
-            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Claim.O.JustSixLines"));
+            this.ValidationErrors.push("לא ניתן להוסיף יותר מ 6 שורות");
             return;
         }
 
@@ -161,7 +162,7 @@ export class ClaimRelatedEntityReasonsTabComponent extends BaseComponent {
         this.ValidationErrors = [];
         if (AppTool.IsNullOrEmpty(item.ReasonListTypeCode)) {
             this.ValidationErrors = [];
-            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.Claim.O.EnterClaimReason"));
+            this.ValidationErrors.push("חובה להזין סיבת תביעה");
             return;
         }
 

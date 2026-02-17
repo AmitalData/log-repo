@@ -61,9 +61,7 @@ namespace Simplog.Data.InvoiceModel
                 currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             }
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
             APInvoiceAgingReportContext context = new APInvoiceAgingReportContext(connection);
             return context;
 

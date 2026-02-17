@@ -23,7 +23,7 @@ import {CustomerTenantAccessStatusTypeListService} from '../../Common/Services/S
 import {CommonDomainService} from '../../Common/Services/CommonDomainService';
 import {AppTool} from '../../Infrastructure/Tools';
 @Component({
-    
+    moduleId: module.id,
     selector: 'EditRelatedCustomerComponent',
     templateUrl: './EditRelatedCustomerComponent.html',
 })
@@ -85,7 +85,7 @@ export class EditRelatedCustomerComponent extends BaseComponent {
 
 
                     var updateService: CustomerTenantAccessPMService = new CustomerTenantAccessPMService();
-                    updateService.update(this.Parent.EntityPM).subscribe((res:any) => {
+                    updateService.update(this.Parent.EntityPM).subscribe(res => {
                         this.CurrentSession.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindowEmit("OK");
 
@@ -110,7 +110,7 @@ export class EditRelatedCustomerComponent extends BaseComponent {
         var entityService: EntityResourceService = new EntityResourceService();
         entityService.getEntityResourceByTableName("CustomerTenantAccessStatusType", 0).subscribe(p => {
             var service: CustomerTenantAccessStatusTypeListService = new CustomerTenantAccessStatusTypeListService();
-            service.getAllFromCache().subscribe((res:any) => {
+            service.getAllFromCache().subscribe(res => {
                 if (!res.HasError) {
                     this.StatusList = res.Result.filter(d => d.Code == "A" || d.Code == "IA");
                     if (!AppTool.IsNullOrEmpty(this.EntityPM.StatusTypeCode)) {

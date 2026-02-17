@@ -1,52 +1,42 @@
-import { Component, OnDestroy } from '@angular/core';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { APInvoiceLinePM } from '../../../../Invoice/EntityPMs/APInvoiceLinePM';
-import { APInvoiceTotalVATPM } from '../../../../Invoice/EntityPMs/APInvoiceTotalVATPM';
-import { AppTool, DateTool, FontTool, ArrayTool } from '../../../../Infrastructure/Tools';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { InvoiceTool } from '../../../../Invoice/Tools';
-import { SummaryItem, InvoiceTotalsClass } from '../../../../Invoice/Args';
-import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { VatTypePercentagePM } from '../../../../Common/EntityPMs/VatTypePercentagePM';
-import { VATTypesGroupPM } from '../../../../Common/EntityPMs/VATTypesGroupPM';
-import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
-import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
-import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
-import { CardList } from '../../../../Common/EntityLists/CardList';
-import { PaymentTermListService } from '../../../../Common/Services/StandardLists/PaymentTermListService';
-import { PaymentTermList } from '../../../../Common/EntityLists/PaymentTermList';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
-import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
-import { UpdateCurrencyRateComponent } from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { VatTypeList } from '../../../../Common/EntityLists/VatTypeList';
-import { VatTypeListService } from '../../../../Common/Services/StandardLists/VatTypeListService';
-import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
-import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
-import { UserList } from '../../../../Common/EntityLists/UserList';
-import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
-import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { ExpenseAllocationSettingExtendedService } from 'Invoice/Services/ExtendedPMs/ExpenseAllocationSettingExtendedService';
-import { ExpenseAllocationSettingPM } from 'Invoice/EntityPMs/ExpenseAllocationSettingPM';
-import { ExpenseAllocationSettingList } from 'Invoice/EntityLists/ExpenseAllocationSettingList';
-import { ExpenseAllocationSettingPMService } from 'Invoice/Services/StandardPMs/ExpenseAllocationSettingPMService';
-import { ExpenseAllocationFlowPM } from 'Invoice/EntityPMs/ExpenseAllocationFlowPM';
-import { ExpenseAllocationFlowPMService } from 'Invoice/Services/StandardPMs/expenseAllocationFlowPMService';
-declare var window: any;
+import {Component, OnDestroy}  from '@angular/core';
+import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {APInvoiceLinePM} from '../../../../Invoice/EntityPMs/APInvoiceLinePM';
+import {APInvoiceTotalVATPM} from '../../../../Invoice/EntityPMs/APInvoiceTotalVATPM';
+import {AppTool, DateTool, FontTool, ArrayTool} from '../../../../Infrastructure/Tools';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {InvoiceTool} from '../../../../Invoice/Tools';
+import {SummaryItem, InvoiceTotalsClass} from '../../../../Invoice/Args';
+import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
+import {VATTypesGroupPM} from '../../../../Common/EntityPMs/VATTypesGroupPM';
+import {NumbersPipe} from '../../../../Infrastructure/Pipes/NumbersPipe';
+import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
+import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
+import {CardList} from '../../../../Common/EntityLists/CardList';
+import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
+import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
+import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
+import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
+import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
+import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatTypeListService';
+import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
+import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import {UserList} from '../../../../Common/EntityLists/UserList';
+import {UserListService} from '../../../../Common/Services/StandardLists/UserListService';
+import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
+import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
+import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './APInvoiceDetailsTabGeneral.html',
 })
 
@@ -60,98 +50,23 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public todayDate: Date;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-    public IsFullAccounting: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    InvoiceLineHeader: string;
-    accountingActivated: boolean = false;
-    DisplayFieldsFromList: string;
-    DisplayLocalFieldsFromList: string;
-    VendorLovSizeForFullAccounting: number;
-    forceShowLocalAndEnglishColumns = false;
-    public AllowVatTypes: boolean = true;
-    ColumnsWidths: any[] = [];
-    public IsUsingVirtuallization: boolean = false;
-    public GLAccountsFilterItems: ApiQueryFilters;
-
     constructor(private entityArgs: EntityArgs) {
         super();
-
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        this.InitLOVFilters();
-        this.SetIsUsingVirtuallization();
-        this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");      
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.todayDate = DateTool.GetCurrentDateAsUtc();
         this.isBaseDataLoaded = false;
-
-        this.CheckFeatures();
         this.InitializeServices();
         this.SetUIProperties();
         this.BuildScreenData();
         this.Listen();
-        if (SessionLocator.TenantPM.AccountingActivated) {
-            this.InvoiceLineHeader = TextCodeTranslator.Translate("APInvoiceLine.F.Description");
-            this.accountingActivated = true;
-        }
-        else {
-            this.InvoiceLineHeader = TextCodeTranslator.Translate("APInvoiceLine.O.Name");
-        }
+
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
-        }
-        this.InitializeVendorLov();
-
-        if (this.EntityPM.StatusCode == null) {
-            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
-        }
-
+        }   
     }
-    InitLOVFilters() {
-        this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
-    }
-    SetIsUsingVirtuallization() {
-        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
-        if (hasGridVirtuallizationToggleFeature) {
-            this.IsUsingVirtuallization = true;
-        }
-    }
-
-    private InitializeVendorLov() {
-        if (this.accountingActivated) {
-            this.DisplayFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedEnglishName,PartnerTypeName,CountryCode";
-            this.DisplayLocalFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedLocalName,PartnerTypeName,CountryCode";
-            this.VendorLovSizeForFullAccounting = 550;
-            this.forceShowLocalAndEnglishColumns = true;
-            this.FillLOVColumnsWidths();
-
-        }
-    }
-
-
-    FillLOVColumnsWidths() {
-        this.ColumnsWidths = [
-            { ColumnName: 'Code', Width: 120 },
-            { ColumnName: 'CalculatedEnglishName', Width: 120 },
-            { ColumnName: 'CalculatedLocalName', Width: 120 },
-            { ColumnName: 'LocalName', Width: 120 },
-            { ColumnName: 'GLAccountDisplayNumber', Width: 120 },
-            // { ColumnName: 'CityName', Width: 85 },
-            { ColumnName: 'CountryCode', Width: 120 },
-            { ColumnName: 'PartnerTypeName', Width: 60 }
-        ];
-    }
-
-    CheckFeatures() {
-
-        var table = window.ObjectTables.filter(d => d.Name === 'APInvoice')[0];
-        var hideVatTypesFeature = FeatureLocator.Features.filter(f => (f.Code == "HideVatTypes") && f.ObjectTableId == table.Id)[0];
-        if (hideVatTypesFeature) {
-            this.AllowVatTypes = false;
-        }
-    }
-
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
@@ -159,10 +74,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (this.entityArgs.EditComponent != null) {
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                if (isSaveSuccess) {                   
+                if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    if(this.EntityPM.IsPrepaidExpenses && this.EntityPM.HasExpenseAllocationSetting)
-                        this.saveExpenseAllocationSetting();
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
                 }
@@ -190,8 +103,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public myVatTypeListService: VatTypeListService;
     private myChargesTypeListService: ChargesTypeListService;
     public myGLAccountPMService: GLAccountPMService;
-    public expenseAllocationSettingExtendedService: ExpenseAllocationSettingExtendedService ;
-
     InitializeServices() {
         this.myCardListService = new CardListService();
         this.myCommonDomainService = new CommonDomainService();
@@ -200,7 +111,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.myVatTypeListService = new VatTypeListService();
         this.myChargesTypeListService = new ChargesTypeListService();
         this.myGLAccountPMService = new GLAccountPMService();
-        this.expenseAllocationSettingExtendedService = new ExpenseAllocationSettingExtendedService();
         this.GetAllVatTypes();
     }
     GetAllVatTypes() {
@@ -217,18 +127,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (!this.IsScreenEnabled) {
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AmountInInvoiceCurrency", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, false);
 
         }
 
@@ -239,18 +145,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, true);
-            this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, true);
-            this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, true);
-            this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, true);
-
-
             if (this.EntityPM.InvoicePayments.length > 0) {
                 this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
-
+                
                 this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             }
 
@@ -258,8 +159,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             }
         }
-
-        this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
 
         this.SetUIProperties_DueDate();
         this.SetUIProperties_VATNumber();
@@ -285,9 +184,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     SetUIProperties_VATNumber() {
         var isRequired = false;
 
-        if (AppTool.IsNullOrEmpty(this.VATNumber)) {
-                if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && (this.EntityPM.VendorCountry === "IL"|| this.EntityPM.VendorCountry === null)) {
-                     isRequired = true;
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+            if (AppTool.IsNullOrEmpty(this.VATNumber)) {
+                isRequired = true;
             }
         }
 
@@ -296,9 +195,22 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     public RateIsEnabled: boolean = false;
     SetUIProperties_ExchangeRate() {
-       
-        this.RateIsEnabled = this.IsScreenEnabled;
-        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, this.IsScreenEnabled);
+        var isEnabled: boolean = false;
+
+        if (this.IsScreenEnabled) {
+            if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
+                if (this.InvoiceCurrencyId) {
+                    if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                        if (this.EntityPM.InvoicePayments.length == 0) {
+                            isEnabled = true;
+                        }
+                    }
+                }                
+            }            
+        }
+
+        this.RateIsEnabled = isEnabled;
+        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isEnabled);
     }
 
 
@@ -338,12 +250,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     // LoadVatsPercentages
-    // Load Date
+    // Load Date 
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     private myCurrencyRatesService: CurrencyRatesService;
-    public ObjectTableId: string;
-    public expenseAllocationSetting: ExpenseAllocationSettingPM;
     LoadData() {
 
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -361,38 +271,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
             if (!myResponse.HasError) {
                 this.LastRatesList = myResponse.Result;
-                var table = window.ObjectTables.filter(d=> d.Name == "APInvoice")[0];
-                if (table) this.ObjectTableId = table.Id;
-    
+
                 this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
-                    if(this.EntityPM?.Id){
-                        this.expenseAllocationSettingExtendedService.getExpenseAllocationSettingByEntityIdAndObjectTable(this.EntityPM?.Id,this.ObjectTableId).subscribe((res: ServiceResponse) => {
-                            if (!res.HasError) 
-                                 if(res.Result){
-                                    this.expenseAllocationSetting = res.Result;
-                                    this.EntityPM.HasExpenseAllocationSetting = true;
-                                    this.EntityPM.ExpenseAllocationStartDate = this.expenseAllocationSetting.StartDateTime;
-                                 }
-                                    
-                                else{
-                                    
-                                    this.expenseAllocationSetting = new ExpenseAllocationSettingPM();
-                                    this.expenseAllocationSetting.CreateDate = DateTool.GetCurrentDateAsUtc();
-                                    this.expenseAllocationSetting.CreatedByUserId = SessionLocator.LoggedUserId;
-                                }
-                            else{
-                                this.expenseAllocationSetting = new ExpenseAllocationSettingPM();
 
-                            }
-                        })
-
-                    }
-                    else{
-                        this.expenseAllocationSetting = new ExpenseAllocationSettingPM();
-                        this.expenseAllocationSetting.CreateDate = DateTool.GetCurrentDateAsUtc();
-                        this.expenseAllocationSetting.CreatedByUserId = SessionLocator.LoggedUserId;
-                    }
-                    
                     if (!myResponse2.HasError) {
                         this.VatTypePercentagesList = myResponse2.Result;
                     }
@@ -407,67 +288,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.CurrentSession.StopBusyIndicator();
             }
         });
-    }
-
-    saveExpenseAllocationSetting(){
-        var approved = this.EntityPM?.StatusCode === "AD";
-        if(this.EntityPM?.Id){
-            this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
-            if(this.expenseAllocationSetting?.Id){
-                this.CurrentSession.StartBusyIndicatorSaving();
-                this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
-                    if (!res.HasError) {
-                        this.expenseAllocationSetting = res.Result;
-                        if(approved){
-                            
-                            this.addExpenseAllocationFlow();
-
-                        }
-                            
-                        else{
-                            this.CurrentSession.StopBusyIndicator();
-                        }
-                    }  
-                    else{
-                        this.CurrentSession.StopBusyIndicator();
-                    }                
-                })
-            }
-            else{
-                this.CurrentSession.StartBusyIndicatorSaving();
-                this.expenseAllocationSettingPMService.insert(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {   
-                    if (!res.HasError) {
-                        this.expenseAllocationSetting = res.Result;
-                        if(approved){
-                            
-                            this.addExpenseAllocationFlow();
-                        }
-                        else{
-                            this.CurrentSession.StopBusyIndicator();
-                        }
-                            
-                    }     
-                    else{
-                        this.CurrentSession.StopBusyIndicator();
-                    }                 
-                })
-            }
-        }
-    }
-    expenseAllocationFlowPMService: ExpenseAllocationFlowPMService = new ExpenseAllocationFlowPMService();
-    addExpenseAllocationFlow(jounalId: string = null){
-        var expenseAllocationFlowPM : ExpenseAllocationFlowPM = new ExpenseAllocationFlowPM();
-        expenseAllocationFlowPM.Tenant = SessionLocator.Tenant;
-        expenseAllocationFlowPM.SettingId = this.expenseAllocationSetting?.Id;
-        expenseAllocationFlowPM.Status = "Done";
-        expenseAllocationFlowPM.RunDate = this.expenseAllocationSetting.StartDateTime;
-        expenseAllocationFlowPM.JournalId = jounalId;
-        this.expenseAllocationFlowPMService.insert(expenseAllocationFlowPM).subscribe((res: ServiceResponse) => {
-           
-                this.CurrentSession.StopBusyIndicator();
-            
-        });
-
     }
     UpdateData() {
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -516,15 +336,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             else {
-                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.InvoiceCurrencyId);
-                if (lastRate) {
-                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.InvoiceCurrencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
-                   
-                    const customRate =  exchangeRateId
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
-                        : null;
-
-                    myRate = customRate ?? lastRate.Rate;
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.InvoiceCurrencyId)[0];
+                if (lastRate != null) {
+                    myRate = lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
             }
@@ -542,13 +356,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             else {
-                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
-                if (lastRate) {
-                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
-                   const customRate = exchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
-                        : null;
-                        myResult = customRate ?? lastRate.Rate;
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.Rate;
                 }
             }
         }
@@ -660,10 +470,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
         return myResult;
     }
+
+
     private isTotalInLocalCurrency: boolean = false;
-
-    
-
     get IsTotalInLocalCurrency() { return this.isTotalInLocalCurrency; }
     set IsTotalInLocalCurrency(value: boolean) {
         if (this.isTotalInLocalCurrency != value) {
@@ -671,14 +480,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.BuildSummary();
         }
     }
-
-    get BranchId() { return this.EntityPM.BranchId; }
-    set BranchId(value: string) {
-        if (this.EntityPM.BranchId != value) {
-            this.EntityPM.BranchId = value;
-        }
-    }
-
 
     public SummaryItems: SummaryItem[] = [];
     ComputeTotals() {
@@ -725,7 +526,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     BuildTotalVATs() {
         this.EntityPM.TotalVATs = [];
-        var pipe = new NumbersPipe();
 
         var myDataLines: APInvoiceLinePM[] = this.EntityPM.InvoiceLines.filter(f => f.VatTypeId != null);
         if (myDataLines.length > 0) {
@@ -761,7 +561,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
                         myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
                         myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
-                        // myQroupItem.VatRecognizedPercentage = lineVatType.RecognizedPercentage;
                         group_Source.push(myQroupItem);
                     }
 
@@ -775,13 +574,11 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             myQroupItem.LocalCurrencyAmount = item.LocalCurrencyAmount;
                             myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                             myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
-
                             myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
 
                             var vatType = this.AllVatTypes.filter(f => f.Id == itemGroup.SingleVATTypeId)[0];
                             if (vatType) {
                                 myQroupItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
-                                //  myQroupItem.VatRecognizedPercentage = vatType.RecognizedPercentage;
                                 myQroupItem.VatTypePercentage = this.GetVatTypePercentage(vatType.Id);
                             }
 
@@ -811,7 +608,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     record.LocalCurrencyAmount = item.LocalCurrencyAmount;
                     record.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                     record.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
-
                     group_data.push(record);
                 }
             });
@@ -828,15 +624,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 itemTotalVAT.VatTypeName = itemVatType.EnglishName;
                 itemTotalVAT.ExternalVATCard = item.ExternalVatCard;
                 itemTotalVAT.ExternalTAXItemId = item.ExternalTAXItemId;
-                itemTotalVAT.VatPercent = AppTool.Round(item.VatTypePercentage, 3);
+                itemTotalVAT.VatPercent = AppTool.Round(item.VatTypePercentage, 2);
                 itemTotalVAT.LocalVatableAmount = AppTool.Round(item.LocalCurrencyAmount, 2);
                 itemTotalVAT.InvoiceCurrencyVatableAmount = AppTool.Round(item.InvoiceCurrencyAmount, 2);
                 itemTotalVAT.ProfitVatableAmount = AppTool.Round(item.ProfitCurrencyAmount, 2);
                 itemTotalVAT.LocalVATAmount = AppTool.Round((itemTotalVAT.LocalVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.InvoiceCurrencyVATAmount = AppTool.Round((itemTotalVAT.InvoiceCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.ProfitCurrencyVATAmount = AppTool.Round((itemTotalVAT.ProfitVatableAmount * itemTotalVAT.VatPercent / 100), 2);
-                itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + pipe.transform(itemTotalVAT.VatPercent, "N3") + "%)";
-                itemTotalVAT.VatRecognizedPercentage = itemVatType.RecognizedPercentage / 100;
+                itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + itemTotalVAT.VatPercent + "%)";
                 this.EntityPM.AddAPInvoiceTotalVATPM(itemTotalVAT);
             });
         }
@@ -859,8 +654,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.SummaryItems.push(myOperatorItem);
 
                 var mySummaryItem = new SummaryItem();
-                //mySummaryItem.Label = item.VatTypeCell;
-                mySummaryItem.Label = item.VatTypeName + " (" + pipe.transform(item.VatPercent, "N3") + "%)";
+                mySummaryItem.Label = item.VatTypeCell;
                 mySummaryItem.Value = this.IsTotalInLocalCurrency ? pipe.transform(item.LocalVATAmount, "N2") : pipe.transform(item.InvoiceCurrencyVATAmount, "N2");
                 this.SummaryItems.push(mySummaryItem);
             });
@@ -878,12 +672,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     private OnInvoiceDateChangedLoad() {
         this.UpdateData();
-    }
-    get InternalNotes() { return this.EntityPM.InternalNotes; }
-    set InternalNotes(value: string) {
-        if (this.EntityPM.InternalNotes != value) {
-            this.EntityPM.InternalNotes = value;
-        }
     }
 
     get SubTotalInLocalCurrency() { return this.EntityPM.SubTotalInLocalCurrency; }
@@ -908,10 +696,29 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (this.EntityPM.AmountInInvoiceCurrency != setValue) {
             this.EntityPM.AmountInInvoiceCurrency = setValue;
             this.EntityPM.InvoiceExpectedAmount = setValue;
-            this.ComputeTotals();
 
+            //// Local
+            //if (SessionLocator.LocalCurrencyId == this.EntityPM.InvoiceCurrencyId) {
+            //    this.EntityPM.AmountInLocalCurrency = setValue;
+            //}
+            //else {
+            //    this.EntityPM.AmountInLocalCurrency = AppTool.Round(setValue * this.InvoiceCurrencyExchangeRate, 2);
+            //}
 
-           
+            //// Profit
+            //if (this.EntityPM.ProfitCurrencyId == this.InvoiceCurrencyId) {
+            //    this.EntityPM.AmountInProfitCurrency = setValue;
+            //}
+            //else if (this.EntityPM.ProfitCurrencyId == SessionLocator.LocalCurrencyId) {
+            //    this.EntityPM.AmountInProfitCurrency = this.EntityPM.AmountInLocalCurrency;
+            //}
+            //else {
+            //    this.EntityPM.AmountInProfitCurrency = AppTool.Round(this.EntityPM.AmountInLocalCurrency / this.ProfitCurrencyExchangeRate, 2);
+            //}
+
+            //this.EntityPM.AmountDue = this.EntityPM.AmountInInvoiceCurrency == null ? 0 : this.EntityPM.AmountInInvoiceCurrency;
+            //this.EntityPM.AmountDueInLocalCurrency = this.EntityPM.AmountInLocalCurrency == null ? 0 : this.EntityPM.AmountInLocalCurrency;
+            //this.EntityPM.AmountDueInProfitCurrency = this.EntityPM.AmountInProfitCurrency == null ? 0 : this.EntityPM.AmountInProfitCurrency;
         }
     }
 
@@ -968,7 +775,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     // Properties
-    public VendorDependencyProperty1: string = InvoiceTool.GetGeneralAPInvoiceVendorPartnerTypes();
+    public VendorDependencyProperty1: string = InvoiceTool.GetVendorPartnerTypes();
 
     public glaccount: GLAccountPM = null;
     get VendorId() {
@@ -982,7 +789,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (this.EntityPM != null) {
             if (this.EntityPM.VendorId != value) {
                 this.EntityPM.VendorId = value;
-                this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
+
                 if (!AppTool.IsNullOrEmpty(value)) {
                     this.ItemsSource.Collection.forEach(item => {
                         if (AppTool.IsNullOrEmpty(item.VendorId)) {
@@ -1000,115 +807,45 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
         }
     }
-    public GLAccountId: string;
-    public BillToId: string;
 
     GetCardProperties() {
         this.myCardListService.getSingle(this.EntityPM.VendorId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var list: CardList = myResponse.Result;
                 if (list == null) {
-                    this.GLAccountId = null;
-                    this.BillToId = null;
                     this.VATNumber = null;
                     this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
                     this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
                     this.glaccount = null;
                     this.EntityPM.VendorGLAccountId = null;
-                    this.EntityPM.VendorName = null;
-                    this.EntityPM.VendorLocalName = null;
-                    this.EntityPM.VendorCountry = null;
                 }
 
                 else {
-                    this.GLAccountId = list.GLAccountId;
-                    this.BillToId = list.BillToId;
                     this.VATNumber = list.VatNumber;
                     this.EntityPM.VendorName = list.EnglishName;
-                    this.EntityPM.VendorLocalName = list.LocalName || list.EnglishName;
-                    this.EntityPM.VendorCountry = list.CountryCode;
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }
-                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
-                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                this.glaccount = myResponse.Result;
 
-                                if (this.glaccount.PaymentTerms)
-                                    this.PaymentTermId = this.glaccount.PaymentTerms;
-                                else
-                                    this.PaymentTermId = this.glaccount.PaymentTermId;
-                                if (AppTool.IsNullOrEmpty(this.PaymentTermId)) {
-                                    this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
-                                }
-                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
-                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
-                            }
-                        });
-                    }
-                    else if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
+                    if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
                         this.PaymentTermId = list.PaymentTermId;
                     }
 
                     if (!AppTool.IsNullOrEmpty(list.VatTypeId)) {
-
+                   
                     }
 
+                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
+                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                this.glaccount = myResponse.Result;
+                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
+                            }
+                        });
+                    }
                 }
-                if (this.IsFullAccounting)
-                    this.GetConnectedGLAccount();
-                else
-                    this.GetConnectedBillTo();
-                this.SetUIProperties_VATNumber();
-
-
             }
         });
-    }
-
-    GetConnectedBillTo() {
-        if (this.BillToId) {
-
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this.myCardListService.getSingle(this.BillToId).subscribe((myResult: any) => {
-                var myResponse: ServiceResponse = myResult;
-                this.CurrentSession.StopBusyIndicator();
-                if (!myResponse.HasError) {
-                    var cardList: CardList = myResponse.Result;
-                    if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
-                        this.InvoiceCurrencyId = cardList.InvoiceCurrencyId;
-
-                    }
-
-                }
-            });
-        }
-    }
-    vendorGLAccount: GLAccountList;
-    _GLAccountListService: GLAccountListService = new GLAccountListService();
-    GetConnectedGLAccount() {
-        if (this.GLAccountId) {
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this._GLAccountListService.getSingle(this.GLAccountId).subscribe((myResult: any) => {
-                console.log("[_GLAccountListService.getSingle]", myResult);
-                this.CurrentSession.StopBusyIndicator();
-
-                var myResponse: ServiceResponse = myResult;
-                if (!myResponse.HasError) {
-                    var gla: GLAccountList = myResponse.Result;
-                    this.vendorGLAccount = gla;
-                    this.EntityPM.VendorGLAccountId = gla.Id;
-                    if (!gla.IsMultiCurrency) {
-                        this.InvoiceCurrencyId = gla.CurrencyId;
-
-                    }
-                }
-            });
-        } else {
-            this.vendorGLAccount = null;
-            this.EntityPM.VendorGLAccountId = null;
-        }
     }
 
     get VATNumber() {
@@ -1151,6 +888,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.PaymentTermName = null;
             }
+
             else {
                 this.myPaymentTermListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
@@ -1173,95 +911,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
-    get IsEquipment() { return this.EntityPM.IsEquipment; }
-    set IsEquipment(newValue: boolean) {
-        if (this.EntityPM.IsEquipment != newValue) {
-            this.EntityPM.IsEquipment = newValue;
-        }
-    }
-    get IsPrepaidExpenses() { return this.EntityPM.IsPrepaidExpenses; }
-    set IsPrepaidExpenses(newValue: boolean) {
-        if (this.EntityPM.IsPrepaidExpenses != newValue) {
-            this.EntityPM.IsPrepaidExpenses = newValue;  
-            this.setPrepaidExpensesForLines(newValue);
-             if(newValue)
-                this.showRecurringScheduleSettings();
-                     
-        }
-    }
-    setPrepaidExpensesForLines(isPrepaid: boolean){
-        this.ItemsSource.Collection.forEach(item => {
-            item.IsPrepaidExpenses = isPrepaid;
-        });
-    }
-    expenseAllocationSettingPMService: ExpenseAllocationSettingPMService = new ExpenseAllocationSettingPMService();
-    showRecurringScheduleSettings(){
-        const paymentType = this.expenseAllocationSetting?.PaymentDateType;
-          
-          var IsMonthly = true;
-          var AllocationDateType = null;
-          var selectedDay = null;
-          var selectedDayByWeek = null;
-
-        if (paymentType?.startsWith('Monthly_')) {
-            IsMonthly = true;
-            const parts = paymentType.split('_'); 
-            AllocationDateType = parts[1] || '';
-            selectedDay = parts[2] ? parts[2] : null;
-        } else if (paymentType?.startsWith('Weekly_')) {
-            IsMonthly = false;
-            const parts = paymentType.split('_'); 
-            selectedDayByWeek = parts[1] || null;
-        }
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { 
-            StartDateTime: this.expenseAllocationSetting?.StartDateTime || this.AccountingDate,
-            EndDateTime: this.expenseAllocationSetting?.EndDateTime || this.AccountingDate, 
-            RecurrenceCount: this.expenseAllocationSetting?.NumberOfPayments || null, 
-            MonthInterval: this.expenseAllocationSetting?.MonthInterval || 1,
-            TotalAmount: this.SubTotalInInvoiceCurrency,
-            TotalLocalAmount: this.SubTotalInLocalCurrency,
-            CurrencyCode: this.InvoiceCurrencyCode,
-            MinDate: this.AccountingDate ,
-            AllocationDateType: AllocationDateType,
-            IsWeekly: !IsMonthly,
-            SelectedDay: selectedDay,
-            SelectedDayByWeek: selectedDayByWeek
-            }
-            ;
-        logWindow.Width = 550;
-        logWindow.Height = 380;
-        logWindow.Title = TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSetting");
-        logWindow.ShowCloseButton =  true;
-        logWindow.ComponentLoaded.subscribe(comp => {
-            logWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    if(comp){
-                        const createDate = this.expenseAllocationSetting?.CreateDate;
-                        const createdByUserId = this.expenseAllocationSetting?.CreatedByUserId;
-                        const id = this.expenseAllocationSetting?.Id;
-                        this.expenseAllocationSetting = comp.expenseAllocationSettingPM;
-                        this.expenseAllocationSetting.CreateDate = createDate;
-                        this.expenseAllocationSetting.CreatedByUserId = createdByUserId;
-                        this.expenseAllocationSetting.Id = id;
-                        this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
-                        this.expenseAllocationSetting.ObjectTableId = this.ObjectTableId;
-                        this.expenseAllocationSetting.Tenant = SessionLocator.Tenant;
-                        this.expenseAllocationSetting.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                        this.expenseAllocationSetting.UpdatedByUserId = SessionLocator.LoggedUserId;
-                        this.EntityPM.ExpenseAllocationStartDate = this.expenseAllocationSetting.StartDateTime;
-                        if(this.expenseAllocationSetting)
-                            this.EntityPM.HasExpenseAllocationSetting = true;
-                        this.saveExpenseAllocationSetting();
-                        
-                    }
-                    
-                }
-            });
-        });
-        logWindow.Show('./CommonModules/CommonOthers/Components/RecurringSchedule/RecurringScheduleComponent');
-      
-    }
     get DueDate() { return this.EntityPM.DueDate; }
     set DueDate(newValue: Date) {
         if (this.EntityPM.DueDate != newValue) {
@@ -1274,44 +923,19 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set InvoiceDate(newValue: Date) {
         if (this.EntityPM.InvoiceDate != newValue) {
             this.EntityPM.InvoiceDate = newValue;
+
             InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
             this.OnInvoiceDateChangedLoad();
         }
     }
 
-    get ConfirmationNumber() { return this.EntityPM.ConfirmationNumber; }
-    set ConfirmationNumber(newValue: string) {
-        if (this.EntityPM.ConfirmationNumber != newValue) {
-            this.EntityPM.ConfirmationNumber = newValue;
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ConfirmationNumber) && (this.EntityPM.ConfirmationNumber.length < 9 || this.EntityPM.ConfirmationNumber.length > 30)) {
-                this.UIProperties.SetValidity("ConfirmationNumber", this.ObjectTableName, false, TextCodeTranslator.Translate("APInvoice.O.ConfirmationNumberLength"));
-            } else {
-                this.UIProperties.SetValidity("ConfirmationNumber", this.ObjectTableName, true, "");
-            }
-        }
-    }
-
-    get AccountingDate() { return this.EntityPM.AccountingDate; }
-    set AccountingDate(value: Date) {
-        if (this.EntityPM.AccountingDate != value) {
-            this.EntityPM.AccountingDate = value;
-            if (value == null) {
-                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
-            }
-            else {
-                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
-            }           
-        }
-    }
-
-    // Currency
+    // Currency 
     get InvoiceCurrencyId() { return this.EntityPM.InvoiceCurrencyId; }
     set InvoiceCurrencyId(value: string) {
         if (this.EntityPM.InvoiceCurrencyId != value) {
             this.EntityPM.InvoiceCurrencyId = value;
             this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);
             this.ExchangeRateDate = this.GetCurrencyRateDate(value);
-            this.SetUIProperties_ExchangeRate();
 
             if (AppTool.IsNullOrEmpty(value)) {
                 this.InvoiceCurrencyCode = null;
@@ -1416,7 +1040,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     item.VatTypeId = vatType;
                 });
             }
-
+                        
             this.ComputeTotals();
         }
     }
@@ -1442,9 +1066,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnCurrencyId = this.InvoiceCurrencyId;
         line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
-        line.IsPrepaidExpenses = this.IsPrepaidExpenses;
+
         var myService: CardListService = new CardListService();
-        myService.getSingle(this.VendorId).subscribe((myResult: any) => {
+        myService.getSingle(this.VendorId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var card: CardList = myResponse.Result;
@@ -1457,13 +1081,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 logWindow.DataContext = addEditViewModel;
                 var title = TextCodeTranslator.Translate("APInvoiceLine.O.AddInvoiceLine");
                 logWindow.Title = title;
-                logWindow.ComponentLoaded.subscribe(comp => {
-                    logWindow.WindowClosed.subscribe(s => {
-                                                
-                         this.markSameChargeTypeLinesAsPrepaid(line.ChargesTypeId ,line.IsPrepaidExpenses);
-                       
-                    });
-                });
                 logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
             }
         });
@@ -1473,23 +1090,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             var logWindow = new LogitudeWindow();
             logWindow.Title = TextCodeTranslator.Translate("APInvoiceLine.O.EditInvoiceLine");
             logWindow.DataContext = item;
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(s => {                  
-                        this.markSameChargeTypeLinesAsPrepaid(item.ChargesTypeId,item.IsPrepaidExpenses);
-                   
-                });
-            });
             logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
         }
-    }
-    markSameChargeTypeLinesAsPrepaid(chargesTypeId: string, isPrepaid: boolean){
-       
-            this.ItemsSource.Collection.forEach(item => {
-                if(item.ChargesTypeId == chargesTypeId){
-                    item.IsPrepaidExpenses = isPrepaid;
-                }
-            });
-        
     }
 }
 export class APInvoiceLineItem extends BaseComponent {
@@ -1544,33 +1146,14 @@ export class APInvoiceLineItem extends BaseComponent {
     get InvoiceCurrencyId() {
         return this.invoicePM.InvoiceCurrencyId;
     }
-     
+
     get ForiegnCurrencyId() { return this.invoiceLinePM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(value: string) {
         if (this.invoiceLinePM.ForiegnCurrencyId != value) {
             this.invoiceLinePM.ForiegnCurrencyId = value;
         }
     }
-    get PayableDebitGLAcountId() { return this.invoiceLinePM.PayableDebitGLAcountId; }
-    set PayableDebitGLAcountId(value: string) {
-        if (this.invoiceLinePM.PayableDebitGLAcountId != value) {
-            this.invoiceLinePM.PayableDebitGLAcountId = value;
-            if(!AppTool.IsNullOrEmpty(value) && AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId))    {}
-            this.fatherComponent.myGLAccountPMService.get(this.PayableDebitGLAcountId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                     this.PayableDebitGLAcountName = this.fatherComponent.isRTL ? myResponse?.Result?.LocalName : myResponse?.Result?.EnglishName;
-                 
-                }
-            });
-            this.SetUIProperties_PayableDebitGLAcountId();
-        }
-     }
-     get PayableDebitGLAcountName() { return this.invoiceLinePM.PayableDebitGLAcountName }
-     set PayableDebitGLAcountName(value: string) {
-      if (this.invoiceLinePM.PayableDebitGLAcountName != value) {
-            this.invoiceLinePM.PayableDebitGLAcountName = value;
-        }
-    }
+
     get ForiegnExchangeRate() { return this.invoiceLinePM.ForiegnExchangeRate; }
     set ForiegnExchangeRate(value: number) {
         if (this.invoiceLinePM != null) {
@@ -1585,18 +1168,7 @@ export class APInvoiceLineItem extends BaseComponent {
     get ForiegnCurrencyCode() {
         return this.invoiceLinePM.ForiegnCurrencyCode;
     }
-    get IsPrepaidExpenses() {
-        return this.invoiceLinePM.IsPrepaidExpenses;
-    }
-    set IsPrepaidExpenses(value: boolean) {
-        if (this.invoiceLinePM != null) {
-            if (this.invoiceLinePM.IsPrepaidExpenses != value) {
-                this.invoiceLinePM.IsPrepaidExpenses = value;
-                this.fatherComponent.markSameChargeTypeLinesAsPrepaid(this.ChargesTypeId, value);
-                
-            }
-        }
-    }
+
     UpdateCurrencyRateClicked() {
 
         var loadingDate = this.fatherComponent.InvoiceDate;
@@ -1650,7 +1222,6 @@ export class APInvoiceLineItem extends BaseComponent {
         this.SetUIProperties_EditControls();
         this.SetUIProperties_VAT();
         this.SetUIProperties_Description();
-        this.SetUIProperties_PayableDebitGLAcountId();
     }
     SetUIProperties_Rate() {
         var isFieldEnabled = false;
@@ -1664,7 +1235,7 @@ export class APInvoiceLineItem extends BaseComponent {
                 }
             }
         }
-
+        
         this.IsRateEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("ForiegnExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
@@ -1706,10 +1277,11 @@ export class APInvoiceLineItem extends BaseComponent {
     }
     private SetUIProperties_VAT() {
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, this.IsScreenEnabled);
+        this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, this.IsScreenEnabled);
 
-        //if (this.VatIsMultiPercentage) {
-        this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, false);
-        // }
+        if (this.VatIsMultiPercentage) {
+            this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, false);
+        }
 
         var isVatPercentageRequired = false;
 
@@ -1728,12 +1300,7 @@ export class APInvoiceLineItem extends BaseComponent {
     SetUIProperties_Description() {
         this.UIProperties.SetRequired("LocalDescription", this.ObjectTableName, AppTool.IsNullOrEmpty(this.LocalDescription));
     }
-    SetUIProperties_PayableDebitGLAcountId() {
-       this.UIProperties.SetRequired("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId));
-       this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId));
-       this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, false);
 
-    }
     // Line Properties
     public RefreshLine() {
         //FirePropertyChanged("Exists");
@@ -1899,7 +1466,7 @@ export class APInvoiceLineItem extends BaseComponent {
 
     }
 
-    // ChargeType
+    // ChargeType 
     public chargesTypeList: ChargesTypeList = null;
     public Glaccount: GLAccountPM = null;
     get ChargesTypeId() {
@@ -1922,8 +1489,6 @@ export class APInvoiceLineItem extends BaseComponent {
             this.Description = null;
             this.LocalDescription = null;
             this.Glaccount = null;
-            this.chargesTypeList = null;
-            this.PayableDebitGLAcountId = null;
         }
 
         else {
@@ -1931,25 +1496,17 @@ export class APInvoiceLineItem extends BaseComponent {
             chargesTypeService.getSingle(this.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     this.chargesTypeList = myResponse.Result;
-                    if (this.chargesTypeList != null) {
+                    if (this.chargesTypeList  != null) {
                         this.ChargesTypeCode = this.chargesTypeList.Code;
                         this.ChargesTypeName = this.chargesTypeList.EnglishName;
                         this.VatTypeId = this.chargesTypeList.VatTypeId;
                         this.Description = this.chargesTypeList.EnglishName;
-                        if (SessionLocator.TenantPM.AccountingActivated) {
-                            this.Description = this.chargesTypeList.Description != null ? this.chargesTypeList.Description : this.chargesTypeList.EnglishName;
-                        }
-
                         this.LocalDescription = this.chargesTypeList.LocalName;
-                        this.PayableDebitGLAcountId = this.chargesTypeList.PayableDebitGLAcountId;
 
                         if (!AppTool.IsNullOrEmpty(this.chargesTypeList.PayableDebitGLAcountId)) {
                             this.fatherComponent.myGLAccountPMService.get(this.chargesTypeList.PayableDebitGLAcountId).subscribe((myResponse: ServiceResponse) => {
-                                this.invoiceLinePM.ChargeTypeGLAccountId = this.chargesTypeList.PayableDebitGLAcountId;
                                 if (!myResponse.HasError) {
                                     this.Glaccount = myResponse.Result;
-                                    this.PayableDebitGLAcountName = this.Glaccount?.LocalName;
-                                   
                                 }
                             });
                         }
@@ -1958,7 +1515,7 @@ export class APInvoiceLineItem extends BaseComponent {
             });
         }
     }
-    
+
     get ChargesTypeCode() { return this.invoiceLinePM.ChargesTypeCode; }
     set ChargesTypeCode(value: string) {
         if (this.invoiceLinePM.ChargesTypeCode != value) {
@@ -2013,7 +1570,7 @@ export class APInvoiceLineItem extends BaseComponent {
         }
 
         else {
-            this.fatherComponent.myVatTypeListService.getSingle(this.VatTypeId).subscribe((myResponse: ServiceResponse) => {
+            this.fatherComponent.myVatTypeListService.getSingleFromCache(this.VatTypeId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     var list: VatTypeList = myResponse.Result;
                     if (list != null) {
@@ -2021,10 +1578,6 @@ export class APInvoiceLineItem extends BaseComponent {
                         this.VatIsMultiPercentage = list.IsMultiPercentage;
                         //this.invoiceLinePM.ExternalVATCard = list.ExternalVATCard;
                         this.invoiceLinePM.ExternalTAXItemId = list.ExternalTAXItemId;
-                        if (list.RecognizedPercentage != null) {
-                            this.invoiceLinePM.VatRecognizedPercentage = list.RecognizedPercentage / 100;
-                        } else { this.invoiceLinePM.VatRecognizedPercentage = null; }
-
 
                         if (list.IsMultiPercentage) {
                             this.VatPercentage = null;
@@ -2055,7 +1608,7 @@ export class APInvoiceLineItem extends BaseComponent {
     get VatPercentage() { return this.invoiceLinePM.VatPercentage; }
     set VatPercentage(newValue: number) {
         if (this.invoiceLinePM.VatPercentage != newValue) {
-            this.invoiceLinePM.VatPercentage = AppTool.Round(newValue, 3);
+            this.invoiceLinePM.VatPercentage = AppTool.Round(newValue, 2);
             this.ReadVatTypeData();
             this.ReCalculateTotals();
             this.SetUIProperties_VAT();
@@ -2082,7 +1635,6 @@ export class APInvoiceLineItem extends BaseComponent {
         var isMultiIconVisible = false;
         this.VatTypesGroups = [];
 
-        var pipe: NumbersPipe = new NumbersPipe();
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
 
             if (this.VatIsMultiPercentage) {
@@ -2093,7 +1645,7 @@ export class APInvoiceLineItem extends BaseComponent {
             }
 
             else if (this.VatPercentage != null) {
-                myValue = this.VatTypeName + " (" + pipe.transform(this.VatPercentage, "N3") + "%)";
+                myValue = this.VatTypeName + " (" + this.VatPercentage + "%)";
                 myColor = FontTool.Black;
             }
 
@@ -2401,9 +1953,4 @@ export class APInvoiceLineItem extends BaseComponent {
             logWindow.Show('./CommonModules/CommonOthers/Components/UpdateVATPercentage/UpdateVATPercentageComponent');
         }
     }
-
-
-  
-   
 }
-

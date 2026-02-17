@@ -29,7 +29,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 declare var makeChart, FunnelClick, ResetItemFunnel;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './OverviewWorkspaceComponent.html',
 })
 
@@ -439,7 +439,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
     public UpcomingActivitiesCount: number = 0;
     public UpcomingActivitiesList: UpcomingActivityItem[];
     public LoadActivitiesSummary() {
-        this.myDomainService.GetUpcomigActivities(this.OwnerId, this.BusinessUnitId, null, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
+        this.myDomainService.GetUpcomigActivities(this.OwnerId, this.BusinessUnitId, null, this.RecordsTypeFilterCode).subscribe(myResult => {
             if (myResult == null) {
                 this.UpcomingActivitiesList = [];
                 this.UpcomingActivitiesCount = 0;
@@ -529,7 +529,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
     }
     EditActivity(entity: any) {
         if (entity != null) {
-            this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -545,7 +545,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
     //Spot Light
     private SpotlightData: DailySpotlightClass;
     private LoadSpotLightData() {
-        this.myDomainService.GetCRMDailySpotlightCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
+        this.myDomainService.GetCRMDailySpotlightCounts(this.OwnerId, SessionLocator.LoggedUserPM.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.SpotlightData = myResponse.Result;
@@ -643,8 +643,8 @@ export class OverviewWorkspaceComponent extends BaseComponent {
         }
 
         var myBusinessUnitId = null;
-        if (!AppTool.IsNullOrEmpty(this.BusinessUnitId)) {
-            myBusinessUnitId = this.BusinessUnitId;
+        if (!AppTool.IsNullOrEmpty(SessionLocator.LoggedUserPM.BusinessUnitId)) {
+            myBusinessUnitId = SessionLocator.LoggedUserPM.BusinessUnitId;
         }
 
         var filters = new ApiQueryFilters();
@@ -735,7 +735,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -758,7 +758,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -781,7 +781,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -804,7 +804,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -827,7 +827,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -850,7 +850,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                            filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -1091,7 +1091,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -1166,7 +1166,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
         }
 
         var myService: OpportunityListService = new OpportunityListService();
-        myService.getByFilters(filters).subscribe((myResult:any) => {
+        myService.getByFilters(filters).subscribe(myResult => {
             if (myResult == null) {
                 this.TopOpportunitiesList = [];
             }
@@ -1278,7 +1278,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
         filters.PageSize = 10;
         filters.GetCount = true;
         var service = new ContactListService();
-        service.getByFilters(filters).subscribe((myResult:any) => {
+        service.getByFilters(filters).subscribe(myResult => {
             if (myResult != null) {
                 this.FatherComp.UpcomingCount = myResult.Count;
                 if (myResult.Count != 0) {

@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -12,16 +11,16 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomsDocumentsTicketsExtendedService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsDocumentsTicketsExtended';
     }
 
     delete(Id: string) {
     
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -35,9 +34,9 @@ export class CustomsDocumentsTicketsExtendedService {
             var mappedEntity: CustomsDocumentsTicketPM;
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, { headers: authHeader }).map(response => {
 
-                var pm = response;
+                var pm = response.json();
                 if (pm) {
                     var mappedResult: CustomsDocumentsTicketPM;
                     //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -47,67 +46,13 @@ export class CustomsDocumentsTicketsExtendedService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
 
     }
-    GetIsConnectDec(documentsfilingid: string,entityId:string) {
-    
-        return defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            var mappedEntity: CustomsDocumentsTicketPM;
-            // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-            return this._http.get(this._apiUrl + '/GetIsConnectDec/?' + 'documentsfilingid=' + documentsfilingid+'&entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
-                return serviceResponse;
-               
-            }),catchError(ServiceHelper.HandleServiceError));
-        }
-
-        );
-
-    }
-    GetDocConnectTicket(documentsfilingid: string,entityId:string, tenant: number) {
-    
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            var mappedEntity: CustomsDocumentsTicketPM;
-            // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-            return this._http.get(this._apiUrl + '/GetIsConnectTicket/?' + 'documentsfilingid=' + documentsfilingid.replace(/\+/gi, '%2B')+'&entityId=' + entityId+'&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
-                return serviceResponse;
-               
-            }),catchError(ServiceHelper.HandleServiceError));
-        }
-
-        );
-
-    }
     MapJsonToEntityPM(jsonPM: any) {
 
         var entityPM: CustomsDocumentsTicketPM;

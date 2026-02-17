@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class ShipmentPackingDataProvider : BaseDataProvider
+    public class ShipmentPackingDataProvider
     {
         public string FileNumber { get; set; }
         public string Shipper { get; set; }
@@ -19,20 +19,7 @@ namespace WebFreight.Web.DataProviders
         public string Signature { get; set; }
         public double? TotalGrossWeight { get; set; }
         public int? TotalNumberOfPackages { get; set; }
-        public string GrossWeightInKG { get; set; }
-        public string GrossWeightInLB { get; set; }
-        public double? VolumeInCBM { get; set; }
-        public double? VolumeInCBF { get; set; }
-        public string TotalReceivablesForFreightCharges { get; set; }
-        public string TotalReceivablesForOtherCharges { get; set; }
-        public string TotalAmounts { get; set; }
-        public string CustomerReference1 { get; set; }
-        public string CustomerReference2 { get; set; }
-        public string PortOfLading { get; set; }
-        public string HouseNumber { get; set; }
-        public string DescriptionOfGoods { get; set; }
-        public string DestinationPortCountryName { get; set; }
-        public string CarrierType { get; set; }
+
         public List<ShipmentPackageProvider> ShipmentPackages { get; set; }
     }
 
@@ -42,24 +29,7 @@ namespace WebFreight.Web.DataProviders
         public string ContainerSize { get; set; }
         public string ContainerNumber { get; set; }
         public double? GrossWeight { get; set; }
-        public string HorseName { get; set; }
-        public int? HorseYearOfBirth { get; set; }
-        public string HorseColor { get; set; }
-        public string HorseGender { get; set; }
-        public string HorseBreed { get; set; }
-        public string HorseDiscipline { get; set; }
-        public string HorseTravelBehavior { get; set; }
-        public string HorseMicochipNumber { get; set; }
-        public string HorsePassportNumber { get; set; }
-        public string HorseCountryOfBirthName { get; set; }
-        public string HorseCurrentStable { get; set; }
-        public string HorseOwner { get; set; }
-        public string HorseRemarks { get; set; }
-        public string Quantity { get; set; }
-        public string PackageType { get; set; }
-
         public List<PackageItemProvider> PackageItems { get; set; }
-        public List<PackageItemProviderDetails> PackageItemsDetails { get; set; }
     }
 
     public class PackageItemProvider
@@ -67,12 +37,5 @@ namespace WebFreight.Web.DataProviders
         public int Index { get; set; }
         public string Description { get; set; }
         public string Value { get; set; }
-    }
-    public class PackageItemProviderDetails
-    {
-        public string Description { get; set; }
-        public string Quantity { get; set; }
-        public string Value { get; set; }
-        public string Amount { get; set; }
     }
 }

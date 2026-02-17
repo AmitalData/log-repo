@@ -29,7 +29,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapEAWBContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BluesnapEAWBSContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BluesnapInttraStockContractId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.BluesnapOneTimeContract).HasMaxLength(40).IsUnicode(false);            
+            this.Property(t => t.BluesnapOneTimeContract).HasMaxLength(40).IsUnicode(false); 
+           
             this.Property(t => t.AWBMessagesCCSTypeCode).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.PIMA).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.TenantTypeCode).HasMaxLength(3).IsUnicode(false);
@@ -53,8 +54,6 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapEAWBSContractQTY).IsOptional();
             this.Property(t => t.BluesnapOneTimeContractQTY).IsOptional();
             this.Property(t => t.BluesnapInttraStockContractQTY).IsOptional();
-            this.Property(t => t.SupportDomain).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.CountryName).HasMaxLength(120).IsUnicode(false); 
 
             this.ToTable("TenantManagements");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -107,6 +106,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapEAWBSContractId).HasColumnName("BluesnapEAWBSContractId");
             this.Property(t => t.BluesnapInttraStockContractId).HasColumnName("BluesnapInttraStockContractId");            
             this.Property(t => t.BluesnapOneTimeContract).HasColumnName("BluesnapOneTimeContract");
+
             this.Property(t => t.AWBMessagesCCSTypeCode).HasColumnName("AWBMessagesCCSTypeCode");
             this.Property(t => t.PIMA).HasColumnName("PIMA");
             this.Property(t => t.IsEAWBOnlyDemo).HasColumnName("IsEAWBOnlyDemo");
@@ -144,10 +144,6 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.RegisteredAirlines).HasColumnName("RegisteredAirlines");
             this.Property(t => t.PendingAirlines).HasColumnName("PendingAirlines");
             this.Property(t => t.EnableBranding).HasColumnName("EnableBranding");
-            this.Property(t => t.TranzilaPaymentWithBit).HasColumnName("TranzilaPaymentWithBit");
-            this.Property(t => t.EnableExportToExcel).HasColumnName("EnableExportToExcel");
-            this.Property(t => t.DeclarationMessage).HasColumnName("DeclarationMessage");
-            this.Property(t => t.ActivatedforDeclarationApprove).HasColumnName("ActivatedforDeclarationApprove");
             this.Property(t => t.CustomerURL).HasColumnName("CustomerURL");
             this.Property(t => t.HideSharedlogistics).HasColumnName("HideSharedlogistics");
             this.Property(t => t.ContactEmail).HasColumnName("ContactEmail");
@@ -158,35 +154,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsINTTRAStockPrepaid).HasColumnName("IsINTTRAStockPrepaid");
             this.Property(t => t.PackageCodeSearchField).HasColumnName("PackageCodeSearchField");
             this.Property(t => t.IsINTTRAOnlyDemo).HasColumnName("IsINTTRAOnlyDemo");
-            this.Property(t => t.MainAdditionalPackageApplied).HasColumnName("MainAdditionalPackageApplied");
-            this.Property(t => t.TotalPrice).HasColumnName("TotalPrice");
-            this.Property(t => t.SupportDomain).HasColumnName("SupportDomain");
-            this.Property(t => t.TotalNumberOfUsers).HasColumnName("TotalNumberOfUsers");
-            this.Property(t => t.TotalFreeUsers).HasColumnName("TotalFreeUsers");
-            this.Property(t => t.AveragePrice).HasColumnName("AveragePrice");
-            this.Property(t => t.TotalPaymentamount).HasColumnName("TotalPaymentamount");
-            this.Property(t => t.CountryName).HasColumnName("CountryName");
-            this.Property(t => t.NoPaymentForChildTenants).HasColumnName("NoPaymentForChildTenants");
-            this.Property(t => t.ScheduledTasksLimitPerReport).HasColumnName("ScheduledTasksLimitPerReport");
-            this.Property(t => t.WhatsAppMessagingPhoneNumber).HasColumnName("WhatsAppMessagingPhoneNumber");
-            this.Property(t => t.IsContainerTrackingPrepaid).HasColumnName("IsContainerTrackingPrepaid");
-            this.Property(t => t.ShowMoneyOrder).HasColumnName("ShowMoneyOrder");
-            this.Property(t => t.DigitalPortalLastDate).HasColumnName("DigitalPortalLastDate");
-            this.Property(t => t.DigitalPortalTotalLastWeek).HasColumnName("DigitalPortalTotalLastWeek");
-            this.Property(t => t.DigitalPortalTotalLastMonth).HasColumnName("DigitalPortalTotalLastMonth");
-            this.Property(t => t.DigitalPortalMobileLastDate).HasColumnName("DigitalPortalMobileLastDate");
-            this.Property(t => t.DigitalPortalMobTotalLastWeek).HasColumnName("DigitalPortalMobTotalLastWeek");
-            this.Property(t => t.DigitalPortalMobTotalLastMonth).HasColumnName("DigitalPortalMobTotalLastMonth");
-            this.Property(t => t.DPArchiveShipmentCreateFilter).HasColumnName("DPArchiveShipmentCreateFilter");
-            this.Property(t => t.DPArchiveShipmentArrivalFilter).HasColumnName("DPArchiveShipmentArrivalFilter");
-            this.Property(t => t.DPArchiveShipmentDepartFilter).HasColumnName("DPArchiveShipmentDepartFilter");
-
-            this.Property(t => t.CargoTrackingPublicShowEvents).HasColumnName("CargoTrackingPublicShowEvents");
-            this.Property(t => t.CargoTrackingPrivateShowEvents).HasColumnName("CargoTrackingPrivateShowEvents");
-			this.Property(t => t.SearchAbsoluteValuePublic).HasColumnName("SearchAbsoluteValuePublic");
 
 
-			string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.AgentSharedLogisticsStatisticsLastDate).HasColumnName("AgentSharedLogisticsLastDate");
@@ -208,10 +178,12 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.HasOptional(t => t.RecurringPeriod).WithMany().HasForeignKey(d => d.RecurringPeriodCode);
             this.HasOptional(t => t.PaymentCurrency).WithMany().HasForeignKey(d => d.PaymentCurrencyCode);
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapContractId);
-            this.HasOptional(t => t.BluesnapContractCRM).WithMany().HasForeignKey(d => d.BluesnapCRMContractId);
-            this.HasOptional(t => t.BluesnapContractEAWB).WithMany().HasForeignKey(d => d.BluesnapEAWBContractId);
-            this.HasOptional(t => t.BluesnapContractEAWBS).WithMany().HasForeignKey(d => d.BluesnapEAWBSContractId);
-            this.HasOptional(t => t.BluesnapInttraStockContract).WithMany().HasForeignKey(d => d.BluesnapInttraStockContractId);            
+            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapCRMContractId);
+            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBContractId);
+            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBSContractId);
+            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapInttraStockContractId);
+
+            
             this.HasOptional(t => t.AWBMessagesCCSType).WithMany().HasForeignKey(d => d.AWBMessagesCCSTypeCode);
             this.HasOptional(t => t.TenantType).WithMany().HasForeignKey(d => d.TenantTypeCode);
 

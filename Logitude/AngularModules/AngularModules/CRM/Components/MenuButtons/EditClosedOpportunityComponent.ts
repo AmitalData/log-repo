@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
 import {OpportunityPM} from '../../EntityPMs/OpportunityPM';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -15,26 +15,13 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditClosedOpportunityComponent.html',
 })
 
-export class EditClosedOpportunityComponent extends BaseComponent implements AfterViewInit {
+export class EditClosedOpportunityComponent extends BaseComponent implements OnInit{
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-
-    constructor() {
-        super();
-    }
-
-    SetWindowArgs(args: OpportunityPM) {
-        this.EntityPM = args;
-    }
-
-    ngAfterViewInit() {
-        this.SetUIProperties();
-        this.LoadChildComponent();
-    }
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     public EntityPM: OpportunityPM;
     public ObjectTableName: string = "Opportunity";
@@ -72,7 +59,7 @@ export class EditClosedOpportunityComponent extends BaseComponent implements Aft
 
     SetUIProperties() {
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe((result:any) => {
+        oppTypeListService.getAllFromCache().subscribe(result => {
 
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == this.EntityPM.OpportunityTypeId)[0];
             var typeCode: string = typeList == null ? null : typeList.Code;
@@ -121,8 +108,8 @@ export class EditClosedOpportunityComponent extends BaseComponent implements Aft
 
         });
 
-    }
 
+    }
     public AgentIdVisibility: boolean = false;
     public ForeignClientIdVisibility: boolean = false;
     public LeadUserIdVisibility: boolean = false;
@@ -140,11 +127,10 @@ export class EditClosedOpportunityComponent extends BaseComponent implements Aft
         this.SetUIProperties_GeneratedComponent(false);
         this.CurrentSession.CloseCurrentWindowEmit("cancle");
     }
-
     OkButtonClicked() {
         this.CurrentSession.StartBusyIndicatorCreating();
         this.myService = new OpportunityPMService();
-        this.myService.update(this.EntityPM).subscribe((myResult:any) => {
+        this.myService.update(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -161,11 +147,13 @@ export class EditClosedOpportunityComponent extends BaseComponent implements Aft
         });
     }
 
+
+
     OnOpportunityTypeChanging(newValue: string) {
         var isConfirmNeeded: boolean = false;
         this.newOpportunityTypeId = newValue;
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe((result:any) => {
+        oppTypeListService.getAllFromCache().subscribe(result => {
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == newValue)[0];
             if (typeList != null) {
                 this.newOpportunityTypeCode = typeList.Code;
@@ -207,6 +195,10 @@ export class EditClosedOpportunityComponent extends BaseComponent implements Aft
             }
         });
 
+
+
+
+
     }
 
 
@@ -228,18 +220,47 @@ export class EditClosedOpportunityComponent extends BaseComponent implements Aft
         }
 
         this.SetUIProperties();
+
+
+
+    }
+
+
+    constructor() {
+        super();
+   
+    }
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.SetUIProperties();
+            this.LoadChildComponent();
+        }
+        else {
+            this.RunComponentTimer();
+        }
     }
 
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
                 this.GeneratedComponent = cmpRef.instance;
-
-                cmpRef.instance.LoadCompleted.subscribe(s => {
-                    this.SetUIProperties_GeneratedComponent(true);
-                });
-
                 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, "Opportunity.AdditionalFields");
+                    this.SetUIProperties_GeneratedComponent(true);
+
             });
     }
     private GeneratedComponent: any;
@@ -249,4 +270,12 @@ export class EditClosedOpportunityComponent extends BaseComponent implements Aft
         }
     }
 
+    SetWindowArgs(args: OpportunityPM) {
+        this.EntityPM = args;
+        //this.SetUIProperties();
+    }
+
+    ngOnInit() {
+        this.RunComponent();  
+    }
 }

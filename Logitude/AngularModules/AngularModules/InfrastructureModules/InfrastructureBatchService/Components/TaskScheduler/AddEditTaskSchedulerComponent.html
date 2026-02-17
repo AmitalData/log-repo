@@ -102,7 +102,7 @@
 
                                                                     <td style="width:50%">
 
-                                                                        <div class="MediaFillAbsolute">
+                                                                        <div  class="MediaFillAbsolute" >
                                                                             <div #GeneralSectionLocation class="LocationDirective"></div>
                                                                         </div>
 
@@ -154,11 +154,11 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td style="width:10px"></td>
-                                                                                <!--<td style="width:105px">
+                                                                                <td style="width:105px">
                                                                                     <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsOneTime == true" (Checked)="SetTigger('O')" [Text]="'One Time'" [Top]="5"></RadioButton>
 
 
-                                                                                </td>-->
+                                                                                </td>
                                                                                 <td style="width:80px">
 
                                                                                     <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsDaily == true" (Checked)="SetTigger('D')" [Text]="'Daily'" [Top]="5"></RadioButton>
@@ -218,9 +218,9 @@
                                                                                 </tr>
 
 
-                                                                                <tr *ngIf="DataContext.TriggerType == 'D'"  class="FormFieldRow">
+                                                                                <tr class="FormFieldRow">
                                                                                     <td>
-                                                                                        <LogLabel  [ObjectFieldName]="'RepeatInMinutes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                        <LogLabel [ObjectFieldName]="'RepeatInMinutes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                                     </td>
 
                                                                                     <td>
@@ -335,7 +335,7 @@
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <tr class="FormFieldRow" *ngIf="false && DataContext.TriggerType == 'M'">
+                                                                                <tr class="FormFieldRow" *ngIf="DataContext.TriggerType == 'M'">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'MonthlyDay'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Day Number'"></LogLabel>
                                                                                     </td>
@@ -358,53 +358,6 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-                                                                <tr style="height:1px;">
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:10px"></td>
-                                                                               
-                                                                                
-                                                                                    <td style="width:80px"  *ngIf ="ShowRunTaskNowButton">
-                                                                                        <button [disabled]="DataContext.IsNew" class="Button" (click)="RunNowButtonClicked()">Run Task Now</button>
-    
-                                                                                    </td>                                                                                
-
-                                                                                <td *ngIf="ShowDateFields" style="width:320px;">
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width: 5px;">
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                            <td  style="width:30px;">
-                                                                                                <LogLabel [Text]="'From'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                            </td>
-                                                                                            <td  style="width:90px">
-                                                                                                <LogDatePicker  [SelectedDateValue]="RunNowFromDate" (ValueChanged) ="DatePickerFromValueChange($event)" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RunNowFromDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
-
-                                                                                            </td>
-
-                                                                                           
-                                                                                            <td  style="width:30px;">
-                                                                                                <LogLabel [Text]="'To'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                            </td>
-                                                                                            <td  style="width:90px">
-                                                                                                <LogDatePicker  [SelectedDateValue]="RunNowToDate" (ValueChanged) ="DatePickerToValueChange($event)" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RunNowToDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </td>
-                                                                                <td style="width:80px">
-                                                                                </td>
-                                                                                <td></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-
-
-
-                                                                </tr>
-                                                                <tr style="height:10px"><td></td></tr>
 
                                                             </table>
                                                         </td>
@@ -415,87 +368,17 @@
                                         </td>
                                     </tr>
 
-                                    <tr style="height:25px"><td></td></tr>
-
-                                    <tr style="height:70px">
-                                        <td>
-                                            <div style="height:100%;width:100%; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
-                                                <table style="border :none;">
-
-                                                    <tr style="height:25px">
-                                                        <td>
-                                                            <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:300px">
-                                                                            <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">Create\Update Details</p>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr style="height:3px">
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr style="height:60px">
-                                                        <td style="vertical-align:top;">
-                                                            <table style="margin-left:5px;">
-                                                                <tr>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:80px;"><label class="Label">Created By:</label></td>
-                                                                                <td><label>{{DataContext.CreatedBy}}</label></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:80px;"><label class="Label">Updated By:</label></td>
-                                                                                <td><label>{{DataContext.UpdatedBy}}</label></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:80px;"><label class="Label">Create Date:</label></td>
-                                                                                <td><label>{{DataContext.CreateDate | DateTimePipe:'DTLL12'}}</label></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:80px;"><label class="Label">Update Date:</label></td>
-                                                                                <td><label>{{DataContext.UpdateDate | DateTimePipe:'DTLL12'}}</label></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </td>
-                                    </tr>
                                     <tr><td></td></tr>
                                 </table>
                             </ScrollViewer>
                         </td>
                     </tr>
+
+
                 </table>
             </td>
        </tr>
+
         <!--Close And Cancel Area-->
         <tr style="height: 32px;">
             <td style="vertical-align: bottom">
@@ -504,12 +387,15 @@
                         <td>
                             <div></div>
                         </td>
+
                         <td style="width: 57px;">
                             <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
                         </td>
+
                         <td style="width: 5px;">
                             <div></div>
                         </td>
+
                         <td style="width: 57px;">
                             <button [disabled]="!IsEnableSaveButton" class="RedButton" (click)="OKButtonClicked()">Ok</button>
                         </td>
@@ -517,5 +403,6 @@
                 </table>
             </td>
         </tr>
+
 </table>
 

@@ -7,7 +7,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
@@ -61,9 +61,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ShipmentReceivableParentId = itemPM.ShipmentReceivableParentId;
             itemPoco.QuoteSaleMinAmount = itemPM.QuoteSaleMinAmount;
             itemPoco.QuoteSaleMaxAmount = itemPM.QuoteSaleMaxAmount;
-            itemPoco.VatAmountLocal = itemPM.VatAmountLocal;
-            itemPoco.VatAmountProfit = itemPM.VatAmountProfit;
-            itemPoco.PayableVendorId = itemPM.PayableVendorId;
         }
     }
 }

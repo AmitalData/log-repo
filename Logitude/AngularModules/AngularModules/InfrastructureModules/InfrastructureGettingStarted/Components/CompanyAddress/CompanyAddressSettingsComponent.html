@@ -27,10 +27,6 @@
                             <li [class.Selected]="SelectedTabCode === '1'" (click)="SelectedTabCode = '1'" *ngIf="IsLocalAddressTabVisible">
                                 <div class="InnerChild">Local Address</div>
                             </li>
-
-                            <li [class.Selected]="SelectedTabCode === '2'" (click)="SelectedTabCode = '2'">
-                                <div class="InnerChild">Invoice Signature</div>
-                            </li>
                         </ul>
                     </div>
 
@@ -60,7 +56,7 @@
                                                         </td>
 
                                                         <td style="width: 350px;">
-                                                            <LogTextBox [ObjectFieldName]="'Company'" [Text]="Company" [InputType]="'ntext'" [ObjectTableName]="TenantObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                            <LogTextBox [ObjectFieldName]="'Company'" [Text]="Company" [InputType]="text" [ObjectTableName]="TenantObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                         </td>
                                                     </tr>
 
@@ -293,7 +289,7 @@
                                                         </td>
 
                                                         <td style="width: 350px;">
-                                                            <LogTextBox [ObjectFieldName]="'Name'" [Text]="LocalAddressDataContext.Name" [InputType]="'text'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext" [HideColumns]="true"></LogTextBox>
+                                                            <LogTextBox [ObjectFieldName]="'Name'" [Text]="LocalAddressDataContext.Name" [InputType]="text" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext" [HideColumns]="true"></LogTextBox>
                                                         </td>
                                                     </tr>
 
@@ -489,55 +485,6 @@
                             </tr>
                         </table>
 
-                        <!-- Invoice Signature -->
-                        <table [hidden]="SelectedTabCode != '2'" style="margin-left:10px;">
-                            <tr>
-                                <td>
-                                    <table class="FixedTable">
-                                        <tr>
-                                            <td style="width: 460px">
-                                                <table>
-                                                    <!-- InvoicePrintNotes -->
-                                                    <tr class="FormFieldRow" >
-                                                        <td style="width: 130px;padding-top: 20px;">
-                                                            <LogLabel [ObjectFieldName]="'InvoicePrintNotes'" [ObjectTableName]="TenantObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td style="width: 400px; padding-left: 20px;">
-                                                            <LogTextBox [ObjectFieldName]="'InvoicePrintNotes'" [Text]="InvoicePrintNotes" [InputType]="'text'" [IsMultiline]="true" [ObjectTableName]="TenantObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                        </td>
-
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr style="height: 32px;"></tr>
-
-                                                    <!-- InvoicePrintNotesLocal -->
-                                                    <tr class="FormFieldRow">
-                                                        <td style="padding-top: 20px">
-                                                            <LogLabel [ObjectFieldName]="'InvoicePrintNotesLocal'" [ObjectTableName]="TenantObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td style="padding-left: 20px;">
-                                                            <LogTextBox [ObjectFieldName]="'InvoicePrintNotesLocal'" [Text]="InvoicePrintNotesLocal" [InputType]="'ntext'" [IsMultiline]="true" [ObjectTableName]="TenantObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td colspan="3">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-
                     </div>
                 </div>
             </div>
@@ -553,7 +500,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'CancelButton' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -561,7 +508,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OkButton' | IdGeneratorAsyncPipe | async}}" class="RedButton"(click)="OkButtonClicked()">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

@@ -1,5 +1,5 @@
 ﻿import {DocumentTypeTemplatePM} from '../../../../../../Common/EntityPMs/DocumentTypeTemplatePM';
-import {EditableFieldPosition} from './BuildStimulReportResult';
+import {EditableFieldPosition} from './EditableFieldPosition';
 
 export class DocumentTypeTemplateFilter {
     Tenant: number;

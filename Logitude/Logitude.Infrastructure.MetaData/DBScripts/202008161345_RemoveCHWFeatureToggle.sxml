@@ -1,9 +1,0 @@
-﻿<Script DBType="Main">
-  <Sql Version="1">
-    <![CDATA[
-      DELETE FROM FeatureToggles WHERE ToggleCode = 'CWH'
-      DELETE FROM Toggles WHERE Code = 'CWH'
-    ]]>       
-  </Sql>
-  <Oracle Version="1"></Oracle>
-</Script>

@@ -1,16 +1,18 @@
-﻿using Logitude.Customs.Data.Repsitories;
-using Logitude.CustomsMessaging.MessagingServices;
+﻿using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.TreeFilterQuery;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools.Utils;
+using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Caching;
-using WebFreight.Web.GlobalModel;
 
 namespace CustomsWorkerRole
 {
@@ -21,7 +23,7 @@ namespace CustomsWorkerRole
             if (CacheManager.CacheWrapper != null) return;
             CustomsWorkerEntryPoint.StartStatic();
         }
-        public static void StartStatic(bool suppressCache = false, Action<bool, bool,int> BuildObjectTablesZipFilesDataAction=null,string prodInfo = null,
+        public static void StartStatic(bool suppressCache = false, Action<bool, bool> BuildObjectTablesZipFilesDataAction=null,string prodInfo = null,
             Action<string, string, int, string> checkContactFeature= null
             )
         {
@@ -31,37 +33,16 @@ namespace CustomsWorkerRole
             }
             else
             {
-                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                LogitudeSettings.DatabaseManagementSystem = dbms;
-
-                Dictionary<int, string> globalDBs = new Dictionary<int, string>();
-                List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
-                foreach (var item in globalTenants)
-                {
-                    globalDBs.Add(item.Id, item.GlobalDBId);
-                }
                 CacheManager.CacheWrapper = new CacheWrapper(//HttpContext.Current.Cache
-            Cache,globalDBs
+            Cache
             );
             }
 
             
             ThreadedRoleEntryPoint.StartStatic(BuildObjectTablesZipFilesDataAction, prodInfo);
-            try
-            {
-                var repo = new CustomsSettingRepository(1);
-                WorkerRoleServiceLocator.HaveCourierTenant = repo.GetRealAll().Any(r => r.CompanyType == "B");
-            }
-            catch (Exception)
-            {
-
-                //throw;
-            }
-           
-            InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
-
+            InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null);
             //ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
-             
+
             //string storageServiceMode = ConfigurationManager.AppSettings.Get("StorageServiceMode");
             //ContainerAccessor.InitContainer(storageServiceMode);
 

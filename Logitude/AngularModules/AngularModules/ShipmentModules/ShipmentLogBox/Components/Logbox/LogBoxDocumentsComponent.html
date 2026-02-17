@@ -274,47 +274,6 @@
     visibility: visible;
     opacity: 1;
 }
- 
-    .logboxDocumentName {
-        background-color: #5AACE5;
-        border: 1px solid #5AACE5
-    }
- 
-  .ActualDate { 
-    color: green; 
-    }
-
-   .ExpectedDate {
-     color: darkorange;
-    }
-
-   .Date {
-     vertical-align: middle;
-     font-size: 15px;
-     margin-left: 10px;
-    }
-
-    .SHO {
-        color: white;
-        background: black;
-        border: 2px solid black;
-        border-radius: 15px 15px;
-        display: inline;
-        padding-right: 15px;
-        padding-left: 15px;
-        font-weight: bold;
-    }
-
-    .SHONumber {
-        border-radius: 15px;
-        border: 1px solid #5AACE5;
-        margin: 10px;
-        min-width: 100px;
-        text-align: center;
-        display: inline;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
 </style>
 
 <table>
@@ -331,49 +290,35 @@
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'O'" src="./Images/Vessel.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'A'" src="./Images/Airline.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'I'" src="./Images/Trucker.png" style="width:23px;height:18px;vertical-align:middle;" />
-                            <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}}  </span>
-                            <div *ngIf="IsSHOVisible(SelectedShipment)" class="SHO">SHO</div>
-                            <div *ngIf="IsSHONumberVisible()" class="SHONumber" title="Shipment Order Number">{{GetSHONumber()}}</div>
-
-                            <span *ngIf="SelectedShipment && IsExportActivated">
-                                <span class="Date" [class.ActualDate]="MainCarriageTDLabel == 'ATD:'" [class.ExpectedDate]="MainCarriageTDLabel == 'ETD:'">
-                                    {{MainCarriageTDLabel}}{{MainCarriageTD | DateTimePipe: 'SMD'}}
-                                </span>
-                                <span class="Date" [class.ActualDate]="MainCarriageTALabel == 'ATA:'" [class.ExpectedDate]="MainCarriageTALabel == 'ETA:'">
-                                    {{MainCarriageTALabel}}{{MainCarriageTA | DateTimePipe: 'SMD'}}
-                                </span>
-                            </span>
-                            <span *ngIf="SelectedShipment && !IsExportActivated">
-                                <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:green;margin-left: 10px;">ATA : {{SelectedShipment.MainCarriageATA  | DateTimePipe: 'SMD'}}</span>
-                                <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageETA && !SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:darkorange;margin-left: 10px;">ETA : {{SelectedShipment.MainCarriageETA | DateTimePipe: 'SMD'}}</span>
-                            </span>
-                        </td> 
-                        <!--<td style="width:1px;" *ngIf="!IsPrivateLabel && this.SelectedShipment && !this.SelectedShipment.ForwarderShipmentNumber">
-        <button class="IconButton" style="width:140px;height:26px;margin-right:5px;float:right;" (click)="ShareDocumentsClick()" [class.Disable]="AllowSendingDocsToAgent == false || DocsSentToAgent == true">
-            <img src="./Images/LogBox/Share.png" style="position:relative;width:25px;margin-left:-5px;" />
-            <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == false">Share Documents</span>
-            <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == true">Shared with agent</span>
-        </button>
-        <div class="tooltip" style="float:left;margin-top:5px;">
-            <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
-            <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == true">
-                <table>
-                    <tr><td> This option allows you to digitally send the shared </td></tr>
-                    <tr><td> documents to your agent before he created the shipment. </td></tr>
-                </table>
-            </div>
-            <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == false">
-                <table>
-                    <tr><td> Sorry , this option is not supported for this agent. </td></tr>
-                </table>
-            </div>
-            <div class="tooltiptext" *ngIf="DocsSentToAgent == true">
-                <table>
-                    <tr><td> Documents was already shared with Agent. </td></tr>
-                </table>
-            </div>
-        </div>
-    </td>-->
+                            <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}}</span>
+                            <span *ngIf="IsPrivateLabel == true" style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" >{{SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( '( ' + SelectedShipment.IncotermCode + ' )' ) : '' ): ''}}</span>
+                        </td>
+                        <!--<td style="width:1px;" *ngIf="!IsPrivateLabel && this.SelectedShipment && !this.SelectedShipment.ForwarderShipmentNumber"> 
+                            <button class="IconButton" style="width:140px;height:26px;margin-right:5px;float:right;" (click)="ShareDocumentsClick()" [class.Disable]="AllowSendingDocsToAgent == false || DocsSentToAgent == true">
+                                <img src="./Images/LogBox/Share.png" style="position:relative;width:25px;margin-left:-5px;" />
+                                <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == false">Share Documents</span>
+                                <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == true">Shared with agent</span>
+                            </button>
+                            <div class="tooltip" style="float:left;margin-top:5px;">
+                                <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
+                                <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == true">
+                                    <table>
+                                        <tr><td> This option allows you to digitally send the shared </td></tr>
+                                        <tr><td> documents to your agent before he created the shipment. </td></tr> 
+                                    </table>
+                                </div>
+                                <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == false">
+                                    <table>
+                                        <tr><td> Sorry , this option is not supported for this agent. </td></tr>
+                                    </table>
+                                </div>
+                                <div class="tooltiptext" *ngIf="DocsSentToAgent == true">
+                                    <table>
+                                        <tr><td> Documents was already shared with Agent. </td></tr>
+                                    </table>
+                                </div>
+                            </div> 
+                        </td>-->
                         <td style="float:right;">
                             <div style="border-radius:15px;border:1px solid #5AACE5;margin:10px;min-width:100px;text-align:center;">
                                 <span style="margin:5px;">{{SelectedShipment ? SelectedShipment.StatusName : ''}}</span>
@@ -382,40 +327,40 @@
                     </tr>
                     <tr>
                         <td>
-
-
-
-
-                            <img *ngIf="FromPortCountryCode" src="{{FromPortCountryCode  | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
-                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{FromPortCode}} , </span>
-                            <img *ngIf="ToPortCountryCode" src="{{ToPortCountryCode  | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
-                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{ToPortCode}}</span>
-
-                            <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId == ShipmentPM.ForwardingPartnerId" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + AgentLable + ' Forwarding ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' - ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>
-                            <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId != ShipmentPM.ForwardingPartnerId
-                                         && SelectedShipment && SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---'" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>
-                        </td>
-                        <td class="tooltip" style="float: right; min-width: 170px; max-width:170px; width:170px;">
-                            <span [title]="ReferencesLabel" style="vertical-align: middle; font-size: 12px; color: #6E7172; float: left;">{{ ShortReferencesLabel }}</span>
+                            <img *ngIf="SelectedShipment && SelectedShipment.MainCarriageFromPortCode != '---'" src="{{SelectedShipment.MainCarriageFromPortCountryCode | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageFromPortCode : ''}} , </span>
+                            <img *ngIf="SelectedShipment && SelectedShipment.MainCarriageToPortCode != '---'" src="{{SelectedShipment.MainCarriageToPortCountryCode | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageToPortCode : ''}}</span>
+                            <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId == ShipmentPM.ForwardingPartnerId" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'(' + AgentLable + ' Forwarding)'}}</span>
+                        </td> 
+                        <td style="float:right;min-width:170px;">
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{SelectedShipment ? ((SelectedShipment.CustomerReference1? SelectedShipment.CustomerReference1 : '') + '/' + (SelectedShipment.CustomerReference2 ? SelectedShipment.CustomerReference2 : '')) : ''}}</span>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <span *ngIf="!ShowShipmentPackagesLabelLink" style="vertical-align:middle;font-size:12px;color:#6E7172;">
-                                {{ ShipmentPackagesLabel }}
+                        <td *ngIf="SelectedShipment && (ShipmentTypeId === 'FCL' || ShipmentTypeId === 'FCLD') && SelectedShipment.TransportModeId != 'A'">
+                            <span *ngIf="SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0" style="vertical-align:middle;font-size:12px;color:#6E7172;">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Containers' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
                             </span>
-
-                            <span class="Archive"  *ngIf="ShowShipmentPackagesLabelLink"  (click)="OnPackagesClick(ShipmentPackageTitle)" style="vertical-align: middle; font-size: 12px; color: lightskyblue;">
-                                {{ ShipmentPackagesLabel }}
+                            <span class="Archive" *ngIf="SelectedShipment.PackagesQuantity != null && SelectedShipment.PackagesQuantity != 0" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Containers')">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Containers' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
                             </span>
-
-                        </td> 
+                        </td>
+                        <td *ngIf="SelectedShipment && (ShipmentTypeId != 'FCL' && ShipmentTypeId != 'FCLD') || (SelectedShipment && SelectedShipment.TransportModeId == 'A')">
+                            <!--<span class="Archive" style="vertical-align:middle;font-size:12px;color:#6E7172;" >{{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}</span>-->
+                            <span *ngIf="SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0" style="vertical-align:middle;font-size:12px;color:#6E7172;">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
+                            </span>
+                            <span class="Archive" *ngIf="SelectedShipment.PackagesQuantity != null && SelectedShipment.PackagesQuantity != 0" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Packages')">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
+                            </span>
+                        </td>
                         <td *ngIf="!SelectedShipment">
                             <span style="vertical-align:middle;font-size:12px;color:#6E7172;"></span>
                         </td>
-                        <td style="float: right; min-width: 170px; max-width: 170px; width: 170px;">
+                        <td style="float:right;min-width:170px;">
                             <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{TextChanged}}</span>
-                            <span class="tooltip" [title]="ValueChanged" style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;min-width:30px;">{{ValueChangedAfterTriming}}</span>
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;min-width:30px;">{{ValueChanged}}</span>
                         </td>
                     </tr>
                 </table>
@@ -439,7 +384,7 @@
                                         <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;">Documents</span>
                                     </td>
                                     <td style="float:right;">
-                                        <button id="{{'AddLogboxDocument' | IdGeneratorAsyncPipe | async}}" class="IconButton"  style="width:114px;height:26px;margin-right:5px;" (click)="AddDocumentClick()" [class.Disable]="DisableAddDocumentButton == true || !SelectedShipment">
+                                        <button class="IconButton"  style="width:114px;height:26px;margin-right:5px;" (click)="AddDocumentClick()" [class.Disable]="DisableAddDocumentButton == true">
                                             <img src="./Images/LogBox/Add.png"  style="visibility:inherit;left:2px;vertical-align:middle;position:relative;" />
                                             <span style="vertical-align:middle;">Add Document</span>
                                         </button>
@@ -532,24 +477,21 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    <!--<div style="float:right;width:150px;margin-right: -12px;">
+                                    <div style="float:right;width:150px;margin-right: -12px;">
                                         <LogCheckBox [ObjectFieldName]="'ShowDeleted'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
                                         <label style="margin-right:-10px;">Show Cancelled ({{DeletedDocsCount}})</label>
-                                     
-                                    </div>-->
+                                        <!--<input type="checkbox" for="Cancel" [(ngModel)]="ShowDeleted" />-->
+                                    </div>
                                 </div>
                                 <div class="TabControlBody BodyBackground" style="height:calc(100% - 16px);">
                                     <!-- Category -->
                                     <div id="DocsTab" class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'CAT'">
                                         <div class="LocationDirective" LocationDirective Code="CAT" style="height:calc(100% - 6px);">
                                             <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
-                                                <div *ngIf="SelectedShipment && DeletedDocsCount != 0" style="width:150px;position:absolute;top:7px;right:0;">
-                                                    <LogCheckBox [ObjectFieldName]="'ShowDeleted'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
-                                                    <label style="margin-right:-10px;">Show Cancelled ({{DeletedDocsCount}})</label> 
-                                                </div>
+
                                                 <div *ngFor="let item1 of externalDocs" style="padding:5px;float:left;width:100%;">
                                                     <span style="font-size:16px;border-bottom:1px solid #BCBEC0;width:100%;float:left;">{{item1.key}}</span>
-                                                    <div id="{{'EmptyTicket' | IdGeneratorAsyncPipe | async}}" *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
+                                                    <div *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
                                                         <table *ngIf="!item.hasFile" style="height:162px;width:162px;" (click)="DocumentClicked(item)">
                                                             <tr>
                                                                 <td style="height:40px;">
@@ -562,7 +504,7 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="height:1px;">
+                                                                <td style="height:1px;"> 
                                                                     <div style="margin:5px;float:right;max-width:150px;" class="TextTrimming" [title]="item.Description">
                                                                         <span *ngIf="item.IsRequested && item.Description" style="text-align:right;">{{item.Description}}</span>
                                                                     </div>
@@ -590,23 +532,23 @@
                                                             <tr>
                                                                 <td>
                                                                     <!--<div [id]="'BusyIndecator' + item.Id" class="CenterCenter" [style.width.px]="162" [style.height.px]="162" [style.display]="item.SignRequestByUserEmail ? 'block' : 'none'" style="z-index: 1;background: linear-gradient(rgba(240, 240, 240, 0.5), rgba(198, 198, 198, 0.5));">
-                            <div style="margin: auto; margin-top: 40px;" [style.width.px]="25" [style.height.px]="25">
-                                <img src="./Images/BusyIndicator.gif" alt="Loading..." [style.width.px]="25" [style.height.px]="25" />
-                            </div>
+                                                                        <div style="margin: auto; margin-top: 40px;" [style.width.px]="25" [style.height.px]="25">
+                                                                            <img src="./Images/BusyIndicator.gif" alt="Loading..." [style.width.px]="25" [style.height.px]="25" />
+                                                                        </div>
 
-                            <div style="margin-top: 15px; height: 20px; width: 100%; text-align: center;">
-                                <label style="font-weight:bold;color:orange;">waiting to be signed ...</label>
-                            </div>
-                        </div>-->
+                                                                        <div style="margin-top: 15px; height: 20px; width: 100%; text-align: center;">
+                                                                            <label style="font-weight:bold;color:orange;">waiting to be signed ...</label>
+                                                                        </div>
+                                                                    </div>-->
                                                                     <table (click)="DocumentClicked(item)">
                                                                         <tr style="max-width:162px;">
                                                                             <td style="height:40px;max-width:162px;">
-                                                                                <div [ngStyle]="hasDocumentTypeHighlightColor ? privateLabelClass : ''" [class.logboxDocumentName]="!hasDocumentTypeHighlightColor" style="margin:2px;margin-top:-10px;border-radius:30px;width:98%; text-align:center;height:18px;">
+                                                                                <div style="margin:2px;margin-top:-10px;border: 1px solid #5AACE5;border-radius:30px;width:98%;background-color:#5AACE5;text-align:center;height:18px;">
                                                                                     <div style="color:white;float:left;width:80%;padding-left:3px;" class="TextTrimming" [title]="item.DocumentTypeName">
                                                                                         <span style="text-align:center;color: white;">{{item.DocumentTypeName}}</span>
                                                                                     </div>
-                                                                                    <img *ngIf="item.IsCustomReference == true" src="./Images/CustomReference.png" style="float:right;padding-right:5px;" [title]="'Customs Reference: ' + item.CustomReference" />
-                                                                                </div>
+                                                                                    <img *ngIf="item.IsCustomReference == true" src="./Images/CustomReference.png" style="float:right;padding-right:5px;"  [title]="'Customs Reference: ' + item.CustomReference"/>
+                                                                                </div> 
                                                                                 <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
                                                                             </td>
                                                                         </tr>
@@ -616,12 +558,12 @@
                                                                                     <tr>
                                                                                         <td>
                                                                                             <span style="white-space:pre-wrap;margin-left:2px;text-align:center;color: #45494A;font-size: 13px;word-wrap: break-word;" [title]="item.Description && item.Description.length > 56 ? item.Description : ''">{{item.Description && item.Description.length > 56 ? item.Description.substring(0, 54) + '...' : item.Description}}</span>
-
+                                                                                            
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td>
-                                                                                            <div [id]="'BusyIndecator' + item.Id" [style.display]="item.SignRequestByUserEmail ? 'block' : 'none'">
+                                                                                            <div [id]="'BusyIndecator' + item.Id" [style.display]="item.SignRequestByUserEmail ? 'block' : 'none'"> 
                                                                                                 <div style="height: 20px; width: 100%; text-align: center;">
                                                                                                     <label style="font-weight:bold;color:orange;">Signing in progress..</label>
                                                                                                     <img src="./Images/close.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Delete" (click)="CancelSignProcess(item)" />
@@ -632,7 +574,7 @@
                                                                                     <tr>
                                                                                         <td></td>
                                                                                     </tr>
-                                                                                </table>
+                                                                                </table> 
                                                                             </td>
                                                                         </tr>
                                                                         <tr style="height:40px;max-width:162px;">
@@ -660,15 +602,14 @@
                                                                                                         <img src="./Images/BusyIndicator.gif" style="position:absolute;top:5px;left:-20px;width:30px;height:30px;" />
                                                                                                         <img src="./Images/DigitallySignedO.png" style="position:absolute;top:14px;left:-10px;" />
                                                                                                     </div>
-                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder">
-                                                                                                        <!--*ngIf="!item.ForwarderDocumentId && item.IsSharedWithCustomer == false"-->
-                                                                                                        <img src="./Images/SharedWithAgentB.png" [title]="'Shared With ' + AgentLable" />
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder"><!--*ngIf="!item.ForwarderDocumentId && item.IsSharedWithCustomer == false"-->
+                                                                                                       <img src="./Images/SharedWithAgentB.png" [title]="'Shared With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == false">
-                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="SelectedShipment.StatusName == 'In Progress' ? 'You are not allowed to share documents with agents while the shipment status is in progress' : 'Share With ' + AgentLable" />
+                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="'Share With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == true">
-                                                                                                        <img src="./Images/CloudArrowUp.png" [title]="item.ExternalEntityReference ? 'Agent Reference : ' + item.ExternalEntityReference : ''" />
+                                                                                                        <img src="./Images/CloudArrowUp.png" [title]="item.ExternalEntityReference ? 'Agent Reference : ' + item.ExternalEntityReference : ''"/>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </td>
@@ -682,8 +623,8 @@
                                                             </tr>
                                                         </table>
                                                         <!--<div>
-                <img [id]="'Note' + item1.key + i" src="./Images/ToggleNote.png" style="position:relative;z-index:1;display:none;" />
-            </div>-->
+                                                            <img [id]="'Note' + item1.key + i" src="./Images/ToggleNote.png" style="position:relative;z-index:1;display:none;" />
+                                                        </div>-->
 
                                                     </div>
                                                 </div>
@@ -696,10 +637,6 @@
                                     <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'REQ'">
                                         <div class="LocationDirective" LocationDirective Code="REQ" style="height:calc(100% - 6px);">
                                             <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
-                                                <!--<div style="width:150px;position:absolute;top:7px;right:0;">
-                                                    <LogCheckBox [ObjectFieldName]="'ShowDeleted'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
-                                                    <label style="margin-right:-10px;">Show Cancelled ({{DeletedDocsCount}})</label>
-                                                </div>-->
                                                 <div *ngFor="let item1 of externalRequestedDocs" style="padding:5px;float:left;width:100%;">
                                                     <span style="font-size:16px;border-bottom:1px solid #BCBEC0;width:100%;float:left;">{{item1.key}}</span>
                                                     <div *ngFor="let item of item1.value let i = index" class="emptyticket" style="max-width:164px;margin-top:10px;">
@@ -749,10 +686,6 @@
                                     <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'SREQ'">
                                         <div class="LocationDirective" LocationDirective Code="SREQ" style="height:calc(100% - 6px);">
                                             <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
-                                                <!--<div style="width:150px;position:absolute;top:7px;right:0;">
-                                                    <LogCheckBox [ObjectFieldName]="'ShowDeleted'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
-                                                    <label style="margin-right:-10px;">Show Cancelled ({{DeletedDocsCount}})</label>
-                                                </div>-->
                                                 <div *ngFor="let item1 of SignReqDocs; let myIndex = index" style="padding:5px;float:left;width:100%;">
                                                     <div style="border-bottom:1px solid #BCBEC0;width:100%;height:30px;">
                                                         <button *ngIf="myIndex == 0" class="IconButton" style="width:70px;height:26px;margin-right:5px;float:right" (click)="SignAllClick()">
@@ -760,7 +693,7 @@
                                                             <span style="vertical-align:middle;">Sign All</span>
                                                         </button>
                                                         <span style="font-size:16px;float:left;">{{item1.key}}</span>
-                                                    </div>
+                                                    </div> 
                                                     <div *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
                                                         <table *ngIf="!item.hasFile" style="height:162px;width:162px;" (click)="DocumentClicked(item)">
                                                             <tr>
@@ -804,7 +737,7 @@
                                                                     <table (click)="DocumentClicked(item)">
                                                                         <tr style="max-width:162px;">
                                                                             <td style="height:40px;max-width:162px;">
-                                                                                <div [ngStyle]="hasDocumentTypeHighlightColor ? privateLabelClass : ''" style="margin:2px;margin-top:-10px;border-radius:30px;width:98%;background-color:#5AACE5;text-align:center;height:18px;">
+                                                                                <div style="margin:2px;margin-top:-10px;border: 1px solid #5AACE5;border-radius:30px;width:98%;background-color:#5AACE5;text-align:center;height:18px;">
                                                                                     <div style="color:white;float:left;width:80%;padding-left:3px;" class="TextTrimming" [title]="item.DocumentTypeName">
                                                                                         <span style="text-align:center;color: white;">{{item.DocumentTypeName}}</span>
                                                                                     </div>
@@ -868,7 +801,7 @@
                                                                                                         <img src="./Images/SharedWithAgentB.png" [title]="'Shared With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == false">
-                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="SelectedShipment.StatusName == 'In Progress' ? 'You are not allowed to share documents with agents while the shipment status is in progress' : 'Share With ' + AgentLable" />
+                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="'Share With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == true">
                                                                                                         <img src="./Images/CloudArrowUp.png" [title]="item.ExternalEntityReference ? 'Agent Reference : ' + item.ExternalEntityReference : ''" />

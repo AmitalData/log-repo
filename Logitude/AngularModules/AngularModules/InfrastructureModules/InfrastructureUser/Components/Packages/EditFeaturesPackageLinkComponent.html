@@ -1,9 +1,5 @@
-﻿<tr>
-    <td style="width:250px">  
-        <SearchBox (TextChanged)="SearchFeatures($event)"></SearchBox>
-    </td>
-</tr>    
-<table>    
+﻿
+<table>
     <tr>
         <td>
             <div class="MediaFill">
@@ -54,33 +50,27 @@
         </td>
     </tr>
 
-    <tr style="height: 40px; display: table-row;">
-        <td style="vertical-align: middle;">
-            <table style="height: 30px;">
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
                 <tr>
                     <td>
                         <div></div>
                     </td>
-    
+
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()" 
-                                style="margin-bottom: 20px;">
-                            {{'General.B.Cancel' | TextCodeTranslationPipe}}
-                        </button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
-    
+
                     <td style="width: 5px;">
                         <div></div>
                     </td>
-    
+
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" 
-                                style="margin-bottom: 20px;">
-                            {{'General.B.Ok' | TextCodeTranslationPipe}}
-                        </button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
         </td>
-    </tr>                
+    </tr>
 </table>

@@ -10,10 +10,10 @@ using Logitude.BL.QuoteModel.BusinessUnitFilters;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
@@ -22,14 +22,10 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.QuoteModel;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Logitude.CRM.Data.Repsitories;
-using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 namespace Logitude.BL.QuoteModel.EntityQueries
 {
-    public partial class QuoteQuery
+    public class QuoteQuery
     {
         QuoteRepository repository;
 
@@ -48,8 +44,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
         public QuotePM GetSinglePM(string id, int tenant)
         {
-            Quote entityPOCO = (from a in repository.context.Quotes.Include("Incoterm").Include("Stage").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("FromPartnerCard").Include("ToPartnerCard").Include("ToPort.Country").Include("FromPort.Country").Include("FromPort").Include("Direction").Include("TransportMode").Include("QuoteType").Include("AgentCard").Include("SaleCurrency").Include("ShipmentType")
-                                .Include("MoveType")
+            Quote entityPOCO = (from a in repository.context.Quotes.Include("Incoterm").Include("Stage").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("FromPartnerCard").Include("ToPartnerCard").Include("ToPort.Country").Include("FromPort.Country").Include("FromPort").Include("Direction").Include("TransportMode").Include("QuoteType").Include("AgentCard").Include("SaleCurrency")
                                 where a.Id == id && a.Tenant == tenant
                                 select a).FirstOrDefault();
 
@@ -63,20 +58,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             myResult = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), myResult, tenant);
 
             return myResult;
-        }
-
-        public QuotePM GetSinglePMForWorkerRole(string id, int tenant)
-        {
-            Quote entityPOCO = (from a in repository.context.Quotes.Include("Incoterm").Include("Stage").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("FromPartnerCard").Include("ToPartnerCard").Include("ToPort.Country").Include("FromPort.Country").Include("FromPort").Include("Direction").Include("TransportMode").Include("QuoteType").Include("AgentCard").Include("SaleCurrency")
-                                where a.Id == id && a.Tenant == tenant
-                                select a).FirstOrDefault();
-
-            QuotePM entityPM = this.MapPOCOToPM(entityPOCO);
-
-            QuotePM securedPM = new QuotePM();
-            SecuredMapping.GetMappedPM(entityPM, securedPM, "Quote", tenant);
-
-            return securedPM;
         }
 
         public QuotePM GetSinglePMByQuoteNumber(string quoteNumber, int tenant)
@@ -110,8 +91,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 iQueryable = ProductPermitionsFilter.AddUserProductRestrictionFilters<Quote>(new QueryOperations(), iQueryable, tenant);
             }
 
-            IQueryable<QuoteList> result = from f in iQueryable.Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard").Include("MoveType").Include("ShipmentSubType")
-                                                               .Include("ShipperCard").Include("CustomerCard").Include("ValidByType").Include("ConsigneeNotImporterCard").Include("ShipperNotExporterCard")
+            IQueryable<QuoteList> result = from f in iQueryable.Include("Incoterm").Include("FromPort").Include("Stage").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard").Include("MoveType")
                                            select new QuoteList()
                                            {
                                                IsClosed = f.IsClosed,
@@ -124,8 +104,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                TransportModeName = f.TransportMode == null ? "" : f.TransportMode.Name,
                                                QuoteViewId = f.Id,
                                                CustomerName = f.CustomerName,
-                                               CustomerCode = f.CustomerCard != null ? f.CustomerCard.Code : "",
-                                               ShipperCode = f.ShipperCard != null ? f.ShipperCard.Code : "",
                                                ShipmentType = f.ShipmentType == null ? "" : f.ShipmentType.Name,
                                                Field1 = f.Field1,
                                                Field2 = f.Field2,
@@ -140,8 +118,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                LastVersionNumber = f.LastVersionNumber,
                                                ShipperReference1 = f.ShipperReference1,
                                                LastModified = f.LastModified,
-                                               CreatedByUser = f.CreatedByUser != null && f.CreatedByUser.Contact != null ? f.CreatedByUser.Contact.EnglishName : null,
-                                               UpdatedByUser = f.UpdatedByUser != null && f.UpdatedByUser.Contact != null ? f.UpdatedByUser.Contact.EnglishName : null,
+                                               CreatedByUser = f.CreatedByUser != null && f.CreatedByUser.Contact != null ? f.CreatedByUser.Contact.EnglishName : "",
                                                QuoteTypeCode = f.QuoteTypeCode,
                                                DirectionId = f.DirectionId,
                                                TransportModeId = f.TransportModeId,
@@ -152,23 +129,17 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                QuoteNumber = f.QuoteNumber,
                                                OpenDate = f.OpenDate,
                                                ExpirationDate = f.ExpirationDate,
-                                               StartDate = f.StartDate,
                                                MainCarriageCarrierId = f.MainCarriageCarrierId,
                                                MainCarriageCarrierName = f.MainCarriageCarrierCard == null ? "" : f.MainCarriageCarrierCard.EnglishName,
                                                QuoteTypeName = f.QuoteType == null ? "" : f.QuoteType.Name,
                                                CarrierName = f.MainCarriageCarrierCard == null ? "" : f.MainCarriageCarrierCard.EnglishName,
                                                ChargeableWeight = f.ChargeableWeight,
-                                               ChargeableWeightInKG = f.ChargeableWeightInKG,
-                                               PickupDeliveryChargeableWeight = f.PickupDeliveryChargeableWeight,
-                                               PickupDeliveryVolumetricWeight = f.PickupDeliveryVolumetricWeight,
                                                GrossWeight = f.GrossWeight,
                                                GrossWeightInKG = f.GrossWeightInKG,
                                                GrossWeightPerTon = f.GrossWeightPerTon,
-                                               VolumeInCBM = f.VolumeInCBM,
                                                IsCancelled = f.IsCancelled,
                                                SearchFields = f.SearchFields,
                                                Notes = f.Notes,
-                                               QuoteClosingReasonNotes = f.QuoteClosingReasonNotes,
                                                BranchId = f.BranchId,
                                                DepartmentId = f.DepartmentId,
                                                BranchName = f.Branch == null ? null : f.Branch.EnglishName,
@@ -180,7 +151,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                FromPartnerAddressId = f.FromPartnerAddressId,
                                                ToPartnerAddressId = f.ToPartnerAddressId,
                                                NumberOfPackages = f.NumberOfPackages,
-                                               QuoteClosingReasonId = f.QuoteClosingReasonId,
                                                QuoteClosingReasonCode = f.QuoteClosingReasonCode,
                                                QuoteClosingReasonName = f.QuoteClosingReason == null ? null : f.QuoteClosingReason.Name,
                                                SentDate = f.SentDate,
@@ -195,8 +165,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                BusinessUnitId = f.BusinessUnitId,
                                                BusinessUnitName = f.BusinessUnit == null ? "" : f.BusinessUnit.Name,
                                                SalesmanUserId = f.SalesmanUserId,
-                                               Salesman = f.SalesmanUser == null ? null : (f.SalesmanUser.Contact == null ? null : f.SalesmanUser.Contact.EnglishName),
-                                               SalesmanName = f.SalesmanUser == null ? null : (f.SalesmanUser.Contact == null ? null : f.SalesmanUser.Contact.EnglishName),
+                                               Salesman = f.SalesmanUser == null ? "" : (f.SalesmanUser.Contact == null ? "" : f.SalesmanUser.Contact.EnglishName),
+                                               SalesmanName = f.SalesmanUser == null ? "" : (f.SalesmanUser.Contact == null ? "" : f.SalesmanUser.Contact.EnglishName),
                                                StageId = f.StageId,
                                                StageName = f.Stage == null ? "" : f.Stage.Name,
                                                StageMaxDays = f.Stage == null ? 0 : f.Stage.MaxDays,
@@ -222,8 +192,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
                                                FromPortName = f.FromPort == null ? "" : f.FromPort.EnglishName,
                                                ToPortName = f.ToPort == null ? "" : f.ToPort.EnglishName,
-                                               FromPortNameCode = f.FromPort == null ? "" : f.FromPort.EnglishName + ", " + f.FromPort.Code,
-                                               ToPortNameCode = f.ToPort == null ? "" : f.ToPort.EnglishName + ", " + f.ToPort.Code,
 
                                                FromPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                                                (f.FromPartnerAddress != null ? f.FromPartnerAddress.City : "")
@@ -235,7 +203,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                :
                                                ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "")),
 
-                                               FromPortCountry = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "",
+                                               FromPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
+                                               ((f.FromPartnerAddress != null && f.FromPartnerAddress.Country != null ? f.FromPartnerAddress.Country.EnglishName : ""))
+                                               :
+                                               ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "")),
 
                                                ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                                                (f.ToPartnerAddress != null ? f.ToPartnerAddress.City : "")
@@ -247,7 +218,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                :
                                                ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "")),
 
-                                               ToPortCountry = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "",
+                                               ToPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
+                                               ((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.EnglishName : ""))
+                                               :
+                                               ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "")),
 
                                                Routing = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                                                ((f.FromPartnerAddress == null ? "" : f.FromPartnerAddress.City) + " > " + (f.ToPartnerAddress == null ? "" : f.ToPartnerAddress.City))
@@ -282,51 +256,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                NotifyContactId = f.NotifyContactId,
                                                NotifyName = f.NotifyCard == null ? null : f.NotifyCard.EnglishName,
                                                NotifyNote = f.NotifyCard == null ? null : f.NotifyCard.Notes,
-                                               NotifyReference1 = f.NotifyReference1,
-                                               NotifyReference2 = f.NotifyReference2,
-                                               ConsigneeNotImporterAddressId = f.ConsigneeNotImporterAddressId,
-                                               ConsigneeNotImporterContactId = f.ConsigneeNotImporterContactId,
-                                               ConsigneeNotImporterId = f.ConsigneeNotImporterId,
-                                               ConsigneeNotImporterName = f.ConsigneeNotImporterCard != null ? f.ConsigneeNotImporterCard.EnglishName : null,
-                                               ConsigneeNotImporterNote = f.ConsigneeNotImporterCard != null ? f.ConsigneeNotImporterCard.Notes : null,
-                                               ShipperNotExporterAddressId = f.ShipperNotExporterAddressId,
-                                               ShipperNotExporterContactId = f.ShipperNotExporterContactId,
-                                               ShipperNotExporterId = f.ShipperNotExporterId,
-                                               ShipperNotExporterName = f.ShipperNotExporterCard != null ? f.ShipperNotExporterCard.EnglishName : null,
-                                               ShipperNotExporterNote = f.ShipperNotExporterCard != null ? f.ShipperNotExporterCard.Notes : null,
                                                NumberOfFollowUps = f.NumberOfFollowUps,
                                                CustomerId = f.CustomerId,
                                                IsDangerous = f.IsDangerous,
-                                               QuoteHTMLDocumentId = f.QuoteHTMLDocumentId,
-                                               Field11 = f.Field11,
-                                               Field12 = f.Field12,
-                                               Field13 = f.Field13,
-                                               Field14 = f.Field14,
-                                               Field15 = f.Field15,
-                                               Field16 = f.Field16,
-                                               Field17 = f.Field17,
-                                               Field18 = f.Field18,
-                                               Field19 = f.Field19,
-                                               Field20 = f.Field20,
-                                               RequestDate = f.RequestDate,
-                                               EstimatedProfitInLocal = f.EstimatedProfitInLocal,
-                                               EstimatedProfitInProfit = f.EstimatedProfitInProfit,
-                                               ShipmentSubTypeId = f.ShipmentSubTypeId,
-                                               ShipmentSubTypeName = f.ShipmentSubType == null ? null : f.ShipmentSubType.Name,
-                                               RegionalTaxId = f.RegionalTaxId,
-                                               RegionalTaxPercentage = f.RegionalTaxPercentage,
-                                               IsMultiCurrency = f.IsMultiCurrency,
-                                               PackagesQuantity = f.PackagesQuantity,
-                                               SpecialServicesTypeId = f.SpecialServicesTypeId,
-                                               IncludeInsurance = f.IncludeInsurance,
-                                               IsStackable = f.IsStackable,
-                                               IncludeImportDutyCharges = f.IncludeImportDutyCharges,
-                                               InsuranceValue = f.InsuranceValue,
-                                               ValidByTypeCode = f.ValidByTypeCode,
-                                               ValidByTypeName = f.ValidByType == null ? null : f.ValidByType.Name,
-                                               ConnectedToOpportunity = f.ConnectedToOpportunity,
-                                               StageCode = f.Stage == null ? "" : f.Stage.Code,
-                                               IsExpired = f.ExpirationDate != null && f.ExpirationDate < DateTime.Now && !f.IsCancelled && !f.IsClosed
                                            };
             return result;
         }
@@ -334,9 +266,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         public List<QuoteList> GetRecentEntityLists(string ownerId, string businessUnitId, int tenant, string userId, string objectTableId)
         {
             List<QuoteList> entityList = new List<QuoteList>();
-
-            AddressRepository addressRepository = new AddressRepository(tenant);
-            CountryRepository countryRepository = new CountryRepository(tenant);
 
             EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
             List<EntityLastActivity> lastActivities = entityLastActivityRepository.GetTopEntityLastActivities(tenant, userId, objectTableId).ToList();
@@ -365,7 +294,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             foreach (EntityLastActivity lastActivity in lastActivities)
             {
-                Quote f = (from d in entities.Include("Incoterm").Include("FromPort").Include("Stage").Include("Rating").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("MoveType")
+                Quote f = (from d in entities.Include("Incoterm").Include("FromPort").Include("Stage").Include("Rating").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("MoveType")
                            where d.Id == lastActivity.EntityId
                            select d).FirstOrDefault();
 
@@ -397,14 +326,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         GrossWeight = f.GrossWeight,
                         GrossWeightInKG = f.GrossWeightInKG,
                         GrossWeightPerTon = f.GrossWeightPerTon,
-                        VolumeInCBM = f.VolumeInCBM,
                         ChargeableWeight = f.ChargeableWeight,
-                        ChargeableWeightInKG = f.ChargeableWeightInKG,
-                        PickupDeliveryChargeableWeight = f.PickupDeliveryChargeableWeight,
-                        PickupDeliveryVolumetricWeight = f.PickupDeliveryVolumetricWeight,
                         NumberOfContainers = f.NumberOfContainers,
                         NumberOfPackages = f.NumberOfPackages,
-                        QuoteClosingReasonId = f.QuoteClosingReasonId,
                         QuoteClosingReasonCode = f.QuoteClosingReasonCode,
                         QuoteClosingReasonName = f.QuoteClosingReason == null ? null : f.QuoteClosingReason.Name,
                         SentDate = f.SentDate,
@@ -419,8 +343,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         BusinessUnitId = f.BusinessUnitId,
                         BusinessUnitName = f.BusinessUnit == null ? "" : f.BusinessUnit.Name,
                         SalesmanUserId = f.SalesmanUserId,
-                        Salesman = f.SalesmanUser == null ? null : (f.SalesmanUser.Contact == null ? null : f.SalesmanUser.Contact.EnglishName),
-                        SalesmanName = f.SalesmanUser == null ? null : (f.SalesmanUser.Contact == null ? null : f.SalesmanUser.Contact.EnglishName),
+                        Salesman = f.SalesmanUser == null ? "" : (f.SalesmanUser.Contact == null ? "" : f.SalesmanUser.Contact.EnglishName),
+                        SalesmanName = f.SalesmanUser == null ? "" : (f.SalesmanUser.Contact == null ? "" : f.SalesmanUser.Contact.EnglishName),
                         Field1 = f.Field1,
                         Field2 = f.Field2,
                         Field3 = f.Field3,
@@ -433,19 +357,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         Field10 = f.Field10,
                         OpenDate = f.OpenDate,
                         ExpirationDate = f.ExpirationDate,
-                        StartDate = f.StartDate,
                         SearchFields = f.SearchFields,
                         LastVersionNumber = f.LastVersionNumber,
                         MainCarriageCarrierId = f.MainCarriageCarrierId,
                         CarrierName = f.MainCarriageCarrierCard == null ? "" : f.MainCarriageCarrierCard.EnglishName,
                         MainCarriageCarrierName = f.MainCarriageCarrierCard == null ? "" : f.MainCarriageCarrierCard.EnglishName,
-                        CreatedByUser = f.CreatedByUser == null ? null : (f.CreatedByUser.Contact == null ? null : f.CreatedByUser.Contact.EnglishName),
-                        UpdatedByUser = f.UpdatedByUser == null ? null : (f.UpdatedByUser.Contact == null ? null : f.UpdatedByUser.Contact.EnglishName),
+                        CreatedByUser = f.CreatedByUser == null ? "" : (f.CreatedByUser.Contact == null ? "" : f.CreatedByUser.Contact.EnglishName),
                         LastQuoteActivityDate = lastActivity.ActivityDate,
                         LastQuoteActivityTypeName = lastActivity.ActivityType.Name,
                         LastActivityByUserName = lastActivity.User.Contact.EnglishName,
                         Notes = f.Notes,
-                        QuoteClosingReasonNotes = f.QuoteClosingReasonNotes,
                         ShipperId = f.ShipperId,
                         Shipper = f.ShipperName,
                         ShipperReference1 = f.ShipperReference1,
@@ -458,8 +379,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         ToPartnerId = f.ToPartnerId,
                         FromPartnerAddressId = f.FromPartnerAddressId,
                         ToPartnerAddressId = f.ToPartnerAddressId,
-                        InlandDomesticFromCountryId = f.InlandDomesticFromCountryId,
-                        InlandDomesticToCountryId = f.InlandDomesticToCountryId,
                         StageId = f.StageId,
                         StageName = f.Stage == null ? "" : f.Stage.Name,
                         StageMaxDays = f.Stage == null ? null : f.Stage.MaxDays,
@@ -490,16 +409,30 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         :
                         (f.FromPort != null ? f.FromPort.Code : ""),
 
-                        FromCountryCode = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "",
-                        FromPortCountry = f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "",
+                        FromCountryCode = (f.TransportModeId == "I" && f.DirectionId == "D") ?
+                        ((f.FromPartnerAddress != null && f.FromPartnerAddress.Country != null ? f.FromPartnerAddress.Country.Code : ""))
+                        :
+                        ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.Code : "")),
+
+                        FromPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
+                        ((f.FromPartnerAddress != null && f.FromPartnerAddress.Country != null ? f.FromPartnerAddress.Country.EnglishName : ""))
+                        :
+                        ((f.FromPort != null && f.FromPort.Country != null ? f.FromPort.Country.EnglishName : "")),
 
                         ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                         (f.ToPartnerAddress != null ? f.ToPartnerAddress.City : "")
                         :
                         (f.ToPort != null ? f.ToPort.Code : ""),
 
-                        ToCountryCode = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "",
-                        ToPortCountry = f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "",
+                        ToCountryCode = (f.TransportModeId == "I" && f.DirectionId == "D") ?
+                        ((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.Code : ""))
+                        :
+                        ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.Code : "")),
+
+                        ToPortCountry = (f.TransportModeId == "I" && f.DirectionId == "D") ?
+                        ((f.ToPartnerAddress != null && f.ToPartnerAddress.Country != null ? f.ToPartnerAddress.Country.EnglishName : ""))
+                        :
+                        ((f.ToPort != null && f.ToPort.Country != null ? f.ToPort.Country.EnglishName : "")),
 
                         Routing = (f.TransportModeId == "I" && f.DirectionId == "D") ?
                         ((f.FromPartnerAddress == null ? "" : f.FromPartnerAddress.City) + " > " + (f.ToPartnerAddress == null ? "" : f.ToPartnerAddress.City))
@@ -529,28 +462,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         IsQuoteDocumentExternal = f.IsQuoteDocumentExternal,
                         QuotationSections = f.QuotationSections,
                         NumberOfFollowUps = f.NumberOfFollowUps,
-                        QuoteHTMLDocumentId = f.QuoteHTMLDocumentId,
-                        Field11 = f.Field11,
-                        Field12 = f.Field12,
-                        Field13 = f.Field13,
-                        Field14 = f.Field14,
-                        Field15 = f.Field15,
-                        Field16 = f.Field16,
-                        Field17 = f.Field17,
-                        Field18 = f.Field18,
-                        Field19 = f.Field19,
-                        Field20 = f.Field20,
-                        RequestDate = f.RequestDate,
-                        EstimatedProfitInLocal = f.EstimatedProfitInLocal,
-                        EstimatedProfitInProfit = f.EstimatedProfitInProfit,
-                        IsMultiCurrency = f.IsMultiCurrency,
-                        PackagesQuantity = f.PackagesQuantity,
-                        SpecialServicesTypeId = f.SpecialServicesTypeId,
-                        IncludeInsurance = f.IncludeInsurance,
-                        IsStackable = f.IsStackable,
-                        IncludeImportDutyCharges = f.IncludeImportDutyCharges,
-                        InsuranceValue = f.InsuranceValue,
-                        ValidByTypeCode = f.ValidByTypeCode,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -563,63 +474,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     else
                     {
                         list.Salesman = "";
-                    }
-
-                    if(list.DirectionId == "D" && list.TransportModeId == "I")
-                    {
-                        if (!string.IsNullOrEmpty(list.FromPartnerAddressId))
-                        {
-                            Address address = addressRepository.GetSingleAddress(list.FromPartnerAddressId, tenant);
-                            if (address != null)
-                            {
-                                if (!string.IsNullOrEmpty(address.CountryId))
-                                {
-                                    Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
-                                    if (country != null)
-                                    {
-                                        list.FromCountryCode = country.Code;
-                                        list.FromPortCountry = country.EnglishName;
-                                    }
-                                }
-                            }
-                        }
-
-                        else if (!string.IsNullOrEmpty(list.InlandDomesticFromCountryId))
-                        {
-                            Country country = countryRepository.GetSingleCountry(list.InlandDomesticFromCountryId, tenant);
-                            if (country != null)
-                            {
-                                list.FromCountryCode = country.Code;
-                                list.FromPortCountry = country.EnglishName;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(list.ToPartnerAddressId))
-                        {
-                            Address address = addressRepository.GetSingleAddress(list.ToPartnerAddressId, tenant);
-                            if (address != null)
-                            {
-                                if (!string.IsNullOrEmpty(address.CountryId))
-                                {
-                                    Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
-                                    if (country != null)
-                                    {
-                                        list.ToCountryCode = country.Code;
-                                        list.ToPortCountry = country.EnglishName;
-                                    }
-                                }
-                            }
-                        }
-
-                        else if (!string.IsNullOrEmpty(list.InlandDomesticToCountryId))
-                        {
-                            Country country = countryRepository.GetSingleCountry(list.InlandDomesticToCountryId, tenant);
-                            if (country != null)
-                            {
-                                list.ToCountryCode = country.Code;
-                                list.ToPortCountry = country.EnglishName;
-                            }
-                        }
                     }
 
                     entityList.Add(list);
@@ -687,27 +541,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         }).ToList();
 
             return myResult;
-        }
-
-        private string GetPriceBreakWeightUnitCodeByCostMeasurementCode(string costMeasurementCode, QuotePM quotePM)
-        {
-            string weightUnitCode = "";
-            switch (costMeasurementCode)
-            {
-                case "GRWT": { weightUnitCode = quotePM.GrossWeightUnitCode; break; }
-                case "CHWT": { weightUnitCode = quotePM.ChargeableWeightUnitCode; break; }
-                case "PDCW": { weightUnitCode = quotePM.PickupDeliveryCWeightUnitCode; break; }
-                case "VOLU": { weightUnitCode = quotePM.VolumeUnitCode; break; }
-                case "BTEU": { weightUnitCode = "TEU"; break; }
-                case "PRVL": { weightUnitCode = "Value of Goods"; break; }
-                case "PRFR": { weightUnitCode = "Freight Value"; break; }
-                case "GWTN": { weightUnitCode = "Ton"; break; }
-                case "QTY": { weightUnitCode = "pieces"; break; }
-                case "CWKG": { weightUnitCode = "KG"; break; }
-                case "GWKG": { weightUnitCode = "KG"; break; }
-                case "VCBM": { weightUnitCode = "CBM"; break; }
-            }
-            return weightUnitCode.ToLower();
         }
 
         public List<ChartingDataClass> GetQuotesChartData(string code, string ownerId, string businessUnitId, string chartCode, int tenant)
@@ -1273,6 +1106,158 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return result;
         }
 
+        public string GetQuoteAutomaticSubject(QuotePM entityPM)
+        {
+            string mySubject = null;
+
+            int tenant = entityPM.Tenant;
+
+            bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
+
+            AddressRepository addressRepository = new AddressRepository(tenant);
+
+            if (!string.IsNullOrEmpty(entityPM.IncotermId))
+            {
+                IncotermRepository incotermRepository = new IncotermRepository(tenant);
+                Incoterm incoterm = incotermRepository.GetSingleIncoterm(entityPM.IncotermId, tenant);
+                if (incoterm != null)
+                {
+                    mySubject = incoterm.Code;
+                }
+            }
+
+            if (isInlandDomestic)
+            {
+                #region
+                if (!string.IsNullOrEmpty(entityPM.FromPartnerAddressId))
+                {
+                    Address myAddress = addressRepository.GetSingleAddress(entityPM.FromPartnerAddressId, tenant);
+                    if (myAddress != null)
+                    {
+                        if (!string.IsNullOrEmpty(myAddress.City))
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " " + myAddress.City;
+                        }
+
+                        else if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " " + myAddress.ZipCode;
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
+                {
+                    Address myAddress = addressRepository.GetSingleAddress(entityPM.ToPartnerAddressId, tenant);
+                    if (myAddress != null)
+                    {
+                        if (!string.IsNullOrEmpty(myAddress.City))
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " > " + myAddress.City;
+                        }
+
+                        else if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " > " + myAddress.ZipCode;
+                        }
+                    }
+                }
+                #endregion
+            }
+
+            else
+            {
+                #region
+                if (entityPM.IncludePickUp)
+                {
+                    if (!string.IsNullOrEmpty(entityPM.PickUpAddressId))
+                    {
+                        Address myAddress = addressRepository.GetSingleAddress(entityPM.PickUpAddressId, tenant);
+                        if (myAddress != null)
+                        {
+                            if (!string.IsNullOrEmpty(myAddress.City))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " " + myAddress.City;
+                            }
+
+                            else if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " " + myAddress.ZipCode;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(entityPM.FromAddressCity))
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? entityPM.FromAddressCity : mySubject + " " + entityPM.FromAddressCity;
+                        }
+
+                        else if (!string.IsNullOrEmpty(entityPM.FromAddressZipCode))
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? entityPM.FromAddressZipCode : mySubject + " " + entityPM.FromAddressZipCode;
+                        }
+                    }
+                }
+
+                else if (!string.IsNullOrEmpty(entityPM.FromPortId))
+                {
+                    PortPM myPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.FromPortId, true);
+                    if (myPort != null)
+                    {
+                        mySubject = string.IsNullOrEmpty(mySubject) ? myPort.Code : mySubject + " " + myPort.Code;
+                    }
+                }
+
+                if (entityPM.IncludeDelivery)
+                {
+                    if (!string.IsNullOrEmpty(entityPM.DeliveryAddressId))
+                    {
+                        Address myAddress = addressRepository.GetSingleAddress(entityPM.DeliveryAddressId, tenant);
+                        if (myAddress != null)
+                        {
+                            if (!string.IsNullOrEmpty(myAddress.City))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " > " + myAddress.City;
+                            }
+
+                            else if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                            {
+                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " > " + myAddress.ZipCode;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(entityPM.ToAddressCity))
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? entityPM.ToAddressCity : mySubject + " > " + entityPM.ToAddressCity;
+                        }
+
+                        else if (!string.IsNullOrEmpty(entityPM.ToAddressZipCode))
+                        {
+                            mySubject = string.IsNullOrEmpty(mySubject) ? entityPM.ToAddressZipCode : mySubject + " > " + entityPM.ToAddressZipCode;
+                        }
+                    }
+                }
+
+                else if (!string.IsNullOrEmpty(entityPM.ToPortId))
+                {
+                    PortPM myPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
+                    if (myPort != null)
+                    {
+                        mySubject = string.IsNullOrEmpty(mySubject) ? myPort.Code : mySubject + " > " + myPort.Code;
+                    }
+                }
+
+                #endregion
+            }
+
+            return mySubject;
+        }
+
         private QuotePM MapPOCOToPM(Quote entityPOCO)
         {
             QuotePM entityPM = new QuotePM()
@@ -1283,7 +1268,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 IsFreightBySteps = entityPOCO.IsFreightBySteps,
                 ConcurrencyGUID = entityPOCO.ConcurrencyGUID,
                 ExpirationDate = entityPOCO.ExpirationDate,
-                StartDate = entityPOCO.StartDate,
                 ExpirationDays = entityPOCO.ExpirationDays,
                 IsFixedPrice = entityPOCO.IsFixedPrice,
                 SentDate = entityPOCO.SentDate,
@@ -1313,7 +1297,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 DirectionId = entityPOCO.DirectionId,
                 LastModified = entityPOCO.LastModified,
                 Notes = entityPOCO.Notes,
-                QuoteClosingReasonNotes = entityPOCO.QuoteClosingReasonNotes,
                 OpenDate = entityPOCO.OpenDate,
                 CreatedByUserId = entityPOCO.CreatedByUserId,
                 BusinessUnitId = entityPOCO.BusinessUnitId,
@@ -1345,26 +1328,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 ExchangeRate = entityPOCO.ExchangeRate,
                 UsageCount = entityPOCO.UsageCount,
                 LastUsageDate = entityPOCO.LastUsageDate,
-                QuoteClosingReasonId = entityPOCO.QuoteClosingReasonId,
                 QuoteClosingReasonCode = entityPOCO.QuoteClosingReasonCode,
                 VolumeUnitCode = entityPOCO.VolumeUnitCode,
                 DimensionsUnitCode = entityPOCO.DimensionsUnitCode,
                 GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode,
                 ChargeableWeightUnitCode = entityPOCO.ChargeableWeightUnitCode,
-                PickupDeliveryCWeightUnitCode = entityPOCO.PickupDeliveryCWeightUnitCode,
                 Volume = entityPOCO.Volume,
                 VolumetricWeight = entityPOCO.VolumetricWeight,
                 GrossWeight = entityPOCO.GrossWeight,
                 GrossWeightInKG = entityPOCO.GrossWeightInKG,
                 GrossWeightPerTon = entityPOCO.GrossWeightPerTon,
                 ChargeableWeight = entityPOCO.ChargeableWeight,
-                ChargeableWeightInKG = entityPOCO.ChargeableWeightInKG,
-                PickupDeliveryChargeableWeight = entityPOCO.PickupDeliveryChargeableWeight,
-                PickupDeliveryVolumetricWeight = entityPOCO.PickupDeliveryVolumetricWeight,
-                VolumeInCBM = entityPOCO.VolumeInCBM,
                 TransportModeId = entityPOCO.TransportModeId,
                 Ratio = entityPOCO.Ratio,
-                PickupDeliveryRatio = entityPOCO.PickupDeliveryRatio,
                 DimFactor = entityPOCO.DimFactor,
                 NumberOfPackages = entityPOCO.NumberOfPackages,
                 NumberOfContainers = entityPOCO.NumberOfContainers,
@@ -1394,7 +1370,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 IncotermName = entityPOCO.Incoterm == null ? null : entityPOCO.Incoterm.Name,
                 SalesmanUserId = entityPOCO.SalesmanUserId,
                 SalesmanName = entityPOCO.SalesmanUser == null ? null : (entityPOCO.SalesmanUser.Contact == null ? null : entityPOCO.SalesmanUser.Contact.EnglishName),
-                SalesmanEmail = entityPOCO.SalesmanUser == null ? null : (entityPOCO.SalesmanUser.Contact == null ? null : entityPOCO.SalesmanUser.Contact.Email),
                 StageId = entityPOCO.StageId,
                 StageDueDate = entityPOCO.StageDueDate,
                 StageName = entityPOCO.Stage == null ? null : entityPOCO.Stage.Name,
@@ -1438,50 +1413,17 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 LastStageDate = entityPOCO.LastStageDate,
                 QuotationSections = entityPOCO.QuotationSections,
                 NumberOfFollowUps = entityPOCO.NumberOfFollowUps,
-                SameOrFixed = entityPOCO.IsSaleCurrencySameAsCost ? "Same as Cost Currency" : entityPOCO.IsMultiCurrency ? "Multi" : "Fixed",
+                SameOrFixed = entityPOCO.IsSaleCurrencySameAsCost ? "Same as Cost Currency" : "Fixed",
                 QuoteLevel = entityPOCO.ShipmentTypeId,
                 GrossWeightEdited = entityPOCO.GrossWeightEdited,
                 ChargeableWeightEdited = entityPOCO.ChargeableWeightEdited,
-                QuoteHTMLDocumentId = entityPOCO.QuoteHTMLDocumentId,
-                QuoteVersion = entityPOCO.LastVersionNumber > 0 ? entityPOCO.QuoteNumber + "-" + entityPOCO.LastVersionNumber : "",
-                Field11 = new CustomFieldClass("Field11", "Quote", entityPOCO.Field11),
-                Field12 = new CustomFieldClass("Field12", "Quote", entityPOCO.Field12),
-                Field13 = new CustomFieldClass("Field13", "Quote", entityPOCO.Field13),
-                Field14 = new CustomFieldClass("Field14", "Quote", entityPOCO.Field14),
-                Field15 = new CustomFieldClass("Field15", "Quote", entityPOCO.Field15),
-                Field16 = new CustomFieldClass("Field16", "Quote", entityPOCO.Field16),
-                Field17 = new CustomFieldClass("Field17", "Quote", entityPOCO.Field17),
-                Field18 = new CustomFieldClass("Field18", "Quote", entityPOCO.Field18),
-                Field19 = new CustomFieldClass("Field19", "Quote", entityPOCO.Field19),
-                Field20 = new CustomFieldClass("Field20", "Quote", entityPOCO.Field20),
-                EstimatedProfitInLocal = entityPOCO.EstimatedProfitInLocal,
-                EstimatedProfitInProfit = entityPOCO.EstimatedProfitInProfit,
-                ProfitCurrencyId = entityPOCO.ProfitCurrencyId,
-                ProfitExchangeRate = entityPOCO.ProfitExchangeRate,
-                RequestDate = entityPOCO.RequestDate,
-                RegionalTaxId = entityPOCO.RegionalTaxId,
-                RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
-                DescriptionRightToLeft = entityPOCO.DescriptionRightToLeft,
-                IsMultiCurrency = entityPOCO.IsMultiCurrency,
-                PackagesQuantity = entityPOCO.PackagesQuantity,
-                SpecialServicesTypeId = entityPOCO.SpecialServicesTypeId,
-                IncludeInsurance = entityPOCO.IncludeInsurance,
-                IsStackable = entityPOCO.IsStackable,
-                IncludeImportDutyCharges = entityPOCO.IncludeImportDutyCharges,
-                InsuranceValue = entityPOCO.InsuranceValue,
-                ValidByTypeCode = entityPOCO.ValidByTypeCode,
-                ConnectedToOpportunity = entityPOCO.ConnectedToOpportunity,
-                ShipmentType = entityPOCO.ShipmentType == null ? "" : entityPOCO.ShipmentType.Name,
-                MoveTypeName = entityPOCO.MoveType == null ? null : entityPOCO.MoveType.MoveTypeEnglishName,
-                MoveTypeCode = entityPOCO.MoveType == null ? null : entityPOCO.MoveType.Code,
-                IsExpired = entityPOCO.ExpirationDate != null && entityPOCO.ExpirationDate < DateTime.Now && !entityPOCO.IsCancelled && !entityPOCO.IsClosed
             };
 
             int tenant = entityPOCO.Tenant;
             string entityId = entityPOCO.Id;
 
-            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
-            IQuotesContext myQuotesContext = QuotesContext.GetContext(tenant);
+            ICommonDataContext myCommonContext= CommonDataContext.GetContext(tenant);
+            IQuotesContext myQuotesContext= QuotesContext.GetContext(tenant);
 
             FollowUpRepository followUpsRepository = new FollowUpRepository(tenant);
             PortRepository portRepository = new PortRepository(myCommonContext);
@@ -1509,12 +1451,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         entityPM.FromCountryId = fromAddress.CountryId;
 
                         string fromLocation = "";
-                        string fromLocationIncludeCountry = "";
 
                         if (!string.IsNullOrEmpty(fromAddress.City))
                         {
                             fromLocation = fromAddress.City;
-                            fromLocationIncludeCountry = fromAddress.City;
                         }
 
                         if (fromAddress.Country != null)
@@ -1524,18 +1464,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                             if (string.IsNullOrEmpty(fromLocation))
                             {
                                 fromLocation = fromAddress.Country.Code;
-                                fromLocationIncludeCountry = fromAddress.Country.EnglishName;
                             }
 
                             else
                             {
                                 fromLocation += " " + fromAddress.Country.Code;
-                                fromLocationIncludeCountry += " " + fromAddress.Country.EnglishName;
                             }
                         }
 
                         entityPM.FromLocation = fromLocation;
-                        entityPM.FromLocationIncludeCountry = fromLocationIncludeCountry;
                     }
                 }
 
@@ -1547,12 +1484,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         entityPM.ToCountryId = toAddress.CountryId;
 
                         string toLocation = "";
-                        string toLocationIncludeCountry = "";
 
                         if (!string.IsNullOrEmpty(toAddress.City))
                         {
                             toLocation = toAddress.City;
-                            toLocationIncludeCountry = toAddress.City;
                         }
 
                         if (toAddress.Country != null)
@@ -1562,18 +1497,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                             if (string.IsNullOrEmpty(toLocation))
                             {
                                 toLocation = toAddress.Country.Code;
-                                toLocationIncludeCountry = toAddress.Country.EnglishName;
                             }
 
                             else
                             {
                                 toLocation += " " + toAddress.Country.Code;
-                                toLocationIncludeCountry += " " + toAddress.Country.EnglishName;
                             }
                         }
 
                         entityPM.ToLocation = toLocation;
-                        entityPM.ToLocationIncludeCountry = toLocationIncludeCountry;
                     }
                 }
             }
@@ -1587,7 +1519,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 {
                     entityPM.FromCountryId = fromPort.CountryId;
                     entityPM.FromLocation = fromPort.Code + " " + fromPort.EnglishName;
-                    entityPM.FromLocationIncludeCountry = fromPort.EnglishName + ", " + fromPort.CountryName;
+
                     entityPM.FromCountryIsEC = fromPort.CountryEC;
                 }
 
@@ -1596,7 +1528,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 {
                     entityPM.ToCountryId = toPort.CountryId;
                     entityPM.ToLocation = toPort.Code + " " + toPort.EnglishName;
-                    entityPM.ToLocationIncludeCountry = toPort.EnglishName + ", " + toPort.CountryName;
+
                     entityPM.ToCountryIsEC = toPort.CountryEC;
                 }
             }
@@ -1628,62 +1560,39 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             if (isInlandDomestic)
             {
-                entityPM.FromPortId = entityPOCO.FromPortId;
-                entityPM.ToPortId = entityPOCO.ToPortId;
-                entityPM.InlandDomesticFromZipCode = entityPOCO.InlandDomesticFromZipCode;
-                entityPM.InlandDomesticToZipCode = entityPOCO.InlandDomesticToZipCode;
-                entityPM.InlandDomesticFromCity = entityPOCO.InlandDomesticFromCity;
-                entityPM.InlandDomesticToCity = entityPOCO.InlandDomesticToCity;
-                entityPM.InlandDomesticFromCountryId = entityPOCO.InlandDomesticFromCountryId;
-                entityPM.InlandDomesticToCountryId = entityPOCO.InlandDomesticToCountryId;
-                entityPM.InlandDomesticFromTypeCode = entityPOCO.InlandDomesticFromTypeCode;
-                entityPM.InlandDomesticToTypeCode = entityPOCO.InlandDomesticToTypeCode;
-                entityPM.MainCarriageFromPortAddress = entityPOCO.MainCarriageFromPortAddress;
-                entityPM.MainCarriageToPortAddress = entityPOCO.MainCarriageToPortAddress;
-
-                switch (entityPM.InlandDomesticFromTypeCode)
+                if (!string.IsNullOrEmpty(entityPOCO.FromPartnerAddressId))
                 {
-                    case "PART":
+                    Address address = addressRepository.GetSingleAddress(entityPOCO.FromPartnerAddressId, tenant);
+                    if (address != null)
+                    {
+                        if (!string.IsNullOrEmpty(address.CountryId))
                         {
-                            this.GetFromPartnerAddressData(entityPM, addressRepository, countryRepository);
-                            break;
+                            Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                            if (country != null)
+                            {
+                                entityPM.FromCountryCode = country.Code;
+                                entityPM.FromCountryName = country.EnglishName;
+                            }
                         }
-
-                    case "PORT":
-                        {
-                            this.GetFromPort(entityPM, portRepository, countryRepository);
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            this.GetFromCasualAddressData(entityPM, countryRepository);
-                            break;
-                        }
+                    }
                 }
 
-                switch (entityPM.InlandDomesticToTypeCode)
+                if (!string.IsNullOrEmpty(entityPOCO.ToPartnerAddressId))
                 {
-                    case "PART":
+                    Address address = addressRepository.GetSingleAddress(entityPOCO.ToPartnerAddressId, tenant);
+                    if (address != null)
+                    {
+                        if (!string.IsNullOrEmpty(address.CountryId))
                         {
-                            this.GetToPartnerAddressData(entityPM, addressRepository, countryRepository);
-                            break;
+                            Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                            if (country != null)
+                            {
+                                entityPM.ToCountryCode = country.Code;
+                                entityPM.ToCountryName = country.EnglishName;
+                            }
                         }
-
-                    case "PORT":
-                        {
-                            this.GetToPort(entityPM, portRepository, countryRepository);
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            this.GetToCasualAddressData(entityPM, countryRepository);
-                            break;
-                        }
+                    }
                 }
-
-                entityPM.Routing = entityPM.RoutingFrom + " > " + entityPM.RoutingTo;
             }
 
             else
@@ -1721,8 +1630,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         }
                     }
                 }
-
-                entityPM.Routing = entityPM.FromCountryName + " > " + entityPM.ToCountryName;
             }
             #endregion
 
@@ -1740,16 +1647,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
             }
 
-            #region ConsigneeNotImporter
-            this.SetConsigneeNotImporterDetails(entityPM, entityPOCO, addressRepository);
-
-            #endregion
-
-            #region ShipperNotExporter
-            this.SetShipperNotExporterDetails(entityPM, entityPOCO, addressRepository);
-
-            #endregion
-
             #region Shipper
 
 
@@ -1757,8 +1654,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             {
                 Card loadedCard = CardRepository.GetSingleCard(entityPOCO.ShipperId, tenant, true);
                 entityPM.ShipperNote = loadedCard.Notes;
-                entityPM.ShipperCountryCode = loadedCard.CountryCode;
-                entityPM.ShipperCountryName = loadedCard.CountryName;
+
                 if (loadedCard.PartnerTypeId == "PO")
                 {
                     entityPM.IsPotentialShipper = true;
@@ -1786,8 +1682,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             {
                 Card loadedCard = CardRepository.GetSingleCard(entityPOCO.ConsigneeId, tenant, false);
                 entityPM.ConsigneeNote = loadedCard.Notes;
-                entityPM.ConsigneeCountryCode = loadedCard.CountryCode;
-                entityPM.ConsigneeCountryName = loadedCard.CountryName;
 
                 if (loadedCard.PartnerTypeId == "PO")
                 {
@@ -1828,8 +1722,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.NotifyId = entityPOCO.NotifyId;
             entityPM.NotifyAddressId = entityPOCO.NotifyAddressId;
             entityPM.NotifyContactId = entityPOCO.NotifyContactId;
-            entityPM.NotifyReference1 = entityPOCO.NotifyReference1;
-            entityPM.NotifyReference2 = entityPOCO.NotifyReference2;
             if (!string.IsNullOrEmpty(entityPOCO.NotifyId))
             {
                 Card loadedCard = CardRepository.GetSingleCard(entityPOCO.NotifyId, entityPOCO.Tenant, true);
@@ -1865,12 +1757,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.ToAddressCity = entityPOCO.ToAddressCity;
             entityPM.ToAddressZipCode = entityPOCO.ToAddressZipCode;
             entityPM.ToAddressCountryId = entityPOCO.ToAddressCountryId;
-            entityPM.PickupCity = entityPOCO.FromAddressCity;
-            entityPM.PickupCountryId = entityPOCO.FromAddressCountryId;
-            entityPM.PickupZipCode = entityPOCO.FromAddressZipCode;
-            entityPM.DeliveryCity = entityPOCO.ToAddressCity;
-            entityPM.DeliveryCountryId = entityPOCO.ToAddressCountryId;
-            entityPM.DeliveryZipCode = entityPOCO.ToAddressZipCode;
 
             if (entityPM.IncludePickUp)
             {
@@ -1882,9 +1768,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         entityPM.PickUpAddress = this.GetAddress(address)
                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
                             + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
-                        entityPM.PickupCity = address.City;
-                        entityPM.PickupCountryId = address.Country?.Id;
-                        entityPM.PickupZipCode = address.ZipCode;
                     }
                 }
             }
@@ -1899,9 +1782,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         entityPM.DeliveryAddress = this.GetAddress(address)
                             + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
                             + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
-                        entityPM.DeliveryCity = address.City;
-                        entityPM.DeliveryCountryId = address.Country?.Id;
-                        entityPM.DeliveryZipCode = address.ZipCode;
                     }
                 }
             }
@@ -1995,7 +1875,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
                 #endregion
             }
-
+            
             if (entityPOCO.IncludeDelivery)
             {
                 #region Delivery Location
@@ -2035,10 +1915,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                             else
                             {
                                 location += " - " + address.ZipCode;
-                            }
-                            if (string.IsNullOrEmpty(entityPM.ToAddressZipCode))
-                            {
-                                entityPM.ToAddressZipCode = address.ZipCode;
                             }
                         }
 
@@ -2108,7 +1984,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     IsNew = follow.IsNew,
                     JobId = follow.JobId,
                     LegType = follow.LegType,
-                    Notes = follow.Notes,
+                    Note = follow.Notes,
                     QuoteId = follow.QuoteId,
                     EventTypeId = follow.EventTypeId,
                     EventTypeFollowUpName = follow.EventType.FollowUpEnglishName,
@@ -2123,19 +1999,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
             #endregion
 
-            entityPM.ShipmentSubTypeId = entityPOCO.ShipmentSubTypeId;
-            if (!string.IsNullOrEmpty(entityPOCO.ShipmentSubTypeId))
-            {
-                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(tenant);
-                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(entityPOCO.ShipmentSubTypeId, tenant);
-                if (subType != null)
-                {
-                    entityPM.ShipmentSubTypeName = subType.Name;
-                }
-            }
-
-            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant, entityPM.QuoteTypeCode);
-
+            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);           
             entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(entityId, tenant);
 
             if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
@@ -2203,7 +2067,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             #endregion
 
             entityPM.TotalReceivablesAmount = 0;
-
             foreach (QuoteChargePM receviable in entityPM.QuoteCharges)
             {
                 if (receviable.SaleTotalAmountLocal != null)
@@ -2212,7 +2075,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
             }
 
-            entityPM.QuotationSaleCharges = new List<QuoteSaleChargePM>();
             #region QuoteCostCharges || QuoteSaleCharges
             foreach (QuoteChargePM item in entityPM.QuoteCharges)
             {
@@ -2230,7 +2092,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         isCostChargeAddable = false;
                     }
                 }
-
                 else
                 {
                     if (item.CostUnitPrice == null
@@ -2296,22 +2157,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         CostMaxAmount = item.CostMaxAmount,
                         SaleMinAmount = item.SaleMinAmount,
                         SaleMaxAmount = item.SaleMaxAmount,
-                        IsRegionalTax = item.IsRegionalTax,
-                        MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
-                        ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
-                        ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
-                        ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
-                        ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
-                        ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
-                        MarkUpCurrencyId = item.MarkUpCurrencyId,
                     };
 
                     entityPM.QuoteCostCharges.Add(costChargePM);
                 }
 
                 bool isSaleChargeAddable = !(item.IsAllIN);
-                bool isSaleChargeQuotationAddable = true;
-
 
                 if (entityPM.TransportModeId.ToUpper() == "A"
                     ||
@@ -2325,7 +2176,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         if (item.QuoteChargePriceSteps.Count == 0)
                         {
                             isSaleChargeAddable = false;
-                            isSaleChargeQuotationAddable = false;
                         }
                     }
 
@@ -2334,7 +2184,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         if (item.SaleUnitPrice == null)
                         {
                             isSaleChargeAddable = false;
-                            isSaleChargeQuotationAddable = false;
                         }
                     }
                 }
@@ -2346,7 +2195,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         if (item.QuoteChargePriceSteps.Count == 0)
                         {
                             isSaleChargeAddable = false;
-                            isSaleChargeQuotationAddable = false;
                         }
                     }
 
@@ -2361,16 +2209,75 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                             )
                         {
                             isSaleChargeAddable = false;
-                            isSaleChargeQuotationAddable = false;
                         }
                     }
                 }
 
-
-
-                if (isSaleChargeAddable || isSaleChargeQuotationAddable)
+                if (isSaleChargeAddable)
                 {
-                    QuoteSaleChargePM saleChargePM = MapChargePMToSaleChargePM(item);
+                    QuoteSaleChargePM saleChargePM = new QuoteSaleChargePM()
+                    {
+                        Id = item.Id,
+                        Tenant = item.Tenant,
+                        QuoteId = item.QuoteId,
+                        ChargesTypeId = item.ChargesTypeId,
+                        ChargesTypeCode = item.ChargesTypeCode,
+                        ChargesTypeName = item.ChargesTypeName,
+                        ChargesTypeDescription = item.ChargesTypeDescription,
+                        ChargesGroupCode = item.ChargesGroupCode,
+                        CurrencyId = item.SaleCurrencyId,
+                        CurrencyCode = item.SaleCurrencyCode,
+                        SaleExchangeRate = item.SaleExchangeRate,
+                        MarkUpTypeCode = item.MarkUpTypeCode,
+                        MarkUpValue = item.MarkUpValue,
+                        ChargesTypeLocalName = item.ChargesTypeLocalName,
+                        Notes = item.Notes,
+                        UpdatedByUserId = item.UpdatedByUserId,
+                        UpdateDate = item.UpdateDate,
+                        ValueDate = item.ValueDate,
+                        IsAllIN = item.IsAllIN ? "True" : "False",
+                        QuoteTypeCode = item.QuoteTypeCode,
+                        ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode,
+                        ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode,
+                        ContainerType3MarkUpTypeCode = item.ContainerType3MarkUpTypeCode,
+                        ContainerType4MarkUpTypeCode = item.ContainerType4MarkUpTypeCode,
+                        ContainerType5MarkUpTypeCode = item.ContainerType5MarkUpTypeCode,
+                        ContainerType1MarkUpValue = item.ContainerType1MarkUpValue,
+                        ContainerType2MarkUpValue = item.ContainerType2MarkUpValue,
+                        ContainerType3MarkUpValue = item.ContainerType3MarkUpValue,
+                        ContainerType4MarkUpValue = item.ContainerType4MarkUpValue,
+                        ContainerType5MarkUpValue = item.ContainerType5MarkUpValue,
+                        SaleMeasurementId = item.SaleMeasurementId,
+                        SaleMeasurementCode = item.SaleMeasurementCode,
+                        SaleMeasurementShortName = item.SaleMeasurementShortName,
+                        SaleMeasurementLocalName = item.SaleMeasurementLocalName,
+                        SaleQuantity = item.SaleQuantity,
+                        SaleUnitPrice = item.SaleUnitPrice,
+                        SaleTotalAmount = item.SaleTotalAmount,
+                        SaleTotalAmountLocal = item.SaleTotalAmountLocal,
+                        SaleContainerType1UnitPrice = item.SaleContainerType1UnitPrice,
+                        SaleContainerType2UnitPrice = item.SaleContainerType2UnitPrice,
+                        SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice,
+                        SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice,
+                        SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice,
+                        VatTypeId = item.VatTypeId,
+                        VatPercentage = item.VatPercentage,
+                        VatTypeName = item.VatTypeName,
+                        VatAmount = item.VatAmount,
+                        UOMPercentage = item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" ? "%" : "",
+                        SaleUnitPriceInSaleCurrency = item.SaleUnitPriceInSaleCurrency,
+                        SaleUnitPrice1InSaleCurrency = item.SaleUnitPrice1InSaleCurrency,
+                        SaleUnitPrice2InSaleCurrency = item.SaleUnitPrice2InSaleCurrency,
+                        SaleUnitPrice3InSaleCurrency = item.SaleUnitPrice3InSaleCurrency,
+                        SaleUnitPrice4InSaleCurrency = item.SaleUnitPrice4InSaleCurrency,
+                        SaleUnitPrice5InSaleCurrency = item.SaleUnitPrice5InSaleCurrency,
+                        SaleAmountInSaleCurrency = item.SaleAmountInSaleCurrency,
+                        CostMinAmount = item.CostMinAmount,
+                        CostMaxAmount = item.CostMaxAmount,
+                        SaleMinAmount = item.SaleMinAmount,
+                        SaleMaxAmount = item.SaleMaxAmount,
+                    };
+
                     if (item.IsChargeBySteps)
                     {
                         if (item.QuoteChargePriceSteps.Count > 0)
@@ -2397,27 +2304,24 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                         }
                                     }
                                 }
-                                string stepUOM = GetPriceBreakWeightUnitCodeByCostMeasurementCode(item.CostMeasurementCode, entityPM);
+
                                 if (string.IsNullOrEmpty(myPriceBreaks))
                                 {
-                                    myPriceBreaks += "+" + itemStep.Step + " " + stepUOM + ": " + formattedValue;
+                                    myPriceBreaks += "+" + itemStep.Step + " kg: " + formattedValue;
                                 }
 
                                 else
                                 {
                                     myPriceBreaks += "\r";//Environment.NewLine;
-                                    myPriceBreaks += "+" + itemStep.Step + " " + stepUOM + ": " + formattedValue;
+                                    myPriceBreaks += "+" + itemStep.Step + " kg: " + formattedValue;
                                 }
-
                             }
 
                             saleChargePM.PriceBreaks = myPriceBreaks;
                         }
                     }
 
-                    if (isSaleChargeAddable) entityPM.QuoteSaleCharges.Add(saleChargePM);
-                    else if (isSaleChargeQuotationAddable) entityPM.QuotationSaleCharges.Add(saleChargePM);
-
+                    entityPM.QuoteSaleCharges.Add(saleChargePM);
                 }
             }
             #endregion
@@ -2430,7 +2334,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                              select new QuoteSalesTotalPM()
                                              {
                                                  CurrencyCode = g.Key,
-                                                 Amount = g.Sum(s => s.SaleTotalAmount),
+                                                 Amount = g.Sum(s=>s.SaleTotalAmount),
                                              }).ToList();
             }
 
@@ -2484,13 +2388,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
             #endregion
 
-
-            #region QuoteSalesAmountWithVATDetails
-
-            entityPM.QuoteSalesAmountWithVATDetails = ComputeQuoteSalesAmountWithVATDetails(entityPM);
-
-            #endregion
-
             string totalContainers = "";
             string container = "";
             string containerTypeCode = "";
@@ -2505,7 +2402,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 {
                     containerTypeCode = packageType.Code.Insert(2, "'");
                 }
-
+                
                 container = entityPM.PackageType1Quantity + " x " + containerTypeCode;
                 totalContainers = totalContainers + container;
             }
@@ -2611,130 +2508,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.TotalSaleIncludingVATAmountInSaleCurrency = mySaleAmount + myTotalVAT;
             entityPM.TotalSaleIncludingVATAmountInLocalCurrency = mySaleAmountLocal + myTotalVATLocal;
 
-            entityPM.TicketId = GetConnectedTicketId(entityPOCO, tenant);
-            entityPM.SummaryMarkup = this.GetSummaryMarkup(entityPM);
-            entityPM.TotalVATInSalesCurrency = this.GetSummaryTotalVAT(entityPM);
-
-            new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Quote", Tenant = tenant }).Set();
-
             return entityPM;
         }
-
-        private List<QuoteSalesAmountWithVATDetailsPM> ComputeQuoteSalesAmountWithVATDetails(QuotePM quotePM)
-        {
-            IEnumerable<IGrouping<string, QuoteSaleChargePM>> quoteSaleChargesGroupLists = quotePM.QuoteSaleCharges.GroupBy(q => q.CurrencyCode);
-            var quoteSalesTotals = new List<QuoteSalesAmountWithVATDetailsPM>();
-            foreach (IGrouping<string, QuoteSaleChargePM> quoteSaleChargesGrop in quoteSaleChargesGroupLists)
-            {
-                string currencyCode = "";
-                double? vATAmount = 0;
-                double? subtotalAmount = 0;
-                string vATPercentage = "";
-                List<QuoteSaleChargePM> quoteSaleCharges = quoteSaleChargesGrop.ToList();
-                foreach (QuoteSaleChargePM quoteSaleChargePM in quoteSaleCharges)
-                {
-                    currencyCode = quoteSaleChargePM.CurrencyCode;
-                    vATAmount += quoteSaleChargePM.VatAmount != null ? (double)quoteSaleChargePM.VatAmount : 0;
-                    subtotalAmount += (quoteSaleChargePM.SaleTotalAmount != null ? quoteSaleChargePM.SaleTotalAmount : 0);
-                    vATPercentage += quoteSaleChargePM.VatPercentage + " % ,";
-                }
-
-                vATPercentage = vATPercentage.TrimEnd(',');
-
-                quoteSalesTotals.Add(new QuoteSalesAmountWithVATDetailsPM()
-                {
-                    CurrencyCode = currencyCode,
-                    SubtotalAmount = subtotalAmount,
-                    VATAmount = vATAmount,
-                    TotalAmount = subtotalAmount + vATAmount,
-                    VATPercentage = vATPercentage,
-                });
-            }
-
-            return quoteSalesTotals;
-        }
-
-        private void SetConsigneeNotImporterDetails(QuotePM entityPM, Quote entityPOCO, AddressRepository addressRepository)
-        {
-            if (entityPOCO.ConsigneeNotImporterId == null)
-            {
-                return;
-            }
-            entityPM.ConsigneeNotImporterId = entityPOCO.ConsigneeNotImporterId;
-            entityPM.ConsigneeNotImporterAddressId = entityPOCO.ConsigneeNotImporterAddressId;
-            entityPM.ConsigneeNotImporterContactId = entityPOCO.ConsigneeNotImporterContactId;
-
-            Card loadedCard = CardRepository.GetSingleCard(entityPOCO.ConsigneeNotImporterId, entityPOCO.Tenant, true);
-            entityPM.ConsigneeNotImporterName = loadedCard.EnglishName;
-            entityPM.ConsigneeNotImporterNote = loadedCard.Notes;
-
-            Address address = addressRepository.GetMainAddressByCardId(entityPOCO.FreelancerId, entityPOCO.Tenant);
-            if (address == null)
-            {
-                return;
-            }
-            entityPM.ConsigneeNotImporterAddressId = address.Id;
-        }
-
-        private void SetShipperNotExporterDetails(QuotePM entityPM, Quote entityPOCO, AddressRepository addressRepository)
-        {
-            if (entityPOCO.ShipperNotExporterId == null)
-            {
-                return;
-            }
-            entityPM.ShipperNotExporterId = entityPOCO.ShipperNotExporterId;
-            entityPM.ShipperNotExporterAddressId = entityPOCO.ShipperNotExporterAddressId;
-            entityPM.ShipperNotExporterContactId = entityPOCO.ShipperNotExporterContactId;
-
-            Card loadedCard = CardRepository.GetSingleCard(entityPOCO.ShipperNotExporterId, entityPOCO.Tenant, true);
-            entityPM.ShipperNotExporterName = loadedCard.EnglishName;
-            entityPM.ShipperNotExporterNote = loadedCard.Notes;
-
-            Address address = addressRepository.GetMainAddressByCardId(entityPOCO.FreelancerId, entityPOCO.Tenant);
-            if (address == null)
-            {
-                return;
-            }
-            entityPM.ShipperNotExporterAddressId = address.Id;
-        }
-        
-        private string GetSummaryMarkup(QuotePM quoteEntityPM)
-        {
-            double? summaryCostAmount = 0;
-            double? summarySaleAmount = 0;
-            string markupPercentage = "";
-            if (quoteEntityPM != null)
-            {
-                var myCostAmountLocal = MethodHelper.Round(quoteEntityPM.QuoteCharges.Sum(a => a.CostTotalAmountLocal), 2);
-                var mySaleAmountLocal = MethodHelper.Round(quoteEntityPM.QuoteCharges.Where(f => f.IsAllIN == false).Sum(a => a.SaleTotalAmountLocal), 2);
-                summaryCostAmount = MethodHelper.Round(myCostAmountLocal, 2);
-                summarySaleAmount = MethodHelper.Round(mySaleAmountLocal, 2);
-
-                markupPercentage = (summaryCostAmount == 0 ? summaryCostAmount : MethodHelper.Round((summarySaleAmount - summaryCostAmount) * 100 / summaryCostAmount, 2)) + "%";
-            }
-            return markupPercentage;
-        }
-
-        private double? GetSummaryTotalVAT(QuotePM quoteEntityPM)
-        {
-            double? totalVAT = 0;
-            if (quoteEntityPM != null)
-            {
-                totalVAT = MethodHelper.Round(quoteEntityPM.TotalVATs.Sum(a => a.QuoteCurrencyVATAmount), 2);
-            }
-
-            return totalVAT;
-        }
-
-
-        private string GetConnectedTicketId(Quote entityPOCO, int tenant)
-        {
-            #region Ticket
-            TicketRepository ticketRepository = new TicketRepository(tenant);
-            return ticketRepository.GetIdByQuoteId(entityPOCO.Id);
-            #endregion
-        }
- 
 
         private string GetAddress(Address address)
         {
@@ -2789,269 +2564,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return resultAddress;
         }
 
-        private string GetMarkUpText(double? value, string typeCode)
-        {
-            string myResult = "0.00";
 
-            if (value != null)
-            {
-                if (value != 0)
-                {
-                    myResult = value.ToString();
 
-                    if (typeCode == "P")
-                    {
-                        myResult += " %";
-                    }
-                }
-            }
-
-            return myResult;
-        }
-
-        public List<QuoteSaleChargePM> AddEmptySaleCharge(List<QuoteChargePM> quoteCharges, string transportMode, string shipmentType)
-        {
-            List<QuoteSaleChargePM> emptySaleCharges = new List<QuoteSaleChargePM>() { };
-            quoteCharges.ForEach(quote => {
-                if (quote.IsAllIN && quote.SaleUnitPrice == null && !quote.IsChargeBySteps)
-                {
-                    if (IsPackageableShipment(transportMode, shipmentType))
-                    {
-                        if (quote.SaleContainerType1UnitPrice == null
-                            && quote.SaleContainerType2UnitPrice == null
-                            && quote.SaleContainerType3UnitPrice == null
-                            && quote.SaleContainerType4UnitPrice == null
-                            && quote.SaleContainerType5UnitPrice == null)
-                            emptySaleCharges.Add(MapChargePMToSaleChargePM(quote));
-                    }
-                    else
-                    {
-                        emptySaleCharges.Add(MapChargePMToSaleChargePM(quote));
-                    }
-
-                }
-            });
-            return emptySaleCharges;
-        }
-
-        private bool IsPackageableShipment(string transportMode, string shipmentType)
-        {
-            if (transportMode.ToUpper() == "A" ||
-               (shipmentType.ToUpper() == "O" && shipmentType.ToUpper() == "LCLD") ||
-               (shipmentType.ToUpper() == "I" && shipmentType.ToUpper() == "LTL"))
-                return false;
-            return true;
-        }
-        private QuoteSaleChargePM MapChargePMToSaleChargePM(QuoteChargePM item)
-        {
-            var vatAmount = item.VatAmount == null ? 0 : item.VatAmount;
-            QuoteSaleChargePM saleChargePM = new QuoteSaleChargePM()
-            {
-                Id = item.Id,
-                Tenant = item.Tenant,
-                QuoteId = item.QuoteId,
-                ChargesTypeId = item.ChargesTypeId,
-                ChargesTypeCode = item.ChargesTypeCode,
-                ChargesTypeName = item.ChargesTypeName,
-                ChargesTypeDescription = item.ChargesTypeDescription,
-                ChargesGroupCode = item.ChargesGroupCode,
-                CurrencyId = item.SaleCurrencyId,
-                CurrencyCode = item.SaleCurrencyCode,
-                SaleExchangeRate = item.SaleExchangeRate,
-                MarkUpTypeCode = item.MarkUpTypeCode,
-                MarkUpValue = item.MarkUpValue,
-                ChargesTypeLocalName = item.ChargesTypeLocalName,
-                Notes = item.Notes,
-                UpdatedByUserId = item.UpdatedByUserId,
-                UpdateDate = item.UpdateDate,
-                ValueDate = item.ValueDate,
-                IsAllIN = item.IsAllIN ? "True" : "False",
-                QuoteTypeCode = item.QuoteTypeCode,
-                ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode,
-                ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode,
-                ContainerType3MarkUpTypeCode = item.ContainerType3MarkUpTypeCode,
-                ContainerType4MarkUpTypeCode = item.ContainerType4MarkUpTypeCode,
-                ContainerType5MarkUpTypeCode = item.ContainerType5MarkUpTypeCode,
-                ContainerType1MarkUpValue = item.ContainerType1MarkUpValue,
-                ContainerType2MarkUpValue = item.ContainerType2MarkUpValue,
-                ContainerType3MarkUpValue = item.ContainerType3MarkUpValue,
-                ContainerType4MarkUpValue = item.ContainerType4MarkUpValue,
-                ContainerType5MarkUpValue = item.ContainerType5MarkUpValue,
-                SaleMeasurementId = item.SaleMeasurementId,
-                SaleMeasurementCode = item.SaleMeasurementCode,
-                SaleMeasurementShortName = item.SaleMeasurementShortName,
-                SaleMeasurementLocalName = item.SaleMeasurementLocalName,
-                SaleQuantity = item.SaleQuantity,
-                SaleUnitPrice = item.SaleUnitPrice,
-                SaleTotalAmount = item.SaleTotalAmount,
-                SaleTotalAmountLocal = item.SaleTotalAmountLocal,
-                SaleContainerType1UnitPrice = item.SaleContainerType1UnitPrice,
-                SaleContainerType2UnitPrice = item.SaleContainerType2UnitPrice,
-                SaleContainerType3UnitPrice = item.SaleContainerType3UnitPrice,
-                SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice,
-                SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice,
-                VatTypeId = item.VatTypeId,
-                VatPercentage = item.VatPercentage,
-                VatTypeName = item.VatTypeName,
-                VatAmount = item.VatAmount,
-                UOMPercentage = item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" ? "%" : "",
-                SaleUnitPriceInSaleCurrency = item.SaleUnitPriceInSaleCurrency,
-                SaleUnitPrice1InSaleCurrency = item.SaleUnitPrice1InSaleCurrency,
-                SaleUnitPrice2InSaleCurrency = item.SaleUnitPrice2InSaleCurrency,
-                SaleUnitPrice3InSaleCurrency = item.SaleUnitPrice3InSaleCurrency,
-                SaleUnitPrice4InSaleCurrency = item.SaleUnitPrice4InSaleCurrency,
-                SaleUnitPrice5InSaleCurrency = item.SaleUnitPrice5InSaleCurrency,
-                SaleAmountInSaleCurrency = item.SaleAmountInSaleCurrency,
-                CostMinAmount = item.CostMinAmount,
-                CostMaxAmount = item.CostMaxAmount,
-                SaleMinAmount = item.SaleMinAmount,
-                SaleMaxAmount = item.SaleMaxAmount,
-                IsRegionalTax = item.IsRegionalTax,
-                MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
-                ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
-                ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
-                ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
-                ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
-                ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
-                IsChargeBySteps = item.IsChargeBySteps,
-                SalesWithVATAmount = item.SaleTotalAmount + vatAmount,
-                QuoteChargesGroupCode = item.QuoteChargesGroupCode,
-                VATAmountInLocalCurrency = item.VATAmountInLocalCurrency,
-                VATAmountInLineSaleCurrency = item.VATAmountInLineSaleCurrency,
-                SaleTotalAmountIncludingVAT = item.SaleTotalAmountIncludingVAT,
-                SaleTotalAmountLocalIncludingVAT = item.SaleTotalAmountLocalIncludingVAT,
-                MarkUpCurrencyId = item.MarkUpCurrencyId,
-
-            };
-            return saleChargePM;
-        }
-
-        private void GetFromPartnerAddressData(QuotePM entityPM, AddressRepository addressRepository, CountryRepository countryRepository)
-        {
-            if (!string.IsNullOrEmpty(entityPM.FromPartnerAddressId))
-            {
-                Address address = addressRepository.GetSingleAddress(entityPM.FromPartnerAddressId, entityPM.Tenant);
-                if (address != null)
-                {
-                    entityPM.RoutingFrom = address.City;
-                    entityPM.FromCity = address.City;
-                    entityPM.FromZipCode = address.ZipCode;
-
-                    if (!string.IsNullOrEmpty(address.CountryId))
-                    {
-                        Country country = countryRepository.GetSingleCountry(address.CountryId, entityPM.Tenant);
-                        if (country != null)
-                        {
-                            entityPM.FromCountryId = country.Id;
-                            entityPM.FromCountryCode = country.Code;
-                            entityPM.FromCountryName = country.EnglishName;
-                        }
-                    }
-                }
-            }
-        }
-        private void GetFromPort(QuotePM entityPM, PortRepository portRepository, CountryRepository countryRepository)
-        {
-            if (!string.IsNullOrEmpty(entityPM.FromPortId))
-            {
-                Port port = portRepository.GetSinglePort(entityPM.Tenant, entityPM.FromPortId);
-                if (port != null)
-                {
-                    entityPM.RoutingFrom = port.Code;
-
-                    if (!string.IsNullOrEmpty(port.CountryId))
-                    {
-                        Country country = countryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant);
-                        if (country != null)
-                        {
-                            entityPM.FromCountryId = country.Id;
-                            entityPM.FromCountryCode = country.Code;
-                            entityPM.FromCountryName = country.EnglishName;
-                        }
-                    }
-                }
-            }
-        }
-        private void GetFromCasualAddressData(QuotePM entityPM, CountryRepository countryRepository)
-        {
-            entityPM.RoutingFrom = entityPM.InlandDomesticFromCity;
-            entityPM.FromCity = entityPM.InlandDomesticFromCity;
-            entityPM.FromZipCode = entityPM.InlandDomesticFromZipCode;
-
-            if (!string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId))
-            {
-                Country country = countryRepository.GetSingleCountry(entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
-                if (country != null)
-                {
-                    entityPM.FromCountryId = entityPM.InlandDomesticFromCountryId;
-                    entityPM.FromCountryCode = country.Code;
-                    entityPM.FromCountryName = country.EnglishName;
-                }
-            }
-        }
-
-        private void GetToPartnerAddressData(QuotePM entityPM, AddressRepository addressRepository, CountryRepository countryRepository)
-        {
-            if (!string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
-            {
-                Address address = addressRepository.GetSingleAddress(entityPM.ToPartnerAddressId, entityPM.Tenant);
-                if (address != null)
-                {
-                    entityPM.RoutingTo = address.City;
-                    entityPM.ToCity = address.City;
-                    entityPM.ToZipCode = address.ZipCode;
-
-                    if (!string.IsNullOrEmpty(address.CountryId))
-                    {
-                        Country country = countryRepository.GetSingleCountry(address.CountryId, entityPM.Tenant);
-                        if (country != null)
-                        {
-                            entityPM.ToCountryId = country.Id;
-                            entityPM.ToCountryCode = country.Code;
-                            entityPM.ToCountryName = country.EnglishName;
-                        }
-                    }
-                }
-            }
-        }
-        private void GetToPort(QuotePM entityPM, PortRepository portRepository, CountryRepository countryRepository)
-        {
-            if (!string.IsNullOrEmpty(entityPM.ToPortId))
-            {
-                Port port = portRepository.GetSinglePort(entityPM.Tenant, entityPM.ToPortId);
-                if (port != null)
-                {
-                    entityPM.RoutingTo = port.Code;
-
-                    if (!string.IsNullOrEmpty(port.CountryId))
-                    {
-                        Country country = countryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant);
-                        if (country != null)
-                        {
-                            entityPM.ToCountryId = country.Id;
-                            entityPM.ToCountryCode = country.Code;
-                            entityPM.ToCountryName = country.EnglishName;
-                        }
-                    }
-                }
-            }
-        }
-        private void GetToCasualAddressData(QuotePM entityPM, CountryRepository countryRepository)
-        {
-            entityPM.RoutingTo = entityPM.InlandDomesticToCity;
-            entityPM.ToCity = entityPM.InlandDomesticToCity;
-            entityPM.ToZipCode = entityPM.InlandDomesticToZipCode;
-
-            if (!string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId))
-            {
-                Country country = countryRepository.GetSingleCountry(entityPM.InlandDomesticToCountryId, entityPM.Tenant);
-                if (country != null)
-                {
-                    entityPM.ToCountryId = entityPM.InlandDomesticToCountryId;
-                    entityPM.ToCountryCode = country.Code;
-                    entityPM.ToCountryName = country.EnglishName;
-                }
-            }
-        }
     }
 }

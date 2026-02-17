@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Services.WebApi;
 using Microsoft.VisualStudio.Services.WebApi.Patch.Json;
 using Microsoft.VisualStudio.Services.WebApi.Patch;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -20,12 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
-using Logitude.Server.Tools.QueueService;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
+
 
 namespace WebFreight.Web.Helpers
 {
@@ -48,29 +43,19 @@ namespace WebFreight.Web.Helpers
             this.AnalyzeQueueId = AnalyzeQueueId;
             this.Tenant = tenant;
 
-            if (this.Details.Relations != null)
+            foreach (var item in this.Details.Relations)
             {
-                foreach (var item in this.Details.Relations)
-                {
-                    string url = item.Url;
+                string url = item.Url;
 
-                    if (item.Rel == "System.LinkTypes.Hierarchy-Reverse")
-                    {
-                        string last = url.Split('/').Last();
-                        projectNo = this.GetWorkItemById(Int32.Parse(last));
-                        this.Details.ProjectNumber = projectNo;
-                        this.CheckComputingPartners();
-                        break;
-                    }
+                if (item.Rel == "System.LinkTypes.Hierarchy-Reverse")
+                {
+                    string last = url.Split('/').Last();
+                    projectNo = this.GetWorkItemById(Int32.Parse(last));
+                    this.Details.ProjectNumber = projectNo;
+                    this.CheckComputingPartners();
+                    break;
                 }
             }
-            else
-            {
-                projectNo = this.GetWorkItemById(Int32.Parse(this.Details.WorkItemId));
-                this.Details.ProjectNumber = projectNo;
-                this.CheckComputingPartners();
-            }
-
         }
 
         bool isFirst = true;
@@ -78,7 +63,7 @@ namespace WebFreight.Web.Helpers
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = this.GetPersonalKey(); 
+            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
             int workItemId = wi;
 
             // new VssOAuthAccessTokenCredential(personalAccessToken)
@@ -90,31 +75,27 @@ namespace WebFreight.Web.Helpers
             try
             {
                 // Get the specified work item
-                var workitemResult = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations);
-                if (workitemResult != null)
+                WorkItem workitem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
+                var s = new StringBuilder();
+
+                // Output the work item's field values
+                projectNo = workitem.Fields.Where(a => a.Key == "LogitudeProcess.ProjectNumber").Select(a => a.Value).FirstOrDefault();
+                if (isFirst && isOutSide)
                 {
-                    WorkItem workitem = workitemResult.Result;
-                    var s = new StringBuilder();
+                    WorkItem workitem_description = witClient.GetWorkItemAsync(Int32.Parse(this.Details.WorkItemId), null, null, WorkItemExpand.Relations).Result;
+                    Description = workitem_description.Fields.Where(a => a.Key == "System.Title").Select(a => a.Value).FirstOrDefault();
+                }
+                if (projectNo == null)
+                {
+                    if (workitem.Relations != null)
+                    {
+                        var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
 
-                    // Output the work item's field values
-                    projectNo = workitem.Fields.Where(a => a.Key == "LogitudeProcess.ProjectNumber").Select(a => a.Value).FirstOrDefault();
-                    if (isFirst && isOutSide)
-                    {
-                        WorkItem workitem_description = witClient.GetWorkItemAsync(Int32.Parse(this.Details.WorkItemId), null, null, WorkItemExpand.Relations).Result;
-                        Description = workitem_description.Fields.Where(a => a.Key == "System.Title").Select(a => a.Value).FirstOrDefault();
-                    }
-                    if (projectNo == null)
-                    {
-                        if (workitem.Relations != null)
+                        if (relation != null)
                         {
-                            var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
-
-                            if (relation != null)
-                            {
-                                isFirst = false;
-                                string last = relation.Url.Split('/').Last();
-                                return this.GetWorkItemById(Int32.Parse(last));
-                            }
+                            isFirst = false;
+                            string last = relation.Url.Split('/').Last();
+                            return this.GetWorkItemById(Int32.Parse(last));
                         }
                     }
                 }
@@ -124,30 +105,12 @@ namespace WebFreight.Web.Helpers
                 VssServiceException vssex = aex.InnerException as VssServiceException;
                 if (vssex != null)
                 {
-                    ///throw new Exception(vssex.Message);
+                    Console.WriteLine(vssex.Message);
                 }
             }
-            return projectNo != null ? projectNo.ToString().Trim() : "";
+
+            return projectNo != null ? projectNo.ToString() : "";
         }
-
-        private string GetPersonalKey()
-        {
-            string personalAccessKey = "";
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-                if (setting != null)
-                {
-                    personalAccessKey = setting.TMPersonalAccessToken;
-                }
-
-                scope.Complete();
-            }
-
-            return personalAccessKey;
-        }
-
         private void CheckComputingPartners()
         {
             ICommonDataContext context = CommonDataContext.GetContext(Tenant); ;
@@ -159,6 +122,18 @@ namespace WebFreight.Web.Helpers
             ComputingPartner computingPartner = computingRepository.GetSingleComputingPartnerByCode("G-TFS"); // Computing Partner for TimeSheet = "TFS"
             if (computingPartner != null)
             {
+                //var objectTable = objectTableRepository.GetObjectTableByName("User", Tenant, false);
+                //ComputingPartnerTable computingTable = computingTableRepository.GetSingleComputingPartnerTable(Tenant, objectTable.Id, computingPartner.Id);
+                //if (computingTable != null)
+                //{
+                //    checkPartner = true;
+                //    this.InsertTMEmployeeTime(checkPartner);
+                //}
+                //else
+                //{
+                //    this.InsertTMEmployeeTime(checkPartner);
+                //}
+
                 this.InsertTMEmployeeTime(true);
             }
             else
@@ -210,13 +185,14 @@ namespace WebFreight.Web.Helpers
                 createdByUser = userRepository.GetSingleUserByCodeOrEmail(null, createdByUserEmail, Tenant, true);
             }
 
-            var projectId = tmProjectRepository.GetTMActiveProjectByNumber(Details.ProjectNumber, Tenant);
+            var projectId = tmProjectRepository.GetTMProjectByNumber(Details.ProjectNumber, Tenant);
             if (assignedToUser != null && updatedByUser != null)
             {
-                if (IsAddingNewTMEmployeeTimeLine(assignedToUser, updatedByUser))
+                if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed" || Details.TaskState == "Done"))
                 {
                     if (!CheckTMLineDuplication(this.Details.WorkItemId, Tenant)) {
                         var newItem = new TMEmployeeTimePM();
+                        //newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
                         newItem.Tenant = Tenant;
                         newItem.DateOfWork = this.Details.ChangedDate != null ? this.Details.ChangedDate.Date : this.Details.ChangedDate;
                         newItem.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
@@ -245,45 +221,6 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        private bool IsAddingNewTMEmployeeTimeLine(User assignedToUser, User updatedByUser)
-        {
-            if ((assignedToUser.Id == updatedByUser.Id) && ((Details.RemainingWork != null && IsVisualStudioValidStatus()) || IsMBItemIsMaintenanceBoardItem()))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool IsVisualStudioValidStatus()
-        {
-            if (Details.TaskState.ToLower() == "in progress")
-                return true;
-
-            if (Details.TaskState.ToLower() == "committed")
-                return true;
-
-            if (Details.TaskState.ToLower() == "done")
-                return true;
-
-            if (Details.TaskState.ToLower() == "ready for test")
-                return true;
-
-            return false;
-        }
-
-        private bool IsMBItemIsMaintenanceBoardItem()
-        {
-            if (Details.WorkItemType.ToLower() == "product backlog item"
-                && Details.TaskState.ToLower() == "committed"
-                && Details.Area != null
-                && Details.Area.Contains("MaintenanceBoard"))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public bool CheckTMLineDuplication(string workItemId, int tenant)
         {
             var isDuplicate = false;
@@ -303,43 +240,29 @@ namespace WebFreight.Web.Helpers
         public List<TMEmployeeTime> GetProjects(List<TMEmployeeTime> list, int tenant)
         {
             ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
-            TMEmployeeTimeRepository iTMEmployeeTimeRepository = new TMEmployeeTimeRepository(myContext);
-            TMProjectRepository iTMProjectRepository = new TMProjectRepository(myContext);
-            int count = 0;
-
+            TMEmployeeTimeRepository myTMEmployeeTimeRepository = new TMEmployeeTimeRepository(tenant);
+            TMProjectRepository myTMProjectRepository = new TMProjectRepository(tenant);
+            int workItemNumber;
+            bool isAnyWIUpdated = false;
             foreach (var item in list)
             {
-                int iWorkItemNumber;
-
-                if (Int32.TryParse(item.WINumber, out iWorkItemNumber))
+                if (!string.IsNullOrEmpty(item.WINumber))
                 {
-                    string iProjectNumber = GetWorkItemById(iWorkItemNumber, false);
-                    if (!string.IsNullOrEmpty(iProjectNumber))
+                    TMEmployeeTime tmEmployee = myTMEmployeeTimeRepository.GetSingle(item.Id, item.Tenant);
+                    if (string.IsNullOrEmpty(tmEmployee.ProjectId))
                     {
-                        string iProjectId = iTMProjectRepository.GetTMActiveProjectByNumber(iProjectNumber, tenant);
-
-                        if (!string.IsNullOrEmpty(iProjectId))
-                        {
-                            if (item.ProjectId != iProjectId)
-                            {
-                                item.ProjectId = iProjectId;
-                                iTMEmployeeTimeRepository.Update(item);
-                                count++;
-                            }
-                        }
+                        Int32.TryParse(item.WINumber, out workItemNumber);
+                        projectNo = this.GetWorkItemById(workItemNumber, false);
+                        item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
+                        tmEmployee.ProjectId = item.ProjectId;
+                        myTMEmployeeTimeRepository.Update(tmEmployee);
+                        isAnyWIUpdated = true;
                     }
                 }
-
-                if (count >= 100)
-                {
-                    count = 0;
-                    iTMEmployeeTimeRepository.SubmitChanges();
-                }
             }
-
-            if (count > 0)
+            if (isAnyWIUpdated)
             {
-                iTMEmployeeTimeRepository.SubmitChanges();
+                myTMEmployeeTimeRepository.SubmitChanges();
             }
             return list;
         }
@@ -348,7 +271,7 @@ namespace WebFreight.Web.Helpers
         {
             ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
             List<TMEmployeeTime> tmEmployeelist = (from d in myContext.TMEmployeeTimes
-                                                   where d.Tenant == tenant && d.DateOfWork != null && d.WINumber != null
+                                                   where d.Tenant == tenant && d.DateOfWork != null &&d.WINumber != null
                                                    select d).ToList();
 
             var groupedItems = (from d in tmEmployeelist
@@ -357,7 +280,7 @@ namespace WebFreight.Web.Helpers
                                 {
                                     Tenant = g.Key.Tenant,
                                     WINumber = g.Key.WINumber,
-                                    CompletedWork = (g.Sum(s => s.TimeInMinutes)) / 60.00,
+                                    CompletedWork = (g.Sum(s => s.TimeInMinutes))/60.00,
                                 });
             int counter = 0;
             int currentIndex = 0;
@@ -366,46 +289,44 @@ namespace WebFreight.Web.Helpers
             {
                 counter += 1;
                 currentIndex += 1;
-                SendQueueMessage(item.WINumber, item.CompletedWork, item.Tenant);
-
-                if (counter == 10)
-                {
-                    counter = 0;
-                    System.Threading.Thread.Sleep(1000);
-                }
-            }
-        }
-        private void SendQueueMessage(string wINumber, double completedWork, int tenant)
-        {
-            string queueName = "timemanagementqueue";
-            if (!string.IsNullOrEmpty(wINumber))
-            {
+               
+                // Create a connection to the account
+                string accountUri = "https://logitudeteam.visualstudio.com";
+                var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
+                int workItemId = Int32.Parse(item.WINumber);
+                // new VssOAuthAccessTokenCredential(personalAccessToken)
+                VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("logitudo@live.com", personalAccessToken));
+                // Get an instance of the work item tracking client
+                WorkItemTrackingHttpClient witClient = connection.GetClient<WorkItemTrackingHttpClient>();
+                //object completedWork = null;
                 try
                 {
-                    DbQueueService queueservice = new DbQueueService(queueName, tenant);
-                    Dictionary<string, string> message = new Dictionary<string, string>()
+                    // Get the specified work item
+                    WorkItem workitem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
+                    JsonPatchDocument patchDocument = new JsonPatchDocument();
+                    patchDocument.Add(new JsonPatchOperation()
                     {
-                        { "Tenant", tenant.ToString() },
-                        { "WorkItemNumber",  wINumber },
-                        { "CompletedWork", completedWork.ToString("0.##")},
-                    };
+                        Operation = Operation.Replace,
+                        Path = "/fields/Microsoft.VSTS.Scheduling.CompletedWork",
+                        Value = item.CompletedWork.ToString("0.##"),
+                    });
 
-                    queueservice.Send(message, tenant);
-                }
-                catch (Exception ex)
-                {
-                    string ip = "";
-                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    witClient.UpdateWorkItemAsync(patchDocument, Int32.Parse(item.WINumber));
+                    if(counter == 10)
                     {
-                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                        if (string.IsNullOrEmpty(currentIP))
-                        {
-                            currentIP = HttpContext.Current.Request.UserHostAddress;
-                        }
-                        ip = currentIP;
+                        counter = 0;
+                        System.Threading.Thread.Sleep(1000);
                     }
-                    throw new Exception(ex + "\t" + ip);
                 }
+                catch (AggregateException aex)
+                {
+                    VssServiceException vssex = aex.InnerException as VssServiceException;
+                    if (vssex != null)
+                    {
+                        Console.WriteLine(vssex.Message);
+                    }
+                }
+
             }
         }
     }

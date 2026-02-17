@@ -2,7 +2,7 @@
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -31,7 +31,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             aWBAdditionalHandlingInfoQuery = new AWBAdditionalHandlingInfoQuery(tenant);
-            return aWBAdditionalHandlingInfoQuery.GetSinglePM(id, tenant);
+            return aWBAdditionalHandlingInfoQuery.GetSingleAWBInformationPM(id);
         }
 
         public AWBAdditionalHandlingInfoList GetSingleAWBAdditionalHandlingInfoList(string id, int tenant)
@@ -39,7 +39,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             aWBAdditionalHandlingInfoQuery = new AWBAdditionalHandlingInfoQuery(tenant);
-            AWBAdditionalHandlingInfoPM entityPM = aWBAdditionalHandlingInfoQuery.GetSinglePM(id, tenant);
+            AWBAdditionalHandlingInfoPM entityPM = aWBAdditionalHandlingInfoQuery.GetSingleAWBInformationPM(id);
 
             AWBAdditionalHandlingInfoList entityList = new AWBAdditionalHandlingInfoList()
             {
@@ -223,8 +223,8 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
             }
 
-            AWBAdditionalHandlingInfoService service = new AWBAdditionalHandlingInfoService(objectContext, entityPM.Tenant);
-            service.Update(entityPM);
+            AWBAdditionalHandlingInfoService service = new AWBAdditionalHandlingInfoService(objectContext, entityPM, ServiceContext.User.Identity.Name);
+            service.Update();
         }
 
         public void DeleteAWBAdditionalHandlingInfo(AWBAdditionalHandlingInfoPM entityPM)

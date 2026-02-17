@@ -33,7 +33,7 @@ declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
     selector: 'CustomerOverviewTabDetailsComponent',
-    
+    moduleId: module.id,
     templateUrl: './CustomerOverviewTabDetailsComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
@@ -184,7 +184,7 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
 
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.SelectedDirectionFilterShipment, this.SelectedTransportFilterShipment, this.Customer.Id).subscribe((myResult:any) => {
+                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.SelectedDirectionFilterShipment, this.SelectedTransportFilterShipment, this.Customer.Id).subscribe(myResult => {
                     this.FinalShipmentData = myResult;
                     this.CommonFiltersShipment();
                 });            
@@ -198,7 +198,7 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
                 days = 0;
             }
 
-            service.GetActivityStatus(this.SelectedDateTypeItem.Index, month, days, this.TenantPM.Id, this.Customer.Id).subscribe((myResult:any) => {
+            service.GetActivityStatus(this.SelectedDateTypeItem.Index, month, days, this.TenantPM.Id, this.Customer.Id).subscribe(myResult => {
                 this.FinalShipmentData = myResult;
                 this.CommonFiltersShipment();
             });
@@ -210,7 +210,7 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
         var service = new DashboardDomainService(); 
         this.LoadActivityStatus();
         if (this.SelectedTimeRangeItem.Index == "-1") {          
-                service.GetShipmentByDirectionAndTransmodeCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.Customer.Id).subscribe((myResult:any) => {
+                service.GetShipmentByDirectionAndTransmodeCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.Customer.Id).subscribe(myResult => {
                     this.FinalDirectionAndTransportData = myResult;
                     this.CommonFiltersDirectionAndTransportMode();
                 });
@@ -224,7 +224,7 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
                 month = -36;
                 days = 0;
             }         
-            service.GetShipmentByDirectionAndTransmode(this.SelectedDateTypeItem.Index, month, days, this.TenantPM.Id, this.Customer.Id).subscribe((myResult:any) => {
+            service.GetShipmentByDirectionAndTransmode(this.SelectedDateTypeItem.Index, month, days, this.TenantPM.Id, this.Customer.Id).subscribe(myResult => {
                 this.FinalDirectionAndTransportData = myResult;
                 this.CommonFiltersDirectionAndTransportMode();
             });
@@ -349,7 +349,7 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
             var dtf: DirectionTransportFilter = this.GetCurrentDirectionTransmodeFilterItemCountries();
             var service = new DashboardDomainService();
 
-            service.GetShipmentsByTop10CountriesDashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, this.Customer.Id, dtf.FilterDirectionID, dtf.FilterTransportID).subscribe((myResult:any) => {
+            service.GetShipmentsByTop10CountriesDashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, this.Customer.Id, dtf.FilterDirectionID, dtf.FilterTransportID).subscribe(myResult => {
                 this.FinalCountriesData = myResult;
                 var countriesFilterdList: List<GroupByClass> = FunctionsCRM.getCountriesFilterdList(this.FinalCountriesData, parseInt(this.SelectedShowItem.Index), this.TopCountries, this.IncludeOthersCountries);
                 this.fillCountriesPie(countriesFilterdList);
@@ -367,7 +367,7 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
             }
             var dtf: DirectionTransportFilter = this.GetCurrentDirectionTransmodeFilterItemCountries();
             var service = new DashboardDomainService();
-            service.GetShipmentsByTop10CountriesDashBoard(this.SelectedDateTypeItem.Index, month, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, this.Customer.Id, dtf.FilterDirectionID, dtf.FilterTransportID).subscribe((myResult:any) => {
+            service.GetShipmentsByTop10CountriesDashBoard(this.SelectedDateTypeItem.Index, month, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, this.Customer.Id, dtf.FilterDirectionID, dtf.FilterTransportID).subscribe(myResult => {
                 this.FinalCountriesData = myResult;
                 var countriesFilterdList: List<GroupByClass> = FunctionsCRM.getCountriesFilterdList(this.FinalCountriesData, parseInt(this.SelectedShowItem.Index), this.TopCountries, this.IncludeOthersCountries);
                 this.fillCountriesPie(countriesFilterdList);

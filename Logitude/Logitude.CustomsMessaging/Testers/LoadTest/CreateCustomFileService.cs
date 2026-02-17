@@ -19,8 +19,8 @@ namespace Logitude.CustomsMessaging.Testers.LoadTest
     {
         void testc()
         {
-            //var a =  UnifreightIIG.Common.WCOResource.DB;
-            //var a1 = UnifreightIIG.Common.WCOResource.DBManifest_18;
+            var a =  UnifreightIIG.Common.WCOResource.DB;
+            var a1 = UnifreightIIG.Common.WCOResource.DBManifest_18;
 
 
         }
@@ -135,7 +135,7 @@ namespace Logitude.CustomsMessaging.Testers.LoadTest
                 ICustomContext dbContext = CustomContext.GetContext(tenant);
                 var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
                 var documentFilingRep = new DocumentsFilingRepository(tenant);
-                var documentsFilingList= documentFilingRep.GetDocumentsFilingsByEntityId_noInclude(declarationId, tenant);
+                var documentsFilingList= documentFilingRep.GetDocumentsFilingsByEntityId(declarationId, tenant);
                 if (documentsFilingList.Count<1)
                 {
                     throw new Exception("No documentsFilingList  for dec id  =" +declarationId);
@@ -286,6 +286,49 @@ namespace Logitude.CustomsMessaging.Testers.LoadTest
             //  });
             //  }
         }
+#if false
+        async void Login()
+        {
+            LoginParameter loginParameter = new LoginParameter()
+            {
+                Email = "admin@fnarsoft.com",
+                Password = "1",//"!J123456.0",
+                CardType = null,
+                CardId = null,
+                IsUser = true,
+                IsMobileLogin = false,
+                GetToken = true,
 
+            };
+
+            // int tenant = 1;
+            using (var client = new HttpClient())
+            {
+                var logingUrl = _BaseUri;//    //   "http://accountingtest/accounting/" 
+                string AuthURI = logingUrl + "authentication?&tenant=" + _Tenant.ToString();
+
+                var serializedObject = JsonConvert.SerializeObject(loginParameter);
+                var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                var result = await client.PostAsync(AuthURI, content);
+                if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var tempUser = result.Content.ReadAsStringAsync().Result;
+                    UserData User = JsonConvert.DeserializeObject<UserData>(tempUser);
+                    Token = User.Token;
+                    var resultData = result.Content.ReadAsStringAsync().Result;
+                    MessageBox.Show("Ok " + resultData);
+                    //   ChartOfAccountPM account = JsonConvert.DeserializeObject<ChartOfAccountPM>(resultData);
+                }
+                else
+                {
+                    var resultData = result.Content.ReadAsStringAsync().Result;
+                    MessageBox.Show("Not Ok " + resultData);
+                    APIException ex = JsonConvert.DeserializeObject<APIException>(resultData);
+                }
+            }
+        }
+
+
+#endif
     }
 }

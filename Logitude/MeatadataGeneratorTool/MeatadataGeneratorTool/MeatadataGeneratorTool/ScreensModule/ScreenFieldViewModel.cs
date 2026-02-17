@@ -59,64 +59,7 @@ namespace MeatadataGeneratorTool.ScreensModule
                 }
                 
             }
-        }
-
-        public List<Properties> rows;
-        private void SetRowsComboBoxList(int SelectedCoulmn)
-        {
-
-            int CoulmnCount = 0;
-            if (Column == 1)
-            {
-                CoulmnCount = ScreenViewModel.ScreenFieldCol1ObsList.Count;
-
-            }
-            else if (Column == 2)
-            {
-
-                CoulmnCount = ScreenViewModel.ScreenFieldCol2ObsList.Count;
-            }
-            else if (Column == 3)
-            {
-                CoulmnCount = ScreenViewModel.ScreenFieldCol3ObsList.Count;
-            }
-            else if (Column == 4)
-            {
-                CoulmnCount = ScreenViewModel.ScreenFieldCol4ObsList.Count;
-            }
-            else if (Column == 5)
-            {
-                CoulmnCount = ScreenViewModel.ScreenFieldCol5ObsList.Count;
-            }
-            else
-            {
-                CoulmnCount = 5;
-            }
-            List<Properties> _Properties = new List<Properties>();
-
-            for (int i = CoulmnCount; i < 5; i++)
-            {
-                _Properties.Add(new Properties() { Id = (i+1), Name = "Row " + (i + 1) });
-            }
-
-            Rows = _Properties;
-
-        }
-   
-        public List<Properties> Rows
-        {
-            get
-            {
-                return rows;
-
-            }
-
-            set
-            {
-                rows = value;
-                FirePropertyChanged("Rows");
-            }
-        }
+        } 
         public ScreenFieldViewModel(ObjectTableViewModel OTViewModel, ScreensViewModel SViewModel, bool IsNew)
         {
             viewModel = OTViewModel;
@@ -130,10 +73,6 @@ namespace MeatadataGeneratorTool.ScreensModule
             {
                 var temp = viewModel.ObsList.Where(a => a.FieldName != "Id" && a.FieldName != "Tenant");
                 ObservableCollection<ObjectFieldsViewModel> ObsListtemp = new ObservableCollection<ObjectFieldsViewModel>();
-                ObsListtemp.Add(new ObjectFieldsViewModel(null, true));
-                ObsListtemp[0].FieldName = "Empty_Field";
-                ObsListtemp[0].DefaultText = "Empty Field (NULL For Spaces)";
-     
                 foreach (var item in temp)
                 {
                     ObsListtemp.Add(item);
@@ -186,7 +125,6 @@ namespace MeatadataGeneratorTool.ScreensModule
             set
             {
                 column = value;
-                SetRowsComboBoxList(value);
                 FirePropertyChanged("Column");
             }
         }
@@ -234,8 +172,8 @@ namespace MeatadataGeneratorTool.ScreensModule
             //{
             //    ErrorMessages += ObjectFieldName + " is already exists ...";
             //}
+           
 
-      
             if (ErrorMessages == "")
             {
                 ScreenViewModel.UpdateScreenFieldsList(this);
@@ -282,12 +220,7 @@ namespace MeatadataGeneratorTool.ScreensModule
             {
                 str.AppendLine("You Should Select Column ..");
             }
-
-            //if (Row == 0)
-            //{
-            //    str.AppendLine("You Should Select Row ..");
-            //}
-
+            
             ErrorMessages = str.ToString();
             if (ErrorMessages != "")
             {

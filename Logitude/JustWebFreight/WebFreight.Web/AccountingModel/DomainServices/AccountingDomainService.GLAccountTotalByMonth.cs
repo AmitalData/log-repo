@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
@@ -34,7 +34,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         {
             accountingContext = AccountingContext.GetContext(tenant);
             gLAccountTotalByMonthQuery = new GLAccountTotalByMonthQueryService(accountingContext);
-            GLAccountTotalByMonthPM gLAccountTotalByMonthPM = gLAccountTotalByMonthQuery.GetSingle(code,GLAccountTotalDateTypeValues.AccountingDate, year, month, currencyId, true, false);
+            GLAccountTotalByMonthPM gLAccountTotalByMonthPM = gLAccountTotalByMonthQuery.GetSingle(code,GLAccountTotalDateTypeValues.Accountingdate, year, month, currencyId, true, false);
             return gLAccountTotalByMonthPM;
         }
 
@@ -60,7 +60,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             }
             accountingContext = AccountingContext.GetContext(tenant);
             GLAccountTotalByMonthListQueryService listService = new GLAccountTotalByMonthListQueryService(accountingContext);
-            return listService.GetSingle(code,GLAccountTotalDateTypeValues.AccountingDate,year, month, currencyId );
+            return listService.GetSingle(code,GLAccountTotalDateTypeValues.Accountingdate,year, month, currencyId );
         }
 
         public List<GLAccountTotalByMonthList> GetGLAccountTotalByMonthLists(int tenant)

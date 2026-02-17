@@ -100,7 +100,7 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
 
                     <td style="width:120px">
                         <div style="width:120px">
-                            <TransportsFilter [SelectedValue]="MySelectedTransportFilter" (SelectedValueChanged)="MySelectedTransportFilter = $event"></TransportsFilter>
+                            <TransportsFilter (SelectedValueChanged)="MySelectedTransportFilter = $event"></TransportsFilter>
 
                         </div>
                     </td>
@@ -110,7 +110,7 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
                     <td style="width:180px">
                         <div style="width:180px">
 
-                            <DirectionsFilter [SelectedValue]="MySelectedDirectionFilter" (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
+                            <DirectionsFilter (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
 
                         </div>
 
@@ -121,7 +121,7 @@ box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
 
                     <td style="width:90px;">
                         <button (click)="RunReport()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
+                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
                         </button>
 
                     </td>

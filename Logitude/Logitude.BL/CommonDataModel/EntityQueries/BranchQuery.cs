@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class BranchQuery
     {
         BranchRepository repository;
-
+        public BranchQuery()
+        {
+               repository = new BranchRepository(); 
+        }
         public BranchQuery(int tenant)
         {
             repository = new BranchRepository(tenant);
@@ -234,17 +237,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 								  CounterCode = a.CounterCode,
 							  }).FirstOrDefault();
                 }
+                BranchPM securedPm = new BranchPM();
+                SecuredMapping.GetMappedPM(entity, securedPm, "Branch", tenant);
 
-                if (entity != null)
-                {
-                    BranchPM securedPm = new BranchPM();
-                    SecuredMapping.GetMappedPM(entity, securedPm, "Branch", tenant);
-                    return securedPm;
-                }
-                else
-                {
-                    return null;
-                }
+                return securedPm;
             }
             return null;
         }       
@@ -319,8 +315,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 INTTRAId = branch.INTTRAId,
                                                 INTTRAAlias = branch.INTTRAAlias,
                                                 INTTRAContactId = branch.INTTRAContactId,
-                                                CalculatedEnglishName = string.IsNullOrEmpty(branch.EnglishName) ? branch.LocalName : branch.EnglishName,
-                                                CalculatedLocalName = string.IsNullOrEmpty(branch.LocalName) ? branch.EnglishName : branch.LocalName,
                                             };
             return result;
         }

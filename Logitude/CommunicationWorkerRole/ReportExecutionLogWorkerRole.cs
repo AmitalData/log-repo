@@ -1,5 +1,4 @@
-﻿using CommunicationWorkerRole.Stimulsoft.fonts;
-using Logitude.BL.CommonDataModel.EntityAMs;
+﻿using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -28,11 +27,11 @@ using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Global.Data.GlobalModel;
@@ -51,14 +50,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Helpers.WorkerRoleHelpers;
 
 namespace CommunicationWorkerRole
 {
     class ReportExecutionLogWorkerRole : WorkerEntryPoint
     {
 
-        DbQueueService queueService;
+        IQueueService queueservice;
+        int tenant = 0;
+      
 
         public ReportExecutionLogWorkerRole()
         {
@@ -74,46 +74,113 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
 
-
-        public override void Run()
+        public override async void AsyncRun()
         {
+
             while (IsRunning)
             {
                 if (!General.IsUpdating())
                 {
                     try
                     {
-                        ExecuteQueue();
+                        queueservice = new DbQueueService("ReportExecutionLogQueue", 0);
+                        var response = queueservice.Receive(new TimeSpan(0,0,1));
+                        LastActivity = DateTime.UtcNow;
+
+                        string tenantString = null;
+                    
+
+                        if (response != null && response.MessageId != null)
+                        {
+                            ReportExecutionLog reportExecutionLog = null;
+                            ReportExecutionLogRepository reportExecutionLogRepository = null;
+          
+
+                            try
+                            {
+                                string reportExecutionLogId = response.MessageValues.Keys.Contains("ReportExecutionLogId") ? response.MessageValues["ReportExecutionLogId"].ToString() : "";
+                                if (response.MessageValues.Keys.Contains("Tenant"))
+                                {
+                                    tenantString = response.MessageValues["Tenant"].ToString();
+                                    if (!string.IsNullOrEmpty(tenantString)) tenant = int.Parse(tenantString);
+                                }
+
+                                if (string.IsNullOrEmpty(reportExecutionLogId) || string.IsNullOrEmpty(tenantString))
+                                {
+                                    queueservice.Complete();
+                                    continue;
+                                }
+
+                                reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
+                                reportExecutionLog = reportExecutionLogRepository.GetSingleReportExecutionLog(reportExecutionLogId, tenant);
+
+                                if (reportExecutionLog == null)
+                                {
+                                    queueservice.Complete();
+                                    continue;
+                                }
+
+                                if (reportExecutionLog.StatusCode!="W")
+                                {
+                                    queueservice.Complete();
+                                    continue;
+                                }
+
+
+                                ReportFliter reportFliter = null;
+                                if (!string.IsNullOrEmpty(reportExecutionLog.ReportFilterXML))
+                                {
+                                    reportFliter = LogitudeXmlSerializer.DeserializeObject<ReportFliter>(reportExecutionLog.ReportFilterXML);
+                                }
+
+                                if (reportFliter != null)
+                                {
+                                    Thread thread = new Thread(() => BuildReport(reportFliter, reportExecutionLog, reportExecutionLogRepository));
+                                    thread.IsBackground = true;
+                                    thread.Start();
+                          
+                                }
+                                else
+                                {
+                                    this.UpdateReportExecutionLog(null, reportExecutionLog, reportExecutionLogRepository, "F" , "Report fliter not found");
+
+                                }
+
+
+                                queueservice.Complete();
+
+                                LogDoneItemInMemory();
+                            }
+                            catch (Exception ex)
+                            {
+                                #region HandleException
+                                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
+                                this.UpdateReportExecutionLog(ex, reportExecutionLog, reportExecutionLogRepository, "F");
+                                queueservice.CompleteAsFailed();
+
+                                #endregion
+                            }
+
+
+                        }
+                        else
+                        {
+                         Thread.Sleep(new TimeSpan(0, 0, 1));
+                        }
+
                     }
-                    catch (Exception exception)
+                    catch (Exception ex)
                     {
-                        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Report execution log queue worker role start", null, null);
+
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
                         Thread.Sleep(new TimeSpan(0, 0, 1));
                     }
+
                 }
-                else Thread.Sleep(new TimeSpan(0, 0, 1));
-            }
-        }
-
-
-
-
-
-
-        private void ExecuteQueue()
-        {
-            queueService = new DbQueueService("ReportExecutionLogQueue", 0);
-            var queueResponse = queueService.Receive(new TimeSpan(0, 0, 1));
-            if (queueResponse != null && queueResponse.MessageId != null)
-            {
-                ThreadStart reportExecutionServiceThreadStart = (() => new ReportExecutionService(queueService, queueResponse).ExecuteReportExecutionQueue());
-                reportExecutionServiceThreadStart += () => { LogDoneItemInMemory(); };
-                new Thread(reportExecutionServiceThreadStart) { IsBackground = true }.Start();
-                queueService.Complete();
-            }
-            else
-            {
-                Thread.Sleep(new TimeSpan(0, 0, 1));
+                else
+                {
+                    Thread.Sleep(new TimeSpan(0, 0, 1));
+                }
             }
         }
 
@@ -121,8 +188,8 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                queueService = new DbQueueService();
-                queueService.InitializeQueue("ReportExecutionLogQueue", 0);
+                queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ReportExecutionLogQueue", tenant);
 
             }
             catch (Exception ex)
@@ -131,8 +198,56 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository)
+        {
+
+            try
+            {
+                ReportHelper reportHelper = new ReportHelper();
+                reportHelper.BuildReport(reportFliter);
+                this.UpdateReportExecutionLog(null, reportExecutionLog, reportExecutionLogRepository, "D");
+            }
+            catch (Exception ex)
+            {
+                if (reportExecutionLog != null && reportExecutionLogRepository != null)
+                {
+                    this.UpdateReportExecutionLog(ex, reportExecutionLog, reportExecutionLogRepository,"F");
+                }
+            }
+        }
+
+
+        private void UpdateReportExecutionLog(Exception ex , ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository, string statusCode , string exception = null)
+        {
+            if (reportExecutionLog != null && reportExecutionLogRepository!=null)
+            {
+                if (statusCode != "D" && (ex!=null || !string.IsNullOrEmpty(exception))) {
+                    var exceptionMessage = exception;
+
+                    if (ex != null)
+                    {
+                        exceptionMessage = ex.Message;
+                        if (ex.InnerException != null)
+                        {
+                            exceptionMessage = exceptionMessage + Environment.NewLine + ex.InnerException;
+                        }
+                        if (ex.StackTrace != null)
+                        {
+                            exceptionMessage = exceptionMessage + Environment.NewLine + "Stack trace: " + ex.StackTrace;
+                        }
+                    }
+
+
+                    reportExecutionLog.ExceptionMessage = exceptionMessage;
+                }
+
+                reportExecutionLog.StatusCode = statusCode;
+                reportExecutionLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                reportExecutionLogRepository.Update(reportExecutionLog);
+                reportExecutionLogRepository.SubmitChanges();
+            }
+        }
 
 
     }
-
 }

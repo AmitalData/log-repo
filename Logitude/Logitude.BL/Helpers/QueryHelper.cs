@@ -5,7 +5,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -53,23 +53,5 @@ namespace Logitude.BL.Helpers
                 }
             }
         }
-
-
-        public static void AddCardToSearchFields(ref string mySearchFields,  int tenant , string cardId)
-        {
-            if (!string.IsNullOrEmpty(cardId))
-            {
-                Card myCard = CardRepository.GetSingleCard(cardId, tenant, true);
-                if (myCard != null)
-                {
-                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
-                }
-            }
-        }
-
-
-
-
-
     }
 }

@@ -3,7 +3,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -67,7 +67,7 @@ namespace WebFreight.Web.ExternalAPIs
                 }
                 else
                 {
-                    var response = this.Request.CreateResponse(HttpStatusCode.OK);
+                    var response = this.Request.CreateResponse(HttpStatusCode.BadRequest);
                     return response;
                 }
                

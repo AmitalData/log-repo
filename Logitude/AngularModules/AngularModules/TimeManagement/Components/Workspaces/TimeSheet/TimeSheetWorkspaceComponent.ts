@@ -5,21 +5,23 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'TimeSheetWorkspaceComponent',
-    
+    moduleId: module.id,
     templateUrl: './TimeSheetWorkspaceComponent.html',
     providers: [EntityResourceService],
 
 })
 
 export class TimeSheetWorkspaceComponent {
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+
     constructor(private _entityResourceService: EntityResourceService) {
     }
 
     InitComponent() {
         this.RunComponent();
-    }
 
+    }
     private isLoaderReady: boolean = false;
     RunComponent() {
         if (this.AllLocations) {
@@ -48,7 +50,7 @@ export class TimeSheetWorkspaceComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -80,8 +82,8 @@ export class TimeSheetWorkspaceComponent {
                     switch (this.SelectedTabCode) {
                         case "Daily": {
                             if (this.PageChild_Daily == null) {
-                                this._entityResourceService.getEntityResourceByTableName("TMEmployeeTime", 0).subscribe((response:any) => {
-                                    this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("TMEmployeeTime", 0).subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe(response => {
                                 SessionLocator.DynamicLoader.Load('./TimeManagement/Components/Workspaces/TimeSheet/DailyTimeSheetComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.PageChild_Daily = cmpRef.instance;
@@ -99,8 +101,8 @@ export class TimeSheetWorkspaceComponent {
 
                         case "Weekly": {
                             if (this.PageChild_Weekly == null) {
-                                this._entityResourceService.getEntityResourceByTableName("TMEmployeeTime", 0).subscribe((response:any) => {
-                                    this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("TMEmployeeTime", 0).subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe(response => {
                                 SessionLocator.DynamicLoader.Load('./TimeManagement/Components/Workspaces/TimeSheet/WeeklyTimeSheetComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.PageChild_Weekly = cmpRef.instance;
@@ -151,17 +153,12 @@ export class TimeSheetWorkspaceComponent {
                         }
 
                         case "Vacations": {
-
                             if (this.PageChild_Vacations == null) {
                                 SessionLocator.DynamicLoader.Load('./TimeManagement/Components/Workspaces/TimeSheet/VacationsComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.PageChild_Vacations = cmpRef.instance;
                                         this.PageChild_Vacations.InitTab();
                                     });
-                            }
-
-                            else {
-                                this.PageChild_Vacations.LoadAllScreenData();
                             }
 
                             break;

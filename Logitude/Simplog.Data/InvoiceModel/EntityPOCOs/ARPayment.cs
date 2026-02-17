@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
 {
@@ -37,8 +37,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? RegisterDate { get; set; }
         public string SearchFields { get; set; }
         public double? OpenAmount { get; set; }
-        public double? OpenAmountInLocalCurrency { get; set; }
-
         public string ChequeOrPaymentRef { get; set; }
         public string Bank { get; set; }
         public string BankBranch { get; set; }
@@ -70,13 +68,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string SelloPago { get; set; }
         public DateTime? SATApprovalDate { get; set; }
 
-        public DateTime? FechaPago { get; set; }
-
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
-
-        public DateTime? AccountingCancelationDate { get; set; }
-        public string CancelationNotes { get; set; }
 
         public string BankAccountLiteId { get; set; }
         [ForeignKey("BankAccountLiteId")]
@@ -143,23 +136,5 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? FirstApproveDate { get; set; }
         public bool IsFullAccounting { get; set; }
         public bool IsExternalEntity { get; set; }
-        public string CreatedByPartner { get; set; }
-        public bool IsPaymentNumberManuallySet { get; set; }
-        public string Field1 { get; set; }
-        public string Field2 { get; set; }
-        public string Field3 { get; set; }
-        public string Field4 { get; set; }
-        public string Field5 { get; set; }
-        public string Field6 { get; set; }
-        public string Field7 { get; set; }
-        public string Field8 { get; set; }
-        public string Field9 { get; set; }
-        public string Field10 { get; set; }
-
-        public string PartnerId { get; set; }
-        [ForeignKey("PartnerId")]
-        public virtual Card Partner { get; set; }
-
-        public string InvoiceNumbers { get; set; }
     }
 }

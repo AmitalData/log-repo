@@ -24,7 +24,7 @@ declare var StringToBase64, Base64ToString: any;
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'HeaderAndFooter',
     templateUrl: './HeaderAndFooterComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService, DocumentTypeTemplatePMService, HtmlEditorService]
@@ -293,10 +293,10 @@ export class HeaderAndFooterComponent implements OnInit {
         var table = window.ObjectTables.filter(d => d.Id == tableId)[0];
         if (table) tableName = table.Name;
 
-        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe(response => {
 
             if (table) {
-                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
                     this.ViewDataField(type, "", tableId);
                 });
             }

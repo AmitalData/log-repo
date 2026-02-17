@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .ConfirmWindowLayout {
         position: absolute;
@@ -12,7 +12,6 @@
         background: -webkit-linear-gradient(rgba(21, 61, 110, 0.7) 0%, rgba(21, 61, 110, 0.2) 50%, rgba(21, 61, 110, 0.7) 100%);
         background: linear-gradient(rgba(21, 61, 110, 0.7) 0%, rgba(21, 61, 110, 0.2) 50%, rgba(21, 61, 110, 0.7) 100%);
         pointer-events: none;
-        z-index: 2;
     }
 
     .ConfirmWindow {
@@ -69,21 +68,17 @@
         background: -o-linear-gradient(-90deg, rgba(108, 132, 153, 1) 0%, rgba(112, 136, 156, 1) 18.27%, rgba(125, 147, 166, 1) 37.99%, rgba(147, 166, 182, 1) 58.38%, rgba(177, 192, 205, 1) 79.19%, rgba(215, 225, 234, 1) 100%);
         background: linear-gradient(180deg, rgba(108, 132, 153, 1) 0%, rgba(112, 136, 156, 1) 18.27%, rgba(125, 147, 166, 1) 37.99%, rgba(147, 166, 182, 1) 58.38%, rgba(177, 192, 205, 1) 79.19%, rgba(215, 225, 234, 1) 100%);
     }
-    .red {
-        color: #e50a0a !important;
-    }
-    
 </style>
-<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnCTRL_S_HotKeyPressed()"  (ESCHotKey)="OnEscHotKeyPressed()"></LogitudeHotKeysComponent>
+
 <div class="ConfirmWindowLayout" tabindex="-1" contenteditable="false" *ngIf="ShowModal"></div>
 
-<div class="MediaFillAbsolute" [ngStyle]="{'z-index': ZIndex}">
+<div class="MediaFillAbsolute">
     <div class="MediaFillRelative">
         <div [attr.id]="WindowId" class="ConfirmWindow" [ngStyle]="{left: Left, top: Top, width: Width, height: Height}">
             <table>
                 <tr style="height: 40px;">
                     <td colspan="3" style="vertical-align: middle;">
-                        <div class="WindowHeader" (mousedown)="OnMouseDown()" style="height: 40px; line-height: 40px;" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '15px'} : {'padding-left': '15px'}" [class.red]="ShowErorImage" >
+                        <div class="WindowHeader" (mousedown)="OnMouseDown()" style="height: 40px; line-height: 40px;" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '15px'} : {'padding-left': '15px'}">
                             {{Title}}
                         </div>
                     </td>
@@ -99,32 +94,17 @@
                             <tr>
                                 <td style="width: 70px; position: relative;">
                                     <!--<img class="LeftCenter" style="width: 70px; height: 70px;" src="./Images/ConfirmIcon.png" />-->
-                                    <div   *ngIf="!ShowWarningImage && !ShowErorImage && !ShowInfoImage" [className]="LayoutDirection == 'rtl' ? 'RightCenter ConfirmIcon' : 'LeftCenter ConfirmIcon'">?</div>
+                                    <div   *ngIf="!ShowWarningImage" [className]="LayoutDirection == 'rtl' ? 'RightCenter ConfirmIcon' : 'LeftCenter ConfirmIcon'">?</div>
                                     <img  *ngIf="ShowWarningImage" style="width:70px;height:70px" src="./Images/SimplogIcons/Warning.png" />
-                                    <img  *ngIf="!ShowWarningImage && ShowErorImage" style="width:70px;height:70px" src="./Images/ErrorIcon.png" />
-                                    <img  *ngIf="ShowInfoImage" style="width:70px;height:70px" src="./Images/InfoIcon.png" />
                                 </td>
 
                                 <td style="width: 10px;">
                                     <div></div>
                                 </td>
 
-                                <td *ngIf="!IsMultipleMessages" style="vertical-align: middle;" [ngStyle]="{color: StringColor}">
-                                    <div [ngStyle]="{color: StringColor}" style="width: 100%; white-space:pre-line; overflow-x: hidden; overflow-y:auto; font-size: 11px;">{{Message}}</div>
+                                <td style="vertical-align: middle;">
+                                    <div style="width: 100%; white-space:pre-line; overflow-x: hidden; overflow-y:auto; font-size: 11px; color: #6E7172;">{{Message}}</div>
                                 </td>
-                                <td *ngIf="IsMultipleMessages" style="vertical-align: middle;" [ngStyle]="{color: StringColor}">
-                                    <div [ngStyle]="{
-                                          color: StringColor,
-                                          width: '100%',
-                                          'white-space': 'pre-line',
-                                          'overflow-x': 'hidden',
-                                          'overflow-y': 'auto',
-                                          'max-height': MultipleMessagesHeight, 
-                                          'font-size': '11px'
-                                        }">
-                                      {{Message}}
-                                    </div>
-                                  </td>
                             </tr>
 
                             <tr *ngIf="ShowCheckBox">

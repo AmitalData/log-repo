@@ -16,7 +16,5 @@ export class BatchServicesLogList {
 		DoneItemsInOneHour: number;
 		DoneItemsInOneMinute: number;
 		DoneItemsInFiveMinutes: number;
-		WaitingItems: number;
-		FailedItems: number;
 	
 }

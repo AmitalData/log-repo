@@ -21,12 +21,11 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { FormGroup, FormBuilder} from '@angular/forms';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 declare var insertAtSubject: any;
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'NewDocumentType',
     templateUrl: './NewDocumentTypeComponent.html',
     providers: [DocumentTypePMService, DocumentTypePMExtendedService]
@@ -47,20 +46,12 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
     SelectedObjectTable: ObjectTablePM;
     private documentTypePMService: DocumentTypePMService;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsLogLovReady: boolean = false;
-    public ObjectTablesFilterItems: ApiQueryFilters;
-    public DataContext: NewDocumentTypeComponent = this;
-    public IsCustomObject: boolean = false;
     constructor(fb: FormBuilder,  public _documentTypePMExtendedService: DocumentTypePMExtendedService) {
         super();
  
         if (this.documentTypePMService == null) {
             this.documentTypePMService = new DocumentTypePMService();
 
-        }
-
-        if (SessionLocator.Tenant != 0) {
-            this.NewDocumentTypePM.AddedManually = true;
         }
 
         this.myForm = fb.group({});
@@ -88,11 +79,69 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
         this.NewDocumentTypePM.DocumentTypeCategoryCode = "O";
         this.NewDocumentTypePM.Tenant = InfraSettings.TenantPM.Id;
-        this.InitLOVFilters();
-        this.IsLogLovReady = true;
-       
+        //this.NewDocumentTypePM.TemplateFormatCode = "P";
+        var tempList: ObjectTablePM[] = [];
+
+        window.ObjectTables.forEach(item => {
+            switch (item.Name) {
+                case "Shipment":
+                case "Master":
+                case "Quote":
+                case "Opportunity":
+                case "Ticket":
+                case "APInvoice":
+                case "ARInvoice":
+                case "APPayment":
+                case "ARPayment":
+                case "Agent":
+                case "Customer":
+                case "Customs.Declaration":
+                case "Customs.CheckRepresentativeType":
+                case "LogitudeMessagesTransmissionLog":
+                case "SharedLogistics":
+                case "ShipmentPickUpDelivery":
+                case "Journal":
+                case "BankDeposit":
+                case "GLAccount":
+                case "WarehouseEntry":
+                case "PaymentCheque":
+                case "WarehouseRelease":
+                case "TaxReport":
+                case"TaxDeductionReport":
+                case "Airline":
+                case "CustomAgent":
+                case "Participant":
+                case "ShippingAgent":
+                case "ShippingLine":
+                case "Trucker":
+                case "Vendor":
+                case "Warehouse":
+                case "OpenFormatReport":
+                {                        
+                    if (tempList.filter(f => f.Name == item.Name).length == 0) {
+                        tempList.push(item);
+                    }
+
+                    break;
+                }
+
+            }
+        });
+
+        this.ObjectTablesList = tempList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
+
+        //this.ObjectTablesList.forEach((item) => {
+
+        //    if (item.Name == "WarehouseEntry" || item.Name == "WarehouseRelease") {
+        //        item.DisplayName = item.Name == "WarehouseEntry" ? "CrossDockEntry" : "CrossDockRelease"; 
+        //    }
+        //   else item.DisplayName = item.Name;
+        //});
 
 
+        this.SelectedObjectTable = this.ObjectTablesList[0]
+        this.NewDocumentTypePM.ObjectTableId = this.SelectedObjectTable.Id;
+        this.NewDocumentTypePM.ObjectTableName = this.SelectedObjectTable.Name;
         this.FormatList = [];
         this.FormatList.push("Print");
         this.FormatList.push("Message");
@@ -105,11 +154,6 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
     }
 
-    InitLOVFilters() {
-        this.ObjectTablesFilterItems = new ApiQueryFilters();
-        this.ObjectTablesFilterItems.addAdditionalFilter("AvailableInDocumentTypes", true, null, null, "Equals", true, false, false, "string");
-        this.ObjectTablesFilterItems.Tenant = SessionLocator.Tenant;
-    }
 
     FormatValueChanged(format) {
         if (format == "Print") this.NewDocumentTypePM.TemplateFormatCode = "P";
@@ -127,7 +171,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
         if (code && this.ExsitCode != code) {
             this.ExsitCode = code;
-            this._documentTypePMExtendedService.GetDoesDocumentTypeCodeExist(code, SessionLocator.Tenant).subscribe((res:any) => {
+            this._documentTypePMExtendedService.GetDoesDocumentTypeCodeExist(code, SessionLocator.Tenant).subscribe(res => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -149,7 +193,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
     }
 
-    ObjectTableValueChanged(table: ObjectTablePM) {
+    ObjectTableValueChanged(table: any) {
         if (table) {
             this.NewDocumentTypePM.ObjectTableName = table.Name;
             this.NewDocumentTypePM.ObjectTableId = table.Id;
@@ -160,32 +204,11 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
         }
         else {
             this.NewDocumentTypePM.ObjectTableId = null;
-            this.SelectedObjectTableId = null;
+            this.SelectedObjectTable = null;
         }
     }
-    public get IsDocOut() { return this.NewDocumentTypePM.IsDocOut }
-    public set IsDocOut(value: boolean) {
-        if (value == this.NewDocumentTypePM.IsDocOut) return;
-        this.NewDocumentTypePM.IsDocOut = value;
-    }
-    private selectedObjectTableId: string;
-    public get SelectedObjectTableId() { return this.selectedObjectTableId; }
-    public set SelectedObjectTableId(value: string) {
-        if (this.selectedObjectTableId == value) return;
-        this.selectedObjectTableId = value;
-        let objectTable = window.ObjectTables.filter(table => table.Id == value)[0];
-        this.SetIsDocOutProperties(objectTable);
-        this.ObjectTableValueChanged(objectTable);
-    }
 
 
-
-    private SetIsDocOutProperties(objectTable: any) {
-        this.IsCustomObject = objectTable?.IsCustom && AppTool.IsNullOrEmpty(objectTable?.ParentObjectTableId);
-        this.IsDocOut = this.IsCustomObject ? false : this.IsDocOut;
-        this.IsDocOutChange(this.IsDocOut);
-        this.NewDocumentTypePM.UIProperties.SetEnabled("IsDocOut", "DocumentType", !this.IsCustomObject);
-    }
 
     public IsDocOutChange(isdoc) {
 
@@ -209,14 +232,9 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
                  });
              }
 
-             if (this.IsCustomObject && !this.NewDocumentTypePM.IsDocIn) {
-                 this.ValidationErrorsList.push("Please choose Doc in");
-             }
-             if (!this.IsCustomObject && !this.NewDocumentTypePM.IsDocIn && !this.NewDocumentTypePM.IsDocOut) {
-                 this.ValidationErrorsList.push("Please choose Doc in or Doc out");
-             }
-             if (!this.SelectedObjectTableId) {
-                 this.ValidationErrorsList.push("Object Table is Required");
+
+             if (!this.NewDocumentTypePM.IsDocIn && !this.NewDocumentTypePM.IsDocOut) {
+                 this.ValidationErrorsList.push("Please chose Doc in or Doc out");
              }
 
              if (this.NewDocumentTypePM.ObjectTableName == "Shipment" || this.NewDocumentTypePM.ObjectTableName == "Quote") {
@@ -232,7 +250,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
                  this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-                 this.documentTypePMService.insert(this.NewDocumentTypePM).subscribe((res:any) => {
+                 this.documentTypePMService.insert(this.NewDocumentTypePM).subscribe(res=> {
                      this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                      var pmResponse: ServiceResponse = res;
@@ -287,7 +305,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
             var table = window.ObjectTables.filter(d => d.Id == this.NewDocumentTypePM.ObjectTableId)[0];
             if (table) tableId = table.Id;
 
-            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe(response => {
                 var windowArgs: any = {};
                 windowArgs.ObjectTypeField = "DocuemntFileName";
                 windowArgs.HideSystemDataTab = true;

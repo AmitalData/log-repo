@@ -7,7 +7,7 @@ using Simplog.Server.Infrastructure;
 
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
-    public class GlobalContactRepository : IRepository<GlobalContact>
+    public class GlobalContactRepository:IRepository<GlobalContact>
     {
         IGlobalContext globalContext;
 
@@ -23,8 +23,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public GlobalContact GetGlobalContactByEmailAndTenant(string email, int tenant)
         {
             GlobalContact globalContact = (from a in context.GlobalContacts.Include("GlobalTenant")
-                                           where a.Email == email && a.GlobalTenantId == 0 && a.InActive == false
-                                           select a).FirstOrDefault();
+                    where a.Email == email && a.GlobalTenantId == 0 && a.InActive==false
+                    select a).FirstOrDefault();
             if (globalContact == null)
             {
                 globalContact = (from a in context.GlobalContacts.Include("GlobalTenant")
@@ -52,8 +52,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public GlobalContact GetSingleGlobalContact(string id)
         {
             return (from a in context.GlobalContacts.Include("GlobalTenant")
-                    where a.Id == id
-                    select a).FirstOrDefault();
+                   where a.Id == id
+                   select a).FirstOrDefault();
         }
 
 
@@ -90,7 +90,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public IGlobalContext context
         {
-            get { return globalContext; }
+            get {return globalContext; }
         }
 
         public void SubmitChanges()

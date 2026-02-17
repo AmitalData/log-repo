@@ -10,12 +10,12 @@ import {AccountingPeriodPM} from '../../EntityPMs/AccountingPeriodPM';
 
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {Args, PeriodTypeCode} from '../Maintenance/AccountingPeriodsComponent';
+import {Args} from '../Maintenance/AccountingPeriodsComponent';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'EditAccountingPeriodComponent',
     templateUrl: './EditAccountingPeriodComponent.html',
 })
@@ -24,14 +24,11 @@ export class EditAccountingPeriodComponent extends BaseComponent {
     public DataContext: EditAccountingPeriodComponent = this;
     public EntityPM: AccountingPeriodPM;
     public EntityId: string;
-    accountingPeriodListPM: AccountingPeriodPM[];
-
-    oldClosedMonth: number;
+    
 
     public ObjectTableName: string = "AccountingPeriod";
     accountingPeriodPMService: AccountingPeriodPMService;
-    transactionsService: LedgerTransactionListService;
-    accountingPeriodList: AccountingPeriodList[];
+    transactionsService: LedgerTransactionListService;s
 
     accountingPeriod: AccountingPeriodList;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -50,8 +47,7 @@ export class EditAccountingPeriodComponent extends BaseComponent {
 
         this.EntityId = args.EntityId;
         this.accountingPeriod = args.AccountingRow;
-        this.accountingPeriodList = args.AccountingRows;
-       
+
         this.Run();
     }
 
@@ -60,24 +56,11 @@ export class EditAccountingPeriodComponent extends BaseComponent {
             var result = myResult.Result;
             if (!AppTool.IsNullOrEmpty(result)) {
                 this.EntityPM = result;
-                this.oldClosedMonth = this.EntityPM.ClosedMonth;
-                if(this.accountingPeriodList && this.accountingPeriodList.length > 0){
-                    this.accountingPeriodListPM = [];
-                    for(var i=0; i<this.accountingPeriodList.length; i++){
-                        if(this.accountingPeriodList[i].Id !== this.EntityPM.Id ){
-                            this.accountingPeriodPMService.get(this.accountingPeriodList[i]?.Id).subscribe((myResult: any) => {
-                                if(myResult && myResult.Result){
-                                   this.accountingPeriodListPM.push(myResult.Result);
-                                }
-                            })
-                        }
-                    }
-                }
             } else {
                 console.log("cannot find the entity!!");
             }
         });
-
+        
     }
 
     get Year() { return this.EntityPM.Year; }
@@ -108,7 +91,7 @@ export class EditAccountingPeriodComponent extends BaseComponent {
         }
     }
 
-
+    
     public ValidationErrorsList: string[];
 
     OkButtonClicked() {
@@ -128,28 +111,10 @@ export class EditAccountingPeriodComponent extends BaseComponent {
     }
 
     SubmitChanges() {
-       
-        this.accountingPeriodPMService.update(this.EntityPM).subscribe((myResult:any) => {
+        this.accountingPeriodPMService.update(this.EntityPM).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                if(this.accountingPeriodListPM && this.accountingPeriodListPM.length > 0 && this.EntityPM.PeriodTypeCode !== PeriodTypeCode.Accounting){
-                    for(var i=0; i<this.accountingPeriodListPM.length; i++){
-                        if(this.accountingPeriodListPM[i].Id != this.EntityPM.Id && this.accountingPeriodListPM[i]?.PeriodTypeCode !== PeriodTypeCode.Accounting){
-                            this.accountingPeriodListPM[i].ClosedMonth = this.EntityPM.ClosedMonth;
-                            this.accountingPeriodListPM[i].OpenMonth = this.EntityPM.OpenMonth;
-                            this.accountingPeriodPMService.update(this.accountingPeriodListPM[i]).subscribe((myResult:any) => {
-                                var mm: ServiceResponse = myResult;
-                                if (mm.HasError) {
-                                    this.ValidationErrorsList = mm.ErrorsArray;
-                                }
-                                
-                            });
-                        }
-                       
-                    }
-                }
                 this.CurrentSession.CloseCurrentWindowEmit("ok");
-
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
@@ -166,13 +131,8 @@ export class EditAccountingPeriodComponent extends BaseComponent {
             if (this.OpenMonth < 12) {
 
                 // begin: invoice row logic
-                if (this.EntityPM.PeriodTypeCode == "2" || this.EntityPM.PeriodTypeCode == "3"  ) { //2-invoice 3-Interest Invoice
+                if (this.EntityPM.PeriodTypeCode == "2") { //2-invoice
                     if (this.OpenMonth+1 > this.accountingPeriod.OpenMonth) {
-                        this.ValidationErrorsList = [];
-                        if (this.EntityPM.PeriodTypeCode == "2")
-                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantOpenInvoiceMonth"));
-                        else
-                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantOpenInterestInvoiceMonth"));
                         return;
                     }
                 }
@@ -187,7 +147,7 @@ export class EditAccountingPeriodComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(this.OpenMonth)) {
 
-            if (this.OpenMonth > 0 && (this.OpenMonth > this.ClosedMonth + 1 || this.ClosedMonth == undefined)) {
+            if (this.OpenMonth > 0 && this.OpenMonth > this.ClosedMonth + 1) {
 
 
                 var endDayNumber: number = new Date(new Date().getFullYear(), this.OpenMonth + 1, 0).getDate();
@@ -205,22 +165,6 @@ export class EditAccountingPeriodComponent extends BaseComponent {
                 toDate.setDate(endDayNumber);
 
                 filters.addAdditionalFilter("AccountingDate", fromDate, toDate, null, "Between", false, false, false, "number");
-                switch (this.PeriodTypeCode) {
-                    case "2": { // Regular Invoice
-                        filters.addAdditionalFilter("OnlyNonInterestInvoice", true, null, null, "Equal", true, false, false, "boolean");
-                        break;
-                    }
-
-                    case "3": { // Interest Invoice
-                        filters.addAdditionalFilter("OnlyInterestInvoice", true, null, null, "Equal", true, false, false, "boolean");
-                        break;
-                    }
-
-                    default: {  
-                        filters.addAdditionalFilter("OnlyNonInvoice", true, null, null, "Equal", true, false, false, "boolean");
-                        break;
-                    }
-                }
 
                 this.transactionsService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse != null) {
@@ -229,7 +173,7 @@ export class EditAccountingPeriodComponent extends BaseComponent {
 
                             if (myResult.length > 0) { // transactions exist
                                 this.ValidationErrorsList = [];
-                                this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelOpenMonth"));
+                                this.ValidationErrorsList.push("Can’t cancel opening this month, Transaction registered already");
                             } else {
                                 //if (this.OpenMonth > 0 && this.OpenMonth > this.ClosedMonth + 1) {
                                     this.OpenMonth--;
@@ -250,6 +194,14 @@ export class EditAccountingPeriodComponent extends BaseComponent {
         this.ValidationErrorsList = [];
 
         if (!AppTool.IsNullOrEmpty(this.ClosedMonth)) {
+
+            // begin: invoice row logic
+            if (this.EntityPM.PeriodTypeCode == "2") { //2-invoice
+                if (this.ClosedMonth+1 < this.accountingPeriod.ClosedMonth) {
+                    return;
+                }
+            }
+            //end
 
             if (this.ClosedMonth == 12)
                 return;
@@ -273,50 +225,21 @@ export class EditAccountingPeriodComponent extends BaseComponent {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.MonthNotEndedCantClosed"));  //"The month is not ended, can’t be closed");
                 } else {
-                    this.ClosedMonth = 1;
+                    this.ClosedMonth = (this.EntityPM.PeriodTypeCode == "2" ? this.accountingPeriod.ClosedMonth : 1);
                 }
             }
         }
     }
     DecrementClosed() {
-        // // incase: we want to allow cancelling before save the period - DON'T DELETE!
-        // if(this.ClosedMonth){
+        this.ValidationErrorsList = [];
 
-        //     if(this.ClosedMonth == 1 && !this.oldClosedMonth)
-        //         this.ClosedMonth = null
-
-        //     if(this.ClosedMonth > 1 && (this.ClosedMonth > this.oldClosedMonth || !this.oldClosedMonth))
-        //         this.ClosedMonth--;
-        // }
-
-
-
-
-
-        if(this.ClosedMonth){
-
-             if (this.EntityPM.PeriodTypeCode == "2" || this.EntityPM.PeriodTypeCode == "3") { //2-invoice 3-Interest Invoice
-                 if (this.ClosedMonth == this.accountingPeriod.ClosedMonth) {
-                     this.ValidationErrorsList = [];
-                     if (this.EntityPM.PeriodTypeCode == "2")
-                         this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelInvoiceClosedMonth"));
-                     else
-                         this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelInterestInvoiceClosedMonth"));
-                     //this.ValidationErrorsList.push("Cannot open an invoice's closed month which is less than accounting period's closed month.");
-                     // this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelOpenMonth"));
-                     return;
-                 }
-             }
-
-
-            if(this.ClosedMonth == 1)
-                this.ClosedMonth = null
-            else if(this.ClosedMonth > 1)
-                this.ClosedMonth--;
+        if (!AppTool.IsNullOrEmpty(this.ClosedMonth)) {
+            //if (this.ClosedMonth > 0) {
+            //    this.ClosedMonth--;
+            //}
         }
-
     }
 
 
-
+    
 }

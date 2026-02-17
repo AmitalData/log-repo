@@ -3,7 +3,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {AccountingTransferHeaderPM} from '../../EntityPMs/AccountingTransferHeaderPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "./AccountingTransferHeaderHelperComponent.html",
 })
 

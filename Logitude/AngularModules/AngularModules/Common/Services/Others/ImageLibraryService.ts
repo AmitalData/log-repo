@@ -1,7 +1,6 @@
-import {Injectable, } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable, } from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {DocumentsFilingPM} from '../../EntityPMs/DocumentsFilingPM';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -9,37 +8,40 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 @Injectable()
 
 export class ImageLibraryService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ImageLibrary';
     }
 
-    DownloadFile(filename: string, documentExtension: string, fileLocation: string, tenant: number , type:string = "",tokenTenant:number = -1 ) {
-        tokenTenant = tokenTenant > -1 ? tokenTenant:tenant;
+    DownloadFile(filename: string, documentExtension: string, fileLocation: string, tenant: number , type:string = "") {
+
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getdownloadfile/?' + 'filename=' + filename + '&documentExtension=' + documentExtension + '&fileLocation=' + fileLocation + '&type=' + type + '&tenant=' + tenant+'&tokenTenant='+tokenTenant, ServiceHelper.GetHttpHeaders()).pipe(map(result => {
+        return this._http.get(this._apiUrl + '/getdownloadfile/?' + 'filename=' + filename + '&documentExtension=' + documentExtension + '&fileLocation=' + fileLocation + '&type=' + type + '&tenant=' + tenant, { headers: authHeader }).map(result => {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
-                pmresponse.Result = result;
+                pmresponse.Result = result.json();
                 return pmresponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
     }
     UploadFile(imageuploadFilter: any) {
-        imageuploadFilter.TokenTenant = imageuploadFilter.TokenTenant > -1 ? imageuploadFilter.TokenTenant:imageuploadFilter.Tenant;
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return defer(() => {
-            return this._http.post(this._apiUrl + "/PostUploadFile", JSON.stringify(imageuploadFilter) ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result :any = response;
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + "/PostUploadFile", JSON.stringify(imageuploadFilter), {
+        
+                headers: authHeader,
+
+            }).map(response => {
+                var result = response.json();
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -51,14 +53,16 @@ export class ImageLibraryService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return defer(() => {
-            return this._http.post(this._apiUrl + "/PostImageAfterResize", JSON.stringify(imageuploadFilter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result :any = response;
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + "/PostImageAfterResize", JSON.stringify(imageuploadFilter), {
+                headers: authHeader,
+            }).map(response => {
+                var result = response.json();
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -68,14 +72,17 @@ export class ImageLibraryService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return defer(() => {
-            return this._http.post(this._apiUrl + "/PostUploadPdfFile", JSON.stringify(imageuploadFilter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result :any = response;
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + "/PostUploadPdfFile", JSON.stringify(imageuploadFilter), {
+                headers: authHeader,
+
+            }).map(response => {
+                var result = response.json();
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -84,25 +91,25 @@ export class ImageLibraryService {
     CancelUpload(documentId: string,  tenant:number ) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getcancelupload/?' + 'documentId=' + documentId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result :any = response;
+        return this._http.get(this._apiUrl + '/getcancelupload/?' + 'documentId=' + documentId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+            var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
 
     }
     RemoveFile(documentId: string , tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getremovefile/?' + 'documentId=' + documentId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result :any = response;
+        return this._http.get(this._apiUrl + '/getremovefile/?' + 'documentId=' + documentId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+            var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
 
     }
 
@@ -112,15 +119,15 @@ export class ImageLibraryService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetAllParticipantsConversationHeaderMessageId/?' + 'conversationHeaderId=' + conversationHeaderId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/GetAllParticipantsConversationHeaderMessageId/?' + 'conversationHeaderId=' + conversationHeaderId, { headers: authHeader }).map(response => {
 
-            var result :any = response;
+            var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
 
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 }

@@ -38,7 +38,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? UpdateDate { get; set; }
         public string APInvoiceTypeCode { get; set; }
         public string VendorName { get; set; }
-        public string VendorLocalName { get; set; }
         public string VendorCode { get; set; }
         public string PaymentTermName { get; set; }
         public string InvoiceCurrencyCode { get; set; }
@@ -54,7 +53,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public double? AmountDueInLocalCurrency { get; set; }
         public double? AmountDueInProfitCurrency { get; set; }
         public string BranchId { get; set; }
-        public string BranchName { get; set; }
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
         public string Description { get; set; }
@@ -78,33 +76,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public bool IsExternalEntity { get; set; }
         public bool IsGeneralInvoice { get; set; }
         public DateTime? FirstApproveDate { get; set; }
-        public string VendorCity { get; set; }
-        public string VendorCountry { get; set; }
-        public string CreatedByPartner { get; set; }
-        public string Field1 { get; set; }
-        public string Field2 { get; set; }
-        public string Field3 { get; set; }
-        public string Field4 { get; set; }
-        public string Field5 { get; set; }
-        public string Field6 { get; set; }
-        public string Field7 { get; set; }
-        public string Field8 { get; set; }
-        public string Field9 { get; set; }
-        public string Field10 { get; set; }
-        public bool TotalVATOnly { get; set; }
-        public DateTime? PaidDate { get; set; }
-        public string ShipmentsNumbers { get; set; }
-        public string MasterNumbers { get; set; }
-        public string MasterShipmentNumbers { get; set; }
-        public string HouseNumbers { get; set; }
-        public string GlobalTaxCalculation { get; set; }
-        public bool IsEquipment { get; set; }
-        public string ConnectedPaymentsNumbers { get; set; }
-        public string ConfirmationNumber { get; set; }
-        public bool IsPrepaidExpenses { get; set; }
-
-
 
     }
-
 }

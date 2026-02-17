@@ -1,10 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
 import {TicketMainTabComponent} from '../MainTab/TicketMainTabComponent';
+import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {UserList} from '../../../../../Common/EntityLists/UserList';
 import {UserListService} from '../../../../../Common/Services/StandardLists/UserListService';
+import {CardList} from '../../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../../Common/Services/StandardLists/CardListService';
 import {TicketClassificationList} from '../../../../../CRM/EntityLists/TicketClassificationList';
 import {TicketClassificationListService} from '../../../../../CRM/Services/StandardLists/TicketClassificationListService';
@@ -16,25 +18,26 @@ import {CRMDomainService} from '../../../../../CRM/Services/CRMDomainService';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {ShipmentList} from '../../../../../Shipment/EntityLists/ShipmentList';
 import {CRMTool} from '../../../../../CRM/Tools';
+import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import {TicketSeverityList} from '../../../../../CRM/EntityLists/TicketSeverityList';
 import {TicketSeverityListService} from '../../../../../CRM/Services/StandardLists/TicketSeverityListService';
 import {ContactList} from '../../../../../Common/EntityLists/ContactList';
 import {ContactListService} from '../../../../../Common/Services/StandardLists/ContactListService';
+import {ContactInputTemplateArgs} from '../../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator'; 
 import {ContactItemClass} from '../../../../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
 import {ContactPMService} from '../../../../../Common/Services/StandardPMs/ContactPMService';
 import {CachedDataManager} from '../../../../../Infrastructure/Utilities/CachedDataManager';
-import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
-import { NewQuoteComponentArgs } from '../../../../../Quote/Args';
+import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 declare var window: any;
 
 @Component({
     selector: 'DetailsTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './DetailsTabComponent.html',
 })
 
-export class DetailsTabComponent extends BaseComponent {
+export class DetailsTabComponent extends BaseComponent implements AfterViewInit {
 
     public EntityPM: TicketPM;
     public Trigger: TicketMainTabComponent;
@@ -86,7 +89,15 @@ export class DetailsTabComponent extends BaseComponent {
         this.TicketSeverityListService = new TicketSeverityListService();
         this.TicketClassificationListService = new TicketClassificationListService();
     }
-    
+    ngAfterViewInit() {
+        //if (this.Trigger.EntityPM != null && this.Trigger.EntityPM.TicketCorrespondence != null && this.Trigger.EntityPM.TicketCorrespondence[0].Direction == "O") {
+        if (this.Trigger.EntityPM.Source == "MAL") {
+            this.IsFromOutSide = true;
+        }
+        else {
+            this.IsFromOutSide = false;
+        }
+    }
     InitTab(trigger: TicketMainTabComponent) {
         this.Trigger = trigger;
         this.EntityPM = this.Trigger.EntityPM;
@@ -107,13 +118,6 @@ export class DetailsTabComponent extends BaseComponent {
         this.ObjectTableName = this.Trigger.ObjectTableName;
         this.SetUIProperties();
         this.getGeneralClassification();
-
-        if (this.Trigger.EntityPM.Source == "MAL") {
-            this.IsFromOutSide = true;
-        }
-        else {
-            this.IsFromOutSide = false;
-        }
     }
     RefreshTab(trigger: TicketMainTabComponent) {
         this.EntityPM = this.Trigger.EntityPM;
@@ -379,7 +383,7 @@ export class DetailsTabComponent extends BaseComponent {
     set SeverityId(newValue: string) {
         if (this.Trigger.EntityPM.SeverityId != newValue) {
             this.Trigger.EntityPM.SeverityId = newValue;
-            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe((result:any) => {
+            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe(result => {
                 var severity: TicketSeverityList = result.Result;
                 if (severity != null)
                     this.Trigger.EntityPM.SeverityName = severity.Name;
@@ -549,7 +553,7 @@ export class DetailsTabComponent extends BaseComponent {
     }
 
     ChooseEntity() {
-        if (this.IsTicketEditEnabled && this.EntityType != null) {
+        if (this.IsTicketEditEnabled) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 800;
             logWindow.Height = 570;
@@ -593,12 +597,8 @@ export class DetailsTabComponent extends BaseComponent {
     AddButtonClicked() {
         var path = './Quote/ComponentsNewEntity/NewQuoteComponent';
         var windowTitle = "New Quote";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
             var logWindow = new LogitudeWindow();
-            var args = new NewQuoteComponentArgs();
-            args.IsCreatedFromTicket = true;
-            args.TicketCreateDate = this.EntityPM.CreateDate;
-            logWindow.WindowArgs = args;
             logWindow.Width = 960;
             logWindow.Height = 570;
             logWindow.Title = windowTitle;
@@ -611,8 +611,6 @@ export class DetailsTabComponent extends BaseComponent {
                             this.QuoteNumber = quote.QuoteNumber;
                             this.QuoteId = quote.Id;
                             this.CompanyId = quote.CustomerId;
-                            this.ViewQuoteClicked();
-
                         }
                     }
                 });

@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -39,19 +39,6 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
      [Key]
         [Column("Version")]
 	    public int Version { get; set; }
-        [Column("IsDraft")]
-	    public bool IsDraft { get; set; }
-        [Column("ApproveDate")]
-	    public DateTime? ApproveDate { get; set; }
-        [ForeignKey("ApprovedByUser")]
-        [Column("ApprovedByUserId")]
-	    public string ApprovedByUserId { get; set; }
-	      
-        public virtual User ApprovedByUser { get; set; }
-        [Column("ParentVersionNumber")]
-	    public int ParentVersionNumber { get; set; }
-        [Column("InitialEnddate")]
-	    public DateTime? InitialEnddate { get; set; }
     }
 }
 	 

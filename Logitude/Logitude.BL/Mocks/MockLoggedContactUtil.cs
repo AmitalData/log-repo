@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-
 
 namespace Logitude.BL.Mocks
 {
@@ -23,18 +21,5 @@ namespace Logitude.BL.Mocks
 
             return loggedcontact;
         }
-
-        public Contact GetLoggedContactsIncludingCustomerCareForWR(int tenant)
-        {
-            string expectedLoggedUserId = "myUser";
-            Contact loggedcontact = new Contact()
-            {
-                Id = expectedLoggedUserId,
-                DontShowLocalLabels = true,
-            };
-
-            return loggedcontact;
-        }
-
     }
 }

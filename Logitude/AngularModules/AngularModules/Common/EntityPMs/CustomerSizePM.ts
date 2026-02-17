@@ -20,7 +20,7 @@ export class CustomerSizePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -50,11 +50,6 @@ export class CustomerSizePM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
-    private code: string;
-    public get Code() { return this.code; }
-    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
-       
-	 
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
@@ -64,10 +59,7 @@ export class CustomerSizePM {
     public OldEntityPM: CustomerSizePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -75,7 +67,6 @@ export class CustomerSizePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomerSize");
            
         }
-	 }
     }
     private MyClone: CustomerSizePM;
 

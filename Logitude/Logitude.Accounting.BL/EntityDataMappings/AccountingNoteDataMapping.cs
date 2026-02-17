@@ -57,8 +57,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
             if (entityPOCO.UpdatedByUserId != null)
             {
-                ContactPM updatedByContact = query.GetSinglePM(entityPOCO.UpdatedByUserId, entityPOCO.Tenant) 
-                    ?? query.GetSinglePM(entityPOCO.UpdatedByUserId, 0);
+                ContactPM updatedByContact = query.GetSinglePM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
                 if (updatedByContact != null)
                 {
                     entityPM.UpdatedByUserName = showLocals ? (updatedByContact.LocalName ?? updatedByContact.EnglishName) : updatedByContact.EnglishName;

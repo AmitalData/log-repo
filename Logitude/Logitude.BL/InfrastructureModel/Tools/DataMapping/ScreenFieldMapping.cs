@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -11,15 +11,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             screenField.ObjectFieldId = screenFieldPM.ObjectFieldId;
             screenField.Row = screenFieldPM.Row;
             screenField.ScreenId = screenFieldPM.ScreenId;
-            screenField.ScreenCode = screenFieldPM.ScreenCode;
-
             screenField.Tenant = screenFieldPM.Tenant;
-            screenField.ObjectFieldCode = screenFieldPM.ObjectFieldCode;
-            screenField.SectionNumber = screenFieldPM.SectionNumber;
-
-
-
-
+            
         }
     }
 }

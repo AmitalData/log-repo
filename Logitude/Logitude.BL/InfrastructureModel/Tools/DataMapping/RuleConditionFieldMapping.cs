@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -12,7 +12,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             ruleConditionField.ObjectTableRuleId = ruleConditionFieldPM.ObjectTableRuleId;
             ruleConditionField.Operator = ruleConditionFieldPM.Operator;
             ruleConditionField.Value = ruleConditionFieldPM.Value;
-            ruleConditionField.ObjectFieldCode = ruleConditionFieldPM.ObjectFieldCode;
         }
     }
 }

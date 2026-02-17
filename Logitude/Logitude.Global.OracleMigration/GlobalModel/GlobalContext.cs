@@ -1,13 +1,20 @@
 
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.Entity.Core.EntityClient;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Mapping;
 using Simplog.Server.Infrastructure;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Infrastructure;
+using System.Data;
 using Simplog.Global.Data.GlobalModel;
+using Logitude.Global.OracleMigration.Migrations;
 using System.Configuration;
 using System;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.Global.OracleMigration.GlobalModel
 {
@@ -16,7 +23,7 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public GlobalContext()
             : base("LogitudeGlobalStr")
         {
-            Database.SetInitializer<GlobalContext>(null);
+            Database.SetInitializer<GlobalContext>(new MigrateDatabaseToLatestVersion<GlobalContext,Logitude.Global.OracleMigration.Migrations.Configuration>());
         }
         public GlobalContext(DbConnection connection)
             : base(connection,true)
@@ -25,14 +32,15 @@ namespace Logitude.Global.OracleMigration.GlobalModel
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer<GlobalContext>(null);//(new MigrateDatabaseToLatestVersion<GlobalContext, Simplog.Global.Data.Migrations.Configuration>());
- 
+            //bool exists = Database.CreateIfNotExists();
+            //var configuration = new Simplog.Global.Data.Migrations.Configuration();
+            //configuration.AutomaticMigrationDataLossAllowed = true;
+            //configuration.TargetDatabase = new DbConnectionInfo(connection.ConnectionString, "System.Data.SqlClient");
+            //var migrator = new DbMigrator(configuration);
+            
+            //migrator.Update();
         }
-
-        public GlobalContext(string nameOrConnectionString) : base(nameOrConnectionString)
-        {
-            Database.SetInitializer<GlobalContext>(null);
-        }
-
+               
         public void SetAsModified(object entity)
         {
             this.Entry(entity).State = EntityState.Modified;
@@ -41,12 +49,13 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public static IGlobalContext GetContext()
         {
             
-            string dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
-            return  new GlobalContext(dbConnectionInfo);
-
-            //DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-            //GlobalContext context = new GlobalContext(connection);
-            //return context;
+            string dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString; 
+            if (dbConnectionInfo.Contains("Main"))
+            { }
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            GlobalContext context = new GlobalContext(connection);
+          
+            return context;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -152,9 +161,6 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
         public IDbSet<BluesnapContractType> BluesnapContractTypes { get; set; }
-        public IDbSet<BluesnapTransaction> BluesnapTransactions { get; set; }
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; set; }
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys { get; set; }
-        public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
+
     }
 }

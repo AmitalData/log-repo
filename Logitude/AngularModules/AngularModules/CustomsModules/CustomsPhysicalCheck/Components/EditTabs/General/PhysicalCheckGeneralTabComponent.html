@@ -41,37 +41,10 @@
         background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
         background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
     }
-
-    .DisbleBox {
-        display: inline-block;
-        border: 1px solid #ffd800;
-        border-radius: 5px;
-        background: #faf5c0;
-        padding: 2px 10px;
-        margin: 5px;
-        color: gray;
-        font-family: sans-serif;
-    }
-    :host ::ng-deep .InputDiv {
-        height: 55px !important;
-    }
 </style>
 
 <div style="margin:10px;" class="MediaFill">
     <table>
-         <!--Disble Alert-->
-         <tr *ngIf="IsDisplayOnly" style="height: 28px;">
-            <td colspan="3">
-                <div style="width: 100%;text-align:center">
-                    <div class="DisbleBox">
-                        {{DisplayOnlyMessage}}
-                        <span style="padding: 0px 16px;">-</span>
-                        <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
-
-                    </div>
-                </div>
-            </td>
-        </tr>
         <tr class="FormFieldRow">
             <td>
                 <div *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
@@ -83,7 +56,7 @@
         <tr>
             <td>
                 <div class="MediaFill">
-                    <div style="float:right; width: 300px;" >
+                    <div style="float:right;">
                         <table style="width: 250px;height: 350px;padding-top: 10px;float:right;">
 
                             <tr style="height:25px">
@@ -94,54 +67,17 @@
                             <tr class="FormFieldRow">
                                 <td colspan="3">
                                     <div class="RadioButton">
-                                        <input id="ByAskForAnEarlierDate" type="radio" name="MyRadio" [checked]="AskForAnEarlierDate" (click)="SetByAskForAnEarlierDate()" [disabled]="IsDisplayOnly"/>
+                                        <input id="ByAskForAnEarlierDate" type="radio" name="MyRadio" [checked]="AskForAnEarlierDate" (click)="SetByAskForAnEarlierDate()" />
                                         <label for="ByAskForAnEarlierDate">{{'Customs.PhysicalCheck.O.AskForAnEarlierDate' | TextCodeTranslationPipe}}</label>
                                     </div>
                                 </td>
 
 
                             </tr>
-
-                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"
-                                style="display: flex; width: 400px; align-items: flex-start;">
-
-                                <td colspan="1" style="margin-left: 10px;">
-                                    <div class="Tbl1Col0" style="display: flex; justify-content: flex-start;">
-                                        <label for="RequestToAdvanceAQueue">{{'Customs.PhysicalCheck.O.RequestToAdvanceAQueue' | TextCodeTranslationPipe}} </label>
-                                    </div>
-                                </td>
-                                <td class="Tbl1Col1" style="width: 170px; margin-bottom: 10px;">                                    
-                                    <LogLov [ObjectFieldName]="'RequestToAdvanceAQueue'"
-                                    [ObjectTableName]="'Customs.PhysicalCheck'"
-                                    [DataContext]="DataContext" 
-                                    [HideColumns]="true"
-                                    [SelectedValue] = "RequestToAdvanceAQueue"
-                                    [LookUpTableName]="'Customs.RequestToAdvanceAQueue'">
-                                </LogLov>
-                                </td>
-
-                            </tr>
-                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"
-                                style=" display: flex; flex-direction: row; align-items: flex-start; width: 400px;">
-                                <td colspan="1" style="margin-left: 10px;">
-                                    <div class="Tbl1Col0" style="display: flex; justify-content: flex-start;">
-                                        <label for="RequestDetails">{{'Customs.PhysicalCheck.O.RequestDetails' | TextCodeTranslationPipe}}</label>
-                                    </div>
-                                </td>
-                                <td class="Tbl1Col1" style="width: 170px;">
-                                    <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'RequestDetails'"
-                                                         [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
-                                                          [DataContext]="DataContext"></LogTextBox>
-                                </td>
-
-                            </tr>
-                           
-
-
                             <tr class="FormFieldRow">
                                 <td colspan="3">
                                     <div class="RadioButton">
-                                        <input id="ByAskForAnLaterDate" type="radio" name="MyRadio" [checked]="AskForAnLaterDate" (click)="SetByAskForAnLaterDate()" [disabled]="IsDisplayOnly"/>
+                                        <input id="ByAskForAnLaterDate" type="radio" name="MyRadio" [checked]="AskForAnLaterDate" (click)="SetByAskForAnLaterDate()" />
                                         <label for="ByAskForAnLaterDate">{{'Customs.PhysicalCheck.O.AskForAnLaterDate' | TextCodeTranslationPipe}}</label>
                                     </div>
                                 </td>
@@ -149,9 +85,9 @@
 
                             </tr>
                             <tr class="FormFieldRow">
-                                <td colspan="2">
+                                <td colspan="3">
                                     <div class="RadioButton">
-                                        <input id="ByAvailableTimeChecked" type="radio" name="MyRadio" [checked]="AvailableTimeChecked" (click)="SetByAvailableTimeChecked()" [disabled]="IsDisplayOnly"/>
+                                        <input id="ByAvailableTimeChecked" type="radio" name="MyRadio" [checked]="AvailableTimeChecked" (click)="SetByAvailableTimeChecked()" />
                                         <label for="ByAvailableTimeChecked">{{'Customs.PhysicalCheck.O.GetAvailableTimeList' | TextCodeTranslationPipe}}</label>
                                     </div>
                                 </td>
@@ -159,8 +95,7 @@
 
                             </tr>
 
-                            <tr class="FormFieldRow"
-                                style=" display: flex; flex-direction: row; align-items: center; width: 400px;">
+                            <tr class="FormFieldRow">
                                 <td class="Tbl1Col0">
                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                               [TextCode]="'Customs.PhysicalCheck.O.FromDate'"></LogLabel>
@@ -178,8 +113,7 @@
                                 <td><div></div></td>
                             </tr>
 
-                            <tr class="FormFieldRow"
-                                style=" display: flex; flex-direction: row; align-items: center; width: 400px;">
+                            <tr class="FormFieldRow">
                                 <td class="Tbl1Col0">
                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                               [TextCode]="'Customs.PhysicalCheck.O.ToDate'"></LogLabel>
@@ -197,17 +131,14 @@
                                 </td>
                                 <td><div></div></td>
                             </tr>
-                            <tr style="display: flex;
-                                align-items: flex-end;
-                                justify-content: center;
-                                margin: 10px;
-                                width: 300px;">
+                            <tr>
                                 <td></td>
                                 <td colspan="2">
                                     <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
-                                                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)" [IsDisabled]="IsDisplayOnly">
+                                                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
                                     </custom-send-options>
                                 </td>
+
                             </tr>
                             <tr>
                                 <td></td>

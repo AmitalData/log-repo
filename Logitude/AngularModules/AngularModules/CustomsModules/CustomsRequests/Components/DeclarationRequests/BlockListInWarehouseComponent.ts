@@ -21,7 +21,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'BlockListInWarehouseComponent',
-    
+    moduleId: module.id,
     templateUrl: './BlockListInWarehouseComponent.html',
 })
 
@@ -188,11 +188,10 @@ export class BlockListInWarehouseComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לגושים במחסן", true)
             .then((res) => {
                 this.ResponseData = res;
-                this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {

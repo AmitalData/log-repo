@@ -271,7 +271,7 @@ export class OpportunityMenuButtonsHandler {
 
     CloseWon_SaveCompleted() {
             var closingListService: OpportunityClosingReasonListService = new OpportunityClosingReasonListService();
-            closingListService.getAllFromCache().subscribe((result:any) => {
+            closingListService.getAllFromCache().subscribe(result => {
                 var myClosingReason: OpportunityClosingReasonList = result.Result.filter(d => d.Code == "WN")[0];
                 if (myClosingReason == null) {
                     var messageWindow = new MessageWindow();
@@ -382,7 +382,7 @@ export class OpportunityMenuButtonsHandler {
 
     private LoadCustomer(tag: string) {
     var cardService: CardListService = new CardListService();
-    cardService.getSingle(this.EntityPM.CustomerId).subscribe((result:any) => {
+    cardService.getSingle(this.EntityPM.CustomerId).subscribe(result => {
         var loadedCustomer: CardList = result.Result;
         this.EntityPM.CustomerExternalId = loadedCustomer.ReceivablesAccountingCard;
         if (loadedCustomer != null) {
@@ -476,7 +476,7 @@ export class OpportunityMenuButtonsHandler {
                 if (this.EntityPM.Field3 == null || (this.EntityPM.Field3 != null && AppTool.IsNullOrEmpty(this.EntityPM.Field3.Value))) {
                     if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerId)) {
                         var customerService: CustomerListService = new CustomerListService();
-                        customerService.getSingle(this.EntityPM.CustomerId).subscribe((result:any) => {
+                        customerService.getSingle(this.EntityPM.CustomerId).subscribe(result => {
                             var customer: CardList = result.Result;
                             var createTenantHelper: CreateTenantHelper = new CreateTenantHelper("Opportunity", customer.Id, customer.EnglishName, customer.ReceivablesAccountingCard, customer.PrimaryContactId, customer.VatNumber, customer.CountryName, customer.CountryCode);
                             createTenantHelper.CreateTenantMethod();
@@ -532,7 +532,7 @@ export class OpportunityMenuButtonsHandler {
        
        var todayDateTime: Date = DateTool.GetCurrentDateTimeAsUtc();
        var stageService: StageListService = new StageListService();
-       stageService.getAllFromCache().subscribe((result:any) => {
+       stageService.getAllFromCache().subscribe(result => {
            var myStage: StageList = result.Result.filter(d => d.Code == "QUA" && d.Tenant == SessionLocator.Tenant)[0];
            if (myStage != null) {
                newOpportunity.StageId = myStage.Id;

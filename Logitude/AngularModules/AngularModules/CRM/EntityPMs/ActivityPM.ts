@@ -19,11 +19,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class ActivityPM {
-      
+
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-                    this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -574,29 +574,11 @@ export class ActivityPM {
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
        
 	 
-    private leadSourceId: string;
-    public get LeadSourceId() { return this.leadSourceId; }
-    public set LeadSourceId(newValue: string) { if (this.leadSourceId != newValue) { this.leadSourceId = newValue; this.MarkAsDirty("LeadSourceId"); } }
-       
-	 
-    private leadSourceName: string;
-    public get LeadSourceName() { return this.leadSourceName; }
-    public set LeadSourceName(newValue: string) { if (this.leadSourceName != newValue) { this.leadSourceName = newValue; this.MarkAsDirty("LeadSourceName"); } }
-       
-	 
-    private customerCode: string;
-    public get CustomerCode() { return this.customerCode; }
-    public set CustomerCode(newValue: string) { if (this.customerCode != newValue) { this.customerCode = newValue; this.MarkAsDirty("CustomerCode"); } }
-       
-	 
 
     public OldEntityPM: ActivityPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -604,7 +586,6 @@ export class ActivityPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Activity");
            
         }
-       }
     }
 
     private MyClone: ActivityPM;

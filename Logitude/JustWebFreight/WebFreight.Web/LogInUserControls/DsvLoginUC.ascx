@@ -7,45 +7,215 @@
     <link id="logolink" rel="shortcut icon" />
     <title></title>
 
-    <link href="../css/asp.css" rel="stylesheet" type="text/css"/>
-    <link href="../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="../js/kendo.all.min.js" type="text/javascript"></script>
-    <script src="../js/knockout-3.5.1.js" type="text/javascript"></script>
-    <script src="../js/knockout-kendo.min.js" type="text/javascript"></script>
-
-    <script src="../HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>
-    <link href="../HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>    
-    <link href="../HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
-    <link href="../HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
-    <link href="../HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>   
-    <script src="../Scripts/json2.min.js" type="text/javascript"></script>
-
+    <script src="HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>
 
     <style type="text/css">
+
+                       
+.cmdSubmit {
+	-moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+	box-shadow:inset 0px 1px 0px 0px #caefab;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77d42a), color-stop(1, #5cb811) );
+	background:-moz-linear-gradient( center top, #77d42a 5%, #5cb811 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811');
+	background-color:#77d42a;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #268a16;
+	display:inline-block;
+	 color: #ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #aade7c;
+     width: 100px;
+     margin-top:2px;
+}.cmdSubmit:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a) );
+	background:-moz-linear-gradient( center top, #5cb811 5%, #77d42a 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a');
+	background-color:#5cb811;
+}.cmdSubmit:active {
+	position:relative;
+	top:1px;
+}
+
+        .loginButton
+        {
+            -moz-box-shadow: inset 0px 1px 0px 0px #f29c93;
+            -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
+            box-shadow: inset 0px 1px 0px 0px #f29c93;
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #cc0029) );
+            background: -moz-linear-gradient( center top, #fe1a00 5%, #cc0029 100% );
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#cc0029');
+            background-color: #fe1a00;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            border: 1px solid #d83526;
+            display: inline-block;
+            color: #ffffff;
+            font-family: arial;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 6px 24px;
+            text-decoration: none;
+            text-shadow: 1px 1px 0px #b03466;
+            width: 100px;
+        }
+
+            .loginButton:hover
+            {
+                background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #cc0029), color-stop(1, #fe1a00) );
+                background: -moz-linear-gradient( center top, #cc0029 5%, #fe1a00 100% );
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0029', endColorstr='#fe1a00');
+                background-color: #cc0029;
+            }
+
+            .loginButton:active
+            {
+                position: relative;
+                top: 1px;
+            }
+
+
+
+   
+     .promptButton {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	padding: .5em 2em .55em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+.promptButton:hover {
+	text-decoration: none;
+}
+.promptButton:active {
+	position: relative;
+	top: 1px;
+}
+            
+    </style>
+
+    <style type="text/css">
+        body, html
+        {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            height: 100%;
+        }
+
+        body
+        {
+            min-width: 980px;
+            background: url("images/LoginScreen/map.png") no-repeat 50% 180px;
+        }
+
+        #mapBackground
+        {
+            background-image: url("images/LoginScreen/map.png");
+            text-align: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            width: 907px;
+            height: 466px;
+            margin-top: 15px;
+            background-position: center;
+        }
+
+
+
+        .auto-style1
+        {
+            background: #dbdbdb; /* Old browsers */
+            /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RiZGJkYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjI4JSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQxJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+            background: -moz-linear-gradient(top, #dbdbdb 0%, #f2f2f2 28%, #ffffff 41%, #ffffff 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(28%,#f2f2f2), color-stop(41%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* IE10+ */
+            background: linear-gradient(to bottom, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+            font-family: tahoma, arial, sans-serif;
+            width: 260px;
+            height: 25px;
+            font-size: 13px;
+        }
+
+        .column1
+        {
+            text-align: left;
+            width: 300px;
+            font-family: "Myriad Pro";
+            font-size: 14px;
+            color: #4B4A4A;
+        }
+
         span.k-icon.k-i-arrow-s {
             background-image: url('HtmlHelpers/Images/Icons/DropArrow.png');
             background-size: 12px 12px;
             background-position: 0 0;
         }
+        /*
+        #cmbTenants-list .k-item
+        {
+            background:transparent;
+            color: black;
+            border:0px;
+        }
+
+        #cmbTenants-list .k-item:hover
+        {
+            background:gray;
+            color: white;
+        } 
+    */
     </style>
 
+    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.common.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.default.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>    
+    <link href="../HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
+    <link href="../HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
+    <link href="../HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
+     
+    <!--  AmitalBrowserWpfApplication\Views\GatewayUserControl.cs GOOD (Itzik )-->        	
+    
+    <script src="Scripts/json2.min.js" type="text/javascript"></script>
+<%--	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.js" type="text/javascript"></script>
+    <script src="http://cdn.kendostatic.com/2012.1.322/js/kendo.all.min.js" type="text/javascript"></script>--%>
 
-
-     	
+    <!--  AmitalBrowserWpfApplication\Views\GatewayUserControl.cs Bad (Itzik )-->        	
    
      
-
+    <script type="text/javascript" src="../HtmlHelpers/JS/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js"></script>
 </head>
 
 <body onload="get_cookie_data()" onkeydown="capLock( event )">
     
-
+    <script src="../HtmlHelpers/JS/knockout-2.2.0.js" type="text/javascript"></script>
+    <script src="../HtmlHelpers/JS/knockout-kendo.min.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/app.js" type="text/javascript"></script>
-
     <% if (Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment == "customs") {%>
         <script type="text/javascript" src="../HtmlHelpers/JS/Amital.GatewayControl.js"></script>
     <%  }%>
@@ -772,7 +942,7 @@
 
                 var isTenantAllowed = false;
                 var Tenant = userdata.CurrentTenant;
-                if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638 || Tenant == 341) {
+                if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638) {
                     isTenantAllowed = true;
                 }
 
@@ -1207,15 +1377,13 @@
     // An adaptation of Dorcht's cookie functions 
 
     function set_cookie(name, value, expires, path, domain, secure) {
-       const isSecure = (window.location.protocol === "https:");
 
         if (!expires) { expires = new Date() }
         document.cookie = name + "=" + escape(value) +
         ((expires == null) ? "" : "; expires=" + expires.toGMTString()) +
         ((path == null) ? "" : "; path=" + path) +
         ((domain == null) ? "" : "; domain=" + domain) +
-        (isSecure ? "; Secure" : "") +
-        "; SameSite=Lax";
+        ((secure == null) ? "" : "; secure");
     }
 
     function get_cookie(name) {
@@ -1288,7 +1456,7 @@
 
 
 
-    </script> 
+</script> 
         
     <script type="text/javascript">
         $(document).ready(function () {

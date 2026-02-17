@@ -58,10 +58,7 @@ export class TicketStagePM {
     public OldEntityPM: TicketStagePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -69,7 +66,6 @@ export class TicketStagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TicketStage");
            
         }
-       }
     }
 
     private MyClone: TicketStagePM;

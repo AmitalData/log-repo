@@ -1,36 +1,41 @@
+﻿import {Injectable, Output, EventEmitter} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import {ServiceHelper} from '../Utilities/ServiceHelper';
+import {ServiceResponse} from '../DataContracts/ServiceResponse';
+import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
+import {TraceEventPM} from '../EntityPMs/TraceEventPM';
+import {CustomPickListPM} from '../EntityPMs/CustomPickListPM'
+import {ExportToExcelArgs} from '../DataContracts/ExportToExcelArgs';
+import {SessionInfo} from '../Utilities/SessionInfo';
 import {PickListGeneralEntitiesArgs} from '../DataContracts/PickListGeneralEntitiesArgs';
-import { EntityPMServiceResponse } from '../DataContracts/EntityPMServiceResponse';
-import { ObjectFieldValidationPM } from '../EntityPMs/ObjectFieldValidationPM';
-import { PropertyChangedArgs } from '../EventEmitterArgs/PropertyChangedArgs';
-import { ScreenLayoutArgs } from '../DataContracts/ScreenLayoutArgs';
-import { ServiceResponse } from '../DataContracts/ServiceResponse';
-import { Injectable, Output, EventEmitter } from '@angular/core';
-import { CustomPickListPM } from '../EntityPMs/CustomPickListPM';
-import { ObjectFieldPM } from '../EntityPMs/ObjectFieldPM';
-import { ServiceHelper } from '../Utilities/ServiceHelper';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { Guid } from '../Utilities/Guid';
-import { defer, of } from 'rxjs';
-import { ScreenSectionPMService } from './StandardPMs/ScreenSectionPMService';
-import { ScreenSectionPM } from '../EntityPMs/ScreenSectionPM';
+import {EntityPMServiceResponse} from '../DataContracts/EntityPMServiceResponse';
+import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
+import {ObjectFieldValidationPM} from '../EntityPMs/ObjectFieldValidationPM';
+import {Guid} from '../Utilities/Guid';
+import {PropertyChangedArgs} from '../EventEmitterArgs/PropertyChangedArgs';
+import {ScreenLayoutArgs} from '../DataContracts/ScreenLayoutArgs';
 
 @Injectable()
+
 export class GeneralDomainService {
     private _apiUrl: string;
-    private _http: HttpClient
+    private _http: Http
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GeneralDomain';
     }
 
     GetTranslationsByParam(typeCode: string, tableId: string, translationLanguageCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetTranslationsByParam?typeCode=' + typeCode + '&tableId=' + tableId + '&translationLanguageCode=' + translationLanguageCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<FieldsTranslations> = [];
 
                 for (var itemJeson in listJason) {
@@ -41,16 +46,19 @@ export class GeneralDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetStandardFieldsByTableId(tableId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetStandardFieldsByTableId?tableId=' + tableId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
                 //var listMapped: Array<ObjectFieldPM> = [];
 
                 //for (var itemJeson in listJason) {
@@ -61,45 +69,52 @@ export class GeneralDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listJason;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     
     GetCustomFieldsByTableId(tableId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetCustomFieldsByTableId?tableId=' + tableId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetFieldDataTypes() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetFieldDataTypes';
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetTranslationsList(typeCode:string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetTranslationsList?typeCode=' + typeCode;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<FieldsTranslations> = [];
 
                 for (var itemJeson in listJason) {
@@ -110,16 +125,21 @@ export class GeneralDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     
     UpdateFieldsTranslations(entity: FieldsUpdateHelper) {
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
             var mappedEntity: FieldsUpdateHelper = this.MapJsonToFieldsUpdateHelper(entity, false);
 
-            return this._http.put(this._apiUrl + "/PutFieldsTranslations", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                var myJsonResult = response;
+            return this._http.put(this._apiUrl + "/PutFieldsTranslations", JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
 
                 var mappedResult: FieldsUpdateHelper = this.MapJsonToFieldsUpdateHelper(myJsonResult, true, entity);
 
@@ -127,17 +147,20 @@ export class GeneralDomainService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetTextCodeTypes() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetTextCodeTypes';
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<TextCodeType> = [];
 
                 for (var itemJeson in listJason) {
@@ -148,17 +171,20 @@ export class GeneralDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     LoadAllFieldsTranslations(translationLanguageCode: string, objectTableId: string, textCodeType: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetAllFieldsTranslations?language=' + translationLanguageCode + '&objectTableId=' + objectTableId + '&textCodeType=' + textCodeType;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<FieldsTranslations> = [];
 
                 for (var itemJeson in listJason) {
@@ -169,16 +195,19 @@ export class GeneralDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetCustomPickListsByCode(Code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetCustomPickListsByCode?code=' + Code;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
                 var listMapped: Array<CustomPickListPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -191,115 +220,136 @@ export class GeneralDomainService {
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listMapped;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     insertPickListGeneralEntities(entities: PickListGeneralEntitiesArgs) {
-        return defer(() => {
-            var entityPMServiceResponse: EntityPMServiceResponse;
-            entityPMServiceResponse = new EntityPMServiceResponse();
 
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+             
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
+            
             var mappedEntity: PickListGeneralEntitiesArgs;
-            mappedEntity = this.MapJsonToEntityPM(entities, false);
+                mappedEntity = this.MapJsonToEntityPM(entities, false);
 
-            return this._http.post(this._apiUrl + "/PostPickList", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                var pm = response;
-                if (pm) {
-                    //var mappedResult: GeneralEntitiesArgs;
-                    //mappedResult = this.MapJsonToEntityPM(pm, true, entities);
-                    entityPMServiceResponse.Result = pm;
-                }
-                return entityPMServiceResponse;
+                return this._http.post(this._apiUrl +"/PostPickList", JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            //var mappedResult: GeneralEntitiesArgs;
+                            //mappedResult = this.MapJsonToEntityPM(pm, true, entities);
+                            response.Result = pm;
+                        } 
+                        return response;
 
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+                    }); 
+        }
+
+        );
     }
 
     updatePickListGeneralEntities(entities: PickListGeneralEntitiesArgs) {
 
-        return defer(() => {
-            var entityPMServiceResponse: EntityPMServiceResponse;
-            entityPMServiceResponse = new EntityPMServiceResponse();
+        return Observable.defer(() => {
 
-            var mappedEntity: PickListGeneralEntitiesArgs;
-            mappedEntity = this.MapJsonToEntityPM(entities, false);
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+             
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
+            
+                var mappedEntity: PickListGeneralEntitiesArgs;
+                mappedEntity = this.MapJsonToEntityPM(entities, false);
 
-            return this._http.put(this._apiUrl + "/PutPickList", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                var pm = response
-                if (pm) {
-                    //var mappedResult: PickListGeneralEntitiesArgs;
-                    //mappedResult = this.MapJsonToEntityPM(pm, true, entities);
-                    entityPMServiceResponse.Result = pm;
-                }
+                return this._http.put(this._apiUrl + "/PutPickList", JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            //var mappedResult: PickListGeneralEntitiesArgs;
+                            //mappedResult = this.MapJsonToEntityPM(pm, true, entities);
+                            response.Result = pm;
+                        }
 
-                return entityPMServiceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    } 
+
+
+                        return response;
+
+                    });
+            
+        }
+
+        );
+    }    
 
     updateScreenFields(entities: ScreenLayoutArgs) {
 
-        return defer(() => {
-            var entityPMServiceResponse: EntityPMServiceResponse;
-            entityPMServiceResponse = new EntityPMServiceResponse();
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
 
             var mappedEntity: ScreenLayoutArgs;
             mappedEntity = this.MapJsonToScreenFieldsPM(entities, false);
 
-            return this._http.put(this._apiUrl + "/PutScreenFields", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                var pm = response;
-                if (pm) {
-                    //var mappedResult: PickListGeneralEntitiesArgs;
-                    //mappedResult = this.MapJsonToEntityPM(pm, true, entities);
-                    entityPMServiceResponse.Result = pm;
-                }
+            return this._http.put(this._apiUrl + "/PutScreenFields", JSON.stringify(mappedEntity),
+                { headers: authHeader }).map((res) => {
+                    var pm = res.json();
+                    if (pm) {
+                        //var mappedResult: PickListGeneralEntitiesArgs;
+                        //mappedResult = this.MapJsonToEntityPM(pm, true, entities);
+                        response.Result = pm;
+                    }
 
-                return entityPMServiceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+
+
+                    return response;
+
+                });
+
+        }
+
+        );
     }
 
-    GetScreenModificationByScreenCode(ScreenCode: string) {
-        var url = this._apiUrl + '/GetScreenModificationByScreenCode?ScreenCode=' + ScreenCode;
+    GetScreenModificationByScreenId(ScreenId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        var url = this._apiUrl + '/GetScreenModificationByScreenId?ScreenId=' + ScreenId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
+                 
+
+                 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
-
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     
     GetSingleObjectFieldFromZeroTenant(id: string) {
-        var url = this._apiUrl + '/GetSingleObjectFieldFromZeroTenant?' + 'id=' + id;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pm = response;
-
-                var entity: ObjectFieldPM;
-                if (pm) {
-                    entity = this.MapJsonToObjectFieldPM(pm);
-                }
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetSingleObjectFieldByFieldCodeFromZeroTenant(fieldCode: string) {
-        var url = this._apiUrl + '/GetSingleObjectFieldByFieldCodeFromZeroTenant?' + 'fieldCode=' + fieldCode;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pm = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleObjectFieldFromZeroTenant?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
 
                 var entity: ObjectFieldPM;
                 if (pm) {
@@ -308,18 +358,22 @@ export class GeneralDomainService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
+                serviceResponse.Result = entity;                
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetSingleObjectFieldByFieldNameAndTableId(fieldName: string, tableId: string) {
-        var url = this._apiUrl + '/GetSingleObjectFieldByFieldNameAndTableId?fieldName=' + fieldName + '&tableId=' + tableId;
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pm = response;
+        var url = this._apiUrl + '/GetSingleObjectFieldByFieldNameAndTableId?fieldName=' + fieldName + '&tableId=' + tableId;
+        var callTime = new Date();
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var pm = response.json();
 
                 var entity: ObjectFieldPM;
                 if (pm) {
@@ -329,24 +383,8 @@ export class GeneralDomainService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
-
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetObjectFieldModificationForLoggedTenant() {
-        var url = this._apiUrl + '/GetObjectFieldModificationForLoggedTenant';
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
-
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = listJason;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     
@@ -393,7 +431,10 @@ export class GeneralDomainService {
     }
 
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entities: PickListGeneralEntitiesArgs = null) {
+
+
         if (!entities) {
+
             entities = new PickListGeneralEntitiesArgs();
             entities.CustomPickListPMs = [];
             entities.RemovedCustomPickListPMs = [];
@@ -427,15 +468,15 @@ export class GeneralDomainService {
     }
 
     MapJsonToScreenFieldsPM(jsonPM: any, getCallMap: boolean = true, entities: ScreenLayoutArgs = null) {
+
+
         if (!entities) {
+
             entities = new ScreenLayoutArgs();
             entities.ScreenFields = [];
             entities.RemovedScreenFields = [];
-            entities.ScreenSections = [];
-
         }
 
-        if (jsonPM.ScreenSections) jsonPM.ScreenSections = this.MapScreenSections(jsonPM.ScreenSections);
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
@@ -642,17 +683,6 @@ export class GeneralDomainService {
         }
         return entityPM;
     }
-
-
-    
-    private MapScreenSections(screenSections: ScreenSectionPM[]) {
-        var results = [];
-        var screenSectionPMService: ScreenSectionPMService = new ScreenSectionPMService();
-        screenSections.forEach((screenSection) => {
-            results.push(screenSectionPMService.MapJsonToEntityPM(screenSection, false));
-        });
-        return results;
-    }
 }
 
 export class FieldsTranslations {
@@ -662,7 +692,6 @@ export class FieldsTranslations {
     }
     
     public TextCodeId: string;
-    public TextCodeCode: string;
     public Code: string;
     
     private translatedText: string;
@@ -685,14 +714,16 @@ export class FieldsTranslations {
     public TranslateDate: Date;
     public TranslatedByUserId: string;
     public IsTranslated: boolean;
-    public OldEntityPM: FieldsTranslations;
-    public IsDirty: boolean;
 
+    public OldEntityPM: FieldsTranslations;
+
+    public IsDirty: boolean;
     MarkAsDirty(propertyName: string = null) {
         this.IsDirty = true;
 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+
         }
     }
 }
@@ -711,4 +742,3 @@ export class FieldsUpdateHelper {
     public Tenant: number;
     public Items: FieldsTranslations[] = [];
 }
-

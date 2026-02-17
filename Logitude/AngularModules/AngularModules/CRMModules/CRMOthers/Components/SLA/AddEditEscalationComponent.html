@@ -1,4 +1,4 @@
-<table>
+﻿<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -96,7 +96,7 @@
                                 <td style="width:10px;"><div></div></td>
                                 <td style="width:50px;"><div style="font-size:11px;color:#6E7172;">Users: </div></td>
                                 <td>
-                                        <EmailSearchTextBox [DontInCludeInactive]="true" [EmailsText]="DataContext.Users" [Watermark]="'Add Users'" [IsUsersList]="true" (EmailsTextChanged)="DataContext.Users = $event" (SelectedListChanged)="DataContext.UserSelectedList = $event"></EmailSearchTextBox>
+                                        <EmailSearchTextBox [EmailsText]="DataContext.Users" [Watermark]="'Add Users'" [IsUsersList]="true" (EmailsTextChanged)="DataContext.Users = $event" (SelectedListChanged)="DataContext.UserSelectedList = $event"></EmailSearchTextBox>
                                 </td>
                                 <td style="width:10px;"><div></div></td>
                             </tr>

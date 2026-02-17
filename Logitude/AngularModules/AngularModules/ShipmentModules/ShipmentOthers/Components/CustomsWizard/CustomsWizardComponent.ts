@@ -7,7 +7,7 @@ import {CustomsWizardArgs} from '../../../../Shipment/Args';
 import {ABMWebService, ABMResult} from '../../../../Infrastructure/Services/WebServices/ABMWebService';
 @Component({
     selector: 'CustomsWizardComponent',
-    
+    moduleId: module.id,
     templateUrl: './CustomsWizardComponent.html',
 })
 

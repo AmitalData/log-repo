@@ -21,7 +21,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'NewPaymentOrderComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewPaymentOrderComponent.html',
 })
 
@@ -37,7 +37,7 @@ export class NewPaymentOrderComponent
     constructor(private EntityResourceService: EntityResourceService) {
         super();
 
-        EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => { });
+        EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => { });
     }
 
     @ViewChild(CustomMessageWrapperComponent)
@@ -133,7 +133,7 @@ export class NewPaymentOrderComponent
         currRequestParams.RequestParamsVersion = 0;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליפת הוראת תשלום", false)
             .then((res) => {
                 this.ResponseData = res;

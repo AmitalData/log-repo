@@ -7,7 +7,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
@@ -33,10 +33,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public IQueryable<ShipmentComputedFields> GetShipmentComputedFields(int tenant)
         {
             return context.ShipmentComputedFields.Where(s => s.Tenant == tenant);
-        }
-        public IQueryable<ShipmentComputedFields> GetShipmentComputedFields()
-        {
-            return context.ShipmentComputedFields;
         }
 
         public ShipmentComputedFields GetSingleShipmentComputedFields(string Id,int tenant)
@@ -89,20 +85,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public List<ShipmentComputedFields> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
-        }
-
-        public ShipmentComputedFields GetSingleShipmentComputedFields(string id)
-        {
-            if (!string.IsNullOrEmpty(id))
-            {
-
-                ShipmentComputedFields entity = (from a in context.ShipmentComputedFields
-                                                 where a.Id == id
-                                                 select a).FirstOrDefault();
-
-                return entity;
-            }
-            return null;
         }
 
         public ShipmentComputedFields GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)

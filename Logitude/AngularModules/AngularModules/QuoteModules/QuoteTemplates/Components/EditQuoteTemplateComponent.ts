@@ -23,10 +23,10 @@ import {FroalaEditorSetting} from '../../../InfrastructureModules/Infrastructure
 import {QuoteTemplateTextCodePM} from '../../../Quote/EntityPMs/QuoteTemplateTextCodePM';
 import {QuoteTemplateSectionPM} from '../../../Quote/EntityPMs/QuoteTemplateSectionPM';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+
 @Component({
     selector: 'EditQuoteTemplateComponent',
-    
+    moduleId: module.id,
     templateUrl: './EditQuoteTemplateComponent.html',
 })
 
@@ -64,7 +64,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     IsShowFroalaEditor: boolean = false;
     froalaEditorSetting: FroalaEditorSetting;
     quoteTemplatePMService: QuoteTemplatePMService;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     IsDisableEditButton: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -94,7 +94,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     SetWindowArgs(args: any) {
 
         var _entityResourceService: EntityResourceService = new EntityResourceService();
-        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe((response:any) => {
+        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
             this.IsReady = true;
             this.Load(args);
         });
@@ -106,7 +106,6 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     Load(args: any) {
         this.froalaEditorSetting = new FroalaEditorSetting();
         this.froalaEditorSetting.Id = Guid.newGuid();
-        this.froalaEditorSetting.UseNormalPreview = true;
         this.froalaEditorSetting.IsDisableEdit = true;
         this.froalaEditorSetting.HtmlString = "";
         this.froalaEditorSetting.Height = (this.CurrentSession.CurrentWindow.Height - 100);
@@ -205,7 +204,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 620;
-        logWindow.Height = 450;
+        logWindow.Height = 400;
         logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.General"); 
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateGeneralSetting");
 
@@ -245,7 +244,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
             windowArgs.QuoteTemplateSectionViewModel = item;
             windowArgs.QuoteId = this.QuotePM != null ? this.QuotePM.Id : "";
-            windowArgs.QuotePM = this.QuotePM;
+
             //Pricing Setting
             if (item.QuoteTemplateSectionTypeCode == "PP" || item.QuoteTemplateSectionTypeCode == "PC") {
                 windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "PP" ? "Packages" : "Containers";
@@ -260,8 +259,6 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             //Page Header && Footer  Setting
             else if (item.QuoteTemplateSectionTypeCode == "PH" || item.QuoteTemplateSectionTypeCode == "PF") {
                 windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "PH" ? "Header" : "Footer";
-                windowArgs.EditQuoteTemplateComponent = this;
-                
                 componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteTemplateHeaderFooterSettingComponent";
                 logWindow.Width = (window.innerWidth / 1.476); // 1920/1300
                 logWindow.Height = 600;
@@ -299,15 +296,6 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
                         }
                         else {
-
-                            if (item.QuoteTemplateSectionTypeCode == "QH") {
-                                var quoteTemplateSectionHeaderViewModel = this.QuoteTemplateSectionLists.filter(d => d.QuoteTemplateSectionTypeCode == "PH")[0];
-                                if (quoteTemplateSectionHeaderViewModel) {
-                                    quoteTemplateSectionHeaderViewModel.IsLoaded = false;
-                                }
-                            }
-                      
-
                             item.IsLoaded = false;
                             this.SelectQuoteTemplateSection = item;
                         }
@@ -329,7 +317,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         var percentageHeightwindow = heighthwindow * 0.1764705;
         var sendWindowHeight = heighthwindow - percentageHeightwindow;
         var sendWindowWidth = widthwindow - percentagewidthwindow;
-        if (sendWindowWidth < 1080) sendWindowWidth = 1080;
+        if (sendWindowWidth < 900) sendWindowWidth = 900;
         if (sendWindowHeight < 500) sendWindowHeight = 500;
 
         var windowArgs: any = {};
@@ -413,7 +401,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     //Loading Area
     LoadQuoteTemplatePM() {
 
-        this.quoteTemplatePMService.get(this.QuoteTemplateId).subscribe((res:any) => {
+        this.quoteTemplatePMService.get(this.QuoteTemplateId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.EntityPM = pmResponse.Result;
@@ -440,7 +428,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     LoadSetting() {
     
 
-        this.quoteTemplateSettingPMService.get(this.EntityPM.QuoteTemplateSettingId).subscribe((res:any) => {
+        this.quoteTemplateSettingPMService.get(this.EntityPM.QuoteTemplateSettingId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.IsLoadQuoteTemplateSettingsRuning = false;
             this.LoadCompleted();
@@ -456,7 +444,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     LoadQuoteTemplateSectionLists() {
 
         this.QuoteTemplateSectionLists = [];
-        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplateSectionByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
+        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplateSectionByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
 
             this.IsLoadQuoteTemplateSectionRuning = false;
@@ -476,7 +464,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     LoadQuoteTemplateTextCodeLists() {
         this.QuoteTemplateTextCodeLists = [];
-        this.quoteTemplateTextCodeExtendedPMService.GetQuoteTemplateTextCodeByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
+        this.quoteTemplateTextCodeExtendedPMService.GetQuoteTemplateTextCodeByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.IsLoadQuoteTemplateTextCodeRuning = false;
             this.LoadCompleted();
@@ -507,7 +495,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                     var quoteId: string = this.QuotePM != null ? this.QuotePM.Id : "";
                     var sectionDocId: string = !AppTool.IsNullOrEmpty(this.selectQuoteTemplateSection.SectionDocId) ? this.selectQuoteTemplateSection.SectionDocId : "";
 
-                    this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode, sectionDocId, this.EntityPM.Id, this.EntityPM.QuoteTemplateSettingId, quoteId, this.EntityPM.CreatedByUserId, SessionLocator.Tenant).subscribe((res:any) => {
+                    this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode, sectionDocId, this.EntityPM.Id, this.EntityPM.QuoteTemplateSettingId, quoteId, this.EntityPM.CreatedByUserId, SessionLocator.Tenant).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         this.IsLoadPreviewSectionRuning = false;
                         this.LoadCompleted();
@@ -521,9 +509,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
                         }
-                       else if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                            this.ShowMessage(pmResponse.ErrorsArray[0]);
-                        }
+
 
                     });
                 }
@@ -545,22 +531,6 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         }
 
     }
-
-
-
-    public ShowMessage(message: string, title: string = "") {
-
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show(message);
-
-        if (title) {
-            messageWindow.Title = title;
-        }
-    }
-
-
-
-
 
     LoadCompleted() {
         if (!this.IsLoadQuoteTemplateSectionRuning && !this.IsLoadQuoteTemplateTextCodeRuning && !this.IsLoadQuoteTemplateSettingsRuning && !this.IsLoadPreviewSectionRuning) {
@@ -594,7 +564,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     
 
 
-        this.quoteTemplateSectionPMService.insert(newQuoteTemplateSectionPM).subscribe((res:any) => {
+        this.quoteTemplateSectionPMService.insert(newQuoteTemplateSectionPM).subscribe(res => {
             var pmResponse: ServiceResponse = res;
 
             var pageBreakSection: QuoteTemplateSectionViewModel = new QuoteTemplateSectionViewModel(pmResponse.Result);
@@ -672,7 +642,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                 item.EntityPM.IsDirty = false;
             });
 
-            this.quoteTemplateSectionExtendedPMService.updateSections(quoteTemplateSectionChangedLists).subscribe((res:any) => {
+            this.quoteTemplateSectionExtendedPMService.updateSections(quoteTemplateSectionChangedLists).subscribe(res => {
                 this.CurrentSession.StopBusyIndicator();
                 if (previewPdfAfterSave) this.PreviewPdf();
             });
@@ -735,7 +705,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     SaveQuoteTemplateSection(sections: any) {
 
         if (this.IsSaveQuoteTemplateSectionRuning) {
-            this.quoteTemplateSectionExtendedPMService.updateSections(sections).subscribe((res:any) => {
+            this.quoteTemplateSectionExtendedPMService.updateSections(sections).subscribe(res => {
                 this.IsSaveQuoteTemplateSectionRuning = false;
 
                 this.SaveCompleted();
@@ -751,7 +721,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
         if (this.IsSaveQuoteTemplateRuning) {
             this.RefreshQuoteTemplate = true;
-            this.quoteTemplatePMService.update(this.EntityPM).subscribe((res:any) => {
+            this.quoteTemplatePMService.update(this.EntityPM).subscribe(res => {
                 this.IsSaveQuoteTemplateRuning = false;
                 this.SaveCompleted();
             });
@@ -761,7 +731,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     SaveQuoteTemplateSetting() {
         if (this.IsSaveQuoteTemplateSettingsRuning) {
-            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
+            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                 this.IsSaveQuoteTemplateSettingsRuning = false;
                 this.SaveCompleted("RefreshPreviewData");
             });
@@ -1010,7 +980,6 @@ export class QuoteTemplateSectionViewModel {
 
         else if (sectionTypeCode == "PB") {
             textCode = "QuoteTemplate.B.PageBreak";
-            textCodeToolTip = null;//To avoid alert missing textcode
         }
 
         this.DisplayName = TextCodeTranslator.Translate(textCode);

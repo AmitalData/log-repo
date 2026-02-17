@@ -15,7 +15,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DevicesTabComponent.html',
 })
 
@@ -33,7 +33,7 @@ export class DevicesTabComponent extends BaseComponent {
         this.twoFactorAuthenticationDeviceExtendedPMService = new TwoFactorAuthenticationDeviceExtendedPMService();
         this.twoFactorAuthenticationDevicePMService = new TwoFactorAuthenticationDevicePMService();
 
-        this.twoFactorAuthenticationDeviceExtendedPMService.GetDevicesByUser(this.EntityPM.Id).subscribe((response:any) => {
+        this.twoFactorAuthenticationDeviceExtendedPMService.GetDevicesByUser(this.EntityPM.Id).subscribe(response => {
             if (!response.HasError) {
                 this.ItemsSource = response.Result;
             }
@@ -44,7 +44,7 @@ export class DevicesTabComponent extends BaseComponent {
     DeviceActivation(device: TwoFactorAuthenticationDevicePM, isActive: boolean) {
         device.InActive = !isActive;
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.twoFactorAuthenticationDevicePMService.update(device).subscribe((response:any) => {
+        this.twoFactorAuthenticationDevicePMService.update(device).subscribe(response => {
             this.CurrentSession.StopBusyIndicator();
             if (response.HasError) {
             }

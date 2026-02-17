@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.StorageService
 {
@@ -9,10 +13,6 @@ namespace Logitude.Server.Tools.StorageService
         void WriteBlock(byte[] buffer, long sentBytes, string[] blockIdsList, int bufferNumber, BlobFileInfo fileInfo);
         void Delete(BlobFileInfo fileInfo);
         bool FileExists(BlobFileInfo fileInfo);
-        void AppendText(string text, BlobFileInfo fileInfo);
-        void Dispose();
-        void MoveFromAnotherStorage(string containerSASURI, string fileNameSource, BlobFileInfo destinationFileInfo);
 
-        Dictionary<string, byte[]> ReadAllFilesInFolder(string containerName, string folderName);
-    }   
+    }
 }

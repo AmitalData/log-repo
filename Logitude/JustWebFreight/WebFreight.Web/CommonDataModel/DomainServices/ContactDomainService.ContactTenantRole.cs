@@ -4,7 +4,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -97,7 +97,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
         public List<ContactTenantRolePM> GetContactTenantRolesForContactTenant(string contactTenantId, int tenant)
         {
-            ContactTenantRoleQuery contactTenantRoleQuery = new ContactTenantRoleQuery(tenant);
+            ContactTenantRoleQuery contactTenantRoleQuery = new ContactTenantRoleQuery();
             List<ContactTenantRolePM> roles = contactTenantRoleQuery.GetContactTenantRolesForContactTenant(contactTenantId, tenant);
             return roles;
         }

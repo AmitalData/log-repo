@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public CommodityRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CommodityRepository(int tenant)
         {
@@ -49,13 +52,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Commodity GetSingleCommodity(string id,int tenant)
         {
             return (from d in context.Commodities where d.Id == id && d.Tenant == tenant select d).FirstOrDefault();
-        }
-        public string GetSingleCommodityNameByCode(string code, int tenant)
-        {
-            if (string.IsNullOrEmpty(code))
-                return "";
-
-            return (from d in context.Commodities where d.Code == code && d.Tenant == tenant select d.Name).FirstOrDefault();
         }
 
         public void Add(Commodity entity)

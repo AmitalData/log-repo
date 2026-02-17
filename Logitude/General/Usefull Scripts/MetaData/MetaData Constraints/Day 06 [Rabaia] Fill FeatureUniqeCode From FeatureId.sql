@@ -1,8 +1,0 @@
-update MenusTables set FeatureUniqeCode = (select FeatureUniqeCode from Features where Id = FeatureId)
-update MenuButtons set FeatureUniqeCode = (select FeatureUniqeCode from Features where Id = FeatureId)
-update Queries set FeatureUniqeCode = (select FeatureUniqeCode from Features where Id = FeatureId)
-update ObjectTableTabs set FeatureUniqeCode = (select FeatureUniqeCode from Features where Id = FeatureId)
-update ObjectTableHelperControls set FeatureUniqeCode = (select FeatureUniqeCode from Features where Id = FeatureId)
---update PackageFeatures set FeatureUniqeCode = (select FeatureUniqeCode from Features where Id = FeatureId)
---update RoleFeatures set FeatureUniqeCode = (select FeatureUniqeCode from Features where Id = FeatureId)
-update Reports set FeatureUniqeCode = (select FeatureUniqeCode from Features where Id = FeatureId)

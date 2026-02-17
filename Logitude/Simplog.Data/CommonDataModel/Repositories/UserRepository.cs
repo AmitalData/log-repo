@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -11,6 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class UserRepository : IRepository<User>
     {
         ICommonDataContext commonDataContext;
+        public UserRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public UserRepository(ICommonDataContext context)
         {
@@ -42,63 +46,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.Users where record.Tenant == tenant && record.IsTwoFactorAuthenticationEnabled select record).Any();
         }
 
-        public User GetSingleUserById(string id)
-        {
-            return context.Users.FirstOrDefault(x => x.Id == id);
-        }
 
         public User GetSingleUser(string id, int tenant)
         {
             string entityName = "User" + id + tenant;
             User entity;
 
-
-            if (CacheManager.CacheWrapper.Get(entityName) == null)
+            if (HttpContext.Current != null)
             {
-                var x = context.Users.FirstOrDefault();
-                entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
-                          where record.Id == id && record.Tenant == tenant
-                          select record).FirstOrDefault();
-
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                {
-                    if (entity != null)
-                    {
-                        CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
-                }
-            }
-
-            else
-            {
-                entity = (User)CacheManager.CacheWrapper.Get(entityName);
-            }
-
-
-
-
-            return entity;
-        }
-
-        public User GetSingleUser(string id, int tenant, bool getFromCache)
-        {
-
-            string entityName = "User" + id + tenant;
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                entityName = "IsCostomsDeployUser" + id + tenant;
-                var res = CacheManager.GetOrInsertNewObject<User>(entityName, () =>
-                {
-                    return (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
-                            where record.Id == id && record.Tenant == tenant
-                            select record).FirstOrDefault();
-                });
-                return res;
-            }
-            User entity;
-            if (getFromCache)
-            {
-
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
                     entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
@@ -119,8 +74,52 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     entity = (User)CacheManager.CacheWrapper.Get(entityName);
                 }
 
+            }
+            else
+            {
+                entity = (from record in context.Users.Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+                          where record.Id == id && record.Tenant == tenant
+                          select record).FirstOrDefault();
+            }
 
+            return entity;
+        }
 
+        public User GetSingleUser(string id, int tenant, bool getFromCache)
+        {
+            string entityName = "User" + id + tenant;
+            User entity;
+            if (getFromCache)
+            {
+                if (HttpContext.Current != null)
+                {
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+                                  where record.Id == id && record.Tenant == tenant
+                                  select record).FirstOrDefault();
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            if (entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        entity = (User)CacheManager.CacheWrapper.Get(entityName);
+                    }
+
+                }
+                else
+                {
+                    entity = (from record in context.Users.Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+                              where record.Id == id && record.Tenant == tenant
+                              select record).FirstOrDefault();
+                }
             }
             else
             {
@@ -137,29 +136,33 @@ namespace Simplog.Data.CommonDataModel.Repositories
             User entity;
             if (getFromCache)
             {
-
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                if (HttpContext.Current != null)
                 {
-                    entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
-                              where record.Code == code && record.Tenant == tenant
-                              select record).FirstOrDefault();
-
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
-                        if (entity != null)
+                        entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+                                  where record.Code == code && record.Tenant == tenant
+                                  select record).FirstOrDefault();
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            if (entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
                         }
+                    }
+
+                    else
+                    {
+                        entity = (User)CacheManager.CacheWrapper.Get(entityName);
                     }
                 }
 
                 else
                 {
-                    entity = (User)CacheManager.CacheWrapper.Get(entityName);
+                    entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit") where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
                 }
-
-
-
             }
 
             else
@@ -174,43 +177,74 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public User GetSingleUserByEmail(string email, int tenant, bool getFromCache = false)
         {
+
+            email = email.ToLower();
+            string entityName = "User" + email + tenant;
             User entity;
             if (getFromCache)
             {
-                string cacheKey = $"User_{email}_{tenant}";
-                entity = (User)CacheManager.CacheWrapper.Get(cacheKey);
-                if (entity == null)
+                if (HttpContext.Current != null)
                 {
-                    entity = GetUserFromDB(email, tenant);
-                    if (entity != null)
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
-                        if (CacheManager.CacheWrapper.Get(cacheKey) == null)
+                        entity = (from record in context.Users.Include("Contact")
+                                  where (record.Contact.Email == email) && record.Tenant == tenant
+                                  select record).FirstOrDefault();
+
+                        if (entity == null && tenant != 0)
                         {
-                            CacheManager.CacheWrapper.Insert(cacheKey, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            entity = (from record in context.Users.Include("Contact")
+                                      where (record.Contact.Email == email) && record.Tenant == 0
+                                      select record).FirstOrDefault();
                         }
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            if (entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        entity = (User)CacheManager.CacheWrapper.Get(entityName);
+                        // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    }
+
+                }
+                else
+                {
+                    entity = (from record in context.Users.Include("Contact")
+                              where (record.Contact.Email == email) && record.Tenant == tenant
+                              select record).FirstOrDefault();
+
+                    if (entity == null && tenant != 0)
+                    {
+                        entity = (from record in context.Users.Include("Contact")
+                                  where (record.Contact.Email == email) && record.Tenant == 0
+                                  select record).FirstOrDefault();
                     }
                 }
             }
             else
             {
-                entity = GetUserFromDB(email, tenant);
+                entity = (from record in context.Users.Include("Contact")
+                          where (record.Contact.Email == email) && record.Tenant == tenant
+                          select record).FirstOrDefault();
+
+                if (entity == null && tenant != 0)
+                {
+                    entity = (from record in context.Users.Include("Contact")
+                              where (record.Contact.Email == email) && record.Tenant == 0
+                              select record).FirstOrDefault();
+                }
+
             }
             return entity;
         }
 
-        private User GetUserFromDB(string email, int tenant)
-        {
-            User entity = (from record in context.Users.Include("Contact")
-                           where (record.Contact.Email == email && record.Contact.Tenant == tenant) && record.Tenant == tenant
-                           select record).FirstOrDefault();
-            if (entity == null && tenant != 0)
-            {
-                entity = (from record in context.Users.Include("Contact")
-                          where (record.Contact.Email == email && record.Contact.Tenant == 0) && record.Tenant == 0
-                          select record).FirstOrDefault();
-            }
-            return entity;
-        }
+
 
         public User GetSingleUserByCodeOrEmailForTenant(string code, string email, int tenant, bool getFromCache)
         {
@@ -220,36 +254,44 @@ namespace Simplog.Data.CommonDataModel.Repositories
             User entity;
             if (getFromCache)
             {
-
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                if (HttpContext.Current != null)
                 {
-                    entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
-                              where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Tenant == tenant && record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
-                              select record).FirstOrDefault();
-
-
-
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
-                        if (entity != null)
+                        entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+                                  where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
+                                  select record).FirstOrDefault();
+
+
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            if (entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
                         }
                     }
+                    else
+                    {
+                        entity = (User)CacheManager.CacheWrapper.Get(entityName);
+                        // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    }
+
                 }
                 else
                 {
-                    entity = (User)CacheManager.CacheWrapper.Get(entityName);
-                    // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+                              where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
+                              select record).FirstOrDefault();
+
+
                 }
-
-
-
             }
             else
             {
                 entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
-                          where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Tenant == tenant && record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
+                          where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
                           select record).FirstOrDefault();
 
 
@@ -265,10 +307,40 @@ namespace Simplog.Data.CommonDataModel.Repositories
             User entity;
             if (getFromCache)
             {
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                if (HttpContext.Current != null)
+                {
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+                                  where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
+                                  select record).FirstOrDefault();
+
+                        if (entity == null && tenant != 0)
+                        {
+                            entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
+                                      where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == 0
+                                      select record).FirstOrDefault();
+                        }
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            if (entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        entity = (User)CacheManager.CacheWrapper.Get(entityName);
+                        // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    }
+
+                }
+                else
                 {
                     entity = (from record in context.Users.Include("UserLastLogin").Include("Contact").Include("Department").Include("Branch").Include("BusinessUnit")
-                              where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Tenant == tenant && record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
+                              where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == tenant
                               select record).FirstOrDefault();
 
                     if (entity == null && tenant != 0)
@@ -277,23 +349,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                   where ((record.Code == code && !string.IsNullOrEmpty(record.Code)) || (record.Contact.Email == email && !string.IsNullOrEmpty(record.Contact.Email))) && record.Tenant == 0
                                   select record).FirstOrDefault();
                     }
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
-                    {
-                        if (entity != null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
-                    }
                 }
-                else
-                {
-                    entity = (User)CacheManager.CacheWrapper.Get(entityName);
-                    // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-
-
-
             }
             else
             {
@@ -314,9 +370,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public bool DoesUserExist(string email, int tenant)
         {
-            email = email.ToLower();
             return (from a in context.Users
-                    where a.Contact.Email == email && a.Tenant == tenant
+                    where a.Contact.Email == email.ToLower() && a.Tenant == tenant
                     select a).Any();
         }
 
@@ -473,12 +528,5 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).Any();
         }
 
-        public string GetPersonalIdByUserId(string userId, int tenant)
-        {
-            return context.Users
-                          .Where(a => a.Id == userId && (a.Tenant == tenant || a.Tenant == 0))
-                          .Select(a => a.PersonalId)
-                          .FirstOrDefault();
-        }
     }
 }

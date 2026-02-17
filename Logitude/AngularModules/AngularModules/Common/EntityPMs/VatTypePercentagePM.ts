@@ -21,10 +21,10 @@ export class VatTypePercentagePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -68,10 +68,7 @@ export class VatTypePercentagePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -81,7 +78,6 @@ export class VatTypePercentagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "VatTypePercentage");
            
         }
-	 }
     }
     private MyClone: VatTypePercentagePM;
 

@@ -1,4 +1,3 @@
-
 import { Component, ComponentRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 //import { AgGridModule } from "ag-grid-angular/main";
 import { BIReportPM } from '../../../../Infrastructure/EntityPMs/BIReportPM';
@@ -12,7 +11,7 @@ import { DateTimePipe } from '../../../../Controls/Pipes/DateTimePipe';
 import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 import { AgGridNg2 } from 'ag-grid-angular/main';
 import { InfrastructureDomainService, BIReportXMLData, BITabularViewSettings, Column } from '../../../../Infrastructure/Services/InfrastructureDomainService';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
@@ -21,99 +20,42 @@ import { DWObjectFieldsDetails } from '../../../../Infrastructure/Helpers/DWQuer
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { EditShipmentLinkRendererComponent } from "../TemplateRenderer/EditShipmentLinkRendererComponent";
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { LastRunDetailPM } from '../../../../Infrastructure/EntityPMs/LastRunDetailPM';
-import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/LastRunDetailExtendedPMService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/BIReportExtendedPMService';
-import { isNullOrUndefined } from 'util';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
-import { DocumentTypeTemplateViewModel } from '../../../InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel';
-import { DocumentTypeList } from '../../../../Common/EntityLists/DocumentTypeList';
-import { DocumentTypeTemplatePMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { DocumentTypeListService } from '../../../../Common/Services/StandardLists/DocumentTypeListService';
-import { BIReportDocumentTypeTemplateService } from '../../../../Report/Services/BIReportDocumentTypeTemplateService';
-import { ObjectTableList } from '../../../../Infrastructure/EntityLists/ObjectTableList';
-import { ObjectTableListService } from '../../../../Infrastructure/Services/StandardLists/ObjectTableListService';
-import { Observable } from 'rxjs';
-declare var window: any;
-@Component({
 
+@Component({
+    moduleId: module.id,
     templateUrl: 'BIReportPreviewComponent.html',
 })
 
-export class BIReportPreviewComponent extends BaseComponent implements OnInit {
-
-    @ViewChild('agGrid', { static: false }) agGrid: AgGridNg2;
-
+export class BIReportPreviewComponent implements OnInit {
+    @ViewChild('agGrid') agGrid: AgGridNg2;
     public ComponentRef: ComponentRef<BIReportPreviewComponent>;
     public EntityPM: BIReportPM = null;
     public EntityId: string;
-    public TasksSchedulerId: string;
     public DWQueryId: string;
     public FolderId: string;
-    public IsScheduler: boolean;
-    public IsNewScheduler: boolean;
-    public CanScheduler: boolean;
     public DWQueryData: DWQueryData;
-    BackButtonLable: string = "BI Reports";
     SelectedFiltersDataSource: any[] = [];
-    //SelectedDynamicFiltersDataSource: any[] = [];
     public _DWSubQueryPMService: DWSubQueryPMService;
     public _DWQueryBuilderService: DWQueryBuilderService;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper
     public _BIReportPMService: BIReportPMService;
-    public BIReportExtendedPMService: BIReportExtendedPMService;
-    public LastRunDetailExtendedPMService: LastRunDetailExtendedPMService;
-    DataContext: any = this;
     public _InfrastructureDomainService: InfrastructureDomainService;
     public _ShipmentPMService: ShipmentPMService;
     public columnDefs: any[] = [];
     public rowData: any[] = [];
     public BIReportName = "";
     @Output() RunReportCommand = new EventEmitter();
-    @Output() ShowFixedFilters = new EventEmitter();
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     private _EntityPMService: EntityPMService = new EntityPMService();
     private timerToken: any;
     public BIReportXMLData: BIReportXMLData = null;
     public HasDeletionFeature = false;
-    public HasCopyFeature = false;
-    public HasDownloadFeature = false;
     public columnTypes;
     public context;
     public CountText: string;
     public IsFilterValueChanged: boolean = false;
-    public isEntityChange: boolean = false;
-    public ValidationErrorsList: string[] = [];
-    public HasRunFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public hasFixedFilter = false;
-    public filterButtonTitle = "No available fixed filters"; 
-    public OriginalDWQueryFilterData: any;
-    public SavedFilterItemsData: any;
-    public ParentComponent: any;
-    public DocumentTypeTemplateLists: DocumentTypeTemplateViewModel[];
-    private documentTypeTemplateSelected: DocumentTypeTemplateViewModel;
-    public get DocumentTypeTemplateSelected() { return this.documentTypeTemplateSelected; }
-    public set DocumentTypeTemplateSelected(value: DocumentTypeTemplateViewModel) {
-        if (this.documentTypeTemplateSelected != value) {
-            this.documentTypeTemplateSelected = value;
-            this.IsEnableEditTemplate = true;
-        }
-    }
-    private bIReportDocumentTypeTemplateService: BIReportDocumentTypeTemplateService;
-    public IsEnableEditTemplate: boolean = false;
-    public IsEnableAddTemplate: boolean = true;
-    public ObjectTableId: string;
-    public DocumentTypeTemplateIds: string[] = [];
-    public BIReportId: string;
-
-    @Output() ComputeFiltersCommand = new EventEmitter();
-    constructor(private entityResourceService: EntityResourceService) {
-        super();
+    constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
             this.IsFilterValueChanged = true;
@@ -121,96 +63,30 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         });
     }
     ngOnInit() {
-        this.HasRunFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportRun");
-        if (!this.HasRunFeature) {
-            this.ValidationErrorsList.push('Sorry! You have no permission to run the report.');
-        }
-        else {
-            this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy") && !this.IsScheduler;
-            this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete") && !this.IsScheduler;
-            this.HasDownloadFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDownload") && !this.IsScheduler;
-            this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe((myResult: any) => {
-                if (!myResult.HasError) {
-                    this.DWQueryData = myResult.Result;
-                    if (this.DWQueryData.Filters) {
-                        this.DWQueryData.Filters = this.IsScheduler && !this.IsNewScheduler ? this.SavedFilterItemsData : this.DWQueryData.Filters;
-                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
-                        var temp = [];
-                        temp.push(MyFilter);
-                        //temp[0].FilterType = 'Ask User';
-                        this.SelectedFiltersDataSource = temp;
-                        this.checkFixedFilter();
-                        //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
-                    }
+        this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
+        this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe(myResult => {
+            if (!myResult.HasError) {
+                this.DWQueryData = myResult.Result;
+                if (this.DWQueryData.Filters) {
+                    var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
+                    var temp = [];
+                    temp.push(MyFilter);
+                    this.SelectedFiltersDataSource = temp;
                 }
-            });
-            
-            this.LoadBIReportData();
-      
-            
-        }
-    }
-
-    checkFixedFilter() { 
-        this.hasFixedFilter = false; 
-        this.ShowStaticFilters = false;
-        this.SelectedFiltersDataSource.forEach(item => {
-            this.checkFixedItemFilters(item); 
-        }); 
-        this.getFixedButtonTitle(); 
-    }
-    checkFixedItemFilters(item: any) {
-        item.FilterItems.forEach(nestedItem => {
-            if (nestedItem.FilterItems.length > 0) {
-                this.checkFixedItemFilters(nestedItem);
             }
-            else if (nestedItem.filterType == "Fixed Filter") {
-                this.hasFixedFilter = true 
-            }}) 
+        });
+        this.LoadBIReportData();
     }
-    getFixedButtonTitle() {
-        if (this.hasFixedFilter)
-            this.filterButtonTitle = "Show fixed filters";
-        else
-        this.filterButtonTitle = "No available fixed filters";
-    } 
-
     public Run(args: any) {
         this.InitializeServices();
         this.DWQueryId = args['DWQueryId'];
-        this.BIReportName = args['Name'];
         this.EntityId = args['EntityId'];
-        this.TasksSchedulerId = args['TasksSchedulerId'];
-        this.BIReportId = args['EntityId'];
         this.FolderId = args['FolderId'];
-        this.BackButtonLable = args['BackButtonLable'] != undefined ? args['BackButtonLable'] : "BI Reports";
-        this.IsScheduler = args['IsScheduler'];
-        this.IsNewScheduler = args['IsNewScheduler'];
-        this.ParentComponent = args['ParentComponent'];
-        if (this.IsScheduler) {
-            this.bIReportDocumentTypeTemplateService = new BIReportDocumentTypeTemplateService(args['DocumentTypeTemplateId'], this);
-            this.bIReportDocumentTypeTemplateService.Load();
-        }
-
-        this.SetSavedFilterItemsData(args);
     }
-
-
-
-
-    SetSavedFilterItemsData(args) {
-        this.SavedFilterItemsData = args['SavedFilterItemsData'];
-        this.SavedFilterItemsData?.FilterItems?.forEach((filter) => {
-            filter.TextValue = AppTool.IsNil(filter.TextValue) ? null : filter.TextValue;
-        });
-    }
-
     InitializeServices() {
         this._InfrastructureDomainService = new InfrastructureDomainService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._BIReportPMService = new BIReportPMService();
-        this.BIReportExtendedPMService = new BIReportExtendedPMService();
-        this.LastRunDetailExtendedPMService = new LastRunDetailExtendedPMService();
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._ShipmentPMService = new ShipmentPMService();
     }
@@ -219,56 +95,23 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     private IsSorting = false;
     private IsResizing = false;
     private ReportXML: any;
-    private isParentTenant: boolean = false;
-
-    private showStaticFilters: boolean = false;
-    public get ShowStaticFilters() { return this.showStaticFilters; }
-    public set ShowStaticFilters(newValue: boolean) {
-        this.showStaticFilters = newValue;
-        //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
-
-        this.ShowFixedFilters.emit(this.showStaticFilters);
-    }
-
-    public LoadBIReportData(IsBIReportUpdated = false) {
+    public LoadBIReportData() {
         if (this.DWQueryId != null) {
-            this._InfrastructureDomainService.GetByBIReportId(this.EntityId, this.DWQueryId).subscribe((myResult: ServiceResponse) => {
+            this._InfrastructureDomainService.GetByBIReportId(this.EntityId, this.DWQueryId).subscribe(myResult => {
                 if (!myResult.HasError) {
                     var result: BIReportXMLData = myResult.Result;
                     this.ReportXML = result;
                     this.BIReportXMLData = result;
-                    this.SetAndOrMainOpertaion();
-                    this.OriginalDWQueryFilterData = this.IsScheduler ? this.BIReportXMLData.DWQueryData.Filters : this.OriginalDWQueryFilterData;
                     this.EntityPM = result.BIReportPM;
-                    this.CanScheduler = this.EntityPM != null ? this.EntityPM.AvailableForScheduling && !this.IsScheduler : false;
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
-                    this.PrepareContactList();
-                    // this.BuildColumns(result);
-                    if (IsBIReportUpdated) {
-                        this.BIReportExtendedPMService.UpdateWithoutAGGridXML(this.EntityPM).subscribe((response: any) => {
-                            this.BuildRows(result);
-                        });
-                    }
-                    else {
-                        this.BuildRows(result);
-                    }
+                    this.BuildColumns(result);
+                    this.BuildRows(result);
                 }
             });
         }
     }
 
-    private SetAndOrMainOpertaion() {
-        if (!this.IsScheduler) return;
-        if (!this.BIReportXMLData) return;
-        if (!this.BIReportXMLData.DWQueryData) return;
-        if (!this.BIReportXMLData.DWQueryData.Filters) return;
-        if (!this.SavedFilterItemsData) return;
-
-        this.BIReportXMLData.DWQueryData.Filters.AndOr = this.SavedFilterItemsData.AndOr;
-    }
-
     public UpdateAGGrid(arg: BIReportXMLData, msg = null, count = 0) {
-
         var sortsList = [];
         if (arg.BITabularViewSettings != null && arg.BITabularViewSettings.Columns != null) {
             arg.BITabularViewSettings.Columns.forEach(item => {
@@ -284,14 +127,13 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             });
             if (sortsList != null) {
                 sortsList = sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 });
-                //this.IsSorting = true;
-
+                this.IsSorting = true;
                 //this.agGrid.api.setSortModel(sortsList);
             }
             this.agGrid.api.refreshCells();
 
             if (count > 50000 || msg == "MT5000") {
-                this.CountText = "Showing the first 10,000 rows, download the report to view all.";
+                this.CountText = "Showing the first 50,000 rows, download the excel to view all."
             }
             else {
                 this.CountText = count + " rows";
@@ -299,7 +141,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
         }
     }
-
+    
     public BuildColumns(arg: BIReportXMLData) {
         this.columnDefs = [];
 
@@ -309,9 +151,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             for (var i = 0; i < columns.length; i++) {
                 if (columns[i].IsChecked) {
                     var type = this.GetColumnDataType(columns[i].DataTypeCode);
-
                     if (type == "dateColumn") {
-                        var dataTypeCode = columns[i].DataTypeCode;
                         this.columnDefs.push({
                             colId: columns[i].Code,
                             headerName: columns[i].Code,
@@ -322,12 +162,12 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                             //cellClass: columns[i].DataTypeCode,
                             Index: columns[i].Index,
                             type: type,
-                            cellRenderer: dataTypeCode == "Date" ? this.DateCellRenderer : this.DateTimeCellRenderer,
+                            cellRenderer: this.DateCellRenderer,
                             filter: 'agDateColumnFilter'
                             //sort: sortingDirction,
                         });
                     }
-                    else if (type == "integerColumn") {
+                    else if (type == "integerColumn"){
                         this.columnDefs.push({
                             colId: columns[i].Code,
                             headerName: columns[i].Code,
@@ -356,7 +196,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                                 var pipe = new NumbersPipe();
                                 return pipe.transform(params.value, "N2");
                             },
-
+                           
                         });
                     }
                     else if (type == "booleanColumn") {
@@ -376,35 +216,22 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                                     return `<img src="./Images/CheckBoxIcon.png" class="CenterCenter" />`;
                                 }
                             },
-
+                           
                         });
                     }
-                    else if (columns[i].Code == "Shipment Number" || columns[i].FieldCode == "[Shipment Number]" ) {
-                        if (this.isParentTenant) {
-                            this.columnDefs.push({
-                                colId: columns[i].Code,
-                                headerName: columns[i].Code,
-                                field: columns[i].Code,
-                                sortable: true,
-                                filter: true,
-                                width: columns[i].Width,
-                                resizable: true,
-                                Index: columns[i].Index,
-                            });
-                        }
-                        else {
-                            this.columnDefs.push({
-                                colId: columns[i].Code,
-                                headerName: columns[i].Code,
-                                field: columns[i].Code,
-                                sortable: true,
-                                filter: true,
-                                width: columns[i].Width,
-                                resizable: true,
-                                Index: columns[i].Index,
-                                cellRendererFramework: EditShipmentLinkRendererComponent,
-                            });
-                        }
+                    else if (columns[i].Code == "Shipment Number") {
+                        this.columnDefs.push({
+                            colId: columns[i].Code,
+                            headerName: columns[i].Code,
+                            field: columns[i].Code,
+                            sortable: true,
+                            filter: true,
+                            width: columns[i].Width,
+                            resizable: true,
+                            Index: columns[i].Index,
+                            //type: type,
+                            cellRendererFramework: EditShipmentLinkRendererComponent,
+                        });
                     }
                     else {
                         this.columnDefs.push({
@@ -418,7 +245,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                             //cellClass: columns[i].DataTypeCode,
                             Index: columns[i].Index,
                             type: type,
-
+                           
                         });
                     }
                 }
@@ -476,48 +303,18 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
         this.CountText = "";
-        this.RunReportAutomatically(arg);
-    }
-
-    RunReportAutomatically(arg: BIReportXMLData) {
-        let dateFieldFilter = arg?.DWQueryData?.Filters?.FilterItems?.find(f => f.DataTypeCode == "Date" || f.DataTypeCode == "DateTime");
-        if (isNullOrUndefined(dateFieldFilter)) {
-            this.StartBusyIndicator();
-            this.RunReportCommand.emit({ MyData: arg.DWQueryData, FirstTime: true });
-        }
+        this.StartBusyIndicator();
+        this.RunReportCommand.emit({ MyData: arg.DWQueryData, FirstTime: true });
     }
 
     private DateCellRenderer(params: any) {
         var datepipe = new DateTimePipe();
-        return datepipe.transform(params.value, "D");
-    }
-
-    private DateTimeCellRenderer(params: any) {
-        var datepipe = new DateTimePipe();
-        return datepipe.transform(params.value, "DT");
-    }
-
-    ExportToExcelAdvancedButtonClick() {
-        let windowArgs: any = {
-            Type:"Excel"
-        }
-        this.OpenAdvancedSettingsComponent(windowArgs);
-    }
-
-    private OpenAdvancedSettingsComponent(windowArgs: any) {
-        var logWindow = new LogitudeWindow();
-        windowArgs.BIReportPreviewComponent = this;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 310;
-        logWindow.Height = 160;
-        logWindow.Title = "Export Advanced Settings";
-
-        logWindow.Show("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIExportSettingAdvanceComponent");
+        return datepipe.transform(params.value, "SD");
     }
 
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult: any) => {
+        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
             if (!myResult.HasError) {
                 var Id = myResult.Result;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -549,16 +346,13 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public ShowBusyIndicator: boolean = false;
     WidthBusyIndicator: number;
     public StartBusyIndicator(message: string = "Generating...", width: number = 200) {
-        // this.BusyIndicatorText = message;
-        //this.ShowBusyIndicator = true;
-        // this.WidthBusyIndicator = width;
-        this.CurrentSession.StartBusyIndicator(message);
-
+        this.BusyIndicatorText = message;
+        this.ShowBusyIndicator = true;
+        this.WidthBusyIndicator = width;
     }
     public StopBusyIndicator() {
-        // this.BusyIndicatorText = null;
-        //this.ShowBusyIndicator = false;
-        this.CurrentSession.StopBusyIndicator();
+        this.BusyIndicatorText = null;
+        this.ShowBusyIndicator = false;
     }
 
     //#region ag-grid Events 
@@ -571,10 +365,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     }
     onSortChanged(params) {
-        if (!this.IsSorting) {
+        if (!this.IsSorting)
             this.hasChanged = true;
-            this.IsFilterValueChanged = true;
-        }
         else {
             this.hasChanged = false;
             this.IsSorting = false;
@@ -613,15 +405,18 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         };
         this.agGrid.api.exportDataAsExcel(params);
     }
-    ExportButtonClicked(type:string) {
-
-
-        var args: any = {};
-        args.DWQueryId = this.DWQueryId;
-        args.ExportType = type;
-
-
-        this.ComputeFiltersCommand.emit(args);
+    ExportToExcelClicked() {
+        var windowArgs: any = {};
+        windowArgs.queryId = this.DWQueryId;
+        windowArgs.reportId = this.EntityPM.Id;
+        windowArgs.reportName = this.EntityPM.Name;
+        windowArgs.BIReportXMLData = this.BIReportXMLData;
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 500;
+        logitudeWindow.Height = 200;
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Infrastructure/Components/ExportBI2ExcelControl/ExportBI2ExcelControl');
     }
     //#endregion
 
@@ -656,14 +451,12 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         else {
             if (this.ComponentRef) {
                 this.BackCompleted.emit(false);
-                this.CurrentSession.FireEvent("ReloadAllList");
+                this.CurrentSession.FireEvent("BIRefresh");
                 this.ComponentRef.destroy();
             }
         }
     }
-
     SaveBIReport(isBackBtn = false) {
-        this.isEntityChange = true;
         if (this.EntityId == null) {
             this.NewBIReport();
         }
@@ -727,13 +520,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     newColumn.SortDirction = sortItem["sort"];
                     newColumn.SortOrder = sorting.indexOf(sortItem);
 
-                    var displayName: string = item.DisplayName;
-                    if (displayName.indexOf('[') == -1 && displayName.indexOf(']') == -1) {
-                        displayName = "[" + displayName + "]";
-                    }
-
                     sortsList.push({
-                        colId: displayName,
+                        colId: item.DisplayName,
                         sort: newColumn.SortDirction,
                         order: newColumn.SortOrder
                     });
@@ -750,7 +538,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             result.DWQueryData.ColumnsSort = result.DWQueryData.ColumnsSort.replace(/,\s*$/, "");
         }
 
-        this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe((myResult: ServiceResponse) => {
+        this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.BIReportXMLData = myResult.Result;
                 this.EntityPM = this.BIReportXMLData.BIReportPM;
@@ -783,13 +571,10 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.DWQueryId = this.DWQueryId;
-        windowArgs.BIReportId = this.EntityId;
         windowArgs.IsBIReportEditScreen = true;
-        windowArgs.FactTableName = this.EntityPM.FactTableName;
-        windowArgs.IsScheduler = this.IsScheduler;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
-        logWindow.Height = 780;
+        logWindow.Height = 500;
         logWindow.Title = "Query Builder";
         logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
         logWindow.ComponentLoaded.subscribe(s => {
@@ -800,15 +585,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                         var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
                         var temp = [];
                         temp.push(MyFilter);
-                        //temp[0].FilterType = 'Ask User';
                         this.SelectedFiltersDataSource = temp;
-                        this.checkFixedFilter();
-                        //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
-                    else {
-                        this.SelectedFiltersDataSource = [];
-                    }
-                    this.LoadBIReportData(true);
+                    this.LoadBIReportData();
                 }
             });
         });
@@ -829,107 +608,10 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                 });
         }
     }
-
-    //UpdateFiltersBIReportClicked() {
-    //    this.BIReportXMLData.DWQueryData.Filters = this.OriginalDWQueryFilterData;
-    //    var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.BIReportXMLData.DWQueryData.Filters);
-    //    var temp = [];
-    //    temp.push(MyFilter);
-    //    this.SelectedFiltersDataSource = temp;
-    //}
-
-    isPartnersChanged:boolean = false;
-    PartnersObslist: EntityPartner[];
-    PrepareContactList() {
-        if (!this.IsScheduler) return;
-        if (!this.SelectedFiltersDataSource) return;
-        this.CleanPartnersObslist();
-        this.SelectedFiltersDataSource[0]?.FilterItems?.forEach(DWQueryDataFilter => {
-            this.FillPartnersObslist(DWQueryDataFilter);
-        });
-    }
-
-    FillPartnersObslist(DWQueryDataFilter: any) {
-        if (DWQueryDataFilter.DataTypeCode != "Dimension" || DWQueryDataFilter.DimensionTableCode != "DIM_Partners") return;
-
-        DWQueryDataFilter.MultiSelectedValueLists?.forEach(MultiSelectedValueList => {
-            this.ProcessToAddPartner(MultiSelectedValueList, DWQueryDataFilter);
-        });
-    }
-
-    ProcessToAddPartner(MultiSelectedValueList: any, DWQueryDataFilter: any) {
-        let j = 1;
-        while (MultiSelectedValueList["Value" + j] != null && MultiSelectedValueList["Value" + j].Header != 'Partner Type') {
-            j += 1;
-        }
-        if (MultiSelectedValueList["Value" + j] != null) {
-            this.AddPartner(MultiSelectedValueList["Value" + j].Row, DWQueryDataFilter.TextValue);
-        }
-    }
-
-    CompareContactList() {
-        let originalPartnersObslist = this.PartnersObslist?.filter(p => p.PartnerType != 'All Users');
-        this.PrepareContactList();
-        originalPartnersObslist?.forEach(originalPartner => {
-            this.SetIsPartnersChanged(originalPartner);
-        });
-    }
-
-    SetIsPartnersChanged(originalPartner: EntityPartner) {
-        let partner = this.PartnersObslist.filter(p => p.PartnerType == originalPartner.PartnerType)[0];
-        if (!partner) {
-            this.isPartnersChanged = true;
-        }
-        else if (partner.PartnerId.indexOf(originalPartner.PartnerId) < 0) {
-            this.isPartnersChanged = true;
-        }
-    }
-
-    IsPartnersChanged(SelectedTabIndex) {
-        const previewBIReportPageTabIndex = '2';
-        if (SelectedTabIndex == previewBIReportPageTabIndex)
-            return this.isPartnersChanged = false;
-
-        this.CompareContactList();
-        return this.isPartnersChanged;
-    }
-
-    CleanPartnersObslist() {
-        this.PartnersObslist = [];
-    }
-
-    AddPartner(partnerType: string, partnerId: string) {
-        var partnerExist: boolean = false;
-        this.PartnersObslist?.forEach(partner => {
-            if (!AppTool.IsNullOrEmpty(partner) && partner.PartnerType == partnerType) {
-                partnerExist = true;
-                partner.PartnerId += ',' + partnerId;
-            }
-        });
-
-        if (partnerExist) {
-            return;
-        }
-
-        var entityPartner: EntityPartner = new EntityPartner(partnerType, partnerId, false);
-        this.PartnersObslist.push(entityPartner);
-    }
-
     RunReportButtonClicked() {
         this.IsFilterValueChanged = false;
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
-
-
-        //this.UpdateBIReport(false);
     }
-
-    SaveBIReportScheduler() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
-        this._DWSubQueryPMService.UpdateDWQueryData(this.BIReportXMLData.DWQueryData).subscribe((myResult: any) => {
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-        });
-    }
-
     public HasValidationError = false;
     OnRunReportComplete(MyData) {
         if (MyData.Msg == "ValidationError") {
@@ -938,53 +620,16 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             this.StopBusyIndicator();
         }
         else {
-            var lastRunDetail: LastRunDetailPM = this.FillLastRunDetails();
-
-            this.LastRunDetailExtendedPMService.UpdateLastRunDetails(lastRunDetail, SessionLocator.LoggedUserId).subscribe((myResult: ServiceResponse) => {
-                this.HasValidationError = false;
-                this.rowData = MyData.rowData;
-                this.isParentTenant = MyData.IsParentTenant;
-                this.BuildColumns(this.BIReportXMLData);
-                this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg, MyData.Count), 500);
-                this.StopBusyIndicator();
-            });
+            this.HasValidationError = false;
+            this.rowData = MyData.rowData;
+            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg, MyData.Count), 500);
+            this.StopBusyIndicator();
         }
 
         this.StopBusyIndicator();
     }
-    private FillLastRunDetails() {
-        var lastRunDetail: LastRunDetailPM = new LastRunDetailPM();
-        var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
-        lastRunDetail.Id = this.EntityPM.LastRunId;
-        lastRunDetail.Tenant = SessionLocator.Tenant;
-        lastRunDetail.LastRunByUserId;
-        lastRunDetail.LastRunDate = todayDate;
-        lastRunDetail.LastRunByUserId = SessionLocator.LoggedUserId;
-        return lastRunDetail;
-    }
-
     OnComputeFiltersComplete(MyData) {
         this.BIReportXMLData.DWQueryData = MyData;
-        this.BIReportXMLData.ExportDataType = MyData ? MyData.ExportType:"";
-
-        this.ExportToExcelAction();
-    }
-    ExportToExcelAction() {
-
-        var windowArgs: any = {};
-        windowArgs.queryId = this.DWQueryId;
-        windowArgs.reportId = this.EntityPM.Id;
-        windowArgs.reportName = this.EntityPM.Name;
-        windowArgs.BIReportXMLData = this.BIReportXMLData;
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 500;
-        logitudeWindow.Height = 200;
-        logitudeWindow.Title = "Exporting View Data List To " + this.BIReportXMLData.ExportDataType + " File";
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./Infrastructure/Components/ExportBI2ExcelControl/ExportBI2ExcelControl');
-        logitudeWindow.WindowClosed.subscribe(() => {
-            this.BIReportXMLData.IncludeTotals = false;
-        });
     }
     CountClicked() {
         alert("Count : " + this.agGrid.api.getDisplayedRowCount());
@@ -1010,43 +655,6 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             });
         }
     }
-
-    onCopyBIReportClick() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Copy BI Report";
-        var windowArgs: any = {};
-        windowArgs.Name = this.BIReportName;
-        windowArgs.Description = this.EntityPM.Description;
-        windowArgs.DWQueryId = this.EntityPM.DWQueryId;
-        windowArgs.IsCopy = true;
-        windowArgs.BIReportFolderId = this.EntityPM.BIReportFolderId;
-        windowArgs.FactTableName = this.EntityPM.FactTableName;
-        //windowArgs.ComponentRef = this.ComponentRef;
-        //windowArgs.BackCompleted = this.BackCompleted;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
-        logWindow.WindowClosed.subscribe(d => {
-            if (d) {
-                //this.LoadData();
-            }
-        });
-    }
-
-    onBIReportSchedulerClick() {
-        this.entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe((response: any) => {
-
-            var windowArgs: any = {};
-            windowArgs.BIReportEntity = this.EntityPM;
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 1200;
-            logWindow.Height = 1000;
-
-            logWindow.Title = this.EntityPM['Name'] + " Scheduler";
-            logWindow.WindowArgs = windowArgs;
-            logWindow.Show('./Report/Components/Scheduler/MainReportSchedulerComponent');
-        });
-    }
-
     onDeleteBIReportClick() {
         if (!this.IsNewEntity) {
             var confirmWindow = new ConfirmWindow();
@@ -1059,11 +667,10 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     // save
-                    this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+                    this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe(myResult => {
                         if (!myResult.HasError) {
                             if (this.ComponentRef) {
-                                this.BackCompleted.emit(true);
-                                this.CurrentSession.FireEvent("ReloadAllList");
+                                this.CurrentSession.FireEvent("BIRefresh");
                                 this.ComponentRef.destroy();
                             }
                         }
@@ -1075,24 +682,5 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             });
         }
     }
-
-    
-
-    EditDocumentTemplate(documentTemplate: any) {
-        this.bIReportDocumentTypeTemplateService.EditDocumentTemplate(documentTemplate);
-    }
-    
-
-    AddDocumentTypeTemplate() {
-        this.bIReportDocumentTypeTemplateService.AddDocumentTypeTemplate();
-    }
-            
-    
-
-
     //#endregion
 }
-
-
-
-

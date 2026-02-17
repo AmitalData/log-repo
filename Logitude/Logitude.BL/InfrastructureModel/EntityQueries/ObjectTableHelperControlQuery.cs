@@ -41,7 +41,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                      Tenant = a.Tenant,
                                      Code = a.Code,
                                      FeatureId = a.FeatureId,
-                                     FeatureUniqeCode = a.FeatureUniqeCode
                                  };
             return helpercontrols;
         }
@@ -59,7 +58,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                               Tenant = a.Tenant,
                                                               Code = a.Code,
                                                               FeatureId = a.FeatureId,
-                                                              FeatureUniqeCode = a.FeatureUniqeCode
                                                           };
             return tabs;
         }

@@ -10,13 +10,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 {
     public class JournalLineDebitMapping : JournalLineMappingBase
     {
-        private IAccountingSettingResolver _myIAccountingSettingResolver;
         private bool _VatExtract;
 
-        internal JournalLineDebitMapping(JournalLinePM journalLine, JournalPM journalPM, bool vatExtract, IGLAccountDataProvider myGLAccountPMProvider, IAccountingSettingResolver myIAccountingSettingResolver)
-            : base(journalLine, journalPM, myGLAccountPMProvider, myIAccountingSettingResolver)
+        internal JournalLineDebitMapping(JournalLinePM journalLine, JournalPM journalPM, bool vatExtract, IGLAccountDataProvider myGLAccountPMProvider)
+            : base(journalLine, journalPM, myGLAccountPMProvider)
         {
-            _myIAccountingSettingResolver = myIAccountingSettingResolver;
             this._VatExtract = vatExtract;
         }
         protected override void MapIt()
@@ -78,7 +76,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
                     if (parent.ControlAccountId != _JournalLine.DebitControlAccountId)
                     {
-                        throw new ApplicationException("(parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)");
+                        throw new Exception("(parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)");
                     }
                     MyLedgerTransaction.ControlAccountId = _JournalLine.DebitControlAccountId;
                     //if (String.IsNullOrWhiteSpace(MyLedgerTransaction.ControlAccountId))
@@ -87,11 +85,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                     //}
                     if (String.IsNullOrWhiteSpace(MyLedgerTransaction.ControlAccountId))
                     {
-                        throw new ApplicationException("AccountType!=Card , But MyLedgerTransaction.ControlAccountId==null");
+                        throw new Exception("AccountType!=Card , But MyLedgerTransaction.ControlAccountId==null");
                     }
                     //if (MyLedgerTransaction.ControlAccountId != _JournalLine.DebitControlAccountId)
                     //{
-                    //    throw new ApplicationException("(MyLedgerTransaction.ControlAccountId != _JournalLine.DebitControlAccountId)");
+                    //    throw new Exception("(MyLedgerTransaction.ControlAccountId != _JournalLine.DebitControlAccountId)");
                     //}
                 }
                 else
@@ -146,15 +144,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
         public virtual decimal ResolveVat(int Tenant, DateTime DocumentDate)
         {
             //(new AccountingSettingResolver()).
-            return //(new AccountingSettingResolver())
-            _myIAccountingSettingResolver
-                .ResolveVat(Tenant, DocumentDate);// Convert.ToDecimal(1.18);
+            return (new AccountingSettingResolver()).ResolveVat(Tenant, DocumentDate);// Convert.ToDecimal(1.18);
         }
         public virtual string ResolveAccountingCurrencyId(int Tenant)
         {
-            return
-                _myIAccountingSettingResolver//(new AccountingSettingResolver())
-                .ResolveAccountingCurrencyId(Tenant);
+            return (new AccountingSettingResolver()).ResolveAccountingCurrencyId(Tenant);
         }
         protected override void AddGLAccountTotalByMounth(GLAccountTotalByMonthPM currGLAccountTotalByMounth, LedgerTransactionPM currLedgerTransaction)
         {

@@ -8,8 +8,6 @@ import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {DocumentsFilingExtendedPMService} from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import {ShipmentAdditionalCloudDataService} from '../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
 import {AppTool} from '../../../Infrastructure/Tools';
-import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
 
@@ -48,12 +46,9 @@ export class ApprovePaymentButtonListTemplate {
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public ShowRenewButtons: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    private _entityResourceService: EntityResourceService = new EntityResourceService();
-    Language: string = 'HB';
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
-        this.Language = SessionLocator.TenantPM.Language;
         //if (SessionLocator.PrivateLableSettings) {
         //    this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
         //    this.Width = 80;
@@ -66,9 +61,9 @@ export class ApprovePaymentButtonListTemplate {
         this.ShowRenewButtons = (this.rowData['IsDepositionRequired'] == true);
         if (SessionLocator.PrivateLableSettings) {
             this.ShowButtons = (this.rowData['IsImporterApprovalRequried'] == true);// && AppTool.IsNullOrEmpty(this.rowData['ApprovedByUserName'])
-            this.ShowRemoveButton = (this.rowData['IsDigitalSignRequired'] == true || this.rowData['IsRequestedDocuments'] == true || this.rowData['IsDepositionRequired'] == true || this.rowData['RequestedDocumentsCount'] > 0);
+            this.ShowRemoveButton = (this.rowData['IsDigitalSignRequired'] == true || this.rowData['IsRequestedDocuments'] == true || this.rowData['IsDepositionRequired'] == true);
             //if (SessionLocator.PrivateLableSettings) {
-            //    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res:any) => {
+            //    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
             //        if (res.Result == false) {
             //            this.HasSharedDocs = false;
             //        }
@@ -78,7 +73,7 @@ export class ApprovePaymentButtonListTemplate {
         //this.fieldName = fieldName;
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
-        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
+        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
         //        this.Source = "data:image/JPEG;base64," + myResult;
         //        this.CD.detectChanges(); 
         //    });
@@ -88,48 +83,33 @@ export class ApprovePaymentButtonListTemplate {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         //this.CurrentSession.SessionEvent.emit("DisableBusyIndicator");
         //this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe((AdditionalResult:any) => {
+                this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe(AdditionalResult => {
                     //this.CurrentSession.StopBusyIndicator();
-                    this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response1 => {
-                        var newWindow = new LogitudeWindow();
-                        newWindow.Width = 705;
-                        newWindow.Height = 700;
-                        if (this.Language == 'HB') {
-                            newWindow.RTL = true;
-                        }
-                        else {
-                            newWindow.RTL = false;
-                        }
-                        //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
-                        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.PLApprovalWindowTitle") + " " + myResult.Result?.forwarderShipmentNumber;//"אישור היבואן להגשת הצהרת יבוא למכס";
-                        var windowArgs: any = {};
-                        //windowArgs.IsNew = false;
-                        windowArgs.EntityPm = myResult.Result
-                        windowArgs.AdditionalData = AdditionalResult.Result;
-                        windowArgs.ForwarderPartnerId = this.rowData['ForwarderPartnerId'];
-                        newWindow.WindowArgs = windowArgs;
-                        //newWindow.Add(control);
-                        let privateLabelApprovePaymentComponentPath = this.GetPrivateLabelApprovePaymentComponentPath();
-                        newWindow.Show(privateLabelApprovePaymentComponentPath);
-                        newWindow.WindowClosed.subscribe(($event: any) => {
-                            this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
-                            //if ($event == "MyShipmentAdded") {
-                            //    this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
-                            //}
-                        });
+                    var newWindow = new LogitudeWindow();
+                    newWindow.Width = 665;
+                    newWindow.Height = 700;
+                    newWindow.RTL = true;
+                    //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
+                    newWindow.Title = "אישור היבואן להגשת הצהרת יבוא למכס";
+                    var windowArgs: any = {};
+                    //windowArgs.IsNew = false;
+                    windowArgs.EntityPm = myResult.Result
+                    windowArgs.AdditionalData = AdditionalResult.Result
+                    newWindow.WindowArgs = windowArgs;
+                    //newWindow.Add(control); 
+                    newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
+                    newWindow.WindowClosed.subscribe(($event: any) => {
+                        this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                        //if ($event == "MyShipmentAdded") {
+                        //    this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                        //}
                     });
                 });
                 
             }
         });
-    }
-
-    GetPrivateLabelApprovePaymentComponentPath() {
-        let isDSV = SessionLocator?.PrivateLableSettings?.PrivateLabelDomain?.toLowerCase()?.indexOf("dsv") > -1;
-        let privateLabelApprovePaymentComponentPath = './ShipmentModules/ShipmentLogBox/Components/Logbox/' + (isDSV ? 'DSVApprovePaymentComponent' : 'PrivateLabelApprovePaymentComponent');
-        return privateLabelApprovePaymentComponentPath;
     }
 
     RemoveTasksButtonClicked() {
@@ -140,7 +120,7 @@ export class ApprovePaymentButtonListTemplate {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Loading ..")
-                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe((myResult:any) => {
+                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe(myResult => {
                     if (!myResult.HasError) {
                         this.CurrentSession.StopBusyIndicator();
                         this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
@@ -191,7 +171,7 @@ export class ApprovePaymentButtonListTemplate {
     EditButtonClicked() {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();

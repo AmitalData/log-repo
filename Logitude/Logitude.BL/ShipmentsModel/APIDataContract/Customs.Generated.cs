@@ -12,12 +12,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
    
-    public partial class Customs
+    public class Customs
     {
 
 	    
@@ -100,20 +99,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string DeclarationXMLData { get; set; }
     
     public DateTime? DeclarationDate { get; set; }
-    
-    public string Notify1Reference { get; set; }
-    
-    public string Notify1Reference2 { get; set; }
-    
-    public string CustomerReference3 { get; set; }
-    
-    public string CustomerReference2 { get; set; }
-    
-    public string ShipperReference3 { get; set; }
-    
-    public string ConsigneeReference3 { get; set; }
-    
-    public string CustomerReference1 { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

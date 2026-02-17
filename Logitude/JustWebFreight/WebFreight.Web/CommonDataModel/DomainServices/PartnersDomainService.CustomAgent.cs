@@ -8,10 +8,10 @@ using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.EntityLists;
@@ -284,7 +284,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
             service.Update(currentEntity);
         }
-
 
         public void UpdateCustomAgentList(CustomAgentList currentEntity)
         {

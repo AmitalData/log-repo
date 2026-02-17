@@ -66,9 +66,7 @@ namespace Logitude.SystemLogs.OracleMigratrion
                 currentDb = GlobalDbHelper.GetGlobalDBById(dbId);
             }
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             SystemLogContext context = new SystemLogContext(connection);
 
             return context;
@@ -90,8 +88,6 @@ namespace Logitude.SystemLogs.OracleMigratrion
             modelBuilder.Configurations.Add(new ContactActivityLogMap());
             modelBuilder.Configurations.Add(new ErrorLogMap());
             modelBuilder.Configurations.Add(new BatchServicesLogMap());
-            modelBuilder.Configurations.Add(new FailedLoginLogMap());
-            modelBuilder.Configurations.Add(new FailedTokenLogMap());
 
             base.OnModelCreating(modelBuilder);
         }

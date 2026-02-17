@@ -37,10 +37,5 @@ export class VendorList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
-		CreatedByPartner: string;
-		StateName: string;
-		RegimenFiscalCode: string;
-		SATReceptorName: string;
-		GLAccountNumber: string;
 	
 }

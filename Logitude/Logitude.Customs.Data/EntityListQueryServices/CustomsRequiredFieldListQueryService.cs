@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -28,10 +28,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  ObjectTableId = a.ObjectTableId,
                                                                  Id = a.Id,
                                                                  ObjectfieldId = a.ObjectfieldId,
-                                                                 ObjectfieldCode = a.ObjectfieldCode,
                                                                  Tenant = a.Tenant,
-                                                                 IsExport=a.IsExport,
-                                                                 IsImport=a.IsImport
                                                              });
             return query;
 		}

@@ -15,7 +15,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     selector: 'WeeklyTimeSheetComponent',
-    
+    moduleId: module.id,
     templateUrl: './WeeklyTimeSheetComponent.html',
     providers: [EntityResourceService],
 })
@@ -209,7 +209,7 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
 
     }
     AddLineClicked() {
-        //this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe((response:any) => {
+        //this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe(response => {
             var logWindow = new LogitudeWindow();
             logWindow.Title = "New Line";
             var args: any = {};
@@ -232,7 +232,7 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
         //});
     }
     CopyLineClicked(item: ItemSourceItem) {
-        //this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe((response:any) => {
+        //this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe(response => {
             var logWindow = new LogitudeWindow();
             logWindow.Title = "Copy Line";
             var args: any = {};

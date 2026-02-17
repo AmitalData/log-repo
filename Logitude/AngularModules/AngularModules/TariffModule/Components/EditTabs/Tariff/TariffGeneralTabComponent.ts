@@ -1,925 +1,572 @@
-import { Component, OnDestroy,AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
+import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { AppTool } from '../../../../Infrastructure/Tools';
-import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
-import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { PortPM } from '../../../../Common/EntityPMs/PortPM';
+import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '../../../../TariffModule/Services/TariffDomainService';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
-import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
-import { CardList } from '../../../../Common/EntityLists/CardList';
-import { TariffTool } from '../../../Tools';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 
-@Component({    
+
+declare var ResultAsArray: any;
+
+
+@Component({
+    moduleId: module.id,
     templateUrl: './TariffGeneralTabComponent.html',
 })
 
-export class TariffGeneralTabComponent extends BaseComponent implements OnDestroy, AfterViewInit {
+export class TariffGeneralTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public DataContext = this;
-    public VisibileSurchargesArea: boolean = false;
-    private IdProps: string[] = [];
-    private UOMProps: string[] = [];
-    private containersProps: string[] = [];
-    public ChargeTypesQueryFilters: ApiQueryFilters;
-    public MeasurementsQueryFilters: ApiQueryFilters;
-    public ValidationErrorsList: string[] = [];
-    private chargesTypePMService: ChargesTypeListService;
-    public SellerDependancy: string = "AL";
-    public TariffCurrencyTextCode: string = "Tariff.F.CurrencyId";
-    public IsContainersAreaVisible: boolean = false;
-    public IsUnitOfMeasurementFieldVisible: boolean = false;
-    private draftVersion: TariffVersionPM;
-    public IsSellerVisible: boolean = false;    
-    public IsCustomerGroupVisible: boolean = false;
-    public IsSurchargeTariff: boolean = false;
-    public IsCustomsTariff: boolean = false;
-    public IsInlandFTLTariff: boolean = false;
-    public IsTariffHasContainers: boolean = false;
-    public IsLocalCustomsTariff: boolean = false;
-    public SellerToolTip: string;
-    public ContainerTypeDependencyFilter: string;
-    private commonDomainService: CommonDomainService;
+    public TariffsLinesSource: ObservableCollection;
+    private EntityArgs: EntityArgs;
+    public IsResourcesReady: boolean = false;
+    private TariffDomainService: TariffDomainService;
+    private DocumentExtendedService: DocumentsFilingExtendedPMService;
 
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
-        this.EntityPM = entityArgs.EntityPM;
-        this.chargesTypePMService = new ChargesTypeListService();
-        this.draftVersion = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
-
-        this.IsSurchargeTariff = TariffTool.IsSurchargeTariff(this.EntityPM);
-        this.IsCustomsTariff = TariffTool.IsCustomsTariff(this.EntityPM);
-        this.IsLocalCustomsTariff = TariffTool.IsLocalCustomsTariff(this.EntityPM);
-        this.IsInlandFTLTariff = TariffTool.IsInlandFTLTariff(this.EntityPM);
-        this.IsTariffHasContainers = TariffTool.IsTariffHasContainers(this.EntityPM);
-        this.commonDomainService = new CommonDomainService();
-
-        this.BuildQueryFilters();
-
-        if (this.IsSurchargeTariff || this.IsCustomsTariff || this.IsInlandFTLTariff || this.IsLocalCustomsTariff) {
-            this.FillChargesIDsAndUOMS();
-            this.VisibileSurchargesArea = true;
-            this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
-        }
-
-        if (this.IsTariffHasContainers) {
-            this.FillContainersIDs();
-            this.IsContainersAreaVisible = true;
-            this.ContainerTypeDependencyFilter = this.EntityPM.TypeCode == "IFT" ? null : "O";
-        }
-
-        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
-            this.SellerToolTip = "Customs Broker";
-        }
-
+        this.EntityArgs = entityArgs;
         this.Listen();
-        this.SetUIProperties();
-        this.GetBCNTMeasurementId();
-        this.SetUnitOfMeasurementFieldVisiblity();
-    }
-
-    private BCNTmeasurementId: string;
-    private GetBCNTMeasurementId() {
-        if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
-            this.commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res:any) => {
-                if (!res.HasError) {
-                    if (res.Result) {
-                        this.BCNTmeasurementId = res.Result;
-                    }
-                }
-            });
-        }
-    }
-
-    SetUIProperties() {
-        this.SetUIProperties_Seller();
-        this.CheckCurrancyEnabledProperty();
-        this.SetUIProperties_CustomerGroup();
-    }
-    private SetUIProperties_Seller() {
-        var isSellerVisible: boolean = true;
-        var isSellerRequired: boolean = false;
-
-        if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
-            isSellerVisible = false;
-        }
-
-        if (isSellerVisible) {
-            isSellerRequired = AppTool.IsNullOrEmpty(this.SellerId);
-        }
-
-        this.IsSellerVisible = isSellerVisible;
-        this.UIProperties.SetVisibility("SellerId", this.ObjectTableName, isSellerVisible);
-        this.UIProperties.SetRequired("SellerId", this.ObjectTableName, isSellerRequired)
-    }
-    
-    private SetUIProperties_CustomerGroup() {
-        var isCustomerGroupVisible: boolean = false;
-        var isisCustomerGroupRequired: boolean = false;
-
-        if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
-            isCustomerGroupVisible = true;
-        }
-
-        if (isCustomerGroupVisible) {
-            isisCustomerGroupRequired = AppTool.IsNullOrEmpty(this.CustomerGroupId);
-        }
-
-        this.IsCustomerGroupVisible = isCustomerGroupVisible;
-        this.UIProperties.SetVisibility("CustomerGroupId", this.ObjectTableName, isCustomerGroupVisible);
-        this.UIProperties.SetRequired("CustomerGroupId", this.ObjectTableName, isisCustomerGroupRequired);
-    }
-    SetUnitOfMeasurementFieldVisiblity() {
-        this.UIProperties.SetEnabled("UnitOfMeasurementCode", this.ObjectTableName, false);
-        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "AFC") {
-            this.IsUnitOfMeasurementFieldVisible = true;
-        }
-    }
-
-    CheckCurrancyEnabledProperty() {
-        var service: TariffDomainService = new TariffDomainService();
-        service.GetAllVersionsWithLinesForTariff(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-               var versions = response.Result;
-                if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
-                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
-                    if (versions != null) {
-                        if (versions != null && versions.length > 1) {
-                            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
-                        }
-                        else {
-                            var version = versions[0];
-                            if (version == null || (version != null && version.IsDraft)) {
-                                var hasTariffLines = false;
-                                versions.forEach(item => {
-                                    if (item.TariffLines != null && item.TariffLines.length > 0) {
-                                        hasTariffLines = true;
-                                    }
-                                });
-                                if (hasTariffLines) {
-                                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
-                                }
-                            }
-                            else if (version != null && !version.IsDraft) {
-                                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
-                            }
-                        }
-                    }
-                }
-                if (this.EntityPM.TypeCode == "AFC") {
-                    this.UIProperties.SetRequired("TariffProductId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TariffProductId));
-                }
-            }
-        }); 
-    }
-
-    BuildQueryFilters() {
-        var entityType: string = "IsAir";
-        if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
-            entityType = "IsOcean";
-            this.SellerDependancy = "SL";
-        }
-
-        else if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
-            entityType = "IsOcean";
-            this.SellerDependancy = "SL,AG,SG";
-        }
-
-        else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
-            entityType = this.EntityPM.TypeCode == "ECS" ? "IsExport" : "IsImport";
-        }
-
-        else if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
-            entityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
-            this.SellerDependancy = "AG,CG";
-        }
-
-        else if (this.EntityPM.TypeCode == "IFT") {
-            entityType = "IsInland";
-            this.SellerDependancy = "TR";
-        }
-
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
-        if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
-            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "BCNT,BTEU,FIXD", null, null, "InList", false, true, false, "string", false, true, true);
-        }
-        else if (this.EntityPM.TypeCode == "ECS" || this.EntityPM.TypeCode == "ICS"){
-            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "FIXD", null, null, "Equals", false, false, false, "string", false, true, true);
-        }
-        else {
-            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
-        }
-
-        this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter(entityType, true, null, null, "Equals", false, false, false, "Boolean");
-
-        if (this.EntityPM.TypeCode != "IFT") {
-            this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
-        }
-    }
-
-    FillChargesIDsAndUOMS() {
-        for (var index = 1; index <= 10; index++) {
-            this.IdProps.push("Surcharge" + index + "Id");
-            this.UOMProps.push("Surcharge" + index + "UOM");
-        }
-    }
-    FillContainersIDs() {
-        for (var index = 1; index <= 5; index++) {
-            this.containersProps.push("ContainerType" + index + "Id");
-        }
-    }
-
-    SetDefaultUOM(index: number) {
-        if (this.EntityPM.TypeCode == "ECS" || this.EntityPM.TypeCode == "ICS") {
-            this.SetFixedUOM(index);
-            return;
-        }
-        this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
-            if (!res.HasError) {
-                if (res.Result) {
-                    var ChargesType: ChargesTypeList = res.Result;
-                    if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
-                        if (!AppTool.IsNullOrEmpty(ChargesType.ContainerMeasurementId)) {
-                            this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
-                        }
-                        else {
-                            this[this.UOMProps[index]] = this.BCNTmeasurementId;
-                        }
-                    }
-                    else {
-                        this[this.UOMProps[index]] = ChargesType.MeasurementId;
-                    }
-                }
-            }
-        });
-    }
-
-    private SetFixedUOM(index: number) {
-        this.commonDomainService.GetMeasurementIdByCode("FIXD").subscribe((res: any) => {
-            if (!res.HasError && res.Result)
-                this[this.UOMProps[index]] = res.Result;
-        });
-    }
-
-    private SetDefaultCurrency(index: number) {        
-        if (this.draftVersion != null) {
-            this.draftVersion.TariffLines.forEach(item => {
-                if (item.IsDifferentCurrenciesPerCharge) {
-                    if (AppTool.IsNullOrEmpty(this["Surcharge" + index + "Id"])) {
-                        item["Surcharge" + index + "CurrencyId"] = null;
-                    }
-
-                    else {
-                        item["Surcharge" + index + "CurrencyId"] = this.CurrencyId;
-                    }
-                }
-            });
-        }
-    }
-
-    get Surcharge1Id() {
-        return this.EntityPM.Surcharge1Id;
-    }
-    set Surcharge1Id(value: string) {
-        if (this.EntityPM.Surcharge1Id != value) {
-            this.EntityPM.Surcharge1Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(0);
-            }
-
-            this.SetDefaultCurrency(1);
-        }
-    }
-
-    get Surcharge2Id() {
-        return this.EntityPM.Surcharge2Id;
-    }
-    set Surcharge2Id(value: string) {
-        if (this.EntityPM.Surcharge2Id != value) {
-            this.EntityPM.Surcharge2Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(1);
-            }
-
-            this.SetDefaultCurrency(2);
-        }
-    }
-
-    get Surcharge3Id() {
-        return this.EntityPM.Surcharge3Id;
-    }
-    set Surcharge3Id(value: string) {
-        if (this.EntityPM.Surcharge3Id != value) {
-            this.EntityPM.Surcharge3Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(2);
-            }
-
-            this.SetDefaultCurrency(3);
-        }
-    }
-
-    get Surcharge4Id() {
-        return this.EntityPM.Surcharge4Id;
-    }
-    set Surcharge4Id(value: string) {
-        if (this.EntityPM.Surcharge4Id != value) {
-            this.EntityPM.Surcharge4Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(3);
-            }
-
-            this.SetDefaultCurrency(4);
-        }
-    }
-
-    get Surcharge5Id() {
-        return this.EntityPM.Surcharge5Id;
-    }
-    set Surcharge5Id(value: string) {
-        if (this.EntityPM.Surcharge5Id != value) {
-            this.EntityPM.Surcharge5Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(4);
-            }
-
-            this.SetDefaultCurrency(5);
-        }
-    }
-
-    get Surcharge6Id() {
-        return this.EntityPM.Surcharge6Id;
-    }
-    set Surcharge6Id(value: string) {
-        if (this.EntityPM.Surcharge6Id != value) {
-            this.EntityPM.Surcharge6Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(5);
-            }
-
-            this.SetDefaultCurrency(6);
-        }
-    }
-
-    get Surcharge7Id() {
-        return this.EntityPM.Surcharge7Id;
-    }
-    set Surcharge7Id(value: string) {
-        if (this.EntityPM.Surcharge7Id != value) {
-            this.EntityPM.Surcharge7Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(6);
-            }
-
-            this.SetDefaultCurrency(7);
-        }
-    }
-
-    get Surcharge8Id() {
-        return this.EntityPM.Surcharge8Id;
-    }
-    set Surcharge8Id(value: string) {
-        if (this.EntityPM.Surcharge8Id != value) {
-            this.EntityPM.Surcharge8Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(7);
-            }
-
-            this.SetDefaultCurrency(8);
-        }
-    }
-
-    get Surcharge9Id() {
-        return this.EntityPM.Surcharge9Id;
-    }
-    set Surcharge9Id(value: string) {
-        if (this.EntityPM.Surcharge9Id != value) {
-            this.EntityPM.Surcharge9Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(8);
-            }
-
-            this.SetDefaultCurrency(9);
-        }
-    }
-
-    get Surcharge10Id() {
-        return this.EntityPM.Surcharge10Id;
-    }
-    set Surcharge10Id(value: string) {
-        if (this.EntityPM.Surcharge10Id != value) {
-            this.EntityPM.Surcharge10Id = value;
-            this.Validate();
-            if (value != null) {
-                this.SetDefaultUOM(9);
-            }
-
-            this.SetDefaultCurrency(10);
-        }
-    }
-
-    get Surcharge1UOM() {
-        return this.EntityPM.Surcharge1UOM;
-    }
-    set Surcharge1UOM(value: string) {
-        if (this.EntityPM.Surcharge1UOM != value) {
-            this.EntityPM.Surcharge1UOM = value;
-            this.Validate();
-        }
-    }
-
-    get Surcharge2UOM() {
-        return this.EntityPM.Surcharge2UOM;
-    }
-    set Surcharge2UOM(value: string) {
-        if (this.EntityPM.Surcharge2UOM != value) {
-            this.EntityPM.Surcharge2UOM = value;
-            this.Validate();
-        }
-    }
-
-    get Surcharge3UOM() {
-        return this.EntityPM.Surcharge3UOM;
-    }
-    set Surcharge3UOM(value: string) {
-        if (this.EntityPM.Surcharge3UOM != value) {
-            this.EntityPM.Surcharge3UOM = value;
-            this.Validate();
-        }
-    }
-
-    get Surcharge4UOM() {
-        return this.EntityPM.Surcharge4UOM;
-    }
-    set Surcharge4UOM(value: string) {
-        if (this.EntityPM.Surcharge4UOM != value) {
-            this.EntityPM.Surcharge4UOM = value;
-            this.Validate();
-        }
-    }
-
-    get Surcharge5UOM() {
-        return this.EntityPM.Surcharge5UOM;
-    }
-    set Surcharge5UOM(value: string) {
-        if (this.EntityPM.Surcharge5UOM != value) {
-            this.EntityPM.Surcharge5UOM = value;
-            this.Validate();
-        }
-    }
-
-    get Surcharge6UOM() {
-        return this.EntityPM.Surcharge6UOM;
-    }
-    set Surcharge6UOM(value: string) {
-        if (this.EntityPM.Surcharge6UOM != value) {
-            this.EntityPM.Surcharge6UOM = value;
-            this.Validate();
-        }
-    }
-
-    get Surcharge7UOM() {
-        return this.EntityPM.Surcharge7UOM;
-    }
-    set Surcharge7UOM(value: string) {
-        if (this.EntityPM.Surcharge7UOM != value) {
-            this.EntityPM.Surcharge7UOM = value;
-            this.Validate();
-        }
-    }
-
-    get Surcharge8UOM() {
-        return this.EntityPM.Surcharge8UOM;
-    }
-    set Surcharge8UOM(value: string) {
-        if (this.EntityPM.Surcharge8UOM != value) {
-            this.EntityPM.Surcharge8UOM = value;
-            this.Validate();
-        }
-    }
-
-    get Surcharge9UOM() {
-        return this.EntityPM.Surcharge9UOM;
-    }
-    set Surcharge9UOM(value: string) {
-        if (this.EntityPM.Surcharge9UOM != value) {
-            this.EntityPM.Surcharge9UOM = value;
-            this.Validate();
-        }
-    }
-
-    get Surcharge10UOM() {
-        return this.EntityPM.Surcharge10UOM;
-    }
-    set Surcharge10UOM(value: string) {
-        if (this.EntityPM.Surcharge10UOM != value) {
-            this.EntityPM.Surcharge10UOM = value;
-            this.Validate();
-        }
-    }
-
-    //Containers
-    get ContainerType1Id() {
-        return this.EntityPM.ContainerType1Id;
-    }
-    set ContainerType1Id(value: string) {
-        if (this.EntityPM.ContainerType1Id != value) {
-            this.EntityPM.ContainerType1Id = value;
-            this.ValidateContainers();
-        }
-    }
-
-    get ContainerType2Id() {
-        return this.EntityPM.ContainerType2Id;
-    }
-    set ContainerType2Id(value: string) {
-        if (this.EntityPM.ContainerType2Id != value) {
-            this.EntityPM.ContainerType2Id = value;
-            this.ValidateContainers();
-        }
-    }
-
-    get ContainerType3Id() {
-        return this.EntityPM.ContainerType3Id;
-    }
-    set ContainerType3Id(value: string) {
-        if (this.EntityPM.ContainerType3Id != value) {
-            this.EntityPM.ContainerType3Id = value;
-            this.ValidateContainers();
-        }
-    }
-
-    get ContainerType4Id() {
-        return this.EntityPM.ContainerType4Id;
-    }
-    set ContainerType4Id(value: string) {
-        if (this.EntityPM.ContainerType4Id != value) {
-            this.EntityPM.ContainerType4Id = value;
-            this.ValidateContainers();
-        }
-    }
-
-    get ContainerType5Id() {
-        return this.EntityPM.ContainerType5Id;
-    }
-    set ContainerType5Id(value: string) {
-        if (this.EntityPM.ContainerType5Id != value) {
-            this.EntityPM.ContainerType5Id = value;
-            this.ValidateContainers();
-        }
-    }
-
-    get TariffProductId() {
-        return this.EntityPM.TariffProductId;
-    }
-    set TariffProductId(value: string) {
-        if (this.EntityPM.TariffProductId != value) {
-            this.EntityPM.TariffProductId = value;
-            this.SetUIProperties();
-        }
-    }
-
-    ValidateSurcharge() {
-        var IdProps: string[] = [];
-        var UOMProps: string[] = [];
-        var IdPropsName: string[] = [];
-        var UOMPropsName: string[] = [];
-        var DuplicatedChargesIds: string[] = [];
-        var EmptyIndex = 1;
-        var emptyLines: boolean = false;
-        var FirstLineEmpty: boolean = false;
-        var tempErrors: Array<string> = [];
-        for (var index = 1; index <= 10; index++) {
-            IdProps.push("Surcharge" + index + "Id");
-            UOMProps.push("Surcharge" + index + "UOM");
-
-            IdPropsName.push("Charge Type " + index);
-            UOMPropsName.push("UOM " + index);
-            if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
-                var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
-                if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
-                    DuplicatedChargesIds.push(this[chargresType + ""]);
-                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe((res:any) => {
-                        if (!res.HasError) {
-                            var chargesTypeList: ChargesTypeList = res.Result;
-                            if (res) {
-                                this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
-                            }
-                        }
-                    });
-                }
-            }
-            if (index == 1) {
-                if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    tempErrors.push(IdPropsName[index - 1] + " is required");
-                    FirstLineEmpty = true;
-                }
-
-                if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]])) {
-                    tempErrors.push(UOMPropsName[index - 1] + " is required");
-                }
-            }
-
-            else {
-                if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    if (EmptyIndex == 1) {
-                        EmptyIndex = index;
-                    }
-                }
-
-                if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    this.ValidationErrorsList.push(IdPropsName[index - 1] + " is filled without a UOM");
-                }
-
-                if (index == 2) {
-                    if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                        if (FirstLineEmpty) {
-                            emptyLines = true;
-                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line 1 and line 2");
-                            EmptyIndex = 1;
-                        }
-                    }
-                }
-
-                if (index >= 3) {
-                    if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                        if (EmptyIndex != 1) {
-                            emptyLines = true;
-                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line " + (EmptyIndex - 1) + " and line " + index);
-                            EmptyIndex = 1;
-                        }
-                        if (AppTool.IsNullOrEmpty(this[IdProps[index - 2]])) {
-                            //   this.ValidationErrorsList.push("no empty line between 2 charges in line "+index+ " and "+(index-2));
-                        }
-                    }
-                }
-            }
-        }
-
-        if (!emptyLines) {
-            tempErrors.forEach(error => {
-                this.ValidationErrorsList.push(error);
-            });
-        }
-    }
-
-    ngAfterViewInit() {
-        if (this.IsSurchargeTariff || this.IsCustomsTariff || this.IsInlandFTLTariff || this.IsLocalCustomsTariff) {
-            this.Validate(true);
-        }
-
-        if (this.IsTariffHasContainers) {
-            this.ValidateContainers(true);
-        }        
-    }
-
-    private firstIndex: number = 0;
-    Validate(initial: boolean = false) {
-        var entered = false;
-        for (var index = 1; index <= 10; index++) {
-            if (initial) {
-                if (!AppTool.IsNullOrEmpty(this[this.IdProps[index - 1]])) {
-                    this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, false);
-                    this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, false);
-                }
-
-                else {
-                    if (!entered) {
-                        entered = true;
-                        this.firstIndex = index;
-
-                        this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, true);
-                        this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, false);
-                    }
-                    else {
-                        this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, false);
-                        this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, false);
-                    }
-                }
-            }
-
-            else {
-                if (index>= this.firstIndex) {
-                    if (AppTool.IsNullOrEmpty(this[this.IdProps[index - 1]])) {
-                        this[this.UOMProps[index - 1]] = null;
-
-                        this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, false);
-                        if (index > 1) {
-                            if (!AppTool.IsNullOrEmpty(this[this.UOMProps[index - 2]]) && !AppTool.IsNullOrEmpty(this[this.IdProps[index - 2]])) {
-                                this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, true);
-                                this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, false);
-                            }
-                        }
-
-                        else {
-                            this.UIProperties.SetRequired(this.IdProps[index - 1], this.ObjectTableName, true);
-                            this.UIProperties.SetRequired(this.UOMProps[index - 1], this.ObjectTableName, true);
-                        }
-                    }
-
-                    else {
-                        if(this.EntityPM.TypeCode != "ECS" && this.EntityPM.TypeCode != "ICS") 
-                           this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, true);
-                           
-                        if (index == 1) {
-                            this.UIProperties.SetRequired(this.IdProps[index - 1], this.ObjectTableName, false);
-                            if (AppTool.IsNullOrEmpty(this[this.UOMProps[index - 1]])) {
-                                this.UIProperties.SetRequired(this.UOMProps[index - 1], this.ObjectTableName, true);
-                            }
-                            else {
-                                this.UIProperties.SetRequired(this.UOMProps[index - 1], this.ObjectTableName, false);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private containerIndex: number = 0;
-    ValidateContainers(initial: boolean = false) {
-        var entered = false;
-        for (var index = 1; index <= 5; index++) {
-            if (initial) {
-                if (!AppTool.IsNullOrEmpty(this[this.containersProps[index - 1]])) {
-                    this.UIProperties.SetEnabled(this.containersProps[index - 1], this.ObjectTableName, false);
-                }
-
-                else {
-                    if (!entered) {
-                        entered = true;
-                        this.containerIndex = index;
-                        this.UIProperties.SetEnabled(this.containersProps[index - 1], this.ObjectTableName, true);
-                    }
-                    else {
-                        this.UIProperties.SetEnabled(this.containersProps[index - 1], this.ObjectTableName, false);
-                    }
-                }
-            }
-
-            else {
-                if (index >= this.containerIndex) {
-                    if (AppTool.IsNullOrEmpty(this[this.containersProps[index - 1]])) {
-                        
-                        if (index > 1) {
-                            if (!AppTool.IsNullOrEmpty(this[this.containersProps[index - 2]])) {
-                                this.UIProperties.SetEnabled(this.containersProps[index - 1], this.ObjectTableName, true);
-                            }
-                        }
-                        else {
-                            this.UIProperties.SetRequired(this.containersProps[index - 1], this.ObjectTableName, true);
-                        }
-                    }
-                    else {
-                        if (index == 1) {
-                            this.UIProperties.SetRequired(this.containersProps[index - 1], this.ObjectTableName, false);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.LoadTariffLines();
+                }
+            });
 
-                    for (var i = 1; i <= 10; i++) {
-                        this["isSurcharges" + i + "Added"] = false;
-                    }
-
-                    if (this.IsSurchargeTariff || this.IsCustomsTariff || this.IsInlandFTLTariff || this.IsLocalCustomsTariff) {
-                        this.Validate(true);
-                    }
-
-                    if (this.IsTariffHasContainers) {
-                        this.ValidateContainers(true);
-                    }
-                    
-                    this.CheckCurrancyEnabledProperty();
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.LoadTariffLines();
                 }
             });
         }
     }
-
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+    ngOnInit() {
+        this.Intialize();  
     }
 
-    get Name() { return this.EntityPM.Name; }
+    Intialize() {
+        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            this.IsResourcesReady = true;
+            this.TariffsLinesSource = new ObservableCollection([]);
+            this.EntityPM = this.EntityArgs.EntityPM;
+            this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
+            this.TariffDomainService = new TariffDomainService();
+            this.SetStepsLabelsAndVisibility();
+            this.LoadTariffLines();
+        });
+    }
+
+    LoadTariffLines() {
+        this.TariffsLinesSource.Clear();
+        var itemsCollection: TariffLineData[] = []; 
+        this.EntityPM.TariffLines.forEach(item => {
+            itemsCollection.push(new TariffLineData(item,this));
+        });
+        this.TariffsLinesSource.InsertCollection(itemsCollection);
+    }
+
+    get PriceSteps() {
+        return this.EntityPM.PriceSteps;
+    }
+    set PriceSteps(value: string) {
+        if (this.EntityPM.PriceSteps != value) {
+            this.EntityPM.PriceSteps = value;
+        }
+    }
+
+    get Name() {
+        return this.EntityPM.Name;
+    }
     set Name(value: string) {
         if (this.EntityPM.Name != value) {
             this.EntityPM.Name = value;
         }
     }
 
-    get Notes() { return this.EntityPM.Notes; }
-    set Notes(value: string) {
-        if (this.EntityPM.Notes != value) {
-            this.EntityPM.Notes = value;
+    get StartDate() {
+        return this.EntityPM.StartDate;
+    }
+    set StartDate(value: Date) {
+        if (this.EntityPM.StartDate != value) {
+            this.EntityPM.StartDate = value;
         }
     }
 
-    get CurrencyId() { return this.EntityPM.CurrencyId; }
+    get ExpirationDate() {
+        return this.EntityPM.ExpirationDate;
+    }
+    set ExpirationDate(value: Date) {
+        if (this.EntityPM.ExpirationDate != value) {
+            this.EntityPM.ExpirationDate = value;
+        }
+    }
+
+    get Description() {
+        return this.EntityPM.Description;
+    }
+    set Description(value: string) {
+        if (this.EntityPM.Description != value) {
+            this.EntityPM.Description = value;
+        }
+    }
+
+    get CurrencyId() {
+        return this.EntityPM.CurrencyId;
+    }
     set CurrencyId(value: string) {
         if (this.EntityPM.CurrencyId != value) {
             this.EntityPM.CurrencyId = value;
-
-            this.SetDifferentCurrencies();
         }
     }
 
-    get SellerId() { return this.EntityPM.SellerId; }
+    get SellerId() {
+        return this.EntityPM.SellerId;
+    }
     set SellerId(value: string) {
         if (this.EntityPM.SellerId != value) {
             this.EntityPM.SellerId = value;
-
-            this.SetUIProperties_Seller();
         }
     }
 
-    private seller: CardList;
-    get Seller() { return this.seller; }
-    set Seller(value: CardList) {
-        if (this.seller != value) {
-            this.seller = value;
-
-            if (value) {
-                this.EntityPM.SellerName = value.EnglishName;
-            }
-
-            else {
-                this.EntityPM.SellerName = null;
-            }
-        }
+    get ContractNumber() {
+        return this.EntityPM.ContractNumber;
     }
-
-    get CustomerGroupId() {
-        return this.EntityPM.CustomerGroupId;
-    }
-    set CustomerGroupId(value: string) {
-        if (this.EntityPM.CustomerGroupId != value) {
-            this.EntityPM.CustomerGroupId = value;
-
-            this.SetUIProperties_CustomerGroup();
-        }
-    }
-
-    private customsBroker: CardList;
-    get CustomsBroker() { return this.customsBroker; }
-    set CustomsBroker(value: CardList) {
-        if (this.customsBroker != value) {
-            this.customsBroker = value;
-
-            if (value) {
-                this.EntityPM.CustomsBrokerName = value.EnglishName;
-            }
-
-            else {
-                this.EntityPM.CustomsBrokerName = null;
-            }
-        }
-    }
-
-    get ContractNumber() { return this.EntityPM.ContractNumber; }
-    set ContractNumber(value: string) {
+    set ContractNumber(value: number) {
         if (this.EntityPM.ContractNumber != value) {
             this.EntityPM.ContractNumber = value;
         }
     }
 
-    get UnitOfMeasurementCode() { return this.EntityPM.UnitOfMeasurementCode; }
-    set UnitOfMeasurementCode(value: string) {
-        if (this.EntityPM.UnitOfMeasurementCode != value) {
-            this.EntityPM.UnitOfMeasurementCode = value;
-        }
-    }
+    public Step1PriceLabel: string;
+    public Step2PriceLabel: string;
+    public Step3PriceLabel: string;
+    public Step4PriceLabel: string;
+    public Step5PriceLabel: string;
+    public Step6PriceLabel: string;
+    public Step7PriceLabel: string;
+    public Step8PriceLabel: string;
 
-    private SetDifferentCurrencies() {
-        for (var i = 1; i <= 10; i++) {
-            if (this["isSurcharges" + i + "Added"]) {
-                if (this["Surcharge" + i + "Id"]) {
-                    this.SetDefaultCurrency(i);
+    public Step1PriceVisibility: boolean;
+    public Step2PriceVisibility: boolean;
+    public Step3PriceVisibility: boolean;
+    public Step4PriceVisibility: boolean;
+    public Step5PriceVisibility: boolean;
+    public Step6PriceVisibility: boolean;
+    public Step7PriceVisibility: boolean;
+    public Step8PriceVisibility: boolean;
+
+    SetStepsLabelsAndVisibility() {
+        if (!AppTool.IsNullOrEmpty(this.PriceSteps)) {
+            if (this.PriceSteps.indexOf(',') > -1) {
+                var steps: string[] = [] = this.PriceSteps.split(",");
+                var count = steps.length;
+                if (count == 1) {
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step1PriceVisibility = true;
                 }
+                else if (count == 2) {
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                }
+                else if (count == 3) {
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                }
+                else if (count == 4) {
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                }
+                else if (count == 5) {
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
+                    this.Step5PriceLabel = steps[4] + " KG";
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                    this.Step5PriceVisibility = true;
+                }
+                else if (count == 6) {
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
+                    this.Step5PriceLabel = steps[4] + " KG";
+                    this.Step6PriceLabel = steps[5] + " KG";
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                    this.Step5PriceVisibility = true;
+                    this.Step6PriceVisibility = true;
+                }
+                else if (count == 7) {
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
+                    this.Step5PriceLabel = steps[4] + " KG";
+                    this.Step6PriceLabel = steps[5] + " KG";
+                    this.Step7PriceLabel = steps[6] + " KG";
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                    this.Step5PriceVisibility = true;
+                    this.Step6PriceVisibility = true;
+                    this.Step7PriceVisibility = true;
+                }
+                else if (count == 8) {
+                    this.Step1PriceLabel = steps[0] + " KG";
+                    this.Step2PriceLabel = steps[1] + " KG";
+                    this.Step3PriceLabel = steps[2] + " KG";
+                    this.Step4PriceLabel = steps[3] + " KG";
+                    this.Step5PriceLabel = steps[4] + " KG";
+                    this.Step6PriceLabel = steps[5] + " KG";
+                    this.Step7PriceLabel = steps[6] + " KG";
+                    this.Step8PriceLabel = steps[7] + " KG";
+                    this.Step1PriceVisibility = true;
+                    this.Step2PriceVisibility = true;
+                    this.Step3PriceVisibility = true;
+                    this.Step4PriceVisibility = true;
+                    this.Step5PriceVisibility = true;
+                    this.Step6PriceVisibility = true;
+                    this.Step7PriceVisibility = true;
+                    this.Step8PriceVisibility = true;
+                }
+            }
+            else {
+                this.Step1PriceLabel = this.PriceSteps;
+                this.Step1PriceVisibility = true;
             }
         }
     }
+
+    AddTariffLine() {
+        var logWindow = new LogitudeWindow();
+        var itemPM = new TariffLinePM(null);
+        itemPM.StartDate = this.StartDate;
+        itemPM.ExpirationDate = this.ExpirationDate;
+        itemPM.Tenant = SessionLocator.Tenant;
+        var itemComponent = new TariffLineData(itemPM, this, true);
+        logWindow.DataContext = itemComponent;
+        logWindow.Title = "New Tariff Line"; 
+        logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
+    }
+
+    EditTariffButtonClicked(item: TariffLineData) {
+        var logWindow = new LogitudeWindow();
+        logWindow.DataContext = item;
+        logWindow.Title = "Edit Tariff Line";
+        logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
+    }
+
+    DeleteTariffButtonClicked(item: TariffLineData) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Delete this Tariff Line?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.RemoveTariffLine(item.EntityPM);
+                this.TariffsLinesSource.Remove(item);
+                this.LoadTariffLines();
+            }
+        });
+    }
+
+    // Upload Excel File 
+    OnFileChanged(event) {
+        var file = event.target.files[0];
+        this.UploadExcel(file);
+    }
+    UploadExcel(file: any) {
+        if (file && file.size > 0) {
+            this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response : ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingExcelFile(file);
+                    }
+                }
+            });
+        }
+    }
+    StartUploadingExcelFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64(filebuffer, this);
+        }
+    }
+    ConvertArrayBufferToBase64(file: any, context: any) {
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(ResultAsArray(e));
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            var filter = new TariffFilterParameter();
+            filter.FileData = window.btoa(binary);
+            filter.PriceSteps = context.PriceSteps;
+            context.SendExcelToServer(filter);
+        };
+
+        reader.onerror = function (e) {
+            console.log(e);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    SendExcelToServer(filter: any) {
+        this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var tariffLines: ExcelTariffLines[] = response.Result;
+                if (tariffLines) {
+                    // draw lines
+                    tariffLines.forEach(item => {
+                        var tariff = new TariffLinePM(null);
+                        tariff.StartDate = this.StartDate;
+                        tariff.ExpirationDate = this.ExpirationDate;
+                        tariff.Tenant = SessionLocator.Tenant;
+                        tariff.OriginPortId = item.FromPortId;
+                        tariff.OriginPortCode = item.FromPortCode;
+                        tariff.OriginPortName = item.FromPortName;
+                        tariff.DestinationPortId = item.ToPortId;
+                        tariff.DestinationPortCode = item.ToPortCode;
+                        tariff.DestinationPortName = item.ToPortName;
+                        tariff.MinPrice = item.MinPrice;
+                        tariff.Step1Price = item.Step1Price;
+                        tariff.Step2Price = item.Step2Price;
+                        tariff.Step3Price = item.Step3Price;
+                        tariff.Step4Price = item.Step4Price;
+                        tariff.Step5Price = item.Step5Price;
+                        tariff.Step6Price = item.Step6Price;
+                        tariff.Step7Price = item.Step7Price;
+                        tariff.Step8Price = item.Step8Price; 
+                        
+                        this.EntityPM.AddTariffLine(tariff); 
+                    });
+                    this.LoadTariffLines();
+                }
+            }
+        });
+    }
+
+    // Download Excel 
+    DownloadExcel() {
+        this.TariffDomainService.DownloadTariffLines(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {           
+            if (!myResponse.HasError) {
+                var fileName = myResponse.Result;
+                var tempDate = new Date();
+                var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "Tariffs" + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007";
+                {
+                    window.open(url);
+                }
+            }
+        });
+    }
 }
+
+export class TariffLineData extends BaseComponent {
+    public EntityPM: TariffLinePM;
+    public DataContext: TariffLineData = this;
+    private ObjectTableName = "TariffLine";
+    public IsNewEntity: boolean = false;
+
+    constructor(entity: TariffLinePM, public FatherComponent: TariffGeneralTabComponent, isNew: boolean = false) {
+        super();
+        this.EntityPM = entity;
+        this.IsNewEntity = isNew;
+        this.SetUIProperties();
+    }
+
+    private SetUIProperties() {
+        this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
+        this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
+    }
+
+    get MinPrice() {
+        return this.EntityPM.MinPrice;
+    }
+    set MinPrice(value: number) {
+        if (this.EntityPM.MinPrice != value) {
+            this.EntityPM.MinPrice = value;
+        }
+    }
+
+    get DestinationPortId() {
+        return this.EntityPM.DestinationPortId;
+    }
+    set DestinationPortId(value: string) {
+        if (this.EntityPM.DestinationPortId != value) {
+            this.EntityPM.DestinationPortId = value;
+            this.SetUIProperties();
+        }
+    }
+
+    get DestinationPortCode() {
+        return this.EntityPM.DestinationPortCode;
+    }
+    set DestinationPortCode(value: string) {
+        if (this.EntityPM.DestinationPortCode != value) {
+            this.EntityPM.DestinationPortCode = value;
+        }
+    }
+
+    destinationPort: PortPM;
+    get DestinationPort() { return this.destinationPort; }
+    set DestinationPort(value: PortPM) {
+        if (this.destinationPort != value) {
+            this.destinationPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.DestinationPortCode = value.Code;
+        } else {
+            this.DestinationPortCode = null;
+        }
+    }
+
+    get OriginPortCode() {
+        return this.EntityPM.OriginPortCode;
+    }
+    set OriginPortCode(value: string) {
+        if (this.EntityPM.OriginPortCode != value) {
+            this.EntityPM.OriginPortCode = value;
+        }
+    }
+
+    originPort: PortPM;
+    get OriginPort() { return this.originPort; }
+    set OriginPort(value: PortPM) {
+        if (this.originPort != value) {
+            this.originPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.OriginPortCode = value.Code;
+        } else {
+            this.OriginPortCode = null;
+        }
+    }
+
+    get OriginPortId() {
+        return this.EntityPM.OriginPortId;
+    }
+    set OriginPortId(value: string) {
+        if (this.EntityPM.OriginPortId != value) {
+            this.EntityPM.OriginPortId = value;
+            this.SetUIProperties();
+        }
+    }
+
+    get Step1Price() {
+        return this.EntityPM.Step1Price;
+    }
+    set Step1Price(value: number) {
+        if (this.EntityPM.Step1Price != value) {
+            this.EntityPM.Step1Price = value;
+        }
+    }
+
+    get Step2Price() {
+        return this.EntityPM.Step2Price;
+    }
+    set Step2Price(value: number) {
+        if (this.EntityPM.Step2Price != value) {
+            this.EntityPM.Step2Price = value;
+        }
+    }
+
+    get Step3Price() {
+        return this.EntityPM.Step3Price;
+    }
+    set Step3Price(value: number) {
+        if (this.EntityPM.Step3Price != value) {
+            this.EntityPM.Step3Price = value;
+        }
+    }
+
+    get Step4Price() {
+        return this.EntityPM.Step4Price;
+    }
+    set Step4Price(value: number) {
+        if (this.EntityPM.Step4Price != value) {
+            this.EntityPM.Step4Price = value;
+        }
+    }
+
+    get Step5Price() {
+        return this.EntityPM.Step5Price;
+    }
+    set Step5Price(value: number) {
+        if (this.EntityPM.Step5Price != value) {
+            this.EntityPM.Step5Price = value;
+        }
+    }
+
+    get Step6Price() {
+        return this.EntityPM.Step6Price;
+    }
+    set Step6Price(value: number) {
+        if (this.EntityPM.Step6Price != value) {
+            this.EntityPM.Step6Price = value;
+        }
+    }
+
+    get Step7Price() {
+        return this.EntityPM.Step7Price;
+    }
+    set Step7Price(value: number) {
+        if (this.EntityPM.Step7Price != value) {
+            this.EntityPM.Step7Price = value;
+        }
+    }
+
+    get Step8Price() {
+        return this.EntityPM.Step8Price;
+    }
+    set Step8Price(value: number) {
+        if (this.EntityPM.Step8Price != value) {
+            this.EntityPM.Step8Price = value;
+        }
+    }
+}
+
+

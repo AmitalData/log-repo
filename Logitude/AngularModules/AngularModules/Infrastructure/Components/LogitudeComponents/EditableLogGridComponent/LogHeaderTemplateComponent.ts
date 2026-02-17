@@ -4,7 +4,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 
 @Component({
     selector: 'log-header-template',
-    
+    moduleId: module.id,
     templateUrl: './LogHeaderTemplateComponent.html',
 })
 

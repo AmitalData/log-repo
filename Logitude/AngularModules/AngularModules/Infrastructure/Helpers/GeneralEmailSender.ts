@@ -1,3 +1,4 @@
+﻿
 declare var System: any;
 declare var window: any;
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
@@ -16,15 +17,12 @@ import {DocumentOutPMService} from '../../Common/Services/ExtendedPMs/DocumentOu
 import {DocumentTypePMExtendedService} from '../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 import {EntityPartner} from '../../Infrastructure/DataContracts/EntityPartner';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import { AppTool } from '../../Infrastructure/Tools';
-import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
 
 export class GeneralEmailSender {
     public ObjectTableName: string;
     public CurrentObjectTableId: string;
     PartnersObslist: EntityPartner[];
 
-    public IsShareDocumentsViaEmail: boolean = false;
     public ChildObjectTableId: string = "";
     public ChildEntityId: string;
     public CurrentEntityId: string;
@@ -35,6 +33,7 @@ export class GeneralEmailSender {
     DocumentTypeLists: DocumentTypeList[];
     EntityPM: any;
     ToSpecificeEmail: string = "";
+    ExportQuotationsToIntegratedSystem: boolean;
     Subject: string;
     Replyto: string;
     From: string;
@@ -43,13 +42,7 @@ export class GeneralEmailSender {
     DocumentTypeCode: string;
     EventRefreshName: string;
     LoadingSendingComponent: boolean = false;
-    public IsToEmailIsDisabled: boolean = false;
-    IsDigitalPortal: boolean = false;
-    ToMail: string;
-    ReportFliter: ReportFliter;
-    private CurrentSession = SessionLocator.SelectedSession;
-
-    constructor(objecttablename: string, documentTypeCode: string, entityId: string, entityReference: string, childEntityId: string, childEntityReference: string, documentFilingId: string, subject: string, attachments: AttachmentsList[], eventRefreshName: string = null, entityPM: any = null, isCrm: boolean = false, eventTypeCode: string = null, fromMail: string = null,toMail:string = null, isDigitalPortal: boolean = false,reportFliter:ReportFliter = null) {
+    constructor(objecttablename: string, documentTypeCode: string, entityId: string, entityReference: string, childEntityId: string, childEntityReference: string, documentFilingId: string, subject: string, attachments: AttachmentsList[], eventRefreshName: string = null, entityPM: any = null, isCrm: boolean = false, eventTypeCode: string = null, fromMail: string = null) {
         this.LoadingSendingComponent = true;
         this.CurrentObjectTableId = window.ObjectTables.filter(d => d.Name == objecttablename)[0].Id;
         this.ObjectTableName = window.ObjectTables.filter(d => d.Name == objecttablename)[0].Name;
@@ -67,17 +60,12 @@ export class GeneralEmailSender {
         this.EntityPM = entityPM;
         this.IsCrm = isCrm;
         this.EventTypeCode = eventTypeCode;
-        this.IsDigitalPortal = isDigitalPortal;
-        this.ToSpecificeEmail = this.IsDigitalPortal ? toMail : "";
-        this.ToMail = toMail;
-        this.ReportFliter=reportFliter;
+        this.ToSpecificeEmail = "";
+        this.ExportQuotationsToIntegratedSystem = false;
     }
 
-    SetIsShareDocumentsViaEmail() {
-        this.IsShareDocumentsViaEmail = true;
-    }
 
-    SendMessage(glAccountId: string = '') {
+    SendMessage() {
 
         var widthwindow = window.innerWidth;
         var heighthwindow = window.innerHeight;
@@ -102,13 +90,11 @@ export class GeneralEmailSender {
         windowArgs.ObjecttableName = this.ObjectTableName ? this.ObjectTableName : "";
         windowArgs.ObjectTableId = this.CurrentObjectTableId ? this.CurrentObjectTableId : "";
         windowArgs.Subject = this.Subject ? this.Subject : "";
-        windowArgs.ToEmail = this.IsDigitalPortal ? (this.ToMail ? this.ToMail : "") : (this.Replyto ? this.Replyto : "");
+        windowArgs.ToEmail = this.Replyto ? this.Replyto : "";
         windowArgs.From = this.From ? this.From : "";
         windowArgs.PartnersObslist = this.PartnersObslist;
         windowArgs.IsUserFromReport = this.PartnersObslist ? true : false;
         windowArgs.EntityPM = this.EntityPM;
-        windowArgs.GlaccountId = glAccountId;
-        windowArgs.reportFilter=this.ReportFliter;
 
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = sendWindowWidth;
@@ -123,7 +109,7 @@ export class GeneralEmailSender {
 
     ShowFullSendControll() {
 
-        if (this.EntityPM || this.IsDigitalPortal) {
+        if (this.EntityPM) {
 
             var documentTypeListService = new DocumentTypeListService();
             var documentOutPM = null;
@@ -132,14 +118,14 @@ export class GeneralEmailSender {
             apiQueryFilters.GetAll = true;
             apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
 
-            documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
+            documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
                     documentTypeList = myResult.filter(d => d.Code == this.DocumentTypeCode)[0];
                     if (documentTypeList) {
                         var documentOutPMService = new DocumentOutPMService();
-                        documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.CurrentEntityId, SessionInfo.LoggedUserTenant, "", documentTypeList.Id).subscribe((res:any) => {
+                        documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.CurrentEntityId, SessionInfo.LoggedUserTenant, "", documentTypeList.Id).subscribe(res => {
                             var pmResponse: ServiceResponse = res;
                             if (!pmResponse.HasError) {
                                 var myResult = pmResponse.Result;
@@ -147,7 +133,7 @@ export class GeneralEmailSender {
                                 documentOutPM = myResult;
 
                                 if (!documentOutPM) {
-                                    documentOutPMService.getCreateDocumentOut(documentTypeList.Id, this.CurrentEntityId, "", "", this.CurrentObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                                    documentOutPMService.getCreateDocumentOut(documentTypeList.Id, this.CurrentEntityId, "", "", this.CurrentObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
                                         var pmResponse: ServiceResponse = res;
                                         if (!pmResponse.HasError) {
                                             var myResult = pmResponse.Result;
@@ -189,7 +175,7 @@ export class GeneralEmailSender {
 
         var documentTypePM = null;
         this.documentTypePMService = new DocumentTypePMExtendedService();
-        this.documentTypePMService.getSingleDocumentType(documentTypeList.Id, documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this.documentTypePMService.getSingleDocumentType(documentTypeList.Id, documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
 
 
             var pmResponse: ServiceResponse = res;
@@ -231,11 +217,8 @@ export class GeneralEmailSender {
         SelectedInternalDocument.EventRefreshName = this.EventRefreshName;
         SelectedInternalDocument.AttachmentsLists = this.Attachments;
         SelectedInternalDocument.ToSpecificeEmail = this.ToSpecificeEmail;
+        SelectedInternalDocument.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;
 
-
-        var windowArgs: any = {};
-        windowArgs.IsShareDocumentsViaEmail = this.IsShareDocumentsViaEmail;
-        windowArgs.IsDigitalPortal = this.IsDigitalPortal;
         var logWindow = new LogitudeWindow();
         logWindow.Width = sendWindowWidth;
         logWindow.Height = SelectedInternalDocument.WindowHeight = sendWindowHeight;
@@ -243,14 +226,8 @@ export class GeneralEmailSender {
         logWindow.DataContext = SelectedInternalDocument;
         logWindow.NotifyOnClose = true;
         logWindow.IsShowCloseButton = true;
-        logWindow.WindowArgs = windowArgs;
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/SendDocumentComponent");
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event != null && $event.includes("DigitalPortal")) {
-                var htmlTemplate = $event.split(",")[1];
-
-            }
-        });
         this.LoadingSendingComponent = false;
+
     }
 }

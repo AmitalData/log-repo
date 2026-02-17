@@ -10,7 +10,6 @@ namespace WebFreight.Web.DataProviders
         public string BillToName { get; set; }
         public string BillToAddress { get; set; }
         public string BillToVatNo { get; set; }
-        public string BillToWebsite { get; set; }
         public DateTime Today { get; set; }
 
         public DateTime? RegisterDate { get; set; }
@@ -41,9 +40,7 @@ namespace WebFreight.Web.DataProviders
 
         public double? OutstandingBalance  { get; set; }
         public double? TotalAmount { get; set; }
-        public string TotalAmountInWordsEnglish { get; set; }
-        public string TotalAmountInWordsSpanish { get; set; }
-        public string ReceivedFromInLocal { get; set; }
+
         public string CopyName { get; set; }
         public string ChequeOrPaymentRef { get; set; }
         public double Amount { get; set; }
@@ -67,38 +64,16 @@ namespace WebFreight.Web.DataProviders
         public string AccountNumber { get; set; }
         public string BankAccountLocalName { get; set; }
         public string BankAccountEnglishName { get; set; }
-  
+
         public string IRSPlace { get; set; }
         public string IRSNumber { get; set; }
         public string BranchAddress { get; set; }
 		public string BillToCountryCode { get; set; }
-        public string ForeignRFC { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string IssuedByLocalName { get; set; }
 
-        public double? AmountInLocalCurrency { get; set; }
+		public List<InvoicePayments> PaidInvoicesList { get; set; }     
 
-        public List<InvoicePayments> PaidInvoicesList { get; set; }
-        public List<ARPaymentCheque> ARPaymentCheques { get; set; }
-
-        public string ARPaymentField1 { get; set; }
-        public string ARPaymentField2 { get; set; }
-        public string ARPaymentField3 { get; set; }
-        public string ARPaymentField4 { get; set; }
-        public string ARPaymentField5 { get; set; }
-        public string ARPaymentField6 { get; set; }
-        public string ARPaymentField7 { get; set; }
-        public string ARPaymentField8 { get; set; }
-        public string ARPaymentField9 { get; set; }
-        public string ARPaymentField10 { get; set; }
-        public string BillToBankAccountNumber { get; set; }
-        public string BillToBankName { get; set; }
-		public string GLAccountDisplayNumber { get; set; }
-
-		public class InvoicePayments
+        public class InvoicePayments
         {
-            public string ProjectNumber { get; set; }
             public string InvoiceNumber { get; set; }
             public string Reference { get; set; }
             public double? AmountPaid { get; set; }
@@ -119,7 +94,6 @@ namespace WebFreight.Web.DataProviders
             public decimal ImpPagado { get; set; }
             public decimal ImpSaldoInsoluto { get; set; }
             public double? InvoicePaymentExchangeRate { get; set; }
-            public string CustomerRef { get; set; }
 
 
             //            UUID
@@ -135,20 +109,6 @@ namespace WebFreight.Web.DataProviders
 
         }
 
-        public class ARPaymentCheque
-        {
-            public string ChequeOrPaymentRef { get; set; }
-            public string Bank { get; set; }
-            public string Branch { get; set; }
-            public string Account { get; set; }
-            public string ValueDate { get; set; }
-            public string CurrencyCode { get; set; }
-            public decimal LocalAmount { get; set; }
-            public decimal ForeignAmount { get; set; }
-            public string StatusName { get; set; }
-
-        }
-
 
 
         public double? PaymentExchangeRate { get; set; }
@@ -156,10 +116,6 @@ namespace WebFreight.Web.DataProviders
         public string DepositBankAccountNumber { get; set; }
         public string SATTransferStatus { get; set; }
         public string BankName { get; set; }
-        public string FullAccountingBankEnglishName { get; set; }
-        public string FullAccountingBankLocalName { get; set; }
-        public string FullAccountingBankName { get; set; }
-
         public string BankAccountNumber { get; set; }
         //        BillToAddress
         //PaymentExchangeRate

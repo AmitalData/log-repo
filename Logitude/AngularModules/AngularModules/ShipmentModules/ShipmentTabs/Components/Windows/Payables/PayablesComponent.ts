@@ -20,7 +20,7 @@ import {PackageTypeListService} from '../../../../../Common/Services/StandardLis
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PayablesComponent.html',
 })
 
@@ -32,20 +32,11 @@ export class PayablesComponent extends BaseComponent {
     public LocalCurrencyCode: string;
     public IsResourcesReady: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsUsingVirtuallization: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        this.SetIsUsingVirtuallization();
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
         this.InitializeServices();
-    }
-
-    SetIsUsingVirtuallization() {
-        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
-        if (hasGridVirtuallizationToggleFeature) {
-            this.IsUsingVirtuallization = true;
-        }
     }
 
     public AllChargesTypes: ChargesTypeList[] = [];
@@ -97,7 +88,7 @@ export class PayablesComponent extends BaseComponent {
         this.ReceivableText = TextCodeTranslator.Translate('Shipment.S.Receivables.Receivable');       
         this.QuantityText = TextCodeTranslator.Translate("ShipmentReceivable.F.Quantity");
         this.UnitPriceText = TextCodeTranslator.Translate("ShipmentReceivable.F.UnitPrice");
-        this.AmountText = TextCodeTranslator.Translate("ShipmentReceivable.F.TotalAmount.Short");
+        this.AmountText = TextCodeTranslator.Translate("ShipmentReceivable.F.Amount.Short");
         this.AmountLocalText = TextCodeTranslator.Translate("Shipment.O.Receivables.AmountLocal").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
     }
 
@@ -137,7 +128,7 @@ export class PayablesComponent extends BaseComponent {
     public get EstimateProfit() { return this.EntityPM.EstimateProfitInLocalCurrency; }
     public set EstimateProfit(value: number) {
         if (this.EntityPM.EstimateProfitInLocalCurrency != value) {
-            this.EntityPM.EstimateProfitInLocalCurrency = AppTool.Round(value, 2);            
+            this.EntityPM.EstimateProfitInLocalCurrency = AppTool.Round(value, 2);
         }
     }
 
@@ -239,13 +230,7 @@ export class PayablesComponent extends BaseComponent {
     }
     OkButtonClicked() {
         this.ItemsSource.Collection.forEach(p => {
-            if (p.IsAdded) {
-                if (p.ReceivablePM.MeasurementCode == "PFCL") {
-                    p.ReceivablePM.Quantity = ArrayTool.Sum(this.ItemsSource.Collection.filter(d => d.IsAdded && d.CurrencyCode != SessionLocator.LocalCurrencyCode && d.MeasurementCode != "PFCL"), "ReceivableAmountLocal");
-                    p.ComputeReceivableAmount();
-                }
-                this.EntityPM.AddReceivable(p.ReceivablePM);
-            }
+            if (p.IsAdded) this.EntityPM.AddReceivable(p.ReceivablePM);
         });
 
         this.BuildObsList();
@@ -638,14 +623,7 @@ export class GenerateFromPayablesModelData extends BaseComponent {
                     case "FIXD": {
                         _Ratio = this.PayablePM.Quantity / this.ShipmentPM.ShipmentConsoleShipments.length;
                         unitPrice = _Ratio * this.PayablePM.UnitPrice;
-                        quantity = this.ShipmentPM.ShipmentConsoleShipments.filter(d => d.Id == item.ShipmentId)[0].TEU;
-                        break;
-                    }
-
-                    case "PFCL": {
-                        _Ratio = this.PayablePM.Quantity / this.ShipmentPM.ShipmentConsoleShipments.length;
-                        unitPrice = _Ratio * this.PayablePM.UnitPrice;
-                        quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
+                        quantity = 1;
                         break;
                     }
 
@@ -731,7 +709,7 @@ export class GenerateFromPayablesModelData extends BaseComponent {
         }
     }
 
-    public ComputeReceivableAmount() {
+    ComputeReceivableAmount() {
         var amount: number = null;
         var amountLocal: number = null;
         var amountProfit: number = null;

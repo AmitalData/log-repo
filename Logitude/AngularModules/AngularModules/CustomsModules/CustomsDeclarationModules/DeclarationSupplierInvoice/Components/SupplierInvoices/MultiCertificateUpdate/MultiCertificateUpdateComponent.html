@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .DisbleBox {
         display: inline-block;
@@ -149,8 +149,7 @@
                                 [ObjectTableName]="CertTableName"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Customs.CertificateExemptionType'"
-                                [HideColumns]="true"
-                                [QueryFilterItems]="TypeCodeFilterItems">
+                                [HideColumns]="true">
                         </LogLov>
                     </td>
                 </tr>
@@ -281,8 +280,7 @@
                                     [ObjectTableName]="CertTableName"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.CertificateExemptionType'"
-                                    [HideColumns]="true"
-                                    [QueryFilterItems]="TypeCodeFilterItems">
+                                    [HideColumns]="true">
                             </LogLov>
                         </td>
                         <td></td>
@@ -343,7 +341,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly" id="UpdateCertificate">{{'Customs.Declaration.O.Update' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.Update' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

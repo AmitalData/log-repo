@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -18,10 +18,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             {
                 entityPOCO.Tenant = entityPM.Tenant;
             }
-            //if (!string.IsNullOrEmpty(entityPM.ExternalId) && string.IsNullOrEmpty(entityPOCO.ExternalId))
-            //{
-            //    entityPOCO.ExternalId = entityPOCO.Id;
-            //}
+            if(string.IsNullOrEmpty(entityPM.ExternalId)  && string.IsNullOrEmpty(entityPOCO.ExternalId))
+            {
+                entityPOCO.ExternalId = entityPOCO.Id;
+            }
             entityPOCO.Address1 = entityPM.Address1;
             entityPOCO.Address2 = entityPM.Address2;
             entityPOCO.AddressTypeId = entityPM.AddressTypeId;
@@ -38,11 +38,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.InActive = entityPM.InActive;
             entityPOCO.IsLocalLanguage = entityPM.IsLocalLanguage;
             entityPOCO.ExternalId = entityPM.ExternalId;
-            entityPOCO.Responsibility = entityPM.Responsibility;
-            entityPOCO.TruckerId = entityPM.TruckerId;
-            entityPOCO.TransportationInstructions = entityPM.TransportationInstructions;
-            entityPOCO.CityId   = entityPM.CityId;
-
 
             BuildSearchFields(entityPM, entityPOCO);
         }

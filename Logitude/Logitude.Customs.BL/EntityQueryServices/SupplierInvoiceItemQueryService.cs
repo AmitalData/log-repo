@@ -14,7 +14,6 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.EntityDataMappings;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.CustomsMessaging.Common.Gen;
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class SupplierInvoiceItemQueryService : EntityQueryService<SupplierInvoiceItem, SupplierInvoiceItemKeys, SupplierInvoiceItemPM, SupplierInvoicePM, SupplierInvoiceKeys> 
@@ -52,8 +51,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.SupplierInvoiceItemVehicles = supplierInvoiceItemVehicleQueryService.GetMulti(supplierInvoiceItemKeys, true);
             SupplierInvoiceItemModVehicleQueryService supplierInvoiceItemModVehicleQueryService = new SupplierInvoiceItemModVehicleQueryService(context);
             entityPM.SupplierInvoiceItemModVehicles = supplierInvoiceItemModVehicleQueryService.GetMulti(supplierInvoiceItemKeys, true);
-            SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(context);
-            entityPM.SupplierInvoiceItemsPrices = supplierInvoiceItemsPriceQueryService.GetMulti(supplierInvoiceItemKeys, true);
 
 
             if (entityPM.SupplierInvoiceItemTaxes.Count > 0)
@@ -181,11 +178,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     }).ToList();
         }
 
-        public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemsByCounterKeysFullPM(string declarationId, List<string> counterKeysLineNumbers, int tenant)
-        {
-            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemsByCounterKeysAndLineNumbers(declarationId, counterKeysLineNumbers, tenant);
-            return supplierInvoiceItems.Select(rec => this.GetEntityPM(rec)).ToList();
-        }
+
         public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemsByParent(string declarationId, int counterKey, int parentLineNumber, int tenant)
         {
             List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemsByParent(declarationId, counterKey, parentLineNumber, tenant);
@@ -323,12 +316,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             
         }
 
-        public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemsForMultiUpdate(string declarationId, int tenant)
-        {
-            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemsForDeclaration(declarationId, tenant);
-            return supplierInvoiceItems.Select(rec => this.GetEntityPM(rec)).ToList();
-        }
-
         public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemsForDeclaration(string declarationId, int tenant)
         {
             List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemsForDeclaration(declarationId, tenant);
@@ -337,64 +324,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     {
                         DeclarationId = a.DeclarationId,
                         CounterKey = a.CounterKey,
-                        Tenant=a.Tenant,
-                        LineNumber = a.LineNumber,
-                        SequenceNumeric = a.SequenceNumeric,
-                        ItemCode = a.ItemCode,
-                        ClassificationCode = a.ClassificationCode,
-                        OriginCountryName = a.OriginCountry != null ? a.OriginCountry.LocalName : null,
-                        OriginCountryCode = a.OriginCountryCode,
-                        TradeAgreementCode = a.TradeAgreementCode,
-                        TradeAgreementName = a.TradeAgreement != null ? a.TradeAgreement.LocalName : null,
-                        ItemPrice = a.ItemPrice,
-                        InvoiceQuantity = a.InvoiceQuantity,
-                        AdditionalQuantity = a.AdditionalQuantity,
-                        AdditionalQuantityType = a.AdditionalQuantityType,
-                        CertificatesStatusCode = a.CertificatesStatusCode,
-                        CustomsBookTypeCode = a.CustomsBookTypeCode,
-                        DeferredCustomsTax = a.DeferredCustomsTax,
-                        DangerousClassificationCode = a.DangerousClassificationCode,
-                        DeferredPurchaseTax = a.DeferredPurchaseTax,
-                        InvoiceQuantityType = a.InvoiceQuantityType,
-                        ItemDescription = a.ItemDescription,
-                        ItemPriceCurrencyCode = a.ItemPriceCurrencyCode,
-                        ManufactureIdentifier = a.ManufactureIdentifier,
-                        DangerousPackingGroupTypeCode = a.DangerousPackingGroupTypeCode,
-                        OptionalTamaPercentage = a.OptionalTamaPercentage,
-                        IsUsed = a.IsUsed,
-                        NonCustomsItemPrice = a.NonCustomsItemPrice,
-                        NonCustomsItemPriceCurCode = a.NonCustomsItemPriceCurCode,
-                        PreferenceDocumentNumber = a.PreferenceDocumentNumber,
-                        SalesTaxExemptionTypeCode = a.SalesTaxExemptionTypeCode,
-                        StatisticQuantity = a.StatisticQuantity,
-                        StatisticQuantityType = a.StatisticQuantityType,
-                        TaxExemptCode = a.TaxExemptCode,
-                        WholeSaleItemPrice = a.WholeSaleItemPrice,
-                        WholeSaleItemPriceCurrencyCode = a.WholeSaleItemPriceCurrencyCode,
-                        TransactionNatureCode= a.TransactionNatureCode,
-                        TransactionNatureName=a.TransactionNatureCode,
-                        ClaimReasonName=a.ClaimReasonCode,
-                        ClaimReasonCode=a.ClaimReasonCode,
-                        AdditionalQuantityTypeName = a.AdditionalMeasurmentUnit != null ? a.AdditionalMeasurmentUnit.LocalName : null,
-                        InvoiceQuantityTypeName = a.InvoiceMeasurmentUnit != null ? a.InvoiceMeasurmentUnit.LocalName : null,
-                        StatisticQuantityTypeName = a.StatisticMeasurmentUnit != null ? a.StatisticMeasurmentUnit.LocalName : null,
-                        ItemAdditionalStatus=a.ItemAdditionalStatus,
-                    }).ToList();
-        }
-
-        public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemByClassificationCode(string declarationId, int tenant,string classificationCode)
-        {
-            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemByClassificationCode(declarationId, tenant, classificationCode);
-            return supplierInvoiceItems.Select(rec => this.GetEntityPM(rec)).ToList();
-        }
-        public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemByInvoiceNumber(int tenant, string declarationId, string ItemCode)
-        {
-            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemByInvoiceNumber(tenant,declarationId,ItemCode);
-            return (from a in supplierInvoiceItems
-                    select new SupplierInvoiceItemPM()
-                    {
-                        DeclarationId = a.DeclarationId,
-                        CounterKey = a.CounterKey,
                         LineNumber = a.LineNumber,
                         SequenceNumeric = a.SequenceNumeric,
                         ItemCode = a.ItemCode,
@@ -431,9 +360,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         AdditionalQuantityTypeName = a.AdditionalMeasurmentUnit != null ? a.AdditionalMeasurmentUnit.LocalName : null,
                         InvoiceQuantityTypeName = a.InvoiceMeasurmentUnit != null ? a.InvoiceMeasurmentUnit.LocalName : null,
                         StatisticQuantityTypeName = a.StatisticMeasurmentUnit != null ? a.StatisticMeasurmentUnit.LocalName : null,
-                        Tenant=a.Tenant,
-                        IsParent=a.IsParent,
-                        ParentLineNumber=a.ParentLineNumber,
                     }).ToList();
         }
 
@@ -505,46 +431,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             else itemPM = null;
             return itemPM;
         }
-        public List<SupplierInvoiceItem> GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(string declarationId, int tenant)
-        {
-            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(declarationId, tenant);
 
-            return supplierInvoiceItems.ToList();
-        }
-
-        public string ValidateClassificationCode(string classificationCode)
-        {
-            if (string.IsNullOrEmpty(classificationCode))
-            {
-                return classificationCode;
-            }
-            string newValue = classificationCode.Length > 11 ? classificationCode.Substring(0, 11) : classificationCode;
-
-            if (newValue.Length == 8)
-            {
-                newValue += "00";
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-            }
-            else if (newValue.Length == 9)
-            {
-                string lastDigit = newValue.Substring(8, 1);
-                string modifiedValue = $"{newValue.Substring(0, 8)}00{lastDigit}";
-                bool isValid = LuhnAlgorithm.CalculateLuhnAlgorithm(modifiedValue.Substring(0, modifiedValue.Length - 1)) == int.Parse(lastDigit);
-                newValue = isValid ? modifiedValue : null;
-            }
-            else if (newValue.Length == 10)
-            {
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-            }
-            else if (newValue.Length == 11)
-            {
-                string lastDigit = newValue.Substring(10, 1);
-                bool isValid = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10)) == int.Parse(lastDigit);
-                newValue = isValid ? newValue : null;
-            }
-
-            return newValue;
-        }
 
     }
 }

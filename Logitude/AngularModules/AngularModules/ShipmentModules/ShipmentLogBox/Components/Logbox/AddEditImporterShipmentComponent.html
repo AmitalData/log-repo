@@ -1,7 +1,7 @@
-<table>
+﻿<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
     </tr>
     <tr>
@@ -87,7 +87,7 @@
 
                             <tr style="height: 30px;">
                                 <td style="height: 22px;">
-                                    <LogTextBox [ObjectFieldName]="'CustomerReference3'" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'CustomerReference1'" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                             </tr>
                             <tr style="height: 30px;">
@@ -192,8 +192,8 @@
                     <td><div></div></td>
                     <td>
                         <div>
-                            <button id="{{'OKButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-                            <button id="{{'CancelButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                            <button class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>
+                            <button class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">Cancel</button>
                         </div>
                     </td>
                 </tr>

@@ -1,4 +1,4 @@
-
+﻿
     <table [style.width]="ScreenWidth" [style.height]="ScreenHeight"  style="overflow:auto;vertical-align:central;vertical-align:top;">
 
 
@@ -19,27 +19,28 @@
 
                         <tr style="height:10px"><td colspan="7"><div></div></td></tr>
 
-                        <tr *ngIf="(!IsShowFromInputBox || !IsShowReplyToInputBox || !IsShowCCInputBox || (!IsShowBCCInputBox && !DontShowBCCField)  ||  (!IsShowToInputBox && !DontShowToField)) && !IsFromScheduler" style="margin-bottom:3px;height:15px;">
+                        <tr *ngIf="!IsShowFromInputBox || !IsShowReplyToInputBox || !IsShowCCInputBox" style="margin-bottom:3px;height:15px;" >
                             <td colspan="7" style="text-align:left">
                                 <div style="margin-left:63px;margin-top:-10px">
-                                    <a *ngIf="!IsShowFromInputBox" style="font-size:11px;color:#0094ff" (click)="AddFromLinkClick()">Add From</a>
-                                    <a *ngIf="!IsShowReplyToInputBox" style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddReplyToLinkClick()">Add ReplyTo</a>
-                                    <a *ngIf="!IsShowCCInputBox" style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddCCLinkClick()">Add CC</a>
-                                    <a *ngIf="!IsShowBCCInputBox && !DontShowBCCField" style="margin-left:5px;color:#0094ff;font-size:11px" (click)="AddBCCLinkClick()">Add BCC</a>
-                                    <a *ngIf="!IsShowToInputBox && !DontShowToField" style="margin-left:5px;color:#0094ff;font-size:11px" (click)="AddToLinkClick()">Add To</a>
+                                    <a *ngIf="!IsShowFromInputBox"  style="font-size:11px;color:#0094ff" (click)="AddFromLinkClick()">Add From</a>
 
+                                    <a *ngIf="!IsShowReplyToInputBox" [style.margin-left]="!IsShowFromInputBox ? '5px':'0px'" style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddReplyToLinkClick()">Add ReplyTo</a>
+                                    
+
+                                    <a *ngIf="!IsShowCCInputBox" [style.margin-left]="!IsShowReplyToInputBox ? '5px':'0px'" style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddCCLinkClick()">Add CC</a>
+                                    
                                 </div>
                             </td>
                         </tr>
 
 
                         <tr>
-                            <td style="width:8px"><div></div></td>
+                            <td style="width:8px"><div></div></td>  
 
                             <td style="width:50px"><div>Subject:</div></td>
                             <td style="width:5px"><div></div></td>
                             <!--[(ngModel)]="Subject"-->
-                            <td><input [attr.id]="SubjectId" type="text" [(ngModel)]="Subject" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;" /></td>
+                            <td><input [attr.id] = "SubjectId" type="text" [(ngModel)]="Subject"  style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;" /></td>
 
                             <td style="width:5px"><div></div></td>
                             <td style="width:50px;height:22px;text-align:left"><button (click)="AddDataField('Subject')" style="width:100px;background-color:#E6E6E6;height:22px;" class="Button">Add Data Field</button></td>
@@ -47,7 +48,7 @@
                         </tr>
 
 
-                        <tr *ngIf="IsShowFromInputBox || IsShowReplyToInputBox || IsShowCCInputBox || IsShowBCCInputBox ||  IsShowToInputBox" style="height:7px"><td colspan="7"><div></div></td></tr>
+                        <tr *ngIf="IsShowFromInputBox || IsShowReplyToInputBox || IsShowCCInputBox" style="height:7px"><td colspan="7"><div></div></td></tr>
                         <tr *ngIf="IsShowFromInputBox">
                             <td style="width:8px"><div></div></td>
 
@@ -91,37 +92,6 @@
                         </tr>
 
                         <tr *ngIf="IsShowCCInputBox" style="height:7px"><td colspan="7"><div></div></td></tr>
-
-                        <tr *ngIf="IsShowBCCInputBox && !DontShowBCCField">
-                            <td style="width:8px"><div></div></td>
-
-                            <td style="width:50px"><div>BCC:</div></td>
-                            <td style="width:5px"><div></div></td>
-
-                            <td><input [attr.id]="BCCId" type="text" [(ngModel)]="BCC" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;" /></td>
-
-                            <td style="width:5px"><div></div></td>
-                            <td style="width:50px;height:22px;text-align:left"><button (click)="AddDataField('BCC')" style="width:100px;background-color:#E6E6E6;height:22px;" class="Button">Add Data Field</button></td>
-                            <td style="width:10px"><div></div></td>
-                        </tr>
-
-                        <tr *ngIf="IsShowBCCInputBox &&  !DontShowBCCField" style="height:7px"><td colspan="7"><div></div></td></tr>
-
-
-                        <tr *ngIf="IsShowToInputBox && !DontShowToField">
-                            <td style="width:8px"><div></div></td>
-
-                            <td style="width:50px"><div>To:</div></td>
-                            <td style="width:5px"><div></div></td>
-
-                            <td><input [attr.id]="TOId" type="text" [(ngModel)]="To" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;" /></td>
-
-                            <td style="width:5px"><div></div></td>
-                            <td style="width:50px;height:22px;text-align:left"><button (click)="AddDataField('To')" style="width:100px;background-color:#E6E6E6;height:22px;" class="Button">Add Data Field</button></td>
-                            <td style="width:10px"><div></div></td>
-                        </tr>
-                        <tr *ngIf="IsShowToInputBox && !DontShowToField" style="height:7px"><td colspan="7"><div></div></td></tr>
-
                     </table>
 
                 </div>
@@ -159,11 +129,6 @@
                             <div style="width:50px;height:22px;top:0px;float:left;position:relative;text-align:left;margin-left:6px;margin-top:-5px"><button (click)="ViewHeaderAndFooter('Footer')" style="width:auto;background-color:#E6E6E6;height:22px;" class="Button">Footer</button></div>
                         </td>
                         <td><div></div></td>
-
-                        <td *ngIf="IsShowAttachmentLinks" style="width:100px"><a style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="SelectDefultAttachments()">Select Default Attachments</a></td>
-                        <td   *ngIf="IsShowAttachmentLinks" style="width:100px"><a style="margin-left:5px;color:#0094ff;font-size:11px;" (click)="AddDefultExternalAttachments()">Add Default External Attachments</a></td>
-
-
                     </tr>
                 </table>
             </div>
@@ -185,14 +150,14 @@
             <td  style="vertical-align: bottom">
                 <table style="height: 22px;">
                     <tr>
-
-                        <td *ngIf="IsShowUploadAndDownloadButtons" style="width: 80px;">
+                        
+                        <td *ngIf="IsShowUploadAndDownloadButtons"  style="width: 80px;">
                             <button class="Button" (click)="DownloadButtonClicked()">Export Template</button>
                         </td>
-                        <td *ngIf="IsShowUploadAndDownloadButtons" style="width: 7px;"></td>
+                        <td  *ngIf="IsShowUploadAndDownloadButtons"  style="width: 7px;"></td>
 
-                        <td *ngIf="IsShowUploadAndDownloadButtons" style="width: 80px;">
-                            <input [attr.id]="DocumentTemplateFileId" accept=".xml,.XML" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
+                        <td  *ngIf="IsShowUploadAndDownloadButtons"  style="width: 80px;">
+                            <input  [attr.id] = "DocumentTemplateFileId" accept=".xml,.XML" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
                             <button class="Button" (click)="UploadButtonClicked()">Import Template</button>
                         </td>
 
@@ -207,22 +172,14 @@
                         </td>
                         <td *ngIf="IsShowButtonCancel" style="width: 7px;"></td>
 
-
-
-                        <td *ngIf="IsShowSaveAsButtonOnly" style="width: 57px;">
-
-                            <button class="RedButton" (click)="SavaAsButtonClicked()">Save as</button>
-                        </td>
-
-
-                        <td *ngIf="IsShowButtonSaveAs && !IsShowSaveAsButtonOnly" style="width: 57px;">
+                        <td *ngIf="IsShowButtonSaveAs" style="width: 57px;">
 
                             <button class="Button" (click)="SavaAsButtonClicked()">Save as</button>
                         </td>
 
-                        <td *ngIf="IsShowButtonSaveAs || IsShowSaveAsButtonOnly" style="width: 7px;"></td>
+                        <td  *ngIf="IsShowButtonSaveAs" style="width: 7px;"></td>
 
-                        <td *ngIf="!IsShowSaveAsButtonOnly" style="width: 57px;">
+                        <td  style="width: 57px;">
                             <button class="RedButton" (click)="SaveButtonClicked()">{{LableSaveButton}}</button>
                         </td>
                     </tr>

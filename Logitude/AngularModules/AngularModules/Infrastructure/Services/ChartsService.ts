@@ -1,52 +1,68 @@
-import { DashBoardClass } from '../DataContracts/Dashboard/DashBoardClass';
-import { ServiceHelper } from '../Utilities/ServiceHelper';
-import { List } from '../DataContracts/Dashboard/List';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { defer, of } from 'rxjs';
-
+import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {Observable}     from 'rxjs/Rx';
+import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
+import {ServiceHelper} from '../Utilities/ServiceHelper';
+import {ServiceResponse} from '../DataContracts/ServiceResponse';
+import {List} from '../DataContracts/Dashboard/List';
+import {DashBoardClass} from '../DataContracts/Dashboard/DashBoardClass';
 
 @Injectable()
+
 export class ChartsService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api';
+        this._http = ServiceHelper.Http;
+        //this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
     }
 
     GetMoneyStatusForTenant(ActivityType: string, months: number, days: number, tenant: number, index: number, currency: number) {
-        var url = this._apiUrl + '/InvoiceDomain/GetMoneyStatusForTenant?type=' + ActivityType + '&months=' + months + '&days=' + days + '&tenant=' + tenant + '&index=' + index + '&currency=' + currency;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetMoneyStatusForTenant?type=' + ActivityType + '&months=' + months + '&days=' + days + '&tenant=' + tenant + '&index=' + index + '&currency=' + currency, {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists = response.json();
                 return allLists;
-            }), catchError(ServiceHelper.HandleServiceError));
+            });
         });
     }
-
     GetMoneyOutStatusForTenant(months: number, days: number, tenant: number, index: number, currency: number) {
-        var url = this._apiUrl + '/InvoiceDomain/GetMoneyOutStatusForTenant?months=' + months + '&days=' + days + '&tenant=' + tenant + '&index=' + index + '&currency=' + currency;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetMoneyOutStatusForTenant?months=' + months + '&days=' + days + '&tenant=' + tenant + '&index=' + index + '&currency=' + currency, {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists = response.json();
                 return allLists;
-            }), catchError(ServiceHelper.HandleServiceError));
+            });
         });
     }
+    GetActivityStatusByType(ActivityType: string, fromDate: Date, toDate: Date, currentTenant: string, customerid: string = null, directionId: string = null, transportmodeId:string=null) {
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-    GetActivityStatusByType(ActivityType: string, fromDate: Date, toDate: Date, currentTenant: string, customerid: string = null, directionId: string = null, transportmodeId: string = null) {
-        var url = this._apiUrl + '/ShipmentDomain/GetActivityStatusByType?type=' + ActivityType + '&FromDate=' + ServiceHelper.GetDateString(fromDate) + '&ToDate=' + ServiceHelper.GetDateString(toDate) + '&currentTenant=' + currentTenant + '&customerid=' + customerid + '&directionid=' + directionId + '&transportmodeId=' + transportmodeId;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetActivityStatusByType?type=' + ActivityType + '&FromDate=' + ServiceHelper.GetDateString(fromDate) + '&ToDate=' + ServiceHelper.GetDateString(toDate) + '&currentTenant=' + currentTenant + '&customerid=' + customerid + '&directionid=' + directionId + '&transportmodeId=' + transportmodeId, {
+                headers: authHeader
+            }).map(response => {
 
-                var allLists: any = response;
+                var allLists: DashBoardClass[] = response.json();
                 var myList: List<DashBoardClass> = new List<DashBoardClass>();
                 for (var key in allLists) {
                     var entity: DashBoardClass;
@@ -54,17 +70,22 @@ export class ChartsService {
                     myList.add(entity);
                 }
                 return myList;
-            }), catchError(ServiceHelper.HandleServiceError));
+            });
         });
-    }
 
+    }
     GetActivityStatus(ActivityType: string, lastMonths: number, lastDays: number, currentTenant: number, customerid: string = null) {
-        var url = this._apiUrl + '/ShipmentDomain/GetActivityStatus?type=' + ActivityType + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&currentTenant=' + currentTenant + '&customerid=' + customerid;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var allLists: any = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetActivityStatus?type=' + ActivityType + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&currentTenant=' + currentTenant + '&customerid=' + customerid, {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists: DashBoardClass[] = response.json();
                 var myList: List<DashBoardClass> = new List<DashBoardClass>();
                 for (var key in allLists) {
                     var entity: DashBoardClass;
@@ -72,17 +93,22 @@ export class ChartsService {
                     myList.add(entity);
                 }
                 return myList;
-            }), catchError(ServiceHelper.HandleServiceError));
+            });
         });
-    }
 
+    }
     GetShipmentByDirectionAndTransmode(type: string, lastMonths: number, lastDays: number, currentTenant: number, customerid: string) {
-        var url = this._apiUrl + '/ShipmentDomain/GetShipmentByDirectionAndTransmode?type=' + type + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&currentTenant=' + currentTenant + '&customerid=' + customerid;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var allLists: any = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetShipmentByDirectionAndTransmode?type=' + type + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&currentTenant=' + currentTenant + '&customerid=' + customerid, {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists: DashBoardClass[] = response.json();
                 var myList: List<DashBoardClass> = new List<DashBoardClass>();
                 for (var key in allLists) {
                     var entity: DashBoardClass;
@@ -90,16 +116,22 @@ export class ChartsService {
                     myList.add(entity);
                 }
                 return myList;
-            }), catchError(ServiceHelper.HandleServiceError));
+            });
         });
-    }
 
+    }
     GetShipmentsByTop10CountriesDashBoard(type: string, lastMonths: number, lastDays: number, measurment: number, currentTenant: number, top: number, includeOthers: boolean, customerid: string, directionId: string, transmodeId: string) {
-        var url = this._apiUrl + '/ShipmentDomain/GetShipmentsByTop10CountriesDashBoard?type=' + type + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&measurment=' + measurment + '&currentTenant=' + currentTenant + '&top=' + top + '&includeOthers=' + includeOthers + '&customerid=' + customerid + '&directionId=' + directionId + '&transmodeId=' + transmodeId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-                var allLists: any = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetShipmentsByTop10CountriesDashBoard?type=' + type + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&measurment=' + measurment + '&currentTenant=' + currentTenant + '&top=' + top + '&includeOthers=' + includeOthers + '&customerid=' + customerid + '&directionId=' + directionId + '&transmodeId=' + transmodeId, {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists: DashBoardClass[] = response.json();
                 var myList: List<DashBoardClass> = new List<DashBoardClass>();
                 for (var key in allLists) {
                     var entity: DashBoardClass;
@@ -107,9 +139,12 @@ export class ChartsService {
                     myList.add(entity);
                 }
                 return myList;
-            }), catchError(ServiceHelper.HandleServiceError));
+            });
         });
+
     }
+
+
 
     private MapJsonToEntityList(jsonList: any) {
 
@@ -122,6 +157,8 @@ export class ChartsService {
             entityList[property] = jsonList[property];
         }
 
+
         return entityList;
     }
+
 }

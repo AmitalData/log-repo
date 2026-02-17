@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PaymentTermDateTypeRepository repository;
 
-
+        public PaymentTermDateTypeQuery()
+        {
+            repository = new PaymentTermDateTypeRepository(); 
+        }
         public PaymentTermDateTypeQuery(int tenant)
         {
             repository = new PaymentTermDateTypeRepository(tenant);

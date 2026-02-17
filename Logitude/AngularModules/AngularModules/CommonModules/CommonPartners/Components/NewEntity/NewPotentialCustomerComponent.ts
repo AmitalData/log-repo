@@ -21,7 +21,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewPotentialCustomerComponent.html',
 })
 
@@ -33,7 +33,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
     public Contact: ContactPM;
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private args: NewEntityArgs;
     public DataContext: NewPotentialCustomerComponent = this;  
     public ContactDataContext: ContactItem; 
@@ -64,7 +64,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
             this.IsRadioButtonsVisible = true;
         }
 
-        this.entityResourceService.getEntityResourceByTableName("Address", 0).subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response => {
             this.entityResourceService.getEntityResourceByTableName("Contact").subscribe(response2 => {
                 this.entityResourceService.getEntityResourceByTableName("Customer").subscribe(response3 => {
                     this.IsResourcesReady = true;
@@ -116,7 +116,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -180,7 +180,6 @@ export class NewPotentialCustomerComponent extends BaseComponent {
             args.PartnerTypeId = this.PartnerTypeId;
             args.CountryId = this.CountryId_Potential;
             args.CountryName = this.EntityPM.CountryName;
-            args.CountryEnglishName = this.EntityPM.CountryName;
             args.SetReady = false;
 
             VatNumberValidator.ValidateVatFormat(args);
@@ -355,6 +354,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
         if (this.EntityPM.CountryId_Potential != newValue) {
             this.EntityPM.CountryId_Potential = newValue;
             this.StateId_Potential = null;
+            this.SetUIProperties();
         }
     }
 
@@ -537,7 +537,6 @@ export class NewPotentialCustomerComponent extends BaseComponent {
             args.PartnerTypeId = this.PartnerTypeId;
             args.CountryId = this.CountryId_Potential;
             args.CountryName = this.EntityPM.CountryName;
-            args.CountryEnglishName = this.EntityPM.CountryName;
             args.SetReady = false;
 
             VatNumberValidator.ValidateVatFormat(args);
@@ -779,7 +778,7 @@ export class ContactItem extends BaseComponent {
         else {
             var domainService: PartnersDomainService = new PartnersDomainService();
 
-            domainService.GetContactsByEmail(email).subscribe((myResult:any) => {
+            domainService.GetContactsByEmail(email).subscribe(myResult => {
                 if (myResult != null) {
                     this.loadedContact = myResult[0];
 

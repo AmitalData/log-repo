@@ -35,26 +35,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPOCOToPM(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLine entityPOCO)
         {
-            CustomMappedPMProperties.Add(PMPropertyNames.ReconciliationNumber);
-            CustomMappedPMProperties.Add(PMPropertyNames.Amount);
-
             if (entityPOCO.IsReconciled)
             {
                 ExternalReconciliationLineQueryService recoLineQS = new ExternalReconciliationLineQueryService(entityPOCO.Tenant);
                 ExternalReconciliationQueryService recoQS = new ExternalReconciliationQueryService(entityPOCO.Tenant);
                 ExternalReconciliationLine reconciliationLine = recoLineQS.GetByBankPageLineId(entityPOCO.Id, entityPOCO.Tenant);
-
-                if(reconciliationLine != null)
-                {
-                    ExternalReconciliationPM reco = recoQS.GetSingle(reconciliationLine.ReconciliationId, false, false);
-                    entityPM.ReconciliationNumber = reco.ReconciliationNumber.ToString();
-                }
+                ExternalReconciliationPM reco = recoQS.GetSingle(reconciliationLine.ReconciliationId, false,false);
+                entityPM.ReconciliationNumber = reco.ReconciliationNumber.ToString();
             }
-
-            entityPM.Amount = entityPOCO.CreditAmount != 0 ? entityPOCO.CreditAmount : entityPOCO.DebitAmount;
-
         }
-    }
+   }
 
 
 }

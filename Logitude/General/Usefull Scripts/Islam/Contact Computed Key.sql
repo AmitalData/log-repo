@@ -12,16 +12,6 @@
   --select * from contacts where id = '1-253859' or id ='1-253860'
   
   --select * from users where id = '1-253859' or id ='1-253860'
-  
-  --select * from contacts where  LTRIM(RTRIM(computedkey)) = ''
-
---  ALTER TABLE [dbo].[Contacts] ADD  CONSTRAINT [UQ_Tenant_ComputedKey_Contacts] UNIQUE NONCLUSTERED 
---(
---	[Tenant] ASC,
---	[ComputedKey] ASC
---)
-
-
 declare @Id  as varchar(15)  
 declare @Tenant as int
 declare @Email as varchar(70)
@@ -32,8 +22,8 @@ BEGIN
 		FOR
 		select Id,Email,Tenant,ComputedKey
 		from [Main].[dbo].[Contacts]
-		where (ComputedKey <> Email and ComputedKey is not  null and LTRIM(RTRIM(email)) <> '') or (computedkey is null)
-		OPEN mainContactsCursor FETCH NEXT FROM mainContactsCursor INTO @Id,@Email,@Tenant,@ComputedKey
+		where ComputedKey <> Email and computedkey <> Id
+		OPEN mainContactsCursor FETCH NEXT FROM mainContactsCursor INTO @Id,@Email,@Tenant
 			WHILE @@FETCH_STATUS = 0
 				BEGIN
 					 
@@ -48,10 +38,10 @@ BEGIN
 								END
 							
 							print 'Computed key for ContactId:'+ @Id  +', Tenant:' + CAST(@Tenant as varchar) + ' is:'+@ComputedKey
-		        			update [Main].[dbo].[Contacts] set ComputedKey =@ComputedKey where id = @Id and tenant = @Tenant
+		        			 --update [LogitudeMain-Test2].[dbo].[Contacts] set ComputedKey =@ComputedKey where id = @Id and tenant = @Tenant
 						END
              
-					FETCH NEXT FROM mainContactsCursor INTO @Id,@Email,@Tenant,@ComputedKey
+					FETCH NEXT FROM mainContactsCursor INTO @Id,@Email,@Tenant
 				End
 		CLOSE mainContactsCursor
 		DEALLOCATE mainContactsCursor

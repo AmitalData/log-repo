@@ -6,25 +6,11 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
-using System.Collections.Generic;
-using System;
-using Logitude.Server.Tools.CustomFields;
-using System.IO.Packaging;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -39,7 +25,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ICommonDataContext objectContext;
         private CardRepository entityRepository;
         private ContactRepository contactRepository;
-        GLAccountCardDataService gLAccountCardDataService;
         public CardService(ICommonDataContext objectContext, CardPM entityPM)
         {
             this.entityPM = entityPM;
@@ -48,10 +33,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityRepository = new CardRepository(objectContext);
             this.addressRepository = new AddressRepository(objectContext);
             this.contactRepository = new ContactRepository(objectContext);
-
             this.GetLoggedContact();
         }
-        public CardService(ICommonDataContext objectContext, int tenant)
+        public CardService(ICommonDataContext objectContext,int tenant)
         {
 
             this.tenant = tenant;
@@ -82,13 +66,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM = entityPM;
             this.tenant = entityPM.Tenant;
             this.Create();
-            RunStoredProcedures();
 
         }
         public void Create()
         {
             this.isNewEntity = true;
-
+            
             if (string.IsNullOrEmpty(entityPM.Id))
             {
                 this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
@@ -110,7 +93,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CardPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             if (entityPM.Addresses != null)
             {
@@ -130,25 +112,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     addressRepository.Add(newAddress);
                 }
             }
-            AddCardKafkaQueueMessage();
         }
         public void Update(CardPM entityPM)
         {
             this.entityPM = entityPM;
             this.tenant = entityPM.Tenant;
             this.Update();
-            RunStoredProcedures();
-        }
 
+        }
         public void Update()
         {
             this.isNewEntity = false;
-
-            this.Poco = entityRepository.GetSingleCard(entityPM.Id, tenant);
-            if (entityPM.GLAccountId!= null && !entityPM.IsFromGlaAccountUpdate)
-            {
-                this.UpdateGLAccount();
-            }
+            this.Poco = entityRepository.GetSingleCard(entityPM.Id , tenant);
 
             this.Initialize();
 
@@ -162,89 +137,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CardPM> { entityPM }.Cast<object>().ToList() }).Update();
 
-            //UpdateGLaccountCardsDara();
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
             if (entityPM.DisconectFromContact)
             {
                 CardContactRepository CardContactRepository = new Simplog.Data.CommonDataModel.Repositories.CardContactRepository(objectContext);
                 CardContact cardContact = CardContactRepository.GetCardContactByContactAndCard(entityPM.Id, entityPM.ContactId, entityPM.Tenant);
-
-                Contact contact = contactRepository.GetSingleContact(cardContact.ContactId, cardContact.Tenant);
-                contact.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                AddDisconectFromContactKafkaQueueMessage(cardContact);
-
-                contactRepository.Update(contact);
-                contactRepository.SubmitChanges();
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }
-            if ((entityPM.PartnerTypeId == PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor || entityPM.PartnerTypeId == PartnerTypes.AccountingPartner) && entityPM.GLAccountId != null)
-            {
-                HandleGLAccountCardData(entityPM.Id, entityPM.GLAccountId, entityPM.Tenant);
-            }
-
-            AddCardKafkaQueueMessage();
         }
 
-        public void HandleGLAccountCardData(string cardId, string glaccountId, int tenant)
-        {
-            if (glaccountId != null)
-            {
-                gLAccountCardDataService = new GLAccountCardDataService(cardId, glaccountId, tenant);
-                if (gLAccountCardDataService.cardGLaccount != null)
-                {
-                    bool GlAccountCardDataExists = CheckIfGlAccountCardDataExists();
-                    if (GlAccountCardDataExists)
-                    {
-                        gLAccountCardDataService.UpdateGLaccountCardsData();
-                    }
-                    else { gLAccountCardDataService.CreateGLaccountCardsDara(); }
-                }
-            }
-        }
-        private bool CheckIfGlAccountCardDataExists()
-        {
-            if (gLAccountCardDataService.gLAccountCardsDataPM == null)
-            {
-                return false;
-            }
-            else return true;
-        }
-        public string CheckIfVatNumberExists(string partnerTypeId, string vatNumber, string code, int tenant)
-        {
-           return entityRepository.CheckIfVatNumberExists(partnerTypeId, vatNumber, code, tenant);
-        }
-        public void RunStoredProcedures()
-        {
-
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }
-        }
-        private void UpdateGLAccount()
-        {
-            if (entityPM.IsExcludeCard)
-            {
-                UpdateGLAccountWithAdditionalData(Poco.GLAccountId, Poco.Tenant, Poco.Id);
-            }
-            else
-            {
-                UpdateGLAccountWithAdditionalData(Poco.GLAccountId, Poco.Tenant,null);
-            }
-        }
-
-
-
-        private void UpdateGLAccountWithAdditionalData(string accountId, int tenant, string excludeCardId)
-        {
-            IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
-            glaccountUpdate.UpdateGLAccountWithAdditionalData(accountId, tenant, excludeCardId);
-        }
         private void Initialize()
         {
             if (isNewEntity)
@@ -261,7 +165,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.UpdatedByUserId = loggedContact.Id;
             }
         }
-
         private void CacheEntity()
         {
             if (CacheManager.CacheWrapper != null)
@@ -313,49 +216,5 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-
-        private void AddDisconectFromContactKafkaQueueMessage(CardContact cardContact)
-        {
-            if (FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("CToolLookups", 0);
-                var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "DisconectFromContact" },
-                { "EntityId", "{" + "\"ContactId\":" + "\"" + cardContact.ContactId + "\"," + "\"CardId\":" + "\"" + cardContact.CardId + "\"," + "\"Tenant\":" + tenant + "}" },
-                { "Tenant", tenant.ToString()}};
-                queueservice.Send(queueMessage, tenant);
-            }
-        }
-
-        private void AddCardKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Card" },
-                { "EntityId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
-        }
-    }
-
-    public static class PartnerTypes
-    {
-
-        public static string Customer = "CS";
-        public static string Vendor = "VD";
-        public static string AccountingPartner = "AC";
-
     }
 }
-

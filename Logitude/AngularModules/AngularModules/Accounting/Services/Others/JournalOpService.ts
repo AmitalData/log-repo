@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {JournalList} from '../../EntityLists/JournalList';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {JournalLinePM} from '../../EntityPMs/JournalLinePM';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -11,21 +13,22 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 @Injectable()
 
 export class JournalOpService {
-    private _http: HttpClient;
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/JournalOp';
     }
 
-    GetYearTransferJournal(year: string, myOperation: string, lastYearTransferJournalPMId: string ) {
-        
-        var url = this._apiUrl + '/GetYearTransferJournal?year=' + year + "&myOperation=" + myOperation + "&lastYearTransferJournalPMId=" + lastYearTransferJournalPMId;
+    GetYearTransferJournal(year: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var url = this._apiUrl + '/GetYearTransferJournal?year=' + year;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var result = response;
+                var result = response.json();
                 var entity: JournalPM;
                 if (result) {
                     entity = this.MapJsonToEntityPM(result);
@@ -35,55 +38,27 @@ export class JournalOpService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetTaskLoadTest(tenant: number, actionType: string, amount: number, sleepEveryMinute: number, year: number) {
-      
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var url = this._apiUrl + '/GetTaskLoadTest?tenant=' + tenant.toString() + "&actionType=" + actionType + "&amount=" + amount.toString() + "&sleepEveryMinute=" + sleepEveryMinute.toString() + "&year=" + year;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var result = response;
+                var result = response.json();
                 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = result;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    CreateInterestTransactions(date:string) {
-      
-        var url = this._apiUrl + '/putcreateinteresttransactions?date=' + date;
-
-        return defer(() => {
-            return this._http.put(url,null, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var result = response;
-                
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
-                return serviceResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    FixFailedReconcileJournals() {
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/FixFailedReconcileJournals/', null,
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
-
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: JournalPM = null) {
 
 

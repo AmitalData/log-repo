@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 additional.Id = IdCounter.GetNumber("Customs.UIMessageAdditional", entityPM.Tenant);
                 additional.Code = entityPM.Code;
                 additional.Tenant = entityPM.Tenant;
-                additional.Sort = entityPM.Sort;
+                //additional.Sort = 99999999;
                 //additional.SearchFields = entityPM.Code + ',' + entityPM.EnglishName + ',' + entityPM.LocalName;
                 additional.SearchFields = entityPM.Code + ',' + entityPM.Sort;
                 additionalRep.Add(additional);

@@ -11,7 +11,7 @@ import {BankDepositListService} from '../../../Services/StandardLists/BankDeposi
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CashBookManageDepoTabComponent.html',
 })
 
@@ -83,7 +83,7 @@ export class CashBookManageDepoTabComponent extends BaseComponent {
         filters.SortDirection = "Descending";
         filters.addAdditionalFilter("CashBookId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
 
-        this._BankDepositListService.getByFilters(filters).subscribe((myResult:any) => {
+        this._BankDepositListService.getByFilters(filters).subscribe(myResult => {
             console.log("Response: ", myResult);
             if (myResult == null) {
                 this.ItemsSource = [];

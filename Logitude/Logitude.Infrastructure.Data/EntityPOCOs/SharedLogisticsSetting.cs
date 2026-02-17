@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -61,58 +61,6 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public bool IsShipperShared { get; set; }
         [Column("IsConsigneeShared")]
 	    public bool IsConsigneeShared { get; set; }
-        [Column("IsShowAmountLocalCurrency")]
-	    public bool IsShowAmountLocalCurrency { get; set; }
-        [Column("IsShipperShowContactTS")]
-	    public bool IsShipperShowContactTS { get; set; }
-        [Column("IsConsigneeShowContactTS")]
-	    public bool IsConsigneeShowContactTS { get; set; }
-        [Column("IsAgentShowContactTS")]
-	    public bool IsAgentShowContactTS { get; set; }
-        [Column("IsShipperNotExShowContactTS")]
-	    public bool IsShipperNotExShowContactTS { get; set; }
-        [Column("IsConsigneeNotImShowContactTS")]
-	    public bool IsConsigneeNotImShowContactTS { get; set; }
-        [Column("IsNotify1ShowContactTS")]
-	    public bool IsNotify1ShowContactTS { get; set; }
-        [Column("IsNotify2ShowContactTS")]
-	    public bool IsNotify2ShowContactTS { get; set; }
-        [Column("IsFreightForwardShowContactTS")]
-	    public bool IsFreightForwardShowContactTS { get; set; }
-        [Column("IsColoaderShowContactTS")]
-	    public bool IsColoaderShowContactTS { get; set; }
-        [Column("IsCustomAgentExShowContactTS")]
-	    public bool IsCustomAgentExShowContactTS { get; set; }
-        [Column("IsCustomAgentImShowContactTS")]
-	    public bool IsCustomAgentImShowContactTS { get; set; }
-        [Column("IsCustomCleaPointShowContactTS")]
-	    public bool IsCustomCleaPointShowContactTS { get; set; }
-        [Column("IsConsolidatorShowContactTS")]
-	    public bool IsConsolidatorShowContactTS { get; set; }
-        [Column("IsReleasingAgentShowContactTS")]
-	    public bool IsReleasingAgentShowContactTS { get; set; }
-        [Column("IsIssuingCarAgentShowContactTS")]
-	    public bool IsIssuingCarAgentShowContactTS { get; set; }
-        [Column("IsCustomerShared")]
-	    public bool IsCustomerShared { get; set; }
-        [Column("IsCustomerShowContactTS")]
-	    public bool IsCustomerShowContactTS { get; set; }
-        [Column("IsAccountManagerShared")]
-	    public bool IsAccountManagerShared { get; set; }
-        [Column("IsAccountManagerShowContactTS")]
-	    public bool IsAccountManagerShowContactTS { get; set; }
-        [Column("IsSalesmanShared")]
-	    public bool IsSalesmanShared { get; set; }
-        [Column("IsSalesmanShowContactTS")]
-	    public bool IsSalesmanShowContactTS { get; set; }
-        [Column("IsCollectorShared")]
-	    public bool IsCollectorShared { get; set; }
-        [Column("IsCollectorShowContactTS")]
-	    public bool IsCollectorShowContactTS { get; set; }
-        [Column("IsPickDelivCarShowContactTS")]
-	    public bool IsPickDelivCarShowContactTS { get; set; }
-        [Column("IsMainCarShowContactTS")]
-	    public bool IsMainCarShowContactTS { get; set; }
     }
 }
 	 

@@ -12,7 +12,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string VatTypeId { get; set; }
         public double? VATPercent { get; set; }
         public string VatTypeName { get; set; }
-        public string VatTypeCode { get; set; }
         public string VatTypeCell { get; set; }
         public string ExternalVATCard { get; set; }
         public string ExternalTAXItemId { get; set; }
@@ -23,7 +22,5 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? LocalVATAmount { get; set; }
         public double? ProfitCurrencyVATAmount { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
-        public bool IsRegionalTax { get; set; }
-
     }
 }

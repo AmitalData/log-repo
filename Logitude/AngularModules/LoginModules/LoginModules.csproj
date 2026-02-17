@@ -16,7 +16,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LoginModules</RootNamespace>
     <AssemblyName>LoginModules</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -29,14 +29,14 @@
     <SccProvider>SAK</SccProvider>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -44,7 +44,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -101,13 +101,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\LoginScreen\Layer.png" />
-    <Content Include="Images\LoginScreen\LogBoxLogo.png" />
-    <Content Include="Images\LoginScreen\password_eye.png" />
-    <Content Include="Images\LoginScreen\password_eye_closed.png" />
-    <Content Include="Images\PrivateLabel\Background.png" />
-    <Content Include="Images\PrivateLabel\LogBoxLogo.png" />
-    <Content Include="Images\PrivateLabel\MainImage.png" />
     <Content Include="Js\ChangePasswordFunctions.js" />
     <Content Include="Login\Components\ChangePasswordComponent.css" />
     <Content Include="Login\Components\ChangePasswordComponent.html" />
@@ -116,12 +109,6 @@
     <Content Include="Login\Components\DSVMobileLoginComponent.html" />
     <Content Include="Login\Components\DSVResetPasswordComponent.html" />
     <Content Include="Login\Components\ResetPasswordComponent.html" />
-    <Content Include="Login\PrivateLabels\LoginComponents\PrivateChangePasswordComponent.css" />
-    <Content Include="Login\PrivateLabels\LoginComponents\PrivateChangePasswordComponent.html" />
-    <Content Include="Login\PrivateLabels\LoginComponents\PrivateResetPasswordComponent.css" />
-    <Content Include="Login\PrivateLabels\LoginComponents\PrivateLoginComponent.css" />
-    <Content Include="Login\PrivateLabels\LoginComponents\PrivateLoginComponent.html" />
-    <Content Include="Login\PrivateLabels\LoginComponents\PrivateResetPasswordComponent.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -279,6 +266,7 @@
     <Content Include="Images\LoginScreen\header.jpg" />
     <Content Include="Images\LoginScreen\HeaderLogo.jpg" />
     <Content Include="Images\LoginScreen\indicator.gif" />
+    <Content Include="Images\LoginScreen\Layer.png" />
     <Content Include="Images\LoginScreen\line.png" />
     <Content Include="Images\LoginScreen\map.png" />
     <Content Include="Images\LoginScreen\screen_bg.jpg" />
@@ -327,16 +315,6 @@
     <TypeScriptCompile Include="Login\Components\DSVResetPasswordComponent.ts" />
     <TypeScriptCompile Include="Login\Components\LoginComponent.ts" />
     <TypeScriptCompile Include="Login\Components\ResetPasswordComponent.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\LoginComponents\PrivateChangePasswordComponent.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\LoginComponents\PrivateLoginComponent.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\LoginComponents\PrivateResetPasswordComponent.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\DataContracts\PrivateLabelsBrandingData.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\DataContracts\PrivateLabelsBrandingDataRequest.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\DataContracts\PrivateLabelsImage.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\DataContracts\ServiceResponse.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\Services\BrandingDataService.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\Services\PrivateLabelsService.ts" />
-    <TypeScriptCompile Include="Login\PrivateLabels\Services\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Login\LoginService.ts" />
     <TypeScriptCompile Include="Login\LogitudeLoginModuleAOT.ts" />
     <TypeScriptCompile Include="Login\LogitudeLoginModule.ts" />

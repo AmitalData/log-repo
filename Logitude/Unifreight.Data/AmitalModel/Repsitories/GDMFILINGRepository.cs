@@ -90,13 +90,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return this.GetSingle(keys.COMID);
         }
 
-        public List<GDMFILING> GetNotDeleted(List<string> commIds)
-        {
-            
-            return this.GetAll()
-                .Where(r => commIds.Contains(r.COMID))
-                .Where(r => r.DELETED != "T").ToList();
-        }
         public void GetStatisticWeekly(out int totalSplitedDocsLastMonth, out int logBoxDocuments)
         {
             logBoxDocuments =totalSplitedDocsLastMonth = -1;
@@ -136,9 +129,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                 var res = qRes.Count();
                 totalSplitedDocsLastMonth = res;
             }
-
-#if notInUse
-
+            
 
             var openReaderSingleResult = new OpenReaderSingleResult(this.currentContext);
             string UserId = openReaderSingleResult.GetSchemaUserId();
@@ -153,10 +144,9 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
                 });
             logBoxDocuments = res1.GetValueOrDefault();
-#endif
         }
 
-
+        
     }
 }
 	 

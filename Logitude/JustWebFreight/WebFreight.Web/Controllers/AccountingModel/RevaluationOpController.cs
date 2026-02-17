@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -11,7 +11,7 @@ using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -25,7 +25,7 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Logitude.Accounting.BL.Utils;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPeriodViewsController.cs
+namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
     //[RoutePrefix("api/RevaluationOp")]
     public partial class RevaluationOpController : ApiController
@@ -41,9 +41,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
 
 
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 //SecurityUtility.CheckContactFeature("Revaluation", "NEW", authToken.Tenant);
 
                 RevaluationBatch revaluationBatch = new RevaluationBatch();
@@ -51,34 +50,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
                 string responseText = revaluationBatch.ResponseText();
                 HttpStatusCode StatusCode = revaluationBatch.StatusCode();
                 var res1 = new { Success = true, Message = responseText};
-
-                return Request.CreateResponse(StatusCode, res1);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
-        public HttpResponseMessage GetRunOneRevaluation(int tenant, string revaluationId)
-        {
-            try
-            {
-
-
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                //SecurityUtility.CheckContactFeature("Revaluation", "NEW", authToken.Tenant);
-
-                RevaluationBatch revaluationBatch = new RevaluationBatch();
-                revaluationBatch.RunOneRevaluation(tenant, revaluationId);
-                string responseText = revaluationBatch.ResponseText();
-                HttpStatusCode StatusCode = revaluationBatch.StatusCode();
-                var res1 = new { Success = true, Message = responseText };
 
                 return Request.CreateResponse(StatusCode, res1);
             }
@@ -128,7 +99,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("Revaluation", entityPm.Tenant, authToken.Tenant);
                 SecurityUtility.CheckContactFeature("Revaluation", "NEW", authToken.Tenant);
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                 var qs = new LedgerTransactionListQueryService(accountingContext);
@@ -169,7 +139,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.AuthenticationOnTenant(tenant);
                     SecurityUtility.CheckContactFeature("Revaluation", "NEW", authToken.Tenant);
                     var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                     var service = new RevaluationUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);

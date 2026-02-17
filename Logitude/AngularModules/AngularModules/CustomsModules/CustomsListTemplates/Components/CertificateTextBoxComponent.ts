@@ -7,7 +7,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {DeclarationEventManager} from '../../../Customs/Utilities/DeclarationEventManager';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'CertificateTextBoxComponent',
     templateUrl: './CertificateTextBoxComponent.html',

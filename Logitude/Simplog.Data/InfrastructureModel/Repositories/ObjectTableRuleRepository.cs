@@ -4,7 +4,7 @@ using System.Linq;
 using System.Transactions;
 using System.Web;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -45,18 +45,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
 
+       
 
-        public ObjectTableRule GetSingleObjectTableRuleByCode(string code   , int tenant)
-        {
-            ObjectTableRule rule = (from record in context.ObjectTableRules.Include("ObjectTable") where record.RuleCode == code && record.Tenant == tenant select record).FirstOrDefault();
-
-            //RuleConditionFieldRepository ruleConditionFieldRepository = new RuleConditionFieldRepository(tenant);
-            //rule.RuleConditionFields = ruleConditionFieldRepository.GetRuleConditionFieldsByRuleIdTenant(rule.Tenant, rule.Id).ToList();
-
-
-            return rule;
-
-        }
         public static List<ObjectTableRule> GetObjectTableRulesByTenant(int tenant)
         {
             List<ObjectTableRule> zeroObjectTableRules;
@@ -68,7 +58,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                    IWebFreightContext context = WebFreightContext.GetContext(0);
                     zeroObjectTableRules = (from a in context.ObjectTableRules.Include("ObjectTable").Include("RuleType")
 											where a.Tenant == 0
                                             select a).ToList();

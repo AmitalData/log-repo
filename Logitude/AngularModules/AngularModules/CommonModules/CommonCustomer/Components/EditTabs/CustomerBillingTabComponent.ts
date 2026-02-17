@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -10,98 +10,77 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
-import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerBillingTabComponent.html',
 })
 
-export class CustomerBillingTabComponent extends BaseComponent implements OnInit,AfterViewInit {
+export class CustomerBillingTabComponent extends BaseComponent implements OnInit {
     public EntityPM: CustomerPM;
     public ObjectTableName: string = "Customer";
     public DataContext = this;
     public HasCreditLimitFeature: boolean = false;
-    public HasEditCreditAmountFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
     public LocalCurrencyCode: string;
     public IsAccountingActivated: boolean;
-    public SatInterfaceSettingCode: string;
-    public Profact4Enabled: boolean = false;
-    public IsBlockMessageVisible: boolean = false;
-    @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
+
+    @ViewChild('BillingChild', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    private entityResourceService: EntityResourceService = new EntityResourceService();
-    public isDataLoaded: boolean = false;
-    constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
+    constructor(public entityArgs: EntityArgs) {
         super();
-        this.entityResourceService.getEntityResourceByTableName("Card").subscribe((response: any) => {
-
-
-            this.EntityPM = entityArgs.EntityPM;
+        this.EntityPM = entityArgs.EntityPM;
      
 
-            this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
-    
-            this.HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
-            this.HasEditCreditAmountFeature = FeatureLocator.HasFeaturePermession("Customer", "EDITCREDITAMOUNT");
-    
-            if (this.HasCreditLimitFeature) {
-                this.IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
-                this.SetLabels();
-            }
-    
-            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
-                this.DisplaySATSettings = true;
-                this.SatInterfaceSettingCode = SessionLocator.SATInterfaceSettings.SATInterfaceCode;
-                this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
-            }
-            this.isDataLoaded = true;     
-            this.Listen();
-        })
-      
-    }
+        this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
 
-    ngAfterViewInit(): void {
-        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
-        this.SetUIProperties();
-        this.LoadGeneratedComponents();
-        this.LoadCreditLimitData();
-        this.CD.detectChanges();
-        this.SetUIProperties_GeneratedComponent();
+        this.HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
+
+        if (this.HasCreditLimitFeature) {
+            this.IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
+            this.SetLabels();
+        }
+
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
+            this.DisplaySATSettings = true;
+        }
+
+        this.Listen();
     }
 
     ngOnInit() {
-      
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        this.SetUIProperties();
+        this.RunComponent();
+        this.LoadCreditLimitData();
     }
 
-    LoadGeneratedComponents() {
-        if (!this.viewContainerRef) {
-            this.RunComponentTimer("Child");
-            return;
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
         }
-        this.LoadChildComponent(this.viewContainerRef);
+
+        else {
+            this.RunComponentTimer();
+        }
     }
 
     private Retries: number = 0;
     private timerToken: any;
     private GeneratedComponent: any;
-    private readonly MAX_RETRIES: number = 100;
-    private readonly DELAY_MS: number = 500;
-    private RunComponentTimer(componentName: String) {
+    private RunComponentTimer() {
         this.Retries++;
 
         if (this.timerToken) {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < this.MAX_RETRIES) {
-            this.timerToken = componentName == "ARInvoiceDocumentTypeTemplateComponent" ? setTimeout(() => this.LoadARInvoiceDocumentTypeTemplateComponent(), this.DELAY_MS) : setTimeout(() => this.LoadGeneratedComponents(), this.DELAY_MS);
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-    private LoadChildComponent(viewContainerRef) {
+    private LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
                 this.GeneratedComponent = cmpRef.instance;
@@ -112,25 +91,8 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
                 var screenCode = "Customer.BillingTabScreen";
                 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-                if (viewContainerRef == this.viewContainerRef) this.LoadARInvoiceDocumentTypeTemplateComponent();
             });
     }
-
-    IsARInvoiceDocumentTypeTemplateAreaLoaded: boolean = false;
-    public LoadARInvoiceDocumentTypeTemplateComponent() {
-        if (this.IsARInvoiceDocumentTypeTemplateAreaLoaded) return;
-        this.Retries = 0;
-        if (!this.documentTemplateViewContainerRef) {
-            this.RunComponentTimer("ARInvoiceDocumentTypeTemplateComponent");
-            return;
-        }
-        SessionLocator.DynamicLoader.Load('./CommonModules/CommonPartners/Components/Templates/PartnerARInvoiceDocumentTypeTemplateComponent', this.documentTemplateViewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.Run(this.EntityPM);
-            });
-        this.IsARInvoiceDocumentTypeTemplateAreaLoaded = true;
-    }
-
     SetUIProperties_GeneratedComponent() {
         if (this.GeneratedComponent) {
             var enabled: boolean = true;
@@ -140,33 +102,11 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
             this.GeneratedComponent.SetEnabled(enabled);
         }
-
-        if (SessionLocator.TenantPM.IsHybrid === true && this.IsAccountingActivated === true) {
-
-            this.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
-            this.EntityPM?.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
-            this.SetEnablitity();
-
-        }
-    }
-
-    private SetEnablitity() {
-        this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
-        this.EntityPM?.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
-        this.EntityPM?.UIProperties.SetEnabled("BankName", this.ObjectTableName, true);
-        this.EntityPM?.UIProperties.SetEnabled("BankAddress", this.ObjectTableName, true);
-        this.EntityPM?.UIProperties.SetEnabled("BankCodeId", this.ObjectTableName, true);
-        this.EntityPM?.UIProperties.SetEnabled("BankBranch", this.ObjectTableName, true);
-        this.EntityPM?.UIProperties.SetEnabled("AccountNumber", this.ObjectTableName, true);
-        this.EntityPM?.UIProperties.SetEnabled("Swift", this.ObjectTableName, true);
-        this.EntityPM?.UIProperties.SetEnabled("IBANNumber", this.ObjectTableName, true);     
-        
     }
 
     public CreditLimitAmountLabel: string;
     public CreditLimitOpenBalanceLabel: string;
     public CreditLimitActualBalanceLabel: string;
-
     SetLabels() {
         this.CreditLimitAmountLabel = TextCodeTranslator.Translate('Customer.F.CreditLimitAmount') + " (" + this.LocalCurrencyCode + ")";
         this.CreditLimitOpenBalanceLabel = TextCodeTranslator.Translate('Customer.F.CreditLimitOpenBalance') + " (" + this.LocalCurrencyCode + ")";
@@ -174,7 +114,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     }
 
     SetUIProperties() {
-       
+
         var isFieldActivated: boolean = false;
         if (this.HasCreditLimitFeature) {
             if (this.IsCreditLimitActivated) {
@@ -183,8 +123,6 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
                 }
             }
         }
-
-        
 
         this.UIProperties.SetEnabled("IsCreditLimitEnabled", this.ObjectTableName, this.IsCreditLimitActivated);
         this.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, isFieldActivated);
@@ -216,11 +154,6 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         this.UIProperties.SetRequired("CreditLimitWarningPercentage", this.ObjectTableName, false);
         this.UIProperties.SetValidity("CreditLimitWarningPercentage", this.ObjectTableName, true, null);
 
-        if (this.EntityPM?.Card?.ExternalSystem == "UNIFREIGHT") {
-            this.IsBlockMessageVisible = true;
-            this.UIProperties.SetEnabled("IsAutonomy", "Card", false);
-
-        }
         if (isWarningPercentageRequired) {
             this.UIProperties.SetRequired("CreditLimitWarningPercentage", this.ObjectTableName, isWarningPercentageRequired);
         }
@@ -230,13 +163,10 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         }
 
         this.SetUIProperties_GeneratedComponent();
-
-        
     }
     
     private SessionEvent: any = null;
     private Listen() {
-      
         if (this.entityArgs.EditComponent) {
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
@@ -302,14 +232,6 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         }
     }
 
-    get InsuredcreditLimit() { return this.EntityPM.InsuredcreditLimit; }
-    set InsuredcreditLimit(value: number) {
-        if (this.EntityPM.InsuredcreditLimit != value) {
-            this.EntityPM.InsuredcreditLimit = AppTool.Round(value, 2);
-            this.SetUIProperties();
-        }
-    }
-
     get CreditLimitOpenBalance() { return this.EntityPM.CreditLimitOpenBalance; }
     set CreditLimitOpenBalance(value: number) {
         if (this.EntityPM.CreditLimitOpenBalance != value) {
@@ -326,13 +248,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
             this.SetUIProperties();
         }
     }
-    get IsAutonomy() { return this.EntityPM.Card?.IsAutonomy; }
-    set IsAutonomy(newValue: boolean) {
-        if (this.EntityPM?.Card != null && this.EntityPM.Card?.IsAutonomy != newValue) {
-            this.EntityPM.Card.IsAutonomy = newValue;
-            this.EntityPM.IsDirty = true;
-        }
-    }   
+
     ComputeActualBalance() {        
         this.CreditLimitActualBalance = AppTool.AddAmounts(this.CreditLimitLoadedAmount, this.CreditLimitOpenBalance);
     }
@@ -366,24 +282,10 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         }
     }
 
-    get RegimenFiscalCode() { return this.EntityPM.RegimenFiscalCode; }
-    set RegimenFiscalCode(newValue: string) {
-        if (this.EntityPM.RegimenFiscalCode != newValue) {
-            this.EntityPM.RegimenFiscalCode = newValue;
-        }
-    }
-
     get SATForeignRFC() { return this.EntityPM.SATForeignRFC; }
     set SATForeignRFC(newValue: string) {
         if (this.EntityPM.SATForeignRFC != newValue) {
             this.EntityPM.SATForeignRFC = newValue;
-        }
-    }
-
-    get SATCustomerName() { return this.EntityPM.SATCustomerName; }
-    set SATCustomerName(newValue: string) {
-        if (this.EntityPM.SATCustomerName != newValue) {
-            this.EntityPM.SATCustomerName = newValue;
         }
     }
 

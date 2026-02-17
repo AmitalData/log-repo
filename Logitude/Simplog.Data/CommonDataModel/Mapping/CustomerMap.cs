@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -16,20 +16,20 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountManagerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SalesmanUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.RankId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.TeamId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Field1).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field2).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field3).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field4).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field5).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field6).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field7).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field8).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field9).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field10).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.BillToId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Field1).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field2).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field3).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field4).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field5).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field6).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field7).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field8).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field9).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field10).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.IndustryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LeadSourceId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.LeadDescription).HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.LeadDescription).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.CustomerStatusCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ClassifierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CollectorId).HasMaxLength(15).IsUnicode(false);
@@ -49,8 +49,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivatedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SetAsInactiveByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ActivationRequestedByUserId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.LastOpportunitySubject).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.LastOpportunityStatus).HasMaxLength(60).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Customers");
@@ -59,10 +57,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountManagerUserId).HasColumnName("AccountManagerUserId");
             this.Property(t => t.SalesmanUserId).HasColumnName("SalesmanUserId");
             this.Property(t => t.RankId).HasColumnName("RankId");
-            this.Property(t => t.TeamId).HasColumnName("TeamId");
             this.Property(t => t.StartWorkingDate).HasColumnName("StartWorkingDate");
             this.Property(t => t.StartWorkingManuallySet).HasColumnName("StartWorkingManuallySet");
             this.Property(t => t.LastShipmentDate).HasColumnName("LastShipmentDate");
+            this.Property(t => t.BillToId).HasColumnName("BillToId");
             this.Property(t => t.Field1).HasColumnName("Field1");
             this.Property(t => t.Field2).HasColumnName("Field2");
             this.Property(t => t.Field3).HasColumnName("Field3");
@@ -90,8 +88,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RegionId).HasColumnName("RegionId");
             this.Property(t => t.CustomerSizeId).HasColumnName("CustomerSizeId");
             this.Property(t => t.LastOpportunityDate).HasColumnName("LastOpportunityDate");
-            this.Property(t => t.LastOpportunityStatus).HasColumnName("LastOpportunityStatus");
-            this.Property(t => t.LastOpportunitySubject).HasColumnName("LastOpportunitySubject");
             this.Property(t => t.LastMeetingDate).HasColumnName("LastMeetingDate");
             this.Property(t => t.LastCallDate).HasColumnName("LastCallDate");
             this.Property(t => t.FirstShipmentDate).HasColumnName("FirstShipmentDate");
@@ -105,7 +101,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsPrivateLabelCustomer).HasColumnName("IsPrivateLabelCustomer");
             this.Property(t => t.IsCreditLimitEnabled).HasColumnName("IsCreditLimitEnabled");
             this.Property(t => t.CreditLimitAmount).HasColumnName("CreditLimitAmount");
-            this.Property(t => t.InsuredcreditLimit).HasColumnName("InsuredcreditLimit");
             this.Property(t => t.CreditLimitOpenBalance).HasColumnName("CreditLimitOpenBalance");
             this.Property(t => t.CreditLimitWarningPercentage).HasColumnName("CreditLimitWarningPercentage");
             this.Property(t => t.BlockNewInvoiceCreation).HasColumnName("BlockNewInvoiceCreation");
@@ -120,14 +115,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivatedByUserId).HasColumnName("ActivatedByUserId");
             this.Property(t => t.SetAsInactiveByUserId).HasColumnName("SetAsInactiveByUserId");
             this.Property(t => t.ActivationRequestedByUserId).HasColumnName("ActivationRequestedByUserId");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
 
             // Relationships
+            this.HasOptional(t => t.BillToCard).WithMany().HasForeignKey(d => d.BillToId);
             this.HasRequired(t => t.Card).WithOptional(t => t.Customer);
             this.HasOptional(t => t.AccountManagerUser).WithMany().HasForeignKey(d => d.AccountManagerUserId);
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
             this.HasOptional(t => t.Rank).WithMany().HasForeignKey(d => d.RankId);
-            this.HasOptional(t => t.CustomerTeam).WithMany().HasForeignKey(d => d.TeamId);
             this.HasOptional(t => t.LeadSource).WithMany().HasForeignKey(d => d.LeadSourceId);
             this.HasOptional(t => t.Industry).WithMany().HasForeignKey(d => d.IndustryId);
             this.HasOptional(t => t.CustomerStatus).WithMany().HasForeignKey(d => d.CustomerStatusCode);
@@ -141,8 +135,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.CustomerSize).WithMany().HasForeignKey(d => d.CustomerSizeId);
             this.HasOptional(t => t.ActivatedByUser).WithMany().HasForeignKey(d => d.ActivatedByUserId);
             this.HasOptional(t => t.SetAsInactiveByUser).WithMany().HasForeignKey(d => d.SetAsInactiveByUserId);
-            this.HasOptional(t => t.ActivationRequestedByUser).WithMany().HasForeignKey(d => d.ActivationRequestedByUserId);           
-
+            this.HasOptional(t => t.ActivationRequestedByUser).WithMany().HasForeignKey(d => d.ActivationRequestedByUserId);
         }
     }
 }

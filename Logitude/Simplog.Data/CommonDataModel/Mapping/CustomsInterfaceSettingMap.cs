@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,13 +30,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.LocalCustomsInterfaceCode).HasColumnName("LocalCustomsInterfaceCode");
             this.Property(t => t.LocalCompanyId).HasColumnName("LocalCompanyId");
             this.Property(t => t.LocalUserId).HasColumnName("LocalUserId");
-            this.Property(t => t.LocalPassword).HasColumnName("LocalPassword");            
+            this.Property(t => t.LocalPassword).HasColumnName("LocalPassword");
+            
             this.Property(t => t.ImportToUSAInterfaceCode).HasColumnName("ImportToUSAInterfaceCode");
             this.Property(t => t.ExportFromUSAInterfaceCode).HasColumnName("ExportFromUSAInterfaceCode");
+
             this.Property(t => t.ArtemusOutSettingsId).HasColumnName("ArtemusOutSettingsId");
             this.Property(t => t.ArtemusInSettingsId).HasColumnName("ArtemusInSettingsId");
-            this.Property(t => t.AMCAirStartDate).HasColumnName("AMCAirStartDate");
-            this.Property(t => t.AMCOceanStartDate).HasColumnName("AMCOceanStartDate");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

@@ -12,7 +12,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DefaultTranslationComponent.html',
 })
 

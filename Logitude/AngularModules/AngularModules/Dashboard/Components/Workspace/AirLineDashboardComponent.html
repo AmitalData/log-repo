@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     a {
         color: black;
         text-decoration: none;
@@ -136,7 +136,7 @@
                                         <table>
                                             <tr style="height:1px">
                                                 <td>
-                                                    <div [attr.id]="ActivitiesStatusDashboardId" class="MediaFill" (click)="ActivityStatusClick()"></div>
+                                                    <div [attr.id]="ActivitiesStatusDashboardId" class="CellContent" (click)="ActivityStatusClick()"></div>
                                                 </td>
                                             </tr>
 
@@ -355,7 +355,7 @@
                                         <table>
                                             <tr style="height:1px">
                                                 <td>
-                                                    <div [attr.id]="TopParticipantsDashboard" class="MediaFill" (click)="TopParticipantClicking()"></div>
+                                                    <div [attr.id]="TopParticipantsDashboard" style="height:90%;width:100%" class="CellContent" (click)="TopParticipantClicking()"></div>
                                                 </td>
                                             </tr>
 
@@ -406,7 +406,7 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <div [attr.id]="BookingInProgressDashboardId" class="MediaFill" (click)="BookingClicking()"></div>
+                                                                <div [attr.id]="BookingInProgressDashboardId" style="height:100%;width:100%" class="CellContent" (click)="BookingClicking()"></div>
                                                             </td>
                                                             <td style="width:120px;min-width:120px;overflow-y:auto">
                                                                 <div class="MediaFill">

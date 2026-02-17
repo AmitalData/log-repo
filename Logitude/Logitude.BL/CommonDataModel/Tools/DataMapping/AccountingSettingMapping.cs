@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -36,11 +36,12 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.APInvoiceTransferStartDate = entityPM.APInvoiceTransferStartDate;
             poco.ARInvoiceTransferStartDate = entityPM.ARInvoiceTransferStartDate;
             poco.AllowPositiveAmountsInTheCreditNote = entityPM.AllowPositiveAmountsInTheCreditNote;
+            poco.QBOAccessToken = entityPM.QBOAccessToken;
+            poco.QBOAccessTokenSecret = entityPM.QBOAccessTokenSecret;
             poco.QBOrealMeID = entityPM.QBOrealMeID;
             poco.IsSingleTaxPerInvoice = entityPM.IsSingleTaxPerInvoice;
             poco.IsARPaymentsTransferEnabled = entityPM.IsARPaymentsTransferEnabled;
             poco.ARPaymentTransferStartDate = entityPM.ARPaymentTransferStartDate;
-            poco.APPaymentTransferStartDate = entityPM.APPaymentTransferStartDate;
             poco.TransferToDropboxActivated = entityPM.TransferToDropboxActivated;
             poco.EnableMultiPercentageVATTypes = entityPM.EnableMultiPercentageVATTypes;
             poco.NotifyPastDateOnInvoiceEdit = entityPM.NotifyPastDateOnInvoiceEdit;
@@ -54,15 +55,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.EnableNegativeOffsetAPPayments = entityPM.EnableNegativeOffsetAPPayments;
             poco.EnableMultiCurrencyAPPayments = entityPM.EnableMultiCurrencyAPPayments;
             poco.EnableInvoiceStocksManagement = entityPM.EnableInvoiceStocksManagement;
-            poco.RefreshToken = entityPM.RefreshToken;
-            poco.QBOOAuth = entityPM.QBOOAuth;
-            poco.AllowManualARPaymentNumber = entityPM.AllowManualARPaymentNumber;
-            poco.AllowRegionalTaxManagement = entityPM.AllowRegionalTaxManagement;
-            poco.EnableAPPaymentExternalPayment = entityPM.EnableAPPaymentExternalPayment;
-            poco.TransferToFTPActivated = entityPM.TransferToFTPActivated;
-            poco.TransferFTPDetailId = entityPM.TransferFTPDetailId;
-            poco.EnableEnteringTotalVAT = entityPM.EnableEnteringTotalVAT;
-            poco.BlockSendInvoiceOriginalCopy = entityPM.BlockSendInvoiceOriginalCopy;
         }
     }
 }

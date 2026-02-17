@@ -7,7 +7,7 @@ import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddEditPartnerComponent',
     templateUrl: './AddEditPartnerComponent.html',
 })
@@ -133,7 +133,6 @@ export class AddEditPartnerComponent implements OnInit {
                     }
 
                     if (this.oldCustomerPartnerId != this.EntityPM.CustomerId) {
-                        this.DataContext.fatherComponent.OnCustomerGroupChanged(this.oldCustomerPartnerId, this.EntityPM.CustomerId);
                         this.DataContext.fatherComponent.OnCustomerChanged();
                     }
                 }

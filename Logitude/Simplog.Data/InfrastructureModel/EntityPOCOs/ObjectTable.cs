@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
@@ -27,8 +27,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool AutoCompleteSearchWindow { get; set; }
         public bool IsClosed { get; set; }
         public string HeaderScreenId { get; set; }
-        public string HeaderScreenCode { get; set; }
-
         public bool CacheOnClient { get; set; }
         public bool EditableFromAutoCompleteWindow { get; set; }
         public DateTime LastUpdateDate { get; set; }
@@ -40,7 +38,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsAutoComplete { get; set; }
         public string SortingByObjectField { get; set; }
         public string DBTableName { get; set; }
-        public string DBTableShortName { get; set; }
         public int CustomFieldsCount { get; set; }
         public bool HasCustomFields { get; set; }
         public bool InActive { get; set; }
@@ -65,8 +62,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
-        public string DescriptionTextCodeCode { get; set; }
-        public string NewButtonTextCodeCode { get; set; }
 
         public DateTime? EntityResourceLastUpdate { get; set; }
         public bool DisableSearchBox { get; set; }
@@ -98,25 +93,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public string DownloadToExcelFeatureCode { get; set; }
         public string SplitComponentPath { get; set; }
-        public bool AllowedInTicket { get; set; }
-        public bool IsTabsHidden { get; set; }
-        public string HashString { get; set; }
-        public string ParentObjectTableName { get; set; }
-        public bool AvailableInCustomization { get; set; }
-        public string ParentObjectTableId { get; set; }
-        public bool IsCustom { get; set; }
-        public bool SupportSubEntity { get; set; }
-        public bool ApplyGenericCustomFields { get; set; }
-        public string FullNameTextCodeId { get; set; }
-        public string FullNameTextCodeCode { get; set; }
-        [ForeignKey("FullNameTextCodeId")]
-        public virtual TextCode FullNameTextCode { get; set; }
-        public bool AvailableInDocumentTypes { get; set; }
-		public bool IsLock { get; set; }
-		public string RelatedEntity { get; set; }
-		public string ThisKey { get; set; }
-		public string RelatedKey { get; set; }
-
-        public bool? ShowFastSearch { get; set; }
+        public bool AllowedInQueues { get; set; }
     }
 }

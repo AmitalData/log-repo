@@ -11,8 +11,6 @@
         public string DefaultTextPlural { get; set; }
         public bool InActive { get; set; }
         public string LocalDefaultText { get; set; }
-        public string LocalDefaultTextBack_up { get; set; }
-
         public bool IsMemoryAdded { get; set; } // dont fill
         public bool IsSpellChecked { get; set; }
     }

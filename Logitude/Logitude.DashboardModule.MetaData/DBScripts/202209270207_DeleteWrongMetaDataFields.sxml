@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
-  <Sql Version="1">
-    <![CDATA[
-        DELETE AnalyticsFactsFieldsMetaDatas where FieldCode ='QuoteNumber'
-    ]]>       
-  </Sql>
-</Script>

@@ -20,7 +20,7 @@ export class TenantManagmentPrivateLabelsPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -43,11 +43,6 @@ export class TenantManagmentPrivateLabelsPM {
     private privateLabelUrl: string;
     public get PrivateLabelUrl() { return this.privateLabelUrl; }
     public set PrivateLabelUrl(newValue: string) { if (this.privateLabelUrl != newValue) { this.privateLabelUrl = newValue; this.MarkAsDirty("PrivateLabelUrl"); } }
-       
-	 
-    private privateLabelDomain: string;
-    public get PrivateLabelDomain() { return this.privateLabelDomain; }
-    public set PrivateLabelDomain(newValue: string) { if (this.privateLabelDomain != newValue) { this.privateLabelDomain = newValue; this.MarkAsDirty("PrivateLabelDomain"); } }
        
 	 
     private mainLogo: string;
@@ -90,94 +85,11 @@ export class TenantManagmentPrivateLabelsPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private backgroundImageId: string;
-    public get BackgroundImageId() { return this.backgroundImageId; }
-    public set BackgroundImageId(newValue: string) { if (this.backgroundImageId != newValue) { this.backgroundImageId = newValue; this.MarkAsDirty("BackgroundImageId"); } }
-       
-	 
-    private loginImageId: string;
-    public get LoginImageId() { return this.loginImageId; }
-    public set LoginImageId(newValue: string) { if (this.loginImageId != newValue) { this.loginImageId = newValue; this.MarkAsDirty("LoginImageId"); } }
-       
-	 
-    private mainColor: string;
-    public get MainColor() { return this.mainColor; }
-    public set MainColor(newValue: string) { if (this.mainColor != newValue) { this.mainColor = newValue; this.MarkAsDirty("MainColor"); } }
-       
-	 
-    private loginProgressImageId: string;
-    public get LoginProgressImageId() { return this.loginProgressImageId; }
-    public set LoginProgressImageId(newValue: string) { if (this.loginProgressImageId != newValue) { this.loginProgressImageId = newValue; this.MarkAsDirty("LoginProgressImageId"); } }
-       
-	 
-    private forgetPasswordImageId: string;
-    public get ForgetPasswordImageId() { return this.forgetPasswordImageId; }
-    public set ForgetPasswordImageId(newValue: string) { if (this.forgetPasswordImageId != newValue) { this.forgetPasswordImageId = newValue; this.MarkAsDirty("ForgetPasswordImageId"); } }
-       
-	 
-    private secondaryColor: string;
-    public get SecondaryColor() { return this.secondaryColor; }
-    public set SecondaryColor(newValue: string) { if (this.secondaryColor != newValue) { this.secondaryColor = newValue; this.MarkAsDirty("SecondaryColor"); } }
-       
-	 
-    private hasLogboxAccess: boolean;
-    public get HasLogboxAccess() { return this.hasLogboxAccess; }
-    public set HasLogboxAccess(newValue: boolean) { if (this.hasLogboxAccess != newValue) { this.hasLogboxAccess = newValue; this.MarkAsDirty("HasLogboxAccess"); } }
-       
-	 
-    private mainTabHighlightColor: string;
-    public get MainTabHighlightColor() { return this.mainTabHighlightColor; }
-    public set MainTabHighlightColor(newValue: string) { if (this.mainTabHighlightColor != newValue) { this.mainTabHighlightColor = newValue; this.MarkAsDirty("MainTabHighlightColor"); } }
-       
-	 
-    private documentTypeHighlightColor: string;
-    public get DocumentTypeHighlightColor() { return this.documentTypeHighlightColor; }
-    public set DocumentTypeHighlightColor(newValue: string) { if (this.documentTypeHighlightColor != newValue) { this.documentTypeHighlightColor = newValue; this.MarkAsDirty("DocumentTypeHighlightColor"); } }
-       
-	 
-    private isExportActivated: boolean;
-    public get IsExportActivated() { return this.isExportActivated; }
-    public set IsExportActivated(newValue: boolean) { if (this.isExportActivated != newValue) { this.isExportActivated = newValue; this.MarkAsDirty("IsExportActivated"); } }
-       
-	 
-    private isCustomsActivated: boolean;
-    public get IsCustomsActivated() { return this.isCustomsActivated; }
-    public set IsCustomsActivated(newValue: boolean) { if (this.isCustomsActivated != newValue) { this.isCustomsActivated = newValue; this.MarkAsDirty("IsCustomsActivated"); } }
-       
-	 
-    private queryFiltersHighlightColor: string;
-    public get QueryFiltersHighlightColor() { return this.queryFiltersHighlightColor; }
-    public set QueryFiltersHighlightColor(newValue: string) { if (this.queryFiltersHighlightColor != newValue) { this.queryFiltersHighlightColor = newValue; this.MarkAsDirty("QueryFiltersHighlightColor"); } }
-       
-	 
-    private createShipmentsWithoutDocs: boolean;
-    public get CreateShipmentsWithoutDocs() { return this.createShipmentsWithoutDocs; }
-    public set CreateShipmentsWithoutDocs(newValue: boolean) { if (this.createShipmentsWithoutDocs != newValue) { this.createShipmentsWithoutDocs = newValue; this.MarkAsDirty("CreateShipmentsWithoutDocs"); } }
-       
-	 
-    private createOShipmentsWithoutDocs: boolean;
-    public get CreateOShipmentsWithoutDocs() { return this.createOShipmentsWithoutDocs; }
-    public set CreateOShipmentsWithoutDocs(newValue: boolean) { if (this.createOShipmentsWithoutDocs != newValue) { this.createOShipmentsWithoutDocs = newValue; this.MarkAsDirty("CreateOShipmentsWithoutDocs"); } }
-       
-	 
-    private filingInboxDomain: string;
-    public get FilingInboxDomain() { return this.filingInboxDomain; }
-    public set FilingInboxDomain(newValue: string) { if (this.filingInboxDomain != newValue) { this.filingInboxDomain = newValue; this.MarkAsDirty("FilingInboxDomain"); } }
-       
-	 
-    private distributorCode: string;
-    public get DistributorCode() { return this.distributorCode; }
-    public set DistributorCode(newValue: string) { if (this.distributorCode != newValue) { this.distributorCode = newValue; this.MarkAsDirty("DistributorCode"); } }
-       
-	 
 
     public OldEntityPM: TenantManagmentPrivateLabelsPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -185,7 +97,6 @@ export class TenantManagmentPrivateLabelsPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TenantManagmentPrivateLabels");
            
         }
-	 }
     }
     private MyClone: TenantManagmentPrivateLabelsPM;
 

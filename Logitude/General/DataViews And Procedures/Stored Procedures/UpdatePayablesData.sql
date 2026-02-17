@@ -34,11 +34,6 @@ BEGIN
 		declare @PRVL_Id as varchar(15)
 		declare @PRFR_Id as varchar(15)	
 		declare @QTY_Id as varchar(15)	
-		declare @GWKG_Id as varchar(15)
-		declare @CWKG_Id as varchar(15)
-		declare @VCBM_Id as varchar(15)
-		declare @SCGW_Id as varchar(15)
-		declare @PFCL_Id as varchar(15)
 		set @GRWT_Id = (select Id from Measurements where Code = 'GRWT' AND Tenant = @Tenant)
 		set @CHWT_Id = (select Id from Measurements where Code = 'CHWT' AND Tenant = @Tenant)
 		set @FIXD_Id = (select Id from Measurements where Code = 'FIXD' AND Tenant = @Tenant)
@@ -48,11 +43,6 @@ BEGIN
 		set @PRVL_Id = (select Id from Measurements where Code = 'PRVL' AND Tenant = @Tenant)
 		set @PRFR_Id = (select Id from Measurements where Code = 'PRFR' AND Tenant = @Tenant)
 		set @QTY_Id = (select Id from Measurements where Code = 'QTY' AND Tenant = @Tenant)
-		set @GWKG_Id = (select Id from Measurements where Code = 'GWKG' AND Tenant = @Tenant)
-		set @CWKG_Id = (select Id from Measurements where Code = 'CWKG' AND Tenant = @Tenant)
-		set @VCBM_Id = (select Id from Measurements where Code = 'VCBM' AND Tenant = @Tenant)
-		set @SCGW_Id = (select Id from Measurements where Code = 'SCGW' AND Tenant = @Tenant)
-		set @PFCL_Id = (select Id from Measurements where Code = 'PFCL' AND Tenant = @Tenant)
 
 		-- 02
 		declare @AllHousesCount as float
@@ -64,12 +54,6 @@ BEGIN
 		declare @AllHousesTotalGrossWeightPerTon as float	
 		declare @AllHousesTotalNumberOfPackages as float
 		declare @AllHousesTotalNumberOfContainers as float	
-		declare @AllHousesTotalGrossWeightInKG as float
-		declare @AllHousesTotalChargeableWeightInKG as float
-		declare @AllHousesTotalVolumeInCBM as float
-		declare @AllHousesGrossWeightPerStorageDays as float;
-		declare @AllHousesTotalGrossWeightPerTon as float	
-
 		if exists (select * from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId)
 		begin
 			select
@@ -81,11 +65,7 @@ BEGIN
 			@AllHousesTotalChargeables = sum(isnull(ChargeableWeight,0)),
 			@AllHousesTotalGrossWeightPerTon = sum(isnull(GrossWeightPerTon,0)),
 			@AllHousesTotalNumberOfPackages = sum(isnull(NumberOfPackages,0)),
-			@AllHousesTotalNumberOfContainers = sum(isnull(NumberOfContainers,0)),
-			@AllHousesTotalGrossWeightInKG = sum(isnull(GrossWeightInKG,0)),
-			@AllHousesTotalChargeableWeightInKG = sum(isnull(ChargeableWeightInKG,0)),
-			@AllHousesTotalVolumeInCBM = sum(isnull(VolumeInCBM,0)),
-			@AllHousesGrossWeightPerStorageDays = sum(isnull(GrossWeightPerStorageDays,0))
+			@AllHousesTotalNumberOfContainers = sum(isnull(NumberOfContainers,0))
 			from Shipments
 			where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId
 		end
@@ -99,10 +79,6 @@ BEGIN
 			set @AllHousesTotalGrossWeightPerTon = 0
 			set @AllHousesTotalNumberOfPackages = 0
 			set @AllHousesTotalNumberOfContainers = 0
-			set @AllHousesTotalGrossWeightInKG = 0
-			set @AllHousesTotalChargeableWeightInKG = 0
-			set @AllHousesTotalVolumeInCBM = 0
-			set @AllHousesGrossWeightPerStorageDays = 0
 		end
 
 		-- 03
@@ -156,10 +132,6 @@ BEGIN
 		declare @HouseGrossWeightPerTon as float
 		declare @HouseValueOfGoods as float
 		declare @HouseFreightAmount as float
-		declare @HouseGrossWeightInKG as float
-		declare @HouseChargeableWeightInKG as float
-		declare @HouseVolumeInCBM as float
-		declare @HouseGrossWeightPerStorageDays as float
 		declare @HousePayableId as varchar(15)
 		declare @HousePayableMeasurementId as varchar(15)
 		declare @HousePayableLineStatusCode as varchar(4)
@@ -181,7 +153,6 @@ BEGIN
 		declare @OpenAmountInLocalCurrency as float
 		declare @OpenAmountInProfitCurrency as float
 		declare @ExpectedAmountRatio as float
-		declare @HousePercentForeignChargesLocalAmount as float
 	END
 		
 	-- Loop Master Payables (1: Not PRFR)
@@ -190,7 +161,7 @@ BEGIN
 		FOR
 		SELECT Id, Quantity, UnitPrice, VendorId, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentPayableLineStatusCode, ShipmentPayableAmountTypeCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, ValueDate, OpenAmount, AccountedAmount, ExpectedAmount, IATACodeId
 		FROM ShipmentPayables
-		WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND (MeasurementId != @PRFR_Id OR MeasurementId is null OR MeasurementId != @PFCL_Id)
+		WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND (MeasurementId != @PRFR_Id OR MeasurementId is null)
 		OPEN MasterPayables1Cursor FETCH NEXT FROM MasterPayables1Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
@@ -199,10 +170,10 @@ BEGIN
 			BEGIN
 				DECLARE Houses1Cursor CURSOR READ_ONLY
 				FOR
-				SELECT Id, TEU, Volume, GrossWeight, ChargeableWeight, GrossWeightPerTon, ValueOfGoods, NumberOfPackages, NumberOfContainers, TransportModeId, ShipmentTypeId, GrossWeightInKG, ChargeableWeightInKG, VolumeInCBM, GrossWeightPerStorageDays
+				SELECT Id, TEU, Volume, GrossWeight, ChargeableWeight, GrossWeightPerTon, ValueOfGoods, NumberOfPackages, NumberOfContainers, TransportModeId, ShipmentTypeId
 				FROM Shipments
 				WHERE ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId and Tenant = @Tenant
-				OPEN Houses1Cursor FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId,@HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM, @HouseGrossWeightPerStorageDays
+				OPEN Houses1Cursor FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId,@HouseTypeId 
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
 
@@ -225,11 +196,6 @@ BEGIN
 							OR @MasterPayableMeasurementId = @GWTN_Id
 							OR @MasterPayableMeasurementId = @PRVL_Id
 							OR @MasterPayableMeasurementId = @QTY_Id
-							OR @MasterPayableMeasurementId = @GWKG_Id
-							OR @MasterPayableMeasurementId = @CWKG_Id
-							OR @MasterPayableMeasurementId = @VCBM_Id
-							OR @MasterPayableMeasurementId = @SCGW_Id
-							OR @MasterPayableMeasurementId = @PFCL_Id
 							)
 					BEGIN
 						if not exists (select * from ShipmentPayables where Tenant = @Tenant and ShipmentId = @HouseId and ShipmentPayableParentId = @MasterPayableId and ChargesTypeId = @MasterPayableChargesTypeId)
@@ -450,67 +416,6 @@ BEGIN
 									set @UnitPrice = @Ratio * @MasterPayableUnitPrice
 								END
 
-								-- @PFCL_Id
-								else if (@MasterPayableMeasurementId = @PFCL_Id)
-								BEGIN
-									if (@AllHousesGrossWeightPerStorageDays <> 0)
-									begin
-										set @Ratio = @MasterPayableQuantity / @AllHousesGrossWeightPerStorageDays
-									end
-
-									set @Quantity = @HouseGrossWeightPerStorageDays
-									set @UnitPrice = @Ratio * @MasterPayableUnitPrice
-								END
-
-								-- GrossWeightPerStorageDays
-								else if (@MasterPayableMeasurementId = @SCGW_Id)
-								BEGIN
-									if (@AllHousesGrossWeightPerStorageDays <> 0)
-									begin
-										set @Ratio = @MasterPayableQuantity / @AllHousesGrossWeightPerStorageDays
-									end
-
-									set @Quantity = @HouseGrossWeightPerStorageDays
-									set @UnitPrice = @Ratio * @MasterPayableUnitPrice
-								END
-
-										-- GWKG: Gross Weight in Kg
-										else if (@MasterPayableMeasurementId = @GWKG_Id)
-										BEGIN
-											if (@AllHousesTotalGrossWeightInKG <> 0)
-											begin
-												set @Ratio = @MasterPayableQuantity / @AllHousesTotalGrossWeightInKG
-											end
-
-											set @Quantity = @HouseGrossWeightInKG
-											set @UnitPrice = @Ratio * @MasterPayableUnitPrice
-										END
-
-										-- CWKG: Chargeable Weight in Kg
-										else if (@MasterPayableMeasurementId = @CWKG_Id)
-										BEGIN
-											if (@AllHousesTotalChargeableWeightInKG <> 0)
-											begin
-												set @Ratio = @MasterPayableQuantity / @AllHousesTotalChargeableWeightInKG
-											end
-
-											set @Quantity = @HouseChargeableWeightInKG
-											set @UnitPrice = @Ratio * @MasterPayableUnitPrice
-										END
-
-										-- VCBM: Volume in CBM
-										else if (@MasterPayableMeasurementId = @VCBM_Id)
-										BEGIN
-											if (@AllHousesTotalVolumeInCBM <> 0)
-											begin
-												set @Ratio = @MasterPayableQuantity / @AllHousesTotalVolumeInCBM
-											end
-
-											set @Quantity = @HouseVolumeInCBM
-											set @UnitPrice = @Ratio * @MasterPayableUnitPrice
-										END
-
-
 								-- Percent of Value
 								else if (@MasterPayableMeasurementId = @PRVL_Id)
 								BEGIN
@@ -639,7 +544,7 @@ BEGIN
 					DEALLOCATE HousePayables1Cursor
 				END
 
-				FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId, @HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM, @HouseGrossWeightPerStorageDays
+				FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId, @HouseTypeId 
 				END
 				CLOSE Houses1Cursor
 				DEALLOCATE Houses1Cursor
@@ -913,265 +818,5 @@ BEGIN
 		CLOSE MasterPayables2Cursor
 		DEALLOCATE MasterPayables2Cursor
 	END
-	
-	-- Loop Master Payables (3: PFCL)
-	BEGIN
-		DECLARE MasterPayables3Cursor CURSOR READ_ONLY
-		FOR
-		SELECT Id, Quantity, UnitPrice, VendorId, ChargesTypeId, MeasurementId, PrepaidCollectId, DueTypeCode, AWBPrint, CurrencyId, Rate, ProfitCurrencyExchangeRate, ShipmentPayableLineStatusCode, ShipmentPayableAmountTypeCode, CreatedByUserId, UpdateByUserId, CreateDate, UpdateDate, ValueDate, OpenAmount, AccountedAmount, ExpectedAmount, IATACodeId
-		FROM ShipmentPayables
-		WHERE Tenant = @Tenant AND ShipmentId = @MasterId AND MeasurementId = @PFCL_Id 
-		OPEN MasterPayables3Cursor FETCH NEXT FROM MasterPayables3Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId
-		WHILE @@FETCH_STATUS = 0
-		BEGIN
-
-			-- Loop Houses
-			BEGIN
-				DECLARE Houses3Cursor CURSOR READ_ONLY
-				FOR
-				SELECT Id, TEU, Volume, GrossWeight, ChargeableWeight, GrossWeightPerTon, ValueOfGoods
-				FROM Shipments
-				WHERE ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId and Tenant = @Tenant
-				OPEN Houses3Cursor FETCH NEXT FROM Houses3Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods
-				WHILE @@FETCH_STATUS = 0
-				BEGIN
-
-				set @IsCreatingPayable = 0
-				set @HousePayableMeasurementId = @MasterPayableMeasurementId			
-				set @HousePercentForeignChargesLocalAmount = (select sum(isnull(ExpectedAmountLocal,0)) from ShipmentPayables where ShipmentId = @HouseId AND  CurrencyId != (select CurrencyId from tenants where Id = @Tenant) AND MeasurementId != @PFCL_Id)	
-
-				-- IsCreatingPayable
-				BEGIN
-					if (@MasterPayableAmountTypeCode = 'NEXP')
-					BEGIN
-						if not exists (select * from ShipmentPayables where Tenant = @Tenant and ShipmentId = @HouseId and ShipmentPayableParentId = @MasterPayableId and ChargesTypeId = @MasterPayableChargesTypeId)
-						set @IsCreatingPayable = 1
-					END
-
-					else if (@MasterPayableMeasurementId = @PFCL_Id)
-					BEGIN
-						if not exists (select * from ShipmentPayables where Tenant = @Tenant and ShipmentId = @HouseId and ShipmentPayableParentId = @MasterPayableId and ChargesTypeId = @MasterPayableChargesTypeId)
-						set @IsCreatingPayable = 1
-					END
-				
-					if (@IsCreatingPayable = 1)
-					BEGIN
-
-						SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
-						BEGIN TRAN T1;
-						EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'ShipmentPayable'
-						COMMIT TRAN T1; 
-
-						INSERT INTO ShipmentPayables
-						(
-						Id,
-						Tenant,
-						ShipmentId,
-						ShipmentPayableParentId,
-						ShipmentPayableLineStatusCode,
-						ShipmentPayableAmountTypeCode,
-						VendorId,
-						ChargesTypeId,
-						MeasurementId,
-						PrepaidCollectId,
-						DueTypeCode,
-						AWBPrint,
-						CurrencyId,
-						Rate,
-						ProfitCurrencyExchangeRate,
-						ValueDate,
-						CreateDate,
-						UpdateDate,
-						CreatedByUserId,
-						UpdateByUserId,
-						IsFromQuote,
-						IsEditedByUser,
-						IATACodeId
-						)
-						VALUES
-						(
-						@NewId,
-						@Tenant,
-						@HouseId,
-						@MasterPayableId,
-						@MasterPayableLineStatusCode,
-						@MasterPayableAmountTypeCode,
-						@MasterPayableVendorId,
-						@MasterPayableChargesTypeId,
-						@HousePayableMeasurementId,
-						@MasterPayablePrepaidCollectId,
-						@MasterPayableDueTypeCode,
-						@MasterPayableAWBPrint,
-						@MasterPayableCurrencyId,
-						@MasterPayableRate,
-						@MasterPayableProfitRate,
-						@MasterPayableValueDate,
-						@MasterPayableCreateDate,
-						@MasterPayableUpdateDate,
-						@MasterPayableCreatedByUserId,
-						@MasterPayableUpdatedByUserId,
-						0,
-						0,
-						@MasterPayableIATACodeId
-						)				
-					END
-				END
-
-				-- Loop House Payables / Amount Calculating & Updating
-				BEGIN
-					DECLARE HousePayables3Cursor CURSOR READ_ONLY
-					FOR
-					SELECT Id, ShipmentPayableLineStatusCode
-					FROM ShipmentPayables
-					WHERE ShipmentId = @HouseId AND Tenant = @Tenant AND ShipmentPayableParentId = @MasterPayableId 
-					OPEN HousePayables3Cursor FETCH NEXT FROM HousePayables3Cursor INTO @HousePayableId, @HousePayableLineStatusCode
-					WHILE @@FETCH_STATUS = 0
-					BEGIN
-		
-						set @IsUpdatingPayable = 0
-
-						if (@IsCreatingPayable = 1)
-						begin
-							set @IsUpdatingPayable = 1
-						end
-
-						else if (@IsInvoiceUpdated_PARAM = 1)
-						begin
-							set @IsUpdatingPayable = 1
-						end
-
-						else
-							begin
-							if (@HousePayableLineStatusCode in ('ACCT' , 'PACC') AND @MasterPayableLineStatusCode in ('ACCT' , 'PACC'))
-							begin
-								set @IsUpdatingPayable = 0
-							end
-
-							else
-							begin
-								set @IsUpdatingPayable = 1
-							end
-						end
-
-						--set @IsUpdatingPayable = 1
-						if (@IsUpdatingPayable = 1)
-						BEGIN
-							-- Reset Variables
-							BEGIN
-								set @Ratio = 0
-								set @Quantity = 0
-								set @UnitPrice = 0
-								set @ExpectedAmount = 0
-								set @ExpectedAmountLocal = 0
-								set @ExpectedAmountInProfitCurrency = 0
-								set @AccountedAmount = 0
-								set @AccountedAmountInLocalCurrency = 0
-								set @AccountedAmountInProfitCurrency = 0
-								set @OpenAmount = 0
-								set @OpenAmountInLocalCurrency = 0
-								set @OpenAmountInProfitCurrency = 0
-							END
-						
-							-- Compute Ration, Quantity, UnitPrice
-							BEGIN
-								if (@MasterPayableAmountTypeCode = 'NEXP')
-								BEGIN
-									set @Ratio = @MasterPayableAccountedAmount / @AllHousesCount
-									set @Quantity = 0
-									set @UnitPrice = 0
-									set @AccountedAmount = @Ratio								
-								END
-
-								-- Percent of foreign charges local amounts
-								else if (@MasterPayableMeasurementId = @PFCL_Id)
-								BEGIN
-									set @Quantity = @HousePercentForeignChargesLocalAmount
-									set @UnitPrice = @MasterPayableUnitPrice
-								END
-							END
-						
-							-- Compute Amounts
-							BEGIN
-								set @ExpectedAmount =  @Quantity * @UnitPrice / 100
-
-								if (@MasterPayableAmountTypeCode = 'NEXP')
-								begin
-									set @ExpectedAmount = null
-									set @OpenAmount = null
-								end
-
-								else if (@MasterPayableLineStatusCode = 'ACCT' OR @MasterPayableLineStatusCode = 'PACC')
-								begin
-									set @ExpectedAmountRatio = @ExpectedAmount / @MasterPayableExpectedAmount
-									set @OpenAmount = @MasterPayableOpenAmount * @ExpectedAmountRatio --/ @AllHousesCount
-									set @AccountedAmount = @MasterPayableAccountedAmount * @ExpectedAmountRatio --/ @AllHousesCount
-								end
-
-								else
-								begin
-									set @OpenAmount = @ExpectedAmount
-									set @AccountedAmount = 0
-								end
-
-								set @ExpectedAmountLocal = @ExpectedAmount * @MasterPayableRate					
-								set @AccountedAmountInLocalCurrency = @AccountedAmount * @MasterPayableRate
-								set @OpenAmountInLocalCurrency = @OpenAmount * @MasterPayableRate
-												
-								set @ExpectedAmountInProfitCurrency = @ExpectedAmountLocal / @MasterPayableProfitRate
-								set @AccountedAmountInProfitCurrency= @AccountedAmountInLocalCurrency / @MasterPayableProfitRate
-								set @OpenAmountInProfitCurrency = @OpenAmountInLocalCurrency / @MasterPayableProfitRate
-							END
-
-							-- Update Payable
-							BEGIN
-								update ShipmentPayables
-								set
-								VendorId = @MasterPayableVendorId,
-								MeasurementId = @HousePayableMeasurementId,
-								PrepaidCollectId = @MasterPayablePrepaidCollectId,
-								DueTypeCode = @MasterPayableDueTypeCode,
-								--AWBPrint = 0, --@MasterPayableAWBPrint,						
-								ValueDate = @MasterPayableValueDate,
-								UpdateDate = @MasterPayableUpdateDate,
-								UpdateByUserId = @MasterPayableUpdatedByUserId,
-								ShipmentPayableLineStatusCode = @MasterPayableLineStatusCode,
-								CurrencyId = @MasterPayableCurrencyId,
-								Rate = @MasterPayableRate,
-								ProfitCurrencyExchangeRate = @MasterPayableProfitRate,
-								Quantity = isnull(ROUND(@Quantity,3),0),
-								UnitPrice = isnull(Round(@UnitPrice,3),0),							
-								ExpectedAmount = isnull(Round(@ExpectedAmount,3),0),
-								ExpectedAmountLocal = isnull(Round(@ExpectedAmountLocal,3),0),
-								ExpectedAmountInProfitCurrency = isnull(Round(@ExpectedAmountInProfitCurrency,3),0),
-								AccountedAmount = isnull(Round(@AccountedAmount,3),0),
-								AccountedAmountInLocalCurrency = isnull(Round(@AccountedAmountInLocalCurrency,3),0),
-								AccountedAmountInProfitCurrency = isnull(Round(@AccountedAmountInProfitCurrency,3),0),
-								OpenAmount = isnull(Round(@OpenAmount,3),0),
-								OpenAmountInLocalCurrency = isnull(Round(@OpenAmountInLocalCurrency,3),0),
-								OpenAmountInProfitCurrency = isnull(Round(@OpenAmountInProfitCurrency,3),0),
-								IATACodeId = @MasterPayableIATACodeId
-								where Id = @HousePayableId and Tenant = @Tenant
-							END
-						END
-
-					FETCH NEXT FROM HousePayables3Cursor INTO @HousePayableId, @HousePayableLineStatusCode
-					END
-					CLOSE HousePayables3Cursor
-					DEALLOCATE HousePayables3Cursor
-				END
-
-				FETCH NEXT FROM Houses3Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods
-				END
-				CLOSE Houses3Cursor
-				DEALLOCATE Houses3Cursor
-			END
-
-		FETCH NEXT FROM MasterPayables3Cursor INTO @MasterPayableId, @MasterPayableQuantity, @MasterPayableUnitPrice, @MasterPayableVendorId, @MasterPayableChargesTypeId, @MasterPayableMeasurementId, @MasterPayablePrepaidCollectId, @MasterPayableDueTypeCode, @MasterPayableAWBPrint, @MasterPayableCurrencyId, @MasterPayableRate, @MasterPayableProfitRate, @MasterPayableLineStatusCode, @MasterPayableAmountTypeCode, @MasterPayableCreatedByUserId, @MasterPayableUpdatedByUserId, @MasterPayableCreateDate, @MasterPayableUpdateDate, @MasterPayableValueDate, @MasterPayableOpenAmount, @MasterPayableAccountedAmount, @MasterPayableExpectedAmount, @MasterPayableIATACodeId
-		END
-		CLOSE MasterPayables3Cursor
-		DEALLOCATE MasterPayables3Cursor
-	END
-	
-	
 	END
 END

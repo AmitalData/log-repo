@@ -29,12 +29,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         StartDate, 
 	         ExpirationDate, 
 	         CreateDate, 
-	         Version, 
-	         IsDraft, 
-	         ApproveDate, 
-	         ApprovedByUserId, 
-	         ParentVersionNumber, 
-	         InitialEnddate,
+	         Version,
 	      }
 
 
@@ -48,12 +43,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         StartDate, 
 	         ExpirationDate, 
 	         CreateDate, 
-	         Version, 
-	         IsDraft, 
-	         ApproveDate, 
-	         ApprovedByUserId, 
-	         ParentVersionNumber, 
-	         InitialEnddate,
+	         Version,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -90,31 +80,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
             {
 				entityPOCO.CreateDate = entityPM.CreateDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDraft))
-            {
-				entityPOCO.IsDraft = entityPM.IsDraft;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApproveDate))
-            {
-				entityPOCO.ApproveDate = entityPM.ApproveDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserId))
-            {
-				entityPOCO.ApprovedByUserId = entityPM.ApprovedByUserId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentVersionNumber))
-            {
-				entityPOCO.ParentVersionNumber = entityPM.ParentVersionNumber;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InitialEnddate))
-            {
-				entityPOCO.InitialEnddate = entityPM.InitialEnddate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -163,31 +128,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.Version = entityPOCO.Version;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDraft))
-            {
-					entityPM.IsDraft = entityPOCO.IsDraft;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApproveDate))
-            {
-					entityPM.ApproveDate = entityPOCO.ApproveDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApprovedByUserId))
-            {
-					entityPM.ApprovedByUserId = entityPOCO.ApprovedByUserId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ParentVersionNumber))
-            {
-					entityPM.ParentVersionNumber = entityPOCO.ParentVersionNumber;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InitialEnddate))
-            {
-					entityPM.InitialEnddate = entityPOCO.InitialEnddate;
-            }
-
 		}
 
 		public void PMToOldPM(TariffVersionPM entityPM, TariffVersionPM oldEntityPM)
@@ -222,31 +162,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
             {
                 oldEntityPM.CreateDate = entityPM.CreateDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDraft))
-            {
-                oldEntityPM.IsDraft = entityPM.IsDraft;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApproveDate))
-            {
-                oldEntityPM.ApproveDate = entityPM.ApproveDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserId))
-            {
-                oldEntityPM.ApprovedByUserId = entityPM.ApprovedByUserId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentVersionNumber))
-            {
-                oldEntityPM.ParentVersionNumber = entityPM.ParentVersionNumber;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InitialEnddate))
-            {
-                oldEntityPM.InitialEnddate = entityPM.InitialEnddate;
             }
 			
 		}

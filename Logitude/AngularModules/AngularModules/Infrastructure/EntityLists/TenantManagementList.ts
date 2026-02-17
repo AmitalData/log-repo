@@ -113,8 +113,6 @@ export class TenantManagementList {
 		MobileTotalLastWeek: number;
 		MobileTotalLastMonth: number;
 		EnableBranding: boolean;
-		TranzilaPaymentWithBit: boolean;
-		EnableExportToExcel: boolean;
 		CustomerURL: string;
 		HideSharedlogistics: boolean;
 		ContactEmail: string;
@@ -122,7 +120,6 @@ export class TenantManagementList {
 		RegisteredAirlines: string;
 		PendingAirlines: string;
 		PrivateLabelId: string;
-		PrivateLabelName: string;
 		IsParentTenant: boolean;
 		ParentTenantId: number;
 		AgentSharedLogisticsStatisticsLastDate: Date;
@@ -132,58 +129,5 @@ export class TenantManagementList {
 		IsINTTRAStockPrepaid: boolean;
 		PackageCodeSearchField: string;
 		IsINTTRAOnlyDemo: boolean;
-		IsTestTenant: boolean;
-		MainAdditionalPackageApplied: boolean;
-		TotalPrice: number;
-		MainColor: string;
-		SecondaryColor: string;
-		TertiaryColor: string;
-		Opacity: number;
-		BackgroundId: string;
-		ComapnylogoId: string;
-		InvertedLogoId: string;
-		BrowserIconId: string;
-		ShipmentHeaderImageId: string;
-		TotalNumberOfUsers: number;
-		TotalFreeUsers: number;
-		AveragePrice: number;
-		TotalPaymentamount: number;
-		NoPaymentForChildTenants: boolean;
-		LastEbookingSentDate: Date;
-		LastSISentDate: Date;
-		NumberOfBookingSentLastWeek: number;
-		NumberOfSISentLastWeek: number;
-		LastContainerStatusReceived: Date;
-		LastTariffUpdateDate: Date;
-		LastTariffUsageDate: Date;
-		LastWeekCreatedTariffs: number;
-		LastMonthCreatedTariffs: number;
-		ScheduledTasksLimitPerReport: number;
-		IsHybrid: boolean;
-		WhatsAppMessagingPhoneNumber: string;
-		ActivatedforDeclarationApprove: boolean;
-		DeclarationMessage: string;
-		ActivatePrivateSite: boolean;
-		IsContainerTrackingPrepaid: boolean;
-		DigitalPortalLastDate: Date;
-		DigitalPortalTotalLastWeek: number;
-		DigitalPortalTotalLastMonth: number;
-		DigitalPortalMobileLastDate: Date;
-		DigitalPortalMobTotalLastWeek: number;
-		DigitalPortalMobTotalLastMonth: number;
-		DPArchiveShipmentCreateFilter: number;
-		DPArchiveShipmentArrivalFilter: number;
-		DPArchiveShipmentDepartFilter: number;
-		ShowMoneyOrder: boolean;
-		CargoTrackingPublicShowEvents: boolean;
-		CargoTrackingPrivateShowEvents: boolean;
-		LogoURL: string;
-		ServiceAgreementURL: string;
-		EcommerceSupportEmail: string;
-		EcommerceTenant: boolean;
-		SearchAbsoluteValuePublic:boolean;
-		MinutsTimeOutSession:number;
-
 	
-}
- 
+}

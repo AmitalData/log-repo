@@ -4,7 +4,7 @@ import { CustomAgentPM } from '../../../../../Common/EntityPMs/CustomAgentPM';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomAgentDocsInTabComponent.html',
 })
 

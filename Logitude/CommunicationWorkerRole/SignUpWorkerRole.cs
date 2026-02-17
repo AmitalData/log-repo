@@ -21,13 +21,8 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using Logitude.SystemLogs;
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools;
-using CommunicationWorkerRole.Services.Logbox;
-using System.Net.Http;
-using Newtonsoft.Json;
-using CommunicationWorkerRole.Services.SignUp;
-using System.Drawing;
 
 namespace CommunicationWorkerRole
 {
@@ -46,11 +41,8 @@ namespace CommunicationWorkerRole
             while (IsRunning)
             {
 
-                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
-                {
-                    WorkOnce();
-                    Thread.Sleep(MillisecondsTimeout);//600000
-                }
+                WorkOnce();
+                Thread.Sleep(MillisecondsTimeout);//600000
 
             }
 
@@ -58,76 +50,64 @@ namespace CommunicationWorkerRole
 
         public void WorkOnce()
         {
-            if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+            OnStart();
+            if (General.IsUpdating())
             {
+                Thread.Sleep(300000);
+                return;
+            }
+            if (!queue.Exists()) //??? onstart built it >>
+            {
+                return;
+            }
+            var msg = queue.GetMessage(TimeSpan.FromSeconds(5));
+            LastActivity = DateTime.UtcNow;
+            if (msg == null)
+            {
+                return;
+            }
+            try
+            {
+                MemoryStream memorystream = new MemoryStream(msg.AsBytes);
+
+                XmlSerializer serializer = new XmlSerializer(typeof(SignUpInfoClass));
+
+                SignUpInfoClass signUpInfo = (SignUpInfoClass)serializer.Deserialize(memorystream);
+                string message = msg.AsString;
+
+                queue.DeleteMessage(msg);
+
+                //string email = signUpInfo.Email;
+                //string name = signUpInfo.Name;
+                //string company = signUpInfo.Company;
+                //string phone = signUpInfo.phone;
 
 
-                OnStart();
-                if (General.IsUpdating())
+                if (signUpInfo.IsCrmTenant)
                 {
-                    Thread.Sleep(300000);
-                    return;
+                   CardRepository cardRepository = new CardRepository(signUpInfo.Tenant);
+                   string accountingCard = cardRepository.GetAccountingCardFromCard(signUpInfo.CustomerId, signUpInfo.Tenant);
+                   if (string.IsNullOrEmpty(accountingCard))  CreateTenant(signUpInfo);
+                   else return;
+
                 }
-                if (!queue.Exists()) //??? onstart built it >>
-                {
-                    return;
-                }
-                var msg = queue.GetMessage(TimeSpan.FromSeconds(5));
-                LastActivity = DateTime.UtcNow;
-                if (msg == null)
-                {
-                    return;
-                }
-                try
-                {
-                    MemoryStream memorystream = new MemoryStream(msg.AsBytes);
-
-                    XmlSerializer serializer = new XmlSerializer(typeof(SignUpInfoClass));
-
-                    SignUpInfoClass signUpInfo = (SignUpInfoClass)serializer.Deserialize(memorystream);
-                    string message = msg.AsString;
-
-                    queue.DeleteMessage(msg);
-
-                    //string email = signUpInfo.Email;
-                    //string name = signUpInfo.Name;
-                    //string company = signUpInfo.Company;
-                    //string phone = signUpInfo.phone;
-
-                    if (signUpInfo.IsCreateLogboxTenantFromCloud && !signUpInfo.IsCreateLogboxTenantFromCloudPassed)
-                    {
-                        QueueMessageCloudToLogboxSender.Send(signUpInfo);
-                    }
-                    else if (signUpInfo.IsCreateLogboxTenantFromCloud)
-                    {
-                        CreateTenant(signUpInfo);
-                    }
-                    else if (signUpInfo.IsCrmTenant)
-                    {
-                        CardRepository cardRepository = new CardRepository(signUpInfo.Tenant);
-                        string accountingCard = cardRepository.GetAccountingCardFromCard(signUpInfo.CustomerId, signUpInfo.Tenant);
-                        if (string.IsNullOrEmpty(accountingCard)) CreateTenant(signUpInfo);
-                        else return;
-
-                    }
-                    else CreateTenant(signUpInfo);
-                    LogDoneItemInMemory();
-                }
-                catch (Exception e)
-                {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
-                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "SignUpWorkerRole : Run() Method", null);
-                    Thread.Sleep(10000);
-                }
+                else CreateTenant(signUpInfo);
+                LogDoneItemInMemory();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "SignUpWorkerRole : Run() Method", null);
+                Thread.Sleep(10000);
             }
         }
 
         public void CreateTenant(SignUpInfoClass signUpInfo)
         {
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateTenant:Email=" + signUpInfo.Email);
+            Debug.WriteLine("CreateTenant:Email=" + signUpInfo.Email);
             string password = SignUpClass.StartSignUp(signUpInfo);
             this.Password = password;
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateTenant:password=" + password);
+            Debug.WriteLine("CreateTenant:password=" + password);
             //EmailsWorkerRole emailrole = new EmailsWorkerRole();
 
 
@@ -147,20 +127,92 @@ namespace CommunicationWorkerRole
             HtmlTemplate.Append("Password: " + (!string.IsNullOrEmpty(password) ? password : "your current password"));
             HtmlTemplate.Append("<br /><br />");
 
-             string emailbody = HtmlTemplate.ToString();
+            string emailbody = HtmlTemplate.ToString();
 
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(emailbody);
+            Debug.WriteLine(emailbody);
             EmailCommunicationParams emailParams = new EmailCommunicationParams();
-            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
+            if (LogitudeSettings.DeploymentStage == "Simplog")
             {
-                emailParams = GetLogboxEmailCommunicationParams(signUpInfo, emailbody);
+                //EmailParameters parameters = new EmailParameters()
+                //{
+                //    From = "admin@fnarsoft.com",
+                //    To = "jalal@logitudeworld.com",
+                //    Cc = "Perla@logitudeworld.com;zaki@logitudeworld.com;isra@logitudeworld.com;maram@logitudeworld.com;fajr@logitudeworld.com;Liraz@logitudeworld.com;ahmada@logitudeworld.com;ahmadb@logitudeworld.com;Alex@logitudeworld.com;jinan@amital.co.il;eman@logitudeworld.com",
+                //    Bcc = "",
+                //    Subject = "SignUp complete successfully for " + signUpInfo.Company,
+                //    Body = emailbody,
+                //};
+                //Debug.WriteLine(parameters.To);
+                //EmailingHelper.SendEmail(parameters);
+
+
+                emailParams = new EmailCommunicationParams()
+                {
+                    From = "admin@fnarsoft.com",
+                    To = "jalal@logitudeworld.com;ahmada@logitudeworld.com",
+                    CC = "Perla@logitudeworld.com;zaki@logitudeworld.com;isra@logitudeworld.com;maram@logitudeworld.com;fajr@logitudeworld.com;eman@logitudeworld.com;diaa@logitudeworld.com;maryam@logitudeworld.com;azhar@logitudeworld.com",
+                    BCC = "",
+                    Subject = "SignUp complete successfully for " + signUpInfo.Company,
+                    EmailBody = emailbody,
+                    Tenant = 0, 
+                    IsBodySecured = true,
+                    
+                };
+              
+            }
+            else if(LogitudeSettings.DeploymentStage == "logboxwe1")
+            {
+                //EmailParameters parameters = new EmailParameters()
+                //{
+                //    From = "admin@fnarsoft.com",
+                //    To = "ahmada@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
+                //    Cc = "ahmadb@logitudeworld.com;YaronC@AMITAL.CO.IL;boazelkana@gmail.com;basel@amital.co.il",
+                //    Bcc = "",
+                //    Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
+                //    Body = emailbody,
+                //}; 
+                //Debug.WriteLine(parameters.To);
+                //EmailingHelper.SendEmail(parameters);
+
+                emailParams = new EmailCommunicationParams()
+                {
+                    From = "admin@fnarsoft.com",
+                    To = "ahmada@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
+                    CC = "YaronC@AMITAL.CO.IL;boazelkana@gmail.com",
+                    BCC = "",
+                    Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
+                    EmailBody = emailbody,
+                    Tenant = 0,
+                    IsBodySecured = true,
+                };
+             
             }
             else
             {
-                  emailParams = new EmailCommunicationParams()
+                //EmailParameters parameters = new EmailParameters()
+                //{
+                //    From = "admin@fnarsoft.com",
+                //    To = "jalal@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
+                //    Cc = "ahmada@logitudeworld.com;ahmadb@logitudeworld.com;YaronC@AMITAL.CO.IL;razan@logitudeworld.com",
+                //    Bcc = "",
+                //    Subject = LogitudeSettings.DeploymentStage+" - SignUp complete successfully for " + signUpInfo.Company,
+                //    Body = emailbody,
+                //};
+                //if (LogitudeSettings.IsCostomsDeploy)
+                //{
+                //        parameters.To += "eldad@amital.co.il;itzik@amital.co.il;YaronC@AMITAL.CO.IL";
+                //}
+                
+                //Debug.WriteLine(parameters.To);
+                //EmailingHelper.SendEmail(parameters);
+
+
+                emailParams = new EmailCommunicationParams()
                 {
-                    From = SettingUtil.Emails.FromNoReply,
-                    To =SettingUtil.Emails.AccountingManagers,
+                    From = "admin@fnarsoft.com",
+                    To = "jalal@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
+                    CC = "ahmada@logitudeworld.com;ahmadb@logitudeworld.com;YaronC@AMITAL.CO.IL;razan@logitudeworld.com",
+                    BCC = "",
                     Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,
                     Tenant = 0,
@@ -169,34 +221,18 @@ namespace CommunicationWorkerRole
 
                 if (LogitudeSettings.IsCostomsDeploy)
                 {
-                    emailParams.To += ";"+SettingUtil.Emails.CustomsManagers;
+                    emailParams.To += "eldad@amital.co.il;itzik@amital.co.il;YaronC@AMITAL.CO.IL";
                 }
             }
 
             Communications.AddEmailCommunicationLogQueue(emailParams, 0);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SendEmail:done!!");
-        }
-
-        private static EmailCommunicationParams GetLogboxEmailCommunicationParams(SignUpInfoClass signUpInfo, string emailbody)
-        {
-            return new EmailCommunicationParams()
-            {
-                From = SettingUtil.Emails.FromNoReply,
-                To =SettingUtil.Emails.LogboxManagers,
-                Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
-                EmailBody = emailbody,
-                Tenant = 0,
-                IsBodySecured = true,
-            };
+            Debug.WriteLine("SendEmail:done!!");
         }
 
         public override bool OnStart()
         {
+            
 
-            //if (setting.WorkEnvironment == "customs")
-            //{
-            //    return;
-            //}
             if (_OnStartDone) return true;
             _OnStartDone = true;
 
@@ -206,20 +242,12 @@ namespace CommunicationWorkerRole
 
             storageAccount = StorageAcountDetails.StorageAccount; //CloudStorageAccount.FromConfigurationSetting("DiagnosticsConnectionString");
             queueclient = storageAccount.CreateCloudQueueClient();
-            if (!(LogitudeSettings.WorkEnvironment == "customs"))
+            queue = queueclient.GetQueueReference("signupqueue");
+            queue.CreateIfNotExists();
+            if (!SuppressClearQ)
             {
-
-                queue = queueclient.GetQueueReference("signupqueue");
-          
-                queue.CreateIfNotExists();
-
-                if (!SuppressClearQ)
-                {
-                    queue.Clear();
-                }///itzik ask :why to .. 
-
-         
-
+                queue.Clear();
+            }///itzik ask :why to .. 
 
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
@@ -229,7 +257,7 @@ namespace CommunicationWorkerRole
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
             RoleEnvironment.Changing += RoleEnvironmentChanging;
-            }
+
             return base.OnStart();
         }
 
@@ -282,7 +310,7 @@ namespace CommunicationWorkerRole
         public void WorkOnceSuppressClearQ()
         {
 
-
+            
             _SignUpWorkerRole.SuppressClearQ = true;
             _SignUpWorkerRole.WorkOnce();
         }

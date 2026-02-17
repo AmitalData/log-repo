@@ -1,12 +1,12 @@
 import {Component}  from '@angular/core';
 import {ExportDocumentService} from '../../../../Common/Services/DocumentServices/ExportDocumentService';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { DateTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SystemInfo',
     templateUrl: './SystemInfoComponent.html',   
     providers: [ExportDocumentService],
@@ -30,8 +30,6 @@ export class SystemInfoComponent {
     PaidVisibility: boolean=false;
     IsTrailVisibility: boolean=false;
     TemporalPackageVisibility: boolean = false;
-    TenantLocalTime: Date;
-
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _exportDocumentService: ExportDocumentService) {
 
@@ -42,7 +40,7 @@ export class SystemInfoComponent {
         this.PackageName = SessionLocator.TenantManagementJS.PackageName;
         this.NumberOfUsers = SessionLocator.TenantManagementJS.NumberOfUsers.toString();
         this.IsTrial = SessionLocator.TenantManagementJS.IsTrial ? "Yes" : "No";
-        this.TenantLocalTime = this.GetCurrentTenantDateAsUtc(SessionLocator.TenantPM.TimeZoneOffset);
+
         if (SessionLocator.TenantManagementJS.TemporalPackageCode) {
             this.TemporalPackageVisibility = true;
         }
@@ -63,7 +61,7 @@ export class SystemInfoComponent {
     }
 
     GetUsedSpaceFromServer() {
-        this._exportDocumentService.GetUsedSpaceForTenant(SessionLocator.Tenant).subscribe((res:any) => {
+        this._exportDocumentService.GetUsedSpaceForTenant(SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -85,21 +83,5 @@ export class SystemInfoComponent {
 
     CloseButtonClicked() {    
         this.CurrentSession.CloseCurrentWindow();
-    }
-
-    get IsCustomerCare() {
-        return SessionLocator?.LoggedUserPM?.IsCustomerCare;
-    }
-
-    private GetCurrentTenantDateAsUtc(timeZoneOffset: number) {
-        var myResult: Date = new Date();
-        myResult.setUTCFullYear(myResult.getUTCFullYear());
-        myResult.setUTCMonth(myResult.getUTCMonth());
-        myResult.setUTCDate(myResult.getUTCDate());
-        myResult.setUTCHours(myResult.getUTCHours() + timeZoneOffset);
-        myResult.setUTCMinutes(myResult.getUTCMinutes());
-        myResult.setUTCSeconds(myResult.getUTCSeconds());
-        myResult.setUTCMilliseconds(myResult.getUTCMilliseconds());
-        return myResult;
     }
 }

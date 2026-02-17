@@ -2,24 +2,20 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Stimulsoft.Report;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
@@ -113,8 +109,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("ReportsTemplate", reportsTemplatePM.Tenant, authToken.Tenant);
-
                 int tenant = authToken.Tenant;
                 SecurityUtility.CheckContactFeature("ReportsTemplate", "NEW", authToken.Tenant);
                 if (reportsTemplatePM.TemplateData == null)
@@ -130,15 +124,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     }
                 }
 
-                string extension = reportsTemplatePM.TemplateType == "R" ? "mrt" : reportsTemplatePM.TemplateType == "M"? "html" : "xml";
+                string extension = reportsTemplatePM.TemplateType == "R" ? "mrt" : "html";
 
                 ReportHelper reportHelper = new ReportHelper();
-                DocumentFile documentFile = new DocumentFile() { FileName = reportsTemplatePM.Description, FileData = reportsTemplatePM.TemplateData, Extension = extension, Folder = "reports", Tenant = tenant };
-                Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(documentFile);
-                 
+                Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(reportsTemplatePM.Description, reportsTemplatePM.TemplateData, extension , "reports", tenant);
                 ReportsTemplateRepository reportsTemplateRepository = new ReportsTemplateRepository(tenant);
                 ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
-                string reportTemplateId=  reportHelper.AddReportTemplate(reportsTemplatePM.ReportId, reportsTemplatePM.Description, reportsTemplatePM.CreatedByUserId, newDocument.Id, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, reportsTemplatePM.IsSystem, reportsTemplatePM.TemplateType, reportsTemplatePM.EntityId, reportsTemplatePM.ObjectTableId, reportsTemplatePM.Subject, useStimul : reportsTemplatePM.UseStimul);
+                string reportTemplateId=  reportHelper.AddReportTemplate(reportsTemplatePM.ReportId, reportsTemplatePM.Description, reportsTemplatePM.CreatedByUserId, newDocument.Id, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, reportsTemplatePM.IsSystem, reportsTemplatePM.TemplateType);
 
                 reportsTemplateRepository.SubmitChanges();
                 reportsTemplatesVersionRepository.SubmitChanges();
@@ -147,7 +139,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 ReportsTemplateQuery reportsTemplateQuery = new ReportsTemplateQuery(tenant);
                 ReportsTemplatePM result = reportsTemplateQuery.GetSinglePM(reportTemplateId,tenant);
 
-                if(result.TemplateType == "M" || result.TemplateType == "E")
+                if(result.TemplateType == "M")
                 {
                     result.TemplateData = reportsTemplatePM.TemplateData;
                 }
@@ -205,8 +197,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("ReportsTemplate", reportsTemplatePM.Tenant, authToken.Tenant);
-
                 int tenant = authToken.Tenant;
                 SecurityUtility.CheckContactFeature("ReportsTemplate", "UPDATE", authToken.Tenant);
                 if (reportsTemplatePM.TemplateData != null)
@@ -245,36 +235,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private object GetDataProviderFromStiReport(StiReport stiReport)
-        {
-            if (stiReport == null) return null;
-            if (stiReport.BusinessObjectsStore == null) return null;
-            if (stiReport.BusinessObjectsStore[0] == null) return null;
-            return stiReport.BusinessObjectsStore[0].BusinessObjectValue;
-        }
 
-        private string GetDataProviderNameFromStiReport(StiReport stiReport)
-        {
-            if (stiReport == null) return null;
-            if (stiReport.BusinessObjectsStore == null) return null;
-            if (stiReport.BusinessObjectsStore[0] == null) return null;
-            return stiReport.BusinessObjectsStore[0].Name;
-        }
-        [HttpPost]
-        public HttpResponseMessage PostReportTemplateEditorHtmlData([FromBody] ReportTemplateEditorHtmlDataParams filterParams) 
+
+        public HttpResponseMessage GetReportTemplateEditorHtmlData(string reportsTemplateId,  int version , string userId, string subject,  string from = null, string replyTo = null, string cc = null)
         {
             try
             {
-                var bodyStream = new StreamReader(HttpContext.Current.Request.InputStream);
-                bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
-                var bodyText = bodyStream.ReadToEnd();
-                var settings = new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Auto
-                };
-                var reportTemplateEditorParams = JsonConvert.DeserializeObject<ReportTemplateEditorHtmlDataParams>(bodyText);
-
-
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -284,12 +250,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 byte[] fileData = null;
                 SendHtmlFilter reslutFilter = new SendHtmlFilter();
                 ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
-                string documentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateIdAndVersion(filterParams.ReportsTemplateId, filterParams.Version.GetValueOrDefault(), tenant);
-
-                string from = reportTemplateEditorParams.From;
-                string replyTo = reportTemplateEditorParams.ReplyTo;
-                string cc = reportTemplateEditorParams.Cc;
-                string subject= reportTemplateEditorParams.Subject;
+                string documentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateIdAndVersion(reportsTemplateId, version, tenant);
 
                 if (!string.IsNullOrEmpty(documentId))
                 {
@@ -309,26 +270,19 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     {
                         html = System.Text.Encoding.UTF8.GetString(fileData);
                     }
-                    Boolean getStimulReportForMail = true;
-                    HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-                    StiReport stiReport = htmlEditorHelper.GetStimulReportByReportFilter(reportTemplateEditorParams.ReportFilter, getStimulReportForMail);
 
-                    object dataProvider = GetDataProviderFromStiReport(stiReport);
-                    string dataProviderName = GetDataProviderNameFromStiReport(stiReport);
-                    html = htmlEditorHelper.ResolveDataProviderHtml(new DataProviderResolverArgs() { htmlValue = html, dataProvider = dataProvider, dataProviderName = dataProviderName });
-                    subject = htmlEditorHelper.ResolveDataProviderHtml(new DataProviderResolverArgs() { htmlValue = subject, dataProvider = dataProvider, dataProviderName = dataProviderName });
-                    reslutFilter.Htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, reportTemplateEditorParams.UserId, ref subject, ref from, ref replyTo, ref cc, tenant);
+
+                    HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                    reslutFilter.Htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, userId, ref subject, ref from, ref replyTo, ref cc, tenant);
 
                 }
-
+          
                 reslutFilter.Subject = subject;
                 reslutFilter.From = from;
                 reslutFilter.ReplyTo = replyTo;
                 reslutFilter.Cc = cc;
 
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, reslutFilter);
-
-                return reponseMessage;
+                return Request.CreateResponse(HttpStatusCode.OK, reslutFilter);
             }
 
             catch (Exception ex)

@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr>
         <td>
@@ -20,7 +20,7 @@
                                         </td>
 
                                         <td style="width: 70px;">
-                                            <button id="{{'NewHouseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="NewShipment()">New house</button>
+                                            <button id="{{'NewHouseBtn' | IdGeneratorPipe}}" class="Button" (click)="NewShipment()">New house</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -35,233 +35,231 @@
 
                         <tr>
                             <td>
-                                <div class="MediaFill">
-                                    <div class="SimpleGridView">
-                                        <div class="SimpleGridViewHeader">
-                                            <table>
-                                                <tr>
-                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                        <div></div>
-                                                    </td>
-                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                        <div></div>
-                                                    </td>
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                    <div></div>
+                                                </td>
 
-                                                    <td style="width: 80px; min-width: 80px; max-width: 80px;">{{'Shipment.CH.ShipmentNumberListLable' | TextCodeTranslationPipe}}</td>
-                                                    <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.CustomerNameListLable' | TextCodeTranslationPipe}}</td>
-                                                    <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.HAWBFBLBLListLable' | TextCodeTranslationPipe}}</td>
-                                                    <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'Shipment.CH.GrossWeightListLable' | TextCodeTranslationPipe}}</td>
-                                                    <td style="width: 115px; min-width: 115px; max-width: 115px;">{{'Shipment.CH.VolumeInKGListLable' | TextCodeTranslationPipe}}</td>
-                                                    <td>{{'Shipment.CH.FHLStatusNameListLable' | TextCodeTranslationPipe}}</td>
-                                                </tr>
-                                            </table>
-                                        </div>
+                                                <td style="width: 80px; min-width: 80px; max-width: 80px;">{{'Shipment.CH.ShipmentNumberListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.CustomerName' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.HAWBFBLBLListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'Shipment.CH.GrossWeightLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 115px; min-width: 115px; max-width: 115px;">{{'Shipment.CH.VolumeInKGLable' | TextCodeTranslationPipe}}</td>
+                                                <td>{{'Shipment.CH.FHLStatusNameListLable' | TextCodeTranslationPipe}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
 
-                                        <div class="SimpleGridViewBody">
-                                            <table>
+                                    <div class="SimpleGridViewBody">
+                                        <table>
 
-                                                <!-- Connected -->
-                                                <tr *ngIf="ItemsSource1.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
-                                                    <td style="height: 25px;">
-                                                        <table style="height: 25px;">
-                                                            <tr style="height: 2px;">
-                                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                    <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
-                                                                </td>
+                                            <!-- Connected -->
+                                            <tr *ngIf="ItemsSource1.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr style="height: 2px;">
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
 
-                                                                <td>
-                                                                    <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
-                                                                </td>
-                                                            </tr>
+                                                            <td>
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                        </tr>
 
-                                                            <tr>
-                                                                <td>
-                                                                    <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource1Hidden" (click)="ItemsSource1Hidden = true" />
-                                                                    <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource1Hidden" (click)="ItemsSource1Hidden = false" />
-                                                                </td>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource1Hidden" (click)="ItemsSource1Hidden = true" />
+                                                                <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource1Hidden" (click)="ItemsSource1Hidden = false" />
+                                                            </td>
 
-                                                                <td>Connected</td>
-                                                            </tr>
+                                                            <td>Connected</td>
+                                                        </tr>
 
-                                                            <tr style="height: 2px;">
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                                <td>
-                                                                    <div [hidden]="ItemsSource1Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr class="SimpleGridViewRow CellBorder" style="background: #ECF2F6" *ngFor="let item of ItemsSource1" [hidden]="ItemsSource1Hidden || item == null">
-                                                    <td style="height: 25px;">
-                                                        <table style="height: 25px;">
-                                                            <tr>
+                                                        <tr style="height: 2px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                            <td>
+                                                                <div [hidden]="ItemsSource1Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr class="SimpleGridViewRow CellBorder" style="background: #ECF2F6" *ngFor="let item of ItemsSource1" [hidden]="ItemsSource1Hidden || item == null">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr>
 
-                                                                <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
-                                                                    <table style="height: 25px;">
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
+                                                                <table style="height: 25px;">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: white;"></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: #848484;"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div>
+                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                <span class="hyperlink" (click)="ViewShipment(item)">{{item.ShipmentNumber}}</span>
+                                                            </td>
+                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.CustomerName}}</td>
+                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.House}}</td>
+                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; text-align: right;">{{item.GrossWeight | NumbersPipe:'N2'}}</td>
+                                                            <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px; text-align: right;">{{item.VolumetricWeight | NumbersPipe:'N2'}}</td>
+                                                            <td class="GridViewCell">
+                                                                <div class="MediaFill">
+                                                                    <table>
                                                                         <tr>
-                                                                            <td>
+                                                                            <td style="width: 60px; min-width: 60px;">
+                                                                                <span [ngStyle]="{color: item.FHLStatusName | StringToColorPipe}">{{item.FHLStatusName}}</span>
+                                                                            </td>
+
+                                                                            <td class="TextTrimming">
+                                                                                <span [ngStyle]="{color: item.FHLStatusName | StringToColorPipe}" style="font-size: 11px;" *ngIf="item.FNAReason">FNA Reason: {{item.FNAReason}}</span>
+                                                                            </td>
+
+                                                                            <td style="width: 3px; min-width: 3px;">
                                                                                 <div></div>
-                                                                            </td>
-
-                                                                            <td style="width: 1px; height: 100%;">
-                                                                                <div class="Stretch" style="background: white;"></div>
-                                                                            </td>
-
-                                                                            <td style="width: 1px; height: 100%;">
-                                                                                <div class="Stretch" style="background: #848484;"></div>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
-                                                                </td>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
 
-                                                                <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                    <div>
-                                                                        <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
-                                                                    </div>
-                                                                </td>
+                                            <!-- Not Connected -->
+                                            <tr *ngIf="ItemsSource2.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr style="height: 2px;">
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                        </tr>
 
-                                                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
-                                                                    <span class="hyperlink" (click)="ViewShipment(item)">{{item.ShipmentNumber}}</span>
-                                                                </td>
-                                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.CustomerName}}</td>
-                                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.House}}</td>
-                                                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; text-align: right;">{{item.GrossWeight | NumbersPipe:'N2'}}</td>
-                                                                <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px; text-align: right;">{{item.VolumetricWeight | NumbersPipe:'N2'}}</td>
-                                                                <td class="GridViewCell">
-                                                                    <div class="MediaFill">
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width: 60px; min-width: 60px;">
-                                                                                    <span [ngStyle]="{color: item.FHLStatusName | StringToColorPipe}">{{item.FHLStatusName}}</span>
-                                                                                </td>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource2Hidden" (click)="ItemsSource2Hidden = true" />
+                                                                <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource2Hidden" (click)="ItemsSource2Hidden = false" />
+                                                            </td>
 
-                                                                                <td class="TextTrimming">
-                                                                                    <span [ngStyle]="{color: item.FHLStatusName | StringToColorPipe}" style="font-size: 11px;" *ngIf="item.FNAReason">FNA Reason: {{item.FNAReason}}</span>
-                                                                                </td>
+                                                            <td>Not Connected</td>
+                                                        </tr>
 
-                                                                                <td style="width: 3px; min-width: 3px;">
-                                                                                    <div></div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
+                                                        <tr style="height: 2px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                            <td>
+                                                                <div [hidden]="ItemsSource2Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr class="SimpleGridViewRow CellBorder" style="background: #ECF2F6" *ngFor="let item of ItemsSource2" [hidden]="ItemsSource2Hidden || item == null">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr>
 
-                                                <!-- Not Connected -->
-                                                <tr *ngIf="ItemsSource2.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
-                                                    <td style="height: 25px;">
-                                                        <table style="height: 25px;">
-                                                            <tr style="height: 2px;">
-                                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                    <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
-                                                                </td>
-                                                            </tr>
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
+                                                                <table style="height: 25px;">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
 
-                                                            <tr>
-                                                                <td>
-                                                                    <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource2Hidden" (click)="ItemsSource2Hidden = true" />
-                                                                    <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource2Hidden" (click)="ItemsSource2Hidden = false" />
-                                                                </td>
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: white;"></div>
+                                                                        </td>
 
-                                                                <td>Not Connected</td>
-                                                            </tr>
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: #848484;"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
 
-                                                            <tr style="height: 2px;">
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                                <td>
-                                                                    <div [hidden]="ItemsSource2Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr class="SimpleGridViewRow CellBorder" style="background: #ECF2F6" *ngFor="let item of ItemsSource2" [hidden]="ItemsSource2Hidden || item == null">
-                                                    <td style="height: 25px;">
-                                                        <table style="height: 25px;">
-                                                            <tr>
+                                                            <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <img src="./Images/Info.png" class="CenterCenter" title="Not Matched" *ngIf="!item.IsMatched" />
+                                                                <div>
+                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" *ngIf="item.IsMatched" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                                </div>
+                                                            </td>
 
-                                                                <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
-                                                                    <table style="height: 25px;">
+                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                <span class="hyperlink" (click)="ViewShipment(item)">{{item.ShipmentNumber}}</span>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.CustomerName}}</td>
+                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.House}}</td>
+                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; text-align: right;">{{item.GrossWeight | NumbersPipe:'N2'}}</td>
+                                                            <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px; text-align: right;">{{item.VolumetricWeight | NumbersPipe:'N2'}}</td>
+                                                            <td class="GridViewCell">
+                                                                <div class="MediaFill">
+                                                                    <table>
                                                                         <tr>
-                                                                            <td>
+                                                                            <td style="width: 60px; min-width: 60px;">
+                                                                                <span [ngStyle]="{color: item.FHLStatusName | StringToColorPipe}">{{item.FHLStatusName}}</span>
+                                                                            </td>
+
+                                                                            <td class="TextTrimming">
+                                                                                <span [ngStyle]="{color: item.FHLStatusName | StringToColorPipe}" style="font-size: 11px;" *ngIf="item.FNAReason">FNA Reason: {{item.FNAReason}}</span>
+                                                                            </td>
+
+                                                                            <td style="width: 3px; min-width: 3px;">
                                                                                 <div></div>
-                                                                            </td>
-
-                                                                            <td style="width: 1px; height: 100%;">
-                                                                                <div class="Stretch" style="background: white;"></div>
-                                                                            </td>
-
-                                                                            <td style="width: 1px; height: 100%;">
-                                                                                <div class="Stretch" style="background: #848484;"></div>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
-                                                                </td>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
 
-                                                                <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                    <img src="./Images/Info.png" class="CenterCenter" title="Not Matched" *ngIf="!item.IsMatched" />
-                                                                    <div>
-                                                                        <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" *ngIf="item.IsMatched" [IsEnabled]="IsEditingEnabled"></CheckBox>
-                                                                    </div>
-                                                                </td>
+                                            <tr style="height: 1px;" *ngIf="ItemsSource1.length > 0 || ItemsSource2.length > 0">
+                                                <td>
+                                                    <div style="height:1px; width: 100%; background: #848484; margin-top: -1px;"></div>
+                                                </td>
+                                            </tr>
 
-                                                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
-                                                                    <span class="hyperlink" (click)="ViewShipment(item)">{{item.ShipmentNumber}}</span>
-                                                                </td>
-
-                                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.CustomerName}}</td>
-                                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.House}}</td>
-                                                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; text-align: right;">{{item.GrossWeight | NumbersPipe:'N2'}}</td>
-                                                                <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px; text-align: right;">{{item.VolumetricWeight | NumbersPipe:'N2'}}</td>
-                                                                <td class="GridViewCell">
-                                                                    <div class="MediaFill">
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width: 60px; min-width: 60px;">
-                                                                                    <span [ngStyle]="{color: item.FHLStatusName | StringToColorPipe}">{{item.FHLStatusName}}</span>
-                                                                                </td>
-
-                                                                                <td class="TextTrimming">
-                                                                                    <span [ngStyle]="{color: item.FHLStatusName | StringToColorPipe}" style="font-size: 11px;" *ngIf="item.FNAReason">FNA Reason: {{item.FNAReason}}</span>
-                                                                                </td>
-
-                                                                                <td style="width: 3px; min-width: 3px;">
-                                                                                    <div></div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                                <tr style="height: 1px;" *ngIf="ItemsSource1.length > 0 || ItemsSource2.length > 0">
-                                                    <td>
-                                                        <div style="height:1px; width: 100%; background: #848484; margin-top: -1px;"></div>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
 

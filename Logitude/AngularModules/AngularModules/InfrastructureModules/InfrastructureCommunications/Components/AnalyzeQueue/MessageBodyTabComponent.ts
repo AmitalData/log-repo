@@ -7,7 +7,7 @@ import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper'
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './MessageBodyTabComponent.html',
 })
 

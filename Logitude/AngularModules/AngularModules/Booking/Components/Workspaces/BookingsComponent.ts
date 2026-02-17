@@ -16,7 +16,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {FormatTool} from '../../../Infrastructure/Tools';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './BookingsComponent.html',
 })
 
@@ -91,7 +91,7 @@ export class BookingsComponent {
     public CancelledBookingsCount: string;
     public ErrorsQueryColor: string = "#282E30";
     LoadQueriesCounts() {
-        this.myBookingDomainService.GetBookingsCounts().subscribe((myResult:any) => {
+        this.myBookingDomainService.GetBookingsCounts().subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -116,7 +116,7 @@ export class BookingsComponent {
     public RecentBookingsCount: number = 0;
     public RecentBookingsList: BookingList[] = [];
     LoadRecentBookings() {
-        this.myBookingDomainService.GetRecentBookings().subscribe((myResult:any) => {
+        this.myBookingDomainService.GetRecentBookings().subscribe(myResult => {
             if (myResult == null) {
                 this.RecentBookingsList = [];
                 this.RecentBookingsCount = 0;
@@ -210,7 +210,7 @@ export class BookingsComponent {
             listArgs.ObjectTableName = "Booking";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = "Operations";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -229,7 +229,7 @@ export class BookingsComponent {
     }
 
     LoadInProgressBookingsDashboard() {
-        this.myBookingDomainService.GetBookingsDashBoard(SessionLocator.TenantPM.Id).subscribe((myResult:any) => {
+        this.myBookingDomainService.GetBookingsDashBoard(SessionLocator.TenantPM.Id).subscribe(myResult => {
             this.InProgressBookingDashboard = new Array<ChartingDataClass>();
             var myResponse: ServiceResponse = myResult;
             this.InProgressBookingDashboard = myResponse.Result;
@@ -459,7 +459,7 @@ export class BookingsComponent {
         logWindow.Height = 530;
         logWindow.WindowArgs = args;
         logWindow.Title = "Flight Schedules / Availability";
-        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe(response => {
             logWindow.Show('./CommonModules/CommonFlightsSchedules/Components/FlightsSchedules/FlightsSchedulesComponent');
         });
     }

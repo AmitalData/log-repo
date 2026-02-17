@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,6 +13,5 @@ namespace WebFreight.Web.DataContracts
         public DataTable SQLDataResult { get; set; }
         
         public string SQLString { get; set; }
-        public bool IsParentTenant { get; set; }
     }
 }

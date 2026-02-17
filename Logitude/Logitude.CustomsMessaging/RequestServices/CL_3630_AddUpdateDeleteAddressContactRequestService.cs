@@ -1,7 +1,4 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.Data;
-using Logitude.Customs.Def.EntityPMs;
-using Logitude.CustomsMessaging.Common.RequestParams;
+﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -28,21 +25,8 @@ namespace Logitude.CustomsMessaging.RequestServices
        
             myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification = new CustomerIdentification();
             int.TryParse(requestParams.ExternalId, out externalID);
-            ClientPM clientPM = null;
-            if (!String.IsNullOrWhiteSpace(requestParams.ClientId))
-            {
-                ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
-                var ClientSearchQueryService = new ClientQueryService(dbContext);
-                clientPM = ClientSearchQueryService.GetSingle(requestParams.ClientId, false, false);
-            }
             myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.externalID = externalID;
             myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.externalIDSpecified = externalID > 0 ? true : false;
-            if (clientPM != null && !string.IsNullOrWhiteSpace(clientPM.PassportNumber) && clientPM.PassportCountryCode != "IL")
-            {
-                myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.externalID = null;
-                myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.externalIDSpecified = false;
-            }
-
             myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.passportNumber = requestParams.PassportNumber;
             myAddUpdateDeleteAddressContactPhoneForCustomsAgent.CustomerIdentification.passportCountry = requestParams.PassportCountryCode;
             int.TryParse(requestParams.PassportTypeCode, out passportType);

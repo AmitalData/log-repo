@@ -16,25 +16,13 @@ namespace Logitude.TariffModule.Data.Repositories
    {
 		public List<TariffLine> GetMulti(EntityKeyFields entityKeys)
         {
-            TariffVersionKeys myEntityKeys = entityKeys as TariffVersionKeys;
-            return (from a in context.TariffLines where a.TariffId == myEntityKeys.TariffId && a.Version == myEntityKeys.Version select a).ToList();
+            TariffKeys myEntityKeys = entityKeys as TariffKeys;
+            return (from a in context.TariffLines where a.TariffId == myEntityKeys.Id select a).ToList();
         }
 
         public List<TariffLine> GetTariffLinesByTariff(string tariffId, int tenant)
         {
             return (from a in context.TariffLines where a.TariffId == tariffId && a.Tenant == tenant select a).ToList();
-        }
-
-        public List<TariffLine> GetTariffLinesByTariffAndVersion(string tariffId, int version, int tenant)
-        {
-            return (from a in context.TariffLines where a.TariffId == tariffId && a.Version == version && a.Tenant == tenant select a).ToList();
-        }
-
-        public IQueryable<TariffLine> GetAllTariffLinesByTariffIdAndVersions(string tariffId, List<int> versionIds, int tenant)
-        {
-            return from a in context.TariffLines
-                   where a.Tenant == tenant && a.TariffId == tariffId && versionIds.Contains(a.Version)
-                   select a;
         }
     }
 }

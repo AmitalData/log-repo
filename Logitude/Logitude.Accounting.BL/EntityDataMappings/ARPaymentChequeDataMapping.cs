@@ -55,14 +55,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.CurrencyCode = currency.Code;
                 }
             }
-            if (entityPOCO.PaymentId != null )
+            if (entityPOCO.PaymentId != null)
             {
                 ARPaymentQuery aRPaymentQueryService = new ARPaymentQuery(entityPOCO.Tenant);
-                //ARPaymentPM aRPayment = aRPaymentQueryService.GetSinglePM(entityPOCO.PaymentId, entityPOCO.Tenant);
-                //if (aRPayment != null )
-                //{
-                entityPM.PaymentNumber = aRPaymentQueryService.GetARPaymentNumber(entityPOCO.PaymentId, entityPOCO.Tenant);
-                //}
+                ARPaymentPM aRPayment = aRPaymentQueryService.GetSinglePM(entityPOCO.PaymentId, entityPOCO.Tenant);
+                if (aRPayment != null)
+                {
+                    entityPM.PaymentNumber = aRPayment.PaymentNo;
+                }
             }
             if (entityPOCO.BankId != null)
             {

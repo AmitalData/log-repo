@@ -1,4 +1,4 @@
-import {Component, AfterViewInit} from '@angular/core';
+﻿import {Component, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {AppTool} from '../../../../../Infrastructure/Tools';
@@ -6,11 +6,9 @@ import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {AWBWizardComponent} from '../AWBWizardComponent';
 import {ShipmentTool, RoutingHelper} from '../../../../../Shipment/Tools';
 import {PortList} from '../../../../../Common/EntityLists/PortList';
-import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { PortListService } from '../../../../../Common/Services/StandardLists/PortListService';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'AWBHouseRoutingsTabComponent',
     templateUrl: './AWBHouseRoutingsTabComponent.html',
@@ -21,13 +19,8 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
     public Wizard: AWBWizardComponent;
     public DataContext: AWBHouseRoutingsTabComponent = this;
     public ObjectTableName: string;
-    private myPortListService: PortListService;
-
     constructor() {
         super();
-        if (this.myPortListService == null) {
-            this.myPortListService = new PortListService();
-        }
     }
 
     ngAfterViewInit() {
@@ -54,20 +47,10 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
                 if (isSaveSuccess) {
                     this.EntityPM = this.Wizard.EntityPM;
                     this.SetUIProperties();
-                    this.FireWizardEvent();
-                }
-            });
-
-            this.Wizard.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                if (isLoadSuccess) {
-                    this.EntityPM = this.Wizard.EntityPM;
-                    this.SetUIProperties();
-                    this.FireWizardEvent();
                 }
             });
         }
     }
-
 
     public IsEditingEnabled: boolean = false;
     private SetUIProperties() {
@@ -91,36 +74,36 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
         this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, isPortsEnabled);
         this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, isPortsEnabled);
 
-        this.UIProperties.SetEnabled("HasOnForwarding", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("HasOnForwarding", this.ObjectTableName, this.IsEditingEnabled);       
-        this.UIProperties.SetEnabled("PreForwardingFromPortId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("OnForwardingToPortId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("HasOnCarriage", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("HasOnCarriage", this.ObjectTableName, this.IsEditingEnabled);       
+        this.UIProperties.SetEnabled("PreCarriageFromPortId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageToPortId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPortId) ? true : false);
         this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPortId) ? true : false);
         this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPortId) ? true : false);
-        this.SetUIProperties_PreForwarding();
-        this.SetUIProperties_OnForwarding();
+        this.SetUIProperties_PreCarriage();
+        this.SetUIProperties_OnCarriage();
     }
 
-    SetUIProperties_PreForwarding() {
-        var isPreForwardingPortRequired = false;
+    SetUIProperties_PreCarriage() {
+        var isPreCarriagePortRequired = false;
 
-        if (this.HasPreForwarding && AppTool.IsNullOrEmpty(this.PreForwardingFromPortId)) {
-            isPreForwardingPortRequired = true;
+        if (this.HasPreCarriage && AppTool.IsNullOrEmpty(this.PreCarriageFromPortId)) {
+            isPreCarriagePortRequired = true;
         }
 
-        this.UIProperties.SetRequired("PreForwardingFromPortId", this.ObjectTableName, isPreForwardingPortRequired);
+        this.UIProperties.SetRequired("PreCarriageFromPortId", this.ObjectTableName, isPreCarriagePortRequired);
         this.FireWizardEvent();
     }
 
-    SetUIProperties_OnForwarding() {
-        var isOnForwardingPortRequired = false;
+    SetUIProperties_OnCarriage() {
+        var isOnCarriagePortRequired = false;
 
-        if (this.HasOnForwarding && AppTool.IsNullOrEmpty(this.OnForwardingToPortId)) {
-            isOnForwardingPortRequired = true;
+        if (this.HasOnCarriage && AppTool.IsNullOrEmpty(this.OnCarriageToPortId)) {
+            isOnCarriagePortRequired = true;
         }
 
-        this.UIProperties.SetRequired("OnForwardingToPortId", this.ObjectTableName, isOnForwardingPortRequired);
+        this.UIProperties.SetRequired("OnCarriageToPortId", this.ObjectTableName, isOnCarriagePortRequired);
         this.FireWizardEvent();
     }
 
@@ -131,9 +114,7 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
         this.Wizard.ValidateScreen_PAC();
     }
     private Validate() {
-        if (!this.Wizard.IsImportWizard) {
-            this.ShowWarning_House = AppTool.IsNullOrEmpty(this.House) ? true : false;
-        }
+        this.ShowWarning_House = AppTool.IsNullOrEmpty(this.House) ? true : false;
     }
 
     private AllPorts: PortList[];
@@ -149,44 +130,44 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
         }
     }
 
-    get HasPreForwarding() { return this.EntityPM.HasPreForwarding; }
-    set HasPreForwarding(newValue: boolean) {
-        if (this.EntityPM.HasPreForwarding != newValue) {
-            this.EntityPM.HasPreForwarding = newValue;
-            this.SetPreForwarding();
-            this.SetUIProperties_PreForwarding();
+    get HasPreCarriage() { return this.EntityPM.HasPreCarriage; }
+    set HasPreCarriage(newValue: boolean) {
+        if (this.EntityPM.HasPreCarriage != newValue) {
+            this.EntityPM.HasPreCarriage = newValue;
+            this.SetPreCarriage();
+            this.SetUIProperties_PreCarriage();
         }
     }
 
-    get PreForwardingFromPortId() { return this.EntityPM.PreForwardingFromPortId; }
-    set PreForwardingFromPortId(newValue: string) {
-        if (this.EntityPM.PreForwardingFromPortId != newValue) {
-            this.EntityPM.PreForwardingFromPortId = newValue;
-            this.SetUIProperties_PreForwarding();
+    get PreCarriageFromPortId() { return this.EntityPM.PreCarriageFromPortId; }
+    set PreCarriageFromPortId(newValue: string) {
+        if (this.EntityPM.PreCarriageFromPortId != newValue) {
+            this.EntityPM.PreCarriageFromPortId = newValue;
+            this.SetUIProperties_PreCarriage();
         }
     }
 
-    private preForwardingFromPort: PortList;
-    get PreForwardingFromPort() { return this.preForwardingFromPort; }
-    set PreForwardingFromPort(list: PortList) {
-        if (this.preForwardingFromPort != list) {
-            this.preForwardingFromPort = list;
+    private preCarriageFromPort: PortList;
+    get PreCarriageFromPort() { return this.preCarriageFromPort; }
+    set PreCarriageFromPort(list: PortList) {
+        if (this.preCarriageFromPort != list) {
+            this.preCarriageFromPort = list;
             this.AddPort(list);
 
             var Code = list == null ? null : list.Code;
-            if (Code != this.EntityPM.PreForwardingFromPortCode) {
+            if (Code != this.EntityPM.PreCarriageFromPortCode) {
                 if (list == null) {
-                    this.EntityPM.PreForwardingFromPortCode = null;
-                    this.EntityPM.PreForwardingFromPortName = null;
-                    this.EntityPM.PreForwardingFromPortCountryCode = null;
-                    this.EntityPM.PreForwardingFromPortCountryName = null;
+                    this.EntityPM.PreCarriageFromPortCode = null;
+                    this.EntityPM.PreCarriageFromPortName = null;
+                    this.EntityPM.PreCarriageFromPortCountryCode = null;
+                    this.EntityPM.PreCarriageFromPortCountryName = null;
                 }
 
                 else {
-                    this.EntityPM.PreForwardingFromPortCode = list.Code;
-                    this.EntityPM.PreForwardingFromPortName = list.EnglishName;
-                    this.EntityPM.PreForwardingFromPortCountryCode = list.CountryCode;
-                    this.EntityPM.PreForwardingFromPortCountryName = list.CountryName;
+                    this.EntityPM.PreCarriageFromPortCode = list.Code;
+                    this.EntityPM.PreCarriageFromPortName = list.EnglishName;
+                    this.EntityPM.PreCarriageFromPortCountryCode = list.CountryCode;
+                    this.EntityPM.PreCarriageFromPortCountryName = list.CountryName;
                 }
             }
         }
@@ -197,10 +178,9 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
         if (this.EntityPM.MainCarriageFromPortId != newValue) {
             this.EntityPM.FromPortId = newValue;
             this.EntityPM.MainCarriageFromPortId = newValue;
-            this.SetPreForwarding();
+            this.SetPreCarriage();
             this.FireWizardEvent();
             this.SetUIProperties();
-    
         }
     }
 
@@ -238,14 +218,14 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
         }
     }
 
+
     get ToPortId() { return this.EntityPM.ToPortId; }
     set ToPortId(value: string) {
         if (this.EntityPM.ToPortId != value) {
             this.EntityPM.ToPortId = value;
             this.EntityPM.MainCarriageToPortId = value;
             this.EntityPM.MainCarriageFinalDestinationPortId = value;
-           
-            this.SetOnForwarding();
+            this.SetOnCarriage();
             this.FireWizardEvent();
             this.SetUIProperties();
         }
@@ -258,96 +238,137 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
             this.toPort = list;
             this.AddPort(list);
 
-            var Code = list == null ? null : list.Code;
-            if (Code != this.EntityPM.MainCarriageToPortCode) {
-                if (list == null) {
-                    this.EntityPM.ToCountryId = null;
-                    this.EntityPM.ToCountryIsEC = false;
-                    this.EntityPM.MainCarriageToPortCode = null;
-                    this.EntityPM.FinalDistenationPortId = null;
-                    ShipmentTool.ComputeSCI(this.EntityPM);
-                }
+            //var Code = list == null ? null : list.Code;
+            //if (Code != this.EntityPM.MainCarriageToPortCode) {
+            //    if (list == null) {
+            //        this.EntityPM.MainCarriageToPortCode = null;
+            //        this.EntityPM.MainCarriageToPortName = null;
+            //        this.EntityPM.MainCarriageToPortCountryCode = null;
+            //        this.EntityPM.MainCarriageToPortCountryName = null;
+            //        //this.BuildLegs();
+            //    }
 
-                else {
-                    this.EntityPM.ToCountryId = list.CountryId;
-                    this.EntityPM.ToCountryIsEC = list.CountryEC;
-                    this.EntityPM.MainCarriageToPortCode = list.Code;
-                    this.EntityPM.FinalDistenationPortId = list.Id;
-                    ShipmentTool.ComputeSCI(this.EntityPM);
-                }
-            }            
+            //    else {
+            //        this.EntityPM.MainCarriageToPortCode = list.Code;
+            //        this.EntityPM.MainCarriageToPortName = list.EnglishName;
+            //        this.EntityPM.MainCarriageToPortCountryCode = list.CountryCode;
+            //        this.EntityPM.MainCarriageToPortCountryName = list.CountryName;
+            //        //this.BuildLegs();
+            //    }
+            //}
         }
     }
 
-    get HasOnForwarding() { return this.EntityPM.HasOnForwarding; }
-    set HasOnForwarding(newValue: boolean) {
-        if (this.EntityPM.HasOnForwarding != newValue) {
-            this.EntityPM.HasOnForwarding = newValue;
-            this.SetOnForwarding();
-            this.SetUIProperties_OnForwarding();
+    //get MainCarriageToPortId() { return this.EntityPM.MainCarriageToPortId; }
+    //set MainCarriageToPortId(newValue: string) {
+    //    if (this.EntityPM.MainCarriageToPortId != newValue) {
+    //        this.EntityPM.ToPortId = newValue;
+    //        this.EntityPM.MainCarriageToPortId = newValue;
+    //        this.EntityPM.MainCarriageFinalDestinationPortId = newValue;
+    //        this.SetOnCarriage();            
+    //        this.FireWizardEvent();
+    //        this.SetUIProperties();
+    //    }
+    //}
+
+    //private mainCarriageToPort: PortList;
+    //get MainCarriageToPort() { return this.mainCarriageToPort; }
+    //set MainCarriageToPort(list: PortList) {
+    //    if (this.mainCarriageToPort != list) {
+    //        this.mainCarriageToPort = list;
+    //        this.AddPort(list);
+
+    //        var Code = list == null ? null : list.Code;
+    //        if (Code != this.EntityPM.MainCarriageToPortCode) {
+    //            if (list == null) {
+    //                this.EntityPM.MainCarriageToPortCode = null;
+    //                this.EntityPM.MainCarriageToPortName = null;
+    //                this.EntityPM.MainCarriageToPortCountryCode = null;
+    //                this.EntityPM.MainCarriageToPortCountryName = null;
+    //                //this.BuildLegs();
+    //            }
+
+    //            else {
+    //                this.EntityPM.MainCarriageToPortCode = list.Code;
+    //                this.EntityPM.MainCarriageToPortName = list.EnglishName;
+    //                this.EntityPM.MainCarriageToPortCountryCode = list.CountryCode;
+    //                this.EntityPM.MainCarriageToPortCountryName = list.CountryName;
+    //                //this.BuildLegs();
+    //            }
+    //        }
+    //    }
+    //}
+
+
+    get HasOnCarriage() { return this.EntityPM.HasOnCarriage; }
+    set HasOnCarriage(newValue: boolean) {
+        if (this.EntityPM.HasOnCarriage != newValue) {
+            this.EntityPM.HasOnCarriage = newValue;
+            this.SetOnCarriage();
+            this.SetUIProperties_OnCarriage();
         }
     }
 
-    get OnForwardingToPortId() { return this.EntityPM.OnForwardingToPortId; }
-    set OnForwardingToPortId(newValue: string) {
-        if (this.EntityPM.OnForwardingToPortId != newValue) {
-            this.EntityPM.OnForwardingToPortId = newValue;
-            this.SetUIProperties_OnForwarding();
+    get OnCarriageToPortId() { return this.EntityPM.OnCarriageToPortId; }
+    set OnCarriageToPortId(newValue: string) {
+        if (this.EntityPM.OnCarriageToPortId != newValue) {
+            this.EntityPM.OnCarriageToPortId = newValue;
+            this.SetUIProperties_OnCarriage();
         }
     }
 
-    private onForwardingToPort: PortList;
-    get OnForwardingToPort() { return this.onForwardingToPort; }
-    set OnForwardingToPort(list: PortList) {
-        if (this.onForwardingToPort != list) {
-            this.onForwardingToPort = list;
+    private onCarriageToPort: PortList;
+    get OnCarriageToPort() { return this.onCarriageToPort; }
+    set OnCarriageToPort(list: PortList) {
+        if (this.onCarriageToPort != list) {
+            this.onCarriageToPort = list;
             this.AddPort(list);
 
             var Code = list == null ? null : list.Code;
-            if (Code != this.EntityPM.OnForwardingToPortCode) {
+            if (Code != this.EntityPM.OnCarriageToPortCode) {
                 if (list == null) {
-                    this.EntityPM.OnForwardingToPortCode = null;
-                    this.EntityPM.OnForwardingToPortName = null;
-                    this.EntityPM.OnForwardingToPortCountryCode = null;
-                    this.EntityPM.OnForwardingToPortCountryName = null;
+                    this.EntityPM.OnCarriageToPortCode = null;
+                    this.EntityPM.OnCarriageToPortName = null;
+                    this.EntityPM.OnCarriageToPortCountryCode = null;
+                    this.EntityPM.OnCarriageToPortCountryName = null;
                 }
 
                 else {
-                    this.EntityPM.OnForwardingToPortCode = list.Code;
-                    this.EntityPM.OnForwardingToPortName = list.EnglishName;
-                    this.EntityPM.OnForwardingToPortCountryCode = list.CountryCode;
-                    this.EntityPM.OnForwardingToPortCountryName = list.CountryName;
+                    this.EntityPM.OnCarriageToPortCode = list.Code;
+                    this.EntityPM.OnCarriageToPortName = list.EnglishName;
+                    this.EntityPM.OnCarriageToPortCountryCode = list.CountryCode;
+                    this.EntityPM.OnCarriageToPortCountryName = list.CountryName;
                 }
             }
         }
     }
 
-    private SetPreForwarding() {
-        if (this.HasPreForwarding) {
-            this.EntityPM.PreForwardingTransportModeId = "A";
-            this.EntityPM.PreForwardingToPortId = this.EntityPM.FromPortId;
-            this.EntityPM.PreForwardingToPortCode = this.EntityPM.MainCarriageFromPortCode;
-            this.EntityPM.PreForwardingToPortName = this.EntityPM.MainCarriageFromPortName;
-            this.EntityPM.PreForwardingToPortCountryCode = this.EntityPM.MainCarriageFromPortCountryCode;
-            this.EntityPM.PreForwardingToPortCountryName = this.EntityPM.MainCarriageFromPortCountryName;
+    private SetPreCarriage() {
+        if (this.HasPreCarriage) {
+            this.EntityPM.PreCarriageTransportModeId = "A";
+            this.EntityPM.PreCarriageToPortId = this.EntityPM.FromPortId;
+            this.EntityPM.PreCarriageToPortCode = this.EntityPM.MainCarriageFromPortCode;
+            this.EntityPM.PreCarriageToPortName = this.EntityPM.MainCarriageFromPortName;
+            this.EntityPM.PreCarriageToPortCountryCode = this.EntityPM.MainCarriageFromPortCountryCode;
+            this.EntityPM.PreCarriageToPortCountryName = this.EntityPM.MainCarriageFromPortCountryName;
         }
 
         else {
-            RoutingHelper.RemovePreForwardingLeg(this.EntityPM);
+            RoutingHelper.RemovePreCarriageLeg(this.EntityPM);
         }
     }
-    private SetOnForwarding() {
-        if (this.HasOnForwarding) {
-            this.EntityPM.OnForwardingTransportModeId = "A";
-            this.EntityPM.OnForwardingFromPortId = this.EntityPM.ToPortId;
-            this.EntityPM.OnForwardingFromPortCode = this.EntityPM.MainCarriageToPortCode;
-            this.EntityPM.OnForwardingFromPortName = this.EntityPM.MainCarriageToPortName;
-            this.EntityPM.OnForwardingFromPortCountryCode = this.EntityPM.MainCarriageToPortCountryCode;
-            this.EntityPM.OnForwardingFromPortCountryName = this.EntityPM.MainCarriageToPortCountryName;
+    private SetOnCarriage() {
+        if (this.HasOnCarriage) {
+            this.EntityPM.OnCarriageTransportModeId = "A";
+            this.EntityPM.OnCarriageFromPortId = this.EntityPM.ToPortId;
+            this.EntityPM.OnCarriageFromPortCode = this.EntityPM.MainCarriageToPortCode;
+            this.EntityPM.OnCarriageFromPortName = this.EntityPM.MainCarriageToPortName;
+            this.EntityPM.OnCarriageFromPortCountryCode = this.EntityPM.MainCarriageToPortCountryCode;
+            this.EntityPM.OnCarriageFromPortCountryName = this.EntityPM.MainCarriageToPortCountryName;
         }
 
         else {
-            RoutingHelper.RemoveOnForwardingLeg(this.EntityPM);
+            RoutingHelper.RemoveOnCarriageLeg(this.EntityPM);
         }
     }
 

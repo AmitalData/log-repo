@@ -1,55 +1,42 @@
-export class GLAccountSummary {
+﻿export class GLAccountSummary {
     Id : number;
-    ActiveGLAccountCount : any;
-    InactiveGLAccountCount : any;
-    AllGLAccountCount : any;
-    OpenFilesCount: any;
-    OpenMastersCount: any;
-    ClosedFilesGLAccountCount : any;
-    AllFilesCount : any;
-    AllJobsCount : any;
-    
+    ActiveGLAccountCount : number;
+    InactiveGLAccountCount : number;
+    AllGLAccountCount : number;
+    OpenFilesCount : number;
+    ClosedFilesGLAccountCount : number;
+    AllFilesCount : number;
+    AllJobsCount : number;
+
     // Customers
-    ActiveCustomersCount : any;
-    InactiveCustomersCount : any;
-    CollectorsCount : any;
-    DebitorsCount: any;
-    AllCustomersCount: any;
+    ActiveCustomersCount : number;
+    InactiveCustomersCount : number;
+    CollectorsCount : number;
+    DebitorsCount: number;
+    AllCustomersCount: number;
 
     // Vendors
-    ActiveVendorsCount : any;
-    InactiveVendorsCount : any;
+    ActiveVendorsCount : number;
+    InactiveVendorsCount : number;
     //CollectorsCount : number;
     //DebitorsCount : number;
-    AllVendorsCount: any;
+    AllVendorsCount: number;
 }
 
 export class JournalSummary {
     Id : number;
-    AllJournalsCount : any;
-    ApprovedJournalsCount : any;
-    WaitingJournalsCount : any;
-    VoidedJournalsCount : any;
-    DraftJournalsCount : any;
+    AllJournalsCount : number;
+    ApprovedJournalsCount : number;
+    WaitingJournalsCount : number;
+    VoidedJournalsCount : number;
+    DraftJournalsCount : number;
 }
 
 export class BankAccountSummary {
     Id: number;
-    AllBankAccountsCount: any;
+    AllBankAccountsCount: number;
 }
 export class PaymentChequeSummary {
     Id: number;
-    AllPaymentChequesCount: any;
-}
-export class BankDepositSummary {
-    Id: number;
-    TodaysDepositCount: any;
-
-}
-
-export class CashBookSummary {
-    Id: number;
-    CashCashbookCount: any;
-    ChequeCashbookCount: any;
-    AllCashbookCount: any;
+    AllPaymenChequesCount: number;
 }

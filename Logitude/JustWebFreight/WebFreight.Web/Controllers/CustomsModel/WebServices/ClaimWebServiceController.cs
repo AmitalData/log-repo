@@ -5,7 +5,7 @@ using Logitude.Customs.Data;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class ClaimWebServiceController : ApiController
     {
-        [HttpGet]
         public HttpResponseMessage CheckIfCorporationNameExists(int tenant)
         {
             try
@@ -82,21 +81,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
-        public HttpResponseMessage PostSendContinuousRequestOnClaim(ContinuousRequestOnClaimFileRequestParams requestParamsData)
-        {
-            try
-            {
-                ContinuousResponseOnClaimFileResponseData responseData;
-                var messagingService = new CLAIM_5005_ContinuousRequestOnClaimFileMessagingService();
-                responseData = messagingService.Send(requestParamsData);
-                return Request.CreateResponse(HttpStatusCode.OK, responseData);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
 
     }
 }

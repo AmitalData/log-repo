@@ -16,15 +16,11 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public int Row { get; set; }
 
         public string ScreenId { get; set; }
-        public string ScreenCode { get; set; }
 
         // public string FieldName { get; set; }
         public string ObjectFieldId { get; set; }
-        public string ObjectFieldCode { get; set; }
-        public int? SectionNumber { get; set; }
 
-
-        
+         
         //[Include]
         //[Association("ScreenScreenField", "ScreenId", "Id",IsForeignKey=true)]
         [ForeignKey("ScreenId")]
@@ -35,6 +31,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         [ForeignKey("ObjectFieldId")]
         public virtual ObjectField ObjectField { get; set; }
+
+
 
     }
 }

@@ -31,9 +31,7 @@ export class TransportModePM {
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { this.searchFields = newValue; this.MarkAsDirty(); }
        
-	private localName: string;
-    public get LocalName() { return this.localName; }
-    public set LocalName(newValue: string) { this.localName = newValue; this.MarkAsDirty(); }
+	 
 
     public OldEntityPM: TransportModePM;
 		
@@ -42,4 +40,4 @@ export class TransportModePM {
         this.IsDirty = true;
 		  	
     }
-}
+}

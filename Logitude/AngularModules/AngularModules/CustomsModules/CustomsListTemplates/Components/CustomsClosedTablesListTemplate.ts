@@ -21,40 +21,30 @@ import { ClosedTableStatusList } from '../../../Customs/EntityLists/ClosedTableS
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { SystemTableRequestParams } from '../../../Customs/DataContract/RequestParams/SystemTableRequestParams';
 import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: 'CustomsClosedTablesListTemplate.html',
 })
 
 export class CustomsClosedTablesListTemplate {
 
     _CustomsClosedTable: CustomsClosedTableList;
-    public fieldName: any;      
+    public fieldName: any;
     TableUpdateButtonIsEnabled: boolean = false;
     UpdateButtonVisibility: boolean = false;
-    isTableUpdateButtonEnabled: boolean = false;
-    private _isConnectedToUniFreight = false; 
     TableUpdateButtonOpacity: string = "1";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
 
         if (AppTool.IsNullOrEmpty(CustomsClosedTablesListTemplate.translate_CommunicationLogBView)) {
             this._entityResourceService.getEntityResourceByTableName("CommunicationLog")
-                .subscribe((response:any) => {
+                .subscribe(response => {
                     CustomsClosedTablesListTemplate.translate_CommunicationLogBView = TextCodeTranslator.Translate("CommunicationLog.B.View");// itzik : Translate +_entityResourceService - its bad :due that i done this- 
                 });
-        } 
-        const canCustomerCare = SessionLocator?.LoggedUserPM?.IsCustomerCare ?? false;
-        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
-        .subscribe((res: ServiceResponse) => {
-            this._isConnectedToUniFreight = !!res?.Result?.IsConnectedToUniFreight;
-            this.isTableUpdateButtonEnabled = this._isConnectedToUniFreight || canCustomerCare;
-        });
+        }
     }
 
     static translate_CommunicationLogBView: string = "";
@@ -123,7 +113,8 @@ export class CustomsClosedTablesListTemplate {
         
     }
     ShowDetails() {
-         if (!this._CustomsClosedTable.Existed) {
+
+        if (!this._CustomsClosedTable.Existed) {
             this.ShowDetailsNotExistTable();
             return;
         }
@@ -146,24 +137,20 @@ export class CustomsClosedTablesListTemplate {
 
                 var SelectedQuery = null;
 
-                
+
 
                 SelectedQuery = allQueries[0];
            
-                listArgs.QueryCode = SelectedQuery.UniqueCode;
+                listArgs.QueryCode = SelectedQuery.Code;
                 listArgs.ObjectTableName = objectTablePM.Name;
+
+                
                 switch (listArgs.ObjectTableName) {
                     case 'Customs.GovernmentProcedureType':
                     case "Customs.NotificationDefinition":
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
-                    case "Customs.InternalBorderSiteType":
                     case "Customs.UIMessage":
-                    case "Customs.CurrencyType":
-                    case "Customs.CustomsCountry":
-                    case "Customs.InternalBorderSiteType":
-                    case "Customs.CertificateOfOriginMandatoryFields":
-
                     //case "Customs.InternationalSite":
                         listArgs.SuppressOnRowSelected = false;
                         break;
@@ -174,7 +161,7 @@ export class CustomsClosedTablesListTemplate {
             
 
                 listArgs.BackButtonTitle = "Maintenance";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                     listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
@@ -192,7 +179,7 @@ export class CustomsClosedTablesListTemplate {
 
         var myClosedTableStatusListService = new ClosedTableStatusListService();
         //this.CurrentSession.StartBusyIndicator("");
-        myClosedTableStatusListService.getSingleFromCache("2").subscribe((result:any) => {
+        myClosedTableStatusListService.getSingleFromCache("2").subscribe(result => {
             let status: ClosedTableStatusList = result.Result as ClosedTableStatusList;
             this._CustomsClosedTable.StatusName = status.LocalName
             this._CustomsClosedTable.LastUpdateDate = DateTool.AddDays(DateTool.GetCurrentDateAsUtc(), 0);

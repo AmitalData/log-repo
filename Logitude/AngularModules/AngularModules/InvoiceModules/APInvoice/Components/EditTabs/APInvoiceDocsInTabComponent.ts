@@ -1,11 +1,10 @@
-﻿import { AppTool } from './../../../../Infrastructure/Tools';
-declare var window: any;
+﻿declare var window: any;
 import {Component, OnInit}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './APInvoiceDocsInTabComponent.html',
 })
 
@@ -41,9 +40,6 @@ export class APInvoiceDocsInTabComponent implements OnInit {
                 this.EntityObjectTableId = invoiceEntitiy.ObjectTableId;
             }
 
-            if(AppTool.IsNullOrEmpty(this.EntityObjectTableId)){
-                this.EntityObjectTableId=invoiceObjectTable.Id;
-            }
             this.ChildEntityId = this.EntityPM.Id;
             this.ChildEntityReference = this.EntityPM.InvoiceNumber;
             this.ChildEntityObjectTableId = invoiceObjectTable.Id;

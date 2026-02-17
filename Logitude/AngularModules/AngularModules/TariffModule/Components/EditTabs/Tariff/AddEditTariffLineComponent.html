@@ -8,1146 +8,188 @@
 
     <tr>
         <td>
-            <div class="MediaFill">
-                <ScrollViewer>
-                    <table class="FixedTable">
-
-                        <!-- From  -->
-                        <tr *ngIf="IsPortsVisible" class="FormFieldRow">
-                            <td style="width:100px;">
-                                <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td style="width:230px;">
-                                <LogLov [ObjectFieldName]="'OriginPortId'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [LookUpTableName]="'Port'"
-                                        [DataContext]="DataContext"
-                                        (SelectedItemChanged)="DataContext.OriginPort = $event"
-                                        [DisplayMemberPath]="GetDisplayMemberPath()"
-                                        [SelectedValue]="DataContext.OriginPortId"
-                                        [DependencyFilter1Value]="OriginDependencyFilterValue">
-                                </LogLov>
-                            </td>
-
-                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC' || TariffType == 'OFC'">
-                                <div class="MediaFill">
-                                    <table *ngIf="!DataContext.OriginPortId">
-                                        <tr>
-                                            <td style="color:red; padding-left: 10px;">
-                                                {{OriginPortText}}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </td>
-
-                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'IFT'">
-                                <table>
-                                    <tr>
-                                        <td style="width:140px;">
-                                            <LogLabel [ObjectFieldName]="'IsFromAllOtherPorts'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td style="width:25px;">
-                                            <LogCheckBox [ObjectFieldName]="'IsFromAllOtherPorts'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsFromAllOtherPorts"></LogCheckBox>
-                                        </td>
-
-                                        <td style="color:red; padding-left: 10px;">
-                                            <span *ngIf="!DataContext.OriginPortId">{{OriginPortText}}</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <tr *ngIf="!IsPortsVisible && TariffType != 'ECS'" class="FormFieldRow">
-                            <td style="width:100px;">
-                                <LogLabel [ObjectFieldName]="'FromCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td style="width:230px;">
-                                <LogLov [ObjectFieldName]="'FromCountryId'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [LookUpTableName]="'Country'"
-                                        [DataContext]="DataContext"
-                                        (SelectedItemChanged)="DataContext.FromCountry = $event"
-                                        [SelectedValue]="DataContext.FromCountryId">
-                                </LogLov>
-                            </td>
-
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td *ngIf="TariffType != 'ICS' && TariffType != 'ECS'" style="width:160px;">
-                                            <LogLabel [ObjectFieldName]="'IsFromAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="TariffType != 'ICS' && TariffType != 'ECS'" style="width:25px;">
-                                            <LogCheckBox [ObjectFieldName]="'IsFromAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsFromAllOtherCountries"></LogCheckBox>
-                                        </td>
-
-                                        <td style="color:red; padding-left: 10px;">
-                                            <span *ngIf="!DataContext.FromCountryId">{{DataContext.FromCountryCode}}</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <!-- To -->
-                        <tr *ngIf="IsPortsVisible" class="FormFieldRow">
-                            <td>
-                                <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td>
-                                <LogLov [ObjectFieldName]="'DestinationPortId'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [LookUpTableName]="'Port'"
-                                        [DisplayMemberPath]="GetDisplayMemberPath()"
-                                        [DataContext]="DataContext"
-                                        (SelectedItemChanged)="DataContext.DestinationPort = $event"
-                                        [SelectedValue]="DataContext.DestinationPortId"
-                                        [DependencyFilter1Value]="DestinationDependencyFilterValue">
-                                </LogLov>
-                            </td>
-
-                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC' || TariffType == 'OFC'">
-                                <div class="MediaFill">
-                                    <table *ngIf="!DataContext.DestinationPortId">
-                                        <tr>
-                                            <td style="color:red; padding-left: 10px;">
-                                                {{DestinationPortText}}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </td>
-
-                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'IFT'">
-                                <table>
-                                    <tr>
-                                        <td style="width:140px;">
-                                            <LogLabel [ObjectFieldName]="'IsToAllOtherPorts'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td style="width:25px;">
-                                            <LogCheckBox [ObjectFieldName]="'IsToAllOtherPorts'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsToAllOtherPorts"></LogCheckBox>
-                                        </td>
-
-                                        <td style="color:red; padding-left: 10px;">
-                                            <span *ngIf="!DataContext.DestinationPortId">{{DestinationPortText}}</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <tr *ngIf="!IsPortsVisible && TariffType != 'ICS'" class="FormFieldRow">
-                            <td style="width:100px;">
-                                <LogLabel [ObjectFieldName]="'ToCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td style="width:230px;">
-                                <LogLov [ObjectFieldName]="'ToCountryId'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [LookUpTableName]="'Country'"
-                                        [DataContext]="DataContext"
-                                        (SelectedItemChanged)="DataContext.ToCountry = $event"
-                                        [SelectedValue]="DataContext.ToCountryId">
-                                </LogLov>
-                            </td>
-
-
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td *ngIf="TariffType != 'ICS' && TariffType != 'ECS'" style="width:160px;">
-                                            <LogLabel [ObjectFieldName]="'IsToAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="TariffType != 'ICS' && TariffType != 'ECS'" style="width:25px;">
-                                            <LogCheckBox [ObjectFieldName]="'IsToAllOtherCountries'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsToAllOtherCountries"></LogCheckBox>
-                                        </td>
-
-                                        <td style="color:red; padding-left: 10px;">
-                                            <span *ngIf="!DataContext.ToCountryId">{{DataContext.ToCountryCode}}</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <!-- Via  -->
-                        <tr *ngIf="IsViaFieldVisible" class="FormFieldRow">
-                            <td style="width:100px;">
-                                <LogLabel [ObjectFieldName]="'ViaPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td style="width:230px;">
-                                <LogLov [ObjectFieldName]="'ViaPortId'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [LookUpTableName]="'Port'"
-                                        [DataContext]="DataContext"
-                                        (SelectedItemChanged)="DataContext.ViaPort = $event"
-                                        [DisplayMemberPath]="GetDisplayMemberPath()"
-                                        [SelectedValue]="DataContext.ViaPortId"
-                                        [DependencyFilter1Value]="ViaDependencyFilterValue">
-                                </LogLov>
-                            </td>
-
-                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC' || TariffType == 'OFC'">
-                                <div class="MediaFill">
-                                    <table *ngIf="!DataContext.ViaPortId">
-                                        <tr>
-                                            <td style="color:red; padding-left: 10px;">
-                                                {{ViaPortText}}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </td>
-
-                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'IFT'">
-                                <table>
-                                    <tr>
-                                        <td style="color:red; padding-left: 10px;">
-                                            <span *ngIf="!DataContext.ViaPortId">{{ViaPortText}}</span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <!-- Currency -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT' || TariffType == 'ICS' || TariffType == 'ECS'">
-                            <td>
-                                <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td>
-                                <LogLov [ObjectFieldName]="'CurrencyId'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [SelectedValue]="DataContext.CurrencyId"
-                                        [DataContext]="DataContext"
-                                        [DisplayMemberPath]="'Code'"
-                                        (SelectedItemChanged)="DataContext.Currency = $event"
-                                        [LookUpTableName]="'Currency'">
-                                </LogLov>
-                            </td>
-
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td [style.width.px]="(TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'ICS' || TariffType == 'ECS')? 160 : 140">
-                                            <LogLabel [ObjectFieldName]="'IsDifferentCurrenciesPerCharge'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Different per Charge'"></LogLabel>
-                                        </td>
-
-                                        <td style="width:25px;">
-                                            <LogCheckBox [ObjectFieldName]="'IsDifferentCurrenciesPerCharge'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsDifferentCurrenciesPerCharge"></LogCheckBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <!-- StartDate -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT' || TariffType == 'ICS' || TariffType == 'ECS'">
-                            <td>
-                                <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td>
-                                <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                            </td>
-
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-
-                        <!--Notes-->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'IFT' || TariffType == 'ICS' || TariffType == 'ECS'">
-                            <td style="vertical-align:top;">
-                                <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td style="top:5px;">
-                                <table>
-                                    <tr>
-                                        <td style="width:230px;height:60px;">
-                                            <div class="MediaFill">
-                                                <LogTextBox [ObjectFieldName]="'Notes'" [Text]="DataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-
-                        <!-- Air Freight Cost-->
-                        <tr *ngIf="TariffType == 'AFC' || TariffType == 'OLC'" style="height:1px;">
-                            <td colspan="3">
-                                <table>
-                                    <!-- Min -->
-                                    <tr class="FormFieldRow">
-                                        <td style="width:100px;">
-                                            <LogLabel [ObjectFieldName]="'MinPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td style="width:230px;">
-                                            <LogTextBox [ObjectFieldName]="'MinPrice'" [Text]="DataContext.MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td *ngIf="!DataContext.MinPrice" style="width:50px; color:red">
-                                            {{MinPriceText}}
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                    <!-- Step1Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Step1PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Step1Price'" [Text]="DataContext.FatherComponent.Step1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Step1Price'" [Text]="DataContext.Step1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td *ngIf="!DataContext.Step1Price" style="width:50px; color:red">
-                                            {{Step1PriceText}}
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Step2Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Step2PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Step2Price'" [Text]="DataContext.FatherComponent.Step2PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Step2Price'" [Text]="DataContext.Step2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td *ngIf="!DataContext.Step2Price" style="width:50px; color:red">
-                                            {{Step2PriceText}}
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Step3Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Step3PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Step3Price'" [Text]="DataContext.FatherComponent.Step3PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Step3Price'" [Text]="DataContext.Step3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td *ngIf="!DataContext.Step3Price" style="width:50px; color:red">
-                                            {{Step3PriceText}}
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Step4Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Step4PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Step4Price'" [Text]="DataContext.FatherComponent.Step4PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Step4Price'" [Text]="DataContext.Step4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td *ngIf="!DataContext.Step4Price" style="width:50px; color:red">
-                                            {{Step4PriceText}}
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Step5Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Step5PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Step5Price'" [Text]="DataContext.FatherComponent.Step5PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Step5Price'" [Text]="DataContext.Step5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td *ngIf="!DataContext.Step5Price" style="width:50px; color:red">
-                                            {{Step5PriceText}}
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Step6Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Step6PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Step6Price'" [Text]="DataContext.FatherComponent.Step6PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Step6Price'" [Text]="DataContext.Step6Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td *ngIf="!DataContext.Step6Price" style="width:50px; color:red">
-                                            {{Step6PriceText}}
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Step7Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Step7PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Step7Price'" [Text]="DataContext.FatherComponent.Step7PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Step7Price'" [Text]="DataContext.Step7Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td *ngIf="!DataContext.Step7Price" style="width:50px; color:red">
-                                            {{Step7PriceText}}
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Step8Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Step8PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Step8Price'" [Text]="DataContext.FatherComponent.Step8PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Step8Price'" [Text]="DataContext.Step8Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td *ngIf="!DataContext.Step8Price" style="width:50px; color:red">
-                                            {{Step8PriceText}}
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <!-- Air Surcharges Cost-->
-                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'ICC' || TariffType == 'ECC' || TariffType == 'ICS' || TariffType == 'ECS'" style="height:1px;">
-                            <td colspan="3">
-                                <table>
-                                    <tr class="FormFieldRow" style="height:28px;">
-                                        <td colspan="9">
-                                            <span class="BlueTitle">Prices</span>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge1Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge1PriceVisibility" class="FormFieldRow">
-                                        <td style="width:150px;" [title]="DataContext.FatherComponent.Surcharge1PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.FatherComponent.Surcharge1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td style="width:72px;">
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.Surcharge1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge" style="width:70px;">
-                                            <LogLabel [ObjectFieldName]="'Surcharge1CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge" style="width: 80px;">
-                                            <LogLov [ObjectFieldName]="'Surcharge1CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge1CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-
-                                        <td [title]="DataContext.Surcharge1CurrencyMeasurementLabel" style="width: 70px;">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge1CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-
-                                        <td style="width:90px;">
-                                            <LogLabel [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td style="width:72px;">
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="DataContext.Surcharge1MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge2Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge2PriceVisibility" class="FormFieldRow">
-                                        <td [title]="DataContext.FatherComponent.Surcharge2PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.FatherComponent.Surcharge2PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.Surcharge2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLabel [ObjectFieldName]="'Surcharge2CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLov [ObjectFieldName]="'Surcharge2CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge2CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td [title]="DataContext.Surcharge2CurrencyMeasurementLabel">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge2CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="DataContext.Surcharge2MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge3Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge3PriceVisibility" class="FormFieldRow">
-                                        <td [title]="DataContext.FatherComponent.Surcharge3PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.FatherComponent.Surcharge3PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.Surcharge3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLabel [ObjectFieldName]="'Surcharge3CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLov [ObjectFieldName]="'Surcharge3CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge3CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-
-                                        <td [title]="DataContext.Surcharge3CurrencyMeasurementLabel">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge3CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="DataContext.Surcharge3MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge4Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge4PriceVisibility" class="FormFieldRow">
-                                        <td [title]="DataContext.FatherComponent.Surcharge4PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.FatherComponent.Surcharge4PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.Surcharge4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                      
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLabel [ObjectFieldName]="'Surcharge4CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLov [ObjectFieldName]="'Surcharge4CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge4CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td [title]="DataContext.Surcharge4CurrencyMeasurementLabel">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge4CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="DataContext.Surcharge4MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge5Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge5PriceVisibility" class="FormFieldRow">
-                                        <td [title]="DataContext.FatherComponent.Surcharge5PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.FatherComponent.Surcharge5PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.Surcharge5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLabel [ObjectFieldName]="'Surcharge5CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLov [ObjectFieldName]="'Surcharge5CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge5CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td [title]="DataContext.Surcharge5CurrencyMeasurementLabel">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge5CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="DataContext.Surcharge5MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge6Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge6PriceVisibility" class="FormFieldRow">
-                                        <td [title]="DataContext.FatherComponent.Surcharge6PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge6Price'" [Text]="DataContext.FatherComponent.Surcharge6PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge6Price'" [Text]="DataContext.Surcharge6Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLabel [ObjectFieldName]="'Surcharge6CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLov [ObjectFieldName]="'Surcharge6CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge6CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td [title]="DataContext.Surcharge6CurrencyMeasurementLabel">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge6CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="DataContext.Surcharge6MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge7Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge7PriceVisibility" class="FormFieldRow">
-                                        <td [title]="DataContext.FatherComponent.Surcharge7PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge7Price'" [Text]="DataContext.FatherComponent.Surcharge7PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge7Price'" [Text]="DataContext.Surcharge7Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLabel [ObjectFieldName]="'Surcharge7CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLov [ObjectFieldName]="'Surcharge7CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge7CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td [title]="DataContext.Surcharge7CurrencyMeasurementLabel">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge7CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="DataContext.Surcharge7MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge8Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge8PriceVisibility" class="FormFieldRow">
-                                        <td [title]="DataContext.FatherComponent.Surcharge8PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge8Price'" [Text]="DataContext.FatherComponent.Surcharge8PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge8Price'" [Text]="DataContext.Surcharge8Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLabel [ObjectFieldName]="'Surcharge8CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLov [ObjectFieldName]="'Surcharge8CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge8CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td [title]="DataContext.Surcharge8CurrencyMeasurementLabel">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge8CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="DataContext.Surcharge8MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge9Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge9PriceVisibility" class="FormFieldRow">
-                                        <td [title]="DataContext.FatherComponent.Surcharge9PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge9Price'" [Text]="DataContext.FatherComponent.Surcharge9PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge9Price'" [Text]="DataContext.Surcharge9Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                       
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLabel [ObjectFieldName]="'Surcharge9CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLov [ObjectFieldName]="'Surcharge9CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge9CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td [title]="DataContext.Surcharge9CurrencyMeasurementLabel">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge9CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="DataContext.Surcharge9MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Surcharge10Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Surcharge10PriceVisibility" class="FormFieldRow">
-                                        <td [title]="DataContext.FatherComponent.Surcharge10PriceLabel">
-                                            <LogLabel [ObjectFieldName]="'Surcharge10Price'" [Text]="DataContext.FatherComponent.Surcharge10PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge10Price'" [Text]="DataContext.Surcharge10Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                       
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLabel [ObjectFieldName]="'Surcharge10CurrencyId'" [Text]="'Currency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge">
-                                            <LogLov [ObjectFieldName]="'Surcharge10CurrencyId'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [SelectedValue]="DataContext.Surcharge10CurrencyId"
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'Code'"
-                                                    [LookUpTableName]="'Currency'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </td>
-                                        <td style="width:5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td [title]="DataContext.Surcharge10CurrencyMeasurementLabel">
-                                            <div class="TextTrimming" style="width: 70px;">
-                                                {{DataContext.Surcharge10CurrencyMeasurementLabel}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="'Min. Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="DataContext.Surcharge10MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-
-                        <!--Ocean FCL Freight Cost -->
-                        <tr *ngIf="TariffType == 'OFC'" style="height:1px;">
-                            <td colspan="3">
-                                <table>
-                                    <!-- Container1Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Container1PriceVisibility" class="FormFieldRow">
-                                        <td style="width:100px;">
-                                            <LogLabel [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.FatherComponent.Container1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td style="width:230px;">
-                                            <LogTextBox [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.Surcharge1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Container2Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Container2PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.FatherComponent.Container2PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.Surcharge2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Container3Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Container3PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.FatherComponent.Container3PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.Surcharge3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Container4Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Container4PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.FatherComponent.Container4PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.Surcharge4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Container5Price -->
-                                    <tr *ngIf="DataContext.FatherComponent.Container5PriceVisibility" class="FormFieldRow">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.FatherComponent.Container5PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.Surcharge5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <!-- TransitTime -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'AFC' || TariffType == 'OLC' || TariffType == 'OFC'">
-                            <td>
-                                <LogLabel [ObjectFieldName]="'TransitTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td>
-                                <LogTextBox [ObjectFieldName]="'TransitTime'" [Text]="DataContext.TransitTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                            </td>
-
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-
-                        <!--Notes-->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'AFC' || TariffType == 'OLC' || TariffType == 'OFC'">
-                            <td style="vertical-align:top;">
-                                <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-
-                            <td style="top:5px;">
-                                <table>
-                                    <tr>
-                                        <td style="width:230px;height:60px;">
-                                            <div class="MediaFill">
-                                                <LogTextBox [ObjectFieldName]="'Notes'" [Text]="DataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-
-                        <!--Ocean FCL Surchage Cost-->
-                        <tr style="height:10px;" *ngIf="TariffType == 'OFS' || TariffType == 'IFT'">
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-
-                        <tr *ngIf="TariffType == 'OFS' || TariffType == 'IFT'">
-                            <td colspan="3">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div class="MediaFill">
-                                                <div class="SimpleGridView">
-                                                    <div class="SimpleGridViewHeader">
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width: 150px; min-width: 150px; max-width: 150px; text-align:center;"></td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container1Visibility">{{DataContext.FatherComponent.Container1Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container2Visibility">{{DataContext.FatherComponent.Container2Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container3Visibility">{{DataContext.FatherComponent.Container3Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container4Visibility">{{DataContext.FatherComponent.Container4Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.FatherComponent.Container5Visibility">{{DataContext.FatherComponent.Container5Label}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;">{{'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe}}</td>
-                                                                <td style="width: 100px; min-width: 100px; max-width: 100px; text-align:center;" *ngIf="DataContext.IsDifferentCurrenciesPerCharge">{{'TariffLinesContainersPrice.F.CurrencyId' | TextCodeTranslationPipe}}</td>
-                                                                <td class="LastChild">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-
-                                                    <div class="SimpleGridViewBody">
-                                                        <table>
-                                                            <tr class="SimpleGridViewRow" *ngFor="let item of DataContext.ContainerPricesItemsSource">
-                                                                <td class="GridViewCell" [title]="item.ChargeLabel" style="width: 150px; min-width: 150px; max-width: 150px; color:#6E7172">
-                                                                    {{item.ChargeLabel}}
-                                                                </td>
-
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container1Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price1'" [Text]="item.Price1" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
-
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container2Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price2'" [Text]="item.Price2" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
-
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container3Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price3'" [Text]="item.Price3" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
-
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container4Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price4'" [Text]="item.Price4" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
-
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="DataContext.FatherComponent.Container5Visibility">
-                                                                    <LogTextBox [ObjectFieldName]="'Price5'" [Text]="item.Price5" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
-
-                                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                                    <LogTextBox [ObjectFieldName]="'CostPrice'" [Text]="item.CostPrice" [ObjectTableName]="item.ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                                                </td>
-
-                                                                <td *ngIf="DataContext.IsDifferentCurrenciesPerCharge" class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                                    <LogLov [ObjectFieldName]="'CurrencyId'"
-                                                                            [ObjectTableName]="item.ObjectTableName"
-                                                                            [SelectedValue]="item.CurrencyId"
-                                                                            [DataContext]="item"
-                                                                            [DisplayMemberPath]="'Code'"
-                                                                            (SelectedItemChanged)="item.Currency = $event"
-                                                                            [LookUpTableName]="'Currency'"
-                                                                            [HideColumns]="true">
-                                                                    </LogLov>
-                                                                </td>
-
-                                                                <td class="CellStretched">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td colspan="8">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <tr *ngIf="TariffType != 'OFS' && TariffType != 'IFT'">
-                            <td colspan="3">
-                                <div></div>
-                            </td>
-                        </tr>
-                    </table>
-                </ScrollViewer>
-            </div>
+            <table class="FixedTable">
+
+                <!-- From  -->
+                <tr class="FormFieldRow">
+                    <td style="width:100px;">
+                        <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:220px;">
+                        <LogLov [ObjectFieldName]="'OriginPortId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [LookUpTableName]="'Port'"
+                                [DataContext]="DataContext"
+                                (SelectedItemChanged)="DataContext.OriginPort = $event"
+                                [DisplayMemberPath]="'Code'"
+                                [SelectedValue]="DataContext.OriginPortId">
+                        </LogLov>
+
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <!-- To -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'DestinationPortId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [LookUpTableName]="'Port'"
+                                [DisplayMemberPath]="'Code'"
+                                [DataContext]="DataContext"
+                                (SelectedItemChanged)="DataContext.DestinationPort = $event"
+                                [SelectedValue]="DataContext.DestinationPortId">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <!-- Min -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'MinPrice'" [Text]="DataContext.MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step1Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step1PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step1Price'" [Text]="DataContext.Step1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step2Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step2PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step2PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step2Price'" [Text]="DataContext.Step2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step3Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step3PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step3PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step3Price'" [Text]="DataContext.Step3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step4Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step4PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step4PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step4Price'" [Text]="DataContext.Step4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step5Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step5PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step5PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step5Price'" [Text]="DataContext.Step5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step6Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step6PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step6PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step6Price'" [Text]="DataContext.Step6Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step7Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step7PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step7PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step7Price'" [Text]="DataContext.Step7Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Step8Price -->
+                <tr *ngIf="DataContext.FatherComponent.Step8PriceVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MinPrice'" [Text]="DataContext.FatherComponent.Step8PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Step8Price'" [Text]="DataContext.Step8Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 

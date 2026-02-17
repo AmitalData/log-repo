@@ -9,7 +9,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'NewChargesTypeComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewVatTypePercentageComponent.html',
 })
 

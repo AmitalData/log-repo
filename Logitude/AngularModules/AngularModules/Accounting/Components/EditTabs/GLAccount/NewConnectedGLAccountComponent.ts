@@ -22,7 +22,7 @@ import {GLAccountCurrencyPM} from '../../../EntityPMs/GLAccountCurrencyPM';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewConnectedGLAccountComponent.html',
 
 })
@@ -41,16 +41,13 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
     GLAccountPMService: GLAccountPMService = new GLAccountPMService();
     gLAccountCurrencyExtendedPMService: GLAccountCurrencyExtendedPMService = new GLAccountCurrencyExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession;
-    ReconcileMethod_Local: string = "0";
-    ReconcileMethod_Foreign: string = "1";
-
     constructor() {
         super();
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
     }
 
     SetWindowArgs(args: any) {
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => {
 
             this.entityPM = args.EntityPM;
             this.Parent = args.Parent;
@@ -117,14 +114,14 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
         }
           this.ValidationErrorsList = errors;
           if (this.ValidationErrorsList.length == 0) {
-              this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
+
               this.GLAccountPMService.get(this.entityPM.ControlAccountId).subscribe((response: ServiceResponse) => {
                   if (response) {
                       if (!response.HasError) {
                           if (response.Result) 
                               {
 
-                                  this.accountPM.AccountTypeCode = this.entityPM.AccountTypeCode;
+                                  this.accountPM.AccountTypeCode = "2";
                                   this.accountPM.DisplayNumber = this.entityPM.DisplayNumber + "\\" + this.CurrencyCode;
                                   this.accountPM.LocalName = this.entityPM.LocalName + "\\" + this.CurrencyCode;
                                   this.accountPM.EnglishName = this.entityPM.EnglishName + "\\" + this.CurrencyCode;
@@ -135,12 +132,11 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                   this.accountPM.IsControlAccount = false;
                                   this.accountPM.ChartOfAccountsId = this.entityPM.ChartOfAccountsId;
                                   this.accountPM.ChartOfAccountsTypeCode = response.Result.ChartOfAccountsTypeCode;
-                              this.accountPM.ReconcileMethodCode = SessionLocator.TenantPM.CurrencyId == this.CurrencyId ? this.ReconcileMethod_Local : this.ReconcileMethod_Foreign;
+                                  this.accountPM.ReconcileMethodCode = "1";
                                   this.accountPM.AutomaticReconcileId = this.entityPM.AutomaticReconcileId;
                                   this.accountPM.ControlAccountId = this.entityPM.ControlAccountId;
                                   this.accountPM.Tenant = this.entityPM.Tenant;
-                              this.accountPM.Type = "ADDED";
-                              this.accountPM.CardsDataId = this.entityPM.CardsDataId;
+                                  this.accountPM.Type = "ADDED";
                                //   this.accountPM.ParentAccountByCurrency = this.entityPM.in;
 
 
@@ -161,11 +157,9 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                                   if (response) {
                                                       if (!response.HasError) 
                                                       {
-                                                            this.CurrentSession.StopBusyIndicator();
                                                           this.CurrentSession.CloseCurrentWindowEmit("ok");
                                                       }
                                                       else {
-                                                            this.CurrentSession.StopBusyIndicator();
                                                           this.ValidationErrorsList = response.ErrorsArray;
                                                       }
                                                   }
@@ -174,7 +168,6 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                            //  this.CurrentSession.CloseCurrentWindow();
                                           }
                                           else {
-                                                 this.CurrentSession.StopBusyIndicator();
                                               this.ValidationErrorsList = response.ErrorsArray;
                                           }
                                       }
@@ -189,7 +182,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                           }
 
                           else {
-                                 this.CurrentSession.StopBusyIndicator();
+                              
                               errors.push(TextCodeTranslator.Translate("GLAccounts.O.ControlAccountNotFound"));
                               this.ValidationErrorsList = errors;
                           }

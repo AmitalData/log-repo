@@ -1,8 +1,18 @@
-import { Component } from '@angular/core';
-import { LoginService, ChangePasswordParameter } from '../LoginService';
-import { SessionInfo } from '../SessionInfo';
-import { PasswordChangeService } from '../PasswordChangeService';
-export var ChangePasswordComponent = (function () {
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var LoginService_1 = require('../LoginService');
+var SessionInfo_1 = require('../SessionInfo');
+var PasswordChangeService_1 = require('../PasswordChangeService');
+var ChangePasswordComponent = (function () {
     function ChangePasswordComponent(_passwordChangeService, _loginService) {
         this._passwordChangeService = _passwordChangeService;
         this._loginService = _loginService;
@@ -19,13 +29,14 @@ export var ChangePasswordComponent = (function () {
             this.IsResetPasswordViaEmail = true;
         }
         else {
-            this.email = SessionInfo.LoggedUserEmail;
+            this.email = SessionInfo_1.SessionInfo.LoggedUserEmail;
         }
     }
     ChangePasswordComponent.prototype.ngOnInit = function () {
     };
     ChangePasswordComponent.prototype.SubmitBtnClicked = function () {
         var _this = this;
+        this.email = "hamodi@fnarsoft.com";
         if (!this.email) {
             this.HasErrors = true;
             this.ErrorMessage = "Your email is empty.";
@@ -75,7 +86,7 @@ export var ChangePasswordComponent = (function () {
             }
         }
         if (this.CurrentPassword) {
-            var changePasswordParameter = new ChangePasswordParameter();
+            var changePasswordParameter = new LoginService_1.ChangePasswordParameter();
             changePasswordParameter.CurrentPassword = this.CurrentPassword;
             changePasswordParameter.Email = this.email;
             this._loginService.CheckUserPassword(changePasswordParameter).subscribe(function (res) {
@@ -222,7 +233,7 @@ export var ChangePasswordComponent = (function () {
         };
         this._loginService.PostChangePassword(this.email, params).subscribe(function (res) {
             if (res) {
-                document.location.href = SessionInfo.GetLogitudeURL() + "Login.aspx";
+                document.location.href = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Login.aspx";
             }
             else {
                 _this.ErrorMessage = "Changing password failed!";
@@ -286,19 +297,16 @@ export var ChangePasswordComponent = (function () {
             }
         }
     };
-    ChangePasswordComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'ChangePasswordComponent',
-                    moduleId: './Login/Components/',
-                    templateUrl: 'ChangePasswordComponent.html',
-                    styleUrls: ['ChangePasswordComponent.css']
-                },] },
-    ];
-    /** @nocollapse */
-    ChangePasswordComponent.ctorParameters = [
-        { type: PasswordChangeService, },
-        { type: LoginService, },
-    ];
+    ChangePasswordComponent = __decorate([
+        core_1.Component({
+            selector: 'ChangePasswordComponent',
+            moduleId: './Login/Components/',
+            templateUrl: 'ChangePasswordComponent.html',
+            styleUrls: ['ChangePasswordComponent.css']
+        }),
+        __metadata("design:paramtypes", [PasswordChangeService_1.PasswordChangeService, LoginService_1.LoginService])
+    ], ChangePasswordComponent);
     return ChangePasswordComponent;
 }());
+exports.ChangePasswordComponent = ChangePasswordComponent;
 //# sourceMappingURL=ChangePasswordComponent.js.map

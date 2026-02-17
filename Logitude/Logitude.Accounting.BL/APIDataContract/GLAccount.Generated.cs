@@ -12,13 +12,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.BL.CommonDataModel.APIDataContract;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
    
-    public partial class GLAccount
+    public class GLAccount
     {
 
 	    
@@ -60,12 +58,8 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public ReconcileMethod ReconcileMethod { get; set; }
     
     public string ReconcileMethodName { get; set; }
-
-      public ExchangeRate ExchangeRate { get; set; }
-
-      public string ExchangeRateName { get; set; }
-
-        public GLAccount ControlAccount { get; set; }
+    
+    public GLAccount ControlAccount { get; set; }
     
     public string ControlAccountName { get; set; }
     
@@ -170,9 +164,5 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public RevenueExpenseType RevenueExpenseType { get; set; }
     
     public string Parent { get; set; }
-    
-    public string CardCode { get; set; }
-    
-    public string PartnerTypeId { get; set; }
     }
 } 

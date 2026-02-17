@@ -11,7 +11,7 @@ using Logitude.Server.Tools;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Web;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL.EntityPMs;
@@ -63,6 +63,16 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
 							
 		    entityPM.CreateDate =  myDate;
 					 
+			string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+							 
+
+			if (loggedContact != null)
+            {
+		        entityPM.CreatedByUserId = loggedContact.Id;
+		    }
+					
 	    }
         
 		protected override void FillDefaultValuesOnUpdate(BatchTaskExecutionPM entityPM)

@@ -18,6 +18,5 @@ namespace Unifreight.BL.EntityPMs
         public int? TOPDATA { get; set; }
         public int? WIDTHDATA { get; set; }
         public int? HEIGHTDATA { get; set; }
-        public string QUETYPE { get; set; }
     }
 }

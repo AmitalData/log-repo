@@ -25,25 +25,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //var pm = GetEntityPM(recoLine);
             return recoLine;
         }
-        public List<ReconciliationLine> GetLinesByReconciliationIdAndTenant(string reconciliationId, int tenant)
-        {
-            List<ReconciliationLine> recoLine = (from a in context.ReconciliationLines
-                                           where a.ReconciliationId == reconciliationId && a.Tenant == tenant
-                                           select a).ToList();
-            return recoLine;
-        }
-
-
-        public List<ReconciliationLinePM> GetLinePMsByReconciliationIdAndTenant(string reconciliationId, int tenant)
-        {
-            return context.ReconciliationLines
-                          .Where(a => a.ReconciliationId == reconciliationId && a.Tenant == tenant)
-                          .ToList()
-                          .Select(poco => GetEntityPM(poco))
-                          .ToList();
-        }
-
-
         public List<ReconciliationLinePM> GetLineByTransactionIds(List<string> transId, int tenant)
         {
             List<ReconciliationLine> recoLines = (from a in context.ReconciliationLines
@@ -64,32 +45,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return pms;
         }
-        public List<ReconciliationLinePM> GetLinesByReconciledWithTransactionIdWithoutMapping(string transId, int tenant)
-        {
-            List<ReconciliationLinePM> recoLines = (from recLine in context.ReconciliationLines
-                                                    join reco in context.Reconciliations on recLine.ReconciliationId equals reco.Id
-                                                    where recLine.ReconciledWithTransactionId == transId && recLine.Tenant == tenant
 
-                                                    select new ReconciliationLinePM()
-                                                    {
-                                                        ReconciliationId = recLine.ReconciliationId,
-                                                        TransactionId = recLine.TransactionId,
-                                                        CurrencyId = recLine.CurrencyId,
-                                                        CurrencyName = recLine.Currency != null ? recLine.Currency.EnglishName : null,
-                                                        CurrencyCode = recLine.Currency != null ? recLine.Currency.Code : null,
-                                                        Line = recLine.Line,
-                                                        IsPartial = recLine.IsPartial,
-                                                        Tenant = recLine.Tenant,
-                                                        ReconciliationAmount = recLine.ReconciliationAmount,
-                                                        ReconciledWithTransactionId = recLine.ReconciledWithTransactionId,
-
-                                                        IsRecoCancelled = reco.IsCancelled,
-
-                                                    }).ToList();
-
-
-            return recoLines;
-        }
         public List<ReconciliationLinePM> GetLinesByTransactionId(string transId, int tenant)
         {
             List<ReconciliationLine> recoLines = (from a in context.ReconciliationLines
@@ -99,43 +55,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<ReconciliationLinePM> pms = recoLines.Select(poco => GetEntityPM(poco)).ToList();
 
             return pms;
-        }
-
-        public List<ReconciliationLinePM> GetLinesByTransactionIds(List<string> transId, int tenant)
-        {
-            List<ReconciliationLine> recoLines = (from a in context.ReconciliationLines
-                                                  where transId.Contains(a.TransactionId) && a.Tenant == tenant
-                                                  select a).ToList();
-
-            List<ReconciliationLinePM> pms = recoLines.Select(poco => GetEntityPM(poco)).ToList();
-
-            return pms;
-        }
-        public List<ReconciliationLinePM> GetLinesByTransactionIdsWithoutMapping(List<string> transId, int tenant)
-        {
-            List<ReconciliationLinePM> recoLines = (from recLine in context.ReconciliationLines
-                                                    join reco in context.Reconciliations on recLine.ReconciliationId equals reco.Id
-                                                    where transId.Contains(recLine.TransactionId) && recLine.Tenant == tenant
-
-                                                    select new ReconciliationLinePM()
-                                                    {
-                                                        ReconciliationId = recLine.ReconciliationId,
-                                                        TransactionId = recLine.TransactionId,
-                                                        CurrencyId = recLine.CurrencyId,
-                                                        CurrencyName = recLine.Currency != null ? recLine.Currency.EnglishName : null,
-                                                        CurrencyCode = recLine.Currency != null ? recLine.Currency.Code : null,
-                                                        Line = recLine.Line,
-                                                        IsPartial = recLine.IsPartial,
-                                                        Tenant = recLine.Tenant,
-                                                        ReconciliationAmount = recLine.ReconciliationAmount,
-                                                        ReconciledWithTransactionId = recLine.ReconciledWithTransactionId,
-                                                        
-                                                        IsRecoCancelled = reco.IsCancelled,
-
-                                                    }).ToList();
-
-
-            return recoLines;
         }
 
 

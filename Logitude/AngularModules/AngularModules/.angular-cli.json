@@ -1,0 +1,113 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "AngularModules",
+    "ejected": true
+  },
+  "apps": [
+    {
+      "root": "../AngularModules",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico",
+        "_Resources",
+        "Js",
+        "Images"
+      ],
+      "index": "index.html",
+      "main": "App/Bootstraper.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "App",
+      "styles": [
+        "styles.css"
+      ],
+      "scripts": [
+        "_Resources/js/FaviconManager.js",
+        "_Resources/js/JQuery/jquery-2.0.0.min.js",
+        "_Resources/js/JQuery/jquery.signalR.js",
+        "_Resources/js/js.js",
+        "_Resources/js/ChangePasswordFunctions.js",
+        "log.config.js",
+        "Js/Reflect.js",
+        "Js/jszip.js",
+        "Js/codemirror.min.js",
+        "Js/xml.min.js",
+        "Js/rx.all.js",
+        "_Resources/js/Charts/amcharts.js",
+        "_Resources/js/Charts/dark.js",
+        "_Resources/js/Charts/export.min.js",
+        "_Resources/js/Charts/funnel.js",
+        "_Resources/js/Charts/light.js",
+        "_Resources/js/Charts/pie.js",
+        "_Resources/js/Charts/serial.js",
+        "_Resources/js/Charts/responsive.min.js",
+        "_Resources/js/Charts/chartscript.js",
+
+        "_Resources/Froala/js/froala_editor.min.js",
+        "_Resources/Froala/js/plugins/align.min.js",
+        "_Resources/Froala/js/plugins/char_counter.min.js",
+        "_Resources/Froala/js/plugins/code_beautifier.min.js",
+        "_Resources/Froala/js/plugins/code_view.min.js",
+        "_Resources/Froala/js/plugins/colors.min.js",
+        "_Resources/Froala/js/plugins/emoticons.min.js",
+        "_Resources/Froala/js/plugins/entities.min.js",
+        "_Resources/Froala/js/plugins/file.min.js",
+        "_Resources/Froala/js/plugins/font_family.min.js",
+        "_Resources/Froala/js/plugins/font_size.min.js",
+        "_Resources/Froala/js/plugins/fullscreen.min.js",
+        "_Resources/Froala/js/plugins/image.min.js",
+        "_Resources/Froala/js/plugins/image_manager.min.js",
+        "_Resources/Froala/js/plugins/inline_style.min.js",
+        "_Resources/Froala/js/plugins/line_breaker.min.js",
+        "_Resources/Froala/js/plugins/link.min.js",
+        "_Resources/Froala/js/plugins/lists.min.js",
+        "_Resources/Froala/js/plugins/paragraph_format.min.js",
+        "_Resources/Froala/js/plugins/paragraph_style.min.js",
+        "_Resources/Froala/js/plugins/quick_insert.min.js",
+        "_Resources/Froala/js/plugins/quote.min.js",
+        "_Resources/Froala/js/plugins/table.min.js",
+        "_Resources/Froala/js/plugins/save.min.js",
+        "_Resources/Froala/js/plugins/url.min.js",
+        "_Resources/Froala/js/plugins/video.min.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "./tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "./tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {
+    }
+  }
+}

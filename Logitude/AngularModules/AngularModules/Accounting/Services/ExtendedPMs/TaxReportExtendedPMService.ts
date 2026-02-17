@@ -1,245 +1,149 @@
 import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {TaxReportPM} from '../../EntityPMs/TaxReportPM';
+import {TaxReportLinePM} from '../../EntityPMs/TaxReportLinePM';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators'
 
 @Injectable()
 
 export class TaxReportExtendedPMService {
-
+    private _http: Http;
     private _apiUrl: string;
-    private httpClient: HttpClient;
     constructor() {
-
-        this.httpClient = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
+        this._http = ServiceHelper.Http;
+      this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
     }
 
     DownloadPNC874File(taxReportPM: TaxReportPM) {
-        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874File", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var result = res;
-                serviceResponse.Result = result;
 
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
 
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            var mappedEntity: TaxReportPM;
+            mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
+
+            return this._http.post(this._apiUrl + "/PostDownloadPNC874File", JSON.stringify(mappedEntity), { headers: authHeader })
+                .map((res) => {
+
+                    var result = res.json();
+                    serviceResponse.Result = result;
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+        });
 
     }
 
     DownloadPNC874FileInBatch(taxReportPM: TaxReportPM) {
-        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
-        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var result = res;
-                serviceResponse.Result = result;
 
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
 
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
-    }
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
 
-    CancelTaxReportInBatch(taxReportPM: TaxReportPM) {
-        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
-        return this.httpClient.post(this._apiUrl + "/CancelTaxReportInBatch", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var result = res;
-                serviceResponse.Result = result;
+            var mappedEntity: TaxReportPM;
+            mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
 
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
+            return this._http.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
+                .map((res) => {
+
+                    var result = res.json();
+                    serviceResponse.Result = result;
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+        });
 
     }
-
-    CancelTaxReportByTester(taxReportid: string) {
-        return this.httpClient.post(this._apiUrl+'/CancelTaxReportByTester?taxReportId='+taxReportid,  ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var result = res;
-                serviceResponse.Result = result;
-
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
-    }
-
 
     PostCreateTaxReportInBatch(taxReportPM: TaxReportPM) {
-        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
-        return this.httpClient.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var result = res;
-                serviceResponse.Result = result;
-
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
 
 
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            var mappedEntity: TaxReportPM;
+            mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
+
+            return this._http.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
+                .map((res) => {
+
+                    var result = res.json();
+                    serviceResponse.Result = result;
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+        });
       }
 
     GetReportLinesCounter(taxReportId: string) {
-        return this.httpClient.get(this._apiUrl+'/GetLinesCounters?taxReportId='+taxReportId,  ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
+
+            return Observable.defer(() => {
+
+                var authHeader = new Headers();
+                authHeader.append('Token', SessionInfo.Token);
+                authHeader.append('Content-Type', 'application/json');
+
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                var allLists = response;
 
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
+                return this._http.get(this._apiUrl+'/GetLinesCounters?taxReportId='+taxReportId, { headers: authHeader }).map(response => {
+                    var allLists = response.json();
 
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = allLists;
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+            });
 
     }
 
-    GetTenantTransmittedTaxReports() {
-        return this.httpClient.get(this._apiUrl + '/GetTenantTransmittedTaxReports', ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var allLists = response;
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
-
-    }
-    GetReturnToDraftButtonStatus(createDate:Date) {
-        return this.httpClient.get(this._apiUrl + '/GetReturnToDraftButtonStatus?createDate=' + createDate, ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var result = res;
-                serviceResponse.Result = result;
-
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-    }
-    GetActiveFutureReportsExist(createDate:Date) {
-        return this.httpClient.get(this._apiUrl + '/GetActiveFutureReportsExist?createDate=' + createDate, ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var result = res;
-                serviceResponse.Result = result;
-
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-    }
-
-  CreateNewTaxReportLine(taxReportPM: TaxReportPM) {
-    return this.httpClient.put(this._apiUrl + "/PutCreateTaxReportLine", JSON.stringify(taxReportPM), ServiceHelper.GetHttpHeaders()).pipe(
-      map(res => {
-        var serviceResponse: ServiceResponse;
-        serviceResponse = new ServiceResponse();
-        var result = res;
-        serviceResponse.Result = result;
-
-        return serviceResponse;
-      }),
-      catchError(ServiceHelper.HandleServiceError));
-       }
 
     getErrorsCount(reportId: string) {
 	    var callTime = new Date();
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
-       return this.httpClient.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId,  ServiceHelper.GetHttpHeaders()).pipe(
-        map(response => {
-            var result = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId, {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
 
-            return result;
-        }),
-        catchError(ServiceHelper.HandleServiceError));
+                return result;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
 
+        );
     }
 
-    getDuplicateInputs(reportId: string) {
-	    var callTime = new Date();
-
-       return this.httpClient.get(this._apiUrl+'/GetDuplicateInputs/?'+'reportId=' + reportId,  ServiceHelper.GetHttpHeaders()).pipe(
-        map(response => {
-            var result = response;
-
-            return result;
-        }),
-        catchError(ServiceHelper.HandleServiceError));
-
-    }
-
-    GetTaxReportReconciledLines(taxReportId: string)
-    {
-        return this.httpClient.get(this._apiUrl + '/GetTaxReportReconciledLines?taxReportId=' + taxReportId, ServiceHelper.GetHttpHeaders()).pipe(
-            map(response =>
-            {
-                let serviceResponse = response;
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-    }
-
-    CloseTaxReport(taxReportId: string)
-    {
-        return this.httpClient.post(this._apiUrl + '/PostClosingTaxReportJournal?taxReportId=' + taxReportId,null, ServiceHelper.GetHttpHeaders()).pipe(
-            map(response =>
-            {
-                let serviceResponse = response;
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-    }
-
-    CancelClosingJournal(taxReportId: string)
-    {
-        return this.httpClient.post(this._apiUrl + '/PostCancelClosingJournalInBatch?taxReportId=' + taxReportId,null, ServiceHelper.GetHttpHeaders()).pipe(
-            map(response =>
-            {
-                let serviceResponse = response;
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-    }
-
-    PutTaxReportIsEdited(taxReportPM: TaxReportPM) {
-        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
-        return this.httpClient.put(this._apiUrl + "/PutTaxReportIsEdited", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var result = res;
-                serviceResponse.Result = result;
-
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
-
-		
-	}
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxReportPM = null) {
 

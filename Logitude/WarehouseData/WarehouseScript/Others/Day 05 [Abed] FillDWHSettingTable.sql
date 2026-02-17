@@ -17,7 +17,7 @@
 
 	if(@Tenant is  null)
 	begin
-	insert into DWHSettings values (@Id,@Id,null,null,null,null,GETDATE() , 0)
+	insert into DWHSettings values (@Id,@Id,null,null,null,null,GETDATE())
 	end 
 
 	FETCH NEXT FROM TenantCursor   INTO @Id  

@@ -1,18 +1,11 @@
-﻿using AmitalCustomsWindowsService.Tester;
-using AmitalCustomsWindowsService.Utils;
-using CustomsWorkerRole.BL;
-using Logitude.BL.Helpers;
-using Logitude.BL.Resolvers;
+﻿using AmitalCustomsWindowsService.Utils;
 using Logitude.Customs.BL.EntityQueryServiceExt;
-using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.TreeFilterQuery;
 using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Server.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,54 +14,31 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unifreight.Data.AmitalModel;
 using WebFreight.Web.CustomModel;
 using WebFreight.Web.Security;
 
 namespace AmitalCustomsWindowsService
 {
-    //TEST !!
     static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        //static void Main1()
-        //{
-        //    ServiceBase[] ServicesToRun;
-        //    ServicesToRun = new ServiceBase[]
-        //    {
-        //        new MyWinService()
-        //    };
-        //    ServiceBase.Run(ServicesToRun);
-        //}
+        static void Main1()
+        {
+            ServiceBase[] ServicesToRun;
+            ServicesToRun = new ServiceBase[]
+            {
+                new MyWinService()
+            };
+            ServiceBase.Run(ServicesToRun);
+        }
 
         [STAThread]
         static void Main()
         {
-
-
-
-            bool test = false;
-            if (test)
-            {
-                //int i=CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin();
-                //CustomsWorkerRole.Test.clsTester.CheckCustomsContext();
-                (new Oracle2SQL())
-                    //.CreateCustomsContext();
-                    //.GetReNameLongTable(root: @"C:\log2004\Logitude\");
-                    .GetReNameSchemaCustoms(root: @"C:\log2004\Logitude\");
-
-                //.GetReNameLongColumns(root: @"C:\log2004\Logitude\");
-                //.ChangeToBit();
-                //(new CustomsWorkerRole.Test.clsTester()).CheckCustomContext();
-
-            }
-
-            //ThreadPool.SetMinThreads(400, 400);
             ServiceBase[] ServicesToRun;
 
             // More than one user Service may run within the same process. To add
@@ -83,26 +53,28 @@ namespace AmitalCustomsWindowsService
 
             //GatewayService.TestXmlDF_MSG10000_ImportDeclaration(@"D:\Source\2012\UnifreightIIG\UnifreightIIG.ServerTester\UnifreightIIG.ServerTester\IIGProxys\ImportDeclaration\SaveDF_MSG2750_2754_ImportDeclarationRequest-309925709-7788.xml");
 
+            
 
-
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Environment.UserInteractive" + Environment.UserInteractive.ToString());
+            Debug.WriteLine("AmitalCustomsWindowsService !!!...");
+            Logger.LogMe("AmitalCustomsWindowsService", false);
+            Logger.LogMe("Environment.UserInteractive" + Environment.UserInteractive.ToString(), false);
 
             //TestSystemTable();
             //ThreadStartStatic();
 
             if (System.Environment.CommandLine.EndsWith("TesterForm", StringComparison.OrdinalIgnoreCase))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Debugger");
+                Logger.LogMe("Debugger", false);
                 Program.ThreadStartStaticIsMustB4UsingTheDB();
                 System.Windows.Forms.Application.Run(new AmitalCustomsWindowsService.Tester.TesterForm());
                 return;
             }
             if (System.Environment.CommandLine.ToUpper().EndsWith("TST"))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Debugger");
+                Logger.LogMe("Debugger", false);
 
                 ServiceBase d = GetMyService();
-                //CustomExportService.BaseAddress = ConfigurationManager.AppSettings["baseAddress"].ToString();
+                //CustomExportService.BaseAddress = System.Configuration.ConfigurationSettings.AppSettings["baseAddress"].ToString();
                 (d as IServiceStartMe).StartMe();
 
                 System.Windows.Forms.MessageBox.Show("debug mode");
@@ -111,9 +83,9 @@ namespace AmitalCustomsWindowsService
 
 
             }
-            else if(string.IsNullOrEmpty(ConfigurationManager.AppSettings["WServiceName"]) || ConfigurationManager.AppSettings["WServiceName"] == "production")
+            else
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Runtime");
+                Logger.LogMe("Runtime", false);
                 ServicesToRun = new ServiceBase[] { GetMyService() /*new MyWinService()*/ };
                 ServiceBase.Run(ServicesToRun);
             }
@@ -122,11 +94,7 @@ namespace AmitalCustomsWindowsService
 
         private static ServiceBase GetMyService()
         {
-            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["LoadTestWService"]))
-            {
-                return new LoadTestWService();
-            }
-            
+
             return new AmitalCustomTolerantWindowsService();
 
             //<add key="TolerantWindowsService" value="1" />
@@ -151,52 +119,31 @@ namespace AmitalCustomsWindowsService
             string prodInfo = "";
 
             try
-            { 
+            {
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(prodInfo);
 
-                Action<bool, bool,int> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
+                Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null, null , () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
-                ProxyUtil.SecurityUtilityCheckFeature = (a, b, c) => SecurityUtility.CheckFeature(a, b, c);
-                InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
-                    (string courierMasterId, int tenant) =>
-                    {
-                        var courierMasterRequiredErrors = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierMasterId, tenant);
-                        if (courierMasterRequiredErrors != null)
-                        {
-                            return courierMasterRequiredErrors.RequiredFields.Count == 0;
-
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    };
-
-                Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe?.Invoke("StartStatic", false, "", DateTime.MaxValue);//problem in the amial windows service debug mode after merge
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null);
+                ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
+                Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe("StartStatic", false, "", DateTime.MaxValue);
 
                 CustomsRegistrations.Register();
-                InfraRegistrationHelper.Register();
-                LoggedContactResolver.RegisterLoggedContactUtil();
-                    
-                var serverMonitorControlService = new ServerMonitorControlService();
-                serverMonitorControlService.StopProccessIfNotExist();
-                
                 _ThreadStartStaticLoaded = true;
                 
             }
             catch (Exception e)
             {
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                Logger.LogMe(e.ToString(), true);
                 if (Environment.UserInteractive)
                 {
                     Debug.Fail("StartStatic");
                 }
-       _ThreadStartStaticLoaded = false;
+                Logger.LogMe(e.ToString(), true);
+                _ThreadStartStaticLoaded = false;
             }
         }
     }

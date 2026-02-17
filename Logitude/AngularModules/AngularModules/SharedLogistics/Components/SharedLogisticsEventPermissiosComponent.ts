@@ -13,14 +13,13 @@ import {EventPermissiosViewModel} from './ViewModel/EventPermissiosViewModel';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SharedLogisticsEventPermissios',
     templateUrl: './SharedLogisticsEventPermissiosComponent.html',
     inputs: ['OnCloseWindowEvent'],
     providers: [EventTypeExtendedPMService],
 })
 export class SharedLogisticsEventPermissiosComponent implements OnInit {
-  public EventPermissiosSelectedViewModel: any;
 
 
      myTenantZeroList: EventTypePM[];
@@ -61,7 +60,7 @@ export class SharedLogisticsEventPermissiosComponent implements OnInit {
 
         this.myTenantZeroList = [];
 
-        this._eventTypeExtendedPMService.GetEventTypesByObjectTable(this.ObjectTableId, 0).subscribe((res: ServiceResponse) => {
+        this._eventTypeExtendedPMService.GetEventTypesByObjectTable(this.ObjectTableId,0).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myTenantZeroList = pmResponse.Result;
@@ -78,7 +77,7 @@ export class SharedLogisticsEventPermissiosComponent implements OnInit {
     LoadTenantData() {
         this.myTenantList = [];
 
-        this._eventTypeExtendedPMService.GetEventTypesByObjectTable(this.ObjectTableId, SessionLocator.Tenant).subscribe((res: ServiceResponse) => {
+        this._eventTypeExtendedPMService.GetEventTypesByObjectTable(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myTenantList = pmResponse.Result;
@@ -162,7 +161,7 @@ export class SharedLogisticsEventPermissiosComponent implements OnInit {
 
         if (this.myTenantList.length > 0) {
 
-            this._eventTypeExtendedPMService.update(this.myTenantList).subscribe((res: ServiceResponse) => {
+            this._eventTypeExtendedPMService.update(this.myTenantList).subscribe(res => {
                 this.CloseButtonClicked();
             });
         }

@@ -23,7 +23,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         protected override void AdjustTrailReportFull()
         {
-            var testNow = false;// (new DateTime(2016, 12, 30) > DateTime.Now);
+            var testNow = true;// (new DateTime(2016, 12, 30) > DateTime.Now);
 
             var checkChartOfAcountType1LocalDebit1263p90 = false;
             if (checkChartOfAcountType1LocalDebit1263p90)
@@ -32,15 +32,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 //Chartofaccount==1111.50+76.15	
                 QBaseAllCardsAndDetailsAccType = QBaseAllCardsAndDetailsAccType.Where(coa => coa.ChartOfAccountsTypeCode == "1");
             }
-            if (_TrailReportParam.Suppress_ControlAccount)
-            {
-                QBaseAllCardsAndDetailsAccType = QBaseAllCardsAndDetailsAccType.Where(coa => coa.IsControlAccount == false);
-            }
 
             IQueryable<TrailReportTemp> qLocalAmountOnly_TotalStart_GroupByAccount = Init_LocalAmountOnly_TotalStart_JoinAccounts_GroupByAccount();
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                //_DbLogger.AddExplainLog("qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate:TotalStart:");
+                _DbLogger.AddExplainLog("qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate:TotalStart:");
                 var l1 = qLocalAmountOnly_TotalStart_GroupByAccount.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 
@@ -48,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                //_DbLogger.AddExplainLog("qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo:TotalDelta2End:");
+                _DbLogger.AddExplainLog("qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo:TotalDelta2End:");
                 var l2 = qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByAccount.Where(r => r.AccountId_COAType == _accountId).ToList()
                     ;
             }
@@ -57,18 +53,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All = qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount;
             if (!base.NotUsingControlAccount())
             {
-                //IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount = Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount();
-                //qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All =
-                //qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount.Union(
-                //qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount);
+                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount = Init_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount();
                 qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All =
-                qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount;
+                qAccumulateLocalAmountOnly_TransStart_JoinAccountsNotControlAccount_GroupByAccount.Union(
+                qAccumulate_LocalAmountOnly_TransStart_JoinAccountsWhereIscontrolAccount_GroupByAccount);
             }
 
 
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                //_DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude:");
+                _DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthFromTillFromDateNotInclude:");
                 var l3 = qAccumulateLocalAmountOnly_TransStart_GroupByAccount_All.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 
@@ -76,17 +70,15 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All = qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount;
             if (!base.NotUsingControlAccount())
             {
-                //IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount = Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount();
+                IQueryable<TrailReportTemp> qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount = Init_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount();
 
-                //qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All =
-                //qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount.Union(
-                //qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount);
                 qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All =
-                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount;
+                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsNotControlAccount_GroupByAccount.Union(
+                qAccumulate_LocalAmountOnly_TransEnd__JoinAccountsWhereIsControlAccount_GroupByAccount);
             }
             if (!String.IsNullOrWhiteSpace(_accountId))
             {
-                ///_DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthToDateTillToDateInculde:");
+                _DbLogger.AddExplainLog("qAccumulateTranactionBeginOfMonthToDateTillToDateInculde:");
                 var l4 = qLocalAmountOnly_LocalAmountTransEnd_GroupByAccount_All.Where(r => r.AccountId_COAType == _accountId).ToList();
             }
 
@@ -97,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             bool addAllChatOfAccountTyps = true;
             if (addAllChatOfAccountTyps)
             {
-                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData, _TrailReportParam.ChartOfAccountsTypeCodeList);
+                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData);
             }
 
             if (testNow)
@@ -164,7 +156,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                    ChartOfAcountCode3 = "",
                    ChartOfAcountCode4 = "",
                    ChartOfAcountCode5 = "",
-
                    ChartOfAcountName1 = "",
                    ChartOfAcountName2 = "",
                    ChartOfAcountName3 = "",
@@ -172,23 +163,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                    ChartOfAcountName5 = "",
 
 
-
                    ChartOfAccountId = "",
                    GLAccountName = "",
                    GLAccountNumber = "",
                    GLAccountId = g.Key.AccountId,
-
-
-                   ChartOfAcountName1English = "",
-                   ChartOfAcountName2English = "",
-                   ChartOfAcountName3English = "",
-                   ChartOfAcountName4English = "",
-                   ChartOfAcountName5English = "",
-
-                   GLAccountEnglish = "",
-                   ChartOfAccountsTypeEnglish = "",
-                   ChartOfAccountsEnglish = "",
-
                    CurrencyId = "",//g.Key.CurrencyId,
 
                    LocalOpenBalance =
@@ -221,37 +199,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                    - g.Sum(x => x.LocalAmountCreditTransEnd)
                    ),
 
-                 
+                   ForeignOpenBalance = 0,
+                   ForeignDebit = 0,
+                   ForeignCredit = 0,
+                   ForeignCloseBalance = 0,
 
-                   ForeignOpenBalance =
-                     (
-                     +g.Sum(x => x.ForeignAmountDebitTotalStart)
-                     - g.Sum(x => x.ForeignAmountCreditTotalStart)
-                     + g.Sum(x => x.ForeignAmountDebitTransStart)
-                     - g.Sum(x => x.ForeignAmountCreditTransStart)
-                     ),
-
-                   ForeignDebit =
-                     (
-                      +g.Sum(x => x.ForeignAmountDebitTotalDelta2End)
-                      + g.Sum(x => x.ForeignAmountDebitTransEnd)
-                      - g.Sum(x => x.ForeignAmountDebitTransStart)
-                     ),
-                   ForeignCredit =
-                     (
-                      +g.Sum(x => x.ForeignAmountCreditTotalDelta2End)
-                      + g.Sum(x => x.ForeignAmountCreditTransEnd)
-                      - g.Sum(x => x.ForeignAmountCreditTransStart)
-                     ),
-                   ForeignCloseBalance =
-                     (
-                     +g.Sum(x => x.ForeignAmountDebitTotalStart)
-                     + g.Sum(x => x.ForeignAmountDebitTotalDelta2End)
-                     + g.Sum(x => x.ForeignAmountDebitTransEnd)
-                     - g.Sum(x => x.ForeignAmountCreditTotalStart)
-                     - g.Sum(x => x.ForeignAmountCreditTotalDelta2End)
-                     - g.Sum(x => x.ForeignAmountCreditTransEnd)
-                     ),
                });
 
             IQueryable<TrailReportM> joinq5LvlqMapAllCurrencySum2TRail = null;
@@ -277,31 +229,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                            ChartOfAcountCode3 = chartf.Level3Code,
                            ChartOfAcountCode4 = chartf.Level4Code,
                            ChartOfAcountCode5 = chartf.Level5Code,
-
                            ChartOfAcountName1 = chartf.Level1Name,
                            ChartOfAcountName2 = chartf.Level2Name,
                            ChartOfAcountName3 = chartf.Level3Name,
                            ChartOfAcountName4 = chartf.Level4Name,
                            ChartOfAcountName5 = chartf.Level5Name,
 
-
-
                            ChartOfAccountId = chartf.ChartOfAccountId,
                            GLAccountName = chartf.GLAccountName,
                            GLAccountNumber = chartf.GLAccountNumber,
                            GLAccountId = chartf.GLAccountId,
-
-
-
-                           ChartOfAcountName1English = chartf.Level1English,
-                           ChartOfAcountName2English = chartf.Level2English,
-                           ChartOfAcountName3English = chartf.Level3English,
-                           ChartOfAcountName4English = chartf.Level4English,
-                           ChartOfAcountName5English = chartf.Level5English,
-
-                           GLAccountEnglish = chartf.GLAccountEnglish,
-                           ChartOfAccountsTypeEnglish = chartf.ChartOfAccountsTypeEnglish,
-                           ChartOfAccountsEnglish = chartf.ChartOfAccountsEnglish,
 
                            CurrencyId = groupJoinData.CurrencyId,
 
@@ -344,29 +281,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                        ChartOfAcountCode3 = chartf.Level3Code,
                        ChartOfAcountCode4 = chartf.Level4Code,
                        ChartOfAcountCode5 = chartf.Level5Code,
-
                        ChartOfAcountName1 = chartf.Level1Name,
                        ChartOfAcountName2 = chartf.Level2Name,
                        ChartOfAcountName3 = chartf.Level3Name,
                        ChartOfAcountName4 = chartf.Level4Name,
                        ChartOfAcountName5 = chartf.Level5Name,
 
-
-
                        ChartOfAccountId = chartf.ChartOfAccountId,
                        GLAccountName = chartf.GLAccountName,
                        GLAccountNumber = chartf.GLAccountNumber,
                        GLAccountId = chartf.GLAccountId,
-
-                       ChartOfAcountName1English = chartf.Level1English,
-                       ChartOfAcountName2English = chartf.Level2English,
-                       ChartOfAcountName3English = chartf.Level3English,
-                       ChartOfAcountName4English = chartf.Level4English,
-                       ChartOfAcountName5English = chartf.Level5English,
-
-                       GLAccountEnglish = chartf.GLAccountEnglish,
-                       ChartOfAccountsTypeEnglish = chartf.ChartOfAccountsTypeEnglish,
-                       ChartOfAccountsEnglish = chartf.ChartOfAccountsEnglish,
 
                        CurrencyId = data.CurrencyId,
 
@@ -407,28 +331,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  trailReportRow.ChartOfAcountCode3,
                  trailReportRow.ChartOfAcountCode4,
                  trailReportRow.ChartOfAcountCode5,
-
                  trailReportRow.ChartOfAcountName1,
                  trailReportRow.ChartOfAcountName2,
                  trailReportRow.ChartOfAcountName3,
                  trailReportRow.ChartOfAcountName4,
                  trailReportRow.ChartOfAcountName5,
 
-
-                 trailReportRow.ChartOfAcountName1English,
-                 trailReportRow.ChartOfAcountName2English,
-                 trailReportRow.ChartOfAcountName3English,
-                 trailReportRow.ChartOfAcountName4English,
-                 trailReportRow.ChartOfAcountName5English,
-
                  trailReportRow.ChartOfAccountId,
                  trailReportRow.GLAccountName,
                  trailReportRow.GLAccountNumber,
                  trailReportRow.GLAccountId,
-
-                 trailReportRow.ChartOfAccountsTypeEnglish,
-                 trailReportRow.ChartOfAccountsEnglish,
-                 trailReportRow.GLAccountEnglish,
 
                  //trailReportRow.CurrencyId,
 
@@ -448,32 +360,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      ChartOfAcountCode3 = gCOA.Key.ChartOfAcountCode3,
                      ChartOfAcountCode4 = gCOA.Key.ChartOfAcountCode4,
                      ChartOfAcountCode5 = gCOA.Key.ChartOfAcountCode5,
-
                      ChartOfAcountName1 = gCOA.Key.ChartOfAcountName1,
                      ChartOfAcountName2 = gCOA.Key.ChartOfAcountName2,
                      ChartOfAcountName3 = gCOA.Key.ChartOfAcountName3,
                      ChartOfAcountName4 = gCOA.Key.ChartOfAcountName4,
                      ChartOfAcountName5 = gCOA.Key.ChartOfAcountName5,
 
-
-
                      ChartOfAccountId = gCOA.Key.ChartOfAccountId,
                      GLAccountName = gCOA.Key.GLAccountName,
                      GLAccountNumber = gCOA.Key.GLAccountNumber,
                      GLAccountId = gCOA.Key.GLAccountId,
 
-
-                     ChartOfAcountName1English = gCOA.Key.ChartOfAcountName1English,
-                     ChartOfAcountName2English = gCOA.Key.ChartOfAcountName2English,
-                     ChartOfAcountName3English = gCOA.Key.ChartOfAcountName3English,
-                     ChartOfAcountName4English = gCOA.Key.ChartOfAcountName4English,
-                     ChartOfAcountName5English = gCOA.Key.ChartOfAcountName5English,
-
-                     GLAccountEnglish = gCOA.Key.GLAccountEnglish,
-                     ChartOfAccountsTypeEnglish = gCOA.Key.ChartOfAccountsTypeEnglish,
-                     ChartOfAccountsEnglish = gCOA.Key.ChartOfAccountsEnglish,
-
-                     CurrencyId = /*gCOA.FirstOrDefault(r=>r.CurrencyId!=null).CurrencyId,*/ "",// gCOA.Key.CurrencyId,
+                     CurrencyId = "",// gCOA.Key.CurrencyId,
 
 
                      LocalOpenBalance = gCOA.Sum(x => x.LocalOpenBalance),
@@ -483,82 +381,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-                     ForeignOpenBalance = gCOA.Sum(x => x.ForeignOpenBalance),
-                     ForeignDebit = gCOA.Sum(x => x.ForeignDebit),
-                     ForeignCredit = gCOA.Sum(x => x.ForeignCredit),
-                     ForeignCloseBalance = gCOA.Sum(x => x.ForeignCloseBalance),
+                     ForeignOpenBalance = 0,//gCOA.Sum(x => x.ForeignOpenBalance),
+                     ForeignDebit = 0,//gCOA.Sum(x => x.ForeignDebit),
+                     ForeignCredit = 0,//gCOA.Sum(x => x.ForeignCredit),
+                     ForeignCloseBalance = 0,//gCOA.Sum(x => x.ForeignCloseBalance),
                  }
 
             );
-            
-            _QBaseTrailReportFull = (from gCOA in _QBaseTrailReportFull
-                                     join a in QBaseAllCardsAndDetailsAccType
-                                     on gCOA.GLAccountId equals a.Id
-                                     select new TrailReportM()
-                                     {
-                                         ChartOfAcountType = gCOA.ChartOfAcountType,
-                                         ChartOfAcount1 = gCOA.ChartOfAcount1,
-                                         ChartOfAcount2 = gCOA.ChartOfAcount2,
-                                         ChartOfAcount3 = gCOA.ChartOfAcount3,
-                                         ChartOfAcount4 = gCOA.ChartOfAcount4,
-                                         ChartOfAcount5 = gCOA.ChartOfAcount5,
-
-                                         ChartOfAcountCode1 = gCOA.ChartOfAcountCode1,
-                                         ChartOfAcountCode2 = gCOA.ChartOfAcountCode2,
-                                         ChartOfAcountCode3 = gCOA.ChartOfAcountCode3,
-                                         ChartOfAcountCode4 = gCOA.ChartOfAcountCode4,
-                                         ChartOfAcountCode5 = gCOA.ChartOfAcountCode5,
-
-                                         ChartOfAcountName1 = gCOA.ChartOfAcountName1,
-                                         ChartOfAcountName2 = gCOA.ChartOfAcountName2,
-                                         ChartOfAcountName3 = gCOA.ChartOfAcountName3,
-                                         ChartOfAcountName4 = gCOA.ChartOfAcountName4,
-                                         ChartOfAcountName5 = gCOA.ChartOfAcountName5,
-
-
-
-                                         ChartOfAccountId = gCOA.ChartOfAccountId,
-                                         GLAccountName = gCOA.GLAccountName,
-                                         GLAccountNumber = gCOA.GLAccountNumber,
-                                         GLAccountId = gCOA.GLAccountId,
-
-
-                                         ChartOfAcountName1English = gCOA.ChartOfAcountName1English,
-                                         ChartOfAcountName2English = gCOA.ChartOfAcountName2English,
-                                         ChartOfAcountName3English = gCOA.ChartOfAcountName3English,
-                                         ChartOfAcountName4English = gCOA.ChartOfAcountName4English,
-                                         ChartOfAcountName5English = gCOA.ChartOfAcountName5English,
-
-                                         GLAccountEnglish = gCOA.GLAccountEnglish,
-                                         ChartOfAccountsTypeEnglish = gCOA.ChartOfAccountsTypeEnglish,
-                                         ChartOfAccountsEnglish = gCOA.ChartOfAccountsEnglish,
-
-                                         CurrencyId = a.IsMultiCurrency==true?null:(a.CurrencyId== _AccountingCurrencyId ? null: a.CurrencyId),  
-
-                                         LocalOpenBalance = gCOA.LocalOpenBalance,
-                                         LocalDebit = gCOA.LocalDebit,
-                                         LocalCredit = gCOA.LocalCredit,
-                                         LocalCloseBalance = gCOA.LocalCloseBalance,
-
-
-
-                                         ForeignOpenBalance = a.IsMultiCurrency == true ? null : (a.CurrencyId == _AccountingCurrencyId ? null : gCOA.ForeignOpenBalance),
-                                         
-                                         ForeignDebit = a.IsMultiCurrency == true ? null : (a.CurrencyId == _AccountingCurrencyId ? null : gCOA.ForeignDebit),
-                                         
-                                         ForeignCredit = a.IsMultiCurrency == true ? null : (a.CurrencyId == _AccountingCurrencyId ? null : gCOA.ForeignCredit),
-                                         
-                                         ForeignCloseBalance = a.IsMultiCurrency == true ? null : (a.CurrencyId == _AccountingCurrencyId ? null : gCOA.ForeignCloseBalance),
-                                         
-                                     }
-
-                                     );
-
-
-            if (_TrailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero)
-            {
-                _QBaseTrailReportFull = _QBaseTrailReportFull.Where(r => r.LocalCloseBalance.HasValue &&   r.LocalCloseBalance != 0);
-            }
             if (testNow)
             {
                 var tettt = _QBaseTrailReportFull.ToList();
@@ -617,8 +446,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                LocalAmountDebitTotalDelta2End = 0,
 
 
-               ForeignAmountCreditTransEnd = g.Sum(x => x.ForeignAmountCredit),
-                   ForeignAmountDebitTransEnd = g.Sum(x => x.ForeignAmountDebit),
+               ForeignAmountCreditTransEnd = 0,//g.Sum(x => x.ForeignAmountCredit),
+                   ForeignAmountDebitTransEnd = 0,//g.Sum(x => x.ForeignAmountDebit),
                    LocalAmountCreditTransEnd = g.Sum(x => x.LocalAmountCredit),
                LocalAmountDebitTransEnd = g.Sum(x => x.LocalAmountDebit),
 
@@ -677,8 +506,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  LocalAmountDebitTotalDelta2End = 0,
 
 
-                 ForeignAmountCreditTransEnd = g.Sum(x => x.ForeignAmountCredit),
-                 ForeignAmountDebitTransEnd = g.Sum(x => x.ForeignAmountDebit),
+                 ForeignAmountCreditTransEnd = 0,//g.Sum(x => x.ForeignAmountCredit),
+                 ForeignAmountDebitTransEnd = 0,//g.Sum(x => x.ForeignAmountDebit),
                  LocalAmountCreditTransEnd = g.Sum(x => x.LocalAmountCredit),
                  LocalAmountDebitTransEnd = g.Sum(x => x.LocalAmountDebit),
 
@@ -727,8 +556,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-                        ForeignAmountCreditTransStart = g.Sum(x => x.ForeignAmountCredit),
-                            ForeignAmountDebitTransStart = g.Sum(x => x.ForeignAmountDebit),
+                        ForeignAmountCreditTransStart = 0,//g.Sum(x => x.ForeignAmountCredit),
+                            ForeignAmountDebitTransStart = 0,//g.Sum(x => x.ForeignAmountDebit),
                             LocalAmountCreditTransStart = g.Sum(x => x.LocalAmountCredit),
                         LocalAmountDebitTransStart = g.Sum(x => x.LocalAmountDebit),
 
@@ -790,8 +619,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-                       ForeignAmountCreditTransStart = g.Sum(x => x.ForeignAmountCredit),
-                       ForeignAmountDebitTransStart = g.Sum(x => x.ForeignAmountDebit),
+                       ForeignAmountCreditTransStart = 0,//g.Sum(x => x.ForeignAmountCredit),
+                       ForeignAmountDebitTransStart = 0,//g.Sum(x => x.ForeignAmountDebit),
                        LocalAmountCreditTransStart = g.Sum(x => x.LocalAmountCredit),
                        LocalAmountDebitTransStart = g.Sum(x => x.LocalAmountDebit),
 
@@ -856,8 +685,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                       LocalAmountDebitTransStart = 0,
 
 
-                      ForeignAmountCreditTotalDelta2End = g.Sum(x => x.ForeignAmountCredit),
-                      ForeignAmountDebitTotalDelta2End = g.Sum(x => x.ForeignAmountDebit),
+                      ForeignAmountCreditTotalDelta2End = 0,//g.Sum(x => x.ForeignAmountCredit),
+                      ForeignAmountDebitTotalDelta2End = 0,//g.Sum(x => x.ForeignAmountDebit),
                       LocalAmountCreditTotalDelta2End = g.Sum(x => x.LocalAmountCredit),
                       LocalAmountDebitTotalDelta2End = g.Sum(x => x.LocalAmountDebit),
 
@@ -906,8 +735,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                  AccountId_COAType = g.Key.AccountId,
                  CurrencyId = "",//g.Key.CurrencyId,
-                 ForeignAmountCreditTotalStart = g.Sum(x => x.ForeignAmountCredit),
-                 ForeignAmountDebitTotalStart = g.Sum(x => x.ForeignAmountDebit),
+                 ForeignAmountCreditTotalStart = 0,//g.Sum(x => x.ForeignAmountCredit),
+                 ForeignAmountDebitTotalStart = 0,//g.Sum(x => x.ForeignAmountDebit),
                  LocalAmountCreditTotalStart = g.Sum(x => x.LocalAmountCredit),
                  LocalAmountDebitTotalStart = g.Sum(x => x.LocalAmountDebit),
 
@@ -955,36 +784,21 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                           ChartOfAcount3 = chartf.Level3Id,
                           ChartOfAcount4 = chartf.Level4Id,
                           ChartOfAcount5 = chartf.Level5Id,
-
                           ChartOfAcountCode1 = chartf.Level1Code,
                           ChartOfAcountCode2 = chartf.Level2Code,
                           ChartOfAcountCode3 = chartf.Level3Code,
                           ChartOfAcountCode4 = chartf.Level4Code,
                           ChartOfAcountCode5 = chartf.Level5Code,
-
                           ChartOfAcountName1 = chartf.Level1Name,
                           ChartOfAcountName2 = chartf.Level2Name,
                           ChartOfAcountName3 = chartf.Level3Name,
                           ChartOfAcountName4 = chartf.Level4Name,
                           ChartOfAcountName5 = chartf.Level5Name,
 
-
-
                           ChartOfAccountId = chartf.ChartOfAccountId,
                           GLAccountName = chartf.GLAccountName,
                           GLAccountNumber= chartf.GLAccountNumber,
                           GLAccountId = chartf.GLAccountId,
-
-
-                          ChartOfAcountName1English = chartf.Level1English,
-                          ChartOfAcountName2English = chartf.Level2English,
-                          ChartOfAcountName3English = chartf.Level3English,
-                          ChartOfAcountName4English = chartf.Level4English,
-                          ChartOfAcountName5English = chartf.Level5English,
-
-                          GLAccountEnglish = chartf.GLAccountEnglish,
-                          ChartOfAccountsTypeEnglish = chartf.ChartOfAccountsTypeEnglish,
-                          ChartOfAccountsEnglish = chartf.ChartOfAccountsEnglish,
 
                           CurrencyId = groupJoinData.CurrencyId,
 
@@ -1020,27 +834,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  trailReportRow.ChartOfAcountCode3,
                  trailReportRow.ChartOfAcountCode4,
                  trailReportRow.ChartOfAcountCode5,
-
                  trailReportRow.ChartOfAcountName1,
                  trailReportRow.ChartOfAcountName2,
                  trailReportRow.ChartOfAcountName3,
                  trailReportRow.ChartOfAcountName4,
                  trailReportRow.ChartOfAcountName5,
 
-                 trailReportRow.ChartOfAcountName1English,
-                 trailReportRow.ChartOfAcountName2English,
-                 trailReportRow.ChartOfAcountName3English,
-                 trailReportRow.ChartOfAcountName4English,
-                 trailReportRow.ChartOfAcountName5English,
-
                  trailReportRow.ChartOfAccountId,
                  trailReportRow.GLAccountName,
                  trailReportRow.GLAccountNumber,
                  trailReportRow.GLAccountId,
-
-                 trailReportRow.ChartOfAccountsTypeEnglish,
-                 trailReportRow.ChartOfAccountsEnglish,
-                 trailReportRow.GLAccountEnglish,
 
                  //trailReportRow.CurrencyId,
 
@@ -1055,13 +858,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          ChartOfAcount3 = gCOA.Key.ChartOfAcount3,
                          ChartOfAcount4 = gCOA.Key.ChartOfAcount4,
                          ChartOfAcount5 = gCOA.Key.ChartOfAcount5,
-
                          ChartOfAcountCode1 = gCOA.Key.ChartOfAcountCode1,
                          ChartOfAcountCode2 = gCOA.Key.ChartOfAcountCode2,
                          ChartOfAcountCode3 = gCOA.Key.ChartOfAcountCode3,
                          ChartOfAcountCode4 = gCOA.Key.ChartOfAcountCode4,
                          ChartOfAcountCode5 = gCOA.Key.ChartOfAcountCode5,
-
                          ChartOfAcountName1 = gCOA.Key.ChartOfAcountName1,
                          ChartOfAcountName2 = gCOA.Key.ChartOfAcountName2,
                          ChartOfAcountName3 = gCOA.Key.ChartOfAcountName3,
@@ -1075,17 +876,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          GLAccountNumber= gCOA.Key.GLAccountNumber,
                          GLAccountId = gCOA.Key.GLAccountId,
 
-
-                         ChartOfAcountName1English = gCOA.Key.ChartOfAcountName1English,
-                         ChartOfAcountName2English = gCOA.Key.ChartOfAcountName2English,
-                         ChartOfAcountName3English = gCOA.Key.ChartOfAcountName3English,
-                         ChartOfAcountName4English = gCOA.Key.ChartOfAcountName4English,
-                         ChartOfAcountName5English = gCOA.Key.ChartOfAcountName5English,
-
-                         GLAccountEnglish = gCOA.Key.GLAccountEnglish,
-                         ChartOfAccountsTypeEnglish = gCOA.Key.ChartOfAccountsTypeEnglish,
-                         ChartOfAccountsEnglish = gCOA.Key.ChartOfAccountsEnglish,
-
                          CurrencyId = "",// gCOA.Key.CurrencyId,
 
 
@@ -1096,31 +886,98 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-                         ForeignOpenBalance = gCOA.Sum(x => x.ForeignOpenBalance),
-                         ForeignDebit = gCOA.Sum(x => x.ForeignDebit),
-                         ForeignCredit = gCOA.Sum(x => x.ForeignCredit),
-                         ForeignCloseBalance = gCOA.Sum(x => x.ForeignCloseBalance),
+                         ForeignOpenBalance = 0,//gCOA.Sum(x => x.ForeignOpenBalance),
+                         ForeignDebit = 0,//gCOA.Sum(x => x.ForeignDebit),
+                         ForeignCredit = 0,//gCOA.Sum(x => x.ForeignCredit),
+                         ForeignCloseBalance = 0,//gCOA.Sum(x => x.ForeignCloseBalance),
                      }
 
             );
         }
 
-
-        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData, List<string> chartOfAccountsTypes)
+        private static IQueryable<TrailReportM> NotInUse____NewMethod(IQueryable<TrailReportTemp> _QUnionAllMoneyData)
         {
-            var allChartTypes = _AccountingContext.ChartOfAccountsTypes.AsQueryable();
-            IQueryable<Data.EntityPOCOs.ChartOfAccountsType> chartTypes = null;
-            if (chartOfAccountsTypes != null && chartOfAccountsTypes.Count > 0)
-            {
-                chartTypes = allChartTypes.Where(coa => chartOfAccountsTypes.Contains(coa.Code));
-            }
-            else
-            {
-                chartTypes = allChartTypes;
-            }
+            IQueryable<TrailReportM> qMapAllCurrencySum2TRail =
+                //map All to TrailReportM Schem 
+                (from r in _QUnionAllMoneyData
 
+                 group r by new
+                 {
+                     AccountId = r.AccountId_COAType,
+                     //r.CurrencyId
+                 } into g
+                 select new TrailReportM()
+                 {
+
+                     ChartOfAcountType = "",
+                     ChartOfAcount1 = "",
+                     ChartOfAcount2 = "",
+                     ChartOfAcount3 = "",
+                     ChartOfAcount4 = "",
+                     ChartOfAcount5 = "",
+                     ChartOfAcountCode1 ="",
+                     ChartOfAcountCode2 = "",
+                     ChartOfAcountCode3 = "",
+                     ChartOfAcountCode4 = "",
+                     ChartOfAcountCode5 = "",
+                     ChartOfAcountName1= "",
+                     ChartOfAcountName2 = "",
+                     ChartOfAcountName3 = "",
+                     ChartOfAcountName4 = "",
+                     ChartOfAcountName5 = "",
+
+
+
+                     ChartOfAccountId ="",
+                     GLAccountName = "",
+                     GLAccountNumber="",
+                     GLAccountId = g.Key.AccountId,
+                     CurrencyId = "",//g.Key.CurrencyId,
+
+                     LocalOpenBalance =
+                     (
+                     +g.Sum(x => x.LocalAmountDebitTotalStart)
+                     - g.Sum(x => x.LocalAmountCreditTotalStart)
+                     + g.Sum(x => x.LocalAmountDebitTransStart)
+                     - g.Sum(x => x.LocalAmountCreditTransStart)
+                     ),
+
+                     LocalDebit =
+                     (
+                      +g.Sum(x => x.LocalAmountDebitTotalDelta2End)
+                      + g.Sum(x => x.LocalAmountDebitTransEnd)
+                      - g.Sum(x => x.LocalAmountDebitTransStart)
+                     ),
+                     LocalCredit =
+                     (
+                      +g.Sum(x => x.LocalAmountCreditTotalDelta2End)
+                      + g.Sum(x => x.LocalAmountCreditTransEnd)
+                      - g.Sum(x => x.LocalAmountCreditTransStart)
+                     ),
+                     LocalCloseBalance =
+                     (
+                     +g.Sum(x => x.LocalAmountDebitTotalStart)
+                     + g.Sum(x => x.LocalAmountDebitTotalDelta2End)
+                     + g.Sum(x => x.LocalAmountDebitTransEnd)
+                     - g.Sum(x => x.LocalAmountCreditTotalStart)
+                     - g.Sum(x => x.LocalAmountCreditTotalDelta2End)
+                     - g.Sum(x => x.LocalAmountCreditTransEnd)
+                     ),
+
+                     ForeignOpenBalance = 0,
+                     ForeignDebit = 0,
+                     ForeignCredit = 0,
+                     ForeignCloseBalance = 0,
+
+                 });
+            return qMapAllCurrencySum2TRail;
+        }
+
+
+        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData)
+        {
             _QUnionAllMoneyData = _QUnionAllMoneyData.Concat(
-            chartTypes.Select(r => new TrailReportTemp()
+            _AccountingContext.ChartOfAccountsTypes.Select(r => new TrailReportTemp()
             {
                 AccountId_COAType = r.Code,
 

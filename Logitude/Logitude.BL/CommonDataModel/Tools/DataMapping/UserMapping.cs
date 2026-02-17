@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -28,7 +28,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             user.IsSalesman = userPm.IsSalesman;
             user.IsFreelancer = userPm.IsFreelancer;
             user.FreelancerId = userPm.FreelancerId;
-            user.BusinessUnitId = userPm.BusinessUnitId;            
+            user.BusinessUnitId = userPm.BusinessUnitId;
+            
             user.ExpirationDate = userPm.ExpirationDate;
             user.LicencedUser = userPm.LicencedUser;
             user.IsProductRestricted = userPm.IsProductRestricted;
@@ -44,11 +45,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             user.ShowLogBoxToolTip = userPm.ShowLogBoxToolTip;
             user.ShowInboxToolTip = userPm.ShowInboxToolTip;
             user.ShowLocalNameInLOV = userPm.ShowLocalNameInLOV;
-            user.SecurityLevel = userPm.SecurityLevel;
             user.UserRoles = userPm.UserRoles;
-            user.AdditionalPackagesOnly = userPm.AdditionalPackagesOnly;
-            user.LayoutDirection = userPm.LayoutDirection;
-            user.SignatureImageId = userPm.SignatureImageId;
             BuildSearchFields(userPm, user);
         }
 

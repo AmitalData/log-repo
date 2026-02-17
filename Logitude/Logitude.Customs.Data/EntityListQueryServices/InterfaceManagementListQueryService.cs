@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -14,7 +14,7 @@ using System.Xml.Serialization;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Web;
 
@@ -81,13 +81,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              TenantSendOptionName = s.InterfaceSendOption != null ? s.InterfaceSendOption.LocalName : null,
 
                                                              HasDefinition = s.Id != null ? true : false,
-                                                              InterfaceType= a.InterfaceType,
-                                                             InterfaceTypeName = a.InterfaceType=="C"? "עמילות" : a.InterfaceType == "B" ? "בלדרות" : "הכל",
-                                                             SendTime = s.SendTime,
-                                                             EntityLockId = a.EntityLockId,
-                                                             EntityLockName = a.EntityLock != null ? a.EntityLock.Name : null,
-                                                             IsUnifreight = a.IsUnifreight,
-                                                             IsCustomsFile = a.IsCustomsFile,
+
 
                                                          });
             return query;

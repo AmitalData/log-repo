@@ -2,7 +2,7 @@
 using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.Data.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,6 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", authToken.Tenant);
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseReleasePackageQueryService warehouseReleasePackageQuery = new WarehouseReleasePackageQueryService(MyContext);
@@ -41,7 +40,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
         }
 
 
-        public HttpResponseMessage GetWarehouseReleasePackagePMThatNotUsedForAnyEntityLists()
+        public HttpResponseMessage GetWarehouseReleasePackageListsByShipmentId(string shipmentId, int tenant)
         {
             try
             {
@@ -50,8 +49,16 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", authToken.Tenant);
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
-                WarehouseReleasePackageQueryService warehouseReleasePackageQuery = new WarehouseReleasePackageQueryService(MyContext);
-                var result = warehouseReleasePackageQuery.GetWarehouseReleasePackagePMLists(authToken.Tenant);
+
+                List<WarehouseReleasePackageList> result = null;
+
+               WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(authToken.Tenant);
+                List<string> warehouseReleaseListsIds = warehouseReleaseQueryService.GetWarehouseReleaseListsIdsByshipmentId(shipmentId, tenant);
+                if (warehouseReleaseListsIds.Count > 0)
+                {
+                    WarehouseReleasePackageQueryService warehouseReleasePackageQuery = new WarehouseReleasePackageQueryService(MyContext);
+                    result = warehouseReleasePackageQuery.GetWarehouseReleasePackageListsByWarehouseReleaseIds(warehouseReleaseListsIds, tenant);
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -69,7 +76,6 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", authToken.Tenant);
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(authToken.Tenant);

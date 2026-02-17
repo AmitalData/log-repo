@@ -5,7 +5,6 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.ComponentModel.DataAnnotations.Schema;
-using System;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
@@ -28,9 +27,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string INTTRAContactId { get; set; }
         public string INTTRAAlias { get; set; }
 		public string CounterCode { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
 
-        public virtual Address Address { get; set; }
+		public virtual Address Address { get; set; }
 
         [ForeignKey("INTTRAContactId")]
         public virtual Contact INTTRAContact { get; set; }

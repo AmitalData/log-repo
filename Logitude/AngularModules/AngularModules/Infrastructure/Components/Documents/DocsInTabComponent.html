@@ -21,23 +21,8 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 5px;" *ngIf="IsApprovePendingDocumentsEnabled">
-                            <button [disabled]="!IsDigitalPortalInvitedCustomer" *ngIf="!IsDocumentsNeedApprove" class="Button">
-                                <span>Approve Pending Documents</span>
-                            </button>
-
-                            <button [disabled]="!IsDigitalPortalInvitedCustomer" class="EntityChangesButton" *ngIf="IsDocumentsNeedApprove" (click)="ApprovePendingDocuments()">
-                                <span>Approve Pending Documents</span>
-                            </button>
-                        </td>
-
-                        <td style="width: 5px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width:5px">
-                            <button *ngIf="DownloadAllVisibile" class="Button" (click)="DownloadAllClick()"
-                                    [disabled]="!HasDocuments">
+                        <td style="width:1px">
+                            <button *ngIf="DownloadAllVisibile" class="Button" (click)="DownloadAllClick()" [disabled]="!HasDocuments">
                                 <div style="display:inline">
                                     <span>Download Documents</span>
                                 </div>
@@ -51,10 +36,7 @@
                         <td style="width:1px">
                             <button [disabled]="!UndoReceivedButtonEnable" class="Button" (click)="UndoReceivedButtonClicked()">
                                 <div style="display:inline">
-                                    <span>
-                                        <img style="height:15px;width:15px;vertical-align:central"
-                                             src="./Images/Undo.png" />
-                                    </span>
+                                    <span> <img style="height:15px;width:15px;vertical-align:central" src="./Images/Undo.png" /></span>
                                     <span>{{'DocsIn.B.UndoReceived' | TextCodeTranslationPipe}}</span>
                                 </div>
                             </button>
@@ -67,10 +49,7 @@
                         <td style="width:1px">
                             <button [disabled]="!DeleteAttachmentButtonEnable" class="Button" (click)="DeleteAttachmentButtonClicked()">
                                 <div style="display:inline">
-                                    <span>
-                                        <img style="vertical-align:top;margin-top:2px"
-                                             src="./Images/RedX.png" />
-                                    </span>
+                                    <span> <img style="vertical-align:top;margin-top:2px" src="./Images/RedX.png" /></span>
                                     <span>{{'DocsIn.B.DeleteAttachment' | TextCodeTranslationPipe}}</span>
                                 </div>
                             </button>
@@ -81,18 +60,15 @@
                         </td>
 
                         <td style="width: 150px;">
-                            <SearchTextBox [ObjectTableName]="'Shipment'" [PlaceHolder]="'Search'"
-                                           (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                            <SearchTextBox [ObjectTableName]="'Shipment'" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
                         </td>
 
                         <td style="width: 7px;">
                             <div></div>
                         </td>
-
                         <td style="width: 21px;">
                             <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                         </td>
-
                         <td style="width: 5px;">
                             <div></div>
                         </td>
@@ -103,300 +79,292 @@
         </tr>
 
         <tr>
+
+
             <td style="vertical-align:top">
                 <!--<div  class="MediaFill">-->
-                <logitude-edit-grid (SelectedItemChanged)="OnSelectedDocumentInList($event)" [SelectedRow]="SelectedExternalViewModel" (MouseleaveChanged)="OnMouseleave($event)" (MouseOverChanged)="OnMouseOver($event)"
-                                    [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemsSource">
+                <logitude-edit-grid (SelectedItemChanged)="OnSelectedDocumentInList($event)" [SelectedRow]="SelectedExternalViewModel" (MouseleaveChanged)="OnMouseleave($event)" (MouseOverChanged)="OnMouseOver($event)" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemsSource">
+
 
                     <!--Attach-->
                     <log-column [width]="'60'" [header]="'DocsIn.O.Attach' | TextCodeTranslationPipe">
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
 
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                <table>
-                                    <tr>
+                            <table>
+                                <tr>
 
-                                        <td class="CellStretched" [style.width]="IsRTL ? 'initial' : '60px'" [style.min-width]="IsRTL ? 'initial' : '60px'" [style.max-width]="IsRTL ? 'initial' : '60px'" style="position: relative;">
+                                    <td class="CellStretched" style="width: 60px; min-width: 60px; max-width: 60px; position: relative;">
 
-                                            <div *ngIf="item.SetAttachedIconVisibility" [ngSwitch]="item.Extention">
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'PDF'" src="./Images/FileIcons/File-pdf-48.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'TXT'" src="./Images/FileIcons/txt_48.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'XLS'" src="./Images/FileIcons/Microsoft-Office-Excel-48.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'XLSX'" src="./Images/FileIcons/Microsoft-Office-Excel-48.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'DOC'" src="./Images/FileIcons/Microsoft-Office-Word-48.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'DOCX'" src="./Images/FileIcons/Microsoft-Office-Word-48.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'PPT'" src="./Images/FileIcons/Microsoft-Office-PowerPoint-48.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'PPTX'" src="./Images/FileIcons/Microsoft-Office-PowerPoint-48.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'ZIP'" src="./Images/FileIcons/Zip-icon.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" *ngSwitchCase="'RAR'"
-                                                     src="./Images/FileIcons/Zip-icon.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px"
-                                                     *ngSwitchCase="'XML'" src="./Images/FileIcons/Document-xml-48.png" />
-                                                <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchDefault
-                                                     src="./Images/FileIcons/attachment-icon.png" />
-                                            </div>
+                                        <div *ngIf="item.SetAttachedIconVisibility" [ngSwitch]="item.Extention">
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'PDF'" src="./Images/FileIcons/File-pdf-48.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'TXT'" src="./Images/FileIcons/txt_48.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'XLS'" src="./Images/FileIcons/Microsoft-Office-Excel-48.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'XLSX'" src="./Images/FileIcons/Microsoft-Office-Excel-48.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'DOC'" src="./Images/FileIcons/Microsoft-Office-Word-48.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'DOCX'" src="./Images/FileIcons/Microsoft-Office-Word-48.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'PPT'" src="./Images/FileIcons/Microsoft-Office-PowerPoint-48.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'PPTX'" src="./Images/FileIcons/Microsoft-Office-PowerPoint-48.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'ZIP'" src="./Images/FileIcons/Zip-icon.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" *ngSwitchCase="'RAR'" src="./Images/FileIcons/Zip-icon.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchCase="'XML'" src="./Images/FileIcons/Document-xml-48.png" />
+                                            <img class="CenterCenter" (click)="item.VeiwDocumentButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px" *ngSwitchDefault src="./Images/FileIcons/attachment-icon.png" />
+                                        </div>
 
-                                        </td>
+                                    </td>
 
-                                    </tr>
-                                </table>
-
-                            </log-cell-template>
-
-                        </ng-template>
+                                </tr>
+                            </table>
 
 
+
+
+
+
+                        </log-cell-template>
                     </log-column>
 
                     <!--File Name-->
                     <log-column [width]="'200'" [header]="'File Name'">
-
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
 
 
-                                <table>
-                                    <tr>
+                            <table>
+                                <tr>
 
-                                        <td>
-                                            <div [style.width]="IsRTL ? 'initial' : '200px'">
-                                                {{item.FileName}}
-                                            </div>
+                                    <td>
+                                        <div style="width:200px" class="TextTrimming">
+                                            {{item.FileName}}
+                                        </div>
 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </log-cell-template>
-                        </ng-template>
+                                    </td>
 
+
+
+
+                                </tr>
+                            </table>
+
+
+
+
+                        </log-cell-template>
                     </log-column>
+
 
                     <!--Actions-->
                     <log-column [width]="'190'" [header]="'DocsIn.O.Actions' | TextCodeTranslationPipe">
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
 
-                        <ng-template let-item>
-
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-
-                                <table>
-                                    <tr>
+                            <table>
+                                <tr>
 
 
-                                        <td class="CellStretched" [style.width]="IsRTL ? 'initial' : '190px'" [style.min-width]="IsRTL ? 'initial' : '190px'" [style.max-width]="IsRTL ? 'initial' : '190px'" style="position: relative;">
-                                            <button id="{{'SetReceivedDocumentbtn' | IdGeneratorAsyncPipe | async}}" *ngIf="item.SetReceivedButtonVisibility" style="display:inline;width:75px;height:20px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.SetReceivedButtonClicked()">
-
-                                                {{'DocsIn.B.SetReceived' | TextCodeTranslationPipe}}
-                                            </button>
-
-                                            <button [style.margin-left]="item.SetReceivedButtonVisibility? '5px':'0px'" id="{{'UploadDocumentdbtn' | IdGeneratorAsyncPipe | async}}" [disabled]="IsClickToUpload" *ngIf="item.SetAttachedButtonVisibility" style="display:inline;height:20px;width:50px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px;" class="Button" (click)="item.UploadButtonClicked()">
-                                                {{'DocsIn.B.Upload' | TextCodeTranslationPipe}}
-                                            </button>
+                                    <td class="CellStretched" style="width: 190px; min-width: 190px; max-width: 190px; position: relative;">
+                                        <button *ngIf="item.SetReceivedButtonVisibility" style="display:inline;width:75px;height:20px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.SetReceivedButtonClicked()">{{'DocsIn.B.SetReceived' | TextCodeTranslationPipe}} </button>
+                                        <button [disabled]="IsClickToUpload" *ngIf="item.SetAttachedButtonVisibility" style="display:inline;height:20px;width:50px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.UploadButtonClicked()">{{'DocsIn.B.Upload' | TextCodeTranslationPipe}} </button>
 
 
 
-                                            <button [style.margin-left]="item.SetReceivedButtonVisibility || item.SetAttachedButtonVisibility ? '5px':'0px'" *ngIf="item.DownloadButtonVisibility" style="display:inline;height:20px;width:35px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px;"
-                                                    class="Button" (click)="item.VeiwDocumentButtonClicked(item)">
-                                                {{'DocsIn.B.View' | TextCodeTranslationPipe}}
-
-                                            </button>
+                                        <button *ngIf="item.DownloadButtonVisibility" style="display:inline;height:20px;width:35px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.VeiwDocumentButtonClicked(item)">{{'DocsIn.B.View' | TextCodeTranslationPipe}} </button>
 
 
-                                            <button *ngIf="item.DownloadButtonVisibility"
-                                                    style="display:inline;width:64px;vertical-align:top;height:20px;text-align:left;margin-top:2px;margin-left:5px" class="Button"
-                                                    (click)="item.AdditionalButtonClicked()">
-                                                <span style="margin-left:-0px;font-size:11px">
-                                                    {{'DocsIn.B.Additional' |TextCodeTranslationPipe}}
-                                                </span>
-                                            </button>
-                                        </td>
+                                        <button *ngIf="item.DownloadButtonVisibility" style="display:inline;width:64px;vertical-align:top;height:20px;text-align:left;margin-top:2px" class="Button" (click)="item.AdditionalButtonClicked()"><span style="margin-left:-0px;font-size:11px">{{'DocsIn.B.Additional' | TextCodeTranslationPipe}}</span></button>
+                                    </td>
 
 
-                                    </tr>
-                                </table>
-                            </log-cell-template>
-                        </ng-template>
+                                </tr>
+                            </table>
+
+
+
+
+
+
+                        </log-cell-template>
                     </log-column>
 
                     <!--Name-->
                     <log-column [width]="'200'" [header]="'DocsIn.O.Name' | TextCodeTranslationPipe">
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+
+                            <table>
+                                <tr>
+
+                                    <td>
+                                        <div style="width:200px" class="TextTrimming">
+                                            {{item.Name}}
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            </table>
 
 
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div [style.width]="IsRTL ? 'initial' : '200px'" style="width:200px">
-                                                {{item.Name}}
-                                            </div>
 
-                                        </td>
 
-                                    </tr>
-                                </table>
 
-                            </log-cell-template>
-                        </ng-template>
+
+                        </log-cell-template>
                     </log-column>
+
+
 
                     <!--ChildReference-->
                     <log-column [width]="'150'" [header]="'DocsIn.O.ReferenceNo' | TextCodeTranslationPipe">
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
 
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-
-                                <table>
-                                    <tr>
+                            <table>
+                                <tr>
 
 
-                                        <td class="CellStretched" [style.width]="IsRTL ? 'initial' : '150px'" [style.min-width]="IsRTL ? 'initial' : '150px'" [style.max-width]="IsRTL ? 'initial' : '150px'" style="position: relative;">
+                                    <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
 
 
-                                            {{item.ChildReference}}
+                                        {{item.ChildReference}}
 
 
-                                        </td>
+                                    </td>
 
-                                    </tr>
-                                </table>
+                                </tr>
+                            </table>
 
-                            </log-cell-template>
 
-                        </ng-template>
+
+
+
+
+                        </log-cell-template>
                     </log-column>
+
 
                     <!--ReceivedBy-->
-                    <log-column [width]="'115'" [header]="'DocsIn.O.ReceivedBy' | TextCodeTranslationPipe">
+                    <log-column [width]="'90'" [header]="'DocsIn.O.ReceivedBy' | TextCodeTranslationPipe">
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+
+                            <table>
+                                <tr>
 
 
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                    <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; position: relative;">
 
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <table>
-                                                <tr>
-                                                    <td class="GridViewCell" [style.width]="IsRTL ? 'initial' : '90px'" [style.min-width]="IsRTL ? 'initial' : '90px'" [style.max-width]="IsRTL ? 'initial' : '90px'" style="position: relative;">
-                                                        {{item.ReceivedByUserName}}
-                                                    </td>
-                                                    <td style="width: 3px;">
-                                                        <div></div>
-                                                    </td>
-                                                    <td style="width:18px">
-                                                        <CellTooltip [Height]="90" [Width]="330" [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Document Source'" *ngIf="item.ReceivedByPartner">
-                                                            <div *ngIf="item.ReceivedByPartner == 'Digital'" style="padding:7px">This document is received by Digital Portal</div>
-                                                            <div *ngIf="item.ReceivedByPartner == 'External'" style="padding:7px">This document is received by External Partner</div>
-                                                        </CellTooltip>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </log-cell-template>
-                        </ng-template>
+                                        {{item.ReceivedByUserName}}
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+
+
+
+
+                        </log-cell-template>
                     </log-column>
+
 
                     <!--ReceivedDate-->
                     <log-column [width]="'150'" [header]="'DocsIn.O.ReceivedDate' | TextCodeTranslationPipe">
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
 
-                        <ng-template let-item>
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+                                        <LogDatePicker *ngIf="item.Received || item.DocumentHasFile" (ValueChanged)="item.EditReceiveDate(item,$event)" [ObjectFieldName]="'ReceivedDate'" [ObjectTableName]="ObjectTableName"
+                                                       [NoObjectField]="true"
+                                                       [DataContext]="item" [SelectedDateValue]="item.ReceivedDate" [HideColumns]="true"></LogDatePicker>
 
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                    </td>
+                                </tr>
+                            </table>
 
-                                <table>
-                                    <tr class="FormFieldRow">
-                                        <td [style.width]="IsRTL ? 'initial' : '100px'" [style.min-width]="IsRTL ? 'initial' : '100px'" [style.max-width]="IsRTL ? 'initial' : '100px'" style="position:relative;">
-                                            <LogDatePicker *ngIf="item.Received || item.DocumentHasFile"
-                                                           (ValueChanged)="item.EditReceiveDate(item,$event)" [ObjectFieldName]="'ReceivedDate'" [ObjectTableName]="ObjectTableName"
-                                                           [NoObjectField]="true"
-                                                           [DataContext]="item" [SelectedDateValue]="item.ReceivedDate" [HideColumns]="true"></LogDatePicker>
 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </log-cell-template>
-                        </ng-template>
+
+
+
+
+                        </log-cell-template>
                     </log-column>
+
+
 
                     <!--FollowUp-->
                     <log-column [width]="'70'" [header]="'Follow-Up'">
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                            <div style="width: 100%; height: 100%; position: relative;">
+                                <div (mouseleave)="OnFollowMouseleave(item)" (mouseover)="OnFollowMouseOver(item)" class="CenterCenter">
+                                    <span (click)="AddFollowUp(item)" style="width:20px">
 
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                <div style="width: 100%; height: 100%; position: relative;">
-                                    <div (mouseleave)="OnFollowMouseleave(item)" (mouseover)="OnFollowMouseOver(item)" class="CenterCenter">
-                                        <span (click)="AddFollowUp(item)" style="width:20px">
-
-                                            <img *ngIf="item.ShowFollowUp || item.HasFollowUp"
-                                                 src="./_Resources/Images/Icons/Followups/Followup_Black.png" />
-                                            <img style="opacity:0.7" *ngIf="!item.ShowFollowUp && !item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup.png" />
+                                        <img *ngIf="item.ShowFollowUp || item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup_Black.png" />
+                                        <img style="opacity:0.7" *ngIf="!item.ShowFollowUp && !item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup.png" />
 
 
-                                        </span>
-                                    </div>
+                                    </span>
                                 </div>
-                            </log-cell-template>
-                        </ng-template>
+                            </div>
 
 
+
+
+
+                        </log-cell-template>
                     </log-column>
 
                     <!--Note-->
-                    <log-column [width]="'300'" [header]="'DocsIn.O.Notes' | TextCodeTranslationPipe">
 
-                        <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                    <log-column [width]="'150'" [header]="'DocsIn.O.Notes' | TextCodeTranslationPipe">
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
 
-                                <table>
-                                    <tr>
-                                        <td [style.width]="IsRTL ? 'initial' : '300px'" [style.min-width]="IsRTL ? 'initial' : '300px'" [style.max-width]="IsRTL ? 'initial' : '300px'" style="position:relative;">
+                            <table>
+                                <tr>
+                                    <td style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
 
-                                            <input [attr.id]="item.Key" (change)="item.EditNote(item)"
-                                                   type="text" autocomplete="off" style="height:22px;width:290px" [(ngModel)]="item.Note" value="" />
+                                        <input [attr.id]="item.Key" (change)="item.EditNote(item)" type="text" autocomplete="off" style="height:22px;width:140px" [(ngModel)]="item.Note" value="" />
 
-                                        </td>
+                                    </td>
 
-                                    </tr>
-                                </table>
-                            </log-cell-template>
-                        </ng-template>
+                                </tr>
+                            </table>
 
-                        <!--IsRequested-->
+
+
+
+
+
+                        </log-cell-template>
                     </log-column>
-
-                    <!--IsRequired-->
+                    <!--IsRequested-->
                     <log-column [width]="'90'" [header]="'Is Required'">
-
-                        <ng-template let-item>
-
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                <div style="width: 100%; height: 100%; position: relative;">
-                                    <div class="CenterCenter">
-                                        <CheckBox [IsChecked]="item.IsRequested" (Checked)="item.IsRequested =$event"></CheckBox>
-                                    </div>
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                            <div style="width: 100%; height: 100%; position: relative;">
+                                <div class="CenterCenter">
+                                    <CheckBox [IsChecked]="item.IsRequested" (Checked)="item.IsRequested = $event"></CheckBox>
                                 </div>
+                            </div>
 
 
 
 
-                            </log-cell-template>
-                        </ng-template>
+                        </log-cell-template>
                     </log-column>
+
+
 
                 </logitude-edit-grid>
                 <!--</div>-->
             </td>
+
+
+
+
+
+
+
+
         </tr>
+
     </table>
 </div>
+
+

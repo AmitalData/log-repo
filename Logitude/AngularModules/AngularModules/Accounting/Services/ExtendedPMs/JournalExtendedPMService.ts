@@ -1,23 +1,24 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {JournalPM} from '../../EntityPMs/JournalPM';
-import {JournalLinePM} from '../../EntityPMs/JournalLinePM';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators'
-import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
- 
 
+import {JournalPM} from '../../EntityPMs/JournalPM';
+
+import {JournalLinePM} from '../../EntityPMs/JournalLinePM';
+import {JournalValidator} from '../../Validators/JournalValidator';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class JournalExtendedPMService {
-
+    private _http: Http;
     private _apiUrl: string;
-    private httpClient: HttpClient;
     constructor() {
-  
-        this.httpClient = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + /*'api/journalviews'*/ 'api/journalop';
     }
 
@@ -25,110 +26,64 @@ export class JournalExtendedPMService {
     VoidJournal(tenant, JournalId, AccountingEntityCode, AccountingEntityId, AccountingEntityReference) {
         //http://localhost:9996/api/JournalOp?JournalOp=void&JournalId=1-93808&tenant=1071&AccountingEntityCode=7&AccountingEntityId=Deposit1212&AccountingEntityReference=Cash%20Deposit%207
 
-
+      
 
         let url = this._apiUrl + '?JournalOp=void&JournalId=' + JournalId + '&tenant=' + tenant + '&AccountingEntityCode=' + AccountingEntityCode + '&AccountingEntityId=' + AccountingEntityId + '&AccountingEntityReference=' + AccountingEntityReference;
-        return this.httpClient.delete( url,  ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                var pm = response;
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            
+            // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+
+            return this._http.delete(url, { headers: authHeader }).map(response => {
+
+                var pm = response.json();
                 if (pm) {
                     var mappedResult: JournalPM;
-                
+                    //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
                     serviceResponse.Result = mappedResult;
                 }
 
 
                 return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-       
+
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
 
     }
+    //GetByAccountingEntityId(accountingEntityId) {
+    //    var authHeader = new Headers();
+    //    authHeader.append('Token', SessionInfo.Token);
+    //    var url = this._apiUrl + '/GetByAccountingEntityId?accountingEntityId=' + accountingEntityId;
 
+    //    return Observable.defer(() => {
+    //        return this._http.get(url, { headers: authHeader }).map(response => {
 
-    GetByAccountingEntityId(accountingEntityId: string, accountingEntityCode:string) {
-   
-      return this.httpClient.get(this._apiUrl + '/GetJournalByAccountingEntityId?accountingEntityId=' + accountingEntityId + '&accountingEntityCode=' + accountingEntityCode,   ServiceHelper.GetHttpHeaders()).pipe(
-        map(res => {
-            var serviceResponse: ServiceResponse = new ServiceResponse();
+    //            var result = response.json();
+    //            var entity: JournalPM;
+    //            if (result) {
+    //                entity = this.MapJsonToEntityPM(result);
+    //            }
+    //            var serviceResponse: ServiceResponse;
+    //            serviceResponse = new ServiceResponse();
+    //            serviceResponse.Result = entity;
+    //            return serviceResponse;
 
-            var result = res;
-            var entity: JournalPM;
-            if (result) {
-                entity = this.MapJsonToEntityPM(result);
-            }
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            serviceResponse.Result = entity;
-            return serviceResponse;
-        }),
-        catchError(ServiceHelper.HandleServiceError));
-     
+    //        }).catch(ServiceHelper.HandleServiceError);
+    //    });
+    //}
 
-    }
-    PostJournalAsCSV(fileUploadParamerter: ImageParameter) {
-
-        return this.httpClient.post(this._apiUrl + '/PostJournalAsCSV', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-                var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-
-                pmresponse.Result = result;
-                return pmresponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
-
-    }
-
-    GetFailedJournalsInReconcileProcess(accountId: string) {
-   
-        return this.httpClient.get(this._apiUrl + '/GetFailedJournalInReconcileProcess?accountId=' + accountId, ServiceHelper.GetHttpHeaders()).pipe(
-          map(res => {
-              var serviceResponse: ServiceResponse = new ServiceResponse();
-              serviceResponse.Result = res;
-              return serviceResponse;
-          }),
-          catchError(ServiceHelper.HandleServiceError));
-       
-  
-      }
-
-    
-    PostJournalAsCSVWithSkip(fileUploadParamerter: ImageParameter) {
-
-        return this.httpClient.post(this._apiUrl + '/PostJournalAsCSVWithSkip', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-                var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-
-                pmresponse.Result = result;
-                return pmresponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
-
-    }
-    PostJournalAsMichpal(entityPM: JournalPM) {
-        var mappedEntity: JournalPM = this.MapJsonToEntityPM(entityPM, false);
-
-        return this.httpClient.post(this._apiUrl + '/PostJournalAsMichpal', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-                var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-
-                pmresponse.Result = result;
-                return pmresponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
-
-    }
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: JournalPM = null) {
 
 

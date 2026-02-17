@@ -1,14 +1,12 @@
 <style>
 
     .noBorder {
-        border: none !important;
+           border:none !important;
     }
-
-    .col1Label {
+    .col1Label{
         width: 100px;
     }
-
-    .col1Text {
+    .col1Text{
         width: 127px;
     }
 </style>
@@ -26,10 +24,10 @@
                                 <tr style="height:25px">
 
                                     <!-->td width="10px;">
-                                        <div *ngIf="RequestFileRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
+            <div *ngIf="RequestFileRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
 
-                                        </div>
-                                    </td-->
+            </div>
+        </td-->
                                     <td class="col1Label">
                                         <LogLabel [ObjectFieldName]="'ImporterCode'" [ObjectTableName]="'Customs.DecCargoSplitCon'"
                                                   [DataContext]="DataContext"></LogLabel>
@@ -96,33 +94,28 @@
                         </td>
                         <td></td>
                     </tr>
-
+                    
                     <tr style="height: 15px;"><td><div></div> </td></tr>
 
                     <tr>
                         <td class="TabTitleRow">{{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}}</td>
                         <td style="width: 25px;height: 20px;">
-                            <div>
-                                
-                             <IconButton [IsEnabled]="!IsDisplayOnly && (DeclarationDirection !='E' || (ParentCargoConsinmentItemList != null && DeclarationDirection =='E'))" 
-                                [IsSmall]="true" [Name]="'Add'" (click)="AddItem()" style="float:left;">
-                            </IconButton>
-                            </div>
+                            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="AddItem()" style="float:left;"></IconButton></div>
                         </td>
                     </tr>
                     <tr>
                         <!-->td>
-                        <table>
-                            <tr style="width:450px; height:85px;">
-                                <td style="width: 450px; height: 85px;">
-                                    <div style="width: 450px; height: 85px;">
-                                        <div class="GeneratedGridContainer" style="height : 85px;"-->                                            
-                        <td colspan="2" style="height: 100%; width: 100%;" disabled="IsDisplayOnly">
+            <table>
+                <tr style="width:450px; height:85px;">
+                    <td style="width: 450px; height: 85px;">
+                        <div style="width: 450px; height: 85px;">
+                            <div class="GeneratedGridContainer" style="height : 85px;"-->
+                        <td colspan="2" style="height: 100%;">
                             <div class="CellContent">
-                                <!--[Disabled]="IsDisplayOnly" [IsDisplayMode]="true" [Editable]="false" [IsEnabled]="true"  -->
                                 <logitude-edit-grid GridWidth="100%"
                                                     GridHeight="100%"
                                                     [ItemSource]="ItemsList"
+                                                    [Disabled]="IsDisplayOnly"
                                                     (RowEnded)="OnRowEnded($event)"
                                                     (Ondblclick)="OnFocus()"
                                                     (SelectedItemChanged)="OnRowSelected($event)"
@@ -131,130 +124,108 @@
                                     <log-column [header]="'Customs.DecCargoSplitConsItem.F.ParentCargoConsinmentItem' | TextCodeTranslationPipe"
                                                 [binding]="'ParentCargoConsinmentItem'"
                                                 [width]="'100'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
-                                                <div style="width:100%;height:100%;text-align: right;">
-                                                    <div *ngIf="DeclarationDirection != 'E'">
-                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                            <span>{{item.ParentCargoConsinmentItem}}</span>
-                                                        </div>
-                                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                                            <LogTextBox #ParentCargoConsinmentItemTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ParentCargoConsinmentItem'" [InputType]="'integer'" [DataContext]="item"
-                                                                        [ObjectTableName]="'Customs.DecCargoSplitConsItem'" [HideColumns]="true"
-                                                                        (LostFocus)="item.OnParentCargoConsinmentItemLostFocus(logcelltemplate,ParentCargoConsinmentItemTextBox)" [DebounceTime]="1" (KeyUp)="item.ParentCargoConsinmentItemKeyUp($event,logcelltemplate,ParentCargoConsinmentItemTextBox)"></LogTextBox>
-                                                        </div>
-                                                    </div>
-                                                    <div *ngIf="DeclarationDirection == 'E'">
-                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                            <span>{{item.ParentCargoConsinmentItem}}</span>
-                                                        </div>
-                                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                                            <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 90px; cursor:pointer;" #selectControl (change)="ParentCargoConsinmentItemSelectionChanged(item,selectControl.value)">
-                                                                <option *ngIf="this.ParentCargoConsinmentItemList.length > 1"></option>
-                                                                <option *ngFor="let c of ParentCargoConsinmentItemList" [selected]="c?.SequenceNumeric==item.ParentCargoConsinmentItem?.SequenceNumeric">{{c?.SequenceNumeric}}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width:100%;height:100%;text-align: right;">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.ParentCargoConsinmentItem}}</span>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox #ParentCargoConsinmentItemTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ParentCargoConsinmentItem'" [InputType]="'integer'" [DataContext]="item"
+                                                                [ObjectTableName]="'Customs.DecCargoSplitConsItem'" [HideColumns]="true"
+                                                                (LostFocus)="item.OnParentCargoConsinmentItemLostFocus(logcelltemplate,ParentCargoConsinmentItemTextBox)" [DebounceTime]="1" (KeyUp)="item.ParentCargoConsinmentItemKeyUp($event,logcelltemplate,ParentCargoConsinmentItemTextBox)"></LogTextBox>
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
+
                                     <log-column [header]="'Customs.DecCargoSplitConsItem.F.GrossMassMeasure' | TextCodeTranslationPipe"
                                                 [binding]="'GrossMassMeasure'"
                                                 [width]="'100'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
 
-                                                <div style="text-align: right;width:100%;height:100%;">
-                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                        <span>{{item.GrossMassMeasure | NumbersPipe:'N2'}}</span>
-                                                    </div>
-                                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                                        <LogTextBox #GrossMassMeasureTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GrossMassMeasure'" [InputType]="'double'" [DataContext]="item"
-                                                                    [ObjectTableName]="'Customs.DecCargoSplitConsItem'" [HideColumns]="true"
-                                                                    (LostFocus)="item.OnGrossMassMeasureLostFocus(logcelltemplate,GrossMassMeasureTextBox)" [DebounceTime]="1" (KeyUp)="item.GrossMassMeasureKeyUp($event,logcelltemplate,GrossMassMeasureTextBox)">
-                                                        </LogTextBox>
-                                                    </div>
+                                            <div style="text-align: right;width:100%;height:100%;">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.GrossMassMeasure | NumbersPipe:'N2'}}</span>
                                                 </div>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox #GrossMassMeasureTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GrossMassMeasure'" [InputType]="'double'" [DataContext]="item"
+                                                                [ObjectTableName]="'Customs.DecCargoSplitConsItem'" [HideColumns]="true"
+                                                                (LostFocus)="item.OnGrossMassMeasureLostFocus(logcelltemplate,GrossMassMeasureTextBox)" [DebounceTime]="1" (KeyUp)="item.GrossMassMeasureKeyUp($event,logcelltemplate,GrossMassMeasureTextBox)">
+                                                    </LogTextBox>
+                                                </div>
+                                            </div>
 
-                                            </log-cell-template>
-                                        </ng-template>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.DecCargoSplitConsItem.F.CargoDescription' | TextCodeTranslationPipe"
                                                 [binding]="'CargoDescription'"
                                                 [width]="'142'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
-                                                <div style="width:100%;height:100%;text-align: right;">
-                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                        <span>{{item.CargoDescription}}</span>
-                                                    </div>
-                                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoDescription'" [Text]="item.CargoDescription" [InputType]="'ntext'" [DataContext]="item"
-                                                                    [ObjectTableName]="'Customs.DecCargoSplitConsItem'" [HideColumns]="true"></LogTextBox>
-                                                    </div>
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width:100%;height:100%;text-align: right;">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.CargoDescription}}</span>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoDescription'" [Text]="item.CargoDescription" [InputType]="'ntext'" [DataContext]="item"
+                                                                [ObjectTableName]="'Customs.DecCargoSplitConsItem'" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.DecCargoSplitConsItem.F.RequestReasonCode' | TextCodeTranslationPipe"
                                                 [binding]="'RequestReasonCode'"
-                                                [width]="'122'" [Alignment]="'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
-                                                <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span>{{item.RequestReasonName}}</span> 
-                                                </div>
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogLov [ObjectFieldName]="'RequestReasonCode'"
-                                                            [ObjectTableName]="'Customs.DecCargoSplitConsItem'"
-                                                            [DataContext]="item"
-                                                            [LookUpTableName]="'Customs.SplitOrMergeReason'"
-                                                            [HideColumns]="true"
-                                                            (SelectedItemChanged)="item.SetLocalName($event, 'RequestReasonName')"
-                                                            [FocusOnMe]="'true'">
-                                                    </LogLov>
+                                                [width]="'222'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.RequestReasonName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'RequestReasonCode'"
+                                                        [ObjectTableName]="'Customs.DecCargoSplitConsItem'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Customs.SplitOrMergeReason'"
+                                                        [HideColumns]="true"
+                                                        (SelectedItemChanged)="item.SetLocalName($event, 'RequestReasonName')"
+                                                        [FocusOnMe]="'true'">
+                                                </LogLov>
 
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <log-column [width]="'54'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" [IsEnabled]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
 
-                                                <span class="CellSeparator" style="float: right;"></span>
+                                            <span class="CellSeparator" style="float: right;"></span>
 
-                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px; padding-right: 4px; display:block">
-                                                    <!--<IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>-->
+                                            <div style="width: 22px; float: right; height:20px; padding-top: 2px; padding-right: 4px; display:block">
+                                                <!--<IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>-->
 
-                                                    <IconButton [Name]="'Edit'" [IsEnabled]="true" [IsSmall]="true" *ngIf="!(item.EntityPM.DecCargoSplitConsPackDets != null && item.EntityPM.DecCargoSplitConsPackDets.length > 0)" (click)="EditButtonClicked(item)">
-                                                        <img class="greenTickImg" src="./Images/Buttons/EditWithGreenTick.png" />
-                                                    </IconButton>
-                                                    <!--<button class="Button" style="padding-left: 6px; height:18px; width: 18px;right:4px;" *ngIf="item.EntityPM.DecCargoSplitConsPackDets != null && item.EntityPM.DecCargoSplitConsPackDets.length > 0" (click)="EditButtonClicked(item)" tabindex="-1">
-                                                        <img class="greenTickImg" src="./Images/Buttons/EditWithGreenTick.png" />
-                                                    </button>-->
-                                                    <button class="Button" style="height:18px; width: 18px; right:0px; margin-right: 0px; " *ngIf="item.EntityPM.DecCargoSplitConsPackDets != null && item.EntityPM.DecCargoSplitConsPackDets.length > 0" (click)="EditButtonClicked(item)" tabindex="-1">
-                                                        <img class="greenTickImg" src="./Images/Buttons/EditWithGreenTick.png" style="margin-right: -4px; margin-top: 1px" />
-                                                    </button>
-                                                </div>
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" *ngIf="!(item.EntityPM.DecCargoSplitConsPackDets != null && item.EntityPM.DecCargoSplitConsPackDets.length > 0)" (click)="EditButtonClicked(item)">
+                                                    <img class="greenTickImg" src="./Images/Buttons/EditWithGreenTick.png" />
+                                                </IconButton>
+                                                <!--<button class="Button" style="padding-left: 6px; height:18px; width: 18px;right:4px;" *ngIf="item.EntityPM.DecCargoSplitConsPackDets != null && item.EntityPM.DecCargoSplitConsPackDets.length > 0" (click)="EditButtonClicked(item)" tabindex="-1">
+                                                    <img class="greenTickImg" src="./Images/Buttons/EditWithGreenTick.png" />
+                                                </button>-->
+                                                <button class="Button" style="height:18px; width: 18px; right:0px; margin-right: 0px; " *ngIf="item.EntityPM.DecCargoSplitConsPackDets != null && item.EntityPM.DecCargoSplitConsPackDets.length > 0" (click)="EditButtonClicked(item)" tabindex="-1">
+                                                    <img class="greenTickImg" src="./Images/Buttons/EditWithGreenTick.png" style="margin-right: -4px; margin-top: 1px"/>
+                                                </button>
+                                            </div>
 
-                                                <!--<div style="float: right; padding-top:3px;  border-radius: 3px;">
-                                                    <button class="Button" style="height:18px; width: 21px;right:8px" (click)="item.VehicleButtonClicked(item)" tabindex="-1">
-                                                        <img style="left: 1px; position:absolute;top:1px; width:17px;height:15px" src="./Images/car.png" />
-                                                        <img *ngIf="item.VehicleOkVisiblity" class="certOkImg" style="position: absolute;top:1px;left:3px; opacity: 0.8;" src="./Images/Buttons/EditWithGreenTick.png" />
-                                                    </button>
-                                                </div>-->
+                                            <!--<div style="float: right; padding-top:3px;  border-radius: 3px;">
+                                                <button class="Button" style="height:18px; width: 21px;right:8px" (click)="item.VehicleButtonClicked(item)" tabindex="-1">
+                                                    <img style="left: 1px; position:absolute;top:1px; width:17px;height:15px" src="./Images/car.png" />
+                                                    <img *ngIf="item.VehicleOkVisiblity" class="certOkImg" style="position: absolute;top:1px;left:3px; opacity: 0.8;" src="./Images/Buttons/EditWithGreenTick.png" />
+                                                </button>
+                                            </div>-->
 
 
-                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
-                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -265,8 +236,8 @@
             </div>
         </td>
     </tr>
-</table>
-
+ </table>
+ 
 
 
 

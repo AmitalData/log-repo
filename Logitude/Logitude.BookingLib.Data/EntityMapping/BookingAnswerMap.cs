@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data;
@@ -49,7 +49,7 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.OtherServicesInformation).HasColumnName("OtherServicesInformation").HasMaxLength(250).IsUnicode(false);
 
-            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(1024).IsUnicode(true);
+            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(512).IsUnicode(false);
 
             this.Property(t => t.NumberOfPieces).HasColumnName("NumberOfPieces");
 

@@ -1,4 +1,4 @@
-import {Output, EventEmitter}  from '@angular/core';
+﻿import {Output, EventEmitter}  from '@angular/core';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
@@ -117,20 +117,16 @@ export class APInvoiceMultipleShipmentPM {
     public UniqueKey: string;
 
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName: string = null) {
+        this.IsDirty = true;
 
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
+        if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }
 
-            if (this.EntityParentPM) {
-                this.EntityParentPM.MarkAsDirty();
-            }
-
-            if (propertyName != null) {
-                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "APInvoiceMultipleShipment");
-            }
+        if (propertyName != null) {
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "APInvoiceMultipleShipment");
         }
     }
     private MyClone: APInvoiceMultipleShipmentPM;

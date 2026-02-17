@@ -10,10 +10,9 @@ import {VatTypeListService} from '../../Services/StandardLists/VatTypeListServic
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AccountingTab_ChargesType.html',
 })
 
@@ -30,7 +29,6 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
-        this.EntityPM.DisableMarkAsDirty = SessionLocator.TenantPM.IsHybrid && this.EntityPM.Code == "OTHC";
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.SetUIProperties();
@@ -43,8 +41,8 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
         }
         this.ReceivableCreditGLAccountFilterItems = new ApiQueryFilters();
         this.PayableDebitGLAcountFilterItems = new ApiQueryFilters();
-        this.ReceivableCreditGLAccountFilterItems.addAdditionalFilter("ReceivableCreditFilter", "1", null, null, "Equals", true, false, false, "string", false, true);
-        this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
+        this.ReceivableCreditGLAccountFilterItems.addAdditionalFilter("RevenueExpenseType", "1", null, null, "Equals", false, false, false, "string", false, true);
+        this.PayableDebitGLAcountFilterItems.addAdditionalFilter("RevenueExpenseType", "2", null, null, "Equals", false, false, false, "string", false, true);
 
         this.Listen();
     }
@@ -89,7 +87,7 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
         var isPayableFieldEnabled: boolean = false;
         var isReceivableFieldEnabled: boolean = false;
 
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
+        if (SessionLocator.Tenant == 65) {
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
                 isVATSplitEnabled = false;
             }
@@ -168,7 +166,6 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
     set PayableDebitGLAcountId(value: string) {
         if (this.EntityPM.PayableDebitGLAcountId != value) {
             this.EntityPM.PayableDebitGLAcountId = value;
-            if (this.EntityPM.PayableDebitGLAcountId == null) this.EntityPM.PayDebitGLAcountLocalName = null;
         }
     }
     
@@ -183,7 +180,6 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
     set ReceivableCreditGLAccountId(value: string) {
         if (this.EntityPM.ReceivableCreditGLAccountId != value) {
             this.EntityPM.ReceivableCreditGLAccountId = value;
-            if (this.EntityPM.ReceivableCreditGLAccountId == null) this.EntityPM.RecCreditGLAcountLocalName = null;
         }
     }
 

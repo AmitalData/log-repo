@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.BL.CommonDataModel.EntityPMs;

@@ -11,7 +11,6 @@ export class ToggleList {
 	Code: string;
 	Name: string;
 	SearchFields: string;
-	Description: string;
 	
 }
  

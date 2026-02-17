@@ -8,7 +8,6 @@ namespace WebFreight.Web.Helpers
 {
     public class ImageParameter
     {
-        public bool IsReadDocumentFromBarCode { get; set; }
         public bool IsCheckedSecuritykey { get; set; }
         public string ShipmentNumber { get; set; }
         public string Key { get; set; }
@@ -52,9 +51,6 @@ namespace WebFreight.Web.Helpers
         
         public string PhoneNumber { get; set; }
         public string DeviceName { get; set; }
-        public string SecurityKey { get; set; }
-        public bool KeepOriginalSize { get; set; }
-        public bool ForceCreateDocument { get; set; }
-		public int TokenTenant { get; set; }
-	}
+        public string SecurityKey { get; set; }  
+    }
 }

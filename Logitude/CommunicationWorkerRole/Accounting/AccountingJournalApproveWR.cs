@@ -77,7 +77,8 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 {
                     return true;
                 }
-                _DbQueueService = new DbQueueService(JournalApproveService.K_AccountingJournalApproveWR, SettingUtil.GetTenantDBFromConfig());
+
+                _DbQueueService = new DbQueueService(JournalApproveService.K_AccountingJournalApproveWR, 0);
 
 
             }
@@ -132,19 +133,10 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 }
 
                 OnStart();
-
-
-
-                string logtext = "AccountingJournalApproveWR.WorkOnce(), Point 2, _UseQueue " + _UseQueue.ToString();
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-
-
                 if (_UseQueue)
                 {
-                    var myWorker = new JournalApproveService.JournalApproveWorker();
-                    myWorker.SetLastActivate = () => { this.LastActivity = DateTime.UtcNow; };
-                    myWorker.LogDoneItemInMemoryAction = this.LogDoneItemInMemory;
-                    myWorker.WorkUntilQEmptyQueueDB();    
+                    var myWorker = new JournalApproveService.JournalApproveWorkrer();
+                    myWorker.WorkUntilQEmptyQueueDB();
                 }
                 else
                 {

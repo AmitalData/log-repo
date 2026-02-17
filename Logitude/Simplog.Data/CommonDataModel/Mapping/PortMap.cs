@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -94,10 +94,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
               .IsUnicode(false);
 
             this.Property(t => t.StateName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.StateCode).HasMaxLength(10).IsUnicode(false);
-            this.Property(t => t.CountryCode).HasMaxLength(2).IsUnicode(false);
-            this.Property(t => t.CountryName).HasMaxLength(120).IsUnicode(false);
-            this.Property(t => t.PortTimeZoneCode).HasMaxLength(150).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Ports");
@@ -129,24 +125,15 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StateId).HasColumnName("StateId");
             this.Property(t => t.CombinedCode).HasColumnName("CombinedCode");
             this.Property(t => t.StateName).HasColumnName("StateName");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
-            this.Property(t => t.CountryCode).HasColumnName("CountryCode");
-            this.Property(t => t.CountryName).HasColumnName("CountryName");
-            this.Property(t => t.StateCode).HasColumnName("StateCode");
-            this.Property(t => t.PortTimeZoneCode).HasColumnName("PortTimeZoneCode");
 
             // Relationships
             this.HasRequired(t => t.Country)
                 .WithMany()
                 .HasForeignKey(d => d.CountryId);
-
             this.HasOptional(t => t.State)
                 .WithMany()
                 .HasForeignKey(d => d.StateId);
 
-            this.HasOptional(t => t.PortTimeZone)
-               .WithMany()
-               .HasForeignKey(d => d.PortTimeZoneCode);
         }
     }
 }

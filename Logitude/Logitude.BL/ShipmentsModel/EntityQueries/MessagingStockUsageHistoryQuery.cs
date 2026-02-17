@@ -63,7 +63,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LastActionDate = a.LastActionDate,
                     FirstActionByUserId = a.FirstActionByUserId,
                     LastActionByUserId = a.LastActionByUserId,
-                    LastActionByUserName = a.LastActionByUser == null ? null : a.LastActionByUser.Contact.EnglishName,
+                    LastActionByUserName = a.LastActionByUser == null ? "" : a.LastActionByUser.Contact.EnglishName,
                     EntityId = a.EntityId,
                     EntityNumber = a.EntityNumber,
                 };

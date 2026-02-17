@@ -13,7 +13,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImageParameter';
 declare var UploadLogoFile, base64ToArrayBuffer, saveByteArray, ArrayBufferToBase64: any;
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './UserPackagesComponent.html',
 })
 
@@ -78,7 +78,7 @@ export class UserPackagesComponent implements OnInit {
 
     ExportFeaturesToCSVFile() {
         var service: ExcelExportService = new ExcelExportService();
-        service.ExportFeaturesToCSVFile().subscribe((res:any) => {
+        service.ExportFeaturesToCSVFile().subscribe(res => {
             if (!res.HasError) {
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Show("Export?");
@@ -112,7 +112,7 @@ export class UserPackagesComponent implements OnInit {
         var file: ImageParameter = new ImageParameter();
         file.Base64String = data;
 
-        service.ImportFeaturePackages(file).subscribe((res:any) => {
+        service.ImportFeaturePackages(file).subscribe(res => {
             this.CurrentSession.StopBusyIndicator();
 
             var wind = new MessageWindow();

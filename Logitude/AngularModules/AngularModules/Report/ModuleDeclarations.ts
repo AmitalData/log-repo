@@ -1,11 +1,5 @@
-import { CustomerStatusReportFilterComponent } from './Components/FiltersComponent/Accounting/CustomerStatusReportFilterComponent';
 import { ReportComponent } from './Components/Workspaces/ReportComponent';
 import { MainReportsWorkspace } from './Components/Workspaces/MainReportsWorkspace';
-import { MainReportSchedulerComponent } from './Components/Scheduler/MainReportSchedulerComponent';
-import { TaskReportSchedulerComponent } from './Components/Scheduler/TaskReportSchedulerComponent';
-import { AddEditReportTaskSchedulerComponent } from './Components/Scheduler/AddEditReportTaskSchedulerComponent';
-import { AddEditReportSchedulerComponent } from './Components/Scheduler/AddEditReportSchedulerComponent';
-import { ReportSchedulerDateListTemplate } from './Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate';
 import { BIReportComponent } from './Components/Workspaces/BIReportComponent';
 import { BIFolderReportComponent } from './Components/Workspaces/BIFolderReportComponent';
 import {ReportTemplateComponent} from './Components/ReportTemplateComponent';
@@ -32,10 +26,6 @@ import {OceanShipmentReportFilterComponent} from './Components/FilterReportCompo
 import {ProfitByShipmentFilterConmponent} from './Components/FilterReportComponent/ProfitByShipmentFilterConmponent';
 import {InventoryReportFilterConmponent} from './Components/FilterReportComponent/InventoryReportFilterConmponent';
 import {OpenShipmentsByCustomerFilterComponent} from './Components/FilterReportComponent/OpenShipmentsByCustomerFilterComponent';
-import { UnicargoExportReportFilterComponent } from './Components/FiltersComponent/Operational/UnicargoExportReportFilterComponent';
-import { ShipmentsEventsListFilterComponent } from './Components/FiltersComponent/Operational/ShipmentsEventsListFilterComponent';
-import { ShipperReturnsReportFilterComponent } from './Components/FiltersComponent/Operational/ShipperReturnsReportFilterComponent';
-import { FlightBookingsManifestFilterComponent } from './Components/FiltersComponent/Operational/FlightBookingsManifestFilterComponent';
 
 // Accounting
 import {AccountingLedgerFilterComponent} from './Components/FilterReportComponent/AccountingLedgerFilterComponent';
@@ -55,19 +45,9 @@ import { TrailBalanceFiltersComponent } from './Components/FilterReportComponent
 import { ShipmentsStocksFiltersComponent } from './Components/FilterReportComponent/ShipmentsStocksFiltersComponent';
 import { DetailedShipmentChargesAnalysisComponent } from './Components/FiltersComponent/Accounting/DetailedShipmentChargesAnalysisComponent';
 import { VendorChargesAnalysisFilterComponent } from './Components/FiltersComponent/Accounting/VendorChargesAnalysisFilterComponent';
-import { AutomationTestReportFilterComponent } from './Components/FilterReportComponent/AutomationTestReportFilterComponent';
-import { ExternalReconciliationLinesReportFilterControl } from './Components/FilterReportComponent/ExternalReconciliationLinesReportFilterControl';
-import { PerVendorReportFilterComponent } from './Components/FiltersComponent/Accounting/PerVendorReportFilterComponent';
-import { ARinvoiceSequencesReportFilterComponent } from './Components/FiltersComponent/Accounting/ARinvoiceSequencesReportFilterComponent';
-import { ControlInvoiceLinesReportFilterComponent } from './Components/FiltersComponent/Accounting/ControlInvoiceLinesReportFilterComponent';
-import { MonthlyBalancesReportFilterComponent } from './Components/FiltersComponent/Accounting/MonthlyBalancesReportFilterComponent';
-
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
-import {RacingQuotesComponent} from './Components/FiltersComponent/CRM/RacingQuotesComponent';
-
-
 
 // CRM
 import {ApprovedOpportunitiesFilterComponent} from './Components/FilterReportComponent/ApprovedOpportunitiesFilterComponent';
@@ -82,48 +62,26 @@ import {ParentVsChildTenantsComponent} from './Components/FilterReportComponent/
 import {UsersByTenantReportFilterComponent} from './Components/FiltersComponent/CRM/UsersByTenantReportFilterComponent';
 import {LicenseManagementFilterComponent} from './Components/FiltersComponent/Operational/LicenseManagementFilterComponent';
 import { VehiclesFilterComponent } from './Components/FiltersComponent/Operational/VehiclesFilterComponent';
-import { BluesnapPaymentsReportFilterComponent } from './Components/FiltersComponent/CRM/BluesnapPaymentsReportFilterComponent';
 
 // Time Sheet
 import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportComponent/EmployeeTimeSheetFilterComponent';
 import {WorkDaysPerProjectFilterComponent} from './Components/FilterReportComponent/WorkDaysPerProjectFilterComponent';
 import { TasksOfNoProjectsFilterComponent } from './Components/FilterReportComponent/TasksOfNoProjectsFilterComponent';
-import { WorkDaysPerCategoryFilterComponent } from './Components/FilterReportComponent/WorkDaysPerCategoryFilterComponent';
 
 //Shipment Details
 import { ShipmentDetailsFilterComponent } from './Components/FilterReportComponent/ShipmentDetailsFilterComponent';
 
+
 //VDK Templates
 import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilterComponent';
-import { UserDefinedReportFilterControl } from './Components/FilterReportComponent/UserDefinedReportFilterControl';
-import { LogitudeCRMReportFilterComponent } from './Components/FiltersComponent/CRM/LogitudeCRMReportFilterComponent';
-import { ExcelReportTemplateComponent } from './Components/ExcelReportTemplateComponent';
-import { NoStimulReportTemplateComponent } from './Components/NoStimulReportTemplateComponent';
-import { SpotRateQuoteReportFilterComponent } from './Components/FiltersComponent/Quote/SpotRate/SpotRateQuoteReportFilterComponent';
-import { ReportVariablesComponent } from './Components/ReportVariablesComponent';
-
-//Export Customs
-import { ExportDeclarationReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent';
-import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent';
-import { CertificateOfOriginReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent';
-import { CertificateOfOriginCountReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent';
-import { NewAgingFilterComponent } from './Components/FiltersComponent/Accounting/NewAgingFilterComponent';
-import { NewLedgerTransactionsFilterControl } from './Components/FiltersComponent/Accounting/NewLedgerTransactionsFilterControl';
- 
 
 export const Components =
     [
         MainReportsWorkspace,
-        MainReportSchedulerComponent,
-        TaskReportSchedulerComponent,
-        AddEditReportTaskSchedulerComponent,
-        AddEditReportSchedulerComponent,
-        ReportSchedulerDateListTemplate,
         ReportComponent,
         BIReportComponent,
         BIFolderReportComponent,
         ReportTemplateComponent,
-        ReportVariablesComponent,
         ReportsPreviewComponent,
         ReportsTemplateRestoreComponent,
         NewReportsTemplateComponent,
@@ -160,14 +118,11 @@ export const Components =
         ShipmentProfitVSQuoteEstimateComponent,
         ArchivoExportadoComponent,
         AgingFilterComponent,
-        NewAgingFilterComponent,
-        CustomerStatusReportFilterComponent,
         LedgerTransactionsFilterControl,
         InventoryReportFilterConmponent,
         InvoicesRoutingsFilterComponent,
         EmployeeTimeSheetFilterComponent,
         WorkDaysPerProjectFilterComponent,
-        WorkDaysPerCategoryFilterComponent,
         TasksOfNoProjectsFilterComponent,
         OpenShipmentsByCustomerFilterComponent,
         ParentVsChildTenantsComponent,
@@ -181,30 +136,6 @@ export const Components =
         VendorChargesAnalysisFilterComponent,
         VDKFilterComponent,
         VehiclesFilterComponent,
-        UnicargoExportReportFilterComponent,
-        ShipmentsEventsListFilterComponent,
-        AutomationTestReportFilterComponent,
-        ShipperReturnsReportFilterComponent,
-        FlightBookingsManifestFilterComponent,
-        RacingQuotesComponent,
-        BluesnapPaymentsReportFilterComponent,
-        ExternalReconciliationLinesReportFilterControl,
-        UserDefinedReportFilterControl,
-         LogitudeCRMReportFilterComponent,
-        ExcelReportTemplateComponent,
-        NoStimulReportTemplateComponent,
-        PerVendorReportFilterComponent,
-        ARinvoiceSequencesReportFilterComponent,
-        SpotRateQuoteReportFilterComponent,
-        ControlInvoiceLinesReportFilterComponent,
-        ExportDeclarationReportFilterComponent,
-
-        CertificateOfOriginReportFilterComponent,
-        CertificateOfOriginCountReportFilterComponent,
-        MonthlyBalancesReportFilterComponent,
-        CustomsCollateralFilterComponent,
-         NewLedgerTransactionsFilterControl
- 
     ];
 
 export class ModuleDeclarations {
@@ -214,17 +145,11 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "MainReportsWorkspace": { myResult = MainReportsWorkspace; break; }
-            case "MainReportSchedulerComponent": { myResult = MainReportSchedulerComponent; break; }
-            case "TaskReportSchedulerComponent": { myResult = TaskReportSchedulerComponent; break; }
-            case "AddEditReportTaskSchedulerComponent": { myResult = AddEditReportTaskSchedulerComponent; break; }
-            case "AddEditReportSchedulerComponent": { myResult = AddEditReportSchedulerComponent; break; }
-            case "ReportSchedulerDateListTemplate": { myResult = ReportSchedulerDateListTemplate; break; }
             case "ReportComponent": { myResult = ReportComponent; break; }
             case "BIReportComponent": { myResult = BIReportComponent; break; }
             case "BIFolderReportComponent": { myResult = BIFolderReportComponent; break; }
             case "ReportsPreviewComponent": { myResult = ReportsPreviewComponent; break; }
             case "ReportTemplateComponent": { myResult = ReportTemplateComponent; break; }
-            case "ReportVariablesComponent": { myResult = ReportVariablesComponent; break; }
             case "ReportsTemplateRestoreComponent": { myResult = ReportsTemplateRestoreComponent; break; }
             case "NewReportsTemplateComponent": { myResult = NewReportsTemplateComponent; break; }
             case "IATAStatisticsFilterComponent": { myResult = IATAStatisticsFilterComponent; break; }
@@ -260,13 +185,11 @@ export class ModuleDeclarations {
             case "ShipmentProfitVSQuoteEstimateComponent": { myResult = ShipmentProfitVSQuoteEstimateComponent; break; }
             case "ArchivoExportadoComponent": { myResult = ArchivoExportadoComponent; break; }
             case "AgingFilterComponent": { myResult = AgingFilterComponent; break; }
-            case "CustomerStatusReportFilterComponent": { myResult = CustomerStatusReportFilterComponent; break; }
             case "LedgerTransactionsFilterControl": { myResult = LedgerTransactionsFilterControl; break; }
             case "InventoryReportFilterConmponent": { myResult = InventoryReportFilterConmponent; break; }
             case "InvoicesRoutingsFilterComponent": { myResult = InvoicesRoutingsFilterComponent; break; }
             case "EmployeeTimeSheetFilterComponent": { myResult = EmployeeTimeSheetFilterComponent; break; }
             case "WorkDaysPerProjectFilterComponent": { myResult = WorkDaysPerProjectFilterComponent; break; }
-            case "WorkDaysPerCategoryFilterComponent": { myResult = WorkDaysPerCategoryFilterComponent; break; }
             case "TasksOfNoProjectsFilterComponent": { myResult = TasksOfNoProjectsFilterComponent; break; }
             case "OpenShipmentsByCustomerFilterComponent": { myResult = OpenShipmentsByCustomerFilterComponent; break; }
             case "ParentVsChildTenantsComponent": { myResult = ParentVsChildTenantsComponent; break; }
@@ -279,31 +202,7 @@ export class ModuleDeclarations {
             case "DetailedShipmentChargesAnalysisComponent": { myResult = DetailedShipmentChargesAnalysisComponent; break; }
             case "VendorChargesAnalysisFilterComponent": { myResult = VendorChargesAnalysisFilterComponent; break; }
             case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }
-            case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }
-            case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }
-            case "ShipmentsEventsListFilterComponent": { myResult = ShipmentsEventsListFilterComponent; break; }
-            case "AutomationTestReportFilterComponent": { myResult = AutomationTestReportFilterComponent; break; }
-            case "ShipperReturnsReportFilterComponent": { myResult = ShipperReturnsReportFilterComponent; break; }
-            case "FlightBookingsManifestFilterComponent": { myResult = FlightBookingsManifestFilterComponent; break; }
-            case "RacingQuotesComponent": { myResult = RacingQuotesComponent; break; }
-            case "BluesnapPaymentsReportFilterComponent": { myResult = BluesnapPaymentsReportFilterComponent; break; }
-            case "ExternalReconciliationLinesReportFilterControl": { myResult = ExternalReconciliationLinesReportFilterControl; break; }
-            case "UserDefinedReportFilterControl": { myResult = UserDefinedReportFilterControl; break; }
-            case "LogitudeCRMReportFilterComponent": { myResult = LogitudeCRMReportFilterComponent; break; }
-            case "ExcelReportTemplateComponent": { myResult = ExcelReportTemplateComponent; break; }
-            case "NoStimulReportTemplateComponent": { myResult = NoStimulReportTemplateComponent; break; }
-            case "PerVendorReportFilterComponent": { myResult = PerVendorReportFilterComponent; break; }
-            case "ARinvoiceSequencesReportFilterComponent": { myResult = ARinvoiceSequencesReportFilterComponent; break; }
-            case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
-            case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
-            case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
-             case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
-            case "CustomsCollateralFilterComponent": { myResult = CustomsCollateralFilterComponent; break; }
-            case "CertificateOfOriginReportFilterComponent": { myResult = CertificateOfOriginReportFilterComponent; break; }
-            case "CertificateOfOriginCountReportFilterComponent": { myResult = CertificateOfOriginCountReportFilterComponent; break; }
-            case "NewAgingFilterComponent": { myResult = NewAgingFilterComponent; break; }
-            case "NewLedgerTransactionsFilterControl": { myResult = NewLedgerTransactionsFilterControl; break; }
-
+            case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }                
         }
 
         return myResult;

@@ -1,4 +1,4 @@
-
+﻿
 
 
 <style>
@@ -56,132 +56,105 @@
 
 
 
-<table>
-    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
-        <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-        </td>
+
+<table style="height:60px;width:550px;">
+
+    <tr style="height:25px">
+        <td style="width:5px;"><div style="width:5px;"></div></td>
+        <td colspan="10"><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
     </tr>
 
-    <tr style="height:80px;">
-        <td>
-            <table>
-                <tr style="height:25px">
-                    <td style="width:5px;color:#1B90CB;font-size:14px;">Filter By:</td>
-                </tr>
 
-                <tr style="height:28px;">
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width:10px;">
-                                    <div></div>
-                                </td>
 
-                                <td>
-                                    <table>
-                                        <tr>
+    <tr style="height:30px">
+        <td style="width:5px;"><div style="width:5px;"></div></td>
 
-                                            <!-- Customer -->
-                                            <td style="width:70px">Customer:</td>
-                                            <td style="width:160px;">
-                                                <LogLov [ShowInActive]="true" [LogitudeForm]="myForm"
-                                                        [ObjectFieldName]="'CustomerId'"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Card'"
-                                                        [DisplayMemberPath]="'EnglishName'"
-                                                        CardDependencyProperty1="'CS'">
+        <td style="width:70px;"><div style="width:70px;">Customer:</div></td>
 
-                                                </LogLov>
-                                            </td>
+        <td style="width:150px;">
+            <div class="FormFieldRow" style="width:150px;">
 
-                                            <td style="width:15px;">
-                                                <div></div>
-                                            </td>
+                <LogLov [LogitudeForm]="myForm"
+                        [ObjectFieldName]="'CustomerId'"
+                        [DataContext]="DataContext"
+                        [LookUpTableName]="'Card'"
+                        [DisplayMemberPath]="'EnglishName'"
+                        [ShowInActive]="'true'"
+                        CardDependencyProperty1="'CS'"
+                         >
 
-                                            <!-- Warehouse -->
-                                            <td style="width:80px">Warehouse:</td>
-                                            <td style="width:160px;">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:163px;">
-                                                            <LogLov [ShowInActive]="true" [LogitudeForm]="myForm"
-                                                                    [ObjectFieldName]="'WarehouseId'"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Warehouse'">
+                </LogLov>
 
-                                                            </LogLov>
-                                                        </td>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
+            </div>
+        </td>
+        <!--<td style="width:270px"><LogLov (SelectedItemChanged)="WarehouseValueChange($event)" style="width:230px" [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="'WarehouseRelease'" [DataContext]="warehouseReleasePM" [LookUpTableName]="'Warehouse'"></LogLov></td>-->
 
-                                            <td style="width:25px;">
-                                                <div></div>
-                                            </td>
 
-                                            <!-- Shipper/Consignee: -->
-                                            <td style="width:125px">Shipper/Consignee:  </td>
-                                            <td style="width:160px;">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:163px;">
-                                                            <LogLov [ShowInActive]="true" [LogitudeForm]="myForm"
-                                                                    [ObjectFieldName]="'ShipperConsigneeId'"
-                                                                    [DataContext]="DataContext"
-                                                                    [DisplayMemberPath]="'EnglishName'"
-                                                                    CardDependencyProperty1="'CS'"
-                                                                    [LookUpTableName]="'Card'">
 
-                                                            </LogLov>
-                                                        </td>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
+        <td style="width:20px"><div style="width:30px"></div></td>
+        <td style="width:70px;"><div style="width:70px;">Warehouse:</div></td>
 
-                                            <td style="width:25px;">
-                                                <div></div>
-                                            </td>
+        <td style="width:150px;">
+            <div class="FormFieldRow" style="width:150px;">
 
-                                            <!-- Days in Warehouse -->
-                                            <td style="width:125px">Days in Warehouse:  </td>
-                                            <td style="width:160px;">
-                                                <ComboBox (SelectedItemChanged)="onSelectedItemDaysinWarehouseFilterChange($event)" [SelectedItem]="SelectedItemDaysinWarehouseFilter" [ItemsSource]="DaysinWarehouseFilterItemSource" [Binding]="'Name'"></ComboBox>
-                                            </td>
-                                            <td style="width:2px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width:180px;" *ngIf="IsDaysInWarehouseRequired">
-                                                <LogTextBox [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'DaysInWarehouse'" [DataContext]="DataContext" (ValueChanged)="onDaysInWarehouseChange($event)"></LogTextBox>
+                <LogLov [LogitudeForm]="myForm"
+                        [ObjectFieldName]="'WarehouseId'"
+                        [DataContext]="DataContext"
+                        [LookUpTableName]="'Warehouse'"
+      
+                        >
 
-                                            </td>
+                </LogLov>
 
-                                            <td style="width:10px;">
-                                                <div></div>
-                                            </td>
+            </div>
+        </td>
 
-                                            <!-- Run Report -->
-                                            <td style="width:90px;">
-                                                <button (click)="RunReport(true)" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                                                    <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
-                                                </button>
+        <td style="width:20px"><div style="width:30px"></div></td>
+        <td style="width:150px;"><div style="width:150px;">Shipper/Consignee:</div></td>
 
-                                            </td>
+        <td style="width:150px;">
+            <div class="FormFieldRow" style="width:150px;">
 
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+                <LogLov [LogitudeForm]="myForm"
+                        [ObjectFieldName]="'ShipperConsigneeId'"
+                        [DataContext]="DataContext"
+                        [DisplayMemberPath]="'EnglishName'"
+                        CardDependencyProperty1="'CS'"
+                        [LookUpTableName]="'Card'">
+
+                </LogLov>
+
+            </div>
+        </td>
+
+
+        <td style="width:60px"><div style="width:60px"></div></td>
+        <td style="width:90px;">
+            <button (click)="RunReport(true)" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
+                <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
+            </button>
+
+        </td>
+
+        <td></td>
+
+    </tr>
+
+    <tr><td colspan="13"></td></tr>
+
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

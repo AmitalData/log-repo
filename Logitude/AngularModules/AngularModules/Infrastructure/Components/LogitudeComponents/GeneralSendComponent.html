@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .iwanttohover:hover {
         background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
@@ -252,39 +252,27 @@
                                                     <table style="height:auto;width:100%;">
                                                         <tr>
                                                             <td style="width:8px"><div></div></td>
-                                                            <td style="width:50px;height:22px;text-align:left"><button [disabled]="IsOpenWidnow" (click)="OpenEmailsBox()" style="width:40px;background-color:#E6E6E6;height:22px;" class="Button">To...</button></td>
+                                                            <td style="width:50px;height:22px;text-align:left"><button  [disabled]="IsOpenWidnow"  (click)="OpenEmailsBox()" style="width:40px;background-color:#E6E6E6;height:22px;" class="Button">To...</button></td>
                                                             <td style="width:5px"><div></div></td>
-                                                            <td>
-                                                                <div>
-                                                                    <EmailSearchTextBox [EmailsText]="ToEmail" [AllowFreeEmails]="true" [DontInCludeInactive]="true" (EmailsTextChanged)="ToEmail = $event" ></EmailSearchTextBox>
-                                                                </div>
-                                                            </td>
+                                                            <td><input  type="text" [(ngModel)]="ToEmail" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;color:black" /></td>
                                                             <td style="width:10px"><div></div></td>
                                                         </tr>
 
                                                         <tr *ngIf="IsShowCcBox"><td><div style="height:5px"></div></td></tr>
                                                         <tr *ngIf="IsShowCcBox">
                                                             <td style="width:8px"><div></div></td>
-                                                            <td style="width:50px;height:22px;text-align:left"><button [disabled]="IsOpenWidnow" (click)="OpenEmailsBox()" style="width:40px;height:22px;" class="Button">Cc...</button></td>
+                                                            <td style="width:50px;height:22px;text-align:left"><button [disabled]="IsOpenWidnow"  (click)="OpenEmailsBox()" style="width:40px;height:22px;" class="Button">Cc...</button></td>
                                                             <td style="width:5px"><div></div></td>
-                                                            <td>
-                                                                <div>
-                                                                    <EmailSearchTextBox [EmailsText]="Cc" [AllowFreeEmails]="true" [DontInCludeInactive]="true" (EmailsTextChanged)="Cc = $event" ></EmailSearchTextBox>
-                                                                </div>
-                                                            </td>
+                                                            <td><input type="text" [(ngModel)]="Cc" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;color:black" /></td>
                                                             <td style="width:10px"><div></div></td>
                                                         </tr>
 
                                                         <tr *ngIf="IsShowBccBox"><td><div style="height:5px"></div></td></tr>
                                                         <tr *ngIf="IsShowBccBox" style="margin-top:3px">
                                                             <td style="width:8px"><div></div></td>
-                                                            <td style="width:50px;height:22px;text-align:left"><button [disabled]="IsOpenWidnow" (click)="OpenEmailsBox()" style="width:40px;height:22px;" class="Button">Bcc...</button></td>
+                                                            <td style="width:50px;height:22px;text-align:left"><button [disabled]="IsOpenWidnow"  (click)="OpenEmailsBox()" style="width:40px;height:22px;" class="Button">Bcc...</button></td>
                                                             <td style="width:5px"><div></div></td>
-                                                            <td>
-                                                                <div>
-                                                                    <EmailSearchTextBox [EmailsText]="Bcc" [AllowFreeEmails]="true" [DontInCludeInactive]="true" (EmailsTextChanged)="Bcc = $event" ></EmailSearchTextBox>
-                                                                </div>
-                                                            </td>
+                                                            <td><input type="text" [(ngModel)]="Bcc" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;color:black" /></td>
                                                             <td style="width:10px"><div></div></td>
                                                         </tr>
 

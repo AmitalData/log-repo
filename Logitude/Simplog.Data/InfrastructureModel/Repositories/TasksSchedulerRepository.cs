@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -76,18 +76,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             return webFreightContext.TasksSchedulers.Where(a => a.Tenant == tenant);
         }
-
-        public int GetUserTasksSchedulerPerReport(int tenant, string entityId)
-        {
-            // check ProcedureCode
-            return webFreightContext.TasksSchedulers.Where(a => a.Tenant == tenant && a.EntityId == entityId
-            && !a.InActive  && a.ProcedureCode == "ReportSchedulerTask").Count();
-        }
-
-        public List<int> GetTenantListThatHasTaskScheduler(string procedureCode)
-        {
-            return webFreightContext.TasksSchedulers.Where(a=>a.ProcedureCode == procedureCode && !a.InActive).Select(r=>r.Tenant).ToList();
-        }
-
+        
     }
 }

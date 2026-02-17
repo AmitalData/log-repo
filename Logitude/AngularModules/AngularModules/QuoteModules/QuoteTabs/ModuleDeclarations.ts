@@ -1,5 +1,4 @@
-import { QuoteAuditTabComponent } from './Components/Audit/QuoteAuditTabComponent';
-import {ConnectionsTabComponent} from './Components/Connections/ConnectionsTabComponent';
+﻿import {ConnectionsTabComponent} from './Components/Connections/ConnectionsTabComponent';
 import {QuoteDocsInTabComponent} from './Components/DocsIn/QuoteDocsInTabComponent';
 import {QuoteDocsOutTabComponent} from './Components/DocsOut/QuoteDocsOutTabComponent';
 import {OrdersTabComponent} from './Components/Orders/OrdersTabComponent';
@@ -10,6 +9,7 @@ import {AddEditPartnerComponent} from './Components/Partners/AddEditPartnerCompo
 import {PartnersTabComponent} from './Components/Partners/PartnersTabComponent';
 import {InlandDomesticRoutingsComponent} from './Components/Routings/InlandDomesticRoutingsComponent';
 import {OrdinaryRoutingsComponent} from './Components/Routings/OrdinaryRoutingsComponent';
+import {RoutingsAddEditAddressComponent} from './Components/Routings/RoutingsAddEditAddressComponent';
 import {RoutingsTabComponent} from './Components/Routings/RoutingsTabComponent';
 import {TariffsComponent} from './Components/Tariffs/TariffsComponent';
 
@@ -26,9 +26,9 @@ export const Components =
         PartnersTabComponent,
         InlandDomesticRoutingsComponent,
         OrdinaryRoutingsComponent,
+        RoutingsAddEditAddressComponent,        
         RoutingsTabComponent,
-        TariffsComponent,
-        QuoteAuditTabComponent,
+        TariffsComponent,        
     ];
 
 export class ModuleDeclarations {
@@ -48,9 +48,9 @@ export class ModuleDeclarations {
             case "PartnersTabComponent": { myResult = PartnersTabComponent; break; }
             case "InlandDomesticRoutingsComponent": { myResult = InlandDomesticRoutingsComponent; break; }
             case "OrdinaryRoutingsComponent": { myResult = OrdinaryRoutingsComponent; break; }
+            case "RoutingsAddEditAddressComponent": { myResult = RoutingsAddEditAddressComponent; break; }              
             case "RoutingsTabComponent": { myResult = RoutingsTabComponent; break; }
-            case "TariffsComponent": { myResult = TariffsComponent; break; }
-            case "QuoteAuditTabComponent": { myResult = QuoteAuditTabComponent; break; }  
+            case "TariffsComponent": { myResult = TariffsComponent; break; }           
         }
 
         return myResult;

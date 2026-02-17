@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         UserPermittedProductRepository repository;
 
-
+        public UserPermittedProductQuery()
+        {
+            repository = new UserPermittedProductRepository(); 
+        }
 
         public UserPermittedProductQuery(int tenant)
         {
@@ -58,9 +61,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<UserPermittedProductPM> GetContactFromUserPermittedProductPMsByUserId(string id, int tenant)
         {
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" before GetContactFromUserPermittedProductPMsByUserId  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" GetContactFromUserPermittedProductPMsByUserId  id:" + id + ",tenant:" + tenant);
-
             IQueryable<UserPermittedProductPM> UserPermittedProducts = (from a in repository.context.UserPermittedProducts.Include("Contact")
                                       where a.UserId == id
                                       select new UserPermittedProductPM()
@@ -70,8 +70,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           ProductTypeCode = a.ProductTypeCode,
                                           UserId = a.UserId,
                                       });
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(" after GetContactFromUserPermittedProductPMsByUserId  repository.context.GetConnection().Database" + repository.context.GetConnection()?.Database);
-
             return UserPermittedProducts;
         }
     }

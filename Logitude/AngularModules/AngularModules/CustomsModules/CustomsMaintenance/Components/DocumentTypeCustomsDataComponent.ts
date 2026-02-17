@@ -25,14 +25,10 @@ import { DocumentTypeCustomsDataList } from '../../../Customs/EntityLists/Docume
 import { DocumentTypeCustomsDataPMService } from '../../../Customs/Services/StandardPMs/DocumentTypeCustomsDataPMService';
 import { DocumentTypeCustomsDataListService } from '../../../Customs/Services/StandardLists/DocumentTypeCustomsDataListService';
 import { DocumentTypeCustomsDataExtendPMService } from '../../../Customs/Services/ExtendedPMs/DocumentTypeCustomsDataExtendPMService';
-import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-import { DocumentTypePM } from '../../../Common/EntityPMs/DocumentTypePM';
-import { CustomDocumentTypePM } from '../../../Customs/EntityPMs/CustomDocumentTypePM';
-import { CustomDocumentTypeListService } from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DocumentTypeCustomsDataComponent.html',
 })
 
@@ -53,7 +49,6 @@ export class DocumentTypeCustomsDataComponent
     private _DocumentTypeCustomsDataPMService: DocumentTypeCustomsDataPMService = new DocumentTypeCustomsDataPMService();
     private _DocumentTypeCustomsDataListService: DocumentTypeCustomsDataListService = new DocumentTypeCustomsDataListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    private customDocumentTypeListService: CustomDocumentTypeListService = new CustomDocumentTypeListService();
     
 
     
@@ -62,77 +57,22 @@ export class DocumentTypeCustomsDataComponent
     ValidationErrorsList: string[] = [];
 
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs) {
+    constructor() {
         super();
     }
     Loaded: boolean = false;
     EntityResource: boolean = false;
-    fromLog: boolean = false;
     ngOnInit() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
-            if (!AppTool.IsNullOrEmpty(this.entityArgs.EntityPM)) {
-
-                var docType: DocumentTypePM = this.entityArgs.EntityPM;
-
-                this.DocumentTypeId = docType.Code;
-                this.UnifaceNAME_HEB = docType.Name;
-                this._DocumentTypeCustomsDataPMService
-                    .get(this.DocumentTypeId)
-                    .subscribe((res: any) => {
-                        this.entityPM = res.Result;
-                        if (this.entityPM == null) {
-                            this.IsNew = true;
-                            this.entityPM = new DocumentTypeCustomsDataPM();
-                            this.entityPM.DocumentTypeId = this.DocumentTypeId;
-                            this.entityPM.Tenant = SessionLocator.Tenant;
-
-
-                        }
-                        this.fromLog = true;
-
-                        if (this.entityPM) {
-                            //  this.DocumentTypeId = this.entityPM.;
-                            //  this.UnifaceNAME_HEB = this.entityPM.u;
-                            var customDocumentTypePM: CustomDocumentTypePM;
-                            this.customDocumentTypeListService.getSingle(this.entityPM.CustomsDoucumentTypeCode).subscribe((docTypeRes: ServiceResponse) => {
-                                customDocumentTypePM = docTypeRes.Result;
-                            });
-                            this.Loaded = true;
-                        }
-
-
-
-                        this.EntityResource = true;
-                        if (this.EntityResource && this.Loaded) {
-                            this.CurrentSession.StopBusyIndicator();
-                        }
-                    });
-            }
-            else {
-                this.EntityResource = true;
-                if (this.EntityResource && this.Loaded) {
-                    this.CurrentSession.StopBusyIndicator();
-                }
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        
+            this.EntityResource = true;
+            if (this.EntityResource && this.Loaded) {
+                this.CurrentSession.StopBusyIndicator();
             }
             //this.RefreshBtnClick()
         });
 
-        //var customDocumentTypeListService: CustomDocumentTypeListService = new CustomDocumentTypeListService();
-        //var _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
-        //custDocTypeMetaDataWebService.GetCustomDocumentTypeMetaDataByType(this.CustomsDocument.DocumentTypeCode).subscribe((res: ServiceResponse) => {
-        //    this.customDocumentTypeMetaDataList = res.Result;
-        //    this.customDocumentMetaDataValueList = this.CustomsDocument.CustomsDocumentMetaDataValues;
-        //    var customsClosedTableListService: CustomsClosedTableListService = new CustomsClosedTableListService();
-        //    customsClosedTableListService.getAll().subscribe((resp: ServiceResponse) => {
-        //        this.customsClosedTableList = resp.Result;
-        //        customDocumentTypeListService.getSingle(this.CustomsDocument.DocumentTypeCode).subscribe((docTypeRes: ServiceResponse) => {
-        //            if (this.previousValueList != null) {
-        //                this.customDocumentTypeMetaDataList.forEach((metaData) => {
-        //                    if (!AppTool.IsNullOrEmpty(this.customDocumentMetaDataValueList) && this.customDocumentMetaDataValueList.length > 0) {
-        //                        var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d != null && d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
-        //                        if (value == null) {
-                                    
     }
     DocumentTypeId: string;
     UnifaceNAME_HEB: string;
@@ -140,9 +80,10 @@ export class DocumentTypeCustomsDataComponent
     SetWindowArgs(arg) {
         this.DocumentTypeId = arg.UnifaceDOC_ID;
         this.UnifaceNAME_HEB = arg.UnifaceNAME_HEB;
+        
         this._DocumentTypeCustomsDataPMService
             .get(this.DocumentTypeId)
-            .subscribe((res:any) => {
+            .subscribe(res => {
                 this.entityPM = res.Result;
                 if (this.entityPM == null) {
                     this.IsNew = true;
@@ -177,7 +118,7 @@ export class DocumentTypeCustomsDataComponent
     DeleteRow() {
         var documentTypeCustomsDataExtendPMService: DocumentTypeCustomsDataExtendPMService = new DocumentTypeCustomsDataExtendPMService();
         documentTypeCustomsDataExtendPMService.DeleteRecord(this.entityPM.DocumentTypeId)
-            .subscribe((resp:any) => {
+            .subscribe(resp => {
                 if (resp.HasError) {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(resp.ErrorsArray[0]);
@@ -194,18 +135,18 @@ export class DocumentTypeCustomsDataComponent
         
         if (this.IsNew) {
             this._DocumentTypeCustomsDataPMService.insert(this.entityPM)
-                .subscribe((resp:any) => {
+                .subscribe(resp => {
                     if (resp.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(resp.ErrorsArray[0]);
                         return;
                     }
                     this.CancelButtonClicked();
-                    if (this.fromLog)  this.IsNew = false;
+
                 });
         } else {
             this._DocumentTypeCustomsDataPMService.update(this.entityPM)
-                .subscribe((resp:any) => {
+                .subscribe(resp => {
                     if (resp.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(resp.ErrorsArray[0]);

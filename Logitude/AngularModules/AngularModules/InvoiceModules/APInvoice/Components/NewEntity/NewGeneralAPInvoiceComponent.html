@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -29,14 +29,7 @@
                                 [SelectedValue]="VendorId"
                                 [LookUpTableName]="'Card'"
                                 [DependencyFilter1Value]="VendorDependencyProperty1"
-                                [DependencyFilter1IsList]="true"
-                                [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                [ForceShowLocalAndEnglishColumns]="ForceShowLocalAndEnglishColumns"
-                                [ColumnsWidths]="ColumnsWidths"
-                                [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
+                                [DependencyFilter1IsList]="true">
                         </LogLov>
                     </td>
 
@@ -102,7 +95,7 @@
                         <LogLabel [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td [style.text-align]="isRTL ? 'right' : 'left'" colspan="2">
+                    <td  [style.text-align]="isRTL ? 'right' : 'left'"  colspan="2">
                         <table class="FixedTable">
                             <tr>
                                 <td style="width: 194px">
@@ -211,55 +204,6 @@
                     </td>
                 </tr>
 
-                <!--InternalNotes-->
-                <tr class="FormFieldRow">
-                    <td>
-                        <table>
-                            <tr style="height:5px"></tr>
-                            <tr>
-                                <td style="vertical-align:top;">
-                                    <LogLabel [ObjectFieldName]="'InternalNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-
-                    <td>
-                        <table>
-                            <tr style="height:10px"></tr>
-                            <tr>
-                                <td style="width:50px">
-                                    <LogTextBox [ObjectFieldName]="'InternalNotes'" [IsMultiline]="true" [InputType]="'ntext'" [Text]="InternalNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false"></LogTextBox>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- BranchId -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td>
-                        <LogLov [ObjectFieldName]="'BranchId'"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [SelectedValue]="BranchId"
-                                [LookUpTableName]="'Branch'">
-                        </LogLov>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
                 <tr>
                     <td colspan="3">
                         <div></div>
@@ -279,7 +223,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'cancel-DontAddAPInvoice' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -287,7 +231,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Ok-AddAPInvoice' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

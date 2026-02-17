@@ -1,24 +1,21 @@
  
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import {Http, Headers} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import { defer, of } from 'rxjs';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 
 import {AdvancedQueryFilterPM} from '../../EntityPMs/AdvancedQueryFilterPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import { PerformanceLogger } from 'Infrastructure/Utilities/PerformanceLogger';
 
 @Injectable()
 export class AdvancedQueryFiltersPMService {
 
  private _apiUrl: string;
- private _http: HttpClient;
+ private _http: Http;
  private _serviceArgs: ServiceArgs;
  constructor() {
         
@@ -30,56 +27,64 @@ export class AdvancedQueryFiltersPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/advancedqueryfilters';
     }
 
-    getadvancedqueryfiltersbytenant(tenant: number, userid: string) {
+    getadvancedqueryfiltersbytenant(tenant: number,userid : string) {
+         
+        
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+		
+		 return Observable.defer(() => {
+             return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenant?' + 'tenant=' + tenant + '&loggedcontactid=' + userid, {
+                    headers: authHeader
+                }).map(response => {
+                    var pms = response.json();
+                    
+                    return pms;
+                });
+            }
+
+            );
+       
+    }
+
+    getadvancedqueryfiltersbytenantByQuery(tenant: number, userid: string, queryId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantandquery?' + 'tenant=' + tenant + '&loggedcontactid=' + userid + '&queryId=' + queryId, {
+                headers: authHeader
+            }).map(response => {
+                var pms = response.json();
+
+                return pms;
+            });
+        });
+    }
+
+    getuseradvancedqueryfilterbytenantobjecttablequery(tenant: number,objecttableid:string,queryid:string, userid: string) {
 
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenant?' + 'tenant=' + tenant + '&loggedcontactid=' + userid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pms = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&objecttableid=' + objecttableid + '&queryid=' + queryid + '&loggedcontactid=' + userid, {
+                headers: authHeader
+            }).map(response => {
+                var pms = response.json();
 
                 return pms;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+            });
+        }
+
+        );
 
     }
-
-    getadvancedqueryfiltersbytenantByQuery(tenant: number, userid: string, queryCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantandquery?' + 'tenant=' + tenant + '&loggedcontactid=' + userid + '&queryCode=' + queryCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pms = response;
-
-                return pms;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-
-    getuseradvancedqueryfilterbytenantobjecttablequery(tenant: number, objecttableCode: string, queryCode: string, userid: string) {
-
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&objecttableCode=' + objecttableCode + '&queryCode=' + queryCode + '&loggedcontactid=' + userid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pms = response;
-
-                return pms;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-
-    }
-
 
     insert(entityPM: AdvancedQueryFilterPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -92,95 +97,43 @@ export class AdvancedQueryFiltersPMService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
 
 
-            var serviceResponse: EntityPMServiceResponse;
-            serviceResponse = new EntityPMServiceResponse();
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: AdvancedQueryFilterPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: AdvancedQueryFilterPM;
-                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            var mappedResult: AdvancedQueryFilterPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            response.Result = mappedResult;
+                        }
 
 
 
-                            return serviceResponse;
+                        return response;
 
-                        }), catchError(ServiceHelper.HandleServiceError));
+                    });
             }
             else {
 
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
-
-            }
-        });
-    }
-
-    update(entityPM: AdvancedQueryFilterPM) {
-
-        var callTime = new Date();
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var validator: ClassLevelValidator;
-
-            validator = new ClassLevelValidator();
-
-            var errorsArray = validator.Validate("AnalyzeQueue", entityPM);
-
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            if (errorsArray.length == 0) {
-                var mappedEntity: AdvancedQueryFilterPM;
-                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-                return ServiceHelper.HttpClient.put(ServiceHelper.GetLogitudeURL() + 'api/advancedqueryfilters', JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-
-
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: AdvancedQueryFilterPM;
-                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
-
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AnalyzeQueue", "SaveChanges", "");
-
-                            return serviceResponse;
-
-                        }), catchError(ServiceHelper.HandleServiceError));
-            }
-            else {
-
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
-
-                return of(serviceResponse);
+                return Observable.of(response);
 
             }
-        });
+        }
 
+        );
     }
 
     delete(entityPM: AdvancedQueryFilterPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -193,38 +146,39 @@ export class AdvancedQueryFiltersPMService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
 
 
-            var serviceResponse: EntityPMServiceResponse;
-            serviceResponse = new EntityPMServiceResponse();
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: AdvancedQueryFilterPM;
-
+               
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: AdvancedQueryFilterPM;
-                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            var mappedResult: AdvancedQueryFilterPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            response.Result = mappedResult;
+                        }
 
 
 
-                            return serviceResponse;
+                        return response;
 
-                        }), catchError(ServiceHelper.HandleServiceError));
+                    });
             }
             else {
 
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(response);
 
             }
-        });
+        }
+
+        );
     }
 
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: AdvancedQueryFilterPM = null) {
@@ -260,6 +214,5 @@ export class AdvancedQueryFiltersPMService {
 
         return entityPM;
     }
-
     
 }

@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -117,58 +117,6 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public int TotalQuantity { get; set; }
         [Column("ChargeableWeightUnitCode")]
 	    public string ChargeableWeightUnitCode { get; set; }
-        [Column("ConnectedTo")]
-	    public string ConnectedTo { get; set; }
-        [ForeignKey("FromPort")]
-        [Column("FromPortId")]
-	    public string FromPortId { get; set; }
-	      
-        public virtual Warehouse FromPort { get; set; }
-        [ForeignKey("ToPort")]
-        [Column("ToPortId")]
-	    public string ToPortId { get; set; }
-	      
-        public virtual Port ToPort { get; set; }
-        [Column("CustomerAddressId")]
-	    public string CustomerAddressId { get; set; }
-        [Column("TotalVolumetricWeight")]
-	    public decimal TotalVolumetricWeight { get; set; }
-        [Column("Ratio")]
-	    public double? Ratio { get; set; }
-        [Column("ToTypeCode")]
-	    public string ToTypeCode { get; set; }
-        [ForeignKey("ToPartnerCard")]
-        [Column("ToPartnerCardId")]
-	    public string ToPartnerCardId { get; set; }
-	      
-        public virtual Card ToPartnerCard { get; set; }
-        [ForeignKey("ToAddress")]
-        [Column("ToAddressId")]
-	    public string ToAddressId { get; set; }
-	      
-        public virtual Address ToAddress { get; set; }
-        [Column("ToAddressZipCode")]
-	    public string ToAddressZipCode { get; set; }
-        [Column("ToAddressCity")]
-	    public string ToAddressCity { get; set; }
-        [ForeignKey("ToAddressCountry")]
-        [Column("ToAddressCountryId")]
-	    public string ToAddressCountryId { get; set; }
-	      
-        public virtual Country ToAddressCountry { get; set; }
-        [Column("IsUsed")]
-	    public bool IsUsed { get; set; }
-        [ForeignKey("Trucker")]
-        [Column("TruckerId")]
-	    public string TruckerId { get; set; }
-	      
-        public virtual Card Trucker { get; set; }
-        [Column("TruckerReference")]
-	    public string TruckerReference { get; set; }
-        [Column("ChildEntityReference")]
-	    public string ChildEntityReference { get; set; }
-        [Column("MasterShipmentNumber")]
-	    public string MasterShipmentNumber { get; set; }
     }
 }
 	 

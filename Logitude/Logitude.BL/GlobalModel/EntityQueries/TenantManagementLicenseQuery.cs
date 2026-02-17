@@ -1,5 +1,4 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -36,11 +35,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     {
                         Id = a.Id,
                         Tenant = a.Tenant,
-                        PackageCode = a.PackageCode,
+                        PackageCode = a.PackageCode,                        
                         NumberOfUsers = a.NumberOfUsers,
-                        FreeUsers = a.FreeUsers,
-                        Price = a.Price,
-                        TotalPrice = a.TotalPrice,
                     });
         }
 
@@ -48,17 +44,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         public IQueryable<TenantManagementLicensePM> GetTenantManagementLicenseByListids(List<int> tenantManagementids)
         {
             IQueryable<TenantManagementLicensePM> TenantManagementLicensePMlist = (from a in repository.context.TenantManagementLicenses
-                                                                                   where tenantManagementids.Contains(a.Tenant)
-                                                                                   select new TenantManagementLicensePM()
-                                                                                   {
-                                                                                       Id = a.Id,
-                                                                                       Tenant = a.Tenant,
-                                                                                       PackageCode = a.PackageCode,
-                                                                                       NumberOfUsers = a.NumberOfUsers,
-                                                                                       FreeUsers = a.FreeUsers,
-                                                                                       Price = a.Price,
-                                                                                       TotalPrice = a.TotalPrice,
-                                                                                   });
+                                               where tenantManagementids.Contains(a.Tenant)
+                                               select new TenantManagementLicensePM()
+                                                      {
+                                                        Id = a.Id,
+                                                        Tenant = a.Tenant,
+                                                        PackageCode = a.PackageCode,
+                                                        NumberOfUsers = a.NumberOfUsers,
+                                                      });
             return TenantManagementLicensePMlist;
         }
 
@@ -76,13 +69,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                       Tenant = a.Tenant,
                                                       PackageCode = a.PackageCode,
                                                       NumberOfUsers = a.NumberOfUsers,
-                                                      FreeUsers = a.FreeUsers,
-                                                      Price = a.Price,
-                                                      TotalPrice = a.TotalPrice,
                                                   }).FirstOrDefault();
 
             return entityPM;
         }
-
     }
 }

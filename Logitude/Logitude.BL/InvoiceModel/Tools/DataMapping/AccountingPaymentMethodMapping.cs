@@ -25,8 +25,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             poco.IsAP = entityPM.IsAP;
             poco.IsAR = entityPM.IsAR;
             poco.ARExternalId = entityPM.ARExternalId;
-            poco.APExternalId = entityPM.APExternalId;
-            poco.LocalName = entityPM.LocalName;
+            poco.APExternalId = entityPM.APExternalId;            
         }
     }
 }

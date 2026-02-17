@@ -30,12 +30,11 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {CommonDomainService} from'../../../../Common/Services/CommonDomainService'; 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerProductsTabComponent.html',
 })
 
 export class CustomerProductsTabComponent extends BaseComponent implements OnInit{
-    public imgNgStyle: any = null;
     public ItemsSource: ObservableCollection;
     public ActualObsList: ObservableCollection;
     public EntityPM: CustomerPM;
@@ -67,7 +66,7 @@ export class CustomerProductsTabComponent extends BaseComponent implements OnIni
     }
     ngOnInit() {
         this._currencyListService = new CurrencyListService();
-        this._currencyListService.getAllFromCache().subscribe((result:any) => {
+        this._currencyListService.getAllFromCache().subscribe(result => {
             var myCurrencyCode: string = "";
             var list: CurrencyList = result.Result.filter(d => d.Id == (SessionLocator.TenantPM.ProfitCurrencyId))[0];
             if (list != null) {
@@ -104,7 +103,7 @@ export class CustomerProductsTabComponent extends BaseComponent implements OnIni
     BuildToggleButtonList() {
         this.ToggleButtonList = [];
         var proeductTypeListService: ProductTypeListService = new ProductTypeListService();
-        proeductTypeListService.getAllFromCache().subscribe((result:any) => {
+        proeductTypeListService.getAllFromCache().subscribe(result => {
             var FullProductsList = result.Result.filter(i => i.InActive == false).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
             FullProductsList.forEach(item => {
                 this.ToggleButtonList.push(new ProductTypeItemClass(item, this.EntityPM, this, FullProductsList));
@@ -116,13 +115,13 @@ export class CustomerProductsTabComponent extends BaseComponent implements OnIni
         var selectedItem = null;
         this.ObsList = [];
         this.EntityPM.CustomerProducts.sort((a, b) => { return (a.ProductTypeCode === b.ProductTypeCode) ? 0 : (a.ProductTypeCode < b.ProductTypeCode) ? -1 : 1 }).forEach(item => {
-            //if (item.ProductTypeCode == "AD" || item.ProductTypeCode == "OD" || item.ProductTypeCode == "ID") {
-            //    // continue;
-            //}
+            if (item.ProductTypeCode == "AD" || item.ProductTypeCode == "OD" || item.ProductTypeCode == "ID") {
+                // continue;
+            }
 
-            //else {
-            this.ObsList.push(new ProductViewModelData(this.EntityPM, item, true, "CustomerProductLocation"));
-            // }
+            else {
+                this.ObsList.push(new ProductViewModelData(this.EntityPM, item, true, "CustomerProductLocation"));
+            }
         });
         if (this.ObsList.length > 0)
             this.SelectedItem = this.ObsList[0];
@@ -174,7 +173,7 @@ export class CustomerProductsTabComponent extends BaseComponent implements OnIni
         this.ActualObsList.Clear();
         var list = [];
         if (this.SelectedItem != null) {
-            this.partnersDomainService.GetCustomerProductHistoryActualData(this.EntityPM.Id, this.SelectedItem.ProductTypeCode).subscribe((result:any) => {
+            this.partnersDomainService.GetCustomerProductHistoryActualData(this.EntityPM.Id, this.SelectedItem.ProductTypeCode).subscribe(result => {
                 result.Result.filter(d => d.NumberOfShipments > 0).sort((a, b) => { return ((a.Year === b.Year) ? ((a.Month === b.Month) ? 0 : (a.Month < b.Month) ? -1 : 1) : (a.Year < b.Year ? -1 : 1)) }).reverse().forEach(item => {
                     list.push(new ProductActualViewModelData(item));
                 });
@@ -203,7 +202,7 @@ export class CustomerProductsTabComponent extends BaseComponent implements OnIni
         var proeductTypeListService: ProductTypeListService = new ProductTypeListService();
         this._entityResourceService.getEntityResourceByTableName("CustomerProductLocation", 0).subscribe(p => {
             this.Clone(item);
-            proeductTypeListService.getAllFromCache().subscribe((result:any) => {
+            proeductTypeListService.getAllFromCache().subscribe(result => {
                 var list = result.Result.filter(d => d.Code == item.ProductTypeCode)[0];
                 if (list != null)
                     windowTitle += ": " + list.Name;
@@ -276,7 +275,7 @@ export class CustomerProductsTabComponent extends BaseComponent implements OnIni
         listArgs.DisplayTitle = "Customer Actual Data";
         listArgs.BackButtonTitle = "Back";
         listArgs.ShowViews = false;
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;

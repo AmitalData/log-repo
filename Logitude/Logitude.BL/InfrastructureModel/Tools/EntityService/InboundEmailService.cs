@@ -1,5 +1,4 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.Service;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.Security;
 using Logitude.CRM.BL.EntityPMs;
@@ -10,11 +9,11 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
@@ -73,7 +72,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             string Id = IdCounter.GetNumber("InboundEmail", tenant).ToString();
             entityPM.Id = Id;
             entityPM.Uniquekey = Id;
-            entityPM.AnalyzeQueueId = Id;
             this.Poco = new InboundEmail();
 
             this.Poco.Id = entityPM.Id;
@@ -181,7 +179,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             inboundEmailLineRepository.Remove(itemPoco);
         }
 
-        public void ApplyEmailSending(InboundEmailLinePM entityLinePM, string ticketid, string ticketTableId, string guidId, bool notifyMe, string contactId, string childObjetctTableId , bool isContainsQuotationAttachment =false)
+        public void ApplyEmailSending(InboundEmailLinePM entityLinePM, string ticketid, string ticketTableId, string guidId, bool notifyMe, string contactId, string childObjetctTableId)
         {
             this.tenant = entityLinePM.Tenant;
 
@@ -196,15 +194,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             InboundEmailMapping.MapInboundEmailLineEntity(entityLinePM, itemPoco, true);
             inboundEmailLineRepository.Add(itemPoco);
             inboundEmailLineRepository.SubmitChanges();
+
+
             this.SendEmail(itemPoco, ticket.TicketNumber, ticket.ContactId, ticket.OwnerId, contactId, "", ticket.Id, ticketTableId, childObjetctTableId);
-
-            if (isContainsQuotationAttachment)
-            {
-                QuoteUpdateService quoteUpdateService = new QuoteUpdateService();
-                quoteUpdateService.UpdateQuoteStatusToSend(ticket.QuoteId, ticket.TicketNumber, ticket.Tenant);
-            }
         }
-
 
         public void SendEmail(InboundEmailLine entity, string ticketNumber, string contactId, string ownerId, string currentUserId, string guidId, string ticketId, string objectTableId, string childObjectTableId)
         {
@@ -229,7 +222,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         { "ChildObjectTableId", childObjectTableId} ,
                     };
 
-                queueservice.Send(message, tenant);
+                queueservice.Send(message);
             }
             catch (Exception ex)
             {

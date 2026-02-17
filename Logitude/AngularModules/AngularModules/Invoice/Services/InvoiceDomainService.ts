@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {Observable}     from 'rxjs/Rx';
 import {AppTool} from '../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
@@ -18,365 +19,357 @@ import {ARPaymentInvoicePM} from '../EntityPMs/ARPaymentInvoicePM';
 import {APInvoiceMultipleShortPM} from '../EntityPMs/APInvoiceMultipleShortPM';
 import {APInvoiceLinePM} from '../EntityPMs/APInvoiceLinePM';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
-import { ARInvoicePMService } from './StandardPMs/ARInvoicePMService';
 
 @Injectable()
 
 export class InvoiceDomainService {
-    private _http: HttpClient
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
     }
 
-    GetCardCurrenciesAccountingByCurrencyAndId(cardId: string, currencyId: string, isPayable: boolean) {
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetCardCurrenciesAccountingByCurrencyAndId?cardId=' + cardId + '&currencyId=' + currencyId + '&isPayable=' + isPayable, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var cardCurrenciesAccounting = response;
-                var myResponse: ServiceResponse;
-                myResponse = new ServiceResponse();
-                myResponse.Result = cardCurrenciesAccounting;
-                return myResponse;
-            }));
-        });
-    }
     GetAccountingReceivablesSummary() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAccountingReceivablesSummary';
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(
-                // map operator inside pipe
-                map(response => {
-                    var myJsonResult = response;
-                    var myResult = new AccountReceivablesSummary();
-                    if (myJsonResult) {
-                        var jsonListKeys = Object.keys(myJsonResult);
-                        for (var key in jsonListKeys) {
-                            var property = jsonListKeys[key];
-                            myResult[property] = myJsonResult[property];
-                        }
-                    }
-                    var serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = myResult;
-                    return serviceResponse;
-                }),
-                // catchErrro operator inside pipe
-                catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetAccountingReceivablesSummary', {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists = response.json();
+                return allLists;
+            });
         });
     }
-
     GetAccountPayablesSummary() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetAccountPayablesSummary', {
+                headers: authHeader
+            }).map(response => {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetAccountPayablesSummary', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var allLists = response;
+                var allLists = response.json();
                 return allLists;
-            }));
+            });
         });
     }
     GetAccountingTransferSummary() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetAccountingTransferSummary', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetAccountingTransferSummary', {
+                headers: authHeader
+            }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
                 return myResponse;
-            }));
+            });
         });
     }
     GetMoneyStatusForTenant(months: number, days: number, tenant: number, index: number, currency: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetMoneyStatusForTenant?months=' + months + '&days=' + days + '&tenant=' + tenant + '&index=' + index + '&currency=' + currency, {
+                headers: authHeader
+            }).map(response => {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetMoneyStatusForTenant?months=' + months + '&days=' + days + '&tenant=' + tenant + '&index=' + index + '&currency=' + currency, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var allLists = response;
+                var allLists = response.json();
                 return allLists;
-            }));
+            });
         });
     }
-    GetDebrotExposure(currencyIndex: number) {
+    GetDebrotExposure(tenant: number, currency: number) {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDebrotExposure?currencyIndex=' + currencyIndex, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDebrotExposure?tenant=' + tenant + '&currency=' + currency, {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists = response.json();
                 return allLists;
-            }));
+            });
         });
 
 
     }
-    GetDebrotExposureForGridControl(currencyIndex: number, isBranchRestricted: boolean) {
+    GetDebrotExposureForGridControl(index: number) {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDebrotExposureForGridControl?currencyIndex=' + currencyIndex + '&isBranchRestricted=' + isBranchRestricted, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDebrotExposureForGridControl?index=' + index, {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
 
                 return myResponse;
-            }));
+            });
         });
 
     }
-    GetCreditorExposure(currencyIndex: number, isBranchRestricted: boolean) {
+    GetCreditorExposure(index: number) {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetCreditorExposure?currencyIndex=' + currencyIndex + '&isBranchRestricted=' + isBranchRestricted, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetCreditorExposure?index=' + index, {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
 
                 return myResponse;
-            }));
+            });
         });
     }
     GetAgingReportARInvioceData(index: number, customerId: any) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetAgingReportARInvioceData?index=' + index + '&customerId=' + customerId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetAgingReportARInvioceData?index=' + index + '&customerId=' + customerId, {
+                headers: authHeader
+            }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
 
                 return myResponse;
-            }));
+            });
         });
     }
     GetAgingReportAPInvioceData(index: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetAgingReportAPInvioceData?index=' + index, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetAgingReportAPInvioceData?index=' + index, {
+                headers: authHeader
+            }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
 
                 return myResponse;
-            }));
+            });
         });
     }
     ValidateARPaymentFullAccounting(paymentMethod: string, currency: string, billTo: string, code: string, registergdate: Date, bankAccountId: string) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetARPaymentValidatingList?paymentMethod=' + paymentMethod + "&currency=" + currency + "&billTo=" + billTo + "&code=" + code + "&registergDateString=" + ServiceHelper.GetDateString(registergdate) + "&bankAccountId=" + bankAccountId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetARPaymentValidatingList?paymentMethod=' + paymentMethod + "&currency=" + currency + "&billTo=" + billTo + "&code=" + code + "&registergDateString=" + ServiceHelper.GetDateString(registergdate) + "&bankAccountId=" + bankAccountId, {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = result;
 
                 return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     ValidateAPInvoiceFullAccounting(currency: string, vendor: string, accountingdate: Date) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetAPInvoiceValidatingList?currency=' + currency + "&vendor=" + vendor + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetAPInvoiceValidatingList?currency=' + currency + "&vendor=" + vendor + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate), {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = result;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-    ValidateInvoiceDate(invoiceDate: Date) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetValidateInvoiceDate?invoiceDateString=' + ServiceHelper.GetDateString(invoiceDate), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var myResponse: ServiceResponse;
-                myResponse = new ServiceResponse();
-                myResponse.Result = result;
-                return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-
-
-    }
-    ValidateConfirmationNumber(localVATAmount: string,invoiceDate: Date) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetValidateConfirmationNumber?localVATAmount=' + localVATAmount+ "&invoiceDateString=" + ServiceHelper.GetDateString(invoiceDate), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var myResponse: ServiceResponse;
-                myResponse = new ServiceResponse();
-                myResponse.Result = result;
-                return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-
-
-    }
-    ValidateInvoiceNumber(invoiceNumber: string) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetValidateInvoiceNumber?invoiceNumber=' + invoiceNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var myResponse: ServiceResponse;
-                myResponse = new ServiceResponse();
-                myResponse.Result = result;
-                return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-
-
-    }
-
     PostARPaymentChequeAndCashBook(entityPM: ARPaymentPM) {
-        return defer(() => {
-
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
             var mappedEntity: ARPaymentPM;
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
             mappedEntity = this.MapARPaymentJsonToEntityPM(entityPM, false);
 
-            return this._http.post(this._apiUrl + '/PostARPaymentChequeAndCashBook', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
+            return this._http.post(this._apiUrl + '/PostARPaymentChequeAndCashBook', JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
                 var mappedResult: ARPaymentPM = this.MapARPaymentJsonToEntityPM(myJsonResult, true, entityPM);
                 var myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     PostARInvoiceJournalAndJournalLines(entityPM: ARInvoicePM) {
-        return defer(() => {
-
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
             var mappedEntity: ARInvoicePM;
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
             mappedEntity = this.MapARInvoiceJsonToEntityPM(entityPM, false);
 
-            return this._http.post(this._apiUrl + '/PostARInvoiceJournalAndJournalLines', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
+            return this._http.post(this._apiUrl + '/PostARInvoiceJournalAndJournalLines', JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
                 var mappedResult: ARInvoicePM = this.MapARInvoiceJsonToEntityPM(myJsonResult, true, entityPM);
                 var myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     ValidateARInvoiceFullAccounting(currency: string, billTo: string, accountingdate: Date) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetARInvoiceValidatingList?currency=' + currency + "&billTo=" + billTo + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetARInvoiceValidatingList?currency=' + currency + "&billTo=" + billTo + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate), {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = result;
 
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     IsARInvoiceNumberExists(InvoiceNumber: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetIsARInvoiceNumberExists?InvoiceNumber=' + InvoiceNumber;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var isExists: any = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var isExists: Boolean = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = isExists;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     AutoCreditARInvoice(entityId: string, IsInvoiceNumberManuallySet: boolean, AutoCreditManualNumber: string, AutoCreditDate: Date) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAutoCreditARInvoice?entityId=' + entityId + "&IsInvoiceNumberManuallySet=" + IsInvoiceNumberManuallySet + "&AutoCreditManualNumber=" + AutoCreditManualNumber + "&AutoCreditDateString=" + ServiceHelper.GetDateString(AutoCreditDate);
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var newInvoiceId: any = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var newInvoiceId: string = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = newInvoiceId;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     CheckVendor_NumberDuplication(vendorId: string, invoiceNumber: string, entityId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
 
         var args = new APInvoiceNumberDuplicationCheckArgs();
         args.VendorId = vendorId;
         args.EntityId = entityId;
         args.InvoiceNumber = invoiceNumber;
 
-        return defer(() => {
+        return Observable.defer(() => {
 
-            return this._http.post(this._apiUrl, JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+            return this._http.post(this._apiUrl, JSON.stringify(args), { headers: authHeader }).map((response) => {
 
-                var newInvoiceId: any = response;
+                var newInvoiceId: string = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = newInvoiceId;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     CheckARPaymentCashBook(paymentMethod: string, currency: string, branch: string) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetARPaymentCashBook?paymentMethod=' + paymentMethod + "&currency=" + currency + "&branch=" + branch, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetARPaymentCashBook?paymentMethod=' + paymentMethod + "&currency=" + currency + "&branch=" + branch, {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = result;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetCustomerCreditLimitActualAmount(myCustomerId: string, invoiceId: string = null) {
+    GetCustomerCreditLimitActualAmount(myCustomerId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId + "&invoiceId=" + invoiceId;
+        var url = this._apiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetSingleAPInvoiceShortPM(myInvoiceId: string, myShipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetSingleAPInvoiceShortPM?myInvoiceId=' + myInvoiceId + "&myShipmentId=" + myShipmentId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pm = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var pm = response.json();
 
                 var entity: APInvoiceMultipleShortPM;
                 if (pm) {
@@ -386,19 +379,24 @@ export class InvoiceDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     PutSingleAPInvoiceShortPM(entityPM: APInvoiceMultipleShortPM) {
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
             var mappedEntity: APInvoiceMultipleShortPM;
             mappedEntity = this.MapJsonToAPInvoiceMultipleShortPM(entityPM, false);
 
-            return this._http.put(this._apiUrl + "/PutAPInvoiceMultipleShortPM", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var pm = res;
+            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                { headers: authHeader }).map((res) => {
+                    var pm = res.json();
                     if (pm) {
                         var mappedResult: APInvoiceMultipleShortPM;
                         mappedResult = this.MapJsonToAPInvoiceMultipleShortPM(pm, true, entityPM);
@@ -407,367 +405,347 @@ export class InvoiceDomainService {
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
     RebuildTransferFile(entityId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetRebuildTransferFile?entityId=' + entityId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetNotReadyARInvoicesIds() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetNotReadyARInvoicesIds';
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetNotReadyAPInvoicesIds() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetNotReadyAPInvoicesIds';
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetNotReadyARPaymentsIds() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetNotReadyARPaymentIds';
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetNotReadyAPPaymentsIds() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetNotReadyAPPaymentIds';
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetRecalculateTransfer(ids: string[], entityCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetRecalculateTransfer?allIdsString=' + AppTool.GetIdsArrayText(ids) + "&entityCode=" + entityCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     BlockTransferEntities(ids: string[], entityCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetBlockForTransfer?allIdsString=' + AppTool.GetIdsArrayText(ids) + "&entityCode=" + entityCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     SetAccountingSettingStartDate(entityCode: string, myStartDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
         var url = this._apiUrl + '/GetSetAccountingSettingStartDate?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     SendARPaymentSATXML(id: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetSendARPaymentSATXML?paymentId=' + id
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetARInvoiceSATStatus(id: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetARInvoiceSATStatus?paymentId=' + id
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetOnStartDateEntitiesIds(entityCode: string, myStartDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
         var url = this._apiUrl + '/GetOnStartDateEntitiesIds?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetSingleChargeTypeAccountingList(chargesTypeId: string, vatTypeId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetSingleChargeTypeAccountingList?chargesTypeId=' + chargesTypeId + "&vatTypeId=" + vatTypeId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     PrintTaxData(startDate: Date, endDate: Date, email: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var startDateString: string = ServiceHelper.GetDateString(startDate);
         var endDateString: string = ServiceHelper.GetDateString(endDate);
         var url = this._apiUrl + '/GetTaxApprovalData?startDateString=' + startDateString + "&endDateString=" + endDateString + "&email=" + email;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetShipmentLevelCode(myShipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetShipmentLevelCode?myShipmentId=' + myShipmentId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult: any = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult: string = response.json();
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetShipmentIsAccountingClosed(myShipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetShipmentIsAccountingClosed?myShipmentId=' + myShipmentId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult: any = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult: Boolean = response.json();
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetARPaymentSATCancellationStatus(paymentId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetARPaymentSATCancellationStatus?paymentId=' + paymentId ;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetStatusOfARPaymentCheques(paymentId: string) {
- 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetStatusOfARPaymentCheques?paymentId=' + paymentId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetARInvoiceSATCancellationStatus(invoiceId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetARInvoiceSATCancellationStatus?invoiceId=' + invoiceId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     getConnectedARPayments(invoiceId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/getConnectedARPayments?invoiceId=' + invoiceId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     getConnectedAPPayments(invoiceId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/getConnectedAPPayments?invoiceId=' + invoiceId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetListOfARInvoiceStockPM() {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetListOfARInvoiceStockPM?';
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }    
-
-    MarkEntityAsBlocked(transferTypeCode: string, entityId: string) {
-
-        var url = this._apiUrl + '/GetMarkEntityAsBlocked?transferTypeCode=' + transferTypeCode + "&entityId=" + entityId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
-
-                var myResponse: ServiceResponse;
-                myResponse = new ServiceResponse();
-                myResponse.Result = myResult;
-                return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-    GetConnectedAPInvoicestoPayments(paymentId: string) {
-        var url = this._apiUrl + '/GetConnectedAPInvoicestoPayments?paymentId=' + paymentId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetShipmentsForMultipleAPInvoice(invoiceId: string, vendorId: string) {
-        var url = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain' + '/GetShipmentsForMultipleAPInvoice?invoiceId=' + invoiceId + "&vendorId=" + vendorId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetInvoiceOpenAmountPayables(shipmentId: string) {
-        var url = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain' + '/GetInvoiceOpenAmountPayables?entityId=' + shipmentId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myJsonResult = response;
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myJsonResult;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
+    
 
     MapARPaymentJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {
         if (!entityPM) {
@@ -1358,27 +1336,6 @@ export class InvoiceDomainService {
             }
         }
     }
-
-    ValidateApprovalSendToSAT(aRInvoicePM: ARInvoicePM) {
-        return defer(() => {
-
-            var serviceResponse: ServiceResponse = new ServiceResponse();
-
-            var mappedEntity: ARInvoicePM;
-            let aRInvoicePMService = new ARInvoicePMService();
-            mappedEntity = aRInvoicePMService.MapJsonToEntityPM(aRInvoicePM, false);
-
-            return this._http.put(this._apiUrl + "/PutARInvoiceSATValidation", JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((result: HttpResponse<any>) => {
-                if (result && result.body) {
-                    serviceResponse.Result = result.body;
-                }
-
-                return serviceResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
     public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
@@ -1441,19 +1398,4 @@ class APInvoiceNumberDuplicationCheckArgs {
     public VendorId: string;
     public EntityId: string;
     public InvoiceNumber: string;
-}
-export class AccountReceivablesSummary {
-    public  ARInvoicesDraftsCount: number;
-    public  ARInvoicesUnpaidCount: number;
-    public  ARInvoicesOpenConstituentCount: number;
-    public  ARPaymentsDraftsCount: number;
-    public  ARPaymentsOpenedCount: number;
-    public  ARGeneralInvoiceDraftCount: number;
-    public  ARPaymentsSATFailedCount: number;
-    public  ARInvoicesSATFailedCount: number;
-    public  ARInvoicesFailedCount: number;
-    public  ARPaymentFailedCount: number;
-    public  ARInvoicesSATVoidedNotTransferredCount: number;
-    public  ARInvoiceSATWaitingCancellationCount: number;
-    public  ARPaymentSATWaitingCancellationCount: number;
 }

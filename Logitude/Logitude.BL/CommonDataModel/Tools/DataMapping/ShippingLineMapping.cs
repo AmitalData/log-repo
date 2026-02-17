@@ -2,12 +2,11 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
-using Logitude.BL.CommonDataModel.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -30,12 +29,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.SCACCode = entityPM.SCACCode;
             entityPOCO.IsINTTRARegistered = entityPM.IsINTTRARegistered;
             entityPOCO.INTTRARegistrationNotes = entityPM.INTTRARegistrationNotes;
-            entityPOCO.INTTRAUpdatesShipment = entityPM.INTTRAUpdatesShipment;
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;
-            entityPOCO.CBSA = entityPM.CBSA;
-            entityPOCO.CAAT = entityPM.CAAT;
 
             entityCard.UpdateDate = entityPM.UpdateDate;
             entityCard.UpdatedByUserId = entityPM.UpdatedByUserId;
@@ -48,8 +44,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.PaymentTermId = entityPM.PaymentTermId;
             entityCard.ReceivablesAccountingCard = entityPM.ReceivablesAccountingCard;
             entityCard.PayablesAccountingCard = entityPM.PayablesAccountingCard;
-            entityCard.AccountingVATSplit = entityPM.AccountingVATSplit;
-            entityCard.BillToId = entityPM.BillToId;
             entityCard.VatNumber = entityPM.VatNumber;
             entityCard.Notes = entityPM.Remark;
             entityCard.Website = entityPM.Website;
@@ -68,27 +62,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
-            entityCard.ImageDetailId = entityPM.ImageDetailId;
-            entityPOCO.IsSendingByContainer = entityPM.IsSendingByContainer;
-            entityPOCO.IsSendingByBillOfLading = entityPM.IsSendingByBillOfLading;
-            entityPOCO.IsAutomaticRequestsSent = entityPM.IsAutomaticRequestsSent;
-            entityPOCO.IsSupportsContainerTracking = entityPM.IsSupportsContainerTracking;
-            entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
-            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-
-            entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
-            entityCard.SATCustomerName = entityPM.SATReceptorName;
-            entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
-            entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
-            entityCard.SingleInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.SingleInvoiceTemplateId : null;
-            entityCard.CustomsInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.CustomsInvoiceTemplateId : null;
-            entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;
-            entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
-
             if (!entityPM.IsFirstContactToAdd)
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;
-            }            
+            }
 
             BuildSearchFields(entityPM, entityCard);
         }
@@ -105,7 +82,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayablesAccountingCard);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityCard.CityName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityCard.CountryName);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.SCACCode);
 
             if (mySearchFields.Length > 1000)
             {

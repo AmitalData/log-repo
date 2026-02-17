@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .HeaderBackGround {
         background: -moz-linear-gradient(-142.51% 1527.23% 0deg,rgba(226, 227, 228, 1) 0%,rgba(224, 225, 226, 1) 52.31%,rgba(217, 218, 220, 1) 72.91%,rgba(205, 207, 208, 1) 87.87%,rgba(188, 190, 192, 1) 100%);
         background: -webkit-linear-gradient(0deg, rgba(226, 227, 228, 1) 0%, rgba(224, 225, 226, 1) 52.31%, rgba(217, 218, 220, 1) 72.91%, rgba(205, 207, 208, 1) 87.87%, rgba(188, 190, 192, 1) 100%);
@@ -122,24 +122,6 @@
         opacity: 0.5;
         pointer-events: none;
     }
-
-    .ShortName {
-        width:133px;
-    }
-
-    .LongName {
-        width: 150px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-    .AgentNameText {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        display: block;
-    }
-
 </style>
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -175,11 +157,11 @@
                                         <tr>
                                             <td>
                                                 <div *ngIf="EntityPm.HasFile == true">
-                                                    <div style="float:left;" title="{{ShipmentList.StatusName == 'In Progress' ? 'You are not allowed to share documents with agents while the shipment status is in progress' : ''}}">
-                                                        <button class="Button" [ngClass] = "AgentLabelClass" title="Share With {{AgentLable}}" style="margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled || ShipmentList.StatusName == 'In Progress'" [class.Disable]="EntityPm.SignRequestByUserEmail">
+                                                    <div style="float:left;">
+                                                        <button class="Button" style="width: 133px;margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [class.Disable]="EntityPm.SignRequestByUserEmail">
                                                             <!--<img src="./Images/ShareWithAgentGray.png" /> Share With Agent-->
-                                                            <div class="AgentNameText" *ngIf="!EntityPm.IsSharedWithForwarder"><img src="./Images/ShareWithAgentGray.png" style="margin-top: -3px;margin-right: 3px;" />Share With {{AgentLable}}</div>
-                                                            <div class="AgentNameText" *ngIf="EntityPm.IsSharedWithForwarder"><img src="./Images/SharedWithAgentB.png" style="margin-top: -3px;margin-right: 3px;" />Shared With {{AgentLable}}</div>
+                                                            <div *ngIf="!EntityPm.IsSharedWithForwarder"><img src="./Images/ShareWithAgentGray.png" style="margin-top: -3px;margin-right: 3px;" />Share With {{AgentLable}}</div>
+                                                            <div *ngIf="EntityPm.IsSharedWithForwarder"><img src="./Images/SharedWithAgentB.png" style="margin-top: -3px;margin-right: 3px;" />Shared With {{AgentLable}}</div>
                                                         </button>
                                                         <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" (mouseout)="HideNoteClicked()" (mouseover)="ShowNoteClicked()" />
                                                     </div>
@@ -217,7 +199,7 @@
                         <div>
                             <table>
                                 <tr>
-                                    <td style="width:53%">
+                                    <td style="width:50%">
                                         <table>
                                             <tr style="height:40px;">
                                                 <td style="width:120px">
@@ -225,7 +207,7 @@
                                                 </td>
                                                 <td>
                                                     <ul class="FiltersMenu" style="float: left;width:235px;" *ngIf="TypeSelected == false">
-                                                        <li id="{{'DocumentTypeCode' | IdGeneratorAsyncPipe | async}}" *ngFor="let item of TopTypes" [title]="item.Name" (click)="itemClicked(item.Id,item.Name)" (mouseover)="itemMouseOver(item.Id)" style="width:45px;" [class.SelectedFilter]="DocumentTypeId === item.Id">
+                                                        <li *ngFor="let item of TopTypes" [title]="item.Name" (click)="itemClicked(item.Id,item.Name)" (mouseover)="itemMouseOver(item.Id)" style="width:45px;" [class.SelectedFilter]="DocumentTypeId === item.Id">
                                                             {{item.OrderedDisplayName}}
                                                         </li>
                                                         <li (click)="itemClicked('O','')" (mouseover)="itemMouseOver('O')" style="width:55px;" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'">
@@ -233,7 +215,7 @@
                                                         </li>
                                                     </ul>
                                                     <LogLov *ngIf="ShowTypes == true" [LogitudeForm]="myForm" style="float: left;width: 130px;margin-left: 5px;"
-                                                            [ObjectFieldName]="'DocumentTypeId'" [DependencyFilter2Value]="true"
+                                                            [ObjectFieldName]="'DocumentTypeId'"
                                                             [DataContext]="DataContext" [QueryFilterItems]="MyInActiveFilter"
                                                             (SelectedItemChanged)="OnDocumentTypeChanged($event)"
                                                             [LookUpTableName]="'DocumentType'">
@@ -299,13 +281,13 @@
                                         </table>
                                     </td>
 
-                                    <td style="height:75px;width:25%" [class.Disable]="IsPrivateLabel">
+                                    <td style="height:75px;width:50%" [class.Disable]="IsPrivateLabel">
 
                                         <table>
                                             <tr>
-                                                <!--<td style="width:57px;vertical-align:top"><span style="left:2px;top:5px;font-size:12px;vertical-align:top"></span></td>-->
+                                                <td style="width:57px;vertical-align:top"><span style="left:2px;top:5px;font-size:12px;;vertical-align:top"></span></td>
                                                 <td>
-                                                    <div>
+                                                    <div style="height:75px">
                                                         <LogTextBox  style="height:80px" [Placeholder]="'Notes'" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'Notes'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="Notes"></LogTextBox>
                                                     </div>
                                                 </td>
@@ -384,8 +366,8 @@
                                 <td><div style="margin-top: 7px;"></div></td>
                                 <td>
                                     <div style="margin-top: 7px;">
-                                        <button id="{{'OK' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-                                        <button id="{{'Cancel' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                        <button class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>
+                                        <button class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">Cancel</button>
                                     </div>
                                 </td>
                             </tr>

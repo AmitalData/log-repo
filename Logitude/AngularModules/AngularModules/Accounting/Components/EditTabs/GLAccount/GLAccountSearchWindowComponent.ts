@@ -13,7 +13,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './GLAccountSearchWindowComponent.html',
 
 })
@@ -85,6 +85,8 @@ export class GLAccountSearchWindowComponent extends BaseComponent implements OnI
             filters.addAdditionalFilter("IsParent","11", null, null, "Equals", true, false, false, "string");
        // }
         filters.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string");
+        filters.addAdditionalFilter("AccountTypeCode", this.EntityPM.AccountTypeCode, null, null, "Equals", false, false, false, "string");
+       filters.addAdditionalFilter("ChartOfAccountsId", this.EntityPM.ChartOfAccountsId, null, null, "Equals", false, false, false, "string");
 
        
        return this.entityListService.getByFilters("GLAccount", filters);
@@ -100,13 +102,12 @@ export class GLAccountSearchWindowComponent extends BaseComponent implements OnI
                     if (myResponse) {
                         if (!myResponse.HasError) {
                             this.CurrentSession.CloseCurrentWindowEmit(entityList);
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         }
                         else
                         {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                         }
-                     
+
                     }
 
                 });

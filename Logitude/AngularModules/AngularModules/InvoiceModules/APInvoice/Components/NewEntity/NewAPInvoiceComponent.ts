@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
@@ -31,14 +31,9 @@ import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainSe
 import {InvoiceTotalsClass} from '../../../../Invoice/Args';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
-import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
-import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewAPInvoiceComponent.html',
 })
 
@@ -54,102 +49,19 @@ export class NewAPInvoiceComponent extends BaseComponent {
     public isRTL: boolean = false;
     public IsFullAccounting: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public GLAccountsFilterItems: ApiQueryFilters;
-
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
-        this.InitLOVFilters();
         this.InitializeServices();
-
+        
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
     }
-    InitLOVFilters() {
-        this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
-    }
-    ngOnInit() {
-        this.BuildAdditionalFields();
-    }
-
-    private timerToken: any;
-    private Retries: number = 0;
-    private GeneratedComponent: any;	
-    private additionalFieldsScreenCode = "APInvoice.AdditionalFields";
-    public ShowAdditionalFieldsScreen: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-
-    BuildAdditionalFields() {
-
-        var objectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;
-        var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === objectTableId && x.Code.toLowerCase() == this.additionalFieldsScreenCode.toLowerCase())[0];
-
-        if (myScreen != null) {
-
-            var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
-
-            if (myScreenFields.length == 0) {
-                myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id);
-            }
-
-            if (myScreenFields.length != 0) {
-                this.ShowAdditionalFieldsScreen = true;
-                this.RunComponent();
-            }
-        }
-    }
-
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    LoadChildComponent() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
-            .then(cmpRef => {
-
-                this.GeneratedComponent = cmpRef.instance;
-
-                cmpRef.instance.LoadCompleted.subscribe(s => {
-                    this.SetUIProperties_GeneratedComponent();
-                });
-
-                var screenCode = this.additionalFieldsScreenCode;
-                cmpRef.instance.LabelWidth = 160;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-            });
-    }
-
-    RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
-    SetUIProperties_GeneratedComponent() {
-        if (this.GeneratedComponent) {
-            this.GeneratedComponent.SetEnabled(true);
-        }
-    }
 
     public AllVatTypes: VatTypeList[] = [];
-    public AllCurrencies: CurrencyList[] = [];
-    public AllPaymentTerms: PaymentTermList[] = [];
     private myCardListService: CardListService;
     private myPaymentTermListService: PaymentTermListService;
     private myCurrencyListService: CurrencyListService;
@@ -169,18 +81,6 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.myVatTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AllVatTypes = myResponse.Result;
-            }
-        });
-
-        this.myCurrencyListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.AllCurrencies = myResponse.Result;
-            }
-        });
-
-        this.myPaymentTermListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.AllPaymentTerms = myResponse.Result;
             }
         });
     }
@@ -237,7 +137,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
             this.EntityPM.Description = myDescription;
             this.EntityPM.OperationalDate = InvoiceTool.GetOperationalDate(shipmentPM);
-            this.EntityPM.ShipmentsNumbers = this.shipmentPM.ShipmentNumber;
+
             this.EntityPM.ShipmentConcurrencyGUID = this.shipmentPM.ConcurrencyGUID;
             this.EntityPM.ShipmentNewConcurrencyGUID = this.shipmentPM.NewConcurrencyGUID;
         }
@@ -248,7 +148,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     SetUIProperties() {
         var isVatNumberRequired = false;
 
-              if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
                 isVatNumberRequired = true;
             }
@@ -258,7 +158,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate));
 
         this.SetUIProperties_DueDate();
-        this.SetUIProperties_ExchangeRate();
+        this.SetUIProperties_ExchangeRate();        
     }
     SetUIProperties_DueDate() {
         var AllowManuallyDueDate: boolean = false;
@@ -288,7 +188,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isEnabled);
     }
 
-    // Load Data
+    // Load Data 
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     LoadData() {
@@ -368,26 +268,23 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
         return myResult;
     }
-
+   
     // Vendor Properties
     get VendorDependencyProperty1() { return InvoiceTool.GetVendorPartnerTypes(); }
-    public GLAccountId: string;
-    public BillToId: string;
+
     get VendorId() { return this.EntityPM.VendorId; }
     set VendorId(value: string) {
         if (this.EntityPM.VendorId != value) {
             this.EntityPM.VendorId = value;
-            this.InvoiceCurrencyId = null;
+
             this.CheckDuplication();
 
             if (AppTool.IsNullOrEmpty(value)) {
                 this.VATNumber = null;
                 this.VendorName = null;
-                this.GLAccountId = null;
-                this.BillToId =null;
                 this.EntityPM.VendorPartnerTypeId = null;
-                this.SetInvoiceCurrencyFromTenant();
-                this.SetPaymentTermFromTenant();
+                this.InvoiceCurrencyId = SessionLocator.AccountingCurrencyId;
+                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
                 this.VatTypeId = null;
             }
 
@@ -397,119 +294,22 @@ export class NewAPInvoiceComponent extends BaseComponent {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
                             this.VATNumber = list.VatNumber;
-                            this.GLAccountId = list.GLAccountId;
-                            this.BillToId = list.BillToId;
-                            this.VendorName = list.LocalName || list.EnglishName;
-                            this.EntityPM.VendorName = list.LocalName || list.EnglishName;
-                            this.EntityPM.VendorLocalName = list.LocalName;
+                            this.VendorName = list.EnglishName;
                             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
                             this.VatTypeId = list.VatTypeId;
-                            
-                            if(this.IsFullAccounting){
-                                
-                                this.GetConnectedGLAccount();
-                                if(AppTool.IsNullOrEmpty(this.InvoiceCurrencyId))
-                                this.SetInvoiceCurrencyFromTenant();
-                            }
-                        
-                            else {
-                                this.GetConnectedBillTo();
-                                if(AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)){
-                                    this.SetInvoiceCurrencyFromPartner(list.InvoiceCurrencyId);
-                                }
-                            }
-                            
 
+                            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
+                                this.InvoiceCurrencyId = list.InvoiceCurrencyId;
+                            }
 
-                            this.SetPaymentTermFromPartner(list.PaymentTermId);
+                            if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
+                                this.PaymentTermId = list.PaymentTermId;
+                            }                            
                         }
                     }
                 });
             }
         }
-    }
-
-
-    GetConnectedBillTo() {
-        if (this.BillToId)
-        {
-
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this.myCardListService.getSingle(this.BillToId).subscribe((myResult:any) => {
-                var myResponse: ServiceResponse = myResult;
-                this.CurrentSession.StopBusyIndicator();
-                if (!myResponse.HasError) {
-                    var cardList: CardList = myResponse.Result;
-                    if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
-                        this.InvoiceCurrencyId = cardList.InvoiceCurrencyId;
-
-                    }
-
-                }
-            });
-        }
-    }
-    vendorGLAccount: GLAccountList;
-    _GLAccountListService: GLAccountListService = new GLAccountListService();
-    GetConnectedGLAccount() {
-        if (this.GLAccountId)
-        {
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this._GLAccountListService.getSingle(this.GLAccountId).subscribe((myResult:any) => {
-                console.log("[_GLAccountListService.getSingle]", myResult);
-                this.CurrentSession.StopBusyIndicator();
-
-                var myResponse: ServiceResponse = myResult;
-                if (!myResponse.HasError) {
-                    var gla: GLAccountList = myResponse.Result;
-                    this.vendorGLAccount = gla;
-                    this.EntityPM.VendorGLAccountId = gla.Id;
-                    if (!gla.IsMultiCurrency) {
-                        this.InvoiceCurrencyId = gla.CurrencyId;
-                        
-                    }
-                }
-            });
-        }else{
-            this.vendorGLAccount = null;
-              this.EntityPM.VendorGLAccountId = null;
-        }
-    }
-
-    private SetInvoiceCurrencyFromPartner(currencyId: string) {
-        if (!AppTool.IsNullOrEmpty(currencyId)) {
-            var currency: CurrencyList = this.AllCurrencies.filter(f => f.Id == currencyId)[0];
-            if (currency != null && !currency.InActive)
-                this.InvoiceCurrencyId = currencyId;
-            else
-                this.SetInvoiceCurrencyFromTenant();
-        }
-        else {
-            this.SetInvoiceCurrencyFromTenant();
-        }
-    }
-    private SetPaymentTermFromPartner(paymentTermId: string) {
-        if (!AppTool.IsNullOrEmpty(paymentTermId)) {
-            var paymentTerm: PaymentTermList = this.AllPaymentTerms.filter(f => f.Id == paymentTermId)[0];
-            if (paymentTerm != null && !paymentTerm.InActive)
-                this.PaymentTermId = paymentTermId;
-            else
-                this.SetPaymentTermFromTenant();
-        }
-        else {
-            this.SetPaymentTermFromTenant();
-        }
-    }
-
-    private SetInvoiceCurrencyFromTenant() {
-        var currency: CurrencyList = this.AllCurrencies.filter(f => f.Id == SessionLocator.TenantPM.CurrencyId)[0];
-        if (currency != null && !currency.InActive)
-            this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
-    }
-    private SetPaymentTermFromTenant() {
-        var paymentTerm: PaymentTermList = this.AllPaymentTerms.filter(f => f.Id == SessionLocator.TenantPM.PaymentTermId)[0];
-        if (paymentTerm != null && !paymentTerm.InActive)
-            this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
     }
 
     get VendorName() { return this.EntityPM.VendorName; }
@@ -523,12 +323,6 @@ export class NewAPInvoiceComponent extends BaseComponent {
     set InvoiceNumber(value: string) {
         if (this.EntityPM.InvoiceNumber != value) {
             this.EntityPM.InvoiceNumber = value;
-            //this.CheckDuplication();
-        }
-    }
-
-    OnInvoiceNumberLostFocus(input: string) {
-        if (!AppTool.IsNullOrEmpty(input)) {
             this.CheckDuplication();
         }
     }
@@ -538,10 +332,10 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.FillWarnings(warnings);
 
         if (!AppTool.IsNullOrEmpty(this.VendorId) && !AppTool.IsNullOrEmpty(this.InvoiceNumber)) {
-
+            
             this.myInvoiceDomainService.CheckVendor_NumberDuplication(this.EntityPM.VendorId, this.EntityPM.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-
+                    
                     var isDuplicated: boolean = myResponse.Result;
 
                     if (isDuplicated) {
@@ -557,7 +351,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     get InvoiceCurrencyId() { return this.EntityPM.InvoiceCurrencyId; }
     set InvoiceCurrencyId(value: string) {
         if (this.EntityPM.InvoiceCurrencyId != value) {
-            this.EntityPM.InvoiceCurrencyId = value;
+            this.EntityPM.InvoiceCurrencyId = value;            
             this.SetCurrencyRateData();
             this.SetUIProperties();
 
@@ -638,7 +432,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     set ProfitCurrencyId(value: string) {
         if (this.EntityPM.ProfitCurrencyId != value) {
             this.EntityPM.ProfitCurrencyId = value;
-            this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);
+            this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);   
         }
     }
 
@@ -679,7 +473,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     // Properties
     get VATNumberRedDotVisibility() {
         var myResult = false;
-              if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             myResult = true;
         }
 
@@ -717,7 +511,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                         var list: PaymentTermList = myResponse.Result;
                         if (list != null) {
                             this.PaymentTermName = list.EnglishName;
-                        }
+                        }                        
                     }
                 });
             }
@@ -762,7 +556,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
             this.EntityPM.AccountingDate = value;
-
+          
             if (value == null) {
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             }
@@ -776,14 +570,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         }
     }
 
-    get BranchId() { return this.EntityPM.BranchId; }
-    set BranchId(value: string) {
-        if (this.EntityPM.BranchId != value) {
-            this.EntityPM.BranchId = value;
-        }
-    }
-
-    // Commands
+    // Commands    
     FillWarnings(warnings: string[]) {
         this.ValidationWarningsList = [];
         if (warnings != null && warnings.length > 0) {
@@ -821,7 +608,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceDate")));
         }
 
-        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
+        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
             errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
         }
 
@@ -833,7 +620,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.DueDate")));
         }
 
-              if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.VATNumber)) {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VATNumber")));
             }
@@ -841,10 +628,6 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
         if (this.IsAccountingActivated && this.AccountingDate == null) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.AccountingDate")));
-        }
-
-        if (AppTool.IsNullOrEmpty(this.EntityPM.BranchId)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.BranchId")));
         }
 
         this.ValidationErrorsList = errors;
@@ -960,7 +743,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
                         if (list != null) {
                             invoiceLine.Description = list.EnglishName;
-                            invoiceLine.LocalDescription = list.LocalName;
+                            invoiceLine.LocalDescription = list.LocalName;                            
                         }
                     }
                 });
@@ -973,39 +756,19 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
-    SetInvoiceLineVatType(chargesType: ChargesTypeList, payable: ShipmentPayablePM, invoiceLine: APInvoiceLinePM) {
-        var vatTypeId: string = null;
-        var inactiveVatTypeId: boolean = false;
+    SetInvoiceLineVatType(list: ChargesTypeList, payable: ShipmentPayablePM, invoiceLine: APInvoiceLinePM) {
 
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
-            var vendor_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == this.VatTypeId)[0];
-            if (vendor_VAT != null && !vendor_VAT.InActive)
-                vatTypeId = this.VatTypeId;
-            else
-                inactiveVatTypeId = true;
+            invoiceLine.VatTypeId = this.VatTypeId;
         }
 
-        if ((AppTool.IsNullOrEmpty(vatTypeId) || inactiveVatTypeId) && payable.IsFromQuote && !AppTool.IsNullOrEmpty(payable.VatTypeId)) {
-            var payable_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == payable.VatTypeId)[0];
-            if (payable_VAT != null && !payable_VAT.InActive) {
-                vatTypeId = payable.VatTypeId;
-                inactiveVatTypeId = false
-            }
-            else
-                inactiveVatTypeId = true;
+        else if (payable.IsFromQuote && !AppTool.IsNullOrEmpty(payable.VatTypeId)) {
+            invoiceLine.VatTypeId = payable.VatTypeId;
         }
 
-        if ((AppTool.IsNullOrEmpty(vatTypeId) || inactiveVatTypeId) && chargesType != null) {
-            var chargesType_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == chargesType.VatTypeId)[0];
-            if (chargesType_VAT != null && !chargesType_VAT.InActive) {
-                vatTypeId = chargesType.VatTypeId;
-                inactiveVatTypeId = false
-            }
-            else
-                inactiveVatTypeId = true;
+        else if (list) {
+            invoiceLine.VatTypeId = list.VatTypeId;
         }
-
-        invoiceLine.VatTypeId = vatTypeId;
 
         if (!AppTool.IsNullOrEmpty(invoiceLine.VatTypeId)) {
             var list_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == invoiceLine.VatTypeId)[0];
@@ -1192,7 +955,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             this.EntityPM.AmountDueInProfitCurrency = setValue;
         }
     }
-
+    
     get SubTotalInLocalCurrency() {
         return this.EntityPM.SubTotalInLocalCurrency;
     }
@@ -1203,7 +966,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             this.EntityPM.SubTotalInLocalCurrency = setValue;
         }
     }
-
+    
     get SubTotalInInvoiceCurrency() { return this.EntityPM.SubTotalInInvoiceCurrency; }
     set SubTotalInInvoiceCurrency(value: number) {
         var setValue = AppTool.Round(value, 2);

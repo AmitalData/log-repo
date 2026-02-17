@@ -19,7 +19,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         }
 
 
-        public ARInvoiceLineAction GetARInvoiceLineActionByCode(string Code, int Tenant, string ComputingPartnerName = "")
+        public ARInvoiceLineAction GetARInvoiceLineActionByCode(string Code, int Tenant)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 if (temp == null)
                     throw new ApplicationException("ARInvoiceLineAction with Code " + Code + " doesn't exist");
 
-                return ARInvoiceLineActionDataMapping(temp, Tenant,ComputingPartnerName);
+                return ARInvoiceLineActionDataMapping(temp, Tenant);
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-        public ARInvoiceLineActionList ARInvoiceLineActionDataMappingAndValidatin(ARInvoiceLineAction MyEntity, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public ARInvoiceLineActionList ARInvoiceLineActionDataMappingAndValidatin(ARInvoiceLineAction MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             try
             {

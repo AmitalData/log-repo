@@ -1,13 +1,4 @@
-<style type="text/css">
-    .SectionTitle {
-        height: 20px;
-        line-height: 20px;
-        font-size: 14px;
-        color: #1B90CB;
-        user-select: text;
-        -webkit-user-select: text;
-    }
-</style>
+﻿
 
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -140,30 +131,7 @@
             </table>
         </td>
     </tr>
-    <tr>
-        <td style="vertical-align:top;">
-            <!-- Additional Fields -->
-            <div style="height:190px">
-                <div style="height:10px"></div>
 
-                <div class="SectionTitle">Additional Fields</div>
-                <table style="height: 200x; width: 100%">
-                    <tr>
-                        <td>
-                            <ScrollViewer>
-
-                                <div class="MediaFill">
-                                    <div class="LocationDirective" #Child></div>
-                                </div>
-                            </ScrollViewer>
-                        </td>
-                    </tr>
-                </table>
-
-            </div>
-
-        </td>
-    </tr>
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
@@ -173,7 +141,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'CancelAddPackage' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -182,7 +150,7 @@
 
                     <!-- [disabled]="!DataContext.IsEditingEnabled"-->
                     <td style="width: 57px;">
-                        <button class="RedButton" id="{{'OkAddPackage' | IdGeneratorAsyncPipe | async}}" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

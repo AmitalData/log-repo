@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
 {
@@ -21,6 +21,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string VendorId { get; set; }
         public string StatusCode { get; set; }
         public bool IsClosed { get; set; }
+        public string PaymentMethodId { get; set; }
         public string AccountingPaymentMethodId { get; set; }
         public string PrintNotes { get; set; }
         public string InternalNotes { get; set; }
@@ -47,13 +48,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string TransferStatusCode { get; set; }
         public string TransferError { get; set; }
 
-        public string VendorBankAddress { get; set; }
-        public string VendorBankName { get; set; }
-        public string VendorBankAccountNumber { get; set; }
-        public string VendorSwift { get; set; }
-        public string VendorIBANNumber { get; set; }
-
-
         public Decimal? TaxDeductionLocalAmount { get; set; }
         public int? TaxDeductionPercentage { get; set; }
         public string ApprovedByUserId { get; set; }
@@ -66,7 +60,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public User UpdatedByUser { get; set; }
         [ForeignKey("BranchId")]
         public Branch Branch { get; set; }
-      
+        [ForeignKey("PaymentMethodId")]
+        public virtual APPaymentMethod PaymentMethod { get; set; }
         [ForeignKey("AccountingPaymentMethodId")]
         public virtual AccountingPaymentMethod AccountingPaymentMethod { get; set; }
         [ForeignKey("StatusCode")]
@@ -91,27 +86,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string BankAccountId { get; set; }
 
         public DateTime? FirstApproveDate { get; set; }
-        public bool AutomaticPaymentCheque { get; set; }
-        public DateTime? AccountingCancelationDate { get; set; }
-        public bool DontIncludeInDeductionReport { get; set; }
-        public string CancelationNotes { get; set; }
 
-
-        public string Field1 { get; set; }
-        public string Field2 { get; set; }
-        public string Field3 { get; set; }
-        public string Field4 { get; set; }
-        public string Field5 { get; set; }
-        public string Field6 { get; set; }
-        public string Field7 { get; set; }
-        public string Field8 { get; set; }
-        public string Field9 { get; set; }
-        public string Field10 { get; set; }
-
-        public double? ExternalPaymentAmount { get; set; }
-        public DateTime? ExternalPaymentDate { get; set; }
-        public string ExternalPaymentNotes { get; set; }
-        public string ConnectedInvoicesNumbers { get; set; }
-        public string MasavInterfaceId { get; set; }
     }
 }

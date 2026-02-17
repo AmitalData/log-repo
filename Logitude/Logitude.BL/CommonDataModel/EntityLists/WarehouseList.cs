@@ -1,9 +1,9 @@
-﻿using Logitude.BL.InfrastructureModel.EntityLists;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class WarehouseList : CustomFieldList
+    public class WarehouseList
     {
         [Key]
         public string Id { get; set; }
@@ -25,8 +25,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string VatTypeId { get; set; }
         public bool EnableConsolidationInvoices { get; set; }
         public string CityName { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
         public string CountryId { get; set; }
         public string CountryCode { get; set; }
         public string CountryName { get; set; }
@@ -39,22 +37,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool MyWarehouse { get; set; }
         public string UsoCFDICode { get; set; }
         public string SATForeignRFC { get; set; }
+
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
-        public string StateName { get; set; }
-        public bool ChargeStorage { get; set; }
-        public string CurrencyId { get; set; }
-        public string AirWeightMeasurementCode { get; set; }
-        public string OceanWeightMeasurementCode { get; set; }
-        public string InlandWeightMeasurementCode { get; set; }
-        public string AirWeightRoundingCode { get; set; }
-        public string OceanWeightRoundingCode { get; set; }
-        public string InlandWeightRoundingCode { get; set; }
-        public string RegimenFiscalCode { get; set; }
-        public string SATReceptorName { get; set; }
-        public string GLAccountNumber { get; set; }
-        public int? StorageFreeDays { get; set; }
-        public string PaymentTermEnglishName { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using CWXSD;
 using Logitude.BL.ShipmentsModel.EntityPMs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +7,6 @@ namespace Logitude.XSD.CW_API.ABM
 {
     public class ABMDataBuilder
     {
-
         public ABMDataContext Context { get; set; }
         public ABMDataBuilder(ABMDataContext myContext)
         {
@@ -47,7 +45,7 @@ namespace Logitude.XSD.CW_API.ABM
             body.RequestList = new CustomsForceServiceRequestMessageBodyRequestList();
             body.RequestList.RequestItem = new CustomsForceServiceRequestMessageBodyRequestListRequestItem()
             {
-
+                
             };
 
             body.RequestList.RequestItem.DataList = new CustomsForceServiceRequestMessageBodyRequestListRequestItemDataList();
@@ -59,7 +57,7 @@ namespace Logitude.XSD.CW_API.ABM
 
             body.RequestList.RequestItem.DataList.DataItem.InputDocument.Credentials = new Credentials()
             {
-                UserID = this.Context.UserID,
+                UserID = this.Context.UserID,                                
                 Password = this.Context.Password,
                 CompanyID = this.Context.CompanyID,
                 //LicenseCode = "",
@@ -82,54 +80,7 @@ namespace Logitude.XSD.CW_API.ABM
             myItem.Command = "Update";
 
             myItem.ConsignmentHeader = new ConsignmentHeader();
-
             myItem.ConsignmentHeader.ConsignmentReference = this.Context.ShipmentNumber;
-
-            #region ValueAmount
-            string[] iCurrencyText = new string[1];
-            if (this.Context.ValueOfGoodsCurrencyCode != null)
-            {
-                iCurrencyText[0] = this.Context.ValueOfGoodsCurrencyCode;
-            }
-
-            if (this.Context.ValueOfGoods != null)
-            {
-                List<ValueAmount> iValueAmounts = new List<ValueAmount>();
-
-                iValueAmounts.Add(new ValueAmount()
-                {
-                    ValueType = "DocumentValue",
-                    AmountValue = this.Context.ValueOfGoods.Value,
-                    AmountValueSpecified = true,
-
-                    Currency = new Currency()
-                    {
-                        CodeType = CurrencyCodeType.ISO,
-                        Text = iCurrencyText,
-                    },
-                });
-
-                myItem.ConsignmentHeader.ValueAmount = iValueAmounts.ToArray<ValueAmount>();
-            }
-            #endregion
-
-            //myItem.ConsignmentHeader.ConsignmentBaseCurrency = this.Context.ValueOfGoodsCurrencyCode;
-
-            #region Transport
-            CWXSD.Transport iTransportItem = new Transport()
-            {
-                Conveyance = this.Context.TransportConveyance,
-                TPMode = this.Context.TransportTPMode,
-                TransportType = TransportTransportType.Border,
-                TransportTypeSpecified = true,
-            };
-
-            List<CWXSD.Transport> iTransport = new List<Transport>();
-
-            iTransport.Add(iTransportItem);
-
-            myItem.ConsignmentHeader.Transport = iTransport.ToArray<CWXSD.Transport>();
-            #endregion
 
             #region Reference 
             List<Reference> references = new List<Reference>();
@@ -144,8 +95,6 @@ namespace Logitude.XSD.CW_API.ABM
                 RefCode = "MWB",
                 RefText = this.Context.MasterNumber,
             });
-
-
 
             myItem.ConsignmentHeader.Reference = references.ToArray<Reference>();
             #endregion
@@ -175,7 +124,7 @@ namespace Logitude.XSD.CW_API.ABM
             {
                 Text = new string[] { this.Context.FromPortCode },
                 PortCountry = this.Context.MainCarriageFromPortCountryCode,
-                PortType = "ConsignmentOrigin",
+                PortType = "Origin",
                 CodeType = PortCodeType.UNLOC,
             });
 
@@ -183,19 +132,109 @@ namespace Logitude.XSD.CW_API.ABM
             {
                 Text = new string[] { this.Context.FinalDestinationPortCode },
                 PortCountry = this.Context.FinalDestinationPortCountryCode,
-                PortType = "ConsignmentDestination",
+                PortType = "Arrival",
                 CodeType = PortCodeType.UNLOC,
             });
 
             myItem.ConsignmentHeader.Port = ports.ToArray<Port>();
             #endregion
 
-            #region Parties
-            if (this.Context.Parties.Count > 0)
-            {
-                myItem.ConsignmentHeader.Party = this.Context.Parties.ToArray<CWXSD.Party>();
+            #region Party
 
+            //Shipper
+            Party shipper = new Party();
+            shipper.PartyType = "Consignor";
+            shipper.NameAddress = new NameAddress()
+            {
+                Name = this.Context.ShipperName,
+                Address1 = this.Context.ShipperAddress1,
+                Address2 = this.Context.ShipperAddress2,
+                Address3 = this.Context.ShipperCity,
+                PostCode = this.Context.ShipperZipCode,
+                Country = new Country()
+                {
+                    CountryType = "Consignor",
+                    CodeType = CountryCodeType.ISO,
+                    Text = new string[] { this.Context.ShipperCountryCode },
+                },
+            };
+
+            shipper.AddressLocation = new GPSEvent();
+
+            if (!string.IsNullOrEmpty(this.Context.ShipperReference1) || !string.IsNullOrEmpty(this.Context.ShipperReference2))
+            {
+                List<Reference> shipperReference = new List<Reference>();
+
+                if (!string.IsNullOrEmpty(this.Context.ShipperReference1))
+                {
+                    shipperReference.Add(new Reference()
+                    {
+                        RefCode = "reference 1",
+                        RefText = this.Context.ShipperReference1,
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(this.Context.ShipperReference2))
+                {
+                    shipperReference.Add(new Reference()
+                    {
+                        RefCode = "reference 2",
+                        RefText = this.Context.ShipperReference2,
+                    });
+                }
+
+                shipper.Reference = shipperReference.ToArray<Reference>();
             }
+
+            //Consignee
+            Party consignee = new Party();
+            consignee.PartyType = "Consignee";
+            consignee.NameAddress = new NameAddress()
+            {
+                Name = this.Context.ConsigneeName,
+                Address1 = this.Context.ConsigneeAddress1,
+                Address2 = this.Context.ConsigneeAddress2,
+                Address3 = this.Context.ConsigneeCity,
+                PostCode = this.Context.ConsigneeZipCode,
+                Country = new Country()
+                {
+                    CountryType = "Consignee",
+                    CodeType = CountryCodeType.ISO,
+                    Text = new string[] { this.Context.ConsigneeCountryCode },
+                },
+            };
+
+            consignee.AddressLocation = new GPSEvent();
+
+            if (!string.IsNullOrEmpty(this.Context.ConsigneeReference1) || !string.IsNullOrEmpty(this.Context.ConsigneeReference2))
+            {
+                List<Reference> consigneeReference = new List<Reference>();
+
+                if (!string.IsNullOrEmpty(this.Context.ConsigneeReference1))
+                {
+                    consigneeReference.Add(new Reference()
+                    {
+                        RefCode = "reference 1",
+                        RefText = this.Context.ConsigneeReference1,
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(this.Context.ConsigneeReference2))
+                {
+                    consigneeReference.Add(new Reference()
+                    {
+                        RefCode = "reference 2",
+                        RefText = this.Context.ConsigneeReference2,
+                    });
+                }
+
+                consignee.Reference = consigneeReference.ToArray<Reference>();
+            }
+
+            List<Party> parties = new List<Party>();
+            parties.Add(shipper);
+            parties.Add(consignee);
+            myItem.ConsignmentHeader.Party = parties.ToArray<Party>();
             #endregion
 
             #region Goods Descriptio
@@ -204,11 +243,10 @@ namespace Logitude.XSD.CW_API.ABM
 
             #region Measure
             List<ApplicationUnitsOfMeasure> measures = new List<ApplicationUnitsOfMeasure>();
-            var uomValue = this.Context.Shipment.NumberOfInsidePackages > 0 ? this.Context.Shipment.NumberOfInsidePackages.ToString() : this.Context.NumberOfPackages;
             measures.Add(new ApplicationUnitsOfMeasure()
             {
                 UOMCode = "DocumentPieces",
-                UOMValue = new UOMValue() { Value = uomValue },
+                UOMValue = new UOMValue() { Value = this.Context.NumberOfPackages },
             });
 
             measures.Add(new ApplicationUnitsOfMeasure()
@@ -239,8 +277,7 @@ namespace Logitude.XSD.CW_API.ABM
             #endregion
 
             #region Container
-            string allowedShipmentsTypes = "FCLD,FTL";
-            if (allowedShipmentsTypes.Contains(this.Context.Shipment.ShipmentTypeId) && this.Context.Containers.Count() > 0)
+            if (this.Context.Containers.Count() > 0)
             {
                 myItem.ConsignmentHeader.Container = new Container();
                 List<ContainerItem> containerItems = new List<ContainerItem>();
@@ -253,13 +290,12 @@ namespace Logitude.XSD.CW_API.ABM
                         ContainerRef = container.ContainerNumber,
                         ContainerSealNumber = container.ShipperSeal,
                     };
-
+                    
                     containerItems.Add(containerItem);
                 }
 
                 myItem.ConsignmentHeader.Container.ContainerItem = containerItems.ToArray<ContainerItem>();
             }
-
             #endregion
 
             #region Terms

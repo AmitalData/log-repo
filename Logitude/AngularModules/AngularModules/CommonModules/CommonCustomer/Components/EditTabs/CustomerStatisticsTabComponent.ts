@@ -36,12 +36,11 @@ import {CustomerProductPM} from '../../../../Common/EntityPMs/CustomerProductPM'
 import {LastFilterClass} from '../../../../Infrastructure/Utilities/LastFilterClass';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
-import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 
 declare var window, UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAmBarChart, BarClick, ResetItem, makeAMLineChart: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerStatisticsTabComponent.html',
 })
 
@@ -71,8 +70,6 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
     public barChartData: any[] = [{ data: [], label: '' }, { data: [], label: '' }];
     public NewActualVsPotential: Array<any> = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    private NumbersPipe: NumbersPipe;
-
     CompareComboBoxItemsChange(item) {
         this.SelectedCompareComboBoxItems = item;
         this.LoadActuals();
@@ -82,7 +79,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
 
     NewARPayment() {        
        
-        this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe(response => {
             var str = TextCodeTranslator.Translate("General.O.NewEntity");
             str = str.replace("%Entity", TextCodeTranslator.TranslateTable("ARPayment"));
 
@@ -115,7 +112,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             myMonth = myMonth - 1;
         }        
         var partnersdomainService: PartnersDomainService = new PartnersDomainService();
-        partnersdomainService.GetCustomerActualData(this.EntityId, myYear, myMonth).subscribe((result:any) => {
+        partnersdomainService.GetCustomerActualData(this.EntityId, myYear, myMonth).subscribe(result => {
             this.actualDataList = result;
             this.BuildCompareChartData();
         });
@@ -154,7 +151,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.DisplayTitle = "Customer Actual Data";
             listArgs.BackButtonTitle = "Back";
             listArgs.ShowViews = false;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadQueries());
@@ -182,7 +179,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.ObjectTableName = "Shipment";
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -208,7 +205,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.ObjectTableName = "ARPayment";
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -237,7 +234,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.ObjectTableName = "ARInvoice";
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -268,7 +265,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.ObjectTableName = "ARInvoice";
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -310,7 +307,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
         }
 
         var productTypeListServce: ProductTypeListService = new ProductTypeListService();
-        productTypeListServce.getAllFromCache().subscribe((result:any) => {
+        productTypeListServce.getAllFromCache().subscribe(result => {
             if (result.Result != null) {
                 var i = 0;
                 var index = 0;
@@ -609,7 +606,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
         var service = new ChartsService();
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.EntityPM.Id).subscribe(myResult => {
                     this.LineData = myResult;
                     this.FillLineQueries();
                 });
@@ -618,7 +615,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
 
         else {
             var days = this.ComputeDays();
-            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, this.EntityPM.Id).subscribe(myResult => {
                 this.LineData = myResult;
                 this.FillLineQueries();
             });
@@ -722,14 +719,14 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
         this.lineChartLabels = [];
         data.getAll().forEach(element => {
 
-            this.lineChartData[0].data[index] = element.YField.toFixed(2) + "";
+            this.lineChartData[0].data[index] = element.YField + "";
             this.lineChartLabels.push(element.XField);
             index++;
 
 
             this.AmLineChartTest.push({
                 date: element.XField,
-                visits: element.YField.toFixed(2)+ ""
+                visits: element.YField + ""
             });
 
         });        
@@ -942,15 +939,13 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
 
     public EntityId: string = "";
     public EntityName: string = "";
-    private Numberpipe: NumbersPipe;
+
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.Numberpipe = new NumbersPipe();
         this.EntityPM = entityArgs.EntityPM;
-        this.NumbersPipe = new NumbersPipe();
         this.EntityId = this.EntityPM.Id;
         this.EntityName = "Customer";
         this.TenantPM = SessionLocator.TenantPM;
@@ -1023,7 +1018,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             default: break;
         }
 
-        this._entityResourceService.getEntityResourceByTableName(code, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(code, 0).subscribe(response => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;

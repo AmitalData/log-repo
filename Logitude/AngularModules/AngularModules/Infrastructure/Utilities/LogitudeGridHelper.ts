@@ -16,8 +16,10 @@ export class LogitudeGridHelper {
     private RowIndex: number = null;
     private DetailsDivIndex: number = null;
     private GridRowIndex: number = null;
-    private ListComponentIndexId: number = null;
-    
+
+
+
+
 
     public GetGridRowIndex(reset: boolean = false) {
         if (reset == false) {
@@ -171,18 +173,6 @@ export class LogitudeGridHelper {
             return this.GridColumnsCount.filter(a => a.Id == GridId)[0].Count;
         }
         //return this.ColumnsCount;
-    }
-    public GetLListComponentIndexId() {
-
-        if (this.ListComponentIndexId == null) {
-            this.ListComponentIndexId = 0;
-        }
-
-        else {
-            this.ListComponentIndexId += 1;
-        }
-
-        return this.SessionIndex + "_" + this.ListComponentIndexId;
     }
     public GetLogGridIndexId() {
 

@@ -9,7 +9,7 @@ import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ApiCredintialsComponent.html',
 })
 
@@ -171,13 +171,6 @@ export class ApiCredintialsComponent extends BaseComponent {
     set UpdateDate(value: Date) {
         if (this.EntityPM.UpdateDate != value) {
             this.EntityPM.UpdateDate = value;
-        }
-    }
-
-    get TokenExpirationTime() { return this.EntityPM.TokenExpirationTime; }
-    set TokenExpirationTime(value: number) {
-        if (this.EntityPM.TokenExpirationTime != value) {
-            this.EntityPM.TokenExpirationTime = value;
         }
     }
 

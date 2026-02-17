@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="IsNew && (ValidationErrorsList != null && ValidationErrorsList.length > 0)" style="height:1px;">
         <td>
@@ -47,60 +47,59 @@
 
     <tr>
         <td>
-            <div class="MediaFill">
-                <div class="SimpleGridView">
-                    <div class="SimpleGridViewHeader">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;min-width:120px;max-width:120px;padding:5px;">Description</td>
-                                <td style="width: 250px;min-width:250px;max-width:250px;padding:5px;">Value</td>
-                                <td style="width: 550px;min-width:550px;max-width:550px;padding:5px;">External ID</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="SimpleGridViewBody">
-                        <table>
-                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
-                                <td class="CellStretched" style="width: 120px;min-width:120px;max-width:120px;color:#6E7172;">
-                                    {{item.DescriptionTitle}}
-                                </td>
-                                <td class="CellStretched" style="width: 250px;min-width:250px;max-width:250px;color:#282E30;">
-                                    <div style="width: 250px;min-width:250px;max-width:250px;color:#282E30;" class="TextTrimming">{{item.DescriptionValue}}</div>
-                                </td>
-                                <td class="CellStretched" style="width: 550px;min-width:550px;max-width:550px;">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 180px;">
-                                                <LogTextBox [ObjectFieldName]="item.EditingFieldName" [Text]="item.EditingFieldValue" [NoObjectField]="true" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                            </td>
-                                            <td style="width:2px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 50px;">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.EditClicked()" [disabled]="!item.IsTransferredEnabled"></IconButton>
-                                            </td>
-                                            <td style="width:2px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 200px;" *ngIf="item.DescriptionHelpVisibility">
-                                                {{item.DescriptionHelp}}
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+            <div class="SimpleGridView">
+                <div class="SimpleGridViewHeader">
+                    <table>
+                        <tr>
+                            <td style="width: 120px;min-width:120px;max-width:120px;padding:5px;">Description</td>
+                            <td style="width: 250px;min-width:250px;max-width:250px;padding:5px;">Value</td>
+                            <td style="width: 550px;min-width:550px;max-width:550px;padding:5px;">External ID</td>
+                        </tr>
+                    </table>
                 </div>
-            </div>           
+                <div class="SimpleGridViewBody">
+                    <table>
+                        <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                            <td class="CellStretched" style="width: 120px;min-width:120px;max-width:120px;color:#6E7172;">
+                                {{item.DescriptionTitle}}
+                            </td>
+                            <td class="CellStretched" style="width: 250px;min-width:250px;max-width:250px;color:#282E30;">
+                                <div style="width: 250px;min-width:250px;max-width:250px;color:#282E30;" class="TextTrimming">{{item.DescriptionValue}}</div>
+                            </td>
+                            <td class="CellStretched" style="width: 550px;min-width:550px;max-width:550px;">
+                                <table>
+                                    <tr>
+                                        <td style="width: 180px;">
+                                            <LogTextBox [ObjectFieldName]="item.EditingFieldName" [Text]="item.EditingFieldValue" [NoObjectField]="true" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+                                        <td style="width:2px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 50px;">
+                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.EditClicked()" [disabled]="!item.IsTransferredEnabled"></IconButton>
+                                        </td>
+                                        <td style="width:2px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 200px;" *ngIf="item.DescriptionHelpVisibility">
+                                            {{item.DescriptionHelp}}
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
         </td>
     </tr>
 

@@ -8,11 +8,9 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogLovV2Component';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditAPGeneralInvoiceLineComponent.html',
 })
 
@@ -24,61 +22,19 @@ export class AddEditAPGeneralInvoiceLineComponent {
     public EnableMultiRateAPInvoices: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    ColumnsWidths: ColumnsWidths[] = [];
-    public GLAccountsFilterItems: ApiQueryFilters;
-    public PayableDebitGLAcountFilterItems: ApiQueryFilters;
-
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
 
         if (SessionLocator.AccountingSettingPM) {
             this.EnableMultiRateAPInvoices = SessionLocator.AccountingSettingPM.EnableMultiRateAPInvoices;
         }
-
-        if (SessionLocator.TenantPM.AccountingActivated) {
-            this.FillChargesTypesCustomLOVColumnsWidths();
-        }
-        this.InitLOVFilters();
     }
-    InitLOVFilters() {
-        this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
-        this.PayableDebitGLAcountFilterItems = new ApiQueryFilters();
-       this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
-
-    }
-   
-
-    public ChargeTypesQueryFilters: ApiQueryFilters;
-    private BuildQueryFilters() {
-        this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
-    }
-  
- 
-
-   FillChargesTypesCustomLOVColumnsWidths()
-    {
-        this.ColumnsWidths = [
-            { ColumnName: 'Code', Width: 80 },
-            { ColumnName: 'EnglishName', Width: 180 },
-            { ColumnName: 'LocalName', Width: 200 },
-            { ColumnName: 'MeasurementShortName', Width: 80 },
-            { ColumnName: 'ChargesGroupName', Width: 80 },
-            { ColumnName: 'VatTypeName', Width: 80 }
-        ];
-    }
-
-
 
     SetDataContext(dataContext: APInvoiceLineItem) {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
         this.EntityPM = dataContext.invoiceLinePM;
         this.Clone();
-       // this.BuildQueryFilters();
     }
 
     CancelButtonClicked() {
@@ -96,10 +52,6 @@ export class AddEditAPGeneralInvoiceLineComponent {
             var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatTypeId");
             errors.push(msg.replace("%FieldName", field));
         }
-         if (AppTool.IsNullOrEmpty(this.EntityPM.PayableDebitGLAcountId)) {
-             var field = TextCodeTranslator.Translate("APInvoiceLine.F.PayableDebitGLAcountId");
-             errors.push(msg.replace("%FieldName", field));
-         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
             if (!this.EntityPM.VatIsMultiPercentage) {
@@ -114,7 +66,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
             }
         }
 
-        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.PayableDebitGLAcountId) && AppTool.IsNullOrEmpty(this.EntityPM.PayableDebitGLAcountId)) {
+        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.PayableDebitGLAcountId)) {
             errors.push(TextCodeTranslator.Translate("APInvoice.M.NoGLAccount"));
         }
 
@@ -156,8 +108,6 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.myCloner.AddField('OtherInvoicesAmounts');
         this.myCloner.AddField('InvoiceCurrencyAmount');
         this.myCloner.AddField('OpenAmount');
-        this.myCloner.AddField('PayableDebitGLAcountId');
-        this.myCloner.AddField('IsPrepaidExpenses');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.fatherComponent.EntityPM);
     }

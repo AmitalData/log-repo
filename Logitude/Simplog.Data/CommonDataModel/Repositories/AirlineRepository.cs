@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -14,7 +14,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public AirlineRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public AirlineRepository(ICommonDataContext context)
         {
@@ -31,11 +34,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from a in context.Airlines.Include("Card").Include("Card.PaymentTerm")
                     where a.Prefix == prefix && a.Tenant==tenant
                     select a).FirstOrDefault();
-        }
-
-        public IQueryable<Airline> GetAllAirlinesByPrefix(string prefix, int tenant)
-        {
-            return (from a in context.Airlines where a.Prefix == prefix && a.Tenant == tenant select a);
         }
 
         public Airline GetSingleAirlineByCode(string code, int tenant)

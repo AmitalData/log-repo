@@ -4,7 +4,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -40,7 +40,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         throw new AutenticationException("Sorry! this user is not authorized!");
                     }
               
-                    if (!blobInfo.UploadAsOneBlock && blobInfo.BlobChunk !=null && blobInfo.BlobChunk.Length > 100000)
+                    if (blobInfo.BlobChunk.Length > 100000)
                     {
                         throw new ApplicationException("Blob chunk must not be larger than 100 KB");
                     }

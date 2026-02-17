@@ -21,21 +21,7 @@ namespace Simplog.Data.Helpers
         public string Value { get; set; }
 
         [XmlAttribute]
-        public string OldValue { get; set; }
-
-        [XmlAttribute]
         public string PropertyName { get; set; }
-
-
-        [XmlAttribute]
-        public string PartnerObjectFieldId { get; set; }
-
-        [XmlAttribute]
-        public string PartnerObjectFieldCode { get; set; }
-
         
-
-        [XmlAttribute]
-        public string FieldCode { get; set; }
     }
 }

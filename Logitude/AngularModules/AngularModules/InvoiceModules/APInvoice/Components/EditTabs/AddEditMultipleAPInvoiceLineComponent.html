@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -24,8 +24,7 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
                                             [SelectedValue]="DataContext.ChargesTypeId"
-                                            [LookUpTableName]="'ChargesType'"
-                                            >
+                                            [LookUpTableName]="'ChargesType'">
                                     </LogLov>
                                 </td>
 
@@ -47,7 +46,7 @@
                                             [SelectedValue]="DataContext.VatTypeId"
                                             [LookUpTableName]="'VatType'"
                                             [HideMaintenanceIcon]="true"
-                                            [HideAddLink]="true"  [DependencyFilter2Value]="false">
+                                            [HideAddLink]="true">
                                     </LogLov>
                                 </td>
 
@@ -66,7 +65,7 @@
                                 <td>
                                     <div class="MediaFill">
                                         <div class="MediaFillRelative">
-                                            <LogTextBox [DigitsAfterPoint]="3" [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             <div class="Value" style="position: absolute; left: 10px; top: 7px;" *ngIf="DataContext.VatIsMultiPercentage">Multi</div>
                                         </div>
                                     </div>
@@ -80,7 +79,7 @@
                             <!-- VendorId -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'VendorId'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.O.Vendor'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'VendorId'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.Vendor'"></LogLabel>
                                 </td>
 
                                 <td>
@@ -88,10 +87,7 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
                                             [SelectedValue]="DataContext.VendorId"
-                                            [LookUpTableName]="'Card'"
-                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
+                                            [LookUpTableName]="'Card'">
                                     </LogLov>
                                 </td>
 
@@ -103,7 +99,7 @@
                             <!-- ForiegnCurrencyId -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'ForiegnCurrencyId'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.O.OpenAmount'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'ForiegnCurrencyId'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.Currency'"></LogLabel>
                                 </td>
 
                                 <td>
@@ -123,7 +119,7 @@
                             <!-- ExpectedAmount -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'ExpectedAmount'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.O.ExpectedAmount'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'ExpectedAmount'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.ExpectedAmount'"></LogLabel>
                                 </td>
 
                                 <td [style.text-align]="isRTL ? 'right' : 'left'">
@@ -138,7 +134,7 @@
                             <!-- OtherInvoicesAmounts -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'OtherInvoicesAmounts'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.O.OtherInvoices'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'OtherInvoicesAmounts'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.OtherInvoices'"></LogLabel>
                                 </td>
 
                                 <td [style.text-align]="isRTL ? 'right' : 'left'">
@@ -166,7 +162,7 @@
                             <!-- OpenAmount -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'OpenAmount'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.O.OpenAmount'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'OpenAmount'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.OpenAmount'"></LogLabel>
                                 </td>
 
                                 <td>

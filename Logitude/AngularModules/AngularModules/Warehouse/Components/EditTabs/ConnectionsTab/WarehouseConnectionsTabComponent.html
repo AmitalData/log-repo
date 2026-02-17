@@ -1,24 +1,21 @@
-
+﻿
 <table>
     <tr>
         <td>
             <div class="TabHolder">
                 <table>
                     <tr class="TabTitleRow">
-                        <td>Connected Entities</td>
-                    </tr>
-                    <tr class="TabTitleRow">
-                        <td>Shipments</td>
+                        <td>Shipments Details</td>
                     </tr>
 
                     <tr>
                         <td>
                             <table>
                                 <!--Shipments-->
-                                <tr style="max-height:250px;">
+                                <tr  style="max-height:250px;">
                                     <td>
                                         <table>
-
+                                     
                                             <tr>
                                                 <td>
                                                     <div class="MediaFill">
@@ -26,49 +23,42 @@
                                                             <div class="SimpleGridViewHeader">
                                                                 <table>
                                                                     <tr>
-                                                                        <td style="width: 80px; min-width:80px; max-width:80px;"></td>
-                                                                        <td style="width: 160px; min-width:160px; max-width:160px;">Shipment Number</td>
-                                                                        <td style="width: 150px; min-width:150px; max-width:150px;">Customer</td>
-                                                                        <td style="width: 80px; min-width:80px; max-width:80px;">From</td>
-                                                                        <td style="width: 80px; min-width:80px; max-width:80px;">To</td>
-                                                                        <td style="width: 100px; min-width:100px; max-width:100px;">Connected To</td>
+                                                                        <td style="width: 100px; min-width:100px; max-width:100px;">#</td>
+                                                                        <td style="width: 100px; min-width:100px; max-width:100px;">Shipment Type</td>
+                                                                        <td style="width: 120px; min-width:120px; max-width:120px;">Open Date</td>
                                                                         <td style="width: 100px; min-width:100px; max-width:100px;">Status</td>
-
+                                                                        <td style="width: 130px; min-width:130px; max-width:130px;">Master</td>
+                                                                        <td style="width: 150px; min-width:150px; max-width:150px;">HAWB</td>
+                                                                        <td style="width: 150px; min-width:150px; max-width:150px;">Customer</td>
+                                                                        <td style="width: 75px; min-width:75px; max-width:75px;">From</td>
+                                                                        <td style="width: 75px; min-width:75px; max-width:75px;">To</td>
+                                                                        <td style="width: 100px; min-width:100px; max-width:100px;">Gross Weight</td>
+                                                                        <td style="width: 125px; min-width:125px; max-width:125px;">Volume In KG</td>
                                                                         <td>
                                                                             <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
                                                             </div>
-                                                            <div class="SimpleGridViewBody" *ngIf="IsShowMessageNoConnectedEntity">
-                                                                <span class="NoDataText" style="top:20px">No Connected Shipments</span>
-                                                            </div>
+                                                            <div class="SimpleGridViewBody"   *ngIf="IsShowMessageNoConnectedEntity"><span class="NoDataText" style="top:20px">No Connected Entities</span></div>
                                                             <div *ngIf="!IsShowMessageNoConnectedEntity" class="SimpleGridViewBody">
                                                                 <table>
                                                                     <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
-
-                                                                        <td style="width:80px; height: 30px;">
-                                                                            <span style="width: 35%; height: 100%; position:relative;display: inline-block;">
-
-                                                                                <img style="margin-top: 6px;padding-left:10px;" [attr.src]="'./Images/Icons/' + item.TransportMode + '.png'" />
-
-                                                                            </span>
-                                                                            <span style="width: 20%; height: 100%; position:relative;display: inline-block;">
-
-                                                                                <img style="margin-top: 6px; right:5px;" [attr.src]="'./Images/Directions/' + item.Direction + '.png'" />
-                                                                            </span>
+                                                                        <td class="GridViewCell" style="width: 100px; min-width:100px; max-width:100px;">
+                                                                            <span class="hyperlink" (click)="ViewEntitytClicked()">{{item.EntityNumber}}</span>
+                                                                           
                                                                         </td>
 
-                                                                        <td class="GridViewCell" style="width: 160px; min-width:160px; max-width:160px;height: 30px;padding-left: 5px;">
-                                                                            <span class="hyperlink" style="color:#1B90CB; font-size:12px;" (click)="ViewEntitytClicked()" attr.data-cy="{{'Hyperlink_' + item.EntityNumber}}" >{{item.EntityNumber}}</span>
-
-                                                                        </td>
-                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; min-width:150px; max-width:150px;height: 30px;padding-left: 5px;" attr.data-cy="{{'Customer'}}" >{{item.Customer}}</td>
-                                                                        <td class="GridViewCell" style="width: 80px; min-width:80px; max-width:80px;height: 30px;padding-left: 5px;" attr.data-cy="{{'From'}}" >{{item.From}}</td>
-                                                                        <td class="GridViewCell" style="width: 80px; min-width:80px; max-width:80px;height: 30px;padding-left: 5px;" attr.data-cy="{{'To'}}"  >{{item.To}}</td>
-                                                                        <td class="GridViewCell" style="width: 100px; min-width:100px; max-width:100px;height: 30px;padding-left: 5px;" attr.data-cy="{{'connectedTo'}}" >{{connectedTo}}</td>
-                                                                        <td class="GridViewCell" style="width: 100px; min-width:100px; max-width:100px;height: 30px;padding-left: 5px;" [ngStyle]="{color: item.EntityStatus | StringToColorPipe}" attr.data-cy="{{'EntityStatus'}}" >{{item.EntityStatus}}</td>
-
+                                                                        <td class="GridViewCell" style="width: 100px; min-width:100px; max-width:100px;">{{item.ShipmentType}}</td>
+                                                                        <td class="GridViewCell" style="width: 120px; min-width:120px; max-width:120px;">{{item.OpenDate | DateTimeToDatePipe}}</td>
+                                                                        <td class="GridViewCell" style="width: 100px; min-width:100px; max-width:100px;" [ngStyle]="{color: item.EntityStatus | StringToColorPipe}">{{item.EntityStatus}}</td>
+                                                                        <td class="GridViewCell TextTrimming" style="width: 130px; min-width:130px; max-width:130px;">{{item.Master}}</td>
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; min-width:150px; max-width:150px;">{{item.House}}</td>
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; min-width:150px; max-width:150px;">{{item.Customer}}</td>
+                                                                        <td class="GridViewCell" style="width: 75px; min-width:75px; max-width:75px;">{{item.From}}</td>
+                                                                        <td class="GridViewCell" style="width: 75px; min-width:75px; max-width:75px;">{{item.To}}</td>
+                                                                        <td class="GridViewCell" style="width: 100px; min-width:100px; max-width:100px;">{{item.GrossWeight}}</td>
+                                                                        <td class="GridViewCell" style="width: 125px; min-width:125px; max-width:125px;">{{item.VolumeInKG}}</td>
                                                                         <td>
                                                                             <div></div>
                                                                         </td>
@@ -76,7 +66,7 @@
                                                                     </tr>
 
                                                                     <tr>
-                                                                        <td colspan="8">
+                                                                        <td colspan="12">
                                                                             <div></div>
                                                                         </td>
                                                                     </tr>
@@ -90,108 +80,6 @@
                                     </td>
                                 </tr>
 
-                                <tr *ngIf="ObjectTableName == 'WarehouseEntry'" class="TabTitleRow">
-                               
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td style="width:100%">Cross Docks Releases</td>
-                                                <td style="width:100px"><button [disabled]="IsCancelled" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button></td>
-                                                <td style="width:10px"></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <!--Releases-->
-                                <tr *ngIf="ObjectTableName == 'WarehouseEntry'"  style="max-height:250px;">
-                                    <td>
-                                        <table>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="MediaFill">
-                                                        <div class="SimpleGridView">
-                                                            <div class="SimpleGridViewHeader">
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width: 80px; min-width:80px; max-width:80px;"></td>
-                                                                        <td style="width: 160px; min-width:160px; max-width:160px;">Release Number</td>
-                                                                        <td style="width: 150px; min-width:150px; max-width:150px;">Release Date</td>
-                                                                        <td style="width: 160px; min-width:160px; max-width:160px;">Shipment</td>
-                                                                        <td style="width: 100px; min-width:100px; max-width:100px;">Connected To</td>
-                                                                        <td style="width: 100px; min-width:100px; max-width:100px;">Status</td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
-                                                            <div class="SimpleGridViewBody" *ngIf="IsShowMessageNoConnectedReleaseEntity">
-                                                                <span class="NoDataText" style="top:20px">No Connected Release</span>
-                                                            </div>
-                                                            <div *ngIf="!IsShowMessageNoConnectedReleaseEntity" class="SimpleGridViewBody">
-                                                                <table>
-                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ReleaseItemsSource">
-
-                                                                        <td style="width:80px; height: 30px;">
-                                                                            <span style="width: 100%; height: 100%; position:relative;display: inline-block;">
-
-                                                                                <img style="padding-left:10px; top: 2px;" [attr.src]="'./Images/CellIcons/Release.png'" />
-
-                                                                            </span>
-
-                                                                        </td>
-
-                                                                        <td class="GridViewCell" style="width: 160px; min-width:160px; max-width:160px;height: 30px;padding-left: 5px;color:#1B90CB ">
-                                                                            <span class="hyperlink" style="color:#1B90CB; font-size:12px;" (click)="ViewReleaseClicked(item)" attr.data-cy="{{'Hyperlink_' + item.ReleaseNumber}}">{{item.ReleaseNumber}}</span>
-
-                                                                        </td>
-                                                                        <td class="GridViewCell TextTrimming" *ngIf="item.ActualReleaseDate" style="width: 150px; min-width:150px; max-width:150px;height: 30px;padding-left: 5px; color: green">
-                                                                            {{item.ReleaseDate | DateTimeToDatePipe}}
-                                                                            <span *ngIf="item.ActualReleaseDate">(Actual)</span>
-
-
-                                                                        </td>
-
-
-                                                                        <td class="GridViewCell TextTrimming" *ngIf="item.ExpectedReleaseDate && !item.ActualReleaseDate" style="width: 150px; min-width:150px; max-width:150px;height: 30px;padding-left: 5px;color: red">
-                                                                            {{item.ReleaseDate | DateTimeToDatePipe}}
-
-                                                                            <span *ngIf="item.ExpectedReleaseDate && !item.ActualReleaseDate">(Expected)</span>
-
-                                                                        </td>
-
-
-                                                                        <td class="GridViewCell TextTrimming" *ngIf="!item.ExpectedReleaseDate && !item.ActualReleaseDate" style="width: 150px; min-width:150px; max-width:150px;height: 30px;padding-left: 5px;color: red">
-                                                                            {{item.ReleaseDate | DateTimeToDatePipe}}
-
-
-                                                                        </td>
-                                                                        <td class="GridViewCell" style="width: 160px; min-width:160px; max-width:160px;height: 30px;padding-left: 5px;" attr.data-cy="{{'ShipmentNumber_' + item.ShipmentNumber}}">{{item.ShipmentNumber}}</td>
-                                                                        <td class="GridViewCell" style="width: 100px; min-width:100px; max-width:100px;height: 30px;padding-left: 5px;" attr.data-cy="{{'ConnectedTo_' + item.ReleaseNumber}}">{{item.ConnectedTo}}</td>
-                                                                        <td class="GridViewCell" style="width: 100px; min-width:100px; max-width:100px;height: 30px;padding-left: 5px;" attr.data-cy="{{'Status_' + item.ReleaseNumber}}">{{item.StatusName}}</td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-
-                                                                    </tr>
-
-                                                                    <tr>
-                                                                        <td colspan="7">
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
 
 
                                 <tr>

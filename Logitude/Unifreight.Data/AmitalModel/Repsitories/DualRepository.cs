@@ -1,5 +1,4 @@
 ﻿using Devart.Data.Oracle;
-using Logitude.Customs.Data;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -40,7 +39,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             int recCount = 0;
             DateTime? serverTime = null;
             var entityKeyString = "GetServerDateTime,Delta_TimeSpan";
-            TimeSpan? _Delta_TimeSpan = CacheManager.CacheWrapper.Get(entityKeyString) as TimeSpan?;
+            TimeSpan? _Delta_TimeSpan =CacheManager.CacheWrapper.Get(entityKeyString) as TimeSpan?;
             if (!forceFromDB && _Delta_TimeSpan != null)
             {
                 var meTime = DateTime.Now;
@@ -49,34 +48,12 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
 
             var OpenReaderSingleResult = new OpenReaderSingleResult(_CurrentContext);
-            //        serverTime = OpenReaderSingleResult.ExecuteReaderSingleResult<DateTime>(
-            //SELECT_SYSDATE_FROM_DUAL,
-            //new List<OracleParameter>(),
-            //(dataReader) =>
-            //{
-            //    return dataReader.GetDateTime(0);
-
-            //});
-
-            string sql;
-            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            serverTime = OpenReaderSingleResult.ExecuteReaderSingleResult<DateTime>(SELECT_SYSDATE_FROM_DUAL,
+                (dataReader) =>
             {
-                sql = SELECT_SYSDATE_FROM_DUAL;
-            }
-            else
-            {
-                sql = "select getdate()";
-            }
-            
-            serverTime = OpenReaderSingleResult.ExecuteReaderSingleResult<DateTime>(
-    sql,
-     (cmd) => {  },
-    (dataReader) =>
-    {
-        return dataReader.GetDateTime(0);
+                return dataReader.GetDateTime(0);
 
-    });
-
+            });
 
             _Delta_TimeSpan = DateTime.Now.Subtract(serverTime.Value);
             CacheManager.CacheWrapper.Insert(entityKeyString, _Delta_TimeSpan);
@@ -108,14 +85,14 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public OpenReaderSingleResult(int tenant)
         {
-            _CurrentContext = CustomContext.GetContext(tenant) as DbContextBase;
+            _CurrentContext = GlobalContext.GetContext() as DbContextBase;
         }
 
         public OpenReaderSingleResult(DbContext context)
         {
             _CurrentContext = context as DbContextBase;
         }
-        private Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
+        public Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
             where returnType : struct
         {
             {
@@ -135,7 +112,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                     command.CommandText = sqlReturn1Row;
 
 
-                    using (var dataReader = command.ExecuteReader(CommandBehavior.CloseConnection | CommandBehavior.SingleResult))
+                    using (var dataReader = command.ExecuteReader(CommandBehavior.SingleResult))
                     {
 
                         if (dataReader.FieldCount < 1)
@@ -166,149 +143,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         }
 
-
- 
-        public Nullable<returnType> ExecuteReaderSingleResultO<returnType>(
-            string sqlReturn1Row,
-             List<OracleParameter> dbParameters,//https://www.devart.com/dotconnect/oracle/docs/Parameters.html
-            Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader
-
-            )
-            where returnType : struct
+        internal string GetSchemaUserId()
         {
 
-
-
-
-
-
-            using (var command = _CurrentContext.Database.Connection.CreateCommand())
-            {
-
-
-                if (_CurrentContext.Database.Connection.State != System.Data.ConnectionState.Open)
-                {
-                    _CurrentContext.Database.Connection.Open();
-                }
-                command.CommandText = sqlReturn1Row;
-                int c = 0;
-                command.Prepare();
-                foreach (var paramValue in dbParameters)
-                {
-
-                    command.Parameters.Add(paramValue);
-                    //command.Parameters.Add(new OracleParameter($":p{c++}", paramValue));
-                    //command.Parameters[c++].Value = item;
-                }
-
-
-
-
-                using (var dataReader = command.ExecuteReader(CommandBehavior.CloseConnection | CommandBehavior.SingleResult))
-                {
-
-                    if (dataReader.FieldCount < 1)
-                    {
-                        return null;
-                    }
-
-                    if (!dataReader.Read())
-                    {
-                        return null;
-                    }
-                    if (dataReader.IsDBNull(0))
-                    {
-                        return null;
-                    }
-
-
-
-                    var ReturnValue = GetReturnTypeFromReader(dataReader);
-
-                    return ReturnValue;
-                }
-            }
-
-
-
-
-
-        }
-
-
- 
-
-        public Nullable<returnType> ExecuteReaderSingleResult<returnType>(
-           string sqlReturn1Row,
-           Action<DbCommand> action,            ///List<OracleParameter> dbParameters,//https://www.devart.com/dotconnect/oracle/docs/Parameters.html
-           Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader
-
-           )
-           where returnType : struct
-        {
-
-
-
-
-
-
-            using (var command = _CurrentContext.Database.Connection.CreateCommand())
-            {
-
-
-                if (_CurrentContext.Database.Connection.State != System.Data.ConnectionState.Open)
-                {
-                    _CurrentContext.Database.Connection.Open();
-                }
-                command.CommandText = sqlReturn1Row;
-                int c = 0;
-                command.Prepare();
-                action?.Invoke(command);
-                //foreach (var paramValue in dbParameters)
-                //{
-
-                //    command.Parameters.Add(paramValue);
-                //    //command.Parameters.Add(new OracleParameter($":p{c++}", paramValue));
-                //    //command.Parameters[c++].Value = item;
-                //}
-
-
-
-
-                using (var dataReader = command.ExecuteReader(CommandBehavior.CloseConnection | CommandBehavior.SingleResult))
-                {
-
-                    if (dataReader.FieldCount < 1)
-                    {
-                        return null;
-                    }
-
-                    if (!dataReader.Read())
-                    {
-                        return null;
-                    }
-                    if (dataReader.IsDBNull(0))
-                    {
-                        return null;
-                    }
-
-
-
-                    var ReturnValue = GetReturnTypeFromReader(dataReader);
-
-                    return ReturnValue;
-                }
-            }
-
-
-
-
-
-        }
-        public string GetSchemaUserId(int tenantSeed = 1)
-        {
-
-            var toSchema = DbContextBaseUtil.GetSchemaAMITAL_DB(tenantSeed);
+            var toSchema = DbContextBaseUtil.GetSchemaAMITAL_DB();
             
             return toSchema;
         }

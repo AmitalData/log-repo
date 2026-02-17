@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -18,12 +18,12 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
-    
+    moduleId: module.id,
     selector: 'SharedManifestComponent',
     templateUrl: './SharedManifestComponent.html',
     providers: [SharedAgentManifestService, AgentSharedManifestPMService, EntityResourceService],
 })
-export class SharedManifestComponent implements AfterViewInit {
+export class SharedManifestComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, private _entityResourceService: EntityResourceService, private _aentSharedManifestPMService: AgentSharedManifestPMService) {
 
@@ -53,7 +53,6 @@ export class SharedManifestComponent implements AfterViewInit {
     IsLoadComponent: boolean = false;
 
     ShowAreaButton: boolean = false;
-    public isEntityChange: boolean = false;
 
 
     SetWindowArgs(args: any) {
@@ -62,25 +61,21 @@ export class SharedManifestComponent implements AfterViewInit {
         this.LoadData();
 
     }
-
-    ngAfterViewInit() {
-        this.LoadChildComponent();
-    }
-
     agentManifestSharedRefListIds: string[] = [];
 
     LoadData() {
 
       
         this.CurrentSession.StartBusyIndicator("Loading...");
-        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((res:any) => {
-            this._entityResourceService.getEntityResourceByTableName("Master").subscribe((res1:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(res => {
+            this._entityResourceService.getEntityResourceByTableName("Master").subscribe(res1 => {
                 this.IsLoadComponent = true;
-                this._sharedAgentManifestService.get(this.EntityList.Id).subscribe((response:any) => {
+                this._sharedAgentManifestService.get(this.EntityList.Id).subscribe(response => {
   
                     if (!response.HasError) {
                     
                         this.CurrentEntity = response.Result;
+                        this.RunSharedManifestHeaderComponent();
                         this.ManifestSL = this.CurrentEntity.ManifestSL;
                         if (this.ManifestSL.ShipmentLevelCode == 'D') {
                             this.MessageNoHouseFound = "This is a direct shipment";
@@ -130,7 +125,7 @@ export class SharedManifestComponent implements AfterViewInit {
 
 
         // Check if Shipment Create Or Not and Enable Edit
-            this._sharedAgentManifestService.getAgentSharedManifesRefShipmentListsByIds(this.agentManifestSharedRefListIds).subscribe((res:any) => {
+            this._sharedAgentManifestService.getAgentSharedManifesRefShipmentListsByIds(this.agentManifestSharedRefListIds).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var result: AgentSharedManifesRefShipment[] = pmResponse.Result;
@@ -288,9 +283,8 @@ export class SharedManifestComponent implements AfterViewInit {
 
         this.CurrentEntity.StatusCode = status;
         this.CurrentEntity.UpdateDate = DateTool.GetCurrentDateAsUtc();
-        this._aentSharedManifestPMService.update(this.CurrentEntity).subscribe((res:any) => {
+        this._aentSharedManifestPMService.update(this.CurrentEntity).subscribe(res => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.isEntityChange = true;
             this.RefreshSharedManifiestoStatus();
         });
     }
@@ -325,8 +319,20 @@ export class SharedManifestComponent implements AfterViewInit {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private timerToken: any;
+    private Retries: number = 0;
+
+    RunSharedManifestHeaderComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestHeaderComponent', this.viewContainerRef)
             .then(cmpRef => {
@@ -336,6 +342,17 @@ export class SharedManifestComponent implements AfterViewInit {
             });
     }
 
+    RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunSharedManifestHeaderComponent(), 1);
+        }
+    }
 
 }
 

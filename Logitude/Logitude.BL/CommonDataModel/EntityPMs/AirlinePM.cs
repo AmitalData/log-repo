@@ -4,13 +4,12 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-    public class AirlinePM : ObjectCustomFieldDataContractPM
+    public class AirlinePM
     {
         [Key]
         [DataMember]
@@ -302,7 +301,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [Include]
         [Association("AirlineCarrier", "Id", "Id")]
-        [DataMember]
         public CardPM Card { get; set; }        
 
         private List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencies;
@@ -327,7 +325,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
                 cardExternalCodeByCurrencies = value;
             }
         }
-                
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string ExternalAccountingBusinessArea { get; set; }
@@ -340,6 +338,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExternalId2 { get; set; }
 
+
         [DataMember]
         public string SATForeignRFC { get; set; }
 
@@ -348,38 +347,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string UsoCFDICode { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ImageDetailId { get; set; }
-
-        [DataMember]
-        public string GLAccountId { get; set; }
-
-        [DataMember]
-        public bool AccountingVATSplit { get; set; }
-
-        [DataMember]
-        public string UploadingUniqueKey { get; set; }
-
-        [DataMember]
-        public string GLAccountNumber { get; set; }
-
-        [DataMember]
-        public string BillToId { get; set; }
-
-        [DataMember]
-        public string RegimenFiscalCode { get; set; }
-
-        [DataMember]
-        public string SATReceptorName { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ImportLocalCustomerGroupId { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ExportLocalCustomerGroupId { get; set; }
     }
 }

@@ -10,10 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Customs.Data.DataContracts;
-using Simplog.Data.InfrastructureModel;
-using Unifreight.BL.BL;
-
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class InterfaceManagementQueryService : EntityQueryService<InterfaceManagement, InterfaceManagementKeys, InterfaceManagementPM, object, InterfaceManagementKeys>
@@ -53,11 +49,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                              HasDefinition = s.Id != null ? true : false,
                                                              SignatureTypeCode = a.SignatureTypeCode,
                                                              SignatureTypeName = a.SignatureType != null? a.SignatureType.LocalName : null,
-                                                             SendTime = s.SendTime, 
-                                                             EntityLockId = a.EntityLockId,
-                                                             EntityLockName = a.EntityLock != null ? a.EntityLock.Name : null,
 
-														 }).ToList();
+                                                         }).ToList();
 
             //foreach (InterfaceManagementList item in managements)
             //{
@@ -73,23 +66,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        public InterfaceManagementPM GetSingleInterfaceManagementwithDefinition(string code, int tenant)
-        {
 
-            string key = $"GetSingleInterfaceManagementwithDefinition({code}, {tenant})";
-            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<InterfaceManagementPM>(key, () =>
-            {
-                return GetSingleInterfaceManagementwithDefinitionReal(code, tenant);
-            });
-        }
-        public InterfaceManagementPM GetSingleInterfaceManagementwithDefinitionReal(string code, int tenant)
+        public InterfaceManagementPM GetSingleInterfaceManagementwithDefinition(string code, int tenant)
         {
             InterfaceManagementPM interfaceManagement = null;
             if (!string.IsNullOrWhiteSpace(code))
             {
                 InterfaceManagement management = repository.GetSingleInterfaceManagement(new InterfaceManagementKeys() { Code = code });
                 InterfaceTenantDefinitionRepository definitionRepository = new InterfaceTenantDefinitionRepository(context);
-                InterfaceTenantDefinition definition = definitionRepository.GetSingleDefinitionByCode(code, tenant, getFromCache: false);
+                InterfaceTenantDefinition definition = definitionRepository.GetSingleDefinitionByCode(code, tenant);
                 if (management != null)
                 {
                     interfaceManagement = new InterfaceManagementPM()
@@ -108,19 +93,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                         SignatureTypeCode = management.SignatureTypeCode,
                                                          DefaultSendOptionName = management.InterfaceSendOption != null ? management.InterfaceSendOption.LocalName :null,
                                                          SearchFields = management.SearchFields,
-                                                         InterfaceType = management.InterfaceType,
-                                                         Tenant = tenant,
-                                                         UseRabbitMQ= management.UseRabbitMQ,
-						                                 EntityLockId = management.EntityLockId,
-                                                         EntityLockName = management.EntityLock != null ? management.EntityLock.Name : null
-					};
+                                                         
+                                                         Tenant = tenant
+                                                     };
                     if (definition != null)
                     {
-                        interfaceManagement.Active = definition.Active;
                         interfaceManagement.TenantPriority = definition.TenantPriority;
                         interfaceManagement.TenantSendOptionsCode = definition.TenantSendOptionsCode;
                         interfaceManagement.TenantSendOptionName = definition.InterfaceSendOption != null ? definition.InterfaceSendOption.LocalName : null;
-                        interfaceManagement.SendTime = definition.SendTime;
+
                         interfaceManagement.DcaRenameFileEnable = definition.DcaRenameFileEnable;
                         interfaceManagement.DcaRenameFilePrefix = definition.DcaRenameFilePrefix;
 
@@ -216,39 +197,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             allPM = repository.GetAll().ToList().Select(poco => GetEntityPM(poco)).ToList();
 
             return allPM;
-        }
-
-        public List<InterfaceManagement> GetAllFromCache() => CacheHelper.GetFromCache("InterfaceManagementGetAll", () => repository.GetAll().ToList());
-
-        public List<CustomsRequestsSheetSummary> GetQueueMessagesSatistic(int tenant, bool includingFuture)
-        {
-            var summry = new List<CustomsRequestsSheetSummary>();
-            var dateTimeNow = DateTime.Now;
-            List<InterfaceManagement> interfaceManagements = GetAllFromCache();
-            var webFreightContext = WebFreightContext.GetContext(tenant);
-
-            var summryQ = (from qm in webFreightContext.QueueMessages
-                           where qm.Tenant == tenant
-                           && (includingFuture || qm.NextRunDateTime < dateTimeNow)
-                           && qm.InterfaceTypeCode != null
-
-                           group qm by qm.InterfaceTypeCode into g
-                           select new
-                           {
-                               InterfaceTypeName = g.Key,
-                               count = g.Count()
-                           });
-
-            var res = summryQ.ToList();
-
-            res.ForEach(qm =>
-                summry.Add(new CustomsRequestsSheetSummary()
-                {
-                    count = qm.count,
-                    InterfaceTypeName = interfaceManagements.Find(im => im.Code == qm.InterfaceTypeName)?.Description
-                }));
-
-            return summry;
         }
     }
 }

@@ -17,7 +17,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 declare var passtring, PassWordValueTriming, isctype, ClientSideBestPassword, gSimilarityMap, gDictionary, DispPwdStrength, ClientSideStrongPassword, DispPwdStrength, ClientSideMediumPassword, DispPwdStrength, ClientSideWeakPassword: any;
  
 @Component({
-    
+    moduleId: module.id,
     selector: 'ChangePassword',
     templateUrl: './ChangePasswordComponent.html',
     providers: [PasswordChangeService]
@@ -149,7 +149,7 @@ export class ChangePasswordComponent implements OnInit {
                 changePasswordParameter.CurrentPassword = this.CurrentPassword;
                 changePasswordParameter.Email = SessionInfo.LoggedUserPM.Email;
 
-                this._passwordChangeService.CheckUserPassword(changePasswordParameter).subscribe((res:any) => {
+                this._passwordChangeService.CheckUserPassword(changePasswordParameter).subscribe(res => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -257,7 +257,7 @@ export class ChangePasswordComponent implements OnInit {
         changePasswordParameter.CurrentPassword = this.CurrentPassword;
 
 
-        this._passwordChangeService.ChangeUserPassword(changePasswordParameter).subscribe((res:any) => {
+        this._passwordChangeService.ChangeUserPassword(changePasswordParameter).subscribe(res => {
 
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 

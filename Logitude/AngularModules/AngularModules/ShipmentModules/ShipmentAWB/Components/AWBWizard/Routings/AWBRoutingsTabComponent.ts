@@ -25,7 +25,7 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AWBRoutingsTabComponent',
     templateUrl: './AWBRoutingsTabComponent.html',   
 })
@@ -441,60 +441,57 @@ export class AWBRoutingsTabComponent extends BaseComponent {
     public ShowWarning_Transshipment1CarrierId: boolean = false;
     public ShowWarning_Transshipment2CarrierId: boolean = false;
     private FireWizardEvent() {
-            this.Wizard.ValidateScreen_PAR();
-            this.Wizard.ValidateScreen_ROU();
-            this.Wizard.ValidateScreen_GEN();
-            this.Wizard.ValidateScreen_PAC();
-            this.Wizard.ValidateScreen_OCI();
-        
+        this.Wizard.ValidateScreen_PAR();
+        this.Wizard.ValidateScreen_ROU();
+        this.Wizard.ValidateScreen_GEN();
+        this.Wizard.ValidateScreen_PAC();
+        this.Wizard.ValidateScreen_OCI();
     }
     private Validate() {
-        if (!this.Wizard.IsImportWizard) {
-            this.ShowWarning_MainCarriageCarrierId = false;
-            this.ShowWarning_MainCarriageCarrierNumber = false;
-            this.ShowWarning_Master = false;
-            this.ShowWarning_MAWBOBLDate = false;
-            this.ShowWarning_MainCarriageETD = false;
-            this.ShowWarning_Transshipment1CarrierId = false;
-            this.ShowWarning_Transshipment2CarrierId = false;
+        this.ShowWarning_MainCarriageCarrierId = false;
+        this.ShowWarning_MainCarriageCarrierNumber = false;
+        this.ShowWarning_Master = false;
+        this.ShowWarning_MAWBOBLDate = false;
+        this.ShowWarning_MainCarriageETD = false;
+        this.ShowWarning_Transshipment1CarrierId = false;
+        this.ShowWarning_Transshipment2CarrierId = false;
 
-            if (this.MainCarriageCarrierId == null) {
-                this.ShowWarning_MainCarriageCarrierId = true;
+        if (this.MainCarriageCarrierId == null) {
+            this.ShowWarning_MainCarriageCarrierId = true;
+        }
+
+        if (AppTool.IsNullOrEmpty(this.Master)) {
+            this.ShowWarning_Master = true;
+        }
+
+        if (this.MAWBOBLDate == null) {
+            this.ShowWarning_MAWBOBLDate = true;
+        }
+
+        if (this.MainCarriageETD == null) {
+            this.ShowWarning_MainCarriageETD= true;
+        }
+
+        if (this.Transshipment1CarrierId == null) {
+            this.ShowWarning_Transshipment1CarrierId = true;
+        }
+
+        if (this.Transshipment2CarrierId == null) {
+            this.ShowWarning_Transshipment2CarrierId = true;
+        }
+
+        var isCarrierNumberFormatValid = FormatTool.Validate_FlightNumber(this.MainCarriageCarrierNumber);
+        if (this.MainCarriageCarrierId == null) {
+            if (!isCarrierNumberFormatValid) {
+                this.ShowWarning_MainCarriageCarrierNumber = true;
             }
+        }
 
-            if (AppTool.IsNullOrEmpty(this.Master)) {
-                this.ShowWarning_Master = true;
-            }
-
-            if (this.MAWBOBLDate == null) {
-                this.ShowWarning_MAWBOBLDate = true;
-            }
-
-            if (this.MainCarriageETD == null) {
-                this.ShowWarning_MainCarriageETD = true;
-            }
-
-            if (this.Transshipment1CarrierId == null) {
-                this.ShowWarning_Transshipment1CarrierId = true;
-            }
-
-            if (this.Transshipment2CarrierId == null) {
-                this.ShowWarning_Transshipment2CarrierId = true;
-            }
-
-            var isCarrierNumberFormatValid = FormatTool.Validate_FlightNumber(this.MainCarriageCarrierNumber);
-            if (this.MainCarriageCarrierId == null) {
-                if (!isCarrierNumberFormatValid) {
-                    this.ShowWarning_MainCarriageCarrierNumber = true;
-                }
-            }
-
-            else {
-                var codePrefix: string = AppTool.IsNullOrEmpty(this.MainCarriageCarrierPrefix) ? this.MainCarriageCarrierPrefix : this.MainCarriageCarrierPrefix.trim();
-                var isValidcodePrefix = !AppTool.IsNullOrEmpty(codePrefix) && codePrefix.length == 2;
-                if (!isValidcodePrefix || !isCarrierNumberFormatValid) {
-                    this.ShowWarning_MainCarriageCarrierNumber = true;
-                }
+        else {
+            var codePrefix: string = AppTool.IsNullOrEmpty(this.MainCarriageCarrierPrefix) ? this.MainCarriageCarrierPrefix : this.MainCarriageCarrierPrefix.trim();
+            var isValidcodePrefix = !AppTool.IsNullOrEmpty(codePrefix) && codePrefix.length == 2;
+            if (!isValidcodePrefix || !isCarrierNumberFormatValid) {
+                this.ShowWarning_MainCarriageCarrierNumber = true;
             }
         }
     }
@@ -567,7 +564,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
                         if (list) {
                             RoutingHelper.Transshipment1FromPortChanged(this.EntityPM, list);
-                            this.FireWizardEvent();
                         }
 
                         else {
@@ -575,7 +571,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
                                     RoutingHelper.Transshipment1FromPortChanged(this.EntityPM, list);
-                                    this.FireWizardEvent();
                                 }
                             });
                         }
@@ -605,7 +600,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
                         if (list) {
                             RoutingHelper.Transshipment2FromPortChanged(this.EntityPM, list);
-                            this.FireWizardEvent();
                         }
 
                         else {
@@ -613,7 +607,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
                                     RoutingHelper.Transshipment2FromPortChanged(this.EntityPM, list);
-                                    this.FireWizardEvent();
                                 }
                             });
                         }
@@ -643,7 +636,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
                         if (list) {
                             RoutingHelper.Transshipment3FromPortChanged(this.EntityPM, list);
-                            this.FireWizardEvent();
                         }
 
                         else {
@@ -651,7 +643,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
                                     RoutingHelper.Transshipment3FromPortChanged(this.EntityPM, list);
-                                    this.FireWizardEvent();
                                 }
                             });
                         }
@@ -1122,7 +1113,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
         }
 
         if (!AppTool.IsNullOrEmpty(this.Master)) {
-            this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM)
+            this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM.Id, this.EntityPM.BookingId, this.EntityPM.Master, this.EntityPM.AirlinePrefix, this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentLevelCode, this.EntityPM.IsCancelled)
                 .subscribe((myResult: any) => {
 
                     if (AppTool.IsNullOrEmpty(myResult)) {

@@ -39,27 +39,6 @@ namespace Logitude.Server.Tools.Helpers
             }
             return hash;
         }
-
-
-        public static string GenerateHashForString(string entityString)
-        {
-            if (String.IsNullOrEmpty(entityString))
-            {
-                return "NULL";
-            }
-
-            MD5CryptoServiceProvider cryptoServiceProvider = new MD5CryptoServiceProvider();
-            byte[] stringBytes = Encoding.UTF8.GetBytes(entityString);
-            byte[] computedHash = cryptoServiceProvider.ComputeHash(stringBytes);
-            StringBuilder stringBuilder = new StringBuilder();
-
-            foreach (var h in computedHash)
-            {
-                stringBuilder.Append(h.ToString("x2").ToLower());
-            }
-
-            return stringBuilder.ToString();
-        }
     }
 }
 public static class StreamExtensions

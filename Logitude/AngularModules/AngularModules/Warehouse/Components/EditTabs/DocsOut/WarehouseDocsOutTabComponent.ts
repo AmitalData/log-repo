@@ -10,7 +10,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
     selector: 'WarehouseDocsOutTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './WarehouseDocsOutTabComponent.html',
     providers: [DocumentTypeListService]
 })

@@ -23,9 +23,9 @@ import { ClientList } from '../../../Customs/EntityLists/ClientList';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 
 
-@Component({ 
+@Component({
     selector: 'CreditLimitQueryComponent',
-    
+    moduleId: module.id,
     templateUrl: './CreditLimitQueryComponent.html',
 })
 
@@ -181,7 +181,7 @@ export class CreditLimitQueryComponent
         currRequestParams.ExtertnalID = this.ImporterCode;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לתקרת אשראי", true)
             .then((res) => {
                 this.ResponseData = res;

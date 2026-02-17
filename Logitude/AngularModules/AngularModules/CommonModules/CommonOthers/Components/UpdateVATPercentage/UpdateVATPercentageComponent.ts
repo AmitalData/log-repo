@@ -10,7 +10,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './UpdateVATPercentageComponent.html',
 })
 

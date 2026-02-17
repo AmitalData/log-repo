@@ -3,7 +3,7 @@ using Logitude.TimeManagement.BL.EntityQueryServices;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -33,7 +33,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.AuthenticationOnTenant(parameter.Tenant);
 
                     ExcelExportService excelExportService = new ExcelExportService();
                     excelExportService.ImportClockTime(Convert.FromBase64String(parameter.Base64String), tenant);

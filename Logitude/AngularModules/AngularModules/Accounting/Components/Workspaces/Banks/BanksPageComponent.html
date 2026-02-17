@@ -71,7 +71,7 @@
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.General.O.Deposits' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button id="{{'NEWDEPOSIT' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="RunNewDepositWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button class="Button" (click)="RunNewDepositWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
@@ -80,7 +80,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="TodayDepositsVisibility" (click)="ViewDepositQuery('TodayDeposits')"> {{'BankDeposit.Q.Today' | TextCodeTranslationPipe}} ({{bankDepositSummary.TodaysDepositCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="TodayDepositsVisibility" (click)="ViewDepositQuery('TodayDeposits')"> {{'BankDeposit.Q.Today' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -95,7 +95,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p id="{{'DepositsQuery' | IdGeneratorAsyncPipe | async}}" class="QueryLink" *ngIf="AllBankDepositsVisibility" (click)="ViewDepositQuery('AllBankDeposits')"> {{'Accounting.General.Q.AllDeposits' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" *ngIf="AllBankDepositsVisibility" (click)="ViewDepositQuery('AllBankDeposits')"> {{'Accounting.General.Q.AllDeposits' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
 
@@ -115,7 +115,7 @@
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.General.O.Cashbooks' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button  id="{{'NEWCASHBOOK' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="RunNewCashBookWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button class="Button" (click)="RunNewCashBookWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
@@ -124,17 +124,17 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCash')"> {{'Accounting.General.O.Cash' | TextCodeTranslationPipe}} ({{cashBookSummary.CashCashbookCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCash')"> {{'Accounting.General.O.Cash' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCheque')"> {{'Accounting.General.O.Cheque' | TextCodeTranslationPipe}} ({{cashBookSummary.ChequeCashbookCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCheque')"> {{'Accounting.General.O.Cheque' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p id="{{'cashbookQuery' | IdGeneratorAsyncPipe | async}}" class="QueryLink" (click)="ViewCashbookQuery('CashBooks')"> {{'Accounting.General.O.AllCashbook' | TextCodeTranslationPipe}} ({{cashBookSummary.AllCashbookCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashBooks')"> {{'Accounting.General.O.AllCashbook' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
 
@@ -154,7 +154,7 @@
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.General.O.BankAccounts' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button id="{{'NEWBANK' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="RunNewBankAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button class="Button" (click)="RunNewBankAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
@@ -163,13 +163,13 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p id="{{'BANKSQUIERY' | IdGeneratorAsyncPipe | async}}"class="QueryLink" (click)="ViewBankAccountQuery('AllBankAccounts')"> {{'Accounting.General.O.AllBankAccounts' | TextCodeTranslationPipe}} ({{_BankAccountSummary.AllBankAccountsCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewBankAccountQuery('AllBankAccounts')"> {{'Accounting.General.O.AllBankAccounts' | TextCodeTranslationPipe}} ({{_BankAccountSummary.AllBankAccountsCount}})</p>
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr *ngIf="LoadBankPageMENUVisibility" >
+                                                                    <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="LoadBankPagesFromFile()"> {{'Accounting.General.O.LoadBankPage' | TextCodeTranslationPipe}}  </p>
+                                                                            <p class="QueryLink" (click)="LoadBankPagesFromFile()"> {{'Accounting.General.O.BankPagesFromFile' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
 
@@ -187,7 +187,7 @@
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.General.O.PaymentCheques' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button id="{{'NEWPaymentCheque' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="NewPaymentCheque()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button class="Button" (click)="NewPaymentCheque()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
@@ -196,7 +196,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p id="{{'PaymentChequesQuery' | IdGeneratorAsyncPipe | async}}" class="QueryLink" (click)="ViewPaymentChequesQuery('AllPaymentCheques')"> {{'Accounting.General.O.AllPaymentCheques' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewPaymentChequesQuery('AllPaymentCheques')"> {{'Accounting.General.O.AllPaymentCheques' | TextCodeTranslationPipe}} ({{paymentChequeSummary.AllPaymenChequesCount}})</p>
                                                                         </td>
                                                                     </tr>
 

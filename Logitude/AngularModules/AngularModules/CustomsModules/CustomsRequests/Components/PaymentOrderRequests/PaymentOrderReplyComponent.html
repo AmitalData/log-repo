@@ -246,25 +246,21 @@
                                             <!-- ParagraphTypeName -->
                                             <log-column [header]="'סעיף מס'"
                                                         [binding]="'ParagraphTypeName'" [width]="'100'" [Alignment]="'right'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming" style="text-align:right">
                                                         <span>{{item.ParagraphTypeName}}</span>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!-- Amount -->
                                             <log-column [header]="'סכום'"
                                                         [binding]="'Amount'" [width]="'90'" [Alignment]="'right'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming" style="text-align:right">
                                                         <span>{{item.Amount | NumbersPipe:'N2'}}</span>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                         </logitude-edit-grid>
@@ -287,37 +283,31 @@
                                             <!-- PaymentMethodTypeName -->
                                             <log-column [header]="'סוג אמצעי'"
                                                         [binding]="'PaymentMethodTypeName'" [width]="'100'" [Alignment]="'right'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming" style="text-align:right">
                                                         <span>{{item.PaymentMethodTypeName}}</span>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!-- Amount -->
                                             <log-column [header]="'סכום'"
                                                         [binding]="'Amount'" [width]="'100'" [Alignment]="'right'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming" style="text-align:right">
                                                         <span>{{item.Amount | NumbersPipe:'N2'}}</span>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!-- PaymentMethodStatus -->
                                             <log-column [header]="'סטטוס אמצעי'"
                                                         [binding]="'PaymentMethodStatus'" [width]="'100'" [Alignment]="'right'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming" style="text-align:right">
                                                         <span>{{item.PaymentMethodStatusName}}</span>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                         </logitude-edit-grid>

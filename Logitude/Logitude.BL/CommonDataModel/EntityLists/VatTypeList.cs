@@ -19,19 +19,10 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string Description { get; set; }
         public string LocalDescription { get; set; }
         public string SearchFields { get; set; }
-        public double? RecognizedPercentage { get; set; }
+
         //public double? Percentage { get; set; }
-
         public string ExternalVATCard { get; set; }
-      
-
-        public string PayablesExternalId { get; set; }
-        public string ReceivablesExternalId { get; set; }
-
-
         public string ExternalTAXItemId { get; set; }
         public bool IsMultiPercentage { get; set; }
-        public bool IsRegionalTax { get; set; }
-
     }
 }

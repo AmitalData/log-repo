@@ -58,8 +58,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                                   //NumberOfThreads = entity.NumberOfThreads,
                                                                   ClassName = entity.ClassName,
                                                                   Parameter1 = entity.Parameter1,
-                                                                  Parameter2 = entity.Parameter2,
-                                                                  QueueDefinitionCode = entity.QueueDefinitionCode
+                                                                  Parameter2 = entity.Parameter2
                                                               };
             return result;
         }
@@ -67,8 +66,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         public IQueryable<BatchServicesDefinitionPM> GetAllActiveBatchServicesDefinitions()
         {
 
-            var result = (from a in repository.context.BatchServicesDefinitions 
-                          where a.BatchServicesDefinitionMods.InActive == false && a.Code != "WorkFlowsWR"
+            var result = (from a in repository.context.BatchServicesDefinitions
+                          //join b in repository.context.BatchServicesDefinitionMods on a.Code equals b.Code
+                          where a.BatchServicesDefinitionMods.InActive == false
                           select new BatchServicesDefinitionPM()
                           {
                               ClassName = a.ClassName,
@@ -76,9 +76,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                               InActive = a.BatchServicesDefinitionMods.InActive,
                               NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
                               Parameter1 = a.Parameter1,
-                              Parameter2 = a.Parameter2,
-                              QueueDefinitionCode = a.QueueDefinitionCode,
-                              QueueBase = a.QueueBase
+                              Parameter2 = a.Parameter2
                           }
                           );
 
@@ -118,8 +116,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                               InActive = a.BatchServicesDefinitionMods.InActive,
                               NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
                               Parameter1 = a.Parameter1,
-                              Parameter2 = a.Parameter2,
-                              QueueDefinitionCode = a.QueueDefinitionCode
+                              Parameter2 = a.Parameter2
                           }
                           );
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())

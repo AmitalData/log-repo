@@ -10,7 +10,7 @@ import {AWBOCIPM} from '../../../../../Shipment/EntityPMs/AWBOCIPM';
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './AddEditOCIComponent.html',
 })

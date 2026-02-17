@@ -17,15 +17,9 @@ import {APPaymentPM} from '../../../../Invoice/EntityPMs/APPaymentPM';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {ModulesService} from '../../../Services/ModulesService';
-import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
-import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
-import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
-import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
-import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
-import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './PayablePageComponent.html',
 })
 
@@ -45,7 +39,6 @@ export class PayablePageComponent {
 
     //Counts
     public APPaymentsDraftsCount: string;
-    public APPaymentsDraftPermission: boolean;
     public APPaymentsOpenedCount: string;
     public APInvoicesDraftsCount: string;
     public APInvoicesUnpaidCount: string;
@@ -54,13 +47,9 @@ export class PayablePageComponent {
 
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    private LastRatesList: LastRate[] = [];
-    private myCurrencyListService: CurrencyListService;
-
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        this.myCurrencyListService = new CurrencyListService();
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("APPayment").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((response: any) => { });
@@ -189,7 +178,6 @@ export class PayablePageComponent {
         newApPaymentPM.CreateDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
-        newApPaymentPM.PrintNotes=TextCodeTranslator.Translate("APPayment.S.ShortTitle");;
 
         newApPaymentPM.LocalCurrencyId = this.TenantPM.CurrencyId;
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
@@ -210,51 +198,17 @@ export class PayablePageComponent {
     ViewInvoiceQuery(args: string) {
         if (args != null) {
 
-            var displayTitle = "";
-            var queryCode = args;
-            queryCode = "APPayment";
-            var filters = new ApiQueryFilters();
-            switch (args) {
-
-                case "Draft Payments":
-                    {
-
-                        displayTitle = TextCodeTranslator.Translate("APPayment.Q.DraftAPPayments");
-
-                        break;
-                    }
-                case "Open Payments":
-                    {
-
-                        displayTitle = TextCodeTranslator.Translate("APPayment.Q.OpenAPPayments");
-
-                        break;
-                    }
-                case "All Payments":
-                    {
-
-
-                        displayTitle = TextCodeTranslator.Translate("APPayment.Q.AllAPPayments");
-
-                        break;
-                    }
-
-
-
-                default: { break; }
-            }
-
             var backButtonTitle = "Accounting";
             var objectTableName = args.split(':')[0];
             var queryCode = args.split(':')[1];
-
+            var displayTitle = queryCode;
             this.filterAgrs = new ApiQueryFilters();
 
             var ObjectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
             var query = window.Queries.filter(q => q.ObjectTableId == ObjectTable.Id && q.Code == queryCode)[0];
 
-            if (window.PreDefinedFilters.filter(d => d.queryCode == query.Code) != null) {
-                var predefinedFilters = window.PreDefinedFilters.filter(d => d.queryCode == query.Code);
+            if (window.PreDefinedFilters.filter(d => d.QueryId == query.Id) != null) {
+                var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == query.Id);
 
                 predefinedFilters.forEach((filter, key) => {
                     var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
@@ -305,73 +259,44 @@ export class PayablePageComponent {
     }
 
     LoadQueriesCounts() {
-        var myService = new ModulesService();
-        myService.GetAccountPayablesSummary().subscribe((myResult:any) => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
             if (myResult != null) {
+                this.glAccountSummary.ActiveVendorsCount = myResult.ActiveVendorsCount > 1000 ? "1000+" : myResult.ActiveVendorsCount.toString();
+                this.glAccountSummary.InactiveVendorsCount = myResult.InactiveVendorsCount > 1000 ? "1000+" : myResult.InactiveVendorsCount.toString();
+                //this.glAccountSummary.CollectorsCount = myResult.CollectorsCount > 1000 ? "1000+" : myResult.CollectorsCount.toString();
+                //this.glAccountSummary.DebitorsCount = myResult.DebitorsCount > 1000 ? "1000+" : myResult.DebitorsCount.toString();
+                this.glAccountSummary.AllVendorsCount = myResult.AllVendorsCount > 1000 ? "1000+" : myResult.AllVendorsCount.toString();
+            }
+        });
+
+        // APPayments
+
+        var myService = new ModulesService();
+        myService.GetAccountPayablesSummary().subscribe(myResult => {
+            if (myResult != null) {
+                this.APPaymentsDraftsCount = myResult.APPaymentsDraftsCount > 1000 ? "1000+" : myResult.APPaymentsDraftsCount.toString();
+                this.APPaymentsOpenedCount = myResult.APPaymentsOpenedCount > 1000 ? "1000+" : myResult.APPaymentsOpenedCount.toString();
                 this.APInvoicesDraftsCount = myResult.APInvoicesDraftsCount > 1000 ? "1000+" : myResult.APInvoicesDraftsCount.toString();
-                this.APPaymentsDraftsCount = myResult.APPaymentsDraftsCount;
-                this.APPaymentsDraftPermission = FeatureLocator.HasFeaturePermession("APPayment", "DRAFTPAYMENTS");
+                this.APInvoicesUnpaidCount = myResult.APInvoicesUnpaidCount > 1000 ? "1000+" : myResult.APInvoicesUnpaidCount.toString();
             }
         });
     }
 
     EditGLAccount(entity: any) {
         if (entity != null) {
-
-            GLAccountSecurityLevelService.CheckLevel(entity.Id).then(hasAccess =>
-            {
-                if (hasAccess)
-                    this.OpenGLAccountEditWindow(entity);
-                else
-                GLAccountSecurityLevelService.ShowSecurityBockingMessage();
-            });
-
-
-
-        }
-    }
-
-    private OpenGLAccountEditWindow(entity: any)
-    {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef =>
-            {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Payables") });
-                cmpRef.instance.BackCompleted.subscribe(($event: any) =>
-                {
-                    this.RefreshButtonClicked();
-                });
-            });
-    }
-
-    // General Invoice
-    NewGeneralAPInvoice() {
-
-        if (SessionLocator.TenantPM.AccountingActivated) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                this.CurrentSession.SessionLocation.viewContainerRef)
-
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
-                    const entity = new APInvoicePM();
-                    this.GetCurrenciesExchangeRateByValueDate(entity);
-
-                    entity.IsGeneralInvoice = true;
-                    entity.Tenant = SessionLocator.TenantPM.Id;
-                    entity.LocalCurrencyId = SessionLocator.LocalCurrencyId;
-                    entity.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
-                    entity.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
-                    entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
-                    entity.InternalNotes = TextCodeTranslator.Translate("APInvoice.O.VendorInvoice");
-
-                    const additionalFieldsScreenCode = "APInvoice.AdditionalFields";
-
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: "", EntityPM: entity, ObjectTableName: 'APInvoice' });
+                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Payables") });
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                        this.RefreshButtonClicked();
+                    });
                 });
-            return;
         }
+    }
 
+    // General Invoice 
+    NewGeneralAPInvoice() {
         var str = TextCodeTranslator.Translate("Accounting.General.O.NewGeneralInvoice");
         var windowTitle = str;
         var logWindow = new LogitudeWindow();
@@ -391,64 +316,5 @@ export class PayablePageComponent {
             });
         });
         logWindow.Show("./InvoiceModules/APInvoice/Components/NewEntity/NewGeneralAPInvoiceComponent");
-    }
-
-    private GetCurrenciesExchangeRateByValueDate(entity: APInvoicePM){
-        var myCurrencyRatesService = new CurrencyRatesService();
-        var myCommonDomainService = new CommonDomainService();
-
-        var loadingDate = DateTool.GetCurrentDateAsUtc();
-
-        myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.LastRatesList = myResponse.Result;
-                this.InitializeProfitCurrency(entity);
-            }
-
-            else {
-                this.CurrentSession.StopBusyIndicator();
-            }
-        });
-    }
-
-    private InitializeProfitCurrency(entityPM: APInvoicePM) {
-
-        if (entityPM.IsMultipleEntities) {
-            entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
-        }
-
-        else if (AppTool.IsNullOrEmpty(entityPM.ProfitCurrencyId)) {
-            entityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
-        }
-
-        this.myCurrencyListService.getSingleFromCache(entityPM.ProfitCurrencyId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var list: CurrencyList = myResponse.Result;
-                if (list != null) {
-                    entityPM.ProfitCurrencyCode = list.Code;
-                }
-            }
-        });
-
-        entityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(entityPM.ProfitCurrencyId);
-    }
-
-    GetCurrencyRate(currencyId: string) {
-        var myResult: number = null;
-
-        if (!AppTool.IsNullOrEmpty(currencyId)) {
-            if (currencyId == SessionLocator.TenantPM.CurrencyId) {
-                myResult = 1;
-            }
-
-            else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
-                if (lastRate != null) {
-                    myResult = lastRate.Rate;
-                }
-            }
-        }
-
-        return myResult;
     }
 }

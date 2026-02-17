@@ -33,7 +33,6 @@ namespace Logitude.TimeManagement.BL.EntityQueryServices
                                                ToDate = a.ToDate,
 
                                                Name = a.Name,
-                                               IsCompleted = a.IsCompleted,
                                            };
             return sprints;
         }

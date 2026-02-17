@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .LogitudeCellTooltipText {
         white-space: pre-line;
@@ -26,21 +26,20 @@
 </style>
 
 <div class="LogitudeCellTooltip" [attr.id]="TooltipId" [style.width.px]="IconWidth" [style.height.px]="IconHeight">
-    <button [attr.id]="TooltipButtonId" [style.width.px]="IconWidth" [style.height.px]="IconHeight" [ngStyle]="{background: IconBackground}" (mouseover)="mouseover()" (mouseleave)="OnButtonMouseLeave()" (click)="click()" (blur)="blur()" tabindex="-1"></button>
+    <button [attr.id]="TooltipButtonId" [style.width.px]="IconWidth" [style.height.px]="IconHeight" [ngStyle]="{background: IconBackground}" (mouseover)="mouseover()" (mouseleave)="mouseleave()" (click)="click()" (blur)="blur()" tabindex="-1"></button>
 
-    <div class="LogitudeCellTooltipContent"
-         [attr.id]="TooltipContentId"
-         [style.width.px]="Width"
-         [style.max-width.px]="Width"
-         [style.height.px]="Height"
-         [style.min-height.px]="MinHeight"
-         [style.max-height.px]="MaxHeight"
-         (mouseover)="IsMouseOver = true;IsPopupMouseOver = true"
-         (mouseleave)="mouseleave();IsPopupMouseOver = false"
-         >
+    <div class="LogitudeCellTooltipContent" 
+         [attr.id]="TooltipContentId" 
+         [style.width.px]="Width" 
+         [style.max-width.px]="Width" 
+         [style.height.px]="Height" 
+         [style.min-height.px]="MinHeight" 
+         [style.max-height.px]="MaxHeight" 
+         (mouseover)="IsMouseOver = true;" 
+         (mouseleave)="IsMouseOver = false;">
         <div class="MediaFixed" style="left: 12px; right: 30px; top: 12px; bottom: 13px;">
             <table style="cursor:default; user-select:text;">
-
+                
                 <tr *ngIf="Head" style="height: 3px; min-height: 3px;">
                     <td>
                         <div></div>

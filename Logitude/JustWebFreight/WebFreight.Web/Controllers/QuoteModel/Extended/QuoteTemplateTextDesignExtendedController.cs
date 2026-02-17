@@ -8,7 +8,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -29,7 +29,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -56,11 +56,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 QuoteTemplateTextDesignService service = new QuoteTemplateTextDesignService(QuotesContext.GetContext(authToken.Tenant), authToken.Tenant);
                 foreach (QuoteTemplateTextDesignPM item in quoteTemplateTextDesignPMs)
                 {
-                    SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplateTextCode", item.Tenant, authToken.Tenant);
-
                     service.Update(item);
                 }
 
@@ -83,7 +82,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                     string[] idsList = ids.Split(',');
                     QuoteTemplateTextDesignQuery quoteTemplateTextDesignQuery = new QuoteTemplateTextDesignQuery(tenant);

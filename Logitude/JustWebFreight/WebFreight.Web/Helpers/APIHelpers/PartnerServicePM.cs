@@ -29,12 +29,5 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public AirlinePM Airline { get; set; }
         public ShippingLinePM ShippingLine { get; set; }
         public TruckerPM Trucker { get; set; }
-        public AccountingPartnerPM AccountingPartner { get; set; }
-        public bool IsReactivatingContact { get; set; }
-        public bool IsConnectingInactiveContact { get; set; }
-        public string InactiveContactId { get; set; }
-
-        public string ExternalId { get; set; }
-
     }
 }

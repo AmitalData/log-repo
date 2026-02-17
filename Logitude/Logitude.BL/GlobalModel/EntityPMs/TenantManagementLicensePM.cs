@@ -21,15 +21,6 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? NumberOfUsers { get; set; }
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public int? FreeUsers { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? Price { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? TotalPrice { get; set; }
-
         public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }

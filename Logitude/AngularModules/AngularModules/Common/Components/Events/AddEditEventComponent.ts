@@ -8,7 +8,7 @@ import {WebFreightDomainService, NewTraceEventResult} from '../../../Infrastruct
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditEventComponent.html',
 })
 
@@ -32,7 +32,7 @@ export class AddEditEventComponent {
 
     CancelButtonClicked() {
         this.EntityPM.RejectChanges();
-        this.CurrentSession.CurrentWindow.Close("Cancel");
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -79,7 +79,6 @@ export class AddEditEventComponent {
                                                 this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
                                                 break;
                                             }
-
                                         }
                                     }
                                 }

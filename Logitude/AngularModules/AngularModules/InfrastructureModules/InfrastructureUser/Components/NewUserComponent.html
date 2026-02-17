@@ -1,41 +1,52 @@
-
+﻿
 <style>
     .MessageText {
         white-space: normal;
         word-wrap: break-word;
         overflow-x: hidden;
         overflow-y: auto;
-        line-height: 18px;
+        line-height:18px;
     }
 
-    .FormFieldRow {
+   
+  .FormFieldRow{
         height: 25px;
     }
+
+
+
+
+
 </style>
 
-<div style="height:100%;vertical-align:top">
-    <table style="height:100%;vertical-align:top">
 
-        <tr style="height:10px">
-            <td>
-                <div></div>
-            </td>
-        </tr>
+
+
+
+
+<div  style="height:100%;vertical-align:top">
+
+    <table  style="height:100%;vertical-align:top">
+
+        <tr style="height:10px"><td colspan="3"><div></div></td></tr>
+
 
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-            <td>
-                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            <td colspan="3">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" ></ValidationSummary>
             </td>
         </tr>
 
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
-            <td>
-                <div style="height:5px"></div>
+            <td colspan="3">
+               <div style="height:5px"></div>
             </td>
         </tr>
 
-        <tr *ngIf="DemoTenantMessageVisibility" style="height:23px">
-            <td>
+
+        <tr  *ngIf="DemoTenantMessageVisibility" style="height:23px">
+
+            <td colspan="3">
                 <div style="height:23px;border-radius:3px;background-color:#FFF9A8;border:2px solid #FFDEA1;">
                     <span style="vertical-align:central;text-align:left;margin-left:5px;margin-top:-2px">Please note that you can't create new users in the demo environment !</span>
                 </div>
@@ -43,329 +54,374 @@
         </tr>
 
         <tr *ngIf="DemoTenantMessageVisibility" style="height:5px">
-            <td>
-                <div style="height:5px">
 
+            <td colspan="3">
+                <div style="height:5px">
+                   
                 </div>
             </td>
         </tr>
 
         <tr *ngIf="Info1Visibility" style="height:20px">
-            <td>
+
+            <td colspan="3">
+               
+
                 <table>
                     <tr>
-
+                       
                         <td style="width: 17px;">
                             <div class="LeftCenter" style="width: 17px; height: 17px; background:url(./Images/Info.png) no-repeat; background-size: 100% 100%;"></div>
                         </td>
-                        <td style="width:3px">
-                            <div></div>
+                        <td style="width:3px"><div></div></td>
+                        
+                         <td style="width: 16px;">
+                             <span style="vertical-align:central;font-size:10px; color:#084B8A">{{Info1Text}}</span>
                         </td>
 
-                        <td style="width: 16px;">
-                            <span style="vertical-align:central;font-size:10px; color:#084B8A">{{Info1Text}}</span>
-                        </td>
+                 
 
                         <td>
                             <div></div>
                         </td>
                     </tr>
                 </table>
+
+
+
+
+
+
             </td>
         </tr>
 
+
         <!--Fields Grid-->
+
+
         <tr style="height:300px;vertical-align:top;">
-            <td>
-                <table>
-                    <tr>
-                        <td style="width:390px">
-                            <table>
-                                <tr class="FormFieldRow">
-                                    <td style="width:160px;">
-                                        <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
 
-                                    <td style="width:230px">
-                                        <LogTextBox (LostFocus)="EmailKeyUpMethod($event)" [ObjectFieldName]="'Email'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogTextBox>
-                                    </td>
-                                </tr>
+        
+          <td style="width:350px">
+             <table style="vertical-align:top;">
+                 <tr style="vertical-align:top;height:25px">
+                     <td style="width:5px;"><div></div></td>
+                     <td style="width:120px;">  <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td style="width:230px"><LogTextBox  (LostFocus)="EmailKeyUpMethod($event)" style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'Email'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" ></LogTextBox></td>
+                     <td><div></div></td>
+                 </tr>
 
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <table style="table-layout: fixed;">
-                                            <tr>
-                                                <td style="width: 10px; vertical-align: middle;">
-                                                    <div *ngIf="!NewUserPM.Password" style="width: 10px;">
-                                                        <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
-                                                    </div>
-                                                </td>
-                                                <td id="{{'PassId' | IdGeneratorAsyncPipe | async}}" class="TextTrimming" style="text-align: left; vertical-align:middle;">
-                                                    <label *ngIf="NewUserPM.Password" class="Label" style="color:#6E7172">{{'User.F.Password' | TextCodeTranslationPipe}}:</label>
-                                                    <label *ngIf="!NewUserPM.Password" class="Label" style="color:red">{{'User.F.Password' | TextCodeTranslationPipe}}:</label>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
 
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td style="width:193px;">
-                                                    <input id="{{'PasswordId' | IdGeneratorAsyncPipe | async}}" [disabled]="IsPasswordDisable" type="password" autocomplete="off" style="height:22px;width:193px;" [(ngModel)]="NewUserPM.Password" value="" />
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
+                 <tr style="vertical-align:top;height:25px;">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:110px;">
+                    
+                         <table style="table-layout: fixed;">
+                             <tr >
+                                 <td style="width: 10px; vertical-align: middle;">
+                                     <div  *ngIf="!NewUserPM.Password" style="width: 10px;">
+                                         <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;" ></div>
+                                
+                                     </div>
+                                 </td>
+                                 <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                     <label  *ngIf="NewUserPM.Password" class="Label" style="color:#6E7172">{{'User.F.Password' | TextCodeTranslationPipe}}</label>
+                                     <label  *ngIf="!NewUserPM.Password" class="Label" style="color:red">{{'User.F.Password' | TextCodeTranslationPipe}}</label>
+                                 </td>
+                             </tr>
+                         </table>
 
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <table style="table-layout: fixed;">
-                                            <tr>
-                                                <td style="width: 10px; vertical-align: middle;">
-                                                    <div *ngIf="!ReTypePassword" style="width: 10px;">
-                                                        <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
-                                                    </div>
-                                                </td>
-                                                <td id="{{'Password' | IdGeneratorAsyncPipe | async}}" class="TextTrimming" style="text-align: left; vertical-align:middle;">
-                                                    <label *ngIf="ReTypePassword" class="Label" style="color:#6E7172">{{'User.O.ReTypePassword' | TextCodeTranslationPipe}}:</label>
-                                                    <label *ngIf="!ReTypePassword" class="Label" style="color:red">{{'User.O.ReTypePassword' | TextCodeTranslationPipe}}:</label>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
 
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td style="width:193px;">
-                                                    <input id="{{'retypePass' | IdGeneratorAsyncPipe | async}}" [disabled]="IsPasswordDisable" type="password" autocomplete="off" style="height:22px;width:193px;" [(ngModel)]="ReTypePassword" value="" />
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
+                     </td>
 
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
 
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'EnglishName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogTextBox>
-                                    </td>
-                                </tr>
+                    
+                     
+                     <td colspan="2">
+                         <table>
 
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
+                             <tr>
 
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'LocalName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogTextBox>
-                                    </td>
-                                </tr>
+                                 <td style="width:193px;"><input [disabled]="IsPasswordDisable"  type="password" autocomplete="off"  style="height:22px;width:193px;" [(ngModel)]="NewUserPM.Password" value="" /></td>
+                                 <td><div></div></td>
+                             </tr>
+                         </table>
 
-                                <tr *ngIf="PersonalIdVisible" class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'PersonalId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
 
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'PersonalId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogTextBox>
-                                    </td>
-                                </tr>
+                     </td>
+        
+                 
+                 
+                 </tr>
 
-                                <tr *ngIf="ExpirationDateVisible" class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
 
-                                    <td>
-                                        <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogDatePicker>
-                                    </td>
-                                </tr>
+                 <tr style="vertical-align:top;height:25px">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:120px;">
 
-                                <tr *ngIf="IsSalesmanVisible" class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'IsSalesman'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
+                         <table style="table-layout: fixed;">
+                             <tr>
+                                 <td style="width: 10px; vertical-align: middle;">
+                                     <div *ngIf="!ReTypePassword" style="width: 10px;">
+                                         <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
 
-                                    <td>
-                                        <LogCheckBox [ObjectFieldName]="'IsSalesman'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogCheckBox>
-                                    </td>
-                                </tr>
+                                     </div>
+                                 </td>
+                                 <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                     <label *ngIf="ReTypePassword" class="Label" style="color:#6E7172">{{'User.O.ReTypePassword' | TextCodeTranslationPipe}}</label>
+                                     <label *ngIf="!ReTypePassword" class="Label" style="color:red">{{'User.O.ReTypePassword' | TextCodeTranslationPipe}}</label>
+                                 </td>
+                             </tr>
+                         </table>
 
-                                <tr *ngIf="LicencedUserVisible" class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'LicencedUser'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
 
-                                    <td>
-                                        <LogCheckBox [ObjectFieldName]="'LicencedUser'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogCheckBox>
-                                    </td>
-                                </tr>
+                     </td>
 
-                                <tr *ngIf="IsDistributorVisible" class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'IsDistributor'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
+                 
+                     <td colspan="2">
+                         <table>
 
-                                    <td>
-                                        <LogCheckBox [ObjectFieldName]="'IsDistributor'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogCheckBox>
-                                    </td>
-                                </tr>
+                             <tr>
 
-                                <tr *ngIf="DistributorCodeVisible" class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'DistributorCode'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
+                                 <td style="width:193px;"><input  [disabled]="IsPasswordDisable"  type="password" autocomplete="off" style="height:22px;width:193px;" [(ngModel)]="ReTypePassword" value="" /></td>
+                                 <td><div></div></td>
+                             </tr>
+                         </table>
 
-                                    <td>
-                                        <LogLov [LookUpTableName]="'Distributor'" [ObjectFieldName]="'DistributorCode'" [DisplayMemberPath]="'EnglishName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLov>
-                                    </td>
-                                </tr>
 
-                                <tr *ngIf="IsAdditionalPackagesOnlyVisible" class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'AdditionalPackagesOnly'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
+                     </td>
+                     
+                        
+                 </tr>
 
-                                    <td>
-                                        <LogCheckBox [ObjectFieldName]="'AdditionalPackagesOnly'" [Checked]="AdditionalPackagesOnly" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogCheckBox>
-                                    </td>
-                                </tr>
 
-                                <tr>
-                                    <td></td>
-                                </tr>
 
-                            </table>
-                        </td>
+                 <tr style="vertical-align:top;height:25px">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:120px;">  <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td style="width:230px"><LogTextBox style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'EnglishName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogTextBox></td>
+                     <td><div></div></td>
+                 </tr>
 
-                        <td style="width:20px;">
-                            <div></div>
-                        </td>
+                 <tr style="vertical-align:top;height:25px">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:120px;">  <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td style="width:230px"><LogTextBox style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'LocalName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" ></LogTextBox></td>
+                     <td><div></div></td>
+                 </tr>
 
-                        <td style="width:340px">
-                            <table>
-                                <tr class="FormFieldRow">
-                                    <td style="width:110px;">
-                                        <LogLabel [ObjectFieldName]="'DepartmentId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
 
-                                    <td style="width:230px">
-                                        <LogLov [ObjectFieldName]="'DepartmentId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" [LookUpTableName]="'Department'"></LogLov>
-                                    </td>
-                                </tr>
 
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
 
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'BranchId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" [LookUpTableName]="'Branch'"></LogLov>
-                                    </td>
-                                </tr>
+                 <tr *ngIf="PersonalIdVisible" style="vertical-align:top;height:25px">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:120px;">  <LogLabel [ObjectFieldName]="'PersonalId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td style="width:230px"><LogTextBox style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'PersonalId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" ></LogTextBox></td>
+                     <td><div></div></td>
+                 </tr>
 
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'BusinessUnitId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
+                 <tr style="vertical-align:top;height:25px">
+                     <td *ngIf="ExpirationDateVisible"  style="width:5px"><div></div></td>
+                     <td *ngIf="ExpirationDateVisible"  style="width:120px;">  <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td *ngIf="ExpirationDateVisible"  style="width:230px"><LogDatePicker style="width:200px" [LogitudeForm]="myForm" [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogDatePicker></td>
+                     <td *ngIf="ExpirationDateVisible" > <div></div></td>
+                 </tr>
 
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'BusinessUnitId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" [LookUpTableName]="'BusinessUnit'"></LogLov>
-                                    </td>
-                                </tr>
+                 <tr *ngIf="IsSalesmanVisible" style="vertical-align:top;height:25px">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsSalesman'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsSalesman'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogCheckBox></td>
+                     <td><div></div></td>
+                 </tr>
 
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
+                 <!--<tr *ngIf="IsFreelancerVisible" style="vertical-align:top;height:25px">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsFreelancer'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsFreelancer'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogCheckBox></td>
+                     <td><div></div></td>
+                 </tr>-->
 
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
 
-                                <tr style="vertical-align:top;height:33px">
-                                    <td colspan="2">
-                                        <table>
-                                            <tr>
-                                                <td style="width:15px">
-                                                    <div></div>
-                                                </td>
-                                                <td style="width:338px">
-                                                    <div style="height:90px;">
-                                                        <LogTextBox [ObjectFieldName]="'Notes'" [IsMultiline]="true" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogTextBox>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
+                 <tr *ngIf="LicencedUserVisible" style="vertical-align:top;height:25px">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:120px;"><LogLabel [ObjectFieldName]="'LicencedUser'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'LicencedUser'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogCheckBox></td>
+                     <td><div></div></td>
+                 </tr>
 
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
 
-                            </table>
-                        </td>
+         
+                 <tr *ngIf="IsDistributorVisible" style="vertical-align:top;height:25px">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsDistributor'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsDistributor'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogCheckBox></td>
+                     <td><div></div></td>
+                 </tr>
 
-                        <td>
-                            <div></div>
-                        </td>
+
+          
+                 
+                 
+                 <tr *ngIf="DistributorCodeVisible" class="FormFieldRow"  style="vertical-align:top;">
+                     <td style="width:5px"><div></div></td>
+                     <td style="width:120px;">  <LogLabel [ObjectFieldName]="'DistributorCode'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                     <td style="width:230px"><LogLov style="width:230px"     [LookUpTableName]="'Distributor'" [LogitudeForm]="myForm" [ObjectFieldName]="'DistributorCode'" [DisplayMemberPath]="'EnglishName'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" ></LogLov></td>
+                     <td><div></div></td>
+                 </tr>
+
+                
+                         
+                         
+                        
+                         
+                         
+                 
+
+              <tr><td></td></tr>
+
+             </table> 
+
+
+
+          </td>
+
+          <td style="width:340px">
+
+                <table style="vertical-align:top">
+
+                    <tr style="vertical-align:top;"  class="FormFieldRow">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:110px;">  <LogLabel  [ObjectFieldName]="'DepartmentId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                        <td style="width:230px"><LogLov style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'DepartmentId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" [LookUpTableName]="'Department'"></LogLov></td>
+                        <td><div></div></td>
                     </tr>
+
+
+
+
+                    <tr style="vertical-align:top;"  class="FormFieldRow">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:110px;">  <LogLabel [ObjectFieldName]="'BranchId'"   [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                        <td style="width:230px"><LogLov style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'BranchId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" [LookUpTableName]="'Branch'" ></LogLov></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr style="vertical-align:top;"  class="FormFieldRow">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:110px;">  <LogLabel [ObjectFieldName]="'BusinessUnitId'"  [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                        <td style="width:230px"><LogLov style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'BusinessUnitId'" [ObjectTableName]="'User'" [DataContext]="NewUserPM" [LookUpTableName]="'BusinessUnit'"></LogLov></td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr style="vertical-align:top"  class="FormFieldRow">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:110px;">  <LogLabel [ObjectFieldName]="'Notes'"  [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel></td>
+                        <td style="width:230px"><div></div></td>
+                        <td><div></div></td>
+                    </tr>
+                    
+
+
+                    <tr style="vertical-align:top;height:33px">
+
+                        <td colspan="4">
+
+                            <table>
+                                <tr>
+                                    <td style="width:15px"><div></div></td>
+                                    <td style="width:338px">
+
+                                        <div style="height:90px;">
+                                            <LogTextBox style="width:338px;height:90px" [LogitudeForm]="myForm" [ObjectFieldName]="'Notes'" [IsMultiline]="true" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogTextBox>
+
+                                        </div>
+
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr><td><div></div></td></tr>
+
                 </table>
-            </td>           
+
+
+
+            </td>
+
+          <td><div></div></td>
+
         </tr>
+
+
         <!--End Fields Grid-->
 
         <tr *ngIf="RolesAreaVisibility" style="height:20px">
-            <td>
-                <span style="font-size:15px;color:#1B90CB;margin-left:5px">Roles</span>
-            </td>
+           
+            <td  colspan="3"><span style="font-size:15px;color:#1B90CB;margin-left:5px">Roles</span>    </td>
+           
         </tr>
 
-        <tr *ngIf="RolesAreaVisibility" style="max-height:300px;vertical-align:central">
-            <td style="max-height:300px;vertical-align:central" class="CellStretch">
+        <tr *ngIf="RolesAreaVisibility"  style="max-height:300px;vertical-align:central">
+       
+            <td  colspan="3" style="max-height:300px;vertical-align:central" class="CellStretch">
                 <div class="SimpleGridView">
                     <div class="SimpleGridViewHeader">
                         <table>
                             <tr>
+
                                 <td style="width: 190px; min-width: 190px;">Name</td>
                                 <td style="width: 50px; min-width: 50px;">Active</td>
                                 <td style="width: 100%; min-width:100%">Description</td>
                                 <td style="width: 46px; min-width: 46px"></td>
+
                             </tr>
                         </table>
                     </div>
 
-                    <div class="SimpleGridViewBody">
-                        <table>
+                    <div class="SimpleGridViewBody"> 
+                        <table> 
                             <tr style="height: 1px;">
                                 <td>
                                     <table>
-                                        <tr id="{{'row1' | IdGeneratorAsyncPipe | async}}" class="SimpleGridViewRow RowHover" *ngFor="let item of ObsList">
+                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ObsList">
                                             <td>
                                                 <table>
-                                                    <tr id="{{'row11' | IdGeneratorAsyncPipe | async}}" style="height:25px;" (click)="SelectedUserRolesItem = item" [class.RowSelected]="item === SelectedUserRolesItem">
+                                                    <tr style="height:25px;" (click)="SelectedUserRolesItem = item" [class.RowSelected]="item === SelectedUserRolesItem">
+
+
+
                                                         <td class="GridViewCell" style="width: 190px; min-width: 190px; max-width: 190px; position: relative;">
-                                                            {{item.Name}}
+                                                             
+                                                          {{item.Name}}
+                                     
                                                         </td>
+
+                                                        <!--<td class="CellStretched" style="width: 50px; min-width: 50px; max-width: 50px; position: relative;">
+
+                                                          
+                                                            <div class="CheckBox">
+                                                                <input [disabled]="(NewUserPM.IsFreelancer && !item.Code.startsWith('FRL'))"  class="CenterCenter" style="text-align:center" [attr.id]="item.Key" type="checkbox" (change)="IsActiveCheckboxClick(item)" [(ngModel)]="item.IsActive" />
+                                                                <label class="CenterCenter" [attr.for]="item.Key"></label>
+                                                            </div>
+
+                                                        </td>-->
+
+                                                        <!--<td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                            <div class="MediaFill">
+                                                                <div class="MediaFillRelative">
+                                                                    <div class="CenterCenter" style="width: 16px;">
+                                                                        <CheckBox [IsEnabled]="!(NewUserPM.IsFreelancer && !item.Code.startsWith('FRL'))" (Checked)="IsActiveCheckboxClick(item)" [IsChecked]="item.IsActive"></CheckBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>-->
 
                                                         <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
                                                             <div class="MediaFill">
@@ -377,21 +433,26 @@
                                                             </div>
                                                         </td>
 
+
+
+
                                                         <td class="GridViewCell" style="width:100%; min-width:100%; max-width:100%; position: relative;">
                                                             <div class="MessageText">{{item.Description}}</div>
+
                                                         </td>
 
                                                         <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;">
                                                             <div *ngIf="item.IsActive" class="EditButton" (click)="EditRole(item)" style="display:inline;width:18px;">
                                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
                                                             </div>
-                                                        </td>
-                                                    </tr>
 
-                                                    <tr>
-                                                        <td colspan="3"></td>
+                                                        </td>
+
                                                     </tr>
+                                                    <tr><td colspan="3"></td></tr>
                                                 </table>
+
+
                                             </td>
                                         </tr>
                                     </table>
@@ -408,16 +469,14 @@
                 </div>
 
             </td>
+
+
         </tr>
 
-        <tr *ngIf="!RolesAreaVisibility">
-            <td>
-                <div></div>
-            </td>
-        </tr>
+        <tr *ngIf="!RolesAreaVisibility"> <td><div></div></td></tr>
 
         <tr style="height: 32px;">
-            <td style="vertical-align: bottom">
+            <td colspan="3" style="vertical-align: bottom">
                 <table style="height: 22px;">
                     <tr>
                         <td>
@@ -435,11 +494,13 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button id="{{'OKIdButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                            <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
+
     </table>
+
 </div>

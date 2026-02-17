@@ -16,10 +16,10 @@ using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -56,8 +56,6 @@ namespace CommunicationWorkerRole
         public string LoggedContactId { get; set; }
         public string UserName { get; set; }
         public string StageName { get; set; }
-        public string EmailFooterMessage { get; set; }
-
         public string contactEmail = "";
         public string GuidId = "";
         public string EntityId = "";
@@ -66,7 +64,6 @@ namespace CommunicationWorkerRole
 
         List<DocumentsFilingPM> DocumentsFilings;
         User TicketUser;
-        int tenant = 0;
 
         public override void Run()
         {
@@ -76,7 +73,7 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-
+                        int tenant = 0;
                         queueservice = new DbQueueService(queueName, tenant);//QueueServiceManager.GetQueueService(queueName, 0);
                         var response = queueservice.Receive();
                         LastActivity = DateTime.UtcNow;
@@ -95,7 +92,6 @@ namespace CommunicationWorkerRole
                                 ObjectTableId = response.MessageValues["ObjectTableId"].ToString();
                                 LoggedContactId = response.MessageValues["CurrentLoggedUserId"].ToString();
                                 UserName = this.GetUserName(LoggedContactId, tenant);
-                                this.SetEmailFooterMessage();
                                 this.CreateCommunicationLog(lineId, tenant, ticketNumber, contactId, ownerId);
                                 queueservice.Complete();
                                 LogDoneItemInMemory();
@@ -148,8 +144,6 @@ namespace CommunicationWorkerRole
                     oldLines = inboundEmailLineRepository.GetInboundEmailLinesByInboudEmailId(newInboundEmailLine.InboundEmailId, newInboundEmailLine.Tenant);
                     Correspondence myCorrespondenceLine = correspondenceRep.GetSingle(newInboundEmailLine.EntityLineId, tenant);
                     StageName = GetTicketStageName(myCorrespondenceLine.EntityId, myCorrespondenceLine.ObjectTableId, tenant);
-
-                    this.GetSupportMailBoxEmail();
 
                     contactEmail = contactRep.GetEmailContactByIdAndTenant(tenant, contactId);
                     string ownerEmail = contactRep.GetEmailContactByIdAndTenant(tenant, ownerId);
@@ -216,12 +210,12 @@ namespace CommunicationWorkerRole
                             this.SendEmailCc(internals_Emails, tenant, bytearray, true);
                         }
 
-                        if (myCorrespondenceLine.NotifyMe & !string.IsNullOrEmpty(loggedUserEmail))
+                        if (myCorrespondenceLine.NotifyMe)
                         {
                             this.SendEmailTo(loggedUserEmail, tenant, bytearray, true);
                         }
 
-                        if (myCorrespondenceLine.NotifyOwner && !string.IsNullOrEmpty(ownerEmail))
+                        if (myCorrespondenceLine.NotifyOwner)
                         {
                             this.SendEmailTo(ownerEmail, tenant, bytearray, true);
                         }
@@ -253,14 +247,14 @@ namespace CommunicationWorkerRole
                             this.SendEmailCc(internals_Emails, tenant, bytearray, true);
                         }
 
-                        if (myCorrespondenceLine.NotifyMe && !string.IsNullOrEmpty(loggedUserEmail))
+                        if (myCorrespondenceLine.NotifyMe)
                         {
                             this.SendEmailTo(loggedUserEmail, tenant, bytearray, false);
                         }
 
                         myHTMLBody = this.BuildHTMLBody(oldLines, ticketNumber, false, true);
                         bytearray = enc.GetBytes(myHTMLBody);
-                        if (myCorrespondenceLine.NotifyOwner && !string.IsNullOrEmpty(ownerEmail))
+                        if (myCorrespondenceLine.NotifyOwner)
                         {
                             this.SendEmailTo(ownerEmail, tenant, bytearray, false);
                         }
@@ -311,18 +305,28 @@ namespace CommunicationWorkerRole
 
             return myResult;
         }
-
         private bool IsSupportEmail(string email)
         {
             bool myResult = false;
+
             if (!string.IsNullOrEmpty(email))
             {
-                if (email.ToLower().Split('@')[1] == this.SupportDomain.ToLower())
-                    myResult = true;
+                email = email.ToLower();
+
+                switch (email)
+                {
+                    case "s@test.unifreight.co.il":
+                    case "support@ilcargo.com":
+                    case "support@icl.unifreight.co.il":
+                        {
+                            myResult = true;
+                            break;
+                        }
+                }
             }
+
             return myResult;
         }
-
         private bool IsEmail(string email)
         {
             var myResult = true;
@@ -346,23 +350,18 @@ namespace CommunicationWorkerRole
 
             return myResult;
         }
-        private void SetEmailFooterMessage()
-        {
-                this.EmailFooterMessage = "This email is a service from Unifreight Cloud Generation!";
-        }
 
-        Ticket Ticket;
         private string GetTicketStageName(string Id, string objectTableId, int tenant)
         {
             string stageName = "";
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
             ObjectTable objectTable = objectTableRepository.GetObjectTableByName("Ticket", 0, true);
-            TicketRepository ticketRep = new TicketRepository(tenant);
-            Ticket = ticketRep.GetSingle(Id, tenant);
             if (objectTable.Id == objectTableId)
             {
+                TicketRepository ticketRep = new TicketRepository(tenant);
+                Ticket ticket = ticketRep.GetSingle(Id, tenant);
                 TicketStageRepository stageRep = new TicketStageRepository(tenant);
-                TicketStage ticketStage = stageRep.GetSingle(Ticket.StageId, Ticket.Tenant);
+                TicketStage ticketStage = stageRep.GetSingle(ticket.StageId, ticket.Tenant);
                 stageName = ticketStage.Name;
             }
 
@@ -406,11 +405,7 @@ namespace CommunicationWorkerRole
                 if (isInternal)
                 {
                     string replayTo = newInboundEmailLine.Recepient;
-                    if (!replayTo.Split('@')[0].Contains("+"))
-                    {
-                        replayTo = newInboundEmailLine.Recepient.Split('@')[0] + "+" + GuidId + "@" + newInboundEmailLine.Recepient.Split('@')[1];
-                    }
-                    replayToList = replayTo.Split('@')[0] +  "-in" + "@" + replayTo.Split('@')[1];
+                    replayToList = replayTo.Split('@')[0] + "-in" + "@" + replayTo.Split('@')[1];
                 }
 
                 else
@@ -425,10 +420,6 @@ namespace CommunicationWorkerRole
                 if (isInternal)
                 {
                     string replayTo = newInboundEmailLine.Sender;
-                    if (!replayTo.Split('@')[0].Contains("+"))
-                    {
-                        replayTo = newInboundEmailLine.Sender.Split('@')[0] + "+" + GuidId + "@" + newInboundEmailLine.Sender.Split('@')[1];
-                    }
                     replayToList = replayTo.Split('@')[0] + "-in" + "@" + replayTo.Split('@')[1];
                 }
 
@@ -444,7 +435,9 @@ namespace CommunicationWorkerRole
                 UserName = "Support";
             }
 
-            string from = "<" + UserName + "> " + SupportEmail;
+            string tenantEmail = GetTenantManagementEmail(Tenant);
+            string from = "<" + UserName + "> " + tenantEmail;
+
             CommunicationLog commLog = new CommunicationLog()
             {
                 Id = IdCounter.GetNumber("CommunicationLog", Tenant),
@@ -498,10 +491,18 @@ namespace CommunicationWorkerRole
 
             try
             {
+				//IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
+				//Dictionary<string, string> message = new Dictionary<string, string>() 
+				//    {
+				//        { "CommunicationLogId", myCommunicationLogId}, 
+				//        { "Tenant", Tenant.ToString() }, 
+				//    };
 
-                DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
-            }
+				//queueservice.Send(message);
+
+				DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
+				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId",myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
+			}
 
             catch (Exception ex)
             {
@@ -575,6 +576,7 @@ namespace CommunicationWorkerRole
 
                 else
                 {
+                    //replayToList = newInboundEmailLine.Sender;
                     replayToList = replayTo.Split('@')[0] + "-ex" + "@" + replayTo.Split('@')[1];
                 }
             }
@@ -584,7 +586,8 @@ namespace CommunicationWorkerRole
                 UserName = "Support";
             }
 
-            string from = "<" + UserName + "> " + SupportEmail;
+            string tenantEmail = GetTenantManagementEmail(Tenant);
+            string from = "<" + UserName + "> " + tenantEmail;
 
             CommunicationLog commLog = new CommunicationLog()
             {
@@ -597,13 +600,13 @@ namespace CommunicationWorkerRole
                 EntityId = EntityId,
                 ObjectTableId = ObjectTableId,
                 ChildEntityId = newInboundEmailLine.EntityLineId,
-                ChildObjectTableId = ChildObjectTableId,
+                ChildObjectTableId =ChildObjectTableId, 
                 Subject = newInboundEmailLine.Subject,
                 Tenant = Tenant,
                 CommunicationLogTypeCode = "E",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant),
                 CommunicationStatusTypeCode = "W",
-                // CreatedByUserId = TicketUser != null ? TicketUser.Id : null,
+               // CreatedByUserId = TicketUser != null ? TicketUser.Id : null,
                 DocumentId = document.Id,
                 SearchFields = "mailgun" + "," + "O" + "," + newInboundEmailLine.Subject,
                 CreateDateUTC = DateTime.UtcNow,
@@ -638,18 +641,18 @@ namespace CommunicationWorkerRole
 
             try
             {
-                //IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
-                //Dictionary<string, string> message = new Dictionary<string, string>() 
-                //    {
-                //        { "CommunicationLogId", myCommunicationLogId}, 
-                //        { "Tenant", Tenant.ToString() }, 
-                //    };
+				//IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
+				//Dictionary<string, string> message = new Dictionary<string, string>() 
+				//    {
+				//        { "CommunicationLogId", myCommunicationLogId}, 
+				//        { "Tenant", Tenant.ToString() }, 
+				//    };
 
-                //queueservice.Send(message);
+				//queueservice.Send(message);
 
-                DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
-            }
+				DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
+				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
+			}
 
             catch (Exception ex)
             {
@@ -1006,7 +1009,7 @@ namespace CommunicationWorkerRole
                         foreach (string id in docIds)
                         {
                             DocumentsFilingPM myDoc = DocumentsFilings.Where(a => a.Id == id).FirstOrDefault();
-                            string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant;
+                            string uri = LogitudeSettings.LogitudeURL + "/WebPages/CorrespondenceDownloadpage.aspx?id=" + myDoc.SecurityId + "~" + item.Tenant; 
                             myResult += @"<a href=" + uri + "><span style=';font-family:Lucida Sans Unicode;font-size:12px;'>" + myDoc.FileName + "</span></a> |";
                         }
 
@@ -1118,7 +1121,7 @@ namespace CommunicationWorkerRole
             }
 
             myResult += @"<div style='text-align:center;width:100%!important;height:50px;background:#008dbc;border:1px solid #DADADA;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;font-family:Lucida Sans Unicode;font-size:17px;'>"
-                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>"+ this.EmailFooterMessage+"</p>"
+                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is service from Unifreight!</p>"
                    + @"</div>";
 
             string lowerPart =
@@ -1268,7 +1271,7 @@ namespace CommunicationWorkerRole
             }
 
             myResult += @"<div style='text-align:center;min-height:50px;background:#008dbc;border:1px solid #DADADA;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;font-family:Lucida Sans Unicode;font-size:17px;'>"
-                   + @"<p style='width:100%!important;text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>"+ this.EmailFooterMessage + "</p>"
+                   + @"<p style='width:100%!important;text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is service  from Unifreight!</p>"
                    + @"</div>";
 
             string lowerPart =
@@ -1280,27 +1283,17 @@ namespace CommunicationWorkerRole
             return myResult;
         }
 
-        public string SupportEmail = "";
-        public string SupportDomain = "";
-        public void GetSupportMailBoxEmail()
+        public string GetTenantManagementEmail(int tenant)
         {
-            var mailBox = this.GetDefaultSupportMailBox();
+            string email = "";
             TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
             TenantManagement myTenant = tenantManagementRepository.GetSingleTenantManagement(tenant);
             if (myTenant != null)
             {
-                SupportDomain = myTenant.SupportDomain;
-                this.SupportEmail = mailBox + "@" + myTenant.SupportDomain;
+                email = myTenant.SupportEmail;
             }
-        }
 
-        private string GetDefaultSupportMailBox()
-        {
-            string mailBox = null;
-            SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(tenant);
-            SupportMailbox supportMailbox = mailboxRepository.GetSingle(Ticket.SupportMailboxId, tenant);
-            mailBox = supportMailbox != null ? supportMailbox.Mailbox : null;
-            return mailBox;
+            return email;
         }
 
         private string GetUserName(string id, int tenant)
@@ -1340,7 +1333,7 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                queueservice = new DbQueueService(queueName, 0);
+                queueservice = new DbQueueService(queueName, 0); 
             }
             catch (Exception ex)
             {

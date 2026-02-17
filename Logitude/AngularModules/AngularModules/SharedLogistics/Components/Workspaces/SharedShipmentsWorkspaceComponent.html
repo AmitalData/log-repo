@@ -50,9 +50,9 @@
     <tr style="height:21px;">
         <td>
             <ul class="PagesMenu">
-                <li id="{{'PROG' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'PROG'" (click)="SelectedItem = 'PROG'">In Progress ({{InProgressCount}})</li>
+                <li id="{{'PROG' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'PROG'" (click)="SelectedItem = 'PROG'">In Progress ({{InProgressCount}})</li>
 
-                <li id="{{'ALLS' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'ALLS'" (click)="SelectedItem = 'ALLS'">All Shipments ({{AllShipmentsCount}})</li>
+                <li id="{{'ALLS' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'ALLS'" (click)="SelectedItem = 'ALLS'">All Shipments ({{AllShipmentsCount}})</li>
             </ul>
         </td>
     </tr>

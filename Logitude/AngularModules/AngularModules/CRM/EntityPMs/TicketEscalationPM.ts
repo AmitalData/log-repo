@@ -89,19 +89,11 @@ export class TicketEscalationPM {
     public set EscalationForName(newValue: string) { if (this.escalationForName != newValue) { this.escalationForName = newValue; this.MarkAsDirty("EscalationForName"); } }
        
 	 
-    private searchFields: string;
-    public get SearchFields() { return this.searchFields; }
-    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
 
     public OldEntityPM: TicketEscalationPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -109,7 +101,6 @@ export class TicketEscalationPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TicketEscalation");
            
         }
-       }
     }
 
     private MyClone: TicketEscalationPM;

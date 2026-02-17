@@ -370,7 +370,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:80px;">
-                                                                            <LogLabel  [NoObjectField]="true"  [Text]="ConnectToFilterLabel" [DataContext]="DataContext"></LogLabel>
+                                                                            <LogLabel [Text]="ConnectToFilterLabel" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
                                                                         <td>
                                                                             <table>
@@ -557,15 +557,15 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td *ngIf="!IsLogBox && EntityObjectTableName!='Master'" style="width:80px;">
-                                                                            <LogLabel  [NoObjectField]="true"  [Text]="'Customer'" [DataContext]="DataContext"></LogLabel>
+                                                                            <LogLabel [Text]="'Customer'" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
 
                                                                         <td *ngIf="!IsLogBox && EntityObjectTableName=='Master'" style="width:80px;">
-                                                                            <LogLabel  [NoObjectField]="true"  [Text]="'Agent'" [DataContext]="DataContext"></LogLabel>
+                                                                            <LogLabel [Text]="'Agent'" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
 
                                                                         <td *ngIf="IsLogBox" style="width:80px;">
-                                                                            <LogLabel  [NoObjectField]="true"  [Text]="'Supplier'" [DataContext]="DataContext"></LogLabel>
+                                                                            <LogLabel [Text]="'Supplier'" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
                                                                         <td style="width:170px;">
                                                                             <div class="TextTrimming" style="width: 170px;">
@@ -584,7 +584,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:80px;">
-                                                                            <LogLabel  [NoObjectField]="true"  [Text]="'Route'" [DataContext]="DataContext"></LogLabel>
+                                                                            <LogLabel [Text]="'Route'" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
                                                                         <td style="width:170px;">
                                                                             <div class="TextTrimming" style="width: 170px;">
@@ -626,7 +626,7 @@
                                                                                         <td>
                                                                                             <table>
                                                                                                 <tr>
-                                                                                                    <td *ngIf="item.IsSingleTick" style="width:16px;height:11px; padding-right:2px;vertical-align:middle;">
+                                                                                                    <td *ngIf="item.IsSingleTick && item.AttachLogs == null" style="width:16px;height:11px; padding-right:2px;vertical-align:middle;">
                                                                                                         <div *ngIf="item != SelectedAttachment" class="MediaFill CenterCenter" style="width:16px;height:11px;">
                                                                                                             <button style="width:16px;height:11px;background:url(./Images/single-tick.png) no-repeat;background-size: 100% 100%; position: fixed;padding: 0 !important;vertical-align: middle;display: block;" tabindex="-1"></button>
                                                                                                         </div>
@@ -635,7 +635,7 @@
                                                                                                         </div>
                                                                                                     </td>
 
-                                                                                                    <td *ngIf="item.AttachLogs != null && item.AttachLogs.length > 0 && item == SelectedAttachment" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                                                                                    <td *ngIf="item.AttachLogs != null && item == SelectedAttachment" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
                                                                                                         <CellTooltip [IconWidth]="20" [IconHeight]="15" [Width]="SelectedAttachment.EntityNumberColumnWidth+230" [IconPath]="'./Images/double-tick-white.png'" [Head]="'Logs'">
                                                                                                             <table>
                                                                                                                 <tr *ngFor="let log of SelectedAttachment.AttachLogs" style="vertical-align:top;height:22px;">
@@ -664,7 +664,7 @@
                                                                                                             </table>
                                                                                                         </CellTooltip>
                                                                                                     </td>
-                                                                                                    <td *ngIf="item.AttachLogs != null && item.AttachLogs.length > 0 && item != SelectedAttachment" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                                                                                    <td *ngIf="item.AttachLogs != null && item != SelectedAttachment" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
                                                                                                         <CellTooltip [IconWidth]="20" [IconHeight]="15" [Width]="item.EntityNumberColumnWidth + 230" [IconPath]="'./Images/double-tick.png'" [Head]="'Logs'">
                                                                                                             <table>
                                                                                                                 <tr *ngFor="let log of item.AttachLogs" style="vertical-align:top;height:22px;">
@@ -751,7 +751,7 @@
                                                                                                                     </li>
                                                                                                                 </ul>
 
-                                                                                                                <LogLov *ngIf="SelectedAttachment.ShowTypes == true" style="float: left;width: 130px;margin-left: 5px;"
+                                                                                                                <LogLov *ngIf="SelectedAttachment.ShowTypes == true" [LogitudeForm]="myForm" style="float: left;width: 130px;margin-left: 5px;"
                                                                                                                         [ObjectFieldName]="'DocumentTypeId'"
                                                                                                                         [SelectedValue]="SelectedAttachment.DocumentTypeId"
                                                                                                                         [DataContext]="SelectedAttachment.DataContext"

@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter} from '@angular/core';
 import { CustomsMenuItem, RequestSheetState } from '../../DataContract/CustomsMenuItem';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
@@ -10,70 +10,33 @@ import { CommunicationLogStepListService } from '../../../Common/Services/Extend
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 //import { BaseRequestsSheetMassaging } from '../../Customs/Components/CustomsRequests/BaseRequestsSheetMassaging';
 import { BaseRequestsSheetMassaging } from '../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
-import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
-import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
 
 @Injectable()
 export class CustomsRequestMenuService {
     private _CustomsRequestMenuItems: CustomsMenuItem[];
     public get CustomsRequestMenuItems() { return this._CustomsRequestMenuItems }
-    private entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(isReports: any = false) {
+    constructor() {
         ///alert("CustomsRequestMenuService");
-        if (isReports) {
-            this.buildReportsList();
-        } else {
-            this.buildCustomsList();
-        }
-    }
-    private buildReportsList() {
-        this._CustomsRequestMenuItems = [];
-        if (FeatureLocator.HasFeaturePermession("Customs.CustomsVendor", "SettingVehicle")) {
-            this.entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
-                this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewClient"), "NewClient", './CustomsModules/CustomsClient/Components/NewClient/NewClientComponent', 850, 500, "Customs.Client")); //3610
-            });
-        }
-
-        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "SlaReport")) {
-            this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח SLA", "SLAReport", './CustomsModules/CustomsReport/Components/Reports/SLAReportComponent', 400, 300, "1111"));
-        }
-        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "LastMileReport")) {
-
-            this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח הפצה", "LastMileReport", './CustomsModules/CustomsReport/Components/Reports/LastMileReportComponent', 500, 300, "1112"));
-        }
-        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "WorkSheetFromExcel")) {
-
-            this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסך עבודה - הטענת אקסל", "WorkSheetFromExcel", './CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetFromExcelComponent', 1880, 1000, "1113"));
-        }
+        this.buildCustomsList();
     }
     private buildCustomsList() {
         this._CustomsRequestMenuItems = [];
-        //TextCodeTranslator.Translate("Customs.General.O.CopyDeclaration")
+
         // <!> Abdullah: Fill 'CustomsMenuItem.ObjectTableName' if you want to open a query screen
-        if (FeatureLocator.HasFeaturePermession("CustomsGeneral", "EXPORTTENANT0")) {
 
-            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ExportReport"), "ExportReport", './CustomsModules/CustomsReport/Components/Reports/ExportReportComponent', 500, 300, "1112"));
-        }
-
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ExportDeclarationRestoreQuery"), "DeclarationRestoreQuery", './CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent', 850, 500, "9079"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationRestoreQuery"), "DeclarationRestoreQuery", './CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent', 850, 500, "8373"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MorningMessageQuery"), "MorningMessage", './CustomsModules/CustomsGeneralRequests/Components/MorningMessageComponent', 800, 600, "0102"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Declaration.O.SendRequest"), "DeclarationStatusQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/DeclarationStatusComponent', 550, 650, "8250"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CourierBOLQuery"), "CourierBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/CourierBOLQueryComponent', 750, 500, "9022"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.GuaranteeCertificateFilterQuery"), "GuaranteeCertificateQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/GuaranteeCertificateComponent', 850, 670, "8306"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.FaultQuery"), "FaultQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/FaultQueryComponent', 750, 680, "8332"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.WarehouseBlockBalance"), "WarehouseBlockBalanceQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/WarehouseBlockBalanceComponent', 850, 720, "8328"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.WarehouseBlockBalance"), "WarehouseBlockBalanceQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/WarehouseBlockBalanceComponent', 850, 690, "8328"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasterBOLQuery"), "MasterBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/MasterBOLQueryComponent', 600, 590, "9020"));
-
-        let my8347 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CurrencyExchangeRateQuery"), "ExchangeRateQuery", './CustomsModules/CustomsGeneralRequests/Components/ExchangeRatesQueryComponent', 650, 590, "8347")
-        my8347.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(my8347);
-
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CurrencyExchangeRateQuery"), "ExchangeRateQuery", './CustomsModules/CustomsGeneralRequests/Components/ExchangeRatesQueryComponent', 650, 590, "8347"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), "CustomItemLegalDemandsQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomItemLegalDemandsQueryComponent', 950, 630, "8316"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationPrintQuery"), "DeclarationPrintQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/PrintRequestComponent', 500, 490, "8302"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomsItemDetailsQuery"), "CustomsItemsDetailsQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomsItemDetailsQueryComponent', 470, 500, "8314"));
-
 
         // Vendors
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.Vendors"), "Vendors", '', 850, 500, "", "", null, "Customs.CustomsVendor"));
@@ -85,22 +48,16 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewClient"), "NewClient", './CustomsModules/CustomsClient/Components/NewClient/NewClientComponent', 850, 500, "Customs.Client")); //3610
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ClientSearchByIDQuery"), "ClientSearchByID", './CustomsModules/CustomsGeneralRequests/Components/ClientSearchByIDComponent', 850, 800, "8343"));
 
-        var item8330 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BlockListInWarehouseQuery"), "BlockList", './CustomsModules/CustomsRequests/Components/DeclarationRequests/BlockListInWarehouseComponent', 900, 520, "8330");
-        item8330.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(item8330);
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BlockListInWarehouseQuery"), "BlockList", './CustomsModules/CustomsRequests/Components/DeclarationRequests/BlockListInWarehouseComponent', 900, 520, "8330"));
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CargoQuery"), "MainfestStatus", '', 850, 500, ""));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CargoQuery"), "MainfestStatus", './CustomsModules/CustomsGeneralRequests/Components/CargoQueryRequestComponent', 1010, 680, "8240"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Declaration.O.RestoreMessage"), "RestoreMessage", './CustomsModules/CustomsGeneralRequests/Components/CustomsRestoreMessagesComponent', 540, 380, ""));// 9010 or 9011
-
-        var item8326 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ImporterDeclarationQuery"), "ImporterDeclarationQuery", './CustomsModules/CustomsGeneralRequests/Components/ImporterDeclarationComponent', 850, 800, "8326")
-        item8326.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(item8326);
-
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ImporterDeclarationQuery"), "ImporterDeclarationQuery", './CustomsModules/CustomsGeneralRequests/Components/ImporterDeclarationComponent', 850, 800, "8326"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BankAccountToRefundQuery"), "BankAccountToRefundQuery", './CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deposit/BankAccountToRefundComponent', 600, 420, "2018"));
-
+         
         if (FeatureLocator.HasFeaturePermession("General", "RECALLSUPPLIER")) {
-            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", './CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent', 850, 500, ""));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", '', 850, 500, ""));
         }
 
 
@@ -108,18 +65,10 @@ export class CustomsRequestMenuService {
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasavPaymentsToAgentQuery"), "MasavPaymentsToAgentQuery", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/MasavPaymentsToAgentComponent', 830, 650, "8368"));
         var my8368 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasavPaymentsToAgentQuery"), "MasavPaymentsToAgentQuery", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/MasavPaymentsToAgentComponent', 830, 650, "8368")
         my8368.CanExportExcel = true;
-        //CustomMessageProgressComponent
-        //    .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
-        //    .then((res) => {
-        //        this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
-        //    }
-        //    ).catch((err) => {
-        //        this.ValidationErrorsList.push(err);
-        //    });
         this._CustomsRequestMenuItems.push(my8368);
 
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder"), "NewPaymentOrder", './CustomsModules/CustomsPaymentOrder/Components/NewEntity/NewPaymentOrderComponent', 420, 300, "3053"));
+      this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder"), "NewPaymentOrder", './CustomsModules/CustomsPaymentOrder/Components/NewEntity/NewPaymentOrderComponent', 420, 300, "3053"));
         var myCustomsMenuItem8305 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.GuaranteeFileFilterQuery"), "GuaranteeFileFilterQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/GuaranteeFileFilterQueryComponent', 900, 670, "8305")
         myCustomsMenuItem8305.CanExportExcel = true;
         this._CustomsRequestMenuItems.push(myCustomsMenuItem8305);
@@ -129,29 +78,16 @@ export class CustomsRequestMenuService {
         //string uri = Simplog.Infrastructure.App.Current.Host.Source.AbsoluteUri;
         //if (!uri.StartsWith("http://amitaliis.cloudapp.net/unifreightIIG/")) {
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CreditQuery"), "CreditQuery", './CustomsModules/CustomsGeneralRequests/Components/CreditLimitQueryComponent', 650, 610, "8289"));
-
-        var my8289Z = (new CustomsMenuItem("שאילתא לתקרת זהב", "CreditGoldQuery", './CustomsModules/CustomsGeneralRequests/Components/GoldCreditLimitQueryComponent', 1040, 610, "8289Z"))
-        my8289Z.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(my8289Z);
-
-        const my8285 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.PaymentQuery"), "Payments", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/PaymentOrderQueryComponent', 950, 650, "8285")
-        my8285.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(my8285);
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SpecialActivityRequestHeader"), "SpecialActivityRequest", './CustomsModules/CustomsGeneralRequests/Components/SpecialActivityRequestComponent', 920, 680, "40"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא לתקרת זהב", "CreditGoldQuery", './CustomsModules/CustomsGeneralRequests/Components/GoldCreditLimitQueryComponent', 850, 610, "8289Z"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.PaymentQuery"), "Payments", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/PaymentOrderQueryComponent', 950, 650, "8285"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SpecialActivityRequest"), "SpecialActivityRequest", './CustomsModules/CustomsGeneralRequests/Components/SpecialActivityRequestComponent', 920, 680, "40"));
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SendClaim"), "SendClaim", '', 850, 500, "")); // Task 29851
         //}
-        // this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא להצהרה יצוא", "ExportDeclarationDataRequest", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ExportDeclarationDataComponent', 700, 680, "9070"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DecDataQuery"), "ExportDeclarationDataRequest", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ExportOrImportDeclarationDataComponent', 700, 680, "9070"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא להצהרה יצוא", "ExportDeclarationDataRequest", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ExportDeclarationDataComponent', 700, 680, "9070"));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ClaimFileFilterQuery"), "ClaimFileFilter", './CustomsModules/CustomsRequests/Components/ClaimRequests/ClaimFileFilterComponent', 870, 720, "8244"));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomsBookQuery"), "CustomsBookQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomsBookQueryComponent', 850, 500, "8361"));
-
-        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONCARGOSEAL")) {
-
-            this._CustomsRequestMenuItems.push(new CustomsMenuItem("עדכון סגרים", "CargoSealsQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/CargoSealsQueryComponent', 820, 550, "6001"));
-        }
-        //TextCodeTranslator.Translate("Customs.General.O.CargoSealsQuery")
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", './CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent', 500, 400, ""));
 
 
@@ -175,25 +111,11 @@ export class CustomsRequestMenuService {
             , "RequiredDocument",
             './CustomsModules/CustomsGeneralRequests/Components/RequiredDocumentComponent',
             400, 410, "8228", null, null, null, true
-
         ));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("סיום בדיקה פיזית"
-            , "EndPhysicalCheck",
-            './CustomsModules/CustomsGeneralRequests/Components/EndPhysicalCheckComponent',
-            1010, 450, "196", null, null, null, true
-        ));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("בדיקה פיזית"
-            , "PhysicalCheck",
-            './CustomsModules/CustomsGeneralRequests/Components/PhysicalCheckComponent',
-            1010, 450, "190", null, null, null, true
-        ));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("קליטת זמינויות", "StorageEntranceComponent", './CustomsModules/CustomsRequests/Components/Courier/StorageEntranceComponent', 800, 500, ""));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסר התרה לתיק", "ReleaseGoods", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ReleaseGoodsComponent', 1010, 610, "2470", null, null, null, true));
-
-
-
     }
     public ShowModalByIdAndIntreface(id: string, InterfaceTypeCode: string, RequestDescription: string) {
         if (AppTool.IsNullOrEmpty(id)) {
@@ -210,6 +132,7 @@ export class CustomsRequestMenuService {
             this.ShowModalDefault(id, InterfaceTypeCode, RequestDescription);
             return;
         }
+
         this.ShowModal(list[0], id, null);
     }
 
@@ -259,6 +182,7 @@ export class CustomsRequestMenuService {
 
 
                 this.CurrentSession.StopBusyIndicator();
+
                 if (suppressHugeDataFeature && reqJson == "(item.DocumentData.Length * sizeof(Char) > sizeOf250KB)") {
 
 
@@ -278,7 +202,7 @@ export class CustomsRequestMenuService {
                     'AnalyzeMessage': JSON.parse(resJson),
                     'CustomResponse': JSON.parse(reqJson),
                 };
-                logitudeWindow.Show('./CustomsModules/CustomsControls/Components/ObjectViewerComponent');
+                logitudeWindow.Show('./CustomsModules/CustomControls/Components/ObjectViewerComponent');
 
 
             });
@@ -301,7 +225,7 @@ export class CustomsRequestMenuService {
     //    }
     //    else {
     //        documentName = item.DocumentId;
-    //         DownloadManager.DownloadPage(documentName);
+   //         DownloadManager.DownloadPage(documentName);
     //    }
 
 
@@ -309,9 +233,9 @@ export class CustomsRequestMenuService {
     ViewXMLClicked(item) {
 
         var link = "";
-        var documentName: string = item.DocumentId;
+        var documentName: string =  item.DocumentId;
 
-
+     
 
         //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(link);
@@ -336,14 +260,12 @@ export class CustomsRequestMenuService {
         }
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = item.WindowWidth; //850;
-        logitudeWindow.Height = item.WindowHeight + 30;//500;
+        logitudeWindow.Height = item.WindowHeight + 10;//500;
         logitudeWindow.ShowCloseButton = true;
         logitudeWindow.Title = item.TranslatedName//"Declaration restore query";
 
-        if(item.MainInterfaceCode == "9079"){
-            menuArg = { LoggingEntityReference: 'E' };
-        } 
-
+        //logitudeWindow.Show('./CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent');
+        //MorningMessageComponent
         var myLogId = logId;
         myLogId = myLogId || item.DemoLogId;
         var isComponentLoaded: boolean = false;
@@ -354,22 +276,13 @@ export class CustomsRequestMenuService {
                 logitudeWindow.ComponentLoaded.subscribe((compo) => {
                     var myRequestsSheetMassagingView: BaseRequestsSheetMassaging = compo as BaseRequestsSheetMassaging;
                     if (myRequestsSheetMassagingView) {
-                        //myRequestsSheetMassagingView.MyCustomsMenuItem = item;
-                        var my = new LongRunner20(
-                            () => { return myRequestsSheetMassagingView.IsViewChildCustomMessageWrapperComponentInit; },
-                            () => {
-                                myRequestsSheetMassagingView.MyCustomsMenuItem = item;
-                                if (!AppTool.IsNullOrEmpty(menuArg)) {
-                                    try {
-                                        var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
-                                        myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
-                                    } catch (err) { console.warn("! SetMenuArg(menuArg)") }
-                                }
-
-                            }
-                        );
-                        my.RunComponent()
-
+                        myRequestsSheetMassagingView.MyCustomsMenuItem = item;
+                        if (!AppTool.IsNullOrEmpty(menuArg)) {
+                            try {
+                                var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
+                                myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
+                            } catch (err) { console.warn("! SetMenuArg(menuArg)") }
+                        }
                         logitudeWindow.WindowClosed.subscribe((anyString) => {
                             myRequestsSheetMassagingView.DisposeMyState();
                             this.WindowClosed.emit(anyString);
@@ -380,15 +293,9 @@ export class CustomsRequestMenuService {
             }
             if (!isComponentLoaded) {
                 logitudeWindow.ComponentLoaded.subscribe((compo) => {
-
                     var myRequestsSheetMassagingView: BaseRequestsSheetMassaging = compo as BaseRequestsSheetMassaging;
                     if (myRequestsSheetMassagingView) {
-                        var my = new LongRunner20(
-                            () => { return myRequestsSheetMassagingView.IsViewChildCustomMessageWrapperComponentInit; },
-                            () => { myRequestsSheetMassagingView.MyCustomsMenuItem = item; }
-                        );
-                        my.RunComponent();
-                        //myRequestsSheetMassagingView.MyCustomsMenuItem = item;
+                        myRequestsSheetMassagingView.MyCustomsMenuItem = item;
                     }
                 });
             }
@@ -401,14 +308,8 @@ export class CustomsRequestMenuService {
         let resJson = "";
 
         this.CurrentSession.StartBusyIndicator("");
-        if (!this.shouldPrefetchReqRes(item)) {
-            this.CurrentSession.StopBusyIndicator();
-            this.ShowAsRequestSheet(logitudeWindow, item, null, null, menuArg, logId, true);
-            return;
-        }
-
         var myCommunicationLogStepListService = new CommunicationLogStepListService();
-
+        //logId=1-212245&tenant=1
         myCommunicationLogStepListService.getCommunicationLogStepsRequestParamResponseData(
             item.MainInterfaceCode,
             myLogId, SessionLocator.Tenant
@@ -423,60 +324,35 @@ export class CustomsRequestMenuService {
                 //alert(resJson);
                 this.CurrentSession.StopBusyIndicator();
                 this.ShowAsRequestSheet(logitudeWindow, item, reqJson, resJson, menuArg, logId);
+
+
             });
+
+
+
+
     }
 
+    ShowAsRequestSheet(logitudeWindow, item: CustomsMenuItem, reqJson, resJson, menuArg, logId: string) {
 
-
-
-    ShowAsRequestSheet(logitudeWindow, item: CustomsMenuItem, reqJson, resJson, menuArg, logId: string, isNoDataByDesign: boolean = false) {
         var myRequestSheetState = item.requestSheetState || new RequestSheetState(true, true, false);
 
         logitudeWindow.ComponentLoaded.subscribe((compo) => {
             var myRequestsSheetMassagingView: BaseRequestsSheetMassaging = compo as BaseRequestsSheetMassaging;
             if (myRequestsSheetMassagingView) {
-                var my = new LongRunner20(
-                    () => { return myRequestsSheetMassagingView.IsViewChildCustomMessageWrapperComponentInit; },
-                    () => {
+                myRequestsSheetMassagingView.MyCustomsMenuItem = item;
+                myRequestsSheetMassagingView.MyCommunicationLogId = logId;
 
-                        myRequestsSheetMassagingView.MyCustomsMenuItem = item;
-                        myRequestsSheetMassagingView.MyCommunicationLogId = logId;
-                        myRequestsSheetMassagingView.CustomRequestContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
-                        myRequestsSheetMassagingView.CustomResponseContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
-                        myRequestsSheetMassagingView.CustomSendOptionsButtonIsDisable = myRequestSheetState.CustomSendOptionsButtonIsDisable;
-                        if (isNoDataByDesign) {
-                            var anyView = myRequestsSheetMassagingView as any;
-                            if (anyView && anyView.MessageDisplayWithNoData) {
-                                anyView.MessageDisplayWithNoData();
-                            } else {
-                                myRequestsSheetMassagingView.MassageDisplay("", "");
-                            }
-                        } else {
-                            myRequestsSheetMassagingView.MassageDisplay(reqJson, resJson);
-
-                        }
-                        if (!AppTool.IsNullOrEmpty(menuArg)) {
-                            try {
-                                var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
-                                myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
-                            } catch (err) { console.warn("! SetMenuArg(menuArg)") }
-                        }
-
-                    }
-                );
-                my.RunComponent();
-                //myRequestsSheetMassagingView.MyCustomsMenuItem = item;
-                //myRequestsSheetMassagingView.MyCommunicationLogId = logId;
-                //myRequestsSheetMassagingView.CustomRequestContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
-                //myRequestsSheetMassagingView.CustomResponseContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
-                //myRequestsSheetMassagingView.CustomSendOptionsButtonIsDisable = myRequestSheetState.CustomSendOptionsButtonIsDisable;
-                //myRequestsSheetMassagingView.MassageDisplay(reqJson, resJson);
-                //if (!AppTool.IsNullOrEmpty(menuArg)) {
-                //    try {
-                //        var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
-                //        myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
-                //    } catch (err) { console.warn("! SetMenuArg(menuArg)") }
-                //}
+                myRequestsSheetMassagingView.CustomRequestContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
+                myRequestsSheetMassagingView.CustomResponseContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
+                myRequestsSheetMassagingView.CustomSendOptionsButtonIsDisable = myRequestSheetState.CustomSendOptionsButtonIsDisable;
+                myRequestsSheetMassagingView.MassageDisplay(reqJson, resJson);
+                if (!AppTool.IsNullOrEmpty(menuArg)) {
+                    try {
+                        var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
+                        myRequestsSheetMassagingViewAny.SetMenuArg(menuArg);
+                    } catch (err) { console.warn("! SetMenuArg(menuArg)") }
+                }
                 logitudeWindow.WindowClosed.subscribe((anyString) => {
                     myRequestsSheetMassagingView.DisposeMyState();
                     this.WindowClosed.emit("");
@@ -485,47 +361,5 @@ export class CustomsRequestMenuService {
 
         });
         logitudeWindow.Show(item.URLContent);
-    }
-
-    private shouldPrefetchReqRes(item: CustomsMenuItem): boolean {
-        return item.MainInterfaceCode !== "190";
-    }
-}
-class LongRunner20 {
-    private Retries: number = 0;
-    private timerToken: any;
-
-    constructor(
-        private IsReady: () => boolean,
-        private ActionMethod: () => void
-    ) {
-        //private myRequestsSheetMassagingView: BaseRequestsSheetMassaging, private myCustomsMenuItem: CustomsMenuItem) {
-    }
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-    RunComponent() {
-        if (this.IsReady == null) {
-            return;
-        }
-        if (this.ActionMethod == null) {
-            return;
-        }
-        if (this.IsReady()) {
-            this.ActionMethod();
-            //this.myRequestsSheetMassagingView.MyCustomsMenuItem = this.myCustomsMenuItem;
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
     }
 }

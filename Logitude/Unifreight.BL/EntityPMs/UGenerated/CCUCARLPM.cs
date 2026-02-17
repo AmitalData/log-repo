@@ -31,11 +31,11 @@ namespace Unifreight.BL.EntityPMs
 
         public int? MEMIRTYPE { get; set; }
 
-        public decimal? MADADRATE { get; set; }
+        public double? MADADRATE { get; set; }
 
         public string FUELTYPE { get; set; }
 
-        public decimal? WEIGHT { get; set; }
+        public double? WEIGHT { get; set; }
 
         public string FFU1 { get; set; }
 
@@ -52,11 +52,5 @@ namespace Unifreight.BL.EntityPMs
         public decimal? MADADDEDUCT { get; set; }
 
         public int? HYBRID { get; set; }
-        
-        public int Tenant { get; set; }
-        
-        public bool IS_SYNCH { get; set; }
-        
-        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }

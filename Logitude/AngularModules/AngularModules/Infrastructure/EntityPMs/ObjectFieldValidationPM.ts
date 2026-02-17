@@ -1,4 +1,4 @@
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 export class ObjectFieldValidationPM {
 
     
@@ -40,14 +40,11 @@ export class ObjectFieldValidationPM {
     public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
 
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty() {
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
-            if (this.entityParentPM) {
-                this.entityParentPM.MarkAsDirty();
-            }
-        }
+        this.IsDirty = true;
+        if (this.entityParentPM) {
+            this.entityParentPM.MarkAsDirty();
+        }	
 
     }
 }

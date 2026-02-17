@@ -97,7 +97,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             datacounts.OpenQuotes = quoteRep.GetOpenQuotesCountForCustomer(tenant,customerid);
             datacounts.AllShipments = shipmentrep.GetAllShipmentsCountForCustomer(tenant,customerid);
             datacounts.OpenShipments = shipmentrep.GetOpenShipmentsCountForCustomer(tenant, customerid);
-            datacounts.CancelledShipments = shipmentrep.GetCancelledShipmentsCountForCustomer(tenant, customerid);
 
             return datacounts;
         }

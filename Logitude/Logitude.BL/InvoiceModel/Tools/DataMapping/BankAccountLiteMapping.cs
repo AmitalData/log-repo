@@ -1,5 +1,4 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -31,21 +30,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.BranchAddress = entityPM.BranchAddress;
             entity.Inactive = entityPM.Inactive;
             entity.VatNumber = entityPM.VatNumber;
+            entity.SearchFields = entityPM.SearchFields;
 
-            BuildSearchFields(entityPM, entity);
-        }
-
-        private static void BuildSearchFields(BankAccountLitePM entityPM, BankAccountLite entityPOCO)
-        {
-            string mySearchFields = "";
-
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.BankCode);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.BranchNumber);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AccountNumber);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
-
-            entityPM.SearchFields = mySearchFields;
-            entityPOCO.SearchFields = mySearchFields;
         }
     }
 }

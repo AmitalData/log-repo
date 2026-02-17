@@ -32,14 +32,9 @@ namespace WebFreight.Web.WcfApi
         [OperationContract]
         Response Delete(string activityId, int tenant);
 
+
         [OperationContract]
         ActivityPM GetActivityPM(string id, int tenant, ref Response response);
-
-        [OperationContract]
-        Response GetStorageContainerConnectionString(int tenant);
-
-        [OperationContract]
-        Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId = null);
 
         [OperationContract]
         Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId);

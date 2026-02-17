@@ -10,8 +10,6 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools.Utils;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -93,16 +91,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             oldVehiclePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                             vehicleUpdateService.Update(oldVehiclePM, false);
                         }
-
-                        DateTime stopLogAt = new DateTime(2020, 06, 01);
-                        string logData = "";
-                        if (entityPM.RichbitFileNumber != entityPOCO.RichbitFileNumber)
-                        {
-                            var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
-                            logData = $"entityPM.RichbitFileNumber(New value)={entityPM.RichbitFileNumber},entityPOCO.RichbitFileNumber(Old value)={entityPOCO.RichbitFileNumber}, User name={loggedUser}";
-                            LogitudeSettings.HandleLogMe("RichbitFileNumber changed " + logData, false, "SupplierInvoiceItemUpdate.RichbitFileNumber", stopLogAt);
-                        }
-
                     }
                 }
 

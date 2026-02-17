@@ -1,8 +1,7 @@
 ﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -16,10 +15,10 @@ import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFiel
 @Injectable()
 export class DocumentFilingBackupBatchPMExtendedService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DocumentFilingBackupBatchExtended';
     }
 
@@ -27,9 +26,9 @@ export class DocumentFilingBackupBatchPMExtendedService {
     GetDocumentFilingBackupBatchPMs() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetDocumentFilingBackupBatchPMs" ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetDocumentFilingBackupBatchPMs" , { headers: authHeader }).map(response => {
 
-            var result :any = response;
+            var result = response.json();
             var entity: DocumentFilingBackupBatchPM;
             var automationPMLists: DocumentFilingBackupBatchPM[];
             automationPMLists = new Array<DocumentFilingBackupBatchPM>();
@@ -48,7 +47,7 @@ export class DocumentFilingBackupBatchPMExtendedService {
 
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
   

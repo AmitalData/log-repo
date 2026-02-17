@@ -57,7 +57,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             string iProjectNumber = webhook.GetWorkItemById(iWorkItemNumber, false);
                             if (!string.IsNullOrEmpty(iProjectNumber))
                             {
-                                string iProjectId = iTMProjectRepository.GetTMActiveProjectByNumber(iProjectNumber, args.Tenant);
+                                string iProjectId = iTMProjectRepository.GetTMProjectByNumber(iProjectNumber, args.Tenant);
 
                                 if (!string.IsNullOrEmpty(iProjectId))
                                 {

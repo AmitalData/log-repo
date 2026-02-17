@@ -38,10 +38,6 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
-       [DataMember]
-       public bool PermissionForAll  { get; set; }
-       [DataMember]
-       public string PermittedByUserId  { get; set; }
    }
 
 }

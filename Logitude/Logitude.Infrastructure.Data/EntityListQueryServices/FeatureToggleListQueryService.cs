@@ -12,7 +12,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
         public IQueryable<FeatureToggleList> GetIqueryableList(IQueryable<FeatureToggle> iQueryable)
         {
             IQueryable<FeatureToggleList> query = (from a in iQueryable.Include("Toggle").Include("CreatedByUser")
-                                                   select new FeatureToggleList() 
+                                                   select new FeatureToggleList()
                                                    {
                                                        Id = a.Id,
                                                        Tenant = a.Tenant,
@@ -25,11 +25,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                        Inactive = a.Inactive,
                                                        ToggleCode = a.ToggleCode,
                                                        ToggleName = a.Toggle == null ? null : a.Toggle.Name,
-                                                       ToggleDescription = a.Toggle == null ? null : a.Toggle.Description,
                                                        CreatedByUser = a.CreatedByUser == null ? null : a.CreatedByUser.Contact.EnglishName,
-                                                       ToTenantNumber = a.ToTenantNumber,
-                                                       FromTenantNumber = a.FromTenantNumber,
-                                                       IsMultiTenant = a.IsMultiTenant,
                                                    });
             return query;
         }

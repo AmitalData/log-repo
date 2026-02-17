@@ -21,7 +21,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomsCollateralComponent.html',
 })
 
@@ -37,8 +37,6 @@ export class CustomsCollateralComponent extends BaseComponent {
    responseData: INF_MSG_GenericResponseData = new INF_MSG_GenericResponseData();
     declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
     private CurrentSession = SessionLocator.SelectedSession;
-    public isEntityChange: boolean = false;
-    
    constructor(public entityArgs: EntityArgs) {
         super();
     }
@@ -165,12 +163,12 @@ export class CustomsCollateralComponent extends BaseComponent {
 
                     for (var i = 0; i < this.CurrentEntity.CustomsCollateralsAnswers.length; i++) {
                         var answer = this.CurrentEntity.CustomsCollateralsAnswers[i];
-                        answer.LineNumber = AppTool.IsNullOrEmpty(answer.LineNumber) ? i + 1 : answer.LineNumber;
+                        answer.LineNumber = i + 1;
                       
                     }
                     for (var i = 0; i < this.AnswersTabs.length; i++) {
                         var collateralAnswer: CustomsCollateralsAnswerPM = this.AnswersTabs[i].EntityPM;
-                        collateralAnswer.LineNumber = AppTool.IsNullOrEmpty(collateralAnswer.LineNumber) ?  i + 1 : collateralAnswer.LineNumber;
+                        collateralAnswer.LineNumber = i + 1;
                         this.AnswersTabs[i].Code = collateralAnswer.LineNumber.toString();
                         this.AnswersTabs[i].Header = collateralAnswer.LineNumber.toString();
                     }
@@ -242,7 +240,7 @@ export class CustomsCollateralComponent extends BaseComponent {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
              
-                this.customsCollateralPMService.update(this.CurrentEntity).subscribe((response:any) => {
+                this.customsCollateralPMService.update(this.CurrentEntity).subscribe(response => {
                     var result = response.Result;
                     this.CurrentSession.CollateralAnswerRefreshEvent.emit({ IsClosed: this.CurrentEntity.IsClosed  });
             this.IsUnClosedButtonEnabled = true;
@@ -274,7 +272,7 @@ export class CustomsCollateralComponent extends BaseComponent {
             if (confirmWindow.Yes) {
             
              
-                this.customsCollateralPMService.update(this.CurrentEntity).subscribe((response:any) => {
+                this.customsCollateralPMService.update(this.CurrentEntity).subscribe(response => {
                     var result = response.Result;
                     this.CurrentSession.CollateralAnswerRefreshEvent.emit({ IsClosed: this.CurrentEntity.IsClosed });
                     this.IsUnClosedButtonEnabled = false;
@@ -345,7 +343,7 @@ export class CustomsCollateralComponent extends BaseComponent {
         // this.ValidationErrorsList = errors;
         if (errors.length == 0) {
 
-            this.customsCollateralPMService.update(this.CurrentEntity).subscribe((response:any) => {
+            this.customsCollateralPMService.update(this.CurrentEntity).subscribe(response => {
        
        
             if (this.CurrentEntity.CustomsCollateralsAnswers.length > 0) {
@@ -380,7 +378,7 @@ export class CustomsCollateralComponent extends BaseComponent {
                 LoggingObjectTableId = LoggingObjectTableId;
 
                 CustomMessageProgressComponent
-                    .ShowProgressBar(this.CurrentSession,requestParams.PBId,
+                    .ShowProgressBar(requestParams.PBId,
                     "שליחת מענה לדרישת בטוחה", true)
                     .then((res) => {
                         this.responseData = res;
@@ -400,7 +398,6 @@ export class CustomsCollateralComponent extends BaseComponent {
                                     this.customsCollateralPMService.get(this.CurrentEntity.Id).subscribe((response: ServiceResponse) => {
                                         if (response) {
                                             if (!response.HasError) {
-                                                this.isEntityChange = true;
                                                 this.CurrentEntity = response.Result;
                                                 this.BuildAnswersTabs();
                                             }
@@ -456,8 +453,6 @@ export class CustomsCollateralComponent extends BaseComponent {
        
         this.CurrentSession.CloseCurrentWindow();
     }
- 
-
 
     ViewDocumentsComponent() {
         var windowArgs: any = {};

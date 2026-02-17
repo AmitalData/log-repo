@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -31,7 +31,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
                                                    Description = a.Description,
                                                    CustomerId = a.CustomerId,
                                                    CustomerName = a.Customer != null ? a.Customer.EnglishName : null,
-                                                   OwnerName = a.Owner == null ? null : a.Owner.Contact.EnglishName,
+                                                   OwnerName = a.Owner == null ? "" : a.Owner.Contact.EnglishName,
                                                    CreatedByUserId = a.CreatedByUserId,
                                                    CreateDate = a.CreateDate,
                                                    UpdateDate = a.UpdateDate,
@@ -46,11 +46,6 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
                                                    CategoryId = a.CategoryId,
                                                    IsProrated = a.IsProrated, 
                                                    CategoryName=a.TMProjectCategory!=null?a.TMProjectCategory.Name:null,
-                                                   DayOffTypeCode = a.DayOffTypeCode,
-                                                   ExcludeFromProrating = a.ExcludeFromProrating,
-                                                   BudgetName = a.TMBudget != null ? a.TMBudget.Name : null,
-                                                   BlockedForDataEntry = a.BlockedForDataEntry,
-                                                   DayOffTypeName = a.DayOffType != null ? a.DayOffType.Name : null,
                                                });
             return query;
         }

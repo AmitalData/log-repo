@@ -14,10 +14,10 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
@@ -88,7 +88,7 @@ namespace CommunicationWorkerRole
         }
 
         string Token;
-        public override void Run()
+        public override async void AsyncRun()
         {
             try
             {
@@ -106,9 +106,8 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = client.PostAsync(AuthURI, content);
-                    result.Wait();
-                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
+                    var result = await client.PostAsync(AuthURI, content);
+                    var tempUser = result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -130,7 +129,7 @@ namespace CommunicationWorkerRole
 
                             string Id = response.MessageValues["Id"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
-                            string CorrelationId = response.MessageId;
+                            string CorrelationId = response.MessageValues["CorrelationId"].ToString();
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
 
                             #region APILogs
@@ -219,7 +218,6 @@ namespace CommunicationWorkerRole
                                                 //LogPM.CustomerId = CustomerId;
                                                 LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
                                                 LogPM.QueueType = "PrivateLabelApproval";
-                                                LogPM.Refrence = ForwarderShipment.ShipmentNumber;
                                                 apiLogsService.Create(LogPM);
                                             }
                                             var msg = "Start Sending Approval To Forwarder " + DateTime.Now;
@@ -249,9 +247,8 @@ namespace CommunicationWorkerRole
                                             
                                             var serializedObject = JsonConvert.SerializeObject(DataAM);
                                             var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                            var result = client.PostAsync(ImporterShipmentsURI, content);
-                                            result.Wait();
-                                            if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                            var result = await client.PostAsync(ImporterShipmentsURI, content);
+                                            if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                             {
                                                 msg = "Approval sent To Forwarder " + DateTime.Now;
                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
@@ -261,7 +258,7 @@ namespace CommunicationWorkerRole
                                             }
                                             else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                             {
-                                                APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                                APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
                                                 if (EXC != null)
                                                 {
                                                     var Failmsg = EXC.ErrorType + " Fail To Send Approval To Forwarder Tenant " + DateTime.Now;

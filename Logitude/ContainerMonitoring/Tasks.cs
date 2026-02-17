@@ -21,14 +21,7 @@ namespace Unifreight.ContainerTasks
     public class ContainerTasks : IActivateOperation, IDisposable
     {
         string _token = "e2ad6f1dafbdd3dbdf9f6cb8f684d7cae1ff4306";
-        string baseEndPoint = @"https://capi.ocean-insights.com/containertracking/v1/";
-        public ContainerTasks(bool useOIV2)
-        {
-            if (useOIV2)
-            {
-                baseEndPoint = @"https://capi.ocean-insights.com/containertracking/v2/";
-            }
-        }
+        string baseEndPoint = @"http://capi.ocean-insights.com/containertracking/v1/";
         public void ActivateOperation(string operation, ref Hashtable hash_data_in, ref object obj_prj_inner_data, out string data_out, out string status, out string err_message)
         {
             data_out = "";
@@ -141,7 +134,7 @@ namespace Unifreight.ContainerTasks
 
         }
 
-        public void StartMonitor(string carrierSCAC, string containerNo, string token, out string v_result, out string status, out string err_message,string type)
+        public void StartMonitor(string carrierSCAC, string containerNo, string token, out string v_result, out string status, out string err_message, bool isCarrier = true)
         {
             status = "0";
             err_message = "";
@@ -171,9 +164,14 @@ namespace Unifreight.ContainerTasks
                 }
                 stage = "HTTP Request";
                 string postData = "";
-                
-                postData = jSonTest(containerNo, carrierSCAC, type);
-               
+                if (isCarrier)
+                {
+                    postData = jSonTest(containerNo, carrierSCAC,true);
+                }
+                else
+                {
+                    postData = jSonTest(containerNo, carrierSCAC,false);
+                }
                 
                 var client = new RestClient(endPoint, HttpVerb.POST, postData);
                 var json = client.MakeRequest("", token);//YMLU8718132
@@ -309,10 +307,14 @@ namespace Unifreight.ContainerTasks
 
         }
 
-        private string jSonTest(string continer, string carrier, string type)
-        {           
-                return ("{\"request_key\":\"" + continer + "\",\"request_carrier_code\":\"" + carrier + "\",\"request_type\":\""+type+ "\"}");     
-         }
+        private string jSonTest(string continer, string carrier, bool isCarrier)
+        {
+            if (isCarrier)
+                return ("{\"request_key\":\"" + continer + "\",\"request_carrier_code\":\"" + carrier + "\",\"request_type\":\"c_id\"}");
+            else
+                return ("{\"request_key\":\"" + continer + "\",\"request_carrier_code\":\"" + carrier + "\",\"request_type\":\"m_bl\"}");
+            //return ("{\"request_key\":\"" + continer + "\",\"request_carrier_code\":\"" + carrier + "\",\"request_type\":\"c_id\"}");
+        }
 
 
         private string ErrorMessage(Exception ex)

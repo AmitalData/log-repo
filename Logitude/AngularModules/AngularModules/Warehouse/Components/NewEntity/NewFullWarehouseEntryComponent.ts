@@ -26,7 +26,7 @@ import {FilterClass} from '../../../Shipment/Components/NewEntity/NewShipmentCom
 import {PortListService} from '../../../Common/Services/StandardLists/PortListService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'NewFullWarehouseEntryComponent',
     templateUrl: './NewFullWarehouseEntryComponent.html',
 
@@ -118,7 +118,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
 
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe(response => {
             this.Start(args);
         });
     }
@@ -187,17 +187,13 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
             this.FromPortId = null;
             this.ToPortId = null;
-            this.ShipmentTypeId = null;
+
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
-            this.SetChargeableWeightUnit();
         }
     }
 
-    SetChargeableWeightUnit() {
-        this.warehouseEntryPM.ChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
-    }
-
+    
     public ShipmentTypeName: string = null;
     get ShipmentTypeId() { return this.warehouseEntryPM.ShipmentTypeId; }
     set ShipmentTypeId(newValue: string) {
@@ -502,29 +498,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
 
         }
     }
-
-
-
-
-
-
-    get ToCountryId() { return this.warehouseEntryPM.ToCountryId; }
-    set ToCountryId(newValue: string) {
-        if (this.warehouseEntryPM.ToCountryId != newValue) {
-            this.warehouseEntryPM.ToCountryId = newValue;
-        }
-    }
-
-
-    get FromCountryId() { return this.warehouseEntryPM.FromCountryId; }
-    set FromCountryId(newValue: string) {
-        if (this.warehouseEntryPM.FromCountryId != newValue) {
-            this.warehouseEntryPM.FromCountryId = newValue;
-        }
-    }
-
-
-
+    
 
     public FromPortList: PortList = null;
     get FromPortId() { return this.warehouseEntryPM.FromPortId; }
@@ -612,34 +586,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
         }
     }
 
-    get FromTypeCode() { return this.warehouseEntryPM.FromTypeCode; }
-    set FromTypeCode(newValue: string) {
-        if (this.warehouseEntryPM.FromTypeCode != newValue) {
-            this.warehouseEntryPM.FromTypeCode = newValue;
-            this.FromPortId = null;
-            this.FromCountryId = null;
-
-        }
-    }
-
-    get ToTypeCode() { return this.warehouseEntryPM.ToTypeCode; }
-    set ToTypeCode(newValue: string) {
-        if (this.warehouseEntryPM.ToTypeCode != newValue) {
-            this.warehouseEntryPM.ToTypeCode = newValue;
-            this.ToPortId = null;
-            this.ToCountryId = null;
-        }
-    }
-
-
-    
-
-
-
-
-
-
-
+   
     get ActualEntryDate() { return this.warehouseEntryPM.ActualEntryDate; }
     set ActualEntryDate(newValue: Date) {
         if (this.warehouseEntryPM.ActualEntryDate != newValue) {
@@ -784,9 +731,6 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
     OnFiltersChanged() {
         this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
         this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
-        this.warehouseEntryPM.Ratio = AppTool.GetRatio(this.DirectionId, this.TransportModeId, this.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
-
-
         this.SetScreenEnabled();
         this.SetPartners();
         this.SetUIProperties();
@@ -894,8 +838,6 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
 
        
         if (this.warehouseEntryPM) {
-            this.FromTypeCode = 'PORT';
-            this.ToTypeCode = 'PORT';
 
             var myCommonDomain = new CommonDomainService();
             myCommonDomain.GetDeafaultMyWarehouse().subscribe((myResponse: ServiceResponse) => {
@@ -1028,24 +970,19 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
         this.UIProperties.SetEnabled("TotalPieces", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("TotalGrossWeight", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("TotalVolume", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Manufacturer", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, isScreenEnabled);
-
     }
 
     FillMorePackagesDetails() {
 
-        var isLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
-
         var logeWindow = new LogitudeWindow();
-        logeWindow.Width =isLCLEntity ? 1010 :1090;
+        logeWindow.Width = 960;
         logeWindow.Height = 500;
         logeWindow.Title = "Packages Details";
 
-      
+
 
         logeWindow.WindowArgs = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, ShowPackageSummary: true, IsFromFullWarehouseEntryComponent:true};
         logeWindow.Show("./Warehouse/Components/WarehouseEntryPackagesDetailsComponent");
@@ -1086,8 +1023,8 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             }
         } 
 
-        //this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
-        //this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
+        this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
+        this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
 
 
     }
@@ -1231,8 +1168,8 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -1293,8 +1230,8 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -1338,14 +1275,22 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             this.warehouseEntryPM.FromPortId = null;
             this.warehouseEntryPM.ToPortId = null;
         }
+        else {
+            this.warehouseEntryPM.FromAddressId = null;
+            this.warehouseEntryPM.ToAddressId = null;
+            this.warehouseEntryPM.FromPartnerId = null;
+            this.warehouseEntryPM.ToPartnerId = null;
+
+
+        }
 
         if (!this.IsInlandDomestic) {
-            //if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.FromPortId)) {
-            //    this.ValidationErrorsList.push(this.FromPortText + " field is required");
-            //}
-            //if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.ToPortId)) {
-            //    this.ValidationErrorsList.push(this.ToPortText + " field is required");
-            //}
+            if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.FromPortId)) {
+                this.ValidationErrorsList.push(this.FromPortText + " field is required");
+            }
+            if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.ToPortId)) {
+                this.ValidationErrorsList.push(this.ToPortText + " field is required");
+            }
 
             if (this.IsShipperMyCustomer) {
                 this.warehouseEntryPM.ShipperReference1 = this.CustomerRef1;

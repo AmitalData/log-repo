@@ -21,16 +21,6 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-
-        public List<CustomsPartnerFtp> GetAllTenantBy(string InterfaceName, string PartnerCode, string TypeCode)
-        {
-            var q=(from r in context.CustomsPartnerFtps
-            where r.InterfaceName == InterfaceName && r.PartnerCode == PartnerCode && r.TypeCode == TypeCode
-            select r);
-            return q.ToList();
-                 
-            
-        }
    }
 
 }

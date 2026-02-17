@@ -4,13 +4,11 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class WarehousePM : ObjectCustomFieldPM
+    public class WarehousePM
     {
         [Key]
         [DataMember]
@@ -273,89 +271,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string SATForeignRFC { get; set; }
 
-        [DataMember]
-        public bool AccountingVATSplit { get; set; }
-
-        [DataMember]
-        public string UploadingUniqueKey { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool ChargeStorage { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string CurrencyId { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AirWeightMeasurementCode { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string OceanWeightMeasurementCode { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandWeightMeasurementCode { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AirWeightRoundingCode { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string OceanWeightRoundingCode { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandWeightRoundingCode { get; set; }
-
-        private List<WarehouseStoragePricingPM> warehouseStoragePricings;
-        [Include]
-        [Association("WarehouseWarehouseStoragePricing", "Id", "WarehouseId")]
-        [Composition]
-        public virtual List<WarehouseStoragePricingPM> WarehouseStoragePricings
-        {
-            get
-            {
-                if (warehouseStoragePricings == null)
-                {
-                    warehouseStoragePricings = new List<WarehouseStoragePricingPM>();
-                }
-
-                return warehouseStoragePricings;
-            }
-
-            set
-            {
-                warehouseStoragePricings = value;
-            }
-        }
-        [DataMember]
-        public string GLAccountId { get; set; }
-        [DataMember]
-        public string GLAccountNumber { get; set; }
-
-        [DataMember]
-        public int? StorageFreeDays { get; set; }
-        [DataMember]
-        public string Address1 { get; set; }
-        [DataMember]
-        public string Address2 { get; set; }
-        [DataMember]
-        public string BillToId { get; set; }
-        [DataMember]
-        public string RegimenFiscalCode { get; set; }
-        [DataMember]
-        public string SATReceptorName { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ImportLocalCustomerGroupId { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ExportLocalCustomerGroupId { get; set; }
     }
 }

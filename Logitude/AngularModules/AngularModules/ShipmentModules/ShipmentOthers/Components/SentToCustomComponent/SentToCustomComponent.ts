@@ -1,8 +1,9 @@
-import {Component, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
+import {CustomsWizardArgs, ArtemusWizardArgs} from '../../../../Shipment/Args';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LogitudeWindow} from  '../../../../Controls/Windows/LogitudeWindow'; 
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
@@ -15,19 +16,18 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {CommonDomainService} from'../../../../Common/Services/CommonDomainService'; 
 import {CustomsInterfaceSettingList} from '../../../../Common/EntityLists/CustomsInterfaceSettingList'; 
 import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
-    selector: 'SentToCustomComponent',    
+    selector: 'SentToCustomComponent',
+    moduleId: module.id,
     templateUrl: './SentToCustomComponent.html',
 })
 
-export class SentToCustomComponent extends BaseComponent implements OnDestroy {
+export class SentToCustomComponent extends BaseComponent {
     public EntityPM: ShipmentPM;
     public ValidationErrorsList: string[] = [];
     public DataContext: SentToCustomComponent = this;
     public ObjectTableName = "ShipmentCustomsTransmission";
-    private AMSFeatureToggle: FeatureToggleList;
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public MessageText: string;
@@ -37,13 +37,10 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
     public IsAESVisible = false;
     public IsATMSVisible_BOL = false;
     public IsATMSVisible_VOG = false;
-    public IsAMANACVisible = false;
-
 
     public IsABMDisabled = false;
     public IsAESDisabled = false;
     public IsATMSDisabled = false;
-    public IsAMANACDisabled = false;
     private ShipmentCustomsTransmissionList: ShipmentCustomsTransmissionPM[] = [];
 
     public LocalCustomsTransmissionsStatusName: string;
@@ -79,7 +76,6 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
     }
     SetWindowArgs(windowArgs: ShipmentPM) {
         this.EntityPM = windowArgs;
-        this.AMSFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AMS")[0];
         this.FillData();
     }
     FillData() {
@@ -110,7 +106,6 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
             }
             this.IsVisible = true;
             this.CheckVisibility();
-            this.CheckSendButtons();
         });
     }
     LoadShipmentData() {
@@ -159,58 +154,6 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
         });
     }
 
-    public IsRetransferAMANACVisible: boolean = false;
-    private CheckSendButtons() {
-        this.CheckAMANACButtons();
-    }
-    private CheckAMANACButtons() {
-        this.IsAMANACDisabled = false;
-
-        if (this.LocalCustomsTransmissionsStatusCode == "NSEN") {
-            this.IsAMANACDisabled = true;
-            this.IsRetransferAMANACVisible = false;
-        }
-        else {
-            this.IsRetransferAMANACVisible = true;
-        }
-    }
-
-    RetransferAMANACClicked() {
-        this.EntityPM.LocalCustomsTransmissionsStatusCode = "NSEN";
-        this.EntityPM.LocalCustomsTransmissionsStatusName = this.notSent;
-        this.EntityPM.LocalCustomsTransmissionsStatusDate = null;
-        this.EntityPM.LocalCustomsSentByUserId = null;
-        this.EntityPM.LocalCustomsSentByUserName = null;
-        this.EntityPM.LocalCustomsTransmissionsStatusError = null;
-
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.LoadShipmentData();
-                        this.CheckAMANACButtons();
-                    }
-
-                    else {
-                        this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
-                    }
-                    
-                    AppTool.KillEventEmitter(this.SaveCompletedEvent);
-                    this.SaveCompletedEvent = null;
-                });
-            }
-
-            this.CurrentSession.CurrentEditComponent.SaveChanges();
-        }
-    }
-
-    private SaveCompletedEvent: any = null;
-    ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);
-        this.SaveCompletedEvent = null;
-    }
-
     CheckVisibility() {
         if ((ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == null || ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "NO")
             &&
@@ -224,53 +167,48 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
             this.CheckArtemusVisibility_VOG();
             this.CheckABMVisibility();
             this.CheckAESVisibility();
-            this.CheckAMANACVisibility();
         }
     }
     CheckABMVisibility() {
-        if (this.EntityPM.ShipmentLevelCode != "C") {
-            if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "ABM") {
-                    this.IsABMVisible = true;
+        if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
+            if (this.EntityPM.ShipmentLevelCode != "C") {
+                if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+                    if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "ABM") {
+                        this.IsABMVisible = true;
+                    }
                 }
             }
-        }
-        else {
-            this.IsABMVisible = false;
+            else {
+                this.IsABMVisible = false;
+            }
         }
     }
     CheckArtemusVisibility_BOL() {
-        this.IsATMSVisible_BOL = false;
-
         if (FeatureLocator.HasFeaturePermession("Shipment", "SendToArtemus")) {
-            if (this.EntityPM.TransportModeId == "O" && (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H")) {
-                if (ObjectsLocator.CustomsInterfaceSettingPM.ImportToUSAInterfaceCode == "ART") {
-                    if (this.EntityPM.DirectionId == "I") {
-                        this.IsATMSVisible_BOL = true;
-                    }
 
-                    else if (this.EntityPM.DirectionId == "E" && this.AMSFeatureToggle != null) {
-                        this.IsATMSVisible_BOL = true;
-                    }
+            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "I" && (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H")) {
+                if (ObjectsLocator.CustomsInterfaceSettingPM.ImportToUSAInterfaceCode == "ART") {
+                    this.IsATMSVisible_BOL = true;
                 }
             }
+            else {
+                this.IsATMSVisible_BOL = false;
+            }
+
         }
     }
     CheckArtemusVisibility_VOG() {
-        this.IsATMSVisible_VOG = false;
-
         if (FeatureLocator.HasFeaturePermession("Shipment", "SendToArtemus")) {
-            if (this.EntityPM.TransportModeId == "O" && (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C")) {
-                if (ObjectsLocator.CustomsInterfaceSettingPM.ImportToUSAInterfaceCode == "ART") {
-                    if (this.EntityPM.DirectionId == "I") {
-                        this.IsATMSVisible_VOG = true;
-                    }
 
-                    else if (this.EntityPM.DirectionId == "E" && this.AMSFeatureToggle != null) {
-                        this.IsATMSVisible_VOG = true;
-                    }
+            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "I" && (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C")) {
+                if (ObjectsLocator.CustomsInterfaceSettingPM.ImportToUSAInterfaceCode == "ART") {
+                    this.IsATMSVisible_VOG = true;
                 }
             }
+            else {
+                this.IsATMSVisible_VOG = false;
+            }
+
         }
     }
     CheckAESVisibility() {
@@ -282,16 +220,6 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
                     }
                 }
             }
-        }
-    }
-    CheckAMANACVisibility() {
-        if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-            if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC") {
-                this.IsAMANACVisible = true;
-            }
-        }
-        else {
-            this.IsAMANACVisible = false;
         }
     }
 
@@ -333,9 +261,6 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
                 {
                     this.SendToAES();
                 }
-            case "AMC": {
-                this.SendToAMANAC();
-            }
         }
     }
     CheckInterfaceByCode(code: string) {
@@ -444,9 +369,6 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
                 this.CurrentSession.FireEvent("CustomsWizardClosed");
             }
         });
-    }
-    private SendToAMANAC() {
-
     }
 
     SetCellNotesWidth(text: string) {

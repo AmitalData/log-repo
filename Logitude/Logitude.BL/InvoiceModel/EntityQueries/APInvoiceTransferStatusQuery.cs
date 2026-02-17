@@ -51,19 +51,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }).FirstOrDefault();
         }
 
-        public APInvoiceTransferStatusPM GetSinglePM(string code, int tenant=0)
-        {
-            return (from a in repository.context.APInvoiceTransferStatuses
-                    where a.Code == code
-                    select new APInvoiceTransferStatusPM()
-                    {
-                        Code = a.Code,
-                        Name = a.Name,
-                        SearchFields = a.SearchFields,
-                    }).FirstOrDefault();
-        }
-
-
         public IQueryable<APInvoiceTransferStatusList> GetIQueryableEntityList(IQueryable<APInvoiceTransferStatus> iQueryable)
         {
             IQueryable<APInvoiceTransferStatusList> result = from entity in iQueryable

@@ -7,7 +7,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DownloadPackagesFileComponent.html',
 })
 
@@ -22,10 +22,8 @@ export class DownloadPackagesFileComponent {
     }
 
     private EntityId: string;
-    private EntityNumber: string;
-    Download(entityId: string, entityNumber: string) {
+    Download(entityId: string) {
         this.EntityId = entityId;
-        this.EntityNumber = entityNumber;
         this.IsResourcesReady = true;
         this.Start();
     }
@@ -37,7 +35,7 @@ export class DownloadPackagesFileComponent {
         this.IsDownloadingError = false;
 
         var myDomainService = new ShipmentDomainService();
-        myDomainService.DownloadShipmentPackages(this.EntityNumber, this.EntityId).subscribe((myResponse: ServiceResponse) => {
+        myDomainService.DownloadShipmentPackages(this.EntityId).subscribe((myResponse: ServiceResponse) => {
             this.IsDownloadInProgress = false;
 
             if (myResponse.HasError) {
@@ -59,7 +57,7 @@ export class DownloadPackagesFileComponent {
         var tempDate = new Date();
         var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
 
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + this.FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + this.FileName;
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + this.FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "ShipmentPackages" + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007";
         {
             window.open(url);
         }

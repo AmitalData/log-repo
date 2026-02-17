@@ -2,9 +2,8 @@
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -25,7 +24,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+                if (!General.IsUpdating())
                 {
                     int myTenant = 0;
 
@@ -76,7 +75,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+                if (!General.IsUpdating())
                 {
                     LastActivity = DateTime.UtcNow;
                     DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 30, 0);
@@ -85,15 +84,13 @@ namespace CommunicationWorkerRole
                     if (DateTime.Now >= date1 && DateTime.Now <= date2)
                     {
                         LastActivity = DateTime.UtcNow;
-                        ICommonDataContext iContext = CommonDataContext.GetContext((int)Tenant);
+                        ICommonDataContext iContext = CommonDataContext.GetContext(0);
                         List<int> AllTenants = (from d in iContext.Tenants select d.Id).ToList();
                         if (AllTenants != null)
                         {
                             string CustomerId = null;
                             DateTime? StartDateTime = null;
                             DateTime? EndDateTime = null;
-                            bool iHasException = false;
-                            string iExceptionMessage = null;
 
                             foreach (int iTenant in AllTenants)
                             {
@@ -115,8 +112,6 @@ namespace CommunicationWorkerRole
 
                                 catch (Exception ex)
                                 {
-                                    iHasException = true;
-                                    iExceptionMessage = ex.Message;
                                     EndDateTime = DateTime.Now;
                                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Customer actual data worker role start, Tenant: " + iTenant, null, null);
                                     Thread.Sleep(10000);
@@ -126,7 +121,7 @@ namespace CommunicationWorkerRole
                                 {
                                     if (StartDateTime != null && EndDateTime != null)
                                     {
-                                        CommonModelProcedureClass.InsertCustomerActualDataHistory(iTenant, StartDateTime, EndDateTime, iHasException, iExceptionMessage);
+                                        CommonModelProcedureClass.InsertCustomerActualDataHistory(iTenant, StartDateTime, EndDateTime);
                                     }
                                 }
                             }

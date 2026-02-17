@@ -13,12 +13,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.InvoiceNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.BillToId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BillToAddressId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ConfirmationNumber).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.VatNumber).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.PrintByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IssuedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ConfirmationNumberStatus).HasMaxLength(2).IsUnicode(false);
-
             this.Property(t => t.InvoiceCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LocalCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusCode).IsRequired().HasMaxLength(2).IsUnicode(false);
@@ -29,20 +26,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PaymentTermId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PrepaidCollectId).HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.DraftNumber).HasMaxLength(20).IsUnicode(false); 
-            this.Property(t => t.PaymentReferences).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.SATCancelReasonCode).HasMaxLength(5).IsUnicode(false);
-            this.Property(t => t.PaidStatus).HasMaxLength(40).IsUnicode(false);
-
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS"); 
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.SearchFields).HasMaxLength(2000).IsUnicode(true);
-            }
-            else
-            {
-                this.Property(t => t.SearchFields).IsMaxLength().IsUnicode(true);
-            }
+            this.Property(t => t.DraftNumber).HasMaxLength(20).IsUnicode(false);
+            this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
             this.Property(t => t.MainEntityReference).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.MainEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerRef).HasMaxLength(105).IsUnicode(false);
@@ -79,8 +64,6 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.SATInvoiceStatusCode).IsRequired().HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.MetodoPagoCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.UsoCFDICode).HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.RegimenFiscalCode).HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.PeriodCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.TransmissionError).HasMaxLength(8000).IsUnicode(true);
             this.Property(t => t.ExternalAccountingEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BankAccountLiteId).HasMaxLength(15).IsUnicode(true);
@@ -89,49 +72,35 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TotalVAT).HasPrecision(16, 2);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.ARInvoiceStockId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.DocumentFilingId).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.BillToGLAccountId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.IsFromInterestBatchInvoice);
-            this.Property(t => t.ShipmentsNumbers).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.MasterNumbers).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.MasterShipmentNumbers).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.HouseNumbers).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.GlobalTaxCalculation).HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.TotalEquation).IsMaxLength().IsUnicode(false);
-            this.Property(t => t.DocumentTemplateId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ARInvoices");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.IsFromInterestBatchInvoice).HasColumnName("IsFromInterestBatchInvoice");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.InvoiceNumber).HasColumnName("InvoiceNumber");
             this.Property(t => t.BillToId).HasColumnName("BillToId");
             this.Property(t => t.BillToAddressId).HasColumnName("BillToAddressId");
             this.Property(t => t.VatNumber).HasColumnName("VatNumber");
-            this.Property(t => t.InvoiceDate).HasColumnName("InvoiceDate").IsRequired();
+            this.Property(t => t.InvoiceDate).HasColumnName("InvoiceDate");
             this.Property(t => t.PrintByUserId).HasColumnName("PrintByUserId");
             this.Property(t => t.IssuedByUserId).HasColumnName("IssuedByUserId");
-            this.Property(t => t.ConfirmationNumberStatus).HasColumnName("ConfirmationNumberStatus");
-
             this.Property(t => t.InvoiceCurrencyId).HasColumnName("InvoiceCurrencyId");
             this.Property(t => t.LocalCurrencyId).HasColumnName("LocalCurrencyId");
-            this.Property(t => t.InvoiceCurrencyExchangeRate).HasColumnName("InvoiceCurrencyExchangeRate").IsRequired();
-            this.Property(t => t.SubTotalInLocalCurrency).HasColumnName("SubTotalInLocalCurrency").IsRequired();
-            this.Property(t => t.SubTotalInInvoiceCurrency).HasColumnName("SubTotalInInvoiceCurrency").IsRequired();
-            this.Property(t => t.AmountInLocalCurrency).HasColumnName("AmountInLocalCurrency").IsRequired();
-            this.Property(t => t.AmountInInvoiceCurrency).HasColumnName("AmountInInvoiceCurrency").IsRequired();
+            this.Property(t => t.InvoiceCurrencyExchangeRate).HasColumnName("InvoiceCurrencyExchangeRate");
+            this.Property(t => t.SubTotalInLocalCurrency).HasColumnName("SubTotalInLocalCurrency");
+            this.Property(t => t.SubTotalInInvoiceCurrency).HasColumnName("SubTotalInInvoiceCurrency");
+            this.Property(t => t.AmountInLocalCurrency).HasColumnName("AmountInLocalCurrency");
+            this.Property(t => t.AmountInInvoiceCurrency).HasColumnName("AmountInInvoiceCurrency");
             this.Property(t => t.StatusCode).HasColumnName("StatusCode");
             this.Property(t => t.IsAutoCredit).HasColumnName("IsAutoCredit");
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
             this.Property(t => t.CancelledByARInvoiceId).HasColumnName("CancelledByARInvoiceId");
             this.Property(t => t.InternalNotes).HasColumnName("InternalNotes");
             this.Property(t => t.PrintNotes).HasColumnName("PrintNotes");
-            this.Property(t => t.DueDate).HasColumnName("DueDate").IsRequired();
+            this.Property(t => t.DueDate).HasColumnName("DueDate");
             this.Property(t => t.PrintDate).HasColumnName("PrintDate");
             this.Property(t => t.ARInvoiceTypeCode).HasColumnName("ARInvoiceTypeCode");
-            this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.PaymentTermId).HasColumnName("PaymentTermId");
             this.Property(t => t.PrepaidCollectId).HasColumnName("PrepaidCollectId");
@@ -141,19 +110,19 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ExchangeRateDate).HasColumnName("ExchangeRateDate");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.MainEntityReference).HasColumnName("MainEntityReference");
-            this.Property(t => t.AmountDue).HasColumnName("AmountDue").IsRequired();
+            this.Property(t => t.AmountDue).HasColumnName("AmountDue");
             this.Property(t => t.MainEntityId).HasColumnName("MainEntityId");
             this.Property(t => t.CustomerRef).HasColumnName("CustomerRef");
             this.Property(t => t.HouseNumber).HasColumnName("HouseNumber");
             this.Property(t => t.MasterNumber).HasColumnName("MasterNumber");
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
             this.Property(t => t.ProfitCurrencyId).HasColumnName("ProfitCurrencyId");
-            this.Property(t => t.ProfitCurrencyExchangeRate).HasColumnName("ProfitCurrencyExchangeRate").IsRequired();
-            this.Property(t => t.AmountInProfitCurrency).HasColumnName("AmountInProfitCurrency").IsRequired();
+            this.Property(t => t.ProfitCurrencyExchangeRate).HasColumnName("ProfitCurrencyExchangeRate");
+            this.Property(t => t.AmountInProfitCurrency).HasColumnName("AmountInProfitCurrency");
             this.Property(t => t.ExpectedPaymentDate).HasColumnName("ExpectedPaymentDate");
             this.Property(t => t.AmountDueInLocalCurrency).HasColumnName("AmountDueInLocalCurrency");
             this.Property(t => t.AmountDueInProfitCurrency).HasColumnName("AmountDueInProfitCurrency");
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.BranchId).HasColumnName("BranchId");
             this.Property(t => t.IsPrinted).HasColumnName("IsPrinted");
@@ -175,15 +144,13 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TransferTries).HasColumnName("TransferTries");
             this.Property(t => t.TransferError).HasColumnName("TransferError");
             this.Property(t => t.IsTransferStarted).HasColumnName("IsTransferStarted");
-            this.Property(t => t.IsApprovalFailed).HasColumnName("IsApprovalFailed");
-            this.Property(t => t.ApprovalInProgress).HasColumnName("ApprovalInProgress");
             this.Property(t => t.TransferStatusCode).HasColumnName("TransferStatusCode");
             this.Property(t => t.AccountingExternalCode).HasColumnName("AccountingExternalCode");
             this.Property(t => t.ApprovedDate).HasColumnName("ApprovedDate");
             this.Property(t => t.ApprovedByUserId).HasColumnName("ApprovedByUserId");
             this.Property(t => t.CreditedByARInvoiceId).HasColumnName("CreditedByARInvoiceId");
             this.Property(t => t.OperationalDate).HasColumnName("OperationalDate");
-            this.Property(t => t.DateForInterest).HasColumnName("DateForInterest");
+            this.Property(t => t.DateForVATInterest).HasColumnName("DateForVATInterest");
             this.Property(t => t.SplitJournalByCurrency).HasColumnName("SplitJournalByCurrency");
             this.Property(t => t.IsExternalEntity).HasColumnName("IsExternalEntity");
             this.Property(t => t.IsGeneralInvoice).HasColumnName("IsGeneralInvoice");
@@ -196,8 +163,6 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.RelatedInvoice).HasColumnName("RelatedInvoice");
             this.Property(t => t.MetodoPagoCode).HasColumnName("MetodoPagoCode");
             this.Property(t => t.UsoCFDICode).HasColumnName("UsoCFDICode");
-            this.Property(t => t.RegimenFiscalCode).HasColumnName("RegimenFiscalCode");
-            this.Property(t => t.PeriodCode).HasColumnName("PeriodCode");
             this.Property(t => t.SATTransferStatusCode).HasColumnName("SATTransferStatusCode");
             this.Property(t => t.SATInvoiceStatusCode).HasColumnName("SATInvoiceStatusCode");
             this.Property(t => t.Intercompany).HasColumnName("Intercompany");
@@ -211,24 +176,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
             this.Property(t => t.ARInvoiceStockId).HasColumnName("ARInvoiceStockId");
             this.Property(t => t.IsInvoiceNumberFromStock).HasColumnName("IsInvoiceNumberFromStock");
-            this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
-            this.Property(t => t.DocumentFilingId).HasColumnName("DocumentFilingId");
-            this.Property(t => t.BillToGLAccountId).HasColumnName("BillToGLAccountId");
-            this.Property(t => t.RegionalTaxId).HasColumnName("RegionalTaxId");
-            this.Property(t => t.RegionalTaxPercentage).HasColumnName("RegionalTaxPercentage");
-            this.Property(t => t.PaidDate).HasColumnName("PaidDate");
-            this.Property(t => t.ShipmentsNumbers).HasColumnName("ShipmentsNumbers");
-            this.Property(t => t.MasterNumbers).HasColumnName("MasterNumbers");
-            this.Property(t => t.MasterShipmentNumbers).HasColumnName("MasterShipmentNumbers");
-            this.Property(t => t.HouseNumbers).HasColumnName("HouseNumbers");
-            this.Property(t => t.GlobalTaxCalculation).HasColumnName("GlobalTaxCalculation");
-            this.Property(t => t.PaymentReferences).HasColumnName("PaymentReferences");
-            this.Property(t => t.SATCancelReasonCode).HasColumnName("SATCancelReasonCode");
-            this.Property(t => t.PaidStatus).HasColumnName("PaidStatus");
-            this.Property(t => t.TotalEquation).HasColumnName("TotalEquation");
-            this.Property(t => t.DocumentTemplateId).HasColumnName("DocumentTemplateId");
-            this.Property(t => t.ConfirmationNumber).HasColumnName("ConfirmationNumber");
-            this.Property(t => t.ReferenceDate).HasColumnName("ReferenceDate");
+
+             
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);
@@ -239,8 +188,6 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);
             this.HasRequired(t => t.ARInvoiceType).WithMany().HasForeignKey(d => d.ARInvoiceTypeCode);
             this.HasRequired(t => t.IssuedByUser).WithMany().HasForeignKey(d => d.IssuedByUserId);
-            this.HasOptional(t => t.Confirmation).WithMany().HasForeignKey(d => d.ConfirmationNumberStatus);
-
             this.HasRequired(t => t.LocalCurrency).WithMany().HasForeignKey(d => d.LocalCurrencyId);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
             this.HasRequired(t => t.TransferStatus).WithMany().HasForeignKey(d => d.TransferStatusCode);
@@ -253,13 +200,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
             this.HasOptional(t => t.MetodoPago).WithMany().HasForeignKey(d => d.MetodoPagoCode);
             this.HasOptional(t => t.UsoCFDI).WithMany().HasForeignKey(d => d.UsoCFDICode);
-            this.HasOptional(t => t.RegimenFiscal).WithMany().HasForeignKey(d => d.RegimenFiscalCode);
             this.HasRequired(t => t.SATTransferStatus).WithMany().HasForeignKey(d => d.SATTransferStatusCode);
             this.HasRequired(t => t.SATInvoiceStatus).WithMany().HasForeignKey(d => d.SATInvoiceStatusCode);
             this.HasOptional(t => t.BankAccountLite).WithMany().HasForeignKey(d => d.BankAccountLiteId);
-            this.HasOptional(t => t.RegionalTax).WithMany().HasForeignKey(d => d.RegionalTaxId);
-            this.HasOptional(t => t.QBOGlobalTaxCalculation).WithMany().HasForeignKey(d => d.GlobalTaxCalculation);
-            this.HasOptional(t => t.DocumentTemplate).WithMany().HasForeignKey(d => d.DocumentTemplateId);
         }
     }
 }

@@ -48,12 +48,6 @@
 </style>
 
 <table>
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-        </td>
-    </tr>
-
     <tr style="height: 1px;" *ngIf="Message">
         <td>
             <div class="OrangeInfo" style="margin: 5px;">
@@ -90,7 +84,7 @@
                                 </td>
 
                                 <td style="width:400px;">
-                                    Delete / reset counters for Shipments, Quotes, Tariffs, Invoices & Payments (AR & AP)
+                                    Delete / reset counters for Shipments , Quotes , Invoices & Payments (AR & AP)
                                 </td>
 
                                 <td>
@@ -208,6 +202,32 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="ResponseProgressLayout" *ngIf="IsResponseProgressVisible">
+                <div class="FillContent">
+                    <div class="ResponseProgressWindow">
+                        <table>
+                            <tr style="height: 25px;">
+                                <td>
+                                    <div class="ResponseProgressWindowHeader">
+                                        Waiting for response
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="ResponseProgressWindowBody">
+                                        <img class="CenterCenter" style="bottom: 20px;" src="./Images/ProgressBar.gif" />
+
+                                        <div class="hyperlink" (mousedown)="CloseResponseProgressClicked()" style="font-size: 12px; width: 100%; text-align: center; position: absolute; bottom: 10px;">I will check response later</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </td>
     </tr>
 

@@ -11,7 +11,8 @@ using System.Diagnostics;
 //using Logitude.Accounting.BL.CoreBL.Fakes;
 using Logitude.Accounting.BL.Validators;
 using FakeItEasy;
-using Logitude.Accounting.BL.CoreBL;
+
+
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
@@ -50,7 +51,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 TestsUtil.AssertThrows<Exception>(delegate
                 {
                     // Arrange
-                    var journalLineCreditMapping = new JournalLineCreditMapping(item.Item1, item.Item2, GetDefaultFakeGLAccountDataProvider(), GetDefaultIAccountingSettingResolver());
+                    var journalLineCreditMapping = new JournalLineCreditMapping(item.Item1, item.Item2, GetDefaultFakeGLAccountDataProvider());
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
 
@@ -60,7 +61,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
             }
         }
 
-        
 
         [TestMethod]
         //[ExpectedException(typeof(Exception), "this.MyMappingTypeEnum != MappingTypeEnum.Debit")]
@@ -76,7 +76,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             TestsUtil.AssertThrows<Exception>(delegate
             {
                 // Arrange
-                var journalLineCreditMapping = new JournalLineCreditMapping(myState.Item1, myState.Item2, GetDefaultFakeGLAccountDataProvider(), GetDefaultIAccountingSettingResolver());
+                var journalLineCreditMapping = new JournalLineCreditMapping(myState.Item1, myState.Item2, GetDefaultFakeGLAccountDataProvider());
                 // Act: Run the method under test:
                 journalLineCreditMapping.DoIt();
 
@@ -103,8 +103,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             };
             JournalPM journalPM = new JournalPM { Tenant = 1, Id = id };
 
-            var journalLineCreditMapping = new JournalLineCreditMapping(journalLine, journalPM,
-               GetDefaultFakeGLAccountDataProvider(), GetDefaultIAccountingSettingResolver());
+            var journalLineCreditMapping = new JournalLineCreditMapping(journalLine, journalPM, GetDefaultFakeGLAccountDataProvider());
 
 
             TestsUtil.AssertThrows<Exception>(delegate
@@ -147,7 +146,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item2,
                           journalPM: state2Check.Item1,
-                          myGLAccountPMProvider:GetDefaultFakeGLAccountDataProvider(), myIAccountingSettingResolver:GetDefaultIAccountingSettingResolver()
+                          myGLAccountPMProvider:GetDefaultFakeGLAccountDataProvider()
                           );
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
@@ -247,7 +246,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = tenant,
                     JournalId = id,
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     AccountingDate = jAccountingDate,
                     DueDate = jlDueDate,
                     LocalAmount = localAmount,
@@ -340,8 +339,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item2,
                           journalPM: state2Check.Item1,
-                          myGLAccountPMProvider:GetDefaultFakeGLAccountDataProvider(),
-                          myIAccountingSettingResolver: GetDefaultIAccountingSettingResolver());
+                          myGLAccountPMProvider:GetDefaultFakeGLAccountDataProvider());
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
                     // Assert: Verify the result:
@@ -476,7 +474,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                {
                    Tenant = tenant,
                    JournalId = id,
-                   ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                   ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                    DueDate = jlDueDate,
                    AccountingDate= jlAccountingDate,
                    Line = jline,
@@ -520,7 +518,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -538,7 +536,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -567,12 +565,11 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(state2Check.Item3);
+                    Debug.WriteLine(state2Check.Item3);
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2
-                          , myGLAccountPMProvider:GetFakeGLAccountDataProvider(myfun),
-                          myIAccountingSettingResolver: GetDefaultIAccountingSettingResolver());
+                          , myGLAccountPMProvider:GetFakeGLAccountDataProvider(myfun));
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
                     // Assert: Verify the result:
@@ -601,7 +598,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -623,7 +620,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -644,7 +641,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -663,7 +660,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -698,12 +695,11 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
+                    Debug.WriteLine("state Test: " + state2Check.Item3);
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2,
-                          myGLAccountPMProvider:GetFakeGLAccountDataProvider(myFunc),
-                          myIAccountingSettingResolver: GetDefaultIAccountingSettingResolver());
+                          myGLAccountPMProvider:GetFakeGLAccountDataProvider(myFunc));
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
                     // Assert: Verify the result:
@@ -760,7 +756,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 11,
@@ -781,7 +777,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 22.54353m,
@@ -802,7 +798,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 231.44m,
@@ -820,7 +816,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = -4531.55m,
@@ -842,7 +838,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
+                    Debug.WriteLine("state Test: " + state2Check.Item3);
                     
                     var fakeJournalLineCreditMapping = CreateFake(state2Check);
 
@@ -891,7 +887,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 11,
@@ -913,7 +909,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 22.54353m,
@@ -934,7 +930,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 231.44m,
@@ -953,7 +949,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = -4531.55m,
@@ -978,7 +974,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
+                    Debug.WriteLine("state Test: " + state2Check.Item3);
 
                     var fakeJournalLineCreditMapping = CreateFake(state2Check);
 
@@ -1013,7 +1009,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     .WithArgumentsForConstructor(
                     () => new JournalLineCreditMapping(
 state2Check.Item1, state2Check.Item2,
-null, GetDefaultIAccountingSettingResolver()
+null
                     )
                   ));
             return journalLineCreditMapping;
@@ -1074,8 +1070,7 @@ null, GetDefaultIAccountingSettingResolver()
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item2,
                           journalPM: state2Check.Item1,
-                          myGLAccountPMProvider: GetDefaultFakeGLAccountDataProvider(),
-                          myIAccountingSettingResolver: GetDefaultIAccountingSettingResolver()
+                          myGLAccountPMProvider: GetDefaultFakeGLAccountDataProvider()
                           );
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
@@ -1131,10 +1126,7 @@ null, GetDefaultIAccountingSettingResolver()
         {
             return FakeItEasy.A.Fake<IGLAccountDataProvider>();
         }
-        static IAccountingSettingResolver GetDefaultIAccountingSettingResolver()
-        {
-            return FakeItEasy.A.Fake<IAccountingSettingResolver>();
-        }
+
         private IGLAccountDataProvider GetFakeGLAccountDataProvider(string expectedControlAccountId,  string myGLAccountTypeEnumCard)
         {
             myGLAccountTypeEnumCard = "";

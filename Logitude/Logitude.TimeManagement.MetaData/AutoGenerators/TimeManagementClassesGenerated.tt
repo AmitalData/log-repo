@@ -63,7 +63,7 @@ GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.TimeMan
 
 // ---------------------------- typedscript generated files
 
-	GenerateAllControllers("../EntityFiles","../../JustWebFreight/WebFreight.Web/Controllers","TimeManagementContext","Logitude.TimeManagement","TimeManagementModel");
+	GenerateAllControllers("../EntityFiles","../.../JustWebFreight/WebFreight.Web/Controllers","TimeManagementContext","Logitude.TimeManagement","TimeManagementModel");
  
 
 // Generate TimeManagement TS files---------------------------------------------------------------------------------------------------------------

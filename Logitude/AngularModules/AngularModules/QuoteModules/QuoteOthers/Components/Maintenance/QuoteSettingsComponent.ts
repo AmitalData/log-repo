@@ -6,9 +6,9 @@ import {QuoteSettingPM} from '../../../../Quote/EntityPMs/QuoteSettingPM';
 import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './QuoteSettingsComponent.html',
 })
 
@@ -21,17 +21,11 @@ export class QuoteSettingsComponent extends BaseComponent {
     public SaleCurrencySettings: CodeNameClass[] = [];
     private myService: QuoteDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
-    private MultiCurrencyToggleFeature: FeatureToggleList;
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        this.MultiCurrencyToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMC")[0]
 
         this.SaleCurrencySettings.push(new CodeNameClass("F", "Fixed"));
         this.SaleCurrencySettings.push(new CodeNameClass("S", "Same as cost currency"));
-
-        if (this.MultiCurrencyToggleFeature) {
-            this.SaleCurrencySettings.push(new CodeNameClass("M", "Multi Currency"));
-        }
 
         this.myService = new QuoteDomainService();
 
@@ -53,14 +47,10 @@ export class QuoteSettingsComponent extends BaseComponent {
                         this.selectedSaleCurrencySetting = this.SaleCurrencySettings.filter(f => f.Code == "S")[0];
                     }
 
-                    else if (this.EntityPM.IsMultiCurrency && this.MultiCurrencyToggleFeature) {
-                        this.selectedSaleCurrencySetting = this.SaleCurrencySettings.filter(f => f.Code == "M")[0];
-                    }
-
                     else {
                         this.selectedSaleCurrencySetting = this.SaleCurrencySettings.filter(f => f.Code == "F")[0];
                     }
-                    
+
                     this.IsResourcesReady = true;
                 }
             });
@@ -137,13 +127,6 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
     }
 
-    get CopyExchangeRates() { return this.EntityPM.CopyExchangeRates; }
-    set CopyExchangeRates(value: boolean) {
-        if (this.EntityPM.CopyExchangeRates != value) {
-            this.EntityPM.CopyExchangeRates = value;
-        }
-    }
-
     get EditMainCarriage() { return this.EntityPM.EditMainCarriage; }
     set EditMainCarriage(value: boolean) {
         if (this.EntityPM.EditMainCarriage != value) {
@@ -158,34 +141,6 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
     }
 
-    get IsMultiCurrency() { return this.EntityPM.IsMultiCurrency; }
-    set IsMultiCurrency(value: boolean) {
-        if (this.EntityPM.IsMultiCurrency != value) {
-            this.EntityPM.IsMultiCurrency = value;
-        }
-    }
-
-    get AutomaticallyCloseDays() { return this.EntityPM.AutomaticallyCloseDays; }
-    set AutomaticallyCloseDays(value: number) {
-        if (this.EntityPM.AutomaticallyCloseDays != value) {
-            this.EntityPM.AutomaticallyCloseDays = value;
-        }
-    }
-
-    get QuoteExpirationDays() { return this.EntityPM.QuoteExpirationDays; }
-    set QuoteExpirationDays(value: number) {
-        if (this.EntityPM.QuoteExpirationDays != value) {
-            this.EntityPM.QuoteExpirationDays = value;
-        }
-    }
-
-    get CostChargesMust() { return this.EntityPM.CostChargesMust; }
-    set CostChargesMust(value: boolean) {
-        if (this.EntityPM.CostChargesMust != value) {
-            this.EntityPM.CostChargesMust = value;
-        }
-    }
-
     private selectedSaleCurrencySetting: CodeNameClass;
     get SelectedSaleCurrencySetting() { return this.selectedSaleCurrencySetting; }
     set SelectedSaleCurrencySetting(value: CodeNameClass) {
@@ -193,20 +148,14 @@ export class QuoteSettingsComponent extends BaseComponent {
             this.selectedSaleCurrencySetting = value;
 
             var isSaleAsCostCurrency: boolean = false;
-            var isMultiCurrency: boolean = false;
 
             if (value) {
                 if (value.Code == "S") {
                     isSaleAsCostCurrency = true;
                 }
-
-                else if (value.Code == "M") {
-                    isMultiCurrency = true;
-                }
             }
 
             this.IsSaleAsCostCurrency = isSaleAsCostCurrency;
-            this.IsMultiCurrency = isMultiCurrency;
         }
     }
     
@@ -220,14 +169,6 @@ export class QuoteSettingsComponent extends BaseComponent {
 
         if (isAnyOptionChecked == false) {
             errors.push("One Option at least  should be selected");
-        }
-
-        if (this.AutomaticallyCloseDays == 0) {
-            errors.push("Automatically Close Days field should not be Zero");
-        }
-
-        if (this.AutomaticallyCloseDays == null) {
-            errors.push("Automatically Close Days field is required");
         }
 
         this.ValidationErrorsList = errors;
@@ -294,14 +235,6 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
 
         else if (this.EditMainCarriage) {
-            myResult = true;
-        }
-
-        else if (this.AutomaticallyCloseDays != null) {
-            myResult = true;
-        }
-
-        else if (this.QuoteExpirationDays != null) {
             myResult = true;
         }
 

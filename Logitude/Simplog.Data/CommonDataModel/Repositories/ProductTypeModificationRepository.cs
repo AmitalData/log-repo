@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public ProductTypeModificationRepository()
+        {
+            commonDataContext=new CommonDataContext();
+        }
 
         public ProductTypeModificationRepository(int tenant)
         {
@@ -85,12 +88,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public ProductTypeModification GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
-        }
-        public ProductTypeModification GetSingle(string productTypeCode)
-        {
-            return (from a in context.ProductTypeModifications
-                    where a.ProductTypeCode == productTypeCode
-                    select a).FirstOrDefault() ;
         }
     }
 }

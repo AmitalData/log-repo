@@ -10,27 +10,35 @@ export class EditPhoneCalls {
         this.Generator = new GeneralFunctions();
     }
     public EditPhoneCall(phoneCallNo: string) {
+
         this.EditPhoneCallGeneralTab(phoneCallNo);
         this.Helper.WaitByIdAndClick('Activity-SaveClose');
         this.Helper.WaitBusyIndicator();
 
+
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.invisibilityOf(element(by.id('Activity.B.MarkAsComplete'))), 100000).then(a => {
         });
+
     }
+
+
     EditPhoneCallGeneralTab(phoneCallDesc: string) {
-        this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Customer Activity');
+        this.Helper.WaitByIdAndFill('Activity_CustomerId', 'razan j');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        this.Helper.WaitByIdAndFill('Activity_CallWithId', 'Protractor Conatact');
+        this.Helper.WaitByIdAndFill('Activity_CallWithId', 'razan');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        this.Helper.WaitByIdAndFill('Activity_Subject', 'Edit Subject for ' + phoneCallDesc + ', Edited by protractor ..');
+        this.Helper.WaitByIdAndFill('Activity_Subject', 'Edit Subject for ' + phoneCallDesc);
 
         this.Helper.WaitByIdAndFill('Activity_Description', 'Edit Description for ' + phoneCallDesc);// test random number randomWholeNum
 
-        this.Helper.WaitByIdAndFill('Activity_OwnerId', 'Protractor user');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+        // this.Helper.WaitByIdAndFill('Activity_OwnerId', 'ra');
+        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
+
+
     }
 
 }

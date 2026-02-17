@@ -1,28 +1,45 @@
 
 
-import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
+declare var window;
+import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import { AppTool, FontTool } from '../../../../../Infrastructure/Tools';
+import { AppTool, ArrayTool, FontTool } from '../../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { SupplierInvoiceItemPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import { TradeAgreementPM } from '../../../../../Customs/EntityPMs/TradeAgreementPM';
 import { MeasurmentUnitPM } from '../../../../../Customs/EntityPMs/MeasurmentUnitPM';
 import { CustomsCountryPM } from '../../../../../Customs/EntityPMs/CustomsCountryPM';
+import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
+
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
+
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { CardPMService } from '../../../../../Common/Services/StandardPMs/CardPMService';
+import { CustomsHouseTypeExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsHouseTypeExtendedPMService';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
+import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
+
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { CustomsVendorListService } from '../../../../../Customs/Services/StandardLists/CustomsVendorListService';
 import { CustomsCountryListService } from '../../../../../Customs/Services/StandardLists/CustomsCountryListService';
+
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
-import { ItemCodeComponent } from '../../../../../CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceGeneralTabComponent';
+import { CustomsRequiredFieldListService } from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
+import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+
+import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
+import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ItemCodeComponent } from '../../../../../Customsmodules/Customsdeclarationmodules/Declarationsupplierinvoice/Components/Supplierinvoices/SupplierInvoiceGeneralTabComponent';
 import { LogCellTemplateComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
 import { LuhnAlgorithm } from '../../../../../Customs/Utilities/LuhnAlgorithm';
 import { CustomsVendorPMService } from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
@@ -31,23 +48,21 @@ import { CustomsSettingListService } from '../../../../../Customs/Services/Stand
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { AddEditSupplierInvoiceDUMMY } from './DeclarationClassificationComponent';
 import { SupplierInvoiceService } from '../../../../../Customs/Services/Others/SupplierInvoiceService';
+
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { QuantityTypeMessageService } from '../../../../../Customs/Services/WebServices/QuantityTypeMessageService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
-import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-import { GITITEMCR } from '../../../../../Customs/EntityPMs/Extended/GITITEMCR';
 
 @Component({
     selector: 'SInvoiceClassificationTabContent',
-    
+    moduleId: module.id,
     templateUrl: './SInvoiceClassificationTabComponent.html',
-    providers: [DeclarationExtendedListService]
 })
 
-export class SInvoiceClassificationTabComponent extends BaseComponent implements OnDestroy, AfterViewInit {
-  public OriginCountryCode: any;
-
+export class SInvoiceClassificationTabComponent
+    extends BaseComponent
+    implements OnDestroy {
     public EntityPM: SupplierInvoicePM;
     public declarationPM: DeclarationPM;
 
@@ -71,25 +86,8 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
     public declarationPMService: DeclarationPMService = new DeclarationPMService();
     ClasificationQtyTypes: { [code: string]: any; } = {};
     quantityTypeMessageService: QuantityTypeMessageService = new QuantityTypeMessageService();
-    _viewContainerRefOfClassificationCode: LogCellTemplateComponent;
-
-
-    //@ViewChild('logcelltemplateOfClassificationCode', { read: ViewContainerRef })
-    //set(val: any) {
-    //    this._viewContainerRefOfClassificationCode = val as LogCellTemplateComponent;
-    //    this._viewContainerRefOfClassificationCode.IsEditMode = true;
-    //}
-    @ViewChild('logcelltemplateOfClassificationCode') myDiv: ElementRef;
-    //myDiv: ElementRef;
-    //@ViewChild('logcelltemplateOfClassificationCode')
-    //set(val: any) {
-    //    this.myDiv = val;
-    //    let logCell = (this.myDiv as any);
-    //    logCell.IsEditMode = true;
-    //}
-    public CurrentSession = SessionLocator.SelectedSession;
-    IsDisplayMessage: boolean;
-    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         //this.ConsimentPackages = new ObservableCollection([]);
         this.ItemsSource = new ObservableCollection([]);
@@ -99,27 +97,13 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
     }
     private _SubDisplayModeChanged;
     private _SubConsignmentsChanged;
-    ngAfterViewInit() {
-        console.log('SInvoiceClassificationTabComponent:ngAfterViewInit():');
-        let token = setTimeout(() => {
-            console.log("viewContainerRefOfClassificationCode:", this.myDiv);
-            let LogCellTemplateComponent = this.myDiv as any;
-            if (LogCellTemplateComponent) {
-             
-                LogCellTemplateComponent.IsEditMode = false ;
-            }
-            
-            clearTimeout(token);
-        }, 700);
-    }
     ngOnDestroy() {
         console.log("SInvoiceClassificationTabComponent:ngOnDestroy");
         //if (this.Tab.ComponentReference && this.Tab.ComponentReference.ngOnDestroy) {
         //    this.Tab.ComponentReference.ngOnDestroy();
         //}
-        if (this.Tab) {
-            this.Tab.ComponentReference = null;
-        }
+
+        this.Tab.ComponentReference = null;
         this.Tab = null;
         if (this._SubDisplayModeChanged) {
             this._SubDisplayModeChanged.unsubscribe();
@@ -160,38 +144,27 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
 
     public DisplayOnlyMessage: string = "";
     DisplayOnlyCheck() {
-        if (this.CurrentSession.CurrentEditComponent.EditComponentController) {
-            this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-                   if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
-                this.SetScreenFieldsEditability();
-                DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
-                return;
-            }
-            
-
-        }
         
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.IsDisplayOnly) {
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.SetScreenFieldsEditability();
+            DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
+            return;
+        }
     
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.CurrentSession.CurrentEditComponent.EntityPM).subscribe((response: any) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
             if (this.IsDisplayOnly) {
-                const prefix = (TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") || "").trim();
-                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
-
-                this.DisplayOnlyMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
+                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
-           
             
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
-
-
- 
     SetTabArgs(args: any) {
         this.EntityPM = args.EntityPM;
         this.Tab = args.Tab;
@@ -267,7 +240,7 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
     }
     public supplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
     GetFreightTotals() {
-        this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe((response:any) => {
+        this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe(response => {
 
 
 
@@ -303,7 +276,7 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
         this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_CTRY", "NON", "NON", this.declarationPM.Tenant)
-            .subscribe((response:any) => {
+            .subscribe(response => {
                 this.CurrentSession.StopBusyIndicator();
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
                     this.IsCountryPURForItems = true;
@@ -449,7 +422,6 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
                 this.CurrentSession.StartBusyIndicator("");
                 this.declarationPMService.update(this.CurrentSession.CurrentEditComponent.EntityPM).subscribe((response: ServiceResponse) => {
                     var declaration = response.Result;
-                    DeclarationEventManager.SavePendingAfterDeclarationSaved.emit(null);
                     this.CurrentSession.StopBusyIndicator();
                     if (!AppTool.IsNullOrEmpty(declaration)) {
                         if (!AppTool.IsNullOrEmpty(item)) {
@@ -475,7 +447,7 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
         
         var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
         var decPM: DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;// this component 
-        supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(decPM/*this.EntityPM*/.Id, this.EntityPM.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe((response:any) => {
+        supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(decPM/*this.EntityPM*/.Id, this.EntityPM.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe(response => {
 
             var windowArgs: any = {};
             windowArgs.EntityPM = response.Result;
@@ -484,7 +456,7 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
             var windowTitle = "Supplier Invoice";
 
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
+            logWindow.Width = 995; // don't change this width!
             logWindow.Height = 600;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) && !AppTool.IsNullOrEmpty(decPM/*this.EntityPM*/.DeclarationNumber)) {
@@ -515,7 +487,7 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
                 else {
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.ReloadMyScreen();
                 }
                 ///this.CD.reattach();
 
@@ -559,8 +531,6 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
     public closedManullay: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
-    public GITITEMCRPMs: GITITEMCR[];
-    
     constructor(EntityPM: SupplierInvoiceItemPM, parent: SInvoiceClassificationTabComponent) {
         super();
         this.entityPM = EntityPM;
@@ -671,8 +641,6 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
 
     public get ItemDescription() { return this.entityPM.ItemDescription; }
     //public set ItemDescription(newValue: string) { this.entityPM.ItemDescription = newValue; }
-
-    public get TariffID() { return this.entityPM.TradeAgreementCode; }
 
     public get NotForAccumaltion() { return this.entityPM.NotForAccumaltion; }
     public set NotForAccumaltion(value: boolean) {
@@ -807,10 +775,8 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
         }
     }
     OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
-        if (!(this.entityPM.ChangeSetOp=="Update")) return;
         var newValue = this.ClassificationCode;
         this.valid = true;
-        logCellTemplate.IsEditMode = false;
         this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
 
         if (AppTool.IsNullOrEmpty(newValue)) {
@@ -895,7 +861,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
                   GITITEMCacheService.Instance.AddItemCodeComponent(/*ItemCode_LocalCache.push(*/
                     new ItemCodeComponent(
                       this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, null,
-                        this.Parent.declarationPM.CustomerCode, this.TariffID, this.GITITEMCRPMs,this.Parent.declarationPM.Direction));
+                      this.Parent.declarationPM.CustomerCode));
                   
                 }
                 else {
@@ -951,7 +917,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
             else {
                 this.Parent.ClasificationQtyTypes[this.ClassificationCode] = null;
                 var code = this.ClassificationCode.toString().slice(0, this.ClassificationCode.toString().length - 1);
-                this.Parent.quantityTypeMessageService.GetQuantityType(code, this.Parent.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
+                this.Parent.quantityTypeMessageService.GetQuantityType(code).subscribe((myServiceResponse: ServiceResponse) => {
                     if (!myServiceResponse.HasError) {
 
 

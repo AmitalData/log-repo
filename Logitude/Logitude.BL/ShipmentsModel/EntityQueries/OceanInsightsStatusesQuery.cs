@@ -32,8 +32,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                       ContentDocumentId = a.ContentDocumentId,
                                                       CreateDate = a.CreateDate,
                                                       OceanInsightsRequestId = a.OceanInsightsRequestId,
-                                                      Tenant = a.Tenant,
-                                                      XML = a.XML
+                                                      Tenant = a.Tenant
                                                   }).FirstOrDefault();
 
             
@@ -51,8 +50,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                       ContentDocumentId = a.ContentDocumentId,
                                                       CreateDate = a.CreateDate,
                                                       OceanInsightsRequestId = a.OceanInsightsRequestId,
-                                                      Tenant = a.Tenant,
-                                                      XML = a.XML
+                                                      Tenant = a.Tenant
                                                   }).ToList(); 
             return myResult;
         }

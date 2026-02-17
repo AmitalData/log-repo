@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr>
         <td>
@@ -28,10 +28,7 @@
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Card'"
                                                             [DependencyFilter1Value]="VendorDependencyProperty1"
-                                                            [DependencyFilter1IsList]="true"
-                                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
+                                                            [DependencyFilter1IsList]="true">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -75,7 +72,6 @@
                                                 </td>
                                             </tr>
 
-                                            
                                         </table>
                                     </td>
 
@@ -157,16 +153,6 @@
                                                 </td>
                                             </tr>
 
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
                                         </table>
                                     </td>
 
@@ -218,33 +204,7 @@
                                     </td>
 
                                     <td style="width: 300px;">
-                                        <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" [IsDisabled]="!IsEditingEnabled" (ItemClicked)="AddShipment($event)" [QueryFilterItems]="apiQueryFilters" [AutoClearSearchText]="true"></SearchBox>
-                                    </td>
-
-                                    <td style="width: 10px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width:150px; vertical-align:middle;">
-                                        <ul class="FiltersMenu">
-                                            <li (click)="LevelCodeitemClicked('All')" (mouseover)="LevelCodeMouseOver('All')" [class.SelectedFilter]="LevelCodeSelectedValue === 'All'" title="All Shipments">
-                                                All
-                                            </li>
-                                            <li style="width:50px;" (click)="LevelCodeitemClicked('MasterAndDirect')" (mouseover)="LevelCodeMouseOver('MasterAndDirect')" (mouseleave)="LevelCodeMouseLeave('MasterAndDirect')" [class.SelectedFilter]="LevelCodeSelectedValue === 'MasterAndDirect'" title="Master And Direct">
-                                                Masters
-                                            </li>
-                                            <li style="width:70px;" (click)="LevelCodeitemClicked('HouseAndDirect')" (mouseover)="LevelCodeMouseOver('MasterAndHouse')" (mouseleave)="LevelCodeMouseLeave('HouseAndDirect')" [class.SelectedFilter]="LevelCodeSelectedValue === 'HouseAndDirect'" title="House And Direct">
-                                                Shipments
-                                            </li>
-                                        </ul>
-                                    </td>
-
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 1px;">
-                                        <button [disabled]="!IsEditingEnabled" class="Button" (click)="AddShipmentsButtonClicked()">Add Open Shipments</button>
+                                        <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" [IsDisabled]="!IsEditingEnabled" (ItemClicked)="AddShipment($event)"></SearchBox>
                                     </td>
 
                                     <td style="width: 5px;">
@@ -283,9 +243,6 @@
                                                 <td style="width: 120px; min-width: 120px; max-width: 120px;">Open Amount</td>
                                                 <td style="width: 120px; min-width: 120px; max-width: 120px;">Total</td>
                                                 <td style="width: 120px; min-width: 120px; max-width: 120px;">Total VAT</td>
-                                                <td style="width: 90px; min-width: 90px; max-width: 90px;">
-                                                    <div></div>
-                                                </td>
                                                 <td class="LastChild" style="min-width: 50px;">
                                                     <div></div>
                                                 </td>
@@ -329,21 +286,17 @@
                                                     {{item.TotalVATAmount | NumbersPipe:'N2'}}
                                                 </td>
 
-                                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
-                                                    <button [disabled]="!IsEditingEnabled" class="Button" (click)="AddPayablesButtonClicked(item)">Calculate</button>
-                                                </td>
-
                                                 <td style="min-width: 50px;">
                                                     <div class="LeftCenter" style="height: 20px;">
                                                         <span class="CellSeparator"></span>
-                                                        <IconButton attr.data-cy="{{'EditShipmentLine_' + item.ShipmentNumber | IdGeneratorAsyncPipe | async}}" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
-                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>                                                        
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
                                                     </div>
                                                 </td>
                                             </tr>
 
                                             <tr>
-                                                <td colspan="10">
+                                                <td colspan="9">
                                                     <div></div>
                                                 </td>
                                             </tr>

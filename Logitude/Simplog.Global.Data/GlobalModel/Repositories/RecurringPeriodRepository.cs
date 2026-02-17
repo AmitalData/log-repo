@@ -5,7 +5,6 @@ using System.Text;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class RecurringPeriodRepository : IRepository<RecurringPeriod>
@@ -32,37 +31,12 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             RecurringPeriod instance = (from i in context.RecurringPeriods
                                  where i.Code == code                                 
                                  select i).FirstOrDefault();
-            string entityName = "RecurringPeriod" + code;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && instance != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, instance, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    instance = (RecurringPeriod)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
             return instance;
         }
 
         public IQueryable<RecurringPeriod> GetRecurringPeriods()
         {
-            IQueryable<RecurringPeriod> items = context.RecurringPeriods;
-            string entityName = "RecurringPeriods";
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && items != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, items, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    items = (IQueryable<RecurringPeriod>)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            return items;
+            return context.RecurringPeriods;
         }
 
         public IQueryable<RecurringPeriod> GetAll()

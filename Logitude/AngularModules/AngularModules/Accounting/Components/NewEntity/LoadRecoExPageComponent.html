@@ -10,18 +10,15 @@
         font-size: 12px;
         text-align: center;
     }
-    .MyTR{
-        height:20px;
-    }
 </style>
 
 <div>
    
 
         <!-- Request -->
-        <div class="class-request-content" *ngIf="_ResultLoadBankPage == null" >
+        <div class="class-request-content">
             <table style="width: 350px;height: 270px;padding-top: 10px;">
-                <tr  *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
                     <td>
                         <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
                     </td>
@@ -60,61 +57,7 @@
             </table>
         </div>
 
-        <div style="overflow:auto; height:300px;">
-            <table>
-                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors!=null && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors.length>0">
-                    <td colspan="10">
-                        <div style="color:orangered">שגיאות שנמצאו </div>
-                    </td>
-                </tr>
-                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors!=null && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors.length>0">
-                    <td>
-                        <table>
-                            <tr class="MyTR" *ngFor="let item of _ResultLoadBankPage.ValidateBankPageAgaintDBErrors">
-                                <td>{{item.Message}}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-
-                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBExceptionPageList!=null && _ResultLoadBankPage.DBExceptionPageList.length>0">
-                    <td colspan="10">
-                        <div style="color:red">שגיאות בבנית דפי בנק </div>
-                    </td>
-                </tr>
-                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBExceptionPageList!=null && _ResultLoadBankPage.DBExceptionPageList.length>0">
-                    <td>
-                        <table>
-                            <tr class="MyTR" *ngFor="let item of _ResultLoadBankPage.DBExceptionPageList">
-                                <td>{{item.Message}}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-
-
-                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBSuccessPageList!=null && _ResultLoadBankPage.DBSuccessPageList.length>0">
-                    <td colspan="10">
-                        <div style="color:green">דפים שנקלטו</div>
-                    </td>
-                </tr>
-                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBSuccessPageList!=null && _ResultLoadBankPage.DBSuccessPageList.length>0">
-                    <td>
-                        <table>
-                            <tr class="MyTR"  *ngFor="let item of _ResultLoadBankPage.DBSuccessPageList">
-                                <td>{{item.Message}}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
+        
 
 
 </div>

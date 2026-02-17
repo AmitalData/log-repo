@@ -77,7 +77,7 @@ export class DocumentsPrintHelper {
 
                 //3
                 //Get document out
-                this._documentOutPMService.getCreateDocumentOut(documentType.Id, this.EntityId, null, null, objectTableId, this.Tenant).subscribe((res:any) => {
+                this._documentOutPMService.getCreateDocumentOut(documentType.Id, this.EntityId, null, null, objectTableId, this.Tenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var documentout: DocumentOutPM = pmResponse.Result;
@@ -90,7 +90,7 @@ export class DocumentsPrintHelper {
                             //if (documentOutCopy) {
                             //4
                             //Export to pdf
-                            this._exportDocumentService.getDocumentPdfFile(documentType.Id, this.EntityId, objectTableId, null, null, documentout.Id, documentout.Tenant, documentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe((res:any) => {
+                            this._exportDocumentService.getDocumentPdfFile(documentType.Id, this.EntityId, objectTableId, null, null, documentout.Id, documentout.Tenant, documentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe(res => {
                                 var pmResponse: ServiceResponse = res;
                                 if (!pmResponse.HasError) {
                                     console.log("[DocumentsPrintHelper] _exportDocumentService.getDocumentPdfFile", pmResponse)

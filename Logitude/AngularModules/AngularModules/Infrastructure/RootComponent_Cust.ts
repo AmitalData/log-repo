@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { DynamicLoader } from '../App/DynamicLoader/DynamicLoader';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {DynamicLoader_Cust} from './Utilities/DynamicLoader_Cust';
 import {ServiceHelper} from './Utilities/ServiceHelper';
 import {SessionLocator} from './Utilities/SessionLocator';
 import {ExternalParams, ExternalParamsArg} from './Utilities/ExternalParams';
@@ -10,25 +10,23 @@ import {TermsofUseArgs} from './DataContracts/TermsofUseArgs';
 import { environment } from '../environments/environment';
 import { LoginService } from './Services/LoginService';
 import { AppTool } from './Tools'
-import { ChildDirective } from './Directives/ChildDirective';
-import { RootService } from './RootService';
 declare var IsMobileDetected;
-
 @Component({
-  selector: 'RootComponent',
-  template:
+    selector: 'RootComponent',
+    template:
     `
         <div class="MediaFillRelative">
-            <div ChildDirective></div>
+            <div #Child></div>
         </div>
     `,
 })
 
-export class RootComponent_Cust implements AfterViewInit {
-
-  @ViewChild(ChildDirective) Child: ChildDirective;
-
+export class RootComponent_Cust implements OnInit {
+  private isComponentBooted: boolean = false;
+  private isComponentInited: boolean = false;
+  @ViewChild("Child", { read: ViewContainerRef }) location: ViewContainerRef;
   constructor() {
+
     var data = window.sessionStorage.getItem('userdata');
 
     if (data != "SignOut") {
@@ -37,55 +35,66 @@ export class RootComponent_Cust implements AfterViewInit {
   }
 
   Boot(args: any) {
-    ServiceHelper.HttpClient = args["Http"];
-    SessionLocator.DynamicLoader = DynamicLoader;
+    ServiceHelper.Http = args["Http"];
+    SessionLocator.Http = args["Http"];
+    DynamicLoader_Cust.Compiler = args["Compiler"];
+    DynamicLoader_Cust.Resolver = args["Resolver"];
+    DynamicLoader_Cust.Injector = args["Injector"];
+    DynamicLoader_Cust.ModuleLoader = args["ModuleLoader"];
+    SessionLocator.DynamicLoader = DynamicLoader_Cust;
     SessionLocator.RootComponent = this;
 
     if (environment.production) {
       SessionLocator.IsProduction = true;
     }
+
+    this.isComponentBooted = true;
+    this.RunComponent();
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
+    this.isComponentInited = true;
     this.RunComponent();
   }
 
   isDSV: boolean = false;
   RunComponent() {
-    var url = window.location.href;
+    if (this.isComponentBooted && this.isComponentInited) {
+      var url = window.location.href;
 
-    this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
+      this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
 
-    var data = window.sessionStorage.getItem('userdata');
-    if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && url.indexOf('localhost') == -1)) {
-      document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
-    }
-
-    else {
-      this.LoadLoginPage();
-      if (url && url.indexOf('localhost') == -1) {
-        window.onbeforeunload = function (e) {
-          var message = "";
-          if (SessionLocator.ExternalParams && SessionLocator.ExternalParams.OneTimePasswordId) {
-            message = "when you leave this site can't not be used the key agin";
-          }
-          else if (!SessionLocator.IsSiguOut) {
-            message = "Are you sure you want to leave this page ?";
-          }
-
-          if (!AppTool.IsNullOrEmpty(message)) {
-            e.returnValue = message;
-            return message;
-          }
-        };
+      var data = window.sessionStorage.getItem('userdata');
+      if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && url.indexOf('localhost') == -1)) {
+        document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
       }
 
+      else {
+        this.LoadLoginPage();
+        if (url && url.indexOf('localhost') == -1) {
+          window.onbeforeunload = function (e) {
+            var message = "";
+            if (SessionLocator.ExternalParams && SessionLocator.ExternalParams.OneTimePasswordId) {
+              message = "when you leave this site can't not be used the key agin";
+            }
+            else if (!SessionLocator.IsSiguOut) {
+              message = "Are you sure you want to leave this page ?";
+            }
+
+            if (!AppTool.IsNullOrEmpty(message)) {
+              e.returnValue = message;
+              return message;
+            }
+          };
+        }
+
+      }
     }
   }
 
   private ClearLocation() {
-    if (this.Child.Location) {
-      this.Child.Location.clear();
+    if (this.location) {
+      this.location.clear();
     }
   }
 
@@ -124,7 +133,7 @@ export class RootComponent_Cust implements AfterViewInit {
     //this.isDSV = true;
     if (this.isDSV == true) {
       if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
-          SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/PrivateLabelComponents/DSVMobileLoginProcessComponent", this.Child.Location)
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent", this.location)
           .then(cmpRef => {
 
             cmpRef.instance.Blocking.subscribe(s => {
@@ -138,7 +147,7 @@ export class RootComponent_Cust implements AfterViewInit {
           });
       }
       else {
-          SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent", this.Child.Location)
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVLoginProcessComponent", this.location)
           .then(cmpRef => {
 
             cmpRef.instance.Blocking.subscribe(s => {
@@ -151,12 +160,9 @@ export class RootComponent_Cust implements AfterViewInit {
             });
           });
       }
-    } else if(SessionLocator?.ExternalParams?.Menu?.startsWith("IdentityShaamLandingPage"))
-      SessionLocator.DynamicLoader.Load("./Infrastructure/Components/IdentityShaamLandingPageComponent/IdentityShaamLandingPageComponent", this.Child.Location).then()
-      else if (RootService.redirectToExternalLink()) 
-        return;
-      else {
-      SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.Child.Location)
+    }
+    else {
+      SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.location)
         .then(cmpRef => {
 
           cmpRef.instance.Blocking.subscribe(s => {
@@ -173,7 +179,7 @@ export class RootComponent_Cust implements AfterViewInit {
   LoadBlockingScreen() {
     this.ClearLocation();
 
-    SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/BlockScreenComponent", this.Child.Location)
+    SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/BlockScreenComponent", this.location)
       .then(cmpRefBlocked => {
         cmpRefBlocked.instance.BackToLoginCompleted.subscribe(r => {
           this.SignOutCompleted();
@@ -185,7 +191,7 @@ export class RootComponent_Cust implements AfterViewInit {
     this.ClearLocation();
 
     //SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.location)
-    SessionLocator.DynamicLoader.Load("./Infrastructure/Components/HomeComponent/HomeComponent", this.Child.Location)
+    SessionLocator.DynamicLoader.Load("./Infrastructure/Components/HomeComponent/HomeComponent", this.location)
       .then(cmpRef => {
         cmpRef.instance.RunComponent();
 
@@ -206,7 +212,7 @@ export class RootComponent_Cust implements AfterViewInit {
 
     this.ClearLocation();
 
-    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.Child.Location)
+    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.location)
       .then(cmpRef => {
         cmpRef.instance.RunComponent();
 
@@ -226,7 +232,7 @@ export class RootComponent_Cust implements AfterViewInit {
 
     this.ClearLocation();
 
-    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/ECommercePaymentRequestMobileComponent", this.Child.Location)
+    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/ECommercePaymentRequestMobileComponent", this.location)
       .then(cmpRef => {
         cmpRef.instance.RunComponent();
 
@@ -243,28 +249,15 @@ export class RootComponent_Cust implements AfterViewInit {
       });
   }
 
-  VieUserIdNumberMobileComponent() {
-    this.ClearLocation();
-    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.Child.Location)
-      .then(cmpRef => {
-        cmpRef.instance.RunComponent();
-      });
-  }
-
   OnLoginCompleted(Param: any = null) {
 
     if (Param == "IgnoreTerms") {
-      if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid") {
-        this.VieUserIdNumberMobileComponent();
-      }
-      else {
-        this.ViewEComercePaymentRequestComponent();
-      }
+      this.ViewEComercePaymentRequestComponent();
       return;
     }
     this._FinishLogin = true;
     var termsofUseService = new TermsofUseService();
-    termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
+    termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe(res => {
       var pmResponse: ServiceResponse = res;
       if (!pmResponse.HasError) {
         var myResult: TermsofUseArgs = pmResponse.Result;
@@ -272,10 +265,10 @@ export class RootComponent_Cust implements AfterViewInit {
           if (myResult.IsTermOfUse) {
             this.ClearLocation();
             if (this.isDSV == true) {
-              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.Child.Location)
+              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.location)
                 .then(cmpRef => {
                   cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Load(myResult.PrivateLabelId, myResult.Id, myResult.VersionDocumentId);
+                  cmpRef.instance.Load(myResult.Version);
                   cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
                     if ($event == "Accept") {
@@ -289,10 +282,10 @@ export class RootComponent_Cust implements AfterViewInit {
                 });
             }
             else {
-              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
+              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.location)
                 .then(cmpRef => {
                   cmpRef.instance.ComponentRef = cmpRef;
-                  cmpRef.instance.Load(myResult.PrivateLabelId, myResult.Id, myResult.VersionDocumentId);
+                  cmpRef.instance.Load(myResult.Version);
                   cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
                     if ($event == "Accept") {
@@ -314,9 +307,6 @@ export class RootComponent_Cust implements AfterViewInit {
             else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" && IsMobileDetected() == true) {
               this.ViewEComercePaymentRequestComponent();
             }
-            else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid" && IsMobileDetected() == true) {
-              this.VieUserIdNumberMobileComponent();
-            }
             else {
               this.ViewHomeComponent();
             }
@@ -328,7 +318,7 @@ export class RootComponent_Cust implements AfterViewInit {
   SignOutCompleted() {
 
     var loginService = new LoginService();
-    loginService.GetSignOut().subscribe((res: any) => {
+    loginService.GetSignOut().subscribe(res => {
 
     });
 

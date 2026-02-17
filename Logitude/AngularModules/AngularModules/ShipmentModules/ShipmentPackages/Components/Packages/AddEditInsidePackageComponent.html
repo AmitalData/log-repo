@@ -123,7 +123,7 @@
                                                     <td>
                                                         <table>
                                                             <tr>
-                                                                <td style="width: 106px;">
+                                                                <td style="width: 100px;">
                                                                     <LogTextBox [HideColumns]="true" [ObjectFieldName]="'CommodityNumber'" [Text]="DataContext.CommodityNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                 </td>
                                                                 <td style="width: 20px; padding-left: 4px;">
@@ -133,76 +133,6 @@
                                                                 </td>
                                                             </tr>
                                                         </table>
-                                                    </td>
-                                                </tr>
-
-                                                <!--Harmonize-->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLabel [ObjectFieldName]="'Harmonize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td style="width: 1px;">
-                                                                    <Hyperlink (click)="MultiHarmonizeClicked()">Multi</Hyperlink>
-                                                                </td>
-
-                                                                <td style="width: 2px;">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-
-                                                                <td>
-                                                                    <div class="MediaFill">
-                                                                        <div class="MediaFillRelative">
-                                                                            <LogTextBox [ObjectFieldName]="'Harmonize'" [Text]="DataContext.Harmonize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                            <div class="Value" style="position: absolute; left: 10px; top: 7px;" *ngIf="EntityPM.IsMultiHarmonize">Multi</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-
-                                                                <td style="width: 4px;">
-                                                                    <div></div>
-                                                                </td>
-
-                                                                <td style="width: 14px;">
-                                                                    <div>
-                                                                        <span class="hyperlink" *ngIf="!EntityPM.IsMultiHarmonize" [class.HyperlinkDisabled]="!DataContext.IsEditingFieldsEnabled" (click)="ChooseHarmonizeClicked()">
-                                                                            <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
-                                                                        </span>
-                                                                    </div>
-                                                                </td>
-
-                                                                <td style="width: 18px;">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                                <tr class="FormFieldRow" *ngIf="DataContext.HorseFieldIsVisible">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'HorseId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td>
-                                                        <LogLov [ObjectFieldName]="'HorseId'"
-                                                                [SelectedValue]="DataContext.HorseId"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"
-                                                                [LookUpTableName]="'Horse'"
-                                                                (SelectedItemChanged)="DataContext.Horse = $event"
-                                                                [DisplayMemberPath]="'Name'">
-                                                        </LogLov>
                                                     </td>
                                                 </tr>
 
@@ -440,7 +370,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'CancelInsidePackage' | IdGeneratorAsyncPipe | async}}"  (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" id="{{'CancelInsidePackage' | IdGeneratorPipe}}"  (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -448,7 +378,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'OKInsidePackage' | IdGeneratorAsyncPipe | async}}"  [disabled]="!DataContext.IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'OKInsidePackage' | IdGeneratorPipe}}"  [disabled]="!DataContext.IsEditingEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

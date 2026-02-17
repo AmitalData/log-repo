@@ -35,7 +35,7 @@ namespace AmitalCustomsWindowsService.Utils
                 }
                 try
                 {
-                    To = ConfigurationManager.AppSettings["SMTP.ErrorNotifyEMAIL"].ToString();
+                    To = ConfigurationSettings.AppSettings["SMTP.ErrorNotifyEMAIL"].ToString();
                 }
                 catch
                 {
@@ -73,7 +73,7 @@ namespace AmitalCustomsWindowsService.Utils
 
             try
             {
-                if (String.IsNullOrWhiteSpace( ConfigurationManager.AppSettings["SMTP.ForceBother"]))
+                if (String.IsNullOrWhiteSpace( ConfigurationSettings.AppSettings["SMTP.ForceBother"]))
                 {
                     Logger.LogMe("Sorry Due SMTP.ForceBother IsNullOrWhiteSpace suppress send email !!", false);
                     return;
@@ -84,15 +84,15 @@ namespace AmitalCustomsWindowsService.Utils
                 {
                     if (smtpserver == "")
                     {
-                        smtpserver = ConfigurationManager.AppSettings["SMTP.server"].ToString();
+                        smtpserver = ConfigurationSettings.AppSettings["SMTP.server"].ToString();
                     }
                     if (sendusername == "")
                     {
-                        sendusername = ConfigurationManager.AppSettings["SMTP.sendusername"].ToString();
+                        sendusername = ConfigurationSettings.AppSettings["SMTP.sendusername"].ToString();
                     }
                     if (sendpassword == "")
                     {
-                        sendpassword = ConfigurationManager.AppSettings["SMTP.sendpassword"].ToString();
+                        sendpassword = ConfigurationSettings.AppSettings["SMTP.sendpassword"].ToString();
                     }
                 }
                 catch

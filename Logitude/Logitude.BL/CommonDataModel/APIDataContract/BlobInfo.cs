@@ -16,8 +16,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public int BlobChunkNumber { get; set; }
         public List<string> BlobChunkIdsList { get; set; }
         public long TotalSentChunksSize { get; set; }
-        public bool UploadAsOneBlock { get; set; }
-
 
     }
 }

@@ -10,7 +10,7 @@ import {StockSeriesListClass, StockSeries} from '../../../../Common/Services/AWB
 import {FBLStockExtenedPMService} from '../../../../Shipment/Services/ExtendedPMs/FBLStockExtenedPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewFBLStockComponent.html',
 })
 

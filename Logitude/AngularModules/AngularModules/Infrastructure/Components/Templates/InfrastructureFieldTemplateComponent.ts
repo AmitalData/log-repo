@@ -1,10 +1,8 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import { DataCustomObjectList } from '../../EntityLists/DataCustomObjectList';
-import { ReferenceCustomObjectList } from '../../EntityLists/ReferenceCustomObjectList';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './InfrastructureFieldTemplateComponent.html',
 })
 
@@ -16,7 +14,6 @@ export class InfrastructureFieldTemplateComponent {
     public SpotlightDataTemplate: string = null;
     public IsSpotLightTemplate: boolean = false;
     public isRTL: boolean = false;
-    public IsCustomObjectTable: boolean = false;
     constructor(private cd: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         
@@ -28,12 +25,9 @@ export class InfrastructureFieldTemplateComponent {
         this.ObjectTableName = args['ObjectTableName'];
         this.IsSpotLightTemplate = args['IsSpotLightTemplate'];
         this.SpotlightDataTemplate = args['SpotlightDataTemplate'];
-        this.IsCustomObjectTable = this.Entity instanceof ReferenceCustomObjectList || this.Entity instanceof DataCustomObjectList;
 
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
-
-            this.SetPrivateLabelIdFieldValue();
 
             if (this.cd) {
                 var isDestroyed: boolean = this.cd['destroyed'];
@@ -41,12 +35,6 @@ export class InfrastructureFieldTemplateComponent {
                     this.cd.detectChanges();
                 }
             }
-        }
-    }
-
-    private SetPrivateLabelIdFieldValue() {
-        if (this.ObjectTableName == "TenantManagement" && this.FieldName == "PrivateLabelId") {
-            this.FieldValue = this.Entity["PrivateLabelName"];
         }
     }
 
@@ -61,5 +49,4 @@ export class InfrastructureFieldTemplateComponent {
             return 'black';
         }
     }
-
 }

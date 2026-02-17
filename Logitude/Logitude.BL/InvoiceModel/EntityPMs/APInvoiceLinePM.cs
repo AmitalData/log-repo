@@ -26,7 +26,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string VatTypeId { get; set; }
         public double? VatPercentage { get; set; }
-        public double? VatRecognizedPercentage { get; set; }
+
         public string VatTypeName { get; set; }
         public string ExternalVATCard { get; set; }
         public string ExternalTAXItemId { get; set; }
@@ -86,15 +86,5 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool AuthorizedSignatory { get; set; }
 
         public string PrepaidCollectId { get; set; }
-
-        public string ContainerTypeId { get; set; }
-        public string ContainerTypeCode { get; set; }
-        public int? Quantity { get; set; }
-        public double? ForiegnAmountWithRecognizedVat { get; set; }
-        public double? LocalAmountWithVatRecognized { get;  set; }
-      public string PayableDebitGLAcountName { get; set; }
-        public string PayableDebitGLAcountId { get; set; }
-        public bool? ExcludeFromTaxReport { get; set; }
-        public bool? IsPrepaidExpenses { get; set; }
     }
 }

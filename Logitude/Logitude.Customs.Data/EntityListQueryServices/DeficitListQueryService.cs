@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -21,29 +21,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<DeficitList> GetIqueryableList(IQueryable<Deficit> iQueryable)
         {
-            IQueryable<DeficitList> query = (from a in iQueryable.Include("DebtNotificationType")
-                                             select new DeficitList()
-                                                    {
-                                                        DebtNotificationNumber = a.DebtNotificationNumber,
-                                                        DebtNotificationReason = a.DebtNotificationReason,
-                                                        Id = a.Id,
-                                                        NotificationTypeCode = a.NotificationTypeCode,
-                                                        NotificationTypeName = a.DebtNotificationType.LocalName != null ? a.DebtNotificationType.LocalName : a.DebtNotificationType.EnglishName,
-                                                        ProductionDate = a.ProductionDate,
-                                                        RealesGoodsDescription = a.RealesGoodsDescription,
-                                                        Tenant = a.Tenant,
-                                                        ValidityDateTo = a.ValidityDateTo,
-                                                       
-
-                                                    });
+		IQueryable<DeficitList> query = (from a in iQueryable
+                                            select new DeficitList()
+											{
+                     
+					                          TapagId = a.TapagId,
+					
+		                    	            });
             return query;
 		}
 
-        private IQueryable<Deficit> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Deficit> iQueryable, int tenant)
+		private IQueryable<Deficit> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Deficit> iQueryable, int tenant)
         {
-            return iQueryable;
-        }
-	}
+			throw new NotImplementedException();
+		}
+			}
 
 
 }

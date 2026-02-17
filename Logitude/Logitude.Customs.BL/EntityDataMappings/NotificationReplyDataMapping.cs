@@ -11,7 +11,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -40,16 +40,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (entityPOCO.RepliedByUserId != null)
             {
-                UserRepository rep = new UserRepository(entityPOCO.Tenant);
-                User user = rep.GetSingleUser(entityPOCO.RepliedByUserId, entityPOCO.Tenant, false);
-                if (user == null)
-                {
-                    user = rep.GetSingleUser(entityPOCO.RepliedByUserId, 0, false);
-                }
-                user = user ?? new User();
-                //var qs= new SystemDataQuery(entityPOCO.Tenant);
-                //var user = qs.GetSinglePM(entityPOCO.RepliedByUserId, entityPOCO.Tenant);
-
+                UserRepository rep = new UserRepository(0);
+                User user = rep.GetSingleUser(entityPOCO.RepliedByUserId , entityPOCO.Tenant, false);
                 entityPM.RepliedByUserName = user.Contact != null ? user.Contact.LocalName: null;
             }
         }

@@ -6,15 +6,13 @@ using System.Collections.Generic;
 using Simplog.Server.Infrastructure;
 using System;
 using Simplog.Data.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
-using Logitude.BL.Resolvers;
-using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -57,15 +55,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
-            ContactPM contact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
+            Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
+                
 
-                if (entityPM.IsTotalUpdatedByCC)
-                {
-                    CreateTotalUpdatedEvent(entityPM, entityPOCO, contact);
-                }
                 if (entityPM.EnglishName != entityPOCO.EnglishName && (!String.IsNullOrEmpty(entityPM.EnglishName) || !String.IsNullOrEmpty(entityPOCO.EnglishName)))
                 {
                     string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
@@ -129,21 +124,5 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-        private void CreateTotalUpdatedEvent(CashBookPM entityPM, CashBook entityPOCO, ContactPM contact)
-        {
-            string notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.TotalAmount
-                        + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.TotalAmount;
-
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
-            {
-                EntityId = entityPM.Id,
-                Tenant = entityPM.Tenant,
-                UserId = contact.Id,
-                ObjectTableName = "CashBook",
-                IsAddedManually = false,
-                EventTypeCode = "CCBU",
-                Notes = notes,
-            });
-        }
     }
 }

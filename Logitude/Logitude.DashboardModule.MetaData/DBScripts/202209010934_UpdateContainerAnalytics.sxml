@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Dashboard" TargetTableName="Containers"  Env="local,test">
-  <Sql Version="1">
-    <![CDATA[
-        update ContainerAnalytics set ShipmentStatusId = (select ShipmentStatusId from Containers where ContainerAnalytics.Id = Containers.Id)  
-    ]]>
-  </Sql>
-</Script>

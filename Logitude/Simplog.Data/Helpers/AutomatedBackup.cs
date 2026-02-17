@@ -32,14 +32,6 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public int Delaytime { get; set; }
 
-
-        [DataMember]
-        public string DelaytimeOp { get; set; }
-
-
-        [DataMember]
-        public string SelectedDelaytimeFieldCode { get; set; }
-
         [DataMember]
         public string DelaytimeIndicator { get; set; }
 
@@ -49,18 +41,8 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public bool IsAutomationResultEmailAllActiveUsers { get; set; }
 
-
-
         [DataMember]
-        public string ReportTemplateId { get; set; }
-        [DataMember]
-        public string DocumentCopyId { get; set; }
-
-        [DataMember]
-        public AutomationFollowUp AutomationFollowUp { get; set; }  
-
-        [DataMember]
-        public AutomationEvent AutomationEvent { get; set; }
+        public AutomationFollowUp AutomationFollowUp { get; set; }
 
         [DataMember]
         public AutomationQueuedTask AutomationQueuedTask { get; set; }
@@ -110,21 +92,6 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public AutomationSetSLAValue AutomationSetSLAValue { get; set; }
-
-
-        [DataMember]
-        public AutomationSendInterface AutomationSendInterface { get; set; }
-
-
-        [DataMember]
-        public AutomationSendDocument AutomationSendDocument { get; set; }
-
-
-        [DataMember]
-        public AutomationCreateTask AutomationCreateTask { get; set; }
-
-        [DataMember]
-        public AutomationOnUpdateDocument AutomationOnUpdateDocument { get; set; }
     }
 
 
@@ -136,14 +103,5 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public string ObjectFieldId { get; set; }
-
-        [DataMember]
-        public string ObjectFieldCode { get; set; }
-
     }
-
-
-   
-
-
 }

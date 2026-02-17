@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .NotesBox {
         border: 1px solid gray;
         border-radius: 5px;
@@ -220,37 +220,31 @@
                                                                     <!-- ParagraphTypeCode -->
                                                                     <log-column [header]="'Customs.PaymentOrderLine.F.ParagraphTypeCode' | TextCodeTranslationPipe"
                                                                                 [binding]="'ParagraphTypeCode'" [width]="'70'" [Alignment]="'right'">
-                                                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                                        <log-cell-template template="let item" #logcelltemplate>
                                                                             <div class="TextTrimming" style="text-align:right">
                                                                                 <span>{{item.ParagraphTypeCode}}</span>
                                                                             </div>
                                                                         </log-cell-template>
-</ng-template>
                                                                     </log-column>
 
                                                                     <!-- ParagraphTypeName -->
                                                                     <log-column [header]="'Customs.PaymentOrderLine.F.ParagraphTypeName' | TextCodeTranslationPipe"
                                                                                 [binding]="'ParagraphTypeName'" [width]="'110'" [Alignment]="'right'">
-                                                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                                        <log-cell-template template="let item" #logcelltemplate>
                                                                             <div class="TextTrimming" style="text-align:right">
                                                                                 <span>{{item.ParagraphTypeName}}</span>
                                                                             </div>
                                                                         </log-cell-template>
-</ng-template>
                                                                     </log-column>
 
                                                                     <!-- Amount -->
                                                                     <log-column [header]="'Customs.PaymentOrderLine.F.Amount' | TextCodeTranslationPipe"
                                                                                 [binding]="'Amount'" [width]="'100'" [Alignment]="'right'">
-                                                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                                        <log-cell-template template="let item" #logcelltemplate>
                                                                             <div class="TextTrimming" style="text-align:right">
                                                                                 <span>{{item.Amount | NumbersPipe:'N1'}}</span>
                                                                             </div>
                                                                         </log-cell-template>
-</ng-template>
                                                                     </log-column>
 
                                                                 </logitude-edit-grid>
@@ -303,14 +297,11 @@
                                                         <log-column [header]="'Customs.PaymentOrderMethod.F.TypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'140'" [Alignment]="'right'" [binding]="'TypeCode'">
                                                             <log-footer>
-                                                                <ng-template let-item>  
-                                                                <log-footer-template >
+                                                                <log-footer-template template="let item">
                                                                     <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{'Customs.PaymentOrder.O.Total' | TextCodeTranslationPipe}}</div>
                                                                 </log-footer-template>
-                                                            </ng-template>  
                                                             </log-footer>
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.TypeName}}</span>
                                                                 </div>
@@ -326,21 +317,17 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Amount -->
                                                         <log-column [width]="'110'" [Alignment]="'right'" [binding]="'Amount'"
                                                                     [header]="'Customs.PaymentOrderMethod.F.Amount' | TextCodeTranslationPipe" >
                                                             <log-footer>
-                                                                <ng-template let-item>  
-                                                                <log-footer-template >
+                                                                <log-footer-template template="let item">
                                                                     <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{MethodItemsAmountTotal | NumbersPipe:'N2'}}</div> 
                                                                 </log-footer-template>
-                                                            </ng-template>  
                                                             </log-footer>
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate >
+                                                            <log-cell-template template="let item" #logcelltemplate >
                                                                 <div style="width:100%;height:100%;">
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                         <span>{{item.Amount | NumbersPipe:'N2'}}</span>
@@ -352,13 +339,11 @@
                                                                     </div>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- BankCode -->
                                                         <log-column [header]="'Customs.DeclarationPaymentMethod.F.BankCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'BankCode'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.InternalBankName}}</span>
                                                                 </div>
@@ -369,14 +354,12 @@
                                                                               [Binding]="'Name'"></ComboBox>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- CustomerActivityType -->
                                                         <log-column [header]="'Customs.PaymentOrderMethod.F.CustomerActivityTypeCode' | TextCodeTranslationPipe" [width]="'140'"
                                                                     [Alignment]="'right'" [binding]="'CustomerActivityTypeCode'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.CustomerActivityTypeName}}</span>
                                                                 </div>
@@ -392,14 +375,12 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- PaymentMethodStatus -->
                                                         <log-column [header]="'Customs.PaymentOrderMethod.F.PaymentMethodStatusCode' | TextCodeTranslationPipe"
                                                                     [width]="'140'" [Alignment]="'right'" [binding]="'PaymentMethodStatusCode'" [Editable]="false">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.PaymentMethodStatusName}}</span>
                                                                 </div>
@@ -415,19 +396,16 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <span class="CellSeparator" style="float: right;"></span>
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteMethodsList(item)"
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>
@@ -476,14 +454,11 @@
                                                         <log-column [header]="'Customs.PaymentOrderProtestReason.F.ProtestTypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'140'" [Alignment]="'right'" [binding]="'ProtestTypeName'">
                                                             <log-footer>
-                                                                <ng-template let-item>  
-                                                                <log-footer-template >
+                                                                <log-footer-template template="let item">
                                                                     <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{'Customs.PaymentOrder.O.Total' | TextCodeTranslationPipe}}</div>
                                                                 </log-footer-template>
-                                                            </ng-template>  
                                                             </log-footer>
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.ProtestTypeName}}</span>
                                                                 </div>
@@ -499,49 +474,28 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- InvoiceNumber -->
                                                         <log-column [width]="'110'" [binding]="'InvoiceNumber'" [Alignment]="'right'"
                                                                     [header]="'Customs.PaymentOrderProtestReason.F.InvoiceNumber' | TextCodeTranslationPipe">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div style="width:100%;height:100%;">
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                        <span>{{item.InvoiceNumber}}</span>
+                                                                        <span>{{item.InvoiceNumber | NumbersPipe:'N3'}}</span>
                                                                     </div>
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsEditMode">
-                                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'InvoiceNumber'" [InputType]="'text'" [DataContext]="item"
+                                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'InvoiceNumber'" [InputType]="'double'" [DataContext]="item"
                                                                                     [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                                     </div>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
-                                                        </log-column>
-                                                        <!-- GoodsItemLineNumber -->
-                                                        <log-column [width]="'110'" [binding]="'GoodsItemLineNumber'" [Alignment]="'right'"
-                                                                    [header]="'Customs.PaymentOrderProtestReason.F.GoodsItemLineNumber' | TextCodeTranslationPipe">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                                                <div style="width:100%;height:100%;">
-                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                                        <span>{{item.GoodsItemLineNumber}}</span>
-                                                                    </div>
-                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsEditMode">
-                                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GoodsItemLineNumber'" [InputType]="'integer'" [DataContext]="item"
-                                                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                                    </div>
-                                                                </div>
-                                                            </log-cell-template>
-</ng-template>
                                                         </log-column>
 
-                                                                         <!-- GoodsItemClassification -->
+                                                        <!-- GoodsItemClassification -->
                                                         <log-column [header]="'Customs.PaymentOrderProtestReason.F.GoodsItemClassification' | TextCodeTranslationPipe"
                                                                     [width]="'120'" [Alignment]="'right'" [binding]="'GoodsItemClassification'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.GoodsItemClassification}}</span>
                                                                 </div>
@@ -550,21 +504,17 @@
                                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- AmountInDispute -->
                                                         <log-column [width]="'110'" [binding]="'AmountInDispute'" [Alignment]="'right'"
                                                                     [header]="'Customs.PaymentOrderProtestReason.F.AmountInDispute' | TextCodeTranslationPipe">
                                                             <log-footer>
-                                                                <ng-template let-item>  
-                                                                <log-footer-template >
+                                                                <log-footer-template template="let item">
                                                                     <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{AmountInDisputeTotal | NumbersPipe:'N2'}}</div>
                                                                 </log-footer-template>
-                                                            </ng-template>  
                                                             </log-footer>
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div style="width:100%;height:100%;">
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                         <span>{{item.AmountInDispute | NumbersPipe:'N2'}}</span>
@@ -576,14 +526,12 @@
                                                                     </div>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- CustomsAgentExplanation -->
                                                         <log-column [width]="'110'" [Alignment]="'right'" [binding]="'CustomsAgentExplanation'"
                                                                     [header]="'Customs.PaymentOrderProtestReason.F.CustomsAgentExplanation' | TextCodeTranslationPipe">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div style="width:100%;height:100%;">
                                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                         <span>{{item.CustomsAgentExplanation}}</span>
@@ -594,19 +542,16 @@
                                                                     </div>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <span class="CellSeparator" style="float: right;"></span>
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteProtestsList(item)"
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>
@@ -647,9 +592,8 @@
 
                                         <tr style="height: 55px;">
                                             <td style="width: 250px;">
-                                                <div style="width: 100%; height:95%; text-align:center; border: 1px solid gray; border-radius: 5px;"><b>
-                                                    <textarea [(ngModel)]="Reason" style="font-size: larger;font-weight:bold; box-shadow: none; background: #faf5c0;" readonly="readonly"></textarea>
-                                                    </b>
+                                                <div style="width: 100%; height:95%; text-align:center; border: 1px solid gray; border-radius: 5px;">
+                                                    <textarea [(ngModel)]="Reason" style="box-shadow:none; background: #faf5c0;" readonly="readonly"></textarea>
                                                 </div>
                                             </td>
 
@@ -657,7 +601,7 @@
 
                                             <td style="width: 250px;">
                                                 <div style="width: 100%; height:95%; text-align:center; border: 1px solid gray; border-radius: 5px;">
-                                                    <textarea [(ngModel)]="InternalNotes" style=" font-size:larger;font-weight:bold; box-shadow:none; background: #faf5c0;"></textarea>
+                                                    <textarea [(ngModel)]="InternalNotes" style="box-shadow:none; background: #faf5c0;"></textarea>
                                                 </div>
                                             </td>
 

@@ -5,7 +5,7 @@
     <img class="LogitudeQuickSearchDeleteIcon" src="./Images/RedX2.png" *ngIf="IsIconsVisible &&IsDeleteIconVisible && !HideIcons && !HideBox" (click)="DeleteClicked()" />
 
     <div class="LogitudeQuickSearchDropDown" [ngStyle]="{top: HideBox ? '0px' : '22px'}" *ngIf="IsQuickSearchOpened" [style.height.px]="DropDownHeight" [style.width.px]="DropDownWidth">
-        <div>
+        <div [ngStyle]="{'background': Background}">
             <ng-content></ng-content>
             <img *ngIf="IsQuickSearchLoading" class="CenterCenter" style="height:20px; width:20px;" src="./Images/LoginScreen/indicator.gif" />
             <div *ngIf="IsQuickSearchNoResult" class="NoDataText" style="top: 27px;">No Data</div>

@@ -14,7 +14,6 @@ using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simplog.Server.Infrastructure;
 using System.Linq;
-using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.UnitTest.Accounting.UniTests.Reconciliation
 {
@@ -285,6 +284,201 @@ namespace Logitude.UnitTest.Accounting.UniTests.Reconciliation
 
 
         }
+
+
+        
+        [TestMethod]
+        public void IsReconciliationValid007_ARPaymentorAPPaymentandnotstorno3_ValidationresultErrorM_CantIncludeTwoOrMorePayment()
+        {
+            int myTenant = 1;
+
+            var reconciliationPM = new ReconciliationPM()
+            {
+                Tenant = myTenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ReconciliationLines = new List<ReconciliationLinePM>()
+                {
+                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t1" , ChangeSetOp = ChangeSetOperation.Insert},
+                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t2" , ChangeSetOp = ChangeSetOperation.Insert},
+
+                },
+
+
+            };
+            var fakeIReconciliationValidatorContextDataProvider = A.Fake<IReconciliationValidatorContextDataProvider>();
+
+            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetGLAccount("AccId1", myTenant))
+            .Returns<GLAccountPM>(new GLAccountPM() { Id = "AccId1", Tenant = myTenant });
+
+
+            List<string> transactionsId = reconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(tt => tt.TransactionId).ToList();
+
+            var ltList = new List<LedgerTransactionPM>() {
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3", OriginalJournalId=null},
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3",OriginalJournalId=null},
+
+            };
+
+            //A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
+            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(A<List<string>>.Ignored, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
+            var a = MyTestInitialize(reconciliationPM, fakeIReconciliationValidatorContextDataProvider);
+            var validationresult = ReconciliationValidator.IsReconciliationValid(reconciliationPM, a);
+            Assert.IsNotNull(validationresult);
+            Assert.IsNotNull(validationresult.ErrorMessage);
+            //var errList = new List<String>(validationresult.MemberNames);
+            var messageExist = validationresult.ErrorMessage.Contains(ReconciliationValidator.M_CantIncludeTwoOrMorePayment);
+            var lineCode = "paymentsCount = transactionsPMList.Count(d => (d.SourceTypeCode == '3' || d.SourceTypeCode == '5') && d.OriginalJournalId == null); // 3- ARPayment , or 5- APPayment , and not storno";
+            Assert.IsTrue(messageExist, lineCode);
+
+
+
+        }
+
+
+        [TestMethod]
+        public void IsReconciliationValid008_ARPaymentorAPPaymentandnotstorno3ButStorno_ValidationresultError_NotContains_M_CantIncludeTwoOrMorePayment()
+        {
+            int myTenant = 1;
+
+            var reconciliationPM = new ReconciliationPM()
+            {
+                Tenant = myTenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ReconciliationLines = new List<ReconciliationLinePM>()
+                {
+                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t1" , ChangeSetOp = ChangeSetOperation.Insert},
+                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t2" , ChangeSetOp = ChangeSetOperation.Insert},
+
+                },
+
+
+            };
+            var fakeIReconciliationValidatorContextDataProvider = A.Fake<IReconciliationValidatorContextDataProvider>();
+
+            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetGLAccount("AccId1", myTenant))
+            .Returns<GLAccountPM>(new GLAccountPM() { Id = "AccId1", Tenant = myTenant });
+
+
+            List<string> transactionsId = reconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(tt => tt.TransactionId).ToList();
+
+            var ltList = new List<LedgerTransactionPM>() {
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3", OriginalJournalId="s1"},
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3",OriginalJournalId="s1"},
+
+            };
+
+            //A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
+            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(A<List<string>>.Ignored, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
+            var a = MyTestInitialize(reconciliationPM, fakeIReconciliationValidatorContextDataProvider);
+            var validationresult = ReconciliationValidator.IsReconciliationValid(reconciliationPM, a);
+            Assert.IsNotNull(validationresult);
+            Assert.IsNotNull(validationresult.ErrorMessage);
+            //var errList = new List<String>(validationresult.MemberNames);
+            var messageExist = validationresult.ErrorMessage.Contains(ReconciliationValidator.M_CantIncludeTwoOrMorePayment);
+            var lineCode = "paymentsCount = transactionsPMList.Count(d => (d.SourceTypeCode == '3' || d.SourceTypeCode == '5') && d.OriginalJournalId == null); // 3- ARPayment , or 5- APPayment , and not storno";
+            Assert.IsFalse(messageExist, lineCode);
+
+
+
+        }
+
+
+        [TestMethod]
+        public void IsReconciliationValid009_ARPaymentorAPPaymentandnotstorno5_ValidationresultErrorM_CantIncludeTwoOrMorePayment()
+        {
+            int myTenant = 1;
+
+            var reconciliationPM = new ReconciliationPM()
+            {
+                Tenant = myTenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ReconciliationLines = new List<ReconciliationLinePM>()
+                {
+                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t1" , ChangeSetOp = ChangeSetOperation.Insert},
+                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t2" , ChangeSetOp = ChangeSetOperation.Insert},
+
+                },
+
+
+            };
+            var fakeIReconciliationValidatorContextDataProvider = A.Fake<IReconciliationValidatorContextDataProvider>();
+
+            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetGLAccount("AccId1", myTenant))
+            .Returns<GLAccountPM>(new GLAccountPM() { Id = "AccId1", Tenant = myTenant });
+
+
+            List<string> transactionsId = reconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(tt => tt.TransactionId).ToList();
+
+            var ltList = new List<LedgerTransactionPM>() {
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3", OriginalJournalId=null},
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="3",OriginalJournalId=null},
+
+            };
+
+            //A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
+            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(A<List<string>>.Ignored, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
+            var a = MyTestInitialize(reconciliationPM, fakeIReconciliationValidatorContextDataProvider);
+            var validationresult = ReconciliationValidator.IsReconciliationValid(reconciliationPM, a);
+            Assert.IsNotNull(validationresult);
+            Assert.IsNotNull(validationresult.ErrorMessage);
+            //var errList = new List<String>(validationresult.MemberNames);
+            var messageExist = validationresult.ErrorMessage.Contains(ReconciliationValidator.M_CantIncludeTwoOrMorePayment);
+            var lineCode = "paymentsCount = transactionsPMList.Count(d => (d.SourceTypeCode == '3' || d.SourceTypeCode == '5') && d.OriginalJournalId == null); // 3- ARPayment , or 5- APPayment , and not storno";
+            Assert.IsTrue(messageExist, lineCode);
+
+
+
+        }
+
+
+        [TestMethod]
+        public void IsReconciliationValid010_ARPaymentorAPPaymentandnotstorno5ButStorno_ValidationresultError_NotContains_M_CantIncludeTwoOrMorePayment()
+        {
+            int myTenant = 1;
+
+            var reconciliationPM = new ReconciliationPM()
+            {
+                Tenant = myTenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ReconciliationLines = new List<ReconciliationLinePM>()
+                {
+                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t1" , ChangeSetOp = ChangeSetOperation.Insert},
+                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t2" , ChangeSetOp = ChangeSetOperation.Insert},
+
+                },
+
+
+            };
+            var fakeIReconciliationValidatorContextDataProvider = A.Fake<IReconciliationValidatorContextDataProvider>();
+
+            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetGLAccount("AccId1", myTenant))
+            .Returns<GLAccountPM>(new GLAccountPM() { Id = "AccId1", Tenant = myTenant });
+
+
+            List<string> transactionsId = reconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(tt => tt.TransactionId).ToList();
+
+            var ltList = new List<LedgerTransactionPM>() {
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="5", OriginalJournalId="s1"},
+                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="5",OriginalJournalId="s1"},
+
+            };
+
+            //A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
+            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(A<List<string>>.Ignored, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
+            var a = MyTestInitialize(reconciliationPM, fakeIReconciliationValidatorContextDataProvider);
+            var validationresult = ReconciliationValidator.IsReconciliationValid(reconciliationPM, a);
+            Assert.IsNotNull(validationresult);
+            Assert.IsNotNull(validationresult.ErrorMessage);
+            //var errList = new List<String>(validationresult.MemberNames);
+            var messageExist = validationresult.ErrorMessage.Contains(ReconciliationValidator.M_CantIncludeTwoOrMorePayment);
+            var lineCode = "paymentsCount = transactionsPMList.Count(d => (d.SourceTypeCode == '3' || d.SourceTypeCode == '5') && d.OriginalJournalId == null); // 3- ARPayment , or 5- APPayment , and not storno";
+            Assert.IsFalse(messageExist, lineCode);
+
+
+
+        }
+
+
 
 
         [TestMethod]
@@ -1044,159 +1238,5 @@ namespace Logitude.UnitTest.Accounting.UniTests.Reconciliation
             var validationresult = ReconciliationValidator.IsReconciliationValid(reconciliationPM, a);
             Assert.IsNull(validationresult);
         }
-
-
-
-        [TestMethod]
-        public void IsReconciliationValid100_CreatedByReconciliationAfterConversion_ValidationresultError_noJournalLine()
-        {
-            int myTenant = 1;
-
-            var reconciliationPM = new ReconciliationPM()
-            {
-                Tenant = myTenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                ReconciliationLines = new List<ReconciliationLinePM>()
-                {
-                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t1" , ChangeSetOp = ChangeSetOperation.Insert, ReconciliationAmount=100},
-                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t2" , ChangeSetOp = ChangeSetOperation.Insert, ReconciliationAmount=-50},
-                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t3" , ChangeSetOp = ChangeSetOperation.Insert, ReconciliationAmount=-50},
-
-                },
-
-
-            };
-            var fakeIReconciliationValidatorContextDataProvider = A.Fake<IReconciliationValidatorContextDataProvider>();
-
-            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetGLAccount("AccId1", myTenant))
-            .Returns<GLAccountPM>(new GLAccountPM() { Id = "AccId1", Tenant = myTenant });
-
-
-            List<string> transactionsId = reconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(tt => tt.TransactionId).ToList();
-
-            var ltList = new List<LedgerTransactionPM>() {
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="5", OriginalJournalId="s1" , OpenAmountCurrencyId="USD" , OpenAmount=100} ,
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t2"  , SourceTypeCode ="5",OriginalJournalId="s1", OpenAmountCurrencyId="USD", OpenAmount=-50},
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t3"  , SourceTypeCode ="5",OriginalJournalId="s1", OpenAmountCurrencyId="USD", OpenAmount=-50},
-
-            };
-
-            //A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
-            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(A<List<string>>.Ignored, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
-            var a = MyTestInitialize(reconciliationPM, fakeIReconciliationValidatorContextDataProvider);
-            reconciliationPM.CreatedByReconciliationAfterConversion = true;
-            var validationresult = ReconciliationValidator.IsReconciliationValid(reconciliationPM, a);
-            Assert.IsNotNull(validationresult);
-
-            Assert.IsTrue(validationresult.ErrorMessage.Contains(
-            ReconciliationValidator.M_AfterConversion_no_Journal_Line
-            ));
-        }
-
-        [TestMethod]
-        public void IsReconciliationValid101_M_AfterConversion_noallJournalLinehaveExternalReconcileNumber()
-        {
-            int myTenant = 1;
-
-            var reconciliationPM = new ReconciliationPM()
-            {
-                Tenant = myTenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                ReconciliationLines = new List<ReconciliationLinePM>()
-                {
-                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t1" , ChangeSetOp = ChangeSetOperation.Insert, ReconciliationAmount=100},
-                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t2" , ChangeSetOp = ChangeSetOperation.Insert, ReconciliationAmount=-50},
-                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t3" , ChangeSetOp = ChangeSetOperation.Insert, ReconciliationAmount=-50},
-
-                },
-
-
-            };
-            var fakeIReconciliationValidatorContextDataProvider = A.Fake<IReconciliationValidatorContextDataProvider>();
-
-            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetGLAccount("AccId1", myTenant))
-            .Returns<GLAccountPM>(new GLAccountPM() { Id = "AccId1", Tenant = myTenant });
-
-
-            List<string> transactionsId = reconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(tt => tt.TransactionId).ToList();
-
-            var ltList = new List<LedgerTransactionPM>() {
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="5", OriginalJournalId="s1" , OpenAmountCurrencyId="USD" , OpenAmount=100} ,
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t2"  , SourceTypeCode ="5",OriginalJournalId="s1", OpenAmountCurrencyId="USD", OpenAmount=-50},
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t3"  , SourceTypeCode ="5",OriginalJournalId="s1", OpenAmountCurrencyId="USD", OpenAmount=-50},
-
-            };
-
-            //A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
-            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(A<List<string>>.Ignored, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
-
-            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetJournalLineByLedgerTransactionIdList(A<List<string>>.Ignored, myTenant)).Returns<List<JournalLine>>(new List<JournalLine>() {
-                 new JournalLine(){  }
-            });
-
-            var a = MyTestInitialize(reconciliationPM, fakeIReconciliationValidatorContextDataProvider);
-            reconciliationPM.CreatedByReconciliationAfterConversion = true;
-            var validationresult = ReconciliationValidator.IsReconciliationValid(reconciliationPM, a);
-            Assert.IsNotNull(validationresult);
-
-            Assert.IsTrue(validationresult.ErrorMessage.Contains(
-            ReconciliationValidator.M_AfterConversion_noallJournalLinehaveExternalReconcileNumber
-            ));
-        }
-
-
-
-        [TestMethod]
-        public void IsReconciliationValid102_M_AfterConversion_JournalLinehavenotthesameExternalReconcileNumber()
-        {
-            int myTenant = 1;
-
-            var reconciliationPM = new ReconciliationPM()
-            {
-                Tenant = myTenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                ReconciliationLines = new List<ReconciliationLinePM>()
-                {
-                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t1" , ChangeSetOp = ChangeSetOperation.Insert, ReconciliationAmount=100},
-                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t2" , ChangeSetOp = ChangeSetOperation.Insert, ReconciliationAmount=-50},
-                    new ReconciliationLinePM(){  CurrencyId ="USD", TransactionId ="t3" , ChangeSetOp = ChangeSetOperation.Insert, ReconciliationAmount=-50},
-
-                },
-
-
-            };
-            var fakeIReconciliationValidatorContextDataProvider = A.Fake<IReconciliationValidatorContextDataProvider>();
-
-            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetGLAccount("AccId1", myTenant))
-            .Returns<GLAccountPM>(new GLAccountPM() { Id = "AccId1", Tenant = myTenant });
-
-
-            List<string> transactionsId = reconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(tt => tt.TransactionId).ToList();
-
-            var ltList = new List<LedgerTransactionPM>() {
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t1"  , SourceTypeCode ="5", OriginalJournalId="s1" , OpenAmountCurrencyId="USD" , OpenAmount=100} ,
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t2"  , SourceTypeCode ="5",OriginalJournalId="s1", OpenAmountCurrencyId="USD", OpenAmount=-50},
-                new LedgerTransactionPM() { Tenant = myTenant ,Id="t3"  , SourceTypeCode ="5",OriginalJournalId="s1", OpenAmountCurrencyId="USD", OpenAmount=-50},
-
-            };
-
-            //A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
-            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetLedgerTransactionPMsByIdList(A<List<string>>.Ignored, myTenant)).Returns<List<LedgerTransactionPM>>(ltList);
-
-            A.CallTo(() => fakeIReconciliationValidatorContextDataProvider.GetJournalLineByLedgerTransactionIdList(A<List<string>>.Ignored, myTenant)).Returns<List<JournalLine>>(new List<JournalLine>() {
-                 new JournalLine(){  ExternalReconcileNumber="1" },
-                 new JournalLine(){  ExternalReconcileNumber="2" }
-            });
-
-            var a = MyTestInitialize(reconciliationPM, fakeIReconciliationValidatorContextDataProvider);
-            reconciliationPM.CreatedByReconciliationAfterConversion = true;
-            var validationresult = ReconciliationValidator.IsReconciliationValid(reconciliationPM, a);
-            Assert.IsNotNull(validationresult);
-
-            Assert.IsTrue(validationresult.ErrorMessage.Contains(
-            ReconciliationValidator.M_AfterConversion_JournalLinehavenotthesameExternalReconcileNumber
-            ));
-        }
-
     }
 }

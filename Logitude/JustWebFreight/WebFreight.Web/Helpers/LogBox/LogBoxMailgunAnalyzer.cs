@@ -6,7 +6,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -138,32 +138,28 @@ namespace WebFreight.Web.Helpers.LogBox
                 if (myAnalyzeQueue.Retries >= 5)
                 {
                     myAnalyzeQueue.Status = "F";
-                }
-            }
 
-            if (myAnalyzeQueue.Status == "F")
-            {
-                if (myAnalyzeQueue.ConnectedToTenant && myAnalyzeQueue.CommunicationLogId != null)
-                {
-                    CommunicationLog commLog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, Tenant);
-                    if (commLog != null)
+                    if (myAnalyzeQueue.ConnectedToTenant)
                     {
-                        commLog.CommunicationStatusTypeCode = "F";
-                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
-                        commLog.LastStatusDateUTC = DateTime.UtcNow;
-                        commLog.ExceptionMessage = myAnalyzeQueue.ErrorMessage;
-
-                        if (myAnalyzeQueue.StackTrace != null)
+                        CommunicationLog commLog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, Tenant);
+                        if (commLog != null)
                         {
-                            commLog.ExceptionMessage = commLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + myAnalyzeQueue.StackTrace;
-                        }
+                            commLog.CommunicationStatusTypeCode = "F";
+                            commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                            commLog.LastStatusDateUTC = DateTime.UtcNow;
+                            commLog.ExceptionMessage = myAnalyzeQueue.ErrorMessage;
 
-                        myCommunicationLogRepository.Update(commLog);
-                        myCommunicationLogRepository.SubmitChanges();
+                            if (myAnalyzeQueue.StackTrace != null)
+                            {
+                                commLog.ExceptionMessage = commLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + myAnalyzeQueue.StackTrace;
+                            }
+
+                            myCommunicationLogRepository.Update(commLog);
+                            myCommunicationLogRepository.SubmitChanges();
+                        }
                     }
                 }
             }
-
             myAnalyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(myAnalyzeQueue.Tenant);
             analyzeQueueRepository.Update(myAnalyzeQueue);
             analyzeQueueRepository.SubmitChanges();

@@ -15,11 +15,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string AutomationsId { get; set; }
         public string RecipientValue { get; set; }
         public string RecipientType { get; set; }
-        public string PartnerObjectFieldCode { get; set; }
-        public bool IsNotifyBack { get; set; }
 
-
-
+        
 
     }
 

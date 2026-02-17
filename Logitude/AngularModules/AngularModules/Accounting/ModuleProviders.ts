@@ -1,4 +1,3 @@
-import { BankDepositLineListService } from './Services/StandardLists/BankDepositLineListService';
 import { IntegrityCheckStatusListService } from './Services/StandardLists/IntegrityCheckStatusListService';
 import { AccountingNoteExtendedListService } from './Services/ExtendedLists/AccountingNoteExtendedListService';
 //#region import services
@@ -28,8 +27,6 @@ import { PeriodTypeListService } from './Services/StandardLists/PeriodTypeListSe
 import { ReconcileCurrencyTypeListService } from './Services/StandardLists/ReconcileCurrencyTypeListService';
 import { ReconcileMethodListService } from './Services/StandardLists/ReconcileMethodListService';
 import { ReconciliationListService } from './Services/StandardLists/ReconciliationListService';
-import { ReconciliationLineListService } from './Services/StandardLists/ReconciliationLineListService';
-import { CashBookLineListService } from './Services/StandardLists/CashBookLineListService';
 import { RevenueExpenseTypeListService } from './Services/StandardLists/RevenueExpenseTypeListService';
 import { TestEntityListService } from './Services/StandardLists/TestEntityListService';
 import { TaxReportListService } from './Services/StandardLists/TaxReportListService';
@@ -56,7 +53,6 @@ import { OpenFormatReportListService } from './Services/StandardLists/OpenFormat
 //import { OpenFormatDateTypeListService } from './Services/StandardLists/OpenFormatDateTypeListService';
 import { TaxDeductionReportStatusListService } from './Services/StandardLists/TaxDeductionReportStatusListService';
 import { TaxReportPMService } from './Services/StandardPMs/TaxReportPMService';
-import { InterestTransactionPMService } from './Services/StandardPMs/InterestTransactionPMService';
 import { AccountingPeriodPMService } from './Services/StandardPMs/AccountingPeriodPMService';
 import { AutomaticReconcileMethodPMService } from './Services/StandardPMs/AutomaticReconcileMethodPMService';
 import { Category1PMService } from './Services/StandardPMs/Category1PMService';
@@ -88,8 +84,6 @@ import { ExternalReconciliationPMService } from './Services/StandardPMs/External
 import { GLAccountMoreDataPMService } from './Services/StandardPMs/GLAccountMoreDataPMService';
 import { TaxDeductionReportPMService } from './Services/StandardPMs/TaxDeductionReportPMService';
 import { OpenFormatReportPMService } from './Services/StandardPMs/OpenFormatReportPMService';
-import { InterestReportLinePMService } from './Services/StandardPMs/InterestReportLinePMService';
-import { InterestReportPMService } from './Services/StandardPMs/InterestReportPMService';
 
 //#endregion
 import { AccountingPeriodExtendedListService } from './Services/ExtendedLists/AccountingPeriodExtendedListService';
@@ -102,25 +96,20 @@ import { BankDepositExtendedListService } from './Services/ExtendedLists/BankDep
 
 
 import { ReconciliationExtendedPMService } from './Services/ExtendedPMs/ReconciliationExtendedPMService';
-import { CashBookExtendedPMService } from './Services/ExtendedPMs/CashBookExtendedPMService';
 import { JournalOpService } from './Services/Others/JournalOpService';
 import { BankAccountExtendedListService } from './Services/ExtendedLists/BankAccountExtendedListService';
 import { ReconcileExternalPageListService } from './Services/StandardLists/ReconcileExternalPageListService';
 import { BankDepositExtendedPMService } from './Services/ExtendedPMs/BankDepositExtendedPMService';
-import { AccountingOpService } from './Services/Others/AccountingOpService';
-import { InterestReportExtendedListService } from './Services/ExtendedLists/InterestReportExtendedListService';
+
 import { PaymentChequeListService } from './Services/StandardLists/PaymentChequeListService';
 import { TaxWithholdingAssessOfficeListService } from './Services/StandardLists/TaxWithholdingAssessOfficeListService';
 import { ExternalReconciliationExtendedPMService } from './Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
 import { ReconcileExternalPageExtendedListService } from './Services/ExtendedLists/ReconcileExternalPageExtendedListService';
 import { ExternalReconciliationExtendedListService } from './Services/ExtendedLists/ExternalReconciliationExtendedListService';
-import { InterestTransactionExtendedListService } from './Services/ExtendedLists/InterestTransactionExtendedListService';
 import { AutomaticExternalRconcilMthodListService } from './Services/StandardLists/AutomaticExternalReconcileMethodListService';
 import { TaxReportExtendedPMService } from './Services/ExtendedPMs/TaxReportExtendedPMService';
 import { OpenFormatReportStatusListService } from './Services/StandardLists/OpenFormatReportStatusListService';
 
-import { InterestBasesTypeMenuButtonsHandler } from './Components/MenuButtons/InterestBasesTypeMenuButtonsHandler';
-import { InterestReportMenuButtonsHandler } from './Components/MenuButtons/InterestReportMenuButtonsHandler';
 import { JournalMenuButtonsHandler } from './Components/MenuButtons/JournalMenuButtonsHandler';
 import { GLAccountMenuButtonsHandler } from './Components/MenuButtons/GLAccountMenuButtonsHandler';
 import { CashBookMenuButtonsHandler } from './Components/MenuButtons/CashBookMenuButtonsHandler';
@@ -133,29 +122,6 @@ import { TaxReportMenuButtonsHandler } from './Components/MenuButtons/TaxReportM
 import { TaxDeductionReportMenuButtonsHandler } from './Components/MenuButtons/TaxDeductionReportMenuButtonsHandler';
 import { OpenFormatReportMenuButtonsHandler } from './Components/MenuButtons/OpenFormatReportMenuButtonsHandler';
 import { AccountingIntegrityCheckPMService } from './Services/StandardPMs/AccountingIntegrityCheckPMService';
-import { ExternalPageAdditionalDataListService } from './Services/StandardLists/ExternalPageAdditionalDataListService';
-import { ExternalPageAdditionalDataPMService } from './Services/StandardPMs/ExternalPageAdditionalDataPMService';
-import { InterestBasesPeriodListService } from './Services/StandardLists/InterestBasesPeriodListService';
-import { InterestBasesTypeListService } from './Services/StandardLists/InterestBasesTypeListService';
-import { InterestBasesPeriodPMService } from './Services/StandardPMs/InterestBasesPeriodPMService';
-import { InterestBasesTypePMService } from './Services/StandardPMs/InterestBasesTypePMService';
-import { InterestReportListService } from './Services/StandardLists/InterestReportListService';
-import { InterestReportLineListService } from './Services/StandardLists/InterestReportLineListService';
-import { InterestReportStatuseListService } from './Services/StandardLists/InterestReportStatuseListService';
-import { InterestReportLinesByDateListService } from './Services/StandardLists/InterestReportLinesByDateListService';
-import { CargoTrackingIncrementalStatExtendedListService } from './Services/ExtendedLists/CargoTrackingIncrementalStatExtendedListService';
-import { QueueMessagesStatExtendedListService } from './Services/ExtendedLists/QueueMessagesStatExtendedListService';//simon
-import { QueueMessagesMoreDetailsExtendedListService } from './Services/ExtendedLists/QueueMessagesMoreDetailsExtendedListService';//simon
-import { UserDefinedReportListService } from './Services/StandardLists/UserDefinedReportListService';
-import { UserDefinedReportPMService } from './Services/StandardPMs/UserDefinedReportPMService';
-import { CalculatedChartsLineTypeListService } from './Services/StandardLists/CalculatedChartsLineTypeListService';
-import { ARPaymentChequeOperationsService } from './Services/Others/ARPaymentChequeOpService';
-import { InterestTransactionListService } from './Services/StandardLists/InterestTransactionListService';
-import { ARPaymentChequeListService } from './Services/StandardLists/ARPaymentChequeListService';
-import { ARPaymentChequeStatusListService } from './Services/StandardLists/ARPaymentChequeStatusListService';
-import { InvoiceApiCommunicationLogPMService } from './Services/StandardPMs/InvoiceApiCommunicationLogPMService';
-import { InvoiceApiCommunicationLogListService } from './Services/StandardLists/InvoiceApiCommunicationLogListService';
-import { InvoiceApiStepListService } from './Services/StandardLists/InvoiceApiStepLogListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -164,15 +130,9 @@ export class ModuleProviders {
 
         switch (name) {
             //#region standerd services
-            case "UserDefinedReportListService": { myResult = new UserDefinedReportListService(); break; }
-            case "UserDefinedReportPMService": { myResult = new UserDefinedReportPMService(); break; }
             case "AccountingEntityListService": { myResult = new AccountingEntityListService(); break; }
             case "AccountingPeriodListService": { myResult = new AccountingPeriodListService(); break; }
             case "AutomaticReconcileListService": { myResult = new AutomaticReconcileListService(); break; }
-            
-            case "ARPaymentChequeListService": { myResult = new ARPaymentChequeListService(); break; }
-            case "ARPaymentChequeStatusListService": { myResult = new ARPaymentChequeStatusListService(); break; }
-
             case "AutomaticReconcileMethodListService": { myResult = new AutomaticReconcileMethodListService(); break; }
             case "Category1ListService": { myResult = new Category1ListService(); break; }
             case "Category2ListService": { myResult = new Category2ListService(); break; }
@@ -196,9 +156,6 @@ export class ModuleProviders {
             case "ReconcileCurrencyTypeListService": { myResult = new ReconcileCurrencyTypeListService(); break; }
             case "ReconcileMethodListService": { myResult = new ReconcileMethodListService(); break; }
             case "ReconciliationListService": { myResult = new ReconciliationListService(); break; }
-            case "ReconciliationLineListService": { myResult = new ReconciliationLineListService(); break; }
-            case "CashBookLineListService": { myResult = new CashBookLineListService(); break; }
-            case "BankDepositLineListService": { myResult = new BankDepositLineListService(); break; }
             case "RevenueExpenseTypeListService": { myResult = new RevenueExpenseTypeListService(); break; }
             case "TestEntityListService": { myResult = new TestEntityListService(); break; }
             case "TestEntityListService": { myResult = new TestEntityListService(); break; }
@@ -219,12 +176,13 @@ export class ModuleProviders {
             case "TaxReportListService": { myResult = new TaxReportListService(); break; }
             case "TaxDeductionReportListService": { myResult = new TaxDeductionReportListService(); break; }
             case "OpenFormatReportListService": { myResult = new OpenFormatReportListService(); break; }
-            case "InterestReportListService": { myResult = new InterestReportListService(); break; }
-            case "InterestReportLineListService": { myResult = new InterestReportLineListService(); break; }
-          case "InterestReportExtendedListService": { myResult = new InterestReportExtendedListService(); break;}
+
+
+
             case "TaxDeductionReportPMService": { myResult = new TaxDeductionReportPMService(); break; }
+
             case "OpenFormatReportPMService": { myResult = new OpenFormatReportPMService(); break; }
-            case "ExternalPageAdditionalDataPMService": { myResult = new ExternalPageAdditionalDataPMService(); break; }
+
 
             case "AccountingPeriodPMService": { myResult = new AccountingPeriodPMService(); break; }
             case "AutomaticReconcileMethodPMService": { myResult = new AutomaticReconcileMethodPMService(); break; }
@@ -251,20 +209,13 @@ export class ModuleProviders {
             case "CashBookPMService": { myResult = new CashBookPMService(); break; }
             case "RevaluationPMService": { myResult = new RevaluationPMService(); break; }
             case "TaxWithholdingAssessOfficePMService": { myResult = new TaxWithholdingAssessOfficePMService(); break; }
-            case "InterestReportPMService": { myResult = new InterestReportPMService(); break; }
-            case "InterestReportLinePMService": { myResult = new InterestReportLinePMService(); break; }
 
             case "AccountingCompanyTypePMService": { myResult = new AccountingCompanyTypePMService(); break; }
             case "WithholdingTaxDeductionTypePMService": { myResult = new WithholdingTaxDeductionTypePMService(); break; }
             case "ExternalReconciliationPMService": { myResult = new ExternalReconciliationPMService(); break; }
             case "TaxReportPMService": { myResult = new TaxReportPMService(); break; }
-            case "InterestTransactionPMService": { myResult = new InterestTransactionPMService(); break; }
             case "TaxReportLineTransmitStatusListService": { myResult = new TaxReportLineTransmitStatusListService(); break; }
             case "GLAccountMoreDataPMService": { myResult = new GLAccountMoreDataPMService(); break; }
-            case "InterestReportStatuseListService": { myResult = new InterestReportStatuseListService(); break; }
-            case "InterestReportLinesByDateListService": { myResult = new InterestReportLinesByDateListService(); break; }
-            case "CalculatedChartsLineTypeListService": { myResult = new CalculatedChartsLineTypeListService(); break; }
-            case "InvoiceApiCommunicationLogPMService": { myResult = new InvoiceApiCommunicationLogPMService(); break; }
 
             case "TaxReportStatusListService": { myResult = new TaxReportStatusListService(); break; }
             case "TaxReportLineTypeListService": { myResult = new TaxReportLineTypeListService(); break; }
@@ -274,15 +225,6 @@ export class ModuleProviders {
             // case "OpenFormatDateTypeListService": { myResult = new OpenFormatDateTypeListService(); break; }
             case "TaxDeductionReportStatusListService": { myResult = new TaxDeductionReportStatusListService(); break; }
             case "OpenFormatReportStatusListService": { myResult = new OpenFormatReportStatusListService(); break; }
-            case "ExternalPageAdditionalDataListService": { myResult = new ExternalPageAdditionalDataListService(); break; }
-            case "InterestBasesPeriodListService": { myResult = new InterestBasesPeriodListService(); break; }
-            case "InterestBasesTypeListService": { myResult = new InterestBasesTypeListService(); break; }
-            case "InterestBasesPeriodPMService": { myResult = new InterestBasesPeriodPMService(); break; }
-            case "InterestBasesTypePMService": { myResult = new InterestBasesTypePMService(); break; }
-            case "InterestTransactionListService": { myResult = new InterestTransactionListService(); break; }
-            case "InvoiceApiCommunicationLogListService": { myResult = new InvoiceApiCommunicationLogListService(); break; }
-            case "InvoiceApiStepListService": { myResult = new InvoiceApiStepListService(); break; }
-
             //#endregion
 
             //Extend Services
@@ -294,9 +236,7 @@ export class ModuleProviders {
             case "BankDepositExtendedListService": { myResult = new BankDepositExtendedListService(); break; }
             case "BankAccountExtendedListService": { myResult = new BankAccountExtendedListService(); break; }
             case "ReconciliationExtendedPMService": { myResult = new ReconciliationExtendedPMService(); break; }
-            case "CashBookExtendedPMService": { myResult = new CashBookExtendedPMService(); break; }
             case "JournalOpService": { myResult = new JournalOpService(); break; }
-            case "ARPaymentChequeOperationsService": { myResult = new ARPaymentChequeOperationsService(); break; }
             case "ReconcileExternalPageListService": { myResult = new ReconcileExternalPageListService(); break; }
             case "TaxWithholdingAssessOfficeListService": { myResult = new TaxWithholdingAssessOfficeListService(); break; }
             case "ExternalReconciliationExtendedPMService": { myResult = new ExternalReconciliationExtendedPMService(); break; }
@@ -308,19 +248,13 @@ export class ModuleProviders {
             case "AccountingIntegrityCheckPMService": { myResult = new AccountingIntegrityCheckPMService; break; }
             case "AccountingNoteExtendedListService": { myResult = new AccountingNoteExtendedListService; break; }
             case "IntegrityCheckStatusListService": { myResult = new IntegrityCheckStatusListService; break; }
-            case "GLAccountOpService": { myResult = new AccountingOpService(); break; }
-            case "InterestTransactionExtendedListService": { myResult = new InterestTransactionExtendedListService(); break; }
-            case "CargoTrackingIncrementalStatExtendedListService": { myResult = new CargoTrackingIncrementalStatExtendedListService(); break; }
-            case "QueueMessagesStatExtendedListService": { myResult = new QueueMessagesStatExtendedListService(); break; }//simon
-            case "QueueMessagesMoreDetailsExtendedListService": { myResult = new QueueMessagesMoreDetailsExtendedListService(); break; }//simon
+
 
             //Menu Buttons
             case "JournalMenuButtonsHandler": { myResult = new JournalMenuButtonsHandler; break; }
-            case "InterestReportMenuButtonsHandler": { myResult = new InterestReportMenuButtonsHandler; break; }
             case "GLAccountMenuButtonsHandler": { myResult = new GLAccountMenuButtonsHandler; break; }
             case "CashBookMenuButtonsHandler": { myResult = new CashBookMenuButtonsHandler; break; }
             case "BankDepositMenuButtonsHandler": { myResult = new BankDepositMenuButtonsHandler; break; }
-            case "InterestBasesTypeMenuButtonsHandler": { myResult = new InterestBasesTypeMenuButtonsHandler; break; }
             case "PaymentChequeMenuButtonsHandler": {
                 myResult = new PaymentChequeMenuButtonsHandler; break
             }

@@ -1,52 +1,36 @@
 ﻿using Logitude.AmitalMessaging.Utils;
-using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.Messaging.Customs;
-using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
-using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
-using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Models;
-using Logitude.Customs.BL.NotificationBL;
-using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
-using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
-using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using UnifreightIIG.Common.MessageLib.Collateral;
+using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using UnifreightIIG.Common.MessageLib.Fault;
 using UnifreightIIG.Common.MessageLib.ID;
-using UnifreightIIG.Common.MessageLib.Ransom;
+using UnifreightIIG.Common.MessageLib.Collateral;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class DF_NG_5117_ImportDeclerationAmendmentReplyResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
-        DeclarationPM _MyDeclarationPMOrg;
-
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
 
-
-        public INF_MSG_GenericResponseData Update5117(DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
-        {
-            Update(customResponse, requestParams);
-            return this.MyResponseData;
-        }
         public override void Update(DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
         {
             var context = CustomContext.GetContext(requestParams.Tenant);
@@ -54,113 +38,45 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
             DeclarationCorrectionsPointerService myDeclarationCorrectionsPointerService = new DeclarationCorrectionsPointerService();
-            string error = "";
-            DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
 
-
-            LogMessagingUtil.Instance.AppendLine($"5117.Update – start to update");
-            FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
-
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
-
-            var feature = features.Features.FirstOrDefault(x => x.Code == "DECLARATIONAMENDMENT");
-            if (feature != null)
+            requestParams.AppicationId = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
+            if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
             {
-                var dec = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
+                //if still not found search by ExternalDeclarationNumber
+                requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
+            }
 
-                bool fromMehes = false;
-
-                if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
+            var declarationNumber = "";
+            if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
+            {
+                _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
+               // declarationNumber = customResponse.Response.Declaration.ID.Value;
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 {
+                    LogMessagingUtil.Instance.AppendLine("Can not find declaration- DeclarationNumber: " + customResponse.Response.Declaration.ID.Value + " ExternalDeclarationNumber: " + customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value);
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                    this.MyResponseData.Succeeded = true;
-                    this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
-                    this.MyResponseData.HasException = false;
-
+                    this.MyResponseData.Succeeded = false;
+                    this.MyResponseData.UserMessage = "Can not find declaration- DeclarationNumber: " + customResponse.Response.Declaration.ID.Value + " ExternalDeclarationNumber: " + customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value;
                     return;
-
                 }
+                //declarationNumber = requestParams.AppicationId;
+            }
+            declarationNumber = customResponse.Response.Declaration.ID.Value;
 
-                string functionalReferenceID = "";
-                if (customResponse.Response.FunctionalReferenceID != null)
-                    functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
-                else
-                    functionalReferenceID = "";
-
-                string agentFileReferenceID = "";
-                if (customResponse.Response?.Declaration?.DMExtensions?.AgentFileReferenceID != null)
-                    agentFileReferenceID = customResponse.Response.Declaration.DMExtensions.AgentFileReferenceID.Value.ToString();
-                else
-                    agentFileReferenceID = "";
-
-
-                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
-
-                bool isDCA = requestParams.RequestVIA == SendRequestVIA.DCABatch;
-
-
-                //var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant);
-
-                if (declaration != null)
+            //var key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" + requestParams.Tenant.ToString();
+            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+            using (var disposableToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5117ResponseService.Update"))
+            {
+                if (!(customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99"))
                 {
-                    _MyDeclarationPM = declaration;
-                    var AdditionalInformation = customResponse.Response.AdditionalInformation;
-                    string status = "";
-                    if (AdditionalInformation != null)
-                    {
-                        status = AdditionalInformation.FirstOrDefault(x => x.Content != null && x.StatementTypeCode.Value == "32").Content.Value;
-                    }
-                    if (customResponse.Response.Declaration != null && (status == "2" || status == "1"))
-                    {
-                        var swMap = Stopwatch.StartNew();
-                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isDCA: isDCA);
-                        LogMessagingUtil.Instance.AppendLine($"5117.Update – MapResponseToDeclaration (status {status}) took {swMap.ElapsedMilliseconds} ms");
-                    }
+                    this._MyDeclarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
                 }
-                else
-                {
-                    LogMessagingUtil.Instance.AppendLine($"5117.Update – GetDeclaration is null");
-                    if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
-                    {
-                        _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
-
-                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true, isDCA: isDCA);
-
-                    }
-
-                    else if (customResponse.Response.Declaration != null)
-                    {
-                        _MyDeclarationPM = myDeclarationQueryService.GetSingleByDecNoAndVersion(customResponse.Response.Declaration.ID.Value, customResponse.Response.Declaration.DMExtensions.VersionID.Value, requestParams.Tenant);
-
-
-                        if (_MyDeclarationPM != null)
-                        {
-                            _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isDCA: isDCA);
-
-                        }
-
-                        else
-                        {
-                            string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
-
-                            _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false, isDCA: isDCA);
-
-                        }
-                        fromMehes = true;
-                    }
-
-
-                }
-
-
 
                 if (this._MyDeclarationPM == null)
                 {
-                    Handle5117MissingFileOrDeclaration(
-        customResponse,
-        requestParams,
-        context,
-        "לא נמצא תיק במערכת - נוצרה התראה לפי מספר הצהרה");
                     LogMessagingUtil.Instance.AppendLine("Can not find declaration" + requestParams.AppicationId);
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = false;
@@ -168,13 +84,49 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
 
+                var myUpdateEventContextTagModel = new EventContextTagModel()
+                {
+                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
+                    EventCode = "DCH",
+                    EventRemarks = "Declaration Changed By Customs",
+                    FUStatusRemarks = "בוצע תיקון הצהרה" + this._MyDeclarationPM.DeclarationNumber,
+                };
 
+                this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
+                List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
+                if (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value))
+                {
 
+                    var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
+                        .SerializeObject(customResponse.Response);
 
+                    var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Response>
+                        .DeSerializeObject(customResponseResponseXml);
+                    ////5117 5117 5117 5117 5117
+                    List<error> systemMessagesList = new List<error>();
+                    if (customResponse.CollateralRequests != null && customResponse.CollateralRequests.Count() > 0) // Update Declaration Correction Pointer
+                    {
+                        foreach (var collateralRequestItem in customResponse.CollateralRequests)
+                        {
+                            var myError = new error();
+                            myError.ListVersionID = "A";
+                            myError.MessageError = "המשוב להצהרה כולל דרישה לבטוחה " + " - מספר בטוחה " + collateralRequestItem.collateralRequestNumber;
+                            systemMessagesList.Add(myError);
+                        }
+                    }
+                    this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant);
+                }
+                if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
+                {
+                    _MyDeclarationPM.UserNotes = "LoadTest";
+                }
+
+                //<--- Yuval Chalup 18.10.2016 TASK-23113
                 if (customResponse.ProceduralFaults != null)
                 {
+                    //Transfer ProceduralFaultDetails of 5117 to ProceduralFaultDetails of 8218
                     var ProceduralFaultDetailsXml_5117 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.ProceduralFaultDetails[]>
-                       .SerializeObject(customResponse.ProceduralFaults);
+                        .SerializeObject(customResponse.ProceduralFaults);
 
                     var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
                     customResponse_8218.ProceduralFaultDetails = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Fault.ProceduralFaultDetails[]>
@@ -182,660 +134,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     var ResponseService_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService();
                     ResponseService_8218.Update(customResponse_8218, requestParams);
-
-
-                    //update id original after create faults
-                    var proceduralFaultQueryService = new ProceduralFaultQueryService(requestParams.Tenant);
-                    var proceduralFaultUpdateService = new ProceduralFaultUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                    foreach (var proceduralFaultItem in customResponse_8218.ProceduralFaultDetails)
-                    {
-                        string faultId = proceduralFaultQueryService.GetFaultIdByFaultNumber(proceduralFaultItem.proceduralFaultNumber.ToString(), requestParams.Tenant);
-                        var proceduralFaultPM = new ProceduralFaultPM();
-
-                        EventContextTagModel myInsertEventContextTagModel = new EventContextTagModel();
-                        myInsertEventContextTagModel.MyNotificationPM = new NotificationPM();
-
-                        if (!string.IsNullOrWhiteSpace(faultId))
-                        {
-                            proceduralFaultPM = proceduralFaultQueryService.GetSingle(faultId, true, false);
-                            proceduralFaultPM.ChangeSetOp = ChangeSetOperation.Update;
-                            proceduralFaultPM.DeclarationId = _MyDeclarationPM.Id;
-                            proceduralFaultUpdateService.Update(proceduralFaultPM, true);
-                        }
-                    }
-
                 }
+                //Yuval Chalup 18.10.2016 TASK-23113 --->
 
-
-
-                var declarationQueryService = new DeclarationQueryService(_MyDeclarationPM.Tenant);
-                _MyDeclarationPMOrg = declarationQueryService.GetSingle(_MyDeclarationPM.AmendmentOriginalDeclartation, true, false);
-
-
-                string loggingUserId = "";
-                UserRepository userRepository = new UserRepository(_MyDeclarationPM.Tenant);
-                var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
-                if (user != null)
-                {
-                    loggingUserId = user.Id;
-                }
-
-                EventContextTagModel myUpdateEventContextTagModel = null;
-
-                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
-                using (var disposableToken =
-                ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
-                    )
-                {
-
-                    foreach (var additionalInformation in customResponse.Response.AdditionalInformation)
-                    {
-                        switch (additionalInformation.StatementTypeCode.Value)
-                        {
-                            case "16":
-                                {
-                                    if (additionalInformation.Content != null)
-                                    {
-                                        //  additionalInformation.Content.Value = "11";
-                                        var paymentOrderQueryService = new PaymentOrderQueryService(context);
-                                        var paymentOrderId = paymentOrderQueryService.GetIdByPaymentNumber(additionalInformation.Content.Value, requestParams.Tenant);
-                                        if (!string.IsNullOrEmpty(paymentOrderId))
-                                        {
-                                            PaymentOrderPM paymentOrder = paymentOrderQueryService.GetSingle(paymentOrderId, true, false);
-                                            PaymentOrderConnectionTablePM paymentOrderConnectionTablePM = null;
-                                            if (paymentOrder.PaymentOrderConnectionTables != null && paymentOrder.PaymentOrderConnectionTables.Count > 0)
-                                            {
-                                                foreach (var item in paymentOrder.PaymentOrderConnectionTables)
-                                                {
-                                                    if (item.ConnectedEntityId == _MyDeclarationPMOrg.Id && item.ConnectedEntityCode == "D")
-                                                    {
-                                                        item.ChangeSetOp = ChangeSetOperation.Delete;
-
-                                                        paymentOrderConnectionTablePM = new PaymentOrderConnectionTablePM()
-                                                        {
-                                                            ConnectedEntityCode = "D",
-                                                            ChangeSetOp = ChangeSetOperation.Insert,
-                                                            PaymentOrderId = paymentOrderId,
-                                                            ConnectedEntityId = _MyDeclarationPM.Id,
-                                                            Tenant = _MyDeclarationPM.Tenant
-
-                                                        };
-
-
-
-
-                                                    }
-
-                                                }
-
-                                            }
-                                            if (paymentOrderConnectionTablePM != null)
-                                            {
-                                                paymentOrder.PaymentOrderConnectionTables.Add(paymentOrderConnectionTablePM);
-
-
-                                                //  paymentOrder.FirstEntityID =  _MyDeclarationPM.Id;
-                                                paymentOrder.ChangeSetOp = ChangeSetOperation.Update;
-                                                PaymentOrderUpdateService pOUpdateservice = new PaymentOrderUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                                                pOUpdateservice.Update(paymentOrder, false);
-
-                                                //_MyDeclarationPM = declarationQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-
-                                            }
-                                        }
-
-                                    }
-                                    break;
-                                }
-                            case "29":
-                                {
-                                    if (additionalInformation.Content != null)
-                                        _MyDeclarationPM.AmendmentRemarks += '\n' + additionalInformation.Content.Value;
-                                    if (!string.IsNullOrEmpty(_MyDeclarationPM.AmendmentRemarks) && _MyDeclarationPM.AmendmentRemarks.Length >= 511)
-                                    {
-                                        _MyDeclarationPM.AmendmentRemarks = _MyDeclarationPM.AmendmentRemarks.Substring(0, 511);
-                                    }
-                                    break;
-                                }
-                            case "27":
-                                {
-                                    if (additionalInformation.Content != null)
-                                    {
-                                        AmendRequestRejectReasonTypeQueryService amendRequestRejectReasonTypeQueryService = new AmendRequestRejectReasonTypeQueryService(context);
-
-                                        var amendRequestRejectReasonType = amendRequestRejectReasonTypeQueryService.GetSingle(additionalInformation.Content?.Value, false, true);
-
-                                        _MyDeclarationPM.AmendmentRejectionReason = amendRequestRejectReasonType != null ? amendRequestRejectReasonType.LocalName : additionalInformation.Content?.Value;
-                                    }
-                                    break;
-
-                                }
-
-                            case "32":
-                                {
-                                    if (additionalInformation.Content != null)
-                                    {
-                                        switch (additionalInformation.Content.Value)
-                                        {
-                                            case "1":
-
-                                                var declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
-
-                                                _MyDeclarationPM.AmendmentDontDisplayInList = false;
-                                                _MyDeclarationPM.AmendmentStatus = "3";
-                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
-                                                if (_MyDeclarationPM.Id != declarationParent.Id)
-                                                {
-                                                    UpdateParentDec(myDeclarationUpdateService, declarationParent);
-
-                                                }
-                                                var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                                                {
-                                                    Tenant = _MyDeclarationPM.Tenant,
-                                                    objectTableName = "Customs.Declaration",
-                                                    EventCode = "DMA",
-                                                    notes = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
-                                                    UserId = loggingUserId,
-
-                                                    CommunicationSubject = "FU Status DMA from logitude ",
-                                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                                                    {
-                                                        entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPM.CustomFileNo,
-                                                        status = "new",
-                                                        xml_status = "new",
-                                                        status_id = "DMA",
-                                                        status_DateTime = DateTime.Now,
-                                                        comments = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    }
-                                                };
-                                                AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel, iscustomUser: true);
-
-                                                myUpdateEventContextTagModel = new EventContextTagModel()
-                                                {
-                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                                                    EventCode = "DMA",
-                                                    EventRemarks = "Declaration Amendment Approved",
-                                                    FUStatusRemarks = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                };
-
-                                                break;
-
-                                            case "4":
-                                                _MyDeclarationPM.AmendmentStatus = "4";
-
-
-                                                var myAmitalEventTracerModel2 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                                                {
-                                                    Tenant = _MyDeclarationPM.Tenant,
-                                                    objectTableName = "Customs.Declaration",
-                                                    EventCode = "DMD",
-                                                    notes = "תיקון הצהרה נדחה - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
-                                                    UserId = loggingUserId,
-
-                                                    CommunicationSubject = "FU Status DMD from logitude ",
-                                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                                                    {
-                                                        entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPM.CustomFileNo,
-                                                        status = "new",
-                                                        xml_status = "new",
-                                                        status_id = "DMD",
-                                                        status_DateTime = DateTime.Now,
-                                                        comments = "תיקון הצהרה נדחה - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    }
-                                                };
-
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel2, iscustomUser: true);
-                                                myUpdateEventContextTagModel = new EventContextTagModel()
-                                                {
-                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                                                    EventCode = "DMD",
-                                                    EventRemarks = "Declaration Amendment Denial",
-                                                    FUStatusRemarks = "תיקון הצהרה נדחה - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                };
-
-
-
-                                                List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
-
-                                                var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
-                                                    .SerializeObject(customResponse.Response);
-
-                                                var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
-                                                    .DeSerializeObject(customResponseResponseXml);
-
-                                                List<error> systemMessagesList = new List<error>();
-
-                                                this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferenceListMsg);
-
-
-                                                break;
-
-
-
-                                            case "2":
-
-                                                _MyDeclarationPM.AmendmentStatus = "6";
-                                                _MyDeclarationPM.AmendmentDontDisplayInList = false;
-
-                                                declarationParent = myDeclarationQueryService.GetAcceptDeclarationAmendment(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
-                                                if (_MyDeclarationPM.AmendmentOriginalDeclartation != declarationParent.AmendmentOriginalDeclartation)
-                                                {
-                                                    UpdateParentDec(myDeclarationUpdateService, declarationParent);
-
-                                                }
-                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
-
-
-                                                var myAmitalEventTracerModel4 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                                                {
-                                                    Tenant = _MyDeclarationPM.Tenant,
-                                                    objectTableName = "Customs.Declaration",
-                                                    EventCode = "DMP",
-                                                    notes = "תיקון הצהרה אושר חלקית - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
-                                                    UserId = loggingUserId,
-
-                                                    CommunicationSubject = "FU Status DMP from logitude ",
-                                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                                                    {
-                                                        entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPM.CustomFileNo,
-                                                        status = "new",
-                                                        xml_status = "new",
-                                                        status_id = "DMP",
-                                                        status_DateTime = DateTime.Now,
-                                                        comments = "תיקון הצהרה אושר חלקית - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    }
-                                                };
-
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel4, iscustomUser: true);
-                                                myUpdateEventContextTagModel = new EventContextTagModel()
-                                                {
-                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                                                    EventCode = "DMP",
-                                                    EventRemarks = "Declaration Amendment Partial Approval",
-                                                    FUStatusRemarks = "תיקון הצהרה אושר חלקית - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + "מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                };
-
-                                                break;
-
-
-                                            case "6":
-                                                _MyDeclarationPM.AmendmentStatus = "1";
-                                                var myAmitalEventTracerModel5 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                                                {
-                                                    Tenant = _MyDeclarationPM.Tenant,
-                                                    objectTableName = "Customs.Declaration",
-                                                    EventCode = "DWR",
-                                                    notes = "תיקון הצהרה ממתין לטיפול המכס - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
-                                                    UserId = loggingUserId,
-
-                                                    CommunicationSubject = "FU Status DWR from logitude ",
-                                                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                                                    {
-                                                        entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPM.CustomFileNo,
-                                                        status = "new",
-                                                        xml_status = "new",
-                                                        status_id = "DWR",
-                                                        status_DateTime = DateTime.Now,
-                                                        comments = "תיקון הצהרה ממתין לטיפול המכס - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                    }
-                                                };
-
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel5, iscustomUser: true);
-                                                myUpdateEventContextTagModel = new EventContextTagModel()
-                                                {
-                                                    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                                                    EventCode = "DWR",
-                                                    EventRemarks = "Declaration Amendment Waiting for customs response",
-                                                    FUStatusRemarks = "תיקון הצהרה ממתין לטיפול המכס - " + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
-                                                };
-
-                                                UpdateReplacingDeclaration(requestParams, myDeclarationQueryService, myDeclarationUpdateService);
-
-                                                break;
-                                        };
-
-                                    }
-
-
-                                    break;
-                                }
-                        }
-                    }
-
-                    if (_MyDeclarationPM.IsCourierDeclaration && (_MyDeclarationPM.AmendmentStatus == "6" || _MyDeclarationPM.AmendmentStatus == "3" || _MyDeclarationPM.AmendmentStatus == "4"))
-                    {
-                        CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(_MyDeclarationPM.Tenant);
-                        var courierMasterPM = courierMasterQueryService.GetByDeclarationId(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
-                        var repository = new CardRepository(_MyDeclarationPM.Tenant);
-                        if (courierMasterPM != null)
-                        {
-                            var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, _MyDeclarationPM.Tenant);
-                            if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
-                            {
-                                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_MyDeclarationPM.Tenant);
-
-                                string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, _MyDeclarationPM.Tenant);
-                                if (defValue == "Y")
-                                {
-                                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_MyDeclarationPM.Tenant);
-                                    var declarationCourierStatusPm = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
-                                    if (declarationCourierStatusPm != null && declarationCourierStatusPm.IsClosedForFollowUp)
-                                    {
-                                        var casual = new DeclarationCasualDetailsPM
-                                        {
-                                            //CasualSupplierName = _MyDeclarationPM.CasualSupplierName,
-                                            //CasualSupplierAddress = _MyDeclarationPM.CasualSupplierAddress,
-                                            ImporterCode = _MyDeclarationPM.ImporterCode,
-                                            TransferImporterCode = _MyDeclarationPM.TransferImporterCode,
-                                            EntitleImporterCode = _MyDeclarationPM.EntitleImporterCode,
-                                            ImporterName = _MyDeclarationPM.ImporterName,
-                                            ImporterAddress = _MyDeclarationPM.ImporterAddress,
-                                            TransferImporterName = _MyDeclarationPM.TransferImporterName,
-                                            TransferImporterAddress = _MyDeclarationPM.TransferImporterAddress,
-                                            EntitleImporterName = _MyDeclarationPM.EntitleImporterName,
-                                            EntitleImporterAddress = _MyDeclarationPM.EntitleImporterAddress,
-                                            ImporterPassportNumber = _MyDeclarationPM.ImporterPassportNumber,
-                                            EntitlePassportNumber = _MyDeclarationPM.EntitlePassportNumber,
-                                            TransferPassportNumber = _MyDeclarationPM.TransferPassportNumber,
-                                            CasualImporterAddress1 = _MyDeclarationPM.CasualImporterAddress1,
-                                            CasualImporterAddress2 = _MyDeclarationPM.CasualImporterAddress2,
-                                            CasualImporterCity = _MyDeclarationPM.CasualImporterCity,
-                                            CasualImporterZipCode = _MyDeclarationPM.CasualImporterZipCode,
-                                            CasualImporterFax = _MyDeclarationPM.CasualImporterFax,
-                                            CasualImporterEmail = _MyDeclarationPM.CasualImporterEmail,
-                                            CasualImporterTel = _MyDeclarationPM.CasualImporterTel,
-                                            CasualImporterContact = _MyDeclarationPM.CasualImporterContact,
-                                            DeclarationId = _MyDeclarationPM.Id,
-                                            Tenant = _MyDeclarationPM.Tenant
-                                        };
-                                        casual.ChangeSetOp = ChangeSetOperation.Insert;
-                                        DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                                        declarationCasualDetailsUpdateService.Update(casual, true);
-
-                                        //_MyDeclarationPM.CasualSupplierName = null;
-                                        //_MyDeclarationPM.CasualSupplierAddress = null;
-                                        _MyDeclarationPM.ImporterCode = null;
-                                        _MyDeclarationPM.TransferImporterCode = null;
-                                        _MyDeclarationPM.EntitleImporterCode = null;
-                                        _MyDeclarationPM.ImporterName = null;
-                                        _MyDeclarationPM.ImporterAddress = null;
-                                        _MyDeclarationPM.TransferImporterName = null;
-                                        _MyDeclarationPM.TransferImporterAddress = null;
-                                        _MyDeclarationPM.EntitleImporterName = null;
-                                        _MyDeclarationPM.EntitleImporterAddress = null;
-                                        _MyDeclarationPM.ImporterPassportNumber = null;
-                                        _MyDeclarationPM.EntitlePassportNumber = null;
-                                        _MyDeclarationPM.TransferPassportNumber = null;
-                                        _MyDeclarationPM.CasualImporterAddress1 = null;
-                                        _MyDeclarationPM.CasualImporterAddress2 = null;
-                                        _MyDeclarationPM.CasualImporterCity = null;
-                                        _MyDeclarationPM.CasualImporterZipCode = null;
-                                        _MyDeclarationPM.CasualImporterFax = null;
-                                        _MyDeclarationPM.CasualImporterEmail = null;
-                                        _MyDeclarationPM.CasualImporterTel = null;
-                                        _MyDeclarationPM.CasualImporterContact = null;
-                                        _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (customResponse.Response.Error != null && (!new string[] { "3", "6" }.Contains(_MyDeclarationPM.AmendmentStatus)))
-                    {
-                        DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
-
-                        this._MyDeclarationPM.AmendmentErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO);
-
-                    }
-
-
-
-                    if (myUpdateEventContextTagModel != null)
-                        this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
-                    if (fromMehes)
-                    {
-                        _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
-                        _MyDeclarationPM.AmendmentissueDate = DateTime.ParseExact(customResponse.Response.Declaration.IssueDateTime, "yyyy-MM-ddTHH:mm:ss", null);
-
-
-                    }
-                    if (_MyDeclarationPM.AmendmentStatus == "3" || _MyDeclarationPM.AmendmentStatus == "6")
-                    {
-                        var myDeclarationReferantData = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-
-                        var DeclarationReferantDataQueryService = new DeclarationReferantDataQueryService(context);
-                        DeclarationReferantDataPM declarationReferantData = DeclarationReferantDataQueryService.GetDeclarationReferandDateByDeclarationIdToDisplay(_MyDeclarationPMOrg.Id, _MyDeclarationPMOrg.Tenant);
-
-                        declarationReferantData.DeclarationIdToDisplay = _MyDeclarationPM.Id;
-                        declarationReferantData.ChangeSetOp = ChangeSetOperation.Update;
-                        myDeclarationReferantData.Update(declarationReferantData, true);
-
-                        _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
-                        _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
-                        if (fromMehes)
-                        {
-                            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                            {
-                                Tenant = _MyDeclarationPM.Tenant,
-                                objectTableName = "Customs.Declaration",
-                                EventCode = "DCH",
-                                notes = "-  בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
-                                CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
-                                EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
-                                UserId = loggingUserId,
-
-                                CommunicationSubject = "FU Status DCH from logitude ",
-                                MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                                {
-                                    entname = "CFIFILEM",
-                                    primary_number = _MyDeclarationPM.CustomFileNo,
-                                    status = "new",
-                                    xml_status = "new",
-                                    status_id = "DCH",
-                                    status_DateTime = DateTime.Now,
-                                    comments = "-  בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
-                                }
-                            };
-                            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, iscustomUser: true);
-
-
-                            myUpdateEventContextTagModel = new EventContextTagModel()
-                            {
-                                CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                                EventCode = "DCH",
-                                EventRemarks = "Declaration Changed By Customs",
-                                FUStatusRemarks = "בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
-                            };
-
-                        }
-
-
-                        List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
-                        if ((customResponse.Response.Declaration != null) && (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value)))
-                        {
-
-                            var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
-                                .SerializeObject(customResponse.Response);
-
-                            var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
-                                .DeSerializeObject(customResponseResponseXml);
-                            ////5117 5117 5117 5117 5117
-                            List<error> systemMessagesList = new List<error>();
-                            if (customResponse.CollateralRequests != null && customResponse.CollateralRequests.Count() > 0) // Update Declaration Correction Pointer
-                            {
-                                foreach (var collateralRequestItem in customResponse.CollateralRequests)
-                                {
-                                    var myError = new error();
-                                    myError.ListVersionID = "A";
-                                    myError.MessageError = "המשוב להצהרה כולל דרישה לבטוחה " + " - מספר בטוחה " + collateralRequestItem.collateralRequestNumber;
-                                    systemMessagesList.Add(myError);
-                                }
-                            }
-                            this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferenceListMsg);
-                        }
-                        if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
-                        {
-                            _MyDeclarationPM.UserNotes = "LoadTest";
-                        }
-
-
-                        this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                        var swUpdateDec = Stopwatch.StartNew();
-                        myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
-                        LogMessagingUtil.Instance.AppendLine($"5117.Update – myDeclarationUpdateService.Update (AmendmentStatus={_MyDeclarationPM.AmendmentStatus}) took {swUpdateDec.ElapsedMilliseconds} ms");
-
-
-
-
-
-
-                        bool sendDeclarationPrintSync = false;
-                        if (sendDeclarationPrintSync)
-                        {
-                            SendDeclarationPrintSync(requestParams);
-                        }
-                        else
-                        {
-                            SendDeclarationPrint(requestParams);
-                        }
-
-                        if (customResponse.CollateralRequests != null)
-                        {
-                            LogMessagingUtil.Instance.AppendLine("ImportDeclarationAmendmentReplyMsg: Create Collateral");
-                            var requestXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.CollateralRequestDetails[]>.SerializeObject(customResponse.CollateralRequests);
-                            var collateralArry = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.CollateralRequestDetails[]>.DeSerializeObject(requestXml);
-
-                            COLT_NG_8211_MSG10040_CollateralRequestMsg myCOLT_NG_8211_MSG10040_CollateralRequestMsg = new COLT_NG_8211_MSG10040_CollateralRequestMsg();
-                            var responseContentHeader = customResponse.GetResponseContentHeader();
-                            myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader = new UnifreightIIG.Common.MessageLib.Collateral.ResponseContentHeader();
-                            if (responseContentHeader != null)
-                            {
-                                myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.ApplicationID = responseContentHeader.ApplicationID;
-                                myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.Remark = responseContentHeader.Remark;
-                                myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.TransmitionDateTime = responseContentHeader.TransmitionDateTime;
-                            }
-                            myCOLT_NG_8211_MSG10040_CollateralRequestMsg.CollateralRequestDetails = collateralArry;
-                            var xml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.COLT_NG_8211_MSG10040_CollateralRequestMsg>
-                                .SerializeObject(myCOLT_NG_8211_MSG10040_CollateralRequestMsg);
-
-                            var ser = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.COLT_NG_8211_MSG10040_CollateralRequestMsg>.DeSerializeObject(xml);
-                            var DF_MSG10040_CollateralRequestMsgResponseService = new DF_8211_CollateralRequestMsgResponseService();
-                            DF_MSG10040_CollateralRequestMsgResponseService.Update(ser, requestParams);
-                        }
-
-                    }
-
-                    else
-                    {
-
-                        this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                        var swUpdateDec2 = Stopwatch.StartNew();
-                        myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
-                        LogMessagingUtil.Instance.AppendLine($"5117.Update – myDeclarationUpdateService.Update (else branch) took {swUpdateDec2.ElapsedMilliseconds} ms");
-
-
-                    }
-                    if (customResponse.Response.Declaration != null && (_MyDeclarationPM.AmendmentStatus == "6" || _MyDeclarationPM.AmendmentStatus == "3"))
-                    {
-                        DF_NG_2754_MSG10004_ImportDeclarationResponseService dF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
-
-                        UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse dec_2754 = new UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse();
-                        dec_2754.Response = new UnifreightIIG.Common.ImportDeclarationServiceReference.Response();
-                        dec_2754.Response.Declaration = CastDeclaration(customResponse.Response.Declaration);
-                        dec_2754.Response.Status = CastStatus(customResponse.Response.Status);
-
-
-                        if (customResponse.Response.Error != null)
-                            dec_2754.Response.Error = CastError(customResponse.Response.Error);
-
-
-                        GenericRequestParams requestParams_2754 = new GenericRequestParams
-                        {
-                            Tenant = _MyDeclarationPM.Tenant,
-                            AppicationId = _MyDeclarationPM.Id,
-                            ResponseName = "5117"
-                        };
-
-                        dF_NG_2754_MSG10004_ImportDeclarationResponseService.Update(dec_2754, requestParams_2754);
-
-                    }
-
-                    //}
-
-                    if (customResponse.AmendmentDocumentDetails != null && (_MyDeclarationPM.AmendmentStatus == "3" || _MyDeclarationPM.AmendmentStatus == "6")) // Create Document 
-                    {
-                        LogMessagingUtil.Instance.AppendLine("ConstraintApprovalDecision: Create Document");
-
-                        foreach (var documentItem in customResponse.AmendmentDocumentDetails)
-                        {
-
-                            //Get Document Detail
-                            var documentXml = new UnifreightIIG.Common.MessageLib.Ransom.RequiredDocumentDetails();
-                            documentXml.documentID = documentItem.RequiredDocumentDetails.documentID;
-                            documentXml.remarks = documentItem.RequiredDocumentDetails.remarks;
-                            documentXml.requiredDocumentMessageType = documentItem.RequiredDocumentDetails.requiredDocumentMessageType;
-                            documentXml.typeID = documentItem.RequiredDocumentDetails.typeID.ToString();
-                            //Get Entity Details
-                            RequiredDocumentRequestParams documentRequestParams = new RequiredDocumentRequestParams();
-                            documentRequestParams.Tenant = requestParams.Tenant;
-                            documentRequestParams.ParentEntityCode = "Declaration";
-                            documentRequestParams.ParentEntityId = _MyDeclarationPM.Id;
-
-                            var listConnectedEntity = new List<UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity>();
-                            var entityXml = new UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity();
-                            entityXml.entityType = 1055;
-                            //    entityXml.entityIdKey1 = customResponse..LeadDocumentIDNum;
-                            listConnectedEntity.Add(entityXml);
-
-                            VAL_NG_8227_MSG_520_RequiredDocumentMessage myVAL_NG_8227_MSG_520_RequiredDocumentMessage = new VAL_NG_8227_MSG_520_RequiredDocumentMessage();
-                            myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RequiredDocumentDetails = documentXml;
-
-                            myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RelatedEntity = listConnectedEntity.ToArray();
-                            var xml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.VAL_NG_8227_MSG_520_RequiredDocumentMessage>
-                               .SerializeObject(myVAL_NG_8227_MSG_520_RequiredDocumentMessage);
-
-                            var ser = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.VAL_NG_8227_MSG_520_RequiredDocumentMessage>.DeSerializeObject(xml);
-                            var myVAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService = new VAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService();
-                            myVAL_NG_8227_MSG_520_RequiredDocumentMessageResponseService.Update(ser, documentRequestParams);
-                        }
-                    }
-
-
-                }
-
-
-                if (_MyDeclarationPM.IsCourierDeclaration && (_MyDeclarationPM.AmendmentStatus == "6" || _MyDeclarationPM.AmendmentStatus == "3") && _MyDeclarationPM.HatraDate == null)
-
-                {
-                    if (_MyDeclarationPM.Consignments == null || _MyDeclarationPM.Consignments.Count() == 0)
-
-                    {
-                        _MyDeclarationPM = declarationQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-
-                    }
-                    var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                    var swMasof = Stopwatch.StartNew();
-                    mySend2MasofIfNeededService.Send2Masof(_MyDeclarationPM, false, _MyDeclarationPM, true);
-                    LogMessagingUtil.Instance.AppendLine($"5117.Update – Send2Masof took {swMasof.ElapsedMilliseconds} ms");
-
-
-                    SendManifest(_MyDeclarationPM, requestParams);
-
-                }
-
+                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
@@ -847,300 +150,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
                 this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
-                LogMessagingUtil.Instance.AppendLine($"5117.Update1 – answer for declaration " + this._MyDeclarationPM.DeclarationNumber);
 
-                requestParams.AppicationId = _MyDeclarationPM.Id;// myDeclarationQueryService.GetIdByDeclarationNumber(_MyDeclarationPM.Id, requestParams.Tenant);
-                //if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
-                //{
-                //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
-                //}
-
-
-            }
-
-
-
-            else
-            {
-
-                requestParams.AppicationId = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
-                if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
+                bool sendDeclarationPrintSync = false;// ConfigurationManager.AppSettings["20180307.5117SendDeclarationPrintSync"] =="1";
+                if (sendDeclarationPrintSync)
                 {
-                    requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
-                }
-
-                var declarationNumber = "";
-                if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
-                {
-                    _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
+                    SendDeclarationPrintSync(requestParams);
                 }
                 else
                 {
-                    if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
-                    {
-                        LogMessagingUtil.Instance.AppendLine("Can not find declaration- DeclarationNumber: " + customResponse.Response.Declaration.ID.Value + " ExternalDeclarationNumber: " + customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value);
-                        this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                        this.MyResponseData.Succeeded = false;
-                        this.MyResponseData.UserMessage = "Can not find declaration- DeclarationNumber: " + customResponse.Response.Declaration.ID.Value + " ExternalDeclarationNumber: " + customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value;
-                        return;
-                    }
+                    SendDeclarationPrint(requestParams);
                 }
-                declarationNumber = customResponse.Response.Declaration.ID.Value;
 
-                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
-                using (var disposableToken =
-                     ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
-                    )
+                if (customResponse.CollateralRequests != null) // Create Collateral
                 {
-                    if (!(customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99"))
+                    LogMessagingUtil.Instance.AppendLine("ImportDeclarationAmendmentReplyMsg: Create Collateral");
+                    var requestXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.CollateralRequestDetails[]>.SerializeObject(customResponse.CollateralRequests);
+                    var collateralArry = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.CollateralRequestDetails[]>.DeSerializeObject(requestXml);
+
+                    COLT_NG_8211_MSG10040_CollateralRequestMsg myCOLT_NG_8211_MSG10040_CollateralRequestMsg = new COLT_NG_8211_MSG10040_CollateralRequestMsg();
+                    var responseContentHeader = customResponse.GetResponseContentHeader();
+                    myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader = new UnifreightIIG.Common.MessageLib.Collateral.ResponseContentHeader();
+                    if (responseContentHeader != null)
                     {
-                        this._MyDeclarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
+                        myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.ApplicationID = responseContentHeader.ApplicationID;
+                        myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.Remark = responseContentHeader.Remark;
+                        myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.TransmitionDateTime = responseContentHeader.TransmitionDateTime;
                     }
+                    myCOLT_NG_8211_MSG10040_CollateralRequestMsg.CollateralRequestDetails = collateralArry;
+                    var xml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.COLT_NG_8211_MSG10040_CollateralRequestMsg>
+                        .SerializeObject(myCOLT_NG_8211_MSG10040_CollateralRequestMsg);
 
-                    if (this._MyDeclarationPM == null)
-                    {
-                        Handle5117MissingFileOrDeclaration(
-        customResponse,
-        requestParams,
-        context,
-        "לא נמצא תיק במערכת - נוצרה התראה לפי מספר הצהרה");
-                        LogMessagingUtil.Instance.AppendLine("Can not find declaration" + requestParams.AppicationId);
-                        this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                        this.MyResponseData.Succeeded = false;
-                        this.MyResponseData.UserMessage = "Can not find declaration" + requestParams.AppicationId;
-                        return;
-                    }
-
-                    var myUpdateEventContextTagModel = new EventContextTagModel()
-                    {
-                        CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                        EventCode = "DCH",
-                        EventRemarks = "Declaration Changed By Customs",
-                        FUStatusRemarks = "בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
-                    };
-
-                    this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
-                    List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
-                    if (currentXmlVersionId == null || !currentXmlVersionId.Contains(customResponse.Response.Declaration.DMExtensions.VersionID.Value))
-                    {
-
-                        var customResponseResponseXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
-                            .SerializeObject(customResponse.Response);
-
-                        var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.Response>
-                            .DeSerializeObject(customResponseResponseXml);
-                        ////5117 5117 5117 5117 5117
-                        List<error> systemMessagesList = new List<error>();
-                        if (customResponse.CollateralRequests != null && customResponse.CollateralRequests.Count() > 0) // Update Declaration Correction Pointer
-                        {
-                            foreach (var collateralRequestItem in customResponse.CollateralRequests)
-                            {
-                                var myError = new error();
-                                myError.ListVersionID = "A";
-                                myError.MessageError = "המשוב להצהרה כולל דרישה לבטוחה " + " - מספר בטוחה " + collateralRequestItem.collateralRequestNumber;
-                                systemMessagesList.Add(myError);
-                            }
-                        }
-                        var swCorrections = Stopwatch.StartNew();
-                        this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant);
-                        LogMessagingUtil.Instance.AppendLine($"5117.Update – AnalyzeCorrectionsPointer took {swCorrections.ElapsedMilliseconds} ms");
-                    }
-                    if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
-                    {
-                        _MyDeclarationPM.UserNotes = "LoadTest";
-                    }
-
-                    //<--- Yuval Chalup 18.10.2016 TASK-23113
-                    if (customResponse.ProceduralFaults != null)
-                    {
-                        //Transfer ProceduralFaultDetails of 5117 to ProceduralFaultDetails of 8218
-                        var ProceduralFaultDetailsXml_5117 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.ProceduralFaultDetails[]>
-                            .SerializeObject(customResponse.ProceduralFaults);
-
-                        var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
-                        customResponse_8218.ProceduralFaultDetails = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Fault.ProceduralFaultDetails[]>
-                            .DeSerializeObject(ProceduralFaultDetailsXml_5117);
-
-                        var ResponseService_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService();
-                        ResponseService_8218.Update(customResponse_8218, requestParams);
-                    }
-                    //Yuval Chalup 18.10.2016 TASK-23113 --->
-
-                    this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                    myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
-
-                    this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                    this.MyResponseData.Succeeded = true;
-                    this.MyResponseData.HasException = false;
-                    this.MyResponseData.UserMessage = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
-
-                    this.MyRequestSheetParam = new RequestSheetParam();
-                    this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
-                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                    this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
-                    this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
-                    LogMessagingUtil.Instance.AppendLine($"5117.Update2 – answer for declaration " + this._MyDeclarationPM.DeclarationNumber);
-
-                    bool sendDeclarationPrintSync = false;// ConfigurationManager.AppSettings["20180307.5117SendDeclarationPrintSync"] =="1";
-                    if (sendDeclarationPrintSync)
-                    {
-                        SendDeclarationPrintSync(requestParams);
-                    }
-                    else
-                    {
-                        SendDeclarationPrint(requestParams);
-                    }
-
-                    if (customResponse.CollateralRequests != null) // Create Collateral
-                    {
-                        LogMessagingUtil.Instance.AppendLine("ImportDeclarationAmendmentReplyMsg: Create Collateral");
-                        var requestXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.CollateralRequestDetails[]>.SerializeObject(customResponse.CollateralRequests);
-                        var collateralArry = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.CollateralRequestDetails[]>.DeSerializeObject(requestXml);
-
-                        COLT_NG_8211_MSG10040_CollateralRequestMsg myCOLT_NG_8211_MSG10040_CollateralRequestMsg = new COLT_NG_8211_MSG10040_CollateralRequestMsg();
-                        var responseContentHeader = customResponse.GetResponseContentHeader();
-                        myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader = new UnifreightIIG.Common.MessageLib.Collateral.ResponseContentHeader();
-                        if (responseContentHeader != null)
-                        {
-                            myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.ApplicationID = responseContentHeader.ApplicationID;
-                            myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.Remark = responseContentHeader.Remark;
-                            myCOLT_NG_8211_MSG10040_CollateralRequestMsg.ResponseContentHeader.TransmitionDateTime = responseContentHeader.TransmitionDateTime;
-                        }
-                        myCOLT_NG_8211_MSG10040_CollateralRequestMsg.CollateralRequestDetails = collateralArry;
-                        var xml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.COLT_NG_8211_MSG10040_CollateralRequestMsg>
-                            .SerializeObject(myCOLT_NG_8211_MSG10040_CollateralRequestMsg);
-
-                        var ser = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.COLT_NG_8211_MSG10040_CollateralRequestMsg>.DeSerializeObject(xml);
-                        var DF_MSG10040_CollateralRequestMsgResponseService = new DF_8211_CollateralRequestMsgResponseService();
-                        DF_MSG10040_CollateralRequestMsgResponseService.Update(ser, requestParams);
-                    }
-
+                    var ser = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.COLT_NG_8211_MSG10040_CollateralRequestMsg>.DeSerializeObject(xml);
+                    var DF_MSG10040_CollateralRequestMsgResponseService = new DF_8211_CollateralRequestMsgResponseService();
+                    DF_MSG10040_CollateralRequestMsgResponseService.Update(ser, requestParams);
                 }
 
             }
         }
-
-
-        public void SendManifest(DeclarationPM declarationPM, GenericRequestParams requestParams)
-        {
-
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-
-            var requestParams1170 = new MANIFESTRequestRequestParams()
-            {
-                Tenant = requestParams.Tenant,
-                LoggingEnabled = true,
-                LoggingObjectTableId = objectTableId,
-                LoggingEntityId = declarationPM.Id,
-                LoggingObjectTableId2 = objectTableIdCourierMaster,
-                LoggingEntityId2 = declarationPM.CourierMasterId,
-                InterfaceTypeCode = "1170",
-                LoggingUserId = requestParams.LoggingUserId,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-                DeclarationId = declarationPM.Id,
-                LoggingEntityReference = declarationPM.Id,
-
-            };
-            SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
-        }
-
-        private void UpdateParentDec(DeclarationUpdateService myDeclarationUpdateService, DeclarationPM declarationParent)
-        {
-            if (declarationParent != null)
-            {
-                _MyDeclarationPM.DeclarationNumber = declarationParent.DeclarationNumber;
-                declarationParent.AmendmentDontDisplayInList = true;
-                declarationParent.DeclarationNumber = null;
-
-
-                declarationParent.ChangeSetOp = ChangeSetOperation.Update;
-                myDeclarationUpdateService.Update(declarationParent, true);
-
-
-
-            }
-        }
-
-        private void UpdateReplacingDeclaration(GenericRequestParams requestParams, DeclarationQueryService myDeclarationQueryService, DeclarationUpdateService myDeclarationUpdateService)
-        {
-
-            if (!string.IsNullOrEmpty(_MyDeclarationPM.ReplacingRepairRequest))
-            {
-                var declarationReplacing = myDeclarationQueryService.GetDeclarationAmendmentByIdAndAmendmentNo(requestParams.Tenant, _MyDeclarationPM.AmendmentOriginalDeclartation, _MyDeclarationPM.ReplacingRepairRequest);
-                declarationReplacing.AmendmentStatus = "7";
-                declarationReplacing.ChangeSetOp = ChangeSetOperation.Update;
-                myDeclarationUpdateService.Update(declarationReplacing, true);
-
-            }
-        }
-
-
-        public UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseStatus CastStatus(UnifreightIIG.Common.MessageLib.ID.ResponseStatus declaration)
-        {
-
-
-            string DeclarationString;
-            using (var stringwriter = new System.IO.StringWriter())
-            {
-                var serializer = new XmlSerializer(declaration.GetType());
-                serializer.Serialize(stringwriter, declaration);
-                DeclarationString = stringwriter.ToString();
-            }
-
-
-
-            using (var stringReader = new System.IO.StringReader(DeclarationString))
-            {
-                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseStatus));
-                return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseStatus;
-            }
-        }
-
-
-        public UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration CastDeclaration(UnifreightIIG.Common.MessageLib.ID.Declaration declaration)
-        {
-
-
-            string DeclarationString;
-            using (var stringwriter = new System.IO.StringWriter())
-            {
-                var serializer = new XmlSerializer(declaration.GetType());
-                serializer.Serialize(stringwriter, declaration);
-                DeclarationString = stringwriter.ToString();
-            }
-
-
-
-            using (var stringReader = new System.IO.StringReader(DeclarationString))
-            {
-                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
-                return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration;
-            }
-        }
-
-
-        public UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseError[] CastError(UnifreightIIG.Common.MessageLib.ID.ResponseError[] responseError)
-        {
-
-
-            string ErrorString;
-            using (var stringwriter = new System.IO.StringWriter())
-            {
-                var serializer = new XmlSerializer(responseError.GetType());
-                serializer.Serialize(stringwriter, responseError);
-                ErrorString = stringwriter.ToString();
-            }
-
-
-
-            using (var stringReader = new System.IO.StringReader(ErrorString))
-            {
-                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseError[]));
-                return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseError[];
-            }
-        }
-
         bool SendDeclarationPrintSync(GenericRequestParams requestParams)
         {
 
@@ -1183,11 +229,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
-
+        
         public bool SendDeclarationPrint(GenericRequestParams requestParams)
         {
             LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
-            string decNum = this._MyDeclarationPMOrg != null ? this._MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber;
+            string decNum = this._MyDeclarationPM.DeclarationNumber;
             var decNumList = new List<string>();
             decNumList.Add(decNum);
             DF_NG_8302_Web03_DeclarationPrintRequestParams searchParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
@@ -1198,11 +244,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 Tenant = this._MyDeclarationPM.Tenant,
                 RequestName = "Declaration Print(5117)",
                 ResponseName = "Declaration Print(5117)",
-                LoggingEntityId = this._MyDeclarationPMOrg != null ? this._MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
+                LoggingEntityId = this._MyDeclarationPM.Id,
                 RequestVIA = SendRequestVIA.WebServiceBatch,
 
 
-                LoggingUserId = requestParams.LoggingUserId,//HD CALL#298426
+                LoggingUserId = requestParams.LoggingUserId ,//HD CALL#298426
             };
 
             var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
@@ -1216,115 +262,5 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogMessagingUtil.Instance.AppendLine("Declaration Print Request Succeeded " + resData.CustomsRequestsSheetId);
             return true;
         }
-
-        private void Handle5117MissingFileOrDeclaration(
-    DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse,
-    GenericRequestParams requestParams,
-    ICustomContext dbContext,
-    string reason)
-        {
-            try
-            {
-                string declarationNumber =
-                    customResponse?.Response?.Declaration?.ID?.Value
-                    ?? customResponse?.Response?.Declaration?.DMExtensions?.ExternalDeclarationID?.Value
-                    ?? requestParams?.AppicationId
-                    ?? "";
-
-                if (string.IsNullOrWhiteSpace(declarationNumber))
-                {
-                    LogMessagingUtil.Instance.AppendLine("5117 MissingFile: cannot determine declaration number");
-                    return;
-                }
-
-                string status32 = "";
-                var additional = customResponse?.Response?.AdditionalInformation;
-                if (additional != null)
-                {
-                    status32 = additional
-                        .FirstOrDefault(x => x.Content != null && x.StatementTypeCode?.Value == "32")
-                        ?.Content?.Value;
-                }
-
-                string eventCode;
-                switch (status32)
-                {
-                    case "1": eventCode = "DMA"; break; 
-                    case "4": eventCode = "DMD"; break; 
-                    case "2": eventCode = "DMP"; break; 
-                    case "6": eventCode = "DWR"; break; 
-                    default: eventCode = "DCH"; break; 
-                }
-
-                string notificationDefinitionCode = null;
-                string desc = null;
-                string type = "A"; 
-
-                switch (eventCode)
-                {
-                    case "DCH":
-                        notificationDefinitionCode = "5117N";
-                        desc = "בוצע תיקון הצהרה " + declarationNumber;
-                        break;
-
-                    case "DMA":
-                        notificationDefinitionCode = "5117A";
-                        desc = "תיקון הצהרה אושר " + declarationNumber;
-                        break;
-
-                    case "DMP":
-                        notificationDefinitionCode = "5117P";
-                        desc = "תיקון הצהרה אושר חלקית " + declarationNumber;
-                        break;
-
-                    case "DMD":
-                        notificationDefinitionCode = "5117D";
-                        desc = "תיקון הצהרה נדחה " + declarationNumber;
-                        break;
-
-                    case "DWR":
-                        notificationDefinitionCode = "5117W";
-                        desc = "תיקון הצהרה ממתין להחלטת המכס " + declarationNumber;
-                        break;
-                }
-
-                if (string.IsNullOrWhiteSpace(notificationDefinitionCode))
-                {
-                    LogMessagingUtil.Instance.AppendLine($"5117 MissingFile: no mapping for eventCode={eventCode}");
-                    return;
-                }
-
-                if (!string.IsNullOrWhiteSpace(reason))
-                {
-                    desc += "\n" + reason;
-                }
-
-                var functionalRef = customResponse?.Response?.FunctionalReferenceID?.Value;
-                if (!string.IsNullOrWhiteSpace(functionalRef))
-                {
-                    desc += "\nמספר בקשה - " + functionalRef;
-                }
-
-                NotificationBase.CreateNotification(
-                    dbContext: dbContext,
-                    tenant: requestParams.Tenant,
-                    objectTableName: "Customs.Declaration",
-                    notificationDefinitionCode: notificationDefinitionCode,
-                    description: desc,
-                    assigneToNotificationTypeCode: type,
-                    reference1Number: declarationNumber,
-                    entityId: null, 
-                    createdByRequestId: requestParams.CustomsRequestsSheetId
-                );
-
-                LogMessagingUtil.Instance.AppendLine(
-                    $"5117 MissingFile: notification created. Code={notificationDefinitionCode}, Ref={declarationNumber}, Event={eventCode}");
-            }
-            catch (System.Exception ex)
-            {
-                LogMessagingUtil.Instance.AppendLine("5117 MissingFile: failed " + ex);
-            }
-        }
-
     }
 }

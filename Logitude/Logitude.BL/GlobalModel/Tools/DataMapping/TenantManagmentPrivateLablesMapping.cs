@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
@@ -30,20 +30,6 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.HybridPartnerId = entityPM.HybridPartnerId;
             entityPOCO.ContactUsEmail = entityPM.ContactUsEmail;
             entityPOCO.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail;
-            entityPOCO.MainColor = entityPM.MainColor;
-            entityPOCO.BackgroundImageId = entityPM.BackgroundImageId;
-            entityPOCO.LoginImageId = entityPM.LoginImageId;
-            entityPOCO.LoginProgressImageId = entityPM.LoginProgressImageId;
-            entityPOCO.ForgetPasswordImageId = entityPM.ForgetPasswordImageId; 
-            entityPOCO.SecondaryColor = entityPM.SecondaryColor;
-            entityPOCO.HasLogboxAccess = entityPM.HasLogboxAccess;
-            entityPOCO.MainTabHighlightColor = entityPM.MainTabHighlightColor;
-            entityPOCO.DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor;
-            entityPOCO.IsCustomsActivated = entityPM.IsCustomsActivated;
-            entityPOCO.IsExportActivated = entityPM.IsExportActivated;
-            entityPOCO.CreateShipmentsWithoutDocs = entityPM.CreateShipmentsWithoutDocs;
-            entityPOCO.CreateOShipmentsWithoutDocs = entityPM.CreateOShipmentsWithoutDocs;
-            entityPOCO.DistributorCode = entityPM.DistributorCode;
         }
     }
 }

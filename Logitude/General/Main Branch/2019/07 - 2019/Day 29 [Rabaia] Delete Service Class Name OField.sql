@@ -1,2 +1,0 @@
-delete from TextCodes where Id in (select HelpTextCodeId from ObjectFields where FieldName = 'ServiceClassName') or Id in (select ListTextCodeId from ObjectFields where FieldName = 'ServiceClassName')
-delete from ObjectFields where FieldName = 'ServiceClassName'

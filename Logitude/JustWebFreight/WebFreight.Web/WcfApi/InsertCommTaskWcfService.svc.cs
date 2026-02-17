@@ -8,7 +8,7 @@ using Logitude.Server.Tools;
 using WebFreight.Web.Security;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.ServiceModel.Activation;
 
 namespace WebFreight.Web.WcfApi
@@ -24,8 +24,6 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 SecurityUtility.AuthenticationOnTenant(myTenant);
-
-                
 
                 string userEmail = "system@tenant" + destinationTenant + ".com";
                 UserRepository userRepository = new UserRepository(destinationTenant);
@@ -47,8 +45,7 @@ namespace WebFreight.Web.WcfApi
                 logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
                 var Id = Communications.AddCommunicationLog(logParams);
                 response.Result = Id;
-                //Communications.AddCommunicationLog(logParams);
-                //var qId = HttpContext.Current.Request.Headers["CurrentRequestOpenedQueues"];
+
 
                 return response;
             }

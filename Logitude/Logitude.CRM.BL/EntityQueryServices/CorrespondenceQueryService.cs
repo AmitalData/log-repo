@@ -1,7 +1,5 @@
 ﻿using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,38 +16,35 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                             where a.EntityId == entityId
                                             && a.Tenant == tenant && a.IsInternal == false
                                             select new CorrespondencePM()
-                                            {
-                                                Id = a.Id,
-                                                Tenant = a.Tenant,
-                                                CreateDate = a.CreateDate,
-                                                CreatedByContactId = a.CreatedByContactId,
-                                                Description = a.Description,
-                                                IsInternal = a.IsInternal,
-                                                ObjectTableId = a.ObjectTableId,
-                                                EntityId = a.EntityId,
-                                                ActivityId = a.ActivityId,
-                                                ActivitySubject = a.ActivitySubject,
-                                                ActivityTypeCode = a.ActivityTypeCode,
-                                                CCs = a.CCs,
-                                                Bcc = a.Bcc,
-                                                InternalUsers = a.InternalUsers,
-                                                ContactName = a.CreatedByContact != null ? a.CreatedByContact.EnglishName : null,
-                                                ContactEmail = a.CreatedByContact != null ? a.CreatedByContact.Email : null,
-                                                NotifyMe = a.NotifyMe,
-                                                NotifyOwner = a.NotifyOwner,
-                                                Direction = a.Direction,
-                                                HTMLFullBody = a.HTMLFullBody,
-                                                RightToLeft = a.RightToLeft,
-                                                ContactImageDetailId = a.CreatedByContact != null ? a.CreatedByContact.ImageDetailId : null,
-                                            }).OrderByDescending(a => a.CreateDate).ToList();
+                                                {
+                                                    Id = a.Id, 
+                                                    Tenant = a.Tenant,
+                                                    CreateDate = a.CreateDate,
+                                                    CreatedByContactId = a.CreatedByContactId,
+                                                    Description = a.Description,
+                                                    IsInternal = a.IsInternal,
+                                                    ObjectTableId = a.ObjectTableId,
+                                                    EntityId = a.EntityId,
+                                                    ActivityId = a.ActivityId,
+                                                    ActivitySubject = a.ActivitySubject,
+                                                    ActivityTypeCode = a.ActivityTypeCode,
+                                                    CCs = a.CCs,
+                                                    Bcc = a.Bcc,
+                                                    InternalUsers = a.InternalUsers,
+                                                    ContactName = a.CreatedByContact != null ? a.CreatedByContact.EnglishName : null,
+                                                    ContactEmail = a.CreatedByContact != null ? a.CreatedByContact.Email : null,
+                                                    NotifyMe = a.NotifyMe,
+                                                    NotifyOwner = a.NotifyOwner,
+                                                    Direction = a.Direction,
+                                                    HTMLFullBody = a.HTMLFullBody,
+                                                    RightToLeft = a.RightToLeft,
+
+                                                }).OrderByDescending(a=>a.CreateDate).ToList();
             return query;
         }
 
         public List<CorrespondencePM> GetAllCorrespondencesByEntityIdAndTenant(string entityId, int tenant)
         {
-            ColorIndexRepository colorIndexRepository = new ColorIndexRepository(tenant);
-            IQueryable<ColorIndex> ColorIndexList = colorIndexRepository.GetColorIndexs();
-
             List<CorrespondencePM> query = (from a in context.Correspondences
                                             where a.EntityId == entityId
                                             && a.Tenant == tenant
@@ -76,49 +71,9 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                 Direction = a.Direction,
                                                 HTMLFullBody = a.HTMLFullBody,
                                                 RightToLeft = a.RightToLeft,
-                                                ContactImageDetailId = a.CreatedByContact != null ? a.CreatedByContact.ImageDetailId : null,
-                                                ContactIndexColor = a.CreatedByContact != null ? a.CreatedByContact.IndexColor : null,
+                  
                                             }).ToList();
-
-            foreach (CorrespondencePM correspondence in query)
-            {
-                correspondence.ContactDefaultColor = ColorIndexList.Where(d => d.IndexNumber == correspondence.ContactIndexColor).Select(s => s.Color).FirstOrDefault();
-            }
-
             return query;
-        }
-
-        public CorrespondencePM GetLastCorrespondenceByEntityId(string entityId, int tenant)
-        {
-            CorrespondencePM lastCorrespondenceLine = (from a in context.Correspondences
-                                            where a.EntityId == entityId
-                                            && a.Tenant == tenant
-                                            select new CorrespondencePM()
-                                            {
-                                                Id = a.Id,
-                                                Tenant = a.Tenant,
-                                                CreateDate = a.CreateDate,
-                                                CreatedByContactId = a.CreatedByContactId,
-                                                Description = a.Description,
-                                                IsInternal = a.IsInternal,
-                                                ObjectTableId = a.ObjectTableId,
-                                                EntityId = a.EntityId,
-                                                ActivityId = a.ActivityId,
-                                                ActivitySubject = a.ActivitySubject,
-                                                ActivityTypeCode = a.ActivityTypeCode,
-                                                CCs = a.CCs,
-                                                Bcc = a.Bcc,
-                                                InternalUsers = a.InternalUsers,
-                                                ContactName = a.CreatedByContact != null ? a.CreatedByContact.EnglishName : null,
-                                                ContactEmail = a.CreatedByContact != null ? a.CreatedByContact.Email : null,
-                                                NotifyMe = a.NotifyMe,
-                                                NotifyOwner = a.NotifyOwner,
-                                                Direction = a.Direction,
-                                                HTMLFullBody = a.HTMLFullBody,
-                                                RightToLeft = a.RightToLeft,
-                                                ContactImageDetailId = a.CreatedByContact != null ? a.CreatedByContact.ImageDetailId : null,
-                                            }).OrderByDescending(a => a.CreateDate).FirstOrDefault();
-            return lastCorrespondenceLine;
         }
     }
 }

@@ -27,7 +27,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ReadyForActivationComponent.html',
 })
 
@@ -41,7 +41,7 @@ export class ReadyForActivationComponent extends BaseComponent {
     public ProductsList: Array<ProductTypeItemClass> = [];
     public ServicesList: Array<ServiceItemClass> = [];
     private _QuestionnairePMService: QuestionnairePMService
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -104,7 +104,7 @@ export class ReadyForActivationComponent extends BaseComponent {
         }
         else {
             var countryListService: CountryListService = new CountryListService();
-            countryListService.getSingleFromCache(this.CountryId_Potential).subscribe((myResult:any) => {
+            countryListService.getSingleFromCache(this.CountryId_Potential).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: CountryList = myResponse.Result;
@@ -135,7 +135,7 @@ export class ReadyForActivationComponent extends BaseComponent {
         this.ProductsList = [];
 
         var _productTypeListService: ProductTypeListService = new ProductTypeListService();
-        _productTypeListService.getAllFromCache().subscribe((result:any) => {
+        _productTypeListService.getAllFromCache().subscribe(result => {
             var fullProductsList = result.Result;
 
             fullProductsList.filter(i => i.InActive == false).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach(item => {
@@ -148,7 +148,7 @@ export class ReadyForActivationComponent extends BaseComponent {
         this.ServicesList = [];
 
         var service: AdditionalServiceListService = new AdditionalServiceListService();
-        service.getAllFromCache().subscribe((result:any) => {
+        service.getAllFromCache().subscribe(result => {
             var fullServicesList = result.Result;
 
             fullServicesList.filter(i => i.InActive == false).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach(item => {
@@ -168,7 +168,7 @@ export class ReadyForActivationComponent extends BaseComponent {
     private CheckIfVatUnique() {
         if (this.EntityPM.IsCustomer) {
             if (!AppTool.IsNullOrEmpty(this.VatNumber)) {
-                this.partnersDomainService.GetIsVATUniqueForCustomer(this.VatNumber, this.EntityPM.Id, this.CountryId_Potential, this.EntityPM.PartnerTypeId).subscribe((myResponse: ServiceResponse) => {
+                this.partnersDomainService.GetIsVATUniqueForCustomer(this.VatNumber, this.EntityPM.Id, this.CountryId_Potential).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.vatTypeNotUnique = myResponse.Result;
                     }
@@ -196,7 +196,7 @@ export class ReadyForActivationComponent extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunAdditionalFieldsComponent(), 1);
         }
     }
@@ -545,7 +545,7 @@ export class ReadyForActivationComponent extends BaseComponent {
     }
 
     ShowQuestionnaire() {
-        this._QuestionnairePMService.get(SessionLocator.TenantPM.DefaultQuestionnaireId).subscribe((response:any) => {
+        this._QuestionnairePMService.get(SessionLocator.TenantPM.DefaultQuestionnaireId).subscribe(response => {
             var logWindow = new LogitudeWindow();
             var result = response.Result;
             if (result) {
@@ -580,7 +580,7 @@ export class ReadyForActivationComponent extends BaseComponent {
             this.CurrentSession.StartBusyIndicatorSaving();
         }
 
-        this.customerService.update(this.EntityPM).subscribe((myResult:any) => {
+        this.customerService.update(this.EntityPM).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 if (msg == "Activated") {
@@ -635,7 +635,7 @@ export class ProductTypeItemClass {
 
                 var type = null;
                 var productTypeListService: ProductTypeListService = new ProductTypeListService();
-                productTypeListService.getSingleFromCache(this.entityList.Id).subscribe((myResult:any) => {
+                productTypeListService.getSingleFromCache(this.entityList.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         var list: ProductTypeList = myResponse.Result;
@@ -712,7 +712,7 @@ export class ServiceItemClass {
 
                 var name = null;
                 var service: AdditionalServiceListService = new AdditionalServiceListService();
-                service.getSingleFromCache(this.entityList.Id).subscribe((myResult:any) => {
+                service.getSingleFromCache(this.entityList.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         var list: AdditionalServiceList = myResponse.Result;

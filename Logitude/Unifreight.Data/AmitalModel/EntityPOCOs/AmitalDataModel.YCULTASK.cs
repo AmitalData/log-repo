@@ -21,7 +21,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.YCULTASK in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference = true)]
-    public partial class YCULTASK : UNIFBASICPOCO, INotifyPropertyChanged
+    public partial class YCULTASK : INotifyPropertyChanged
     {
 
         public YCULTASK()

@@ -19,7 +19,7 @@ import {EntityResourceService} from '../../Infrastructure/Services/EntityResourc
 
 @Component({
     selector: 'NotificationBellComponent',
-    
+    moduleId: module.id,
     templateUrl: './NotificationBellComponent.html',
 })
 
@@ -38,12 +38,12 @@ export class NotificationBellComponent {
     DataContext = this;
     PreventSelect: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
-        entityResourceService.getEntityResourceByTableName("Customs.Notification").subscribe((response:any) => {
-            entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
-                entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
-                    entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
-                        entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe((response:any) => {
-                            entityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe((response:any) => {
+        entityResourceService.getEntityResourceByTableName("Customs.Notification").subscribe(response => {
+            entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+                entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
+                    entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
+                        entityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe(response => {
+                            entityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe(response => {
 
                                 this.IsVisibile = true;
                                 this.GetOpenNotificationsCount();
@@ -58,7 +58,7 @@ export class NotificationBellComponent {
     GetNotifications() {
         this.ItemsSource = [];
         this.Notifications = [];
-        this.notificationExtendedListService.GetGetTopTenNotifications(SessionInfo.LoggedUserId).subscribe((response:any) => {
+        this.notificationExtendedListService.GetGetTopTenNotifications(SessionInfo.LoggedUserId).subscribe(response => {
 
 
             if (response) {
@@ -66,7 +66,7 @@ export class NotificationBellComponent {
                     this.Notifications = response.Result;
                     this.BuildList();
 
-                    this.notificationExtendedListService.PutNotificationBadjCount(new NotificationPM()).subscribe((response:any) => {
+                    this.notificationExtendedListService.PutNotificationBadjCount(new NotificationPM()).subscribe(response => {
 
 
                     });
@@ -92,7 +92,7 @@ export class NotificationBellComponent {
     count: number;
 
     GetOpenNotificationsCount() {
-        this.notificationExtendedListService.GetOpenNotificationsCount(SessionInfo.LoggedUserId).subscribe((response:any) => {
+        this.notificationExtendedListService.GetOpenNotificationsCount(SessionInfo.LoggedUserId).subscribe(response => {
 
 
             if (response) {
@@ -159,6 +159,7 @@ export class NotificationBellComponent {
                                 case "5117N":
                                 case "8400A":
                                 case "5101C":
+                                case "5101D":
                                 case "5101G":
                                 //case "5101I":
                                 case "5101S":
@@ -170,33 +171,8 @@ export class NotificationBellComponent {
                                 case "70N":
                                 case "70C":
                                 case "60A":
-                                case "5117C":
-                                case "5117W":
-                                case "5117D":
-                                case "5117A":
-                                case "5117P":
                                     {
-                                      //  var tab = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId && d.IndexOrder == 0);
-                                        var tab;
-                                        var tabs = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId);
-                                        if (tabs.lenght > 0) {
-                                            tabs = tabs.sort((n1, n2) => {
-                                                if (n1.IndexOrder > n2.IndexOrder) {
-                                                    return 1;
-                                                }
-
-                                                if (n1.IndexOrder < n2.IndexOrder) {
-                                                    return -1;
-                                                }
-
-                                                return 0;
-                                            });
-
-                                            tab = tabs[0];
-                                        }
-                                        else {
-                                            tab = tabs;
-                                        }
+                                        var tab = window.ObjectTableTabs.find(d => d.ObjectTableId == selected.ObjectTableId && d.IndexOrder == 0);
 
                                         if (tab) {
                                             currentScreenCode = tab.Code;
@@ -210,12 +186,6 @@ export class NotificationBellComponent {
                                     }
 
                                 case "5101N":
-                                case "5101R":
-                                case "5101D":
-                                case "5101A":
-                                case "5101E":
-                                case "5101D":
-
                                     {
                                         currentScreenCode = "DCNT";
                                         break;
@@ -242,9 +212,6 @@ export class NotificationBellComponent {
                                 case "1812U":
                                 case "2020N":
                                 case "2000N":
-                                case "2753A":
-                                case "5110N":
-                                case "5108N":
                                     {
                                         currentScreenCode = "DCTP";
                                         break;
@@ -350,10 +317,10 @@ export class NotificationBellComponent {
                                 case "8211U":
 
                                     {
-                                        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-                                            this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
-                                                this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response:any) => {
-                                                    this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
+                                        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                                            this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
+                                                this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
+                                                    this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe(response => {
 
 
                                                         this.customsCollateralPMService.get(selected.EntityId).subscribe((response: any) => {
@@ -503,7 +470,7 @@ export class NotificationBellComponent {
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe((res:any) => {
+        editWindow.WindowClosed.subscribe(res => {
 
 
 
@@ -547,26 +514,27 @@ export class NotificationBellLine {
         }
         else {
             this.IconeVisibility = false;
+        }
+
+        if (this.entity.NotificationDefinitionCode == "5101N") {
             this.BlueIconeVisibility = true;
+            this.IconeVisibility = false;
 
         }
 
-        
 
-       
-        if (!AppTool.IsNullOrEmpty(this.entity.DueDate)) {
-            var valueDate = new Date(this.entity.DueDate.valueOf()).valueOf();
-            var today = DateTool.GetCurrentDateAsUtc().valueOf();
-            if (valueDate != null && valueDate < today) {
-                this.datecolor = "#ff6a00";
-                this.fontcolor = "#ffffff";
-            }
-
-            else {
-                this.datecolor = "#E2E2E2";
-                this.fontcolor = "#6E7172";
-            }
+        var valueDate = new Date(this.entity.DueDate.valueOf()).valueOf();
+        var today = DateTool.GetCurrentDateAsUtc().valueOf();
+        if (valueDate != null && valueDate < today) {
+            this.datecolor = "#ff6a00";
+            this.fontcolor = "#ffffff";
         }
+
+        else {
+            this.datecolor = "#E2E2E2";
+            this.fontcolor = "#6E7172";
+        }
+
 
         if (!AppTool.IsNullOrEmpty(this.entity.CustomerName) && !AppTool.IsNullOrEmpty(this.entity.Reference1Number)) {
             this.Reference1NumberWithCustomer = entityPM.Reference1Number + " * " + entityPM.CustomerName;
@@ -604,7 +572,7 @@ export class NotificationBellLine {
         this.Parent.ParentComponent.IsControlVisibile = true;
         this.entity.IsClosedByAssignee = true;
         this.Parent.BuildList();
-        this.notificationExtendedListService.PutNotificationsStatus(this.entity).subscribe((response:any) => {
+        this.notificationExtendedListService.PutNotificationsStatus(this.entity).subscribe(response => {
             if (response) {
                 if (!response.HasError) {
                     this.Parent.PreventSelect = false;

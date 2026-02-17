@@ -9,7 +9,6 @@
 export class VolumeUnitList {
    		Code: string;
 		Name: string;
-		PrintAs: string;
 		SearchFields: string;
 	
 }

@@ -15,30 +15,46 @@ namespace CustomsWorkerRole.L2U
 {
     class SendDbQueueMessage2Unifreight : ReceivedDbMessageAction
     {
-        public SendDbQueueMessage2Unifreight(CustomDBQueueMessage receivedCustomDBQueueResponse, bool fromRabitHandler) : base(receivedCustomDBQueueResponse, fromRabitHandler) 
+        
+
+        public SendDbQueueMessage2Unifreight(CustomDBQueueMessage receivedCustomDBQueueResponse)
+            : base(receivedCustomDBQueueResponse) 
         {
-        }
+
+                }
+
+        
 
         public override bool DoAction(string urouterParams)
-        {
-            var setting = CustomsSettingQueryService.GetSettingByTenant(_Tenant);
+                {
+            //implement the code to send the xml file to amital;
+
             string P_MOREPARAMS = "";
             string P_XML_DATA = "";
             string P_MESSAGE = "";
             if (String.IsNullOrWhiteSpace(urouterParams))
             {
+
                 throw new ArgumentNullException("SendFileToAmitalService():xmlfile is null");
             }
-
             string uniTester = "";
             P_XML_DATA = SendMessageToUServerUtil.SendMessageToUServer(_Tenant, urouterParams, out P_MESSAGE, out uniTester);
+            //_WaitingCommLog.Logs += "UServer did not return response ";
             _WaitingCommLog.Logs += P_XML_DATA + Environment.NewLine;
             _WaitingCommLog.Logs += uniTester;
-            if (setting.IsConnectedToUniFreight == true && String.IsNullOrWhiteSpace(P_XML_DATA))
+            if (String.IsNullOrWhiteSpace(P_XML_DATA))
             {
                 _WaitingCommLog.Logs += "UServer did not return response ";
                 return false;    
             }
+            else
+            {
+                //todo: Create New commincation/ANALYZQUEUE ?? 
+            }
+
+            
+            // var UNIQUE_ENVIRONMENT_ID = UnifaceAssociativeListUtil.GetValue(P_XML_DATA, "UNIQUE_ENVIRONMENT_ID");
+
             return true;
         }
     }

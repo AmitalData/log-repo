@@ -1,4 +1,4 @@
-
+﻿
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -11,7 +11,7 @@
 
                     <!-- Code -->
                     <tr class="FormFieldRow">
-                        <td style="width: 150px;">
+                        <td style="width: 120px;">
                             <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
@@ -52,16 +52,7 @@
                             <LogTextBox [ObjectFieldName]="'NewEntityPercentage'" [Text]="NewEntityPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
                     </tr>
-                    <!-- RecognizedPercentage -->
-                    <tr class="FormFieldRow" *ngIf="IsAccountingActivated">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'RecognizedPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
 
-                        <td>
-                            <LogTextBox [ObjectFieldName]="'RecognizedPercentage'" [Text]="RecognizedPercentage" [InputType]="'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                        </td>
-                    </tr>
                     <!-- Percentage Date -->
                     <tr class="FormFieldRow" *ngIf="IsNewEntity && !IsMultiPercentage">
                         <td>
@@ -70,17 +61,6 @@
 
                         <td>
                             <LogDatePicker [ObjectFieldName]="'NewEntityPercentageDate'" [SelectedDateValue]="NewEntityPercentageDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                        </td>
-                    </tr>
-
-                    <!-- IsRegionalTax -->
-                    <tr class="FormFieldRow" *ngIf="IsRegionalTaxActivated">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'IsRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <LogCheckBox [ObjectFieldName]="'IsRegionalTax'" [Checked]="IsRegionalTax" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                         </td>
                     </tr>
 
@@ -153,7 +133,7 @@
                                         </td>
 
                                         <td style="width: 1px;" *ngIf="IsNewEntity">
-                                            <RadioButton [Name]="'MultiPercentageRadio'" [IsEnabled]="IsMultiPercentageEnabled" [IsChecked]="IsMultiPercentage == false" (Checked)="IsMultiPercentage = false" [Text]="'Single'"></RadioButton>
+                                            <RadioButton [Name]="'MultiPercentageRadio'" [IsChecked]="IsMultiPercentage == false" (Checked)="IsMultiPercentage = false" [Text]="'Single'"></RadioButton>
                                         </td>
 
                                         <td style="width: 10px;" *ngIf="IsNewEntity">
@@ -161,7 +141,7 @@
                                         </td>
 
                                         <td style="width: 1px;" *ngIf="IsNewEntity">
-                                            <RadioButton [Name]="'MultiPercentageRadio'" [IsEnabled]="IsMultiPercentageEnabled" [IsChecked]="IsMultiPercentage == true" (Checked)="IsMultiPercentage = true" [Text]="'Multi-percentage'"></RadioButton>
+                                            <RadioButton [Name]="'MultiPercentageRadio'" [IsChecked]="IsMultiPercentage == true" (Checked)="IsMultiPercentage = true" [Text]="'Multi-percentage'"></RadioButton>
                                         </td>
 
                                         <td style="width: 1px;" class="Value" *ngIf="!IsNewEntity">Multi-percentage</td>

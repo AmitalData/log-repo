@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Accounting.MetaData</RootNamespace>
     <AssemblyName>Logitude.Accounting.MetaData</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -60,232 +60,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="AutoGenerators\AccountingClassesGenerator1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AccountingClassesGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="AutoGenerators\ContextGenerator.cs">
       <DependentUpon>ContextGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
-    <None Include="DBOthers\SProcedures\usp_SetTenantIdleProcedure.dxml" />
-    <None Include="DBOthers\SProcedures\usp_Queue_Peek_ThreadPerTenant.dxml" />
-    <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
-    <None Include="DBOthers\SProcedures\usp_FixFailedReconcileJournals.dxml" />
-    <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
-    <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
-    <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
-    <None Include="DBOthers\SProcedures\usp_UpdateLTForeign.dxml" />
-    <None Include="DBOthers\SProcedures\usp_UpdateLTLocal.dxml" />
-    <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
-    <Content Include="DBScripts\202204131020_AddInterestTransactionsForRegularJournals.axml" />
-    <Content Include="DBScripts\20220912_0000_AddInterestsForCancelledARPayments.axml" />
-    <Content Include="DBScripts\20220721_164759_ARInvoiceOppositeJournalCreditLinesNewLogic.axml" />
-    <Content Include="DBScripts\202207041224_ARInvoiceOppositeJournalCreditLines.axml" />
-    <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
-    <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
-    <None Include="DBOthers\SProcedures\usp_NewAgingReport.dxml" />
-    <None Include="DBScripts\202405131200_CreateSchemaQueryReports.sxml" />
-    <None Include="DBScripts\202403031201_ChartOfAccountsEnglishName.sxml" />
-    <None Include="DBScripts\202403111553_ChequeCounterSerialAddLine.sxml" />
-    <None Include="DBScripts\202308211244_UpdateInterestReportSearchFields.sxml" />
-    <None Include="DBScripts\202308141215_UpdateInterestReportSearchFields.sxml" />
-    <None Include="DBScripts\20221213_UpdateChartOfAccountTypesOrders.sxml" />
-    <None Include="DBScripts\202208081221_UpdateSearchFieldsForInterestReports.sxml" />
-    <None Include="DBScripts\202206201224_UpdateInterestTransactionsGLAccountIfInvIsNotMultiCurrency.sxml" />
-    <None Include="DBScripts\202206201236_InsertIntTransForInvoicesNotMultiCurrency.sxml" />
-    <None Include="DBScripts\202206201239_UpdateJournalLinesGLAccountIfInvoiceMultilCurrency.sxml" />
-    <None Include="DBScripts\202206201236_InsertOppositeIntTransForInvoicesNotMultiCurrency.sxml" />
-    <None Include="DBScripts\202206201239_UpdateLedgerTransactionsGLAccountIfInvNotMultiCurrency.sxml" />
-    <Content Include="DBScripts\202206211132_UpdateCancelledARInvoicesWithCorrectBillToGlAccount.axml" />
-    <Content Include="DBScripts\202206281132_CreateNewInterestsTransactionsForAutoCredit ARInvoice.axml" />
-    <Content Include="DBScripts\20220721_164759_ARInvoiceOppositeJournalCreditLinesNewLogic.axml" />
-    <Content Include="DBScripts\202206231132_RemoveInterestTransAndAddOppInterestsForAccountingEntities.axml" />
-    <None Include="DBScripts\202206151132_RemoveInterestTransAndAddOppInterestsForDraftARPayments.sxml" />
-    <Content Include="DBScripts\202206021039_RemoveInterestTransAndAddOppInterestsIfLedgerNotCreated.axml" />
-    <None Include="DBScripts\202206060955_RemoveInterestTransAddOppInterIfLedgerNotCreatedForJournal.sxml" />
-    <None Include="DBScripts\202206071236_InsertOppositeInterestTransactionsForWrongBillToGLAccountInterests.sxml" />
-    <None Include="DBScripts\202206071224_UpdateInterestTransactionsForWrongBillToGLAccountInterests.sxml" />
-    <None Include="DBScripts\202206071239_UpdateJournalLinesForWrongBillToGLAccount.sxml" />
-    <None Include="DBScripts\202206071239_UpdateLedgerTransactionsForWrongBillToGLAccount.sxml" />
-    <None Include="DBScripts\202205301016_AddInterestTranasctionsForBankAdjustmentsJournals.sxml" />
-    <None Include="DBScripts\202204211224_UpdateInterestTransactionsForWrongGLAccountInterests.sxml" />
-    <None Include="DBScripts\202204211236_InsertOppositeInterestTransactionsForWrongGLAccountInterests.sxml" />
-    <None Include="DBScripts\202204211237_InsertInterestTransactionsForWrongGLAccountInterests.sxml" />
-    <None Include="DBScripts\202204211239_UpdateJournalLinesForWrongGLAccount.sxml" />
-    <None Include="DBScripts\202204211239_UpdateLedgerTransactionsForWrongGLAccount.sxml" />
-    <None Include="DBScripts\202204141136_AddIntrestTransactionForRevaluationJournalLine.sxml" />
-    <None Include="DBScripts\202202130931_UpdateRecCreditPayDebitGLAcountLocalName.sxml" />
-    <None Include="DBScripts\202204130000_UpdateInterestTransactionsSearchFields.sxml" />
-    <None Include="DBScripts\202204131020_AdjustmentsJournalInterestTransactions.sxml" />
-    <None Include="DBScripts\202204211237_InsertInterestTransactionsForWrongGLAccountInterests.sxml" />
-    <None Include="DBScripts\202205180000_FillEmptySearchFieldsForInterestTransactions.sxml" />
-    <None Include="DBScripts\202204270000_UpdateAccountingEntityCodeForInterestTransaction.sxml" />
-    <None Include="DBScripts\202204211239_UpdateLedgerTransactionsForWrongGLAccount.sxml" />
-    <None Include="DBScripts\202204211239_UpdateJournalLinesForWrongGLAccount.sxml" />
-    <None Include="DBScripts\202204211236_InsertOppositeInterestTransactionsForWrongGLAccountInterests.sxml" />
-    <None Include="DBScripts\202204211224_UpdateInterestTransactionsForWrongGLAccountInterests.sxml" />
-    <None Include="DBScripts\202201201432_UpdateReportName.sxml" />
-    <None Include="DBScripts\202201191432_UpdateReportLocalName.sxml" />
-    <None Include="DBScripts\202112161249_UpdateCrossYearReconciliations.sxml" />
-    <None Include="DBScripts\202112011125_ InsertNewInterestEntityType.sxml" />
-    <None Include="DBScripts\202108211409_UpdateARPAymentSearchFields.sxml" />
-    <None Include="DBScripts\202108171446_UpdateSearchFieldsForARPayments.sxml" />
-    <None Include="DBScripts\202107041359_SumUpGLAccountCardsDataAmounts.sxml" />
-    <None Include="DBScripts\202104211213_UpdateGLAccountCardDataTable.sxml" />
-    <None Include="DBScripts\202008241136_EventTypesConverteLocalNameToEnglishName.sxml" />
-    <None Include="DBScripts\202009231117_UpdateActiveForInterestFieldOnGLAccount.asxml" />
-    <None Include="DBScripts\202012251232_UpdateUserDefinedReportLocalName.sxml" />
-    <None Include="DBScripts\202012021000_UpdateNullableGLAccountFields.sxml" />
-    <None Include="DBScripts\202009041551_UpdateDisplayNumberFieldOnCards.sxml" />
-    <None Include="DBScripts\202011101133_AvailableForScheduling.sxml" />
-    <None Include="DBScripts\202102070900_UpdateNullableGLAccountFutureFields.sxml" />
-    <None Include="DBScripts\202101141620_ UpdateStatusCodeFieldOnTaxReportLine.sxml" />
-    <None Include="DBScripts\202103311233_BankAccountSearchFields.sxml" />
-    <None Include="DBScripts\202104111142_PaymentChequesSearchFields.sxml" />
-    <None Include="DBScripts\202210111701_Update_PRVR_ReportLocalName.sxml" />
-    <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAmountsOnly.sxml" />
-    <None Include="DBScripts\20230130_UpdateSearchFieldsForBankDepositsLocalAndForeignAmounts.sxml" />
-    <None Include="DBScripts\20230219_UpdateBankAccountTotalOpenTran.sxml" />
-    <None Include="DBScripts\20230219_UpdateBankAccountTotalOpenPageLines.sxml" />
-    <None Include="DBScripts\20230207_JournalsExternalCodeAndExternalSystemConstraint.sxml" />
-    <None Include="DBScripts\20230131_UpdateSearchFieldsForBankDepositsWithNoLine.sxml" />
-    <None Include="DBScripts\2023030_JournalApprovalMLInsertGlobalRecords.sxml" />
-    <None Include="DBScripts\2023030_CreateIndexInLedgerTransactions_AccountIdMarkTenant.sxml" />
-    <None Include="DBScripts\20230619_QueuePeekJouranlApprovalSetUpdateDate.dxml" />
-    <None Include="DBScripts\202404011909_AddTableGLAccountCardsData.sxml" />
-    <None Include="DBScripts\202405021130_UpdateObjectField_DisplayInRequiredFields.sxml" />
-    <None Include="DBScripts\20250202_Create_PIX_GLAccounts_ChartOfAccountsTypeCode.sxml" />
-    <None Include="DBScripts\20250202_Create_PIX_Journals_ExternalSystem.sxml" />
-    <None Include="DBScripts\20250311_Create_PIX_LedgerTransactions_Tenant_LocalAmountDebit_AccountingDate.sxml" />
-    <None Include="DBScripts\20250618_ARInvoice_IsSigned_CanFilter_Operator.sxml" />
-    <None Include="DBScripts\20250812_UpdateNewAgingAvailableScheduler.sxml" />
-    <None Include="DBScripts\27092023_FillDefaultHeaderColor.sxml" />
-    <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
-    <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
-    <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
-    <None Include="DBScripts\Post\202503121241_InsertValuesToTenantIdleStatuses.sxml" />
-    <None Include="DBScripts\Post\202302191141_InsertValuesInCopyFromTenant0.sxml" />
-    <None Include="DBTables\AccountingCompanyType.dxml" />
-    <None Include="DBTables\AccountingEntity.dxml" />
-    <None Include="DBTables\AccountingEntityJournal.dxml" />
-    <None Include="DBTables\AccountingIntegrityCheck.dxml" />
-    <None Include="DBTables\AccountingNote.dxml" />
-    <None Include="DBTables\AccountingPeriod.dxml" />
-    <None Include="DBTables\ARPaymentCheque.dxml" />
-    <None Include="DBTables\ARPaymentChequeStatus.dxml" />
-    <None Include="DBTables\ARPaymentsJournal.dxml" />
-    <None Include="DBTables\AutomaticExternalReconcileMethod.dxml" />
-    <None Include="DBTables\AutomaticReconcile.dxml" />
-    <None Include="DBTables\AutomaticReconcileMethod.dxml" />
-    <None Include="DBTables\BankAccount.dxml" />
-    <None Include="DBTables\BankCode.dxml" />
-    <None Include="DBTables\BankDeposit.dxml" />
-    <None Include="DBTables\BankDepositLine.dxml" />
-    <None Include="DBTables\BankPageEntryType.dxml" />
-    <None Include="DBTables\CalculatedChartsOfAccount.dxml" />
-    <None Include="DBTables\CalculatedChartsOfAccountsLine.dxml" />
-    <None Include="DBTables\CalculatedChartsOfAccountsLineType.dxml" />
-    <None Include="DBTables\CashBook.dxml" />
-    <None Include="DBTables\CashBookLine.dxml" />
-    <None Include="DBTables\CashBookType.dxml" />
-    <None Include="DBTables\Category1.dxml" />
-    <None Include="DBTables\Category2.dxml" />
-    <None Include="DBTables\Category3.dxml" />
-    <None Include="DBTables\Category4.dxml" />
-    <None Include="DBTables\Category5.dxml" />
-    <None Include="DBTables\ChartOfAccount.dxml" />
-    <None Include="DBTables\ChartOfAccountsType.dxml" />
-    <None Include="DBTables\ChequeCounterSerial.dxml" />
-    <None Include="DBTables\CopyFromTenant0.dxml" />
-    <None Include="DBTables\CustomerDebtNotification.dxml" />
-    <None Include="DBTables\ExternalPageAdditionalData.dxml" />
-    <None Include="DBTables\ExternalReconciliation.dxml" />
-    <None Include="DBTables\ExternalReconciliationLine.dxml" />
-    <None Include="DBTables\FullAccountingSetting.dxml" />
-    <None Include="DBTables\GLAccount.dxml" />
-    <None Include="DBTables\GLAccountAgingData.dxml" />
-    <None Include="DBTables\GLAccountCounter.dxml" />
-    <None Include="DBTables\GLAccountCurrency.dxml" />
-    <None Include="DBTables\GLAccountInterestPeriod.dxml" />
-    <None Include="DBTables\GLAccountMoreData.dxml" />
-    <None Include="DBTables\GLAccountRecocileData.dxml" />
-    <None Include="DBTables\GLAccountTotalByMonth.dxml" />
-    <None Include="DBTables\GLAccountTotalDateType.dxml" />
-    <None Include="DBTables\GLAccountType.dxml" />
-    <None Include="DBTables\GLAccountWithholdingTax.dxml" />
-    <None Include="DBTables\IntegrityCheckStatus.dxml" />
-    <None Include="DBTables\InterestBasesPeriod.dxml" />
-    <None Include="DBTables\InterestBasesType.dxml" />
-    <None Include="DBTables\InterestEntityType.dxml" />
-    <None Include="DBTables\InterestLastBatchService.dxml" />
-    <None Include="DBTables\InterestReport.dxml" />
-    <None Include="DBTables\InterestReportLine.dxml" />
-    <None Include="DBTables\InterestReportLinesByDate.dxml" />
-    <None Include="DBTables\InterestReportsConnectedInvoice.dxml" />
-    <None Include="DBTables\InterestReportStatuse.dxml" />
-    <None Include="DBTables\InterestTransaction.dxml" />
-    <None Include="DBTables\InvoiceApiCommunicationLog.dxml" />
-    <None Include="DBTables\InvoiceApiStatus.dxml" />
-    <None Include="DBTables\InvoiceApiStep.dxml" />
-    <None Include="DBTables\Journal.dxml" />
-    <None Include="DBTables\JournalActionType.dxml" />
-    <None Include="DBTables\JournalAdditionalData.dxml" />
-    <None Include="DBTables\JournalExternalReconcile.dxml" />
-    <None Include="DBTables\JournalLine.dxml" />
-    <None Include="DBTables\JournalMoreData.dxml" />
-    <None Include="DBTables\JournalReconcile.dxml" />
-    <None Include="DBTables\JournalStatusType.dxml" />
-    <None Include="DBTables\JournalType.dxml" />
-    <None Include="DBTables\LedgerTransaction.dxml" />
-    <None Include="DBTables\OpenFormatReport.dxml" />
-    <None Include="DBTables\OpenFormatReportStatus.dxml" />
-    <None Include="DBTables\PaymentCheque.dxml" />
-    <None Include="DBTables\PaymentChequeLine.dxml" />
-    <None Include="DBTables\PaymentChequeStatus.dxml" />
-    <None Include="DBTables\PeriodType.dxml" />
-    <None Include="DBTables\ReconcileExternalPage.dxml" />
-    <None Include="DBTables\ReconcileExternalPageLine.dxml" />
-    <None Include="DBTables\ReconcileExternalPageStatus.dxml" />
-    <None Include="DBTables\ReconcileMethod.dxml" />
-    <None Include="DBTables\Reconciliation.dxml" />
-    <None Include="DBTables\ReconciliationLine.dxml" />
-    <None Include="DBTables\Revaluation.dxml" />
-    <None Include="DBTables\RevaluationStatus.dxml" />
-    <None Include="DBTables\RevenueExpenseType.dxml" />
-    <None Include="DBTables\TaxDeductionReport.dxml" />
-    <None Include="DBTables\TaxDeductionReportStatus.dxml" />
-    <None Include="DBTables\TaxReport.dxml" />
-    <None Include="DBTables\TaxReportLine.dxml" />
-    <None Include="DBTables\TaxReportLineStatus.dxml" />
-    <None Include="DBTables\TaxReportLineTransmitStatus.dxml" />
-    <None Include="DBTables\TaxReportLineType.dxml" />
-    <None Include="DBTables\TaxReportStatus.dxml" />
-    <None Include="DBTables\TaxWithholdingAssessOffice.dxml" />
-    <None Include="DBTables\TenantIdleStatus.dxml" />
-    <None Include="DBTables\TestEntity.dxml" />
-    <None Include="DBTables\UserDefinedReport.dxml" />
-    <None Include="DBTables\VatReportStatus.dxml" />
-    <None Include="DBTables\WithholdingTaxDeductionType.dxml" />
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
-    <None Include="EntityFiles\AccountingEntityJournal.lxml" />
     <None Include="EntityFiles\AccountingNote.lxml" />
-    <None Include="EntityFiles\ARPaymentsJournal.lxml" />
-    <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
-    <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
-    <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
-    <None Include="EntityFiles\ChequeCounterSerial.lxml" />
-    <None Include="EntityFiles\CopyFromTenant0.lxml" />
-    <None Include="EntityFiles\CustomerDebtNotification.lxml" />
-    <None Include="EntityFiles\GLAccountAgingData.lxml" />
-    <None Include="EntityFiles\GLAccountCardsData.lxml" />
-    <None Include="EntityFiles\GLAccountCounter.lxml" />
-    <None Include="EntityFiles\GLAccountFollowUpData.lxml" />
-    <None Include="EntityFiles\GLAccountInterestPeriod.lxml" />
-    <None Include="EntityFiles\GLAccountRecocileData.lxml" />
     <None Include="EntityFiles\IntegrityCheckStatus.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -298,29 +79,12 @@
     </None>
     <None Include="EntityFiles\GLAccountMoreData.lxml" />
     <None Include="EntityFiles\GLAccountWithholdingTax.lxml" />
-    <None Include="EntityFiles\ExternalPageAdditionalData.lxml" />
-    <None Include="EntityFiles\InterestBasesPeriod.lxml" />
-    <None Include="EntityFiles\InterestBasesType.lxml" />
-    <None Include="EntityFiles\InterestEntityType.lxml" />
-    <None Include="EntityFiles\InterestLastBatchService.lxml" />
-    <None Include="EntityFiles\InterestReport.lxml" />
-    <None Include="EntityFiles\InterestReportLine.lxml" />
-    <None Include="EntityFiles\InterestReportLinesByDate.lxml" />
-    <None Include="EntityFiles\InterestReportsConnectInvoice.lxml" />
-    <None Include="EntityFiles\InterestReportStatuse.lxml" />
-    <None Include="EntityFiles\InterestTransaction.lxml" />
     <None Include="EntityFiles\JournalAdditionalData.lxml" />
-    <None Include="EntityFiles\JournalExternalReconcile.lxml">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="EntityFiles\JournalMoreData.lxml" />
     <None Include="EntityFiles\JournalReconcile.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\BankPageEntryType.lxml" />
-    <None Include="EntityFiles\InvoiceApiCommunicationLog.lxml" />
-    <None Include="EntityFiles\InvoiceApiStatus.lxml" />
-    <None Include="EntityFiles\InvoiceApiStep.lxml" />
     <None Include="EntityFiles\OpenFormatReport.lxml" />
     <None Include="EntityFiles\OpenFormatReportStatus.lxml" />
     <None Include="EntityFiles\PaymentCheque.lxml" />
@@ -335,8 +99,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="DBScripts\Post\202106200820_ Fill0GLAccountMoreData.sxml" />
-    <None Include="DBScripts\20250807_Create_IX_LedgerTransactions_Covering.sxml" />
     <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -353,8 +115,6 @@
     <None Include="EntityFiles\TaxReportLineStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineTransmitStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineType.lxml" />
-    <None Include="EntityFiles\TenantIdleStatus.lxml" />
-    <None Include="EntityFiles\UserDefinedReport.lxml" />
     <None Include="EntityFiles\VatReportStatus.lxml" />
     <None Include="EntityFiles\TaxReportStatus.lxml" />
     <None Include="EntityFiles\WithholdingTaxDeductionType.lxml" />
@@ -365,7 +125,7 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
       <Name>Simplog.Global.Data</Name>
     </ProjectReference>
@@ -377,7 +137,7 @@
     <None Include="app.config" />
     <None Include="AutoGenerators\AccountingClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AccountingClassesGenerator1.cs</LastGenOutput>
+      <LastGenOutput>AccountingClassesGenerator.cs</LastGenOutput>
     </None>
     <None Include="AutoGenerators\ContextGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -443,11 +203,6 @@
       <LastGenOutput>AccountingDataContractsClassesGenerator.cs</LastGenOutput>
       <LastOutputs>.\AccountingDataContractsClassesGenerator.cs</LastOutputs>
     </Content>
-    <Content Include="DBScripts\202209270000_AddInterestForARPayments_PartnerTypeNotCustomer.axml" />
-    <Content Include="DBScripts\202209131224_AddInterestForReturnedToCustomerCheques.axml" />
-    <None Include="DBScripts\202301231_UpdateTaxReportDeductionMonthYear.sxml" />
-    <None Include="DBScripts\202302011610_UpdateARInvoicesIsPrintedColumn.sxml" />
-    <Content Include="DBScripts\20221227_AddInterestsForClosedARPayments.axml" />
     <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ElasticDemoGen.cs</LastGenOutput>

@@ -17,8 +17,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
       public int FailedThresold { get; set; }
 
       public int WaitingThresold { get; set; }
-        [Key]
-        public int TypeCode { get; set; }
     }
 }
 

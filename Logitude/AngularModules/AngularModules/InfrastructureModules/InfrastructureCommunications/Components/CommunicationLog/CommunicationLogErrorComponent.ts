@@ -16,7 +16,7 @@ import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/L
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'CommunicationLogMessageBody',
     templateUrl: './CommunicationLogErrorComponent.html',
 

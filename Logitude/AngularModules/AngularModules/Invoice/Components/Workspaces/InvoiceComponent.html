@@ -1,15 +1,15 @@
-
+﻿
 <table>
     <tr style="height:1px;">
         <td>
             <ul class="PagesMenu">
-                <li id="{{'RECEIVABLEAccounting' | IdGeneratorAsyncPipe | async}}" [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'RECEIVABLE'" (click)="SelectedItem = 'RECEIVABLE'">{{'General.O.AccountReceivable' | TextCodeTranslationPipe}}</li>
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'RECEIVABLE'" (click)="SelectedItem = 'RECEIVABLE'">{{'General.O.AccountReceivable' | TextCodeTranslationPipe}}</li>
 
-                <li id="{{'PAYABLEAccounting' | IdGeneratorAsyncPipe | async}}" [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'PAYABLE'" (click)="SelectedItem = 'PAYABLE'">{{'General.O.AccountPayable' | TextCodeTranslationPipe}}</li>
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'PAYABLE'" (click)="SelectedItem = 'PAYABLE'">{{'General.O.AccountPayable' | TextCodeTranslationPipe}}</li>
 
-                <li id="{{'TRANSFERAccounting' | IdGeneratorAsyncPipe | async}}" [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'TRANSFER'" (click)="SelectedItem = 'TRANSFER'">{{'General.O.AccountingTransfer' | TextCodeTranslationPipe}}</li>
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'TRANSFER'" (click)="SelectedItem = 'TRANSFER'">{{'General.O.AccountingTransfer' | TextCodeTranslationPipe}}</li>
 
-                <li *ngIf="IsVisible_Settings" id="{{'SETTINGSAccounting' | IdGeneratorAsyncPipe | async}}" [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'SETTINGS'" (click)="SelectedItem = 'SETTINGS'">{{'General.O.Settings' | TextCodeTranslationPipe}}</li>
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'SETTINGS'" (click)="SelectedItem = 'SETTINGS'">{{'General.O.Settings' | TextCodeTranslationPipe}}</li>
             </ul>
         </td>
     </tr>

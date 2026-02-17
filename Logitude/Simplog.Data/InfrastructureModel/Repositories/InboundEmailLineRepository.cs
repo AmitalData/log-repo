@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             webFreightContext = context;
         }
 
-        public InboundEmailLineRepository() : this(0)
+        public InboundEmailLineRepository()
         {
+            webFreightContext = WebFreightContext.GetContext(0);
         }
 
         public InboundEmailLineRepository(int tenant)

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
@@ -20,7 +20,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PaymentGatewayPartnerCode { get; set; }
         public string PaymentGatewayConnectionString { get; set; }
 
-        public PaymentGatewayPartner PaymentGatewayPartner { get; set; }
+        public PaymentGatewayPartners PaymentGatewayPartner { get; set; }
 
     }
 }

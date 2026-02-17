@@ -1,8 +1,7 @@
 ﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -17,10 +16,10 @@ import {EntityChangePM} from '../../EntityPMs/EntityChangePM';
 @Injectable()
 export class EntityChangeExtendedPMService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/EntityChangeExtended';
     }
 
@@ -28,9 +27,9 @@ export class EntityChangeExtendedPMService {
     getEntityChangePMsByEntityIdAndObjectTable(entityId: string, objectTableId: string , tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/getentitychangepmsbyentityidandobjecttable" + '?entityId=' + entityId + '&objectTableId=' + objectTableId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/getentitychangepmsbyentityidandobjecttable" + '?entityId=' + entityId + '&objectTableId=' + objectTableId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result :any = response;
+            var result = response.json();
 
             var pmresponse: ServiceResponse = new ServiceResponse();
 
@@ -40,15 +39,15 @@ export class EntityChangeExtendedPMService {
 
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
   
     getEntityChangeAutomationsSummaryByEntityChangeId(entitychangeId: string, objectTableName: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/getentitychangeautomationssummarybyentitychangeId" + '?entitychangeId=' + entitychangeId + '&objectTableName=' + objectTableName + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/getentitychangeautomationssummarybyentitychangeId" + '?entitychangeId=' + entitychangeId + '&objectTableName=' + objectTableName + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result :any = response;
+            var result = response.json();
 
             var pmresponse: ServiceResponse = new ServiceResponse();
 
@@ -58,7 +57,7 @@ export class EntityChangeExtendedPMService {
 
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
     
 

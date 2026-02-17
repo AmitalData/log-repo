@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -844,75 +844,6 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryId",OldValue=countryId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   countryId=value;
-		   }
-			
-		 }
-	   }
-	  private string shipmentId ;
-	  	  
-       
-	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentId  
-	   {
-	    
-	     get
-		{
-		   return shipmentId;
-		 }
-		 set
-		 {
-		   if(shipmentId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentId",OldValue=shipmentId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   shipmentId=value;
-		   }
-			
-		 }
-	   }
-	  private string releaseStatus ;
-	  	  
-       
-	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ReleaseStatus  
-	   {
-	    
-	     get
-		{
-		   return releaseStatus;
-		 }
-		 set
-		 {
-		   if(releaseStatus != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReleaseStatus",OldValue=releaseStatus,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   releaseStatus=value;
-		   }
-			
-		 }
-	   }
-	  private string releaseNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ReleaseNumber  
-	   {
-	    
-	     get
-		{
-		   return releaseNumber;
-		 }
-		 set
-		 {
-		   if(releaseNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReleaseNumber",OldValue=releaseNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   releaseNumber=value;
 		   }
 			
 		 }

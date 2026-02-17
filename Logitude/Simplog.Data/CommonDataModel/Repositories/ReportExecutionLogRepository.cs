@@ -2,7 +2,7 @@
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public ReportExecutionLogRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public ReportExecutionLogRepository(ICommonDataContext context)
         {
@@ -25,35 +28,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<ReportExecutionLog> GetReportExecutionLogs(int tenant)
         {
-            if (tenant != 0)
-            {
-                return (from record in context.ReportExecutionLogs where record.Tenant == tenant select record);
-            }
-            else
-            {
-                return (from record in context.ReportExecutionLogs select record);
-            }
-        }
-        // used by generated controller
-        public ReportExecutionLog GetSingleReportExecutionLog(string id, int tenant)
-        {
-            var result = (from record in context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("Report") where record.Id == id select record).FirstOrDefault();
-            return result;
+            return (from record in context.ReportExecutionLogs where record.Tenant == tenant select record);
         }
 
-        public ReportExecutionLog GetReportExecutionLog(string id, int tenant)
+        public ReportExecutionLog GetSingleReportExecutionLog(string id, int tenant)
         {
             return (from record in context.ReportExecutionLogs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-        }
-        public ReportExecutionLog GetReportExecutionLog(string id)
-        {
-            return (from record in context.ReportExecutionLogs where record.Id == id select record).FirstOrDefault();
         }
 
 
         public void Add(ReportExecutionLog entity)
         {
-            entity.SearchFields = entity.ReportId;
             context.ReportExecutionLogs.Add(entity);
         }
 

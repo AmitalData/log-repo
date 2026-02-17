@@ -19,13 +19,11 @@ import { TapagMessagesService } from '../../../../../../Customs/Services/WebServ
 import { DeclarationWebService } from '../../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../../../Infrastructure/Services/EntityResourceService';
-import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
-import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
-import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PaymentOrderDeficitComponent.html',
     selector: 'PaymentOrderDeficitComponent',
 })
@@ -222,44 +220,21 @@ export class PaymentOrderDeficitComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
-    DeficitDecisionButtonClicked(item: ConnectedEntityLineComponent) {
-        var windowArgs: any = {};
-        windowArgs.EntityPM = item.deficitPM;
-        windowArgs.DeclarationId = item.entityPM.Id;
-
-        if (item.deficitPM != null && item.deficitPM.DeficitDecisions != null && item.deficitPM.DeficitDecisions.length > 0) {
-            windowArgs.DeficitDecisionItem = item.deficitPM.DeficitDecisions.filter(d => d.DeclarationId == item.entityPM.Id);
-            if (windowArgs.DeficitDecisionItem != null) {
-                windowArgs.DeficitDecisionItem = windowArgs.DeficitDecisionItem[0];
-            }
-        }
-
-        if (windowArgs.DeficitDecisionItem == null) {
-            var myMessageWindow = new MessageWindow();
-            myMessageWindow.Width = 250;
-            myMessageWindow.Height = 150;
-            myMessageWindow.Show("טרם התקבלה החלטת מכס בגין הגרעון");
-            return;
-        }
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
-        logWindow.Height = 400;
-        logWindow.ShowCloseButton = true;
-        logWindow.WindowArgs = windowArgs;
-        //logWindow.Title = TextCodeTranslator.Translate("Customs.PaymentOrder.TH.Deficits");
-        logWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deficit/DeficitDecisionComponent');
-    }
-    
-
-    NavigateToDeclarationButtonClicked(customFileNo: string) {
-        new DeclarationExtendedListService().GetLastAmendmentByCustomFileNo(customFileNo).subscribe(async (res: ServiceResponse) => {
-            const entity: DeclarationPM = res.Result;
-            const cmpRef = await SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-            cmpRef.instance.ComponentRef = cmpRef;
-            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "הצהרת יבוא" });
-        });
-    }
+    //to do.....
+//    public RelayCommand ParagraphTypeAmountCommand { get { return new RelayCommand(() => OpenParagraphTypeAmountScreen()); } }
+//SimplogWindow window;
+//        private void OpenParagraphTypeAmountScreen()
+//{
+//    ParagraphTypeAmountLines control = new ParagraphTypeAmountLines() { DataContext = this };
+//    window = new SimplogWindow();
+//    window.Height = 600;
+//    window.Width = 800;
+//    window.CancelButton.Visibility = Visibility.Collapsed;
+//    window.Title = TextCodeTranslator.Translate("Customs.PaymentOrder.O.ParagraphTypesAmountLines");
+//    window.CloseButton.Visibility = Visibility.Visible;
+//    window.Add(control);
+//    window.Show();
+//}
 }
 
 export class ConnectedEntityLineComponent extends BaseComponent {

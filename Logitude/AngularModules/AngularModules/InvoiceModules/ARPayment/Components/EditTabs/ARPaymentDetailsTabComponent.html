@@ -22,13 +22,9 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td style="width:120px">{{'ARPayment.TH.Details' | TextCodeTranslationPipe}}</td>
+                                    <td style="width:600px">{{'ARPayment.TH.Details' | TextCodeTranslationPipe}}</td>
                                     <td>
-                                        <div class="MediaFill">
-                                            <!--<div class="OrangeInfo">{{EntityWarning}}</div>-->
-                                            <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0 && EntityPM.SATTransferStatusCode != 'SM'" [ItemsSource]="EntityWarningsList"></WarningSummary>
-                                        </div>
-
+                                        <div></div>
                                     </td>
                                 </tr>
                             </table>
@@ -41,33 +37,9 @@
                                 <tr>
                                     <td style="width:360px;">
                                         <table>
-                                            <!-- PartnerId -->
-                                            <tr class="FormFieldRow">
-                                                <td style="width:120px;">
-                                                    <LogLabel [ObjectFieldName]="'PartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td style="width:230px; ">
-                                                    <LogLov [ObjectFieldName]="'PartnerId'"
-                                                            [SelectedValue]="PartnerId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Card'"
-                                                            [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
-                                                            [DependencyFilter1IsList]="true"
-                                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
-                                                    </LogLov>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
                                             <!-- BillToId -->
-                                            <tr class="FormFieldRow">
-                                                <td style="width:120px;">
+                                            <tr class="customtrclass">
+                                                <td style="width:120px; height:25px; ">
                                                     <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -77,9 +49,8 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="BillToId"
                                                             [LookUpTableName]="'Card'"
-                                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
+                                                            [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
+                                                            [DependencyFilter1IsList]="true">
                                                     </LogLov>
                                                 </td>
 
@@ -90,8 +61,8 @@
                                             </tr>
 
                                             <!-- BillToAddressId -->
-                                            <tr class="FormFieldRow">
-                                                <td>
+                                            <tr class="customtrclass">
+                                                <td style="width:120px; height:25px; ">
                                                     <LogLabel [ObjectFieldName]="'BillToAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -112,8 +83,8 @@
                                             </tr>
 
                                             <!-- ARPaymentMethodId -->
-                                            <tr class="FormFieldRow">
-                                                <td>
+                                            <tr class="customtrclass">
+                                                <td style="width:120px; height:25px; ">
                                                     <LogLabel [ObjectFieldName]="'AccountingPaymentMethodId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -134,13 +105,13 @@
                                             </tr>
 
                                             <!-- AmountInPaymentCurrency -->
-                                            <tr class="FormFieldRow" *ngIf="VisibleIfCash">
-                                                <td>
+                                            <tr class="customtrclass" *ngIf="VisibleIfCash">
+                                                <td style="width:120px; height:25px; ">
                                                     <LogLabel [ObjectFieldName]="'AmountInPaymentCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [DigitsAfterPoint]="2" [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
 
                                                 <td>
@@ -150,24 +121,24 @@
                                             </tr>
 
                                             <!--<tr style="height:22px;" *ngIf="DisplaySATSettings">
-        <td style="width:120px; height:25px; ">
-            <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
+                                                <td style="width:120px; height:25px; ">
+                                                    <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
 
-        <td>
-            <LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [SelectedValue]="SATPaymentMethodCode"
-                    [LookUpTableName]="'SATPaymentMethod'">
-            </LogLov>
-        </td>
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="SATPaymentMethodCode"
+                                                            [LookUpTableName]="'SATPaymentMethod'">
+                                                    </LogLov>
+                                                </td>
 
-        <td>
-            <div></div>
-        </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
 
-    </tr>-->
+                                            </tr>-->
 
                                             <tr>
                                                 <td>
@@ -177,22 +148,18 @@
 
                                         </table>
                                     </td>
-
                                     <td style="width:100px;">
                                         <div></div>
                                     </td>
-
                                     <!-- Currency + Rate -->
                                     <td style="width:360px;">
                                         <table>
-
-                                            <!-- Currency -->
-                                            <tr class="FormFieldRow">
-                                                <td style="width:120px;">
+                                            <tr class="customtrclass">
+                                                <td style="width:120px;height:25px;">
                                                     <LogLabel [ObjectFieldName]="'PaymentCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td style="width:240px;">
+                                                <td style="height:25px;">
                                                     <table>
                                                         <tr>
                                                             <td>
@@ -230,49 +197,13 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- PaymentNo -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'PaymentNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <LogTextBox [ObjectFieldName]="'PaymentNo'" [Text]="PaymentNo" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="IsEntityNumberComboBoxVisible"></LogTextBox>
-                                                            </td>
-
-                                                            <td style="width: 5px;" *ngIf="IsEntityNumberComboBoxVisible">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="width:100px;" *ngIf="IsEntityNumberComboBoxVisible">
-                                                                <ComboBox [IsDisabled]="!IsEntityNumberComboBoxEnabled" [ItemsSource]="NumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedNumberFilter" (SelectedItemChanged)="SelectedNumberFilter = $event"></ComboBox>
-                                                            </td>
-                                                           
-                                                            <td style="width: 18px;" *ngIf="IsEntityNumberComboBoxVisible">
-                                                                <div>
-                                                                    <!--<HelpIcon *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='MAS'" [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>-->
-                                                                </div>
-                                                            </td>
-
-                                                            <td style="width: 18px;" *ngIf="IsEntityNumberComboBoxVisible">
-                                                                <div></div>
-                                                            </td>
-
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-
                                             <!-- RegisterDate -->
-                                            <tr class="FormFieldRow">
-                                                <td>
+                                            <tr class="customtrclass">
+                                                <td style="width:120px;height:25px;">
                                                     <LogLabel [ObjectFieldName]="'RegisterDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td>
+                                                <td style="width:240px;">
                                                     <LogDatePicker [ObjectFieldName]="'RegisterDate'" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
 
@@ -282,12 +213,12 @@
                                             </tr>
 
                                             <!-- BranchId -->
-                                            <tr class="FormFieldRow">
-                                                <td>
+                                            <tr class="customtrclass">
+                                                <td style="width:120px;height:25px;">
                                                     <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td>
+                                                <td style="width:240px;">
                                                     <LogLov [ObjectFieldName]="'BranchId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
@@ -297,6 +228,14 @@
                                                 </td>
 
                                                 <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+
+
+                                            <tr *ngIf="VisibleIfCash">
+                                                <td colspan="3">
                                                     <div></div>
                                                 </td>
                                             </tr>
@@ -334,7 +273,7 @@
 
                                                 <td *ngIf="FullAccounting  && IsCashBookValid">
                                                     <div [style.text-align]="isRTL ? 'right' : 'left'" float-start style="display: block;">
-                                                        {{ 'Cashbook.O.Name'|TextCodeTranslationPipe }}: {{CashBookName}} (
+                                                        Cashbook: {{CashBookName}} (
                                                         <span (click)="EditGLAccount('CB')" class="hyperlink"> {{BranchGLAccountNumber}} </span>)
                                                     </div>
                                                 </td>
@@ -406,7 +345,7 @@
                                                 </td>
 
                                                 <td *ngIf="FullAccounting && AccountingPaymentMethodCode == 'CH'" style="width:150px; left: -10px;">
-                                                    <LogLabel [Text]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe"  [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [Text]="'Cheque Status'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
@@ -416,7 +355,7 @@
 
                                             <tr class="customtrclass">
                                                 <td style="width:150px;">
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [DigitsAfterPoint]="2" [Text]="AmountInPaymentCurrency" [InputType]="'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [Text]="AmountInPaymentCurrency" [InputType]="'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
 
                                                 <td style="width:150px;">
@@ -517,223 +456,195 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" [UseVirtuallization]="IsUsingVirtuallization">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
 
                                     <!-- IsConnected -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsFilled]="true" [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                                <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                                    <img *ngIf="item.NotMatchedVisibility" class="CenterCenter" title="Not Matched" src="./Images/Info.png" />
-                                                    <CheckBox *ngIf="item.CheckBoxVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" [IsEnabled]="item.CheckBoxEnabled"></CheckBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsFilled]="true" [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                            <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                <img *ngIf="item.NotMatchedVisibility" class="CenterCenter" title="Not Matched" src="./Images/Info.png" />
+                                                <CheckBox *ngIf="item.CheckBoxVisibility" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" [IsEnabled]="item.CheckBoxEnabled"></CheckBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- InvoiceNumber -->
                                     <log-column [width]="'90'" [header]="'ARInvoice.CH.InvoiceNumberListLable' | TextCodeTranslationPipe" [SortFieldName]="'InvoiceNumber'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                                <Hyperlink [FontSize]="12" (click)="ViewEntity(item)">{{item.InvoiceNumber}}</Hyperlink>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                            <Hyperlink [FontSize]="12" (click)="ViewEntity(item)">{{item.InvoiceNumber}}</Hyperlink>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- InvoiceAmount -->
                                     <log-column [width]="'110'" [header]="'ARInvoice.CH.AmountInInvoiceCurrencyListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'InvoiceAmount'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                                <div style="width: 100%;">
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                            <div style="width: 100%;">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
 
-                                                            <td style="width:1px;">
-                                                                {{item.InvoiceAmount | NumbersPipe:'N2'}}
-                                                            </td>
+                                                        <td style="width:1px;">
+                                                            {{item.InvoiceAmount | NumbersPipe:'N2'}}
+                                                        </td>
 
-                                                            <td style="width:5px;">
-                                                                <div></div>
-                                                            </td>
+                                                        <td style="width:5px;">
+                                                            <div></div>
+                                                        </td>
 
-                                                            <td style="width:30px;">
-                                                                <div style="width: 30px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.CurrencyCodeColor,background: item.CurrencyCodeBackground}">
-                                                                    {{item.CurrencyCode}}
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                        <td style="width:30px;">
+                                                            <div style="width: 30px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.CurrencyCodeColor,background: item.CurrencyCodeBackground}">
+                                                                {{item.CurrencyCode}}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- AmountDue -->
                                     <log-column [width]="'110'" [header]="'ARInvoice.CH.AmountDueListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountDue'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="'right'" [CellColor]="item.CellBackground">
-                                                {{item.AmountDue | NumbersPipe:'N2'}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="'right'" [CellColor]="item.CellBackground">
+                                            {{item.AmountDue | NumbersPipe:'N2'}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- OtherPaymentsAmount -->
-                                    <log-column [width]="'110'" [header]="'ARInvoice.O.OtherPayments' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'OtherPaymentsAmount'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
-                                                {{item.OtherPaymentsAmount | NumbersPipe:'N2'}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'110'" [header]="'ARInvoice.CH.OtherPayments' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'OtherPaymentsAmount'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
+                                            {{item.OtherPaymentsAmount | NumbersPipe:'N2'}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- AmountPaid (invoice) -->
-                                    <log-column [width]="'100'" [header]="'ARInvoice.CH.AmountPaidListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                                <div style="width: 100%;">
-                                                    <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'100'" [header]="'ARInvoice.CH.AmountToPay' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AmountPaid'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                            <div style="width: 100%;">
+                                                <LogTextBox [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [ObjectTableName]="item.ObjectTableName" [ObjectFieldName]="'AmountPaid'" [Text]="item.AmountPaid" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- AmountPaid (Payment) -->
                                     <log-column *ngIf="IsMultiCurrency" [width]="'135'" [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-header-template>
-                                                <div class="GridHeaderCellTemplate">
-                                                    <span>{{'ARInvoice.CH.AmountPaidListLable' | TextCodeTranslationPipe}}</span>
-                                                    <span style="padding-left: 2px;padding-right:2px;">({{PaymentCurrencyCode}})</span>
-                                                </div>
-                                            </log-header-template>
-                                        </ng-template>
+                                        <log-header-template template="let item">
+                                            <div class="GridHeaderCellTemplate">
+                                                <span>{{'ARInvoice.CH.AmountToPay' | TextCodeTranslationPipe}}</span>
+                                                <span style="padding-left: 2px;padding-right:2px;">({{PaymentCurrencyCode}})</span>
+                                            </div>
+                                        </log-header-template>
 
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
-                                                <span *ngIf="item.IsConnected">{{item.ConnectedAmount_PAY | NumbersPipe:'N2'}}</span>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
+                                            <span *ngIf="item.IsConnected">{{item.ConnectedAmount_PAY | NumbersPipe:'N2'}}</span>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Exchange Rate -->
-                                    <log-column *ngIf="IsMultiCurrency" [width]="'100'" [header]="'ARInvoice.CH.InvoiceCurrencyExchangeRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'ExchangeRate'" [Alignment]="isRTL ? 'left' : 'right'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
-                                                <table *ngIf="item.IsAdvancedButtonVisible">
-                                                    <tr>
-                                                        <td>{{item.ExchangeRate | NumbersPipe:'N5'}}</td>
+                                    <log-column *ngIf="IsMultiCurrency" [width]="'100'" [header]="'ARInvoice.CH.InvoiceExchangeRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'ExchangeRate'" [Alignment]="isRTL ? 'left' : 'right'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'" [CellColor]="item.CellBackground">
+                                            <table *ngIf="item.IsAdvancedButtonVisible">
+                                                <tr>
+                                                    <td>{{item.ExchangeRate | NumbersPipe:'N5'}}</td>
 
-                                                        <td style="width: 3px;">
-                                                            <div></div>
-                                                        </td>
+                                                    <td style="width: 3px;">
+                                                        <div></div>
+                                                    </td>
 
-                                                        <td style="width: 1px;">
-                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.AdvancedClicked()"></IconButton>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                    <td style="width: 1px;">
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.AdvancedClicked()"></IconButton>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- DueDate -->
                                     <log-column [width]="'100'" [header]="'ARInvoice.CH.DueDateListLable' | TextCodeTranslationPipe" [SortFieldName]="'DueDate'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                                <div [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}" style="width: 100%;">
-                                                    {{item.DueDate | DateTimeToDatePipe}}
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                            <div [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}" style="width: 100%;">
+                                                {{item.DueDate | DateTimeToDatePipe}}
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Status -->
-                                    <log-column [width]="'140'" [header]="'ARInvoice.O.StatusNameRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'Status'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
+                                    <log-column [width]="'140'" [header]="'ARInvoice.CH.StatusNameRateListLable' | TextCodeTranslationPipe" [SortFieldName]="'Status'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
 
-                                                        <td style="width: 1px;">
-                                                            <div style="padding-left:2px;padding-right:2px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.Status | StringToColorPipe, background: item.StatusBackground}">
-                                                                {{item.Status}}
-                                                            </div>
-                                                        </td>
+                                                    <td style="width: 1px;">
+                                                        <div style="padding-left:2px;padding-right:2px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.Status | StringToColorPipe, background: item.StatusBackground}">
+                                                            {{item.Status}}
+                                                        </div>
+                                                    </td>
 
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Shipment -->
-                                    <log-column [width]="'100'" [header]="'ARPayment.CH.ShipmentNumberListLable' | TextCodeTranslationPipe" [SortFieldName]="'ShipmentNumber'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                                <div style="width: 100%; color:#1B90CB; font-size: 11px;">
-                                                    {{item.ShipmentNumber}}
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'100'" [header]="'ARPayment.CH.ShipmentNo' | TextCodeTranslationPipe" [SortFieldName]="'ShipmentNumber'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                            <div style="width: 100%; color:#1B90CB; font-size: 11px;">
+                                                {{item.ShipmentNumber}}
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Transfer Status -->
                                     <log-column [width]="'140'" [header]="'Transfer Status'" *ngIf="TransferStatusVisibilityColumn">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
 
-                                                        <td style="width: 1px;">
-                                                            <div style="padding-left:2px;padding-right:2px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;">
-                                                                {{item.TransferStatus}}
-                                                            </div>
-                                                        </td>
+                                                    <td style="width: 1px;">
+                                                        <div style="padding-left:2px;padding-right:2px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;">
+                                                            {{item.TransferStatus}}
+                                                        </div>
+                                                    </td>
 
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </log-cell-template>
-                                        </ng-template>                                        
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- SAT Status -->
                                     <log-column [width]="'140'" [header]="'ARInvoice.CH.SATTransferStatusNameListLable' | TextCodeTranslationPipe" *ngIf="DisplaySATSettings">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackground">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
 
-                                                        <td style="width: 1px;">
-                                                            <div style="padding-left:2px;padding-right:2px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;">
-                                                                {{item.SATTransferStatus}}
-                                                            </div>
-                                                        </td>
+                                                    <td style="width: 1px;">
+                                                        <div style="padding-left:2px;padding-right:2px; height: 18px; line-height: 18px;text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;">
+                                                            {{item.SATTransferStatus}}
+                                                        </div>
+                                                    </td>
 
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </log-cell-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

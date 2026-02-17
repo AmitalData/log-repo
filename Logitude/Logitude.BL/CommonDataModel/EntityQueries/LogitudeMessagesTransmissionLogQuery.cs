@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -18,7 +18,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         LogitudeMessagesTransmissionLogRepository repository;
 
- 
+        public LogitudeMessagesTransmissionLogQuery()
+        {
+            repository = new LogitudeMessagesTransmissionLogRepository(); 
+        }
 
         public LogitudeMessagesTransmissionLogQuery(int tenant)
         {

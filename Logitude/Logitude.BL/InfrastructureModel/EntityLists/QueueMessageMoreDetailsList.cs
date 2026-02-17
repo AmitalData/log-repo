@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.InfrastructureModel.EntityLists
+namespace Simplog.Data.InfrastructureModel.EntityLists
 {
     public class QueueMessageMoreDetailsList
     {

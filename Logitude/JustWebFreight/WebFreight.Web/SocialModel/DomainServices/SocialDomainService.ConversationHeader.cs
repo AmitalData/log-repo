@@ -7,7 +7,7 @@ using Logitude.Social.Data.EntityListQueryServices;
 using Logitude.Social.Data.EntityLists;
 using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;

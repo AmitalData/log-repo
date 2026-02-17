@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -39,10 +39,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                .HasMaxLength(200)
                .IsUnicode(false);
 
-            this.Property(t => t.LogDocumentId)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-
             // Table & Column Mappings
             this.ToTable("TaskSchedulerHistory");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -57,15 +53,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.EndDateTimeUTC).HasColumnName("EndDateTimeUTC");
             this.Property(t => t.LogType).HasColumnName("LogType");
             this.Property(t => t.LogFirstLine).HasColumnName("LogFirstLine");
-            this.Property(t => t.LogDocumentId).HasColumnName("LogDocumentId");
 
             this.HasRequired(t => t.TaskScheduler).WithMany()
                .HasForeignKey(d => d.TaskId)
-               .WillCascadeOnDelete(false);
-
-            this.HasOptional(t => t.LogDocument).WithMany()
-               .HasForeignKey(d => d.LogDocumentId)
-               .WillCascadeOnDelete(false);
+               .WillCascadeOnDelete(false);  
         }
     }
 }

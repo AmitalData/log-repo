@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -21,51 +21,19 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
 	    private IQueryable<ReconciliationLineList> GetIqueryableList(IQueryable<ReconciliationLine> iQueryable)
         {
-            IQueryable<ReconciliationLineList> query = (from a in iQueryable.Include("LedgerTransaction").Include("LedgerTransaction.Journal")
+            IQueryable<ReconciliationLineList> query = (from a in iQueryable
                                                         select new ReconciliationLineList()
-                                                        {
-                                                            ReconciliationId = a.ReconciliationId,
-                                                            TransactionId = a.TransactionId,
-                                                            CurrencyId = a.CurrencyId,
-                                                            CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
-                                                            CurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                                                            Line = a.Line,
-                                                            IsPartial = a.IsPartial,
-                                                            Tenant = a.Tenant,
-                                                            ReconciliationAmount = a.ReconciliationAmount,
-                                                            // ledger transaction fields
-                                                            CreateDate = a.LedgerTransaction.CreateDate ?? DateTime.Now,
-                                                            DueDate = (a.LedgerTransaction != null ? a.LedgerTransaction.DueDate : DateTime.Now),
-                                                            AmountCredit = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode=="0"? a.LedgerTransaction.LocalAmountCredit: a.LedgerTransaction.ForeignAmountCredit : 0),
-                                                            AmountDebit = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0),
-                                                            IsAmountDebitNegative = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) > 0,
-                                                            TransactionAmount = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0) == 0?
-                                                                                -1*(a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) :
-                                                                                (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0),
-                                                            
-                                                            ExcelTransactionAmount = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) > 0?
-
-                                                                                (-1 * ((a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0) == 0 ?
-                                                                                -1 * (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) :
-                                                                                (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0))):
-
-                                                                                 ((a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0) == 0 ?
-                                                                                -1 * (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0) :
-                                                                                (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0)),
-
-                                                            Reference1 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference1 : null),
-                                                            Reference2 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference2 : null),
-                                                            Reference3 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference3 : null),
-                                                            Notes = (a.LedgerTransaction != null ? a.LedgerTransaction.Notes : null),
-                                                            JournalNumber = (a.LedgerTransaction != null ? a.LedgerTransaction.JournalLine.Journal.JournalNumber : null),
-                                                            JournalId = (a.LedgerTransaction != null ? a.LedgerTransaction.JournalId : null),
-                                                            OpenAmountCurrencySign = (a.Currency != null ? a.Currency.Sign : null),
-                                                            SearchFields = (a.LedgerTransaction != null ? a.LedgerTransaction.SearchFields : null),
-                                                            CurrencySign = (a.Currency != null ? a.Currency.Sign : null),
-                                                            AccountingDate = a.LedgerTransaction != null ? a.LedgerTransaction.AccountingDate : DateTime.Now,
-                                                            ReconciliationAmountWithSign = a.ReconciliationAmount +" "+ (a.Currency != null ? a.Currency.Sign : null),
-
-                                                        });;
+                                                    {
+                                                        ReconciliationId = a.ReconciliationId,
+                                                        TransactionId = a.TransactionId,
+                                                        CurrencyId = a.CurrencyId,
+                                                        CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                                                        CurrencyCode = a.Currency != null ? a.Currency.Code : null,
+                                                        Line = a.Line,
+                                                        IsPartial = a.IsPartial,
+                                                        Tenant = a.Tenant,
+                                                        ReconciliationAmount = a.ReconciliationAmount,
+                                                    });
             return query;
         }
 

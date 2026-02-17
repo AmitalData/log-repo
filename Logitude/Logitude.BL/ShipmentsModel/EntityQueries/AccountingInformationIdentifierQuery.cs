@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -22,22 +21,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             this.entityRepository = repository;
         }
-        public AccountingInformationIdentifierPM GetSinglePM(string code, int tenant)
-        {
-            AccountingInformationIdentifierPM accountingInformationIdentifierPM = null;
-            AccountingInformationIdentifier accountingInformationIdentifier = entityRepository.GetSingleAccountingInformationIdentifier(code);
 
-            if (accountingInformationIdentifier == null) return accountingInformationIdentifierPM;
-
-            accountingInformationIdentifierPM = new AccountingInformationIdentifierPM()
-            {
-                Code = accountingInformationIdentifier.Code,
-                Name = accountingInformationIdentifier.Name,
-                SearchFields = accountingInformationIdentifier.SearchFields
-            };
-
-            return accountingInformationIdentifierPM;
-        }
         public AccountingInformationIdentifierList GetSingleAccountingInformationIdentifierList(string code)
         {
             AccountingInformationIdentifierList myResult = null;

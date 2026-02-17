@@ -1,12 +1,11 @@
-﻿using Logitude.BL.InfrastructureModel.EntityLists;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
     [DataContract]
-    public class CustomerList : CustomFieldDataContractList
+    public class CustomerList
     {
         [Key]
         [DataMember]
@@ -19,21 +18,22 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string RankId { get; set; }
 
         [DataMember]
-        public string TeamId { get; set; }
-
-        [DataMember]
         public string RankCode { get; set; }
 
         [DataMember]
         public string RankName { get; set; }
-        [DataMember]
-        public string TeamName { get; set; }
 
         [DataMember]
         public string IndustryId { get; set; }
 
         [DataMember]
         public string LeadSourceId { get; set; }
+
+        [DataMember]
+        public string BillToId { get; set; }
+
+        [DataMember]
+        public string BillToName { get; set; }
 
         [DataMember]
         public string SalesmanUserId { get; set; }
@@ -67,13 +67,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string Code { get; set; }
-        [DataMember]
-        public string CodeDataTemplate { get; set; }
 
         [DataMember]
         public string EnglishName { get; set; }
-        [DataMember]
-        public string EnglishNameDataTemplate { get; set; }
 
         [DataMember]
         public string VatNumber { get; set; }
@@ -128,19 +124,18 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public DateTime? StartWorkingDate { get; set; }
-        [DataMember]
-        public DateTime? StartWorkingDataTemplate { get; set; }
 
         [DataMember]
         public bool StartWorkingManuallySet { get; set; }
+
+        [DataMember]
+        public string Activity { get; set; }
 
         [DataMember]
         public double InvoicesDue { get; set; }
 
         [DataMember]
         public string CityName { get; set; }
-        [DataMember]
-        public string CityNameDataTemplate { get; set; }
 
         [DataMember]
         public string CountryId { get; set; }
@@ -153,6 +148,36 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string VatTypeId { get; set; }
+
+        [DataMember]
+        public string Field1 { get; set; }
+
+        [DataMember]
+        public string Field2 { get; set; }
+
+        [DataMember]
+        public string Field3 { get; set; }
+
+        [DataMember]
+        public string Field4 { get; set; }
+
+        [DataMember]
+        public string Field5 { get; set; }
+
+        [DataMember]
+        public string Field6 { get; set; }
+
+        [DataMember]
+        public string Field7 { get; set; }
+
+        [DataMember]
+        public string Field8 { get; set; }
+
+        [DataMember]
+        public string Field9 { get; set; }
+
+        [DataMember]
+        public string Field10 { get; set; }
 
         [DataMember]
         public string IndustryName { get; set; }
@@ -187,13 +212,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public int? SharedLogisticsInvitationStatusCode { get; set; }
 
-
-        [DataMember]
-        public string CargoTrackingInvitationStatusName { get; set; }
-        
-        [DataMember]
-        public int? CargoTrackingInvitationStatusCode { get; set; }
-
         [DataMember]
         public DateTime? LastLoginDate { get; set; }
 
@@ -201,9 +219,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? InvitationDate { get; set; }
 
         [DataMember]
-        public DateTime? CargoTrackingInvitationDate { get; set; }
-        
-        [DataMember] 
         public string LeadDescription { get; set; }
 
         [DataMember]
@@ -217,6 +232,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public bool IsCustomer { get; set; }
+
+
 
         [DataMember]
         public bool IsActiveForMobile { get; set; }
@@ -289,12 +306,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public DateTime? LastOpportunityDate { get; set; }
-
-        [DataMember]
-        public string LastOpportunitySubject { get; set; }
-
-        [DataMember]
-        public string LastOpportunityStatus { get; set; }
 
         [DataMember]
         public DateTime? FirstInvoiceDate { get; set; }
@@ -373,20 +384,17 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string SATForeignRFC { get; set; }
-
         [DataMember]
         public string MetodoPagoCode { get; set; }
-
         [DataMember]
         public string UsoCFDICode { get; set; }
-        [DataMember]
-        public string RegimenFiscalCode { get; set; }
 
         [DataMember]
         public string ZipCode { get; set; }
 
         [DataMember]
         public string Address1 { get; set; }
+
 
         [DataMember]
         public string Address2 { get; set; }
@@ -397,45 +405,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public string CompetitorFields { get; set; }
 
-        [DataMember]
-        public string LeadSourceName { get; set; }
-
-        [DataMember]
-        public string CreatedByPartner { get; set; }
-
-        [DataMember]
-        public string StateName { get; set; }
-
-        [DataMember]
-        public int? StorageFreeDays { get; set; }
-
-        [DataMember]
-        public string GLAccountNumber { get; set; }
-
-        public int SearchWeight { get; set; }
-
-        [DataMember]
-        public bool IsAutonomy { get; set; }
-
-        [DataMember]
-        public string BillToId { get; set; }
-
-        [DataMember]
-        public string BillToName { get; set; }
-        
-        [DataMember]
-        public string SATCustomerName { get; set; }
-
-        public string AccountManagerUserId { get; set; }
-
-        public string ATTN { get; set; }
-
-        [DataMember]
-        public DateTime? LastLoginDateViaPC { get; set; }
-
-        [DataMember]
-        public DateTime? LastLoginDateViaMobile { get; set; }
-      
 
     }
 }

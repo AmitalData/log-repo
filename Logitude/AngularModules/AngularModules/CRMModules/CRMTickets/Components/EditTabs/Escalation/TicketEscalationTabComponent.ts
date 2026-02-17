@@ -9,7 +9,7 @@ import {ObservableCollection} from '../../../../../Infrastructure/Utilities/Obse
 
 @Component({
     selector: 'TicketEscalationTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './TicketEscalationTabComponent.html',
 })
 

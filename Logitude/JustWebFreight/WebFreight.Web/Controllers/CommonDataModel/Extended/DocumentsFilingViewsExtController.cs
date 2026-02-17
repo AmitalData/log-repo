@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,14 +19,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
@@ -49,9 +49,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
                 if (filters.Tenant != null)
-                {
-                    SecurityUtility.AuthenticationOnTenant(filters.Tenant.Value);
-                }
+                    tenant = tenant;
 
                 SecurityUtility.CheckContactFeature("DocumentsFiling", "READ", authToken.Tenant);
 
@@ -215,27 +213,19 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                                     }
                                 default:
                                     {
-                                        entityLists = entityLists.OrderByDescending(d => d.CreateDate);
+                                        entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f => f.Code);
                                         break;
                                     }
                             }
                         }
                     }
-                    else
-                    {
-                        entityLists = sortClass.GetSorterQuery<DocumentsFilingList, string>(queryOperations, entityLists);
-                    }
                 }
-				else if (queryOperations.QueryFilterItems.Count == 1)
-				{
-					entityLists = entityLists.OrderByDescending(d => d.CreateDate);
-				}
-				else
-				{
-					entityLists = entityLists.OrderByDescending(d => Guid.NewGuid());
-				}
+                else
+                {
+                    entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f=>f.Code);
+                }
 
-				ServiceResponse response = new ServiceResponse();
+                ServiceResponse response = new ServiceResponse();
 
                 if (filters.GetCount)
                 {
@@ -249,7 +239,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 }
 
-                response.Result = entityLists.ToList();
+                response.Result = entityLists;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
 

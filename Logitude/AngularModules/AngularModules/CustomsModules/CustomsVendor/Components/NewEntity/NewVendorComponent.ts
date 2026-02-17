@@ -33,7 +33,7 @@ import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServi
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewVendorComponent.html',
 })
 
@@ -232,7 +232,7 @@ export class NewVendorComponent extends BaseComponent {
 
 
             //
-            CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,searchParams.PBId, "חיפוש ספק", true)
+            CustomMessageProgressComponent.ShowProgressBar(searchParams.PBId, "חיפוש ספק", true)
                 .then((myServiceResponse) => {
 
                     console.log("[Send] Response/ShowProgressBar : ", myServiceResponse);
@@ -318,8 +318,8 @@ export class NewVendorComponent extends BaseComponent {
     CreateSupplierButtonClicked() {
 
 
-        this.entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
                 var vendor = new CustomsVendorPM();
                 vendor.Tenant = SessionLocator.Tenant;
                 vendor.VendorTypeCode = "1";
@@ -385,7 +385,7 @@ export class NewVendorComponent extends BaseComponent {
             }
 
             // Call service to add vendor
-            this.customsVendorPMService.insert(newVendor).subscribe((myResult:any) => {
+            this.customsVendorPMService.insert(newVendor).subscribe(myResult => {
 
                 var res: ServiceResponse = myResult;
                 if (!res.HasError) {
@@ -425,7 +425,7 @@ export class NewVendorComponent extends BaseComponent {
                 this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
                 // Get vendor and update it
-                this.vendorMessagesService.GetVendorByNumber(item.VendorNumber).subscribe((res:any) => {
+                this.vendorMessagesService.GetVendorByNumber(item.VendorNumber).subscribe(res => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -471,7 +471,7 @@ export class NewVendorComponent extends BaseComponent {
 
         if (errors.length == 0) {
             // update service
-            this.customsVendorPMService.update(vendorPM).subscribe((myResult:any) => {
+            this.customsVendorPMService.update(vendorPM).subscribe(myResult => {
 
                 var res: ServiceResponse = myResult;
                 if (!res.HasError) {

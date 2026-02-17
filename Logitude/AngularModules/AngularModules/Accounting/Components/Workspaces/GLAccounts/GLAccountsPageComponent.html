@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .SquareIcon {
         width: 10px;
@@ -26,9 +26,9 @@
 
                     <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
 
-                    <td style="width: 390px;">
+                    <td style="width: 300px;">
                         <!-- ObjectTableName = CardGLAccount to filter items by accountTypeCode in CommonDomainController.cs -->
-                        <SearchBox  [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [DropDownWidth]="430" [ObjectTableName]="'CardGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
+                        <SearchBox [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [ObjectTableName]="'CardGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
                     </td>
 
                     <td>
@@ -54,7 +54,7 @@
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <label  float-start style="margin-right: 10px;" >{{'GLAccount.O.Queries' | TextCodeTranslationPipe}}</label>
+                                    <label  float-start style="margin-right: 10px;" >{{'Accounting.General.O.MainQueries' | TextCodeTranslationPipe}}</label>
                                 </td>
                             </tr>
 
@@ -69,9 +69,9 @@
 
                                             <!-- GL Accounts -->
                                             <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Accounting.General.O.GLAccount' | TextCodeTranslationPipe}}</div>
+                                                <div>{{'Accounting.O.GLAccounts' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button  id="{{'NewGLAccount' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
@@ -80,11 +80,13 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
+                                                                            <!-- ({{glAccountSummary.ActiveGLAccountCount}}) -->
                                                                             <p class="QueryLink" *ngIf="ActiveGLAccountsVisibility" (click)="ViewAccountingQuery('ActiveGLAccounts')"> {{'GLAccounts.Q.ActiveGLAccounts' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
+                                                                            <!-- ({{glAccountSummary.InactiveGLAccountCount}})  -->
                                                                             <p class="QueryLink" *ngIf="InactiveGLAccountsVisibility" (click)="ViewAccountingQuery('InactiveGLAccounts')"> {{'GLAccounts.Q.InActiveGLAccounts' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
@@ -120,12 +122,8 @@
                                                                     <table>
                                                                         <tr>
                                                                             <td style="width:190px;">
+                                                                                    <!-- ({{glAccountSummary.OpenFilesCount}}) -->
                                                                                 <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenFiles')"> {{'GLAccounts.Q.OpenFiles' | TextCodeTranslationPipe}} </p>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td style="width:190px;">
-                                                                                <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenMasters')"> {{'GLAccount.Q.OpenMasters' | TextCodeTranslationPipe}} </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -143,8 +141,7 @@
                                                                                 <p class="QueryLink" *ngIf="AllJobsVisibility" (click)="ViewAccountingQuery('AllJobs')"> {{'GLAccounts.Q.AllJobs' | TextCodeTranslationPipe}} </p>
                                                                             </td>
                                                                         </tr>
-                                                                        <tr>
-                                                                            <td><div></div></td>
+                                                                        <tr><td><div></div></td>
                                                                         </tr>
                                                                     </table>
 

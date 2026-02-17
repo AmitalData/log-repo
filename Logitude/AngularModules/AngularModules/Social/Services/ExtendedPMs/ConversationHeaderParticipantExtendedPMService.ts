@@ -1,8 +1,7 @@
-
+﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ConversationHeaderParticipantPM} from '../../EntityPMs/ConversationHeaderParticipantPM';
@@ -10,20 +9,21 @@ import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFiel
 @Injectable()
 
 export class ConversationHeaderParticipantExtendedPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ConversationHeaderParticipantExtended';
     }
     
 
     MakeMeReadMessage(conversationHeaderId: string, userid:string) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetMakeMeReadMessage/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid , { headers: authHeader }).map(response => {
 
-        return this._http.get(this._apiUrl + '/GetMakeMeReadMessage/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result = response;
+            var result = response.json();
           
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -31,15 +31,16 @@ export class ConversationHeaderParticipantExtendedPMService {
             pmresponse.Result = result;
             return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     MakeConversationHeaderParticipantReadMessage(conversationHeaderId: string, userid: string) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetMakeConversationHeaderParticipantReadMessage/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid, { headers: authHeader }).map(response => {
 
-        return this._http.get(this._apiUrl + '/GetMakeConversationHeaderParticipantReadMessage/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result = response;
+            var result = response.json();
            
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -47,14 +48,16 @@ export class ConversationHeaderParticipantExtendedPMService {
             pmresponse.Result = result;
             return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     MakeConversationHeaderParticipantRepliedOrRead(conversationHeaderId: string, userid: string, type: string) {
 
-        return this._http.get(this._apiUrl + '/GetMakeConversationHeaderParticipantRepliedOrRead/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid + "&type=" + type, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetMakeConversationHeaderParticipantRepliedOrRead/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid + "&type=" + type, { headers: authHeader }).map(response => {
 
-            var result = response;
+            var result = response.json();
            
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -62,15 +65,17 @@ export class ConversationHeaderParticipantExtendedPMService {
             pmresponse.Result = result;
             return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
     MakeConversationHeaderParticipantReadAndUnRead(conversationHeaderId: string, userid: string, typequery: string) {
 
-        return this._http.get(this._apiUrl + '/GetMakeConversationHeaderParticipantReadAndUnRead/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid + "&typequery=" + typequery, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetMakeConversationHeaderParticipantReadAndUnRead/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid + "&typequery=" + typequery, { headers: authHeader }).map(response => {
 
-            var result = response;
+            var result = response.json();
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -78,7 +83,7 @@ export class ConversationHeaderParticipantExtendedPMService {
             pmresponse.Result = result;
             return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
@@ -90,10 +95,11 @@ export class ConversationHeaderParticipantExtendedPMService {
 
     MakeDeleteParticipantUnDelete(conversationHeaderId: string) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetMakeDeleteParticipantUnDelete/?' + 'conversationHeaderId=' + conversationHeaderId, { headers: authHeader }).map(response => {
 
-        return this._http.get(this._apiUrl + '/GetMakeDeleteParticipantUnDelete/?' + 'conversationHeaderId=' + conversationHeaderId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result = response;
+            var result = response.json();
            
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -101,15 +107,16 @@ export class ConversationHeaderParticipantExtendedPMService {
             pmresponse.Result = result;
             return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     DeleteConversationHeaderParticipant(conversationHeaderId: string, userid: string) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetDeleteConversationHeaderParticipant/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid, { headers: authHeader }).map(response => {
 
-        return this._http.get(this._apiUrl + '/GetDeleteConversationHeaderParticipant/?' + 'conversationHeaderId=' + conversationHeaderId + "&userid=" + userid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result = response;
+            var result = response.json();
            
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -117,14 +124,16 @@ export class ConversationHeaderParticipantExtendedPMService {
             pmresponse.Result = result;
             return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     GetAllConversationHeaderParticipantPMByConversationHeaderId(conversationHeaderId: string) {
 
-        return this._http.get(this._apiUrl + '/GetAllConversationHeaderParticipantPMByConversationHeaderId/?' + 'conversationHeaderId=' + conversationHeaderId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetAllConversationHeaderParticipantPMByConversationHeaderId/?' + 'conversationHeaderId=' + conversationHeaderId, { headers: authHeader }).map(response => {
 
-            var result:any = response;
+            var result = response.json();
             var entity: ConversationHeaderParticipantPM;
             var  conversationHeaderParticipantPMLists: ConversationHeaderParticipantPM[];
             conversationHeaderParticipantPMLists = new Array<ConversationHeaderParticipantPM>();
@@ -138,7 +147,7 @@ export class ConversationHeaderParticipantExtendedPMService {
             pmresponse.Result = conversationHeaderParticipantPMLists;
             return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
@@ -146,26 +155,30 @@ export class ConversationHeaderParticipantExtendedPMService {
 
     GetAllParticipantsConversationHeaderMessageId(conversationHeaderId: string){
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetAllParticipantsConversationHeaderMessageId/?' + 'conversationHeaderId=' + conversationHeaderId, { headers: authHeader }).map(response => {
 
-        return this._http.get(this._apiUrl + '/GetAllParticipantsConversationHeaderMessageId/?' + 'conversationHeaderId=' + conversationHeaderId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result = response;
+            var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
 
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
     SaveConversationHeaderParticipantPMLists(conversationHeaderParticipantPMLists: any) {
-        return defer(() => {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
 
+            return this._http.post(this._apiUrl + '/PostSaveConversationHeaderParticipantPMLists', JSON.stringify(conversationHeaderParticipantPMLists),
+                { headers: authHeader }).map((response) => {
 
-            return this._http.post(this._apiUrl + '/PostSaveConversationHeaderParticipantPMLists', JSON.stringify(conversationHeaderParticipantPMLists), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-
-                    var result = response;
+                    var result = response.json();
                   
                     var pmresponse: ServiceResponse;
                     pmresponse = new ServiceResponse();
@@ -173,7 +186,7 @@ export class ConversationHeaderParticipantExtendedPMService {
                     pmresponse.Result = result
                     return pmresponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
         );
 

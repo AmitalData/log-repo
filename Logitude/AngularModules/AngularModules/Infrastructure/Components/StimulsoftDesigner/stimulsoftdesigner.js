@@ -19,7 +19,7 @@ export var StimulsoftDesigner = (function () {
     }
     StimulsoftDesigner.prototype.stimuldesignerFinished = function (value) {
         // this.zone.run(() => {
-        SessionLocator.SelectedSession.CurrentWindow.Close(this.TemplateId);
+        SessionLocator.CurrentSession.CurrentWindow.Close(this.TemplateId);
         // });
     };
     StimulsoftDesigner.prototype.ngOnDestroy = function () {
@@ -34,7 +34,7 @@ export var StimulsoftDesigner = (function () {
         var observable = SessionLocator.SignalRChannelService.subscribeChannel("User" + SessionInfo.LoggedUserId + SessionInfo.LoggedUserTenant + sessionId).subscribe(function (ev) {
             if (ev.EventName === "StimulSaved") {
                 observable.unsubscribe();
-                SessionLocator.SelectedSession.CurrentWindow.Close(_this.TemplateId);
+                SessionLocator.CurrentSession.CurrentWindow.Close(_this.TemplateId);
             }
         }, function (error) {
             console.warn("Attempt to join channel failed!", error);
@@ -54,7 +54,7 @@ export var StimulsoftDesigner = (function () {
         confirmWindow.Show("Do you want to close Report Designer? Changes you made may not be saved.");
         confirmWindow.WindowClosed.subscribe(function (event) {
             if (confirmWindow.Yes) {
-                SessionLocator.SelectedSession.CurrentWindow.Close(_this.TemplateId);
+                SessionLocator.CurrentSession.CurrentWindow.Close(_this.TemplateId);
             }
             else {
             }

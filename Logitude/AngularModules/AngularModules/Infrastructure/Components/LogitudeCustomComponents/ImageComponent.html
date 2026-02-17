@@ -1,4 +1,4 @@
-<!--Quotation-->
+﻿<!--Quotation-->
 <table *ngIf="EntityName == 'Quotation'" style="height:100%;width:100%;">
     <tr>
 
@@ -6,9 +6,12 @@
 
             <div class="BodyBackground" valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:100%;width:100%;border:1px solid gray;border-radius:5px;">
                 <div style="vertical-align:central;">
-                    <input [attr.id]="ImageFileHtmlId" accept=".png,.PNG,.jpg,.jpeg,.JPG,.JPEG," type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
+                    <input [attr.id]="ImageFileHtmlId" accept=".png,.jpg,.jpeg" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
 
                     <img [style.height]="DefultImageHeight" (click)="OpenUpLoadLogo()" title="{{'QuoteTemplate.M.Clicktoaddthephoto' | TextCodeTranslationPipe}}" style="width:auto;  top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;background-color:white;max-width: 295px;max-height: 245px; position: absolute;border:0px solid #ffffff" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />
+
+
+                    <!--<img title="Click to add the photo" (click)="OpenUpLoadLogo()" style="vertical-align:central;height:245px;width:100%;background-color:white;border:0px solid #ffffff ;cursor: pointer;" src="./Images/Icons/CLickToUploadLogo.png" [attr.id]="ImageKey" />-->
                     <span [attr.id]="ProgressDownloadId" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img class="CenterCenter" src="Images/progressDownload.gif" /></span>
 
                 </div>
@@ -98,8 +101,8 @@
 
             <div [style.border]="BorderStyle" valign="center" align="center" style="vertical-align:top;text-align:center;background-color:#F2F8FF;height:100%;width:100%;border-radius:5px;">
                 <div style="vertical-align:central">
-                    <input onclick="this.value = null" [attr.id]="ImageFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG,.png,.PNG" type="file" [(ngModel)]="DataImage" (change)="FileChanged($event)" style="display:none" class="upload" />
-                    <img [style.max-width]="WidthImage" [style.max-height]="HeightImage" class="CenterCenter" [style.cursor]="CursorImage" [attr.title]="Tooltip" (click)="OpenUpLoadLogo();openUrl()" style="vertical-align:central;background-color:white;border:0px solid #ffffff;" src="./Images/DefultImage3.jpg" [attr.id]="ImageKey" />
+                    <input [attr.id]="ImageFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
+                    <img [style.max-width]="WidthImage" [style.max-height]="HeightImage" class="CenterCenter" [style.cursor]="CursorImage" [attr.title]="Tooltip" (click)="OpenUpLoadLogo()" style="vertical-align:central;background-color:white;border:0px solid #ffffff;" src="./Images/DefultImage3.jpg" [attr.id]="ImageKey" />
                     <span [attr.id]="ProgressDownloadId" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img class="CenterCenter" src="Images/progressDownload.gif" /></span>
 
                 </div>

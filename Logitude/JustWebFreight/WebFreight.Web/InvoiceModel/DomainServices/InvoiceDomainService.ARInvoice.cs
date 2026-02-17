@@ -6,7 +6,7 @@ using System.Reflection;
 using System.ServiceModel.DomainServices.Server;
 using System.Xml.Serialization;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -23,7 +23,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Web;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
@@ -70,7 +70,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
                 entityList = iQueryableEntityList.FirstOrDefault();
             }
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("ARInvoice", tenant, new List<ARInvoiceList> { entityList }.Cast<object>().ToList());
 
             return entityList;
@@ -178,7 +178,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
             List<ARInvoiceList> listQuery = query2.ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("ARInvoice", tenant, listQuery.Cast<object>().ToList());
 
 
@@ -300,8 +300,8 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
             }
 
             ARInvoiceService service = new ARInvoiceService(objectContext, tenant);
-            //string AutoCreditId = service.CreateAutoCredit(entityId, IsInvoiceNumberManuallySet, AutoCreditManualNumber, AutoCreditDate);
-            return "";
+            string AutoCreditId = service.CreateAutoCredit(entityId, IsInvoiceNumberManuallySet, AutoCreditManualNumber, AutoCreditDate);
+            return AutoCreditId;
         }
 
         private string GetLoggedContact(int tenant)

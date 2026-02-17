@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
@@ -22,7 +22,7 @@ using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -65,8 +65,6 @@ namespace Logitude.BL.InvoiceModel.Tools
         private Boolean IsSameHomeCurrency = false;
         private string AccountingSystemCode;
         private APInvoicePaymentRepository invoicePaymentRepository;
-        private Tenant loggedTenant;
-        private AccountingSystemPM accountingSystem;
 
         private void GetObjectTableData()
         {
@@ -79,11 +77,6 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
         public void APPaymentQuickbooksValidating(APPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, APPayment payment, IInvoiceContext invoiceContext, ICommonDataContext CommonContext,bool setCancelApproved, bool SystemWorkerRole = false )
         {
-            if (entityPM.TransferStatusCode == "BL")
-            {
-                return;
-            }
-
             if (IsSetApproved && !entityPM.SetVoided &&setCancelApproved == false)
             {
                 if (entityPM.TransferStatusCode == "RD" && entityPM.PaymentMethodCode == "FS")
@@ -91,15 +84,15 @@ namespace Logitude.BL.InvoiceModel.Tools
                 else
                 {
                     commonContext = CommonContext;
-                    loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                    Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                     tenant = loggedTenant.Id;
                     tenantName = loggedTenant.Company;
                     AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                     AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                    accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                    AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
 
                     if (loggedTenant.AccountingSetting != null)
-                        if (IsQuickBooksAccoutingSystemTransfer(entityPM))
+                        if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsAPPaymentsTransferEnabled && AccountingSystemPM.AllowAPPaymentsTransfer)
                         {
                             entityPM.ExternalAccountingEntityId = payment.ExternalAccountingEntityId;
                             APPayment = entityPM;
@@ -237,22 +230,12 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
             }
         }
-
-        private bool IsQuickBooksAccoutingSystemTransfer(APPaymentPM aPPaymentPM)
-        {
-            if (!(AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG")) return false;
-            if (!(loggedTenant.AccountingSetting.IsAPPaymentsTransferEnabled)) return false;
-            if (!(accountingSystem.AllowAPPaymentsTransfer)) return false;
-            if ((loggedTenant.AccountingSetting.APPaymentTransferStartDate != null && aPPaymentPM.RegisterDate < loggedTenant.AccountingSetting.APPaymentTransferStartDate)) return false;
-            return true;
-        }
-
         public List<Intuit.Ipp.Data.Customer> GetQuickBooksOnlineCustomersByText(String sql, String tenant)
         {
 
             try
             {
-                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
+                ServiceContext context = getServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Customer> customerQueryService = new QueryService<Intuit.Ipp.Data.Customer>(context);
                 List<Intuit.Ipp.Data.Customer> myResult = customerQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -275,7 +258,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
+                ServiceContext context = getServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Vendor> VendorQueryService = new QueryService<Intuit.Ipp.Data.Vendor>(context);
                 List<Intuit.Ipp.Data.Vendor> myResult = VendorQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -291,7 +274,7 @@ namespace Logitude.BL.InvoiceModel.Tools
         {
             try
             {
-                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
+                ServiceContext context = getServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.TaxCode> TaxCodeQueryService = new QueryService<Intuit.Ipp.Data.TaxCode>(context);
                 List<Intuit.Ipp.Data.TaxCode> myResult = TaxCodeQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -305,7 +288,7 @@ namespace Logitude.BL.InvoiceModel.Tools
         {
             try
             {
-                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
+                ServiceContext context = getServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Item> ItemQueryService = new QueryService<Intuit.Ipp.Data.Item>(context);
                 List<Intuit.Ipp.Data.Item> myResult = ItemQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -326,7 +309,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             try
             {
 
-                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
+                ServiceContext context = getServiceContext(tenant);
 
                 QueryService<Intuit.Ipp.Data.Account> AccountQueryService = new QueryService<Intuit.Ipp.Data.Account>(context);
                 List<Intuit.Ipp.Data.Account> myResult = AccountQueryService.ExecuteIdsQuery(sql).ToList();
@@ -350,7 +333,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
+                ServiceContext context = getServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.CompanyCurrency> CompanyCurrencyQueryService = new QueryService<Intuit.Ipp.Data.CompanyCurrency>(context);
                 List<Intuit.Ipp.Data.CompanyCurrency> myResult = CompanyCurrencyQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -373,7 +356,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
+                ServiceContext context = getServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Term> TermQueryService = new QueryService<Intuit.Ipp.Data.Term>(context);
                 List<Intuit.Ipp.Data.Term> myResult = TermQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -388,7 +371,21 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
         }
-
+        private ServiceContext getServiceContext(String tenant)
+        {
+            Setting mySetting = null;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository mySettingRepository = new SettingRepository();
+                mySetting = mySettingRepository.GetSingleSetting("1");
+                scope.Complete();
+            }
+            AccountingSettingQuery query = new AccountingSettingQuery(int.Parse(tenant));
+            AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
+            OAuthRequestValidator oauthValidator = new OAuthRequestValidator(entityPM.QBOAccessToken, entityPM.QBOAccessTokenSecret, mySetting.QBOConsumerKey, mySetting.QBOConsumerSecretKey);
+            ServiceContext context = new ServiceContext(mySetting.QBOAppToken, entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
+            return context;
+        }
         private void Run(APPaymentPM APPayment)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
@@ -503,7 +500,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "APPayment" }, { "OldTransferStatusCode", null } };
-                queueservice.Send(param, tenant);
+                queueservice.Send(param);
                 queueservice.Complete();
             }
 

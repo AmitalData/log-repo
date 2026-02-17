@@ -11,7 +11,7 @@ import {ShipmentDeliveryPM} from '../../../../../Shipment/EntityPMs/ShipmentDeli
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ContainerFollowupWindowTemplate.html',
 })
 
@@ -25,8 +25,6 @@ export class ContainerFollowupWindowTemplate {
     public HasRouting: boolean = false;
     public ActionRoutingLinkText: string;
     public DeleteRoutingLinkText: string;
-    public ETATextCode: string = "ShipmentPackage.F.EmptyContainerReturnETA";
-    public ATATextCode: string = "ShipmentPackage.F.EmptyContainerReturnATA";
     constructor() {
 
     }
@@ -47,11 +45,6 @@ export class ContainerFollowupWindowTemplate {
                     this.IsDeliveryConnectedWithMultiContainers = true;
                 }
             }
-        }
-
-        else {
-            this.ETATextCode = "ShipmentPackage.O.ExpectedEmptyReturn";
-            this.ATATextCode = "ShipmentPackage.O.ActualEmptyReturn";
         }
 
         this.SetProperties();

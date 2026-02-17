@@ -9,7 +9,7 @@ import {PasswordChangeService} from '../../../../Common/Services/Others/Password
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './UserUnlockComponent.html',
     providers: [PasswordChangeService],
 
@@ -55,7 +55,7 @@ export class UserUnlockComponent{
         if (this.CurrentPassword) {
             this.IsShowProgressLoading = true;
              var computerId: string = SessionLocator.GetComputerIdFromStorage();
-             this._passwordChangeService.GetSetUserLastLogin(this.CurrentPassword, SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant, computerId).subscribe((res:any) => {
+             this._passwordChangeService.GetSetUserLastLogin(this.CurrentPassword, SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant, computerId).subscribe(res => {
                  this.IsShowProgressLoading = false;
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {

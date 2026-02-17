@@ -8,7 +8,7 @@ import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "./CustomerHelperComponent.html",
 })
 

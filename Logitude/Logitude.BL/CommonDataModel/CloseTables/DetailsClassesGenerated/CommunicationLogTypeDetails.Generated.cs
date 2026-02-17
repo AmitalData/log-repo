@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs; 
 using Simplog.Data.CommonDataModel;
 
@@ -38,8 +38,8 @@ namespace Logitude.BL.CommonDataModel
             all.Add(new CommunicationLogTypeDetails()
             {    
                 Code = "E", 
-                SearchFields = "E,Outgoing Email,", 
-                Name = "Outgoing Email", 
+                SearchFields = "E,Email,", 
+                Name = "Email", 
 			});
 			 
             all.Add(new CommunicationLogTypeDetails()
@@ -61,20 +61,6 @@ namespace Logitude.BL.CommonDataModel
                 Code = "T", 
                 SearchFields = "T,Transmission,", 
                 Name = "Transmission", 
-			});
-			 
-            all.Add(new CommunicationLogTypeDetails()
-            {    
-                Code = "Lead", 
-                Name = "LogitudeLead", 
-                SearchFields = "Lead,LogitudeLead", 
-			});
-			 
-            all.Add(new CommunicationLogTypeDetails()
-            {    
-                Code = "IE", 
-                SearchFields = "IE,Incoming Email", 
-                Name = "Incoming Email", 
 			});
 			
             return all;

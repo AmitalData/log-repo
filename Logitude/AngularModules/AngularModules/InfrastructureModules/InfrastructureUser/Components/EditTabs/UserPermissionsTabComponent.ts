@@ -12,10 +12,9 @@ import {BranchListService} from '../../../../Common/Services/StandardLists/Branc
 import {ProductTypeListService} from '../../../../Common/Services/StandardLists/ProductTypeListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../../Infrastructure/Tools';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './UserPermissionsTabComponent.html',
 })
 
@@ -70,7 +69,7 @@ export class UserPermissionsTabComponent extends BaseComponent implements OnDest
     public IsProductsVisible: boolean = false;
     SetUIProperties() {
         var isEditingEnabled = true;
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
+        if (SessionLocator.Tenant == 65) {
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
                 isEditingEnabled = false;
             }
@@ -171,7 +170,6 @@ export class UserPermissionsTabComponent extends BaseComponent implements OnDest
                 var allItems: BranchList[] = myResponse.Result;
 
                 allItems = allItems.sort(function (a, b) { return a.Id.toLowerCase() == b.Id.toLowerCase() ? 0 : a.Id.toLowerCase() < b.Id.toLowerCase() ? -1 : 1; });
-                allItems = allItems.filter(bra => bra.InActive == false);
 
                 allItems.forEach(item => {
                     var newBranch = new UserBranchClass(item, this);

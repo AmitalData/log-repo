@@ -1,10 +1,6 @@
-<div class="container" style="position: absolute;
-        right: 0;
-        top: 0;
-        width: 50px;">
+<div class="container">
         
-        <button [disabled]="IsDisabled"
-                (click)="DropdownMenuButtonClick($event)"
+        <button (click)="DropdownMenuButtonClick($event)"
                 [attr.id]="_DropdownMenuFilterComponentId" 
                 style="background-color: transparent;cursor:pointer">
             <ng-content select=".class-filter-content"></ng-content>

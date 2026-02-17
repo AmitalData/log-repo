@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -25,9 +25,6 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using ICSharpCode.SharpZipLib.Core;
-using System.Text.RegularExpressions;
-using System.Linq;
-
 namespace CommunicationWorkerRole
 {
     class DataBackupWR : WorkerEntryPoint
@@ -53,13 +50,14 @@ namespace CommunicationWorkerRole
                         LastActivity = DateTime.UtcNow;
                         if (clientdatapackupmsg != null)
                         {
+                            string[] result = clientdatapackupmsg.AsString.Split(',');
+                            clientdatapackupqueue.DeleteMessage(clientdatapackupmsg);
+                            string messageType = result[0];
+                            string tenantString = result[1];
+                            int.TryParse(tenantString, out tenant);
+
                             try
                             {
-                                string[] result = clientdatapackupmsg.AsString.Split(',');
-                                clientdatapackupqueue.DeleteMessage(clientdatapackupmsg);
-                                string messageType = result[0];
-                                string tenantString = result[1];
-                                int.TryParse(tenantString, out tenant);
                                 switch (messageType)
                                 {
                                     case "ClientDataBackup":
@@ -83,6 +81,9 @@ namespace CommunicationWorkerRole
                                             break;
                                         }
                                 }
+
+
+
 
 
                             }
@@ -438,64 +439,60 @@ namespace CommunicationWorkerRole
 							sb.AppendLine();
 							noHeaderYet = false;
 						}
-                        
+
 						for (int a = 0; a < reader.FieldCount; a++)
 						{
 							object colValue = reader.GetValue(a);
-                           
+
 							Type type = reader.GetFieldType(a);
 
-                            if (reader.IsDBNull(a))
-                            {
-                                colValue = "NULL";
-                            }
+							if (reader.IsDBNull(a))
+							{
+								colValue = "NULL";
+							}
 
-                            else
-                            {
+							else
+							{
 
-                                if (type.Name == "Byte[]" && colValue.ToString() != "")
-                                {
-                                    colValue = Convert.ToBase64String((byte[])colValue);
-                                }
+								if (type.Name == "Byte[]" && colValue.ToString() != "")
+								{
+									colValue = Convert.ToBase64String((byte[])colValue);
+								}
 
-                                if (colValue.ToString().Contains("\""))
-                                {
-                                    string str = colValue.ToString().Replace("\"", "");
-                                    colValue = str;
-                                }
+								if (colValue.ToString().Contains("\""))
+								{
+									string str = colValue.ToString().Replace("\"", "");
+									colValue = str;
+								}
 
-                                if (colValue.ToString().Contains(","))
-                                {
-                                    colValue = string.Concat("\"", colValue.ToString(), "\"");
-                                }
+								if (colValue.ToString().Contains(","))
+								{
+									colValue = string.Concat("\"", colValue.ToString(), "\"");
+								}
 
-                                else if (colValue.ToString().Contains(Environment.NewLine))
-                                {
-                                    colValue = string.Concat("\"", colValue.ToString(), "\"");
-                                }
+								else if (colValue.ToString().Contains(Environment.NewLine))
+								{
+									colValue = string.Concat("\"", colValue.ToString(), "\"");
+								}
 
-                                else if (colValue.ToString().Contains("\r"))
-                                {
-                                    colValue = string.Concat("\"", colValue.ToString(), "\"");
-                                }
+								else if (colValue.ToString().Contains("\r"))
+								{
+									colValue = string.Concat("\"", colValue.ToString(), "\"");
+								}
 
-                                if (colValue.ToString() == string.Empty)
-                                {
-                                    colValue = string.Empty;
-                                }
-                            }
+								if (colValue.ToString() == string.Empty)
+								{
+									colValue = string.Empty;
+								}
+							}
 
-                          
 
-                            string colStringValue = Regex.Replace(colValue.ToString(), @"\t|\n|\r", "");
-                            sb.Append(colStringValue);
+							sb.Append(colValue.ToString());
 							sb.Append(",");
 						}
 
-                       
 
-                        sb.Remove(sb.Length - 1, 1);
-                        sb.AppendLine();
+						sb.AppendLine();
 
 					}
 
@@ -512,15 +509,12 @@ namespace CommunicationWorkerRole
 			}
 		}
 
-
         private void SaveTableToCSV(StringBuilder sb, string tablename)
         {
 
             Encoding currentEncoding = Encoding.GetEncoding(encodingCodePage);
             byte[] sbByte = currentEncoding.GetBytes(sb.ToString());
             string encodedString = currentEncoding.GetString(sbByte);
-
-            //string resultString = Regex.Replace(encodedString, @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline);
 
             string filename = tablename + ".csv";
 
@@ -581,7 +575,7 @@ namespace CommunicationWorkerRole
                 //GlobalDBRep = new GlobalDBRepository();
                 currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
             }
-            string dbConnectionInfo = !string.IsNullOrEmpty(currentDb.SecondaryAzureDBConnection) ? currentDb.SecondaryAzureDBConnection: currentDb.DBConnection;
+            string dbConnectionInfo = currentDb.DBConnection;
 
             // Specify the provider name, server and database.
             string providerName = "System.Data.SqlClient";

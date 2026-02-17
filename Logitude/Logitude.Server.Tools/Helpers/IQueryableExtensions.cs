@@ -4,10 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Core.Objects;
-using Logitude.Server.Tools.Utils;
-using Growl.CoreLibrary;
-using Devart.Data.Linq;
-using System.Collections;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -19,39 +15,19 @@ namespace Logitude.Server.Tools.Helpers
         /// <typeparam name="T"></typeparam>
         /// <param name="query"></param>
         /// <returns></returns>
-
-
         public static string ToTraceQuery<T>(this IQueryable<T> query)
         {
-            try
+            ObjectQuery<T> objectQuery = GetQueryFromQueryable(query);
+
+            var result = objectQuery.ToTraceString();
+            foreach (var parameter in objectQuery.Parameters)
             {
-
-
-                ObjectQuery<T> objectQuery = GetQueryFromQueryable(query);
-
-                var result = objectQuery.ToTraceString();
-                foreach (var parameter in objectQuery.Parameters.Reverse().ToArray())
-                {
-                    var name = "@" + parameter.Name;
-                    var value = parameter.Value is null ? "NULL" : "'" + parameter.Value.ToString() + "'";
-
-                    DateTime dt = new DateTime();
-                    if (value != null && value.ToString().Length > 10 && DateTime.TryParse(value.Substring(1, 11), out dt))
-                    {
-                        value = string.Format("cast('{0}' as date)", dt.ToString("yyyy-MM-dd"));
-                    }
-
-                    result = result.Replace(name, value);
-                }
-
-                return result;
+                var name = "@" + parameter.Name;
+                var value = "'" + parameter.Value.ToString() + "'";
+                result = result.Replace(name, value);
             }
 
-            catch (Exception ex)
-            {
-                return "error " + ex.Message;
-
-            }
+            return result;
         }
 
         /// <summary>
@@ -90,27 +66,7 @@ namespace Logitude.Server.Tools.Helpers
             var objectQueryField = internalQuery.GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Where(f => f.Name.Equals("_objectQuery")).FirstOrDefault();
             return objectQueryField.GetValue(internalQuery) as System.Data.Entity.Core.Objects.ObjectQuery<T>;
         }
-        
-        
-        public static System.Collections.IList LogAndGetList<T>(this IQueryable<T> query, string funcOrQueryName)
-        {
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{0} Query \r\n {1} ", funcOrQueryName, query.ToTraceQuery()));
-            DateTime start = DateTime.Now;
-            
-            Type elementType = query.ElementType;
-
-            Type listType = typeof(List<>).MakeGenericType(elementType);
-            IList resultList = (IList)Activator.CreateInstance(listType);
-
-            resultList = query.ToList();
-
-       NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("{0} SUM duration {1} seconds ",funcOrQueryName, (DateTime.Now - start).TotalSeconds));
-
-            return resultList;
-
-            ;
-        }
-
+         
     }
 
     public class TraceStringValues

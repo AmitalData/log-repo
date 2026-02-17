@@ -47,7 +47,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ARExternalId = a.ARExternalId,
                          IsAR = a.IsAR,
                         IsAP = a.IsAP,
-                        LocalName = a.LocalName
                     }).FirstOrDefault();
         }
 
@@ -68,7 +67,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ARExternalId = a.ARExternalId,
                         IsAR = a.IsAR,
                         IsAP = a.IsAP,
-                        LocalName = a.LocalName
                     }).FirstOrDefault();
         }
 
@@ -90,7 +88,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ARExternalId = a.ARExternalId,
                         IsAR = a.IsAR,
                         IsAP = a.IsAP,
-                        LocalName= a.LocalName
                     }).FirstOrDefault();
         }
 
@@ -111,7 +108,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ARExternalId = a.ARExternalId,
                         IsAR = a.IsAR,
                         IsAP = a.IsAP,
-                        LocalName = a.LocalName
                     });
         }
 
@@ -131,7 +127,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                          ARExternalId = a.ARExternalId,
                                                          IsAR = a.IsAR,
                                                          IsAP = a.IsAP,
-                                                         LocalName = a.LocalName
                                                      };
 
             return result;

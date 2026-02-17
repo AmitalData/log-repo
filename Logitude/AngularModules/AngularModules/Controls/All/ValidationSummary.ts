@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+﻿import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
@@ -90,7 +90,7 @@ import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 
     .SingleError{
         white-space: normal;
-        max-height: 60px;
+        max-height: 40px;
         padding-top: 2px;
     }
     `],
@@ -137,7 +137,7 @@ export class ValidationSummary implements OnInit {
                             var itemParts = item.split(';');
                             itemParts.forEach(itemPart => {
 
-                                itemPart = AppTool.Replace(itemPart, "(ᵜ)", ",");
+                                itemPart = AppTool.Replace(itemPart, "(ᵜ)", ";");
 
                                 if (this.itemsSource.indexOf(itemPart) == -1) {
                                     this.itemsSource.push(itemPart);
@@ -146,7 +146,7 @@ export class ValidationSummary implements OnInit {
                         }
 
                         else {
-                            item = AppTool.Replace(item, "(ᵜ)", ",");
+                            item = AppTool.Replace(item, "(ᵜ)", ";");
 
                             if (this.itemsSource.indexOf(item) == -1) {
                                 this.itemsSource.push(item);

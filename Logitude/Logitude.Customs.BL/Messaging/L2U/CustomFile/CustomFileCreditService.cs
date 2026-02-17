@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
             _CustomFileCreditModel = customFileCreditModel;
         }
 
-        public CUSTOMCREDIT_UL CheckFileCredit(string reqParamsJson = null)
+        public CUSTOMCREDIT_UL CheckFileCredit()
         {
             var context = CustomContext.GetContext(_CustomFileCreditModel.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -57,32 +57,21 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
                 amitalCustomFileCommunicationModel, myCreditFile);
             bool myImmediately = true;
 
-            var info = myUServerCommunicationService.Send(myImmediately,false, reqParamsJson);
-
-			CustomsSettingQueryService settingService = new CustomsSettingQueryService(_CustomFileCreditModel.Tenant);
-			CustomsSettingPM setting = settingService.GetSettingByTenantN(_CustomFileCreditModel.Tenant);
-            if (!setting.IsConnectedToUniFreight)
+            var info = myUServerCommunicationService.Send(myImmediately);
+            if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
             {
-                var CUSTOMCREDIT_UL = new CUSTOMCREDIT_UL();
-				CUSTOMCREDIT_UL.CustomFileCredit = new CustomFileCredit[] { new CustomFileCredit() { ErrorMessage = "!setting.IsConnectedToUniFreight" } };
-
-                return CUSTOMCREDIT_UL;
-
-			}
-			if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
-            {
-                throw new Exception("ImmediatelyResponse is null" + " Urouter is failed, Try to restart urouter service");
+                throw new Exception("ImmediatelyResponse is null");
             }
             var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
             var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
             if (genericResponseObj == null)
             {
-                throw new Exception("GenericResponse.GenericResponseObj is null" + " Urouter is failed, Try to restart urouter service");
+                throw new Exception("GenericResponse.GenericResponseObj is null");
             }
 
             if (genericResponseObj.ResponseXml == null && genericResponseObj.ResponseXml == "")
             {
-                throw new Exception("genericResponseObj.ResponseXml is null" + " Urouter is failed, Try to restart urouter service");
+                throw new Exception("genericResponseObj.ResponseXml is null");
             }
 
             var unifreightResponse = XmlGenericUtil<CUSTOMCREDIT_UL>.DeSerializeObject(genericResponseObj.ResponseXml);

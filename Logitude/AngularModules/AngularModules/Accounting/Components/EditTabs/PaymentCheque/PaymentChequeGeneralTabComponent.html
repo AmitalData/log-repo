@@ -21,7 +21,7 @@
                                 <tr >
                                     <td>
                                         <table>
-
+                                          
                                             <!-- PayToGlAccountId -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -34,12 +34,10 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'GLAccount'"
-
+                                                    
                                                             [QueryFilterItems]="filterAgrs"
                                                             (SelectedItemChanged)="Account = $event"
-                                                            [HideColumns]="true"
-                                                            [StartSearchFromChar]="3"
-                                                            [StartSearchFromNumber]="5">
+                                                            [HideColumns]="true">
                                                     </LogLov> </td>
                                                 <td><div></div></td>
                                             </tr>
@@ -58,7 +56,7 @@
                                                 <td><div></div></td>
                                             </tr>
 
-
+                                          
                                             <!-- Bank Account -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -71,7 +69,6 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'BankAccount'"
-                                                            [QueryFilterItems]="BankAccountFilter"
                                                             [DisplayMemberPath]="BankName"
                                                             (SelectedItemChanged)="BankAccount = $event"
                                                             [HideColumns]="true">
@@ -138,7 +135,7 @@
                                                 <td  width="170px;">
                                                 <table>
                                                     <tr>
-
+                                                
                                                         <td>
                                                             <LogLabel [ObjectFieldName]="'LocalAmount'" [ObjectTableName]="ObjectTableName"
                                                                       [DataContext]="DataContext"></LogLabel>
@@ -146,7 +143,7 @@
                                                  </tr>
                                                     </table>
                                                 </td>
-
+                                              
                                                 <td width="180px;">
                                                     <LogTextBox [ObjectFieldName]="'LocalAmount'" [InputType]="'double'" [DataContext]="DataContext" [Text]="LocalAmount"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -168,7 +165,7 @@
                                                 <td><div></div></td>
                                             </tr>
 
-
+                                           
                                             <tr ><td><div></div></td></tr>
                                         </table>
                                     </td>
@@ -185,35 +182,34 @@
                         <td colspan="3">
                             <table>
                                 <tr>
-                                    <td style="width: 25px;height: 20px;padding: 5px 3px;">
-                                        <div><IconButton [Name]="'Add'" (click)="Add()" [IsEnabled]="AddLineEnabled" float-start></IconButton></div>
+                                    <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 3px;">
+                                        <div><IconButton [IsSmall]="true" [Name]="'Add'" (click)="Add()" [IsEnabled]="AddLineEnabled" style="float:left;"></IconButton></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="CellContent"  >
+                                        <div class="CellContent" style="">
                                             <logitude-edit-grid GridWidth="100%"
                                                                 GridHeight="100%"
                                                                 [IsReadOnly]="!AddLineEnabled"
                                                                 [ItemSource]="Lines">
 
                                                 <log-column [header]="'#'" [width]="'30'" [Editable]="false" [Alignment]="'right'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template   #logcelltemplate>
+
+                                                    <log-cell-template template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                                                             <span>{{item.SequenceNumeric}}</span>
                                                         </div>
 
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
 
-                                                <log-column [header]="'PaymentChequeLine.F.Notes' | TextCodeTranslationPipe" [width]="'680'" [Editable]="true" [Alignment]="isRTL ? 'right' : 'left'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template   #logcelltemplate>
+                                                <log-column [header]="'PaymentChequeLine.F.Notes' | TextCodeTranslationPipe" [width]="'110'" [Editable]="true" [Alignment]="'center'">
+
+                                                    <log-cell-template template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
-                                                            <span title="{{item.Note}}">{{item.Note}}</span>
+                                                            <span>{{item.Note}}</span>
                                                         </div>
                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                             <LogTextBox [ObjectFieldName]="'Note'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'ntext'"
@@ -223,15 +219,14 @@
 
                                                         </div>
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
 
 
 
                                                 <log-column [header]="AmountHeader" [binding]="'Amount'" [width]="'110'" [Editable]="true" [Alignment]="'center'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template   #logcelltemplate>
+
+                                                    <log-cell-template template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                                                             <span>{{item.Amount | NumbersPipe:'N2'}}</span>
                                                         </div>
@@ -243,12 +238,10 @@
 
                                                         </div>
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
                                                 <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                                         <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
                                                             <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="AddLineEnabled"></IconButton>
                                                         </div>
@@ -256,7 +249,6 @@
 
 
                                                     </log-cell-template>
-                                                    </ng-template>
                                                 </log-column>
 
 
@@ -276,6 +268,6 @@
         </td>
     </tr>
 
-
+ 
 
 </table>

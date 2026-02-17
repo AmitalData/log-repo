@@ -1,8 +1,7 @@
-
+﻿
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -15,11 +14,11 @@ import { CustomsClosedTableList } from '../../EntityLists/CustomsClosedTableList
 @Injectable()
 
 export class CustomsClosedTableExtendedListService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     public static CachedData: Array<CustomsClosedTableList> = [];
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         //CustomsClosedTableViewsController
         //CustomsClosedTableViews
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsClosedTableViews';
@@ -27,9 +26,12 @@ export class CustomsClosedTableExtendedListService {
 
     getSingle(declarationid: string, invoicecounterkey: number, lineNumber: number) {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + declarationid , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var list = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + declarationid , { headers: authHeader }).map(response => {
+                var list = response.json();
 
                 var entity: CustomsClosedTableList;
                 if (list) {
@@ -40,16 +42,19 @@ export class CustomsClosedTableExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     getAll() {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getall', { headers: authHeader }).map(response => {
+
+                var allLists = response.json();
                 var _mappedListsArray: Array<CustomsClosedTableList> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -63,7 +68,7 @@ export class CustomsClosedTableExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -95,15 +100,18 @@ export class CustomsClosedTableExtendedListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                serviceResponse = response.json();
                 var _mappedListsArray: Array<CustomsClosedTableList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -117,7 +125,7 @@ export class CustomsClosedTableExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 

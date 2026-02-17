@@ -21,7 +21,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUACCSUP in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUACCSUP : UNIFBASICPOCO , INotifyPropertyChanged    {
+    public partial class CCUACCSUP : INotifyPropertyChanged    {
 
         public CCUACCSUP()
         {
@@ -357,65 +357,6 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
             }
         }
         private global::System.Nullable<double> _COMMISSIONPERCENT;
-
-        /// <summary>
-        /// There are no comments for RESHIMONTYPEN in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string COUNTRYIDN
-        {
-            get
-            {
-                return _COUNTRYIDN;
-            }
-            set
-            {
-                if (_COUNTRYIDN != value)
-                {
-                    _COUNTRYIDN = value;
-                    OnPropertyChanged("COUNTRYIDN");
-                }
-            }
-        }
-        private string _COUNTRYIDN;
-
-        
-        [System.Runtime.Serialization.DataMember]
-        public virtual string INCOTERMIDN
-        {
-            get
-            {
-                return _INCOTERMIDN;
-            }
-            set
-            {
-                if (_INCOTERMIDN != value)
-                {
-                    _INCOTERMIDN = value;
-                    OnPropertyChanged("INCOTERMIDN");
-                }
-            }
-        }
-        private string _INCOTERMIDN;
-
-        
-        [System.Runtime.Serialization.DataMember]
-        public virtual string CURRENCYIDN
-        {
-            get
-            {
-                return _CURRENCYIDN;
-            }
-            set
-            {
-                if (_CURRENCYIDN != value)
-                {
-                    _CURRENCYIDN = value;
-                    OnPropertyChanged("CURRENCYIDN");
-                }
-            }
-        }
-        private string _CURRENCYIDN;
 
 
         #endregion

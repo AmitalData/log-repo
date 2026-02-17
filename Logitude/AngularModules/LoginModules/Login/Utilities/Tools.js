@@ -1,4 +1,6 @@
-export var Tools = (function () {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Tools = /** @class */ (function () {
     function Tools() {
     }
     Tools.newGuid = function () {
@@ -15,19 +17,8 @@ export var Tools = (function () {
             result += chars[Math.floor(Math.random() * chars.length)];
         return result;
     };
-    Tools.GetSystemURL = function () {
-        var systemUrl = location.href.replace('index.html', '');
-        if (location.href.indexOf('localhost') > -1) {
-            systemUrl = 'http://localhost:9996/';
-        }
-        else {
-            var userLoginUrl = location.href.split("/index.html")[0];
-            userLoginUrl = userLoginUrl.replace(userLoginUrl.substring(userLoginUrl.lastIndexOf('/'), userLoginUrl.length), "");
-            systemUrl = userLoginUrl + "/";
-        }
-        return systemUrl;
-    };
     Tools.DynamicLoader = null;
     return Tools;
 }());
+exports.Tools = Tools;
 //# sourceMappingURL=Tools.js.map

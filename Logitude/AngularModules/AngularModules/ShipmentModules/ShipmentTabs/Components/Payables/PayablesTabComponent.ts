@@ -1,44 +1,40 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
-import { ShipmentPayablePM } from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
-import { ConsoleShipmentPM } from '../../../../Shipment/EntityPMs/ConsoleShipmentPM';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { DecimalFormatter } from '../../../../Infrastructure/Utilities/DecimalFormatter';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { ShipmentTool, ShipmentGenerator, ByPckageType } from '../../../../Shipment/Tools';
-import { AppTool, DateTool, ArrayTool, FontTool } from '../../../../Infrastructure/Tools';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
-import { MeasurementList } from '../../../../Common/EntityLists/MeasurementList';
-import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
-import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList';
-import { UserList } from '../../../../Common/EntityLists/UserList';
-import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
-import { MeasurementListService } from '../../../../Common/Services/StandardLists/MeasurementListService';
-import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
-import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
-import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
-import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { QuotePM } from '../../../../Quote/EntityPMs/QuotePM';
-import { QuotePMService } from '../../../../Quote/Services/StandardPMs/QuotePMService';
-import { CardList } from '../../../../Common/EntityLists/CardList';
-import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
-import { TariffDomainService, TariffSearchSummary, SurchargeSummary, CustomsChargesPayable, CustomsChargesTariffSearchArgs } from '../../../../TariffModule/Services/TariffDomainService';
-import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
-import { APInvoiceListService } from '../../../../Invoice/Services/StandardLists/APInvoiceListService';
-import { APInvoiceList } from '../../../../Invoice/EntityLists/APInvoiceList';
+import {Component, OnInit, OnDestroy}  from '@angular/core';
+import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
+import {ShipmentPayablePM} from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
+import {ConsoleShipmentPM} from '../../../../Shipment/EntityPMs/ConsoleShipmentPM';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {DecimalFormatter} from '../../../../Infrastructure/Utilities/DecimalFormatter';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {ShipmentTool, ShipmentGenerator, ByPckageType} from '../../../../Shipment/Tools';
+import {AppTool, DateTool, ArrayTool, FontTool} from '../../../../Infrastructure/Tools';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
+import {MeasurementList} from '../../../../Common/EntityLists/MeasurementList';
+import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
+import {PackageTypeList} from '../../../../Common/EntityLists/PackageTypeList';
+import {UserList} from '../../../../Common/EntityLists/UserList';
+import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
+import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
+import {MeasurementListService} from '../../../../Common/Services/StandardLists/MeasurementListService';
+import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
+import {UserListService} from '../../../../Common/Services/StandardLists/UserListService';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
+import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
+import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
+import {QuotePMService} from '../../../../Quote/Services/StandardPMs/QuotePMService';
+import {CardList} from '../../../../Common/EntityLists/CardList';
+import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './PayablesTabComponent.html',
 })
 
@@ -55,16 +51,10 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public LocalCurrencyId: string = null;
     public LocalCurrencyCode: string = null;
     public ItemsSource: ObservableCollection;
-    public IsResourcesReady: boolean = false;
+    public IsResourcesReady: boolean = false;  
     public myDomainService: ShipmentDomainService;
-    public IsPriceCheckVisible: boolean = false;
-    public IsCustomsChargesVisible: boolean = false;
     public myUserListService: UserListService = null;
-    public ComponentRef: any;
     private CurrentSession = SessionLocator.SelectedSession;
-    private myChargesTypeListService: ChargesTypeListService;
-    private newAddedTariffPayableCount = 0;
-    public IsUsingVirtuallization: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.OriginShipment = entityArgs.OriginEntity;
@@ -74,44 +64,29 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         this.ProfitCurrencyCode = this.EntityPM.ProfitCurrencyCode;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
-        this.SetIsUsingVirtuallization();
         this.ItemsSource = new ObservableCollection([]);
         this.myDomainService = new ShipmentDomainService();
         this.myUserListService = new UserListService();
-        this.myChargesTypeListService = new ChargesTypeListService();
         this.Listen();
         this.SetEditEnabled();
         this.LoadRequiredData();
-        this.CheckUpdateQuantities();
-    }
-
-    SetIsUsingVirtuallization() {
-        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
-        if (hasGridVirtuallizationToggleFeature) {
-            this.IsUsingVirtuallization = true;
-        }
     }
 
     private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;  
     private Listen() {
         if (this.entityArgs.EditComponent) {
-            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe((event: string) => {
-                if (event) {
-                    if (event == "PayablesGenerated" || event == "ExpensePayableAdded") {
-                        this.BuildItemsSource();
-                        this.ComputeShipmentFields();
-                    }
 
-                    else if (event == "OriginShipmentLoaded") {
-                        this.OriginShipment = this.entityArgs.OriginEntity;
-                    }
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "PayablesGenerated") {
+                    this.BuildItemsSource();
+                    this.ComputeShipmentFields();
+                }
 
-                    else if (event == "UpdateCustomsCharges") {
-                        this.CheckUpdateCustomsCharges();
-                    }
+                else if (s == "OriginShipmentLoaded") {
+                    this.OriginShipment = this.entityArgs.OriginEntity;
                 }
             });
 
@@ -190,13 +165,12 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 this.AllRates = myResponse.Result;
             }
 
-            this.InitializeShipmentGenerator();
             this.entityArgs.EditComponent.StopBusyIndicator();
         });
     }
 
-    ngOnInit() {
-        if (this.EntityPM != null) {
+    ngOnInit() {      
+        if (this.EntityPM != null) {      
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
 
@@ -236,70 +210,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         }
     }
 
-    PriceCheck() {
-        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
-            ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Shipment");
-
-            var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
-            var betweenDateHelpIconMassage: string = "Today's Date";
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageATD)) {
-                betweenDate = this.EntityPM.MainCarriageATD;
-                betweenDateHelpIconMassage = "ATD Date";
-            }
-            else if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageETD)) {
-                betweenDate = this.EntityPM.MainCarriageETD;
-                betweenDateHelpIconMassage = "ETD Date";
-            }
-
-            var tariffType = "";
-            if (this.EntityPM.TransportModeId == "A") {
-                tariffType = "AFC";
-            }
-            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
-                tariffType = "OLC";
-            }
-
-            if (this.IsFCLEntity) {
-
-                tariffType = "OFC";
-            }
-
-            var WindowArgs: any =
-            {
-                BetweenDate: betweenDate,
-                BetweenDateHelpIconMassage: betweenDateHelpIconMassage ,
-                FromPort: this.EntityPM.MainCarriageFromPortId,
-                ToPort: this.EntityPM.ToPortId,
-                GrossWeight: this.EntityPM.GrossWeight,
-                ChargeableWeight: this.EntityPM.ChargeableWeight,
-                Volume: this.EntityPM.Volume,
-                ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
-                GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
-                VolumeUnit: this.EntityPM.VolumeUnitCode,
-                IsShipment: true,
-                FatherComponent: this,
-                ViaPort: this.EntityPM.Transshipment1FromPortId,
-                TariffType: tariffType
-            };
-            var logWindow = new LogitudeWindow();
-            logWindow.IsFillScreenHeight = true;
-            logWindow.Width = 1200;
-            logWindow.Title = "Price Check";
-            logWindow.ComponentLoaded.subscribe(cmpRef => {
-                this.ComponentRef = cmpRef;
-
-                if (WindowArgs != null) {
-                    if (this.ComponentRef['SetWindowArgs']) {
-                        this.ComponentRef.SetWindowArgs(WindowArgs);
-                    }
-                }
-            });
-
-            logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
-
-        });
-    }
-
     // Set Labels
     public ExpectedAmountLocalHeader: string;
     SetLabels() {
@@ -308,23 +218,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
     // SetUIProperties
     public IsEditingEnabled: boolean = true;
-    public IsDeleteAllPayablesVisible: boolean = false;
     SetEditEnabled() {
-
-        if (FeatureLocator.HasFeaturePermession("Shipment", "DeleteAllPayables")) {
-            this.IsDeleteAllPayablesVisible = true;
-        }
-
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
-        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentPriceCheck") && (this.IsLCLEntity || this.IsFCLEntity) && this.EntityPM.TransportModeId != "I"
-            && featureToggle  != null) {
-            this.IsPriceCheckVisible = true;
-        }
-
-        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CCT")[0]) {
-            this.IsCustomsChargesVisible = true;
-        }
-
         var isEditingEnabled: boolean = true;
 
         if (this.EntityPM) {
@@ -566,7 +460,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         var myProfitRate = "N/A";
         var myDefferenceInSelectedCurrency = 0;
         var myDefferenceInSelectedCurrencyText = "";
-
+             
         // Payables
         var CountOfPAY: number = this.EntityPM.ShipmentPayables.length;
         if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
@@ -667,7 +561,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     }
 
     // Generate
-    public IsGenerateButtonsVisible: boolean = false;
+    public IsGenerateButtonsVisible: boolean = false;  
     public IsGenerateFromQuoteChargesEnabled: boolean = false;
     public IsNoChargesTextVisibil: boolean = false;
     private ChargesTypes: ChargesTypeList[];
@@ -718,23 +612,20 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.StartGenerating(myCommandCode);
         }
     }
-
-    public ShipmentGenerator: ShipmentGenerator;
-    public InitializeShipmentGenerator() {
-        this.ShipmentGenerator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-    }
     StartGenerating(myCommandCode: string) {
         switch (myCommandCode) {
             case "ATDS": {
                 // AutoDisplay                
-                this.ShipmentGenerator.GeneratePayablesAutoDisplay();
+                var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
+                Generator.GeneratePayablesAutoDisplay();
                 this.OnEntityDataGenerated();
                 break;
             }
 
             case "QTPY": {
                 // FromQuotePayablesOnly
-                this.ShipmentGenerator.GeneratePayablesFromQuote(this.BaseQuote);
+                var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
+                Generator.GeneratePayablesFromQuote(this.BaseQuote);
                 this.OnEntityDataGenerated();
                 break;
             }
@@ -743,43 +634,15 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 // FromOriginShipment
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginShipmentId)) {
                     if (this.OriginShipment) {
+                        var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
+                        Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
+                        this.OnEntityDataGenerated();
 
-                        if (this.OriginShipment.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && !AppTool.IsNullOrEmpty(d.TariffId)).length > 0) {
-                            var freightTariffId: string = this.OriginShipment.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && !AppTool.IsNullOrEmpty(d.TariffId))[0].TariffId;
-
-                            var tariffType: string = "";
-                            if (this.EntityPM.TransportModeId == "A") {
-                                tariffType = "AFC";
-                            }
-                            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
-                                tariffType = "OLC";
-                            }
-                            else if (AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId)) {
-                                tariffType = "OFC";
-                            }
-
-                            var myDomainService: TariffDomainService = new TariffDomainService();
-                            myDomainService.GetTariffsPricesConnectedToPayables(freightTariffId, this.EntityPM.Id, tariffType).subscribe((res: any) => {
-                                if (!res.HasError) {
-                                    if (res.Result) {
-                                        var loadedResults: Array<TariffSearchSummary> = res.Result;
-                                        this.ShipmentGenerator.GeneratePayablesFromOriginShipment(this.OriginShipment);
-                                        this.OpenSummaryWindow(loadedResults[0], this.OriginShipment.ShipmentPayables, tariffType);
-                                    }
-                                }
-                            });
-                        }
-
-                        else {
-                            this.ShipmentGenerator.GeneratePayablesFromOriginShipment(this.OriginShipment);
-                            this.OnEntityDataGenerated();
-
-                            this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
-                                item.Rate = this.GetCurrencyRate(item.CurrencyId);
-                                item.SetQuantity();
-                                item.ComputeTotalAmount();
-                            });
-                        }
+                        this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
+                            item.Rate = this.GetCurrencyRate(item.CurrencyId);
+                            item.SetQuantity();
+                            item.ComputeTotalAmount();
+                        });
                     }
 
                     else {
@@ -792,42 +655,15 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                                 this.entityArgs.OriginEntity = myResponse.Result;
                                 this.CurrentSession.FireEvent("OriginShipmentLoaded");
 
-                                if (this.OriginShipment.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && !AppTool.IsNullOrEmpty(d.TariffId)).length > 0) {
-                                    var freightTariffId: string = this.OriginShipment.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && !AppTool.IsNullOrEmpty(d.TariffId))[0].TariffId;
+                                var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
+                                Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
+                                this.OnEntityDataGenerated();
 
-                                    var tariffType: string = "";
-                                    if (this.EntityPM.TransportModeId == "A") {
-                                        tariffType = "AFC";
-                                    }
-                                    else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
-                                        tariffType = "OLC";
-                                    }
-                                    else if (AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId)) {
-                                        tariffType = "OFC";
-                                    }
-
-                                    var myDomainService: TariffDomainService = new TariffDomainService();
-                                    myDomainService.GetTariffsPricesConnectedToPayables(freightTariffId, this.EntityPM.Id, tariffType).subscribe((res: any) => {
-                                        if (!res.HasError) {
-                                            if (res.Result) {
-                                                var loadedResults: Array<TariffSearchSummary> = res.Result;
-                                                this.ShipmentGenerator.GeneratePayablesFromOriginShipment(this.OriginShipment);
-                                                this.OpenSummaryWindow(loadedResults[0], this.OriginShipment.ShipmentPayables, tariffType);
-                                            }
-                                        }
-                                    });
-                                }
-
-                                else {
-                                    this.ShipmentGenerator.GeneratePayablesFromOriginShipment(this.OriginShipment);
-                                    this.OnEntityDataGenerated();
-
-                                    this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
-                                        item.Rate = this.GetCurrencyRate(item.CurrencyId);
-                                        item.SetQuantity();
-                                        item.ComputeTotalAmount();
-                                    });
-                                }
+                                this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
+                                    item.Rate = this.GetCurrencyRate(item.CurrencyId);
+                                    item.SetQuantity();
+                                    item.ComputeTotalAmount();
+                                });
                             }
 
                             this.entityArgs.EditComponent.StopBusyIndicator();
@@ -840,146 +676,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
         }
     }
-
-    private OpenSummaryWindow(loadedResult: TariffSearchSummary, originalPayables: ShipmentPayablePM[], tariffType: string) {
-        var message: string = "";
-
-        if (loadedResult == null) {
-            message = "No rates found";
-        }
-
-        else {
-            if (AppTool.IsNullOrEmpty(loadedResult.TariffId)) {
-                if (this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT").length > 0) {
-
-                    var codes: string = "";
-                    this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT").forEach((item: ShipmentPayablePM) => {
-                        if (AppTool.IsNullOrEmpty(codes)) {
-                            codes = item.ChargesTypeCode;
-                        }
-                        else {
-                            codes = codes + ", " + item.ChargesTypeCode;
-                        }
-                    });
-
-                    if (!AppTool.IsNullOrEmpty(codes)) {
-                        message = "No rate for this date for the following lines: " + codes;
-                    }
-                }
-            }
-
-            else {
-                var codes: string = "";
-
-                var feightPayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT")[0];
-                if (feightPayable) {
-                    feightPayable.TariffId = loadedResult.TariffId;
-                    feightPayable.TariffNumber = loadedResult.TariffNumber;
-                    feightPayable.TariffVersion = +loadedResult.VersionId;
-                    feightPayable.TariffLineId = loadedResult.LineId;
-                    var quantity = 1;
-                    var originalPayable: ShipmentPayablePM = originalPayables.filter(d => d.ChargesTypeCode == feightPayable.ChargesTypeCode)[0];
-                    if (originalPayable) {
-                        quantity = originalPayable.Quantity;
-                    }
-
-                    var newPrice: number = 0;                    
-                    if (feightPayable.MeasurementCode == "PRVL" || feightPayable.MeasurementCode == "PRFR" || feightPayable.MeasurementCode == "PFCL") {
-                        var price = loadedResult.ActualPrice * 100;
-                        newPrice = AppTool.Round(price / quantity, 3);
-                    }
-                    else {
-                        newPrice = loadedResult.ActualPrice != null ? AppTool.Round(loadedResult.ActualPrice / quantity, 3) : null;
-                    }
-
-                    if (feightPayable.UnitPrice != newPrice) {                        
-                        feightPayable.UnitPrice = newPrice;
-
-                        if (AppTool.IsNullOrEmpty(codes)) {
-                            codes = feightPayable.ChargesTypeCode;
-                        }
-                        else {
-                            codes = codes + ", " + feightPayable.ChargesTypeCode;
-                        }
-                    }
-                }
-
-                if (loadedResult.SurchargesWithoutAllIn.length == 0) {
-                    var codes1: string = "";
-                    this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode != "FRT").forEach((item: ShipmentPayablePM) => {
-                        if (originalPayables.filter(d => d.ChargesTypeCode == item.ChargesTypeCode).length > 0) {
-
-                            if (AppTool.IsNullOrEmpty(codes1)) {
-                                codes1 = item.ChargesTypeCode;
-                            }
-                            else {
-                                codes1 = codes1 + ", " + item.ChargesTypeCode;
-                            }
-                        }
-                    });
-
-                    if (!AppTool.IsNullOrEmpty(codes1)) {
-                        message = "No rate for this date for the following lines: " + codes1;
-                    }
-                }
-
-                else {
-                    loadedResult.SurchargesWithoutAllIn.forEach((item: SurchargeSummary) => {
-                        var surchargePayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.ChargesTypeCode == item.Code)[0];
-                        if (surchargePayable) {
-                            surchargePayable.TariffId = item.TariffId;
-                            surchargePayable.TariffNumber = item.TariffNumber;
-
-                            var quantity = 1;
-                            var originalPayable: ShipmentPayablePM = originalPayables.filter(d => d.ChargesTypeCode == surchargePayable.ChargesTypeCode)[0];
-                            if (originalPayable) {
-                                quantity = originalPayable.Quantity;
-                            }
-
-                            var newPrice: number = 0;
-                            if (surchargePayable.MeasurementCode == "PRVL" || surchargePayable.MeasurementCode == "PRFR" || surchargePayable.MeasurementCode == "PFCL") {
-                                var price = item.ActualPrice * 100;
-                                newPrice = AppTool.Round(price / quantity, 3);
-                            }
-                            else {
-                                newPrice = item.ActualPrice != null ? AppTool.Round(item.ActualPrice / quantity, 3) : null;
-                            }
-
-                            if (surchargePayable.UnitPrice != newPrice) {
-                                surchargePayable.TariffVersion = +item.VersionId;
-                                surchargePayable.UnitPrice = newPrice;
-
-                                if (AppTool.IsNullOrEmpty(codes)) {
-                                    codes = surchargePayable.ChargesTypeCode;
-                                }
-                                else {
-                                    codes = codes + ", " + surchargePayable.ChargesTypeCode;
-                                }
-                            }
-                        }                        
-                    });
-                }
-
-                if (!AppTool.IsNullOrEmpty(codes)) {
-                    message = "Rate from the tariff changed for the following lines: " + codes;
-                }
-            }
-        }
-
-        this.OnEntityDataGenerated();
-
-        this.ItemsSource.Collection.forEach((item: ShipmentPayableItem) => {
-            item.Rate = this.GetCurrencyRate(item.CurrencyId);
-            item.SetQuantity();
-            item.ComputeTotalAmount();
-        });
-
-        if (!AppTool.IsNullOrEmpty(message)) {
-            var messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Show(message);
-        }
-    }
-
     OnEntityDataGenerated() {
         this.BuildItemsSource();
         this.ComputeShipmentFields();
@@ -992,7 +688,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         }
 
         else {
-            var myLastRate: LastRate = this.AllRates.filter(d => d.ForeignCurrencyId == currencyId)[0];
+            var myLastRate: LastRate = this.AllRates.filter(d=> d.ForeignCurrencyId == currencyId)[0];
             if (myLastRate != null) {
                 myResult = myLastRate.Rate;
             }
@@ -1011,8 +707,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         newItem.UpdateDate = DateTool.GetCurrentDateAsUtc();
         newItem.CreatedByUserId = SessionLocator.LoggedUserId;
         newItem.UpdateByUserId = SessionLocator.LoggedUserId;
-        newItem.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-        newItem.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         newItem.ShipmentPayableLineStatusCode = "EMPT";
         newItem.ShipmentPayableAmountTypeCode = "ACCU";
         newItem.ShipmentPayableAmountTypeName = "Accrual";
@@ -1028,8 +722,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = windowTitle;
         logitudeWindow.DataContext = itemComponent;
-        logitudeWindow.Width = 750;
-        logitudeWindow.Height = 530;
         logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/Payables/AddEditPayableComponent');
     }
     DeleteItem(itemComponent: ShipmentPayableItem) {
@@ -1044,7 +736,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     if (itemComponent.ChargesGroupCode == "FRT") {
                         this.OnFreightAmountChanged();
                     }
-                    this.OnPercentForeignAmountChanged();
+
                     this.ComputeShipmentFields();
                 }
             });
@@ -1112,7 +804,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             }
 
             case "ViewInvoice": {
-                this.ViewAPInvoice(this.SavingRequestParam);                
+                this.RunViewInvoice();
                 break;
             }
 
@@ -1120,65 +812,45 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 this.RunViewQuote();
                 break;
             }
-
-            case "AddCustomsCharges": {
-                this.GetCustomsChargesTariffs();
-                break;
-            }
         }
 
         this.StopSavingFlags();
     }
-    private ViewAPInvoice(invoiceId: string) {
+
+    RunViewInvoice() {
         if (this.SavingRequestParam) {
-            if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
-                this.CheckIfMasterInvoice(invoiceId);
-            }
+            var entityId = this.SavingRequestParam;
 
-            else {
-                this.RunViewInvoice(invoiceId);
-            }
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+
+                    var iFields: any[] = [];
+                    iFields.push({ FieldName: "ShipmentConcurrencyGUID", FieldValue: this.EntityPM.ConcurrencyGUID });
+                    iFields.push({ FieldName: "ShipmentNewConcurrencyGUID", FieldValue: this.EntityPM.NewConcurrencyGUID });
+
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber, EntityFields: iFields });
+
+                    let isEditComponentSaved = false;
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        if (isEditComponentSaved) {
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+                        }
+                    });
+
+                    cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            isEditComponentSaved = true;
+                        }
+                    });
+
+                    cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            isEditComponentSaved = true;
+                        }
+                    });
+                });
         }
-    }
-    RunViewInvoice(entityId: string, mainEntityId: string = null) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                var concurrencyGUID = this.EntityPM.ConcurrencyGUID;
-                var newConcurrencyGUID = this.EntityPM.NewConcurrencyGUID;
-
-                if (!AppTool.IsNullOrEmpty(mainEntityId) && this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
-                    if (this.EntityPM.MasterShipmentDataId == mainEntityId) {
-                        concurrencyGUID = this.EntityPM.HouseMasterConcurrencyGUID;
-                        newConcurrencyGUID = this.EntityPM.HouseMasterNewConcurrencyGUID;
-                    }
-                }
-
-                var iFields: any[] = [];
-                iFields.push({ FieldName: "ShipmentConcurrencyGUID", FieldValue: concurrencyGUID });
-                iFields.push({ FieldName: "ShipmentNewConcurrencyGUID", FieldValue: newConcurrencyGUID });
-
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber, EntityFields: iFields });
-
-                let isEditComponentSaved = false;
-                cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (isEditComponentSaved) {
-                        this.entityArgs.EditComponent.ReloadEntityPM();
-                    }
-                });
-
-                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
-
-                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
-            });
     }
     RunViewQuote() {
         if (this.SavingRequestParam) {
@@ -1249,39 +921,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         logWindow.WindowArgs = this;
         logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Tariffs/TariffsComponent');
     }
-    EditTariffClicked(item: ShipmentPayableItem) {
-        if (item != null) {
-            var editWindow = new LogitudeWindow();
-            editWindow.ShowHeaderButtons = true;
-            editWindow.Title = item.EntityPM.IsCustomsChargesTariff ? "Edit Tariff" : "Price Check";
-            editWindow.Height = 770;
-            editWindow.Width = 1500;
-            var argumentsPriceCheck = { VersionId: item.TariffVersion, LineId: item.TariffLineId, ChargeableWeightInKG: this.EntityPM.OrderChargeableWeight };
-            editWindow.EditComponentArguments = argumentsPriceCheck;
-            editWindow.ShowEditComponent(item.TariffId, "Tariff");
-        }
-    }
-    DeleteTariff(item: ShipmentPayableItem) {
-        if (item != null) {
-            item.TariffId = null;
-            item.TariffNumber = null;
-            item.TariffLineId = null;
-            item.EntityPM.PayablesDisconnectedFromTariff = true;
-            item.SetUIProperties();
-        }
-    }
-    private CheckIfMasterInvoice(invoiceId: string) {
-        var myService: APInvoiceListService = new APInvoiceListService();
-        myService.getSingle(this.SavingRequestParam).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var invoice: APInvoiceList = myResponse.Result;
-                if (invoice != null) {
-                    this.RunViewInvoice(invoiceId, invoice.MainEntityId);
-                }
-            }
-        });
-    }
-
     ComputeShipmentFields() {
         if (this.EntityPM != null) {
             ShipmentTool.ComputeTotals(this.EntityPM);
@@ -1292,14 +931,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     }
     OnFreightAmountChanged() {
         this.ItemsSource.Collection.filter(f => f.ChargesGroupCode != "FRT" && f.MeasurementCode == "PRFR").forEach(item => {
-            if (item.IsLineAttachted == false) {
-                item.SetQuantity();
-            }
-        });
-    }
-
-    OnPercentForeignAmountChanged() {
-        this.ItemsSource.Collection.filter(f => f.MeasurementCode == "PFCL").forEach(item => {
             if (item.IsLineAttachted == false) {
                 item.SetQuantity();
             }
@@ -1329,33 +960,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
-                    case "PFCL": {
-                        var quantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL" ), "ExpectedAmountLocal"),3);
-                        if (item.Quantity != quantity) {
-                            isDifferentOrders = true;
-                        }
-                        break;
-                    }
-
-                    case "SCGW": {
-                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
-                            isDifferentOrders = true;
-                        }
-                        break;
-                    }
-                    case "CWKG": {
-                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
-                            isDifferentOrders = true;
-                        }
-                        break;
-                    }
-                    case "GWKG": {
-                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
-                            isDifferentOrders = true;
-                        }
-                        break;
-                    }
-
                     case "GRWT": {
 
                         if (item.Quantity != this.EntityPM.GrossWeight) {
@@ -1444,15 +1048,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
                         break;
                     }
-
-                    case "VCBM": {
-
-                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
-                            isDifferentOrders = true;
-                        }
-
-                        break;
-                    }
                 }
             });
 
@@ -1488,201 +1083,8 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
         this.CheckUpdateQuantities();
     }
-
-    DeleteAllClicked() {
-        if (this.IsEditingEnabled) {
-
-            if (this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT').length > 0) {
-                var messageWindow = new MessageWindow();
-                messageWindow.Show("Can't delete all, some lines are connected to invoices");
-            }
-
-            else if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableParentId != null).length > 0) {
-                var messageWindow = new MessageWindow();
-                messageWindow.Show("Can't delete all, some lines are connected to master");
-            }
-
-            else {
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Show("Please note that deleting will erase all the lines with the amounts inserted");
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.Yes) {
-                        this.EntityPM.ShipmentPayables = [];
-                        this.EntityPM.IsDeletingAllPayables = true;
-                        this.EntityPM.IsDirty = true;
-                        this.BuildItemsSource();
-                        this.ComputeShipmentFields();
-                    }
-                });
-            }
-        }
-    }
-
-    public UpdateCustomsChargesMessage: string;
-    public UpdateCustomsChargesMessageWidth: number = 0;
-    public IsUpdateCustomsChargesVisible: boolean = false;
-    public IsUpdatingCustomsCharges: boolean = false;
-    CheckUpdateCustomsCharges() {        
-        var updateMessage: string = null;
-
-        if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
-            updateMessage = "Shipment details have been updated, update the generated customs charges?";
-        }
-        
-        this.UpdateCustomsChargesMessage = updateMessage;
-        this.UpdateCustomsChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
-        this.IsUpdateCustomsChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
-    }
-    UpdateCustomsChargesClicked() {
-        var deletedCustomsPayables: ShipmentPayablePM[] = this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff
-            && !(d.ShipmentPayableLineStatusCode == 'PACC' || d.ShipmentPayableLineStatusCode == 'ACCT'));
-
-        var deletedPartnerIds: string[] = SessionLocator.ChangedShipmentPartnersIds.split(',');
-
-        deletedCustomsPayables = deletedCustomsPayables.filter(d => deletedPartnerIds.indexOf(d.VendorId) > -1);      
-
-        if (deletedCustomsPayables.length > 0) {
-            deletedCustomsPayables.forEach((item: ShipmentPayablePM) => {
-                this.EntityPM.RemovePayable(item);
-            });
-
-            this.UpdateCustomsChargesMessage = null;
-            this.UpdateCustomsChargesMessageWidth = 0;
-            this.IsUpdateCustomsChargesVisible = false;
-            deletedPartnerIds = null;
-            this.AddCustomsChargesClicked(false);
-        }
-
-        SessionLocator.ChangedShipmentPartnersIds = "";
-    }
-
-    AddCustomsChargesClicked(isAddingNewCharges: boolean) {
-        this.IsUpdatingCustomsCharges = !isAddingNewCharges;
-        if (AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentExportId) && AppTool.IsNullOrEmpty(this.EntityPM.CustomAgentImportId) && isAddingNewCharges) {
-            var messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Show("Custom Agent Export or Custom Agent Import is required");
-        }
-
-        else {
-            if (this.EntityPM.IsDirty) {
-                if (!this.SavingRequested) {
-                    this.SavingRequested = true;
-                    this.SavingRequestCode = "AddCustomsCharges";
-                    this.SaveChanges();
-                }
-            }          
-
-            else {
-                this.GetCustomsChargesTariffs();
-            }
-        }
-    }
-    private GetCustomsChargesTariffs() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-
-        var args: CustomsChargesTariffSearchArgs = new CustomsChargesTariffSearchArgs();
-        args.FromCountryId = this.EntityPM.FromCountryId;
-        args.ToCountryId = this.EntityPM.MainCarriageFinalDestinationPortCountryId;;
-        args.MainCarriageATD = this.EntityPM.MainCarriageATD;
-        args.MainCarriageETD = this.EntityPM.MainCarriageETD;
-        args.FriehgtAmount = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount");;
-        args.ForiegnChargesAmount = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
-        args.ShipmentId = this.EntityPM.Id;
-        args.LocalCurrencyId = SessionLocator.LocalCurrencyId;
-
-        var tariffService: TariffDomainService = new TariffDomainService();
-        tariffService.GetAvailableCustomsChargesTariffs(args).subscribe((res: ServiceResponse) => {
-            if (!res.HasError) {
-                if (res.Result) {
-                    args = res.Result;
-                    this.CreateCustomChargesPayables(args.CustomsChargesPayables);
-                }
-            }
-
-            else {
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = res.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
-            }
-        });
-    }
-    private CreateCustomChargesPayables(customsChargesPayables: CustomsChargesPayable[]) {
-        if (customsChargesPayables != null) {
-            this.newAddedTariffPayableCount = 0;
-            customsChargesPayables.forEach((payable: CustomsChargesPayable) => {
-                this.AddNewTariffPayable(payable);
-            });
-        }
-
-        this.BuildItemsSource();
-        this.CurrentSession.StopBusyIndicator();
-        if (this.newAddedTariffPayableCount == 0 && !this.IsUpdatingCustomsCharges ) {
-            var messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Show("No Available Customs Charges Can Be Added");
-        }
-    }
-    private AddNewTariffPayable(payable: CustomsChargesPayable) {
-        var samePayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => AppTool.IsNullOrEmpty(d.TariffId) && d.IsCustomsChargesTariff && d.ChargesTypeId == payable.ChargeTypeId && d.MeasurementId == payable.UnitOfMesurmentId)[0];
-        if (samePayable) {
-            var index = this.EntityPM.ShipmentPayables.indexOf(samePayable);
-            if (index > -1) {
-                this.EntityPM.RemovePayable(samePayable);
-            }
-        }
-
-        var alreadyAddedPayable: ShipmentPayablePM = this.EntityPM.ShipmentPayables.filter(d => d.TariffId == payable.TariffId && d.ChargesTypeId == payable.ChargeTypeId && d.MeasurementId == payable.UnitOfMesurmentId)[0];
-
-        if (alreadyAddedPayable == null) {
-            this.newAddedTariffPayableCount += 1;
-            this.myChargesTypeListService.getSingleFromCache(payable.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var chargesType: ChargesTypeList = myResponse.Result;
-                    var shipmentPayable: ShipmentPayablePM = this.ShipmentGenerator.GeneratePayablesFromTariff(chargesType);
-                    shipmentPayable.IsCustomsChargesTariff = true;
-                    shipmentPayable.TariffId = payable.TariffId;
-                    shipmentPayable.TariffNumber = payable.TariffNumber;
-                    shipmentPayable.TariffLineId = payable.TariffLineId;
-                    shipmentPayable.TariffVersion = payable.VersionId;
-                    shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
-                    shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
-                    shipmentPayable.ShipmentId = this.EntityPM.Id;
-                    shipmentPayable.ChargesTypeId = chargesType.Id;
-                    shipmentPayable.ChargesTypeCode = chargesType.Code;
-                    shipmentPayable.ChargesTypeName = chargesType.EnglishName;
-                    shipmentPayable.ChargesGroupCode = chargesType.ChargesGroupCode;
-                    shipmentPayable.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                    shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
-                    shipmentPayable.Tenant = this.EntityPM.Tenant;
-                    shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
-                    shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                    shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
-                    shipmentPayable.MeasurementId = payable.UnitOfMesurmentId;
-                    shipmentPayable.MeasurementCode = payable.UnitOfMesurmentCode;
-                    shipmentPayable.CurrencyId = payable.CurrencyId;
-                    shipmentPayable.CurrencyCode = payable.CurrencyCode;
-                    shipmentPayable.Rate = payable.Rate;
-                    shipmentPayable.ProfitCurrencyExchangeRate = this.ShipmentGenerator.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
-                    shipmentPayable.Quantity = payable.Quantity;
-                    shipmentPayable.ExpectedAmount = AppTool.Round(payable.ExpectedAmount, 2);
-                    shipmentPayable.ExpectedAmountLocal = AppTool.Round(payable.LocalExpectedAmount, 2);
-                    shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
-                    shipmentPayable.OpenAmount = AppTool.Round(shipmentPayable.ExpectedAmount, 2);
-                    shipmentPayable.OpenAmountInLocalCurrency = AppTool.Round(payable.LocalExpectedAmount, 2);
-                    shipmentPayable.OpenAmountInProfitCurrency = AppTool.Round(payable.ProfitExpectedAmount, 2);
-                    shipmentPayable.Notes = payable.Notes;
-                    shipmentPayable.MinAmount = AppTool.Round(payable.MinAmount, 2);
-                    shipmentPayable.UnitPrice = AppTool.Round(payable.Price, 3);
-                    shipmentPayable.VendorId = payable.SellerId;
-                    shipmentPayable.VendorName = payable.SellerName;
-                    this.ShipmentGenerator.CalculatePayableVatAmount(shipmentPayable);
-                    this.EntityPM.AddPayable(shipmentPayable);
-                }
-            });
-        }
-    }
 }
 export class ShipmentPayableItem extends BaseComponent {
-  public IsMinFromQuoteIconVisible: boolean = false; // fix angular 9
-
     public EntityPM: ShipmentPayablePM;
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentPayable";
@@ -1705,7 +1107,7 @@ export class ShipmentPayableItem extends BaseComponent {
         this.BuildInsidePayables();
     }
 
-    // SetUIProperties
+     // SetUIProperties
     public IsRateEnabled: boolean = false;
     public IsQuantityEnabled: boolean = false;
     public IsUnitPriceEnabled: boolean = false;
@@ -1715,8 +1117,6 @@ export class ShipmentPayableItem extends BaseComponent {
     public IsLineAttachted: boolean = false;
     public IsProfitAmountVisible: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
-    public IsChargeEnabled: boolean = false;
-
     SetUIProperties() {
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
@@ -1743,7 +1143,7 @@ export class ShipmentPayableItem extends BaseComponent {
 
             if (this.EntityPM.ShipmentPayableAmountTypeCode == "NEXP" || this.EntityPM.ShipmentPayableLineStatusCode == "EMPT" || this.EntityPM.ShipmentPayableLineStatusCode == "OAMT") {
                 isOpenAmountEnabled = false;
-            }
+            }            
 
             if (isLineAttachted) {
                 isEditingEnabled = false;
@@ -1760,7 +1160,7 @@ export class ShipmentPayableItem extends BaseComponent {
             if (this.IsNewEntity) {
                 isChargeEnabled = true;
             }
-
+            
             if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentEditExchangeRate")) {
                 if (this.CurrencyId != null) {
                     if (this.CurrencyId != SessionLocator.LocalCurrencyId) {
@@ -1768,21 +1168,14 @@ export class ShipmentPayableItem extends BaseComponent {
                     }
                 }
             }
+
+            isQuantityEnabled = true;
             if (!this.EntityPM.IsChargeBySteps) {
                 isUnitPriceEnabled = true;
                 isTotalAmountEnabled = true;
-            }
-
-            isQuantityEnabled = true;
-
-            if (!AppTool.IsNullOrEmpty(this.TariffId)) {
-                isChargeEnabled = false;
-                isQuantityEnabled = false;
-                isUnitPriceEnabled = false;
-                isTotalAmountEnabled = false;
-            }
+            }                       
         }
-
+        
         this.IsRateEnabled = isRateEnabled;
         this.IsQuantityEnabled = isQuantityEnabled;
         this.IsUnitPriceEnabled = isUnitPriceEnabled;
@@ -1790,27 +1183,22 @@ export class ShipmentPayableItem extends BaseComponent {
         this.IsOpenAmountEnabled = isOpenAmountEnabled;
         this.IsEditingEnabled = isEditingEnabled;
         this.IsLineAttachted = isLineAttachted;
-        this.IsChargeEnabled = isChargeEnabled;
-        this.SetUIProperties_SetEnable();
-        this.SetUIProperties_AmountProfit();
-        this.SetUIProperties_MeasurementId();
-    }
 
-    SetUIProperties_SetEnable() {
-        var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
-        this.UIProperties.SetEnabled("ExpectedAmount", this.ObjectTableName, this.IsTotalAmountEnabled || (isFromTariff &&this.IsEditingEnabled));
+        this.UIProperties.SetEnabled("ExpectedAmount", this.ObjectTableName, this.IsTotalAmountEnabled);
         this.UIProperties.SetEnabled("ExpectedAmountLocal", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("Rate", this.ObjectTableName, this.IsRateEnabled || (isFromTariff &&this.IsEditingEnabled));
-        this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, this.IsChargeEnabled || (isFromTariff &&this.IsEditingEnabled));
-        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsQuantityEnabled || (isFromTariff &&this.IsEditingEnabled));
-        this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, this.IsUnitPriceEnabled || (isFromTariff &&this.IsEditingEnabled));
+
+        this.UIProperties.SetEnabled("Rate", this.ObjectTableName, isRateEnabled);
+        this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, isChargeEnabled);
+        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsQuantityEnabled);
+        this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, this.IsUnitPriceEnabled);
         this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("MeasurementId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PrepaidCollectId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
+        this.SetUIProperties_AmountProfit();
+        this.SetUIProperties_MeasurementId();
     }
-
     SetUIProperties_AmountProfit() {
         var isFieldVisible = false;
 
@@ -1851,17 +1239,8 @@ export class ShipmentPayableItem extends BaseComponent {
         this.SetMaxFromTarrifIconVisibility();
         this.SetOpenAmountCell();
         this.SetExpectedAmountCell();
-
+        this.IsAccountedAmountVisible = this.AccountedAmount != null && this.AccountedAmount != 0;
         this.IsInvoicesIconVisible = (this.EntityPM.ShipmentPayableLineStatusCode == "PACC" || this.EntityPM.ShipmentPayableLineStatusCode == "ACCT") ? true : false;
-        this.IsAccountedAmountVisible = false;
-
-        if (this.ExpectedAmount != 0 && this.ExpectedAmount != null) {
-            this.IsAccountedAmountVisible = this.AccountedAmount != null && this.AccountedAmount != 0;
-        }
-
-        else {
-            this.IsAccountedAmountVisible = this.IsInvoicesIconVisible;
-        }
     }
     SetSatusTypeToolTip() {
         var myResult: string;
@@ -1917,7 +1296,7 @@ export class ShipmentPayableItem extends BaseComponent {
 
         if (culculatedAmount != null) {
             if (this.MinAmount != null) {
-                if (culculatedAmount <= this.MinAmount) {
+                if (culculatedAmount < this.MinAmount) {
                     isVisible = true;
                 }
             }
@@ -1953,7 +1332,7 @@ export class ShipmentPayableItem extends BaseComponent {
             var sumOfAmount = ArrayTool.Sum(this.InsideItemsSource, "ExpectedAmount");
             var sumOfAmount = AppTool.Round(sumOfAmount, 2);
 
-            if ((sumOfAmount < 0 || sumOfAmount > 0) && !AppTool.IsNullOrEmpty(this.ExpectedAmount) && sumOfAmount != this.ExpectedAmount) {
+            if ((sumOfAmount < 0 || sumOfAmount > 0) && !AppTool.IsNullOrEmpty(this.ExpectedAmount) && sumOfAmount != this.ExpectedAmount) {            
                 myColor = FontTool.Red;
             }
 
@@ -1976,6 +1355,7 @@ export class ShipmentPayableItem extends BaseComponent {
     public IsOpenAmountVisible: boolean = false;
     public OpenAmountColor: string = null;
     SetOpenAmountCell() {
+
         var isOpenAmountVisible = true;
 
         if (AppTool.IsNullOrEmpty(this.OpenAmount)) {
@@ -1983,7 +1363,7 @@ export class ShipmentPayableItem extends BaseComponent {
         }
 
         else if (this.OpenAmount == 0) {
-            if (this.ExpectedAmount != 0 && (AppTool.IsNullOrZero(this.Quantity) || AppTool.IsNullOrZero(this.UnitPrice))) {
+            if (AppTool.IsNullOrZero(this.Quantity) || AppTool.IsNullOrZero(this.UnitPrice)) {
                 isOpenAmountVisible = false;
             }
         }
@@ -2014,35 +1394,7 @@ export class ShipmentPayableItem extends BaseComponent {
     get ChargesTypeCode() { return this.EntityPM.ChargesTypeCode; }
     get ChargesTypeName() { return this.EntityPM.ChargesTypeName; }
     get ChargesGroupCode() { return this.EntityPM.ChargesGroupCode; }
-    get TariffNumber() { return this.EntityPM.TariffNumber; }
-    set TariffNumber(value: string) {
-        if (value != this.EntityPM.TariffNumber) {
-            this.EntityPM.TariffNumber = value;
-        }
-    }
-    get TariffId() {
-        return this.EntityPM.TariffId;
-    }
-    set TariffId(value: string) {
-        if (value != this.EntityPM.TariffId) {
-            this.EntityPM.TariffId = value;
-        }
-    }
-    get TariffVersion() { return this.EntityPM.TariffVersion; }
-    set TariffVersion(value: number) {
-        if (value != this.EntityPM.TariffVersion) {
-            this.EntityPM.TariffVersion = value;
-        }
-    }
-    get TariffLineId() {
-        return this.EntityPM.TariffLineId;
-    }
-    set TariffLineId(value: string) {
-        if (value != this.EntityPM.TariffLineId) {
-            this.EntityPM.TariffLineId = value;
-        }
-    }
-    
+
     get ChargesTypeId() { return this.EntityPM.ChargesTypeId; }
     set ChargesTypeId(value: string) {
         if (this.EntityPM.ChargesTypeId != value) {
@@ -2095,17 +1447,12 @@ export class ShipmentPayableItem extends BaseComponent {
 
             this.SetPrepaidCollectId();
 
-            if (!AppTool.IsNullOrEmpty(list.PayablesDefaultCurrencyId)) {
-                this.CurrencyId = list.PayablesDefaultCurrencyId;
+            if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
+                this.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
             }
-            else {
-                if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
-                    this.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-                }
 
-                else {
-                    this.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
-                }
+            else {
+                this.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
             }
 
             if (this.fatherComponent.IsLCLEntity) {
@@ -2128,7 +1475,7 @@ export class ShipmentPayableItem extends BaseComponent {
             this.CurrencyId = null;
             this.VatTypeId = null;
             this.EntityPM.IATACodeId = null;
-            //this.EntityPM.IsBackToBack = false;
+                //this.EntityPM.IsBackToBack = false;
         }
     }
 
@@ -2176,7 +1523,7 @@ export class ShipmentPayableItem extends BaseComponent {
                         this.SetLineRate();
                     }
                 });
-            }
+            }            
         }
     }
 
@@ -2205,8 +1552,7 @@ export class ShipmentPayableItem extends BaseComponent {
             }
         }
     }
-
-    public AddEditPayableComponent: any;
+    
     get MeasurementId() { return this.EntityPM.MeasurementId; }
     set MeasurementId(newValue: string) {
         if (this.EntityPM.MeasurementId != newValue) {
@@ -2220,7 +1566,7 @@ export class ShipmentPayableItem extends BaseComponent {
                 this.Quantity = null;
                 this.EntityPM.MeasurementCode = null;
                 this.EntityPM.MeasurementShortName = null;
-                this.UpdateInsideItemsSource_Measurement();     
+                this.UpdateInsideItemsSource_Measurement();
             }
 
             else {
@@ -2240,9 +1586,7 @@ export class ShipmentPayableItem extends BaseComponent {
                                 case "FIXD": { this.Quantity = 1; break; }
                                 case "GWTN": { this.Quantity = this.ShipmentPM.GrossWeightPerTon; break; }
                                 case "QTY": { this.Quantity = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
-                                case "CWKG": { this.Quantity = this.ShipmentPM.ChargeableWeightInKG; break; }
-                                case "GWKG": { this.Quantity = this.ShipmentPM.GrossWeightInKG; break; }
-                                case "VCBM": { this.Quantity = this.ShipmentPM.VolumeInCBM; break; }
+
                                 case "PRVL": {
                                     this.Quantity = this.ShipmentPM.ValueOfGoods;
                                     this.CurrencyId = this.ShipmentPM.ValueOfGoodsCurrencyId;
@@ -2258,20 +1602,6 @@ export class ShipmentPayableItem extends BaseComponent {
                                 case "BCNT": {
                                     this.IsByContainerType = true;
                                     this.BuildByContainersItemsSource();
-                                    if (this.AddEditPayableComponent) {
-                                        this.AddEditPayableComponent.LoadByContainerAdditionalFieldsArea();
-                                    }
-
-                                    break;
-                                }
-
-                                case "SCGW": {
-                                    this.Quantity = this.ShipmentPM.GrossWeightPerStorageDays;
-                                    break;
-                                }
-
-                                case "PFCL": {
-                                    this.Quantity = AppTool.Round(ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"),3);
                                     break;
                                 }
 
@@ -2290,7 +1620,7 @@ export class ShipmentPayableItem extends BaseComponent {
                         }
                     }
                 });
-            }
+            }            
         }
     }
     get MeasurementCode() { return this.EntityPM.MeasurementCode; }
@@ -2345,8 +1675,6 @@ export class ShipmentPayableItem extends BaseComponent {
             newEntity.MeasurementId = itemGrouped.MeasurementId;
             newEntity.MeasurementCode = itemGrouped.MeasurementCode;
             newEntity.MeasurementShortName = itemGrouped.MeasurementShortName;
-            newEntity.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-            newEntity.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
 
             var exsistingEntity = byContainersItemsSource.filter(f => f.ChargesTypeId == newEntity.ChargesTypeId && f.MeasurementId == newEntity.MeasurementId)[0];
             if (exsistingEntity == null) {
@@ -2395,7 +1723,6 @@ export class ShipmentPayableItem extends BaseComponent {
         }
     }
 
-    public VendorCardEntity: CardList = null;
     get VendorName() { return this.EntityPM.VendorName; }
     get VendorId() { return this.EntityPM.VendorId; }
     set VendorId(newValue: string) {
@@ -2411,16 +1738,14 @@ export class ShipmentPayableItem extends BaseComponent {
                 var myService: CardListService = new CardListService();
                 myService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        this.VendorCardEntity = myResponse.Result;
-                        if (this.VendorCardEntity != null) {
-                            this.EntityPM.VendorName = this.VendorCardEntity.EnglishName;
+                        var list: CardList = myResponse.Result;
+                        if (list != null) {
+                            this.EntityPM.VendorName = list.EnglishName;
                             this.UpdateInsideItemsSource_Vendor();
                         }
                     }
                 });
-            }
-
-            this.fatherComponent.ShipmentGenerator.CalculatePayableVatAmount(this.EntityPM);
+            }            
         }
     }
 
@@ -2526,13 +1851,7 @@ export class ShipmentPayableItem extends BaseComponent {
                 item.SetLineSummary();
             });
 
-            this.ComputeInsidePayablesData();
-
-            if (!this.fatherComponent.ShipmentGenerator) {
-                this.fatherComponent.InitializeShipmentGenerator();
-            }
-
-            this.fatherComponent.ShipmentGenerator.CalculatePayableVatAmount(this.EntityPM);
+            this.ComputeInsidePayablesData();                       
         }
     }
 
@@ -2540,12 +1859,6 @@ export class ShipmentPayableItem extends BaseComponent {
     set ExpectedAmountInProfitCurrency(newVaule: number) {
         if (this.EntityPM.ExpectedAmountInProfitCurrency != newVaule) {
             this.EntityPM.ExpectedAmountInProfitCurrency = AppTool.Round(newVaule, 2);
-
-            if (!this.fatherComponent.ShipmentGenerator) {
-                this.fatherComponent.InitializeShipmentGenerator();
-            }
-
-            this.fatherComponent.ShipmentGenerator.CalculatePayableVatAmount(this.EntityPM);
         }
     }
 
@@ -2627,7 +1940,7 @@ export class ShipmentPayableItem extends BaseComponent {
     get CorrectionDate() { return this.EntityPM.CorrectionDate; }
     set CorrectionDate(value: Date) {
         if (this.EntityPM.CorrectionDate != value) {
-            this.EntityPM.CorrectionDate = value;
+            this.EntityPM.CorrectionDate = value;            
         }
     }
 
@@ -2719,14 +2032,7 @@ export class ShipmentPayableItem extends BaseComponent {
                     }
 
                     else {
-                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
-                            var price = this.EntityPM.ExpectedAmount / this.EntityPM.Quantity;
-                            myResult = 100 * price;
-                        }
-
-                        else {
-                            myResult = this.EntityPM.ExpectedAmount / this.EntityPM.Quantity;
-                        }
+                        myResult = this.EntityPM.ExpectedAmount / this.EntityPM.Quantity;
                     }
                 }
 
@@ -2734,12 +2040,12 @@ export class ShipmentPayableItem extends BaseComponent {
             }
         }
     }
-    public ComputeTotalAmount() {
+    ComputeTotalAmount() {
 
         var iAmount: number = null;
 
         if (this.Quantity != null && this.UnitPrice != null) {
-            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
+            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
                 var price = this.EntityPM.UnitPrice / 100;
                 iAmount = this.EntityPM.Quantity * price;
             }
@@ -2778,7 +2084,7 @@ export class ShipmentPayableItem extends BaseComponent {
                 }
             }
         }
-
+       
         this.EntityPM.ExpectedAmount = AppTool.Round(iAmount, 2);
         this.ComputeTotalAmountLocal();
         this.SetLineCells();
@@ -2854,29 +2160,67 @@ export class ShipmentPayableItem extends BaseComponent {
         logWindow.Show('./CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent');
     }
 
-    get CreatedByUserName() { return this.EntityPM.CreatedByUserName; }
-    set CreatedByUserName(newVaule: string) {
-        if (this.EntityPM.CreatedByUserName != newVaule) {
-            this.EntityPM.CreatedByUserName = newVaule;
-        }
-    }
-
-    get UpdatedByUserName() { return this.EntityPM.UpdateByUserName; }
-    set UpdatedByUserName(newVaule: string) {
-        if (this.EntityPM.UpdateByUserName != newVaule) {
-            this.EntityPM.UpdateByUserName = newVaule;
-        }
-    }
-
     // Line Summary
     get CreateDate() { return this.EntityPM.CreateDate; }
-    get UpdateDate() { return this.EntityPM.UpdateDate; }    
+    get UpdateDate() { return this.EntityPM.UpdateDate; }
+    public CreatedByUserName: string = null;
+    public UpdatedByUserName: string = null;
     public ReceivableSummary: number = null;
     public PayableSummary: number = null;
     public ProfitSummary: number = null;
     SetLineSummary() {
+
+        if (AppTool.IsNullOrEmpty(this.UpdatedByUserName)) {       
+            this.fatherComponent.myUserListService.getSingleFromCache(this.EntityPM.CreatedByUserId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: UserList = myResponse.Result;
+                    if (list) {
+                        this.CreatedByUserName = list.EnglishName;
+                    }
+
+                    else {
+                        this.fatherComponent.myUserListService.getSingle(this.EntityPM.CreatedByUserId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: UserList = myResponse.Result;
+                                if (list) {
+                                    this.CreatedByUserName = list.EnglishName;
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+
+            if (this.EntityPM.UpdateByUserId == this.EntityPM.CreatedByUserId) {
+                this.UpdatedByUserName = this.CreatedByUserName;
+            }
+
+            else {
+                this.fatherComponent.myUserListService.getSingleFromCache(this.EntityPM.UpdateByUserId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: UserList = myResponse.Result;
+                        if (list) {
+                            this.UpdatedByUserName = list.EnglishName;
+                        }
+
+                        else {
+                            this.fatherComponent.myUserListService.getSingle(this.EntityPM.UpdateByUserId).subscribe((myResponse: ServiceResponse) => {
+                                if (!myResponse.HasError) {
+                                    var list: UserList = myResponse.Result;
+                                    if (list) {
+                                        this.UpdatedByUserName = list.EnglishName;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+
         var myReceivableSummary = 0;
         var myPayableSummary = 0;
+        var myProfitSummary = 0;
 
         if (this.ShipmentPM.ShipmentReceivables.length > 0) {
             myReceivableSummary = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(f => f.ChargesTypeId == this.ChargesTypeId), "TotalAmountLocal");
@@ -2913,10 +2257,10 @@ export class ShipmentPayableItem extends BaseComponent {
             if (value) {
                 if (!this.isInvoicesListLoaded) {
                     this.isInvoicesListLoaded = true;
-
+                    
                     this.fatherComponent.myDomainService.GetPayableInvoices(this.EntityPM.Id, this.EntityPM.ShipmentPayableParentId).subscribe((myResponse: ServiceResponse) => {
-                        if (!myResponse.HasError) {
-                            this.PayableInvoices = myResponse.Result;
+                        if (!myResponse.HasError) {                           
+                            this.PayableInvoices = myResponse.Result;                            
                         }
                     });
                 }
@@ -2938,7 +2282,7 @@ export class ShipmentPayableItem extends BaseComponent {
         });
 
         this.ComputeInsidePayablesTotals();
-    }
+    }   
     UpdateInsideItemsSource_Rate() {
         if (this.ShipmentPM.ShipmentLevelCode == "C") {
             this.InsideItemsSource.forEach(insidePayable => {
@@ -2989,14 +2333,6 @@ export class ShipmentPayableItem extends BaseComponent {
 
                     this.InsideItemsSource.forEach(item => {
                         switch (this.MeasurementCode) {
-                            case "VCBM": {
-                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "VolumeInCBM");
-                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
-                                unitPrice = _Ratio * this.UnitPrice;
-                                quantity = item.VolumeInCBM;
-                                break;
-                            }
-
                             case "VOLU": {
                                 _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "Volume");
                                 _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
@@ -3018,21 +2354,6 @@ export class ShipmentPayableItem extends BaseComponent {
                                 _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
                                 unitPrice = _Ratio * this.UnitPrice;
                                 quantity = item.GrossWeightPerTon;
-                                break;
-                            }
-
-                            case "CWKG": {
-                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "ChargeableWeightInKG");
-                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
-                                unitPrice = _Ratio * this.UnitPrice;
-                                quantity = item.ChargeableWeightInKG;
-                                break;
-                            }
-                            case "GWKG": {
-                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "GrossWeightInKG");
-                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
-                                unitPrice = _Ratio * this.UnitPrice;
-                                quantity = item.GrossWeightInKG;
                                 break;
                             }
 
@@ -3089,18 +2410,6 @@ export class ShipmentPayableItem extends BaseComponent {
                                 break;
                             }
 
-                            case "SCGW": {
-                                unitPrice = this.UnitPrice;
-                                quantity = item.GrossWeightPerStorageDays;
-                                break;
-                            }
-
-                            case "PFCL": {
-                                unitPrice = this.UnitPrice;
-                                quantity = item.PercentForeignChargesLocal;
-                                break;
-                            }
-
                             default: {
                                 if (this.fatherComponent.IsFCLEntity) {
                                     var list: PackageTypeList = AllPackageTypes.filter(f => f.MeasurementId == this.MeasurementId)[0];
@@ -3142,7 +2451,7 @@ export class ShipmentPayableItem extends BaseComponent {
 
                         var expectedAmount = quantity * unitPrice;
 
-                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL" ) {
+                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
                             expectedAmount = quantity * unitPrice / 100;
                         }
 
@@ -3165,7 +2474,7 @@ export class ShipmentPayableItem extends BaseComponent {
                     this.ComputeInsidePayablesTotals();
                 }
             });
-        }
+        } 
     }
     ComputeInsidePayablesTotals() {
         this.SumOfQuantity = ArrayTool.Sum(this.InsideItemsSource, "Quantity");
@@ -3187,12 +2496,6 @@ export class ShipmentPayableItem extends BaseComponent {
             case "PRFR": { result = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
             case "GWTN": { result = this.ShipmentPM.GrossWeightPerTon; break; }
             case "QTY": { result = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
-            case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
-            case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
-            case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
-            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
-            
-            case "PFCL": { result = AppTool.Round(ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"),3); break;}
             case "BCNT": {
                 break;
             }
@@ -3217,8 +2520,6 @@ export class ShipmentPayableItem extends BaseComponent {
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.OnFreightAmountChanged();
         }
-
-        this.fatherComponent.OnPercentForeignAmountChanged();
     }
 }
 export class InsidePayableViewModel {
@@ -3229,7 +2530,7 @@ export class InsidePayableViewModel {
         this.EntityPM = entityPM;
         this.ShipmentPM = myConsoleShipmentPM;
         this.ProfitCurrencyId = profitCurrencyId;
-        this.SetSatusTypeToolTip();
+        this.SetSatusTypeToolTip();        
     }
 
     public SatusTypeToolTip: string = null;
@@ -3259,11 +2560,6 @@ export class InsidePayableViewModel {
     get FreightReceivablesAmount() { return this.ShipmentPM.FreightReceivablesAmount; }
     get NumberOfPackages() { return this.ShipmentPM.NumberOfPackages; }
     get NumberOfContainers() { return this.ShipmentPM.NumberOfContainers; }
-    get ChargeableWeightInKG() { return this.ShipmentPM.ChargeableWeightInKG; }
-    get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
-    get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
-    get GrossWeightPerStorageDays() { return this.ShipmentPM.GrossWeightPerStorageDays; }
-    get PercentForeignChargesLocal() { return this.ShipmentPM.PercentForeignChargesLocal; }
 
     // Payable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -3337,46 +2633,6 @@ export class InsidePayableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
-            case "PFCL": {
-                if (this.ShipmentPM) {
-                    myQuantity = this.ShipmentPM.PercentForeignChargesLocal;
-                }
-
-                break;
-            }
-
-            case "SCGW": {
-                if (this.ShipmentPM) {
-                    myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
-                }
-
-                break;
-            }
-
-            case "CWKG": {
-                if (this.ShipmentPM) {
-                    myQuantity = this.ShipmentPM.ChargeableWeightInKG;
-                }
-
-                break;
-            }
-
-            case "GWKG": {
-                if (this.ShipmentPM) {
-                    myQuantity = this.ShipmentPM.GrossWeightInKG;
-                }
-
-                break;
-            }
-
-            case "VCBM": {
-                if (this.ShipmentPM) {
-                    myQuantity = this.ShipmentPM.VolumeInCBM;
-                }
-
-                break;
-            }
-
             case "GRWT": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeight;
@@ -3556,7 +2812,7 @@ export class InsidePayableViewModel {
         if (this.Quantity != null && this.UnitPrice != null) {
             iAmount = this.Quantity * this.UnitPrice;
 
-            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
+            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
                 iAmount = this.Quantity * this.UnitPrice / 100;
             }
         }
@@ -3633,5 +2889,5 @@ export class InsidePayableViewModel {
                 this.EntityPM.OpenAmountInProfitCurrency = this.EntityPM.OpenAmountInLocalCurrency / this.EntityPM.ProfitCurrencyExchangeRate;
             }
         }
-    }
+    }    
 }

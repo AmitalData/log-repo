@@ -26,7 +26,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public partial class ShipmentTypeQueryService
     {
 
-        public ShipmentType ShipmentTypeCustomDataMapping(string EntityId, int Tenant, string ComputingPartnerName = "")
+        public ShipmentType ShipmentTypeCustomDataMapping(string EntityId, int Tenant)
         {
             ShipmentTypePM MyEntityPM = query.GetSinglePM(EntityId, Tenant);
             var temp = new ShipmentType();
@@ -40,7 +40,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             }
             else
             {
-                if (MyEntityPM.Id == "Air") return null;
                 temp.Code = MyEntityPM.Id;
             }
 
@@ -48,7 +47,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             return temp;
         }
 
-        public ShipmentTypePM ShipmentTypeCustomDataMappingAndValidatin(ShipmentType MyEntity, int Tenant, bool isUpdate = false)
+        public ShipmentTypePM ShipmentTypeCustomDataMappingAndValidatin(ShipmentType MyEntity, int Tenant)
         {
             var temp = new ShipmentTypePM();
             if (!string.IsNullOrEmpty(MyEntity.Code))

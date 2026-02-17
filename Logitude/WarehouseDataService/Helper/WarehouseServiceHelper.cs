@@ -27,12 +27,11 @@ namespace WarehouseDataService.Helper
                 try
                 {
                     countStart = commandRowCount.ExecuteScalar().ToString();
-                    sourceConnection.Close();
+
 
                 }
                 catch (Exception ex)
                 {
-                    sourceConnection.Close();
 
                     // MessageBox.Show(ex.Message);
                 }
@@ -41,18 +40,17 @@ namespace WarehouseDataService.Helper
             return countStart;
         }
 
-
-
-
-        public bool GetFieldValueFromDBByTableNameAndFieldName(string fieldName, string tableName,string connectionString)
+        public bool GetWarehouseFieldFromSettings(string fieldName, string connectionString)
         {
+            string connection = connectionString.Replace("Main", "Global");
+
             bool result = false;
-            
-            SqlConnection con = new SqlConnection(connectionString);
+
+            SqlConnection con = new SqlConnection(connection);
 
             SqlCommand com = new SqlCommand(
 "select " + fieldName + " " +
-"FROM dbo." + tableName + " ;", con);
+"FROM dbo.Settings" + " ;", con);
 
             try
             {
@@ -60,14 +58,8 @@ namespace WarehouseDataService.Helper
 
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
-                    if (reader.Read())
-                    {
-                        if (reader[fieldName] != null)
-                        {
-                            result = (bool)(reader[fieldName]);
-                        }
-
-                    }
+                    reader.Read();
+                    result = (bool)(reader[fieldName]);
                 }
             }
             finally
@@ -79,13 +71,16 @@ namespace WarehouseDataService.Helper
 
         public DateTime? GetDWNextRunTime(string connectionString)
         {
+
+            string connection = connectionString.Replace("Main", "Global");
+
             DateTime? result = null;
 
-            SqlConnection con = new SqlConnection(connectionString);
+            SqlConnection con = new SqlConnection(connection);
 
             SqlCommand com = new SqlCommand(
 "select DWNextRunTime " +
-"FROM dbo.DWHBuildStatus" + " ;", con);
+"FROM dbo.Settings" + " ;", con);
 
             try
             {
@@ -111,9 +106,10 @@ namespace WarehouseDataService.Helper
 
         public void UpdateDWNextRunTime(string connectionString, DateTime? datetime)
         {
-            using (SqlConnection cn = new SqlConnection(connectionString))
+            string connection = connectionString.Replace("Main", "Global");
+            using (SqlConnection cn = new SqlConnection(connection))
             {
-                SqlCommand sqlCommand = new SqlCommand("update  DWHBuildStatus set DWNextRunTime= '" + datetime + "' ;", cn);
+                SqlCommand sqlCommand = new SqlCommand("update  dbo.Settings set DWNextRunTime= '" + datetime + "' ;", cn);
                 sqlCommand.CommandTimeout = (int)timeOut;
                 cn.Open();
                 sqlCommand.ExecuteNonQuery();
@@ -123,18 +119,12 @@ namespace WarehouseDataService.Helper
         }
 
 
-        public void UpdateDWHBuildStatus(string fieldName, bool value, string connectionString)
+        public void UpdateWarehouseFieldSettings(string fieldName, bool value, string connectionString)
         {
-            string sql = "update  dbo.DWHBuildStatus set " + fieldName + "= " + (value ? 1 : 0) + " ";
-            RunScript(sql, connectionString);
-        }
-
-
-        private void RunScript(string sql , string connection)
-        {
+            string connection = connectionString.Replace("Main", "Global");
             using (SqlConnection cn = new SqlConnection(connection))
             {
-                SqlCommand sqlCommand = new SqlCommand(sql, cn);
+                SqlCommand sqlCommand = new SqlCommand("update  dbo.Settings set " + fieldName + "= " + (value ? 1 : 0) + " ;", cn);
                 sqlCommand.CommandTimeout = (int)timeOut;
                 cn.Open();
                 sqlCommand.ExecuteNonQuery();
@@ -146,12 +136,6 @@ namespace WarehouseDataService.Helper
         {
             string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
             return result;
-        }
-
-        public void UpdateLastIncrementalDWUpdateDate(string sourceConnectionString)
-        {
-            string sql = "update  dbo.DWHBuildStatus set LastIncrementalDWUpdateDate = " + "'" + DateTime.Now + "'";
-            RunScript(sql, sourceConnectionString);
         }
 
         public string BuildConnectionString(string dbSourceConnection)
@@ -181,15 +165,12 @@ namespace WarehouseDataService.Helper
                 {
                     reader.Read();
 
-                    var dbConnectionString = reader["DBConnection"];
-                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString()))
-                    {
-                        result = dbConnectionString.ToString();
-                    }
+                    var dbConnectionString = reader["SecondaryAzureDBConnection"];
+                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
                     else
                     {
-                        dbConnectionString = reader["SecondaryAzureDBConnection"];
-                        if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
+                        dbConnectionString = reader["DBConnection"];
+                        if (dbConnectionString != null) result = dbConnectionString.ToString();
                     }
 
                 }
@@ -204,7 +185,7 @@ namespace WarehouseDataService.Helper
 
 
 
-        public DateTime? CalculateDWNextRunTime(DateTime todayDate)
+        public DateTime? GetWarehouseRunDate(DateTime todayDate)
         {
 
 
@@ -247,24 +228,15 @@ namespace WarehouseDataService.Helper
         }
 
 
-        public bool CheckIsUpgradingSystem(string sourceConnectionString)
-        {
-            string connection = sourceConnectionString.Replace("Main", "Global");
-            return GetFieldValueFromDBByTableNameAndFieldName("IsUpgrading", "GlobalDBs", connection);
-
-        }
-
-
-
 
         public void FillDaysList()
         {
             ApplicationInfo.Days = new List<DayOfWeekClass>();
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Sunday, 0));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Monday, 1));
-            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Tuesday, 2));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Thursday, 2));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Wednesday, 3));
-            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Thursday, 4));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Tuesday, 4));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Friday, 5));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Saturday, 6));
         }

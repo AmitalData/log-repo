@@ -7,8 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {TariffVersionPM} from './TariffVersionPM';
-import {TariffLineExpirationDatePM} from './TariffLineExpirationDatePM';
+import {TariffLinePM} from './TariffLinePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -71,9 +70,9 @@ export class TariffPM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
-    private notes: string;
-    public get Notes() { return this.notes; }
-    public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
+    private description: string;
+    public get Description() { return this.description; }
+    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
        
 	 
     private sellerId: string;
@@ -126,17 +125,46 @@ export class TariffPM {
     public set LastVersion(newValue: number) { if (this.lastVersion != newValue) { this.lastVersion = newValue; this.MarkAsDirty("LastVersion"); } }
        
 	 
-    private contractNumber: string;
+    private contractNumber: number;
     public get ContractNumber() { return this.contractNumber; }
-    public set ContractNumber(newValue: string) { if (this.contractNumber != newValue) { this.contractNumber = newValue; this.MarkAsDirty("ContractNumber"); } }
+    public set ContractNumber(newValue: number) { if (this.contractNumber != newValue) { this.contractNumber = newValue; this.MarkAsDirty("ContractNumber"); } }
        
 	 
-    private sellerName: string;
-    public get SellerName() { return this.sellerName; }
-    public set SellerName(newValue: string) { if (this.sellerName != newValue) { this.sellerName = newValue; this.MarkAsDirty("SellerName"); } }
-       
-	 
-    private setAsInActive: boolean;
+     
+	private tariffLines: TariffLinePM[];
+    get  TariffLines() {
+        if (this.tariffLines == null) {
+            this.tariffLines = [];
+        }
+
+        return this.tariffLines;
+    }
+    set  TariffLines(newValue: TariffLinePM[]) {
+        if (this.tariffLines != newValue) {
+            this.tariffLines = newValue;
+        }
+    }
+    public AddTariffLine(item: TariffLinePM) {
+        if (item != null) {
+            var index = this. TariffLines.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. TariffLines.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveTariffLine(item: TariffLinePM) {
+        if (item != null) {
+            var index = this. TariffLines.indexOf(item);
+            if (index > -1) {
+                this. TariffLines.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public TariffLines: Array<TariffLinePM>= [];
+     private setAsInActive: boolean;
     public get SetAsInActive() { return this.setAsInActive; }
     public set SetAsInActive(newValue: boolean) { if (this.setAsInActive != newValue) { this.setAsInActive = newValue; this.MarkAsDirty("SetAsInActive"); } }
        
@@ -146,326 +174,11 @@ export class TariffPM {
     public set SetAsReActive(newValue: boolean) { if (this.setAsReActive != newValue) { this.setAsReActive = newValue; this.MarkAsDirty("SetAsReActive"); } }
        
 	 
-    private tariffNumber: string;
-    public get TariffNumber() { return this.tariffNumber; }
-    public set TariffNumber(newValue: string) { if (this.tariffNumber != newValue) { this.tariffNumber = newValue; this.MarkAsDirty("TariffNumber"); } }
-       
-	 
-     
-	private tariffVersions: TariffVersionPM[];
-    get  TariffVersions() {
-        if (this.tariffVersions == null) {
-            this.tariffVersions = [];
-        }
-
-        return this.tariffVersions;
-    }
-    set  TariffVersions(newValue: TariffVersionPM[]) {
-        if (this.tariffVersions != newValue) {
-            this.tariffVersions = newValue;
-        }
-    }
-    public AddTariffVersion(item: TariffVersionPM) {
-        if (item != null) {
-            var index = this. TariffVersions.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. TariffVersions.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveTariffVersion(item: TariffVersionPM) {
-        if (item != null) {
-            var index = this. TariffVersions.indexOf(item);
-            if (index > -1) {
-                this. TariffVersions.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public TariffVersions: Array<TariffVersionPM>= [];
-     private tariffLinesAdded: boolean;
-    public get TariffLinesAdded() { return this.tariffLinesAdded; }
-    public set TariffLinesAdded(newValue: boolean) { if (this.tariffLinesAdded != newValue) { this.tariffLinesAdded = newValue; this.MarkAsDirty("TariffLinesAdded"); } }
-       
-	 
-    private surcharge1Id: string;
-    public get Surcharge1Id() { return this.surcharge1Id; }
-    public set Surcharge1Id(newValue: string) { if (this.surcharge1Id != newValue) { this.surcharge1Id = newValue; this.MarkAsDirty("Surcharge1Id"); } }
-       
-	 
-    private surcharge2Id: string;
-    public get Surcharge2Id() { return this.surcharge2Id; }
-    public set Surcharge2Id(newValue: string) { if (this.surcharge2Id != newValue) { this.surcharge2Id = newValue; this.MarkAsDirty("Surcharge2Id"); } }
-       
-	 
-    private surcharge3Id: string;
-    public get Surcharge3Id() { return this.surcharge3Id; }
-    public set Surcharge3Id(newValue: string) { if (this.surcharge3Id != newValue) { this.surcharge3Id = newValue; this.MarkAsDirty("Surcharge3Id"); } }
-       
-	 
-    private surcharge4Id: string;
-    public get Surcharge4Id() { return this.surcharge4Id; }
-    public set Surcharge4Id(newValue: string) { if (this.surcharge4Id != newValue) { this.surcharge4Id = newValue; this.MarkAsDirty("Surcharge4Id"); } }
-       
-	 
-    private surcharge5Id: string;
-    public get Surcharge5Id() { return this.surcharge5Id; }
-    public set Surcharge5Id(newValue: string) { if (this.surcharge5Id != newValue) { this.surcharge5Id = newValue; this.MarkAsDirty("Surcharge5Id"); } }
-       
-	 
-    private surcharge6Id: string;
-    public get Surcharge6Id() { return this.surcharge6Id; }
-    public set Surcharge6Id(newValue: string) { if (this.surcharge6Id != newValue) { this.surcharge6Id = newValue; this.MarkAsDirty("Surcharge6Id"); } }
-       
-	 
-    private surcharge7Id: string;
-    public get Surcharge7Id() { return this.surcharge7Id; }
-    public set Surcharge7Id(newValue: string) { if (this.surcharge7Id != newValue) { this.surcharge7Id = newValue; this.MarkAsDirty("Surcharge7Id"); } }
-       
-	 
-    private surcharge8Id: string;
-    public get Surcharge8Id() { return this.surcharge8Id; }
-    public set Surcharge8Id(newValue: string) { if (this.surcharge8Id != newValue) { this.surcharge8Id = newValue; this.MarkAsDirty("Surcharge8Id"); } }
-       
-	 
-    private surcharge9Id: string;
-    public get Surcharge9Id() { return this.surcharge9Id; }
-    public set Surcharge9Id(newValue: string) { if (this.surcharge9Id != newValue) { this.surcharge9Id = newValue; this.MarkAsDirty("Surcharge9Id"); } }
-       
-	 
-    private surcharge10Id: string;
-    public get Surcharge10Id() { return this.surcharge10Id; }
-    public set Surcharge10Id(newValue: string) { if (this.surcharge10Id != newValue) { this.surcharge10Id = newValue; this.MarkAsDirty("Surcharge10Id"); } }
-       
-	 
-    private surcharge1UOM: string;
-    public get Surcharge1UOM() { return this.surcharge1UOM; }
-    public set Surcharge1UOM(newValue: string) { if (this.surcharge1UOM != newValue) { this.surcharge1UOM = newValue; this.MarkAsDirty("Surcharge1UOM"); } }
-       
-	 
-    private surcharge2UOM: string;
-    public get Surcharge2UOM() { return this.surcharge2UOM; }
-    public set Surcharge2UOM(newValue: string) { if (this.surcharge2UOM != newValue) { this.surcharge2UOM = newValue; this.MarkAsDirty("Surcharge2UOM"); } }
-       
-	 
-    private surcharge3UOM: string;
-    public get Surcharge3UOM() { return this.surcharge3UOM; }
-    public set Surcharge3UOM(newValue: string) { if (this.surcharge3UOM != newValue) { this.surcharge3UOM = newValue; this.MarkAsDirty("Surcharge3UOM"); } }
-       
-	 
-    private surcharge4UOM: string;
-    public get Surcharge4UOM() { return this.surcharge4UOM; }
-    public set Surcharge4UOM(newValue: string) { if (this.surcharge4UOM != newValue) { this.surcharge4UOM = newValue; this.MarkAsDirty("Surcharge4UOM"); } }
-       
-	 
-    private surcharge5UOM: string;
-    public get Surcharge5UOM() { return this.surcharge5UOM; }
-    public set Surcharge5UOM(newValue: string) { if (this.surcharge5UOM != newValue) { this.surcharge5UOM = newValue; this.MarkAsDirty("Surcharge5UOM"); } }
-       
-	 
-    private surcharge6UOM: string;
-    public get Surcharge6UOM() { return this.surcharge6UOM; }
-    public set Surcharge6UOM(newValue: string) { if (this.surcharge6UOM != newValue) { this.surcharge6UOM = newValue; this.MarkAsDirty("Surcharge6UOM"); } }
-       
-	 
-    private surcharge7UOM: string;
-    public get Surcharge7UOM() { return this.surcharge7UOM; }
-    public set Surcharge7UOM(newValue: string) { if (this.surcharge7UOM != newValue) { this.surcharge7UOM = newValue; this.MarkAsDirty("Surcharge7UOM"); } }
-       
-	 
-    private surcharge8UOM: string;
-    public get Surcharge8UOM() { return this.surcharge8UOM; }
-    public set Surcharge8UOM(newValue: string) { if (this.surcharge8UOM != newValue) { this.surcharge8UOM = newValue; this.MarkAsDirty("Surcharge8UOM"); } }
-       
-	 
-    private surcharge9UOM: string;
-    public get Surcharge9UOM() { return this.surcharge9UOM; }
-    public set Surcharge9UOM(newValue: string) { if (this.surcharge9UOM != newValue) { this.surcharge9UOM = newValue; this.MarkAsDirty("Surcharge9UOM"); } }
-       
-	 
-    private surcharge10UOM: string;
-    public get Surcharge10UOM() { return this.surcharge10UOM; }
-    public set Surcharge10UOM(newValue: string) { if (this.surcharge10UOM != newValue) { this.surcharge10UOM = newValue; this.MarkAsDirty("Surcharge10UOM"); } }
-       
-	 
-     
-	private activeVersions: TariffVersionPM[];
-    get  ActiveVersions() {
-        if (this.activeVersions == null) {
-            this.activeVersions = [];
-        }
-
-        return this.activeVersions;
-    }
-    set  ActiveVersions(newValue: TariffVersionPM[]) {
-        if (this.activeVersions != newValue) {
-            this.activeVersions = newValue;
-        }
-    }
-    private tariffLinesAddedNumbers: number;
-    public get TariffLinesAddedNumbers() { return this.tariffLinesAddedNumbers; }
-    public set TariffLinesAddedNumbers(newValue: number) { if (this.tariffLinesAddedNumbers != newValue) { this.tariffLinesAddedNumbers = newValue; this.MarkAsDirty("TariffLinesAddedNumbers"); } }
-       
-	 
-    private tariffLinesAddedFromExcel: boolean;
-    public get TariffLinesAddedFromExcel() { return this.tariffLinesAddedFromExcel; }
-    public set TariffLinesAddedFromExcel(newValue: boolean) { if (this.tariffLinesAddedFromExcel != newValue) { this.tariffLinesAddedFromExcel = newValue; this.MarkAsDirty("TariffLinesAddedFromExcel"); } }
-       
-	 
-    private fileUploadedName: string;
-    public get FileUploadedName() { return this.fileUploadedName; }
-    public set FileUploadedName(newValue: string) { if (this.fileUploadedName != newValue) { this.fileUploadedName = newValue; this.MarkAsDirty("FileUploadedName"); } }
-       
-	 
-    private concurrencyGUID: string;
-    public get ConcurrencyGUID() { return this.concurrencyGUID; }
-    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
-       
-	 
-    private newConcurrencyGUID: string;
-    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
-    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
-       
-	 
-    private isApprovingDraftVersion: boolean;
-    public get IsApprovingDraftVersion() { return this.isApprovingDraftVersion; }
-    public set IsApprovingDraftVersion(newValue: boolean) { if (this.isApprovingDraftVersion != newValue) { this.isApprovingDraftVersion = newValue; this.MarkAsDirty("IsApprovingDraftVersion"); } }
-       
-	 
-    private isSurchargeUpdate: boolean;
-    public get IsSurchargeUpdate() { return this.isSurchargeUpdate; }
-    public set IsSurchargeUpdate(newValue: boolean) { if (this.isSurchargeUpdate != newValue) { this.isSurchargeUpdate = newValue; this.MarkAsDirty("IsSurchargeUpdate"); } }
-       
-	 
-     
-	private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
-    get  DeletedLinesExpirationDates() {
-        if (this.deletedLinesExpirationDates == null) {
-            this.deletedLinesExpirationDates = [];
-        }
-
-        return this.deletedLinesExpirationDates;
-    }
-    set  DeletedLinesExpirationDates(newValue: TariffLineExpirationDatePM[]) {
-        if (this.deletedLinesExpirationDates != newValue) {
-            this.deletedLinesExpirationDates = newValue;
-        }
-    }
-    private isFromUpdateScreen: boolean;
-    public get IsFromUpdateScreen() { return this.isFromUpdateScreen; }
-    public set IsFromUpdateScreen(newValue: boolean) { if (this.isFromUpdateScreen != newValue) { this.isFromUpdateScreen = newValue; this.MarkAsDirty("IsFromUpdateScreen"); } }
-       
-	 
-    private isFromCopy: boolean;
-    public get IsFromCopy() { return this.isFromCopy; }
-    public set IsFromCopy(newValue: boolean) { if (this.isFromCopy != newValue) { this.isFromCopy = newValue; this.MarkAsDirty("IsFromCopy"); } }
-       
-	 
-    private isUpdatingMissingPorts: boolean;
-    public get IsUpdatingMissingPorts() { return this.isUpdatingMissingPorts; }
-    public set IsUpdatingMissingPorts(newValue: boolean) { if (this.isUpdatingMissingPorts != newValue) { this.isUpdatingMissingPorts = newValue; this.MarkAsDirty("IsUpdatingMissingPorts"); } }
-       
-	 
-    private containerType1Id: string;
-    public get ContainerType1Id() { return this.containerType1Id; }
-    public set ContainerType1Id(newValue: string) { if (this.containerType1Id != newValue) { this.containerType1Id = newValue; this.MarkAsDirty("ContainerType1Id"); } }
-       
-	 
-    private containerType2Id: string;
-    public get ContainerType2Id() { return this.containerType2Id; }
-    public set ContainerType2Id(newValue: string) { if (this.containerType2Id != newValue) { this.containerType2Id = newValue; this.MarkAsDirty("ContainerType2Id"); } }
-       
-	 
-    private containerType3Id: string;
-    public get ContainerType3Id() { return this.containerType3Id; }
-    public set ContainerType3Id(newValue: string) { if (this.containerType3Id != newValue) { this.containerType3Id = newValue; this.MarkAsDirty("ContainerType3Id"); } }
-       
-	 
-    private containerType4Id: string;
-    public get ContainerType4Id() { return this.containerType4Id; }
-    public set ContainerType4Id(newValue: string) { if (this.containerType4Id != newValue) { this.containerType4Id = newValue; this.MarkAsDirty("ContainerType4Id"); } }
-       
-	 
-    private containerType5Id: string;
-    public get ContainerType5Id() { return this.containerType5Id; }
-    public set ContainerType5Id(newValue: string) { if (this.containerType5Id != newValue) { this.containerType5Id = newValue; this.MarkAsDirty("ContainerType5Id"); } }
-       
-	 
-    private transportModeCode: string;
-    public get TransportModeCode() { return this.transportModeCode; }
-    public set TransportModeCode(newValue: string) { if (this.transportModeCode != newValue) { this.transportModeCode = newValue; this.MarkAsDirty("TransportModeCode"); } }
-       
-	 
-    private transportModeName: string;
-    public get TransportModeName() { return this.transportModeName; }
-    public set TransportModeName(newValue: string) { if (this.transportModeName != newValue) { this.transportModeName = newValue; this.MarkAsDirty("TransportModeName"); } }
-       
-	 
-    private tariffProductId: string;
-    public get TariffProductId() { return this.tariffProductId; }
-    public set TariffProductId(newValue: string) { if (this.tariffProductId != newValue) { this.tariffProductId = newValue; this.MarkAsDirty("TariffProductId"); } }
-       
-	 
-    private sellerPartnerTypeId: string;
-    public get SellerPartnerTypeId() { return this.sellerPartnerTypeId; }
-    public set SellerPartnerTypeId(newValue: string) { if (this.sellerPartnerTypeId != newValue) { this.sellerPartnerTypeId = newValue; this.MarkAsDirty("SellerPartnerTypeId"); } }
-       
-	 
-    private isRefreshTranslations: boolean;
-    public get IsRefreshTranslations() { return this.isRefreshTranslations; }
-    public set IsRefreshTranslations(newValue: boolean) { if (this.isRefreshTranslations != newValue) { this.isRefreshTranslations = newValue; this.MarkAsDirty("IsRefreshTranslations"); } }
-       
-	 
-    private lastUsedDate: Date;
-    public get LastUsedDate() { return this.lastUsedDate; }
-    public set LastUsedDate(newValue: Date) { if (this.lastUsedDate != newValue) { this.lastUsedDate = newValue; this.MarkAsDirty("LastUsedDate"); } }
-       
-	 
-    private freightChargeId: string;
-    public get FreightChargeId() { return this.freightChargeId; }
-    public set FreightChargeId(newValue: string) { if (this.freightChargeId != newValue) { this.freightChargeId = newValue; this.MarkAsDirty("FreightChargeId"); } }
-       
-	 
-    private customsBrokerId: string;
-    public get CustomsBrokerId() { return this.customsBrokerId; }
-    public set CustomsBrokerId(newValue: string) { if (this.customsBrokerId != newValue) { this.customsBrokerId = newValue; this.MarkAsDirty("CustomsBrokerId"); } }
-       
-	 
-    private customsBrokerName: string;
-    public get CustomsBrokerName() { return this.customsBrokerName; }
-    public set CustomsBrokerName(newValue: string) { if (this.customsBrokerName != newValue) { this.customsBrokerName = newValue; this.MarkAsDirty("CustomsBrokerName"); } }
-       
-	 
-    private customsBrokerPartnerTypeId: string;
-    public get CustomsBrokerPartnerTypeId() { return this.customsBrokerPartnerTypeId; }
-    public set CustomsBrokerPartnerTypeId(newValue: string) { if (this.customsBrokerPartnerTypeId != newValue) { this.customsBrokerPartnerTypeId = newValue; this.MarkAsDirty("CustomsBrokerPartnerTypeId"); } }
-       
-	 
-    private unitOfMeasurementCode: string;
-    public get UnitOfMeasurementCode() { return this.unitOfMeasurementCode; }
-    public set UnitOfMeasurementCode(newValue: string) { if (this.unitOfMeasurementCode != newValue) { this.unitOfMeasurementCode = newValue; this.MarkAsDirty("UnitOfMeasurementCode"); } }
-       
-	 
-    private customerGroupId: string;
-    public get CustomerGroupId() { return this.customerGroupId; }
-    public set CustomerGroupId(newValue: string) { if (this.customerGroupId != newValue) { this.customerGroupId = newValue; this.MarkAsDirty("CustomerGroupId"); } }
-       
-	 
-    private customerGroupName: string;
-    public get CustomerGroupName() { return this.customerGroupName; }
-    public set CustomerGroupName(newValue: string) { if (this.customerGroupName != newValue) { this.customerGroupName = newValue; this.MarkAsDirty("CustomerGroupName"); } }
-       
-	 
 
     public OldEntityPM: TariffPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -473,7 +186,6 @@ export class TariffPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Tariff");
            
         }
-       }
     }
 
     private MyClone: TariffPM;

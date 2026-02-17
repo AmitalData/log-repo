@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -42,8 +42,6 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                             ErrorLog = a.ErrorLog,
 
                                                             PrametersXml = a.PrametersXml,
-                                                            NotDisplayInMenu = a.NotDisplayInMenu,
-
 
                                                             ProgressMessage = a.ProgressMessage,
 

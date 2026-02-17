@@ -1,4 +1,6 @@
-export var SessionInfo = (function () {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var SessionInfo = /** @class */ (function () {
     function SessionInfo() {
     }
     Object.defineProperty(SessionInfo, "PlShortName", {
@@ -49,7 +51,7 @@ export var SessionInfo = (function () {
     SessionInfo.GetLogitudeURL = function () {
         var logitude_url = location.href.replace('index.html', '');
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'http://localhost:9996/'; // test.logitudeworld.com/test/';
+            logitude_url = 'http://localhost:9996/';
         }
         else {
             var urlArr = location.href.split("/index.html");
@@ -64,4 +66,5 @@ export var SessionInfo = (function () {
     SessionInfo.IsExternalParams = false;
     return SessionInfo;
 }());
+exports.SessionInfo = SessionInfo;
 //# sourceMappingURL=SessionInfo.js.map

@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -40,9 +40,7 @@ using Logitude.Accounting.Data.Repositories;
 using System.Transactions;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.Helpers;
-
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated 
+namespace WebFreight.Web.Controllers.AccountingModel 
 {
     public partial class ExternalReconciliationController : ApiController
     {
@@ -52,15 +50,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
         [HttpGet]
-        public HttpResponseMessage GetExternalAutomaticReconcilationsByFilter(
-            bool amountReconcile,
-            bool referenceReconcile,
-            bool refDateReconcile,
-			bool accoutingDateReconcile,
-			string objectTableId,
-            string entityId,
-            string glAccountId,
-            [FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetExternalAutomaticReconcilationsByFilter(bool amountReconcile, bool referenceReconcile, bool refDateReconcile, string bankAccountId, string glAccountId, [FromUri] ApiQueryFilters filters)
         {
             try
             {
@@ -69,10 +59,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
 
-
                 #region Trans filters
 
-
+              
                 QueryOperations queryOperationsTrans = new QueryOperations()
                 {
                     ObjectTableName = "LedgerTransaction",
@@ -116,8 +105,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 }
 
-                DateTime today = GetCurrentDateStart(tenant);
-
                 if (!string.IsNullOrEmpty(filters.AdditionalFilters))
                 {
                     JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
@@ -129,13 +116,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         if (field != null)
                         {
 
+
                             string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                            
-                            object value1;
-                            if (valuestring1 == "#today")
-                                value1 = today;
-                            else
-                                value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
 
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
@@ -149,7 +132,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     }
                 }
                 #endregion
-
 
                 #region Bank lines filters
 
@@ -178,7 +160,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     if (filterNameProp != null)
                     {
                         string filterName = filterNameProp.ToString();
-
 
                         string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
                         ObjectField field = ReconcileExternalPageLineObjectFields.FirstOrDefault(f => f.FieldName == filterName);
@@ -211,14 +192,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         if (filter.FieldName != null)
                         {
                             filter.FieldName = filter.FieldName.Replace("ForeignAmount", "Amount");
-                            filter.FieldName = filter.FieldName.Replace("DocumentDate", "ReferenceDate");
+                            filter.FieldName = filter.FieldName.Replace("CreateDate", "ReferenceDate");
                         }
 
-                        if (filter.FieldName == "IsExternalReconcile"
-                            || filter.FieldName == "DueDate"
-                            || filter.FieldName == "DUMMY_TransferAccountId"
-                            || filter.FieldName == "InReconcileProgress"
-                            || filter.FieldName == "InProgressExternalReconcile")
+                        if (filter.FieldName == "IsExternalReconcile")
                             continue;
 
                         //
@@ -244,28 +221,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
                 #endregion
 
-                string transferGlAccountId = GetAndRemoveFilter(queryOperationsTrans, "DUMMY_TransferAccountId");
 
-                var args = new AutoExternalReconcileArgs()
-                {
-                    AmountReconcile = amountReconcile,
-                    ReferenceReconcile = referenceReconcile,
-                    RefDateReconcile = refDateReconcile,
-					AccoutingDateReconcile = accoutingDateReconcile,
-					ObjectTableId = objectTableId,
-                    EntityId = entityId,
-                    GLAccountId = glAccountId,
-                    TransferGLAccountId = transferGlAccountId,
-                    TransactionQueryOperations = queryOperationsTrans,
-                    BankPageLineQueryOperations = queryOperationsBankLine
-                };
-
-                var automaticExternalReconcileService = new AutomaticExternalReconcileService(tenant);
-                MatchedReconciliationLines matchedLines = automaticExternalReconcileService.GetMatchedLines(args);
+                var automaticExternalReconcileService = new AutomaticExternalReconcileService();
+                AutoSelectedExternalReconciliationLines resultedArray = automaticExternalReconcileService
+                    .AutomaticExternalReconcile(amountReconcile, referenceReconcile, refDateReconcile,
+                    bankAccountId, glAccountId, queryOperationsTrans, queryOperationsBankLine, tenant);
 
                 ServiceResponse response = new ServiceResponse();
-                response.Result = matchedLines;
-                response.Count = matchedLines.Count;
+                response.Result = resultedArray;
+                response.Count = resultedArray.Count;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
@@ -276,26 +240,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-        private DateTime GetCurrentDate(int tenant)
-        {
-            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
-            _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
-            return _today;
-        }
-        private DateTime GetCurrentDateStart(int tenant)
-        {
-            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
-            _today = new DateTime(_today.Year, _today.Month, _today.Day, 0, 0, 0,0);
-            return _today;
-        }
-        private static string GetAndRemoveFilter(QueryOperations queryOperations, string fieldName)
-        {
-            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == fieldName);
-            string TransferGlAccountId = filterItem?.FieldValue.ToString();
-            queryOperations.QueryFilterItems.Remove(filterItem);
-            return TransferGlAccountId;
-        }
-
 
         public HttpResponseMessage GetGenerateTestRecordsForExternalReco(string glAccountId, string bankAccountId, string type)
         {
@@ -306,7 +250,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 
-                AutomaticExternalReconcileService automaticExternalReconcileService = new  AutomaticExternalReconcileService(authToken.Tenant);
+                AutomaticExternalReconcileService automaticExternalReconcileService = new AutomaticExternalReconcileService();
                 automaticExternalReconcileService.GenerateTestRecordsForExternalReco(glAccountId, bankAccountId, type, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "OK");

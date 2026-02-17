@@ -3,11 +3,10 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -61,11 +60,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.CheckContactFeature("TasksScheduler", "READ", authToken.Tenant);
-                //SchedulerLogsQuery LogsQuery = new SchedulerLogsQuery(tenant);
-                //var HistoryLogs = LogsQuery.GetSchedulerLogsByHistory(historyId);
+                SchedulerLogsQuery LogsQuery = new SchedulerLogsQuery(tenant);
+                var HistoryLogs = LogsQuery.GetSchedulerLogsByHistory(historyId);
+             
 
-
-                return Request.CreateResponse(HttpStatusCode.OK);// HistoryLogs);
+                return Request.CreateResponse(HttpStatusCode.OK, HistoryLogs);
             }
 
             catch (Exception ex)
@@ -74,8 +73,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
 
-
-        public HttpResponseMessage PostInsertScheduler(TasksSchedulerPM entityPM)
+        public HttpResponseMessage Post(TasksSchedulerPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +84,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", entityPM.Tenant, authToken.Tenant);
 
                         SecurityUtility.CheckContactFeature("TasksScheduler", "NEW", authToken.Tenant);
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
@@ -95,30 +92,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                         if (entityPM.SchedulerDetailsData != null)
                         {
-                            if (entityPM.SchedulerDetailsData.FTPDetails != null && !string.IsNullOrEmpty(entityPM.SchedulerDetailsData.FTPDetails.Extension))
-                            {
-                                entityPM.SchedulerDetailsData.FTPDetails.Extension = entityPM.SchedulerDetailsData.FTPDetails.Extension.TrimStart('.');
-                            }
-
-                            entityPM.SchedulerDetailsData.Tenant = entityPM.Tenant;
-                            
                             System.Type type1 = typeof(FTPSchedulerDetails);
                             System.Type type2 = "string".GetType();
-                            System.Type type3 = typeof(ReportSchedulerDetails);
-                            System.Type type4 = typeof(ReportSchedulerRecepients);
-                            System.Type type5 = typeof(DWObjectFieldsDetails);
-                            System.Type type6 = typeof(MultiSelectedValue);
-                            System.Type type7 = typeof(ValueDetails);
-                            System.Type type8 = typeof(ObjectFieldOperator);
-                            System.Type[] types = new System.Type[8];
+                            System.Type[] types = new System.Type[2];
                             types[0] = type1;
                             types[1] = type2;
-                            types[2] = type3;
-                            types[3] = type4;
-                            types[4] = type5;
-                            types[5] = type6;
-                            types[6] = type7;
-                            types[7] = type8;
 
                             entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 
@@ -144,6 +122,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
+
         public HttpResponseMessage Put(TasksSchedulerPM entityPM)
         {
 
@@ -154,7 +133,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", entityPM.Tenant, authToken.Tenant);
                     SecurityUtility.CheckContactFeature("TasksScheduler", "UPDATE", authToken.Tenant);
 
 
@@ -163,98 +141,22 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                     if (entityPM.SchedulerDetailsData != null)
                     {
-                        if (entityPM.SchedulerDetailsData.FTPDetails != null && !string.IsNullOrEmpty(entityPM.SchedulerDetailsData.FTPDetails.Extension))
-                        {
-                            entityPM.SchedulerDetailsData.FTPDetails.Extension = entityPM.SchedulerDetailsData.FTPDetails.Extension.TrimStart('.');
-                        }
-
-                        entityPM.SchedulerDetailsData.Tenant = entityPM.Tenant;
-
                         System.Type type1 = typeof(FTPSchedulerDetails);
                         System.Type type2 = "string".GetType();
-                        System.Type type3 = typeof(ReportSchedulerDetails);
-                        System.Type type4 = typeof(ReportSchedulerRecepients);
-                        System.Type[] types = new System.Type[4];
+                        System.Type[] types = new System.Type[2];
                         types[0] = type1;
                         types[1] = type2;
-                        types[2] = type3;
-                        types[3] = type4;
 
                         entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 
-
                     }
 
-                        service.Update(entityPM);
-                        entityPM.SchedulerDetailsXML = null;
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                    }
-                }
-           
 
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage PostRunTaskNow([FromBody] RunTaskNowRequest request)
-        {
-
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                   AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-
-                    IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
-                    TasksSchedulerService service = new TasksSchedulerService(MyContext, tenant);
-                    if (request == null || string.IsNullOrEmpty(request.TaskSchedulerId))
-                    {
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, "TaskSchedulerId is required.");
-                    }
-                    service.RunTaskNow(request?.TaskSchedulerId, tenant, request.FromDate, request.ToDate);
+                    service.Update(entityPM);
+                    entityPM.SchedulerDetailsXML = null;
                     scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, true);
+                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                 }
-            }
-
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetIsExceedsScheduledTasksLimitPerReport(int tenant, string entityId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
-
-                SecurityUtility.CheckContactFeature("TasksScheduler", "READ", authToken.Tenant);
-                TasksSchedulerService service = new TasksSchedulerService(MyContext,tenant);
-                TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tenant);
-
-                bool isExceedsScheduledTasksLimitPerReport = service.isExceedsScheduledTasksLimitPerReport(tenant, entityId);
-                if (!isExceedsScheduledTasksLimitPerReport)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, isExceedsScheduledTasksLimitPerReport);
-
-                }
-                else
-                {
-                    throw new ArgumentException("You have exceeded the defined quota. Contact your account manager if you need to add more!");
-                }
-
             }
 
             catch (Exception ex)
@@ -263,51 +165,5 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
 
-        public HttpResponseMessage GetIsEntityHasScheduler(string entityId, int tenant)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", authToken.Tenant, tenant);
-
-                TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tenant);
-                bool hasScheduler = tasksSchedulerQuery.GetIsEntityHasScheduler(entityId, tenant);
-                
-                return Request.CreateResponse(HttpStatusCode.OK, hasScheduler);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-		public HttpResponseMessage GetProceduresBySchema(string schemaId)
-		{
-			try
-			{
-				string token = HttpContext.Current.Request.Headers["Token"];
-				AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-				SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-				int tenant = authToken.Tenant;
-				
-				TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tenant);
-				List<Procedure> procedures = tasksSchedulerQuery.GetProceduresBySchema(schemaId, tenant);
-
-				return Request.CreateResponse(HttpStatusCode.OK, procedures);
-			}
-
-			catch (Exception ex)
-			{
-				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-			}
-		}
-        public class RunTaskNowRequest
-        {
-            public DateTime FromDate { get; set; }
-            public string TaskSchedulerId { get; set; }
-            public DateTime ToDate { get; set; }
-        }
     }
 }

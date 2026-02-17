@@ -5,6 +5,7 @@ import {OrdersTabComponent} from './Components/Orders/OrdersTabComponent';
 import {AddEditOrderPackageComponent} from './Components/Orders/AddEditOrderPackageComponent';
 import {PartnersTabComponent} from './Components/Partners/PartnersTabComponent';
 import {AddEditPartnerComponent} from './Components/Partners/AddEditPartnerComponent';
+import {AddEditAddressComponent} from './Components/Partners/AddEditAddressComponent';
 import {ShipmentsTabComponent} from './Components/Shipments/ShipmentsTabComponent';
 import {MasterTabComponent} from './Components/Master/MasterTabComponent';
 import {CustomsFileTabComponent} from './Components/CustomsFile/CustomsFileTabComponent';
@@ -24,15 +25,6 @@ import {PayablesComponent} from './Components/Windows/Payables/PayablesComponent
 import {GroupageComponent} from './Components/Windows/Groupage/GroupageComponent';
 import {GroupageContainerComponent} from './Components/Windows/Groupage/GroupageContainerComponent';
 import { HarmonizesComponent } from './Components/Windows/Harmonizes/HarmonizesComponent';
-import { ProductItemsTabComponent } from './Components/ProductItems/ProductItemsTabComponent';
-import { EditCustomerProductItemComponent } from './Components/ProductItems/EditCustomerProductItemComponent';
-import { ShipmentPackagesTabComponent } from './Components/ShipmentPackages/ShipmentPackagesTabComponent';
-import { ShipmentDataTabComponent } from './Components/ShipmentData/ShipmentDataTabComponent';
-import { ShipmentReferenceDetailsComponent } from './Components/ShipmentData/ShipmentReferenceDetails/ShipmentReferenceDetailsComponent';
-import { FreightForwarderReferenceDetailsComponent } from './Components/ShipmentData/FreightForwarderReferenceDetails/FreightForwarderReferenceDetailsComponent';
-import { InlandTransportTabComponent } from './Components/InlandTransport/InlandTransportTabComponent';
-import { AddEditInlandTransportComponent } from './Components/InlandTransport/AddEditInlandTransportComponent';
-import { InlandTransportMainTabComponent } from './Components/InlandTransport/InlandTransportTabs/InlandTransportMainTabComponent';
 
 export const Components =
     [
@@ -46,17 +38,12 @@ export const Components =
         ShipmentAuditTabComponent,
         OverviewTabComponent,
         CustomsTabComponent,
-        ShipmentPackagesTabComponent,
-        ShipmentDataTabComponent,
-        InlandTransportTabComponent,
-        AddEditInlandTransportComponent,
-        InlandTransportMainTabComponent,
-        ShipmentReferenceDetailsComponent,
         ExportFileComponent,
         OrdersTabComponent,
         AddEditOrderPackageComponent,
         PartnersTabComponent,
         AddEditPartnerComponent,
+        AddEditAddressComponent,
         ReceivablesTabComponent,
         AddEditReceivableComponent,
         PayablesTabComponent,
@@ -68,10 +55,8 @@ export const Components =
         GroupageComponent,
         GroupageContainerComponent,
         HarmonizesComponent,
-        ProductItemsTabComponent,
-        EditCustomerProductItemComponent,
-        FreightForwarderReferenceDetailsComponent
     ];
+
 
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -86,6 +71,7 @@ export class ModuleDeclarations {
             case "AddEditOrderPackageComponent": { myResult = AddEditOrderPackageComponent; break; }
             case "PartnersTabComponent": { myResult = PartnersTabComponent; break; }
             case "AddEditPartnerComponent": { myResult = AddEditPartnerComponent; break; }
+            case "AddEditAddressComponent": { myResult = AddEditAddressComponent; break; }
             case "ShipmentsTabComponent": { myResult = ShipmentsTabComponent; break; }
             case "MasterTabComponent": { myResult = MasterTabComponent; break; }
             case "CustomsFileTabComponent": { myResult = CustomsFileTabComponent; break; }
@@ -105,16 +91,6 @@ export class ModuleDeclarations {
             case "GroupageComponent": { myResult = GroupageComponent; break; }
             case "GroupageContainerComponent": { myResult = GroupageContainerComponent; break; }
             case "HarmonizesComponent": { myResult = HarmonizesComponent; break; }
-            case "ProductItemsTabComponent": { myResult = ProductItemsTabComponent; break; }
-            case "EditCustomerProductItemComponent": { myResult = EditCustomerProductItemComponent; break; }
-            case "ShipmentPackagesTabComponent" : { myResult = ShipmentPackagesTabComponent; break; }
-            case "ShipmentDataTabComponent" : { myResult = ShipmentDataTabComponent; break; }
-            case "InlandTransportTabComponent" : { myResult = InlandTransportTabComponent; break; }
-            case "AddEditInlandTransportComponent" : { myResult = AddEditInlandTransportComponent; break; }
-            case "InlandTransportMainTabComponent" : { myResult = InlandTransportMainTabComponent; break; }
-            case "ShipmentReferenceDetailsComponent" : { myResult = ShipmentReferenceDetailsComponent; break; }
-            case "FreightForwarderReferenceDetailsComponent" : { myResult = FreightForwarderReferenceDetailsComponent; break; }
-
         }
 
         return myResult;

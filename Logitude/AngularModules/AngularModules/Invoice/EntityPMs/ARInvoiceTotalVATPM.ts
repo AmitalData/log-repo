@@ -102,9 +102,7 @@ export class ARInvoiceTotalVATPM {
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
-    private isRegionalTax: boolean;
-    public get IsRegionalTax() { return this.isRegionalTax; }
-    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
+	 
 
     public OldEntityPM: ARInvoiceTotalVATPM;
 	    
@@ -115,18 +113,15 @@ export class ARInvoiceTotalVATPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName: string = null) {
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
-            if (this.EntityParentPM) {
-                this.EntityParentPM.MarkAsDirty();
-            }
-            if (propertyName != null) {
-                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARInvoiceTotalVAT");
-
-            }
+    MarkAsDirty(propertyName:string = null) {
+        this.IsDirty = true;
+		  if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }	
+        if (propertyName != null) {
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARInvoiceTotalVAT");
+           
         }
     }
     private MyClone: ARInvoiceTotalVATPM;

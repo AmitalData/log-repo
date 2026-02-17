@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data;
@@ -37,17 +37,11 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.TenantNumber).HasColumnName("TenantNumber");
+            this.Property(t => t.TenantNumber).HasColumnName("TenantNumber").IsRequired();
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
 
             this.Property(t => t.ToggleCode).HasColumnName("ToggleCode").IsRequired().HasMaxLength(3).IsUnicode(false);
-
-            this.Property(t => t.IsMultiTenant).HasColumnName("IsMultiTenant");
-
-            this.Property(t => t.FromTenantNumber).HasColumnName("FromTenantNumber");
-
-            this.Property(t => t.ToTenantNumber).HasColumnName("ToTenantNumber");
         }
     }
 }

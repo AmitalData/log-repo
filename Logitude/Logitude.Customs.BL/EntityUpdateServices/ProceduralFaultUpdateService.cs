@@ -6,7 +6,7 @@ using Logitude.Customs.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -35,12 +35,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(ProceduralFaultPM entityPM)
         {
-          
+            //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+            //if (setting.IsConnectedToUniFreight)
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
-            if (declarationPM != null && (declarationPM.IsConnectedToUnifreight|| declarationPM.IsAmendment==true))
+            if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
             {
-                UpdateUnifreight(entityPM, declarationPM.Direction);
+                UpdateUnifreight(entityPM);
             }
             UpdateNotification(entityPM);
         }

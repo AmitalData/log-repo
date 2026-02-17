@@ -1,55 +1,15 @@
-<style>
-    tr td:first-child{
-    width:1%;
-    white-space:nowrap;
-}
-</style>
-
-
-<table style="height: 24px;width:100%">
+﻿<table style="height: 24px">
     <tr>
         <td>
-            <table>
-             <tr>
-                <td >
-                    <div  style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
-                        {{EntityPM.LocalName}}
-                    </div>
-                 </td>
-                 <td style="width:20px;">
-                    <div  *ngIf="IsConnectedToOneCard" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
-                        <a href="#" style="font-size:12px" (click)="OpenCardScreen(null)">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
-                    </div>
-                 </td>
-                 <td style="width:40px;" *ngIf="IsConnectedToMoreThanOneCard">
-                    <div> <span>{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</span></div>
+            <div class="ShortTitleMainControl" [style.float]="isRTL ? 'right' : 'left'">
+                <div class="ShortTitleDiv" style="padding-left: 5px; font-size: 16px; color: #333333;font-family: Arial;">
+                    {{ EntityPM.LocalName }}
+                </div>
 
-                 </td>
-                 <td style="width:20px;" *ngIf="IsConnectedToMoreThanOneCard">
-                    <div  >
-                  
-                        <LogToolTip [Scrollable]="true" [float]="'left'" [mode]="'Info'" float-start [direction]="isRTL?'bottomleft':'bottomright'" *ngIf="IsConnectedToMoreThanOneCard">                         
-                            <div *ngFor="let card of ConnectedCards">
-                                <a href="#" style="font-size:12px" (click)="OpenCardScreen(card.Id)">{{ (card.LocalName == null ||  card.LocalName=='')?((card.EnglishName== null || card.EnglishName== '') ? card.Code:card.EnglishName): card.LocalName   }}</a>                           
-                             </div>
-                       </LogToolTip>
-                   
-                      </div>
-                 </td>
-               
-                
-                 <td style="width:70px;">
-                      <!-- Cancelled -->
-                  <div *ngIf="EntityPM.Inactive" class="ShortTitleControl" float-start style="padding: 0px 5px;background: #e66464;"><span style="color: white;"> {{'Accounting.O.Inactive' | TextCodeTranslationPipe}}</span></div>
-                 </td>
-                 <td></td>
-             </tr>
+            </div>
 
-            </table>
-            
-         
-
-           
+            <!-- Cancelled -->
+            <div *ngIf="EntityPM.Inactive" class="ShortTitleControl" float-start style="padding: 0px 5px;background: #e66464;"><span style="color: white;"> {{'Accounting.O.Inactive' | TextCodeTranslationPipe}}</span></div>
         </td>
     </tr>
 </table>

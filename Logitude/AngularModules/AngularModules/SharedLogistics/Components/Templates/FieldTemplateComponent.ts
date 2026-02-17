@@ -1,14 +1,12 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
 })
 
 export class FieldTemplateComponent {
-  public StringToColorPipe: any;
-
     public Entity: any = null;
     public FieldName: string = null;
     public FieldValue: any = null;

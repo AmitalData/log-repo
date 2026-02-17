@@ -5,7 +5,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {InfrastructureDomainService} from '../../../../Infrastructure/Services/InfrastructureDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ShowNewFeaturesComponent.html',
 })
 

@@ -2,32 +2,9 @@ declare var window: any;
 import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
 import {ObjectTablePM} from '../EntityPMs/ObjectTablePM';
 import {AppTool, DateTool} from '../Tools';
-import { FieldValidator } from '../Validators/FieldValidator';
 export class CustomFieldClass {
 
-    constructor(value: string, public FieldName: string, public TableName: string) {
-        this.Value = value;
-    }
-
-    private isNotValid: boolean;
-    public get IsNotValid() { return this.isNotValid; }
-    public set IsNotValid(newValue: boolean) {
-        this.isNotValid = newValue;
-    }
-
-    private isChange: boolean;
-    public get IsChange() { return this.isChange; }
-    public set IsChange(newValue: boolean) {
-        this.isChange = newValue;
-    }
-
-    private value: string;
-    public get Value() { return this.value; }
-    public set Value(newValue: string) {
-        if (this.value != newValue) {
-            this.IsChange = true;
-        }
-        this.value = newValue;
+    constructor(public Value: string, public FieldName: string, public TableName: string) {
     }
 
     private resolvedValue: any;
@@ -122,43 +99,31 @@ export class CustomFieldClass {
         return time;
     }
 
-    public ConvertIntToString(myNumber: number, signed: boolean) {
-        let newNumber = myNumber;
-        if (newNumber) {
-            newNumber = Math.trunc(myNumber);
-
-
-            //var fmt: string = "000000000000";
-            if (newNumber > 0) {
-                var paddedString = this.ApplyIntPadding(newNumber + "");
-                var dString: string = paddedString;//d + "";
-                if (signed) {
-                    dString = "+" + paddedString;
-                }
+    public ConvertIntToString(d: number, signed: boolean) {
+        //var fmt: string = "000000000000";
+        if (d > 0) {
+            var paddedString = this.ApplyIntPadding(d + "");
+            var dString: string = paddedString;//d + "";
+            if (signed) {
+                dString = "+" + paddedString;
             }
-            else {
-                newNumber = (newNumber * -1);
-                var paddedString = this.ApplyIntPadding(newNumber + "");
-                var dString: string = paddedString;//d + "";
-                if (signed) {
-                    dString = "-" + paddedString;
-                }
-            }
-
-
-            return dString;
         }
-        else
-            return null;
-
+        else {
+            d = (d * -1);
+            var paddedString = this.ApplyIntPadding(d  + "");
+            var dString: string = paddedString;//d + "";
+            if (signed) {
+                dString = "-" + paddedString;
+            }
+        }
+        return dString;
     }
 
-    public ConvertDoubleOrDecimalToString(value: number, signed: boolean) {
+    public ConvertDoubleOrDecimalToString(d: number, signed: boolean) {
         //string fmt = "000000000000.000";
-        var originalString: string = value + "";
-        let valueWithoutSign = (value + "").replace("-", "");
-        var dString: string = this.ApplyDoublePadding(valueWithoutSign); //d.ToString(fmt);
-        dString = dString.replace("+", "").replace("-", "").replace(".", "").replace(",", "");
+        var dString: string = this.ApplyDoublePadding(d + ""); //d.ToString(fmt);
+        var originalString: string = d + "";
+        dString = dString.replace("+", "").replace("-", "").replace(".", "");
 
         if (signed) {
             dString = (originalString.indexOf("-") > -1 ? "-" + dString : "+" + dString);
@@ -177,19 +142,10 @@ export class CustomFieldClass {
 
         var myResult: string = "";
 
-        if (!AppTool.IsNullOrEmpty(str) && str.includes('.')) {
+        if (!AppTool.IsNullOrEmpty(str)) {
             var stringParts: string[] = str.split('.');
 
             myResult = AppTool.PadLeft(stringParts[0], 12, "0") + "." + AppTool.PadRight(stringParts[1], 3, "0");
-        }
-        else if (!AppTool.IsNullOrEmpty(str) && str.includes(',')) 
-        {
-            var stringParts: string[] = str.split(',');
-
-            myResult = AppTool.PadLeft(stringParts[0], 12, "0") + "," + AppTool.PadRight(stringParts[1], 3, "0");
-        }
-        else{
-            myResult = str;
         }
 
         return myResult;
@@ -294,7 +250,7 @@ export class CustomFieldClass {
         if (field != null && value != null) {
             if (AppTool.IsNullOrEmpty(value+"")) {
             return null;
-            }
+        }
         switch (field.DataTypeCode.trim()) {
             case "Text":
             case "nText":

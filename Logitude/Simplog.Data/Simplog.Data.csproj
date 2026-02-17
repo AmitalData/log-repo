@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -11,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Simplog.Data</RootNamespace>
     <AssemblyName>Simplog.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -20,14 +19,12 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;ORACLE_DB</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,7 +33,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -44,7 +41,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\All Projects\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,106 +49,57 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>..\Library\Bin\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;ORACLE_DB</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\All Projects\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
-    <OutputPath>bin\x64\None\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Azure.Search.Documents, Version=11.5.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Search.Documents.11.5.1\lib\netstandard2.0\Azure.Search.Documents.dll</HintPath>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Linq.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Oracle.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Web, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Web.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=3.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.3.0.5\lib\net461\Microsoft.Azure.KeyVault.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.1\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Data.Edm, Version=5.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Edm.5.8.5\lib\net40\Microsoft.Data.Edm.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.OData.5.8.5\lib\net40\Microsoft.Data.OData.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Data.Services.Client, Version=5.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.5\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.24\lib\net461\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.Azure.3.3.19\lib\net461\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ServiceModel.DomainServices.Tools, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Tools.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
@@ -161,86 +109,33 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ClientModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ClientModel.1.0.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.6.0.1\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory.Data, Version=1.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.Data.1.0.2\lib\net461\System.Memory.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.WebRequest" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
-    <Reference Include="System.Spatial, Version=5.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Spatial.5.8.5\lib\net40\System.Spatial.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=4.0.5.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.4.7.2\lib\net461\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.4.7.2\lib\net461\System.Text.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Extensions" />
@@ -260,118 +155,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureSearch\AzureSearchRepoBase.cs" />
-    <Compile Include="AzureSearch\AzureSerchResponse.cs" />
-    <Compile Include="AzureSearch\FastSearchAzureSearchRepo.cs" />
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\AllActiveGLAccountsView.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.cs" />
-    <Content Include="DecCourierStatusesView_Oracle.sql" />
     <Content Include="InfrastructureModel\DeleteQBOTranslations.sql" />
     <Content Include="InfrastructureModel\DeleteBusinessRecords.sql" />
     <Content Include="InfrastructureModel\DeleteCRMRecords.sql" />
     <Content Include="InfrastructureModel\DeleteCustomerRecords.sql" />
     <Content Include="InfrastructureModel\DeleteTicketsRecords.sql" />
     <Content Include="ShipmentsModel\GetShipmentsCounts.sql" />
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="CommonDataModel\CommonDataContext.Views.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.Views.mssql.cs" />
     <Compile Include="CommonDataModel\CustomersDataViewContext.cs" />
     <Compile Include="CommonDataModel\DocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AgentSharedDocument.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AgentSharedManifest.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CardSearch.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CarrierAreasPort.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CarrierArea.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AirlineMessagingRule.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Automation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationHistory.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationLastUpdate.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationResultEmailRecipient.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CardContactAdditionalService.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CardContactProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CardExternalAccountsByProduct.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CarrierServiceLine.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\BankAccountView.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CustomsBookMainView.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\Responsibility.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\TruckerSetting.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\UserFreelancerGroup.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\FreelancerGroupType.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CooStatusView.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\RequestSheetInQueueMesView.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\DecTaxesByTaxTypeCodeView.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\DecCourierStatusesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CustomerGroup.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CustomerTeam.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\QuoteGroupSection.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\DigitalContactLastSetting.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\DWHEnvironmentSetting.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\HorseGender.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\HTSCode.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\Mention.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\PortGroup.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\PortTimeZone.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\PostalCode.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\AllARPaymentChequesView.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\SearchIndexEditHistory.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\TotalOpenTransInBankView.cs" />
-    <Compile Include="CommonDataModel\Mapping\CarrierServiceLineMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\AllActiveGLAccountsViewMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\ChargesExternalAccountsByProductMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CustomerGroupMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\DigitalContactLastSettingMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\TruckerSettingMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\UserFreelancerGroupMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\FreelancerGroupTypeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\HorseGenderMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\HTSCodeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\MentionMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\PostalCodeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\ProductItemMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\SearchIndexEditHistoryMap.cs" />
-    <Compile Include="CommonDataModel\Repositories\CarrierServiceLineRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CustomerGroupRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\DigitalContactLastSettingRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\ResponsibilityRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\TruckerSettingRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\UserFreelancerGroupRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\FreelancerGroupTypeRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\HorseGenderRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\PortGroupRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\SearchIndexEditHistoryRepository.cs" />
-    <Compile Include="Helpers\DocumentOutCopyArgs.cs" />
-    <Compile Include="Helpers\FieldValueValidator.cs" />
-    <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\AdditionalCurrencyRate.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\CurrencyRate.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\EventRemark.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\CustomChildObject.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\CustomFieldsMainObject.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\DeploymentPackagesVersion.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\DeploymentPackage.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\DataCustomObject.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\DeploymentPackageExecutionLog.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesGroup.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\UnassignedEntity.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerDeposition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsInterface.cs" />
@@ -379,10 +185,8 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsShipper.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentFilingBackupBatch.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentFilingBackupSetting.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\DocumentsExecutionLog.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentsFilingsView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerFieldsUpdateSetting.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\DWHBuildStatus.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DWHSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\EntityCasualData.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\EntityChange.cs" />
@@ -393,6 +197,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\Agent.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Airline.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AirlineStatistics.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\AuthenticationToken.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AWBDescriptionOfGoods.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\BlobFile.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Branch.cs" />
@@ -484,12 +289,10 @@
     <Compile Include="CommonDataModel\EntityPOCOs\INTTRABranchRegisteredCarrier.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\INTTRASetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\INTTRASettingMode.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\LogBoxTenantSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\LogitudeMessagesTransmissionLog.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\MetodoPago.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PackageConnectedPackage.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Participant.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\PaymentGatewayPartner.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PaymentTermDateType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\RegistryDateType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ReportExecutionLog.cs" />
@@ -527,7 +330,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\Role.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\RoleFeature.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\RoleType.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\SharedLogisticsContactLastLogin.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SharedManifestsStatus.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SharedManifestTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ShippingAgent.cs" />
@@ -536,30 +338,21 @@
     <Compile Include="CommonDataModel\EntityPOCOs\TemperatureUnit.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantLoginPolicy.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantAdditionalData.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\TenantManagmentLicense.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TwoFactorAuthenticationDevice.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\LoginPolicy.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLicense.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserPermittedProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UsersReleaseNotesDisplay.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\RegimenFiscal.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UsoCFDI.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VatFormatType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VATTypesGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\NumberFormat.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\AccountingPartner.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\VatUniquePartnerType.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\WarehouseStoragePricing.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\WarehouseType.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\WarehouseWeightMeasurement.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\WarehouseWeightRounding.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\PaymentGatewayPartners.cs" />
     <Compile Include="CommonDataModel\ICustomersDataViewContext.cs" />
     <Compile Include="CommonDataModel\IDocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedDocumentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedManifestMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CardSearchMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CarrierAreasPortMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CarrierAreaMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AirlineMessagingRuleMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AirlineStatisticsMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AutomationHistoryMap.cs" />
@@ -568,20 +361,16 @@
     <Compile Include="CommonDataModel\Mapping\AutomationResultEmailRecipientMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AWBDescriptionOfGoodsMap.cs" />
     <Compile Include="CommonDataModel\Mapping\BlobFileMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CardContactAdditionalServiceMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CardContactProduct.cs" />
     <Compile Include="CommonDataModel\Mapping\CardExternalAccountsByProductMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CheckDigitControlAlgorithmMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\ChargesExternalAccountsByProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ColorIndexMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerCodeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerTableMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerTranslationMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CreditLimitSettingMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CargoTenantMilestoneDefinitionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerDepositionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerFieldsUpdateSettingMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\CustomerOpenFilesAmountMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomersDataViewMap.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -603,7 +392,6 @@
     <Compile Include="CommonDataModel\Mapping\DocumentFilingBackupSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentFolderMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentsDataProviderMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\DocumentsExecutionLogMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentsFilingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentsFilingMetaDataValueMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentsFilingsViewMap.cs" />
@@ -611,9 +399,6 @@
     <Compile Include="CommonDataModel\Mapping\DocumentStatusMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentTypeCategoryMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentTypeMetaDataMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\QuoteGroupSectionMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\DWHBuildStatusMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\DWHEnvironmentSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DWHSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EmailProviderMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EntityCasualDataMap.cs" />
@@ -624,7 +409,6 @@
     <Compile Include="CommonDataModel\Mapping\FilingInboxAttachmentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FilingInboxMap.cs" />
     <Compile Include="CommonDataModel\Mapping\FTPDetailMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\HorseMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HybridPartnerMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HybridPartnersPermissionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\HybridTenantStateMap.cs" />
@@ -632,13 +416,11 @@
     <Compile Include="CommonDataModel\Mapping\INTTRABranchRegisteredCarrierMap.cs" />
     <Compile Include="CommonDataModel\Mapping\INTTRASettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\INTTRASettingModeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\LogBoxTenantSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\LogitudeMessagesTransmissionLogMap.cs" />
     <Compile Include="CommonDataModel\Mapping\MetodoPagoMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PackageConnectedPackageMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ParticipantMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PaymentTermDateTypeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\PortTimeZoneMap.cs" />
     <Compile Include="CommonDataModel\Mapping\RegistryDateTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ReportExecutionLogMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ReportsTemplateMap.cs" />
@@ -646,39 +428,25 @@
     <Compile Include="CommonDataModel\Mapping\SharedFollowedShipmentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\RegionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ReportModificationMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\SharedLogisticsContactLastLoginMap.cs" />
     <Compile Include="CommonDataModel\Mapping\SharedManifestsStatusMap.cs" />
     <Compile Include="CommonDataModel\Mapping\SharedManifestTranslationMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\TariffCarrierTranslationMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TemperatureUnitMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantAdditionalDataMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantLoginPolicyMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\TenantManagmentLicenseMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TwoFactorAuthenticationDeviceMap.cs" />
     <Compile Include="CommonDataModel\Mapping\LoginPolicyMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\UserLastSettingsMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserLicenseMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserPermittedProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UsersReleaseNotesDisplayMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\RegimenFiscalMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UsoCFDIMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VatFormatTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VATTypesGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\NumberFormatMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\AccountingPartnerMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\VatUniquePartnerTypeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\UnassignedEntityMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\WarehouseStoragePricingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\WarehouseTypeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnerMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\WarehouseWeightMeasurementMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\WarehouseWeightRoundingMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnersMap.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedDocumentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedManifestRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CardSearchRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CarrierAreasPortRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineMessagingRuleRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CarrierAreaRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineStatisticsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AutomationHistoryRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AutomationLastUpdateRepository.cs" />
@@ -686,30 +454,14 @@
     <Compile Include="CommonDataModel\Repositories\AutomationResultEmailRecipientRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AWBDescriptionOfGoodsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\BlobFileRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CardContactAdditionalServiceRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CardContactProductRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CardExternalAccountsByProductRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ChargesExternalAccountsByProductRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CheckDigitControlAlgorithmRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ColorIndexRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerCodeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTableRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CargoTenantMilestoneDefinitionRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CustomerOpenFilesAmountRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\QuoteGroupSectionRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\HorseRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\HTSCodeRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\PortTimeZoneRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\ProductItemRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\TariffCarrierTranslationRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\UnassignedEntityrRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\UserLastSettingsRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\DocumentsExecutionLogRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\CreateSharedLogisticsContactLastLoginRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\DWHBuildStatusRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CountryCityRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreditLimitSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerDepositionRepository.cs" />
@@ -749,96 +501,41 @@
     <Compile Include="CommonDataModel\Repositories\INTTRABranchRegisteredCarrierRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\INTTRASettingModeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\INTTRASettingRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\LogBoxTenantSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MetodoPagoRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\RegistryDateTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ReportExecutionLogRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ReportsTemplateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ReportsTemplatesVersionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TemperatureUnitRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\PaymentGatewayPartnerRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\PaymentGatewayPartnersRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TenantLoginPolicyRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TwoFactorAuthenticationDeviceRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\LoginPolicyRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\NumberFormatRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UsersReleaseNotesDisplayRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\AccountingPartnerRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\RegimenFiscalRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\VatUniquePartnerTypeRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\WarehouseStoragePricingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\WarehouseTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UsoCFDIRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\WarehouseWeightMeasurementRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\WarehouseWeightRoundingRepository.cs" />
-    <Compile Include="Helpers\AutomationCreateTask.cs" />
-    <Compile Include="Helpers\AutomationEvent.cs" />
     <Compile Include="Helpers\AutomationFollowUp.cs" />
     <Compile Include="Helpers\AutomationQueuedTask.cs" />
-    <Compile Include="Helpers\AutomationOnUpdateDocument.cs" />
-    <Compile Include="Helpers\AutomationSendDocument.cs" />
-    <Compile Include="Helpers\AutomationSendInterface.cs" />
-    <Compile Include="Helpers\DocumentDefultAttachment.cs" />
-    <Compile Include="Helpers\LogitudeSettingConfigration.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWCategories.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectField.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectFieldCategories.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectTable.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\MultiEntityUpdateLog.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\QueryExportExecutionLog.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\EntityStatusType.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\ReferenceCustomObject.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\ReleaseArgs.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\SearchIndex.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\SearchIndexTenantHistory.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWSubQuery.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQuery .cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryColumn.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryFilter.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\RuleUpdateHistory.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerProcedure.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
-    <Compile Include="InfrastructureModel\Mapping\AdditionalCurrencyRateMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\CurrencyRateMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\EventRemarkMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\CustomChildObjectMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\ChildEntitiesCustomFieldMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\CustomFieldsMainObjectMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\DeploymentPackagesVersionMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\DeploymentPackageMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\DataCustomObjectMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\DeploymentPackageExecutionLogMap.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerLogs.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldCategoriesMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWCategoriesMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectTableMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryColumnMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryFilterMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\EntityStatusTypeMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\MultiEntityUpdateLogMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\QueryExportExecutionLogMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\QuoteChargesGroupMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\ReferenceCustomObjectMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\SearchIndexTenantHistoryMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\TabModificationMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\ScreenSectionMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\SchedulerProcedureMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
-    <Compile Include="InfrastructureModel\Repositories\AdditionalCurrencyRateRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\CurrencyRateRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\EventRemarkRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\CustomChildObjectRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\ChildEntitiesCustomFieldRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\CustomFieldsMainObjectRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\DeploymentPackagesVersionRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\DeploymentPackageRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\DataCustomObjectRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\DeploymentPackageExecutionLogRepository.cs" />
+    <Compile Include="InfrastructureModel\Mapping\SchedulerLogsMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldCategoriesRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryColumnRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryFilterRepository.cs" />
@@ -846,196 +543,63 @@
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectTableRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWCategoriesRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\EntityStatusTypeRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\MultiEntityUpdateLogRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\QueryExportExecutionLogRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\QueueMessagesService.cs" />
-    <Compile Include="InfrastructureModel\Repositories\QuoteChargesGroupRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\ReferenceCustomObjectRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\ScreenSectionRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\SearchIndexRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\SearchIndexTenantHistoryRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\TabModificationRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\RuleUpdateHistoryRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
-    <Compile Include="InfrastructureModel\Mapping\SearchIndexMap.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberDefault.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberStatus.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceAnalytic.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\APPayment.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceAnalytic.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceChargesConstraint.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ARInvoicesSignedStatus.cs" />
+    <Compile Include="InfrastructureModel\Repositories\SchedulerLogsRepository.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStock.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStockLine.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APPaymentTransferStatus.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ARPaymentBankTranfer.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ARPaymentChequeReplica.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ARPaymentChequeStatusReplica.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\BankAccountLite.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ControlForInvoiceLinesDataView.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\DigitalInvoicesCounterDataView.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ExpenseAllocationFlow.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\ExpenseAllocationSetting.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\MasavInterface.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\MasavInterfaceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATPaymentMethod.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
-    <Compile Include="InvoiceModel\EntityPOCOs\QBOGlobalTaxCalculation.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATTransferStatus.cs" />
-    <Compile Include="InvoiceModel\Enums\ARInvoiceSignedStatusValues.cs" />
-    <Compile Include="InvoiceModel\Mapping\ConfirmationNumberStatusMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ConfirmationNumberDefaultMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentTransferStatusMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ARInvoicesSignedStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStockLineMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStockMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStocksStatusMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ARPaymentBankTranferMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ARPaymentChequeReplicaMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ARPaymentChequeStatusReplicaMap.cs" />
     <Compile Include="InvoiceModel\Mapping\BankAccountLiteMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ControlForInvoiceLinesDataViewMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\DigitalInvoicesCounterDataViewMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ExpenseAllocationFlowMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\ExpenseAllocationSettingMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\MasavInterfaceMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\MasavInterfaceStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATPaymentMethodMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATInvoiceStatusMap.cs" />
-    <Compile Include="InvoiceModel\Mapping\QBOGlobalTaxCalculationMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATTransferStatusMap.cs" />
     <Compile Include="InvoiceModel\Repositories\APPaymentTransferStatusRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ARInvoiceChargesConstraintRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ARInvoicesSignedStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARInvoiceStockLineRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARInvoiceStockRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARInvoiceStocksStatusRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ARPaymentBankTranferRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ARPaymentChequeReplicaRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ARPaymentChequeStatusReplicaRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\BankAccountLiteRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ConfirmationNumberDefaultRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ConfirmationNumberStatusRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ExpenseAllocationFlowRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\ExpenseAllocationSettingRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\MasavInterfaceStatusRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\MasavInterfaceRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
-    <Compile Include="InvoiceModel\Repositories\QBOGlobalTaxCalculationRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATTransferStatusRepository.cs" />
-    <Compile Include="QuoteModel\EntityPOCOs\QuoteAnalytic.cs" />
-    <Compile Include="QuoteModel\EntityPOCOs\QuoteComputedField.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\QuoteSetting.cs" />
-    <Compile Include="QuoteModel\EntityPOCOs\ValidByType.cs" />
     <Compile Include="QuoteModel\Mapping\QuoteSettingMap.cs" />
-    <Compile Include="QuoteModel\Mapping\ValidByTypeMap.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
-    <Compile Include="QuoteModel\Repositories\QuoteComputedFieldRepository.cs" />
-    <Compile Include="QuoteModel\Repositories\ValidByTypeRepository.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\Container.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerAnalytic.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerDiscrepancy.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ContainersExternalData.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatus.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerStatusSource.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingProvider.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsShipmentDataView.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\DigitalShipmentsDataView.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\ExternalLink.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\HarmonizeCode.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingStatus.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingTransStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRADocumentType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRASIStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRAStatus.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\LogitudeOceanInsightsRequest.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\LogitudeOceanInsightsResponse.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OBLType.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\OceanCarrierStatusAPIconfig.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OceanInsightsRequestsCount.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\PayableProratedAmount.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryTransportMode.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ReferenceType.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAnalytic.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAssembly.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentContainerStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsMessageType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingRequest.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingResponse.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\LogBoxShipmentDataView.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentDigitalField.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentDocsField.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentProductItem.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\FreightForwarderReference.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentReferance.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentUnassignedField.cs" />
-    <Compile Include="ShipmentsModel\ILogBoxShipmentDataViewContext.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ContainerMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ContainersExternalDataMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ContainerStatusMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ContainerStatusSourceMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ContainerTrackingResponseMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ContainerTrackingRequestMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\CustomsTransferTypeMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\DigitalShipmentDataViewMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\ExternalLinkMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\HarmonizeCodeMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\INTTRABookingStatusMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\INTTRABookingTransStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRADocumentTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRASIStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRAStatusMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsRequestMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsResponseMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\OceanCarrierStatusAPIconfigMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ReferenceTypeMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ShipmentAnalyticMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OBLTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OceanInsightsRequestsCountMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\PayableProratedAmountMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\PickUpDeliveryPackageHarmonizeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\PickUpDeliveryTransportModeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentAssemblyMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentContainerStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ContainerTrackingProviderMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\LogBoxShipmentDataViewMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ShipmentDigitalFieldMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ShipmentDocsFieldMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\FreightForwarderReferenceMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ShipmentReferanceMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ShipmentUnassignedFieldMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ShipmentProductItemMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ShipmentStoragePricingMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\ShipmentSubTypeMap.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ContainerDiscrepancyRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ContainerRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ContainersExternalDataRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ContainerStatusRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ContainerStatusSourceRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ContainerTrackingResponseRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\CustomsTransferLineRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\CustomsTransferTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\FBLStockRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FeaturePackageTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HybridTenantStateRepository.cs" />
@@ -1210,6 +774,7 @@
     <Compile Include="CommonDataModel\Mapping\AddressMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AirlineMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\AuthenticationTokenMap.cs" />
     <Compile Include="CommonDataModel\Mapping\BranchMap.cs" />
     <Compile Include="CommonDataModel\Mapping\BusinessUnitMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CardContactMap.cs" />
@@ -1343,6 +908,7 @@
     <Compile Include="CommonDataModel\Repositories\AddressRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\AuthenticationTokenRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\BranchRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\BusinessUnitRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CardContactRepository.cs" />
@@ -1425,12 +991,7 @@
     <Compile Include="CommonDataModel\Repositories\ShippingLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AccountingInformationIdentifierRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AWBAdditionalHandlingInfoRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\ExternalLinkRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\HarmonizeCodeRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\INTTRABookingStatusRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\INTTRABookingTransStatusRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\LogitudeOceanInsightsRequestRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\LogitudeOceanInsightsResponseRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\MessagingStockRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\MessagingStockUsageHistoryRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransmissionsStatusRepository.cs" />
@@ -1438,15 +999,12 @@
     <Compile Include="ShipmentsModel\Repositories\INTTRASIStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRAStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OBLTypeRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\OceanCarrierStatusAPIconfigRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsRequestsCountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsStatusesRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsRequestRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OtherParticipantIdRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\PayableProratedAmountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryPackageHarmonizeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryTransportModeRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ReferenceTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentAdditionalCloudDataRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentAssemblyRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentComputedFieldsRepository.cs" />
@@ -1454,17 +1012,7 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentContainerStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsMessageTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsTransmissionRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ContainerTrackingProviderRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ContainerTrackingRequestRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ShipmentDigitalFieldRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ShipmentDocsFieldRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageHarmonizeRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ShipmentProductItemRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\FreightForwarderReferenceRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ShipmentReferanceRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ShipmentStoragePricingRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ShipmentSubTypeRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ShipmentUnassignedFieldRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\SpecialServicesTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\StateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TarrifChargeRepository.cs" />
@@ -1711,6 +1259,8 @@
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceTotalVAT.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceType.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\APPayment.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\APPaymentMethod.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APPaymentStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoice.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceEntity.cs" />
@@ -1752,6 +1302,7 @@
     <Compile Include="InvoiceModel\Mapping\APInvoiceTotalVATMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APInvoiceTypeMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\APPaymentMethodMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentStatuMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceEntityMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceLineMap.cs" />
@@ -1785,6 +1336,7 @@
     <Compile Include="InvoiceModel\Repositories\APInvoiceStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\APInvoiceTotalVATRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\APInvoiceTypeRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\APPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\APPaymentRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\APPaymentStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARInvoiceEntityRepository.cs" />
@@ -1856,7 +1408,6 @@
     <Compile Include="ShipmentsModel\Repositories\AWBOCIRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCommodityRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageItemRepository.cs" />
-    <Compile Include="ShipmentsModel\LogBoxShipmentDataViewContext.cs" />
     <Compile Include="ShipmentsModel\ShipmentsContext.cs" />
     <None Include="ShipmentsModel\ShipmentsContext.Views.cs" />
     <Content Include="CommonDataModel\ProductTypeModificationViewScript.sql" />
@@ -2028,9 +1579,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Data.Global</Name>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
@@ -2044,22 +1595,8 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="InvoiceModel\EntityValues\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

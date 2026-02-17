@@ -311,12 +311,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public DateTime? StatusDate { get; set; }
 
-        public string CustomerReference1 { get; set; }
-
-        public string CustomerReference2 { get; set; }
-
-
-
         private List<TraceEventPM> eventsLists;
         public virtual List<TraceEventPM> EventsLists
         {

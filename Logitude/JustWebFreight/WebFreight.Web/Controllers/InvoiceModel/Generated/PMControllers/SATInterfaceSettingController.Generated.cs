@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -40,7 +40,6 @@ using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 
-
 namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 { 
 
@@ -53,18 +52,18 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
         {
 		  try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
+			    string logKey = PerformanceLogger.LogCurrentTime();
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SATInterfaceSettingQuery sATInterfaceSettingQuery = new SATInterfaceSettingQuery(authToken.Tenant);
-                SATInterfaceSettingPM sATInterfaceSettingPM = sATInterfaceSettingQuery.GetSinglePM(tenant);
+                SATInterfaceSettingPM sATInterfaceSettingPM = sATInterfaceSettingQuery.GetSinglePM(tenant, authToken.Tenant);
+                
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey); 
-              
                 return Request.CreateResponse(HttpStatusCode.OK, sATInterfaceSettingPM);
-			
-            }
+			 
+			}
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -39,7 +39,6 @@ using Logitude.BL.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
-
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 { 
@@ -90,7 +89,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ShipmentCustomsTransmission", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("ShipmentCustomsTransmission", entityPM.Tenant, authToken.Tenant);
                 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentCustomsTransmissionService service = new ShipmentCustomsTransmissionService(MyContext, entityPM.Tenant);
@@ -138,7 +136,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ShipmentCustomsTransmission", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("ShipmentCustomsTransmission", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "ShipmentCustomsTransmission" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ShipmentCustomsTransmissionPM" + entityPM.Id + entityPM.Tenant;

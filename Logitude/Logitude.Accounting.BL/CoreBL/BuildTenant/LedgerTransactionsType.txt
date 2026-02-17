@@ -23,14 +23,14 @@ CREATE TYPE [dbo].[LedgerTransactionsType] AS TABLE(
 	[ForeignAmountDebit] [decimal](16, 2) NOT NULL,
 	[ForeignAmountCredit] [decimal](16, 2) NOT NULL,
 	[ExchangeRate] [decimal](16, 5) NOT NULL,
-	[Reference1] [varchar](60) NULL,
-	[Reference2] [varchar](60) NULL,
-	[Reference3] [varchar](60) NULL,
+	[Reference1] [varchar](30) NULL,
+	[Reference2] [varchar](30) NULL,
+	[Reference3] [varchar](30) NULL,
 	[OpenAmount] [decimal](16, 2) NOT NULL,
 	[OppositeAccountId] [varchar](15) NULL,
 	[SearchFields] [nvarchar](4000) NULL,
 	[OpenAmountCurrencyId] [varchar](15) NULL,
-	[Notes] [nvarchar](2000) NULL,
+	[Notes] [nvarchar](150) NULL,
 	[AmountToReconcile] [decimal](16, 2) NOT NULL,
 	[Mark] [bit] NOT NULL,
 	[IsReconciled] [bit] NOT NULL,
@@ -39,24 +39,3 @@ CREATE TYPE [dbo].[LedgerTransactionsType] AS TABLE(
 GO
 
 
-
-
-CREATE TYPE [dbo].[GLAccountTotalByMonthsType] AS TABLE(
-
-                                [AccountId] [varchar](15) NOT NULL,
-								[DateTypeCode] [varchar](1) NOT NULL,
-                                 
-                                 
-								[Year] [int] NOT NULL,
-								[Month] [int] NOT NULL,
-                                 
-								[CurrencyId] [varchar](15) NULL,
-                                [Tenant] [int] NOT NULL,
-
-								[LocalAmountDebit] [decimal](16, 2) NOT NULL,
-								[LocalAmountCredit] [decimal](16, 2) NOT NULL,
-
-								[ForeignAmountDebit] [decimal](16, 2) NOT NULL,
-								[ForeignAmountCredit] [decimal](16, 2) NOT NULL
-	)
-	go

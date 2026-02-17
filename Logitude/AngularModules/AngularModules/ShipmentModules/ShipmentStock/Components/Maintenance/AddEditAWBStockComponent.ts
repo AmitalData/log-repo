@@ -11,7 +11,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {TenantManagementAWBStockTabComponent, StockArgs} from './TenantManagementAWBStockTabComponent';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditAWBStockComponent.html',
 })
 
@@ -198,7 +198,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
             var myService: MessagingStockPMService = new MessagingStockPMService();
 
             if (this.DataContext.EntityPM.Id == null) {
-                myService.insert(this.DataContext.EntityPM).subscribe((myResult:any) => {
+                myService.insert(this.DataContext.EntityPM).subscribe(myResult => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
@@ -219,7 +219,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
             }
 
             else {
-                myService.update(this.DataContext.EntityPM).subscribe((myResult:any) => {
+                myService.update(this.DataContext.EntityPM).subscribe(myResult => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {

@@ -1,13 +1,12 @@
 
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import {Http, Headers} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import { defer, of } from 'rxjs';
+import {Observable}     from 'rxjs/Rx';
 
 import {DWSubQueryPM} from '../../EntityPMs/DWSubQueryPM';
 import { DWQueryData } from '../../../Common/DataContracts/DWQueryData';
@@ -18,16 +17,16 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 export class DWSubQueryPMService {
 
     private _apiUrl: string;
-    private _http: HttpClient;
+    private _http: Http;
     private _serviceArgs: ServiceArgs;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DWSubQuery';     
     }
 
     insertDWQueryData(entityPM: DWQueryData) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -40,8 +39,8 @@ export class DWSubQueryPMService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
 
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
+            var response: ServiceResponse;
+            response = new ServiceResponse();
             if (errorsArray.length == 0) {
                 //var mappedEntity: QueryColumnPM;
                 //mappedEntity = this.MapJsonToEntityPM(entityPM, false);
@@ -52,33 +51,33 @@ export class DWSubQueryPMService {
                 var temp = this.deepClone(entityPM);
 
                 /////////////////////////////////////////////////////
-                return this._http.post(this._apiUrl, JSON.stringify(temp), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-                        var pm = response.body;
+                return this._http.post(this._apiUrl, JSON.stringify(temp),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             //var mappedResult: QueryColumnPM;
                             //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            serviceResponse.Result = pm;
+                            response.Result = pm;
                         }
 
 
 
-                        return serviceResponse;//response;
+                        return response;//response;
 
-                        }), catchError(ServiceHelper.HandleServiceError));
+                    });
             }
             else {
 
-                return null;//of(response);
+                return null;//Observable.of(response);
 
             }
-        });
-    }
+        }
 
+        );
+    }
     UpdateDWQueryData(entityPM: DWQueryData) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -91,8 +90,8 @@ export class DWSubQueryPMService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
 
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
+            var response: ServiceResponse;
+            response = new ServiceResponse();
             if (errorsArray.length == 0) {
                 //var mappedEntity: QueryColumnPM;
                 //mappedEntity = this.MapJsonToEntityPM(entityPM, false);
@@ -103,23 +102,22 @@ export class DWSubQueryPMService {
                 var temp = this.deepClone(entityPM);
 
                 /////////////////////////////////////////////////////
-                return this._http.put(this._apiUrl, JSON.stringify(temp), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-                        var pm = response.body;
+                return this._http.put(this._apiUrl, JSON.stringify(temp),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             //var mappedResult: QueryColumnPM;
                             //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            serviceResponse.Result = pm;
+                            response.Result = pm;
                         }
 
-                            return serviceResponse;//response;
+                        return response;//response;
 
-                        }), catchError(ServiceHelper.HandleServiceError));
+                    });
             }
             else {
 
-                return null;//of(response);
+                return null;//Observable.of(response);
 
             }
         }
@@ -184,7 +182,7 @@ export class DWSubQueryPMService {
     }
     insert(entityPM: DWSubQueryPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -197,42 +195,43 @@ export class DWSubQueryPMService {
             var errorsArray = [];//validator.Validate("AdvancedDWQueryFilter", entityPM);
 
 
-            var serviceResponse: EntityPMServiceResponse;
-            serviceResponse = new EntityPMServiceResponse();
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: DWSubQueryPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: DWSubQueryPM;
-                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            var mappedResult: DWSubQueryPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            response.Result = mappedResult;
+                        }
 
 
 
-                            return serviceResponse;
+                        return response;
 
-                        }), catchError(ServiceHelper.HandleServiceError));
+                    });
             }
             else {
 
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(response);
 
             }
-        });
+        }
+
+        );
     }
 
     update(entityPM: DWSubQueryPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -245,42 +244,43 @@ export class DWSubQueryPMService {
             var errorsArray = [];//validator.Validate("AdvancedDWQueryFilter", entityPM);
 
 
-            var serviceResponse: EntityPMServiceResponse;
-            serviceResponse = new EntityPMServiceResponse();
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: DWSubQueryPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: DWSubQueryPM;
-                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            var mappedResult: DWSubQueryPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            response.Result = mappedResult;
+                        }
 
 
 
-                            return serviceResponse;
+                        return response;
 
-                        }), catchError(ServiceHelper.HandleServiceError));
+                    });
             }
             else {
 
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(response);
 
             }
-        });
+        }
+
+        );
     }
 
     delete(entityPM: DWSubQueryPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -293,37 +293,38 @@ export class DWSubQueryPMService {
             var errorsArray = [];//validator.Validate("AdvancedDWQueryFilter", entityPM);
 
 
-            var serviceResponse: EntityPMServiceResponse;
-            serviceResponse = new EntityPMServiceResponse();
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: DWSubQueryPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.delete(this._apiUrl + '?id=' + entityPM.Id + '&tenant=' + entityPM.Tenant, ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: DWSubQueryPM;
-                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
+                return this._http.delete(this._apiUrl + '?id=' + entityPM.Id + '&tenant=' + entityPM.Tenant,
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            var mappedResult: DWSubQueryPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            response.Result = mappedResult;
+                        }
 
 
 
-                            return serviceResponse;
+                        return response;
 
-                        }), catchError(ServiceHelper.HandleServiceError));
+                    });
             }
             else {
 
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(response);
 
             }
-        });
+        }
+
+        );
     }
 
     get(id: string) {
@@ -333,31 +334,31 @@ export class DWSubQueryPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
-                        var pm = response.body;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
 
 
 
-                        var entity: DWQueryData = new DWQueryData();
-                        if (pm) {
-                            entity.SubQueryData = pm.SubQueryData;//this.MapJsonToEntityPM(pm);
-                            entity.Columns = pm.Columns;
-                            entity.Filters = pm.Filters;
-                        }
+                var entity: DWQueryData = new DWQueryData();
+                if (pm) {
+                    entity.SubQueryData = pm.SubQueryData;//this.MapJsonToEntityPM(pm);
+                    entity.Columns = pm.Columns;
+                    entity.Filters = pm.Filters;
+                }
 
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DWObjectField", "GetSinglePM", 'id=' + id);
+                var servertime = response.headers.get('ServerExecutionTime');
+                //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DWObjectField", "GetSinglePM", 'id=' + id);
 
-                        return serviceResponse;
+                return serviceResponse;
 
-                    }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -368,101 +369,31 @@ export class DWSubQueryPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getByQueryId?' + 'id=' + Queryid, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
-                        var pm = response.body;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getByQueryId?' + 'id=' + Queryid, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
 
 
 
-                        var entity: DWQueryData = new DWQueryData();
-                        if (pm) {
-                            entity.SubQueryData = pm.SubQueryData;//this.MapJsonToEntityPM(pm);
-                            entity.Columns = pm.Columns;
-                            entity.Filters = pm.Filters;
-                        }
+                var entity: DWQueryData = new DWQueryData();
+                if (pm) {
+                    entity.SubQueryData = pm.SubQueryData;//this.MapJsonToEntityPM(pm);
+                    entity.Columns = pm.Columns;
+                    entity.Filters = pm.Filters;
+                }
 
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DWObjectField", "GetSinglePM", 'id=' + id);
+                var servertime = response.headers.get('ServerExecutionTime');
+                //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DWObjectField", "GetSinglePM", 'id=' + id);
 
-                        return serviceResponse;
+                return serviceResponse;
 
-                    }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    getFromTenant(id: string, copyFromTenant: number) {
-
-
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-        var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingleFromTenant?' + 'id=' + id + '&copyFromTenant=' + copyFromTenant, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
-                        var pm = response.body;
-
-
-
-                        var entity: DWQueryData = new DWQueryData();
-                        if (pm) {
-                            entity.SubQueryData = pm.SubQueryData;//this.MapJsonToEntityPM(pm);
-                            entity.Columns = pm.Columns;
-                            entity.Filters = pm.Filters;
-                        }
-
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
-
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DWObjectField", "GetSinglePM", 'id=' + id);
-
-                        return serviceResponse;
-
-                    }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    getByQueryIdFromTenant(Queryid: string, copyFromTenant: number) {
-
-
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-        var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getByQueryIdFromTenant?' + 'id=' + Queryid + '&copyFromTenant=' + copyFromTenant, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
-                        var pm = response.body;
-
-
-
-                        var entity: DWQueryData = new DWQueryData();
-                        if (pm) {
-                            entity.SubQueryData = pm.SubQueryData;//this.MapJsonToEntityPM(pm);
-                            entity.Columns = pm.Columns;
-                            entity.Filters = pm.Filters;
-                        }
-
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
-
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DWObjectField", "GetSinglePM", 'id=' + id);
-
-                        return serviceResponse;
-
-                    }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 

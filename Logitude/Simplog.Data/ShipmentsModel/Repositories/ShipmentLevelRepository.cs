@@ -6,7 +6,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
@@ -57,14 +57,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from a in context.ShipmentLevels where a.Code == code select a).FirstOrDefault();
         }
-
-
-        public string GetSingleShipmentLevelNameByCode(string code)
-        {
-            return (from a in context.ShipmentLevels where a.Code == code select a.Name).FirstOrDefault();
-        }
-
-
 
         public void Add(ShipmentLevel entity)
         {

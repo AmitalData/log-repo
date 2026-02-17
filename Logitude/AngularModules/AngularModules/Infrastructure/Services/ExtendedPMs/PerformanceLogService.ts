@@ -1,65 +1,109 @@
+
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { ServiceArgs } from '../../DataContracts/ServiceArgs';
 import { EntityPMServiceResponse } from '../../DataContracts/EntityPMServiceResponse';
+import { ClassLevelValidator } from '../../Validators/ClassLevelValidator';
+import { Guid } from '../../Utilities/Guid';
+import { InfraSettings } from '../../Utilities/InfraSettings';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { PerformanceLog } from '../../Others/PerformanceLog';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
-import { Injectable } from '@angular/core';
-
 @Injectable()
 export class PerformanceLogService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
+    private _serviceArgs: ServiceArgs;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/performancelogs';
+
     }
+
+    
 
     insert(entity: PerformanceLog) {
-        return defer(() => {
-            var errorsArray = [];
-            var entityServiceResponse: EntityPMServiceResponse;
-            entityServiceResponse = new EntityPMServiceResponse();
 
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var validator: ClassLevelValidator;
+
+            validator = new ClassLevelValidator();
+
+            var errorsArray = [];//validator.Validate("ErrorLog", entityPM);
+
+
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
-                return this._http.post(this._apiUrl, JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var result = response;
-                    entityServiceResponse.Result = result;
+             
 
-                    return entityServiceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
+                return this._http.post(this._apiUrl, JSON.stringify(entity),
+                    { headers: authHeader }).map((res) => {
+                        var result = res.json();
+                        response.Result = result;
+                        return response;
+
+                    });
             }
             else {
-                entityServiceResponse.HasError = true;
-                entityServiceResponse.ErrorsArray = errorsArray;
 
-                return of(entityServiceResponse);
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
+
+                return Observable.of(response);
+
             }
-        });
+        }
+
+        );
     }
+
 
     insertLogsList(logs: PerformanceLog[]) {
-        return defer(() => {
-            var errorsArray = [];
-            var entityServiceResponse: EntityPMServiceResponse;
-            entityServiceResponse = new EntityPMServiceResponse();
 
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var validator: ClassLevelValidator;
+
+            validator = new ClassLevelValidator();
+
+            var errorsArray = [];//validator.Validate("ErrorLog", entityPM);
+
+
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
-                var url = this._apiUrl + '/PostLogsList';
 
-                return this._http.post(url, JSON.stringify(logs), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var result = response;
-                    entityServiceResponse.Result = result;
 
-                    return entityServiceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
+                return this._http.post(this._apiUrl + '/PostLogsList', JSON.stringify(logs),
+                    { headers: authHeader }).map((res) => {
+                        var result = res.json();
+                        response.Result = result;
+                        return response;
+
+                    });
             }
             else {
-                entityServiceResponse.HasError = true;
-                entityServiceResponse.ErrorsArray = errorsArray;
 
-                return of(entityServiceResponse);
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
+
+                return Observable.of(response);
+
             }
-        });
+        }
+
+        );
     }
+
+
 }

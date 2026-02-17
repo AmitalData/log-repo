@@ -1,4 +1,4 @@
-import { RequestParamsBase } from './RequestParamsBase';
+﻿import { RequestParamsBase } from './RequestParamsBase';
 
 export class CH_NG_191_MSG2_ChangingTimeRequestParams extends RequestParamsBase {
 
@@ -14,7 +14,5 @@ export class CH_NG_191_MSG2_ChangingTimeRequestParams extends RequestParamsBase 
     public PhysicalCheckId: string;
     public BringQueueForwardIndicator: boolean;
     public CheckTypeCode: string;
-    public RequestToAdvanceAQueue: string;
-    public RequestDetails: string;
 
 }

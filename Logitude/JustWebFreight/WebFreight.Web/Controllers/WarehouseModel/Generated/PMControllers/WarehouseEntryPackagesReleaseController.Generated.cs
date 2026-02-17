@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -93,7 +93,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WarehouseEntryPackagesRelease", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("WarehouseEntryPackagesRelease", entityPM.Tenant, authToken.Tenant);
 	                    
                         IWarehouseContext MyContext = WarehouseContext.GetContext(entityPM.Tenant);
                         WarehouseEntryPackagesReleaseUpdateService service = new WarehouseEntryPackagesReleaseUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -141,7 +140,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WarehouseEntryPackagesRelease", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("WarehouseEntryPackagesRelease", entityPM.Tenant, authToken.Tenant);
 	
                         IWarehouseContext MyContext = WarehouseContext.GetContext(entityPM.Tenant);
                         WarehouseEntryPackagesReleaseUpdateService service = new WarehouseEntryPackagesReleaseUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

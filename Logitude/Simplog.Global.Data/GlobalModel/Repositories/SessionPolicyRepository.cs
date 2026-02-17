@@ -1,10 +1,9 @@
 ﻿
 
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,42 +28,13 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public SessionPolicy GetSingleSessionPolicy()
         {
-            SessionPolicy item = (from a in context.SessionPolicies select a).FirstOrDefault();
-            string entityName = "SessionPolicy";
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && item != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, item, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    item = (SessionPolicy)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            return item;
-            //return (from a in context.SessionPolicies select a).FirstOrDefault();
+            return (from a in context.SessionPolicies select a).FirstOrDefault();
         }
 
         public IQueryable<SessionPolicy> GetAllSessionPolicies()
         {
-            IQueryable<SessionPolicy> items = from a in context.SessionPolicies
-                                                                 select a;
-            string entityName = "AllSessionPolicies";
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && items != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, items, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    items = (IQueryable<SessionPolicy>)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            return items;
-            //return from a in context.SessionPolicies
-            //       select a;
+            return from a in context.SessionPolicies
+                   select a;
         }
 
         public void Add(SessionPolicy entity)

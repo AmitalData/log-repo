@@ -1,4 +1,4 @@
-
+﻿
 <style>
 
 
@@ -92,7 +92,7 @@
                                                                 (click)="SelectionChanged(item)"
                                                                 [class.SelectedMenuItem]="item === SelectedPartnerItem">
                                                                
-                                                                <div [style.left]="isRTL ? '0px' : '-6px'" style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;">{{item.PartnerType}}</div>
+                                                                <div style="position:absolute; left: -6px; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;">{{item.PartnerType}}</div>
                                                                 <img *ngIf="item === SelectedPartnerItem" class="RightCenter" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
                                                               
                                                          
@@ -149,7 +149,7 @@
                                                                                             <div  style="height: 100%; width: 100%; position: relative;">
 
 
-                                                                                                <logitude-grid  [QueryChangeEvent]="onQueryChangeEvent" [rows]="items"  [dataSource]="DataSource" [SearchFieldchangeevent]="SearchFieldchangeevent" [UseBusyIndecator]="true"
+                                                                                                <logitude-grid  [QueryChangeEvent]="onQueryChangeEvent" [rows]="items"  [dataSource]="DataSource" [SearchFieldchangeevent]="SearchFieldchangeevent"
                                                                                                                [columns]="columns" [autoLoad]="true" [IsCustomTemplate]="true">
                                                                                                 </logitude-grid>
 
@@ -329,7 +329,7 @@
             </table>
         </td>
     </tr>
-    <tr style="height: 32px;" [hidden]="IsSchedulerReport">
+    <tr style="height: 32px;">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
@@ -346,7 +346,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button  id="{{'SaveSendMessageTobtn' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

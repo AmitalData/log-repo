@@ -1,5 +1,5 @@
 
-import { Component, AfterViewInit, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {OpportunityPMService} from '../../../../CRM/Services/StandardPMs/OpportunityPMService';
@@ -24,11 +24,11 @@ import {OpportunityArgs} from '../../../../CRM/Args';
 
 @Component({
     selector: 'NewOpportunityComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewOpportunityComponent.html',
 })
 
-export class NewOpportunityComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class NewOpportunityComponent extends BaseComponent   {
     public ObjectTableName: string = "Opportunity";
     public DataContext: NewOpportunityComponent = this;
     public EntityPM: OpportunityPM = new OpportunityPM();
@@ -37,7 +37,7 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
     public ValidationErrorsList: Array<String> = [];
     public ScreenCode: string = "Opportunity.AdditionalFields";
     private addCustomerVisibility: boolean = true;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public get AddCustomerVisibility() { return this.addCustomerVisibility; }
     public set AddCustomerVisibility(value: boolean) { this.addCustomerVisibility = value; }
     public IsNew: boolean = true;
@@ -50,44 +50,7 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
         
     }
 
-    constructor(private _entityResourceService: EntityResourceService) {
-        super();
-        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe((response: any) => {
-            this.ComputeCustomerDependency();
-        });
-
-    }
-
-    ngOnInit() {
-        this.ComputeCustomerDependency();
-    }
-
-    ngAfterViewInit() {
-        this.SetUIProperties();
-        this.AddCustomerVisibility = AppTool.IsNullOrEmpty(this.EntityPM.CustomerId) ? true : false;
-        OpportunityPMInitService.InitValues(this.EntityPM, this.IsNew);
-        this.LoadChildComponent();
-    }
-
-
-    //Customer
-    //Customer
-    public CustomerDependencyProperty1: string = "PO,CS";
-    public CustomerDependencyProperty1IsList: boolean = true;
-    public CustomerDependencyProperty2: string = "True";
-
-    private ComputeCustomerDependency() {
-        var allowAgentFeatureToggle = this.IsAllowAgentFeatureToggle();
-        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV && allowAgentFeatureToggle != null) {
-            this.CustomerDependencyProperty1 = "PO,CS,AG";
-            this.CustomerDependencyProperty2 = null;
-        }
-    }
-
-    IsAllowAgentFeatureToggle() {
-        var isAllowAgentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAC")[0];
-        return isAllowAgentFeatureToggle;
-    }
+    
 
 
     public set OwnerId(value: string) {
@@ -97,14 +60,14 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
                 this.EntityPM.BusinessUnitId = null;
             else {
                 var listService: UserListService = new UserListService();
-                listService.getAllFromCache().subscribe((result:any) => {
+                listService.getAllFromCache().subscribe(result => {
                     var list: UserList = result.Result.filter(p => p.Id == value)[0];
                     if (list != null)
                         this.EntityPM.BusinessUnitId = list.BusinessUnitId;
 
                 });
 
-                } 
+                }
             }
 
     }
@@ -116,7 +79,7 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
     OkButtonClicked() {
         this.CurrentSession.StartBusyIndicatorCreating();
         this.myService = new OpportunityPMService();
-        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this.myService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -141,7 +104,7 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
         logWindow.Width = 960;
         logWindow.Height = 580;
         logWindow.Title = windowTitle;
-        this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
             logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewPotentialCustomerComponent');
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {
@@ -199,7 +162,7 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
         if (!AppTool.IsNullOrEmpty(this.CustomerId)) {
 
             var cardService: CardListService = new CardListService();
-            cardService.getAll().subscribe((result:any) => {
+            cardService.getAll().subscribe(result => {
                 var list: CardList = result.Result.filter(p => p.Id == this.CustomerId)[0];
                 if (list != null) {
                     myContactId = list.PrimaryContactId;                          
@@ -243,7 +206,7 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
         var isConfirmNeeded: boolean = false;
         this.newOpportunityTypeId = newValue;
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe((result:any) => {
+        oppTypeListService.getAllFromCache().subscribe(result => {
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == newValue)[0];
             if (typeList != null) {
                 this.newOpportunityTypeCode = typeList.Code;
@@ -327,7 +290,7 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
     SetSubject() {
 
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe((result:any) => {
+        oppTypeListService.getAllFromCache().subscribe(result => {
 
             var type: OpportunityTypeList = result.Result.filter(d => d.Id == this.OpportunityTypeId)[0];
             if (type != null) {
@@ -341,7 +304,7 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
 
     SetUIProperties() {
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe((result:any) => {
+        oppTypeListService.getAllFromCache().subscribe(result => {
 
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == this.EntityPM.OpportunityTypeId)[0];
             var typeCode: string = typeList == null ? null : typeList.Code;
@@ -420,6 +383,41 @@ export class NewOpportunityComponent extends BaseComponent implements OnInit, Af
             this.EntityPM = args.Entity;
             this.IsNew = args.IsNew;
             this.addCustomerVisibility = args.IsAddCustomerVisible;
+        }
+    }
+
+    constructor(private _entityResourceService: EntityResourceService) {
+        super();
+        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe(response => {
+
+        });
+        this.RunComponentTimer();         
+    }
+
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.SetUIProperties();
+            this.AddCustomerVisibility = AppTool.IsNullOrEmpty(this.EntityPM.CustomerId) ? true : false;
+            OpportunityPMInitService.InitValues(this.EntityPM, this.IsNew);    
+            this.LoadChildComponent();            
+        }
+        else {
+            this.RunComponentTimer();
         }
     }
 

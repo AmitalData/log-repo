@@ -14,7 +14,7 @@ import {CardList} from '../../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../../Common/Services/StandardLists/CardListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TariffsComponent.html',
 })
 

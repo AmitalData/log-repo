@@ -58,10 +58,8 @@
                     <tr>
                         <td style="width: 15px; font-size: 11px; padding-left: 3px; background: #AAAAAA;">1:</td>
 
-                        <td>
-                            <div class="MediaFill">
-                                <LogTextBox [DigitsAfterPoint]="3" [ObjectFieldName]="'Ratio'" [Text]="Ratio" [IsRatioBox]="true" [ObjectTableName]="ObjectTableName" [DataContext]="IDataContext" [HideColumns]="true" (LostFocus)="OnLostFocus()"></LogTextBox>
-                            </div>
+                        <td>                            
+                            <LogTextBox [ObjectFieldName]="'Ratio'" [Text]="Ratio" [IsRatioBox]="true" [ObjectTableName]="ObjectTableName" [DataContext]="IDataContext" [HideColumns]="true" (LostFocus)="OnLostFocus()"></LogTextBox>
                         </td>
 
                         <td style="width: 15px;">

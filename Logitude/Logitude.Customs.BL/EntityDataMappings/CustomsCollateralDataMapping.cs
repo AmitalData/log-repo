@@ -87,9 +87,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CollateralRequestStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.RequestedCollateralTypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CustomsEntityTypeName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.Direction);
-
-            this.CustomMappedPMProperties.Add(PMPropertyNames.ImporterId);
 
             if (entityPOCO.CustomsEntityTypeCode != null)
             {
@@ -111,17 +108,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CollateralTypePM CollateralType = CollateralTypeQueryService.GetSingle(entityPOCO.RequestedCollateralTypeCode, false, true);
                 entityPM.RequestedCollateralTypeName = CollateralType.LocalName;
             }
-
-            DeclarationQueryService declarationQuery = new DeclarationQueryService(entityPOCO.Tenant);
-            DeclarationPM declaration = declarationQuery.GetSingle(entityPM.DeclarationId, false, false);
-            if (declaration != null)
-            {
-                entityPM.Direction = declaration.Direction;
-                entityPM.ImporterId = declaration.ImporterId;
-            }
-
-
-            }
+        }
    }
 
 

@@ -1,4 +1,4 @@
-
+﻿
 
 <style type="text/css">
     .DatePicker {
@@ -95,34 +95,28 @@
         pointer-events: none;
     }
 
-    .DatePickerInputDivDisabledWithColor {
-        pointer-events: none;
-    }
-
-
-    .ErrorPopUp {
-        background-image: url(Images/ValidationTooltip.png);
+      .ErrorPopUp {
+        background-image: url('Images/ValidationTooltip.png');
         background-repeat: no-repeat;
-        background-size: 250px 100px;
+        background-size: 180px 100px;
         position: absolute;
         height: 110px;
-        width: 250px;
+        width: 180px;
         color: white;
         z-index: 100;
         word-break: break-all;
         word-wrap: break-word;
         overflow: hidden;
         white-space: normal;
-        padding: 8px;
     }
-    
+
     .ErrorPopUpMessage {
         color: white;
         white-space: normal;
         word-break: break-word;
         word-wrap: break-word;
         font-size: 11px;
-        width: 215px !important;
+        width: 165px;
         height: 110px;
         margin: 10px 10px 10px 10px;
         padding: 2px 8px;
@@ -151,13 +145,12 @@
          [ElementId]="ErrorPopUpId"
          [RelativeElementId]="DatePickerInputId"
          [TopDisplacement]="-95"
-         [LeftDisplacement]="30"
+         [LeftDisplacement]="0"
          [ComponentType]="'popup'"
          [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
-         [PopupWidth]="250"
+         [PopupWidth]="180"
          class="ErrorPopUp"
-         *ngIf="ShowErrorPopup"
-         >
+         *ngIf="ShowErrorPopup">
         <div class="ErrorPopUpMessage" [class.FlipImgHoriz]="LayoutDirection == 'rtl'">
             {{uiProperty.ValidationError}}
         </div>
@@ -171,7 +164,7 @@
 
                     <!-- Input -->
                     <div style="height: 100%;width: calc(100% - 24px);"  float-start >
-                        <input [attr.data-cy]="DataCy" [id]="DatePickerInputId"
+                        <input [id]="DatePickerInputId"
                             style="background: transparent;padding-top: 2px;box-shadow:none;border:1px solid transparent; border-radius:3px; text-indent:5px;height:18px;min-height:18px;max-height:20px;opacity:1 !important;line-height: 1.0;display: block;"
                             [disabled]="IsDisabled"
                             [(ngModel)]="InputValue"
@@ -185,7 +178,7 @@
 
                     <!-- Toggle Button -->
                     <div style="height: 100%;width: 20px;" [style.float]="isRTL ? 'left' : 'right'">
-                        <button [attr.data-cy]="DataCy" [id]="CalendarButtonId" tabindex="-1"
+                        <button [id]="CalendarButtonId" tabindex="-1"
                             class="Button CalendarButton RightCenter CustomButton"
                             (click)="ToggleCalendar()"
                             (focus)="OnBtnFocus()"
@@ -230,14 +223,14 @@
 
 
 
-    <div FixedPosition [UseDefaultPosition]="UseDefaultPosition" [ElementId]="DropDownId" [RelativeElementId]="DatePickerInputId" [VertDisplacement]="22" [HorizDisplacement]="2"
+    <div FixedPosition [ElementId]="DropDownId" [RelativeElementId]="DatePickerInputId" [VertDisplacement]="22" [HorizDisplacement]="2"
          [PopupWidth]="184" [ComponentHight]="183"
          [id]="DropDownId" *ngIf="IsDateDropDownOpen" (mouseover)="OnCalendarMouseOver()" (mouseout)="OnCalendarMouseOut()"
          tabindex="-1" class="DatePickerCalendar" [ngStyle]="DatePickerCalendarStyle" [ComponentType]="'datepicker'">
         <LogCalendar [ToggleOpened]="IsCalendarOpen" [SelectedDate]="SelectedDate" (SelectedDateChanged)="OnSelectedDateChanged($event)"></LogCalendar>
     </div>
 
-    <div FixedPosition [UseDefaultPosition]="UseDefaultPosition" [ElementId]="DropDownId" [RelativeElementId]="DatePickerInputId" [VertDisplacement]="22" [HorizDisplacement]="2"
+    <div FixedPosition [ElementId]="DropDownId" [RelativeElementId]="DatePickerInputId" [VertDisplacement]="22" [HorizDisplacement]="2"
          [PopupWidth]="180" [ComponentHight]="152"
          [id]="DropDownId" *ngIf="IsTimeDropDownOpen" (mouseover)="OnCalendarMouseOver()" (mouseout)="OnCalendarMouseOut()"
          tabindex="-1" class="DatePickerCalendar" [ngStyle]="DatePickerCalendarStyle" [ComponentType]="'datepicker'">

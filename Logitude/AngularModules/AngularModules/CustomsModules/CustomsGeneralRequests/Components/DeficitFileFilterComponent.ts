@@ -25,7 +25,7 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 
 @Component({
     selector: 'DeficitFileFilterComponent',
-    
+    moduleId: module.id,
     templateUrl: './DeficitFileFilterComponent.html',
 })
 
@@ -294,7 +294,7 @@ export class DeficitFileFilterComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לגרעונות", true)
             .then((res) => {
                 

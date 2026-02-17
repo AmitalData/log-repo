@@ -25,8 +25,6 @@
                                     <SectionBody>
                                         <table>
                                             <tr>
-
-                                                <!-- Partners -->
                                                 <td>
                                                     <div class="MediaFill">
                                                         <fieldset class="MediaFill GroupBox">
@@ -34,7 +32,7 @@
                                                                 <span>Partners</span>
                                                             </legend>
 
-                                                            <div style="top: 10px;">
+                                                            <div class="MarginAbsolute5" style="top: 15px;">
                                                                 <table>
 
                                                                     <!-- Shipper -->
@@ -96,7 +94,6 @@
                                                     <div></div>
                                                 </td>
 
-                                                <!-- Routings -->
                                                 <td>
                                                     <div class="MediaFill">
                                                         <fieldset class="MediaFill GroupBox">
@@ -104,7 +101,7 @@
                                                                 <span>Routings</span>
                                                             </legend>
 
-                                                            <div style="top: 10px;">
+                                                            <div class="MarginAbsolute5" style="top: 15px;">
                                                                 <table>
 
                                                                     <!-- Main Carriage -->
@@ -155,7 +152,6 @@
                                                     <div></div>
                                                 </td>
 
-                                                <!-- Charges -->
                                                 <td>
                                                     <div class="MediaFill">
                                                         <fieldset class="MediaFill GroupBox">
@@ -163,7 +159,7 @@
                                                                 <span>Charges</span>
                                                             </legend>
 
-                                                            <div style="top: 10px;">
+                                                            <div class="MarginAbsolute5" style="top: 15px;">
                                                                 <table>
 
                                                                     <!-- Charges Types -->
@@ -196,17 +192,6 @@
 
                                                                         <td>
                                                                             <LogCheckBox [ObjectFieldName]="'CopyChargesSale'" [Checked]="CopyChargesSale" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <!-- Rates -->
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CopyExchangeRates'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Rates'"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'CopyExchangeRates'" [Checked]="CopyExchangeRates" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
                                                                         </td>
                                                                     </tr>
 
@@ -276,14 +261,15 @@
                         </td>
                     </tr>
 
-                    <tr style="height: 170px;">
+                    <tr style="height: 100px;">
                         <td>
                             <div class="MediaFill">
                                 <SectionBox>
                                     <SectionHead>
                                         <table>
                                             <tr>
-                                                <td style="width: 1px; color: #45494A; font-size: 14px;">General Settings</td>
+                                                <td style="width: 1px; color: #45494A; font-size: 14px;">Sale Currency</td>
+                                                <td style="padding-left: 5px;" class="Label">Quote Sale Currency Default</td>
                                             </tr>
                                         </table>
                                     </SectionHead>
@@ -296,48 +282,6 @@
 
                                                 <td style="width: 200px;">
                                                     <ComboBox [ItemsSource]="SaleCurrencySettings" [Binding]="'Name'" [SelectedItem]="SelectedSaleCurrencySetting" (SelectedItemChanged)="SelectedSaleCurrencySetting = $event"></ComboBox>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'AutomaticallyCloseDays'" [NoObjectField]="true" [Text]="'Automatically Close Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'AutomaticallyCloseDays'" [Text]="AutomaticallyCloseDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'QuoteExpirationDays'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'QuoteExpirationDays'" [Text]="QuoteExpirationDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'CostChargesMust'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogCheckBox [ObjectFieldName]="'CostChargesMust'" [Checked]="CostChargesMust" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                 </td>
 
                                                 <td>

@@ -48,15 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<DeclarationCargoSplitPM> GetDeclarationCargoSplitsList(string declarationId, int tenant)
         {
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
-
-            var declarationPMs = declarationQueryService.GetDeclarationAmendmentsById(tenant, declarationId);
-
-            List<string> declarationIds = new List<string>();
-            declarationPMs.ForEach(x => declarationIds.Add(x.Id));
-            declarationIds.Add(declarationId);
-
-            List<DeclarationCargoSplit> DeclarationCargoSplits = repository.GetDeclarationCargoSplitsList(declarationIds, tenant);
+            List<DeclarationCargoSplit> DeclarationCargoSplits = repository.GetDeclarationCargoSplitsList(declarationId, tenant);
             List<DeclarationCargoSplitPM> DeclarationCargoSplitList = new List<DeclarationCargoSplitPM>();
             if (DeclarationCargoSplits != null)
             {
@@ -79,7 +71,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public string GetIdByCargoIdentifiers(string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3, int cargoIdentifierType, int tenant)
         {
-            if (String.IsNullOrWhiteSpace(cargoIdentifierKey1) || String.IsNullOrWhiteSpace(cargoIdentifierKey2)) return "";
+            if (String.IsNullOrWhiteSpace(cargoIdentifierKey1) || String.IsNullOrWhiteSpace(cargoIdentifierKey2) || String.IsNullOrWhiteSpace(cargoIdentifierKey3)) return "";
             return repository.GetIdByCargoIdentifiers(cargoIdentifierKey1, cargoIdentifierKey2, cargoIdentifierKey3, cargoIdentifierType, tenant);
         }
     }

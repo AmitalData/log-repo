@@ -2,14 +2,6 @@
 <table style="height: 24px;">
     <tr>
         <td style="padding-right: 5px;">
-            <SalesNotes [Title]="'Sales Notes'"
-                        title="Sales Notes"
-                        [IconCode]="'B'"
-                        [CustomerPM]="CustomerPM" [IsFromQuote]="'true'">
-            </SalesNotes>
-        </td>
-
-        <td style="padding-right: 5px;">
             <HelperNotes [Title]="'Quote.F.Notes' | TextCodeTranslationPipe" [EntityTitle]="'Quote' | TextCodeTranslationPipe" [Text]="Notes" (TextChanged)="Notes = $event" [QuotePM]="EntityPM"></HelperNotes>
         </td>
 

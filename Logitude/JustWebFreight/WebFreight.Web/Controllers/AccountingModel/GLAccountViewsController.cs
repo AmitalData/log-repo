@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -52,8 +52,6 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.Accounting.BL.Utils;
-using Logitude.Accounting.BL.CoreBL.BuildTenant;
-using Logitude.Accounting.BL.CoreBL;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -99,55 +97,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-        public HttpResponseMessage GetInsertControlAccount(string ControlAccountId,string ChartOfAccountsId)
+        public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate)
         {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
-
-                Logitude.BL.Security.LoggedContactUtil loggedUtil = new Logitude.BL.Security.LoggedContactUtil();
-                ContactPM contact = loggedUtil.GetLoggedContact(tenant);
-                //ContactQuery contactQuery = new ContactQuery(tenant);
-                //ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
-
-                //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
-                //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("GLAccount", 0, true);
-
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                var chartOfAccountProvider = new ChartOfAccountProvider();
-                var displayNumberProvider = new DisplayNumberProvider();
-
-                var myFullAccountingProvider = new FullAccountingProvider(chartOfAccountProvider, displayNumberProvider);
-                var accId = myFullAccountingProvider.Insert(tenant, MyContext, new BuildAccountingTenantParam()
-                {
-                    CheckAndInsertPoco = false,
-                    //CreateCustomerControlAccountId = true,
-                     ControlAccountId=ControlAccountId,
-                      ChartOfAccountsId= ChartOfAccountsId,
-                    ControlAccounts = true,
-                    
-                }
-                    );
-
-                return Request.CreateResponse(HttpStatusCode.OK, new { AccountId= accId });
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        //http://localhost:9996/api/glaccountviews/GetCheckBalanceByAccountDisplayNumber?tenant=10&accountDisplayNumber=104355&totalDateType=1&theDate=2020-07-31T00:00:00.000&IncludeRelatedCurrenciesAccount=true&SumOpenTransactions=true
-        public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate
-            , bool IncludeRelatedCurrenciesAccount, bool SumOpenTransactions = false)
-            
-        {///
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
@@ -155,23 +106,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 //int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
 
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
-                var qs = new GLAccountQueryService(tenant);
+                var qs = new GLAccountQueryService(1);
                 var list=qs.GetByDisplayNumber(accountDisplayNumber, tenant);
                 var pm =list.First();
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, pm.Id, null);
-                ac.ReSetAccountList(false, IncludeRelatedCurrenciesAccount);
-                bool openBalancePlease_ReCalcYearTransfer = //true;//Yaron said this is Default !!!
-                    (theDate.Day == 1 && theDate.Month == 1);
-                ac.CalculateBalance(
-                    openBalancePlease_ReCalcYearTransfer,
-                    totalDateType, theDate,false, true, false,
-                    false, SumOpenTransactions);
+                ac.ReSetAccountList(false, false);
+                ac.CalculateBalance(totalDateType, theDate, true, false);
 
                 ac.AccountBalance.LogMessage = null;
 
@@ -185,56 +130,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-        public HttpResponseMessage GetLedgerTransactionByAccountDisplayNumber(int tenant, string accountDisplayNumber,string dateType, DateTime fromDate, DateTime toDate)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
-
-                ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
-                var qs = new GLAccountQueryService(tenant);
-                var list = qs.GetByDisplayNumber(accountDisplayNumber, tenant);
-                var pm = list.First();
-                var myLedgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter()
-                {
-                    Tenant = tenant,
-                    From = fromDate,
-                    To = toDate,
-                    //CurrencyId = currencyId,
-                    DateTypeCode = dateType,
-                    GLAccountId = pm.Id,
-
-                    SearchFields = "",
-                    PageStartAtRecordIndex = 0,
-                    PageSize = 500,
-                    //CallBack = new LedgerTransactionBalanceFilterCallBack()
-                    //{
-
-                    //}
-
-                };
-
-                var accountingContext = AccountingContext.GetContext(tenant);
-                var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, myLedgerTransactionBalanceFilter);
-                ledgerTransactionBalanceService.Run();
-
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, ledgerTransactionBalanceService.Response.MyLedgerTransactionList);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
         public HttpResponseMessage GetCheckBalance(int tenant, string accountId, string totalDateType, DateTime theDate)
         {
             try
@@ -252,9 +147,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, accountId, null);
                 ac.ReSetAccountList(false, false);
-                bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
-                ac.CalculateBalance(openBalancePlease_ReCalcYearTransfer, totalDateType, theDate, false, true, false
-                    ,false,false);
+                ac.CalculateBalance(totalDateType, theDate, true, false);
 
                 ac.AccountBalance.LogMessage = null;
 
@@ -318,44 +211,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-        public HttpResponseMessage GetAccountTransactionsCount(string accountId)
-        {
-            try
-            {
-                AuthenticationToken authToken = Authinticate();
-
-                int count = GetAccountTransactionsCount(accountId, authToken);
-
-                return Request.CreateResponse(HttpStatusCode.OK, count);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        private static int GetAccountTransactionsCount(string accountId, AuthenticationToken authToken)
-        {
-            IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-            GLAccountListQueryService glAccountQuery = new GLAccountListQueryService(MyContext);
-            LedgerTransactionListQueryService transactionsQuery = new LedgerTransactionListQueryService(MyContext);
-
-            var count = transactionsQuery.GetTransactionsCountByAccountId(accountId, authToken.Tenant);
-            return count;
-        }
-
-        private static AuthenticationToken Authinticate()
-        {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            int tenant = authToken.Tenant;
-            string loggedUserEmail = authToken.Email;
-
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
-            return authToken;
         }
 
         public HttpResponseMessage GetAccountCurrencies(string accountId)
@@ -517,7 +372,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 GLAccountQueryService gLAccountQuery = new GLAccountQueryService(MyContext);
-                GLAccountPM gLAccountPM = gLAccountQuery.GetSingle(id, true, false);
+                GLAccountPM gLAccountPM = gLAccountQuery.GetSingle(id, false, false);
                 GLAccountUpdateService service = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
                 if (parentId.Contains("null"))
                 {
@@ -740,10 +595,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
-
                 LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(MyContext);
 
-                int count = query.getRecoCount(accountId, tenant);
+                int count = query.GetAccountOpenTransactionsCount(accountId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, count);
             }
@@ -753,228 +607,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-
-        public HttpResponseMessage GetGLAccountExternalTransactionsTotal(string accountId)
-        {
-            try
-            {
-                int tenant = GetAuthinticatedTenant();
-
-                IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
-                LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(accountingContext);
-
-                var externalTransactions = ledgerQuery.GetExternalTransactionsForAccount(accountId, tenant).ToList();
-                var externalTransactionsTotal = externalTransactions.Sum(d=>d.LocalAmountCredit);
-
-                return Request.CreateResponse(HttpStatusCode.OK, externalTransactionsTotal);
-
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetARPyamentChequesListAsLedgerTransactions(string accountId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
-
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                GLAccountChequesTransactionsRetreivingService ledgerTransactionQuery = new GLAccountChequesTransactionsRetreivingService(tenant,MyContext);
-                List<LedgerTransactionList> myResult = ledgerTransactionQuery.GetAccountChequesTransactions(accountId, null, null);
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage PutGLAccountIsMark(string accountId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
-
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                GLAccountUpdateService service = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
-                (DateTime? MarkDate, bool WasNull) result = service.SetIsMark(accountId, tenant); 
-                var responseContent = new { MarkDate = result.MarkDate, wasNull = result.WasNull };
-                return Request.CreateResponse(HttpStatusCode.OK, responseContent);
-
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage PutGLAccountUndoMark(string accountId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
-
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                GLAccountUpdateService service = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
-                 bool updated= service.UndoMark(accountId, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, updated);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        private int GetAuthinticatedTenant()
-        {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            string loggedUserEmail = authToken.Email;
-            int tenant = authToken.Tenant;
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            return tenant;
-        }
-
-
-        public HttpResponseMessage GetByFiltersShort([FromUri] ApiQueryFilters filters)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("GLAccount", "READ", authToken.Tenant);
-
-                int tenant = authToken.Tenant;
-
-
-                QueryOperations queryOperations = new QueryOperations()
-                {
-                    ObjectTableName = "GLAccount",
-                    PageIndex = filters.PageIndex,
-                    PageSize = filters.PageSize,
-                    QuerySection = "GLAccounts",
-                    SortByColumnName = filters.SortBy,
-                    SortDirectin = filters.SortDirection,
-                    GetAll = filters.GetAll,
-                };
-
-
-                List<ObjectField> GLAccountObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("GLAccount", tenant);
-                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
-                for (int i = 1; i <= 10; i++)
-                {
-                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
-                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
-                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
-                    object filterValue2 = null;
-
-                    if (filterNameProp != null)
-                    {
-                        string filterName = filterNameProp.ToString();
-                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-                        //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
-                        //{
-                        //string[] values = filterValue1.ToString().Split(',');
-                        //if (values.Count() > 1)
-                        //{
-                        //filterValue1 = values[0];
-                        //filterValue2 = values[1];
-                        //}
-                        //}
-                        //ToDo: Get object field by name and set the remained filter properties
-                        ObjectField field = GLAccountObjectFields.FirstOrDefault(f => f.FieldName == filterName);
-                        if (field != null)
-                        {
-                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-                        }
-                        else
-                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
-                    }
-
-
-
-                }
-
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-                {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-
-                    foreach (QueryFilterItem filter in filters_list)
-                    {
-                        ObjectField field = GLAccountObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-                        if (field != null)
-                        {
-
-
-                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                        }
-                    }
-                }
-
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                GLAccountListQueryService gLAccountQuery = new GLAccountListQueryService(MyContext);
-
-                List<GLAccountList> entityLists = gLAccountQuery.GetListShort(queryOperations, tenant);
-
-                ServiceResponse response = new ServiceResponse();
-                if (filters.GetCount)
-                {
-                    int count = gLAccountQuery.GetListCount(queryOperations, tenant);
-                    response.Count = count;
-                }
-
-                response.Result = entityLists;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-
-                return reponseMessage;
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
+    
     }
 
     class MyPeriodM
@@ -982,5 +615,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public decimal Total { get; set; }
         public string PeriodName { get; set; }
     }
+
+    
+
+
+
 }
 	 

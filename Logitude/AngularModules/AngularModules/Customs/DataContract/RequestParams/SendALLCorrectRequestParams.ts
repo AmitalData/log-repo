@@ -1,4 +1,4 @@
-import {GenericRequestParams} from './GenericRequestParams';
+﻿import {GenericRequestParams} from './GenericRequestParams';
 
 export class SendALLCorrectRequestParams extends GenericRequestParams {
 
@@ -6,13 +6,10 @@ export class SendALLCorrectRequestParams extends GenericRequestParams {
     public HAWB: string;
     public CourierDeclarationStatusCode: string;
     public Declarations: string[];
-    public IsWorkSheetFromExcel:boolean;
 
     public SelectedBOLValue: string;
     public SelectedStatusValue: string;
     public SelectedAvailableValue: string;
     public SelectedTotalInvoiceValue: string;
-    public SelectedFastIndividualProcessValue: string;
-    public SelectedCustomStatusValue: string;
-    public SelectedFinalReleaseValue: string;
+
 }

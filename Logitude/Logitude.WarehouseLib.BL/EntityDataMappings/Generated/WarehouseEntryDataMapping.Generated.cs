@@ -10,8 +10,6 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.BL.EntityPMs; 
 using Logitude.WarehouseLib.Data;
@@ -76,16 +74,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromPartnerId, 
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
-	         TotalVolumetricWeight, 
-	         LastStatusUpdateDate, 
-	         ConnectedTo, 
-	         Ratio, 
-	         ToTypeCode, 
-	         FromTypeCode, 
-	         FromCountryId, 
-	         ToCountryId, 
-	         MasterShipmentNumber, 
-	         ConnectedToReferenceNumber,
+	         TotalVolumetricWeight,
 	      }
 
 
@@ -153,22 +142,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromPartnerId, 
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
-	         TotalVolumetricWeight, 
-	         LastStatusUpdateDate, 
-	         MasterHouse, 
-	         EntryReferencesAndDate, 
-	         ConnectedTo, 
-	         Ratio, 
-	         ToTypeCode, 
-	         FromTypeCode, 
-	         FromCountryId, 
-	         ToCountryId, 
-	         MasterShipmentNumber, 
-	         ConnectedToReferenceNumber, 
-	         IsUpdateByAutomation, 
-	         CustomerPrimaryContactId, 
-	         ShipperPrimaryContactId, 
-	         ConsigneePrimaryContactId,
+	         TotalVolumetricWeight,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -437,55 +411,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 				entityPOCO.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
-            {
-				entityPOCO.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
-            {
-				entityPOCO.ConnectedTo = entityPM.ConnectedTo;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
-            {
-				entityPOCO.Ratio = entityPM.Ratio;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
-            {
-				entityPOCO.ToTypeCode = entityPM.ToTypeCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromTypeCode))
-            {
-				entityPOCO.FromTypeCode = entityPM.FromTypeCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromCountryId))
-            {
-				entityPOCO.FromCountryId = entityPM.FromCountryId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToCountryId))
-            {
-				entityPOCO.ToCountryId = entityPM.ToCountryId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasterShipmentNumber))
-            {
-				entityPOCO.MasterShipmentNumber = entityPM.MasterShipmentNumber;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedToReferenceNumber))
-            {
-				entityPOCO.ConnectedToReferenceNumber = entityPM.ConnectedToReferenceNumber;
-			}
-			
-			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "WarehouseEntry", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehouseEntryPM> { entityPM }.Cast<object>().ToList() }).Update();
-		 
-			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant }).Update();
-		 
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -757,56 +682,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.TotalVolumetricWeight = entityPOCO.TotalVolumetricWeight;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusUpdateDate))
-            {
-					entityPM.LastStatusUpdateDate = entityPOCO.LastStatusUpdateDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConnectedTo))
-            {
-					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Ratio))
-            {
-					entityPM.Ratio = entityPOCO.Ratio;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToTypeCode))
-            {
-					entityPM.ToTypeCode = entityPOCO.ToTypeCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromTypeCode))
-            {
-					entityPM.FromTypeCode = entityPOCO.FromTypeCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromCountryId))
-            {
-					entityPM.FromCountryId = entityPOCO.FromCountryId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToCountryId))
-            {
-					entityPM.ToCountryId = entityPOCO.ToCountryId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MasterShipmentNumber))
-            {
-					entityPM.MasterShipmentNumber = entityPOCO.MasterShipmentNumber;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConnectedToReferenceNumber))
-            {
-					entityPM.ConnectedToReferenceNumber = entityPOCO.ConnectedToReferenceNumber;
-            }
-
-			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehouseEntryPM> { entityPM }.Cast<object>().ToList() }).Set();
-
-		 
-			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant }).Set();
-		 
 		}
 
 		public void PMToOldPM(WarehouseEntryPM entityPM, WarehouseEntryPM oldEntityPM)
@@ -1073,51 +948,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 oldEntityPM.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
-            {
-                oldEntityPM.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
-            {
-                oldEntityPM.ConnectedTo = entityPM.ConnectedTo;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
-            {
-                oldEntityPM.Ratio = entityPM.Ratio;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
-            {
-                oldEntityPM.ToTypeCode = entityPM.ToTypeCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromTypeCode))
-            {
-                oldEntityPM.FromTypeCode = entityPM.FromTypeCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromCountryId))
-            {
-                oldEntityPM.FromCountryId = entityPM.FromCountryId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToCountryId))
-            {
-                oldEntityPM.ToCountryId = entityPM.ToCountryId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasterShipmentNumber))
-            {
-                oldEntityPM.MasterShipmentNumber = entityPM.MasterShipmentNumber;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedToReferenceNumber))
-            {
-                oldEntityPM.ConnectedToReferenceNumber = entityPM.ConnectedToReferenceNumber;
-            }
-			
 		}
 
 	    public void EncodeBase64NVARCHARFields(WarehouseEntryPM entityPM)
@@ -1142,10 +972,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ConsigneeName)) //T4 find type == nText 
             {
                 entityPM.ConsigneeName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ConsigneeName));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.ConnectedToReferenceNumber)) //T4 find type == nText 
-            {
-                entityPM.ConnectedToReferenceNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ConnectedToReferenceNumber));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

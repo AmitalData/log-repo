@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -18,7 +18,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public PackageTypeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public PackageTypeRepository(int tenant)
         {
@@ -41,7 +44,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             PackageType entity;
             if (getFromCache)
             {
-              
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -63,8 +67,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (PackageType)CacheManager.CacheWrapper.Get(entityName);
                     }
-                
-             
+                }
+                else
+                {
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                    entity = (from record in context.PackageTypes.Include("Measurement") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                }
             }
             else
             {
@@ -80,7 +88,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             PackageType entity;
             if (getFromCache)
             {
-             
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -102,8 +111,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (PackageType)CacheManager.CacheWrapper.Get(entityName);
                     }
-                
-           
+                }
+                else
+                {
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                    entity = (from record in context.PackageTypes.Include("Measurement") where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
+                }
             }
             else
             {

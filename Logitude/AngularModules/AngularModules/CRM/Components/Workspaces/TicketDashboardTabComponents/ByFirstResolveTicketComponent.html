@@ -1,4 +1,4 @@
-<style type="text/css">
+﻿<style type="text/css">
     .SquareIcon {
         width: 10px;
         height: 10px;
@@ -102,7 +102,7 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <div [attr.id]="ClosedTicketsByClassificationId"  class="MediaFill" (click)="TicketClicking('M')"></div>
+                                                                <div [attr.id]="ClosedTicketsByClassificationId" style="height:100%;width:100%" class="CellContent" (click)="TicketClicking('M')"></div>
                                                             </td>
                                                             <td style="width:100px;min-width:100px;overflow-y:auto">
                                                                 <div class="MediaFill">
@@ -153,7 +153,7 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <div [attr.id]="ClosedTicketsBySeverityId" class="MediaFill" (click)="TicketClicking('S')"></div>
+                                                                <div [attr.id]="ClosedTicketsBySeverityId" style="height:100%;width:100%" class="CellContent" (click)="TicketClicking('S')"></div>
                                                             </td>
                                                             <td style="width:100px;min-width:100px;overflow-y:auto">
                                                                 <div class="MediaFill">
@@ -205,7 +205,7 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <div [attr.id]="ClosedTicketsByTicketTypeId" class="MediaFill" (click)="TicketClicking('C')"></div>
+                                                                <div [attr.id]="ClosedTicketsByTicketTypeId" style="height:100%;width:100%" class="CellContent" (click)="TicketClicking('C')"></div>
                                                             </td>
                                                             <td style="width:100px;min-width:100px;overflow-y:auto">
                                                                 <div class="MediaFill">
@@ -281,7 +281,7 @@
                                         <table>
                                             <tr style="height:1px">
                                                 <td>
-                                                    <div [attr.id]="ClosedSLAViolationId" class="MediaFill" (click)="SLAClicking()"></div>
+                                                    <div [attr.id]="ClosedSLAViolationId" style="height:100%;width:100%" class="CellContent" (click)="SLAClicking()"></div>
                                                 </td>
                                             </tr>
 
@@ -328,7 +328,7 @@
                                         <table>
                                             <tr style="height:1px">
                                                 <td>
-                                                    <div [attr.id]="ClosedSolvedTicketsId" class="MediaFill" (click)="SolvedClosedTicketsClicking()"></div>
+                                                    <div [attr.id]="ClosedSolvedTicketsId" style="height:100%;width:100%" class="CellContent" (click)="SolvedClosedTicketsClicking()"></div>
                                                 </td>
                                             </tr>
 

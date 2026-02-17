@@ -3,7 +3,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
@@ -31,30 +31,14 @@ namespace WebFreight.Web.TrainingResourcesHTML
         protected void Page_Load(object sender, EventArgs e)
         {
             int? tenant = null;
-            string token = Request["Token"] ?? "";
+            string token = Request["tempId"] ?? "";
+
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
             bool isValid = securityDocumentResult.IsValid;
             string email = securityDocumentResult.Email;
             string exceptionMessage = securityDocumentResult.ExceptionResult;
             tenant = securityDocumentResult.Tenant;
-            
-            if (!string.IsNullOrEmpty(email))
-            {
-                int tenant1 = tenant == null ? 0 : tenant.Value;
 
-                ContactRepository contactRepository = new ContactRepository(tenant1);
-                Contact contact = contactRepository.GetSingleContactByEmail(email, tenant1);
-                if (contact == null)
-                {
-                    this.Context.Response.Redirect("../Login.aspx");
-                }
-            }
-            else
-            {
-                this.Context.Response.Redirect("../Login.aspx");
-            }
-
-            this.TokenForResources.Value = token;
 
             if (isValid)
             {
@@ -72,7 +56,7 @@ namespace WebFreight.Web.TrainingResourcesHTML
 
         public bool CheckAvailablityTenantsForEmail(string email, int tenant)
         {
-            UserRepository userRep = new UserRepository(tenant);
+            UserRepository userRep = new UserRepository(0);
             Simplog.Data.CommonDataModel.EntityPOCOs.User user = userRep.GetSingleUserByEmail(email, 0, false);
 
             bool available = true;

@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -46,7 +46,6 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Helpers;
 using WebFreight.Web.AccountingModel.DomainServices;
-using Logitude.Accounting.BL.CoreBL.Fix;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -66,10 +65,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Journal", "READ", tenant);
 
-                Logitude.BL.Security.LoggedContactUtil loggedUtil = new Logitude.BL.Security.LoggedContactUtil();
-                ContactPM contact = loggedUtil.GetLoggedContact(tenant);
-                //ContactQuery contactQuery = new ContactQuery(tenant);
-                //ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
 
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Journal", 0, true);
@@ -78,7 +75,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 JournalListQueryService journalQuery = new JournalListQueryService(MyContext);
                 IQueryable<JournalList> myResult = journalQuery.GetLastActivityJournals(tenant, contact.Id, objectTable.Id).AsQueryable();
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetCustomFieldsValues("Journal", tenant, myResult.Cast<object>().ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult.ToList());
@@ -196,94 +193,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-
-        public HttpResponseMessage GetJournalMoreDatasByJournalId(string JournalId)
-        {
-            try
-            {
-                try
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("Journal", "READ", authToken.Tenant);
-                    IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                    JournalMoreDataListQueryService journalLineQuery = new JournalMoreDataListQueryService(MyContext);
-                    IQueryable<JournalMoreDataList> journalLines = journalLineQuery.GetJournalMoreDatasForJournal(JournalId, authToken.Tenant);
-
-                    return Request.CreateResponse(HttpStatusCode.OK, journalLines);
-                }
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
-        public HttpResponseMessage GetJournalAdditionalDataByJournalId(string JournalId)
-        {
-            try
-            {
-                try
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("Journal", "READ", authToken.Tenant);
-                    IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                    JournalAdditionalDataListQueryService journalXQuery = new JournalAdditionalDataListQueryService(MyContext);
-                    var q = journalXQuery.GetJournalMoreDatasForJournal(JournalId, authToken.Tenant);
-                    var res = q.ToList();
-                    return Request.CreateResponse(HttpStatusCode.OK, res);
-                }
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetResetJournalByJournalId(string JournalId, bool clearIt)
-        {
-            try
-            {
-                try
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("Journal", "READ", authToken.Tenant);
-                    
-
-
-                    var fixJournaRecolService = new FixJournaRecolService();
-                    fixJournaRecolService.Fix(JournalId, authToken.Tenant, clearIt);
-
-
-                    return Request.CreateResponse(HttpStatusCode.OK, new { Success= true });
-                }
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 }
 	 

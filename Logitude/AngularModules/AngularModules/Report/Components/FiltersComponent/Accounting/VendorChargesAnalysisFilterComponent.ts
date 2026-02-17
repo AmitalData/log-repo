@@ -1,24 +1,24 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ReportFliter } from '../../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
 import { ReportsPreviewComponent } from '../../../Components/ReportsPreviewComponent';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './VendorChargesAnalysisFilterComponent.html',
 })
 
 export class VendorChargesAnalysisFilterComponent extends BaseComponent {
-    public DataContext = this;
+    public DataContext = this;    
     public ValidationErrorsList: string[] = [];
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
-    public ReportsPreview: ReportsPreviewComponent;
+    public ReportsPreview: ReportsPreviewComponent;    
     constructor() {
-        super();
+        super();       
     }
 
     public VendorId: string;
@@ -28,7 +28,6 @@ export class VendorChargesAnalysisFilterComponent extends BaseComponent {
     public ProfitCurrencyCode: string;
     public LocalCurrencyCode: string;
     public IncludeAccountedOnly: boolean = false;
-    public ShipmentNumber: string;
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
@@ -64,14 +63,14 @@ export class VendorChargesAnalysisFilterComponent extends BaseComponent {
     }
 
     public DateFilterList: CodeNameClass[];
-    private BuildDateFilter(code: string = "CRT") {
+    private BuildDateFilter() {
         this.DateFilterList = [];
         this.DateFilterList.push(new CodeNameClass("CRT", "Create Date"));
         this.DateFilterList.push(new CodeNameClass("OPE", "Operational Date"));
 
-        this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == code)[0];
+        this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == "CRT")[0];
     }
-
+    
     private selectedDateFilter: CodeNameClass;
     get SelectedDateFilter() { return this.selectedDateFilter; }
     set SelectedDateFilter(value: CodeNameClass) {
@@ -284,101 +283,8 @@ export class VendorChargesAnalysisFilterComponent extends BaseComponent {
             }
         }
     }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
 
-        if (this.IsSchedulerReport) {
-            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-        }
-        else {
-            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-        }
-
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ToDate":
-                    this.ToDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "VendorId":
-                    this.VendorId = queryFilterItem.FieldValue;
-                    break;
-                case "ChargesTypeId":
-                    this.ChargesTypeId = queryFilterItem.FieldValue;
-                    break;
-                case "AccountingType":
-                    this.SelectedAccountingCode = queryFilterItem.FieldValue;
-                    break;
-                case "Direction":
-                    this.SelectedDirectionFilter = queryFilterItem.FieldValue;
-                    break;
-                case "TransportMode":
-                    this.SelectedTransportFilter = queryFilterItem.FieldValue;
-                    break;
-                case "ShipmentNumber":
-                    this.ShipmentNumber = queryFilterItem.FieldValue;
-                    break;
-                case "DateType":
-                    this.BuildDateFilter(queryFilterItem.FieldValue);
-                    break;
-                case "OperationalType":
-                    this.SelectedOperationalCode = queryFilterItem.FieldValue ?? this.LocalCurrencyCode;
-                    break;
-                case "SelectedCurrencyCode":
-                    this.SelectedCurrencyCode=queryFilterItem.FieldValue;
-                    break;
-                
-
-
-            }
-
-
-
-        }
-    }
-
-    RunButtonClicked(isInteractive: boolean) {
-        if (this.ValidateSelectedFilters()) {
-            var myReportFliter: ReportFliter = new ReportFliter();
-            myReportFliter.NumberOfPage = 1;
-            myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-            myReportFliter.IsInteractive = isInteractive;
-            this.RunReportEvent.emit(myReportFliter);
-        }
-    }
-
-    GetQueryFilterItems() {
-        var myFilterItems: QueryFilterItem[] = [];
-        myFilterItems.push(new QueryFilterItem("VendorId", this.VendorId));
-        myFilterItems.push(new QueryFilterItem("DateType", this.SelectedDateFilter.Code));
-        myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate));
-        myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate));
-        myFilterItems.push(new QueryFilterItem("ChargesTypeId", this.ChargesTypeId));
-        myFilterItems.push(new QueryFilterItem("IncludeAccountedOnly", this.IncludeAccountedOnly));
-        myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
-        myFilterItems.push(new QueryFilterItem("SelectedCurrencyCode", this.SelectedCurrencyCode));
-        myFilterItems.push(new QueryFilterItem("OperationalType", this.SelectedOperationalCode));
-        myFilterItems.push(new QueryFilterItem("AccountingType", this.SelectedAccountingCode));
-        myFilterItems.push(new QueryFilterItem("Direction", this.SelectedDirectionFilter));
-        myFilterItems.push(new QueryFilterItem("TransportMode", this.SelectedTransportFilter));
-        myFilterItems.push(new QueryFilterItem("ShipmentNumber", this.ShipmentNumber));
-        return myFilterItems;
-    }
-    ValidateSelectedFilters() {
+    RunButtonClicked() {
         var errors: string[] = [];
 
         if (!this.SelectedDateFilter) {
@@ -400,6 +306,29 @@ export class VendorChargesAnalysisFilterComponent extends BaseComponent {
                 errors.push("To Date is required");
             }
         }
-        return errors.length === 0;
+
+        this.ValidationErrorsList = errors;
+
+        if (this.ValidationErrorsList.length == 0) {
+            var myFilterItems: QueryFilterItem[] = [];
+            myFilterItems.push(new QueryFilterItem("VendorId", this.VendorId));
+            myFilterItems.push(new QueryFilterItem("DateType", this.SelectedDateFilter.Code));
+            myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate));
+            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate));
+            myFilterItems.push(new QueryFilterItem("ChargesTypeId", this.ChargesTypeId));
+            myFilterItems.push(new QueryFilterItem("IncludeAccountedOnly", this.IncludeAccountedOnly));
+            myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
+            myFilterItems.push(new QueryFilterItem("SelectedCurrencyCode", this.SelectedCurrencyCode));
+            myFilterItems.push(new QueryFilterItem("OperationalType", this.SelectedOperationalCode));
+            myFilterItems.push(new QueryFilterItem("AccountingType", this.SelectedAccountingCode));
+            myFilterItems.push(new QueryFilterItem("Direction", this.SelectedDirectionFilter));
+            myFilterItems.push(new QueryFilterItem("TransportMode", this.SelectedTransportFilter));
+
+            var myReportFliter: ReportFliter = new ReportFliter();
+            myReportFliter.NumberOfPage = 1;
+            myReportFliter.ProcessType = "GenerateReport";
+            myReportFliter.QueryFilterItemLists = myFilterItems;
+            this.RunReportEvent.emit(myReportFliter);
+        }
     }
 }

@@ -6,17 +6,11 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -39,16 +33,15 @@ namespace CommunicationWorkerRole
             }
         }
         
-        public void WorkOnce1(bool singleton=false)
+        public void WorkOnce1()
         {
             if (!General.IsUpdating())
             {
-                try 
+                try
                 {
                     int tenant = 0;
-                    int d = 0;
                     queueservice = new DbQueueService();
-                    queueservice.InitializeQueue((singleton ? "Singleton" : "") + "FTPCommunicationLogQueue", 0);
+                    queueservice.InitializeQueue("FTPCommunicationLogQueue", 0);
 
                     var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
                     LastActivity = DateTime.UtcNow;
@@ -241,8 +234,6 @@ namespace CommunicationWorkerRole
                         cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
                         communicationLogRep.Update(cl);
                         communicationLogRep.SubmitChanges();
-
-                        this.UpdateEntity(cl);
                     }
 
                 }
@@ -312,78 +303,15 @@ namespace CommunicationWorkerRole
                 {
                     Logitude.XSD.Artemus.CommunicationLogSettings settingsData = JsonConvert.DeserializeObject<Logitude.XSD.Artemus.CommunicationLogSettings>(waitingCommLog.LogSettings);
                     if (settingsData != null)
-                    {
-                        string ftpHostIP = settingsData.host;
-                        string ftpUserName = settingsData.username;
-                        string ftpPassword = settingsData.password;
-                        string ftpFolderName = settingsData.folder;
+                    {   //ftp://192.116.221.106/temp1
+                        string hostIP = @"ftp://" + settingsData.host;
                         string fileName = (!string.IsNullOrEmpty(settingsData.filename) ? settingsData.filename : document.Id) + "." + document.Extension;
-                        string p_message = "";
-                        if (!settingsData.UseSFTP)
-                        {
+                        FTPService ftpService = new FTPService(hostIP, settingsData.username, settingsData.password);
+						string p_message = "";
+						ftpService.Upload(fileName, settingsData.folder, filedata, out p_message);
+						waitingCommLog.Logs += Environment.NewLine + DateTime.Now.ToString() + " : " + p_message;
 
-                            ////ftp://192.116.221.106/temp1
-                            //string hostIP = @"ftp://" + settingsData.host;
-
-                            FTPService ftpService = new FTPService(ftpHostIP, settingsData.username, settingsData.password);
-
-                            ftpService.Upload(fileName, settingsData.folder, filedata, out p_message);
-                            waitingCommLog.Logs += Environment.NewLine + DateTime.Now.ToString() + " : " + p_message;
-                        }
-                        else
-                        {
-                            ftpHostIP = settingsData.host;
-                            string p_status = "";
-
-                            var sFTPDeleteTempFilesService = new SFTPDeleteTempFilesService(tenant, ftpHost: $"{ftpHostIP}@{ftpUserName}:22/{ftpFolderName}");
-                            SFTPService sftpService = new SFTPService(sFTPDeleteTempFilesService);
-                            sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
-                            waitingCommLog.Logs += p_message;
-                            if (p_status == "0")
-                            {
-                                try
-                                {
-
-                                    sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
-                                }
-                                finally
-                                {
-
-                                    try
-                                    {
-                                        string p_more1=""; string p_status1; string p_message1;
-                                        if (!String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SFTPLogoff"]))
-                                        {
-                                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("sftpService.Logoff");
-                                            sftpService.Logoff(ref p_more1, out p_status1, out p_message1);
-                                        }
-
-                                        
-                                    }
-                                    catch //(Exception)
-                                    {
-
-                                        ///throw;
-                                    }
-
-                                }
-
-                                if (p_status == "-1")
-                                {
-                                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("sftpService.Upload-failed");
-                                    throw new FTPServiceException("SFTP upload file failed: " + p_message);
-                                }
-                                else
-                                {
-                                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("sftpService.Upload-success");
-                                }
-                            }
-                            else
-                                throw new FTPServiceException("SFTP Login failed: " + p_message);
-
-                            waitingCommLog.Logs += p_message;
-                        }
-                    }
+					}
                 }
 
                 waitingCommLog.CommunicationStatusTypeCode = "D";
@@ -394,7 +322,6 @@ namespace CommunicationWorkerRole
                 communicationLogRep.Update(waitingCommLog);
                 communicationLogRep.SubmitChanges();
 
-                this.UpdateEntity(waitingCommLog);
             }
             else
             {
@@ -404,77 +331,6 @@ namespace CommunicationWorkerRole
 
         #endregion
 
-        private void UpdateEntity(CommunicationLog commLog)
-        {
-            if (commLog.Subject.Contains("Automation Interface")) return;
-            string transferStatus = "TR";
-            if(commLog.CommunicationStatusTypeCode == "F")
-            {
-                transferStatus = "ET";
-            }
-
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
-            ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(commLog.ObjectTableId, 0, false);
-            if(objectTable!= null)
-            {
-                IInvoiceContext invoiceContext = InvoiceContext.GetContext(commLog.Tenant);
-
-                switch(objectTable.Name)
-                {
-                    case "ARInvoice":
-                        {
-                            ARInvoiceRepository repository = new ARInvoiceRepository(invoiceContext);
-                            ARInvoice myEntity = repository.GetSingleARInvoice(commLog.EntityId, commLog.Tenant);
-                            if(myEntity != null)
-                            {
-                                myEntity.TransferStatusCode = transferStatus;
-                                repository.Update(myEntity);
-                                repository.SubmitChanges();
-                            }
-                            break;
-                        }
-
-                    case "APInvoice":
-                        {
-                            APInvoiceRepository repository = new APInvoiceRepository(invoiceContext);
-                            APInvoice myEntity = repository.GetSingleAPInvoice(commLog.EntityId, commLog.Tenant);
-                            if (myEntity != null)
-                            {
-                                myEntity.TransferStatusCode = transferStatus;
-                                repository.Update(myEntity);
-                                repository.SubmitChanges();
-                            }
-                            break;
-                        }
-
-                    case "ARPayment":
-                        {
-                            ARPaymentRepository repository = new ARPaymentRepository(invoiceContext);
-                            ARPayment myEntity = repository.GetSingleARPayment(commLog.EntityId, commLog.Tenant);
-                            if (myEntity != null)
-                            {
-                                myEntity.TransferStatusCode = transferStatus;
-                                repository.Update(myEntity);
-                                repository.SubmitChanges();
-                            }
-                            break;
-                        }
-
-                    case "APPayment":
-                        {
-                            APPaymentRepository repository = new APPaymentRepository(invoiceContext);
-                            APPayment myEntity = repository.GetSingleAPPayment(commLog.EntityId, commLog.Tenant);
-                            if (myEntity != null)
-                            {
-                                myEntity.TransferStatusCode = transferStatus;
-                                repository.Update(myEntity);
-                                repository.SubmitChanges();
-                            }
-                            break;
-                        }
-                }
-            }
-        }
 
         public void ConnectClient()
         {
@@ -543,25 +399,6 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         {
             _FTPCommunicationWorkerRole.OnStart();
             _FTPCommunicationWorkerRole.WorkOnce1();
-        }
-    }
-
-    public class SingletonFTPCommunicationWorkerRoleWinService : Logitude.Server.Tools.WorkerEntryPointDoneLog
-    {
-        FTPCommunicationWorkerRole _FTPCommunicationWorkerRole;
-        public SingletonFTPCommunicationWorkerRoleWinService()
-        {
-            _FTPCommunicationWorkerRole = new FTPCommunicationWorkerRole();
-        }
-        public override void StartMe()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void WorkOnce()
-        {
-            _FTPCommunicationWorkerRole.OnStart();
-            _FTPCommunicationWorkerRole.WorkOnce1(true);
         }
     }
 }

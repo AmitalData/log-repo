@@ -9,7 +9,6 @@ using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
-using Logitude.Customs.BL.EntityDataMappings;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -65,43 +64,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetDeclarationIdBythirdCargoID(thirdCargoID, tenant, idList);
         }
-
-
-        public List<Consignment> GetConsgnmentByDeclarationId(string declarationId, int tenant)
-        {
-            return repository.GetConsgnmentByDeclarationId(declarationId, tenant);
-        }
-
-        public List<Consignment> GetConsgnmentByDeclarationIdForDataMapping( string declarationId, int tenant)
-        {
-            return repository.GetConsgnmentByDeclarationIdForDataMapping(declarationId, tenant);
-        }
-   
-
-
-        public List<ConsignmentPM> GetConsigmentByExportContainerizationID(string containerizationId, int tenant)
-        {
-            var query = repository.GetConsigmentByExportContainerizationID(containerizationId, tenant);
-            List<Consignment> Consignments = query.ToList();
-            ConsignmentDataMapping mappings = new ConsignmentDataMapping();
-            List<ConsignmentPM> ConsignmentPMs = new List<ConsignmentPM>();
-            foreach (Consignment consignment in Consignments)
-            {
-                ConsignmentPM ConsignmentPM = new ConsignmentPM();
-                mappings.CustomPOCOToPM(ConsignmentPM, consignment);
-                mappings.POCOToPM(ConsignmentPM, consignment);
-                GetComposition(new ConsignmentKeys() { DeclarationId = consignment.DeclarationId, }, ConsignmentPM);
-                ConsignmentPMs.Add(ConsignmentPM);
-            }
-            return ConsignmentPMs;
-        }
-        public Consignment GetSinglePoco(string declarationid, int? consignmentnumber, bool getComposition, bool getFromCache)
-        {
-            EntityKeys = new ConsignmentKeys() { DeclarationId = declarationid, ConsignmentNumber = consignmentnumber };
-
-            return repository.GetSingle(EntityKeys);
-        }
-
-
     }
 }

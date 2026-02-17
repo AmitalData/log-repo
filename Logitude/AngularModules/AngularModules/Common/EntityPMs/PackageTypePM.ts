@@ -21,7 +21,7 @@ export class PackageTypePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -150,10 +150,7 @@ export class PackageTypePM {
     public OldEntityPM: PackageTypePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -162,7 +159,6 @@ export class PackageTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "PackageType");
            
         }
-	 }
     }
     private MyClone: PackageTypePM;
 

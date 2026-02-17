@@ -6,10 +6,10 @@ using System.Reflection;
 using System.Web.Services;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -35,1450 +35,1718 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class DeliveryNoteWebService : System.Web.Services.WebService
     {
-        private int tenant;
-        private string entityId;
-        private string childEntityId;
-        private string entityObjectTableId;
-        private string childEntityObjectTableId;
-        private string childEntityTypeCode;
-        public ShipmentPM shipment;
-        private ShipmentPickUpDelivery childEntity;
-        private DeliveryNoteDataProvider dataProvider;
-        private IShipmentsContext shipmentsContext;
-        private ICommonDataContext commonContext;
-        private PortRepository portRepository;
-        private AddressRepository addressRepository;
-        private byte[] output;
-        private BranchRepository branchRepository;
-        private ShipmentRepository shipmentRepository;
-        private ShipmentTypeRepository shipmentTypeRepository;
-
         [WebMethod]
-        public byte[] GetPickupData(string entityId, string entityObjectTableId, string childEntityId, string childEntityObjectTableId, int tenant)
+        public byte[] GetPickupData(string entityId, string entityobjecttableId, string childentityId, string childentityobjecttableId, int tenant)
         {
-            this.tenant = tenant;
-            this.entityId = entityId;
-            this.childEntityId = childEntityId;
-            this.entityObjectTableId = entityObjectTableId;
-            this.childEntityObjectTableId = childEntityObjectTableId;
-            this.childEntityTypeCode = "PICK";
-
-            this.Initialize();
-            this.BuildDataProvider();
-            this.FormatDataProvider();
-            this.SerializeDataProvider();
-
-            return output;
+            DeliveryNoteDataProvider deliveryNotedataprovider = GetPickupDataProvider(entityId, entityobjecttableId, childentityId, childentityobjecttableId, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(DeliveryNoteDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, deliveryNotedataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
         }
 
         [WebMethod]
-        public byte[] GetDeliveryData(string entityId, string entityObjectTableId, string childEntityId, string childEntityObjectTableId, int tenant)
+        public byte[] GetDeliveryData(string entityId,string entityobjecttableId,string childentityId,string childentityobjecttableId, int tenant)
         {
-            this.tenant = tenant;
-            this.entityId = entityId;
-            this.childEntityId = childEntityId;
-            this.entityObjectTableId = entityObjectTableId;
-            this.childEntityObjectTableId = childEntityObjectTableId;
-            this.childEntityTypeCode = "DELV";
-
-            this.Initialize();
-            this.BuildDataProvider();
-            this.SerializeDataProvider();
-
-            return output;
+            DeliveryNoteDataProvider deliveryNotedataprovider = GetDeliveryDataProvider(entityId, entityobjecttableId, childentityId, childentityobjecttableId, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(DeliveryNoteDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, deliveryNotedataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
         }
 
-        private void Initialize()
+        private DeliveryNoteDataProvider GetPickupDataProvider(string entityId, string entityobjecttableId, string childentityId, string childentityobjecttableId, int tenant)
         {
-            this.dataProvider = new DeliveryNoteDataProvider()
-            {
-                TotalNumberOfPackages = 0,
-                TotalGrossWeight = 0,
-                TotalVolume = 0,
-            };
-
-            this.shipmentsContext = ShipmentsContext.GetContext(tenant);
-            this.commonContext = CommonDataContext.GetContext(tenant);
-            this.portRepository = new PortRepository(commonContext);
-            this.addressRepository = new AddressRepository(commonContext);
-            this.branchRepository = new BranchRepository(tenant);
-            this.shipmentRepository = new ShipmentRepository(shipmentsContext);
+            DeliveryNoteDataProvider deliveryNotedataprovider = new DeliveryNoteDataProvider();
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            IWebFreightContext webfreightcontext = WebFreightContext.GetContext(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-            this.shipmentTypeRepository = new ShipmentTypeRepository(shipmentsContext);
+            PortRepository portRepository = new PortRepository(commonContext);
+            CountryRepository countryRepository = new CountryRepository(commonContext);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+            CardQuery cardQuery = new CardQuery(tenant);
 
-            shipment = shipmentQuery.GetSinglePM(entityId, tenant);
+            ShipmentPM shipment = null;
 
-            childEntity = (from a in shipmentsContext.ShipmentPickUpDeliveries
-                           where a.Tenant == tenant
-                           && a.Id == childEntityId
-                           && a.ShipmentId == entityId
-                           && a.PickUpDeliveryTypeCode == childEntityTypeCode
-                           select a).FirstOrDefault();
-        }
-        private void BuildDataProvider()
-        {
-            if (shipment != null)
+            Tenant tenantSettings = (from a in commonContext.Tenants
+                                     where a.Id == tenant
+                                     select a).FirstOrDefault();
+
+            ObjectTable entityObjectTable = (from co in webfreightcontext.ObjectTables
+                                             where co.Id == entityobjecttableId
+                                             select co).FirstOrDefault();
+            if (entityObjectTable != null)
             {
-                this.MapHeaderFields();
-                this.MapTenantFields();
-                this.MapLoggedContact();
-                this.MapShipmentFields();
-                this.MapChildEntityFields();
+                switch (entityObjectTable.Name)
+                {
+                    case "Shipment":
+                        shipment = shipmentQuery.GetSinglePM(entityId, tenant);
+                        break;
+                }
             }
-        }
-        private void FormatDataProvider()
-        {
-            PropertyInfo[] properties = dataProvider.GetType().GetProperties();
 
+            else // Default values for now
+            {
+                shipment = shipmentQuery.GetSinglePM(entityId, tenant);
+            }
+          
+            ObjectTable childEntityObjectTable = (from co in webfreightcontext.ObjectTables
+                                                  where co.Id == childentityobjecttableId
+                                                  select co).FirstOrDefault();
+
+            ShipmentPickUpDelivery myPickup = (from a in shipmentsContext.ShipmentPickUpDeliveries
+                                               where a.Id == childentityId && a.Tenant == tenant && a.ShipmentId == entityId && a.PickUpDeliveryTypeCode == "PICK"
+                                               select a).FirstOrDefault();
+            
+            if (shipment != null && tenantSettings != null)
+            {
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                string email = AuthenticationUtil.GetAuthenticatedUser();
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
+                if (loggedContact != null)
+                {
+                    deliveryNotedataprovider.UserName = loggedContact.EnglishName;
+                }
+
+                deliveryNotedataprovider.ITNumber = shipment.ITNumber;
+                deliveryNotedataprovider.ProjectNumber = shipment.ProjectNumber != null ? shipment.ProjectNumber : "";
+                deliveryNotedataprovider.HAWB = shipment.House != null ? shipment.House : "";
+                deliveryNotedataprovider.OurReferenceNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
+                deliveryNotedataprovider.DateSent = String.Format("{0:dd/MMM/yyyy}", DateTime.Now.Date);
+                deliveryNotedataprovider.DateSent_New = DateTime.Now.Date;
+                deliveryNotedataprovider.ClientReferenceNumber = shipment.ShipperReference1 != null ? shipment.ShipperReference1 : "";
+                deliveryNotedataprovider.MainCarriageETA = shipment.MainCarriageETA != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageETA) : "";
+                deliveryNotedataprovider.MainCarriageETD = shipment.MainCarriageETD != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageETD) : "";
+                deliveryNotedataprovider.MainCarriageVesselName = shipment.MainCarriageVesselName;
+                deliveryNotedataprovider.MainCarriageCarrierName = shipment.MainCarriageCarrierName;                
+                deliveryNotedataprovider.BookingNumber = shipment.BookingConfirmationNumber;
+                deliveryNotedataprovider.MasterNumber = shipment.Master;
+                deliveryNotedataprovider.ShipmentNotes = shipment.Notes;
+                deliveryNotedataprovider.ConsigneeRef1 = shipment.ConsigneeReference1;
+                deliveryNotedataprovider.LongMaster = shipment.LongMaster;
+                deliveryNotedataprovider.ShipperReference2 = shipment.ShipperReference2;
+                deliveryNotedataprovider.ConsigneeReference2 = shipment.ConsigneeReference2;
+                deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
+                deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;                
+
+                if (!string.IsNullOrEmpty(shipment.FreightLocationId))
+                {
+                    CardPM cardPM = cardQuery.GetSinglePM(shipment.FreightLocationId, tenant);
+                    if (cardPM != null)
+                    {
+                        deliveryNotedataprovider.FreightLocation = cardPM.EnglishName;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+                {
+                    deliveryNotedataprovider.OnCarriageCarrier = shipment.OnCarriageCarrierName;
+                }
+
+                if (shipment.CutoffDate != null)
+                {
+                    deliveryNotedataprovider.CutOffDate = String.Format("{0:dd MMM yyyy}", shipment.CutoffDate);
+                    deliveryNotedataprovider.CutOffDateAsDate = shipment.CutoffDate;
+                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate.Value.TimeOfDay;
+                }                
+
+                if (!string.IsNullOrEmpty(shipment.ConsigneeId))
+                {
+                    #region
+                    Card myCard = CardRepository.GetSingleCard(shipment.ConsigneeId, tenant, true);
+                    if (myCard != null)
+                    {
+                        deliveryNotedataprovider.ConsigneeName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(shipment.ConsigneeAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                deliveryNotedataprovider.ConsigneeAddress = DataProviders.General.GetAddress(myAddress);
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber) || !string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.ConsigneeAddress += Environment.NewLine;
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber))
+                                {
+                                    deliveryNotedataprovider.ConsigneeAddress += "Tel: " + myAddress.PhoneNumber + " ";
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.ConsigneeAddress += "Fax: " + myAddress.FaxNumber;
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.ShipperId))
+                {
+                    #region
+                    Card myCard = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
+                    if (myCard != null)
+                    {
+                        deliveryNotedataprovider.ShipperName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                deliveryNotedataprovider.ShipperAddress = DataProviders.General.GetAddress(myAddress);
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber) || !string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.ShipperAddress += Environment.NewLine;
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber))
+                                {
+                                    deliveryNotedataprovider.ShipperAddress += "Tel: " + myAddress.PhoneNumber + " ";
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.ShipperAddress += "Fax: " + myAddress.FaxNumber;
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.IssuingCarrierAgentId))
+                {
+                    #region
+                    Card myCard = CardRepository.GetSingleCard(shipment.IssuingCarrierAgentId, tenant, true);
+                    if (myCard != null)
+                    {
+                        deliveryNotedataprovider.IssuingCarrierAgentName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(shipment.IssuingCarrierAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(shipment.IssuingCarrierAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                deliveryNotedataprovider.IssuingCarrierAgentAddress = DataProviders.General.GetAddress(myAddress);
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber) || !string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.IssuingCarrierAgentAddress += Environment.NewLine;
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber))
+                                {
+                                    deliveryNotedataprovider.IssuingCarrierAgentAddress += "Tel: " + myAddress.PhoneNumber + " ";
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.IssuingCarrierAgentAddress += "Fax: " + myAddress.FaxNumber;
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+                }
+
+                if(!string.IsNullOrEmpty(shipment.CustomerContactId))
+                {
+                    Contact contact = commonContext.Contacts.Where(d => d.Id == shipment.CustomerContactId && d.Tenant == tenant).FirstOrDefault();
+                    if(contact != null)
+                    {
+                        deliveryNotedataprovider.CustomerContactName = contact.EnglishName;
+                        deliveryNotedataprovider.CustomerContactPhoneNumber = contact.BusinessPhone;                        
+                    }
+                }
+
+                // tenant data
+                if (tenantSettings != null)
+                {
+                    deliveryNotedataprovider.Signature = tenantSettings.Signature != null ? tenantSettings.Signature : "";
+                    deliveryNotedataprovider.TenantName = tenantSettings.Company != null ? tenantSettings.Company : "";
+                }
+
+                if (myPickup != null)
+                {
+                    #region
+
+                    deliveryNotedataprovider.DriverName = myPickup.Driver;
+
+                    ShipmentPackage myShipmentPackage = (from a in shipmentsContext.ShipmentPackages
+                                                       where a.DeliveryId == myPickup.Id && a.Tenant == tenant
+                                                       select a).FirstOrDefault();
+
+                    if(myShipmentPackage != null)
+                    {
+                        deliveryNotedataprovider.Reference1 = myShipmentPackage.Reference1;
+                        deliveryNotedataprovider.Reference2 = myShipmentPackage.Reference2;
+                        deliveryNotedataprovider.Reference3 = myShipmentPackage.Reference3;
+                        deliveryNotedataprovider.Reference4 = myShipmentPackage.Reference4;
+                    }
+
+                    if (myPickup.CarrierId != null)
+                    {
+                        Card trucker = CardRepository.GetSingleCard(myPickup.CarrierId, tenant, true);
+
+                        if (trucker != null)
+                        {
+                            deliveryNotedataprovider.To = trucker.EnglishName != null ? trucker.EnglishName : "";
+
+                            Address address = addressRepository.GetSingleAddressByCardIdAndTypeId(trucker.Id, "M", tenant);
+
+                            ContactRepository contactRep = new ContactRepository(commonContext);
+                            Contact truckerContact = null;
+
+                            CardContact truckerCardContact = (from cc in commonContext.CardContacts
+                                                              where cc.CardId == trucker.Id
+                                                              select cc).FirstOrDefault();
+
+                            if (truckerCardContact != null)
+                            {
+                                truckerContact = contactRep.GetSingleContact(truckerCardContact.ContactId, myPickup.Tenant);
+                            }
+
+                            if (truckerContact != null)
+                            {
+                                deliveryNotedataprovider.Salesman = truckerContact.EnglishName != null ? truckerContact.EnglishName : "";
+                            }
+
+                            deliveryNotedataprovider.Telephone = address != null ? (address.PhoneNumber != null ? address.PhoneNumber : "") : "";
+                        }
+                    }
+
+                    #region Pickup From
+                    deliveryNotedataprovider.PickupDate = myPickup.ETD != null ? String.Format("{0:dd/MMM/yyyy}", myPickup.ETD) : "";
+                    deliveryNotedataprovider.PickupTime = myPickup.ETD != null ? String.Format("{0:hh:mm}", myPickup.ETD) : "";
+                    deliveryNotedataprovider.PickupTime_DateTime_New = myPickup.ETD != null ? myPickup.ETD : null;
+                    deliveryNotedataprovider.SpecialInstructions = myPickup.Notes != null ? myPickup.Notes : "";
+
+                    #region From PART
+                    if (myPickup.PickUpDeliveryFromTypeCode == "PART")
+                    {
+                        if (string.IsNullOrEmpty(myPickup.FromPartnerCardId))
+                        {
+                            deliveryNotedataprovider.PickupAddress = myPickup.FromAddress != null ? myPickup.FromAddress : "";
+                        }
+
+                        else
+                        {
+                            Card card = CardRepository.GetSingleCard(myPickup.FromPartnerCardId, tenant, true);
+                            if (card != null)
+                            {
+                                deliveryNotedataprovider.PickupCompanyName = card.EnglishName;
+
+                                CardContact cardContact = (from a in commonContext.CardContacts where a.CardId == card.Id select a).FirstOrDefault();
+                                if (cardContact != null)
+                                {
+                                    Contact contact = cardContact.Contact;
+
+                                    if (contact != null)
+                                    {
+                                        deliveryNotedataprovider.PickupContactPhone = contact.BusinessPhone != null ? contact.BusinessPhone : "";
+                                    }
+                                }
+
+                                if (string.IsNullOrEmpty(myPickup.FromAddressId))
+                                {
+                                    deliveryNotedataprovider.PickupAddress = myPickup.FromAddress != null ? myPickup.FromAddress : "";
+                                }
+
+                                else
+                                {
+                                    Address address = addressRepository.GetSingleAddress(myPickup.FromAddressId, tenant);
+                                    if (address != null)
+                                    {
+
+                                        deliveryNotedataprovider.PickupAddress = DataProviders.General.GetAddress(address)
+                                            + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
+                                            + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
+                                        deliveryNotedataprovider.FromAddressDescription = address.Description != null ? address.Description : "";
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region From PORT
+                    else if (myPickup.PickUpDeliveryFromTypeCode == "PORT")
+                    {
+                        if (!string.IsNullOrEmpty(myPickup.FromPortId))
+                        {
+                            Port port = portRepository.GetSinglePort(tenant, myPickup.FromPortId);
+                            if (port != null)
+                            {
+                                deliveryNotedataprovider.PickupCompanyName = port.EnglishName != null ? port.EnglishName : "";
+                            }
+                        }
+
+                        deliveryNotedataprovider.PickupAddress = myPickup.FromAddress != null ? myPickup.FromAddress : "";
+                    }
+                    #endregion
+
+                    #region From CASL
+                    else
+                    {
+                        string location = "";
+
+                        if (!string.IsNullOrEmpty(myPickup.FromAddressCity))
+                        {
+                            location = myPickup.FromAddressCity;
+                        }
+
+                        if (!string.IsNullOrEmpty(myPickup.FromAddressZipCode))
+                        {
+                            location = location + " " + myPickup.FromAddressZipCode;
+                        }
+
+                        if (!string.IsNullOrEmpty(myPickup.FromAddressCountryId))
+                        {
+                            Country country = countryRepository.GetSingleCountry(myPickup.FromAddressCountryId, tenant);
+                            if (country != null)
+                            {
+                                location = location + Environment.NewLine + country.EnglishName;
+                            }
+                        }
+
+                        deliveryNotedataprovider.PickupAddress = location;
+                    }
+                    #endregion
+
+                    #endregion
+
+                    #region Pickup To
+                    deliveryNotedataprovider.DeliveryDate = myPickup.ETA != null ? String.Format("{0:dd/MMM/yyyy}", myPickup.ETA) : "";
+                    deliveryNotedataprovider.DeliveryTime = myPickup.ETA != null ? String.Format("{0:hh:mm}", myPickup.ETA) : "";
+                    deliveryNotedataprovider.DeliveryTime_DateTime_New = myPickup.ETA != null ? myPickup.ETA : null;
+
+                    #region To PART
+                    if (myPickup.PickUpDeliveryToTypeCode == "PART")
+                    {
+                        if (string.IsNullOrEmpty(myPickup.ToPartnerCardId))
+                        {
+                            deliveryNotedataprovider.DeliveryAddress = myPickup.ToAddress != null ? myPickup.ToAddress : "";
+                        }
+
+                        else
+                        {
+                            Card card = CardRepository.GetSingleCard(myPickup.ToPartnerCardId, tenant, true);
+                            if (card != null)
+                            {
+                                deliveryNotedataprovider.DeliveryCompanyName = card.EnglishName;
+                                deliveryNotedataprovider.DeliveryCompanyContactLocalName = card.LocalName;
+
+                                CardContact cardContact = (from a in commonContext.CardContacts where a.CardId == card.Id select a).FirstOrDefault();
+                                if (cardContact != null)
+                                {
+                                    ContactRepository contactRepository = new ContactRepository(commonContext);
+                                    Contact contact = contactRepository.GetSingleContact(cardContact.ContactId, tenant);
+
+                                    if (contact != null)
+                                    {
+                                        deliveryNotedataprovider.DeliveryContactPhone = contact.BusinessPhone != null ? contact.BusinessPhone : "";
+                                        deliveryNotedataprovider.DeliveryContactName = contact.EnglishName != null ? contact.EnglishName : "";
+                                    }
+                                }
+
+                                if (string.IsNullOrEmpty(myPickup.ToAddressId))
+                                {
+                                    deliveryNotedataprovider.DeliveryAddress = myPickup.ToAddress != null ? myPickup.ToAddress : "";
+                                }
+
+                                else
+                                {
+                                    Address address = addressRepository.GetSingleAddress(myPickup.ToAddressId, tenant);
+                                    if (address != null)
+                                    {
+
+                                        deliveryNotedataprovider.DeliveryAddress = DataProviders.General.GetAddress(address)
+                                            + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
+                                            + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
+                                        deliveryNotedataprovider.ToAddressDescription = address.Description != null ? address.Description : "";
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region To PORT
+                    else if (myPickup.PickUpDeliveryToTypeCode == "PORT")
+                    {
+                        if (!string.IsNullOrEmpty(myPickup.ToPortId))
+                        {
+                            Port port = portRepository.GetSinglePort(tenant, myPickup.ToPortId);
+                            if (port != null)
+                            {
+                                deliveryNotedataprovider.DeliveryCompanyName = port.EnglishName != null ? port.EnglishName : "";
+                            }
+                        }
+
+                        deliveryNotedataprovider.DeliveryAddress = myPickup.ToAddress != null ? myPickup.ToAddress : "";
+                    }
+                    #endregion
+
+                    #region From CASL
+                    else
+                    {
+                        string location = "";
+
+                        if (!string.IsNullOrEmpty(myPickup.ToAddressCity))
+                        {
+                            location = myPickup.ToAddressCity;
+                        }
+
+                        if (!string.IsNullOrEmpty(myPickup.ToAddressZipCode))
+                        {
+                            location = location + " " + myPickup.ToAddressZipCode;
+                        }
+
+                        if (!string.IsNullOrEmpty(myPickup.ToAddressCountryId))
+                        {
+                            Country country = countryRepository.GetSingleCountry(myPickup.ToAddressCountryId, tenant);
+                            if (country != null)
+                            {
+                                location = location + Environment.NewLine + country.EnglishName;
+                            }
+                        }
+
+                        deliveryNotedataprovider.DeliveryAddress = location;
+                    }
+                    #endregion
+
+                    #endregion
+    
+                    #region Packages
+                    deliveryNotedataprovider.DescriptionOfGoods = shipment.DescriptionOfGoods != null ? shipment.DescriptionOfGoods : "";
+                    List<ShipmentPickUpDeliveryPackage> packages = shipmentsContext.ShipmentPickUpDeliveryPackages.Where(d => d.ShipmentPickUpDeliveryId == myPickup.Id && d.Tenant == tenant).ToList();
+                    List<string> shipmentPackagesIds = shipmentsContext.ShipmentPackages.Where(d => d.ShipmentId == shipment.Id && d.Tenant == tenant).Select(s => s.Id).ToList();
+
+                    if (shipmentPackagesIds != null && shipmentPackagesIds.Count > 0) {
+                        List<InsideShipmentPackage> insidePackages = shipmentsContext.InsideShipmentPackages.Where(d => shipmentPackagesIds.Contains(d.ShipmentPackageId)).ToList();
+
+                        if(insidePackages != null && insidePackages.Count > 0)
+                        {
+                            deliveryNotedataprovider.InsidePackagesLines = new List<InsidePackageLine>();
+
+                            foreach(InsideShipmentPackage item in insidePackages)
+                            {
+                                InsidePackageLine insidePackageLine = new InsidePackageLine();
+
+                                PackageType insidePackageType = (from pa in commonContext.PackageTypes
+                                                                 where pa.Id == item.PackageTypeId
+                                                                 select pa).FirstOrDefault();
+
+                                insidePackageLine.PackageType = insidePackageType == null ? "" : insidePackageType.EnglishName;
+                                insidePackageLine.Quantity = item.Quantity;
+
+                                if (item.Length != null && item.Width != null && item.Height != null)
+                                {
+                                    insidePackageLine.Dimensions = item.Length + "x" + item.Width + "x" + item.Height;
+                                }
+
+                                insidePackageLine.Volume = item.Volume;
+                                insidePackageLine.VolumetricWeight = item.VolumetricWeight;
+                                insidePackageLine.Weight = item.Weight;
+                                insidePackageLine.Description = item.Description;
+
+                                #region Car Details
+                                insidePackageLine.Make = item.Make;
+                                insidePackageLine.Model = item.Model;
+                                insidePackageLine.Year = item.Year;
+                                insidePackageLine.Color = item.Color;
+                                insidePackageLine.ChassisNumber = item.ChassisNumber;
+                                insidePackageLine.RegistrationNumber = item.RegistrationNumber;
+
+                                if (!string.IsNullOrEmpty(item.CountryId))
+                                {
+                                    Country country = CountryRepository.GetSingleCountry(item.CountryId, tenant, true);
+                                    if (country != null)
+                                    {
+                                        insidePackageLine.CountryName = country.EnglishName;
+                                    }
+                                }
+                                #endregion
+
+                                deliveryNotedataprovider.InsidePackagesLines.Add(insidePackageLine);
+                            }
+                        }
+                    }
+
+                    deliveryNotedataprovider.PackagesLines = new List<PackageLine>();
+                    deliveryNotedataprovider.AttachmentList = new List<PackageLine>();
+                    int counter = 1;
+
+                    string volumeUnitCode = shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "";
+                    int? totalQuantity = 0;
+                    double? totalWeight = 0;
+                    double? totalVolume = 0;
+
+                    foreach (ShipmentPickUpDeliveryPackage package in packages)
+                    {
+                        counter++;
+                        PackageLine packageline = new PackageLine();
+
+                        totalQuantity += package.Quantity;
+                        totalWeight += package.Weight;
+                        totalVolume += package.Volume;
+
+                        packageline.PackageDescriptionOfGoods = package.Description != null ? package.Description : "";
+                        packageline.PackageGrossWeight = package.Weight != null ? (package.Weight.Value.ToString() + " " + shipment.GrossWeightUnitCode) : "";
+                        packageline.PackageQuantity = package.Quantity != null ? package.Quantity.Value.ToString() : "";
+                        packageline.PackageType = package.PackageType != null ? package.PackageType.EnglishName : "";
+                        packageline.PackageVolume = package.Volume != null ? (package.Volume + " " + shipment.VolumeUnitCode) : "";
+                        packageline.SealNumber = package.ShipperSeal;
+
+                        packageline.Width = package.Width == null ? "" : package.Width.ToString();
+                        packageline.Height = package.Height == null ? "" : package.Height.ToString();
+                        packageline.Length = package.Length == null ? "" : package.Length.ToString();
+
+                        #region Car Details
+                        packageline.Make = package.Make;
+                        packageline.Model = package.Model;
+                        packageline.Year = package.Year;
+                        packageline.Color = package.Color;
+                        packageline.ChassisNumber = package.ChassisNumber;
+                        packageline.RegistrationNumber = package.RegistrationNumber;
+
+                        if (!string.IsNullOrEmpty(package.CountryId))
+                        {
+                            Country country = CountryRepository.GetSingleCountry(package.CountryId, tenant, true);
+                            if (country != null)
+                            {
+                                packageline.CountryName = country.EnglishName;
+                            }
+                        }
+                        #endregion
+
+                        if (package.Width != null && package.Height != null && package.Length != null)
+                        {
+                            packageline.Dimensions = package.Length + " x " + package.Width + " x " + package.Height + " " + shipment.DimensionsUnitCode;
+                        }
+
+                        packageline.ContainerNumber = package.ContainerNumber;                        
+
+                        PackageType packtype = (from pa in commonContext.PackageTypes
+                                                where pa.Id == package.PackageTypeId
+                                                select pa).FirstOrDefault();
+
+                        if (packtype != null)
+                        {
+                            packageline.ContainerSize = packtype.ContainerSize.ToString();
+                            packageline.PackageType = packtype.EnglishName != null ? packtype.EnglishName : "";
+                            packageline.IsContainer = packtype.IsContainer;
+                        }
+
+                        #region Harmonize
+                        if (package.IsMultiHarmonize)
+                        {
+                            List<PickUpDeliveryPackageHarmonize> allHarmonizes = shipmentsContext.PickUpDeliveryPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                            foreach (PickUpDeliveryPackageHarmonize itemHarmonize in allHarmonizes)
+                            {
+                                if (string.IsNullOrEmpty(packageline.HSCode))
+                                {
+                                    packageline.HSCode = itemHarmonize.Harmonize;
+                                }
+                                else
+                                {
+                                    packageline.HSCode += "," + itemHarmonize.Harmonize;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            packageline.HSCode = package.Harmonize;
+                        }
+                        #endregion
+
+                        deliveryNotedataprovider.PackagesLines.Add(packageline);
+                    }
+
+                    deliveryNotedataprovider.TotalNumberOfPackages = totalQuantity;
+                    deliveryNotedataprovider.TotalGrossWeight = totalWeight;
+                    deliveryNotedataprovider.TotalVolume = totalVolume;
+                    #endregion
+
+                    #region Document
+                    DocumentType currentdocumentType = commonContext.DocumentTypes.Where(doc => doc.Code == "781" && doc.Tenant == tenant).FirstOrDefault();
+                    if (currentdocumentType != null)
+                    {
+                        DocumentTypeTemplate currentTemplate = commonContext.DocumentTypeTemplates.Where(doc => doc.Id == currentdocumentType.DocumentTypeDefaultReportTemplateId && doc.Tenant == tenant).FirstOrDefault();
+                        if (currentTemplate != null)
+                        {
+                            deliveryNotedataprovider.VerticalShift = currentTemplate.VerticalShift != null ? currentTemplate.VerticalShift.Value : 10;
+                            deliveryNotedataprovider.HorizontalShift = currentTemplate.HorizontalShift != null ? currentTemplate.HorizontalShift.Value : 10;
+                        }
+                    }
+                    #endregion
+
+                    #region  Last Vessel
+                    string vesselNameAndNumber = "";
+
+                    if (!string.IsNullOrEmpty(shipment.Transshipment3FromPortId))
+                    {
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == shipment.Transshipment3VesselId
+                                         select a).FirstOrDefault();
+                        if (vessel != null)
+                        {
+                            vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(shipment.Transshipment2FromPortId))
+                        {
+                            Vessel vessel = (from a in commonContext.Vessels
+                                             where a.Id == shipment.Transshipment2VesselId
+                                             select a).FirstOrDefault();
+                            if (vessel != null)
+                            {
+                                vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                            }
+                        }
+
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(shipment.Transshipment1FromPortId))
+                            {
+                                Vessel vessel = (from a in commonContext.Vessels
+                                                 where a.Id == shipment.Transshipment1VesselId
+                                                 select a).FirstOrDefault();
+                                if (vessel != null)
+                                {
+                                    vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                                }
+                            }
+
+                            else
+                            {
+                                Vessel vessel = (from a in commonContext.Vessels
+                                                 where a.Id == shipment.MainCarriageVesselId
+                                                 select a).FirstOrDefault();
+                                if (vessel != null)
+                                {
+                                    vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                                }
+                            }
+                        }
+                    }
+
+                    deliveryNotedataprovider.LastMainCarriageVesselNameAndNumber = vesselNameAndNumber;
+                    #endregion
+
+                    #region EmptyContainer
+                    deliveryNotedataprovider.EmptyContainerRef = myPickup.EmptyPickupDepotReference;
+
+                    if (!string.IsNullOrEmpty(myPickup.EmptyPickupContainerPartnerId))
+                    {
+                        CardPM cardPM = cardQuery.GetSinglePM(myPickup.EmptyPickupContainerPartnerId, tenant);
+
+                        if (cardPM != null)
+                        {
+                            string myEmptyContainer = null;
+
+                            myEmptyContainer = cardPM.EnglishName != null ? cardPM.EnglishName : "";
+
+                            if (cardPM.MainAddressId != null)
+                            {
+                                Address theAddress = addressRepository.GetSingleAddress(cardPM.MainAddressId, tenant);
+
+                                if (theAddress != null)
+                                {
+                                    if (theAddress.IsLocalLanguage && !string.IsNullOrEmpty(cardPM.LocalName))
+                                    {
+                                        myEmptyContainer = cardPM.LocalName;
+                                    }
+
+                                    myEmptyContainer = myEmptyContainer + Environment.NewLine + DataProviders.General.GetAddress(theAddress);
+
+                                    if (theAddress.PhoneNumber != null)
+                                    {
+                                        myEmptyContainer = myEmptyContainer + Environment.NewLine + "Phone No. : " + theAddress.PhoneNumber;
+                                    }
+
+                                    if (theAddress.FaxNumber != null)
+                                    {
+                                        myEmptyContainer = myEmptyContainer + "   Fax No. : " + theAddress.FaxNumber;
+                                    }
+                                }
+                            }
+
+                            deliveryNotedataprovider.EmptyContainer = myEmptyContainer;
+                        }
+                    }
+                    #endregion
+
+                    //LoadingPortName
+                    if (!string.IsNullOrEmpty(shipment.MainCarriageFromPortId))
+                    {
+                        deliveryNotedataprovider.LoadingPortName = shipment.MainCarriageFromPortName;
+                        deliveryNotedataprovider.OriginCountry = shipment.MainCarriageFromPortCountryName;
+                    }
+
+                    //DischargePortName
+                    if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+                    {
+                        deliveryNotedataprovider.DischargePortName = shipment.Transshipment3ToPortName;
+                    }
+
+                    else if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+                    {
+                        deliveryNotedataprovider.DischargePortName = shipment.Transshipment2ToPortName;
+                    }
+
+                    else if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+                    {
+                        deliveryNotedataprovider.DischargePortName = shipment.Transshipment1ToPortName;
+                    }
+
+                    else if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+                    {
+                        deliveryNotedataprovider.DischargePortName = shipment.MainCarriageToPortName;
+                    }
+
+                    //Dates
+                    deliveryNotedataprovider.MainCarriageETD_DateTime = shipment.MainCarriageETD;
+                    deliveryNotedataprovider.MainCarriageETA_DateTime = shipment.MainCarriageETA;
+                    deliveryNotedataprovider.MainCarriageATA_DateTime = shipment.MainCarriageATA;
+
+                    if (myPickup.TransportModeCode != null)
+                    {
+                        PickUpDeliveryTransportMode myTransportMode = shipmentsContext.PickUpDeliveryTransportModes.Where(d => d.Code == myPickup.TransportModeCode).FirstOrDefault();
+                        if (myTransportMode != null)
+                        {
+                            deliveryNotedataprovider.TransportMode = myTransportMode.Name;
+                        }
+                    }
+
+                    #endregion
+                }
+
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, deliveryNotedataprovider);
+            }
+
+            try
+            {
+                Type pickupNoteType = deliveryNotedataprovider.GetType();
+                PropertyInfo[] properties = pickupNoteType.GetProperties();
+                foreach (PropertyInfo pi in properties)
+                {
+                    string propertytype = pi.PropertyType.FullName;
+
+                    if (propertytype == "System.String")
+                    {
+
+                        if (pi.GetValue(deliveryNotedataprovider, null) == null || pi.GetValue(deliveryNotedataprovider, null).ToString() == "0" || pi.GetValue(deliveryNotedataprovider, null).ToString() == "00.00")
+                        {
+                            pi.SetValue(deliveryNotedataprovider, "", null);
+                        }
+                    }
+                }
+            }
+
+            catch
+            { }
+
+            return deliveryNotedataprovider;
+        }
+        private DeliveryNoteDataProvider GetDeliveryDataProvider(string entityId, string entityobjecttableId, string childentityId, string childentityobjecttableId, int tenant)
+        {
+            DeliveryNoteDataProvider deliveryNotedataprovider = new DeliveryNoteDataProvider();
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            IWebFreightContext webfreightcontext = WebFreightContext.GetContext(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
+            CardRepository cardRepository = new CardRepository(tenant);
+            PortRepository portRepository = new PortRepository(tenant);
+            CountryRepository countryRepository = new CountryRepository(tenant);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+
+            ShipmentPM shipment = null;
+            
+            Tenant tenantSettings = (from a in commonContext.Tenants
+                             where a.Id == tenant
+                             select a).FirstOrDefault();
+
+            ObjectTable entityObjectTable = (from co in webfreightcontext.ObjectTables
+                                              where co.Id ==entityobjecttableId
+                                              select co).FirstOrDefault();
+            if (entityObjectTable != null)
+            {
+                switch (entityObjectTable.Name)
+                {
+                    case "Shipment":
+                        shipment =shipmentQuery.GetSinglePM(entityId,tenant);
+                        break;
+                }
+            }
+            
+            ObjectTable childEntityObjectTable = (from co in webfreightcontext.ObjectTables
+                                                  where co.Id == childentityobjecttableId
+                                             select co).FirstOrDefault();
+
+            ShipmentPickUpDelivery myDelivery = (from a in shipmentsContext.ShipmentPickUpDeliveries
+                                                 where a.Id == childentityId && a.Tenant == tenant && a.ShipmentId == entityId && a.PickUpDeliveryTypeCode == "DELV"
+                                                 select a).FirstOrDefault();
+            
+            Card mainCarriageCard = (from a in commonContext.Cards
+                                           where a.Id == shipment.MainCarriageCarrierId
+                                           select a).FirstOrDefault();
+            
+            if (shipment != null && tenantSettings != null)
+            {
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                string email = AuthenticationUtil.GetAuthenticatedUser();
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
+                if (loggedContact != null)
+                {
+                    deliveryNotedataprovider.UserName = loggedContact.EnglishName;
+                }
+
+                deliveryNotedataprovider.ITNumber = shipment.ITNumber;
+                deliveryNotedataprovider.ProjectNumber = shipment.ProjectNumber != null ? shipment.ProjectNumber : "";
+                deliveryNotedataprovider.HAWB = shipment.House != null ? shipment.House : "";
+                deliveryNotedataprovider.OurReferenceNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
+                deliveryNotedataprovider.DateSent = String.Format("{0:dd/MMM/yyyy}", DateTime.Now.Date);
+                deliveryNotedataprovider.DateSent_New = DateTime.Now.Date;
+                deliveryNotedataprovider.ClientReferenceNumber = shipment.ShipperReference1 != null ? shipment.ShipperReference1 : "";
+                deliveryNotedataprovider.MasterNumber = shipment.Master;
+                deliveryNotedataprovider.ConsigneeRef1 = shipment.ConsigneeReference1;
+                deliveryNotedataprovider.ShipmentNotes = shipment.Notes;
+                deliveryNotedataprovider.MainCarriageETA = shipment.MainCarriageETA != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageETA) : "";
+                deliveryNotedataprovider.LongMaster = shipment.LongMaster;
+                deliveryNotedataprovider.MainCarriageVesselName = shipment.MainCarriageVesselName;
+                deliveryNotedataprovider.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
+                deliveryNotedataprovider.ShipperReference2 = shipment.ShipperReference2;
+                deliveryNotedataprovider.ConsigneeReference2 = shipment.ConsigneeReference2;
+                deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
+                deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
+
+                if (!string.IsNullOrEmpty(shipment.FreightLocationId))
+                {
+                    Card card = cardRepository.GetSingleCard(shipment.FreightLocationId, tenant);
+                    if (card != null)
+                    {
+                        deliveryNotedataprovider.FreightLocation = card.EnglishName;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
+                {
+                    deliveryNotedataprovider.OnCarriageCarrier = shipment.OnCarriageCarrierName;
+                }
+
+                if (shipment.CutoffDate != null)
+                {
+                    deliveryNotedataprovider.CutOffDate = shipment.CutoffDate != null ? String.Format("{0:dd MMM yyyy}", shipment.CutoffDate) : "";
+                    deliveryNotedataprovider.CutOffDateAsDate = shipment.CutoffDate;
+                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate.Value.TimeOfDay;
+                }
+
+                if (!string.IsNullOrEmpty(shipment.CustomerContactId))
+                {
+                    Contact contact = commonContext.Contacts.Where(d => d.Id == shipment.CustomerContactId && d.Tenant == tenant).FirstOrDefault();
+                    if (contact != null)
+                    {
+                        deliveryNotedataprovider.CustomerContactName = contact.EnglishName;
+                        deliveryNotedataprovider.CustomerContactPhoneNumber = contact.BusinessPhone;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(shipment.ConsigneeId))
+                {
+                    #region
+                    Card myCard = CardRepository.GetSingleCard(shipment.ConsigneeId, tenant, true);
+                    if (myCard != null)
+                    {
+                        deliveryNotedataprovider.ConsigneeName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(shipment.ConsigneeAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                deliveryNotedataprovider.ConsigneeAddress = DataProviders.General.GetAddress(myAddress);
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber) || !string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.ConsigneeAddress += Environment.NewLine;
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber))
+                                {
+                                    deliveryNotedataprovider.ConsigneeAddress += "Tel: " + myAddress.PhoneNumber + " ";
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.ConsigneeAddress += "Fax: " + myAddress.FaxNumber;
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.ShipperId))
+                {
+                    #region
+                    Card myCard = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
+                    if (myCard != null)
+                    {
+                        deliveryNotedataprovider.ShipperName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                deliveryNotedataprovider.ShipperAddress = DataProviders.General.GetAddress(myAddress);
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber) || !string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.ShipperAddress += Environment.NewLine;
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber))
+                                {
+                                    deliveryNotedataprovider.ShipperAddress += "Tel: " + myAddress.PhoneNumber + " ";
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.ShipperAddress += "Fax: " + myAddress.FaxNumber;
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.IssuingCarrierAgentId))
+                {
+                    #region
+                    Card myCard = CardRepository.GetSingleCard(shipment.IssuingCarrierAgentId, tenant, true);
+                    if (myCard != null)
+                    {
+                        deliveryNotedataprovider.IssuingCarrierAgentName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(shipment.IssuingCarrierAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(shipment.IssuingCarrierAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                deliveryNotedataprovider.IssuingCarrierAgentAddress = DataProviders.General.GetAddress(myAddress);
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber) || !string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.IssuingCarrierAgentAddress += Environment.NewLine;
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber))
+                                {
+                                    deliveryNotedataprovider.IssuingCarrierAgentAddress += "Tel: " + myAddress.PhoneNumber + " ";
+                                }
+
+                                if (!string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    deliveryNotedataprovider.IssuingCarrierAgentAddress += "Fax: " + myAddress.FaxNumber;
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+                }
+
+                // tenant data
+                if (tenantSettings != null)
+                {
+                    deliveryNotedataprovider.Signature = tenantSettings.Signature != null ? tenantSettings.Signature : "";
+                    deliveryNotedataprovider.TenantName = tenantSettings.Company != null ? tenantSettings.Company : "";
+                }
+
+                if (myDelivery != null)
+                {
+                    deliveryNotedataprovider.TruckNumber = myDelivery.TruckNumber;
+                    deliveryNotedataprovider.TruckerNumber = myDelivery.CarrierNumber;
+                    deliveryNotedataprovider.DriverName = myDelivery.Driver;
+
+                    if (myDelivery.ETA != null)
+                    {
+                        deliveryNotedataprovider.DeliveryETADate = myDelivery.ETA;
+                        deliveryNotedataprovider.DeliveryETATime = myDelivery.ETA;
+                    }
+
+                    ShipmentPackage myShipmentPackage = (from a in shipmentsContext.ShipmentPackages
+                                                         where a.DeliveryId == myDelivery.Id && a.Tenant == tenant
+                                                         select a).FirstOrDefault();
+
+                    if (myShipmentPackage != null)
+                    {
+                        deliveryNotedataprovider.Reference1 = myShipmentPackage.Reference1;
+                        deliveryNotedataprovider.Reference2 = myShipmentPackage.Reference2;
+                        deliveryNotedataprovider.Reference3 = myShipmentPackage.Reference3;
+                        deliveryNotedataprovider.Reference4 = myShipmentPackage.Reference4;
+                    }
+
+                    #region trucker
+                    if (myDelivery.CarrierId != null)
+                    {
+                        Card trucker = (from a in commonContext.Cards
+                                        where a.Id == myDelivery.CarrierId
+                                        select a).FirstOrDefault();
+
+                        if (trucker != null)
+                        {
+                            deliveryNotedataprovider.To = trucker.EnglishName != null ? trucker.EnglishName : "";
+
+                            Address address = addressRepository.GetSingleAddressByCardIdAndTypeId(trucker.Id, "M", tenant);
+
+                            Contact truckerContact = null;
+
+                            CardContact truckerCardContact = (from cc in commonContext.CardContacts
+                                                              where cc.CardId == trucker.Id
+                                                              select cc).FirstOrDefault();
+
+                            if (truckerCardContact != null)
+                            {
+                                truckerContact = ContactRepository.GetSingleContact(truckerCardContact.ContactId, myDelivery.Tenant, false);
+                            }
+                            if (truckerContact != null)
+                            {
+                                deliveryNotedataprovider.Salesman = truckerContact.EnglishName != null ? truckerContact.EnglishName : "";
+                            }
+
+                            deliveryNotedataprovider.Telephone = address != null ? (address.PhoneNumber != null ? address.PhoneNumber : "") : "";
+                        }
+                    }
+                    #endregion
+
+                    #region Delivery From
+                    deliveryNotedataprovider.PickupDate = myDelivery.ETD != null ? String.Format("{0:dd/MMM/yyyy}", myDelivery.ETD) : "";
+                    deliveryNotedataprovider.PickupTime = myDelivery.ETD != null ? String.Format("{0:hh:mm}", myDelivery.ETD) : "";
+                    deliveryNotedataprovider.PickupTime_DateTime_New = myDelivery.ETD != null ? myDelivery.ETD : null;
+                    deliveryNotedataprovider.SpecialInstructions = myDelivery.Notes != null ? myDelivery.Notes : "";
+
+                    #region From PART
+                    if (myDelivery.PickUpDeliveryFromTypeCode == "PART")
+                    {
+                        if (string.IsNullOrEmpty(myDelivery.FromPartnerCardId))
+                        {
+                            deliveryNotedataprovider.PickupAddress = myDelivery.FromAddress != null ? myDelivery.FromAddress : "";
+                        }
+
+                        else
+                        {
+                            Card card = cardRepository.GetSingleCard(myDelivery.FromPartnerCardId, tenant);
+                            if (card != null)
+                            {
+                                deliveryNotedataprovider.PickupCompanyName = card.EnglishName;
+
+                                CardContact cardContact = (from a in commonContext.CardContacts where a.CardId == card.Id select a).FirstOrDefault();
+                                if (cardContact != null)
+                                {
+                                    Contact contact = cardContact.Contact;
+
+                                    if (contact != null)
+                                    {
+                                        deliveryNotedataprovider.PickupContactPhone = contact.BusinessPhone != null ? contact.BusinessPhone : "";
+                                    }
+                                }
+
+                                if (string.IsNullOrEmpty(myDelivery.FromAddressId))
+                                {
+                                    deliveryNotedataprovider.PickupAddress = myDelivery.FromAddress != null ? myDelivery.FromAddress : "";
+                                }
+
+                                else
+                                {
+                                    Address address = addressRepository.GetSingleAddress(myDelivery.FromAddressId, tenant);
+                                    if (address != null)
+                                    {
+
+                                        deliveryNotedataprovider.PickupAddress = DataProviders.General.GetAddress(address)
+                                            + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
+                                            + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
+                                        deliveryNotedataprovider.FromAddressDescription = address.Description != null ? address.Description : "";
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region From PORT
+                    else if (myDelivery.PickUpDeliveryFromTypeCode == "PORT")
+                    {
+                        if (!string.IsNullOrEmpty(myDelivery.FromPortId))
+                        {
+                            Port port = portRepository.GetSinglePort(tenant, myDelivery.FromPortId);
+                            if (port != null)
+                            {
+                                deliveryNotedataprovider.PickupCompanyName = port.EnglishName != null ? port.EnglishName : "";
+                            }
+                        }
+
+                        deliveryNotedataprovider.PickupAddress = myDelivery.FromAddress != null ? myDelivery.FromAddress : "";
+                    }
+                    #endregion
+
+                    #region From CASL
+                    else
+                    {
+                        string location = "";
+
+                        if (!string.IsNullOrEmpty(myDelivery.FromAddressCity))
+                        {
+                            location = myDelivery.FromAddressCity;
+                        }
+
+                        if (!string.IsNullOrEmpty(myDelivery.FromAddressZipCode))
+                        {
+                            location = location + " " + myDelivery.FromAddressZipCode;
+                        }
+
+                        if (!string.IsNullOrEmpty(myDelivery.FromAddressCountryId))
+                        {
+                            Country country = countryRepository.GetSingleCountry(myDelivery.FromAddressCountryId, tenant);
+                            if (country != null)
+                            {
+                                location = location + Environment.NewLine + country.EnglishName;
+                            }
+                        }
+
+                        deliveryNotedataprovider.PickupAddress = location;
+                    }
+                    #endregion
+
+                    #endregion
+
+                    #region Delivery To
+                    deliveryNotedataprovider.DeliveryDate = myDelivery.ETA != null ? String.Format("{0:dd/MMM/yyyy}", myDelivery.ETA) : "";
+                    deliveryNotedataprovider.DeliveryTime = myDelivery.ETA != null ? String.Format("{0:hh:mm}", myDelivery.ETA) : "";
+                    deliveryNotedataprovider.DeliveryTime_DateTime_New = myDelivery.ETA != null ? myDelivery.ETA : null;
+
+                    #region To PART
+                    if (myDelivery.PickUpDeliveryToTypeCode == "PART")
+                    {
+                        if (string.IsNullOrEmpty(myDelivery.ToPartnerCardId))
+                        {
+                            deliveryNotedataprovider.DeliveryAddress = myDelivery.ToAddress != null ? myDelivery.ToAddress : "";
+                        }
+
+                        else
+                        {
+                            Card card = cardRepository.GetSingleCard(myDelivery.ToPartnerCardId, tenant);
+                            if (card != null)
+                            {
+                                deliveryNotedataprovider.DeliveryCompanyName = card.EnglishName;
+                                deliveryNotedataprovider.DeliveryCompanyLocalName = card.LocalName;
+
+                                Contact primaryContact = ContactRepository.GetSingleContact(card.PrimaryContactId, tenant, false);
+                                if (primaryContact != null)
+                                {
+                                    deliveryNotedataprovider.DeliveryCompanyContactLocalName = primaryContact.LocalName;
+                                    deliveryNotedataprovider.DeliveryCompanyContactPhone = primaryContact.BusinessPhone == null ? "" : primaryContact.BusinessPhone;
+                                }
+
+                                CardContact cardContact = (from a in commonContext.CardContacts where a.CardId == card.Id select a).FirstOrDefault();
+                                if (cardContact != null)
+                                {
+                                    ContactRepository contactRepository = new ContactRepository(commonContext);
+                                    Contact contact = contactRepository.GetSingleContact(cardContact.ContactId, tenant);
+
+                                    if (contact != null)
+                                    {
+                                        deliveryNotedataprovider.DeliveryContactPhone = contact.BusinessPhone != null ? contact.BusinessPhone : "";
+                                        deliveryNotedataprovider.DeliveryContactName = contact.EnglishName != null ? contact.EnglishName : "";
+                                    }
+                                }
+
+                                if (string.IsNullOrEmpty(myDelivery.ToAddressId))
+                                {
+                                    deliveryNotedataprovider.DeliveryAddress = myDelivery.ToAddress != null ? myDelivery.ToAddress : "";
+                                }
+
+                                else
+                                {
+                                    Address address = addressRepository.GetSingleAddress(myDelivery.ToAddressId, tenant);
+                                    if (address != null)
+                                    {
+
+                                        deliveryNotedataprovider.DeliveryAddress = DataProviders.General.GetAddress(address)
+                                            + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
+                                            + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
+                                        deliveryNotedataprovider.ToAddressDescription = address.Description != null ? address.Description : "";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region To PORT
+                    else if (myDelivery.PickUpDeliveryToTypeCode == "PORT")
+                    {
+                        if (!string.IsNullOrEmpty(myDelivery.ToPortId))
+                        {
+                            Port port = portRepository.GetSinglePort(tenant, myDelivery.ToPortId);
+                            if (port != null)
+                            {
+                                deliveryNotedataprovider.DeliveryCompanyName = port.EnglishName != null ? port.EnglishName : "";
+                                deliveryNotedataprovider.DeliveryCompanyLocalName = port.LocalName != null ? port.LocalName : "";
+                            }
+                        }
+
+                        deliveryNotedataprovider.DeliveryAddress = myDelivery.ToAddress != null ? myDelivery.ToAddress : "";
+                    }
+                    #endregion
+
+                    #region From CASL
+                    else
+                    {
+                        string location = "";
+
+                        if (!string.IsNullOrEmpty(myDelivery.ToAddressCity))
+                        {
+                            location = myDelivery.ToAddressCity;
+                        }
+
+                        if (!string.IsNullOrEmpty(myDelivery.ToAddressZipCode))
+                        {
+                            location = location + " " + myDelivery.ToAddressZipCode;
+                        }
+
+                        if (!string.IsNullOrEmpty(myDelivery.ToAddressCountryId))
+                        {
+                            Country country = countryRepository.GetSingleCountry(myDelivery.ToAddressCountryId, tenant);
+                            if (country != null)
+                            {
+                                location = location + Environment.NewLine + country.EnglishName;
+                            }
+                        }
+
+                        deliveryNotedataprovider.DeliveryAddress = location;
+                    }
+                    #endregion
+
+                    #endregion
+
+                    #region MoveType
+                    if (!string.IsNullOrEmpty(shipment.MoveTypeId))
+                    {
+                        MoveType moveType = webfreightcontext.MoveTypes.Where(m => m.Id == shipment.MoveTypeId).FirstOrDefault();
+
+                        if (moveType != null)
+                        {
+                            deliveryNotedataprovider.MoveTypeCode = moveType.Code;
+                            deliveryNotedataprovider.MoveTypeName = moveType.MoveTypeEnglishName;
+                        }
+                    }
+                    #endregion
+
+                    #region FreightForwarder
+                    string myForwarderId = shipment.FreightForwarderId;
+                    string myForwarderAddressId = shipment.FreightForwarderAddressId;
+                    if (!string.IsNullOrEmpty(myForwarderId))
+                    {
+                        Card myPartnerCard = CardRepository.GetSingleCard(myForwarderId, tenant, true);
+
+                        if (myPartnerCard != null)
+                        {
+                            deliveryNotedataprovider.ForwarderAgentCode = myPartnerCard.Code;
+                            deliveryNotedataprovider.ForwarderAgentAddress = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
+
+                            if (!string.IsNullOrEmpty(myForwarderAddressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(myForwarderAddressId, tenant);
+
+                                if (myPartnerAddress != null)
+                                {
+                                    if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
+                                    {
+                                        deliveryNotedataprovider.ForwarderAgentAddress = myPartnerCard.LocalName + Environment.NewLine;
+                                    }
+
+                                    deliveryNotedataprovider.ForwarderAgentAddress = deliveryNotedataprovider.ForwarderAgentAddress + DataProviders.General.GetAddress(myPartnerAddress);
+
+                                    if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
+                                    {
+                                        deliveryNotedataprovider.ForwarderAgentAddress = deliveryNotedataprovider.ForwarderAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (myPartnerAddress.FaxNumber != null ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region Packages
+                    List<ShipmentPickUpDeliveryPackage> packages = shipmentsContext.ShipmentPickUpDeliveryPackages.Where(d => d.ShipmentPickUpDeliveryId == myDelivery.Id && d.Tenant == tenant).ToList();
+                    List<ShipmentPackage> shipmentPackages = shipmentsContext.ShipmentPackages.Where(d => d.ShipmentId == myDelivery.ShipmentId && d.Tenant == tenant).ToList();
+                    List<string> shipmentPackagesIds = shipmentsContext.ShipmentPackages.Where(d => d.ShipmentId == shipment.Id && d.Tenant == tenant).Select(s => s.Id).ToList();
+
+                    if (shipmentPackagesIds != null && shipmentPackagesIds.Count > 0)
+                    {
+                        List<InsideShipmentPackage> insidePackages = shipmentsContext.InsideShipmentPackages.Where(d => shipmentPackagesIds.Contains(d.ShipmentPackageId)).ToList();
+
+                        if (insidePackages != null && insidePackages.Count > 0)
+                        {
+                            deliveryNotedataprovider.InsidePackagesLines = new List<InsidePackageLine>();
+
+                            foreach (InsideShipmentPackage item in insidePackages)
+                            {
+                                InsidePackageLine insidePackageLine = new InsidePackageLine();
+
+                                PackageType insidePackageType = (from pa in commonContext.PackageTypes
+                                                                 where pa.Id == item.PackageTypeId
+                                                                 select pa).FirstOrDefault();
+
+                                insidePackageLine.PackageType = insidePackageType == null ? "" : insidePackageType.EnglishName;
+                                insidePackageLine.Quantity = item.Quantity;
+
+                                if (item.Length != null && item.Width != null && item.Height != null)
+                                {
+                                    insidePackageLine.Dimensions = item.Length + "x" + item.Width + "x" + item.Height;
+                                }
+
+                                insidePackageLine.Volume = item.Volume;
+                                insidePackageLine.VolumetricWeight = item.VolumetricWeight;
+                                insidePackageLine.Weight = item.Weight;
+                                insidePackageLine.Description = item.Description;
+
+                                #region Car Details
+                                insidePackageLine.Make = item.Make;
+                                insidePackageLine.Model = item.Model;
+                                insidePackageLine.Year = item.Year;
+                                insidePackageLine.Color = item.Color;
+                                insidePackageLine.ChassisNumber = item.ChassisNumber;
+                                insidePackageLine.RegistrationNumber = item.RegistrationNumber;
+
+                                if (!string.IsNullOrEmpty(item.CountryId))
+                                {
+                                    Country country = CountryRepository.GetSingleCountry(item.CountryId, tenant, true);
+                                    if (country != null)
+                                    {
+                                        insidePackageLine.CountryName = country.EnglishName;
+                                    }
+                                }
+                                #endregion
+
+                                deliveryNotedataprovider.InsidePackagesLines.Add(insidePackageLine);
+                            }
+                        }
+                    }
+
+                    int? totalQuantity = 0;
+                    double? totalWeight = 0;
+                    double? totalVolume = 0;
+
+                    deliveryNotedataprovider.PackagesLines = new List<PackageLine>();
+                    deliveryNotedataprovider.AttachmentList = new List<PackageLine>();
+                    int counter = 1;
+
+                    string volumeUnitCode = shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "";
+
+                    foreach (ShipmentPickUpDeliveryPackage package in packages)
+                    {
+                        counter++;
+                        PackageLine packageline = new PackageLine();
+
+                        packageline.PackageDescriptionOfGoods = package.Description != null ? package.Description : "";
+                        packageline.PackageGrossWeight = package.Weight != null ? (package.Weight.Value.ToString() + " " + shipment.GrossWeightUnitCode) : ""; //+ "  KG" : "";
+                        packageline.PackageQuantity = package.Quantity != null ? package.Quantity.Value.ToString() : "";
+                        packageline.PackageType = package.PackageType != null ? package.PackageType.EnglishName : "Package";
+                        packageline.PackageVolume = package.Volume != null ? (package.Volume + " " + shipment.VolumeUnitCode) : "";// + "  CBM" : "";
+                        packageline.SealNumber = package.ShipperSeal;
+                        packageline.Width = package.Width == null ? "" : package.Width.ToString();
+                        packageline.Height = package.Height == null ? "" : package.Height.ToString();
+                        packageline.Length = package.Length == null ? "" : package.Length.ToString();
+
+                        if (package.Width != null && package.Height != null && package.Length != null)
+                        {
+                            packageline.Dimensions = package.Length + " x " + package.Width + " x " + package.Height + " " + shipment.DimensionsUnitCode;
+                        }
+
+                        packageline.ContainerNumber = package.ContainerNumber;
+
+                        #region Car Details
+                        packageline.Make = package.Make;
+                        packageline.Model = package.Model;
+                        packageline.Year = package.Year;
+                        packageline.Color = package.Color;
+                        packageline.ChassisNumber = package.ChassisNumber;
+                        packageline.RegistrationNumber = package.RegistrationNumber;
+
+                        if (!string.IsNullOrEmpty(package.CountryId))
+                        {
+                            Country country = CountryRepository.GetSingleCountry(package.CountryId, tenant, true);
+                            if (country != null)
+                            {
+                                packageline.CountryName = country.EnglishName;
+                            }
+                        }
+                        #endregion
+
+                        #region Harmonize
+                        if (package.IsMultiHarmonize)
+                        {
+                            List<PickUpDeliveryPackageHarmonize> allHarmonizes = shipmentsContext.PickUpDeliveryPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                            foreach (PickUpDeliveryPackageHarmonize itemHarmonize in allHarmonizes)
+                            {
+                                if (string.IsNullOrEmpty(packageline.HSCode))
+                                {
+                                    packageline.HSCode = itemHarmonize.Harmonize;
+                                }
+                                else
+                                {
+                                    packageline.HSCode += "," + itemHarmonize.Harmonize;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            packageline.HSCode = package.Harmonize;
+                        }
+                        #endregion
+
+                        PackageType packtype = (from pa in commonContext.PackageTypes
+                                                where pa.Id == package.PackageTypeId
+                                                select pa).FirstOrDefault();
+
+                        if (packtype != null)
+                        {
+                            packageline.ContainerSize = packtype.ContainerSize.ToString();
+                            packageline.PackageType = packtype.EnglishName != null ? packtype.EnglishName : "Package";
+                            packageline.IsContainer = packtype.IsContainer;
+                        }
+
+                        totalQuantity += package.Quantity;
+                        totalWeight += package.Weight;
+                        totalVolume += package.Volume;
+
+                        //InsidePackages
+                        packageline.InsidePackagesLines = new List<InsidePackageLine>();
+                        ShipmentPackage shipmentPackage = shipmentPackages.Where(d => d.ContainerNumber == package.ContainerNumber).FirstOrDefault();
+                        if (shipmentPackage != null)
+                        {
+                            List<InsideShipmentPackage> insidePackages = shipmentsContext.InsideShipmentPackages.Where(d => d.ShipmentPackageId == shipmentPackage.Id && d.Tenant == tenant).ToList();
+                            foreach (InsideShipmentPackage insideItem in insidePackages)
+                            {
+                                PackageType insidePackageType = (from pa in commonContext.PackageTypes
+                                                                 where pa.Id == insideItem.PackageTypeId
+                                                                 select pa).FirstOrDefault();
+
+                                InsidePackageLine insidePackage = new InsidePackageLine();
+
+                                insidePackage.PackageType = insidePackageType == null ? "" : insidePackageType.EnglishName;
+                                insidePackage.Quantity = insideItem.Quantity;
+
+                                if (insideItem.Length != null && insideItem.Width != null && insideItem.Height != null)
+                                {
+                                    insidePackage.Dimensions = insideItem.Length + "x" + insideItem.Width + "x" + insideItem.Height;
+                                }
+
+                                insidePackage.Volume = insideItem.Volume;
+                                insidePackage.VolumetricWeight = insideItem.VolumetricWeight;
+                                insidePackage.Weight = insideItem.Weight;
+                                insidePackage.Description = insideItem.Description;
+
+                                packageline.InsidePackagesLines.Add(insidePackage);
+                            }
+                        }
+
+                        deliveryNotedataprovider.PackagesLines.Add(packageline);
+                    }
+
+                    deliveryNotedataprovider.TotalNumberOfPackages = totalQuantity;
+                    deliveryNotedataprovider.TotalGrossWeight = totalWeight;
+                    deliveryNotedataprovider.TotalVolume = totalVolume;
+                    #endregion
+
+                    #region  Last Vessel
+                    string vesselNameAndNumber = "";
+
+                    if (!string.IsNullOrEmpty(shipment.Transshipment3FromPortId))
+                    {
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == shipment.Transshipment3VesselId
+                                         select a).FirstOrDefault();
+                        if (vessel != null)
+                        {
+                            vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(shipment.Transshipment2FromPortId))
+                        {
+                            Vessel vessel = (from a in commonContext.Vessels
+                                             where a.Id == shipment.Transshipment2VesselId
+                                             select a).FirstOrDefault();
+                            if (vessel != null)
+                            {
+                                vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                            }
+                        }
+
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(shipment.Transshipment1FromPortId))
+                            {
+                                Vessel vessel = (from a in commonContext.Vessels
+                                                 where a.Id == shipment.Transshipment1VesselId
+                                                 select a).FirstOrDefault();
+                                if (vessel != null)
+                                {
+                                    vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                                }
+                            }
+
+                            else
+                            {
+                                Vessel vessel = (from a in commonContext.Vessels
+                                                 where a.Id == shipment.MainCarriageVesselId
+                                                 select a).FirstOrDefault();
+                                if (vessel != null)
+                                {
+                                    vesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                                }
+                            }
+                        }
+                    }
+
+                    deliveryNotedataprovider.LastMainCarriageVesselNameAndNumber = vesselNameAndNumber;
+                    #endregion
+
+                    #region EmptyContainer
+                    deliveryNotedataprovider.EmptyContainerReturnRef = myDelivery.EmptyDeliveryDepotReference;
+
+                    if (!string.IsNullOrEmpty(myDelivery.EmptyDeliveryContainerPartnerId))
+                    {
+                        Card myCard = CardRepository.GetSingleCard(myDelivery.EmptyDeliveryContainerPartnerId, tenant, true);
+
+                        if (myCard != null)
+                        {
+                            string myEmptyContainer = null;
+
+                            myEmptyContainer = myCard.EnglishName != null ? myCard.EnglishName : "";
+
+                            Address theAddress = addressRepository.GetMainAddressByCardId(myCard.Id, tenant);
+
+                            if (theAddress != null)
+                            {
+                                if (theAddress.IsLocalLanguage && !string.IsNullOrEmpty(myCard.LocalName))
+                                {
+                                    myEmptyContainer = myCard.LocalName;
+                                }
+
+                                myEmptyContainer = myEmptyContainer + Environment.NewLine + DataProviders.General.GetAddress(theAddress);
+
+                                if (theAddress.PhoneNumber != null)
+                                {
+                                    myEmptyContainer = myEmptyContainer + Environment.NewLine + "Phone No. : " + theAddress.PhoneNumber;
+                                }
+
+                                if (theAddress.FaxNumber != null)
+                                {
+                                    myEmptyContainer = myEmptyContainer + "   Fax No. : " + theAddress.FaxNumber;
+                                }
+                            }
+
+                            deliveryNotedataprovider.EmptyContainerReturn = myEmptyContainer;
+                        }
+                    }
+                    #endregion
+
+                    //LoadingPortName
+                    if (!string.IsNullOrEmpty(shipment.MainCarriageFromPortId))
+                    {
+                        deliveryNotedataprovider.LoadingPortName = shipment.MainCarriageFromPortName;
+                        deliveryNotedataprovider.OriginCountry = shipment.MainCarriageFromPortCountryName;
+                    }
+
+                    //DischargePortName
+                    if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
+                    {
+                        deliveryNotedataprovider.DischargePortName = shipment.Transshipment3ToPortName;
+                    }
+
+                    else if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
+                    {
+                        deliveryNotedataprovider.DischargePortName = shipment.Transshipment2ToPortName;
+                    }
+
+                    else if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
+                    {
+                        deliveryNotedataprovider.DischargePortName = shipment.Transshipment1ToPortName;
+                    }
+
+                    else if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
+                    {
+                        deliveryNotedataprovider.DischargePortName = shipment.MainCarriageToPortName;
+                    }
+
+                    //Dates
+                    deliveryNotedataprovider.MainCarriageETD_DateTime = shipment.MainCarriageETD;
+                    deliveryNotedataprovider.MainCarriageETA_DateTime = shipment.MainCarriageETA;
+                    deliveryNotedataprovider.MainCarriageATA_DateTime = shipment.MainCarriageATA;
+
+                    if (myDelivery.TransportModeCode != null)
+                    {
+                        PickUpDeliveryTransportMode myTransportMode = shipmentsContext.PickUpDeliveryTransportModes.Where(d => d.Code == myDelivery.TransportModeCode).FirstOrDefault();
+                        if (myTransportMode != null)
+                        {
+                            deliveryNotedataprovider.TransportMode = myTransportMode.Name;
+                        }
+                    }
+                }
+
+                deliveryNotedataprovider.DescriptionOfGoods = shipment.DescriptionOfGoods != null ? shipment.DescriptionOfGoods : "";
+
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, deliveryNotedataprovider);
+            }
+
+            Type deliveryNoteType = deliveryNotedataprovider.GetType();
+            PropertyInfo[] properties = deliveryNoteType.GetProperties();
             foreach (PropertyInfo pi in properties)
             {
                 string propertytype = pi.PropertyType.FullName;
 
                 if (propertytype == "System.String")
                 {
-                    if (pi.GetValue(dataProvider, null) == null || pi.GetValue(dataProvider, null).ToString() == "0" || pi.GetValue(dataProvider, null).ToString() == "00.00")
+                    if (pi.GetValue(deliveryNotedataprovider, null) == null || pi.GetValue(deliveryNotedataprovider, null).ToString() == "0" || pi.GetValue(deliveryNotedataprovider, null).ToString() == "00.00")
                     {
-                        pi.SetValue(dataProvider, "", null);
-                    }
-                }
-            }
-        }
-        private void SerializeDataProvider()
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(DeliveryNoteDataProvider));
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, dataProvider);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                output = memstream.ToArray();
-            }
-            
-        }
-
-        private void MapHeaderFields()
-        {
-            dataProvider.DateSent = String.Format("{0:dd/MMM/yyyy}", DateTime.Now.Date);
-            dataProvider.DateSent_New = DateTime.Now.Date;
-        }
-        private void MapTenantFields()
-        {
-            Tenant tenantSettings = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
-
-            if (tenantSettings != null)
-            {
-                dataProvider.Signature = tenantSettings.Signature != null ? tenantSettings.Signature : "";
-                dataProvider.TenantName = tenantSettings.Company != null ? tenantSettings.Company : "";
-            }
-        }
-        private void MapLoggedContact()
-        {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
-            ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
-
-            if (loggedContact != null)
-            {
-                dataProvider.UserName = loggedContact.EnglishName;
-                dataProvider.UserPhoneNumber = loggedContact.BusinessPhone;
-            }
-        }
-
-        private void MapShipmentFields()
-        {
-            dataProvider.ITNumber = DataProviders.General.GetFieldString(shipment.ITNumber);
-            dataProvider.ProjectNumber = DataProviders.General.GetFieldString(shipment.ProjectNumber);
-            dataProvider.HAWB = DataProviders.General.GetFieldString(shipment.House);
-            dataProvider.OurReferenceNumber = DataProviders.General.GetFieldString(shipment.ShipmentNumber);
-            dataProvider.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
-            dataProvider.BookingNumber = shipment.BookingConfirmationNumber;
-            dataProvider.MasterNumber = shipment.Master;
-            dataProvider.ShipmentNotes = shipment.Notes;
-            dataProvider.LongMaster = shipment.LongMaster;
-            dataProvider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
-            dataProvider.StorageFreeDays = shipment.WarehouseStorageFreeDays;
-            dataProvider.WarehouseReferenceNumber = shipment.WarehouseLegReference;
-            dataProvider.FinalDestinationCode = shipment.MainCarriageFinalDestinationPortCode;
-            dataProvider.AMSBL = shipment.AMSBL;
-            dataProvider.DescriptionOfGoods = DataProviders.General.GetFieldString(shipment.DescriptionOfGoods);
-            dataProvider.ContainersNumbersArray = shipment.ContainersNumbers;
-            dataProvider.IncotermName = shipment.IncotermName;
-            dataProvider.DeclarationNumber = shipment.DeclarationNumber;
-            dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
-            dataProvider.ValueOfGoods = shipment.ValueOfGoods;
-            dataProvider.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
-            dataProvider.CarrierCode = shipment.MainCarriageCarrierCode;
-            dataProvider.GrossWeightUnitCode = shipment.GrossWeightUnitCode;
-            dataProvider.VolumeUnitCode = shipment.VolumeUnitCode;
-
-            MapBranchData();
-            MapSealNumbers();
-
-            if (shipment.ValueOfGoodsCurrencyId != null)
-            {
-                Currency currency = commonContext.Currencies.Where(d => d.Id == shipment.ValueOfGoodsCurrencyId).FirstOrDefault();
-                if (currency != null)
-                {
-                    dataProvider.ValueOfGoodsCurrency = currency.Code;
-                }
-            }
-
-            this.MapShipmentFrom();
-            this.MapShipmentTo();
-            this.MapShipmentDates();
-            this.MapShipmentCutoffDate();
-            this.MapShipmentFreightLocation();
-            this.MapShipmentOnCarriage();
-            this.MapShipmentOnForwarding();
-            this.MapShipmentShipper();
-            this.MapShipmentConsignee();
-            this.MapShipmentCustomer();
-            this.MapShipmentIssuingCarrierAgent();
-            this.MapShipmentFreightForwarder();
-            this.MapShipmentSalesmanUser();
-            this.MapShipmentMainVessel();
-            this.MapShipmentLastVessel();
-            this.MapShipmentMoveType();
-            this.MapShipmentInsidePackages();
-            this.MapShipmentCustomFields();
-            this.MapShipmentCustomClearancePoint();
-            this.MapShipmentCustomsAgent();
-            this.MapMasterShipmentNumber();
-            this.MapShipmentType();
-            this.MapShipmentTrucker();
-        }
-
-        private void MapSealNumbers()
-        {
-            var sealNumbers = shipment.ShipmentPackages.Select(d => d.ShipperSeal).ToList();
-            if(sealNumbers == null)
-            {
-                return;
-            }
-            dataProvider.ContainerSeals  = string.Join(",", sealNumbers.Where(i => !string.IsNullOrEmpty(i)).Select(i => i.ToString()).ToArray());
-        }
-
-        private void MapBranchData()
-        {
-            if (!string.IsNullOrEmpty(shipment.BranchId))
-            {
-                Branch branch = branchRepository.GetSingleBranch(shipment.BranchId, tenant);
-                if (branch != null)
-                {
-                    dataProvider.BranchName = branch.EnglishName;
-                    dataProvider.BranchLocalName = branch.LocalName;
-
-                    if (!string.IsNullOrEmpty(branch.AddressId))
-                    {
-                        Address branchAddress = addressRepository.GetSingleAddress(branch.AddressId, tenant);
-                        dataProvider.BranchAddress = DataProviders.General.GetAddress(branchAddress);
-                    }
-                }
-            }
-        }
-        private void MapShipmentFrom()
-        {
-            if (!string.IsNullOrEmpty(shipment.MainCarriageFromPortId))
-            {
-                dataProvider.LoadingPortName = shipment.MainCarriageFromPortName;
-                dataProvider.LoadingPortCode = shipment.MainCarriageFromPortCode;
-                dataProvider.OriginCountry = shipment.MainCarriageFromPortCountryName;
-            }
-        }
-        private void MapShipmentTo()
-        {
-            if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
-            {
-                dataProvider.DischargePortName = shipment.Transshipment3ToPortName;
-                dataProvider.DischargePortCode = shipment.Transshipment3ToPortCode;
-            }
-
-            else if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
-            {
-                dataProvider.DischargePortName = shipment.Transshipment2ToPortName;
-                dataProvider.DischargePortCode = shipment.Transshipment2ToPortCode;
-
-            }
-
-            else if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
-            {
-                dataProvider.DischargePortName = shipment.Transshipment1ToPortName;
-                dataProvider.DischargePortCode = shipment.Transshipment1ToPortCode;
-
-            }
-
-            else if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
-            {
-                dataProvider.DischargePortName = shipment.MainCarriageToPortName;
-                dataProvider.DischargePortCode = shipment.MainCarriageToPortCode;
-            }
-        }
-        private void MapShipmentDates()
-        {
-            dataProvider.MainCarriageETA = shipment.MainCarriageETA != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageETA) : "";
-            dataProvider.MainCarriageETD = shipment.MainCarriageETD != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageETD) : "";
-            dataProvider.MainCarriageETD_DateTime = shipment.MainCarriageETD;
-            dataProvider.MainCarriageETA_DateTime = shipment.MainCarriageETA;
-            dataProvider.MainCarriageATA_DateTime = shipment.MainCarriageATA;
-            dataProvider.FinalDestinationETA = shipment.MainCarriageFinalDestinationETA;
-        }
-        private void MapShipmentCutoffDate()
-        {
-            if (shipment.CutoffDate != null)
-            {
-                dataProvider.CutOffDateAsDate = shipment.CutoffDate;
-                dataProvider.CutOffDate = String.Format("{0:dd MMM yyyy}", shipment.CutoffDate);
-                dataProvider.CutOffTime = String.Format("{0:hh:mm:ss}", shipment.CutoffDate);
-            }
-        }
-        private void MapShipmentFreightLocation()
-        {
-            if (!string.IsNullOrEmpty(shipment.FreightLocationId))
-            {
-                Card card = CardRepository.GetSingleCard(shipment.FreightLocationId, tenant, true);
-                if (card != null)
-                {
-                    dataProvider.FreightLocation = card.EnglishName;
-                }
-            }
-        }
-        private void MapShipmentOnCarriage()
-        {
-            if (shipment.OnCarriageFromPortId != null && shipment.OnCarriageToPortId != null)
-            {
-                if (shipment.OnCarriageCarrierId != null)
-                {
-                    dataProvider.OnCarriageCarrier = shipment.OnCarriageCarrierName;
-                }
-            }
-
-            if(shipment.OnCarriageToPortId != null)
-            {
-                this.MapOnCarriageToPort();
-            }
-        }
-
-        private void MapOnCarriageToPort()
-        {
-            Port onCarriagePort = this.portRepository.GetSinglePort(shipment.OnCarriageToPortId, shipment.Tenant);
-
-            if (onCarriagePort == null)
-                return;
-
-            dataProvider.OnCarriageToPortName = onCarriagePort.EnglishName;
-        }
-
-        private void MapShipmentOnForwarding()
-        {
-            if (shipment.OnForwardingFromPortId != null && shipment.OnForwardingToPortId != null)
-            {
-                if (shipment.OnForwardingCarrierId != null)
-                {
-                    dataProvider.OnForwardingCarrier = shipment.OnForwardingCarrierName;
-                }
-            }
-        }
-
-        private void MapShipmentTrucker()
-        {
-            if (string.IsNullOrEmpty(shipment.TruckerId))
-            {
-                return;
-            }
-            this.MapTruckerReferences();
-            this.MapTruckerAddress();
-            this.MapTruckerContact();
-            this.MapTruckerCard();
-
-        }
-        private void MapTruckerReferences()
-        {
-            dataProvider.ShipmentTruckerReference1 = shipment.TruckerReference1;
-            dataProvider.ShipmentTruckerReference2 = shipment.TruckerReference2;
-        }
-        private void MapTruckerAddress()
-        {
-            if (string.IsNullOrEmpty(shipment.TruckerAddressId))
-            {
-                return;
-            }
-            Address address = addressRepository.GetSingleAddress(shipment.TruckerAddressId, tenant);
-            if (address == null)
-            {
-                return;
-            }
-            dataProvider.ShipmentTruckerAddress = DataProviders.General.GetAddress(address);
-            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
-            {
-                dataProvider.ShipmentTruckerAddress += Environment.NewLine;
-            }
-
-            if (!string.IsNullOrEmpty(address.PhoneNumber))
-            {
-                dataProvider.ShipmentTruckerAddress += "Tel: " + address.PhoneNumber + " ";
-            }
-
-            if (!string.IsNullOrEmpty(address.FaxNumber))
-            {
-                dataProvider.ShipmentTruckerAddress += "Fax: " + address.FaxNumber;
-            }
-        }
-        private void MapTruckerContact()
-        {
-            if (string.IsNullOrEmpty(shipment.TruckerContactId))
-            {
-                return;
-            }
-            Contact contact = ContactRepository.GetSingleContact(shipment.TruckerContactId, tenant, true);
-            if (contact == null)
-            {
-                return;
-            }
-            dataProvider.ShipmentTruckerContactName = contact.EnglishName;
-            dataProvider.ShipmentTruckerContactMobileNumber = contact.Mobile;
-        }
-        private void MapTruckerCard()
-        {
-            Card card = CardRepository.GetSingleCard(shipment.TruckerId, tenant, true);
-            if (card == null)
-            {
-                return;
-            }
-            dataProvider.ShipmentTruckerName = card.EnglishName;
-            dataProvider.ShipmentTruckerVATNumber = card.VatNumber;
-        }
-        private void MapShipmentShipper()
-        {
-            if (!string.IsNullOrEmpty(shipment.ShipperId))
-            {
-                this.MapShipperReferences();
-                this.MapShipperAddress();
-                this.MapShipperContact();
-                this.MapShipperCard();
-            }
-        }
-        private void MapShipperReferences()
-        {
-            dataProvider.ClientReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
-            dataProvider.ShipperReference2 = shipment.ShipperReference2;
-            dataProvider.ShipperReference1 = shipment.ShipperReference1;
-        }
-        private void MapShipperAddress()
-        {
-            if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
-            {
-                Address address = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
-                if (address != null)
-                {
-                    dataProvider.ShipperAddress = DataProviders.General.GetAddress(address);
-
-                    if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
-                    {
-                        dataProvider.ShipperAddress += Environment.NewLine;
-                    }
-
-                    if (!string.IsNullOrEmpty(address.PhoneNumber))
-                    {
-                        dataProvider.ShipperAddress += "Tel: " + address.PhoneNumber + " ";
-                    }
-
-                    if (!string.IsNullOrEmpty(address.FaxNumber))
-                    {
-                        dataProvider.ShipperAddress += "Fax: " + address.FaxNumber;
-                    }
-                }
-            }
-        }
-        private void MapShipperContact()
-        {
-            if (!string.IsNullOrEmpty(shipment.ShipperContactId))
-            {
-                Contact contact = ContactRepository.GetSingleContact(shipment.ShipperContactId, tenant, true);
-                if (contact != null)
-                {
-                    dataProvider.ShipperContactName = contact.EnglishName;
-                    dataProvider.ShipperContactMobileNumber = contact.Mobile;
-                }
-            }
-        }
-        private void MapShipperCard()
-        {
-            Card card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
-            if (card != null)
-            {
-                dataProvider.ShipperName = card.EnglishName;
-                dataProvider.ShipperVATNumber = card.VatNumber;
-            }
-        }
-
-        private void MapShipmentConsignee()
-        {
-            if (!string.IsNullOrEmpty(shipment.ConsigneeId))
-            {
-                dataProvider.ConsigneeRef1 = shipment.ConsigneeReference1;
-                dataProvider.ConsigneeReference2 = shipment.ConsigneeReference2;
-
-                Card card = CardRepository.GetSingleCard(shipment.ConsigneeId, tenant, true);
-                if (card != null)
-                {
-                    dataProvider.ConsigneeName = card.EnglishName;
-                    dataProvider.ConsigneeVATNumber = card.VatNumber;
-
-                    if (!string.IsNullOrEmpty(shipment.ConsigneeAddressId))
-                    {
-                        Address address = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, tenant);
-                        if (address != null)
-                        {
-                            dataProvider.ConsigneeAddress = DataProviders.General.GetAddress(address);
-
-                            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
-                            {
-                                dataProvider.ConsigneeAddress += Environment.NewLine;
-                            }
-
-                            if (!string.IsNullOrEmpty(address.PhoneNumber))
-                            {
-                                dataProvider.ConsigneeAddress += "Tel: " + address.PhoneNumber + " ";
-                            }
-
-                            if (!string.IsNullOrEmpty(address.FaxNumber))
-                            {
-                                dataProvider.ConsigneeAddress += "Fax: " + address.FaxNumber;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        private void MapShipmentCustomer()
-        {
-            if (!string.IsNullOrEmpty(shipment.CustomerId))
-            {
-                if (!string.IsNullOrEmpty(shipment.CustomerContactId))
-                {
-                    Contact contact = ContactRepository.GetSingleContact(shipment.CustomerContactId, tenant, true);
-                    if (contact != null)
-                    {
-                        dataProvider.CustomerContactName = contact.EnglishName;
-                        dataProvider.CustomerContactPhoneNumber = contact.BusinessPhone;
-                    }
-                }
-            }
-        }
-        private void MapShipmentIssuingCarrierAgent()
-        {
-            if (!string.IsNullOrEmpty(shipment.IssuingCarrierAgentId))
-            {
-                Card card = CardRepository.GetSingleCard(shipment.IssuingCarrierAgentId, tenant, true);
-                if (card != null)
-                {
-                    dataProvider.IssuingCarrierAgentName = card.EnglishName;
-
-                    if (!string.IsNullOrEmpty(shipment.IssuingCarrierAddressId))
-                    {
-                        Address address = addressRepository.GetSingleAddress(shipment.IssuingCarrierAddressId, tenant);
-                        if (address != null)
-                        {
-                            dataProvider.IssuingCarrierAgentAddress = DataProviders.General.GetAddress(address);
-
-                            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
-                            {
-                                dataProvider.IssuingCarrierAgentAddress += Environment.NewLine;
-                            }
-
-                            if (!string.IsNullOrEmpty(address.PhoneNumber))
-                            {
-                                dataProvider.IssuingCarrierAgentAddress += "Tel: " + address.PhoneNumber + " ";
-                            }
-
-                            if (!string.IsNullOrEmpty(address.FaxNumber))
-                            {
-                                dataProvider.IssuingCarrierAgentAddress += "Fax: " + address.FaxNumber;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        private void MapShipmentFreightForwarder()
-        {
-            if (!string.IsNullOrEmpty(shipment.FreightForwarderId))
-            {
-                Card card = CardRepository.GetSingleCard(shipment.FreightForwarderId, tenant, true);
-
-                if (card != null)
-                {
-                    dataProvider.ForwarderAgentCode = card.Code;
-                    dataProvider.ForwarderAgentAddress = card.EnglishName != null ? card.EnglishName + Environment.NewLine : "";
-
-                    if (!string.IsNullOrEmpty(shipment.FreightForwarderAddressId))
-                    {
-                        Address myPartnerAddress = addressRepository.GetSingleAddress(shipment.FreightForwarderAddressId, tenant);
-
-                        if (myPartnerAddress != null)
-                        {
-                            if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
-                            {
-                                dataProvider.ForwarderAgentAddress = card.LocalName + Environment.NewLine;
-                            }
-
-                            dataProvider.ForwarderAgentAddress = dataProvider.ForwarderAgentAddress + DataProviders.General.GetAddress(myPartnerAddress);
-
-                            if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
-                            {
-                                dataProvider.ForwarderAgentAddress = dataProvider.ForwarderAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (myPartnerAddress.FaxNumber != null ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        private void MapShipmentSalesmanUser()
-        {
-            if (!string.IsNullOrEmpty(shipment.SalesmanUserId))
-            {
-                dataProvider.ShipmentSalesman = shipment.SalesmanUserName;
-
-                Contact salesmanContact = ContactRepository.GetSingleContact(shipment.SalesmanUserId, tenant, true);
-                if (salesmanContact != null)
-                {
-                    dataProvider.SalesmanEmail = salesmanContact.Email;
-                }
-            }
-        }
-        private void MapShipmentMainVessel()
-        {
-            dataProvider.MainCarriageVesselName = shipment.MainCarriageVesselName;
-
-            if (!string.IsNullOrEmpty(shipment.MainCarriageVesselName))
-            {
-                dataProvider.MainCarriageVesselNameAndNumber = shipment.MainCarriageVesselName + " \\ " + shipment.MainCarriageCarrierNumber;
-            }
-        }
-        private void MapShipmentLastVessel()
-        {
-            string lastVesselName = shipment.Transshipment3VesselName;
-
-            if (lastVesselName == null)
-            {
-                lastVesselName = shipment.Transshipment2VesselName;
-            }
-
-            if (lastVesselName == null)
-            {
-                lastVesselName = shipment.Transshipment1VesselName;
-            }
-
-            if (lastVesselName == null)
-            {
-                lastVesselName = shipment.MainCarriageVesselName;
-            }
-
-            if (lastVesselName != null)
-            {
-                dataProvider.LastMainCarriageVesselNameAndNumber = lastVesselName + " \\ " + shipment.MainCarriageCarrierNumber;
-            }
-        }
-        private void MapShipmentMoveType()
-        {
-            if (!string.IsNullOrEmpty(shipment.MoveTypeId))
-            {
-                IWebFreightContext webfreightcontext = WebFreightContext.GetContext(tenant);
-
-                MoveType moveType = webfreightcontext.MoveTypes.Where(m => m.Id == shipment.MoveTypeId).FirstOrDefault();
-
-                if (moveType != null)
-                {
-                    dataProvider.MoveTypeCode = moveType.Code;
-                    dataProvider.MoveTypeName = moveType.MoveTypeEnglishName;
-                }
-            }
-        }
-        private void MapShipmentInsidePackages()
-        {
-            foreach (ShipmentPackagePM shipmentPackagePM in shipment.ShipmentPackages)
-            {
-                foreach (InsideShipmentPackagePM insideShipmentPackagePM in shipmentPackagePM.InsideShipmentPackages)
-                {
-                    dataProvider.InsidePackagesLines.Add(GetInsidePackageLine(insideShipmentPackagePM));
-                }
-            }
-        }
-        private void MapShipmentCustomFields()
-        {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
-            customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, dataProvider);
-        }
-
-        private void MapChildEntityFields()
-        {
-            if (this.childEntity != null)
-            {
-                dataProvider.DriverName = childEntity.Driver;
-                dataProvider.TruckNumber = childEntity.TruckNumber;
-                dataProvider.TrailerNumber = childEntity.TrailerNumber;
-                dataProvider.TruckerNumber = childEntity.CarrierNumber;
-                dataProvider.SpecialInstructions = childEntity.Notes != null ? childEntity.Notes : "";
-                dataProvider.PickupDeliveryNumber = childEntity.PickUpDeliveryNumber;
-                             
-                this.MapChildEntityFrom();
-                this.MapChildEntityTo();
-                this.MapChildEntityDates();
-                this.MapChildEntityCarrier();
-                this.MapChildEntityEmptyContainer();
-                this.MapChildEntityShipmentPackage();
-                this.MapChildEntityTransportMode();
-                this.MapChildEntityDocumentType();
-                this.MapChildEntityPackages();
-                this.MapChildEntityTruckerAddress();
-                this.MapFromPartnerAddress();
-            }
-        }
-        private void MapFromPartnerAddress()
-        {  
-            Address address = addressRepository.GetMainAddressByCardId(childEntity.FromPartnerCardId, tenant);
-            if (address != null)
-            {
-                dataProvider.FromPartnerAddressName = address.Name != null ? address.Name : "";
-            }  
-        }
-        private void MapChildEntityFrom()
-        {
-            switch (childEntity.PickUpDeliveryFromTypeCode)
-            {
-                case "PORT":
-                    {
-                        this.MapChildEntityFromPort();
-                        break;
-                    }
-
-                case "CASL":
-                    {
-                        this.MapChildEntityFromCasual();
-                        break;
-                    }
-
-                case "PART":
-                    {
-                        this.MapChildEntityFromPartner();
-                        break;
-                    }
-
-                case "WARH":
-                    {
-                        break;
-                    }
-            }
-        }
-        private void MapChildEntityFromPort()
-        {
-            if (!string.IsNullOrEmpty(childEntity.FromPortId))
-            {
-                Port port = portRepository.GetSinglePort(tenant, childEntity.FromPortId);
-
-                if (port != null)
-                {
-                    dataProvider.PickupCompanyName = port.EnglishName != null ? port.EnglishName : "";
-                }
-            }
-
-            dataProvider.PickupAddress = childEntity.FromAddress != null ? childEntity.FromAddress : "";
-        }
-        private void MapChildEntityFromCasual()
-        {
-            string location = "";
-
-            if (!string.IsNullOrEmpty(childEntity.FromAddressCity))
-            {
-                location = childEntity.FromAddressCity;
-            }
-
-            if (!string.IsNullOrEmpty(childEntity.FromAddressZipCode))
-            {
-                location = location + " " + childEntity.FromAddressZipCode;
-            }
-
-            if (!string.IsNullOrEmpty(childEntity.FromAddressCountryId))
-            {
-                Country country = CountryRepository.GetSingleCountry(childEntity.FromAddressCountryId, tenant, true);
-                if (country != null)
-                {
-                    location = location + Environment.NewLine + country.EnglishName;
-                }
-            }
-
-            dataProvider.PickupAddress = location;
-        }
-        private void MapChildEntityFromPartner()
-        {
-            if (string.IsNullOrEmpty(childEntity.FromPartnerCardId))
-            {
-                dataProvider.PickupAddress = childEntity.FromAddress != null ? childEntity.FromAddress : "";
-            }
-
-            else
-            {
-                Card card = CardRepository.GetSingleCard(childEntity.FromPartnerCardId, tenant, true);
-                if (card != null)
-                {
-                    dataProvider.PickupCompanyName = card.EnglishName;
-
-                    CardContact cardContact = (from a in commonContext.CardContacts where a.CardId == card.Id select a).FirstOrDefault();
-                    if (cardContact != null)
-                    {
-                        Contact contact = cardContact.Contact;
-
-                        if (contact != null)
-                        {
-                            dataProvider.PickupContactPhone = contact.BusinessPhone != null ? contact.BusinessPhone : "";
-                        }
-                    }
-
-                    if (string.IsNullOrEmpty(childEntity.FromAddressId))
-                    {
-                        dataProvider.PickupAddress = childEntity.FromAddress != null ? childEntity.FromAddress : "";
-                    }
-
-                    else
-                    {
-                        Address address = addressRepository.GetSingleAddress(childEntity.FromAddressId, tenant);
-                        if (address != null)
-                        {
-                            dataProvider.PickupAddress = DataProviders.General.GetAddress(address)
-                                + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
-                                + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
-
-                            dataProvider.FromAddressDescription = address.Description != null ? address.Description : "";
-                        }
-                    }
-                }
-            }
-        }
-        private void MapChildEntityTo()
-        {
-            switch (childEntity.PickUpDeliveryToTypeCode)
-            {
-                case "PORT":
-                    {
-                        this.MapChildEntityToPort();
-                        break;
-                    }
-
-                case "CASL":
-                    {
-                        this.MapChildEntityToCasual();
-                        break;
-                    }
-
-                case "PART":
-                    {
-                        this.MapChildEntityToPartner();
-                        break;
-                    }
-
-                case "WARH":
-                    {
-                        break;
-                    }
-            }
-        }
-        private void MapChildEntityToPort()
-        {
-            if (!string.IsNullOrEmpty(childEntity.ToPortId))
-            {
-                Port port = portRepository.GetSinglePort(tenant, childEntity.ToPortId);
-
-                if (port != null)
-                {
-                    dataProvider.DeliveryCompanyName = port.EnglishName != null ? port.EnglishName : "";
-                    dataProvider.DeliveryCompanyLocalName = port.LocalName != null ? port.LocalName : "";
-                }
-            }
-
-            dataProvider.DeliveryAddress = childEntity.ToAddress != null ? childEntity.ToAddress : "";
-        }
-        private void MapChildEntityToCasual()
-        {
-            string location = "";
-
-            if (!string.IsNullOrEmpty(childEntity.ToAddressCity))
-            {
-                location = childEntity.ToAddressCity;
-            }
-
-            if (!string.IsNullOrEmpty(childEntity.ToAddressZipCode))
-            {
-                location = location + " " + childEntity.ToAddressZipCode;
-            }
-
-            if (!string.IsNullOrEmpty(childEntity.ToAddressCountryId))
-            {
-                Country country = CountryRepository.GetSingleCountry(childEntity.ToAddressCountryId, tenant, true);
-
-                if (country != null)
-                {
-                    location = location + Environment.NewLine + country.EnglishName;
-                }
-            }
-
-            dataProvider.DeliveryAddress = location;
-        }
-        private void MapChildEntityToPartner()
-        {
-            if (string.IsNullOrEmpty(childEntity.ToPartnerCardId))
-            {
-                dataProvider.DeliveryAddress = childEntity.ToAddress != null ? childEntity.ToAddress : "";
-            }
-
-            else
-            {
-                Card card = CardRepository.GetSingleCard(childEntity.ToPartnerCardId, tenant, true);
-                if (card != null)
-                {
-                    dataProvider.DeliveryCompanyName = card.EnglishName;
-                    dataProvider.DeliveryCompanyLocalName = card.LocalName;
-                    dataProvider.DeliveryCompanyContactLocalName = card.LocalName;
-
-                    Contact primaryContact = ContactRepository.GetSingleContact(card.PrimaryContactId, tenant, false);
-                    if (primaryContact != null)
-                    {
-                        dataProvider.DeliveryCompanyContactLocalName = primaryContact.LocalName;
-                        dataProvider.DeliveryCompanyContactPhone = primaryContact.BusinessPhone == null ? "" : primaryContact.BusinessPhone;
-                    }
-
-                    CardContact cardContact = (from a in commonContext.CardContacts where a.CardId == card.Id select a).FirstOrDefault();
-                    if (cardContact != null)
-                    {
-                        ContactRepository contactRepository = new ContactRepository(commonContext);
-                        Contact contact = contactRepository.GetSingleContact(cardContact.ContactId, tenant);
-                        if (contact != null)
-                        {
-                            dataProvider.DeliveryContactPhone = contact.BusinessPhone != null ? contact.BusinessPhone : "";
-                            dataProvider.DeliveryContactName = contact.EnglishName != null ? contact.EnglishName : null;
-                            dataProvider.DeliveryContactEmail = contact.Email;
-                        }
-                    }
-
-                    if (string.IsNullOrEmpty(childEntity.ToAddressId))
-                    {
-                        dataProvider.DeliveryAddress = childEntity.ToAddress != null ? childEntity.ToAddress : "";
-                    }
-
-                    else
-                    {
-                        Address address = addressRepository.GetSingleAddress(childEntity.ToAddressId, tenant);
-                        if (address != null)
-                        {
-                            dataProvider.ToPartnerAddressName = address.Name;
-
-                            dataProvider.DeliveryAddress = DataProviders.General.GetAddress(address)
-                                + (!string.IsNullOrEmpty(address.ATTN) ? (Environment.NewLine + "Contact : " + address.ATTN) : "")
-                                + (!string.IsNullOrEmpty(address.PhoneNumber) ? (Environment.NewLine + "Phone : " + address.PhoneNumber) : "");
-                            dataProvider.ToAddressDescription = address.Description != null ? address.Description : "";
-
-                        }
-                    }
-                }
-            }
-        }
-        private void MapChildEntityDates()
-        {
-            if (childEntity.ETD != null)
-            {
-                dataProvider.PickupDate = String.Format("{0:dd/MMM/yyyy}", childEntity.ETD);
-                dataProvider.PickupTime = String.Format("{0:hh:mm tt}", childEntity.ETD);
-                dataProvider.PickupTime_DateTime_New = childEntity.ETD;
-            }
-
-            if (childEntity.ETA != null)
-            {
-                dataProvider.DeliveryETADate = childEntity.ETA;
-                dataProvider.DeliveryETATime = childEntity.ETA;
-                dataProvider.DeliveryDate = String.Format("{0:dd/MMM/yyyy}", childEntity.ETA);
-                dataProvider.DeliveryTime = String.Format("{0:hh:mm tt}", childEntity.ETA);
-                dataProvider.DeliveryTime_DateTime_New = childEntity.ETA;
-            }
-
-            dataProvider.PickupDeliveryDeparture = this.GetActualOrExpectedDeparture();
-            dataProvider.PickupDeliveryArrival = this.GetActualOrExpectedArrival();
-        }
-        private DateTime? GetActualOrExpectedDeparture()
-        {
-            DateTime? myDate = childEntity.ATD;
-            if (myDate == null)
-            {
-                myDate = childEntity.ETD;
-            }
-
-            return myDate;
-        }
-        private DateTime? GetActualOrExpectedArrival()
-        {
-            DateTime? myDate = childEntity.ATA;
-            if (myDate == null)
-            {
-                myDate = childEntity.ETA;
-            }
-
-            return myDate;
-        }
-        private void MapChildEntityCarrier()
-        {
-            if (childEntity.CarrierId != null)
-            {
-                Card card = CardRepository.GetSingleCard(childEntity.CarrierId, tenant, true);
-
-                if (card != null)
-                {
-                    dataProvider.To = card.EnglishName != null ? card.EnglishName : "";
-                    dataProvider.TruckerName = dataProvider.To;
-
-                    Address address = addressRepository.GetSingleAddressByCardIdAndTypeId(card.Id, "M", tenant);
-                    if (address != null)
-                    {
-                        dataProvider.Telephone = address != null ? (address.PhoneNumber != null ? address.PhoneNumber : "") : "";
-                    }
-
-                    if (!string.IsNullOrEmpty(card.PrimaryContactId))
-                    {
-                        Contact primaryContact = ContactRepository.GetSingleContact(card.PrimaryContactId, tenant, true);
-                        if (primaryContact != null)
-                        {
-                            dataProvider.TruckerCompanyContactName = primaryContact.EnglishName;
-                        }
-                    }
-
-                    CardContact cardContact = (from cc in commonContext.CardContacts where cc.CardId == card.Id select cc).FirstOrDefault();
-                    if (cardContact != null)
-                    {
-                        Contact contact = ContactRepository.GetSingleContact(cardContact.ContactId, tenant, true);
-                        if (contact != null)
-                        {
-                            dataProvider.Salesman = contact.EnglishName != null ? contact.EnglishName : null;
-                            dataProvider.SalesmanEmail = contact.Email != null ? contact.Email : "";
-                        }
-                    }
-                }
-            }
-        }
-        private void MapChildEntityEmptyContainer()
-        {
-            if (this.childEntityTypeCode == "PICK")
-            {
-                dataProvider.EmptyContainerRef = childEntity.EmptyPickupDepotReference;
-                dataProvider.EmptyContainer = this.GetEmptyContainer(childEntity.EmptyPickupContainerPartnerId);
-            }
-
-            else
-            {
-                dataProvider.EmptyContainerReturnRef = childEntity.EmptyDeliveryDepotReference;
-                dataProvider.EmptyContainerReturn = this.GetEmptyContainer(childEntity.EmptyDeliveryContainerPartnerId);
-            }
-        }
-        private void MapChildEntityShipmentPackage()
-        {
-            ShipmentPackage shipmentPackage = (from a in shipmentsContext.ShipmentPackages where a.DeliveryId == childEntityId && a.Tenant == tenant select a).FirstOrDefault();
-
-            if (shipmentPackage != null)
-            {
-                dataProvider.Reference1 = shipmentPackage.Reference1;
-                dataProvider.Reference2 = shipmentPackage.Reference2;
-                dataProvider.Reference3 = shipmentPackage.Reference3;
-                dataProvider.Reference4 = shipmentPackage.Reference4;
-            }
-        }
-        private void MapChildEntityTransportMode()
-        {
-            if (childEntity.TransportModeCode != null)
-            {
-                PickUpDeliveryTransportMode myTransportMode = shipmentsContext.PickUpDeliveryTransportModes.Where(d => d.Code == childEntity.TransportModeCode).FirstOrDefault();
-                if (myTransportMode != null)
-                {
-                    dataProvider.TransportMode = myTransportMode.Name;
-                }
-            }
-        }
-        private void MapChildEntityDocumentType()
-        {
-            if (this.childEntityTypeCode == "PICK")
-            {
-                DocumentType documentType = commonContext.DocumentTypes.Where(doc => doc.Code == "781" && doc.Tenant == tenant).FirstOrDefault();
-                if (documentType != null)
-                {
-                    DocumentTypeTemplate template = commonContext.DocumentTypeTemplates.Where(doc => doc.Id == documentType.DocumentTypeDefaultReportTemplateId && doc.Tenant == tenant).FirstOrDefault();
-                    if (template != null)
-                    {
-                        dataProvider.VerticalShift = template.VerticalShift != null ? template.VerticalShift.Value : 10;
-                        dataProvider.HorizontalShift = template.HorizontalShift != null ? template.HorizontalShift.Value : 10;
-                    }
-                }
-            }
-        }
-        private void MapChildEntityPackages()
-        {
-            List<ShipmentPickUpDeliveryPackage> packages = shipmentsContext.ShipmentPickUpDeliveryPackages.Where(d => d.ShipmentPickUpDeliveryId == childEntityId && d.Tenant == tenant).ToList();
-
-            if (packages.Count > 0)
-            {
-                dataProvider.TotalNumberOfPackages = packages.Sum(s => s.Quantity);
-                dataProvider.TotalGrossWeight = packages.Sum(s => s.Weight);
-                dataProvider.TotalVolume = packages.Sum(s => s.Volume);
-
-                foreach (ShipmentPickUpDeliveryPackage item in packages)
-                {
-                    PackageLine itemLine = new PackageLine()
-                    {
-                        PackageDescriptionOfGoods = DataProviders.General.GetFieldString(item.Description),
-                        SealNumber = DataProviders.General.GetFieldString(item.ShipperSeal),
-                        ContainerNumber = DataProviders.General.GetFieldString(item.ContainerNumber),
-                        Width = DataProviders.General.GetFieldString(item.Width),
-                        Height = DataProviders.General.GetFieldString(item.Height),
-                        Length = DataProviders.General.GetFieldString(item.Length),
-                        PackageQuantity = DataProviders.General.GetFieldString(item.Quantity),
-                        PackageGrossWeight = DataProviders.General.GetFieldString(item.Weight, shipment.GrossWeightUnitCode),
-                        PackageVolume = DataProviders.General.GetFieldString(item.Volume, shipment.VolumeUnitCode),
-                        Dimensions = this.GetDimensions(item),
-                        Make = item.Make,
-                        Model = item.Model,
-                        Year = item.Year,
-                        Color = item.Color,
-                        ChassisNumber = item.ChassisNumber,
-                        RegistrationNumber = item.RegistrationNumber,
-                    };
-
-                    if (!string.IsNullOrEmpty(item.CountryId))
-                    {
-                        Country country = CountryRepository.GetSingleCountry(item.CountryId, tenant, true);
-                        if (country != null)
-                        {
-                            itemLine.CountryName = country.EnglishName;
-                        }
-                    }
-
-                    this.MapChildEntityPackageType(itemLine, item);
-                    this.MapChildEntityPackageHSCode(itemLine, item);
-
-                    ShipmentPackagePM shipmentPackagePM = shipment.ShipmentPackages.Where(d => d.ContainerNumber == item.ContainerNumber).FirstOrDefault();
-
-                    if (shipmentPackagePM != null)
-                    {
-                        foreach (InsideShipmentPackagePM insideShipmentPackagePM in shipmentPackagePM.InsideShipmentPackages)
-                        {
-                            itemLine.InsidePackagesLines.Add(GetInsidePackageLine(insideShipmentPackagePM));
-                        }
-                    }
-
-                    dataProvider.PackagesLines.Add(itemLine);
-                }
-            }
-        }
-        private void MapChildEntityTruckerAddress()
-        {
-            if (string.IsNullOrEmpty(childEntity.CarrierId))
-            {
-                return;
-            }
-            Address address = addressRepository.GetMainAddressByCardId(childEntity.CarrierId, tenant);
-            if (address == null)
-            {
-                return;
-            }
-            dataProvider.TruckerAddress = DataProviders.General.GetAddress(address);
-            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
-            {
-                dataProvider.TruckerAddress += Environment.NewLine;
-            }
-            if (!string.IsNullOrEmpty(address.PhoneNumber))
-            {
-                dataProvider.TruckerAddress += "Tel: " + address.PhoneNumber + " ";
-            }
-            if (!string.IsNullOrEmpty(address.FaxNumber))
-            {
-                dataProvider.TruckerAddress += "Fax: " + address.FaxNumber;
-            }
-        }
-
-        private void MapChildEntityPackageType(PackageLine itemLine, ShipmentPickUpDeliveryPackage item)
-        {
-            if (item.PackageTypeId != null)
-            {
-                PackageType packageType = (from d in commonContext.PackageTypes where d.Id == item.PackageTypeId select d).FirstOrDefault();
-
-                if (packageType != null)
-                {
-                    itemLine.ContainerSize = DataProviders.General.GetFieldString(packageType.ContainerSize);
-                    itemLine.PackageType = packageType.EnglishName != null ? packageType.EnglishName : "Package";
-                    itemLine.IsContainer = packageType.IsContainer;
-                }
-            }
-        }
-        private void MapChildEntityPackageHSCode(PackageLine itemLine, ShipmentPickUpDeliveryPackage item)
-        {
-            if (item.IsMultiHarmonize)
-            {
-                List<PickUpDeliveryPackageHarmonize> allHarmonizes = shipmentsContext.PickUpDeliveryPackageHarmonizes.Where(d => d.PackageId == item.Id && d.Tenant == tenant).ToList();
-
-                foreach (PickUpDeliveryPackageHarmonize itemHarmonize in allHarmonizes)
-                {
-                    if (string.IsNullOrEmpty(itemLine.HSCode))
-                    {
-                        itemLine.HSCode = itemHarmonize.Harmonize;
-                    }
-
-                    else
-                    {
-                        itemLine.HSCode += "," + itemHarmonize.Harmonize;
+                        pi.SetValue(deliveryNotedataprovider, "", null);
                     }
                 }
             }
 
-            else
-            {
-                itemLine.HSCode = item.Harmonize;
-            }
+            return deliveryNotedataprovider;
         }
-        private string GetEmptyContainer(string cardId)
-        {
-            string output = null;
-
-            if (!string.IsNullOrEmpty(cardId))
-            {
-                Card card = CardRepository.GetSingleCard(cardId, tenant, true);
-                if (card != null)
-                {
-                    output = card.EnglishName != null ? card.EnglishName : "";
-
-                    Address address = addressRepository.GetSingleAddressByCardIdAndTypeId(card.Id, "M", tenant);
-
-                    if (address != null)
-                    {
-                        if (address.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
-                        {
-                            output = card.LocalName;
-                        }
-
-                        output = output + Environment.NewLine + DataProviders.General.GetAddress(address);
-
-                        if (address.PhoneNumber != null)
-                        {
-                            output = output + Environment.NewLine + "Phone No. : " + address.PhoneNumber;
-                        }
-
-                        if (address.FaxNumber != null)
-                        {
-                            output = output + "   Fax No. : " + address.FaxNumber;
-                        }
-                    }
-                }
-            }
-
-            return output;
-        }
-        private InsidePackageLine GetInsidePackageLine(InsideShipmentPackagePM item)
-        {
-            InsidePackageLine itemLine = new InsidePackageLine()
-            {
-                Quantity = item.Quantity,
-                Volume = item.Volume,
-                VolumetricWeight = item.VolumetricWeight,
-                Weight = item.Weight,
-                Description = item.Description,
-                Make = item.Make,
-                Model = item.Model,
-                Year = item.Year,
-                Color = item.Color,
-                ChassisNumber = item.ChassisNumber,
-                RegistrationNumber = item.RegistrationNumber
-            };
-
-            if (!string.IsNullOrEmpty(item.PackageTypeId))
-            {
-                PackageType packageType = (from pa in commonContext.PackageTypes where pa.Id == item.PackageTypeId select pa).FirstOrDefault();
-                if (packageType != null)
-                {
-                    itemLine.PackageType = packageType.EnglishName;
-                }
-            }
-
-            if (item.Length != null && item.Width != null && item.Height != null)
-            {
-                itemLine.Dimensions = item.Length + "x" + item.Width + "x" + item.Height;
-            }
-
-            if (!string.IsNullOrEmpty(item.CountryId))
-            {
-                Country country = CountryRepository.GetSingleCountry(item.CountryId, tenant, true);
-                if (country != null)
-                {
-                    itemLine.CountryName = country.EnglishName;
-                }
-            }
-
-            return itemLine;
-        }
-        private string GetDimensions(ShipmentPickUpDeliveryPackage item)
-        {
-            string output = "";
-
-            if (item.Width != null && item.Height != null && item.Length != null)
-            {
-                output = item.Length + " x " + item.Width + " x " + item.Height + " " + shipment.DimensionsUnitCode;
-            }
-
-            return output;
-        }
-        private void MapShipmentCustomClearancePoint()
-        {
-            if (!string.IsNullOrEmpty(shipment.CustomClearancePointId))
-            {
-                this.MapCustomClearancePointAddress();
-                this.MapCustomClearancePointContact();
-            }
-        }
-        private void MapCustomClearancePointAddress()
-        {
-            if (!string.IsNullOrEmpty(shipment.CustomClearancePointAddressId))
-            {
-                Address address = addressRepository.GetSingleAddress(shipment.CustomClearancePointAddressId, tenant);
-                if (address != null)
-                {
-                    dataProvider.CustomsClearancePointFullAddress = DataProviders.General.GetAddress(address);
-
-                    if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
-                    {
-                        dataProvider.CustomsClearancePointFullAddress += Environment.NewLine;
-                    }
-
-                    if (!string.IsNullOrEmpty(address.PhoneNumber))
-                    {
-                        dataProvider.CustomsClearancePointFullAddress += "Tel: " + address.PhoneNumber + " ";
-                    }
-
-                    if (!string.IsNullOrEmpty(address.FaxNumber))
-                    {
-                        dataProvider.CustomsClearancePointFullAddress += "Fax: " + address.FaxNumber;
-                    }
-                }
-            }
-        }
-        private void MapCustomClearancePointContact()
-        {
-            if (!string.IsNullOrEmpty(shipment.CustomClearancePointContactId))
-            {
-                Contact contact = ContactRepository.GetSingleContact(shipment.CustomClearancePointContactId, tenant, true);
-                if (contact != null)
-                {
-                    dataProvider.CustomsClearancePointContactName = contact.EnglishName;
-                    dataProvider.CustomsClearancePointTelephoneNumber = contact.BusinessPhone;
-                    dataProvider.CustomsClearancePointContactEmail = contact.Email;
-                }
-            }
-        }
-
-        private void MapShipmentCustomsAgent()
-        {
-            dataProvider.ImportCustomsAgentFullDetails = GetCustomsAgentFullDetails(shipment.CustomAgentImportId,
-                                                                                    shipment.CustomAgentImportAddressId,
-                                                                                    shipment.CustomAgentImportContactId);
-            dataProvider.ExportCustomsAgentFullDetails = GetCustomsAgentFullDetails(shipment.CustomAgentExportId,
-                                                                                    shipment.CustomAgentExportAddressId,
-                                                                                    shipment.CustomAgentExportContactId);
-        }
-
-        private string GetCustomsAgentFullDetails(string agentId, string agentAdressId, string agentContactId)
-        {
-            string fullDetails = "";
-            if (string.IsNullOrEmpty(agentId))
-            {
-                return fullDetails;
-            }
-            Card agentCard = CardRepository.GetSingleCard(agentId, tenant, false);
-            if (agentCard == null)
-            {
-                return fullDetails;
-            }
-            fullDetails += Environment.NewLine + agentCard.EnglishName;
-            fullDetails += GetCardAddressDetails(agentAdressId) + Environment.NewLine;
-            fullDetails += GetCardContactDetails(agentContactId);
-            return fullDetails;
-        }
-
-        private string GetCardAddressDetails(string id)
-        {
-            string fullAddress = "";
-            if (string.IsNullOrEmpty(id))
-            {
-                return fullAddress;
-            }
-            Address address = addressRepository.GetSingleAddress(id, tenant);
-            if (address == null)
-            {
-                return fullAddress;
-            }
-            fullAddress = DataProviders.General.GetAddress(address);
-            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
-            {
-                fullAddress += Environment.NewLine;
-            }
-            fullAddress = !string.IsNullOrEmpty(address.PhoneNumber) ? fullAddress + "Tel: " + address.PhoneNumber + " " : fullAddress;
-            fullAddress = !string.IsNullOrEmpty(address.FaxNumber) ? fullAddress + "Fax: " + address.FaxNumber + " " : fullAddress;
-
-            return fullAddress;
-        }
-
-
-        private string GetCardContactDetails(string contactId)
-        {
-            string contactDetails = "";
-            if (string.IsNullOrEmpty(contactId))
-            {
-                return contactDetails;
-            }
-
-            Contact contact = ContactRepository.GetSingleContact(contactId, tenant, false);
-            if (contact == null)
-            {
-                return contactDetails;
-            }
-            return string.Join(",", new string[] { contact.EnglishName, contact.BusinessPhone, contact.Email }
-                         .Where(s => !string.IsNullOrEmpty(s)));
-        }
-
-        private void MapMasterShipmentNumber()
-        {
-            if (shipment.ShipmentLevelCode == "C")
-            {
-                dataProvider.MasterShipmentNumber = shipment.ShipmentNumber;
-            }
-
-            else if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
-            {
-                SetMasterShipmentNumberForConnectedHouse();
-            }
-        }
-
-        private void SetMasterShipmentNumberForConnectedHouse()
-        {
-            Shipment masterData = shipmentRepository.GetSingleShipment(shipment.MasterShipmentDataId, tenant);
-            if (masterData != null)
-            {
-                dataProvider.MasterShipmentNumber = masterData.ShipmentNumber;
-            }
-        }
-
-        private void MapShipmentType()
-        {
-            if (string.IsNullOrEmpty(shipment.ShipmentTypeId))
-                return;
-
-            ShipmentType shipmentType = this.shipmentTypeRepository.GetSingleShipmentType(shipment.ShipmentTypeId);
-
-            if (shipmentType == null)
-                return;
-
-            dataProvider.ShipmentType = shipmentType.Name;
-        }
-
     }
 }

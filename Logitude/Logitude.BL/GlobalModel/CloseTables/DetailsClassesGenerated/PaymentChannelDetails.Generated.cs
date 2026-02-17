@@ -34,13 +34,6 @@ namespace Logitude.BL.GlobalModel
                 SearchFields = "DI,Direct", 
                 Name = "Direct", 
 			});
-			 
-            all.Add(new PaymentChannelDetails()
-            {    
-                Name = "Chargify", 
-                SearchFields = "CH,Champ", 
-                Code = "CY", 
-			});
 			
             return all;
        }

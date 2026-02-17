@@ -18,12 +18,10 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'YearTransferComponent',
     templateUrl: './YearTransferComponent.html',
     providers: [EntityArgs],
@@ -36,7 +34,6 @@ export class YearTransferComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     
     private CurrentSession = SessionLocator.SelectedSession;
-    _CancelYearTransfer: boolean;
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
         this._JournalOpService = new JournalOpService();
@@ -46,14 +43,7 @@ export class YearTransferComponent extends BaseComponent {
         this._entityResourceService.getEntityResourceByTableName("JournalLine").subscribe((response: any) => { });
         this.CurrentSession.StopBusyIndicator();
     }
-    SetWindowArgs(arg: any) {
-        this._CancelYearTransfer = arg.CancelYearTransfer;
-        if (!this._CancelYearTransfer) {
-            this.myOperation = "Check_CreateQBatchTaskYearTransfer";
-        } else {
-            this.myOperation = "CheckCancelYear";
-        }
-    }
+
     // Properties
     private year;
     get Year() { return this.year; }
@@ -82,8 +72,6 @@ export class YearTransferComponent extends BaseComponent {
 
         }
     }
-    myOperation: string="";
-    lastYearTransferJournalPMId: string="";
     _JournalPM: JournalPM = null;
     OkButtonClicked() {
         
@@ -92,59 +80,15 @@ export class YearTransferComponent extends BaseComponent {
             return;
         }
         this.CurrentSession.StartBusyIndicatorCreating();
-        
         this._JournalOpService
-            .GetYearTransferJournal(this.year, this.myOperation, this.lastYearTransferJournalPMId)
+            .GetYearTransferJournal(this.year)
             .subscribe(
             (res: ServiceResponse) => {
-                
                 if (res.HasError) {
                     this.ValidationErrorsList = res.ErrorsArray;
                         
                 } else {
-                    switch (this.myOperation) {
-                        case"Check_CreateQBatchTaskYearTransfer":
-                            {
-                                let obj: any = res.Result;
-                                let BatchTaskYearTransferId = obj.BatchTaskYearTransferId;
-                                var winMessage = new MessageWindow()
-                                winMessage.Show("העברת השנה תבוצע בתהליך רקע ");
-                                winMessage.WindowClosed.subscribe(($event: any) => {
-                                    this.CancelButtonClicked();
-                                });
-                            }
-                            break;
-                        case "CheckCancelYear":
-                            {
-                                let obj: any = res.Result;
-                                let lastYearTransferJournalPMId = obj.lastYearTransferJournalPMId;
-                                let confirmWindow = new ConfirmWindow()
-                                //Are you sure you want to cancel the year transfer (YY)?   “האם אתה בטוח שברצונך לבטל את העברת השנה (YY)?”
-                                confirmWindow.Show("האם אתה בטוח שברצונך לבטל את העברת השנה (" + this.year +")");
-                                confirmWindow.WindowClosed.subscribe((event: any) => {
-                                    if (confirmWindow.Yes) {
-                                        this.myOperation = "DoCancelYear"
-                                        this.lastYearTransferJournalPMId = lastYearTransferJournalPMId;
-                                        this.OkButtonClicked()
-                                    }
-                                    else if (confirmWindow.No) {
-                                        this.CancelButtonClicked();
-                                    }
-                                });
-                            }
-                            break;
-                        case "DoCancelYear":
-                            {
-                                this._JournalPM = res.Result;
-                            }
-                            break;
-                        default:
-                            {
-
-                            }
-                            break;
-                    }
-                    
+                    this._JournalPM = res.Result;
                 }
             },
             (err) => {

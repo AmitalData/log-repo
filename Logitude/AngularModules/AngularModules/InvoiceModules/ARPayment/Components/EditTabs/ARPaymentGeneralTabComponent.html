@@ -122,7 +122,7 @@
                                 </tr>
 
                                 <!-- SelloPago -->
-                                <tr class="FormFieldRow" style="height:70px;">
+                                <tr class="FormFieldRow">
                                     <td style="width: 160px;">
                                         <LogLabel [ObjectFieldName]="'SelloPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -136,34 +136,6 @@
                                     </td>
 
                                 </tr>
-
-                                <tr style="height:22px;" *ngIf="DisplayFechaPago">
-                                    <td style="width: 160px;">
-                                        <LogLabel [ObjectFieldName]="'FechaPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'FechaPago'" [SelectedDateValue]="FechaPago" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'FechaPago'" [SelectedDateValue]="FechaPago" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-
 
 
                                 <tr>

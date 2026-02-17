@@ -9,7 +9,7 @@
                             <div class="ShortTitleControl" style="background: rgba(255, 0, 0, 0.1);display: flex;">
                                 <span>{{'ARInvoice.S.ShortTitle' | TextCodeTranslationPipe}}:</span>
                                 <span style="margin-left: 5px;">{{EntityNumber}}</span>
-                                <span class="TextTrimming" style="max-width: 200px;">{{showLocal ? EntityPM.BillToLocalName : EntityPM.BillToName}}</span>
+                                <span class="TextTrimming" style="max-width: 200px;">{{EntityPM.BillToName}}</span>
                             </div>
                         </td>
 
@@ -71,7 +71,7 @@
 
                                         <td style="vertical-align:top;">
                                             <div class="RightBorderRadius">
-                                                <span style="font-size: 12px; color: #282E30; padding-right: 5px;">{{'ARInvoice.S.ShortTitle.ByInvoice' | TextCodeTranslationPipe}}</span>
+                                                <span style="font-size: 12px; color: #282E30;">{{'ARInvoice.S.ShortTitle.ByInvoice' | TextCodeTranslationPipe}}</span>
                                                 <Hyperlink (click)="ViewEntityClicked(EntityPM.AutoCreditByARInvoiceId)">{{EntityPM.AutoCreditByARInvoiceNumber}}</Hyperlink>
                                             </div>
                                         </td>
@@ -91,7 +91,7 @@
 
                                         <td style="vertical-align:top;">
                                             <div class="RightBorderRadius">
-                                                <span style="font-size: 12px; color: #282E30; padding-right: 5px;">{{'ARInvoice.S.ShortTitle.ByInvoiceAutoCredited' | TextCodeTranslationPipe}}</span>
+                                                <span style="font-size: 12px; color: #282E30;">{{'ARInvoice.S.ShortTitle.ByInvoiceAutoCredited' | TextCodeTranslationPipe}}</span>
                                                 <Hyperlink (click)="ViewEntityClicked(EntityPM.AutoCreditedByARInvoiceId)">{{EntityPM.AutoCreditedByARInvoiceNumber}}</Hyperlink>
                                             </div>
                                         </td>
@@ -108,7 +108,7 @@
                         </td>
 
                         <!-- SATTransferStatusName -->
-                        <td style="padding-left: 5px;" *ngIf="DisplaySATSettings == true && EntityPM.StatusCode != 'VD'">
+                        <td style="padding-left: 5px;" *ngIf="DisplaySATSettings == true">
                             <div class="ShortTitleControl" style="background: #6E7172;">
                                 <span style="color: white;">{{EntityPM.SATTransferStatusName}}</span>
                             </div>

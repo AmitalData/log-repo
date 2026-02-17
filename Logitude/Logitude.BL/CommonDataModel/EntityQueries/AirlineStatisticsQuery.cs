@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.Helpers;
 using Simplog.Data.Helpers;
 using Logitude.BL.DataContracts;
@@ -18,7 +18,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AirlineStatisticsRepository repository;
 
-  
+        public AirlineStatisticsQuery()
+        {
+            repository = new AirlineStatisticsRepository(); 
+        }
 
         public AirlineStatisticsQuery(int tenant)
         {

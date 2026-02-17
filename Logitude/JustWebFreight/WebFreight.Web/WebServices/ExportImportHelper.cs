@@ -5,10 +5,10 @@ using Logitude.SystemLogs;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -117,7 +117,6 @@ namespace WebFreight.Web.WebServices
                                         RoleId = role.Id,
                                         Tenant = 0,
                                         FeatureAccessLevelCode = featureAccessLevelCode,
-                                        FeatureUniqeCode = feature.FeatureUniqeCode
                                     };
 
                                     rolefeaturerep.Add(rolefeature);
@@ -158,13 +157,7 @@ namespace WebFreight.Web.WebServices
                     if (allUpdatedRolesIds.Count > 0)
                     {
                         int tenant = 0;
-                        string email = "system@tenant0.com";
-
-                        if(HttpContext.Current != null)
-                        {
-                            email = HttpContext.Current.User.Identity.Name;
-                        }
-                        
+                        string email = HttpContext.Current.User.Identity.Name;
                         string loggedUserId = this.GetLoggedUserId(email, tenant);
 
                         FeatureChangeRepository myRepository = new FeatureChangeRepository(tenant);
@@ -299,7 +292,6 @@ namespace WebFreight.Web.WebServices
                                         FeatureId = feature.Id,
                                         PackageCode = packagecode,
                                         Tenant = 0,
-                                        FeatureUniqeCode = feature.FeatureUniqeCode
                                     };
 
                                     packfeaturerep.Add(packagefeature);

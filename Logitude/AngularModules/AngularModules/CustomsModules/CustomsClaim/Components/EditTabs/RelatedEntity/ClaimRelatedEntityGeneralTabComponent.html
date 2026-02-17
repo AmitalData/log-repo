@@ -158,8 +158,7 @@
                                                         <!-- PaymentType -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesAmount.F.PaymentTypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'160'" [Alignment]="'right'" [binding]="'PaymentTypeCode'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.PaymentTypeName}}</span>
                                                                 </div>
@@ -175,14 +174,12 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Amount -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesAmount.F.Amount' | TextCodeTranslationPipe"
                                                                     [width]="'80'" [Alignment]="'right'" [binding]="'Amount'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.Amount  | NumbersPipe:'n0'}}</span>
                                                                 </div>
@@ -193,18 +190,15 @@
 
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeletePaymentAmountCommand(item)"
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>

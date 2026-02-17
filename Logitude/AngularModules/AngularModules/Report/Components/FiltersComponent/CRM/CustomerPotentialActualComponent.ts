@@ -6,7 +6,7 @@ import {ReportFliter} from '../../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerPotentialActualComponent.html',
 })
 

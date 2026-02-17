@@ -19,7 +19,7 @@ import {ConversationHeaderParticipantExtendedPMService} from '../Services/Extend
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'NewSocialMessageComponent',
     templateUrl: './NewSocialMessageComponent.html',
 
@@ -141,7 +141,7 @@ export class NewSocialMessageComponent implements OnInit {
         this.NewConversationHeaderPM.ObjectTableId = this.ObjectTableId;
         this.NewConversationHeaderPM.EntityDescription = this.EntityDescription;
 
-        this.conversationHeaderPMService.insert(this.NewConversationHeaderPM).subscribe((res:any) => {
+        this.conversationHeaderPMService.insert(this.NewConversationHeaderPM).subscribe(res => {
             var pmResponse: ServiceResponse = res;
 
             if (!pmResponse.HasError) {
@@ -156,7 +156,7 @@ export class NewSocialMessageComponent implements OnInit {
                 conversationHeaderMessagePM.MessageBody = this.MessageBody;
                 conversationHeaderMessagePM.UserName = SessionLocator.LoggedUserPM.EnglishName;
                 conversationHeaderMessagePM.RegardingEntity = this.RegardingEntity;
-                this.conversationHeaderMessagePMService.insert(conversationHeaderMessagePM).subscribe((res:any) => {
+                this.conversationHeaderMessagePMService.insert(conversationHeaderMessagePM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                   
 
@@ -207,7 +207,7 @@ export class NewSocialMessageComponent implements OnInit {
         }
 
 
-        this.conversationHeaderParticipantExtendedPMService.SaveConversationHeaderParticipantPMLists(this.ConversationHeaderParticipantPMLists).subscribe((res:any) => {
+        this.conversationHeaderParticipantExtendedPMService.SaveConversationHeaderParticipantPMLists(this.ConversationHeaderParticipantPMLists).subscribe(res => {
             var pmResponse: ServiceResponse = res;
 
             this.IsSaveConversationHeaderParticipantComplete = true;

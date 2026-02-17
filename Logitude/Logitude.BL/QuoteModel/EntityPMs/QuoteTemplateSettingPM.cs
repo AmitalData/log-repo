@@ -1,5 +1,4 @@
-﻿using Logitude.BL.QuoteModel.DataContracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,11 +24,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool ShowMeasurementPackages { get; set; }
         public bool ShowMeasurementContainers { get; set; }
         public bool ShowFixedPriceContainers { get; set; }
-        public bool ShowUnitsContainers { get; set; }
-        public bool ShowSaleIncludingVATContainers { get; set; }
-        public bool ShowSaleIncludingVATPackages { get; set; }
-        public bool ShowLocalSaleIncludingVATContainers { get; set; }
-        public bool ShowLocalSaleIncludingVATPackages { get; set; }
+
         public bool ShowChargeDescriptionPackages { get; set; }
         public bool ShowChargeDescriptionContainers { get; set; }
         public bool ShowUnitsPackages { get; set; }
@@ -259,42 +254,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public bool ShowSaleMaxMinAmountPackages { get; set; }
         public bool ShowSaleMaxMinAmountContainers { get; set; }
-
-
-        public bool ShowHeaderLabelsPackages { get; set; }
-        public bool ShowHeaderLabelsContainers { get; set; }
-
-
-        public int SpaceLinesBeforeContainers { get; set; }
-        public int SpaceLinesBeforePackages { get; set; }
-        public int SpaceLinesBeforeQuoteHeaders { get; set; }
-        public int SpaceLinesBeforeQuoteDetails { get; set; }
-        public int SpaceLinesBeforeHeaders { get; set; }
-        public int SpaceLinesBeforeFooters { get; set; }
-        public int SpaceLinesBeforePerContainers { get; set; }
-
-
-        public int QuoteTemplatePDFMarginTop { get; set; }
-        public int QuoteTemplatePDFMarginBottom { get; set; }
-
-
-        public bool ShowIncludedChargesPackages { get; set; }
-        public bool ShowIncludedChargesContainers { get; set; }
-        public bool ShowIncludedChargesPerContainers { get; set; }
-
-
-        public bool ShowVATTypePackages { get; set; }
-        public bool ShowVATTypeContainers { get; set; }
-        public bool ShowVATPercentagePackages { get; set; }
-        public bool ShowVATPercentageContainers { get; set; }
-
-        public bool HidePageNumber { get; set; }
-
-        public string PageNumberingTextDesignId { get; set; }
-        public bool ShowRegionalTAXPackages { get; set; }
-        public bool ShowRegionalTAXContainers { get; set; }
-        public string XMLData { get; set; }
-        public QuoteTemplateSettingData QuoteTemplateSettingData { get; set; }
-
     }
 }

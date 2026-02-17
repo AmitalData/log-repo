@@ -1,365 +1,253 @@
-import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
-import { DeclarationPM } from '../EntityPMs/DeclarationPM';
-import { DeclarationValidator } from '../Validators/DeclarationValidator';
-import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
-import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { AppTool, DateTool } from '../../Infrastructure/Tools';
-import { CourierMasterValidator } from '../../Customs/Validators/CourierMasterValidator';
-import { CustomsRequestsSheetPM } from '../../Customs/EntityPMs/CustomsRequestsSheetPM';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
-import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
-import { AmendmentMessageCacheService } from 'CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/AmendmentMessageCacheService';
 
-declare var window: any;
+import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
+import {DeclarationPM} from '../EntityPMs/DeclarationPM';
+import {DeclarationValidator} from '../Validators/DeclarationValidator'
+import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
+import {Observable}     from 'rxjs/Rx';
+import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
+import {Http, Headers} from '@angular/http';
+import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
+import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../Infrastructure/Utilities/events/MenuButtonsEvents';
+import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import {DeclarationWebService} from '../Services/WebServices/DeclarationWebService';
+import { AppTool, ArrayTool, DateTool} from '../../Infrastructure/Tools';
+
 
 export class DeclarationDisplayOnlyChecks {
 
     private entityPM: DeclarationPM;
     private publishEventOnFinish: boolean;
     private viewModel: string;
-    private http: HttpClient;
+    private http: Http;
     private apiUrl: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    private declarationWebService: DeclarationWebService;
-    private amendmentMessageCacheService: AmendmentMessageCacheService;
-
     constructor() {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
-        this.http = ServiceHelper.HttpClient;
-        this.declarationWebService = new DeclarationWebService();
-        this.amendmentMessageCacheService = new AmendmentMessageCacheService(this.declarationWebService);
+        this.http = ServiceHelper.Http;
     }
-
     private timerToken: any;
-    private _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
+
 
     public DeclarationViewDisplayOnlyChecks(entityPM: DeclarationPM) {
-        return defer(async () => {
-            return await this.runDisplayOnlyChecks(entityPM);
-        });
-    }
-
-    private async runDisplayOnlyChecks(entityPM: DeclarationPM): Promise<ServiceResponse> {
         var editComponentNeedsRefresh: boolean = null;
-
         if (this.CurrentSession.CurrentEditComponent) {
             editComponentNeedsRefresh = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh;
         }
-
+        //if (!editComponentNeedsRefresh) {
         this.entityPM = entityPM;
         var declarationValidator: DeclarationValidator = new DeclarationValidator();
         declarationValidator.SetEntityPM(entityPM);
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-
         if (this.entityPM.IsCancelled) {
-            var message = TextCodeTranslator.Translate("Customs.Declaration.O.Cancelled");
-            clearTimeout(this.timerToken);
+            return Observable.defer(() => {
+                // the declaration is cancelled 
 
-            if (this.CurrentSession.CurrentEditComponent) {
-                this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
-            }
+                var message = TextCodeTranslator.Translate("Customs.Declaration.O.Cancelled");
+                //for menu buttons
+                clearTimeout(this.timerToken);
+                //this.timerToken = setTimeout(() => {
+                //    var args: MenuButtonsStateChangedEventArgs = new MenuButtonsStateChangedEventArgs();
+                //    args.MenuButtonsStates = {};
+                //    args.MenuButtonsStates["SendDeclaration"] = true;
+                //    MenuButtonsEvents.MenuButtonsStateChanged.emit(args);
+                //}, 100);
 
-            serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
-            return serviceResponse;
+                //save button
+                if (this.CurrentSession.CurrentEditComponent) {
+                    this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                }
+                serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
+                return Observable.of(serviceResponse);
+            });
         }
 
-        if (this.entityPM.CancelRequestStatusCode == "2") {
-            var message = TextCodeTranslator.Translate("Customs.Declaration.O.CancelRequestSent");
-            serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
-            return serviceResponse;
-        }
 
-        let amendmentMessage = (this.entityPM?.AmendmentMessage || "").trim();
-        let amendmentDisplayOnly = !!this.entityPM?.IsAmendmentDisplayOnly;
-
-        const am = this.entityPM?.Id
-            ? await this.amendmentMessageCacheService.Get(this.entityPM.Id)
-            : null;
-
-        if (am && (am.AmendmentMessage || "").trim()) {
-            amendmentMessage = (am.AmendmentMessage || "").trim();
-            amendmentDisplayOnly = !!am.IsAmendmentDisplayOnly;
-        }
-
-        if (amendmentMessage) {
-            const errorMessage: string = amendmentMessage;
-
-            SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
-            SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
-            editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
-            SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
-
-            serviceResponse.Result = new DisplayOnlyCheckResult(amendmentDisplayOnly, errorMessage);
-            return serviceResponse;
-        }
-
+        //other declaration checks
         declarationValidator.DeclarationViewDisplayOnlyChecks();
         if (declarationValidator.ValidationErrorMessageCodes.length > 0) {
-            var message = TextCodeTranslator.Translate(declarationValidator.ValidationErrorMessageCodes[0]);
-            serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
-
-            if (this.CurrentSession.CurrentEditComponent) {
-                this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
-            }
-
-            return serviceResponse;
+            return Observable.defer(() => {
+                var message = TextCodeTranslator.Translate(declarationValidator.ValidationErrorMessageCodes[0]);
+                serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
+                //for menu buttons
+                //this.timerToken = setTimeout(() => {
+                //    var args: MenuButtonsStateChangedEventArgs = new MenuButtonsStateChangedEventArgs();
+                //    args.MenuButtonsStates = {};
+                //    args.MenuButtonsStates["SendDeclaration"] = true;
+                //    MenuButtonsEvents.MenuButtonsStateChanged.emit(args);
+                //}, 100);
+                //save button
+                if (this.CurrentSession.CurrentEditComponent) {
+                    this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                }
+                return Observable.of(serviceResponse);
+            });
         }
-
         if (editComponentNeedsRefresh && this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage != null) {
-            var text = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage;
-            serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
-            return serviceResponse;
+            return Observable.defer(() => {
+                var text = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage;
+                serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
+                return Observable.of(serviceResponse);
+            });
+            
         }
 
-        if (this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage != null && this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest == true) {
-            var text = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage;
-            serviceResponse.Result = new DisplayOnlyCheckResult(false, text);
-            return serviceResponse;
-        }
+        // Request sheets in progress check
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode= 2750' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + entityPM.CustomFileNo + '&displayOnlyMode= true', { headers: authHeader })
+                .map(response => {
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    var requestSheets = response.json();
+                    if ((requestSheets == null || requestSheets.length == 0) && !editComponentNeedsRefresh) {
+                        if (this.CurrentSession.CurrentEditComponent) {
+                            this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = false;
+                            this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = false;
 
-        if (this.entityPM.IsCourierDeclaration) {
-            this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.CourierMasterId).subscribe((response: any) => {
-                var displayOnlyCheckResult = response.Result;
-                if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                    let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
-                    if (customsRequestsSheetPM != null) {
-                        var errorMessage: string = "קיימת בקשה לשינוי אתר איחסון ברקע ";
-                        SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
-                        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
-                        editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
-                        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
-                        serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                        }
+                        serviceResponse.Result = new DisplayOnlyCheckResult(false, "");
                         return serviceResponse;
                     }
-                }
-            });
-        }
+                    else if ((requestSheets[0].InterfaceTypeCode == null || requestSheets[0].InterfaceTypeCode == undefined) && !editComponentNeedsRefresh) {//DUMMY From ITZIK
 
-        if (this.entityPM.IsCourierDeclaration) {
-            this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCADPE", this.entityPM.CourierMasterId).subscribe((response: any) => {
-                var displayOnlyCheckResult = response.Result;
-                if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                    let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCADPE")[0];
-                    if (customsRequestsSheetPM != null) {
-                        var errorMessage: string = "קיימת בקשה לשינוי קוד עיכוב ברקע ";
-                        SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
-                        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
-                        editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
-                        SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
-                        serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                        if (this.CurrentSession.CurrentEditComponent) {
+                            this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = false;
+                            this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = false;
+                        }
+                        serviceResponse.Result = new DisplayOnlyCheckResult(false, "");
                         return serviceResponse;
+
+                        //if (this.entityPM.ConcurrencyGUID != requestSheets[0].MainEntityConcurrencyGUID) {
+                        //    //this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe
+                        //    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+
+                        //}
                     }
-                }
-            });
-        }
+                  
+                    else {
 
-        this.CheckIfRequestInProgressByDecID(this.entityPM.Tenant, "DCAMU", this.entityPM.Id).subscribe((response: any) => {
-            var displayOnlyCheckResult = response.Result;
-            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "DCAMU")[0];
-                if (customsRequestsSheetPM != null) {
-
-                    var errorMessage: string = "קיימת בקשה לעדכון קוד תהליך/הנחה פטור ";
-                    SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
-                    SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
-                    editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
-                    SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
-                    serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
-
-                    return serviceResponse;
-                }
-            }
-        });
-
-        return await this.http.get(
-            this.apiUrl + '/GetRequestInProgress/?' +
-            'tenant=' + entityPM.Tenant +
-            '&interfaceTypeCode= 2750' +
-            '&objectTableId1=' + "" +
-            '&entityId1=' + "" +
-            '&objectTableId2=' + "" +
-            '&entityId2=' + "" +
-            '&customFileNo=' + entityPM.CustomFileNo +
-            '&displayOnlyMode= true',
-            ServiceHelper.GetHttpHeaders()
-        ).pipe(
-            map(response => {
-
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                var requestSheets: any = response;
-
-                if ((requestSheets == null || requestSheets.length == 0) || requestSheets[0].InterfaceTypeCode == null
-                    && this.entityPM?.ErrosXml?.includes('Exception')) {
-                    serviceResponse.Result = new DisplayOnlyCheckResult(false, "התקבלה הודעת שגיאה במסך תשובה לתיק");
-                    this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = serviceResponse.Result.DisplayOnlyMessage;
-                    this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
-                    return serviceResponse;
-                }
-
-                if ((requestSheets == null || requestSheets.length == 0) && !editComponentNeedsRefresh) {
-                    if (this.CurrentSession.CurrentEditComponent) {
-                        this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = false;
-                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = false;
-                    }
-
-                    serviceResponse.Result = new DisplayOnlyCheckResult(false, "");
-                    return serviceResponse;
-                }
-                else if ((requestSheets[0].InterfaceTypeCode == null || requestSheets[0].InterfaceTypeCode == undefined) && !editComponentNeedsRefresh) {
-
-                    if (this.CurrentSession.CurrentEditComponent) {
-                        this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = false;
-                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = false;
-                    }
-
-                    serviceResponse.Result = new DisplayOnlyCheckResult(false, "");
-                    return serviceResponse;
-                }
-
-                else {
-
-                    if (this.CurrentSession.CurrentEditComponent) {
-                        this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
-                        if (this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest) {
-                            this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
-                            editComponentNeedsRefresh = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh;
+                        if (this.CurrentSession.CurrentEditComponent) {
+                            this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                            if (this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest) {
+                                this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
+                                editComponentNeedsRefresh = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh;
+                            }
                         }
-                    }
-
-                    let returnDefualt = () => {
-                        var RequestInProgressInterfaceTypeName = requestSheets[0].InterfaceTypeName;
-                        var text = TextCodeTranslator.Translate("Customs.General.RequestInProgress");
-                        text = text.replace('{0}', RequestInProgressInterfaceTypeName);
-                        if (editComponentNeedsRefresh == true) {
-                            this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = text;
-                        }
-
-                        if (this.CurrentSession.CurrentEditComponent.SelectedTab.Code == "DCCD" && text.includes('OCR')) {
-                            serviceResponse.Result = new DisplayOnlyCheckResult(false, "");
-                            return serviceResponse;
-                        }
-                        else {
-                            serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
-                            return serviceResponse;
-                        }
-                    };
-
-                    if (requestSheets[0].InterfaceTypeCode == "2755" && requestSheets[0].FutureSendDateTime) {
-                        var myFutureSendDateTime: Date;
-                        myFutureSendDateTime = new Date(requestSheets[0].FutureSendDateTime);
-
-                        if (myFutureSendDateTime.valueOf() > Date.now().valueOf()) {
-
-                            var datetimeParts = DateTool.GetDateParts(myFutureSendDateTime);
-                            var stringOfYear = AppTool.PadLeft("" + datetimeParts.Year, 4, '0');
-                            var stringOfMonth = AppTool.PadLeft("" + datetimeParts.Month, 2, '0');
-                            var stringOfDay = AppTool.PadLeft("" + datetimeParts.Day, 2, '0');
-                            var stringOfHours = AppTool.PadLeft("" + datetimeParts.Hours, 2, '0');
-                            var stringOfMinutes = AppTool.PadLeft("" + datetimeParts.Minutes, 2, '0');
-                            var stringDatetime = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay + " " + stringOfHours + ":" + stringOfMinutes + "";
-
-                            let text = ` הוגדרה בקשה מתוזמנת לתאריך ${stringDatetime} - לא ניתן להמשיך עד לסיום טיפול או ביטול הבקשה`;
-
+                        let returnDefualt = () => {
+                            var RequestInProgressInterfaceTypeName = requestSheets[0].InterfaceTypeName;
+                            var text = TextCodeTranslator.Translate("Customs.General.RequestInProgress");
+                            text = text.replace('{0}', RequestInProgressInterfaceTypeName);
                             if (editComponentNeedsRefresh == true) {
                                 this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = text;
                             }
                             serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
-
                             return serviceResponse;
+                        };
+                        if (requestSheets[0].InterfaceTypeCode == "2755" && requestSheets[0].FutureSendDateTime) {
+                            var myFutureSendDateTime: Date;
+                            myFutureSendDateTime = new Date(requestSheets[0].FutureSendDateTime);
+
+                            if (myFutureSendDateTime.valueOf() > Date.now().valueOf()) {
+
+                                var datetimeParts = DateTool.GetDateParts(myFutureSendDateTime);
+                                var stringOfYear = AppTool.PadLeft("" + datetimeParts.Year, 4, '0');
+                                var stringOfMonth = AppTool.PadLeft("" + datetimeParts.Month, 2, '0');
+                                var stringOfDay = AppTool.PadLeft("" + datetimeParts.Day, 2, '0');
+                                var stringOfHours = AppTool.PadLeft("" + datetimeParts.Hours, 2, '0');
+                                var stringOfHours12 = AppTool.PadLeft("" + datetimeParts.Hours12, 2, '0');
+                                var stringOfMinutes = AppTool.PadLeft("" + datetimeParts.Minutes, 2, '0');
+                                var stringOfSeconds = AppTool.PadLeft("" + datetimeParts.Seconds, 2, '0');
+                                var stringOfMilliseconds = AppTool.PadLeft("" + datetimeParts.Milliseconds, 3, '0');
+                                var stringDatetime = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay + " " + stringOfHours + ":" + stringOfMinutes + "";
+
+                                 //`לתצוגה בלבד - הוגדרה בקשה מתוזמנת לתאריך ${paymentPM.FuturePaymentDateTime}`;
+                                    //`לתצוגה בלבד - הוגדרה בקשה מתוזמנת לתאריך ${requestSheets[0].FutureSendDateTime} - לא ניתן להמשיך עד לסיום טיפול או ביטול הבקשה`;
+
+                                let text = ` הוגדרה בקשה מתוזמנת לתאריך ${stringDatetime} - לא ניתן להמשיך עד לסיום טיפול או ביטול הבקשה`;
+
+                                if (editComponentNeedsRefresh == true) {
+                                    this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = text;
+                                }
+                                serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
+                                return serviceResponse;
+                            }
+
+                            return returnDefualt();
+
+
+                        } else {
+                            return returnDefualt();
                         }
 
-                        return returnDefualt();
-
-                    } else {
-                        if (requestSheets[0].InterfaceTypeCode == "DCAUAC") {
-                            var errorMessage: string = "קיימת בקשה לעדכון פטור 92 גורף ";
-                            SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
-                            SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
-                            editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
-                            SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
-                            serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
-
-                            return serviceResponse;
-                        }
-                        return returnDefualt();
                     }
+                    //return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        }
 
-                }
-            }),
-            catchError(ServiceHelper.HandleServiceError)
-        ).toPromise();
+        );
+        //}
     }
+
 
     GetRequestByInterfaceTypeCode(entityPM: DeclarationPM) {
 
 
-
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-
-            return this.http.get(this.apiUrl + '/GetRequestByInterfaceTypeCode/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode=2755' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&customFileNo=' + entityPM.CustomFileNo, ServiceHelper.GetHttpHeaders())
-                .pipe(map(response => {
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response;
-                    serviceResponse.Result = requestSheets;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+           
+            return this.http.get(this.apiUrl + '/GetRequestByInterfaceTypeCode/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode=2755' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&customFileNo=' + entityPM.CustomFileNo , { headers: authHeader })
+                    .map(response => {
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        var requestSheets = response.json();
+                        serviceResponse.Result = requestSheets;
+                        return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetAnyRequest(interfaceTypeCode: string, customFileNo: string, tenant: number) {
-
-        return defer(() => {
-            return this.http.get(this.apiUrl + '/GetAnyRequest/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&customFileNo=' + customFileNo, ServiceHelper.GetHttpHeaders())
-                .pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this.http.get(this.apiUrl + '/GetAnyRequest/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode  +'&customFileNo=' + customFileNo , { headers: authHeader })
+                .map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response;
+                    var requestSheets = response.json();
                     serviceResponse.Result = requestSheets;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
     CheckIfRequestInProgress(interfaceTypeCode: string, customFileNo: string, tenant: number, displayOnlyMode: boolean = true) {
 
-        return defer(() => {
-            return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo + '&displayOnlyMode=' + displayOnlyMode, ServiceHelper.GetHttpHeaders())
-                .pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo + '&displayOnlyMode=' + displayOnlyMode, { headers: authHeader })
+                .map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response;
+                    var requestSheets = response.json();
                     serviceResponse.Result = requestSheets;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     CheckIfGeneralRequestInProgress(interfaceTypeCode: string, customFileNo: string, tenant: number) {
-
-        return defer(() => {
-            return this.http.get(this.apiUrl + '/GetGeneralRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo, ServiceHelper.GetHttpHeaders())
-                .pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this.http.get(this.apiUrl + '/GetGeneralRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo , { headers: authHeader })
+                .map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response;
+                    var requestSheets = response.json();
                     serviceResponse.Result = requestSheets;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    CheckIfRequestInProgressByDecID(tenant: number, interfaceTypeCode: string, decId: string, displayOnlyMode: boolean = true) {
-
-        var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
-        return defer(() => {
-            return ServiceHelper.HttpClient.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + objecttable.Id + '&entityId1=' + decId + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "" + '&displayOnlyMode=' + displayOnlyMode, ServiceHelper.GetHttpHeaders())
-                .pipe(map(response => {
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response;
-                    serviceResponse.Result = requestSheets;
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
 }

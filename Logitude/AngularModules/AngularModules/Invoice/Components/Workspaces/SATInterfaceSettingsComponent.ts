@@ -11,14 +11,11 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'SATInterfaceSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './SATInterfaceSettingsComponent.html',
 })
 
 export class SATInterfaceSettingsComponent {
-  public ActivationDate: any;
-
-
     private _entityResourceService: EntityResourceService;
     private sATInterfaceSettingPMService: SATInterfaceSettingPMService;
     public IsResourcesReady: boolean = true;
@@ -28,22 +25,20 @@ export class SATInterfaceSettingsComponent {
     //public SATFolderName = "FromLogitude\SAT";
     IsDropboxConnected: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsCartaPorteSettingsEnabled: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         this._entityResourceService = new EntityResourceService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
+
         //entityResourceService.getEntityResourceByTableName("SATInterfaceSetting").subscribe(res1 => {
             this.LoadData();
         //});
-
-
-        this.IsCartaPorteSettingsEnabled = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "CPT");
     }
 
     private LoadData() {
-        this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe((response:any) => {
+        this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe(response => {
             if (!response.HasError) {
                 this.EntityPM = response.Result;
+               
             }
 
             this.IsResourcesReady = true;
@@ -59,7 +54,7 @@ export class SATInterfaceSettingsComponent {
             this.ValidationErrorsList.push("SAT Interface Code field is required!");
         }
 
-        if ((this.EntityPM.SATInterfaceCode === "PROF" || this.EntityPM.SATInterfaceCode == "PROF33" || this.EntityPM.SATInterfaceCode == "PROF40" ) && AppTool.IsNullOrEmpty(this.EntityPM.Token)) {
+        if ((this.EntityPM.SATInterfaceCode === "PROF" || this.EntityPM.SATInterfaceCode == "PROF33") && AppTool.IsNullOrEmpty(this.EntityPM.Token)) {
             this.ValidationErrorsList.push("Token field is required!");
         }
         if (this.ValidationErrorsList.length > 0)
@@ -71,14 +66,14 @@ export class SATInterfaceSettingsComponent {
         }
         else {
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-            this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe((response:any) => {
+            this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe(response => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (response.HasError) {
                     this.ValidationErrorsList = response.ErrorsArray;
                 }
                 else {
 
-                    this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe((response:any) => {
+                    this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe(response => {
                         if (!response.HasError) {
                             SessionLocator.SATInterfaceSettings  = response.Result;
 
@@ -106,12 +101,12 @@ export class SATInterfaceSettingsComponent {
     CheckDropBoxAndSave() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetDropBoxAccessTocken(SessionLocator.Tenant).subscribe((myResult:any) => {
+        myService.GetDropBoxAccessTocken(SessionLocator.Tenant).subscribe((myResult) => {
             if (myResult.HasError == false && !AppTool.IsNullOrEmpty(myResult.Result.DropBoxAccessToken)) {
                 this.IsDropboxConnected = true;
             }
             if (this.IsDropboxConnected) {
-                this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe((response:any) => {
+                this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe(response => {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (response.HasError) {
                         this.ValidationErrorsList = response.ErrorsArray;

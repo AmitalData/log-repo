@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -167,30 +167,6 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string ChargeableWeightUnitCode { get; set; }
         [Column("TotalVolumetricWeight")]
 	    public decimal TotalVolumetricWeight { get; set; }
-        [Column("LastStatusUpdateDate")]
-	    public DateTime? LastStatusUpdateDate { get; set; }
-        [Column("ConnectedTo")]
-	    public string ConnectedTo { get; set; }
-        [Column("Ratio")]
-	    public double? Ratio { get; set; }
-        [Column("ToTypeCode")]
-	    public string ToTypeCode { get; set; }
-        [Column("FromTypeCode")]
-	    public string FromTypeCode { get; set; }
-        [ForeignKey("FromCountry")]
-        [Column("FromCountryId")]
-	    public string FromCountryId { get; set; }
-	      
-        public virtual Country FromCountry { get; set; }
-        [ForeignKey("ToCountry")]
-        [Column("ToCountryId")]
-	    public string ToCountryId { get; set; }
-	      
-        public virtual Country ToCountry { get; set; }
-        [Column("MasterShipmentNumber")]
-	    public string MasterShipmentNumber { get; set; }
-        [Column("ConnectedToReferenceNumber")]
-	    public string ConnectedToReferenceNumber { get; set; }
     }
 }
 	 

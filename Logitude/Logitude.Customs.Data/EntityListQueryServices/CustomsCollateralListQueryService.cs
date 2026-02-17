@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -13,85 +13,51 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Data.Utils;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{
+{ 
 
     public partial class CustomsCollateralListQueryService
     {
-        private IQueryable<CustomsCollateralList> GetIqueryableList(IQueryable<CustomsCollateral> iQueryable)
+	    private IQueryable<CustomsCollateralList> GetIqueryableList(IQueryable<CustomsCollateral> iQueryable)
         {
-            CustomsCollateralsAnswerListQueryService customsCollateralsAnswerListQueryService = new CustomsCollateralsAnswerListQueryService(context);
-
-
             IQueryable<CustomsCollateralList> query = (from a in iQueryable.Include("CollateralRequestStatus").Include("EntityTypeLookup").Include("RequestedCollateralType")
                                                        select new CustomsCollateralList()
-                                                       {
-                                                           DeclarationId = a.DeclarationId,
-                                                           CollateralRequestNumber = a.CollateralRequestNumber,
-                                                           CollateralRequestStatusCode = a.CollateralRequestStatusCode,
-                                                           CollateralValidityDate = a.CollateralValidityDate,
-                                                           CustomsEntityTypeCode = a.CustomsEntityTypeCode,
-                                                           CustomsHouseTypeCode = a.CustomsHouseTypeCode,
-                                                           EntityIdKey1 = a.EntityIdKey1,
-                                                           EntityIdKey2 = a.EntityIdKey2,
-                                                           EntityIdKey3 = a.EntityIdKey3,
-                                                           FileNo = a.FileNo,
-                                                           Id = a.Id,
-                                                           OrganizationUnitTypeCode = a.OrganizationUnitTypeCode,
-                                                           Remarks = a.Remarks,
-                                                           RequestedCollateralTypeCode = a.RequestedCollateralTypeCode,
-                                                           RequestValidityDate = a.RequestValidityDate,
-                                                           WorkerName = a.WorkerName,
-                                                           Tenant = a.Tenant,
-                                                           IncludingThirdPartyGuarantee = a.IncludingThirdPartyGuarantee,
-                                                           SearchFields = a.SearchFields,
-                                                           CollateralRequestStatusName = a.CollateralRequestStatus.LocalName,
-                                                           CustomsEntityTypeName = a.EntityTypeLookup.LocalName,
-                                                           RequestedCollateralTypeName = a.RequestedCollateralType.LocalName,
-                                                           OrganizationUnitTypeName = a.OrganizationUnitType.LocalName,
-                                                           CustomsHouseTypeName = a.CustomsHouseType.LocalName,
-                                                           IsClosed = a.IsClosed,
-                                                           CreateDateTime = a.CreateDateTime,
-                                                           CustomerName = a.Customer != null ? a.Customer.Card.LocalName : null,
-                                                           //IsAnswer= test.Where(x=>x.CustomsCollateralId== a.CollateralRequestNumber).Any()
-                                                       });
-
-            if (query.Count() > 0)
-            {
-                var query2 = query.ToList();
-
-                var customsCollateralsAnswerList = customsCollateralsAnswerListQueryService.GetList(query.First().Tenant);
-
-                foreach (var item in query2)
-                {
-                    item.IsAnswer = customsCollateralsAnswerList.Where(x => x.CustomsCollateralId == item.Id).Any();
-                }
-                query = query2.AsQueryable();
-            }
+                                                         {
+                                                             CollateralRequestNumber = a.CollateralRequestNumber,
+                                                             CollateralRequestStatusCode = a.CollateralRequestStatusCode,
+                                                             CollateralValidityDate = a.CollateralValidityDate,
+                                                             CustomsEntityTypeCode = a.CustomsEntityTypeCode,
+                                                             CustomsHouseTypeCode = a.CustomsHouseTypeCode,
+                                                             EntityIdKey1 = a.EntityIdKey1,
+                                                             EntityIdKey2 = a.EntityIdKey2,
+                                                             EntityIdKey3 = a.EntityIdKey3,
+                                                             FileNo = a.FileNo,
+                                                             Id = a.Id,
+                                                             OrganizationUnitTypeCode = a.OrganizationUnitTypeCode,
+                                                             Remarks = a.Remarks,
+                                                             RequestedCollateralTypeCode = a.RequestedCollateralTypeCode,
+                                                             RequestValidityDate = a.RequestValidityDate,
+                                                             WorkerName = a.WorkerName,
+                                                             Tenant = a.Tenant,
+                                                             IncludingThirdPartyGuarantee = a.IncludingThirdPartyGuarantee,
+                                                             SearchFields = a.SearchFields,
+                                                             CollateralRequestStatusName = a.CollateralRequestStatus.LocalName,
+                                                             CustomsEntityTypeName = a.EntityTypeLookup.LocalName,
+                                                             RequestedCollateralTypeName = a.RequestedCollateralType.LocalName,
+                                                             OrganizationUnitTypeName = a.OrganizationUnitType.LocalName,
+                                                             CustomsHouseTypeName = a.CustomsHouseType.LocalName,
+                                                             IsClosed = a.IsClosed,
+                                                             CreateDateTime = a.CreateDateTime,
+                                                             CustomerName = a.Customer != null ? a.Customer.Card.LocalName: null,
+                                                         });
             return query;
-        }
+		}
 
         private IQueryable<CustomsCollateral> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsCollateral> iQueryable, int tenant)
         {
-            var filterDeclaration = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "DeclarationId");
-            if (filterDeclaration != null)
-            {
-                string declarationId = filterDeclaration.FieldValue.ToString();
-
-                iQueryable = (
-                    from collateral in iQueryable.Include("Declaration")
-                    let d = context.Declarations.Where(x => x.Id == declarationId).Select(x => x.AmendmentOriginalDeclartation).FirstOrDefault()
-
-                    where (collateral.DeclarationId == declarationId || collateral.Declaration.Id == d ||  (d != null && collateral.Declaration.AmendmentOriginalDeclartation == d)) && collateral.DeclarationId != null
-
-                    select collateral
-                 );
-            }
-        
-
             // Freelancer filterting
             FreelancerCustomersUtil frlUtil = new FreelancerCustomersUtil(tenant);
             if (frlUtil.user.IsFreelancer)
@@ -102,10 +68,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     iQueryable = iQueryable.Where(d => customersIds.Contains(d.CustomerId));
                 }
             }
-
+            
             return iQueryable;
-        }
-    }
+		}
+	}
 
 
 }
+	

@@ -10,7 +10,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string FullNameTextCodeId { get; set; }
         public string ObjectTableId { get; set; }
         public string FieldName { get; set; }
-        public string ShortName { get; set; }
         public string DataTypeCode { get; set; }
         public int MaxLength { get; set; }
         public bool IsRequiered { get; set; }
@@ -73,28 +72,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool CopyToDW { get; set; }
         public bool DisplayOnLookUpLocal { get; set; }
         public bool EnableFullscreenTextBox { get; set; }
-        public bool DisplayInAutomationAsEnitity { get; set; }
-        public string RecordType { get; set; }
-        public string ObjectTable_LookUpTableName { get; set; }
-        public string FieldCode { get;  set; }
-        public string FullNameTextCodeCode { get; set; }
-        public string ShortNameTextCodeCode { get; set; }
-        public string HelpTextCodeCode { get; set; }
-        public string AdditionalQuerySections { get; set; }
-        public bool DisplayInRequiredFields { get; set; }
-
-        public string LeftKey { get; set; }
-        public string RightKey { get; set; }
-        public bool IsForeignKey { get; set; }
-        public string ForeignEntity { get; set; }
-        public string NavigationPropertyName { get; set; }
-        public bool ForMetaDataOnly { get; set; }
-        public bool IsListFilter { get; set; }
-        public int NumberOfDigits { get; set; }
-        public int DigitsAfterPoint { get; set; }
-        public string CustomPickListCode { get; set; }
-
-        public bool InUse { get; set; }
 
     }
 }

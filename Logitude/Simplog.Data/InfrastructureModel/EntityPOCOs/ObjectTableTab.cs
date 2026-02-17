@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -16,11 +16,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public int IndexOrder { get; set; }
         public string Code { get; set; }
         public string FeatureId { get; set; }
-        public string TabNameTextCodeCode { get; set; }
-        public string FeatureUniqeCode { get; set; }
 
-
-        //[ForeignKey("FeatureId")]
+        [ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
 
 
@@ -32,20 +29,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         //[Include]
         //[Association("ObjectTableTabTextCode", "TabNameTextCodeId", "Id", IsForeignKey = true)]
         [ForeignKey("TabNameTextCodeId")]
-        public TextCode TabNameTextCode { get; set; }
-
-        [NotMapped]
-        public TabModification TabModification { get; set; }
-
+        public virtual TextCode TabNameTextCode { get; set; }
 
         public string HtmlComponentName { get; set; }
         public string HtmlComponentUrl { get; set; }
-
-        public string Type { get; set; } = "Predefined";
-        public string ScreenCode { get; set; }
-        public string OriginalTabCode { get; set; }
-        public bool HideTabNameInScreen { get; set; }
-        public bool IsLocked { get; set; }
-
     }
 }

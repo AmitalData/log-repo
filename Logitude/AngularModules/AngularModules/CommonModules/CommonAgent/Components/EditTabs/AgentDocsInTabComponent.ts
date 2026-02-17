@@ -4,7 +4,7 @@ import {AgentPM} from '../../../../Common/EntityPMs/AgentPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AgentDocsInTabComponent.html',
 })
 

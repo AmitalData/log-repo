@@ -16,7 +16,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditQuestionnaireComponent.html',
     providers: [QuestionnairePMService],
 })
@@ -113,7 +113,7 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
     SetWindowArgs(args: any) {
         if (args != null) {
         
-            this._entityResourceService.getEntityResourceByTableName("QuestionnaireQuestion").subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("QuestionnaireQuestion").subscribe(response => {
                 if (args.IsNew) {
 
                     this.IsNewEntity = true;
@@ -135,7 +135,7 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
                 else {
 
                     this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-                    this._QuestionnairePMService.get(args.EntityId).subscribe((response:any) => {
+                    this._QuestionnairePMService.get(args.EntityId).subscribe(response => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                         this.EntityPM = response.Result;
@@ -313,7 +313,7 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             if (this.IsNewEntity) {
-                this._QuestionnairePMService.insert(this.EntityPM).subscribe((response:any) => {
+                this._QuestionnairePMService.insert(this.EntityPM).subscribe(response => {
 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {
@@ -325,7 +325,7 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
 
                 });
             } else {
-                this._QuestionnairePMService.update(this.EntityPM).subscribe((response:any) => {
+                this._QuestionnairePMService.update(this.EntityPM).subscribe(response => {
 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {

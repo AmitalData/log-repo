@@ -16,39 +16,18 @@ import { DeclarationTapagTabComponent } from './Components/Tapag/DeclarationTapa
 import { DeclarationCollateralsComponent } from './Components/Collateral/DeclarationCollateralsComponent';
 import { DeclarationPhysicalCheckTabComponent } from './Components/PhysicalCheck/DeclarationPhysicalCheckTabComponent';
 import { CreateEditTicketComponent } from './Components/Certificate/CreateEditTicketComponent';
-import { NewCertificateGoodsItemsSelectionComponent } from './Components/Certificate/NewCertificateGoodsItemsSelectionComponent';
 import { CertificateSelectionComponent } from './Components/Certificate/CertificateSelectionComponent';
 import { DeclarationCargoSplitTabComponent } from './Components/CargoSplit/DeclarationCargoSplitTabComponent';
 import { ImporterDetailsComponent } from './Components/General/ImporterDetails/ImporterDetailsComponent';
 import { GuaranteeDataComponent } from './Components/Tapag/GuaranteeDataComponent';
-import { ConsigmentPackagesDangerComponent } from './Components/General/ConsigmentTabContent/ConsigmentPackagesDanger/ConsigmentPackagesDangerComponent';
+
 import { DeclarationClassificationComponent } from './Components/Classification/DeclarationClassificationComponent';
 import { SInvoiceClassificationTabComponent } from './Components/Classification/SInvoiceClassificationTabComponent';
-import { CasualSupplierDetailsComponent } from './Components/Classification/CasualSupplierDetailsComponent';
-import { DeclarationAmendmentComponent } from './Components/DeclarationAmendment/DeclarationAmendmentComponent';
-import { DeclarationCargoSealTabComponent } from './Components/CargoSeal/DeclarationCargoSealTabComponent';
-import { ExportDeclarationComponent } from './Components/General/ExportDeclarationComponent';
-import { ExportConsigmentContentComponent } from './Components/General/ConsigmentTabContent/ExportConsigmentContentComponent';
-import { ExportDeclarationClosureComponent } from './Components/Closure/ExportDeclarationClosureComponent';
-import { DeclarationExportStorageComponent } from './Components/ExportStorageList/DeclarationExportStorageComponent';
-import { DeclarationPendingsGeneralComponent } from './Components/Classification/DeclarationPendingsGeneralComponent';
-import { ComprehensiveUpdateConsignment } from './Components/General/ConsigmentTabContent/ComprehensiveUpdateConsignment';
-import { DigitalCertificateOfOriginTabComponent } from './Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent';
-import { SIIRequestTabComponent } from './Components/SIIRequest/SIIRequestTabComponent';
-import { SIIRequestComponent } from './Components/SIIRequest/SIIRequestTabs/SIIRequestComponent';
-import { SIIRequestCopmleteDataItemComponent } from './Components/SIIRequest/SIIRequestCopmleteDataItem/SIIRequestCopmleteDataItemComponent';
-import { CertificateOfOriginComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent';
-import { CertificateOfOriginGeneralTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent';
-import { CertificateOfOriginMoreDetailsTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent';
-import { CertificateAnswersComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent';
-import { UpdateCertificateOfOriginGeneralFieldComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent';
-import { ApprovalReportViewerComponent } from './Components/SIIRequest/ApprovalReportViewer/ApprovalReportViewerComponent';
 
 export const Components =
     [
         DeclarationGeneralComponent,
         ConsigmentTabContentComponent,
-        ExportConsigmentContentComponent,
         CustomsAnswersComponent,
         DeclarationCorrectionsComponent,
         CertificateTabComponent,
@@ -62,34 +41,17 @@ export const Components =
         ItemTaxesMoreFieldsComponent,
         DeclarationPhysicalCheckTabComponent,
         CreateEditTicketComponent,
-        NewCertificateGoodsItemsSelectionComponent,
         CertificateSelectionComponent,
         DeclarationTapagTabComponent,
         DeclarationCollateralsComponent,
         DeclarationCargoSplitTabComponent,
         ImporterDetailsComponent,
         GuaranteeDataComponent,
-        ConsigmentPackagesDangerComponent,
-        DeclarationClassificationComponent,
-        SInvoiceClassificationTabComponent,
-        CasualSupplierDetailsComponent,
-        DeclarationAmendmentComponent,
-        DeclarationCargoSealTabComponent,
-        ExportDeclarationComponent,
-        ExportDeclarationClosureComponent,
-        DeclarationPendingsGeneralComponent,
-        DeclarationExportStorageComponent,
-        ComprehensiveUpdateConsignment,
-        SIIRequestTabComponent,
-        SIIRequestCopmleteDataItemComponent,
-        SIIRequestComponent,
-        DigitalCertificateOfOriginTabComponent,
-        CertificateOfOriginComponent,
-        CertificateOfOriginGeneralTabComponent,
-        UpdateCertificateOfOriginGeneralFieldComponent,
-        CertificateOfOriginMoreDetailsTabComponent,
-        CertificateAnswersComponent,
-        ApprovalReportViewerComponent
+
+    DeclarationClassificationComponent,
+    SInvoiceClassificationTabComponent,
+
+
 
     ];
 
@@ -101,12 +63,10 @@ export class ModuleDeclarations {
         switch (name) {
             case "DeclarationGeneralComponent": { myResult = DeclarationGeneralComponent; break; }
             case "ConsigmentTabContentComponent": { myResult = ConsigmentTabContentComponent; break; }
-            case "ExportConsigmentContentComponent": { myResult = ExportConsigmentContentComponent; break; }
-
             case "CustomsAnswersComponent": { myResult = CustomsAnswersComponent; break; }
             case "DeclarationCorrectionsComponent": { myResult = DeclarationCorrectionsComponent; break; }
             case "CertificateTabComponent": { myResult = CertificateTabComponent; break; }
-            case "NewCertificateGoodsItemsSelectionComponent": { myResult = NewCertificateGoodsItemsSelectionComponent; break; }
+            case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
 
             case "ConstraintsDetailsComponent": { myResult = ConstraintsDetailsComponent; break; }
             case "AgentObjectionComponent": { myResult = AgentObjectionComponent; break; }
@@ -121,32 +81,11 @@ export class ModuleDeclarations {
             case "DeclarationTapagTabComponent": { myResult = DeclarationTapagTabComponent; break; }
             case "DeclarationCollateralsComponent": { myResult = DeclarationCollateralsComponent; break; }
             case "DeclarationCargoSplitTabComponent": { myResult = DeclarationCargoSplitTabComponent; break; }
-            case "DeclarationExportStorageComponent": { myResult = DeclarationExportStorageComponent; break; }
             case "ImporterDetailsComponent": { myResult = ImporterDetailsComponent; break; }
-            case "GuaranteeDataComponent": { myResult = GuaranteeDataComponent; break; }
-            case "DeclarationClassificationComponent": { myResult = DeclarationClassificationComponent; break; }
-            case "SInvoiceClassificationTabComponent": { myResult = SInvoiceClassificationTabComponent; break; }
-            case "CasualSupplierDetailsComponent": { myResult = CasualSupplierDetailsComponent; break; }
-            case "ConsigmentPackagesDangerComponent": { myResult = ConsigmentPackagesDangerComponent; break; }
-            case "DeclarationAmendmentComponent": { myResult = DeclarationAmendmentComponent; break; }
-            case "DeclarationCargoSealTabComponent": { myResult = DeclarationCargoSealTabComponent; break; }
-            case "ExportDeclarationComponent": { myResult = ExportDeclarationComponent; break; }
-            case "ExportDeclarationClosureComponent": { myResult = ExportDeclarationClosureComponent; break; }
-            case "DeclarationPendingsGeneralComponent": { myResult = DeclarationPendingsGeneralComponent; break; }
-            case "ComprehensiveUpdateConsignment": { myResult = ComprehensiveUpdateConsignment; break; }
-            case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
-            case "DigitalCertificateOfOriginTabComponent": { myResult = DigitalCertificateOfOriginTabComponent; break; }
-            case "SIIRequestTabComponent": { myResult = SIIRequestTabComponent; break; }
-            case "SIIRequestCopmleteDataItemComponent": { myResult = SIIRequestCopmleteDataItemComponent; break; }
-            case "SIIRequestComponent": { myResult = SIIRequestComponent; break; }
-            case "CertificateOfOriginComponent": { myResult = CertificateOfOriginComponent; break; }
-            case "CertificateOfOriginGeneralTabComponent": { myResult = CertificateOfOriginGeneralTabComponent; break; }
-            case "UpdateCertificateOfOriginGeneralFieldComponent": { myResult = UpdateCertificateOfOriginGeneralFieldComponent; break; }
-            case "CertificateOfOriginMoreDetailsTabComponent": { myResult = CertificateOfOriginMoreDetailsTabComponent; break; }
-            case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
-            case "CertificateAnswersComponent": { myResult = CertificateAnswersComponent; break; }
-            case "ApprovalReportViewerComponent": { myResult = ApprovalReportViewerComponent; break; }
+          case "GuaranteeDataComponent": { myResult = GuaranteeDataComponent; break; }
 
+          case "DeclarationClassificationComponent": { myResult = DeclarationClassificationComponent; break; }
+          case "SInvoiceClassificationTabComponent": { myResult = SInvoiceClassificationTabComponent; break; }
         }
 
         return myResult;

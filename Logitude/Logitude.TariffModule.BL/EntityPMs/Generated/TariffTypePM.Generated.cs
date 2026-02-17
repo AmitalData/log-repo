@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -85,52 +85,6 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   searchFields=value;
-		   }
-			
-		 }
-	   }
-	  private string transportModeCode ;
-	  	  
-       
-	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TransportModeCode  
-	   {
-	    
-	     get
-		{
-		   return transportModeCode;
-		 }
-		 set
-		 {
-		   if(transportModeCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeCode",OldValue=transportModeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   transportModeCode=value;
-		   }
-			
-		 }
-	   }
-	  private string directionCode ;
-	  	  
-       
-	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DirectionCode  
-	   {
-	    
-	     get
-		{
-		   return directionCode;
-		 }
-		 set
-		 {
-		   if(directionCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DirectionCode",OldValue=directionCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   directionCode=value;
 		   }
 			
 		 }

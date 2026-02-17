@@ -1,3 +1,0 @@
-
-ALTER TABLE Tips
-DROP CONSTRAINT  FK_TipTextCode;

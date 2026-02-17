@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -43,8 +43,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("InActive")]
 	    public bool InActive { get; set; }
-        [Column("Notes")]
-	    public string Notes { get; set; }
+        [Column("Description")]
+	    public string Description { get; set; }
         [ForeignKey("Seller")]
         [Column("SellerId")]
 	    public string SellerId { get; set; }
@@ -60,177 +60,14 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public DateTime? LastExpirationDate { get; set; }
         [Column("PriceSteps")]
 	    public string PriceSteps { get; set; }
-        [ForeignKey("TariffType")]
         [Column("TypeCode")]
 	    public string TypeCode { get; set; }
-	      
-        public virtual TariffType TariffType { get; set; }
         [Column("LastStartDate")]
 	    public DateTime? LastStartDate { get; set; }
         [Column("LastVersion")]
 	    public int LastVersion { get; set; }
         [Column("ContractNumber")]
-	    public string ContractNumber { get; set; }
-        [Column("TariffNumber")]
-	    public string TariffNumber { get; set; }
-        [ForeignKey("Surcharge1I")]
-        [Column("Surcharge1Id")]
-	    public string Surcharge1Id { get; set; }
-	      
-        public virtual ChargesType Surcharge1I { get; set; }
-        [ForeignKey("Surcharge2I")]
-        [Column("Surcharge2Id")]
-	    public string Surcharge2Id { get; set; }
-	      
-        public virtual ChargesType Surcharge2I { get; set; }
-        [ForeignKey("Surcharge3I")]
-        [Column("Surcharge3Id")]
-	    public string Surcharge3Id { get; set; }
-	      
-        public virtual ChargesType Surcharge3I { get; set; }
-        [ForeignKey("Surcharge4I")]
-        [Column("Surcharge4Id")]
-	    public string Surcharge4Id { get; set; }
-	      
-        public virtual ChargesType Surcharge4I { get; set; }
-        [ForeignKey("Surcharge5I")]
-        [Column("Surcharge5Id")]
-	    public string Surcharge5Id { get; set; }
-	      
-        public virtual ChargesType Surcharge5I { get; set; }
-        [ForeignKey("Surcharge6I")]
-        [Column("Surcharge6Id")]
-	    public string Surcharge6Id { get; set; }
-	      
-        public virtual ChargesType Surcharge6I { get; set; }
-        [ForeignKey("Surcharge7I")]
-        [Column("Surcharge7Id")]
-	    public string Surcharge7Id { get; set; }
-	      
-        public virtual ChargesType Surcharge7I { get; set; }
-        [ForeignKey("Surcharge8I")]
-        [Column("Surcharge8Id")]
-	    public string Surcharge8Id { get; set; }
-	      
-        public virtual ChargesType Surcharge8I { get; set; }
-        [ForeignKey("Surcharge9I")]
-        [Column("Surcharge9Id")]
-	    public string Surcharge9Id { get; set; }
-	      
-        public virtual ChargesType Surcharge9I { get; set; }
-        [ForeignKey("Surcharge10I")]
-        [Column("Surcharge10Id")]
-	    public string Surcharge10Id { get; set; }
-	      
-        public virtual ChargesType Surcharge10I { get; set; }
-        [ForeignKey("Surcharge1U")]
-        [Column("Surcharge1UOM")]
-	    public string Surcharge1UOM { get; set; }
-	      
-        public virtual Measurement Surcharge1U { get; set; }
-        [ForeignKey("Surcharge2U")]
-        [Column("Surcharge2UOM")]
-	    public string Surcharge2UOM { get; set; }
-	      
-        public virtual Measurement Surcharge2U { get; set; }
-        [ForeignKey("Surcharge3U")]
-        [Column("Surcharge3UOM")]
-	    public string Surcharge3UOM { get; set; }
-	      
-        public virtual Measurement Surcharge3U { get; set; }
-        [ForeignKey("Surcharge4U")]
-        [Column("Surcharge4UOM")]
-	    public string Surcharge4UOM { get; set; }
-	      
-        public virtual Measurement Surcharge4U { get; set; }
-        [ForeignKey("Surcharge5U")]
-        [Column("Surcharge5UOM")]
-	    public string Surcharge5UOM { get; set; }
-	      
-        public virtual Measurement Surcharge5U { get; set; }
-        [ForeignKey("Surcharge6U")]
-        [Column("Surcharge6UOM")]
-	    public string Surcharge6UOM { get; set; }
-	      
-        public virtual Measurement Surcharge6U { get; set; }
-        [ForeignKey("Surcharge7U")]
-        [Column("Surcharge7UOM")]
-	    public string Surcharge7UOM { get; set; }
-	      
-        public virtual Measurement Surcharge7U { get; set; }
-        [ForeignKey("Surcharge8U")]
-        [Column("Surcharge8UOM")]
-	    public string Surcharge8UOM { get; set; }
-	      
-        public virtual Measurement Surcharge8U { get; set; }
-        [ForeignKey("Surcharge9U")]
-        [Column("Surcharge9UOM")]
-	    public string Surcharge9UOM { get; set; }
-	      
-        public virtual Measurement Surcharge9U { get; set; }
-        [ForeignKey("Surcharge10U")]
-        [Column("Surcharge10UOM")]
-	    public string Surcharge10UOM { get; set; }
-	      
-        public virtual Measurement Surcharge10U { get; set; }
-        [Column("ConcurrencyGUID")]
-	    public string ConcurrencyGUID { get; set; }
-        [ForeignKey("ContainerType1")]
-        [Column("ContainerType1Id")]
-	    public string ContainerType1Id { get; set; }
-	      
-        public virtual PackageType ContainerType1 { get; set; }
-        [ForeignKey("ContainerType2")]
-        [Column("ContainerType2Id")]
-	    public string ContainerType2Id { get; set; }
-	      
-        public virtual PackageType ContainerType2 { get; set; }
-        [ForeignKey("ContainerType3")]
-        [Column("ContainerType3Id")]
-	    public string ContainerType3Id { get; set; }
-	      
-        public virtual PackageType ContainerType3 { get; set; }
-        [ForeignKey("ContainerType4")]
-        [Column("ContainerType4Id")]
-	    public string ContainerType4Id { get; set; }
-	      
-        public virtual PackageType ContainerType4 { get; set; }
-        [ForeignKey("ContainerType5")]
-        [Column("ContainerType5Id")]
-	    public string ContainerType5Id { get; set; }
-	      
-        public virtual PackageType ContainerType5 { get; set; }
-        [ForeignKey("Product")]
-        [Column("TariffProductId")]
-	    public string TariffProductId { get; set; }
-	      
-        public virtual TariffProduct Product { get; set; }
-        [Column("SellerPartnerTypeId")]
-	    public string SellerPartnerTypeId { get; set; }
-        [Column("LastUsedDate")]
-	    public DateTime? LastUsedDate { get; set; }
-        [ForeignKey("ChargesType")]
-        [Column("FreightChargeId")]
-	    public string FreightChargeId { get; set; }
-	      
-        public virtual ChargesType ChargesType { get; set; }
-        [ForeignKey("CustomsBroker")]
-        [Column("CustomsBrokerId")]
-	    public string CustomsBrokerId { get; set; }
-	      
-        public virtual Card CustomsBroker { get; set; }
-        [Column("CustomsBrokerPartnerTypeId")]
-	    public string CustomsBrokerPartnerTypeId { get; set; }
-        [ForeignKey("UnitOfMeasurement")]
-        [Column("UnitOfMeasurementCode")]
-	    public string UnitOfMeasurementCode { get; set; }
-	      
-        public virtual WeightUnit UnitOfMeasurement { get; set; }
-        [ForeignKey("CustomerGroup")]
-        [Column("CustomerGroupId")]
-	    public string CustomerGroupId { get; set; }
-	      
-        public virtual CustomerGroup CustomerGroup { get; set; }
+	    public int? ContractNumber { get; set; }
     }
 }
 	 

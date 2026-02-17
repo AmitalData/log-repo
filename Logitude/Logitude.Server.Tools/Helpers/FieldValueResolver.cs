@@ -1,12 +1,10 @@
 using System;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Reflection;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.Helpers;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -30,7 +28,6 @@ namespace Logitude.Server.Tools.Helpers
 
                     case "DateTime":
                     case "Date":
-                    case "DateTime2":
                         {
                             if (value == "NoDate")
                             {
@@ -38,58 +35,70 @@ namespace Logitude.Server.Tools.Helpers
                             }
                             else
                             {
-								DateTime date = value.EndsWith("Z")
-								   ? DateTime.Parse(value, null, System.Globalization.DateTimeStyles.RoundtripKind)
-								   : Convert.ToDateTime(value);
-								return date;
+                                DateTime date = Convert.ToDateTime(value);
+                                //string dateToStore = ConvertToString(date);
+                                return date;
                             }
                         }
 
                     case "Decimal":
                         {
-                            decimal.TryParse(value.ToString(), out decimal d);
+                            decimal d = 0;
+                            decimal.TryParse(value.ToString(), out d);
+
                             return d;
                         }
 
                     case "UnsDecimal":
                         {
-                            decimal.TryParse(value.ToString(), out decimal d);
+                            decimal d = 0;
+                            decimal.TryParse(value.ToString(), out d);
+
                             return d;
                         }
 
                     case "Integer":
                         {
-                            int.TryParse(value.ToString(), out int d);
+                            int d = 0;
+                            int.TryParse(value.ToString(), out d);
+
                             return d;
                         }
 
                     case "UnsInteger":
                         {
-                            int.TryParse(value.ToString(), out int d);
+                            int d = 0;
+                            int.TryParse(value.ToString(), out d);
+
                             return d;
                         }
 
                     case "Double":
                         {
-                            double.TryParse(value.ToString(), out double d);
+                            double d = 0;
+                            double.TryParse(value.ToString(), out d);
+
                             return d;
                         }
 
                     case "SigDouble":
                         {
-                            double.TryParse(value.ToString(), out double d);
+                            double d = 0;
+                            double.TryParse(value.ToString(), out d);
+
                             return d;
                         }
 
                     case "Boolean":
                         {
-                            bool.TryParse(value, out bool f);
+                            bool f = false;
+                            bool.TryParse(value, out f);
                             return f;
                         }
 
                     default:
                         {
-                            return (value?.ToString());
+                            return (value != null ? value.ToString() : null);
                         }
                 }
             }
@@ -145,19 +154,19 @@ namespace Logitude.Server.Tools.Helpers
                                 return null;
                             }
                             decimal d = Convert.ToDecimal(value);
-                            string decimalTostore = StringHelper.StringPadLeft(d.ToString(), '0', 8);//ConvertToString(d);
+                            string decimalTostore = ConvertToString(d);
                             return decimalTostore;
                         }
                     case "Integer":
                         {
                             int d = Convert.ToInt32(value);
-                            string intTostore = StringHelper.StringPadLeft(d.ToString(), '0', 8);// ConvertToString(d);
+                            string intTostore = ConvertToString(d);
                             return intTostore;
                         }
                     case "Double":
                         {
                             double d = Convert.ToDouble(value);
-                            string doubleTostore = StringHelper.StringPadLeft(d.ToString(), '0', 8);// ConvertToString(d);
+                            string doubleTostore = ConvertToString(d);
                             return doubleTostore;
                         }
                     case "Boolean":
@@ -191,7 +200,6 @@ namespace Logitude.Server.Tools.Helpers
                         }
                     case "Date":
                     case "DateTime":
-                    case "DateTime2":
                         {
 
                             DateTime? date = ConvertToDate(customField);
@@ -256,58 +264,181 @@ namespace Logitude.Server.Tools.Helpers
 
         public static string ConvertToString(DateTime date)
         {
+            string time = "";
             string month, day, minuit, second, hour;
 
             if (date.Month < 10)
             {
                 month = "0" + date.Month.ToString();
             }
-            else 
-            {
-                month = date.Month.ToString();
-            }
+            else { month = date.Month.ToString(); }
 
             if (date.Day < 10)
             {
                 day = "0" + date.Day.ToString();
             }
-            else 
-            { 
-                day = date.Day.ToString();
-            }
+            else { day = date.Day.ToString(); }
 
             if (date.Hour < 10)
             {
                 hour = "0" + date.Hour.ToString();
             }
-            else 
-            {
-                hour = date.Hour.ToString();
-            }
+            else { hour = date.Hour.ToString(); }
 
             if (date.Minute < 10)
             {
                 minuit = "0" + date.Minute.ToString();
             }
-            else 
-            {
-                minuit = date.Minute.ToString(); 
-            }
+            else { minuit = date.Minute.ToString(); }
 
             if (date.Second < 10)
             {
                 second = "0" + date.Second.ToString();
             }
-            else 
-            {
-                second = date.Second.ToString();
-            }
+            else { second = date.Second.ToString(); }
 
-            return date.Year.ToString() + month + day + hour + minuit + second;
+            time = date.Year.ToString() + month + day + hour + minuit + second;
+
+            return time;
         }
 
         #endregion
-        
+
+        #region ConvertToString Integer
+
+        public static string ConvertToString(int d)
+        {
+            string dstring = d.ToString();
+            string s = "";
+            if (dstring.Length == 1)
+            {
+                s = "0000000" + dstring;
+            }
+
+            if (dstring.Length == 2)
+            {
+                s = "000000" + dstring;
+            }
+            if (dstring.Length == 3)
+            {
+                s = "00000" + dstring;
+            }
+            if (dstring.Length == 4)
+            {
+                s = "0000" + dstring;
+            }
+            if (dstring.Length == 5)
+            {
+                s = "000" + dstring;
+            }
+            if (dstring.Length == 6)
+            {
+                s = "00" + dstring;
+            }
+
+            if (dstring.Length == 7)
+            {
+                s = "0" + dstring;
+            }
+            if (dstring.Length == 8)
+            {
+                s = dstring;
+            }
+            return s;
+        }
+
+        #endregion
+
+        #region ConvertToString Double
+
+        public static string ConvertToString(double d)
+        {
+            string dstring = d.ToString();
+            string s = "";
+            if (dstring.Length == 1)
+            {
+                s = "0000000" + dstring;
+            }
+
+            if (dstring.Length == 2)
+            {
+                s = "000000" + dstring;
+            }
+            if (dstring.Length == 3)
+            {
+                s = "00000" + dstring;
+            }
+            if (dstring.Length == 4)
+            {
+                s = "0000" + dstring;
+            }
+            if (dstring.Length == 5)
+            {
+                s = "000" + dstring;
+            }
+            if (dstring.Length == 6)
+            {
+                s = "00" + dstring;
+            }
+
+            if (dstring.Length == 7)
+            {
+                s = "0" + dstring;
+            }
+            if (dstring.Length == 8)
+            {
+                s = dstring;
+            }
+            return s;
+        }
+
+        #endregion
+
+        #region ConvertToString Decimal
+
+        public static string ConvertToString(decimal d)
+        {
+            string dstring = d.ToString();
+            string s = "";
+            if (dstring.Length == 1)
+            {
+                s = "0000000" + dstring;
+            }
+
+            if (dstring.Length == 2)
+            {
+                s = "000000" + dstring;
+            }
+            if (dstring.Length == 3)
+            {
+                s = "00000" + dstring;
+            }
+            if (dstring.Length == 4)
+            {
+                s = "0000" + dstring;
+            }
+            if (dstring.Length == 5)
+            {
+                s = "000" + dstring;
+            }
+            if (dstring.Length == 6)
+            {
+                s = "00" + dstring;
+            }
+
+            if (dstring.Length == 7)
+            {
+                s = "0" + dstring;
+            }
+            if (dstring.Length == 8)
+            {
+                s = dstring;
+            }
+            return s;
+        }
+
+        #endregion
+
         #region ConvertToDate
 
         public static DateTime? ConvertToDate(string s)
@@ -371,7 +502,7 @@ namespace Logitude.Server.Tools.Helpers
                             decimal d;
                             if (decimal.TryParse(value, out d))
                             {
-                                string decimalTostore = StringHelper.StringPadLeft(value.ToString(), '0', 8);//ConvertToString(d);
+                                string decimalTostore = ConvertToString(d);
                                 result = decimalTostore;
                             }
                             break;
@@ -381,7 +512,7 @@ namespace Logitude.Server.Tools.Helpers
                             int d;
                             if (int.TryParse(value, out d))
                             {
-                                string intTostore = StringHelper.StringPadLeft(value.ToString(), '0', 8);//ConvertToString(d);
+                                string intTostore = ConvertToString(d);
                                 result = intTostore;
                             }
 
@@ -392,7 +523,7 @@ namespace Logitude.Server.Tools.Helpers
                             double d;
                             if (double.TryParse(value, out d))
                             {
-                                string doubleTostore = StringHelper.StringPadLeft(value.ToString(), '0', 8);//ConvertToString(d);
+                                string doubleTostore = ConvertToString(d);
                                 result = doubleTostore;
                             }
                             break;
@@ -436,9 +567,12 @@ namespace Logitude.Server.Tools.Helpers
             }
             else if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText")
             {
-                if (result != null && FieldValueValidator.IsNotValidMinMaxValue(field, result.ToString()))
+                if (!field.IsMaxLength)
                 {
-                    throw new ApplicationException("Custom Field with Code " + field.Code + " must be less than " + field.MaxLength + " and more than " + field.MinLength);
+                    if (result.ToString().Length > field.MaxLength || result.ToString().Length < field.MinLength)
+                    {
+                        throw new ApplicationException("Custom Field with Code " + field.Code + " must be less than " + field.MaxLength + " and more than " + field.MinLength);
+                    }
                 }
 
             }

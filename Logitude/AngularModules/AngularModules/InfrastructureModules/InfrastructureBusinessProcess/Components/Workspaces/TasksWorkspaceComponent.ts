@@ -9,13 +9,13 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {TeamPM} from '../../../../Infrastructure/EntityPMs/TeamPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TasksWorkspaceComponent.html',
 })
 
 export class TasksWorkspaceComponent {
     private businessProcessDomainService: BusinessProcessDomainService;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {         
@@ -30,7 +30,7 @@ export class TasksWorkspaceComponent {
 
     private teamsIdsList: string;
     private GetTeamsForLoggedUser() {
-        this.businessProcessDomainService.GetTeamsForLoggedUser(SessionLocator.LoggedUserId).subscribe((myResult: ServiceResponse) => {
+        this.businessProcessDomainService.GetTeamsForLoggedUser(SessionLocator.LoggedUserId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -54,8 +54,8 @@ export class TasksWorkspaceComponent {
     public NoQueuesVisibility: boolean = false;
     private LoadQueues(myFilter: string) {    
         this.QueuesItemsSource = [];
-
-        this.businessProcessDomainService.GetQueuesWithCounts(myFilter).subscribe((myResult: ServiceResponse) => {
+            
+        this.businessProcessDomainService.GetQueuesWithCounts(myFilter).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -153,7 +153,7 @@ export class TasksWorkspaceComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

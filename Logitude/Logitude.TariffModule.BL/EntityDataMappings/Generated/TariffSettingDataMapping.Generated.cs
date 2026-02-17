@@ -24,14 +24,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         DefaultPriceSteps, 
-	         Tenant, 
-	         DefaultWarningPercentage, 
-	         AirDefaultStepsId, 
-	         LCLDefaultStepsId, 
-	         ContainerDefaults, 
-	         DefaultCurrencyId, 
-	         AirUnitOfMeasurementCode, 
-	         LCLUnitOfMeasurementCode,
+	         Tenant,
 	      }
 
 
@@ -40,16 +33,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         DefaultPriceSteps, 
-	         Tenant, 
-	         DefaultWarningPercentage, 
-	         AirDefaultStepsId, 
-	         LCLDefaultStepsId, 
-	         AirDefaultSteps, 
-	         LCLDefaultSteps, 
-	         ContainerDefaults, 
-	         DefaultCurrencyId, 
-	         AirUnitOfMeasurementCode, 
-	         LCLUnitOfMeasurementCode,
+	         Tenant,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -66,41 +50,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultWarningPercentage))
-            {
-				entityPOCO.DefaultWarningPercentage = entityPM.DefaultWarningPercentage;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirDefaultStepsId))
-            {
-				entityPOCO.AirDefaultStepsId = entityPM.AirDefaultStepsId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLDefaultStepsId))
-            {
-				entityPOCO.LCLDefaultStepsId = entityPM.LCLDefaultStepsId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerDefaults))
-            {
-				entityPOCO.ContainerDefaults = entityPM.ContainerDefaults;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultCurrencyId))
-            {
-				entityPOCO.DefaultCurrencyId = entityPM.DefaultCurrencyId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirUnitOfMeasurementCode))
-            {
-				entityPOCO.AirUnitOfMeasurementCode = entityPM.AirUnitOfMeasurementCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLUnitOfMeasurementCode))
-            {
-				entityPOCO.LCLUnitOfMeasurementCode = entityPM.LCLUnitOfMeasurementCode;
 			}
 			}
 
@@ -122,41 +71,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.Tenant = entityPOCO.Tenant;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DefaultWarningPercentage))
-            {
-					entityPM.DefaultWarningPercentage = entityPOCO.DefaultWarningPercentage;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AirDefaultStepsId))
-            {
-					entityPM.AirDefaultStepsId = entityPOCO.AirDefaultStepsId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LCLDefaultStepsId))
-            {
-					entityPM.LCLDefaultStepsId = entityPOCO.LCLDefaultStepsId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerDefaults))
-            {
-					entityPM.ContainerDefaults = entityPOCO.ContainerDefaults;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DefaultCurrencyId))
-            {
-					entityPM.DefaultCurrencyId = entityPOCO.DefaultCurrencyId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AirUnitOfMeasurementCode))
-            {
-					entityPM.AirUnitOfMeasurementCode = entityPOCO.AirUnitOfMeasurementCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LCLUnitOfMeasurementCode))
-            {
-					entityPM.LCLUnitOfMeasurementCode = entityPOCO.LCLUnitOfMeasurementCode;
-            }
-
 		}
 
 		public void PMToOldPM(TariffSettingPM entityPM, TariffSettingPM oldEntityPM)
@@ -171,41 +85,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultWarningPercentage))
-            {
-                oldEntityPM.DefaultWarningPercentage = entityPM.DefaultWarningPercentage;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirDefaultStepsId))
-            {
-                oldEntityPM.AirDefaultStepsId = entityPM.AirDefaultStepsId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLDefaultStepsId))
-            {
-                oldEntityPM.LCLDefaultStepsId = entityPM.LCLDefaultStepsId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerDefaults))
-            {
-                oldEntityPM.ContainerDefaults = entityPM.ContainerDefaults;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultCurrencyId))
-            {
-                oldEntityPM.DefaultCurrencyId = entityPM.DefaultCurrencyId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirUnitOfMeasurementCode))
-            {
-                oldEntityPM.AirUnitOfMeasurementCode = entityPM.AirUnitOfMeasurementCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLUnitOfMeasurementCode))
-            {
-                oldEntityPM.LCLUnitOfMeasurementCode = entityPM.LCLUnitOfMeasurementCode;
             }
 			
 		}

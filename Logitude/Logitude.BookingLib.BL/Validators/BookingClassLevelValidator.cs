@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 
@@ -84,9 +83,15 @@ namespace Logitude.BookingLib.BL.Validators
                             CustomFieldClass fieldClass = propertyValue as CustomFieldClass;
                             propertyValue = fieldClass.Value;
                         }
-                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()))
+                        if (propertyValue != null)
                         {
-                            return false;
+                            if (!objectfeildprop.IsMaxLength)
+                            {
+                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
+                                {
+                                    return false;
+                                }
+                            }
                         }
                     }
                 }
@@ -188,9 +193,16 @@ namespace Logitude.BookingLib.BL.Validators
                             CustomFieldClass fieldClass = propertyValue as CustomFieldClass;
                             propertyValue = fieldClass.Value;
                         }
-                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()))
+                        if (propertyValue != null)
                         {
-                            stringLengthError = stringLengthError + "," + BookingTranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
+                            if (!objectfeildprop.IsMaxLength)
+                            {
+                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
+                                {
+                                    stringLengthError = stringLengthError + "," + BookingTranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
+
+                                }
+                            }
                         }
                     }
                 }

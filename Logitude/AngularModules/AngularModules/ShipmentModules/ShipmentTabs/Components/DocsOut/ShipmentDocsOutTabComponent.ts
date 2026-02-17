@@ -8,7 +8,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ShipmentDocsOutTabComponent.html',
     providers: [DocumentTypeListService]
 })
@@ -44,13 +44,13 @@ export class ShipmentDocsOutTabComponent implements OnInit {
             var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
             apiQueryFilters.Tenant = this.EntityPM.Tenant;
-            this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
+            this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
 
-                    var childrenDocTypes_invoices = myResult.filter(d => d.Code == "999S" || d.Code == "999M" || d.Code == "999CI" || d.Code == "ARINV");
+                    var childrenDocTypes_invoices = myResult.filter(d => d.Code == "999S" || d.Code == "999M" || d.Code == "999CI");
 
                     if (childrenDocTypes_invoices.length > 0) {
                         childrenDocTypes_invoices.forEach((typeList) => {

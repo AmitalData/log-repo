@@ -26,14 +26,14 @@ export class NewOpportunity {
   FillOpportunityFields(opportunityNo: string) {
     
     this.Helper.WaitByIdAndFill('Opportunity_OpportunityTypeId', 'i');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
 
     this.Helper.WaitByIdAndFill('Opportunity_Subject', opportunityNo);
 
     this.Helper.WaitByIdAndFill('date_Opportunity_EstimatedClosingDate', '1');
 
-    this.Helper.WaitByIdAndFill('Opportunity_CustomerId', 'Customer Activity');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByIdAndFill('Opportunity_CustomerId', 'razan');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
 
     this.Helper.WaitByIdAndFill('Opportunity_Notes', 'Opportunity_Notes - Protractor ');// test random number randomWholeNum
     

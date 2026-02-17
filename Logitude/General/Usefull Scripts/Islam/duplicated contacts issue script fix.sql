@@ -70,7 +70,7 @@ BEGIN
 										    
 										    print'This contact will be modified:' + @CurrentContactId + ' to Email:' +@NewEmail
 										    update [Global].[dbo].[GlobalContacts] set Email = @NewEmail where id = @CurrentContactId and GlobalTenantId = @InternalTenant
-  											update [Main].[dbo].[Contacts] set Email = @NewEmail,ComputedKey= @NewEmail where id = @CurrentContactId and Tenant = @InternalTenant
+  											update [Main].[dbo].[Contacts] set Email = @NewEmail where id = @CurrentContactId and Tenant = @InternalTenant
 										END
 								    set @RowsCount = @RowsCount + 1
 							        FETCH NEXT FROM gContactsCursor INTO @CurrentContactId,@InternalTenant	

@@ -1,3 +1,0 @@
-DXML File,LXML File,Element Type,DXML Element Name,LXML Element Name,Attribute Type,DXML Attribute Value,LXML Attribute Value
-User.dxml,User.lxml,Column,AutomaticLastUpdateDate,NULL,Name,AutomaticLastUpdateDate,NULL
-ObjectTable.dxml,ObjectTable.lxml,Column,HashString,NULL,Name,HashString,NULL

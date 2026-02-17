@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .ItemBox {
         height: 40px;
@@ -116,11 +116,11 @@
 
                                 <tr class="FormFieldRow" *ngIf="IsClosingReasonVisible">
                                     <td>
-                                        <LogLabel [ObjectFieldName]="'QuoteClosingReasonId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'QuoteClosingReasonCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td>
-                                        <LogLov [ObjectFieldName]="'QuoteClosingReasonId'"
+                                        <LogLov [ObjectFieldName]="'QuoteClosingReasonCode'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'QuoteClosingReason'">

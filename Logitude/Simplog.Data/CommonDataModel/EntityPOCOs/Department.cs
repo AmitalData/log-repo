@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -34,20 +33,18 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         //[Display(Name = "Inactive")]
         public bool InActive { get; set; }
         public string SearchFields { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
-
+        
         //public virtual  List<User> Users { get; set; }
         ////[Include]
         ////[Association("ShipmentDepartment", "Id", "DepartmentId")]
         //public List<Shipment> Shipments { get; set; }
 
-
+       
         ////[Include]
         ////[Association("QuoteDepartment", "Id", "DepartmentId")]
         //public List<Quote> Quotes { get; set; }
-
-        public string DirectionId { get; set; }
-
+      
+         
 
     }
 }

@@ -8,83 +8,41 @@
 //------------------------------------------------------------------------------
 
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-
-
 export class HybridTenantStatePM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties; 
           this.IsDirty = false;
       }
  	 
     
     private tenant: number;
     public get Tenant() { return this.tenant; }
-    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+    public set Tenant(newValue: number) { this.tenant = newValue; this.MarkAsDirty(); }
        
 	 
     private failedQueue: number;
     public get FailedQueue() { return this.failedQueue; }
-    public set FailedQueue(newValue: number) { if (this.failedQueue != newValue) { this.failedQueue = newValue; this.MarkAsDirty("FailedQueue"); } }
+    public set FailedQueue(newValue: number) { this.failedQueue = newValue; this.MarkAsDirty(); }
        
 	 
     private waitingQueue: number;
     public get WaitingQueue() { return this.waitingQueue; }
-    public set WaitingQueue(newValue: number) { if (this.waitingQueue != newValue) { this.waitingQueue = newValue; this.MarkAsDirty("WaitingQueue"); } }
+    public set WaitingQueue(newValue: number) { this.waitingQueue = newValue; this.MarkAsDirty(); }
        
 	 
     private lastUpdateDateTime: Date;
     public get LastUpdateDateTime() { return this.lastUpdateDateTime; }
-    public set LastUpdateDateTime(newValue: Date) { if (this.lastUpdateDateTime != newValue) { this.lastUpdateDateTime = newValue; this.MarkAsDirty("LastUpdateDateTime"); } }
-       
-	 
-    private lastQueueDateTime: Date;
-    public get LastQueueDateTime() { return this.lastQueueDateTime; }
-    public set LastQueueDateTime(newValue: Date) { if (this.lastQueueDateTime != newValue) { this.lastQueueDateTime = newValue; this.MarkAsDirty("LastQueueDateTime"); } }
-       
-	 
-    private versionNumber: string;
-    public get VersionNumber() { return this.versionNumber; }
-    public set VersionNumber(newValue: string) { if (this.versionNumber != newValue) { this.versionNumber = newValue; this.MarkAsDirty("VersionNumber"); } }
-       
-	 
-    private versionDate: Date;
-    public get VersionDate() { return this.versionDate; }
-    public set VersionDate(newValue: Date) { if (this.versionDate != newValue) { this.versionDate = newValue; this.MarkAsDirty("VersionDate"); } }
+    public set LastUpdateDateTime(newValue: Date) { this.lastUpdateDateTime = newValue; this.MarkAsDirty(); }
        
 	 
 
     public OldEntityPM: HybridTenantStatePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
+    MarkAsDirty() {
         this.IsDirty = true;
 		  	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "HybridTenantState");
-           
-        }
-	 }
     }
-    private MyClone: HybridTenantStatePM;
-
-    public CloneMe() {
-        ServiceHelper.CloneEntityPM(this);
-    }
-
-    public RejectChanges() {
-        ServiceHelper.RejectEntityPMChanges(this);
-    }
-
 }

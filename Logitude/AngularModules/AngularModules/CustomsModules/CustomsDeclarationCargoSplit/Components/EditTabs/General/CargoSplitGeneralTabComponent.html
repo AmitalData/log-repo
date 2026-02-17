@@ -1,25 +1,17 @@
 <!-- PrintRequestComponent view  -->
 <style>
-    .disabled {
-    pointer-events: none;
-    opacity: 0.7;
-    cursor: default;
-    }
-
+    
     .FormFieldRow {
         height: 32px;
     }
-
-    .col1Label {
-        width: 120px;
-        padding-right: 10px;
+    .col1Label{
+        width: 90px;
+        padding-right:10px;
     }
-
-    .col1Text {
+    .col1Text{
         width: 145px;
-        padding-right: 10px;
+        padding-right:10px;
     }
-
     .SimpleGridViewHeaderDark {
         border: none !important;
         border-radius: 0 !important;
@@ -28,23 +20,21 @@
     .SimpleGridView .SimpleGridViewHeaderDark td:not(:last-child) {
         border-right: none !important;
     }
-
     .SimpleGridView .SimpleGridViewHeader td:not(.LastChild):hover {
-        cursor: none;
-        color: white !important;
-        background: none;
+    cursor: none;
+    color:white !important;
+    background: none;
 
-    }
+  }
 
     .SimpleGridView .SimpleGridViewHeaderDark td:not(.LastChild):hover {
-        cursor: default;
+    cursor: default;
 
-        color: white !important;
-        background: none;
+    color:white !important;
+    background: none;
 
 
     }
-
     .subTitle {
         color: #1b90cb;
         font-size: 15px;
@@ -52,55 +42,52 @@
         padding-bottom: 2px;
     }
 
-
-
+    
+   
     .TabControlBody {
-        border: none !important;
+          border:none !important;
     }
-
-    .DisbleBox {
+      .DisbleBox{
         display: inline-block;
         border: 1px solid #ffd800;
         border-radius: 5px;
         background: #faf5c0;
         padding: 2px 10px;
-        font-size: 12px;
+      font-size:12px;
         color: black;
         font-family: sans-serif;
-    }
+     }
+      .ToggleButtonMenu button:not(.HyperlinkButton) {
+  
+    text-align: right;
 
-    .ToggleButtonMenu button:not(.HyperlinkButton) {
+    
+       }
 
-        text-align: right;
+      .ToggleButtonMenuTemp {
 
+    right: 0;
+    left:unset;
+   
+}
 
-    }
+      .ToggleButton img {
+   
+    left: 3px;
+    right:unset;
+  
+}
 
-    .ToggleButtonMenuTemp {
-
-        right: 0;
-        left: unset;
-
-    }
-
-    .ToggleButton img {
-
-        left: 3px;
-        right: unset;
-
-    }
-
-
-    .ToggleButton label {
-
-        right: 5px;
-        left: unset;
-
-    }
-
+      
+.ToggleButton label {
+ 
+    right: 5px;
+    left:unset;
+   
+}
     .ToggleButtonMenu {
-        left: 0;
-        right: unset;
+        left:0;
+        right:unset;
     }
 
     .CustomMultiLinesText {
@@ -113,620 +100,367 @@
         border: 0px solid LightGray;
         border-radius: 3px;
         direction: rtl;
-        text-align: right;
-        font-size: 12px;
-        color: black;
+        text-align:right;
+        font-size:12px;
+        color:black;
     }
-    
-    :host() ::ng-deep .is-required label {
-        border-color: red !important;
-        opacity: 1 !important;
-    }
-
 </style>
 
 <div *ngIf="_EntityResourceFinished && EntityPM" style="margin:10px;" class="MediaFill">
     <table>
-        <tr>
-            <td *ngIf="IsNewEntity && !IsFromDeclaration" class="AppLeftMenuBackgroundRTL" style="width:150px;">
-                <table>
-                    <tr> 
-                        <td>
-                            <table style="height:250px;">
-                                <tr style="height:30px">
-                                    <td>
-                                        <LogLabel [NoObjectField]="true" [Text]="'סוג מערכת'"
-                                            [ObjectFieldName]="'Direction'" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="vertical-align:top;">
-                                        <div style="margin-top:8px">
-                                            <div style="position: relative;">
-                                                <div>
-                                                    <RadioButton [Name]="'DirectionI'" [IsChecked]="DirectionI" (Checked)="DirectionModeClicked('Import')" [Text]="'יבוא'"></RadioButton>
-
-                                                    <img style="left:30px " class="CenterCenter" src="./Images/Directions/I.png" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="vertical-align:top;">
-                                        <div style="margin-top:8px">
-                                            <div style="position: relative;">
-                                                <div>
-                                                    <RadioButton [Name]="'DirectionE'" [IsChecked]="DirectionE" (Checked)="DirectionModeClicked('Export')" [Text]="'יצוא'"></RadioButton>
-                                                 <img style="left:30px " class="CenterCenter"
-                                                        src="./Images/Directions/E.png" /> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>                                
-                                <tr style="height:50px">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'TransportModeId'"
-                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                </tr>
-                                <div>
-                                <tr style="height:30px">
-                                    <td  style="vertical-align:top;">
-                                        <div style="margin-top:8px">
-                                            <div style="position: relative;">
-                                                <div>
-                                                    <RadioButton [ngClass]="{'is-required':isTransportSelected && IsExportDeclaration}" [Name]="'air'" [IsChecked]="isTransportA && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('A')" [Text]="'אויר'"></RadioButton>
- 
-                                                    <img style="left:-90px " class="CenterCenter"
-                                                        src="./Images/TransportModes/A.png" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td  style="vertical-align:top;">
-                                        <div style="margin-top:8px">
-                                            <div style="position: relative;">
-                                                <div>
-                                                    <RadioButton [ngClass]="{'is-required':isTransportSelected && IsExportDeclaration}" [Name]="'ocean'" [IsChecked]="isTransportO && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('O')" [Text]="'ים'"></RadioButton>
-
-                                                    <img style="left:-90px" class="CenterCenter"
-                                                        src="./Images/TransportModes/O.png" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="vertical-align:top;">
-                                        <div style="margin-top:8px">
-                                            <div style="position: relative;">
-                                                <div>
-                                                    <RadioButton [ngClass]="{'is-required':isTransportSelected && IsExportDeclaration}" [Name]="'land'" [IsChecked]="isTransportL && !IsImportDeclaration" [IsEnabled]="!IsImportDeclaration" (Checked)="TransportModeClicked('L')" [Text]="'יבשה'"></RadioButton>
-                                                    <img style="left:-90px " class="CenterCenter"
-                                                        src="./Images/TransportModes/I.png" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </div>
-                                
-                                <tr style="height:150px">
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="2">
+                <ValidationSummary [ItemsSource]="ErrorsList" [SingleLine]="false"></ValidationSummary>
             </td>
-            <td style="width: 700px;">
-                <table>
-      
-                    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-                        <td colspan="2">
-                            <ValidationSummary [ItemsSource]="ErrorsList" [SingleLine]="false"></ValidationSummary>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <!--<div class="TableHolder" [class.NoPadding]="IsWindowMode">-->
+                <table style="width: 700px;height: 410px;padding-top: 10px;float:right;">
+
+                    <tr class="FormFieldRow">
+                        <td class="col1Label">
+                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
-                    </tr>
-                    <tr [class.disabled]="!TransportmodeId"> 
-                        <td colspan="2">
-                            <!--<div class="TableHolder" [class.NoPadding]="IsWindowMode">-->
-                            <table style="height: 410px;padding-top: 10px;float:right;">
-
-                                <tr class="FormFieldRow">
-                                    <td class="col1Label">
-                                        <LogLabel [ObjectFieldName]="'CustomFileNo'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext">
-                                        </LogLabel>
-                                    </td>
-                                    <td class="col1Text" style="text-align: right;">
-                                        <!-->td style="width: 120px;"-->
-                                        <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'"
-                                            [DataContext]="DataContext"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'" [HideColumns]="true"
-                                            (LostFocus)="CustomFileNoTextChanged($event)" [Text]="CustomFileNo">
-                                        </LogTextBox>
-
-
-                                    </td>
-
-
-                                    <!-- ActionTypeCode -->
-                                    <td class="col1Label">
-                                        <LogLabel [ObjectFieldName]="'ActionTypeCode'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext">
-                                        </LogLabel>
-                                    </td>
-                                    <td class="col1Text">
-                                        <LogLov tabindex="4" [ObjectFieldName]="'ActionTypeCode'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext" [LookUpTableName]="'Customs.ActionCode'"
-                                            [SelectedValue]="ActionTypeCode" [HideColumns]="true">
-                                        </LogLov>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-
-
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td class="col1Label">
-                                        <LogLabel [ObjectFieldName]="'RequestDate'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext">
-                                        </LogLabel>
-                                    </td>
-                                    <td class="col1Text">
-
-                                        <LogDatePicker [ObjectFieldName]="'RequestDate'"
-                                            [ObjectTableName]="ObjectTableName" [InputType]="'date'"
-                                            [DataContext]="DataContext" [HideColumns]="true">
-                                        </LogDatePicker>
-
-                                    </td>
-
-                                    <!-- RequestReason -->
-                                    <td class="col1Label">
-                                        <LogLabel [ObjectFieldName]="'RequestReason'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext">
-                                        </LogLabel>
-                                    </td>
-                                    <td class="col1Text">
-                                        <LogLov tabindex="4" [ObjectFieldName]="'RequestReason'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext" [LookUpTableName]="'Customs.SplitOrMergeReason'"
-                                            [SelectedValue]="RequestReason" [HideColumns]="true">
-                                        </LogLov>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <!-- CargoTypeCode -->
-                                    <td class="col1Label">
-                                        <LogLabel [ObjectFieldName]="'CargoTypeCode'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext">
-                                        </LogLabel>
-                                    </td>
-                                    <td class="col1Text">
-                                        <LogLov tabindex="4" [ObjectFieldName]="'CargoTypeCode'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Customs.CargoIdentifireType'"
-                                            [SelectedValue]="CargoTypeCode" [HideColumns]="true">
-                                        </LogLov>
-                                    </td>
-
-                                    <!-- ManifestNumber -->
-                                    <td class="col1Label">
-                                        <LogLabel [ObjectFieldName]="'ManifestNumber'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext">
-                                        </LogLabel>
-                                    </td>
-                                    <td class="col1Text">
-                                        <LogTextBox [ObjectFieldName]="'ManifestNumber'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext" [Text]="ManifestNumber" [HideColumns]="true">
-                                        </LogTextBox>
-
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <!-- SecondCargoID -->
-                                    <td class="col1Label">
-                                        <LogLabel [ObjectFieldName]="'SecondCargoID'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext">
-                                        </LogLabel>
-                                    </td>
-                                    <td class="col1Text">
-                                        <LogTextBox [ObjectFieldName]="'SecondCargoID'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext" [Text]="SecondCargoID" [HideColumns]="true">
-                                        </LogTextBox>
-
-                                    </td>
-
-                                    <!-- ThirdCargoID -->
-                                    <td class="col1Label">
-                                        <LogLabel [ObjectFieldName]="'ThirdCargoID'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext">
-                                        </LogLabel>
-                                    </td>
-                                    <td class="col1Text">
-                                        <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext" [Text]="ThirdCargoID" [HideColumns]="true">
-                                        </LogTextBox>
-
-                                    </td>
-
-
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <!-- style="padding-top: 10px; vertical-align: top; height: 50px"> margin-bottom:10px; margin-left:7px; vertical-align: top;-->
-                                    <!-- RequestRemarks -->
-                                    <td class="col1Label">
-                                        <LogLabel [ObjectFieldName]="'RequestRemarks'"
-                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                            [DataContext]="DataContext">
-                                        </LogLabel>
-                                    </td>
-                                    <!--<td style="height: 40px; padding-right:10px; width: 410px;" colspan="3">-->
-                                    <td class="col1Text" colspan="3">
-                                        <div
-                                            style="height: 20px; white-space: normal;word-wrap: break-word; margin-right:0px;">
-                                            <LogTextBox [ObjectFieldName]="'RequestRemarks'"
-                                                [ObjectTableName]="'Customs.DeclarationCargoSplit'" [IsMultiline]="true"
-                                                [DataContext]="DataContext" [Text]="RequestRemarks"
-                                                [HideColumns]="true">
-                                            </LogTextBox>
-
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-
-                                </tr>
-                                <tr style="height: 20px;">
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="6" style="vertical-align: top; height: 100%;">
-                                        <LogTabs [TabsSource]="Tabs" [SelectedTab]="SelectedTab"
-                                            [Disabled]="IsDisplayOnly" (AddTabClicked)="AddTab($event)"
-                                            (CloseTabClicked)="DeleteTab($event)"
-                                            (SelectedTabChanged)="OnSelectedChanged($event)" [NoBorder]="true"
-                                            [MultiLineTabs]="false" style="display: block; height: 100%;"></LogTabs>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-
-                            </table>
+                        <td class="col1Text" style="text-align: right;">
+                            <!-->td style="width: 120px;"-->
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'"
+                                        [InputType]="text"
+                                        [DataContext]="DataContext"
+                                        [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                        [HideColumns]="true"
+                                        (LostFocus)="CustomFileNoTextChanged($event)"
+                                        [Text]="CustomFileNo"></LogTextBox>
 
 
                         </td>
-                    </tr>
 
 
-
-
-                    <tr style=" height: 25px;">
-                        <!--padding-bottom:5px-->
-                        <td style="padding-right: 10px;" class="TabTitleRow">
-                            {{'Customs.Declaration.O.DecCargoSplitCargoIdentifiers' | TextCodeTranslationPipe}}</td>
-                    </tr>
-
-
-                    <tr *ngIf="!IsExportDeclaration">
-                        <td colspan="5" style="padding-right: 10px; padding-left: 35px; height : 30%">
-                            <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                    [ItemSource]="CargoIdentifiersList">
-
-                                    <!-- CargoIdentifierKey1 -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
-                                        [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey1' | TextCodeTranslationPipe"
-                                        [binding]="'CargoIdentifierKey1'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div class="RightCenter">
-                                                    <span>{{item.CargoIdentifierKey1 }}</span>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <!-- CargoIdentifierKey2 -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
-                                        [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey2' | TextCodeTranslationPipe"
-                                        [binding]="'CargoIdentifierKey2'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div class="RightCenter">
-                                                    <span>{{item.CargoIdentifierKey2}}</span>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <!-- CargoIdentifierKey3 -->
-                                    <log-column [width]="'100'" [Alignment]="'right'"
-                                        [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey3' | TextCodeTranslationPipe"
-                                        [binding]="'CargoIdentifierKey3'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div class="RightCenter">
-                                                    <span>123123</span>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                </logitude-edit-grid>
-                            </div>
+                        <!-- ActionTypeCode -->
+                        <td class="col1Label">
+                            <LogLabel [ObjectFieldName]="'ActionTypeCode'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
-                    </tr>
-                    <tr *ngIf="IsExportDeclaration" [class.disabled]="!TransportmodeId">
-                        <td colspan="2" style=" height: 100%;">
-                            <div class="CellContent">
-                                <table style="width: 700px;height: 70px;float:right;">
-
-                                    <tr class="FormFieldRow">
-                                        <!-- CargoTypeCode -->
-                                        <td class="col1Label">
-                                            <LogLabel [ObjectFieldName]="'CargoTypeCode'"
-                                                [ObjectTableName]="'Customs.DeclarationCargoSplit'"
-                                                [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td class="col1Text">
-                                            <LogLov tabindex="4" [ObjectFieldName]="'CargoTypeCode'"
-                                                [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
-                                                [DataContext]="decCargoSplitCargoIdentifierModel"
-                                                [LookUpTableName]="'Customs.CargoIdentifireType'"
-                                                [QueryFilterItems]="ExportCargoTypeFilterItems"
-                                                [SelectedValue]="decCargoSplitCargoIdentifierModel?.CargoTypeCode"
-                                                [HideColumns]="true"
-                                                (ValueChanged)="decCargoSplitCargoIdentifierModel.ChangeCargoIdentifireType()">
-                                            </LogLov>
-                                        </td>
-
-                                        <!-- ManifestNumber -->
-                                        <td class="col1Label">
-                                            <LogLabel [ObjectFieldName]="'CargoIdentifierKey1'"
-                                                [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
-                                                [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td class="col1Text">
-                                            <LogTextBox #ParentCargoConsinmentItemTextBox
-                                                [Placeholder]="decCargoSplitCargoIdentifierModel?.ManifestNumberPlaceholder"
-                                                [ObjectFieldName]="'CargoIdentifierKey1'"
-                                                [Text]="decCargoSplitCargoIdentifierModel?.CargoIdentifierKey1"
-                                                [DataContext]="decCargoSplitCargoIdentifierModel"
-                                                [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
-                                                [HideColumns]="true">
-                                            </LogTextBox>
-
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="FormFieldRow">
-                                        <!-- SecondCargoID -->
-                                        <td class="col1Label">
-                                            <LogLabel [ObjectFieldName]="'CargoIdentifierKey2'"
-                                                [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
-                                                [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td class="col1Text">
-                                            <LogTextBox [ObjectFieldName]="'CargoIdentifierKey2'"
-                                                [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
-                                                [DataContext]="decCargoSplitCargoIdentifierModel"
-                                                [Text]="decCargoSplitCargoIdentifierModel?.CargoIdentifierKey2"
-                                                [Placeholder]="decCargoSplitCargoIdentifierModel?.SecondCargoIDPlaceholder"
-                                                [HideColumns]="true"></LogTextBox>
-
-                                        </td>
-
-                                        <!-- ThirdCargoID -->
-                                        <td class="col1Label">
-                                            <LogLabel [ObjectFieldName]="'CargoIdentifierKey3'"
-                                                [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
-                                                [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td class="col1Text">
-                                            <LogTextBox [ObjectFieldName]="'CargoIdentifierKey3'"
-                                                [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
-                                                [DataContext]="decCargoSplitCargoIdentifierModel"
-                                                [Text]="decCargoSplitCargoIdentifierModel?.CargoIdentifierKey3"
-                                                [Placeholder]="decCargoSplitCargoIdentifierModel?.ThirdCargoIdPlaceholder"
-                                                [HideColumns]="true"></LogTextBox>
-
-                                        </td>
-
-
-                                    </tr>
-                                </table>
-
-
-                                <!--<logitude-edit-grid GridWidth="100%"
-                        GridHeight="100%" [ItemSource]="ItemsList" [Disabled]="IsDisplayOnly"
-                        (RowEnded)="OnRowEnded($event)" (Ondblclick)="OnFocus()"
-                        (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
-        <log-column [header]="'סוג מזהה מטען יצום '"
-                    [binding]="'CargoTypeCode'"
-                    [width]="'150'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template #logcelltemplate>
-                    <div style="width:100%;height:100%;text-align: right;">
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                            <span>{{item.CargoIdentifireTypeName}}</span>
-                        </div>
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                            <LogLov tabindex="4" [ObjectFieldName]="'CargoTypeCode'"
-                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
-                                    [DataContext]="item"
-                                    [LookUpTableName]="'Customs.CargoIdentifireType'"
-                                    [QueryFilterItems]="ExportCargoTypeFilterItems"
-                                    [SelectedValue]="CargoTypeCode"
-                                    [HideColumns]="true"
-                                    [FocusOnMe]="'true'"
-                                    (ValueChanged)="item.ChangeCargoIdentifireType()">
+                        <td class="col1Text">
+                            <LogLov tabindex="4" [ObjectFieldName]="'ActionTypeCode'"
+                                    [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.ActionCode'"
+                                    [SelectedValue]="ActionTypeCode"
+                                    [HideColumns]="true">
                             </LogLov>
-                        </div>
-                    </div>
-                </log-cell-template>
-            </ng-template>
-        </log-column>
-                <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey1' | TextCodeTranslationPipe"
-                    [binding]="'CargoIdentifierKey1'"
-                    [width]="'150'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template #logcelltemplate>
-                    <div style="width:100%;height:100%;text-align: right;">
-                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.CargoIdentifierKey1}}</span>
-                           
-                                        </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
+                        </td>
 
-                                             <LogTextBox #ParentCargoConsinmentItemTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="item"
-                                                        [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
-                                            </LogTextBox>
-                        </div>
-                                </log-cell-template>                            </ng-template>
-        </log-column>
-
-        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey2' | TextCodeTranslationPipe"
-                    [binding]="'CargoIdentifierKey2'"
-                    [width]="'150'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template #logcelltemplate>
-                    <div style="text-align: right;width:100%;height:100%;">
-                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.CargoIdentifierKey2}}</span>
-                                        </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
-                        <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBox #GrossMassMeasureTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey2'" [DataContext]="item"
-                                                        [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
-                                            </LogTextBox>
-                    </div>
-                                </log-cell-template>
-
-                            </ng-template>
-        </log-column>
-
-        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey3' | TextCodeTranslationPipe"
-                    [binding]="'CargoIdentifierKey3'"
-                    [width]="'150'" [Alignment]="'right'">
-            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
+                        <td><div></div></td>
 
 
-                                    <div style="width:100%;height:100%;text-align: right;">
+                    </tr>
 
-                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                    <tr class="FormFieldRow">
+                        <td class="col1Label">
+                            <LogLabel [ObjectFieldName]="'RequestDate'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td class="col1Text">
 
-                                            <span>{{item.CargoIdentifierKey3}}</span>
-                                        </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey3'" [Text]="item.CargoIdentifierKey3" [DataContext]="item"
-                                                        [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true"></LogTextBox>
-                                        </div>
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
-        </log-column>
+                            <LogDatePicker [ObjectFieldName]="'RequestDate'"
+                                           [ObjectTableName]="ObjectTableName"
+                                           [InputType]="'date'" [DataContext]="DataContext"
+                                           [HideColumns]="true"></LogDatePicker>
 
-    </logitude-edit-grid>-->
+                        </td>
+
+                        <!-- RequestReason -->
+                        <td class="col1Label">
+                            <LogLabel [ObjectFieldName]="'RequestReason'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td class="col1Text">
+                            <LogLov tabindex="4" [ObjectFieldName]="'RequestReason'"
+                                    [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.SplitOrMergeReason'"
+                                    [SelectedValue]="RequestReason"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- CargoTypeCode -->
+                        <td class="col1Label">
+                            <LogLabel [ObjectFieldName]="'CargoTypeCode'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td class="col1Text">
+                            <LogLov tabindex="4" [ObjectFieldName]="'CargoTypeCode'"
+                                    [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                    [SelectedValue]="CargoTypeCode"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+
+                        <!-- ManifestNumber -->
+                        <td class="col1Label">
+                            <LogLabel [ObjectFieldName]="'ManifestNumber'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td class="col1Text">
+                            <LogTextBox [ObjectFieldName]="'ManifestNumber'"
+                                        [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                        [DataContext]="DataContext"
+                                        [Text]="ManifestNumber"
+                                        [HideColumns]="true"></LogTextBox>
+
+                        </td>
+
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- SecondCargoID -->
+                        <td class="col1Label">
+                            <LogLabel [ObjectFieldName]="'SecondCargoID'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td class="col1Text">
+                            <LogTextBox [ObjectFieldName]="'SecondCargoID'"
+                                        [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                        [DataContext]="DataContext"
+                                        [Text]="SecondCargoID"
+                                        [HideColumns]="true"></LogTextBox>
+
+                        </td>
+
+                        <!-- ThirdCargoID -->
+                        <td class="col1Label">
+                            <LogLabel [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td class="col1Text">
+                            <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
+                                        [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                        [DataContext]="DataContext"
+                                        [Text]="ThirdCargoID"
+                                        [HideColumns]="true"></LogTextBox>
+
+                        </td>
+
+
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- style="padding-top: 10px; vertical-align: top; height: 50px"> margin-bottom:10px; margin-left:7px; vertical-align: top;-->
+                        <!-- RequestRemarks -->
+                        <td class="col1Label">
+                            <LogLabel [ObjectFieldName]="'RequestRemarks'" [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <!--<td style="height: 40px; padding-right:10px; width: 410px;" colspan="3">-->
+                        <td class="col1Text" colspan="3">
+                            <div style="height: 20px; white-space: normal;word-wrap: break-word; margin-right:0px;">
+                                <LogTextBox [ObjectFieldName]="'RequestRemarks'"
+                                            [ObjectTableName]="'Customs.DeclarationCargoSplit'"
+                                            [IsMultiline]="true"
+                                            [DataContext]="DataContext"
+                                            [Text]="RequestRemarks"
+                                            [HideColumns]="true"></LogTextBox>
+
                             </div>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td><div></div></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="6" style="vertical-align: top; height: 100%;">
+                            <LogTabs [TabsSource]="Tabs"
+                                     [SelectedTab]="SelectedTab"
+                                     [Disabled]="IsDisplayOnly"
+                                     (AddTabClicked)="AddTab($event)"
+                                     (CloseTabClicked)="DeleteTab($event)"
+                                     (SelectedTabChanged)="OnSelectedChanged($event)"
+                                     [NoBorder]="true"
+                                     style="display: block; height: 100%;"></LogTabs>
                         </td>
                     </tr>
                     <tr>
-
-                        <td colspan="2">
-
-                            <table>
-                                <tr>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                    <td style="width: 57px;vertical-align: bottom;">
-                                        <button class="Button"
-                                            (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel'
-                                            |TextCodeTranslationPipe}}</button>
-                                    </td>
-
-                                    <td style="width: 10px;vertical-align:bottom">
-                                        <div></div>
-                                    </td>
-                                    <!--[IsDisabled]="!OKButtonEnabled"-->
-                                    <td [class.disabled]="!TransportmodeId" style="width: 57px;vertical-align: bottom;">
-                                        <button class="RedButton" (click)="OkButtonClicked()"
-                                            [disabled]="!OKButtonEnabled">{{'General.B.Save' |
-                                            TextCodeTranslationPipe}}</button>
-                                    </td>
-                                    <td style="width: 10px;vertical-align: bottom;">
-                                        <div></div>
-                                    </td>
-                                    <!--[IsDisabled]="!SendButtonEnabled"-->
-                                    <td [class.disabled]="!TransportmodeId" style="width:110px;  vertical-align: bottom;">
-                                        <custom-send-options [IsDisabled]="!SendButtonEnabled" [AvoidDoubleClick]="true"
-                                            #MyCustomSendOptionsComponent
-                                            (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
-                                        </custom-send-options>
-                                    </td>
-                                </tr>
-                            </table>
-
-
-                        </td>
+                        <td><div></div></td>
                     </tr>
 
+
                 </table>
+
+
             </td>
         </tr>
+
+
+
+
+        <tr style=" height: 25px;">
+            <!--padding-bottom:5px-->
+            <td style="padding-right: 10px;" class="TabTitleRow">{{'Customs.Declaration.O.DecCargoSplitCargoIdentifiers' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+
+        <tr>
+            <td colspan="5" style="padding-right: 10px; padding-left: 35px; height : 30%">
+                <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CargoIdentifiersList">
+
+                        <!-- CargoIdentifierKey1 -->
+                        <log-column [width]="'100'" [Alignment]="'right'"
+                                    [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey1' | TextCodeTranslationPipe"
+                                    [binding]="'CargoIdentifierKey1'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div class="RightCenter">
+                                    <span>{{item.CargoIdentifierKey1 }}</span>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- CargoIdentifierKey2 -->
+                        <log-column [width]="'100'" [Alignment]="'right'"
+                                    [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey2' | TextCodeTranslationPipe"
+                                    [binding]="'CargoIdentifierKey2'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div class="RightCenter">
+                                    <span>{{item.CargoIdentifierKey2}}</span>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- CargoIdentifierKey3 -->
+                        <log-column [width]="'100'" [Alignment]="'right'"
+                                    [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey3' | TextCodeTranslationPipe"
+                                    [binding]="'CargoIdentifierKey3'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div class="RightCenter">
+                                    <span>{{item.CargoIdentifierKey3}}</span>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+
+
+        <!--<tr style=" height: 80px;padding-bottom:5px">
+            <td colspan="2" style=" height: 100%;">
+                <div class="CellContent">
+                    <logitude-edit-grid GridWidth="100%"
+                                        GridHeight="100%" [ItemSource]="ItemsList" [Disabled]="IsDisplayOnly"
+                                        (RowEnded)="OnRowEnded($event)" (Ondblclick)="OnFocus()"
+                                        (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+
+                        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey1' | TextCodeTranslationPipe"
+                                    [binding]="'CargoIdentifierKey1'"
+                                    [width]="'150'" [Alignment]="'right'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width:100%;height:100%;text-align: right;">
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <span>{{item.CargoIdentifierKey1}}</span>
+                                    </div>
+                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                        <LogTextBox #ParentCargoConsinmentItemTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="item"
+                                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
+                                        </LogTextBox>
+                                    </div>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey2' | TextCodeTranslationPipe"
+                                    [binding]="'CargoIdentifierKey2'"
+                                    [width]="'150'" [Alignment]="'right'">
+                            <log-cell-template template="let item" #logcelltemplate>
+
+                                <div style="text-align: right;width:100%;height:100%;">
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <span>{{item.CargoIdentifierKey2}}</span>
+                                    </div>
+                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                        <LogTextBox #GrossMassMeasureTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey2'" [DataContext]="item"
+                                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
+                                        </LogTextBox>
+                                    </div>
+                                </div>
+
+                            </log-cell-template>
+                        </log-column>
+
+                        <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey3' | TextCodeTranslationPipe"
+                                    [binding]="'CargoIdentifierKey3'"
+                                    [width]="'150'" [Alignment]="'right'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width:100%;height:100%;text-align: right;">
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <span>{{item.CargoIdentifierKey3}}</span>
+                                    </div>
+                                    <div *ngIf="logcelltemplate.IsEditMode">
+                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoDescription'" [Text]="item.CargoIdentifierKey3" [DataContext]="item"
+                                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true"></LogTextBox>
+                                    </div>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>-->
+
+
+
+        <tr style="height: 35px;padding-bottom:5px">
+            <td colspan="2">
+
+                <table>
+                    <tr>
+
+                        <td>
+                            <div></div>
+                        </td>
+                        <td style="width: 57px;vertical-align: bottom;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <td style="width: 10px;vertical-align:bottom">
+                            <div></div>
+                        </td>
+                        <!--[IsDisabled]="!OKButtonEnabled"-->
+                        <td style="width: 57px;vertical-align: bottom;">
+                            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OKButtonEnabled">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                        </td>
+                        <td style="width: 10px;vertical-align: bottom;">
+                            <div></div>
+                        </td>
+                        <!--[IsDisabled]="!SendButtonEnabled"-->
+                        <td style="width:110px;  vertical-align: bottom;">
+                            <custom-send-options [IsDisabled]="!SendButtonEnabled"
+                                                 [AvoidDoubleClick]="true"
+                                                 #MyCustomSendOptionsComponent
+                                                 (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </td>
+        </tr>
+
     </table>
 </div>

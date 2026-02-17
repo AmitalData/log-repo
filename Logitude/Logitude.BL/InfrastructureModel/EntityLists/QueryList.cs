@@ -6,17 +6,13 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
     {
         [Key]
         public string Id { get; set; }
-        public string QueryCode { get; set; }
         public int Tenant { get; set; }
         public string Code { get; set; }
-        public string UniqueCode { get; set; }
         public string UserId { get; set; }
         public string ObjectTableId { get; set; }
         public bool SystemLevel { get; set; }
         public bool TenantLevel { get; set; }
         public string OriginalQueryId { get; set; }
-        public string OriginalQueryCode { get; set; }
-
         public string QuerySection { get; set; }
         public int IndexOrder { get; set; }
         public bool DisplayCount { get; set; }
@@ -34,9 +30,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsHiddenFromView { get; set; }
         public bool IsNewFromTenantZeroOnly { get; set; }
         public string EditWizardComponentPath { get; set; }
-        public string FeatureUniqeCode { get; set; }
-        public bool IsViewOnly { get; set; }
 
-        
     }
 }

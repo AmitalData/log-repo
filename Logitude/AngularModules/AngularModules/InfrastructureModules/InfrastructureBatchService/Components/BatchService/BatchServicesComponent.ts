@@ -10,7 +10,7 @@ import {BatchServicesDefinitionPM} from '../../../../Infrastructure/EntityPMs/Ba
 import {BatchServicesLogList} from '../../../../Infrastructure/EntityLists/BatchServicesLogList';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './BatchServicesComponent.html',
 })
 
@@ -82,7 +82,7 @@ export class BatchServicesComponent {
 
         this.IsLogsGridVsisible = false;
         
-        this.globalDomainService.GetAllBatchServicesDefinitionsPMs(this.SelectedBatchFilter.Code).subscribe((myResult:any) => {
+        this.globalDomainService.GetAllBatchServicesDefinitionsPMs(this.SelectedBatchFilter.Code).subscribe(myResult => {
             if (myResult == null) {
                 this.ItemsSource = [];
             }
@@ -124,8 +124,8 @@ export class BatchServicesComponent {
 
     private LoadBatchServicesLogs() {  
         this.CurrentSession.StartBusyIndicatorLoading();
-
-        this.infraDomainService.GetBatchServicesLogs(this.SelectedRow.Code, this.SelectedBatchFilter.Code).subscribe((myResult: ServiceResponse) => {
+              
+        this.infraDomainService.GetBatchServicesLogs(this.SelectedRow.Code, this.SelectedBatchFilter.Code).subscribe(myResult => {
             if (myResult == null) {
                 this.LogsItemsSource = [];
             }
@@ -176,8 +176,6 @@ export class BatchServiceItemClass extends BaseComponent {
     get DoneItemsInOneMinute() { return this.EntityPM.DoneItemsInOneMinute; }
     get DoneItemsInFiveMinutes() { return this.EntityPM.DoneItemsInFiveMinutes; }
     get DoneItemsInOneHour() { return this.EntityPM.DoneItemsInOneHour; }
-    get WaitingItems() { return this.EntityPM.WaitingItems; }
-    get FailedItems() { return this.EntityPM.FailedItems; }
 
     get NumberOfThreads() { return this.EntityPM.NumberOfThreads; }
     set NumberOfThreads(newValue: number) {

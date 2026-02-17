@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {GroupByPipe} from '../../../../../Infrastructure/Pipes/GroupByPipe';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CounterAdvancedComponent.html',
 })
 
@@ -28,8 +28,6 @@ export class CounterAdvancedComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public ItemsSource: any[] = [];
     public HasAllTransportsFeature: boolean = false;
-    public HasBranchCounterCodeFeature: boolean = false;
-    public HasSeparatePerBranchCounterCodeFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -37,8 +35,6 @@ export class CounterAdvancedComponent extends BaseComponent {
         if (FeatureLocator.HasFeaturePermession("Shipment", "ALLTRANSPORTMODES")) {
             this.HasAllTransportsFeature = true;
         }
-        this.HasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0] ? true : false;
-        this.HasSeparatePerBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SPB")[0] ? true : false;
     }
 
     SetWindowArgs(args: any) {
@@ -75,7 +71,6 @@ export class CounterAdvancedComponent extends BaseComponent {
     SetUIProperties() {
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, !this.IsCounterUsed);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, !this.IsCounterUsed);
-        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, !this.IsCounterUsed);
     }
     InitializeDefinitions() {
 
@@ -252,22 +247,6 @@ export class CounterAdvancedComponent extends BaseComponent {
         }
     }
 
-    private seperatePerBranch: boolean = false;
-    public get SeperatePerBranch() {
-        this.seperatePerBranch = this.ItemsSource[0].EntityPM.UsePerBranch;
-        return this.seperatePerBranch;
-    }
-    public set SeperatePerBranch(value: boolean) {
-        if (this.seperatePerBranch == value) return;
-        this.seperatePerBranch = value;
-        this.APIHelper.CounterDefinitions.forEach(item => {
-            item.UsePerBranch = value;
-        });
-        this.ItemsSource.forEach(item => {
-            item.EntityPM.UsePerBranch = value;
-        });
-    }
-
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -332,11 +311,11 @@ export class CounterAdvancedComponent extends BaseComponent {
 
             else {
                 var errors: string[] = [];
+                if (this.CounterSize > 20) {
+                    errors.push("Maximum size allowed for counter is 20");
+                }
                 if (this.UniquePerPrefix == true) {
                     this.APIHelper.CounterDefinitions.forEach(item => {
-                        if (item.CounterSize > 20) {
-                            errors.push("Maximum size allowed for counter is 20");
-                        }
                         Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
                         if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
@@ -354,9 +333,6 @@ export class CounterAdvancedComponent extends BaseComponent {
                     }
 
                     this.APIHelper.CounterDefinitions.forEach(item => {
-                        if (item.CounterSize > 20) {
-                            errors.push("Maximum size allowed for counter is 20");
-                        }
                         Validator.TryValidateObject(item, this.ObjectTableName, errors);
                     });
                 }

@@ -18,8 +18,6 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.InvoiceModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -42,9 +40,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             //        entityPOCO.Tenant = entityPM.Tenant;
             //    }
 
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
-            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
-            entityPOCO.SearchFields = entityPM.SearchFields;
+
+
+            //    this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+            //    BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
+            //    entityPOCO.SearchFields = entityPM.SearchFields;
 
         }
         private static void BuildSearchFields(PaymentChequePM entityPM, PaymentCheque poco, bool isNewEntity)
@@ -77,7 +77,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPOCOProperties.Add(POCOPropertyNames.BankAccountGLAccountId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.PayToGLAccountId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.PaymentChequeStatusCode);
-            JournalPM journal = GetJournalByEntityIdAndEntityCode(entityPM);
+            JournalQueryService journalService = new JournalQueryService(entityPOCO.Tenant);
+            JournalPM journal = journalService.GetByAccountingEntityId(entityPOCO.Id, entityPOCO.Tenant);
             if(journal != null)
             {
                 entityPM.JournalId = journal.Id;
@@ -95,7 +96,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     if (account.IsMultiCurrency == null) { account.IsMultiCurrency = false; }
                     entityPM.IsGLAccountMultiCurrency =(bool) account.IsMultiCurrency;
                     entityPM.GLAccountName = account.LocalName;
-                    entityPM.GLAccountNumber = account.DisplayNumber;
                 }
 
             }
@@ -154,24 +154,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             }
 
-            if(entityPOCO.APPaymentId != null)
-            {
-                APPaymentQuery aPPaymentQuery = new APPaymentQuery(entityPOCO.Tenant);
-                APPaymentPM aPPayment = aPPaymentQuery.GetSingleAPPaymentPM(entityPOCO.APPaymentId, entityPOCO.Tenant);
-                if(aPPayment != null)
-                {
-                    entityPM.APPaymentNo = aPPayment.PaymentNo;
-                }
-            }
+        }
 
-        }
-        private JournalPM GetJournalByEntityIdAndEntityCode(PaymentChequePM paymentCheque) {
-            JournalQueryService journalService = new JournalQueryService(paymentCheque.Tenant);
-            string accountingEntityCode = paymentCheque.APPaymentId == null ? "9" : "5";
-            string accountingEntityId = paymentCheque.APPaymentId != null ? paymentCheque.APPaymentId : paymentCheque.Id;
-            return journalService.GetByAccountingEntityIdAndAccountingEntityCode(accountingEntityId, accountingEntityCode, paymentCheque.Tenant);
-            
-        }
         private ContactPM GetLoggedContact(int tenant)
         {
             //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;

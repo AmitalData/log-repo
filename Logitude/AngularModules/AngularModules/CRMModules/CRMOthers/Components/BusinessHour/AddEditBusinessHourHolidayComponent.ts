@@ -7,7 +7,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditBusinessHourHolidayComponent.html',
 })
 

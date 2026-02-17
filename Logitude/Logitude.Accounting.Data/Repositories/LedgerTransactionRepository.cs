@@ -1,40 +1,30 @@
-//using Simplog.Server.Infrastructure.Helpers;
-
-using Logitude.Accounting.Data.DataContract;
-using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Enums;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts;
+ 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity; 
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+using System.Data.Entity.Core.Objects;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-
+using System.Reflection.Emit;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Data.Entity;
+using Logitude.Accounting.Data.DataContract;
 
 namespace Logitude.Accounting.Data.Repositories
 {
     public partial class LedgerTransactionRepository : IRepository<LedgerTransaction>
     {
+        
+        
+        
 
         public List<LedgerTransaction> GetMulti(EntityKeyFields entityKeys)
         {
@@ -46,7 +36,7 @@ namespace Logitude.Accounting.Data.Repositories
         }
         public void ResetDraftOpenReconciliation(string gLAccountId, int tenant)
         {
-            using (var scope = Simplog.Server.Infrastructure.Helpers.TransactionFactory.GetTransaction())
+            using (var scope = TransactionFactory.GetTransaction())
 
             //using (var context = new BloggingContext())
             {
@@ -55,7 +45,7 @@ namespace Logitude.Accounting.Data.Repositories
                 {
                     try
                     {
-                        (context as System.Data.Entity.DbContext).Database.ExecuteSqlCommand(
+                        (context as DbContext).Database.ExecuteSqlCommand(
   String.Format(
 @"UPDATE LedgerTransactions SET Mark='false',AmountToReconcile=0
 WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
@@ -101,36 +91,14 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
             return currencyId;
         }
-        public IQueryable<LedgerTransaction> GetByJournalId(string journalId, int tenant)
+        public List<LedgerTransaction> GetByJournalId(string journalId, int tenant)
         {
-
+            
             return (from a in context.LedgerTransactions
-                    where a.JournalId == journalId && a.Tenant == tenant
-                    select a);
-
+                                        where a.JournalId == journalId && a.Tenant == tenant
+                                        select a).ToList();
+            
         }
-        public IQueryable<LedgerTransaction> GetByJournalAndAccountId(string journalId, string accountId, int tenant)
-        {
-            return context.LedgerTransactions
-                          .Where(a => a.JournalId == journalId && a.AccountId == accountId && a.Tenant == tenant);
-        }
-        public IQueryable<LedgerTransaction> GetByJournalAndReference1(string journalId, string reference1, int tenant)
-        {
-
-            return (from a in context.LedgerTransactions
-                    where a.JournalId == journalId && a.Reference1 == reference1 && a.Tenant == tenant
-                    select a);
-
-        }
-
-        public List<LedgerTransaction> GetByJournalIdAndLine(string journalId, int line, int tenant)
-        {
-
-            return (from a in context.LedgerTransactions
-                    where a.JournalId == journalId && a.JournalLineNumber == line && a.Tenant == tenant
-                    select a).ToList();
-        }
-
         public List<LedgerTransaction> GetByAccountId(string accountId, int tenant)
         {
             return (from a in context.LedgerTransactions
@@ -167,7 +135,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return q;
         }
         public IQueryable<LedgerTransaction> GetQDueGreaterthan(
-            int tenant,
+            int tenant, 
             //List<string> listOfAccId, 
             IQueryable<string> listOfAccId,
             DateTime myDate)
@@ -182,83 +150,46 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return q;
         }
 
-        public IQueryable<LedgerTransactionList> GetFilteredTransactions(IQueryable<string> accountsIds, LedgerTransactionBalanceFilter filters, DateTime? maxCreateDate)
+        
+             public IQueryable<LedgerTransaction> GetQueryByDateType(int tenant, 
+                 IQueryable<string> listOfAccId, 
+                 string DateTypeCode ,DateTime @from, DateTime to,
+            string currencyId,
+            string searchByFilter,
+            DateTime? maxCreateDate)
         {
-            IQueryable<LedgerTransactionList> transactionsQuery = GetTenantTransactionsFilteredByAccountsIds(!filters.UseTaxreportFilter? accountsIds: null, filters);
+            var q = (from rec in context.LedgerTransactions
+                     where rec.Tenant == tenant
+                     where listOfAccId.Contains(rec.AccountId) //less than 1000
+                     select rec
+                     );
 
-            transactionsQuery = FilterByCurrency(filters, transactionsQuery);
-            transactionsQuery = FilterBySearchFields(filters, transactionsQuery);
-            transactionsQuery = FilterMaxCreatedDate(maxCreateDate, transactionsQuery);
-            transactionsQuery = FilterByAmount(filters.AmountLocalFilter, transactionsQuery);
-            transactionsQuery = FilterByAmount(filters.AmountForeignlFilter, transactionsQuery);
-
-            if (!filters.UseTaxreportFilter)
+            if (!string.IsNullOrWhiteSpace(currencyId))
             {
-                transactionsQuery = FilterByFromAndToDate(filters.DateTypeCode, filters.From, filters.To, transactionsQuery, false);
+                q = q.Where(rec => rec.CurrencyId == currencyId);
             }
-            if (filters.Date2TypeCode != null && filters.FromDate2 != null && filters.ToDate2 != null)
-                transactionsQuery = FilterByFromAndToDate(filters.Date2TypeCode, filters.FromDate2.Value, filters.ToDate2.Value, transactionsQuery, false);
-            transactionsQuery = FilterByTax(filters, transactionsQuery);
-            return transactionsQuery;
-        }
-
-        public IQueryable<LedgerTransaction> GetLedgerTransactionsByIds(List<string> ledgerTransactionsIds, int tenant)
-        {
-            return (from transaction in context.LedgerTransactions
-                    where transaction.Tenant == tenant && ledgerTransactionsIds.Contains(transaction.Id)
-                    select transaction);
-        }
-
-        private IQueryable<LedgerTransactionList> GetTenantTransactionsFilteredByAccountsIds(IQueryable<string> accountsIds, LedgerTransactionBalanceFilter filters)
-        {
-            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
-
-            var query = (from transaction in context.LedgerTransactions
-                         where transaction.Tenant == filters.Tenant
-                         select transaction);
-
-            if (accountsIds != null)
+            if (!string.IsNullOrWhiteSpace(searchByFilter))
             {
-                query = query.Where(transaction => accountsIds.Contains(transaction.AccountId));
+                q = q.Where(rec => rec.SearchFields.Contains(searchByFilter));
             }
 
-            return ledgerTransactionListQueryService.GetIqueryableList(query);
-        }
-
-        private static IQueryable<LedgerTransactionList> FilterMaxCreatedDate(DateTime? maxCreateDate, IQueryable<LedgerTransactionList> query)
-        {
-            if (maxCreateDate != null && maxCreateDate.HasValue)
+            if (maxCreateDate.HasValue)
             {
                 DateTime maxCreateDateReal = maxCreateDate.Value;
-                query = query.Where(rec => rec.CreateDate <= maxCreateDateReal);
+                q = q.Where(rec => rec.CreateDate <= maxCreateDateReal);
             }
 
-            return query;
+            q = QFilterByDateTruncateTimeInclusive(DateTypeCode, from, to, q);
+
+            return q;
+
+
+
         }
 
-        private static IQueryable<LedgerTransactionList> FilterBySearchFields(LedgerTransactionBalanceFilter filters, IQueryable<LedgerTransactionList> query)
-        {
-            if (!string.IsNullOrWhiteSpace(filters.SearchFields))
-                query = query.Where(rec => rec.SearchFields.Contains(filters.SearchFields));
-            return query;
-        }
-
-        private static IQueryable<LedgerTransactionList> FilterByCurrency(LedgerTransactionBalanceFilter filters, IQueryable<LedgerTransactionList> query)
-        {
-            if (!string.IsNullOrWhiteSpace(filters.CurrencyId))
-                query = query.Where(rec => rec.CurrencyId == filters.CurrencyId);
-            return query;
-        }
-        private IQueryable<LedgerTransactionList> FilterByTax(LedgerTransactionBalanceFilter filters, IQueryable<LedgerTransactionList> query)
-        {
-            if (filters.UseTaxreportFilter)
-            {
-                LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
-                query = ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(filters, query);
-            }
-            return query;
-        }
-        private IQueryable<LedgerTransactionList> FilterByFromAndToDate(string DateTypeCode, DateTime from, DateTime to, IQueryable<LedgerTransactionList> q, bool order = true)
+        private IQueryable<LedgerTransaction> QFilterByDateTruncateTimeInclusive(
+            string DateTypeCode, DateTime from, DateTime to, IQueryable<LedgerTransaction> q
+            )
         {
             if (context.ToString().StartsWith("Fake"))
             {
@@ -268,7 +199,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                 {
                     case "2"://GLAccountTotalDateTypeValues.DueDate:
                         {
-
+                            
                             q = (from rec in q
                                  where rec.DueDate.Date >= @from
                                  where rec.DueDate.Date <= to
@@ -312,141 +243,39 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
             else
             {
+
                 switch (DateTypeCode)
                 {
-                    case "2":
+                    case "2"://GLAccountTotalDateTypeValues.DueDate:
                         {
                             q = (from rec in q
                                  where EntityFunctions.TruncateTime(rec.DueDate) >= @from
                                  where EntityFunctions.TruncateTime(rec.DueDate) <= to
                                  select rec);
-                            if (order)
-                                q = (from rec in q
-                                     orderby rec.DueDate, rec.Id
-                                     select rec);
+                            q = (from rec in q
+                                 orderby rec.DueDate, rec.Id
+                                 select rec);
                         }
                         break;
-
-                    case "3":
+                    case "3":// GLAccountTotalDateTypeValues.DocumentDate:
                         {
+                            //return null;
                             q = (from rec in q
                                  where EntityFunctions.TruncateTime(rec.DocumentDate) >= @from
                                  where EntityFunctions.TruncateTime(rec.DocumentDate) <= to
+                                 select rec
+                     );
+                            q = (from rec in q
+                                 orderby rec.DocumentDate, rec.Id
                                  select rec);
-                            if (order)
-                                q = (from rec in q
-                                     orderby rec.DocumentDate, rec.Id
-                                     select rec);
                         }
                         break;
-
-                    case "1":
+                    case "1": //Accountingdate = "1"
                     default:
                         {
                             q = (from rec in q
                                  where EntityFunctions.TruncateTime(rec.AccountingDate) >= @from
                                  where EntityFunctions.TruncateTime(rec.AccountingDate) <= to
-                                 select rec);
-                            if (order)
-                                q = (from rec in q
-                                     orderby rec.AccountingDate, rec.Id
-                                     select rec);
-                        }
-                        break;
-                }
-            }
-            return q;
-        }
-
-        private IQueryable<LedgerTransaction> FilterToDate(
-         string DateTypeCode, DateTime to, IQueryable<LedgerTransaction> q
-         )
-        {
-            if (context.ToString().StartsWith("Fake"))
-            {
-
-
-                switch (DateTypeCode)
-                {
-                    case "2"://GLAccountTotalDateTypeValues.DueDate:
-                        {
-
-                            q = (from rec in q
-
-                                 where rec.DueDate.Date <= to
-                                 select rec
-);
-
-                            q = (from rec in q
-                                 orderby rec.DueDate, rec.Id
-                                 select rec);
-                        }
-                        break;
-                    case "3":// GLAccountTotalDateTypeValues.DocumentDate:
-                        {
-                            //return null;
-                            q = (from rec in q
-
-                                 where rec.DocumentDate.Date <= to
-                                 select rec
-    );
-
-                            q = (from rec in q
-                                 orderby rec.DocumentDate, rec.Id
-                                 select rec);
-                        }
-                        break;
-                    case "1": //Accountingdate = "1"
-                    default:
-                        {
-                            q = (from rec in q
-                                     //where rec.AccountingDate.Date >= @from
-                                 where rec.AccountingDate.Date <= to
-                                 select rec
-                                );
-                            q = (from rec in q
-                                 orderby rec.AccountingDate, rec.Id
-                                 select rec);
-                        }
-                        break;
-                }
-
-            }
-            else
-            {
-
-                switch (DateTypeCode)
-                {
-                    case "2"://GLAccountTotalDateTypeValues.DueDate:
-                        {
-                            q = (from rec in q
-                                     //where EntityFunctions.TruncateTime(rec.DueDate) >= @from
-                                 where EntityFunctions.TruncateTime(rec.DueDate) <= to
-                                 select rec);
-                            q = (from rec in q
-                                 orderby rec.DueDate, rec.Id
-                                 select rec);
-                        }
-                        break;
-                    case "3":// GLAccountTotalDateTypeValues.DocumentDate:
-                        {
-                            //return null;
-                            q = (from rec in q
-                                     //where EntityFunctions.TruncateTime(rec.DocumentDate) >= @from
-                                 where EntityFunctions.TruncateTime(rec.DocumentDate) <= to
-                                 select rec
-                     );
-                            q = (from rec in q
-                                 orderby rec.DocumentDate, rec.Id
-                                 select rec);
-                        }
-                        break;
-                    case "1": //Accountingdate = "1"
-                    default:
-                        {
-                            q = (from rec in q
-                                     //where EntityFunctions.TruncateTime(rec.AccountingDate) >= @from
-                                 where EntityFunctions.TruncateTime(rec.AccountingDate) <= to
                                  select rec
                      );
                             q = (from rec in q
@@ -461,163 +290,16 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return q;
         }
 
-        private IQueryable<LedgerTransactionList> FilterByAmount(QueryFilterItem item, IQueryable<LedgerTransactionList> q)
-        {
-            if (item?.FieldName == "IsLocalAmount")
-            {
-
-
-
-                decimal amount;
-                decimal amount2;
-                decimal.TryParse(item.FieldValue.ToString(), out amount);
-                decimal.TryParse(item.FieldValue2?.ToString(), out amount2);
-
-                switch (item.Operator)
-                {
-                    case "LargerThan":
-                        {
-                            q = q.Where(pageLine =>
-                            amount < (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)
-                            );
-                            break;
-                        }
-
-                    case "GreaterThanOrEqual":
-                        {
-                            q = q.Where(pageLine =>
-                            amount <= (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)
-                            );
-                            break;
-                        }
-
-                    case "LessThan":
-                        {
-                            q = q.Where(pageLine =>
-                            (amount > (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)));
-                            break;
-                        }
-
-                    case "LessThanOrEqual":
-                        {
-                            q = q.Where(pageLine =>
-                            (amount >= (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)));
-                            break;
-                        }
-
-                    case "NotEqual":
-                        {
-                            q = q.Where(pageLine =>
-                            (amount != (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit))
-                            );
-                            break;
-                        }
-
-                    case "Between":
-                        {
-                            q = q.Where(pageLine =>
-                            (amount <= (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit))
-                            &&
-                            (amount2 >= (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)));
-                            break;
-                        }
-                    case "Equals":
-                    default:
-                        {
-                            q = q.Where(pageLine =>
-                            (amount == (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit))
-
-                            );
-                            break;
-                        }
-                }
-
-            }
-            if (item?.FieldName == "IsForeignAmount")
-            {
-
-
-
-                decimal amount;
-                decimal amount2;
-                decimal.TryParse(item.FieldValue.ToString(), out amount);
-                decimal.TryParse(item.FieldValue2?.ToString(), out amount2);
-
-                switch (item.Operator)
-                {
-                    case "LargerThan":
-                        {
-                            q = q.Where(pageLine =>
-                            amount < (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)
-                            );
-                            break;
-                        }
-
-                    case "GreaterThanOrEqual":
-                        {
-                            q = q.Where(pageLine =>
-                            amount <= (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)
-                            );
-                            break;
-                        }
-
-                    case "LessThan":
-                        {
-                            q = q.Where(pageLine =>
-                            (amount > (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)));
-                            break;
-                        }
-
-                    case "LessThanOrEqual":
-                        {
-                            q = q.Where(pageLine =>
-                            (amount >= (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)));
-                            break;
-                        }
-
-                    case "NotEqual":
-                        {
-                            q = q.Where(pageLine =>
-                            (amount != (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit))
-                            );
-                            break;
-                        }
-
-                    case "Between":
-                        {
-                            q = q.Where(pageLine =>
-                            (amount <= (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit))
-                            &&
-                            (amount2 >= (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)));
-                            break;
-                        }
-                    case "Equals":
-                    default:
-                        {
-                            q = q.Where(pageLine =>
-                            (amount == (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit))
-
-                            );
-                            break;
-                        }
-                }
-
-            }
-            return q;
-        }
-        public IQueryable<LedgerTransactionList> GetQueryOrderAccDateAndIdBy(int tenant, IQueryable<string> listOfAccId, DateTime @from, DateTime to,
-            string currencyId,
+        public IQueryable<LedgerTransaction> GetQueryOrderAccDateAndIdBy(int tenant, IQueryable<string> listOfAccId, DateTime @from, DateTime to,
+            string currencyId, 
             string searchByFilter,
             DateTime? maxCreateDate)
         {
-            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
-
             var q = (from rec in context.LedgerTransactions
                      where rec.Tenant == tenant
                      where listOfAccId.Contains(rec.AccountId) //less than 1000
                      select rec
                      );
-            var list = ledgerTransactionListQueryService.GetIqueryableList(q);
             //if (context.ToString().StartsWith("Fake"))
             //{
             //    q = (from rec in q
@@ -634,67 +316,135 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             //         select rec
             //         );
             //}
-            list = FilterByFromAndToDate("1", @from, to, list);
+            q = QFilterByDateTruncateTimeInclusive("1", @from, to, q);
 
             if (!string.IsNullOrWhiteSpace(currencyId))
             {
-                list = list.Where(rec => rec.CurrencyId == currencyId);
+                q = q.Where(rec => rec.CurrencyId == currencyId);
             }
             if (!string.IsNullOrWhiteSpace(searchByFilter))
             {
-                list = list.Where(rec => rec.SearchFields.Contains(searchByFilter));
+                q = q.Where(rec => rec.SearchFields.Contains(searchByFilter));
             }
-
+            
             if (maxCreateDate.HasValue)
             {
                 DateTime maxCreateDateReal = maxCreateDate.Value;
-                list = list.Where(rec => rec.CreateDate <= maxCreateDateReal);
+                q = q.Where(rec => rec.CreateDate <= maxCreateDateReal);
             }
-            list = (from rec in list
-                    orderby rec.AccountingDate, rec.Id
-                    select rec);
+            q = (from rec in q
+                 orderby rec.AccountingDate, rec.Id
+                 select rec);
 
 
-            return list;
+            return q;
 
 
 
         }
 
-        public IQueryable<LedgerTransactionList> GetQueryOrderByDateTypeAndIdByRec(int tenant, IQueryable<string> qOfAccId, DateTime @from, DateTime to,
-       string currencyId,
-       string searchByFilter, bool? isReconciled, string dateType)
-        {
-            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
+        
 
+        public IQueryable<LedgerTransaction> GetQueryOrderAccDateAndIdByRec(int tenant, List<string> listOfAccId, DateTime @from, DateTime to,
+    string currencyId,
+    string searchByFilter,bool? isReconciled )
+        {
             var q = (from rec in context.LedgerTransactions
                      where rec.Tenant == tenant
-                     where qOfAccId.Contains(rec.AccountId) //less than 1000
+                     where listOfAccId.Contains(rec.AccountId) //less than 1000
                      select rec
                      );
-            var list = ledgerTransactionListQueryService.GetIqueryableList(q);
-            list = FilterByFromAndToDate(dateType, @from, to, list);
+            //if (context.ToString().StartsWith("Fake"))
+            //{
+            //    q = (from rec in q
+            //         where rec.AccountingDate.Date >= @from
+            //         where rec.AccountingDate.Date <= to
+            //         select rec
+            //        );
+            //}
+            //else
+            //{
+            //    q = (from rec in q
+            //         where EntityFunctions.TruncateTime(rec.AccountingDate) >= @from
+            //         where EntityFunctions.TruncateTime(rec.AccountingDate) <= to
+            //         select rec
+            //         );
+            //}
+            q = QFilterByDateTruncateTimeInclusive("1", @from, to, q);
 
             if (!string.IsNullOrWhiteSpace(currencyId))
             {
-                list = list.Where(rec => rec.CurrencyId == currencyId);
+                q = q.Where(rec => rec.CurrencyId == currencyId);
             }
-            if (isReconciled.HasValue)
+            if (isReconciled.HasValue && isReconciled.Value == true)
             {
-                list = list.Where(rec => rec.IsReconciled == isReconciled.Value);
+                q = q.Where(rec => rec.IsReconciled == true);
             }
 
             if (!string.IsNullOrWhiteSpace(searchByFilter))
             {
-                list = list.Where(rec => rec.SearchFields.Contains(searchByFilter));
+                q = q.Where(rec => rec.SearchFields.Contains(searchByFilter));
             }
 
-            list = (from rec in list
-                    orderby rec.AccountingDate, rec.Id
-                    select rec);
+            q = (from rec in q
+                 orderby rec.AccountingDate, rec.Id
+                 select rec);
 
 
-            return list;
+            return q;
+
+
+
+        }
+
+
+        public IQueryable<LedgerTransaction> GetQueryOrderByDateTypeAndIdByRec(int tenant, List<string> listOfAccId, DateTime @from, DateTime to,
+       string currencyId,
+       string searchByFilter, bool? isReconciled, string dateType)
+        {
+            var q = (from rec in context.LedgerTransactions
+                     where rec.Tenant == tenant
+                     where listOfAccId.Contains(rec.AccountId) //less than 1000
+                     select rec
+                     );
+            //if (context.ToString().StartsWith("Fake"))
+            //{
+            //    q = (from rec in q
+            //         where rec.AccountingDate.Date >= @from
+            //         where rec.AccountingDate.Date <= to
+            //         select rec
+            //        );
+            //}
+            //else
+            //{
+            //    q = (from rec in q
+            //         where EntityFunctions.TruncateTime(rec.AccountingDate) >= @from
+            //         where EntityFunctions.TruncateTime(rec.AccountingDate) <= to
+            //         select rec
+            //         );
+            //}
+            q = QFilterByDateTruncateTimeInclusive(dateType, @from, to, q);
+
+            if (!string.IsNullOrWhiteSpace(currencyId))
+            {
+                q = q.Where(rec => rec.CurrencyId == currencyId);
+            }
+            if (isReconciled.HasValue && isReconciled.Value == true)
+            {
+                q = q.Where(rec => rec.IsReconciled == true);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchByFilter))
+            {
+                q = q.Where(rec => rec.SearchFields.Contains(searchByFilter));
+            }
+
+            q = (from rec in q
+                 orderby rec.AccountingDate, rec.Id
+                 select rec);
+
+
+            return q;
 
 
 
@@ -711,92 +461,18 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                      select record);
             return q;
         }
-        public IQueryable<LedgerTransaction> GetYearTransferLedgerTransaction(string gLAccountId, int year, int tenant)
+        
+        
+               public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {
-
-            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
-            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
-
-            var qYearTransferJournals =
-                (from j in context.Journals
-                 where j.Tenant == tenant
-                 where j.AccountingEntityCode == "11"//yeartransfer
-
-
-
-                 //where
-                 ////string.IsNullOrWhiteSpace(j.VoidedByJournalId)
-                 //(j.VoidedByJournalId == null || j.VoidedByJournalId.Trim() == string.Empty)
-                 //where
-                 ////string.IsNullOrWhiteSpace(j.OriginalJournalId)
-                 //(j.OriginalJournalId == null || j.OriginalJournalId.Trim() == string.Empty)
-                 select j
-                );
-            DateTime beginOfYear = new DateTime(year, 1, 1);
-
-            IQueryable<LedgerTransaction> qLedgerTransaction = null;
-            if (context.ToString().StartsWith("Fake"))
-            {
-                qLedgerTransaction = (from record in context.LedgerTransactions
-
-                                      where record.Tenant == tenant
-                                      ///&& record.AccountId == gLAccountId
-                                      where record.AccountingDate.Date == beginOfYear
-                                      select record
-                 );
-            }
-            else
-            {
-                qLedgerTransaction = (from record in context.LedgerTransactions
-
-                                      where record.Tenant == tenant
-                                      //&& record.AccountId == gLAccountId
-                                      where EntityFunctions.TruncateTime(record.AccountingDate) == beginOfYear
-                                      select record
-                 );
-
-            }
-            if (!string.IsNullOrWhiteSpace(gLAccountId))
-            {
-                qLedgerTransaction = qLedgerTransaction.Where(record => record.AccountId == gLAccountId);
-            }
-
-            var qYeartransferLedgerTransactionAll =
-                (from record in qLedgerTransaction
-
-                     //context.LedgerTransactions
-                     //where record.Tenant == tenant && record.AccountId == gLAccountId
-                     //where EntityFunctions.TruncateTime(record.AccountingDate) == beginOfYear
-
-                 join j in qYearTransferJournals
-                        on record.JournalId equals j.Id
-
-                 select record);
-
-
-            var qYeartransferLedgerTransaction =
-                (from record in qYeartransferLedgerTransactionAll
-
-            join acc in context.GLAccounts.Where(glac => glac.ChartOfAccountsTypeCode == "1" || glac.ChartOfAccountsTypeCode == "2" || glac.Id == setting.RevenueExpenseGLAccountId) // Revenues or Expenses
-                        on record.AccountId equals acc.Id
-
-                select record);
-
-            return qYeartransferLedgerTransaction;
-        }
-
-        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null,LedgerTransactionBalanceFilter _param = null)
-        {
-            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
-
             var fromDateOnlyDate = fromDate.Date;
             var DateUntillNotIncludeOnlyDate = accoutingDateUntillNotInclude.Date
                 .AddDays(-1);//UntillNotIncludeOnly
-            var q = (from rec in context.LedgerTransactions
-                     where rec.Tenant == tenant
-                     select rec);
+            var ledgerTransactionsByAccountingDate =
 
-            var ledgerTransactionsByAccountingDate = ledgerTransactionListQueryService.GetIqueryableList(q);
+                (from rec in context.LedgerTransactions
+                 where rec.Tenant == tenant
+                 select rec);
             //if (context.ToString().StartsWith("Faked"))
             //{
             //    ledgerTransactionsByAccountingDate =
@@ -815,16 +491,8 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             //     select rec);
 
             //}
-            if (_param == null || !_param.UseTaxreportFilter)
-            {
-                ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDateOnlyDate, DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
-            }
-            else if (_param.Date2TypeCode != null && _param.FromDate2 != null && _param.ToDate2 != null)
-            {
-                ledgerTransactionsByAccountingDate = FilterByFromAndToDate(_param.Date2TypeCode, _param.FromDate2.Value, _param.ToDate2.Value, ledgerTransactionsByAccountingDate);
-                ledgerTransactionsByAccountingDate = FilterByTax(_param, ledgerTransactionsByAccountingDate);
-            }
-                
+            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusive(DateTypeCode, fromDateOnlyDate, DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
+
 
             var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
             if (listOfAccId != null)
@@ -869,60 +537,18 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return myCalcGLAccountTotalByMonth;
 
         }
-
-        public List<CurrencySumOpenAmount> CalcCurrencySumOpenAmountByMonthByDateType(string DateTypeCode, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
-        {
-            ///var fromDateOnlyDate = fromDate.Date;
-            var DateUntillNotIncludeOnlyDate = accoutingDateUntillNotInclude.Date
-                .AddDays(-1);//UntillNotIncludeOnly
-            var ledgerTransactionsByAccountingDate =
-
-                (from rec in context.LedgerTransactions
-                 where rec.Tenant == tenant
-                 where !rec.IsReconciled /*== false*/
-                 select rec);
-
-            ledgerTransactionsByAccountingDate = FilterToDate(DateTypeCode, DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
-
-
-            var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
-            if (listOfAccId != null)
-            {
-                lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate.Where(rec => listOfAccId.Contains(rec.AccountId));
-            }
-
-            var myQCalcGLAccountTotalByMonth = (from rec in lTransByAccountingDateFilterByListOfAccId
-                                                group rec by new
-                                                {
-                                                    rec.AccountId,
-                                                    rec.OpenAmountCurrencyId
-                                                } into groupByAccountCurrency
-                                                select new CurrencySumOpenAmount
-                                                {
-
-                                                    AccountId = groupByAccountCurrency.Key.AccountId,
-                                                    OpenAmountCurrencyId = groupByAccountCurrency.Key.OpenAmountCurrencyId,
-                                                    OpenAmount = groupByAccountCurrency.Sum(x => x.OpenAmount)
-
-                                                });
-
-            var l = myQCalcGLAccountTotalByMonth.ToList();
-            return l;
-        }
+     
 
         public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByAccountingDate(DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {
-            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
-
             var fromDateOnlyDate = fromDate.Date;
             var accoutingDateUntillNotIncludeOnlyDate = accoutingDateUntillNotInclude.Date
                 .AddDays(-1);
-            var q =
-               (from rec in context.LedgerTransactions
-                where rec.Tenant == tenant
-                select rec);
-            var ledgerTransactionsByAccountingDate = ledgerTransactionListQueryService.GetIqueryableList(q);
-
+            var ledgerTransactionsByAccountingDate =
+                
+                (from rec in context.LedgerTransactions
+                 where rec.Tenant == tenant
+                 select rec);
             //if (context.ToString().StartsWith("Faked"))
             //{
             //    ledgerTransactionsByAccountingDate =
@@ -941,7 +567,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             //     select rec);
 
             //}
-            ledgerTransactionsByAccountingDate = FilterByFromAndToDate("1", fromDateOnlyDate, accoutingDateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
+            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusive("1", fromDateOnlyDate, accoutingDateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
 
 
             var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
@@ -951,24 +577,24 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
 
             var myQCalcGLAccountTotalByMonth = (from rec in lTransByAccountingDateFilterByListOfAccId
-                                                group rec by new
-                                                {
-                                                    rec.AccountId,
-                                                    rec.CurrencyId
-                                                } into groupByAccountCurrency
-                                                select new //GLAccountTotalByMonth//The entity or complex type 'Logitude.Accounting.Data.GLAccountTotalByMonth' cannot be constructed in a 
-                                                {
-                                                    Tenant = tenant,
-                                                    //   Month = toDate.Month,
-                                                    //   Year = toDate.Year,
-                                                    AccountId = groupByAccountCurrency.Key.AccountId,
-                                                    CurrencyId = groupByAccountCurrency.Key.CurrencyId,
-                                                    LocalAmountCredit = groupByAccountCurrency.Sum(x => x.LocalAmountCredit),
-                                                    LocalAmountDebit = groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
-                                                    ForeignAmountCredit = groupByAccountCurrency.Sum(x => x.ForeignAmountCredit),
-                                                    ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.ForeignAmountDebit)
+                                               group rec by new
+                                               {
+                                                   rec.AccountId,
+                                                   rec.CurrencyId
+                                               } into groupByAccountCurrency
+                                               select new //GLAccountTotalByMonth//The entity or complex type 'Logitude.Accounting.Data.GLAccountTotalByMonth' cannot be constructed in a 
+                                               {
+                                                   Tenant = tenant,
+                                                   //   Month = toDate.Month,
+                                                   //   Year = toDate.Year,
+                                                   AccountId = groupByAccountCurrency.Key.AccountId,
+                                                   CurrencyId = groupByAccountCurrency.Key.CurrencyId,
+                                                   LocalAmountCredit = groupByAccountCurrency.Sum(x => x.LocalAmountCredit),
+                                                   LocalAmountDebit = groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
+                                                   ForeignAmountCredit = groupByAccountCurrency.Sum(x => x.ForeignAmountCredit),
+                                                   ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.ForeignAmountDebit)
 
-                                                });
+                                               });
             var myCalcGLAccountTotalByMonth =
                 myQCalcGLAccountTotalByMonth
                   //The entity or complex type 'Logitude.Accounting.Data.GLAccountTotalByMonth' cannot be constructed in a 
@@ -979,8 +605,8 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                       //   Year = toDate.Year,
                       AccountId = y.AccountId,
                       CurrencyId = y.CurrencyId,
-                      LocalAmountCredit = y.LocalAmountCredit,
-                      LocalAmountDebit = y.LocalAmountDebit,
+                      LocalAmountCredit = y.LocalAmountCredit ,
+                      LocalAmountDebit = y.LocalAmountDebit ,
                       ForeignAmountCredit = y.ForeignAmountCredit,
                       ForeignAmountDebit = y.ForeignAmountDebit
                   }).ToList();
@@ -1019,12 +645,12 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     )
                     );
             }
+            
+            
 
 
 
-
-
-
+            
 
             if (groupByAccountingDateDefaultByDueDate)
             {
@@ -1053,34 +679,28 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
 
             //// // when take from reconcile from 2018/10 the reconcile set the open amount  into FOreignAmount ALWAYS !!!
-            var qTotalByMonthAcc =
+            var qTotalByMonthAcc = 
                  (from groupByAccountCurrency in myGroup
                   select new GLAccountTotalByMonthsDTOAging()
-                  {
-                      Tenant = tenant,
-                      AccountId = groupByAccountCurrency.Key.MainGLAccountId,
-                      GLAccountCurrencyId = groupByAccountCurrency.Key.AccountId,
-                      CurrencyId = groupByAccountCurrency.Key.CurrencyId,
+                                    {
+                                        Tenant = tenant,
+                                        AccountId = groupByAccountCurrency.Key.MainGLAccountId,
+                                        GLAccountCurrencyId= groupByAccountCurrency.Key.AccountId,
+                                        CurrencyId = groupByAccountCurrency.Key.CurrencyId,
 
-                      Year = groupByAccountCurrency.Key.Year,
-                      Month = groupByAccountCurrency.Key.Month,
+                                        Year = groupByAccountCurrency.Key.Year,
+                                        Month = groupByAccountCurrency.Key.Month,
 
-                      LocalAmountCredit = 0,//groupByAccountCurrency.Sum(x => x.OpenAmount),
-                      LocalAmountDebit = 0, //0,//groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
+                                        LocalAmountCredit = 0,//groupByAccountCurrency.Sum(x => x.OpenAmount),
+                                        LocalAmountDebit = 0 , //0,//groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
 
-                      ///accountingCurrencyId != groupByAccountCurrency.Key.CurrencyId ? 0 : groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
-#if supress_OpenCreditAndDebit
-                      ForeignAmountCredit = 0,
-                      ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
-#else
-                      ForeignAmountCredit = -1 * ((decimal?)(groupByAccountCurrency.Where(r => r.LedgerTransaction.LocalAmountCredit != 0).Sum(x => x.LedgerTransaction.OpenAmount)) ?? 0),
-                      ForeignAmountDebit = (decimal?)(groupByAccountCurrency.Where(r => r.LedgerTransaction.LocalAmountCredit == 0).Sum(x => x.LedgerTransaction.OpenAmount)) ?? 0,
-#endif
+                                        ///accountingCurrencyId != groupByAccountCurrency.Key.CurrencyId ? 0 : groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
 
-                      TotalOpenTransactions = groupByAccountCurrency.Count(),
+                                        ForeignAmountCredit = 0,//groupByAccountCurrency.Sum(x => x.ForeignAmountCredit),
+                                        ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
 
-                      CHANGE_TYPE = ""
-                  }); ;
+                                        CHANGE_TYPE = ""
+                                    });
 
 #if NotOnlyInForeign_B4_201810
 
@@ -1147,20 +767,19 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         }
 
         public IQueryable<GLAccountTotalByMonthsDTO> GetQueryableGLAccountTotalByMonthByDateTypeCode(
-            string DateTypeCode,
+            string DateTypeCode, 
             DateTime fromDate, DateTime toDate, int tenant, List<string> listOfAccId = null)
         {
-            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
             var fromDateOnlyDate = fromDate.Date;
             var toDateOnlyDate = toDate.Date;
-            var q = (from rec in context.LedgerTransactions
-                         //where EntityFunctions.TruncateTime(rec.AccountingDate) >= fromDateOnlyDate //fromDate.Date
-                         //where EntityFunctions.TruncateTime(rec.AccountingDate) <= toDateOnlyDate //toDate.Date
-                     where rec.Tenant == tenant
-                     select rec);
+            var ledgerTransactionsByAccountingDate = (from rec in context.LedgerTransactions
+                                                      //where EntityFunctions.TruncateTime(rec.AccountingDate) >= fromDateOnlyDate //fromDate.Date
+                                                      //where EntityFunctions.TruncateTime(rec.AccountingDate) <= toDateOnlyDate //toDate.Date
+                                                      where rec.Tenant == tenant
+                                                      select rec);
 
-            var ledgerTransactionsByAccountingDate = ledgerTransactionListQueryService.GetIqueryableList(q);
-            ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDate, toDate, ledgerTransactionsByAccountingDate);
+
+            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusive(DateTypeCode, fromDate, toDate, ledgerTransactionsByAccountingDate);
             var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
             if (listOfAccId != null)
             {
@@ -1170,7 +789,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             bool byDateType = true;
             if (byDateType)
             {
-                var myGroupBy = lTransByAccountingDateFilterByListOfAccId.GroupBy(rec => new
+                var myGroupBy=lTransByAccountingDateFilterByListOfAccId.GroupBy(rec => new
                 {
                     rec.AccountId,
                     rec.CurrencyId,
@@ -1204,7 +823,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
                         }
                 }
-                var myCalcGLAccountTotalByMonth = myGroupBy.Select(groupByAccountCurrency =>
+                var myCalcGLAccountTotalByMonth = myGroupBy.Select(groupByAccountCurrency=>
                 new //GLAccountTotalByMonth//The entity or complex type 'Logitude.Accounting.Data.GLAccountTotalByMonth' cannot be constructed in a 
                                                    GLAccountTotalByMonthsDTO()
                 {
@@ -1258,148 +877,32 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
         }
 
-
-        public IQueryable<GLAccountTotalByMonthsDTO> GetQueryableGLAccountTotalByMonthByDateTypeCodeFromControlAccount(
-            string DateTypeCode,
-            DateTime fromDate, DateTime toDate, int tenant)
-        {
-            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
-            var fromDateOnlyDate = fromDate.Date;
-            var toDateOnlyDate = toDate.Date;
-            var q = (from rec in context.LedgerTransactions
-                         //where EntityFunctions.TruncateTime(rec.AccountingDate) >= fromDateOnlyDate //fromDate.Date
-                         //where EntityFunctions.TruncateTime(rec.AccountingDate) <= toDateOnlyDate //toDate.Date
-                     where rec.Tenant == tenant
-                     select rec);
-            var ledgerTransactionsByAccountingDate = ledgerTransactionListQueryService.GetIqueryableList(q);
-            ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDate, toDate, ledgerTransactionsByAccountingDate);
-            ledgerTransactionsByAccountingDate = ledgerTransactionsByAccountingDate
-                .Where(r =>
-                r.ControlAccountId != null && r.ControlAccountId.Trim() != string.Empty
-                    );
-            var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
-
-
-
-            var myGroupBy = lTransByAccountingDateFilterByListOfAccId.GroupBy(rec => new
-            {
-                rec.ControlAccountId,
-                rec.CurrencyId,
-                rec.AccountingDate.Year,
-                rec.AccountingDate.Month,
-            });
-            switch (DateTypeCode)
-            {
-                case "2"://GLAccountTotalDateTypeValues.DueDate:
-                    {
-                        myGroupBy = lTransByAccountingDateFilterByListOfAccId.GroupBy(rec => new
-                        {
-                            rec.ControlAccountId,
-                            rec.CurrencyId,
-                            rec.DueDate.Year,
-                            rec.DueDate.Month,
-                        });
-                    }
-                    break;
-                case "3":// GLAccountTotalDateTypeValues.DocumentDate:
-                    {
-                        //return null;
-                        myGroupBy = lTransByAccountingDateFilterByListOfAccId.GroupBy(rec => new
-                        {
-                            rec.ControlAccountId,
-                            rec.CurrencyId,
-                            rec.DocumentDate.Year,
-                            rec.DocumentDate.Month,
-                        });
-                        break;
-
-                    }
-            }
-            var myCalcGLAccountTotalByMonth = myGroupBy.Select(groupByAccountCurrency =>
-            new //GLAccountTotalByMonth//The entity or complex type 'Logitude.Accounting.Data.GLAccountTotalByMonth' cannot be constructed in a 
-                                               GLAccountTotalByMonthsDTO()
-            {
-                Tenant = tenant,
-                AccountId = groupByAccountCurrency.Key.ControlAccountId,
-                CurrencyId = groupByAccountCurrency.Key.CurrencyId,
-
-                Year = groupByAccountCurrency.Key.Year,
-                Month = groupByAccountCurrency.Key.Month,
-
-                LocalAmountCredit = groupByAccountCurrency.Sum(x => x.LocalAmountCredit),
-                LocalAmountDebit = groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
-                ForeignAmountCredit = groupByAccountCurrency.Sum(x => x.ForeignAmountCredit),
-                ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.ForeignAmountDebit),
-                CHANGE_TYPE = ""
-            });
-            return myCalcGLAccountTotalByMonth;
-
-
-
-
-        }
         public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromTo(string accountId, DateTime fromDate, DateTime toDate, int tenant)
         {
 
-            var q = (from r in context.LedgerTransactions
-                     where r.AccountId == accountId && r.AccountingDate >= fromDate && r.AccountingDate <= toDate && r.Tenant == tenant
-                     group r by new
-                     {
-                         r.CurrencyId
-                     } into g
-                     select new CurrencySum
-                     {
-                         AccountId = accountId,
-                         CurrencyId = g.Key.CurrencyId,
-                         LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
-                         LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
-                         ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
-                         ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
-                     });
-            List<CurrencySum> mysumlist = q != null ? q.ToList() : new List<CurrencySum>();
+            var mysumlist = (from r in context.LedgerTransactions
+                             where r.AccountId == accountId && r.AccountingDate >= fromDate && r.AccountingDate <= toDate && r.Tenant == tenant
+                             group r by new
+                             {
+                                 r.CurrencyId
+                             } into g
+                             select new CurrencySum
+                             {
+                                 AccountId = accountId,
+                                 CurrencyId = g.Key.CurrencyId,
+                                 LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
+                                 LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
+                                 ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
+                                 ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
+                             }).ToList();
             return mysumlist;
         }
-
-
-        public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromToV2(
-    IEnumerable<string> accountIds,
-    DateTime fromDate,
-    DateTime toDate,
-    int tenant)
-        {
-            var ids = (accountIds ?? Enumerable.Empty<string>())
-                      .Where(id => !string.IsNullOrEmpty(id))
-                      .Distinct()
-                      .ToList();
-
-            if (!ids.Any())
-                return new List<CurrencySum>();
-
-            var q = from r in context.LedgerTransactions.AsNoTracking()
-                    where ids.Contains(r.AccountId)
-                          && r.AccountingDate >= fromDate
-                          && r.AccountingDate <= toDate
-                          && r.Tenant == tenant
-                    group r by new { r.AccountId, r.CurrencyId } into g
-                    select new CurrencySum
-                    {
-                        AccountId = g.Key.AccountId,
-                        CurrencyId = g.Key.CurrencyId,
-                        LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
-                        LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
-                        ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
-                        ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
-                    };
-
-            return q.ToList();
-        }
-
 
         public IQueryable<CurrencySum> GetQLedgerTransactionGroupBETWEENinclusive(DateTime fromDate, DateTime toDate, int tenant)
         {
             return (from r in context.LedgerTransactions
 
-                        //where r.AccountId == accountId && 
+                    //where r.AccountId == accountId && 
                     where r.AccountingDate >= fromDate
                     where r.AccountingDate <= toDate
 
@@ -1408,13 +911,13 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     {
                         r.AccountId,
                         r.CurrencyId,
-
+                       
                     } into g
                     select new CurrencySum
                     {
                         AccountId = g.Key.AccountId,
                         CurrencyId = g.Key.CurrencyId,
-
+                        
                         ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
                         ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit),
 
@@ -1423,10 +926,10 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     });
         }
 
+        
 
 
-
-
+        
 
 
         public decimal? GetLedgerTransactionSumFromTo(string gLAccointId, DateTime fromDate, DateTime toDate, int tenant, string currencyId)
@@ -1472,167 +975,12 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                  select a).ToList();
             return ledgerTransactionPOCOs;
         }
-
-       
-
-        public List<LedgerTransactionJournalLineLT> GetAPInvoiceLedgerTransactionsByIdList(List<String> ledgerTransactionIds, int tenant)
-        {
-
-            var lt_query1 =
-                from a in context.LedgerTransactions
-                 where ledgerTransactionIds.Contains(a.Id) 
-                 && a.Tenant == tenant
-                 select a;
-
-            bool testing = false;
-            if (testing)
-            {
-                List<LedgerTransaction> testList1 = lt_query1.ToList();
-            }
-
-
-            JournalRepository journalRepository = new JournalRepository(tenant);
-            JournalLineRepository journalLineRepository = new JournalLineRepository(tenant);
-            var lt_query2 = from jl in journalLineRepository.GetAll(tenant).Where(rec => rec.ActionCode == "1")
-                            join j in journalRepository.GetAll(tenant)
-                            on jl.JournalId equals j.Id
-                            join
-                           trans in lt_query1
-                           on new { jl.JournalId, jl.Line }
-                           equals new { trans.JournalId, Line = trans.JournalLineNumber }
-                           select new LedgerTransactionJournalLineLT
-                           {
-                               Id = trans.Id,
-                               Tenant = tenant,
-                               AccountId = trans.AccountId,
-                               ActionCode = jl.ActionCode,
-                               JournalId = trans.JournalId,
-                               JournalLineNumber = trans.JournalLineNumber,
-                               LocalAmountDebit = trans.LocalAmountDebit,
-                               LocalAmountCredit = trans.LocalAmountCredit,
-                               ForeignAmountDebit = trans.ForeignAmountDebit,
-                               ForeignAmountCredit = trans.ForeignAmountCredit,
-                               CurrencyId = trans.CurrencyId,
-                               OpenAmount = trans.OpenAmount,
-                               SourceTypeCode = j.AccountingEntityCode,
-                               SourceId = j.AccountingEntityId,
-                               SourceNumber = j.AccountingEntityReference,
-                               OriginalJournalId = j.OriginalJournalId,
-                               InReconcileProgress = trans.InReconcileProgress,
-                               IsReconciled = trans.IsReconciled,
-                               OpenAmountCurrencyId = trans.OpenAmountCurrencyId,
-                               ChangeSetOp = ChangeSetOperation.None,
-                           };
-
-
-
-            List<LedgerTransactionJournalLineLT> rv = lt_query2.ToList();
-
-
-            return rv;
-        }
-
-
-        public List<LedgerTransactionJournalLineLT> GetLedgerTransactionJournalLineLTsByIdList(List<String> ledgerTransactionIds, int tenant)
-        {
-
-            var lt_query1 =
-                from a in context.LedgerTransactions
-                where ledgerTransactionIds.Contains(a.Id)
-                && a.Tenant == tenant
-                select a;
-
-            bool testing = false;
-            if (testing)
-            {
-                List<LedgerTransaction> testList1 = lt_query1.ToList();
-            }
-
-
-            JournalRepository journalRepository = new JournalRepository(context);
-            JournalLineRepository journalLineRepository = new JournalLineRepository(context);
-            var lt_query2 = from jl in journalLineRepository.GetAll(tenant)
-                            join j in journalRepository.GetAll(tenant)
-                            on jl.JournalId equals j.Id
-                            join
-                           trans in lt_query1
-                           on new { jl.JournalId, jl.Line }
-                           equals new { trans.JournalId, Line = trans.JournalLineNumber }
-                            select new LedgerTransactionJournalLineLT
-                            {
-                                Id = trans.Id,
-                                Tenant = tenant,
-                                AccountId = trans.AccountId,
-                                ActionCode = jl.ActionCode,
-                                JournalId = trans.JournalId,
-                                JournalLineNumber = trans.JournalLineNumber,
-                                LocalAmountDebit = trans.LocalAmountDebit,
-                                LocalAmountCredit = trans.LocalAmountCredit,
-                                ForeignAmountDebit = trans.ForeignAmountDebit,
-                                ForeignAmountCredit = trans.ForeignAmountCredit,
-                                CurrencyId = trans.CurrencyId,
-                                OpenAmount = trans.OpenAmount,
-                                SourceTypeCode = j.AccountingEntityCode,
-                                SourceId = j.AccountingEntityId,
-                                SourceNumber = j.AccountingEntityReference,
-                                OriginalJournalId = j.OriginalJournalId,
-                                InReconcileProgress = trans.InReconcileProgress,
-                                IsReconciled = trans.IsReconciled,
-                                OpenAmountCurrencyId = trans.OpenAmountCurrencyId,
-                                ChangeSetOp = ChangeSetOperation.None,
-                            };
-
-
-
-            List<LedgerTransactionJournalLineLT> rv = lt_query2.ToList();
-
-
-            return rv;
-        }
-
-
-
-        public bool CheckAnyLedgerTransactionReconciledByIdList(List<String> idList, int tenant)
-        {
-            var query =
-                (from a in context.LedgerTransactions
-                 where idList.Contains(a.Id) && a.Tenant == tenant && a.IsReconciled == true
-                 select a.Id);
-            return query.Any();
-        }
-
-        public bool CheckTransactionsInReconcileProgress(List<String> idList, int tenant)
-        {
-            return (from a in context.LedgerTransactions
-                    where idList.Contains(a.Id) && a.InReconcileProgress == true && a.Tenant == tenant
-                    select a).Any();
-        }
-
-        public List<LedgerTransaction> GetLedgerTransactionsByAccountIdListAndJournalId(List<String> accountIdList, string journalId, int tenant)
-        {
-            List<LedgerTransaction> ledgerTransactionPOCOs =
-                (from a in context.LedgerTransactions
-                 where accountIdList.Contains(a.AccountId) &&
-                 a.Tenant == tenant &&
-                 a.JournalId == journalId
-                 select a).ToList();
-            return ledgerTransactionPOCOs;
-        }
-        public List<string> GetTransactionsCurrencies(string accountId, int tenant)
-        {
-            List<string> transactionsCurrencies = (from lt in context.LedgerTransactions
-                                                   where lt.AccountId == accountId && lt.Tenant == tenant
-                                                   group lt by lt.CurrencyId into cr
-                                                   select cr.Key).ToList();
-
-            return transactionsCurrencies;
-        }
         public List<LedgerTransaction> GetLast10TransactionsForAccount(string accountId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs =
                 (from a in context.LedgerTransactions
                  where a.AccountId == accountId && a.Tenant == tenant
-                 select a).OrderByDescending(a => a.AccountingDate).Take(10).ToList();
+                 select a).OrderByDescending(a=>a.AccountingDate).Take(10).ToList();
             return ledgerTransactionPOCOs;
         }
         public IQueryable<LedgerTransaction> GetQByJournalIds(List<string> listOfJournalIds, int tenant)
@@ -1641,7 +989,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
              (from a in context.LedgerTransactions
               where listOfJournalIds.Contains(a.JournalId) && a.Tenant == tenant
               select a);
-
+            
         }
         public IQueryable<LedgerTransaction> GetLedgerTransactionsByAccount(string gLAccountId, int tenant)
         {
@@ -1663,8 +1011,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             if (!String.IsNullOrEmpty(gLAccountId))
             {
                 return (from record in context.LedgerTransactions
-                        where record.Tenant == tenant && record.AccountId == gLAccountId && record.Mark == true 
-                                                      && (record.OpenAmount != 0m || record.AmountToReconcile != 0m)
+                        where record.Tenant == tenant && record.AccountId == gLAccountId && record.Mark == true
                         select record).ToList();
             }
             else
@@ -1673,158 +1020,45 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
         }
 
-        public int getRecoCount(string glAccountId, int tenant)
+        public int getRecoCount(string glAccountId)
         {
             return (from a in context.LedgerTransactions
-                    where
-                    a.AccountId == glAccountId
-                    && a.InReconcileProgress == false
-                    && a.IsReconciled == false
-                    && a.Tenant == tenant
+                    where a.AccountId == glAccountId && a.IsReconciled == false
                     select a).Count();
         }
 
-        public JournalAdditionalData GetJournalAdditionalDataByJournalId(string journalId, int tenant)
-        {
-            return (from a in context.JournalAdditionalDatas
-                    where a.JournalId == journalId && a.Tenant == tenant
-                    select a
-                    ).ToList().FirstOrDefault();
-        }
-        public List<CustomTaxReportData> GetLedgerTransactionsForTaxReport(DateTime? taxReportMonth, int tenant)
+       public List<TaxReportData> GetLedgerTransactionsForTaxReport(DateTime? taxReportMonth, int tenant)
         {
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
-            DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days, 23, 59, 59);
-            bool useAccountingDateForAPTax = FeatureToggleHelper.HasFeatureToggle("UAT", tenant);
-            string apInvoice = "4";
+            DateTime taxdate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
+
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
-
-            return (from ledger in context.LedgerTransactions
-                    join j in context.Journals on ledger.JournalId equals j.Id
-                    join m in context.JournalAdditionalDatas on new { ledger.JournalId, ledger.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
-
-                    where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null || j.IsVoided == true)
-                       && ( (j.AccountingEntityCode != apInvoice ? ledger.DocumentDate
-                                   : (useAccountingDateForAPTax ? ledger.AccountingDate  : ledger.DocumentDate ) )  <= endOfTaxReportDate)
-                            && ledger.AccountId == setting.VATInputsGLAccountId
-                            && ledger.Tenant == tenant
-                            && ledger.LocalAmountDebit != 0
-                            && ledger.OppositeAccountId != setting.VATOutputGLAccountId
-
-                    select new CustomTaxReportData()
+            DateTime date = DateTime.Now.AddDays(-180);
+            DateTime last180days=  new DateTime(date.Year, date.Month, 1);
+            //taxReportMonth. = 1;
+            return (from a in context.LedgerTransactions
+                    join j in context.Journals on a.JournalId equals j.Id
+                    join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
+                    where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) && a.AccountingDate <= taxdate
+                    && a.DocumentDate >= last180days && a.AccountId == setting.VATInputsGLAccountId
+                    select new TaxReportData()
                     {
                         Id = Guid.NewGuid().ToString(),
                         AccountingEntity = j.AccountingEntityCode,
-                        Reference = ledger.Reference1,
-                        ReferenceDate = ledger.DocumentDate,
-                        JournalId = ledger.JournalId,
-                        LocalAmountDebit = ledger.LocalAmountDebit,
-                        LocalAmountCredit = ledger.LocalAmountCredit,
-                        OppositGLAccount = ledger.OppositeAccountId,
-                        AccountingEntityId = j.AccountingEntityId,
-                        JournalLineNumber = ledger.JournalLineNumber,
-                        AccountId = ledger.AccountId,
-                        TransmitStatusCode = m.TaxReportTransmitStatusCode,
-                        IsVoided = j.IsVoided,
-                        TaxReportId = m.TaxReportId,
-                        OriginalJournalId = j.OriginalJournalId,
-                        Tenant = ledger.Tenant,
-                        IsLedgerReconciled = ledger.IsReconciled,
-                        LedgerTransactionId = ledger.Id
+                        Reference = a.Reference1,
+                        ReferenceDate = a.DocumentDate,
+                        JournalId = a.JournalId,
+                        LocalAmountDebit = a.LocalAmountDebit,
+                        LocalAmountCredit = a.LocalAmountCredit,
+                        OppositGLAccount = a.OppositeAccountId,
+                        AccountingEntityId= j.AccountingEntityId,
                     }
-
+                    
                     ).ToList();
 
 
-        }
-        public IQueryable<LedgerTransactionList> GetLedgerTransactionsByTaxReportJournalIds(DateTime? taxReportMonth, LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter, IQueryable<LedgerTransactionList> query)
-        {
-
-            int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
-            DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days, 23, 59, 59);
-
-            var ledgerTransactionsListQuery = from lt in query
-                         where lt.DocumentDate <= endOfTaxReportDate 
-                            && lt.Tenant == ledgerTransactionBalanceFilter.Tenant
-                            && lt.AccountId == ledgerTransactionBalanceFilter.GLAccountId
-                         select lt;
-
-            if (!string.IsNullOrWhiteSpace(ledgerTransactionBalanceFilter.SearchFields))
-            {
-                ledgerTransactionsListQuery = ledgerTransactionsListQuery.Where(x => x.SearchFields.Contains(ledgerTransactionBalanceFilter.SearchFields));
-            }
-            return ledgerTransactionsListQuery;
-        }
-
-
-
-        // Get all journal transactions and journal transactions not excluded from tax report
-        // Used in the TaxReportService
-        // Combined select and return
-        public (HashSet<LedgerTransaction> allJournalTransactions, HashSet<LedgerTransaction> journalTransactionsNotExcluded)
-        GetLedgerTransactionsByJournalIdsCombined(List<string> journalIds, int tenant)
-        {
-            // Single DB query (Include Account and JournalLine to capture all required data)
-            var query = ((DbQuery<LedgerTransaction>)context.LedgerTransactions)
-                .Include("JournalLine")
-                .Include("Account")
-                .Where(a => journalIds.Contains(a.JournalId) && a.Tenant == tenant)
-                .Select(a => new
-                {
-                    LedgerTransaction = a,
-                    IsExcluded = a.JournalLine.ExcludeFromTaxReport
-                })
-                .ToHashSet();
-
-            // Separate results in memory
-            var allJournalTransactions = query
-                .Select(x => x.LedgerTransaction)
-                .ToHashSet();
-
-            var journalTransactionsNotExcluded = query
-                .Where(x => x.IsExcluded != true)
-                .Select(x => x.LedgerTransaction)
-                .ToHashSet();
-
-            return (allJournalTransactions, journalTransactionsNotExcluded);
-        }
-
-
-        public List<LedgerTransaction> GetLedgerTransactionsByJournalIdsAndAccountId(List<string> journalIds, string accountId, int tenant)
-        {
-
-
-            return (from a in ((DbQuery<LedgerTransaction>)context.LedgerTransactions).Include("Account")
-                    where journalIds.Contains(a.JournalId) && a.Tenant == tenant && a.AccountId == accountId
-
-                    select a
-                    ).ToList();
-
-
-        }
-        public IQueryable<LedgerTransactionList> GetLedgerTransactionsInputsNotIncludedInTaxReports(LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter, FullAccountingSettingList setting, IQueryable<LedgerTransactionList> query)
-        {
-
-            IQueryable<LedgerTransactionList> inputLines = (from ledger in query
-                                                            join journal in context.Journals on ledger.JournalId equals journal.Id
-                                                            join additional in context.JournalAdditionalDatas on new { ledger.JournalId, ledger.JournalLineNumber } equals new { additional.JournalId, additional.JournalLineNumber }
-                                                            join taxReport in context.TaxReports on additional.TaxReportId equals taxReport.Id
-                                                            into transactiosjoin
-                                                            from taxreport in transactiosjoin.DefaultIfEmpty()
-                                                            where (ledger.OppositeAccountId != setting.VATOutputGLAccountId || ledger.OppositeAccountId == null)
-                                                           && ledger.Tenant == ledgerTransactionBalanceFilter.Tenant
-                                                          && ledger.LocalAmountDebit != 0
-                                                          && ledger.AccountId == setting.VATInputsGLAccountId
-                                                          && ((taxreport.StatusCode != VatReportStatuses.Transmitted && taxreport.StatusCode != VatReportStatuses.TransmittedAndClosingJournal) || additional.TaxReportId == null)
-                                                            select ledger).Distinct();
-            if (!string.IsNullOrWhiteSpace(ledgerTransactionBalanceFilter.SearchFields))
-            {
-                inputLines = inputLines.Where(x => x.SearchFields.Contains(ledgerTransactionBalanceFilter.SearchFields));
-            }
-
-            return inputLines;
         }
 
         public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, DateTime closedDate, DateTime openDate, int tenant)
@@ -1853,148 +1087,6 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return records;
         }
 
-        public IQueryable<LedgerTransaction> GetTransactionsForMonth(int year, int month, int tenant)
-        {
-            DateTime monthStart = new DateTime(year, month, 1, 0, 0, 0);
-            DateTime monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month), 23, 59, 59);
-
-
-            IQueryable<LedgerTransaction> pocos =
-                (from a in context.LedgerTransactions
-                 where a.AccountingDate >= monthStart
-                    && a.AccountingDate <= monthEnd
-                    && a.Tenant == tenant
-                 select a).OrderByDescending(a => a.AccountingDate);
-            return pocos;
-        }
-
-
-        public IQueryable<LedgerTransactionDeductionDTO> GetTransactionsDeductionDTO(
-            string whAccountId,
-            DateTime startDate,
-            DateTime endDate,
-            int tenant)
-        {
-            return context.LedgerTransactionsDeductionView
-                        .Where(a =>
-                        a.Tenant == tenant &&
-                        (a.ChartOfAccountsTypeCode == ChartOfAccountsTypes.Banks || a.AccountId == whAccountId) &&
-                        a.AccountingDate >= startDate &&
-                        a.AccountingDate <= endDate)
-                        .Select(a => new LedgerTransactionDeductionDTO
-                        {
-                            Id = a.Id,
-                            AccountId = a.AccountId,
-                            OppositeAccountId = a.OppositeAccountId,
-                            JournalId = a.JournalId,
-                            JournalLineNumber = a.JournalLineNumber,
-                            LocalAmountDebit = a.LocalAmountDebit ?? 0m,
-                            LocalAmountCredit = a.LocalAmountCredit ?? 0m,
-                            Reference1 = a.Reference1,
-                            AccountingDate = a.AccountingDate,
-                            Tenant = a.Tenant
-                        });
-        }
-
-    
-        public List<LedgerTransaction> GetTransactionsBySourceId(string sourceId, string sourceTypeCode, int tenant)
-        {
-            return (from transaction in context.LedgerTransactions
-                    join journal in context.Journals on transaction.JournalId equals journal.Id
-                    where journal.AccountingEntityId == sourceId
-                            && journal.AccountingEntityCode == sourceTypeCode
-                            && transaction.Tenant == tenant
-                    select transaction).ToList();
-        }
-        public IQueryable<LedgerTransaction> GetByJournalIdAndForeignAmountDebitNotEqualZero(string journalId, int tenant)
-        {
-
-            return (from a in context.LedgerTransactions
-                    where a.JournalId == journalId && a.Tenant == tenant && a.ForeignAmountDebit != 0
-                    select a);
-
-        }
-        public IQueryable<LedgerTransaction> GetByJournalIdAndForeignAmountCreditNotEqualZero(string journalId, int tenant)
-        {
-
-            return (from a in context.LedgerTransactions
-                    where a.JournalId == journalId && a.Tenant == tenant && a.ForeignAmountCredit != 0
-                    select a);
-
-        }
-
-
-        public LedgerTransactionList GetSingleAsLiteForReco(string transactionId)
-        {
-            var transaction = context.LedgerTransactions.Include("JournalLine").Include("Currency").Include("Journal")
-                .Where(t => t.Id == transactionId)
-                .Select(t => new LedgerTransactionList
-                {
-                    Id = t.Id,
-                    CreateDate = t.CreateDate,
-                    DueDate = t.DueDate,
-                    ForeignAmountDebit = t.ForeignAmountDebit,
-                    ForeignAmountCredit = t.ForeignAmountCredit,
-                    Reference1 = t.Reference1,
-                    Reference2 = t.Reference2,
-                    Reference3 = t.Reference3,
-                    Notes = t.Notes,
-                    JournalNumber = t.JournalLine.Journal.JournalNumber,
-                    JournalId = t.JournalId,
-                    JournalLineNumber = t.JournalLineNumber,
-                    OpenAmountCurrencySign = t.Currency!=null?t.Currency.Sign:String.Empty,
-                    SearchFields = t.SearchFields,
-                }).FirstOrDefault();
-            return transaction;
-        }
-
-        public List<GLAccountTotalByMonthsDTO> GetControllerTotalDateType1(int tenant)
-        {
-            return (from a in context.LedgerTransactions
-                    where a.Tenant == tenant
-                    && a.ControlAccountId != null
-
-                    group a by new { Year = a.AccountingDate.Year, Month = a.AccountingDate.Month, CurrencyId = a.CurrencyId, ControlAccountId = a.ControlAccountId }
-                    into x
-                    select new GLAccountTotalByMonthsDTO()
-                    {
-                        AccountId = x.Key.ControlAccountId,
-                        CurrencyId = x.Key.CurrencyId,
-                        DateTypeValue = "1",
-                        ForeignAmountCredit = x.Sum(y => y.ForeignAmountCredit),
-                        ForeignAmountDebit = x.Sum(y => y.ForeignAmountDebit),
-                        LocalAmountCredit = x.Sum(y => y.LocalAmountCredit),
-                        LocalAmountDebit = x.Sum(y => y.LocalAmountDebit),
-                        Month = x.Key.Month,
-                        Year = x.Key.Year,
-                        Tenant = tenant
-                    }).ToList();
-        }
-
-        public JournalOriginal GetJournalByLedgerTransactionId(string ledgerTransactionId, int tenant)
-        {
-            return (from a in context.LedgerTransactions
-                    join journal in context.Journals on a.JournalId equals journal.Id
-                    where a.Id == ledgerTransactionId && a.Tenant == tenant
-                    select new JournalOriginal
-                    {
-                        OriginalJournalId = a.JournalId,
-                        OriginalJournalNumber = journal.JournalNumber
-
-                    }).FirstOrDefault();
-        }
-
-        public bool ExistsLedgerTransactionByReferenceGLAccountId(string reference1, string gLAccountId, int tenant)
-        {
-            return context.LedgerTransactions
-                .Where(a => a.Reference1 == reference1 && a.AccountId == gLAccountId && a.Tenant == tenant)
-                .Any();
-        }
-    }
-    public class JournalOriginal
-    {
-        public string OriginalJournalId { get; set; }
-        public string OriginalJournalNumber { get; internal set; }
     }
     public class GLAccountTotalByMonthsKey
     {
@@ -2010,15 +1102,5 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
     {
         public LedgerTransaction LedgerTransaction { get; internal set; }
         public string MainGLAccountId { get; internal set; }
-    }
-    public struct VatReportStatuses
-    {
-        public const string Transmitted = "T";
-        public const string TransmittedAndClosingJournal = "J";
-    }
-    public struct JournalStatuses
-    {
-        public const string Voided = "3";
-        public const string Cancelled = "5";
     }
 }

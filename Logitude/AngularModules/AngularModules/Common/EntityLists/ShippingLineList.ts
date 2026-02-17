@@ -41,19 +41,8 @@ export class ShippingLineList {
 		UsoCFDICode: string;
 		IsINTTRARegistered: boolean;
 		INTTRARegistrationNotes: string;
-		INTTRAUpdatesShipment: boolean;
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
-		CBSA: string;
-		CAAT: string;
-		StateName: string;
-		GLAccountNumber: string;
-		IsSendingByContainer: boolean;
-		IsSendingByBillOfLading: boolean;
-		RegimenFiscalCode: string;
-		SATReceptorName: string;
-		IsSupportsContainerTracking: boolean;
-		IsAutomaticRequestsSent: boolean;
 	
 }

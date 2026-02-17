@@ -17,7 +17,7 @@ import { TapagMessagesService } from '../../../../../../Customs/Services/WebServ
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './BankAccountToRefundComponent.html',
     selector: 'BankAccountToRefundComponent',
 })
@@ -379,7 +379,7 @@ export class BankAccountToRefundComponent
         currRequestParams.DeclarationId = this.declarationId;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
                 "שליחת בקשה להחזר פקדון", true)
             .then((res) => {
                 this.ResponseData = res;

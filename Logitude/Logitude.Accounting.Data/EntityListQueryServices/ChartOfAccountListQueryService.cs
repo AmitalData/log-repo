@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -35,22 +35,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                               TypeName = a.ChartOfAccountsTypeCode != null ? a.ChartOfAccountsTypeCode.EnglishName : null,
                                               ParentName = a.ParentChartOfAccount != null ? a.ParentChartOfAccount.EnglishName : null,
                                               SearchFields = a.SearchFields,
-                                              ChartOfAccountSecurityLevel = a.ChartOfAccountSecurityLevel,
                                           });
             return query;
 		}
 
 		private IQueryable<ChartOfAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ChartOfAccount> iQueryable,int tenant)
         {
-            var IsRevenueExpenseFilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "isRevenueExpenseFilter" );
-            var fieldValue2 = IsRevenueExpenseFilter?.FieldValue2?.ToString();
-            if (IsRevenueExpenseFilter != null && !string.IsNullOrEmpty(IsRevenueExpenseFilter.FieldValue.ToString()))
-            {
-                if (!string.IsNullOrEmpty(fieldValue2))
-                    iQueryable = iQueryable.Where(item => IsRevenueExpenseFilter.FieldValue.ToString() == item.TypeCode || IsRevenueExpenseFilter.FieldValue2.ToString() == item.TypeCode);
-                else
-                    iQueryable = iQueryable.Where(item => IsRevenueExpenseFilter.FieldValue.ToString() == item.TypeCode);
-            }
             return iQueryable;
 		}
 

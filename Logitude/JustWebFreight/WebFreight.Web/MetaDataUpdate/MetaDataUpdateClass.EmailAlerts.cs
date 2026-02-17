@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTablePM BookingObjectTable = objectTables.Where(d => d.Name == "Booking").FirstOrDefault();
             #endregion
 
-            Dictionary<string, EmailAlertSetting> tenantAlerts = EmailAlertSettingRepository.GetEmailAlertSettings(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+            Dictionary<string, EmailAlertSetting> tenantAlerts = EmailAlertSettingRepository.GetEmailAlertSettings(0).ToDictionary(d => d.Code, a => a);
 
             AddEmailAlertSettings.AddEmailAlertSetting(new EmailAlertSettingDetails() { Code = "OOPA", SettingLevelCode = "OWNR", Description = "Opportunity Assign", Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, InActive = true, IndexOrder = 0 }, EmailAlertSettingRepository, tenantAlerts);
             AddEmailAlertSettings.AddEmailAlertSetting(new EmailAlertSettingDetails() { Code = "OOPS", SettingLevelCode = "OWNR", Description = "Opportunity Stage Update", Tenant = 0, ObjectTableId = OpportunityObjectTable.Id, InActive = true, IndexOrder = 1 }, EmailAlertSettingRepository, tenantAlerts);

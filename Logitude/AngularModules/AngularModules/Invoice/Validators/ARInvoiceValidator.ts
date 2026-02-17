@@ -1,33 +1,28 @@
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
-import {AppTool} from '../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {Validator} from '../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import {InvoiceTool} from "../Tools";
 import {ARInvoicePM} from '../EntityPMs/ARInvoicePM';
+//import {InvoiceTotalsClass} from '../Args';
 import {VatTypeList} from '../../Common/EntityLists/VatTypeList';
 import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
-import { EntityListService } from '../../Infrastructure/Services/EntityListService';
-import { FullAccountingSettingPM } from '../../Accounting/EntityPMs/FullAccountingSettingPM';
 
 export class ARInvoiceValidator {
     private Errors: string[] = [];
     private EntityPM: ARInvoicePM;
     private message: string;
-    entityListService: EntityListService = new EntityListService();
-    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
-
     constructor() {
         this.Errors = [];
         this.message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
     }
 
-    Validate(entity: ARInvoicePM, statusCode: string = null, approvedDate: Date = null) { 
+    Validate(entity: ARInvoicePM) {
         this.Errors = [];
         this.EntityPM = entity;
 
         Validator.TryValidateObject(this.EntityPM, "ARInvoice", this.Errors);
 
-        this.ValidateSATStatus();
-        
         if (this.EntityPM.IsInvoiceNumberManuallySet && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber)) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
@@ -36,26 +31,12 @@ export class ARInvoiceValidator {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
 
-        if (this.EntityPM.IsInvoiceNumberFromStock && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) && this.EntityPM.IsAutoCredit) {
-            this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
-        }
-        if(!AppTool.IsNullOrEmpty(approvedDate)) {
-            this.Errors.push(TextCodeTranslator.Translate("ARInvoice.O.ApprovalInvoice"));
-        }
-        if(statusCode == "PR"){
-            this.Errors.push(TextCodeTranslator.Translate("ARInvoice.O.InvoiceInProgress"));
-        }
-        
-        var date1 = new Date(this.EntityPM.InvoiceDate.toString());
-        var date2 = new Date();
-        date2.setHours(23);
-        date2.setMinutes(59);
-        
-        if (date1.valueOf() > date2.valueOf()) {
+        if (DateTool.GetDateParts(this.EntityPM.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
         }
+
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAR) {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "PR") {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.VatNumber)) {
                     this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
                 }
@@ -64,7 +45,7 @@ export class ARInvoiceValidator {
 
         if (!SessionLocator.AccountingSettingPM.AllowManualInvoiceNumber) {
             if (this.EntityPM.IsInvoiceNumberManuallySet) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "PR") {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
                     this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.ManualInvoiceNumberNotAllowed"));
                 }
             }
@@ -78,7 +59,7 @@ export class ARInvoiceValidator {
             this.ValidateNormalInvoice()
         }        
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.EntityPM.SATPaymentMethodCode)) {
                 this.Errors.push("Forma Pago Field is Required");
           }
@@ -94,15 +75,6 @@ export class ARInvoiceValidator {
 
         return this.Errors;
     }
-    private ValidateSATStatus() {
-        if (!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "INU")[0]) return;
-
-        let sATTransferingStatusCode = "TG";
-        if (this.EntityPM.SATTransferStatusCode == sATTransferingStatusCode && !this.EntityPM.ResendToSAT) {
-            this.Errors.push("You are not allowed to update the invoice while its status is Transferring to SAT");
-        }
-    }
-
     private ValidateNormalInvoice() {
         if (this.EntityPM.InvoiceLines.length == 0) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));
@@ -146,50 +118,79 @@ export class ARInvoiceValidator {
                 else if (lineItem.Rate != item.ForiegnExchangeRate) {
                     if (!lineItem.Validated) {
                         lineItem.Validated = true;
-                        if (!SessionLocator.TenantPM.AccountingActivated) {
-                            this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
-
-                        }
-
+                        this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates").replace("%CurrencyCode", lineItem.Code));
                     }
                 }
             });
 
+            //var listGrouped: InvoiceTotalsClass[] = [];
+            //this.EntityPM.InvoiceLines.filter(f => f.VatTypeId != null).forEach(item => {
 
-            
-            if (this.EntityPM.ARInvoiceTypeCode != "IT") {
-                if (this.EntityPM.ARInvoiceTypeCode == "CD" || this.EntityPM.ARInvoiceTypeCode == "CC") {
-                    if (!this.EntityPM.IsAutoCredit) {
-                        if (this.EntityPM.SubTotalInInvoiceCurrency > 0) {
-                            this.Errors.push("Subtotal amount can't be positive");
-                        }
+            //    var localAmount = item.VatPercentage * item.LocalCurrencyAmount / 100;
+            //    var invoiceAmount = item.VatPercentage * item.InvoiceCurrencyAmount / 100;
+            //    if (AppTool.IsNullOrEmpty(localAmount)) {
+            //        localAmount = 0;
+            //    }
+            //    if (AppTool.IsNullOrEmpty(invoiceAmount)) {
+            //        invoiceAmount = 0;
+            //    }
 
-                        if (this.EntityPM.AmountInInvoiceCurrency > 0) {
-                            this.Errors.push("Invoice amount can't be positive");
-                        }
+            //    var itemGrouped: InvoiceTotalsClass = listGrouped.filter(f => f.VatTypeId == item.VatTypeId)[0];
+            //    if (itemGrouped == null) {
+            //        itemGrouped = new InvoiceTotalsClass();
+            //        itemGrouped.VatTypeId = item.VatTypeId;
+            //        itemGrouped.RowLabel = item.VatTypeName + " (" + item.VatPercentage + "%)";
+            //        itemGrouped.LocalCurrencyAmount = localAmount;
+            //        itemGrouped.InvoiceCurrencyAmount = invoiceAmount;
+            //        listGrouped.push(itemGrouped);
+            //    }
 
+            //    else {
+            //        itemGrouped.LocalCurrencyAmount += localAmount;
+            //        itemGrouped.InvoiceCurrencyAmount += invoiceAmount;
+            //    }
+            //});
 
-                        
+            if (this.EntityPM.ARInvoiceTypeCode == "CD" || this.EntityPM.ARInvoiceTypeCode == "CC") {
+                if (!this.EntityPM.IsAutoCredit) {
+                    if (this.EntityPM.SubTotalInInvoiceCurrency > 0) {
+                        this.Errors.push("Subtotal amount can't be positive");
                     }
-                }
-                else {
-                    if (this.EntityPM.SubTotalInInvoiceCurrency < 0) {
-                        this.Errors.push("Subtotal amount can't be minus");
+
+                    if (this.EntityPM.AmountInInvoiceCurrency > 0) {
+                        this.Errors.push("Invoice amount can't be positive");
                     }
 
-                    if (this.EntityPM.AmountInInvoiceCurrency < 0) {
-                        this.Errors.push("Invoice amount can't be minus");
-                    }
+                    //this.EntityPM.TotalVATs.filter(f => f.InvoiceCurrencyVATAmount > 0).forEach(item => {
+                    //    this.Errors.push(item.VatTypeCell + " amount can't be positive");
+                    //});
+
+                    //listGrouped.filter(f => f.InvoiceCurrencyAmount > 0).forEach(item => {
+                    //    this.Errors.push(item.RowLabel + " amount can't be positive");
+                    //});
                 }
             }
+            else {
+                if (this.EntityPM.SubTotalInInvoiceCurrency < 0) {
+                    this.Errors.push("Subtotal amount can't be minus");
+                }
+
+                if (this.EntityPM.AmountInInvoiceCurrency < 0) {
+                    this.Errors.push("Invoice amount can't be minus");
+                }
+            }
+
             this.ValidateSingleTaxPerInvoice();
         }
     }
-
-    
     private ValidateConsolidationInvoice() {
 
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
 
+            //if (!this.EntityPM.IsBillToAllowConsolidation) {
+            //    this.Errors.push(InvoiceTool.GetBillToNotAllowConsolidation());
+            //}
+        }
 
         if (this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
             if (this.EntityPM.InvoiceLines.length == 0) {
@@ -197,7 +198,7 @@ export class ARInvoiceValidator {
             }
         }
 
-        else if (this.EntityPM.StatusCode != 'VD' && this.EntityPM.ConstituentInvoices.length == 0) {
+        else if (this.EntityPM.ConstituentInvoices.length == 0) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));
         }
 

@@ -1,5 +1,5 @@
 ﻿<!ELEMENT CFIDATA (CFIDATA_DATA*)>
-<!ELEMENT CFIDATA_DATA (ImporterName?, ImporterAddress?, ImporterId?, CasualSupplierName?, CasualSupplierAddress?, ManifestNumber?, ThirdCargoID?, AirlineId?, MAWB?, HAWB?, COUWTVAL?, UNLOADDATE?, CasualImporterAddress1?, CasualImporterAddress2?, CasualImporterCity?, CasualImporterZipCode?, CasualImporterFax?, CasualImporterEmail?, CasualImportelTel?, CasualImporterContact?, VALUE_IN_USD?)>
+<!ELEMENT CFIDATA_DATA (ImporterName?, ImporterAddress?, ImporterId?, CasualSupplierName?, CasualSupplierAddress?, ManifestNumber?, ThirdCargoID?, AirlineId?, MAWB?, HAWB?, COUWTVAL?, UNLOADDATE?, CasualImporterAddress1?, CasualImporterAddress2?, CasualImporterCity?, CasualImporterZipCode?, CasualImporterFax?, CasualImporterEmail?, CasualImportelTel?, CasualImporterContact?)>
 <!ELEMENT ImporterName (#PCDATA)>
 <!ELEMENT ImporterAddress (#PCDATA)>
 <!ELEMENT ImporterId (#PCDATA)>
@@ -20,4 +20,3 @@
 <!ELEMENT CasualImporterEmail (#PCDATA)>
 <!ELEMENT CasualImportelTel (#PCDATA)>
 <!ELEMENT CasualImporterContact (#PCDATA)>
-<!ELEMENT VALUE_IN_USD (#PCDATA)>

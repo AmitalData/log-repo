@@ -1,13 +1,11 @@
 declare var window: any;
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { AppTool, DateTool } from '../../Infrastructure/Tools';
-import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
-import { Validator } from '../../Infrastructure/Validators/Validator';
-import { LuhnAlgorithm } from '../../Customs/Utilities/LuhnAlgorithm';
-import { DeclarationPM } from '../EntityPMs/DeclarationPM';
-import { SupplierInvoiceItemPM } from '../EntityPMs/SupplierInvoiceItemPM';
-import { DecDangersContactPM } from '../EntityPMs/DecDangersContactPM';
-import { ConsignmentPackDangerPM } from '../EntityPMs/ConsignmentPackDangerPM';
+import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import {AppTool, DateTool} from '../../Infrastructure/Tools';
+import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
+import {Validator} from '../../Infrastructure/Validators/Validator';
+
+import {DeclarationPM}          from '../EntityPMs/DeclarationPM';
+import {SupplierInvoiceItemPM}  from '../EntityPMs/SupplierInvoiceItemPM';
 
 export class DeclarationValidator {
     private _DeclarationPM: DeclarationPM;
@@ -23,45 +21,11 @@ export class DeclarationValidator {
         this._DeclarationPM = declarationPM;
     }
 
-    public validatePackagesDanger(decDangersContactPM: DecDangersContactPM, consignmentPackDangerPM: ConsignmentPackDangerPM) {
-        var errors = [];
-
-        Validator.TryValidateObject(decDangersContactPM, "Customs.DecDangersContact", errors);
-        Validator.TryValidateObject(consignmentPackDangerPM, "Customs.ConsignmentPackDanger", errors);
-
-        return errors;
-
-    }
 
     public ValidateSupplierInvoiceItem(supplierInvoiceItemPM: SupplierInvoiceItemPM) {
         var errors = [];
 
         Validator.TryValidateObject(supplierInvoiceItemPM, "Customs.SupplierInvoiceItem", errors);
-
-        for (let item of supplierInvoiceItemPM.SupplierInvoiceItemsPrices) {
-            Validator.TryValidateObject(item, "Customs.SupplierInvoiceItemsPrice", errors);
-
-            if (AppTool.IsNullOrEmpty(item.AdditionalPriceTypeCode)) {
-                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceItemsPrice.F.AdditionalPriceTypeCode"));
-            }
-
-            if (AppTool.IsNullOrEmpty(item.AdditionalPrice)) {
-                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceItemsPrice.F.AdditionalPrice"));
-
-            }
-        }
-        for (let item of supplierInvoiceItemPM.SuppInvoiceItemsAbachStatements) {
-            Validator.TryValidateObject(item, "Customs.SuppInvoiceItemsAbachStatement", errors);
-
-            if (AppTool.IsNullOrEmpty(item.StatementTypeCode)) {
-                errors.push(this.GetRequierdFieldErrorText("Customs.SuppInvoiceItemsAbachStatement.F.StatementTypeCode"));
-            }
-
-            // if (AppTool.IsNullOrEmpty(item.IsStatementInd)) {
-            //     errors.push(this.GetRequierdFieldErrorText("Customs.SuppInvoiceItemsAbachStatement.F.IsStatementInd")); 
-
-            // }
-        }
 
         for (let item of supplierInvoiceItemPM.SupplierInvoiceItemsMods) {
             Validator.TryValidateObject(item, "Customs.SupplierInvoiceItemsMod", errors);
@@ -154,7 +118,7 @@ export class DeclarationValidator {
                 break;
             }
             //else if (!AppTool.IsNullOrEmpty(item.TradeLevyExamptCode) && !AppTool.IsNullOrEmpty(item.TradeLevyNumber)) {//task 36728 --mohammad
-            //    errors.push("יש למלם קוד פטור םו זיהוי ולם גם וגם");
+            //    errors.push("יש למלא קוד פטור או זיהוי ולא גם וגם");
             //}
             else {
                 // do nothing one of them is filled.
@@ -212,51 +176,18 @@ export class DeclarationValidator {
         return errors;
     }
 
-    //Check if declaration was amendment  with status !=2 
-    public IsAmendment() {
-        var errorMessage: string = "";
-
-        if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.IsAmendment && this._DeclarationPM.AmendmentStatus != "2" && (!AppTool.IsNullOrEmpty(this._DeclarationPM.AmendmentStatus))) {
-                errorMessage = "Customs.Declaration.O.IsAmendment";
-                if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                    this.ValidationErrorMessageCodes.push(errorMessage);
-                    return ' - ' + this._DeclarationPM.AmendmentStatusName;
-                }
-            }
-        }
-
-        return "";
-    }
 
     //Check if declaration was already paid
     public PaymentDateCheck() {
         var errorMessage: string = "";
 
         if (this._DeclarationPM != null) {
-
-
-            if (this._DeclarationPM.IsExportClosed && this._DeclarationPM.DeclarationStatusTypeCode == "36") {
-                errorMessage = "Customs.General.O.DeclarationStatClosed";
-                if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                    this.ValidationErrorMessageCodes.push(errorMessage);
-                }
-
-            }
-            if (this._DeclarationPM.Direction != "E" && this._DeclarationPM.PaymentDate) {
+            if (this._DeclarationPM.PaymentDate) {
                 errorMessage = "Customs.General.O.NoPaymentDate";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
             }
-            if (this._DeclarationPM.Direction == "E" && this._DeclarationPM.IsSubmitDeclaration) {
-                errorMessage = "Customs.General.O.NoPaymentDateExport";
-                if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                    this.ValidationErrorMessageCodes.push(errorMessage);
-                }
-            }
-
-
         }
     }
 
@@ -291,17 +222,13 @@ export class DeclarationValidator {
                             //search the code in Clients table 
                             //if (false)
                             //{
-                            //    errorMessage = "יש לשלוף יבוםן מהמכס לפני שליחה";
+                            //    errorMessage = "יש לשלוף יבואן מהמכס לפני שליחה";
                             //}
                         }
                         else {
                             //Check if ImporterName & ImporterAddrress has value
-                            if (!this._DeclarationPM.ShortProcedure && AppTool.IsNullOrEmpty(importerName) && AppTool.IsNullOrEmpty(importerAddress)) {
+                            if (AppTool.IsNullOrEmpty(importerName) && AppTool.IsNullOrEmpty(importerAddress)) {
                                 errorMessage = "יש להזין נתוני יבואן " + importerField + " לפני שליחה";
-                            }
-                            else if (this._DeclarationPM.ShortProcedure && (AppTool.IsNullOrEmpty(importerName) || AppTool.IsNullOrEmpty(importerAddress))) {
-                                errorMessage = "יש להזין נתוני יצואן " + importerField + " לפני שליחה";
-
                             }
                         }
                     }
@@ -341,26 +268,11 @@ export class DeclarationValidator {
         //Check if Declaration Paid and there waiting for constraint approval
         if (this._DeclarationPM != null) {
             if (this._DeclarationPM.DeclarationStatusTypeCode == "11") {
-
                 var errorMessage = "Customs.General.O.ConstraintsInProgress";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
             }
-            // else {
-
-            //     if (this._DeclarationPM.DeclarationConstraints.find(dc => dc.ConstraintStatusCode == "5")) {
-            //         var errorMessage = "Customs.General.O.HappinessConstraints";
-            //         if (!AppTool.IsNullOrEmpty(errorMessage)) {
-            //             this.ValidationErrorMessageCodes.push(errorMessage);
-            //         }
-            //     }
-
-            // }
-
-
-
-
             //Check if there are constraints in progress
             //if (false)//yaron
             //{
@@ -407,7 +319,7 @@ export class DeclarationValidator {
     public TaxationDateTimeCheck() {
         var errorMessage = "";
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.IsAmendment == true) return "";
+            
             if (!this._DeclarationPM.TaxationDateTime) {
                 errorMessage = "Customs.General.O.TaxationDateTimeNotToday";
             }
@@ -417,11 +329,7 @@ export class DeclarationValidator {
                 if ((taxationDateTime.getFullYear() != todayDate.getUTCFullYear()) ||
                     (taxationDateTime.getMonth() != todayDate.getUTCMonth()) ||
                     (taxationDateTime.getDate() != todayDate.getUTCDate())) {
-                    if (this._DeclarationPM.Direction == "E") {
-                        errorMessage = "Customs.General.O.ExportTaxationDateTimeNT";
-                    } else {
-                        errorMessage = "Customs.General.O.TaxationDateTimeNotToday";
-                    }
+                    errorMessage = "Customs.General.O.TaxationDateTimeNotToday";
                 }
             }
             if (!AppTool.IsNullOrEmpty(errorMessage)) {
@@ -469,17 +377,17 @@ export class DeclarationValidator {
     private CheckConsignmentPackages() {
         var errorMessage = "";
 
-        if (this._DeclarationPM.Consignments == null || (this._DeclarationPM.Direction === 'E' && this._DeclarationPM.ExcludeConsignment)) {
+        if (this._DeclarationPM.Consignments == null) {
             return;
         }
 
         for (var i = 0; i < this._DeclarationPM.Consignments.length; i++) {
             if (this._DeclarationPM.Consignments[i].ConsignmentPackages == null) {
-                errorMessage = TextCodeTranslator.Translate("Customs.General.O.NoConsignmentPackages");
+                errorMessage = "Customs.General.O.NoConsignmentPackages";
             }
             else {
                 if (this._DeclarationPM.Consignments[i].ConsignmentPackages.length == 0) {
-                    errorMessage = TextCodeTranslator.Translate("Customs.General.O.NoConsignmentPackages");
+                    errorMessage = "Customs.General.O.NoConsignmentPackages";
                 }
             }
 
@@ -507,7 +415,7 @@ export class DeclarationValidator {
         //    ErrorCode.Add(errorMessage);
         //}
         //Transfer Importer
-        //errorMessage = ImportersCheck("זכםי", _DeclarationPM.EntitleImporterCode, _DeclarationPM.EntitleImporterId, _DeclarationPM.EntitleImporterTypeCode, _DeclarationPM.EntitleImporterName, _DeclarationPM.EntitleImporterAddress, _DeclarationPM.EntitlePassportNumber, _DeclarationPM.EntitleImporterCountryCode);
+        //errorMessage = ImportersCheck("זכאי", _DeclarationPM.EntitleImporterCode, _DeclarationPM.EntitleImporterId, _DeclarationPM.EntitleImporterTypeCode, _DeclarationPM.EntitleImporterName, _DeclarationPM.EntitleImporterAddress, _DeclarationPM.EntitlePassportNumber, _DeclarationPM.EntitleImporterCountryCode);
         //if (!string.IsNullOrWhiteSpace(errorMessage))
         //{
         //    ErrorCode.Add(errorMessage);
@@ -519,10 +427,10 @@ export class DeclarationValidator {
     }
 
     //Check if it's a converted declaration (IsConvertedDeclaration=True)  // Mirit 02/12/15 Task 18508
-    public CheckIsConvertedDeclaration() {
+    public CheckIsCoverteedDeclaration() {
 
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.IsConvertedDeclaration == true && this._DeclarationPM.IsAmendment != true) {
+            if (this._DeclarationPM.IsConvertedDeclaration == true) {
                 var errorMessage = "Customs.General.O.IsConvertedDeclaration";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
@@ -536,14 +444,8 @@ export class DeclarationValidator {
         var errorMessage: string = "";
 
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.IsClose && this._DeclarationPM.Direction != "E") {
+            if (this._DeclarationPM.IsClose) {
                 errorMessage = "Customs.Declaration.O.Closed";
-                if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                    this.ValidationErrorMessageCodes.push(errorMessage);
-                }
-            }
-            if (this._DeclarationPM.IsClose && this._DeclarationPM.Direction == "E") {
-                errorMessage = "Customs.Declaration.O.OperationallyClosed";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
@@ -554,31 +456,12 @@ export class DeclarationValidator {
     //<--- Yuval Chalup 18.11.2014 TASK-4240
     //Checks for opening Declaration view as 'Display Only'
     public DeclarationViewDisplayOnlyChecks() {
-        //var error = "";
-        //error= this.IsAmendment();
         this.PaymentDateCheck();
         this.ConstraintsInProgressCheck();
         this.FuturePaymentDoneCheck();
         //SubmitDeclarationAgainDoneCheck(); // Mirit 25/06/15 Task 14330 + Remarked by Yuval Chalup 02.08.2015 TASK-15145
-        this.CheckIsConvertedDeclaration(); // Mirit 02/12/15 Task 18508
-        this.CheckIsCloseDeclaration();
-        this.CheckIfAutomaticPayment();
-    }
-    CheckIfAutomaticPayment() {
-
-        var errorMessage: string = "";
-
-        if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.AutomaticPayment) {
-                //"הצהרה בתהליך תשלום םוטומטי - לתצוגה בלבד"
-                errorMessage = "Customs.General.O.InAutomaticPayment";
-                if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                    this.ValidationErrorMessageCodes.push(errorMessage);
-                }
-            }
-        }
-
-
+        this.CheckIsCoverteedDeclaration(); // Mirit 02/12/15 Task 18508
+        this.CheckIsCloseDeclaration(); 
     }
     //Yuval Chalup 18.11.2014 TASK-4240 --->
 
@@ -593,101 +476,24 @@ export class DeclarationValidator {
                 for (let line of item.ConsignmentPackages) {
                     if (line.MarksNumbers == null && line.PackageMeasureQualifierCode == null && line.PackageQuantity == null && line.PackageTypeCode == null && line.GrossMassMeasure == null) {
                         errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.EmptyConsignmentPackage");
-                        if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                            this.ValidationErrorMessageCodes.push(errorMessage);
+                         if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                        this.ValidationErrorMessageCodes.push(errorMessage);
 
-                        }
                     }
-
+                }
+              
                 }
             }
         }
     }
 
-    public CheckIfClassificationCodeValid() {
-        if (this._DeclarationPM != null && this._DeclarationPM.SupplierInvoices.length > 0 && this._DeclarationPM.SupplierInvoices[0].SupplierInvoiceItems.length > 0) {
-            var SourceclassificationCode = this._DeclarationPM.SupplierInvoices[0].SupplierInvoiceItems[0].ClassificationCodeSource;
-            var classificationCode = this._DeclarationPM.SupplierInvoices[0].SupplierInvoiceItems[0].ClassificationCode;
-            if (SourceclassificationCode != classificationCode && !AppTool.IsNullOrEmpty(classificationCode)) {
-                if (classificationCode.toString().length > 11) {
-                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
-                }
-                else if (classificationCode.toString().length < 8) {
-                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
-                }
-                else if (classificationCode.toString().length == 9) {
-                    var digit = classificationCode.toString().substring(8);
-
-                    classificationCode = classificationCode.toString().substring(0, 8) + "00" + classificationCode.toString().substring(8);
-                    var checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(classificationCode.substring(0, 10));
-
-                    if (digit != checkDigit.toString()) {
-                        this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
-                    }
-                }
-                else if (classificationCode.toString().length == 11) {
-                    digit = classificationCode.toString().substring(10);
-                    checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(classificationCode.toString().substring(0, 10));
-                    if (digit != checkDigit.toString()) {
-                        this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
-                    }
-                }
-            }
-        }
-        return;
-    }
-    //Check if ImporterCode Valid
-    public CheckIsImporterCodeValid() {
-
-        if (this._DeclarationPM != null && !AppTool.IsNullOrEmpty(this._DeclarationPM.ImporterCode)) {
-
-            this._DeclarationPM.ImporterTypeCode
-            if (///this._DeclarationPM.ImporterCode[0] == "P" || this._DeclarationPM.ImporterCode[0] == "F") {
-                this._DeclarationPM.ImporterTypeCode == "2" /*"P"*/ ||
-                this._DeclarationPM.ImporterTypeCode == "3" /*"F"*/) {
-                if (!AppTool.IsNullOrEmpty(this._DeclarationPM.ImporterPassportNumber)) {
-                    if (this._DeclarationPM.ImporterPassportNumber.length > 15) {
-                        this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
-                    }
-                }
-                return;
-            }
-
-
-            if (this._DeclarationPM.ImporterCode.length < 9) {
-                if (this._DeclarationPM.Direction != "E")
-                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.ImporterIsTooShort"));
-                else
-                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExporterIsTooShort"));
-
-            }
-            else if (this._DeclarationPM.ImporterCode.length > 9) {
-                if (this._DeclarationPM.Direction != "E")
-                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
-                else
-                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongExporterCode"));
-
-
-            }
-            else {
-                var digit: string = this._DeclarationPM.ImporterCode.toString().substring(8);
-                var checkDigit: number = LuhnAlgorithm.CalculateLuhnAlgorithm(this._DeclarationPM.ImporterCode.substring(0, 8));
-
-                if (digit != checkDigit.toString()) {
-                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
-                }
-            }
-
-        }
-    }
-
+  
     public Validate(entityPM: DeclarationPM) {
-
+   
         var result = [];
         this._DeclarationPM = entityPM;
         this.EmptyConsignmentPackageCheck();
-        this.CheckIsImporterCodeValid();
-        this.CheckIfClassificationCodeValid();
+
         return this.ValidationErrorMessageCodes;
     }
 

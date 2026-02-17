@@ -11,11 +11,11 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -46,55 +46,15 @@ namespace WebFreight.Web
         InboundEmailGeneralHelperMethods helper;
         string jasonMailgun = "", attachs = "";
 
-
-        private string LogForOrit()
-        {
-            var retval = string.Empty;
-            try
-            {
-                using (var reader = new StreamReader(Request.InputStream))
-                {
-                    retval = reader.ReadToEnd();
-                }
-
-                string folderpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data");
-                if (!Directory.Exists(folderpath))
-                {
-                    Directory.CreateDirectory(folderpath);
-                }
-
-
-                var sb = new StringBuilder();
-                Request.Headers.AllKeys.ToList().ForEach(k => sb.AppendLine($"{k} : {Request.Headers[k]}"));
-                sb.AppendLine("Request.Files count : " + Request.Files?.Count.ToString());
-
-                string filename = Guid.NewGuid().ToString();
-                File.WriteAllText($"{folderpath}\\MailgunWebPage_BODY_{filename}.log", retval);
-                File.WriteAllText($"{folderpath}\\MailgunWebPage_HEADERS_{filename}.log", sb.ToString());
-                File.WriteAllText($"{folderpath}\\MailgunWebPage_QUERYSTR_{filename}.log", Request.Url.OriginalString);
-
-            }
-
-            catch (Exception ex)
-            {
-
-            }
-
-            return retval;
-
-        }
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            string reqStreamString = LogForOrit();
-
             try
             {
-                string values = reqStreamString;
-                //using (var reader = new StreamReader(Request.InputStream))
-                //{
-                //    values = reader.ReadToEnd();
-                //}
+                string values = "";
+                using (var reader = new StreamReader(Request.InputStream))
+                {
+                    values = reader.ReadToEnd();
+                }
 
                 if (!string.IsNullOrEmpty(values))
                 {
@@ -104,15 +64,7 @@ namespace WebFreight.Web
                     emailDetails.Subject = helper.getSubject(subject);
 
                     emailDetails.Sender = helper.GetValue("sender");
-                    //emailDetails.RecipientEmail = helper.GetValue("recipient");
-
-                    string recipientEmails = helper.GetValue("recipient");
-                    if (!string.IsNullOrEmpty(recipientEmails) && recipientEmails.Contains(','))
-                    {
-                        recipientEmails = recipientEmails.Replace(',', ';');
-                    }
-                    recipientEmails = helper.TruncateCc(recipientEmails, 4000);
-                    emailDetails.RecipientEmail = recipientEmails;
+                    emailDetails.RecipientEmail = helper.GetValue("recipient");
 
                     string toEmails = helper.GetValue("To");
                     if (!string.IsNullOrEmpty(toEmails) && toEmails.Contains(','))
@@ -199,7 +151,7 @@ namespace WebFreight.Web
                 var reader = new StreamReader(myMemoryStream);
                 string content = reader.ReadToEnd();
                 byte[] bytearray = myMemoryStream.ToArray();
-                int tenant = helper.GetTenantBySupportEmail(emailDetails.RecipientEmail).Id;
+                int tenant = helper.GetTenant(emailDetails.RecipientEmail).Id;
                 AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
                 AnalyzeQueue analyzeQueue = new AnalyzeQueue()
                 {

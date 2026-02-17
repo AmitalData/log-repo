@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -30,9 +30,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public List<SharedUserQuery> GetAllByQueryCode(string UniqueCode)
+        public List<SharedUserQuery> GetAllByQueryId(string queryId)
         {
-            return context.SharedUserQueries.Where(d => d.QueryCode == UniqueCode).ToList();
+            return context.SharedUserQueries.Where(d => d.QueryId == queryId).ToList();
         }
 
         public void Add(SharedUserQuery entity)

@@ -26,7 +26,6 @@
                                             [LookUpTableName]="'ChartOfAccountsType'"
                                             [QueryFilterItems]="ChartOfAccountTypeFilterItems"
                                             [SelectedValue]="ChartOfAccountsTypeCode"
-                                            [DisplayMemberPath]="GetDisplayMemberPath()"
                                             [HideColumns]="true">
                                     </LogLov>
                                 </td>
@@ -55,18 +54,19 @@
                             </tr>
 
                             <!-- DisplayNumber -->
-                            <!-- <tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'DisplayNumber'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'DisplayNumber'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
 
-        <td>
-            <LogTextBox [ObjectFieldName]="'DisplayNumber'" [InputType]="'text'" [DataContext]="DataContext"
-                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-        </td>
-        <td><div></div></td>
-    </tr> -->
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'DisplayNumber'" [InputType]="'text'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
                             <!-- LocalName -->
                             <tr class="FormFieldRow">
                                 <td>
@@ -75,20 +75,7 @@
                                 </td>
 
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext" [Text]="LocalName"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-                            <!-- NameForPrintingCheques -->
-                            <tr class="FormFieldRow" *ngIf="IsVendor">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'NameForPrintingCheques'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'NameForPrintingCheques'" [InputType]="'ntext'" [DataContext]="DataContext" [Text]="NameForPrintingCheques"
+                                    <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td><div></div></td>
@@ -102,7 +89,7 @@
                                 </td>
 
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext" [Text]="EnglishName"
+                                    <LogTextBox [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext"
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
                                     <!-- <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext"
@@ -120,7 +107,7 @@
                                 </td>
 
                                 <td>
-                                    <LogCheckBox [ObjectFieldName]="'IsMultiCurrency'" [Checked]="IsMultiCurrency" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsDisabled]="!IsMultiCurrencyCheckboxEnabled"></LogCheckBox>
+                                    <CheckBox [IsChecked]="IsMultiCurrency" (Checked)="IsMultiCurrency = $event" [IsEnabled]="IsMultiCurrencyCheckboxEnabled"></CheckBox>
                                 </td>
                                 <td><div></div></td>
                             </tr>
@@ -218,43 +205,6 @@
                                 <td><div></div></td>
                             </tr>
 
-                            <!-- ExchangeRate -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'ExchangeRateId'"
-                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                    </LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogLov [ObjectFieldName]="'ExchangeRateId'"
-                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                        [LookUpTableName]="'AdditionalCurrencyRate'"
-                                        [SelectedValue]="ExchangeRateId"
-                                        [DisplayMemberPath]="'Name'" [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <!-- AllowEditChequePayToName -->
-                            <tr *ngIf="IsVendor" class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'AllowEditChequePayToName'" [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogCheckBox [ObjectFieldName]="'AllowEditChequePayToName'" [Checked]="AllowEditChequePayToName"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
                             <tr><td><div></div></td></tr>
                         </table>
 
@@ -272,7 +222,7 @@
                         <table>
                             <!-- ParentAccountId -->
                             <tr class="FormFieldRow">
-                                <td style="width: 220px;">
+                                <td style="width: 150px;">
                                     <LogLabel [ObjectFieldName]="'ParentAccountId'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -284,9 +234,7 @@
                                             [DependencyFilter1Value]="false"
                                             [QueryFilterItems]="ParentsFilterItems"
                                             [LookUpTableName]="'GLAccount'"
-                                            [HideColumns]="false"
-                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
+                                            [HideColumns]="false">
                                     </LogLov>
                                 </td>
                                 <td><div></div></td>
@@ -294,12 +242,12 @@
 
                             <!-- Category1Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 220px;">
+                                <td style="width: 150px;">
                                     <LogLabel [ObjectFieldName]="'Category1Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td style="width: 200px; " [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                <td style="width: 200px; " [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'" >
                                     <LogLov [ObjectFieldName]="'Category1Id'"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
@@ -313,7 +261,7 @@
 
                             <!-- Category2Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 220px;">
+                                <td style="width: 150px;">
                                     <LogLabel [ObjectFieldName]="'Category2Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -332,7 +280,7 @@
 
                             <!-- Category3Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 220px;">
+                                <td style="width: 150px;">
                                     <LogLabel [ObjectFieldName]="'Category3Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -351,7 +299,7 @@
 
                             <!-- Category4Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 220px;">
+                                <td style="width: 150px;">
                                     <LogLabel [ObjectFieldName]="'Category4Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -370,7 +318,7 @@
 
                             <!-- Category5Id -->
                             <tr class="FormFieldRow">
-                                <td style="width: 220px;">
+                                <td style="width: 150px;">
                                     <LogLabel [ObjectFieldName]="'Category5Id'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -389,110 +337,16 @@
 
                             <!-- RevaluationEnabled -->
                             <tr class="FormFieldRow">
-                                <td style="width: 220px;">
+                                <td style="width: 150px;">
                                     <LogLabel [ObjectFieldName]="'RevaluationEnabled'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <CheckBox [IsChecked]="RevaluationEnabled" (Checked)="RevaluationEnabled = $event"></CheckBox>
-                                </td>
+                                <CheckBox [IsChecked]="RevaluationEnabled" (Checked)="RevaluationEnabled = $event"></CheckBox>
+                                    </td>
                                 <td><div></div></td>
                             </tr>
 
-                            <!-- IsEquipmentVendor -->
-                            <tr class="FormFieldRow" *ngIf="IsVendor">
-                                <td style="width: 150px;">
-                                    <LogLabel [ObjectFieldName]="'IsEquipmentVendor'" [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <CheckBox [IsChecked]="IsEquipmentVendor" (Checked)="IsEquipmentVendor = $event"></CheckBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-
-                            <!-- IsPartOfDeductionReport -->
-                            <tr class="FormFieldRow" *ngIf="IsVendor">
-                                <td style="width: 150px;">
-                                    <LogLabel [ObjectFieldName]="'ExcludeFromDeductionReport'" [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <CheckBox [IsChecked]="ExcludeFromDeductionReport" (Checked)="ExcludeFromDeductionReport = $event"></CheckBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-
-                            <!-- Smallcashbook -->
-                            <tr *ngIf="ChartOfAccountsTypeCode=='4'" class="FormFieldRow">
-                                <td style="width: 220px;">
-                                    <LogLabel [ObjectFieldName]="'Smallcashbook'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <CheckBox [IsChecked]="Smallcashbook" (Checked)="Smallcashbook = $event"></CheckBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-                            <!-- ReportingAsAnotherDocument -->
-                            <tr class="FormFieldRow" *ngIf="IsVendor">
-                                <td style="width: 22px;">
-                                    <LogLabel [ObjectFieldName]="'ReportingAsAnotherDocument'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <CheckBox [IsChecked]="ReportingAsAnotherDocument" (Checked)="ReportingAsAnotherDocument = $event"></CheckBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-
-                            <tr *ngIf="IsVendor">
-                                <td style="width: 150px;">
-                                    <LogLabel [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td style="width:150px">
-                                    <LogDatePicker [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                </td>
-                                <td></td>
-                            </tr>
-
-                            <tr *ngIf="IsVendor">
-                                <td style="width: 150px;">
-                                    <LogLabel [ObjectFieldName]="'FollowupNotes'" [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'FollowupNotes'"
-                                            [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
-                                            [DataContext]="DataContext"></LogTextBox>
-
-                                </td>
-                                <td></td>
-                            </tr>
-
-                            <!-- PaymentTerms -->
-                            <tr *ngIf="ChartOfAccountsTypeCode == '4'" class="FormFieldRow" style="height:5px">
-                                <td style="width: 150px;">
-                                    <LogLabel [ObjectFieldName]="'PaymentTerms'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                    
-                                <td style="width:240px;">
-                                    <LogLov [ObjectFieldName]="'PaymentTerms'"
-                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                        [LookUpTableName]="'PaymentTerm'"
-                                        [AutoCompleteSearchWindow]="false"
-                                        [DisplayMemberPath]="GetDisplayMemberPath()"
-                                        [HideColumns]="true">
-                                    </LogLov>
-                                </td>
-                            </tr>
-
-                            <tr style="height:18px"></tr>
-                            
                             <tr><td><div></div></td></tr>
                         </table>
                     </td>
@@ -512,7 +366,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Cancel-DontCreatGLAccount' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -520,7 +374,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Ok-AddGLAccount' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

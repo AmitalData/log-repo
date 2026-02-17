@@ -12,7 +12,7 @@ import {MessagingStockPMService} from '../../../../Shipment/Services/StandardPMs
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './StockNewWizardComponent.html',
 })
 

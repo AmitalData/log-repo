@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
-    public class NumberFormatMap : EntityTypeConfiguration<NumberFormat>
+    public class NumberFormatMap : EntityTypeConfiguration<WarehouseType>
     {
         public NumberFormatMap()
         {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../LogitudeComponents/BaseComponent';
 import {AppTool} from '../../../Tools';
 import {SessionLocator} from '../../../Utilities/SessionLocator';
@@ -13,10 +13,9 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {DateTimeZone, TimeZoneInfoClass, DateTimeFormat} from '../../../Utilities/DateTimeZone';
 import {Validator} from '../../../Validators/Validator';
 import {TextCodeTranslator} from '../../../Utilities/TextCodeTranslator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WizardAddressCompnent.html',
 })
 
@@ -51,10 +50,8 @@ export class WizardAddressCompnent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(addressPM.Description)) {
             this.EntityPM.Description = addressPM.Description = "Main Address";
         }
-        if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "test2" || ObjectsLocator.GlobalSetting?.DeploymentStage == "amitalstorage") {
-            this.ShowDayLightSettings = true;
-        }
-        else if (tenantPM.DayLightOffset != 0) {
+
+        if (tenantPM.DayLightOffset != 0) {
             this.ShowDayLightSettings = false;
         }
 
@@ -84,10 +81,6 @@ export class WizardAddressCompnent extends BaseComponent {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Tenant.F.TimeZoneOffset")));
         }
 
-        if (this.ShowDayLightSettings == true && (AppTool.IsNullOrEmpty(this.DayLightStartDate) || AppTool.IsNullOrEmpty(this.DayLightEndDate))) {
-            errors.push("DayLight Start Date and End Date are Required .");
-        }
-
         return errors;
     }
 
@@ -95,9 +88,6 @@ export class WizardAddressCompnent extends BaseComponent {
         this.IsEditingEnabled = true;
         this.UIProperties.SetRequired("City", "Address", AppTool.IsNullOrEmpty(this.City) ? true : false);
         this.UIProperties.SetRequired("CountryId", "Address", AppTool.IsNullOrEmpty(this.CountryId) ? true : false);
-        this.UIProperties.SetRequired("DayLightStartDate", "Tenant", AppTool.IsNullOrEmpty(this.DayLightStartDate) ? true : false);
-        this.UIProperties.SetRequired("DayLightEndDate", "Tenant", AppTool.IsNullOrEmpty(this.DayLightEndDate) ? true : false);
-        //this.UIProperties.SetRequired("DayLightOffset", "Tenant", AppTool.IsNullOrEmpty(this.DayLightOffset) ? true : false);
         this.SetUIProperties_State();
         this.SetUIProperties_TimeZone();
     }

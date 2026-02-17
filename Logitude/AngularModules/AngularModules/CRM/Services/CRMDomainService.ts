@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {TicketPM} from '../EntityPMs/TicketPM';
@@ -14,24 +13,23 @@ import {SLAEscalationPM} from '../EntityPMs/SLAEscalationPM';
 import {SLAEscalationRecepientPM} from '../EntityPMs/SLAEscalationRecepientPM';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass'; 
 import {Guid} from '../../Infrastructure/Utilities/Guid';
-import { PerformanceLogger } from '../../Infrastructure/Utilities/PerformanceLogger';
-import { OccasionInviteePM } from '../EntityPMs/OccasionInviteePM';
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { SupportMailboxPM } from '../EntityPMs/SupportMailboxPM';
 
 @Injectable()
 
 export class CRMDomainService {
     private _apiUrl: string;
-    private _http: HttpClient;
-    private CurrentSession = SessionLocator.SelectedSession;    
+    private _http: Http;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CRMDomain';
     }
 
     InserNewTicket(entityPM: TicketPM) {
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
 
@@ -46,8 +44,9 @@ export class CRMDomainService {
                 var mappedEntity: TicketPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl + '/InserNewTicket?entityPM=' + entityPM, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                return this._http.post(this._apiUrl + '/InserNewTicket?entityPM=' + entityPM, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: TicketPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -58,14 +57,14 @@ export class CRMDomainService {
 
                         return response;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 response.HasError = true;
                 response.ErrorsArray = errorsArray;
 
-                return of(response);
+                return Observable.of(response);
 
             }
         }
@@ -75,496 +74,574 @@ export class CRMDomainService {
     }
 
     GetOwnerEmployeeGroup(ownerId: string, employeeGroupId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetOwnerEmployeeGroup?ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }),catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetContactCards(companyId: string, contactId: string) {
- 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetContactCards?companyId=' + companyId + '&contactId=' + contactId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }),catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetConnectContactCards(companyId: string, contactId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetConnectContactCards?companyId=' + companyId + '&contactId=' + contactId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }),catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetActivitiesDashBoard(ownerId: string, businessUnitId: string, activityTypeCodeFilter: string, RecordsTypeCode: string) {
-  
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetActivitiesDashBoard?OwnerId=' + ownerId + '&BusinessUnitId=' + businessUnitId + '&activityTypeCodeFilter=' + activityTypeCodeFilter + '&RecordsTypeCode=' + RecordsTypeCode;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetOpportunitiesChartDataCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, chartCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetOpportunitiesChartDataCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetOpportunitiesChartData(code: string, ownerId: string, businessUnitId: string, chartCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetOpportunitiesChartData?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId +'&chartCode=' + chartCode;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetActivitiesChartDataCustom(FromDate: Date,ToDate:Date, ownerId: string, businessUnitId: string, chartCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetActivitiesChartDataCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) +'&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
+
+
     GetActivitiesChartData(code: string, ownerId: string, businessUnitId: string, chartCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetActivitiesChartData?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
+
+
     GetQuotesChartDataCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, chartCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetQuotesChartDataCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate)+ '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetQuotesChartData(code: string, ownerId: string, businessUnitId: string, chartCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetQuotesChartData?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetOpenedTicketsGroupByClassification(code: string, ownerId: string, employeeGroupId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetOpenedTicketsGroupByClassification?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetOpenedTicketsGroupBySeverity(code: string, ownerId: string, employeeGroupId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetOpenedTicketsGroupBySeverity?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetOpenedTicketsGroupByOwner(code: string, ownerId: string, employeeGroupId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetOpenedTicketsGroupByOwner?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetOpenedTicketsBySLAViolation(selectedIndex: number, code: string, ownerId: string, employeeGroupId: string) {
- 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetOpenedTicketsBySLAViolation?selectedIndex=' +selectedIndex+'&code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetOpenedTicketsByOpenedStage(selectedIndex: number, code: string, ownerId: string, employeeGroupId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetOpenedTicketsByOpenedStage?selectedIndex=' + selectedIndex + '&code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetClosedTicketsGroupByClassification(code: string, ownerId: string, employeeGroupId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetClosedTicketsGroupByClassification?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetClosedTicketsGroupBySeverity(code: string, ownerId: string, employeeGroupId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetClosedTicketsGroupBySeverity?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetClosedTicketsGroupByType(code: string, ownerId: string, employeeGroupId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetClosedTicketsGroupByType?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetClosedTicketsBySLAViolation(selectedIndex: number, code: string, ownerId: string, employeeGroupId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetClosedTicketsBySLAViolation?selectedIndex=' + selectedIndex + '&code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetClosedTicketsBySolvedStage(selectedIndex: number, code: string, ownerId: string, employeeGroupId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetClosedTicketsBySolvedStage?selectedIndex=' + selectedIndex + '&code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetOpenTicketsGroupByClassification(ownerId: string, employeeGroupId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetOpenTicketsGroupByClassification?ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetOpenTicketsByDueTime(ownerId: string, employeeGroupId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetOpenTicketsByDueTime?ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetTicketOverviewPerformance(ticketId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetTicketOverviewPerformance?ticketId=' + ticketId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    
+
     
     GetRecentTickets(myOwnerId: string, myEmployeeId: string) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetRecentTickets?ownerId=' + myOwnerId + '&employeeGroupId=' + myEmployeeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetRecentTickets?ownerId=' + myOwnerId + '&employeeGroupId=' + myEmployeeId, {
+                headers: authHeader
+            }).map(response => {
+                var allLists = response.json();
                 return allLists;
-            }));
+            });
         });
     }
 
     GetRecentOpportunities(myOwnerId: string, myEmployeeId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetRecentOpportunities?ownerId=' + myOwnerId + '&businessUnitId=' + myEmployeeId, {
+                headers: authHeader
+            }).map(response => {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetRecentOpportunities?ownerId=' + myOwnerId + '&businessUnitId=' + myEmployeeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var allLists = response;
+                var allLists = response.json();
                 return allLists;
-            }));
+            });
         });
     }
 
     GetCorrespondencesList(entityId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTicketCorrespondences?entityId=' + entityId, {
+                headers: authHeader
+            }).map(response => {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTicketCorrespondences?entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var allLists = response;
+                var allLists = response.json();
                 return allLists;
-            }));
+            });
         });
     }
 
     GetTicketsCounts(myOwnerId: string, myEmployeeId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTicketsCounts?ownerId=' + myOwnerId + '&employeeGroupId=' + myEmployeeId, {
+                headers: authHeader
+            }).map(response => {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTicketsCounts?ownerId=' + myOwnerId + '&employeeGroupId=' + myEmployeeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var allLists = response;
+                var allLists = response.json();
                 return allLists;
-            }));
+            });
         });
     }
 
     GetTopTickets(myOwnerId: string, myEmployeeId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTopTickets?ownerId=' + myOwnerId + '&employeeGroupId=' + myEmployeeId, {
+                headers: authHeader
+            }).map(response => {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTopTickets?ownerId=' + myOwnerId + '&employeeGroupId=' + myEmployeeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var allLists = response;
+                var allLists = response.json();
                 return allLists;
-            }));
+            });
         });
     }
 
     GetTicketsCountByShipmentNumber(shipmentNumber: string) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTicketsCountByShipmentNumber?shipmentNumber=' + shipmentNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var count = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTicketsCountByShipmentNumber?shipmentNumber=' + shipmentNumber, {
+                headers: authHeader
+            }).map(response => {
+                var count = response.json();
                 return count;
-            }));
+            });
         });
     }
 
     GetEmployeeGroupsPMList() {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetEmployeeGroupsPMList?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        //authHeader.append('Token', sessionStorage.getItem("Token"));
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetEmployeeGroupsPMList?', {
+                headers: authHeader
+            }).map(response => {
+                var allLists = response.json();
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
                 return myResponse;
-            }));
+            });
         });
     }
  
-    GetUsersByEmployeeGroupIds(employeeIds: string) {
 
+    GetUsersByEmployeeGroupIds(employeeIds: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        //authHeader.append('Token', sessionStorage.getItem("Token"));
 
         var url = this._apiUrl + '/GetUsersByEmployeeGroupIds?employeeIds=' + employeeIds;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetContactListsByEmailsString(emails: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var url = this._apiUrl + '/GetContactListsByEmailsString?emails=' + emails;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myJsonResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetUserListsByEmailsString(emails: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var url = this._apiUrl + '/GetUserListsByEmailsString?emails=' + emails;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myJsonResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetTicketEscalationListsByTicketId(entityId: string) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTicketEscalationListsByTicketId?entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTicketEscalationListsByTicketId?entityId=' + entityId, {
+                headers: authHeader
+            }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }));
+            });
         });
     }
 
     GetTicketOverViewStatisticsSummary(entityId: string) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTicketOverViewStatisticsSummary?entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTicketOverViewStatisticsSummary?entityId=' + entityId, {
+                headers: authHeader
+            }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }));
+            });
         });
     }
 
     GetBusinessHours(entityId: string) {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetBusinessHours?entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetBusinessHours?entityId=' + entityId, {
+                headers: authHeader
+            }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }));
+            });
         });
     }
 
     GetOpportunitiesSummary(ownerId: string, businessUnitId: string, RecordsTypeCode: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetOpportunitiesSummary?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
                 var myResult = new CRMSummary();
 
                 if (myJsonResult) {
@@ -580,7 +657,7 @@ export class CRMDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -635,13 +712,14 @@ export class CRMDomainService {
     }
 
     GetCRMDailySpotlightCounts(ownerId: string, businessUnitId: string, RecordsTypeCode: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCRMDailySpotlightCounts?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
                 var myResult = new DailySpotlightClass();
 
                 if (myJsonResult) {
@@ -657,80 +735,87 @@ export class CRMDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetUpcomigActivities(ownerId: string, businessUnitId: string, activityTypeCodeFilter: string, RecordsTypeCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetUpcomigActivities?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&activityTypeCodeFilter=' + activityTypeCodeFilter + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetStageFunnelData(ownerId: string, businessUnitId: string, filterCode: string, RecordsTypeCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetStageFunnelData?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&filterCode=' + filterCode + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetCompleteActivity(activityId: string, post: boolean, summary: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCompleteActivity?activityId=' + activityId + '&post=' + post + '&summary=' + summary;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var activity = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var activity = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = activity;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetReopenActivity(activityId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetReopenActivity?activityId=' + activityId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var activity = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var activity = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = activity;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetActivitiesSummary(activityTypeCodeFilter: string, ownerId: string, businessUnitId: string, RecordsTypeCode: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetActivitiesSummary?activityTypeCodeFilter=' + activityTypeCodeFilter + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
                 var myResult = new CRMSummary();
 
                 if (myJsonResult) {
@@ -746,16 +831,19 @@ export class CRMDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetActiveSLAbyTenant() {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetActiveSLAbyTenant?', {
+                headers: authHeader
+            }).map(response => {
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetActiveSLAbyTenant?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var result:any = response;
+                var result = response.json();
                 var entity: SLAHeaderPM;
                 var allLists: SLAHeaderPM[];
                 allLists = new Array<SLAHeaderPM>();
@@ -769,19 +857,22 @@ export class CRMDomainService {
                 pmresponse.Result = allLists;
                 return pmresponse;
 
-                //var allLists = response;
+                //var allLists = response.json();
                 //var myResponse: ServiceResponse;
                 //myResponse = new ServiceResponse();
                 //myResponse.Result = allLists;
                 //return myResponse;
-            }));
+            });
         });
     }
     GetSingleSLAHeaderPMByTenant() {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleSLAHeaderPMByTenant?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pm = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleSLAHeaderPMByTenant?', {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
                 var entity: SLAHeaderPM;
                 if (pm) {
                     entity = this.MapJsonToSLAHeaderEntityPM(pm);
@@ -790,7 +881,7 @@ export class CRMDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }));
+            });
         });
     }
     MapJsonToSLAHeaderEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: SLAHeaderPM = null) {
@@ -1154,452 +1245,226 @@ export class CRMDomainService {
     }
 
     UpdatingActivityMettingSummary(mettingSummary: string, post: boolean, activityId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetUpdatingActivityMettingSummary?mettingSummary=' + mettingSummary + '&post=' + post + '&activityId=' + activityId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }),catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetActivitiesByOpportunityId(entityId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetActivitiesByOpportunityId?entityId=' + entityId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetActivitiesByTicketId(entityId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetActivitiesByTicketId?entityId=' + entityId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetQuotesGroupBySalesman(code: string, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetQuotesGroupBySalesman?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
-    GetQuotesGroupBySalesmanCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
+
+    GetQuotesGroupBySalesmanCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetQuotesGroupBySalesmanCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetCustomersGroupBySalesmanCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCustomersGroupBySalesmanCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetCustomersGroupBySalesman(days: number, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCustomersGroupBySalesman?days=' + days + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
+
+
     GetActivitiesGroupBySalesmanCustom(FromDate: Date,ToDate:Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetActivitiesGroupBySalesmanCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
-    GetActivitiesGroupBySalesman(code: string, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
+
+    GetActivitiesGroupBySalesman(code: string, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetActivitiesGroupBySalesman?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetOpportunitiesGroupBySalesmanCustom(FromDate: Date,ToDate:Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetOpportunitiesGroupBySalesmanCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetOpportunitiesGroupBySalesman(code: string, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetOpportunitiesGroupBySalesman?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
-    GetUpdateCorrespondence(entityId: string, rightToLeft: boolean) {
 
+
+    GetUpdateCorrespondence(entityId: string, rightToLeft: boolean) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetUpdateCorrespondence?entityId=' + entityId + '&rightToLeft=' + rightToLeft;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var result = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = result;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetCommunicationLogs(entityId: string) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCommunicationLogs?entityId=' + entityId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var result = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = result;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
+
+
     GetTicketOwnerPermission(ownerId: string, ownerName:string) {
- 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetTicketOwnerPermission?ownerId=' + ownerId + '&ownerName=' + ownerName ;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var result = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = result;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetOccasionsSummary() {
-
-        var url = this._apiUrl + '/GetOccasionsSummary';
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var myJsonResult = response;
-                var myResult = new OccasionSummary();
-
-                if (myJsonResult) {
-                    var jsonListKeys = Object.keys(myJsonResult);
-                    for (var key in jsonListKeys) {
-                        var property = jsonListKeys[key];
-                        myResult[property] = myJsonResult[property];
-                    }
-                }
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myResult;
-                return serviceResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    
-    GetCountOfOccasionAllCustomers(contactIds: string) {
-
-
-        var url = this._apiUrl + '/GetCountOfOccasionAllCustomers?contactIds=' + contactIds;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
-                return serviceResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }    
-
-    GetOccasionContactsByFilters(filters: ApiQueryFilters) {
-        var callTime = new Date();
-
-        var urlparameters = '/GetOccasionContactsByFilters?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
-
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
-        }
-
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
-
-
-        var callUrl = this._apiUrl.concat(urlparameters);
-
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                map((response: HttpResponse<any>) => {
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = response.body;
-
-                var _mappedListsArray: Array<OccasionContactSearchresult> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: OccasionContactSearchresult;
-                        entity = this.MapOccasionContactSearchresult(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
-                serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "User", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
-
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-
-    GetOccasionContactsByFiltersAndUpdate(filters: ApiQueryFilters) {
-        var callTime = new Date();
-
-        var urlparameters = '/GetOccasionContactsByFiltersAndUpdate?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
-
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
-        }
-
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
-
-
-
-        var callUrl = this._apiUrl.concat(urlparameters);
-
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                map((response: HttpResponse<any>) => {
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = response.body;
-
-                var _mappedListsArray: Array<OccasionContactSearchresult> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: OccasionContactSearchresult;
-                        entity = this.MapOccasionContactSearchresult(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
-                serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "User", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
-                return serviceResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    MapOccasionContactSearchresult(jsonList: any) {
-        var entityList: OccasionContactSearchresult;
-        entityList = new OccasionContactSearchresult();
-        var jsonListKeys = Object.keys(jsonList);
-
-        for (var key in jsonListKeys) {
-            var property = jsonListKeys[key];
-            entityList[property] = jsonList[property];
-        }
-
-        return entityList;
-    }
-
-    GetSupportMailboxsByTenant() {
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSupportMailboxsByTenant?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result:any = response;
-                var entity: SupportMailboxPM;
-                var allLists: SupportMailboxPM[];
-                allLists = new Array<SupportMailboxPM>();
-
-                result.forEach((item) => {
-                    entity = this.MapJsonToSupportMailboxPM(item);
-                    allLists.push(entity);
-                });
-
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-                pmresponse.Result = allLists;
-                return pmresponse;
-            }));
-        });
-    }
-    MapJsonToSupportMailboxPM(jsonPM: any, mapParent: boolean = true, entityPM: SupportMailboxPM = null) {
-        if (!entityPM) {
-            entityPM = new SupportMailboxPM();
-        }
-
-        var jsonPMKeys = Object.keys(jsonPM);
-
-        for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties") {
-                continue;
-            }
-
-            var property = jsonPMKeys[key];
-            entityPM[property] = jsonPM[property];
-        }
-
-        entityPM.IsDirty = false;
-
-        if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
-        }
-
-        else {
-            entityPM.OldEntityPM = null;
-        }
-
-        return entityPM;
-    }
-
-    DeleteMailBox(entityId: string) {
-
-
-        var url = this._apiUrl + '/GetDeleteMailBox?entityId=' + entityId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var myResult = response;
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myResult;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 }
@@ -1633,25 +1498,4 @@ export class CRMSummary {
     public MyOpenDataCount: number;
     public AllOpenDataCount: number;
     public OpenByStageCount: number;
-}
-
-export class OccasionSummary {
-    public Id: number;
-    public AllOccasionsCount: number;
-}
-
-export class OccasionContactSearchresult {
-    public ContactId: string;
-    public Name: string;
-    public Email: string;
-    public Company: string;
-    public Region: string;
-    public Industry: string;
-    public Product: string;
-    public CustomerSize: string;
-    public ContactMobile: string;
-    public ContactPhone: string;
-    public ContactPosition: string;
-    public ContactTel: string;
-
 }

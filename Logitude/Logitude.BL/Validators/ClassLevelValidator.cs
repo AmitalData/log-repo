@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.Helpers;
@@ -13,7 +13,6 @@ using Logitude.BL.Interfaces;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.Helpers;
 
 namespace Logitude.BL.Validators
 {
@@ -64,7 +63,7 @@ namespace Logitude.BL.Validators
                 {
                     foreach (ObjectTableRuleField field in requiredObjectFields)
                     {
-                        ObjectField f = objectFieldList.FirstOrDefault(fd => fd.FieldCode == field.ObjectFieldCode);
+                        ObjectField f = objectFieldList.FirstOrDefault(fd => fd.Id == field.ObjectFieldId);
                         errorMessage = errorMessage + "," + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
                     }
 
@@ -121,9 +120,15 @@ namespace Logitude.BL.Validators
                         }
 
                         string valueString = propertyValue != null ? propertyValue.ToString() : "";
-                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()) && !(objectfeildprop.DataTypeCode == "LookUp" && objectfeildprop.IsCustom))
+                        if (!string.IsNullOrEmpty(valueString) && !(objectfeildprop.DataTypeCode == "LookUp" && objectfeildprop.IsCustom))
                         {
-                            return false;
+                            if (!objectfeildprop.IsMaxLength)
+                            {
+                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
+                                {
+                                    return false;
+                                }
+                            }
                         }
                     }
                     //    }
@@ -219,9 +224,16 @@ namespace Logitude.BL.Validators
                     if (objectfeildprop.DataTypeCode == "Text" || objectfeildprop.DataTypeCode == "nText" || objectfeildprop.DataTypeCode == "LookUp")
                     {
                         string valueString = propertyValue != null ? propertyValue.ToString() : "";
-                        if (propertyValue != null && FieldValueValidator.IsNotValidMinMaxValue(objectfeildprop, propertyValue.ToString()) && !(objectfeildprop.DataTypeCode == "LookUp" && objectfeildprop.IsCustom))
+                        if (!string.IsNullOrEmpty(valueString) && !(objectfeildprop.DataTypeCode == "LookUp" && objectfeildprop.IsCustom))
                         {
-                            stringLengthError = stringLengthError + "," + TranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
+
+                            if (!objectfeildprop.IsMaxLength)
+                            {
+                                if (propertyValue.ToString().Length > objectfeildprop.MaxLength || propertyValue.ToString().Length < objectfeildprop.MinLength)
+                                {
+                                    stringLengthError = stringLengthError + "," + TranslateTextsClass.GetTranslation("General.M.MinMax", objectfeildprop.FullNameTextCode.Code, objectfeildprop.MinLength.ToString(), objectfeildprop.MaxLength.ToString(), objectfeildprop.Tenant);
+                                }
+                            }
                         }
 
                     }

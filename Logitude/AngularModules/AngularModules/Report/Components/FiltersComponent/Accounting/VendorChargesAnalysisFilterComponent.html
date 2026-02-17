@@ -12,7 +12,7 @@
                     <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
                 </tr>
 
-                <tr class="FormFieldRow">
+                <tr style="height:28px;">
                     <td>
                         <table>
                             <tr>
@@ -22,7 +22,7 @@
 
                                 <td style="width:90px;" class="Label">Vendor:</td>
                                 <td style="width:200px;">
-                                    <LogLov  [ShowInActive]="true" [ObjectFieldName]="'VendorId'"
+                                    <LogLov [ObjectFieldName]="'VendorId'"
                                             [ObjectTableName]="'Card'"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"
@@ -51,7 +51,7 @@
 
                                 <td style="width:15px"></td>
                                 <td style="width:90px;">
-                                    <app-run-report-toggle [isRTL]="true" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
+                                    <button (click)="RunButtonClicked()" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
                                 </td>
 
                                 <td>
@@ -62,7 +62,7 @@
                     </td>
                 </tr>
 
-                <tr class="FormFieldRow">
+                <tr style="height:28px;">
                     <td>
                         <table>
                             <tr>
@@ -80,14 +80,8 @@
                                     </LogLov>
                                 </td>
 
-                                <td style="width: 190px;">
+                                <td style="width: 1px;">
                                     <CheckBox [IsChecked]="IncludeAccountedOnly" (Checked)="IncludeAccountedOnly = $event" [Text]="'Include Accounted Only'"></CheckBox>
-                                </td>
-
-                                <td style="width:20px;"><div></div></td>
-                                <td style="width:80px;" class="Label">Shipment No: </td>
-                                <td style="width:110px;">
-                                    <LogTextBox [NoObjectField]="true" [Text]="ShipmentNumber" [ObjectFieldName]="'ShipmentNumber'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                 </td>
 
                                 <td>
@@ -98,7 +92,7 @@
                     </td>
                 </tr>
 
-                <tr class="FormFieldRow">
+                <tr style="height:28px;">
                     <td>
                         <table>
                             <tr>

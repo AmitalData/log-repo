@@ -8,7 +8,7 @@ import { EntityResourceService } from '../../Infrastructure/Services/EntityResou
 import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SharedLogisticsMoneyPermissiosComponent.html',
 })
 
@@ -58,16 +58,6 @@ export class SharedLogisticsMoneyPermissiosComponent extends BaseComponent imple
             this.EntityPM.IsMoneyTabEnabled = value;
         }
     }
-
-
-    get IsShowAmountLocalCurrency() { return this.EntityPM.IsShowAmountLocalCurrency; }
-    set IsShowAmountLocalCurrency(value: boolean) {
-        if (this.EntityPM.IsShowAmountLocalCurrency != value) {
-            this.EntityPM.IsShowAmountLocalCurrency = value;
-        }
-    }
-
-
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();

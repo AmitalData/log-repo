@@ -38,17 +38,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.LICENCESIV = entityPM.LICENCESIV;
             entityPOCO.ORIGINCOUNTRY = entityPM.ORIGINCOUNTRY;
             entityPOCO.UNITID = entityPM.UNITID;
-            entityPOCO.FACTOR = entityPM.FACTOR;
-            entityPOCO.VERIFICATIONNUMBER = entityPM.VERIFICATIONNUMBER;
-            entityPOCO.TARIFFID = entityPM.TARIFFID;
-            entityPOCO.IMPAPPROVTYPEID = entityPM.IMPAPPROVTYPEID;
-            entityPOCO.SIVUGINSTRUCTION = entityPM.SIVUGINSTRUCTION;
-            entityPOCO.REMARKSMAKAT = entityPM.REMARKSMAKAT;
-            entityPOCO.REMARKSPROTEST = entityPM.REMARKSPROTEST;
-            entityPOCO.CLASSIFIER1ID = entityPM.CLASSIFIER1ID;
-            entityPOCO.CLASSIFIER2ID = entityPM.CLASSIFIER2ID;
-            entityPOCO.ITEMNO2= entityPM.ITEMNO2;
-
         }
 
         public void POCOToPM(GITITEMPM entityPM, GITITEM entityPOCO)
@@ -73,17 +62,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.LICENCESIV = entityPOCO.LICENCESIV;
             entityPM.ORIGINCOUNTRY = entityPOCO.ORIGINCOUNTRY;
             entityPM.UNITID = entityPOCO.UNITID;
-            entityPM.FACTOR = entityPOCO.FACTOR;
-            entityPM.VERIFICATIONNUMBER = entityPOCO.VERIFICATIONNUMBER;
-            entityPM.TARIFFID = entityPOCO.TARIFFID;
-            entityPM.IMPAPPROVTYPEID = entityPOCO.IMPAPPROVTYPEID;
-            entityPM.SIVUGINSTRUCTION = entityPOCO.SIVUGINSTRUCTION;
-            entityPM.REMARKSMAKAT = entityPOCO.REMARKSMAKAT;
-            entityPM.REMARKSPROTEST = entityPOCO.REMARKSPROTEST;
-            entityPM.CLASSIFIER1ID = entityPOCO.CLASSIFIER1ID;
-            entityPM.CLASSIFIER2ID = entityPOCO.CLASSIFIER2ID;
-            entityPM.ITEMNO2 = entityPOCO.ITEMNO2;
-
         }
 
         public void CustomPMToPOCO(GITITEMPM entityPM, GITITEM entityPOCO)

@@ -19,8 +19,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool AutoCompleteSearchWindow { get; set; }
         public bool IsClosed { get; set; }
         public string HeaderScreenId { get; set; }
-        public string HeaderScreenCode { get; set; }
-
         public bool HasCounter { get; set; }
         public bool HasCustomValidator { get; set; }
         public bool EnableEditFromLOV { get; set; }
@@ -29,7 +27,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsRestrictable { get; set; }
         public bool IsMain { get; set; }
         public string DBTableName { get; set; }
-        public string DBTableShortName { get; set; }
         public string BaseObjectTableId { get; set; }
         public string DescriptionTextCodeId { get; set; }
         public string DescriptionTextCodeCode { get; set; }
@@ -54,27 +51,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string CodeField { get; set; }
         public string NameField { get; set; }
         public bool DisableSearchBox { get; set; }
-        public bool AllowedInTicket { get; set; }
+        public bool AllowedInQueues { get; set; }
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
-        public bool IsTabsHidden { get; set; }
-        public string ParentObjectTableName { get; set; }
-        public bool AvailableInCustomization { get; set; }
-        public string ParentObjectTableId { get; set; }
-        public bool IsCustom { get; set; }
-        public bool SupportSubEntity { get; set; }
-        public bool ApplyGenericCustomFields { get; set; }
-        public string LookUp1 { get; set; }
-        public string LookUp2 { get; set; }
-        public string FullNameTextCodeId { get; set; }
-        public string FullNameTextCodeCode { get; set; }
-        public string FullNameTextCodeDefaultText { get; set; }
-        public bool AvailableInDocumentTypes { get; set; }
-		public bool IsLock { get; set; }
-		public string RelatedEntity { get; set; }
-		public string ThisKey { get; set; }
-		public string RelatedKey { get; set; }
-
-
-	}
+    }
 }

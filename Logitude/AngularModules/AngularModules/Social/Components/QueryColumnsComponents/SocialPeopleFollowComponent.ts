@@ -8,7 +8,7 @@ import {FollowerExtendedPMService} from '../../Services/ExtendedPMs/FollowerExte
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SocialPeopleFollowComponent',
     templateUrl: './SocialPeopleFollowComponent.html',
 
@@ -53,7 +53,7 @@ export class SocialPeopleFollowComponent implements OnInit {
     AddDeleteFollower(user: any) {
         var isdelete: boolean = user.IsFollowed;
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.followerExtendedPMService.AddDeleteFollower(user.Id, SessionLocator.LoggedUserId, isdelete, SessionLocator.Tenant).subscribe((res:any) => {
+        this.followerExtendedPMService.AddDeleteFollower(user.Id, SessionLocator.LoggedUserId, isdelete, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
 

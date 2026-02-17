@@ -35,7 +35,6 @@ namespace WebFreight.Web.DataProviders
 
         public class ProfitByShipmentReport
         {
-            public int? NumberOfContainers { get; set; }
             public string ShipmentNo { get; set; }
             public string Customer { get; set; }
             public string Agent { get; set; }
@@ -94,8 +93,6 @@ namespace WebFreight.Web.DataProviders
             public string FromPortName { get; set; }
             public string FinalDestinationPortCode { get; set; }
             public string FinalDestinationPortName { get; set; }
-            public string ConsigneeReference1 { get; set; }
-            public string ConsigneeReference2 { get; set; }
             //public string PayablesExpectedAmount { get; set; }
 
         }

@@ -23,8 +23,8 @@ export class OrderTabComponent {
 
       }
       else if (ShipmentType == 'LCL' || ShipmentType == 'LTL') {
-        this.AddLCL_LTLPackage('1', 'h6', '10', '10', '10', '100');
-        this.AddLCL_LTLPackage('2', 'e5', '20', '20', '20', '40');
+        this.AddLCL_LTLPackage('1', 'aa', '10', '10', '10', '100');
+        this.AddLCL_LTLPackage('2', '4c', '20', '20', '20', '40');
       }
       var BookingConfirmationNumber = this.Helper.WaitByIdAndFill('Shipment_BookingConfirmationNumber', 'ConfirmedBy ... ');
       var BookingConfirmedBy = this.Helper.WaitByIdAndFill('Shipment_BookingConfirmedBy', 'Razan ');
@@ -32,9 +32,10 @@ export class OrderTabComponent {
       if(ShipmentType=='FCL'||ShipmentType=='LCL'||ShipmentType==''){
         var CutoffDate = this.Helper.WaitByIdAndFill('date_Shipment_CutoffDate', '3');
       }
-      // else if (ShipmentType=='FTL'||ShipmentType=='LTL'){
-      //   var WarehouseLegCutOffDate = this.Helper.WaitByIdAndFill('date_Shipment_WarehouseLegCutOffDate', '4');
-      // }
+      else if (ShipmentType=='FTL'||ShipmentType=='LTL'){
+        var WarehouseLegCutOffDate = this.Helper.WaitByIdAndFill('date_Shipment_WarehouseLegCutOffDate', '4');
+
+      }
     }
     else if (LogitudeShipType == 'H') {
       if (ShipmentType == '') {
@@ -47,8 +48,8 @@ export class OrderTabComponent {
 
       }
       else if (ShipmentType == 'LCL' || ShipmentType == 'LTL') {
-        this.AddLCL_LTLPackage('1', 'h6', '10', '10', '10', '100');
-        this.AddLCL_LTLPackage('2', 'e5', '20', '20', '20', '40');
+        this.AddLCL_LTLPackage('1', 'aa', '10', '10', '10', '100');
+        this.AddLCL_LTLPackage('2', '4c', '20', '20', '20', '40');
       }
     }
 

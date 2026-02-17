@@ -7,8 +7,7 @@
 //------------------------------------------------------------------------------
 
 export class FeaturePackageTypeList {
-   		Code: string;
-		Name: string;
-		SearchFields: string;
-	
+    Code: string;
+    Name: string;
+    SearchFields: string;
 }

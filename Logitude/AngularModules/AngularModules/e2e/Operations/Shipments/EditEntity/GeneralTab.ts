@@ -8,31 +8,31 @@ export class GeneralTabComponent {
   constructor() {
     this.Helper = new FieldsHelper();
 
-  } 
+  }
   GeneralTab(LogitudeShipType: string) {
     this.Helper.WaitByIdAndClick('Shipment.TH.General');
     if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {
       // Fill some fields in General tab
-      // var mainHarmonize = this.Helper.WaitByIdAndFill('Shipment_MainHarmonize', 'Protractor test ')
+      var mainHarmonize = this.Helper.WaitByIdAndFill('Shipment_MainHarmonize', 'Protractor test ')
 
-      // var otherCharges = this.Helper.WaitByIdAndFill('Shipment_OtherPrepaidCollectId', 'coll');
-      // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-      // var freightPC = this.Helper.WaitByIdAndFill('Shipment_FreightPrepaidCollectId', 'coll');
-      // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-      var moveType = this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveType');
+      var otherCharges = this.Helper.WaitByIdAndFill('Shipment_OtherPrepaidCollectId', 'coll');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var incoterm = this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'LDE Incoterm');
+      var freightPC = this.Helper.WaitByIdAndFill('Shipment_FreightPrepaidCollectId', 'coll');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+      var moveType = this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'd');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 1);
+
+      var incoterm = this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'co');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 1);
 
       var AMSBL = this.Helper.WaitByIdAndFill('Shipment_AMSBL', 'Shipment AMSBL');
 
       var department = this.Helper.WaitByIdAndFill('Shipment_DepartmentId', 'man');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var department = this.Helper.WaitByIdAndFill('Shipment_BranchId', 'main');
+      var department = this.Helper.WaitByIdAndFill('Shipment_BranchId', 'ma');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     }
     else if (LogitudeShipType == 'M') {
@@ -42,8 +42,8 @@ export class GeneralTabComponent {
       var otherCharges = this.Helper.WaitByIdAndFill('Shipment_OtherPrepaidCollectId', 'coll');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var moveType = this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveType');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      var moveType = this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'd');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 1);
 
       var AMSBL = this.Helper.WaitByIdAndFill('Shipment_AMSBL', 'Shipment AMSBL');
 

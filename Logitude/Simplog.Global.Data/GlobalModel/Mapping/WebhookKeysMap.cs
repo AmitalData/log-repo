@@ -48,10 +48,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.Description)
          .HasMaxLength(200)
          .IsUnicode(false);
-            this.Property(t => t.SearchFields)
-         .HasMaxLength(1000)
-         .IsUnicode(true);
-
+             
 
             // Table & Column Mappings
             this.ToTable("WebhookKeys");
@@ -65,7 +62,6 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.UpdatedByUserName).HasColumnName("UpdatedByUserName");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.Description).HasColumnName("Description");
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
 
         }
     }

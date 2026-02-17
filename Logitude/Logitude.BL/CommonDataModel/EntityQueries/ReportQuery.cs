@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ReportRepository repository;
 
-
+        public ReportQuery()
+        {
+            repository = new ReportRepository();
+        }
 
         public ReportQuery(int tenant)
         {
@@ -49,12 +52,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                    DefaultTemplateId = report.DefaultTemplateId,
                                    DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                    DefaultExcelNoStimId = report.DefaultExcelNoStimId,
-                                   FeatureUniqeCode = report.FeatureUniqeCode,
-                                   AvailableForScheduling = report.AvailableForScheduling,
-                                   DisablePreview = report.DisablePreview,
-                                   DefaultExcelTemplateId = report.DefaultExcelTemplateId,
-                                   IsExcelReportAllowed = report.IsExcelReportAllowed,
             };
 
             ReportModificationRepository modificationRep = new ReportModificationRepository(tenant);
@@ -94,12 +91,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                                                DefaultTemplateId =a.DefaultTemplateId,
                                                DefaultMessageTemplateId = a.DefaultMessageTemplateId,
-                                               DefaultExcelNoStimId = a.DefaultExcelNoStimId,
-                                               FeatureUniqeCode = a.FeatureUniqeCode,
-                                               AvailableForScheduling = a.AvailableForScheduling,
-                                               DisablePreview = a.DisablePreview,
-                                               DefaultExcelTemplateId = a.DefaultExcelTemplateId,
-                                               IsExcelReportAllowed = a.IsExcelReportAllowed,
                                            };
             return reports;
         }
@@ -128,12 +119,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              FilterHtmlComponentUrl = a.FilterHtmlComponentUrl,
                              DefaultTemplateId = a.DefaultTemplateId,
                              DefaultMessageTemplateId = a.DefaultMessageTemplateId,
-                             DefaultExcelNoStimId = a.DefaultExcelNoStimId,
-                             FeatureUniqeCode = a.FeatureUniqeCode,
-                             AvailableForScheduling = a.AvailableForScheduling,
-                             DisablePreview = a.DisablePreview,
-                             DefaultExcelTemplateId = a.DefaultExcelTemplateId,
-                             IsExcelReportAllowed = a.IsExcelReportAllowed,
                          }).FirstOrDefault();
 
             return query;
@@ -159,12 +144,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                                 DefaultTemplateId = report.DefaultTemplateId,
                                                 DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                                DefaultExcelNoStimId = report.DefaultExcelNoStimId,
-                                                FeatureUniqeCode = report.FeatureUniqeCode,
-                                                AvailableForScheduling = report.AvailableForScheduling,
-                                                DisablePreview = report.DisablePreview,
-                                                DefaultExcelTemplateId = report.DefaultExcelTemplateId,
-                                                IsExcelReportAllowed = report.IsExcelReportAllowed,
                                             };
             return result;
         }
@@ -194,13 +173,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                           DefaultExcelNoStimId = report.DefaultExcelNoStimId,
-                                           FeatureUniqeCode = report.FeatureUniqeCode,
-                                           AvailableForScheduling = report.AvailableForScheduling,
-                                           DisablePreview = report.DisablePreview,
-                                           DefaultExcelTemplateId = report.DefaultExcelTemplateId,
-                                           IsExcelReportAllowed = report.IsExcelReportAllowed,
-
                                        }).ToList();
 
             foreach (ReportList report in result)
@@ -247,12 +219,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                           DefaultExcelNoStimId = report.DefaultExcelNoStimId,
-                                           FeatureUniqeCode = report.FeatureUniqeCode,
-                                           AvailableForScheduling = report.AvailableForScheduling,
-                                           DisablePreview = report.DisablePreview,
-                                           DefaultExcelTemplateId = report.DefaultExcelTemplateId,
-                                           IsExcelReportAllowed = report.IsExcelReportAllowed,
                                        }).ToList();
 
             foreach (ReportList report in result)
@@ -265,56 +231,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             return result;
         }
-
-        public ReportList GetReportByCode(string code, int tenant)
-        {
-            ReportModificationRepository reportModificationRep = new ReportModificationRepository(tenant);
-            IQueryable<Report> reports = repository.GetReports(tenant);
-            List<ReportModification> modifications = reportModificationRep.GetReportModifications(tenant).ToList();
-
-            ReportList result = (from report in reports.Include("Feature")
-                                       where report.Code == code
-                                       select new ReportList()
-                                       {
-                                           Id = report.Id,
-                                           Name = report.Name,
-                                           LocalName = report.LocalName,
-                                           FilterControlName = report.FilterControlName,
-                                           Description = report.Description,
-                                           SearchFields = report.SearchFields,
-                                           Code = report.Code,
-                                           ReportGroupId = report.ReportGroupId,
-                                           FeatureId = report.FeatureId,
-                                           FeatureCode = report.Feature != null ? report.Feature.Code : null,
-                                           ReportDocumentId = report.ReportDocumentId,
-                                           InActive = report.InActive,
-                                           Tenant = report.Tenant,
-                                           FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
-                                           DefaultTemplateId = report.DefaultTemplateId,
-                                           DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                           DefaultExcelNoStimId = report.DefaultExcelNoStimId,
-                                           FeatureUniqeCode = report.FeatureUniqeCode,
-                                           AvailableForScheduling = report.AvailableForScheduling,
-                                           DisablePreview = report.DisablePreview,
-                                           DefaultExcelTemplateId = report.DefaultExcelTemplateId,
-                                           IsExcelReportAllowed = report.IsExcelReportAllowed,
-                                       }).FirstOrDefault();
-
-            ReportModification modification = modifications.Where(d => d.ReportId == result.Id).FirstOrDefault();
-            if (modification != null)
-            {
-                result.ReportDocumentId = modification.ReportDocumentId;
-            }
-            return result;
-        }
-
-        public Report GetReportOnlyByCode(string code, int tenant)
-        {
-            return (from a in repository.context.Reports
-                    where a.Tenant == tenant && a.Code == code && !a.InActive
-                    select a).FirstOrDefault();
-        }
-
+        
         public List<ReportList> GetReportListsByGroupIdAndTenant(string groupId, int tenant)
         {
  
@@ -341,22 +258,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FilterHtmlComponentUrl = report.FilterHtmlComponentUrl,
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
-                                           DefaultExcelNoStimId = report.DefaultExcelNoStimId,
-                                           FeatureUniqeCode = report.FeatureUniqeCode,
-                                           AvailableForScheduling = report.AvailableForScheduling,
-                                           DisablePreview = report.DisablePreview,
-                                           DefaultExcelTemplateId = report.DefaultExcelTemplateId,
-                                           IsExcelReportAllowed = report.IsExcelReportAllowed,
                                        }).ToList();
 
           
             return result;
         }
-    
-        public string GetReportCodeById(string id, int tenant)
-        {
-            return repository.GetReportCodeById(id, tenant);
-        }
-
     }
 }

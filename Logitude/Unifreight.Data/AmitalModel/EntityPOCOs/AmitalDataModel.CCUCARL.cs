@@ -21,7 +21,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUCARL in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference = true)]
-    public partial class CCUCARL : UNIFBASICPOCO, INotifyPropertyChanged
+    public partial class CCUCARL : INotifyPropertyChanged
     {
 
         public CCUCARL()
@@ -276,7 +276,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for MADADRATE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> MADADRATE
+        public virtual global::System.Nullable<double> MADADRATE
         {
             get
             {
@@ -291,7 +291,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _MADADRATE;
+        private global::System.Nullable<double> _MADADRATE;
 
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for WEIGHT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> WEIGHT
+        public virtual global::System.Nullable<double> WEIGHT
         {
             get
             {
@@ -335,7 +335,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _WEIGHT;
+        private global::System.Nullable<double> _WEIGHT;
 
 
         /// <summary>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
@@ -44,7 +44,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new CustomerSize();
             this.Poco.Id = this.entityPm.Id;
 
-            CustomerSizeValidating.Validate(entityPM);
             CustomerSizeTracing.Trace(entityPM, Poco, isNewEntity);
             CustomerSizeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -57,8 +56,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleCustomerSize(entityPM.Id, entityPm.Tenant);
 
-            CustomerSizeValidating.Validate(entityPM);
-            CustomerSizeTracing.Trace(entityPM, Poco, isNewEntity);           
+            CustomerSizeTracing.Trace(entityPM, Poco, isNewEntity);
             CustomerSizeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();

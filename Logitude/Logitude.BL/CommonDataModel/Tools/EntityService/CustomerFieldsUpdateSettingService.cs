@@ -3,7 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -39,7 +39,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void Create(CustomerFieldsUpdateSettingPM entityPM)
         {
             CustomerFieldsUpdateSettingQuery customerFieldsUpdateSettingQuery = new CustomerFieldsUpdateSettingQuery(tenant);
-            bool result = customerFieldsUpdateSettingQuery.CheckIfExistCustomerFieldsUpdateSetting(entityPM.ObjectFieldCode, tenant);
+            bool result = customerFieldsUpdateSettingQuery.CheckIfExistCustomerFieldsUpdateSetting(entityPM.ObjectFieldId, tenant);
             if (result)
             {
                 throw new Exception("An update setting already exists for the field");

@@ -24,7 +24,7 @@ export class TarrifHeaderPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -179,10 +179,7 @@ export class TarrifHeaderPM {
     public OldEntityPM: TarrifHeaderPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -190,7 +187,6 @@ export class TarrifHeaderPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TarrifHeader");
            
         }
-	 }
     }
     private MyClone: TarrifHeaderPM;
 

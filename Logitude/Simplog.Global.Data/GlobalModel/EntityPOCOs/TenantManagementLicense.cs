@@ -14,9 +14,5 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int Tenant { get; set; }
         public string PackageCode { get; set; }
         public int? NumberOfUsers { get; set; }
-        public int? FreeUsers { get; set; }
-        public double? Price { get; set; }
-        public double? TotalPrice { get; set; }
-
     }
 }

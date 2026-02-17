@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,15 +26,13 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
-using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Simplog.Data.QuoteModel;
@@ -51,7 +49,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string code)
         {
 		  try
             {
@@ -59,12 +57,11 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("QuoteClosingReason", "READ", authToken.Tenant);
 				
 		    	IQuotesContext MyContext = QuotesContext.GetContext(authToken.Tenant);
 				QuoteClosingReasonRepository  quoteClosingReasonRepository = new QuoteClosingReasonRepository(MyContext);
 				QuoteClosingReasonList entityList = null;
-				QuoteClosingReason entityPoco = quoteClosingReasonRepository.GetSingleQuoteClosingReason(id , authToken.Tenant);
+				QuoteClosingReason entityPoco = quoteClosingReasonRepository.GetSingleQuoteClosingReason(code );
 
 				if (entityPoco != null)
 				{
@@ -97,12 +94,11 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("QuoteClosingReason", "READ", authToken.Tenant);
 
 
 				IQuotesContext MyContext = QuotesContext.GetContext(authToken.Tenant);
 				QuoteClosingReasonRepository  quoteClosingReasonRepository = new QuoteClosingReasonRepository(MyContext);
-				IQueryable<QuoteClosingReason> entityPocos = quoteClosingReasonRepository.GetQuoteClosingReasons(authToken.Tenant);
+				IQueryable<QuoteClosingReason> entityPocos = quoteClosingReasonRepository.GetQuoteClosingReasons();
 
 				QuoteClosingReasonQuery quoteClosingReasonQuery = new QuoteClosingReasonQuery(quoteClosingReasonRepository);
 			    IQueryable<QuoteClosingReasonList> entityLists = quoteClosingReasonQuery.GetIQueryableEntityList(entityPocos);
@@ -128,9 +124,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				                
-				SecurityUtility.CheckContactFeature("QuoteClosingReason", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "QuoteClosingReason",
@@ -174,13 +168,12 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                             string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-					
+
 
 
                 }
@@ -203,8 +196,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
                         }
                         else
                         {
@@ -216,38 +208,25 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                 { 
-                     AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "QuoteClosingReason",
-                     ParentEntityId = filters.ParentEntityId,
-                     ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = tenant ,
-                     ParentEntity = filters.ParentEntity
-                 };
 
-								
                 IQuotesContext MyContext = QuotesContext.GetContext(tenant);
                 QuoteClosingReasonRepository  quoteClosingReasonRepository = new QuoteClosingReasonRepository(MyContext);
-                IQueryable<QuoteClosingReason> entityPocos = quoteClosingReasonRepository.GetQuoteClosingReasons(tenant);
+                IQueryable<QuoteClosingReason> entityPocos = quoteClosingReasonRepository.GetQuoteClosingReasons();
 
                 QuoteClosingReasonQuery quoteClosingReasonQuery = new QuoteClosingReasonQuery(quoteClosingReasonRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				
                 entityPocos = genericFilter.GetFilteredQuery<QuoteClosingReason>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<QuoteClosingReasonList> entityLists = quoteClosingReasonQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<QuoteClosingReasonList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<QuoteClosingReasonList>(entityLists , treeFilterQueryArgs);
 
-		      
-			  								
+		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(QuoteClosingReasonList).GetProperty(queryOperations.SortByColumnName);
@@ -311,18 +290,18 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                     }
 				 }
                 }
-            }					  						
-	       else
+            }
+		    else
             {
                 entityLists = entityLists.OrderBy(d => d.Name);
-            } 
+            }
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-    		  }
+			  }
 			  	if(!queryOperations.GetAll)
 				 {
 

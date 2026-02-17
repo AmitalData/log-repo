@@ -17,28 +17,15 @@ namespace Logitude.Infrastructure.Data
     public interface IInfrastructureContext : IContext
     {
    
-       	 IDbSet<AuditLog> AuditLogs { get; }
-		 IDbSet<BatchTaskExecution> BatchTaskExecutions { get; }
+       	 IDbSet<BatchTaskExecution> BatchTaskExecutions { get; }
 		 IDbSet<BatchTaskExecutionStatus> BatchTaskExecutionStatus { get; }
-		 IDbSet<BIFoldersPermission> BIFoldersPermissions { get; }
 		 IDbSet<BIReport> BIReports { get; }
 		 IDbSet<BIReportFolder> BIReportFolders { get; }
-		 IDbSet<BIReportsExecutionLog> BIReportsExecutionLogs { get; }
 		 IDbSet<BIReportsType> BIReportsTypes { get; }
 		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
 		 IDbSet<BusinessRole> BusinessRoles { get; }
-		 IDbSet<ContainerSetting> ContainerSettings { get; }
-		 IDbSet<DigitalFieldSecurity> DigitalFieldSecurities { get; }
-		 IDbSet<DigitalPortalLanguage> DigitalPortalLanguages { get; }
-		 IDbSet<DigitalPortalScreen> DigitalPortalScreens { get; }
-		 IDbSet<DigitalPreDefinedComponent> DigitalPreDefinedComponents { get; }
-		 IDbSet<DigitalProfile> DigitalProfiles { get; }
-		 IDbSet<DigitalTextCode> DigitalTextCodes { get; }
 		 IDbSet<FeatureToggle> FeatureToggles { get; }
-		 IDbSet<LastRunDetail> LastRunDetails { get; }
 		 IDbSet<LBPTeamMember> LBPTeamMembers { get; }
-		 IDbSet<PriceStep> PriceSteps { get; }
-		 IDbSet<SatisfactionSurvey> SatisfactionSurveys { get; }
 		 IDbSet<SharedLogisticsSetting> SharedLogisticsSettings { get; }
 		 IDbSet<Team> Teams { get; }
 		 IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles { get; }

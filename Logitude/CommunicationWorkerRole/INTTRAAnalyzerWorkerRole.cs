@@ -3,7 +3,6 @@ using Logitude.XSD.Analyzers.INTTRAAnalyzer;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+                if (!General.IsUpdating())
                 {
                     try
                     {
@@ -37,7 +36,7 @@ namespace CommunicationWorkerRole
 
                         else
                         {
-                            Thread.Sleep(3000);
+                            Thread.Sleep(500);
                         }
                     }
 

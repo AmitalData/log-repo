@@ -39,7 +39,7 @@ export var DelayAutomationconditionsComponent = (function (_super) {
         }
     };
     DelayAutomationconditionsComponent.prototype.CloseButtonClicked = function () {
-        SessionLocator.SelectedSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     };
     DelayAutomationconditionsComponent.prototype.SaveButtonClicked = function () {
         var _this = this;
@@ -57,7 +57,7 @@ export var DelayAutomationconditionsComponent = (function (_super) {
             automationConditionList.push(item.CurrentEntityPM);
         });
         this.addEditAutomationsComponent.AutomatedBackupClass.DelayAautomationConditionLists = automationConditionList;
-        SessionLocator.SelectedSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     };
     DelayAutomationconditionsComponent.prototype.AddAutomationConditionMethod = function (conditionType) {
         var automationConditionPM = new AutomationCondition();

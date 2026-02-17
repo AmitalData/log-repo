@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,14 +26,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel;
@@ -103,10 +103,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				DescriptionOfGoodsQuery descriptionOfGoodsQuery = new DescriptionOfGoodsQuery(descriptionOfGoodsRepository);
 			    IQueryable<DescriptionOfGoodsList> entityLists = descriptionOfGoodsQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.Name);
-				List<DescriptionOfGoodsList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-										
-				return Request.CreateResponse(HttpStatusCode.OK, listResult);
+								
+				return Request.CreateResponse(HttpStatusCode.OK, entityLists);
             }
             catch (Exception ex)
             {
@@ -124,6 +123,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
+				if(filters.Tenant != null)
+					tenant = tenant;
 				
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -168,8 +169,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -197,8 +197,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
                         }
                         else
                         {
@@ -206,6 +205,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                         }
                     }
                 }
+
 
 
                 GenericFilter genericFilter = new GenericFilter();
@@ -311,9 +311,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<DescriptionOfGoodsList> listResult = entityLists.ToList();
 
-               response.Result = listResult;
+               response.Result = entityLists;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 			   PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
                

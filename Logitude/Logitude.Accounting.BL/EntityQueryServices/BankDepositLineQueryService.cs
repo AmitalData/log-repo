@@ -1,7 +1,5 @@
 ﻿using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.Resolvers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,64 +19,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         
 
         }
-
-        public List<BankDepositLinePM> GetLinesJoinedWithCheques(List<string> depositIds, int tenant)
-        {
-            bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
-
-            List<BankDepositLinePM> depositLines = (from dpLine in context.BankDepositLines 
-                                                  join  arpChequeLine in context.ARPaymentCheques
-                                                  on    dpLine.ARPaymentChequeId equals arpChequeLine.Id
-                                                  where depositIds.Contains(dpLine.DepositId) && dpLine.Tenant == tenant
-                                                  select new BankDepositLinePM()
-                                                  {
-                                                      // cheque fields
-                                                      Bank = arpChequeLine.BankId,
-                                                      ChequeNumber = arpChequeLine.ChequeNumber,
-                                                      ARPaymentNumber = arpChequeLine.Payment.PaymentNo,
-                                                      DueDate = arpChequeLine.ValueDate,
-                                                      LocalAmount = arpChequeLine.LocalAmount,
-                                                      Currency = arpChequeLine.Currency.Code,
-                                                      ForeignAmount = arpChequeLine.ForeignAmount,
-                                                      AccountNumber = arpChequeLine.BankAccount,
-                                                      Branch = arpChequeLine.BankBranch,
-                                                      ARPaymentId = arpChequeLine.PaymentId,
-                                                      ARPaymentChequeId = arpChequeLine.Id,
-                                                      ChequeStatusCode = arpChequeLine.ARPaymentChequeStatus.Code,                                                     
-                                                      ChequeStatusName = showLocals ? arpChequeLine.ARPaymentChequeStatus.LocalName : arpChequeLine.ARPaymentChequeStatus.EnglishName,
-                                                      SearchFields = arpChequeLine.ChequeNumber,
-                                                      DepositId = dpLine.DepositId,
-
-                                                      // line mapping
-                                                      Line = dpLine.Line,
-                                                      Notes = dpLine.Notes,
-                                                      IsOutOfDeposit = dpLine.IsOutOfDeposit,
-                                                      Tenant = dpLine.Tenant,
-                                                      OutOfDepositeDate = dpLine.OutOfDepositeDate,
-                                                      
-
-                                                  }).ToList();
-
-            return depositLines;
-
-
-        }
-
-        public List<int> GetDepositLineNumbersByDepositIdChequeId(string depositId, string chequeId, int tenant)
-        {
-            List<BankDepositLine> depositLines = (from a in context.BankDepositLines
-                                                  where a.DepositId == depositId && a.ARPaymentChequeId == chequeId && a.Tenant == tenant
-                                                  select a).ToList();
-            if (depositLines != null)
-            {
-                return depositLines.Select(rec => rec.Line).ToList();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
 
     }
 }

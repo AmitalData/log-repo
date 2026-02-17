@@ -1,13 +1,9 @@
-import {PhysicalCheckGeneralTabComponent} from './Components/EditTabs/General/PhysicalCheckGeneralTabComponent';
-import { PhysicalCheckSearchReasultTabComponent } from './Components/EditTabs/SearchReasult/PhysicalCheckSearchReasultTabComponent';
-import { PhysicalCheckFiltersMenuComponent } from './Components/FiltersMenu/PhysicalCheckFiltersMenuComponent';
+﻿import {PhysicalCheckGeneralTabComponent} from './Components/EditTabs/General/PhysicalCheckGeneralTabComponent';
 
 
 export const Components =
     [
-        PhysicalCheckGeneralTabComponent,
-        PhysicalCheckSearchReasultTabComponent,
-        PhysicalCheckFiltersMenuComponent
+        PhysicalCheckGeneralTabComponent
     ];
 
 export class ModuleDeclarations {
@@ -17,9 +13,6 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "PhysicalCheckGeneralTabComponent": { myResult = PhysicalCheckGeneralTabComponent; break; }
-            case "PhysicalCheckSearchReasultTabComponent": { myResult = PhysicalCheckSearchReasultTabComponent; break; }
-            case "PhysicalCheckFiltersMenuComponent": { myResult = PhysicalCheckFiltersMenuComponent; break; }
-
         }
 
         return myResult;

@@ -80,9 +80,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
        [DataMember]
        public bool IsChangeAutomationXaml { get; set; }
-
-
-        [DataMember]
-        public List<string> DocumentTypeTemplateIds { get; set; }
     }
 }

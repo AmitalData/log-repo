@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 declare var System: any;
 import {Component, Output, EventEmitter, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {ObjectTablePM} from '../../../EntityPMs/ObjectTablePM'
@@ -13,10 +13,9 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../../../Infrastructure/Utilities/events/MenuButtonsEvents';
 import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { CustomizationPermissionService } from '../../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'MenuButtonsComponent',
     templateUrl: "./MenuButtonsComponent.html",
 })
@@ -29,8 +28,7 @@ export class MenuButtonsComponent implements OnDestroy {
     public MenuButtons: MenuButtonPM[];
     public ToggleButtonTop: string = "22px";
     private MenuButtonsHandler: any;
-    private ObjectTableName: string;
-    IsDisableMenuOther: boolean = false;
+    private IsDisableMenuOther: boolean = false;
     Loaded: boolean = false;
     ToggleButtonWidth:number = 60;
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -90,9 +88,6 @@ export class MenuButtonsComponent implements OnDestroy {
     Run(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ObjectTable = args['ObjectTable'];
-       this.ObjectTableName = this.GetObjectTableName();
-
-        
         if (this.ObjectTable && this.ObjectTable.Name == "Quote") {
             if (this.EntityPM != null) {
                 if (this.EntityPM.IsQuoteDataExternal && this.EntityPM.IsQuoteDocumentExternal) {
@@ -105,55 +100,17 @@ export class MenuButtonsComponent implements OnDestroy {
 
     }
 
-
-
-    private GetObjectTableName() {
-
-        if (this.ObjectTable.Name.indexOf('Customs.') > -1) {
-            return this.ObjectTable.Name.split('.')[1];
-        }
-        else return this.ObjectTable.Name;
-    }
-
-
-
-
     private LoadMenuButtons() {
-        ServiceHelper.HttpClient.get(this.baseMetaUrlApi + "/getmenubuttongrouppms?tenant=" + SessionLocator.Tenant + "&objecttableid=" + this.ObjectTable.Id).subscribe((response) => {
-            var pm = response[0];
+        ServiceHelper.Http.get(this.baseMetaUrlApi + "/getmenubuttongrouppms?tenant=" + SessionLocator.Tenant + "&objecttableid=" + this.ObjectTable.Id).subscribe((response) => {
+            var pm = response.json()[0];
             this.MenuButtonGroup = this.MapJsonToEntityPM(pm, true);
-            this.FillMenuButtons();
-        });
-    }
-
-
-    public FillMenuButtons () {
-
-        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/MenuButtonServices/" + this.ObjectTableName + "MenuButtonService";
-        SessionLocator.DynamicLoader.GetInstance(myComponentPath, true).then((menuButtonServices: any) => {
-            if (menuButtonServices) {
-                this.MenuButtonGroup.MenuButtons = menuButtonServices.GetMenuButtons({
-                    ObjectTableName: this.ObjectTableName,
-                    EntityPM: this.EntityPM,
-                    MenuButtons: this.MenuButtonGroup.MenuButtons
-                });
-            }
             this.BuildMenuButtons();
         });
-
-    }
-
-    public CheckFeature(featureUniqeCode : string) {
-        if (this.ObjectTableName == "DeploymentPackage")
-            return CustomizationPermissionService.IsFeatureGrantedByUniqeCode(featureUniqeCode);
-        return FeatureLocator.IsFeatureGrantedByUniqeCode(featureUniqeCode);
     }
 
     public BuildMenuButtons() {
         this.Listen();
         this.ToggleButtonWidth = 60;
-
-
         var btns = this.MenuButtonGroup.MenuButtons.sort((a, b) => {
             if (a.Index > b.Index) {
                 return 1;
@@ -168,26 +125,29 @@ export class MenuButtonsComponent implements OnDestroy {
 
         var buttons: MenuButtonPM[] = [];
         for (var i = 0; i < btns.length; i++) {
-            if (btns[i].FeatureUniqeCode != null && btns[i].FeatureUniqeCode != undefined) {//if (btns[i].FeatureId != null && btns[i].FeatureId != undefined) {
-                if (this.CheckFeature(btns[i].FeatureUniqeCode))
+            if (btns[i].FeatureId != null && btns[i].FeatureId != undefined) {
+                if (FeatureLocator.IsFeatureGranted(btns[i].FeatureId)) {
                     buttons.push(btns[i]);
+                }
             }
             else {
                 buttons.push(btns[i]);
             }
         }
 
+        var objectTableName = this.ObjectTable.Name;
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/MenuButtons/" + objectTableName + "MenuButtonsHandler";
+        var myComponentName = AppTool.GetComponentName(myComponentPath);
 
-        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/MenuButtons/" + this.ObjectTableName + "MenuButtonsHandler";
         SessionLocator.DynamicLoader.GetInstance(myComponentPath).then((instance: any) => {
             if (instance) {
                 this.MenuButtonsHandler = instance;
                 instance.SetEntityPM(this.entityArgs);
                 instance.CheckButtonState(buttons);
 
-
-    
-       
                 for (var i = 0; i < buttons.length; i++){
 
                     buttons[i].Width == 0 ? buttons[i].Width = 110 : null;
@@ -195,7 +155,7 @@ export class MenuButtonsComponent implements OnDestroy {
                     if (buttons[i].EventCode == "Accept" || buttons[i].EventCode == "Decline") {
                         buttons[i].Width = 70;
                     }
-                    if (this.ObjectTableName == "PaymentCheque" && buttons[i].EventCode == "More") {
+                    if (objectTableName == "PaymentCheque" && buttons[i].EventCode == "More") {
                         this.ToggleButtonWidth = 100;
                     }
 
@@ -212,8 +172,6 @@ export class MenuButtonsComponent implements OnDestroy {
         });
     }
     public DisplayText: string;
-
-
     public OnClick(button: MenuButtonPM) {
         this.MenuButtonsHandler.MenuButtonClick(button);
     }

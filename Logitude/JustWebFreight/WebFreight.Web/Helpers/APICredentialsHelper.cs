@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using System;
 using System.Collections.Generic;
@@ -28,19 +28,14 @@ namespace WebFreight.Web.Helpers
 
             if (Partner != null)
             {
-                userData.TokenExpirationTime = Partner.TokenExpirationTime;
                 userData.Tenant = Partner.Tenant;
                 if (Partner.Tenant == 0)
                 {
                     customerCare = true;
-                    if (Key.Tenant != 0)
-                    {
-                        userData.Tenant = Key.Tenant;
-                    }
                 }
 
-                //if (customerCare)
-                //{
+                if (customerCare)
+                {
 
                     string ipstring = Partner.AllowedIPs;
                     string[] authenticatedIPs = ipstring.Split(',');
@@ -57,7 +52,7 @@ namespace WebFreight.Web.Helpers
                             userData.IpRestricted = true;
                         }
                     }
-                //}
+                }
             }
             else
             {

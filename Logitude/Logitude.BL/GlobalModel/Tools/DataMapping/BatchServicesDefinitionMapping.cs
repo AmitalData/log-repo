@@ -8,23 +8,21 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.GlobalModel.Tools.DataMapping
 {
-    public class BatchServicesDefinitionMapping
+   public  class BatchServicesDefinitionMapping
     {
 
-        public static void MapEntity(BatchServicesDefinitionPM entityPM, BatchServicesDefinition poco, bool isNewState)
-        {
-            if (isNewState)
-            {
-                poco.Code = entityPM.Code;
-            }
+       public static void MapEntity(BatchServicesDefinitionPM entityPM, BatchServicesDefinition poco, bool isNewState)
+       {
+           if (isNewState)
+           {
+               poco.Code = entityPM.Code;
+           }
 
-            //poco.NumberOfThreads = entityPM.NumberOfThreads;
-            //poco.InActive = entityPM.InActive;
-            poco.ClassName = entityPM.ClassName;
-            poco.Parameter1 = entityPM.Parameter1;
-            poco.Parameter2 = entityPM.Parameter2;
-            poco.QueueDefinitionCode = entityPM.QueueDefinitionCode;
-
-        }
+           //poco.NumberOfThreads = entityPM.NumberOfThreads;
+           //poco.InActive = entityPM.InActive;
+           poco.ClassName = entityPM.ClassName;
+           poco.Parameter1 = entityPM.Parameter1;
+           poco.Parameter2 = entityPM.Parameter2;
+       }
     }
 }

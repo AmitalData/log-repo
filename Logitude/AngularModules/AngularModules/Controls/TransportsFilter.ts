@@ -124,7 +124,7 @@ export class TransportsFilter {
 
             img_A.setAttribute("src", "./_Resources/Images/Icons/TransportModes/Filters/A_g.png");
             img_O.setAttribute("src", "./_Resources/Images/Icons/TransportModes/Filters/O_g.png");
-            img_I.setAttribute("src", "./_Resources/Images/Icons/TransportModes/Filters/I_g.png");
+            img_I.setAttribute("src", "./_Resources/Images/Icons/TransportModes/Filters/I_G.png");
 
             switch (this.SelectedValue) {
                 case "A": {

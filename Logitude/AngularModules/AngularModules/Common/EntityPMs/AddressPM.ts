@@ -13,7 +13,6 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { TruckerSettingPM } from './TruckerSettingPM';
 
 
 export class AddressPM {
@@ -21,7 +20,7 @@ export class AddressPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -233,66 +232,14 @@ export class AddressPM {
 	 
     private branchId: string;
     public get BranchId() { return this.branchId; }
-    public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } } 
-
-    private cityId: string;
-    public set CityId(newValue: string) { if (this.cityId != newValue) { this.cityId = newValue; this.MarkAsDirty("CityId"); } }
-    public get CityId() { return this.cityId; }
-
-    private transportationInstructions:string;
-    public set TransportationInstructions(newValue: string) { if (this.transportationInstructions != newValue) { this.transportationInstructions = newValue; this.MarkAsDirty("TransportationInstructions"); } }
-    public get TransportationInstructions() { return this.transportationInstructions; }
-
-    private responsibility:string;
-    public set Responsibility(newValue: string) { if (this.responsibility != newValue) { this.responsibility = newValue; this.MarkAsDirty("Responsibility"); } }
-    public get Responsibility() { return this.responsibility; }
-
-    private truckerId:string;
-    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
-    public get TruckerId() { return this.truckerId; }
-
-    private truckerSettings: TruckerSettingPM[];
-    get  TruckerSettings() {
-        if (this.truckerSettings == null) {
-            this.truckerSettings = [];
-        }
-
-        return this.truckerSettings;
-    }
-    
-    set  TruckerSettings(newValue: TruckerSettingPM[]) {
-        if (this.truckerSettings != newValue) {
-            this.truckerSettings = newValue;
-        }
-    }
-    public AddTruckerSettings(item: TruckerSettingPM) {
-        if (item != null) {
-            var index = this. TruckerSettings.indexOf(item);
-            if (index == -1) {
-                this. TruckerSettings.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveTruckerSettingsitem(item: TruckerSettingPM) {
-        if (item != null) {
-            var index = this. TruckerSettings.indexOf(item);
-            if (index > -1) {
-                this. TruckerSettings.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
+    public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
        
 	 
 
     public OldEntityPM: AddressPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -300,7 +247,6 @@ export class AddressPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Address");
            
         }
-	 }
     }
     private MyClone: AddressPM;
 
@@ -312,4 +258,4 @@ export class AddressPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

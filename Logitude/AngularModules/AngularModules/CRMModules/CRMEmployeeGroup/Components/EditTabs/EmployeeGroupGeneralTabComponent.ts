@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {EmployeeGroupPM} from '../../../../CRM/EntityPMs/EmployeeGroupPM';
@@ -11,6 +11,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
+    moduleId: module.id,
     templateUrl: './EmployeeGroupGeneralTabComponent.html',
 })
 

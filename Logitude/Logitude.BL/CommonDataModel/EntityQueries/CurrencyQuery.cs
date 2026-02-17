@@ -6,10 +6,9 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -17,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CurrencyRepository repository;
 
-
+        public CurrencyQuery()
+        {
+            repository = new CurrencyRepository(); 
+        }
 
         public CurrencyQuery(int tenant)
         {
@@ -55,10 +57,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CurrencyPM GetSinglePM(string id, int tenant)
         {
-            string entityName = "CurrencyPM" + id + tenant;
-               
+            string entityName = //"CurrencyPM" + id + tenant;
+                "CurrencyPM" + id + "," + tenant;
             CurrencyPM entity;
-            if (true)/// HttpContext.Current != null)
+            if (HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
@@ -82,8 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     foreach (var c in currencies)
                     {
-                        string name = "CurrencyPM" + c.Id + tenant;
-
+                        string name = "CurrencyPM" + c.Id + "," + tenant;
                         if (CacheManager.CacheWrapper.Get(name) == null)
                         {
                             CacheManager.CacheWrapper.Insert(name, c, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -165,16 +166,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 };
             return currencies;
         }
-        public List<string> GetCurencyCodesByTransactionsList(List<InterestTransactionList> interestTransactionLists, int tenant)
-        {
-            List<string> entityCurencyIds = interestTransactionLists.Select(d => d.CurrencyId).ToList();
 
-            List<string> CurencyCodes = (from a in repository.context.Currencies
-                                           where entityCurencyIds.Contains(a.Id) && a.Tenant == tenant
-                                           select a.Id+","+a.Code).ToList();
- 
-            return CurencyCodes;
-        }
 
         public IQueryable<CurrencyPM> GetCurrencyPMsByTenant(int tenant)
         {

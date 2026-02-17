@@ -33,7 +33,6 @@ namespace Logitude.XSD.Simulators
         public SimulatorFFA FFA { get; set; }
         public SimulatorFVA FVA { get; set; }
         public bool IsLocalAnalyze { get; set; }
-        public bool IsChampSimulator { get; set; }
     }
 
     public class SimulatorFSA

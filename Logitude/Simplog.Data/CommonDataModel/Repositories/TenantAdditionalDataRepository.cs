@@ -4,7 +4,7 @@ using System.Linq;
 using System.ServiceModel.DomainServices.Server;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -19,7 +19,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public TenantAdditionalDataRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public TenantAdditionalDataRepository(int tenant)
         {
@@ -36,25 +39,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.Tenant == id select a).FirstOrDefault();                      
             return entity;
         }
-
-        public TenantAdditionalData GetSingleTenantAdditionalDataByTenant(int tenant)
-        {
-            TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.Tenant == tenant select a).FirstOrDefault();
-            return entity;
-        }
-
-        public IQueryable<TenantAdditionalData> GetTenantAdditionalDatas(int tenant)
-        {
-            TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.Tenant == tenant select a).FirstOrDefault();
-            return this.context.TenantAdditionalDatas;
-        }
-
-        public TenantAdditionalData GetSingleTenantAdditionalData(int id , int tenant)
-        {
-            TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.Tenant == tenant && a.Id== id select a).FirstOrDefault();
-            return entity;
-        }
-
 
         public TenantAdditionalData GetSingleTenantAdditionalDataByState(string state)
         {

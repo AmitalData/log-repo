@@ -24,7 +24,7 @@ import {CRMTool} from '../../Tools';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ActivityWorkspaceComponent.html',
 })
 
@@ -33,7 +33,6 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     public DataContext = this;
     public QuickSearchItems: ActivityList[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-
     constructor() {
         super(); 
         this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
@@ -73,7 +72,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
 
         // Records Types
         this.RecordsTypesFilterList = [];
-        this.RecordsTypesFilterList.push(new CodeNameClass("S", "Salesman Records"));
+        this.RecordsTypesFilterList.push(new CodeNameClass("S", "Salesmen Records"));
         this.RecordsTypesFilterList.push(new CodeNameClass("C", "Created By Records"));
         this.RecordsTypeFilterCode = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_RecordsType);
         if (AppTool.IsNullOrEmpty(this.RecordsTypeFilterCode)) {
@@ -212,6 +211,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     set SelectedRecordsTypeFilter(value: CodeNameClass) {
         if (this.selectedRecordsTypeFilter != value) {
             this.selectedRecordsTypeFilter = value;
+
             this.RecordsTypeFilterCode = value == null ? "S" : value.Code;
             this.BusinessUnitFilterCode = "M";
             this.CreatedByTypeFilterCode = "M";
@@ -453,7 +453,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     public MyOpenCount: number;
     public AllOpenCount: number;
     private LoadDataCounts() {
-        this.myDomainService.GetActivitiesSummary(this.SelectedActivityFilter, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
+        this.myDomainService.GetActivitiesSummary(this.SelectedActivityFilter, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -470,7 +470,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     public UpcomingActivitiesCount: number = 0;
     public UpcomingActivitiesList: UpcomingActivityItem[];
     public LoadUpcomingEntities() {
-        this.myDomainService.GetUpcomigActivities(this.OwnerId, this.BusinessUnitId, this.selectedActivityFilter, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
+        this.myDomainService.GetUpcomigActivities(this.OwnerId, this.BusinessUnitId, this.selectedActivityFilter, this.RecordsTypeFilterCode).subscribe(myResult => {
             if (myResult == null) {
                 this.UpcomingActivitiesList = [];
                 this.UpcomingActivitiesCount = 0;
@@ -498,12 +498,11 @@ export class ActivityWorkspaceComponent extends BaseComponent {
         //    var itemViewModel: UpcomingActivityItem = new UpcomingActivityItem(item, this, null);
         //    this.UpcomingActivitiesList.push(itemViewModel);
         //});
-
     }
 
     // Chart
     LoadChartData() {
-        this.myDomainService.GetActivitiesDashBoard(this.OwnerId, this.BusinessUnitId, this.selectedActivityFilter, this.RecordsTypeFilterCode).subscribe((result:any) => {
+        this.myDomainService.GetActivitiesDashBoard(this.OwnerId, this.BusinessUnitId, this.selectedActivityFilter, this.RecordsTypeFilterCode).subscribe(result => {
             this.InProgressBookingDashboard = result.Result;
             this.FillInProgressBookingDashboardData();
         });

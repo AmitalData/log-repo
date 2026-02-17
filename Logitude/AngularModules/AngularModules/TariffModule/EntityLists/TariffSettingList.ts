@@ -10,9 +10,6 @@ export class TariffSettingList {
    
 	Id: string;
 	Tenant: number;
-	DefaultWarningPercentage: number;
-	AirDefaultStepsId: string;
-	LCLDefaultStepsId: string;
 	
 }
  

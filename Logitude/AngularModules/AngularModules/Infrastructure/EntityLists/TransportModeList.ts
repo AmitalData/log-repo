@@ -10,6 +10,5 @@ export class TransportModeList {
    		Id: string;
 		Name: string;
 		SearchFields: string;
-		LocalName:string;
 	
-}
+}

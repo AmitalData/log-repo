@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -22,9 +22,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             entityPoco.WaitingThresold = entityPM.WaitingThresold;
             entityPoco.FailedThresold = entityPM.FailedThresold;
-            entityPoco.TypeCode = entityPM.TypeCode;
 
-
+       
         }
     }
 }

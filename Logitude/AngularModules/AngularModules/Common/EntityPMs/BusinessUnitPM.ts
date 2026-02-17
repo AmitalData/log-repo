@@ -20,7 +20,7 @@ export class BusinessUnitPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -64,10 +64,7 @@ export class BusinessUnitPM {
     public OldEntityPM: BusinessUnitPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -75,7 +72,6 @@ export class BusinessUnitPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BusinessUnit");
            
         }
-	 }
     }
     private MyClone: BusinessUnitPM;
 

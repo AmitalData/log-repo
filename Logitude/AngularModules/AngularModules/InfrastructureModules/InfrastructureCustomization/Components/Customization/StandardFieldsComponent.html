@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr>
         <td>
@@ -25,108 +25,107 @@
 
                 <tr>
                     <td>
-                        <div class="MediaFill">
-                            <logitude-edit-grid [UseVirtuallization]="true" GridWidth="100%" GridHeight="100%" [ItemSource]="SelectedTabItem.FieldsItemsSource">
-                                <!-- Default Name -->
-                                <log-column [width]="'250'" [header]="'Default Name'" [Alignment]="'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
-                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                                <label *ngIf="SearchText">
-                                                    {{(item.DefaultText).slice(0,((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.DefaultText).slice(((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.DefaultText).slice((((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                                </label>
+                        <div class="TabControl" style="position: absolute; top: 10px; height: calc(100% - 10px)">
+                            <div class="TabControlHead">
+                                <ul style="margin-left: 2px;">
+                                    <li *ngFor="let tab of Tabs" [class.Selected]="SelectedTabItem == tab" (click)="SelectionChanged(tab)">
+                                        <div class="InnerChild">
+                                            {{tab.Header}}
+                                        </div>
+                                    </li>
 
-                                                <label *ngIf="!SearchText">{{item.DefaultText}}</label>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
+                                </ul>
+                            </div>
 
-                                <!-- Display Name -->
-                                <log-column [width]="'250'" [header]="'Display Name'" [Alignment]="'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
-                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                                {{item.FullLabelText}}
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
-                                <!-- Data Type-->
-                                <log-column [width]="'215'" [header]="'Data Type'" [Alignment]="'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
-                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                                {{item.DataTypeText}}
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
-                                <!--Requiered-->
-                                <log-column [width]="'70'" [header]="'Requiered'" [Alignment]="'center'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [Alignment]="'center'">
-                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                                <img *ngIf="item.IsRequiered" width="18" height="18" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
-                                <!--Edited-->
-                                <log-column [width]="'45'" [header]="'Edited'" [Alignment]="'center'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [Alignment]="'center'">
-                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                                <img *ngIf="item.IsEdited" width="18" height="18" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
-                                <!--Help Text-->
-                                <log-column [width]="'65'" [header]="'Help Text'" [Alignment]="'center'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [Alignment]="'center'">
-                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                                <HelpIcon *ngIf="item.HelpTextText" [Text]="item.HelpTextText"></HelpIcon>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
-                                <!-- Tools Button -->
-                                <log-column [width]="'30'" [Editable]="true" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                            <div style="width: 100%; height: 100%; position: relative;">
-                                                <div class="LeftCenter" style="height: 20px;">
+                            <div class="TabControlBody" >
+                                <div class="LocationDirectiveHolder">
+                                    <div class="LocationDirective" LocationDirective Code="{{SelectedTabItem.ObjectTableId}}">
+                                        <div class="MediaFill">
+                                            <div class="SimpleGridView">
+                                                <div class="SimpleGridViewHeader">
                                                     <table>
                                                         <tr>
-                                                            <td style="width: 4px;">
-                                                                <span class="CellSeparator"></span>
+                                                            <td style="width: 250px; min-width:250px; max-width:250px;">Default Name</td>
+                                                            <td style="width: 250px; min-width:250px; max-width:250px;">Display Name</td>
+                                                            <td style="width: 215px; min-width:215px; max-width:215px;">Data Type</td>
+                                                            <td style="width: 70px; min-width:70px; max-width:70px;">Requiered</td>
+                                                            <td style="width: 45px; min-width:45px; max-width:45px;">Edited</td>
+                                                            <td style="width: 65px; min-width:65px; max-width:65px;">Help Text</td>
+                                                            <td class="LastChild" style="min-width:30px;">
+                                                                <div></div>
                                                             </td>
-                                                            <td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div class="SimpleGridViewBody">
+                                                    <table>
+                                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of SelectedTabItem.FieldsItemsSource">
+                                                            <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width:250px">
+                                                                <label *ngIf="SearchText">
+                                                                    {{(item.DefaultText).slice(0,((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.DefaultText).slice(((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.DefaultText).slice((((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
+                                                                </label>
+
+                                                                <label *ngIf="!SearchText">{{item.DefaultText}}</label>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width:250px">
+                                                                {{item.FullLabelText}}
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 215px; min-width: 215px; max-width:215px">
+                                                                {{item.DataTypeText}}
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 70px; min-width: 70px; max-width:70px">
+                                                                <img *ngIf="item.IsRequiered" width="18" height="18" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 45px; min-width: 45px; max-width:45px">
+                                                                <img *ngIf="item.IsEdited" width="18" height="18" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 65px; min-width: 65px; max-width:65px">
+                                                                <HelpIcon *ngIf="item.HelpTextText" [Text]="item.HelpTextText"></HelpIcon>
+                                                            </td>
+
+                                                            <td class="CellTools" style="min-width:30px;">
+                                                                <span class="CellSeparator"></span>
                                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="SelectedTabItem.EditField(item)"></IconButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="7">
+                                                                <div></div>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                 </div>
                                             </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
-                            </logitude-edit-grid>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
 
-    
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td><div></div></td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseClicked()">Close</button>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
 </table>

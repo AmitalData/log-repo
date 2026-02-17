@@ -1,5 +1,5 @@
 
-<table style="direction:ltr">
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -16,13 +16,8 @@
 
     <tr style="height: 1px;">
         <td>
-            <div>
-                <RadioButton [IsEnabled]="IsCustomerRadioEnabled" [Name]="'CustomerRadio'" [IsChecked]="IsCustomer" (Checked)="SetIsCustomer(true)" [Text]="'Is Customer (Allows more options in customer management)'"></RadioButton>
-            </div>
-
-            <div>
-                <RadioButton [IsEnabled]="IsCustomerRadioEnabled" [Name]="'CustomerRadio'" [IsChecked]="!IsCustomer" (Checked)="SetIsCustomer(false)" [Text]="'Shipper / Consignee is NOT my customer'" [Top]="5"></RadioButton>
-            </div>
+            <RadioButton [IsEnabled]="IsCustomerRadioEnabled" [Name]="'CustomerRadio'" [IsChecked]="IsCustomer" (Checked)="SetIsCustomer(true)" [Text]="'Is Customer (Allows more options in customer management)'"></RadioButton>
+            <RadioButton [IsEnabled]="IsCustomerRadioEnabled" [Name]="'CustomerRadio'" [IsChecked]="!IsCustomer" (Checked)="SetIsCustomer(false)" [Text]="'Shipper / Consignee is NOT my customer'" [Top]="5"></RadioButton>
         </td>
     </tr>
 
@@ -49,7 +44,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Cancel-DontCreateCustomer' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button id="{{'Cancel-DontCreateCustomer' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -57,7 +52,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Ok-AddCustomer' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled">Ok</button>
+                        <button id="{{'Ok-AddCustomer' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

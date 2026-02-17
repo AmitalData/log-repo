@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools.Models;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -22,7 +22,6 @@ namespace Logitude.Server.Tools.Helpers
     public class AuthenticationUtil
     {
         
-        [ThreadStatic] public static string AuthenticatedUserEmail = string.Empty;
 
         public static string GetIP4Address()
         {
@@ -58,28 +57,7 @@ namespace Logitude.Server.Tools.Helpers
         
             return IP4Address;
         }
-
-
-        public static string GetLoggedUserEmail(int tenant)
-        {
-            string email = "";
-            if (!string.IsNullOrEmpty(AuthenticatedUserEmail))
-            {
-                email = AuthenticatedUserEmail;
-                return email;
-            }
-            if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-            {
-                email = HttpContext.Current.User.Identity.Name;
-            }
-            else
-            {
-                email = "system@tenant" + tenant.ToString() + ".com";
-            }
-
-            return email;
-        }
-
+        
 
 
         public static string GetAuthenticatedUser()
@@ -185,22 +163,17 @@ namespace Logitude.Server.Tools.Helpers
             }
             return defaultName;
         }
-        public static string ResolveUserId(int Tenant,bool fromSign=false)
+        public static string ResolveUserId(int Tenant)
         {
             ContactRepository contactRep = new ContactRepository(Tenant);
 
             string resolveUserIdentityName = AuthenticationUtil.ResolveUserIdentityName(Tenant);
 
 
-            var contact = contactRep.GetSingleContactByEmail(resolveUserIdentityName, Tenant, true);
-            if (contact == null && fromSign)
-            {
-                string systemEmail = SystemIdentityName(Tenant);
-                contact = contactRep.GetSingleContactByEmail(systemEmail, Tenant, false);
-            }
+            var contact = contactRep.GetSingleContactByEmail(resolveUserIdentityName, Tenant, false);
             if (contact == null)
             {
-                throw new BusinessErrorException($" resolveUserIdentityName :{resolveUserIdentityName} could not ResolveUserId from  Tenant:{Tenant}");
+                throw new BusinessErrorException("could not ResolveUserId from  Tenant");
             }
             return contact.Id;
         }
@@ -422,17 +395,8 @@ namespace Logitude.Server.Tools.Helpers
 
 
 
-            try
-            {
-                //AppDomain.CurrentDomain.SetThreadPrincipal(null);
-                //AppDomain.CurrentDomain.SetThreadPrincipal(claimsPrincipal);
-            }
-            catch (Exception)
-            {
 
-                //throw;
-            }
-           
+            AppDomain.CurrentDomain.SetThreadPrincipal(claimsPrincipal);
 
 
 
@@ -483,20 +447,21 @@ namespace Logitude.Server.Tools.Helpers
             bool hasEmailClaim = principal.HasClaim(c => c.Type == ClaimTypes.Email);
             if (hasEmailClaim)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("hasEmailClaim:" + claimsEmail.Value);
+                Debug.WriteLine("hasEmailClaim:" + claimsEmail.Value);
             }
 
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GetCurrentPrincipalTenant():{0}",GetThreadCurrentPrincipalTenant()));
+            Debug.WriteLine("GetCurrentPrincipalTenant():" );
+            Debug.Write(GetThreadCurrentPrincipalTenant());
 
 
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UserName:" +Environment.UserName);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Thread.CurrentPrincipal.Identity.Name:" + Thread.CurrentPrincipal.Identity.Name);
+            Debug.WriteLine("UserName:" +Environment.UserName);
+            Debug.WriteLine("Thread.CurrentPrincipal.Identity.Name:" + Thread.CurrentPrincipal.Identity.Name);
             if (HttpContext.Current != null)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("HttpContext.Current.User.Identity.Name:" + HttpContext.Current.User.Identity.Name);
+                Debug.WriteLine("HttpContext.Current.User.Identity.Name:" + HttpContext.Current.User.Identity.Name);
             }
             
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WindowsIdentity.GetCurrent().Name:" + WindowsIdentity.GetCurrent().Name);
+            Debug.WriteLine("WindowsIdentity.GetCurrent().Name:" + WindowsIdentity.GetCurrent().Name);
         }
 
         public static bool IsResolveUserIdentityNameEqualSystem(int tenant)
@@ -568,13 +533,6 @@ namespace Logitude.Server.Tools.Helpers
                         }
                     }
                 }
-                if (contactPassword == null)
-                {
-                    string unfPassword =  PasswordGenerator.GetUnfPassword(password);
-                    contactPassword = globalContext.ContactPasswords
-                                                   .Where(c => c.Email == email && c.Password == unfPassword && !c.IsBCrypt)
-                                                   .FirstOrDefault();
-                }
             }
 
             return contactPassword;
@@ -590,13 +548,6 @@ namespace Logitude.Server.Tools.Helpers
             token = Convert.ToBase64String(rndArray);
 
             return token;
-        }
-    }
-    public class SecurityException : Exception
-    {
-        public SecurityException(string message):base(message)
-        {
-            
         }
     }
 }

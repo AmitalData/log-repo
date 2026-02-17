@@ -6,7 +6,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SupplierInvoiceItemsTaxListTemplate.html',
 })
 

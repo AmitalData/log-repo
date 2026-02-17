@@ -1,4 +1,4 @@
-
+﻿
 
 <table>
 
@@ -8,9 +8,9 @@
                 <div  class="TabControl">
                     <div  class="TabControlHead">
                         <ul style="margin-left: 2px;">
+                       
 
-
-                            <li [class.Selected]="SelectedTabCode == 'STASK'" (click)="SelectedTabCode = 'STASK'">
+                            <li [class.Selected]="SelectedTabCode == 'STASK'" (click)="SelectedTabCode = 'STASK'" >
                                 <div style="width:70px" class="InnerChild">
                                     Task
                                 </div>
@@ -22,12 +22,6 @@
                             <li *ngIf="IsShowTabUpdate" [class.Selected]="SelectedTabCode == 'SFTP'" (click)="SelectedTabCode = 'SFTP'">
                                 <div style="width:70px" class="InnerChild">
                                     FTP
-                                </div>
-                            </li>
-
-                            <li *ngIf="IsShowTabUpdate && IsShowTabSFTBScheduler" [class.Selected]="SelectedTabCode == 'SSFTP'" (click)="SelectedTabCode = 'SSFTP'">
-                                <div style="width:70px" class="InnerChild">
-                                    SFTP
                                 </div>
                             </li>
 
@@ -52,15 +46,6 @@
 
                         </div>
 
-                        <!--   Tab 3-->
-                        <div class="MediaFillRelative" *ngIf="IsShowTabUpdate && IsShowTabSFTBScheduler" [hidden]="SelectedTabCode != 'SSFTP'">
-
-                            <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
-                                <div LocationDirective Code="SSFTP"></div>
-                            </div>
-
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -73,7 +58,6 @@
                 <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
                     <div *ngIf="IsShowTaskScheduler" LocationDirective Code="STASK"></div>
                     <div *ngIf="IsShowTabFTBScheduler" LocationDirective Code="SFTP"></div>
-                    <div *ngIf="IsShowTabSFTBScheduler" LocationDirective Code="SSFTP"></div>
                 </div>
             </div>
          </td>

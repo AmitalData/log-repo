@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Unifreight.BL</RootNamespace>
     <AssemblyName>Unifreight.BL</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -18,15 +17,12 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,14 +30,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\All Projects\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,120 +45,20 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>..\Library\Bin\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\All Projects\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
-    <OutputPath>bin\x64\None\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
-    </Reference>
-    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.OracleClient" />
-    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.8.0.0\lib\net462\System.Text.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -171,10 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL\CacheHelper.cs" />
-    <Compile Include="BL\ExportDeclarationClosing.cs" />
     <Compile Include="ClosedTables\AutonomyDetails.cs" />
-    <Compile Include="BL\ReferantUnifreightStatuses.cs" />
     <Compile Include="ClosedTables\SegmentsDetails.cs" />
     <Compile Include="EntityDataMappings\ATBPTILDataMapping.cs">
       <SubType>Code</SubType>
@@ -221,39 +114,8 @@
     <Compile Include="EntityDataMappings\CCUCARSCDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVDOCDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVFILEDataMapping.cs" />
-    <Compile Include="EntityDataMappings\CFIMSVFLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVPAGEDataMapping.cs" />
-    <Compile Include="EntityDataMappings\CFIMSVREMDataMapping.cs" />
-    <Compile Include="EntityDataMappings\EFIFILEMDataMapping.cs" />
-    <Compile Include="EntityDataMappings\EFIMMNDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ESPSPEDDataMapping.cs" />
-    <Compile Include="EntityDataMappings\CFIMSVSTATLDataMapping.cs" />
-    <Compile Include="EntityDataMappings\GAQTEAMUSRDataMapping.cs" />
-    <Compile Include="EntityDataMappings\GITITEMAPDataMapping.cs" />
-    <Compile Include="EntityDataMappings\CTBCARMODDataMapping.cs" />
-    <Compile Include="EntityDataMappings\GITITEMCRDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ETBAIRLINEDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ETBPAYTRDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ETBPORTDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ETBSERLVDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ETBVENDDataMapping.cs" />
-    <Compile Include="EntityDataMappings\GGGHDAYDataMapping.cs" />
-    <Compile Include="EntityDataMappings\GGGQCDataMapping.cs" />
-    <Compile Include="EntityDataMappings\GTBFUSTATUDataMapping.cs" />
-    <Compile Include="EntityDataMappings\GTBSERLVDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ITBPORTDataMapping.cs" />
-    <Compile Include="EntityDataMappings\LFIFILEMDataMapping.cs" />
-    <Compile Include="EntityDataMappings\MFIFILEMDataMapping.cs" />
-    <Compile Include="EntityDataMappings\MSPSPEDDataMapping.cs" />
-    <Compile Include="EntityDataMappings\MTBCARRDataMapping.cs" />
-    <Compile Include="EntityDataMappings\MTBPORTDataMapping.cs" />
-    <Compile Include="EntityDataMappings\RTBPORTDataMapping.cs" />
-    <Compile Include="EntityDataMappings\YTBTABLEDataMapping.cs" />
-    <Compile Include="EntityPMs\GITITEMPM.cs" />
-    <Compile Include="EntityPMs\GGGQPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\CFIMSVFLINEPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\CFIMSVREMPM.cs" />
     <Compile Include="EntityDataMappings\CFIPACKDataMapping.cs" />
     <Compile Include="EntityDataMappings\CTBAPPROVDataMapping.cs" />
     <Compile Include="EntityDataMappings\CTBAPPROVTYPEDataMapping.cs" />
@@ -360,7 +222,6 @@
     <Compile Include="EntityPMs\UGenerated\CTBAPPROVPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBAPPROVTYPEPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBBONDEDPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\CTBCARMODPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBCOUNTRYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBCURRENCYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBERRORPM.cs" />
@@ -381,46 +242,22 @@
     <Compile Include="EntityPMs\UGenerated\CTBTRANSPPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBTSRUFTYPEPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CTBUNLOADPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\EFIFILEMPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\EFIMMNPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\ESPSPEDPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\ETBAIRLINEPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\ETBPAYTRPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\ETBPORTPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\ETBSERLVPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\ETBVENDPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GAQDOCPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GAQFILEDATAPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\GAQTEAMUSRPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GDFDATAPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GDMENTITYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GDMFILINGPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GDMREFPMcs.cs" />
-    <Compile Include="EntityPMs\UGenerated\GGGHDAYPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\CFIMSVSTATLPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\GITITEMAPPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\GITITEMCRPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\GGGQCPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GITITEMPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GNDADRPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GNDCARDPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBDOCPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\GTBFUSTATUPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBITEMPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBITMCNPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBMANDTPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\GTBPTYPEPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTBREQCERTPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\GTBSERLVPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GTRTRANPM.cs" />
     <Compile Include="EntityPMs\UGenerated\ITBPCKTYPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\ITBPORTPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\LFIFILEMPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\MFIFILEMPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\MSPSPEDPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\MTBCARRPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\MTBPORTPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\RTBPORTPM.cs" />
     <Compile Include="EntityPMs\UGenerated\SupplierInvoicePM.cs" />
     <Compile Include="EntityPMs\UGenerated\CCUCRREQPM.cs" />
     <Compile Include="EntityPMs\UGenerated\SupplierInvoiceItem105PM.cs" />
@@ -432,7 +269,6 @@
     <Compile Include="EntityPMs\UGenerated\CCUTAXPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GGGQPM.cs" />
     <Compile Include="EntityPMs\UGenerated\YCULTASKPM.cs" />
-    <Compile Include="EntityPMs\UGenerated\YTBTABLEPM.cs" />
     <Compile Include="EntityPMs\YCULTASKPM.cs" />
     <Compile Include="EntityQueryServices\ATBPTILQueryService.cs" />
     <Compile Include="EntityQueryServices\CCUCARLQueryService.cs" />
@@ -448,15 +284,12 @@
     <Compile Include="EntityQueryServices\CFIGOODDESCQueryService.cs" />
     <Compile Include="EntityQueryServices\CCUCARSCQueryService.cs" />
     <Compile Include="EntityQueryServices\CFIMSVFILEQueryService.cs" />
-    <Compile Include="EntityQueryServices\CFIMSVFLINEQueryService.cs" />
     <Compile Include="EntityQueryServices\CFIMSVLINEQueryService.cs" />
     <Compile Include="EntityQueryServices\CFIMSVPAGEQueryService.cs" />
-    <Compile Include="EntityQueryServices\CFIMSVREMQueryService.cs" />
     <Compile Include="EntityQueryServices\CFIPACKQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBAPPROVQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBAPPROVTYPEQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBBONDEDQueryService.cs" />
-    <Compile Include="EntityQueryServices\CTBCARMODQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBCOUNTRYQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBCURRENCYQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBERRORQueryService.cs" />
@@ -478,41 +311,24 @@
     <Compile Include="EntityQueryServices\CTBTSRUFTYPEQueryService.cs" />
     <Compile Include="EntityQueryServices\CTBUNLOADQueryService.cs" />
     <Compile Include="EntityQueryServices\DualQueryService.cs" />
-    <Compile Include="EntityQueryServices\EFIFILEMQueryService.cs" />
-    <Compile Include="EntityQueryServices\EFIMMNQueryService.cs" />
-    <Compile Include="EntityQueryServices\ESPSPEDQueryService.cs" />
-    <Compile Include="EntityQueryServices\ETBAIRLINEQueryService.cs" />
-    <Compile Include="EntityQueryServices\ETBPAYTRQueryService.cs" />
-    <Compile Include="EntityQueryServices\ETBSERLVQueryService.cs" />
-    <Compile Include="EntityQueryServices\ETBVENDQueryService.cs" />
     <Compile Include="EntityQueryServices\GAQDOCQueryService.cs" />
     <Compile Include="EntityQueryServices\GAQFILEDATAQueryService.cs" />
-    <Compile Include="EntityQueryServices\GAQTEAMUSRQueryService.cs" />
     <Compile Include="EntityQueryServices\GDFDATAQueryService.cs" />
     <Compile Include="EntityQueryServices\GDMENTITYQueryService.cs" />
     <Compile Include="EntityQueryServices\GDMFILEVERQueryService.cs" />
     <Compile Include="EntityQueryServices\GDMFILINGQueryService.cs" />
     <Compile Include="EntityQueryServices\GDMREFQueryService.cs" />
-    <Compile Include="EntityQueryServices\CFIMSVSTATLQueryService.cs" />
-    <Compile Include="EntityQueryServices\GITITEMAPQueryService.cs" />
-    <Compile Include="EntityQueryServices\GITITEMCRQueryService.cs" />
-    <Compile Include="EntityQueryServices\GGGQCQueryService.cs" />
     <Compile Include="EntityQueryServices\GITITEMQueryService.cs" />
     <Compile Include="EntityQueryServices\GNDADRQueryService.cs" />
     <Compile Include="EntityQueryServices\GNDCARDQueryService.cs" />
     <Compile Include="EntityQueryServices\GTBDOCQueryService.cs" />
-    <Compile Include="EntityQueryServices\GTBFUSTATUQueryService.cs" />
     <Compile Include="EntityQueryServices\GTBITEMQueryService.cs.cs" />
     <Compile Include="EntityQueryServices\GTBITMCNQueryService.cs" />
     <Compile Include="EntityQueryServices\GTBMANDTQueryService.cs" />
     <Compile Include="EntityQueryServices\GTBREQCERTQueryService.cs" />
-    <Compile Include="EntityQueryServices\GTBSERLVQueryService.cs" />
     <Compile Include="EntityQueryServices\GTRTRANPMRepository.cs" />
     <Compile Include="EntityQueryServices\GTRTRANQueryService.cs" />
     <Compile Include="EntityQueryServices\ITBPCKTYQueryService.cs" />
-    <Compile Include="EntityQueryServices\LFIFILEMQueryService.cs" />
-    <Compile Include="EntityQueryServices\MFIFILEMQueryService.cs" />
-    <Compile Include="EntityQueryServices\MSPSPEDQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceQueryService.cs" />
     <Compile Include="EntityQueryServices\CCUCRREQQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceItems105QueryService.cs" />
@@ -523,9 +339,7 @@
     <Compile Include="EntityQueryServices\SupplierInvoiceItems103QueryService.cs" />
     <Compile Include="EntityQueryServices\CCUTAXQueryService.cs" />
     <Compile Include="EntityQueryServices\GGGQQueryService.cs" />
-    <Compile Include="EntityQueryServices\SyncRecordQuery.cs" />
     <Compile Include="EntityQueryServices\YCULTASKQueryService.cs" />
-    <Compile Include="EntityQueryServices\YTBTABLEQueryService.cs" />
     <Compile Include="EntityUpdateServices\CCUCARLUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CCUCARUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CCUQUELOCKUpdateService.cs" />
@@ -534,13 +348,10 @@
     <Compile Include="EntityUpdateServices\CCUTRANSPVALUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CCUCARSCUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CFIMSVFILEUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\CFIMSVFLINEUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CFIMSVLINEUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CFIMSVPAGEUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\CFIMSVREMUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GAQFILEDATAUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GDFDATAUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\GGGQCUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GITITEMUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GTBITEMUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GTBMANDTUpdateService.cs" />
@@ -556,31 +367,17 @@
     <Compile Include="EntityUpdateServices\CCUTAXUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GGGQUpdateService.cs" />
     <Compile Include="EntityUpdateServices\YCULTASKUpdateService.cs" />
-    <Compile Include="Models\EntityRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\MethodExtentionOracleConvertor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="app.config" />
-    <None Include="Nlog.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
-      <Project>{643F92C9-7CF1-4429-B79E-1E354B758ABF}</Project>
-      <Name>Logitude.Customs.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
-      <Project>{78EC8434-E6AD-4E93-9B17-C746F5403F7B}</Project>
-      <Name>Simplog.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
@@ -591,20 +388,8 @@
       <Name>Unifreight.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -2,18 +2,15 @@
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
-using Logitude.BL.DataContracts;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -104,6 +101,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 this.InitializeComponent();
 
+                ParticipantValidating.Validate(entityPM);
 
                 foreach (AddressPM itemPM in entityPM.Addresses)
                 {
@@ -121,18 +119,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 ParticipantMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-                ParticipantValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
                 cardRepository.Add(entityCard);
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Participant", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ParticipantPM> { entityPM }.Cast<object>().ToList() }).Update();
-
-                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                if (!LogitudeSettings.IsCostomsDeploy)
-                {
-                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-                }
             }
         }
 
@@ -157,8 +147,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                  this.InitializeComponent();
 
+                 ParticipantValidating.Validate(entityPM);
 
-                if (entityPM.Registered != entityPOCO.Registered)
+                 if (entityPM.Registered != entityPOCO.Registered)
                  {
                      this.UpdateAirline();
 
@@ -199,19 +190,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                  }
 
                  ParticipantMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-                ParticipantValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
-                cardRepository.Update(entityCard);
+                 cardRepository.Update(entityCard);
                  entityRepository.Update(entityPOCO);
                  entityRepository.SubmitChanges();
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Participant", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ParticipantPM> { entityPM }.Cast<object>().ToList() }).Update();
-
-                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                if (!LogitudeSettings.IsCostomsDeploy)
-                {
-                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-                }
-            }
+             }
         }
 
         private void InitializeComponent()
@@ -287,11 +270,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
             }
-            entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
-            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
-            entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
-            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-
         }
 
         private void ComputeContactFields()

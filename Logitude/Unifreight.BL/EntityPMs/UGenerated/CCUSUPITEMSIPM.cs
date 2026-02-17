@@ -20,11 +20,5 @@ namespace Unifreight.BL.EntityPMs.UGenerated
         public int LINEID { get; set; }
 
         public string MOREDATA { get; set; }
-        public int Tenant { get; set; }
-
-        public bool IS_SYNCH { get; set; }
-
-        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }
-

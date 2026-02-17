@@ -1,91 +1,59 @@
-declare var window: any;
-import { Component, ChangeDetectorRef,ElementRef,ViewChild, EventEmitter } from '@angular/core';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
-import { ReconcileExternalPagePM } from '../../EntityPMs/ReconcileExternalPagePM';
-import { ReconcileExternalPageLinePM } from '../../EntityPMs/ReconcileExternalPageLinePM';
-import { BankAccountPM } from '../../EntityPMs/BankAccountPM';
-import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
-import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ReconcileExternalPagePMService } from '../../Services/StandardPMs/ReconcileExternalPagePMService';
-import { CurrencyPMService } from '../../../Common/Services/StandardPMs/CurrencyPMService';
-import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
-import { ReconcileExternalPageExtendedPMService } from '../../Services/ExtendedPMs/ReconcileExternalPageExtendedPMService';
-import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { AppTool, DateTool } from '../../../Infrastructure/Tools';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { ExternalPageAdditionalDataPMService } from '../../Services/StandardPMs/ExternalPageAdditionalDataPMService';
-import { ExternalPageAdditionalDataPM } from '../../EntityPMs/ExternalPageAdditionalDataPM';
-import { reject } from 'q';
-import { MessageWindow } from 'Controls/Windows/MessageWindow';
-import { ImageParameter } from 'Infrastructure/DataContracts/ImageParameter';
-import { Guid } from 'Infrastructure/Utilities/Guid';
-import * as moment from 'moment';
-import { PartnersUploadExcelParameter } from 'Common/Services/CommonDomainService';
-import { DocumentsFilingExtendedPMService } from 'Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-declare var attachmentUploader, ResultAsArray, resultToUnitArray: any;
+import {Component, ChangeDetectorRef} from '@angular/core';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {Validator} from '../../../Infrastructure/Validators/Validator';
+import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
+import {ReconcileExternalPagePM} from '../../EntityPMs/ReconcileExternalPagePM';
+import {ReconcileExternalPageLinePM} from '../../EntityPMs/ReconcileExternalPageLinePM';
+import {BankAccountPM} from '../../EntityPMs/BankAccountPM';
+import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
+import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ReconcileExternalPagePMService} from '../../Services/StandardPMs/ReconcileExternalPagePMService';
+import {CurrencyPMService} from '../../../Common/Services/StandardPMs/CurrencyPMService';
+import {CurrencyListService} from '../../../Common/Services/StandardLists/CurrencyListService';
+import {ReconcileExternalPageExtendedPMService} from '../../Services/ExtendedPMs/ReconcileExternalPageExtendedPMService';
+import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
+import {AppTool, DateTool} from '../../../Infrastructure/Tools';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+
 @Component({
     selector: 'AddEditRecoExPageComponent',
-
+    moduleId: module.id,
     providers: [EntityListService],
     templateUrl: './AddEditRecoExPageComponent.html',
 })
 
-export class AddEditRecoExPageComponent extends BaseComponent {
-    public PageObjectTableName: string;
+export class AddEditRecoExPageComponent extends BaseComponent{
     public ReconcileExternalPagePM: ReconcileExternalPagePM;
-    public EntityPM: any;
-    public PreviousPagePM: ReconcileExternalPagePM;
+    public BankAccountPM: BankAccountPM;
+    public PrevBankPagePM: ReconcileExternalPagePM;
     public DataContext: AddEditRecoExPageComponent = this;
-    public ExternalPageTable: string = "ReconcileExternalPage";
-
-    AMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount");
-    CreditAMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.CreditAmount");
-    DebitAMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.DebitAmount");
-    _entityResourceService: EntityResourceService = new EntityResourceService();
-    _ReconcileExternalPagePMService: ReconcileExternalPagePMService = new ReconcileExternalPagePMService();
-    _ReconcileExternalPageExtendedPMService: ReconcileExternalPageExtendedPMService = new ReconcileExternalPageExtendedPMService();
-    _ExternalPageAdditionalDataPMService: ExternalPageAdditionalDataPMService = new ExternalPageAdditionalDataPMService();
-    _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
-    currencyListService: CurrencyListService = new CurrencyListService();
-
+    public ObjectTableName: string = "ReconcileExternalPage";
     public ValidationErrorsList: string[] = [];
     isNewEntity: boolean = false;
     IsCancelApprovedEnabled: boolean = false;
-    IsRestoreButtonVisibile: boolean = false;
-    IsLeumi: boolean = false;
     public IsDisplayOnly: boolean = false;
     public IsMultiCurrency: boolean = false;
-    RestoreToolTipMessage: string;
     currency: any;
+    AMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount");
     AmountColHeader: string;
-    CreditAmountColHeader: string;
-    DebitAmountColHeader: string;
     PageLinesList: ObservableCollection;
-    tempPageLinesList: ObservableCollection;
     public isRTL: boolean = false;
     public TotalSum: number = 0.0;
     public Difference: number = 0.0;
+
+    _entityResourceService: EntityResourceService = new EntityResourceService();
+    _ReconcileExternalPagePMService: ReconcileExternalPagePMService = new ReconcileExternalPagePMService();
+    _ReconcileExternalPageExtendedPMService: ReconcileExternalPageExtendedPMService = new ReconcileExternalPageExtendedPMService();
+    _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
+    currencyListService: CurrencyListService = new CurrencyListService();
+
     private CurrentSession = SessionLocator.SelectedSession;
-    IsEditButtonDisabled: boolean = false;
-    EditWindowToolTip: string = null;
-    IsRestoreButtonEnabled: boolean;
-    UploadButtonIsEnabled: boolean = true;
-    FileName: string;
-    FileExtension: string;
-    FileData: number;
-    SelectedRow: PageLineModel;
-
-
-
-
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -95,120 +63,73 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         this.SetUIProperties();
     }
 
-
-
-
     SetWindowArgs(args) {
         if (args != null) {
-            this.PageObjectTableName = args.PageObjectTableName;
-            this.EntityPM = args.EntityPM;
-            this.IsRestoreButtonEnabled = args.IsRestoreButtonEnabled;
-            this.IsEditButtonDisabled = !args.EnableReconcileEditButton;
-            this.IsRestoreButtonVisibile = args.IsRestoreButtonVisibile;
-            this.EditWindowToolTip = args.message;
-            this.RestoreToolTipMessage = args.RestoreToolTipMessage;
-            this.additionalDataPM = args.AdditionalDataPM;
-
-
+            var prevPageNo;
+            this.BankAccountPM = args.BankAccount;
             this.GetDefaultValues();
+            if (args.entity)
+            {
+                // EDIT Mode
+                this.ReconcileExternalPagePM = args.entity;
+                this.isNewEntity = false;
+                this.GetPrevPage(this.ReconcileExternalPagePM.PageNo);
+                if (this.ReconcileExternalPagePM.StatusCode == "2" || this.ReconcileExternalPagePM.StatusCode == "3")
+                    this.IsDisplayOnly = true;
+                this.SetUIProperties();
 
-            if (args.externalPage)
-                this.SetEditMode(args);
+            }
             else
-                this.SetNewEntityMode(args);
+            {
+                // NEW Entity
 
-            this.SetCancelApprovalEditablilty();
+                //get prev page
+                prevPageNo = this.BankAccountPM.LastPageNumber;
+                this.GetPage(prevPageNo);
+
+                this.isNewEntity = true;
+                var newEntity = new ReconcileExternalPagePM();
+                newEntity.Tenant = SessionLocator.Tenant;
+                //newEntity.CreateDate = new Date();
+                //if (SessionLocator.LoggedUserPM)
+                //{
+                //    newEntity.CreatedByUserId = SessionLocator.LoggedUserPM.Id;
+                //    newEntity.CreatedByUserName = SessionLocator.LoggedUserPM.LocalName;
+                //}
+
+                if (args.BankAccount.LastPageEndDate)
+                {
+                    var lastDate: Date = new Date(args.BankAccount.LastPageEndDate);
+                    var lastDatePlusOne = new Date(lastDate.setDate(lastDate.getDate() + 1));
+                    var date = DateTool.GetDate(lastDatePlusOne.getFullYear(), lastDatePlusOne.getMonth(), lastDatePlusOne.getDate(), 0, 0, 0);
+                    newEntity.FromDate = date;
+                }
+                newEntity.StatusCode = "1"; // 1- Draft
+                newEntity.PageNo = 0;
+                newEntity.BankAccountId = args.BankAccountId;
+                newEntity.GLAccountId = args.GLAccountId;
+                newEntity.EntryTypeCode = "1"; // 1- Manual
+
+                this.ReconcileExternalPagePM = newEntity;
+            }
+
+            if (this.isNewEntity) {
+                this.IsCancelApprovedEnabled = false;
+            } else if (this.ReconcileExternalPagePM.StatusCode == "3") { // 3- Cancelled
+                this.IsCancelApprovedEnabled = false;
+            }
+            else if (this.ReconcileExternalPagePM.StatusCode == "2" || this.ReconcileExternalPagePM.StatusCode == "1" ) { // 1- Draft, 2- Approved
+                this.IsCancelApprovedEnabled = true;
+            }
+
             this.CalculateTotals();
             this.FillGridsData();
-            var bankCode = (this.PageObjectTableName == 'BankAccount') ? this.EntityPM.BankCode : null;
-            this.IsLeumi = bankCode == "10";
+
+
+
+
+
         }
-    }
-
-
-    additionalDataPM: ExternalPageAdditionalDataPM;
-    GetAdditionalData(objectTableId: string, entityId: string) {
-        return new Promise(resolve => {
-            this._ExternalPageAdditionalDataPMService.get(objectTableId, entityId)
-                .subscribe((response: any) => {
-                    console.log("[GetAdditionalData]", response);
-
-                    if (!response.HasError) {
-                        resolve(this.additionalDataPM);
-                    }
-                    else {
-                        console.error(response.ErrorsArray.toString());
-                        reject();
-
-                    }
-                });
-        });
-    }
-
-    private SetCancelApprovalEditablilty() {
-        if (this.isNewEntity) {
-            this.IsCancelApprovedEnabled = false;
-        }
-        else if (this.ReconcileExternalPagePM.StatusCode == "3") { // 3- Cancelled
-            this.IsCancelApprovedEnabled = false;
-        }
-        else if (this.ReconcileExternalPagePM.StatusCode == "2" || this.ReconcileExternalPagePM.StatusCode == "1") { // 1- Draft, 2- Approved
-            this.IsCancelApprovedEnabled = true;
-        }
-    }
-
-    private SetNewEntityMode(args: any) {
-        this.isNewEntity = true;
-
-        if (this.additionalDataPM)
-            this.GetPreviousPageByNumber(this.additionalDataPM.LastPageNumber);
-
-
-        this.ReconcileExternalPagePM = this.InitializeNewPage(args);
-    }
-
-    private InitializeNewPage(args: any) {
-        var newEntity = new ReconcileExternalPagePM();
-        var objectTableId = window.ObjectTables.filter(d => d.Name === this.PageObjectTableName)[0];
-        newEntity.Tenant = SessionLocator.Tenant;
-        newEntity.StatusCode = "1"; // 1- Draft
-        newEntity.PageNo = 0;
-        newEntity.EntityId = args.BankAccountId;
-        newEntity.ObjectTableId = objectTableId.Id;
-        newEntity.GLAccountId = args.GLAccountId;
-        newEntity.EntryTypeCode = "1"; // 1- Manual
-
-        if (this.additionalDataPM && this.additionalDataPM.LastPageEndDate) {
-            newEntity.FromDate = this.GetLastPageDatePlusOneDay(args);
-            newEntity.StartBalance = this.additionalDataPM.LastPageCloseBalance;
-        }
-
-        return newEntity;
-    }
-
-    private GetLastPageDatePlusOneDay(args: any) {
-        var lastDate: Date = new Date(this.additionalDataPM.LastPageEndDate);
-        var lastDatePlusOne = new Date(lastDate.setDate(lastDate.getDate() + 1));
-        var date = DateTool.GetDate(lastDatePlusOne.getFullYear(), lastDatePlusOne.getMonth(), lastDatePlusOne.getDate(), 0, 0, 0);
-        return date;
-    }
-
-    private SetEditMode(args: any) {
-        this.ReconcileExternalPagePM = args.externalPage;
-
-
-        this.isNewEntity = false;
-        this.GetPreviousPageForExternalPage(this.ReconcileExternalPagePM.PageNo);
-        this.SetComponentEditablity();
-
-        this.SetUIProperties();
-    }
-
-    private SetComponentEditablity() {
-        if (this.ReconcileExternalPagePM.StatusCode == "2" || this.ReconcileExternalPagePM.StatusCode == "3")
-            this.IsDisplayOnly = true;
-        else
-            this.IsDisplayOnly = false;
     }
 
     //#region Properties
@@ -218,9 +139,9 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             this.ReconcileExternalPagePM.FromDate = value;
             var todayDate = DateTool.GetCurrentDateTimeAsUtc();
             if (value > todayDate) {
-                this.UIProperties.SetValidity("FromDate", this.ExternalPageTable, false, TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
+                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
             } else {
-                this.UIProperties.SetValidity("FromDate", this.ExternalPageTable, true, "ok");
+                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "ok");
 
             }
         }
@@ -233,9 +154,9 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             this.ReconcileExternalPagePM.ToDate = value;
             var todayDate = DateTool.GetCurrentDateTimeAsUtc();
             if (value > todayDate) {
-                this.UIProperties.SetValidity("ToDate", this.ExternalPageTable, false, TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
             } else {
-                this.UIProperties.SetValidity("ToDate", this.ExternalPageTable, true, "ok");
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "ok");
 
             }
         }
@@ -300,6 +221,20 @@ export class AddEditRecoExPageComponent extends BaseComponent {
 
         if (this.ReconcileExternalPagePM.StatusCode == "2") {  // 2- Approved
 
+            // * Check last approved page
+            var isLastApprovedPage = this.BankAccountPM.LastPageNumber == this.ReconcileExternalPagePM.PageNo+"";
+            if (isLastApprovedPage)
+            {
+                // continue...
+            }
+            else
+            {
+                errors.push(TextCodeTranslator.Translate("BankAccounts.O.CantCancelItsNotLastApproved"));
+                this.ValidationErrorsList = errors;
+                return;
+            }
+
+
             // * Check reconciled page lines
             var hasReconciledLines: boolean = false;
             var lines = this.PageLinesList.Collection;
@@ -310,7 +245,8 @@ export class AddEditRecoExPageComponent extends BaseComponent {
                     }
                 });
             }
-            if (hasReconciledLines) {
+            if (hasReconciledLines)
+            {
                 errors.push(TextCodeTranslator.Translate("BankAccounts.O.CanCancelItsTransactionsReconciled"));
                 this.ValidationErrorsList = errors;
                 return;
@@ -323,18 +259,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    closeScreen: boolean = true;
-    EditButtonClicked() {
-        this.ReconcileExternalPagePM.StatusCode = "1";
 
-        this.SetComponentEditablity();
-
-        this.SetUIProperties();
-        this.closeScreen = false;
-
-        this.SaveEntity();
-
-    }
     //* grid handlers in seperate region
 
     //#endregion
@@ -355,29 +280,29 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
 
         // Class Validator
-        Validator.TryValidateObject(this.ReconcileExternalPagePM, this.ExternalPageTable, errors);
+        Validator.TryValidateObject(this.ReconcileExternalPagePM, this.ObjectTableName, errors);
 
         // validate empty lines
         //if (this.ReconcileExternalPagePM.StatusCode != "1") {
-        var lines = this.ReconcileExternalPagePM.ReconcileExternalPageLines;
-        if (lines.length > 0) {
-            lines.forEach((line) => {
-                if (!line.ReferenceDate) {
-                    var error = "";
-                    error = TextCodeTranslator.Translate("Accounting.General.O.Line");
-                    error += (line.LineNumber + ": ");
-                    error += TextCodeTranslator.Translate("Accounting.O.ReferenceDateIsRequired");
-                    errors.push(error);
-                }
-                if (AppTool.IsNullOrEmpty(line.CreditAmount) && AppTool.IsNullOrEmpty(line.DebitAmount)) {
-                    var error = "";
-                    error = TextCodeTranslator.Translate("Accounting.General.O.Line");
-                    error += (line.LineNumber + ": ");
-                    error += TextCodeTranslator.Translate("Accounting.O.AmountIsRequired");
-                    errors.push(error);
-                }
-            });
-        }
+            var lines = this.ReconcileExternalPagePM.ReconcileExternalPageLines;
+            if (lines.length > 0) {
+                lines.forEach((line) => {
+                    if (!line.ReferenceDate) {
+                        var error = "";
+                        error = TextCodeTranslator.Translate("Accounting.General.O.Line");
+                        error += (line.LineNumber + ": ");
+                        error += TextCodeTranslator.Translate("Accounting.O.ReferenceDateIsRequired");
+                        errors.push(error);
+                    }
+                    if (AppTool.IsNullOrEmpty(line.Amount)) {
+                        var error = "";
+                        error = TextCodeTranslator.Translate("Accounting.General.O.Line");
+                        error += (line.LineNumber + ": ");
+                        error += TextCodeTranslator.Translate("Accounting.O.AmountIsRequired");
+                        errors.push(error);
+                    }
+                });
+            }
         //}
 
         //// Custom Validation
@@ -404,11 +329,6 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
     }
 
-    RestoreButtonClicked() {
-        this.IsCancelApprovedEnabled = true;
-        this.EditButtonClicked();
-    }
-
     SubmitChanges() {
         this.CurrentSession.StartBusyIndicatorSaving();
         if (this.isNewEntity) {
@@ -431,32 +351,16 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             });
         } else {
 
-            this._ReconcileExternalPagePMService.update(this.ReconcileExternalPagePM).subscribe((myResult: any) => {
+            this._ReconcileExternalPagePMService.update(this.ReconcileExternalPagePM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
-                if (!mm.HasError && this.closeScreen) {
+                if (!mm.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
-                    if (!this.closeScreen) {
-                        this.CurrentSession.StartBusyIndicatorSaving();
-                        this._ReconcileExternalPagePMService.get(mm.Result.Id).subscribe((myResult: any) => {
 
-                            var result: ServiceResponse = myResult;
-                            if (!result.HasError) {
-                                this.ReconcileExternalPagePM = result.Result;
-                                if (this.IsRestoreButtonVisibile) {
-                                    this.IsRestoreButtonVisibile = false;
-                                }
-
-                                this.FillGridsData();
-                            }
-                            this.CurrentSession.StopBusyIndicator();
-
-                        });
-                    }
-                    else if (this.isApprovedButtonClicked) {
+                    if (this.isApprovedButtonClicked) {
                         this.isApprovedButtonClicked = false;
                         this.ReconcileExternalPagePM.StatusCode = '1' // 1- Draft
                     }
@@ -464,92 +368,70 @@ export class AddEditRecoExPageComponent extends BaseComponent {
                     this.ValidationErrorsList = mm.ErrorsArray;
                     this.CurrentSession.StopBusyIndicator();
                 }
-
-
-                this.closeScreen = true;
-                this.ReconcileExternalPagePM.StatusName = mm.Result.StatusName;
             });
 
         }
     }
 
-    SetCurrency() {
-        if (this.PageObjectTableName == "BankAccount") {
-            if (this.EntityPM.GLAccountCurrencyId && this.EntityPM.GLAccountCurrencyId == "multi")
-                this.SetMultiCurrencyAmountHeader();
-            else if (this.EntityPM.GLAccountCurrencyId)
-                this.GetCurrency(this.EntityPM.GLAccountCurrencyId);
+    GetCurrency() {
+        if (this.BankAccountPM.GLAccountCurrencyId && this.BankAccountPM.GLAccountCurrencyId == "multi")
+        {
+            this.IsMultiCurrency = true;
+            this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
         }
-        else if (this.PageObjectTableName == "GLAccount") {
-            if (this.EntityPM.IsMultiCurrency == true)
-                this.SetMultiCurrencyAmountHeader();
-            else
-                this.GetCurrency(this.EntityPM.CurrencyId);
+        else if (this.BankAccountPM.GLAccountCurrencyId)
+        {
+            this._CurrencyPMService.get(this.BankAccountPM.GLAccountCurrencyId).subscribe((myResult) =>
+            {
+                var currency = myResult.Result;
+                if (!AppTool.IsNullOrEmpty(currency))
+                {
+                    this.currency = currency;
+                    this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.currency.Code +")"
+                }
+                else {
+                    console.log("[!] Cannot find the currency !!");
+                    this.AmountColHeader = this.AMOUNT_TEXT;
+                }
+            });
         }
-    }
-
-    private SetMultiCurrencyAmountHeader() {
-        this.IsMultiCurrency = true;
-        this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
-        this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
-        this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
-    }
-
-    private GetCurrency(currencyId: any) {
-        this._CurrencyPMService.get(currencyId).subscribe((myResult: any) => {
-            var currency = myResult.Result;
-            if (!AppTool.IsNullOrEmpty(currency)) {
-                this.currency = currency;
-                this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.currency.Code + ")";
-                this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.currency.Code + ")";
-                this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.currency.Code + ")";
-            }
-            else {
-                console.log("[!] Cannot find the currency !!");
-                this.AmountColHeader = this.AMOUNT_TEXT;
-                this.CreditAmountColHeader = this.CreditAMOUNT_TEXT;
-                this.DebitAmountColHeader = this.DebitAMOUNT_TEXT;
-            }
-        });
     }
 
     //#region Prev Bank Page
     OpenPrevPage() {
-        console.log(this.PreviousPagePM);
-        this.OpenExternalPageWindow(this.PreviousPagePM);
+        console.log(this.PrevBankPagePM);
+        this.OpenBankPageWindow(this.PrevBankPagePM);
     }
-    OpenExternalPageWindow(externalPage: any = null) {
+    OpenBankPageWindow(entity: any = null) {
 
-        var windowTitle = externalPage ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + externalPage.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
+        var windowTitle = entity ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + entity.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
 
         var windowArgs: any = {};
-        windowArgs.PageObjectTableName = this.PageObjectTableName;
-        windowArgs.externalPage = externalPage;
-        windowArgs.EntityPM = this.EntityPM;
-        windowArgs.BankAccountId = this.EntityPM.Id;
-        windowArgs.GLAccountId = this.EntityPM.GLAccountId;
-        windowArgs.BankAccount = this.EntityPM;
-        windowArgs.AdditionalDataPM = this.additionalDataPM;
+        windowArgs.entity = entity;
+        windowArgs.BankAccountId = this.BankAccountPM.Id;
+        windowArgs.GLAccountId = this.BankAccountPM.GLAccountId;
+        windowArgs.BankAccount = this.BankAccountPM;
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1000;
         logWindow.Height = 600;
         logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => {
+        logWindow.WindowClosed.subscribe(($event: any) =>
+        {
 
         });
         logWindow.Show('./Accounting/Components/NewEntity/AddEditRecoExPageComponent');
 
     }
-    GetPreviousPageByNumber(previousPageNo: string) {
+    GetPage(pageNo: string) {
 
-        if (previousPageNo) {
+        if (pageNo) {
             //get last page
-            this._ReconcileExternalPageExtendedPMService.GetPageByNumber(previousPageNo, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult: ServiceResponse) => {
+            this._ReconcileExternalPageExtendedPMService.GetBankPageByPageNo(pageNo, this.BankAccountPM.Id).subscribe((myResult) => {
                 var bankPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(bankPage)) {
-                    this.PreviousPagePM = bankPage;
+                    this.PrevBankPagePM = bankPage;
                 }
                 else {
                     console.log("[!] Cannot find the Prev Bank Page !!");
@@ -561,14 +443,14 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
     }
 
-    GetPreviousPageForExternalPage(extPageNumber: number) {
+    GetPrevPage(prevPageNo: number) {
 
-        if (extPageNumber) {
+        if (prevPageNo) {
             //get last page
-            this._ReconcileExternalPageExtendedPMService.GetPreviousPageByNumber(extPageNumber, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult: ServiceResponse) => {
+            this._ReconcileExternalPageExtendedPMService.GetPrevPageByPageNo(prevPageNo, this.BankAccountPM.Id).subscribe((myResult) => {
                 var bankPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(bankPage)) {
-                    this.PreviousPagePM = bankPage;
+                    this.PrevBankPagePM = bankPage;
                 }
                 else {
                     console.log("[!] Cannot find the Prev Bank Page !!");
@@ -582,11 +464,10 @@ export class AddEditRecoExPageComponent extends BaseComponent {
     //#endregion
 
     SetUIProperties() {
-        this.UIProperties.SetEnabled("FromDate", this.ExternalPageTable, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("ToDate", this.ExternalPageTable, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("StartBalance", this.ExternalPageTable, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CloseBalance", this.ExternalPageTable, !this.IsDisplayOnly);
-
+        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("StartBalance", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("CloseBalance", this.ObjectTableName, !this.IsDisplayOnly);
         //this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
         //this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
     }
@@ -603,286 +484,6 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             this.CalculateTotals();
 
         }
-    }
-
-
-    public ShowMessage(message: string) {
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show(message);
-    }
-
-    private fileName: string;
-    private fileExtension: string;
-    OnFileChanged(fileEvent) {
-        var file = fileEvent.target.files[0];
-
-        if (file) {
-            var extension: string = file.name.split('.')[1];
-
-            if (extension.includes("xls")) {
-                var file = fileEvent.target.files[0];
-                this.UploadExcel(file);
-            }
-
-            else {
-                var messageWindow: MessageWindow = new MessageWindow();
-                messageWindow.Show("You have to upload excel files only");
-            }
-        }
-    }
-
-    OnTextFileChanged(fileEvent) {
-        var file = fileEvent.target.files[0];
-
-        if (file) {
-            var extension: string = file.name.split('.')[1];
-
-            if (extension.includes("dat")) {
-                var file = fileEvent.target.files[0];
-                this.UploadText(file);
-            }
-
-            else {
-                var messageWindow: MessageWindow = new MessageWindow();
-                messageWindow.Show("You have to upload text .dat files only");
-            }
-        }
-    }
-
-    UploadExcel(file: any) {
-        this.CurrentSession.StartBusyIndicator("Uploading...");
-        this.UploadButtonIsEnabled = false;
-
-        this.fileName = null;
-        this.fileExtension = null;
-
-        if (!AppTool.IsNullOrEmpty(file.name)) {
-            var name = file.name.split('.');
-            if (name.length == 2) {
-                this.fileName = name[0];
-                this.fileExtension = name[1];
-            }
-        }
-        if (file && file.size > 0) {
-            var documentExtendedService = new DocumentsFilingExtendedPMService();
-            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var myResult = response.Result;
-                    if (myResult) {
-                        this.StartUploadingExcelFile(file);
-                    }
-                }
-            });
-        }
-    }
-
-    StartUploadingExcelFile(file: any) {
-        if (file && file.size > 0) {
-            var filebuffer = file.slice(0, file.size);
-            this.ConvertArrayBufferToBase64(filebuffer, this);
-        }
-    }
-
-    UploadText(file: any) {
-        this.CurrentSession.StartBusyIndicator("Uploading...");
-        this.UploadButtonIsEnabled = false;
-
-        this.fileName = null;
-        this.fileExtension = null;
-
-        if (!AppTool.IsNullOrEmpty(file.name)) {
-            var name = file.name.split('.');
-            if (name.length == 2) {
-                this.fileName = name[0];
-                this.fileExtension = name[1];
-            }
-        }
-        if (file && file.size > 0) {
-            var documentExtendedService = new DocumentsFilingExtendedPMService();
-            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var myResult = response.Result;
-                    if (myResult) {
-                        this.StartUploadingTextFile(file);
-                    }
-                }
-            });
-        }
-    }
-
-    StartUploadingTextFile(file: any) {
-        if (file && file.size > 0) {
-            var filebuffer = file.slice(0, file.size);
-            this.ConvertArrayBufferToBase64Text(filebuffer, this);
-        }
-    }
-
-
-    formData: FormData = new FormData();
-    UploadFile(event: any) {
-        const fileList: FileList = event.target.files;
-        if (fileList.length > 0) {
-          const file: File = fileList[0];
-          this.FileName = file.name.replace("." + this.FileExtension, "");
-          this.UploadButtonIsEnabled = false;
-          this.formData.append('file', file, file.name);
-          this.SendExcelToServer();
-        }
-    }
-
-
-    UploadTextFile(event: any) {
-        const fileList: FileList = event.target.files;
-        if (fileList.length > 0) {
-            const file: File = fileList[0];
-            this.FileName = file.name.replace("." + this.FileExtension, "");
-            this.UploadButtonIsEnabled = false;
-            this.formData.append('file', file, file.name);
-            this.SendTextToServer();
-        }
-    }
-
-    myInputVariable: ElementRef;
-    @ViewChild('myInput', { static: false }) myInput!: ElementRef;
-    openFileUploader() {
-        this.myInput.nativeElement.click();
-    }
-
-    public partnersUploadExcelParameter: PartnersUploadExcelParameter;
-    ConvertArrayBufferToBase64(file: any, viewmodel: any) {
-        return new Promise((resolve, reject) => {
-            var reader: FileReader = new FileReader();
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var binary = '';
-                var bytes = new Uint8Array(ResultAsArray(e));
-                var len = bytes.byteLength;
-
-                for (var i = 0; i < len; i++) {
-                    binary += String.fromCharCode(bytes[i]);
-                }
-
-                viewmodel.partnersUploadExcelParameter = new PartnersUploadExcelParameter();
-                viewmodel.partnersUploadExcelParameter.FileData = window.btoa(binary);
-                viewmodel.partnersUploadExcelParameter.FileName = viewmodel.FileName;
-                viewmodel.partnersUploadExcelParameter.ComputingPartnerCode = viewmodel.ComputingPartnerCode;
-                viewmodel.SendExcelToServer(viewmodel.partnersUploadExcelParameter);
-            };
-            reader.onerror = function (e) {
-                console.log(e);
-            };
-            reader.readAsArrayBuffer(file);
-        });
-    }
-
-    SendExcelToServer() {
-        var glaccountId=(this.PageObjectTableName == 'GLAccount') ? this.EntityPM.Id : null;
-        var line = 0;
-        if (this.ReconcileExternalPagePM.ReconcileExternalPageLines.length > 0) {
-            var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines.reduce(function (prev, current) { return (prev.LineNumber > current.LineNumber) ? prev : current }).LineNumber;
-        }
-        line++;
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromExcel(this.formData,this.EntityPM.bankId,this.EntityPM.tenant,this.ReconcileExternalPagePM?.Id,line,glaccountId).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                //filters = response.Result;
-                this.FillReconcileExternalPageLines(response);
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            }
-
-            else {
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
-                this.UploadButtonIsEnabled = true;
-            }
-        });
-    }
-
-    ConvertArrayBufferToBase64Text(file: any, viewmodel: any) {
-        return new Promise((resolve, reject) => {
-            var reader: FileReader = new FileReader();
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var binary = '';
-                var bytes = new Uint8Array(ResultAsArray(e));
-                var len = bytes.byteLength;
-
-                for (var i = 0; i < len; i++) {
-                    binary += String.fromCharCode(bytes[i]);
-                }
-
-                viewmodel.partnersUploadExcelParameter = new PartnersUploadExcelParameter();
-                viewmodel.partnersUploadExcelParameter.FileData = window.btoa(binary);
-                viewmodel.partnersUploadExcelParameter.FileName = viewmodel.FileName;
-                viewmodel.partnersUploadExcelParameter.ComputingPartnerCode = viewmodel.ComputingPartnerCode;
-                viewmodel.SendTextToServer(viewmodel.partnersUploadExcelParameter);
-            };
-            reader.onerror = function (e) {
-                console.log(e);
-            };
-            reader.readAsArrayBuffer(file);
-        });
-    }
-
-    SendTextToServer() {
-        var glaccountId = (this.PageObjectTableName == 'GLAccount') ? this.EntityPM.Id : null;
-        var line = 0;
-        if (this.ReconcileExternalPagePM.ReconcileExternalPageLines.length > 0) {
-            var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines.reduce(function (prev, current) { return (prev.LineNumber > current.LineNumber) ? prev : current }).LineNumber;
-        }
-        line++;
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromText(this.formData, this.EntityPM.bankId, this.EntityPM.tenant, this.ReconcileExternalPagePM?.Id, line, glaccountId).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                //filters = response.Result;
-                this.FillReconcileExternalPageLines(response);
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            }
-
-            else {
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
-                this.UploadButtonIsEnabled = true;
-            }
-        });
-    }
-
-    FillReconcileExternalPageLines(filters: any) {
-        // last no.
-        this.tempPageLinesList = new ObservableCollection([]);
-
-        // Choose ExcelReconcileExternalPageLines from filters if available, otherwise read from filters.Result
-        const excelLines = filters.ExcelReconcileExternalPageLines || filters.Result.ExcelReconcileExternalPageLines;
-
-        if (excelLines && excelLines.length > 0) {
-            this.ReconcileExternalPagePM.EntryTypeCode = "2";
-            excelLines.forEach(element => {
-                this.ReconcileExternalPagePM.AddReconcileExternalPageLine(element);
-                var item = new PageLineModel(element, this);
-                this.tempPageLinesList.Insert(item);
-            });
-            if (this.PageLinesList.Length == 0) {
-                this.UploadButtonIsEnabled = true
-            }
-            this.PageLinesList.InsertCollection(this.tempPageLinesList.Collection);
-            this.CalculateTotals();
-            this.SelectInvoiceItemMethod(null)
-        }
-    }
-    
-    public SelectInvoiceItemMethod(res) {
-        var item: PageLineModel = this.PageLinesList.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
-        //this.SelectedRow = item;
-        this.OnSelectedItemChanged(item); // set this.SelectedRow
-        var index = this.PageLinesList.Collection.indexOf(item);
-        //this.ChangeScrollPosition.emit({ RowIndex: index });
-
-    }
-
-    OnSelectedItemChanged(selectedRow: PageLineModel) {
-        this.SelectedRow = selectedRow;
     }
 
     AddButtonClicked() {
@@ -924,9 +525,6 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
 
         this.CalculateTotals();
-        if (this.PageLinesList.Length == 0) {
-            this.UploadButtonIsEnabled = true
-        }
     }
 
     OnRowEnded($event) {
@@ -946,7 +544,6 @@ export class AddEditRecoExPageComponent extends BaseComponent {
     //#endregion
 
     GetDefaultValues() {
-
         // Tenant currency
         var defaultCurrencyId: string = SessionLocator.TenantPM.CurrencyId;
         this.currencyListService.getSingle(defaultCurrencyId).subscribe((myResponse: ServiceResponse) => {
@@ -955,13 +552,13 @@ export class AddEditRecoExPageComponent extends BaseComponent {
                 if (!myResponse.HasError) {
                     this.TenantCurrency = myResponse.Result;
                     console.log(">>Tenant Currency: ", myResponse.Result);
-                    this.SetCurrency();
+                    this.GetCurrency();
 
                 } else
-                    this.SetCurrency();
+                    this.GetCurrency();
 
             } else
-                this.SetCurrency();
+                this.GetCurrency();
 
         });
     }
@@ -971,11 +568,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
 
         if (this.PageLinesList.Length > 0) {
             for (var line of this.PageLinesList.Collection) {
-
-                //debit
-                sum -= !line.DebitAmount ? 0 : line.DebitAmount;
-                sum += !line.CreditAmount ? 0 : line.CreditAmount;
-
+                sum += (line.Amount == null || line.Amount == undefined) ? 0 : line.Amount;
             }
         }
 
@@ -996,11 +589,6 @@ export class PageLineModel extends BaseComponent {
     public DataContext = this;
     constructor(public pageLinePM: ReconcileExternalPageLinePM, public parent: AddEditRecoExPageComponent) {
         super();
-
-        if (AppTool.IsNullOrEmpty(this.CreditAmount))
-            this.CreditAmount = 0;
-        if (AppTool.IsNullOrEmpty(this.DebitAmount))
-            this.DebitAmount = 0;
     }
 
     //#region Properties
@@ -1026,33 +614,6 @@ export class PageLineModel extends BaseComponent {
             this.parent.CalculateTotals();
         }
     }
-
-    get CreditAmount() { return this.pageLinePM.CreditAmount; }
-    set CreditAmount(value: number) {
-        if (this.pageLinePM.CreditAmount != value) {
-            this.pageLinePM.CreditAmount = value;
-            this.parent.CalculateTotals();
-
-            if (AppTool.IsNullOrEmpty(value))
-                this.CreditAmount = 0;
-            // if(value != 0)
-            //     this.DebitAmount = 0;
-        }
-    }
-
-    get DebitAmount() { return this.pageLinePM.DebitAmount; }
-    set DebitAmount(value: number) {
-        if (this.pageLinePM.DebitAmount != value) {
-            this.pageLinePM.DebitAmount = value;
-            this.parent.CalculateTotals();
-
-            if (AppTool.IsNullOrEmpty(value))
-                this.DebitAmount = 0;
-            // if(value != 0)
-            //     this.CreditAmount = 0;
-        }
-    }
-
 
     get Reference() { return this.pageLinePM.Reference; }
     set Reference(value: string) {
@@ -1092,26 +653,4 @@ export class PageLineModel extends BaseComponent {
         }
 
     }
-
-
 }
-export class ReconcileExternalPageLineParameters {
-    Tenant: number;
-    FileData: string;
-    CarrierAreaId: string;
-    FileName: string;
-    FileExtension: string;
-    TransportMode: string;
-    RowsCount: number;
-    ExcelReconcileExternalPageLines: ExcelReconcileExternalPageLine[];
-}
-export class ExcelReconcileExternalPageLine {
-    ReferenceDate: Date;
-    DebitAmount: number;
-    CreditAmount: number;
-    Reference: string;
-    Notes: string;
-    HasError: boolean;
-}
-
-

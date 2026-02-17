@@ -13,7 +13,7 @@ using WebFreight.Web.DataContracts;
 using System.Xml.Serialization;
 using System.IO;
 using System.Reflection;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Server.Infrastructure.DataContracts;

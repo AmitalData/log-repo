@@ -10,7 +10,7 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -19,15 +19,12 @@ using Logitude.BookingLib.Data.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BookingLib.Data.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -40,25 +37,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private Card entityCard;
         private Contact loggedContact;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
-        
         private ICommonDataContext objectContext;
         private AirlineRepository entityRepository;
         private CardRepository cardRepository;
         private CardQuery cardQuery;
         private ContactRepository contactRepository;
-        public AirlineService(ICommonDataContext objectContext, AirlinePM entityPM, string loggedContactId)
-        {
-            this.entityPM = entityPM;
-            this.tenant = entityPM.Tenant;
-            this.objectContext = objectContext;
-            this.entityRepository = new AirlineRepository(objectContext);
-            this.cardRepository = new CardRepository(objectContext);
-            this.contactRepository = new ContactRepository(objectContext);
-            this.cardQuery = new CardQuery(cardRepository);
-            this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
-        }
-
         public AirlineService(ICommonDataContext objectContext, int tenant)
         {
             
@@ -83,7 +66,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.cardExternalCodeByCurrencyChangeSet = cardExternalCodeByCurrencyChangeSet;
         }
-        
+
         public void Create(AirlinePM entityPM)
         {
             this.entityPM = entityPM;
@@ -102,7 +85,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Id = entityPM.Id,
                     Tenant = tenant,
                     PartnerTypeId = "AL",
-                    UploadingUniqueKey = entityPM.UploadingUniqueKey,
                 };
 
                 this.entityPOCO = new Airline()
@@ -120,6 +102,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 this.InitializeComponent();
 
+                AirlineValidating.Validate(entityPM);
 
                 foreach (CardExternalCodeByCurrencyPM item in entityPM.CardExternalCodeByCurrencies)
                 {
@@ -132,21 +115,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 AirlineMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-                AirlineValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
-
+                 
                 cardRepository.Add(entityCard);
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Airline", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<AirlinePM> { entityPM }.Cast<object>().ToList() }).Update();
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Airline");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                if (!LogitudeSettings.IsCostomsDeploy)
-                {
-                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-                }
-                AddCardKafkaQueueMessage();
             }
 
             else
@@ -178,11 +153,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 this.InitializeComponent();
 
+                AirlineValidating.Validate(entityPM);
                 if (mapComposition)
                 {
-                    this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies);                    
+                    this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies);
                 }
-
                 if (CacheManager.CacheWrapper != null)
                 {
                     string entityName = "Card" + entityPM.Id + entityPM.Tenant;
@@ -208,21 +183,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 AirlineMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-                AirlineValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
                 cardRepository.Update(entityCard);
                 entityRepository.Update(entityPOCO);
                 entityRepository.SubmitChanges();
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Airline", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<AirlinePM> { entityPM }.Cast<object>().ToList() }).Update();
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Airline");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                if (!LogitudeSettings.IsCostomsDeploy)
-                {
-                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-                }
-                AddCardKafkaQueueMessage();
             }
 
             else
@@ -267,11 +234,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
             }
-            entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
-            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
-            entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
-            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-
         }
 
         private void ComputeContactFields()
@@ -390,7 +352,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-        
+
         private void CreateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("CardExternalCodeByCurrency", tenant).ToString();
@@ -412,16 +374,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CardExternalCodeByCurrencyMapping.MapEntity(itemPM, itemPoco, true);
             cardExternalCodeByCurrencyRepository.Add(itemPoco);
         }
-        
         private void UpdateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             CardExternalCodeByCurrency itemPoco = cardExternalCodeByCurrencyRepository.GetSingleCardExternalCodeByCurrency(itemPM.Id, tenant);
-          
             CardExternalCodeByCurrencyMapping.MapEntity(itemPM, itemPoco, false);
 
             cardExternalCodeByCurrencyRepository.Update(itemPoco);
         }
-        
         private void DeleteCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             CardExternalCodeByCurrency itemPoco = cardExternalCodeByCurrencyRepository.GetSingleCardExternalCodeByCurrency(itemPM.Id, tenant);
@@ -431,28 +390,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private void AddCardKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Card" },
-                { "EntityId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
-        }
         public void Submit()
         {
             cardExternalCodeByCurrencyRepository.SubmitChanges();
-        }
+        }         
     }
 }

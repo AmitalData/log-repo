@@ -58,13 +58,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 
 
-        public Branch BranchCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
+        public Branch BranchCustomDataMapping(string Id, int Tenant)
         {
             try
             {
 
                 BranchQueryService BranchService0 = new BranchQueryService(Tenant);
-                var ChargeType = BranchService0.GetBranchById(Id, Tenant,ComputingPartnerName);
+                var ChargeType = BranchService0.GetBranchById(Id, Tenant);
                 return ChargeType;
             }
             catch (Exception ex)

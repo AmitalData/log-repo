@@ -1,5 +1,4 @@
-
-<div class="TabHolder">
+﻿<div class="TabHolder">
     <table>
 
         <tr class="TabTitleRow">
@@ -15,90 +14,74 @@
         <tr>
             <td>
                 <div class="MediaFill">
-                    <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="EmailLinesList" (SelectedItemChanged)="EmailLineSelected($event)" [SelectedRow]="EmailLineSelectedItem">
+                    <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%"  [ItemSource]="EmailLinesList" (SelectedItemChanged)="EmailLineSelected($event)" [SelectedRow]="EmailLineSelectedItem">
 
                         <log-column [width]="'250'" [header]="'Sender'">
-                            <ng-template let-item>
-                                <log-cell-template  #logcelltemplate>
-                                    <div style="float:left;"> {{item.Sender}} </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div  style="float:left;"> {{item.Sender}} </div>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'250'" [header]="'Recepient'">
-                            <ng-template let-item>
-                                <log-cell-template  #logcelltemplate>
-                                    <div style="float:left;"> {{item.Recepient}} </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="float:left;"> {{item.Recepient}} </div>
+                            </log-cell-template>
                         </log-column>
-
+                        
 
                         <log-column [width]="'200'" [header]="'Subject'">
-                            <ng-template let-item>
-                                <log-cell-template  #logcelltemplate>
-                                    <div style="float:left;"> {{item.Subject}} </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="float:left;"> {{item.Subject}} </div>
+                            </log-cell-template>
                         </log-column>
 
 
                         <log-column [width]="'200'" [header]="'CCs'">
-                            <ng-template let-item>
-                                <log-cell-template  #logcelltemplate>
-                                    <div style="float:left;"> {{item.CCs}} </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="float:left;"> {{item.CCs}} </div>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'200'" [header]="'Interna lUsers'">
-                            <ng-template let-item>
-                                <log-cell-template  #logcelltemplate>
-                                    <div style="float:left;"> {{item.InternalUsers}} </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="float:left;"> {{item.InternalUsers}} </div>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'130'" [header]="'Create Date'">
-                            <ng-template let-item>
-                                <log-cell-template  #logcelltemplate>
-                                    <div style="float:left;"> {{item.CreateDate|DateTimePipe: 'D'}} </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="float:left;"> {{item.CreateDate|DateTimePipe: 'D'}} </div>
+                            </log-cell-template>
                         </log-column>
-
+                      
                         <log-column [width]="'350'" [header]="'Body'">
-                            <ng-template let-item>
-                                <log-cell-template  #logcelltemplate>
-                                    <table>
-                                        <tr>
-                                            <td style="float:left;width:260px;">
-                                                <div class="TextTrimming">{{item.Body}}</div>
-                                            </td>
-                                            <td style="width:70px;float:right;vertical-align:middle;top:3px;">
-                                                <button type="button" class="Button" style="height:20px;vertical-align:central;" (click)="item.ViewBody('B')">View</button>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <table>
+                                    <tr>
+                                        <td style="float:left;width:260px;">
+                                            <div class="TextTrimming">{{item.Body}}</div>
+                                        </td>
+                                        <td style="width:70px;float:right;vertical-align:middle;top:3px;">
+                                            <button type="button" class="Button" style="height:20px;vertical-align:central;" (click)="item.ViewBody('B')">View</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'350'" [header]="'Full Body'">
-                            <ng-template let-item>
-                                <log-cell-template  #logcelltemplate>
-                                    <table>
-                                        <tr>
-                                            <td style="float:left;width:260px;">
-                                                <div class="TextTrimming">{{item.FullBody}}</div>
-                                            </td>
-                                            <td style="width:70px;float:right;vertical-align:middle;top:3px;">
-                                                <button type="button" class="Button" style="height:20px;vertical-align:central;" (click)="item.ViewBody('FB')">View</button>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <table>
+                                    <tr>
+                                        <td style="float:left;width:260px;">
+                                            <div class="TextTrimming">{{item.FullBody}}</div>
+                                        </td>
+                                        <td style="width:70px;float:right;vertical-align:middle;top:3px;">
+                                            <button type="button" class="Button" style="height:20px;vertical-align:central;" (click)="item.ViewBody('FB')">View</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </log-cell-template>
                         </log-column>
 
                     </logitude-edit-grid>

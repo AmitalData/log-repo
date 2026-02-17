@@ -33,6 +33,8 @@
             this.BuildWarehouseBotton = new System.Windows.Forms.Button();
             this.label = new System.Windows.Forms.Label();
             this.PrivateDblabel = new System.Windows.Forms.Label();
+            this.DestinationConnectiontextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.BuildWarehouseButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -58,7 +60,7 @@
             // 
             // BuildWarehouseBotton
             // 
-            this.BuildWarehouseBotton.Location = new System.Drawing.Point(216, 49);
+            this.BuildWarehouseBotton.Location = new System.Drawing.Point(216, 66);
             this.BuildWarehouseBotton.Name = "BuildWarehouseBotton";
             this.BuildWarehouseBotton.Size = new System.Drawing.Size(484, 23);
             this.BuildWarehouseBotton.TabIndex = 142;
@@ -88,9 +90,29 @@
             this.PrivateDblabel.Size = new System.Drawing.Size(0, 20);
             this.PrivateDblabel.TabIndex = 147;
             // 
+            // DestinationConnectiontextBox
+            // 
+            this.DestinationConnectiontextBox.Location = new System.Drawing.Point(216, 40);
+            this.DestinationConnectiontextBox.Name = "DestinationConnectiontextBox";
+            this.DestinationConnectiontextBox.Size = new System.Drawing.Size(484, 20);
+            this.DestinationConnectiontextBox.TabIndex = 148;
+            this.DestinationConnectiontextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label1.Location = new System.Drawing.Point(19, 40);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(175, 20);
+            this.label1.TabIndex = 149;
+            this.label1.Text = "Destination Connection";
+            // 
             // BuildWarehouseButton
             // 
-            this.BuildWarehouseButton.Location = new System.Drawing.Point(216, 78);
+            this.BuildWarehouseButton.Location = new System.Drawing.Point(216, 95);
             this.BuildWarehouseButton.Name = "BuildWarehouseButton";
             this.BuildWarehouseButton.Size = new System.Drawing.Size(484, 23);
             this.BuildWarehouseButton.TabIndex = 150;
@@ -102,8 +124,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(848, 576);
+            this.ClientSize = new System.Drawing.Size(845, 424);
             this.Controls.Add(this.BuildWarehouseButton);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.DestinationConnectiontextBox);
             this.Controls.Add(this.PrivateDblabel);
             this.Controls.Add(this.label);
             this.Controls.Add(this.SourceConnectionlTextBox);
@@ -122,6 +146,8 @@
         private System.Windows.Forms.Button BuildWarehouseBotton;
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.Label PrivateDblabel;
+        private System.Windows.Forms.TextBox DestinationConnectiontextBox;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BuildWarehouseButton;
     }
 }

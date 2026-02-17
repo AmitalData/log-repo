@@ -1,3 +1,4 @@
+
 <style type="text/css">
     .HeaderScreen {
         height: 100%;
@@ -26,8 +27,7 @@
         font-size: 12px;
         color: #282E30;
     }
-
-    .FlipImgHoriz {
+    .FlipImgHoriz{
         -moz-transform: scaleX(-1);
         -o-transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
@@ -44,440 +44,362 @@
         -webkit-transition: transform 0.7s;
         transition: transform 0.7s;
     }
-
-    .SplitButton:hover {
-        filter: contrast(2);
-    }
-
-    .flipHoriz {
-        -moz-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
-        -o-transform: rotate(180deg);
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-    }
-
-    .slide-animation {
-        animation: animationFrames ease-out 0.5s;
-        animation-iteration-count: 1;
-        transform-origin: 50% 50%;
-        -webkit-animation: animationFrames ease-out 0.5s;
-        -webkit-animation-iteration-count: 1;
-        -webkit-transform-origin: 50% 50%;
-        -moz-animation: animationFrames ease-out 0.5s;
-        -moz-animation-iteration-count: 1;
-        -moz-transform-origin: 50% 50%;
-        -o-animation: animationFrames ease-out 0.5s;
-        -o-animation-iteration-count: 1;
-        -o-transform-origin: 50% 50%;
-        -ms-animation: animationFrames ease-out 0.5s;
-        -ms-animation-iteration-count: 1;
-        -ms-transform-origin: 50% 50%;
-    }
-     
-    .ShortTitleBox {
-        width: 100%;
-    }
-
-    @keyframes animationFrames {
-        0% {
-            transform: translate(-50px, 0px);
+        .SplitButton:hover{
+            filter: contrast(2);
+        }
+        .flipHoriz {
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
         }
 
-        100% {
-            transform: translate(0px, 0px);
-        }
+    .slide-animation{
+      animation: animationFrames ease-out 0.5s;
+      animation-iteration-count: 1;
+      transform-origin: 50% 50%;
+      -webkit-animation: animationFrames ease-out 0.5s;
+      -webkit-animation-iteration-count: 1;
+      -webkit-transform-origin: 50% 50%;
+      -moz-animation: animationFrames ease-out 0.5s;
+      -moz-animation-iteration-count: 1;
+      -moz-transform-origin: 50% 50%;
+      -o-animation: animationFrames ease-out 0.5s;
+      -o-animation-iteration-count: 1;
+      -o-transform-origin: 50% 50%;
+      -ms-animation: animationFrames ease-out 0.5s;
+      -ms-animation-iteration-count: 1;
+      -ms-transform-origin: 50% 50%;
     }
 
-    @-moz-keyframes animationFrames {
-        0% {
-            -moz-transform: translate(-50px, 0px);
-        }
+    @keyframes animationFrames{
+      0% {
+        transform:  translate(-50px,0px)  ;
+      }
+      100% {
+        transform:  translate(0px,0px)  ;
+      }
+    }
 
-        100% {
-            -moz-transform: translate(0px, 0px);
-        }
+    @-moz-keyframes animationFrames{
+      0% {
+        -moz-transform:  translate(-50px,0px)  ;
+      }
+      100% {
+        -moz-transform:  translate(0px,0px)  ;
+      }
     }
 
     @-webkit-keyframes animationFrames {
-        0% {
-            -webkit-transform: translate(-50px, 0px);
-        }
-
-        100% {
-            -webkit-transform: translate(0px, 0px);
-        }
+      0% {
+        -webkit-transform:  translate(-50px,0px)  ;
+      }
+      100% {
+        -webkit-transform:  translate(0px,0px)  ;
+      }
     }
 
     @-o-keyframes animationFrames {
-        0% {
-            -o-transform: translate(-50px, 0px);
-        }
-
-        100% {
-            -o-transform: translate(0px, 0px);
-        }
+      0% {
+        -o-transform:  translate(-50px,0px)  ;
+      }
+      100% {
+        -o-transform:  translate(0px,0px)  ;
+      }
     }
 
     @-ms-keyframes animationFrames {
-        0% {
-            -ms-transform: translate(-50px, 0px);
-        }
-
-        100% {
-            -ms-transform: translate(0px, 0px);
-        }
+      0% {
+        -ms-transform:  translate(-50px,0px)  ;
+      }
+      100% {
+        -ms-transform:  translate(0px,0px)  ;
+      }
     }
 
     /* animation out */
-    .slide-out {
+    .slide-out{
         right: 0;
     }
 
 
-    .DisbleBox {
-        display: inline-block;
-        border: 1px solid #ffd800;
-        border-radius: 5px;
-        background: #faf5c0;
-        padding: 2px 10px;
-        margin: 5px;
-        color: gray;
-        font-family: sans-serif;
-    }
-    .disabled {
-      pointer-events: none; 
-      opacity: 0.5;
-    }
+  .DisbleBox {
+    display: inline-block;
+    border: 1px solid #ffd800;
+    border-radius: 5px;
+    background: #faf5c0;
+    padding: 2px 10px;
+    margin: 5px;
+    color: gray;
+    font-family: sans-serif;
+  }
 </style>
- 
-<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnSaveHotKeyPressed()" (RightArrowHotKey)="OnArrowRightHotKeyPressed()"
- (LeftArrowHotKey) ="OnArrowLeftHotKeyPressed()" (ESCHotKey)="OnEscHotKeyPressed()" (CTRL_Shift_S_HotKey)="OnSaveAndCloseHotKey()"></LogitudeHotKeysComponent>
- 
-<div class="MediaFillAbsolute LogitudeEditComponent" [ngStyle]="{background: ComponentBackground}">
-    <div class="MarginAbsolute10" style="top: 5px; bottom: 8px;"
-        [style.overflow-y]="IsSplitBtnVisible ? 'auto' : 'none'">
-        <table [dir]="LayoutDirection">
+
+<div class="MediaFillAbsolute" [ngStyle]="{background: ComponentBackground}">
+    <div class="MarginAbsolute10" style="top: 5px; bottom: 8px;" [style.overflow-y]="IsSplitBtnVisible ? 'auto' : 'none'">
+        <table>
             <tr>
 
                 <!-- Edit Component -->
                 <td [attr.id]="EditComponentCellId" style="min-width: 1004px;">
                     <div class="MediaFill">
-                        <table>
+                      <table>
 
-                            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0"
-                                style="height:1px;">
-                                <td style="padding-left: 10px; padding-right: 10px; overflow-x: auto;">
-                                    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                          <td style="padding-left: 10px; padding-right: 10px; overflow-x: auto;">
+                            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                          </td>
+                        </tr>
+
+                        <!--new row next and previous-->
+
+                        <tr style="height:22px;" *ngIf="false">
+                          <td>
+                           
+
+                            <table>
+                              <tr>
+
+                                <td style="width: 50%; min-width: 10px;">
+                                  <div></div>
                                 </td>
-                            </tr>
 
-                            <!--new row next and previous-->
-
-                            <tr style="height:22px;" *ngIf="false">
                                 <td>
-
-
-                                    <table>
-                                        <tr>
-
-                                            <td style="width: 50%; min-width: 10px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td>
-                                                <div class="DisbleBox" *ngIf="NextPreviousVisible">
-                                                    {{DeclarationNavigationMessage}}
-                                                </div>
-                                            </td>
-
-                                            <td style="width: 50%; min-width: 10px;">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                  <div class="DisbleBox" *ngIf="NextPreviousVisible">
+                                    {{DeclarationNavigationMessage}}
+                                  </div>
                                 </td>
-                            </tr>
 
-                            <tr style="height: 1px;" *ngIf="NextPreviousVisible">
-                                <td style="vertical-align: top;">
-                                    <table>
-                                        <tr>
-
-                                            <td style="width: 50%; min-width: 10px;">
-                                                <div></div>
-                                            </td>
-                                            <!--message-->
-                                            <td>
-                                                <div class="DisbleBox" *ngIf="NextPreviousVisible">
-                                                    {{DeclarationNavigationMessage}}
-                                                </div>
-                                            </td>
-                                            <td style="width:5px; min-width:5px;">
-                                                <div></div>
-                                            </td>
-                                            <!-- previous -->
-                                            <td style="width: 57px; min-width: 57px;">
-
-                                                <!--<button [disabled] ="PreviousButtonDisabled" class="Button" (click)="Previous()" style="width:40px; font-weight:bold; font-size:medium;" title="Previous">></button>-->
-                                                <button class="Button" [disabled]="PreviousButtonDisabled"
-                                                    (click)="Previous()">
-                                                    <img src="./Images/Arrow-right.png"
-                                                        style="height:10px;width:10px;" />
-                                                    {{'Customs.General.O.Previous' |TextCodeTranslationPipe}}
-                                                </button>
-                                            </td>
-                                            <td style="width:70px; min-width:70px;">
-                                                <div><input style="text-align:center" tabindex="-1" type="number"
-                                                        [(ngModel)]="TextMoveToValue"
-                                                        placeholder="{{'Customs.Declaration.O.MoveTo' | TextCodeTranslationPipe}}"
-                                                        (blur)="MoveToTextBoxKeyUp($event)" /></div>
-                                            </td>
-                                            <!--next-->
-                                            <td style="width: 57px; min-width: 57px;">
-                                                <!--<button [disabled] ="NextButtonDisabled" class="Button" (click)="Next()" style="width:40px; font-weight:bold; font-size:medium;" title="Next"><</button>-->
-                                                <button class="Button" [disabled]="NextButtonDisabled" (click)="Next()">
-                                                    {{'Customs.General.O.Next' | TextCodeTranslationPipe}}
-                                                    <img src="./Images/Arrow-left.png"
-                                                        style="height:10px;width:10px;" />
-                                                </button>
-                                            </td>
-
-
-
-
-
-                                            <td style="width: 50%; min-width: 10px;">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <td style="width: 50%; min-width: 10px;">
+                                  <div></div>
                                 </td>
-                            </tr>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
 
-                            <tr style="height: 1px;">
-                                <td style="vertical-align: top;">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 1px;">
- 
-                                                <BackButton  [LayoutDirection]="LayoutDirection" id="{{'BackButton' | IdGeneratorAsyncPipe | async}}" [Text]="BackButtonLabel" (click)="BackButtonClicked()"></BackButton>
-                                             </td>
+                        <tr style="height: 1px;" *ngIf="NextPreviousVisible">
+                          <td style="vertical-align: top;">
+                            <table>
+                                <tr>
 
-                                            <td style="width: 10px; min-width: 10px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td class="ShortTitleBox">
-                                                <div class="MediaFill" style="overflow: hidden;">
-                                                    <div #ShortTitle *ngIf="HasShortTitle"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div *ngIf="IsLocked" style="width: 100%;text-align:center;position: absolute; top:0;z-index: 1;">
-                                                    <div class="DisbleBox">
-                                                       {{ DisplayLockMessage}}
-                                                        <span style="padding: 0px 16px;">-</span>
-                                                        <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
-                                                
-                                                    </div>
-                                                </div>  
-                                            </td>
-                                            <td style="width: 10px; min-width: 10px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td style="width: 1px;" *ngIf="HasHelper">
-                                                <div #Helper></div>
-                                            </td>
-
-                                            <td style="width: 15px; min-width: 15px;"
-                                                *ngIf="HasHelper && IsSaveBtnVisible">
-                                                <div
-                                                    style="width: 1px; height: 20px; margin: auto; background: #D1D1D1">
-                                                </div>
-                                            </td>
-
-                                            <!-- Save -->
-                                            <td style="width: 55px; min-width: 55px;" *ngIf="IsSaveBtnVisible">
-
- 
-                                                <button id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button">
-                                                    <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
-                                                    <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
-                                                 </button>
-
-                                                <div *ngIf="IsEntityLoaded">
- 
-                                                    <button id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button">
-                                                        <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
-                                                        <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
-                                                     </button>
-
- 
-                                                    <button [attr.data-cy]="'Edit'+ObjectTableName+'_Save'" id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChanges()">
-                                                        <img src="./Images/Buttons/Save.Red.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" />
-                                                        <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
-                                                     </button>
-                                                </div>
-                                            </td>
-
-                                            <td style="width: 5px; min-width: 5px;" *ngIf="IsSaveBtnVisible">
-                                                <div></div>
-                                            </td>
-
-                                            <!-- Save & Close -->
-                                            <td style="width: 25px; min-width: 25px;" *ngIf="IsSaveBtnVisible">
- 
-                                                <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
-                                                     <img class="CenterCenter" src="./Images/Buttons/Save.png" />
-                                                    <img src="./Images/RedX2.png"
-                                                        style="width: 7px; height: 7px; position: absolute; top:1px; "
-                                                        [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
-                                                </button>
-
-                                                <div *ngIf="IsEntityLoaded">
- 
-                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
-                                                         <img class="CenterCenter" src="./Images/Buttons/Save.png" />
-                                                        <img src="./Images/RedX2.png"
-                                                            style="width: 7px; height: 7px; position: absolute; top:1px;"
-                                                            [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
-                                                    </button>
-
- 
-                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
-                                                         <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
-                                                        <img src="./Images/RedX2.png"
-                                                            style="width: 7px; height: 7px; position: absolute; top:1px;"
-                                                            [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
-                                                    </button>
-                                                </div>
-                                            </td>
-
-                                            <td *ngIf="HasMenuButtons" style="width: 15px; min-width: 15px;">
-                                                <div
-                                                    style="width: 1px; height: 20px; margin: auto; background: #D1D1D1">
-                                                </div>
-                                            </td>
-
-                                            <td *ngIf="HasMenuButtons" style="width: 1px;">
-                                                <div #MenuButtons></div>
-                                            </td>
-
-                                            <!-- Split Button -->
-                                            <td style="width: 27px; min-width: 27px;" *ngIf="IsSplitBtnVisible"
-                                                (click)="SplitButtonClicked()">
-                                                <img class="SplitButton" src="./Images/Split/split-icon-right.png"
-                                                    [class.flipHoriz]="IsSplitComponentOpened" />
-                                            </td>
-
-                                            <td style="width: 2px; min-width: 2px;">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <tr style="height: 5px;">
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="MediaFill">
-
-                                        <!-- HeaderScreen style="width: 130px;"-->
-                                        <div [style.height.px]="HeaderScreenHeight" class="HeaderScreen">
-                                            <table [attr.id]="HeaderId">
-                                                <tr>
-                                                    <td style="height: 100%;" *ngFor="let column of HeaderScreenColumns"
-                                                        [ngStyle]="{'width': column.Width}">
-
-                                                        <div *ngIf="column.IsSeparator"
-                                                            style="width: 1px; height: 100%; margin:auto; background: #DADADA;">
-                                                        </div>
-
-                                                        <table *ngIf="!column.IsSeparator" style="table-layout: fixed;">
-                                                            <tr *ngFor="let row of column.Rows"
-                                                                [style.height.px]="HeaderScreenRowHeight">
-
-                                                                <td *ngIf="row.HideField == false"
-                                                                    class="HeaderScreenLable"
-                                                                    [style.height.px]="HeaderScreenRowHeight"
-                                                                    [ngStyle]="{'width': column.LabelWidth, 'max-width': column.LabelWidth}">
-                                                                    {{row.Label}}
-                                                                </td>
-
- 
-                                                                <td  attr.data-cy="{{'Header_' + row.Label}}"  *ngIf="row.HideField == false" class="HeaderScreenValue" [style.height.px]="HeaderScreenRowHeight">
-                                                                    <div [style.height.px]="HeaderScreenRowHeight" [style.line-height.px]="HeaderScreenRowHeight" style="width: 100%; position: relative;" *ngIf="EntityPM">
-                                                                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [ObjectField]="row.ObjectField" [Entity]="EntityPM" [IsHeaderScreenTemplate]="true"></ObjectFieldTemplate>
-                                                                     </div>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                    <td style="width: 50%; min-width: 10px;">
+                                        <div></div>
+                                    </td>
+                                    <!--message-->
+                                    <td>
+                                        <div class="DisbleBox" *ngIf="NextPreviousVisible">
+                                            {{DeclarationNavigationMessage}}
                                         </div>
+                                    </td>
+                                    <td style="width:5px; min-width:5px;">
+                                        <div></div>
+                                    </td>
+                                    <!--next-->
+                                    <td style="width: 57px; min-width: 57px;">
+                                        <!--<button [disabled] ="NextButtonDisabled" class="Button" (click)="Next()" style="width:40px; font-weight:bold; font-size:medium;" title="Next"><</button>-->
+                                        <button class="Button" [disabled]="NextButtonDisabled" (click)="Next()">
+                                            <img src="./Images/Arrow-right.png" style="height:10px;width:10px;" />
+                                            {{'Customs.General.O.Next' | TextCodeTranslationPipe}}
 
-                                        <div class="MediaFillAbsolute CurvedEditArea scrollable-overflow-element"  style="overflow: overlay;"
-                                            [style.top.px]="HeaderScreenHeight - 5">
-                                            <table *ngIf="IsTabsHidden == false">
-                                                <tr>
-                                                    <td [style.width]="WorkEnvironment=='customs'? '95px' : '130px' ">
-                                                        <div
-                                                            [className]="LayoutDirection == 'rtl' ? 'MediaFill AppLeftMenuBackgroundRTL' : 'MediaFill AppLeftMenuBackground'">
-                                                            <div class="MediaFillAbsolute" style="top: 5px;">
-                                                                <ul>
- 
-                                                                    <li [attr.data-cy]="item.TextCodeId" class="DefaultMenuItem" id="{{ item.TextCode | IdGeneratorAsyncPipe | async  }}" *ngFor="let item of TabsItemsSource" (click)="SelectionChanged(item)" [class.SelectedMenuItem]="item === SelectedTab" [class.DisabledTabItem]="item.IsDisabled == true" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
-                                                                        <div class="TextTrimming" *ngIf="item.EntityPM.Name">{{item.EntityPM.Name}}</div>
-                                                                        <div class="TextTrimming" *ngIf="!item.EntityPM.Name">{{item.TextCode | TextCodeTranslationPipe}}</div>
-                                                                        <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" [hidden]="item != SelectedTab" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
-                                                                     </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </td>
+                                        </button>
+                                    </td>
+                                    <td style="width:5px; min-width:5px;">
+                                        <div></div>
+                                    </td>
+                                    <!-- previous -->
+                                    <td style="width: 57px; min-width: 57px;">
 
-                                                    <td>
-                                                        <div class="MediaFill" [ngClass]="{'disabled': IsLocked}">
-                                                            <div #TabControlBody></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                        <!--<button [disabled] ="PreviousButtonDisabled" class="Button" (click)="Previous()" style="width:40px; font-weight:bold; font-size:medium;" title="Previous">></button>-->
+                                        <button class="Button" [disabled]="PreviousButtonDisabled" (click)="Previous()">
+                                            {{'Customs.General.O.Previous' |TextCodeTranslationPipe}}
+                                            <img src="./Images/Arrow-left.png" style="height:10px;width:10px;" />
+                                        </button>
+                                    </td>
 
-                                            <table *ngIf="IsTabsHidden == true">
-                                                <tr>
-                                                    <td>
-                                                        <div class="MediaFill">
-                                                            <div class="MediaFillRelative">
-                                                                <div class="MarginAbsolute10">
-                                                                    <div #TabControlBody></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
+
+
+
+
+
+                                    <td style="width: 50%; min-width: 10px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                          </td>
+                        </tr>
+
+                        <tr style="height: 1px;">
+                          <td style="vertical-align: top;">
+                            <table>
+                              <tr>
+                                <td style="width: 1px;">
+                                  <BackButton [Text]="BackButtonLabel" (click)="BackButtonClicked()"></BackButton>
                                 </td>
-                            </tr>
 
-                        </table>
+                                <td style="width: 10px; min-width: 10px;">
+                                  <div></div>
+                                </td>
+
+                                <td>
+                                  <div class="MediaFill" style="overflow: hidden;">
+                                    <div #ShortTitle *ngIf="HasShortTitle"></div>
+                                  </div>
+                                </td>
+
+                                <td style="width: 10px; min-width: 10px;">
+                                  <div></div>
+                                </td>
+
+                                <td style="width: 1px;" *ngIf="HasHelper">
+                                  <div #Helper></div>
+                                </td>
+
+                                <td style="width: 15px; min-width: 15px;" *ngIf="HasHelper && IsSaveBtnVisible">
+                                  <div style="width: 1px; height: 20px; margin: auto; background: #D1D1D1"></div>
+                                </td>
+
+                                <!-- Save -->
+                                <td style="width: 55px; min-width: 55px;" *ngIf="IsSaveBtnVisible">
+
+                                  <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button">
+                                    <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
+                                    <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
+                                  </button>
+
+                                  <div *ngIf="IsEntityLoaded">
+                                    <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button">
+                                      <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
+                                      <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
+                                    </button>
+
+                                    <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChanges()">
+                                      <img src="./Images/Buttons/Save.Red.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" />
+                                      <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
+                                    </button>
+                                  </div>
+                                </td>
+
+                                <td style="width: 5px; min-width: 5px;" *ngIf="IsSaveBtnVisible">
+                                  <div></div>
+                                </td>
+
+                                <!-- Save & Close -->
+                                <td style="width: 25px; min-width: 25px;" *ngIf="IsSaveBtnVisible">
+                                  <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                    <img class="CenterCenter" src="./Images/Buttons/Save.png" />
+                                    <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px; " [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
+                                  </button>
+
+                                  <div *ngIf="IsEntityLoaded">
+                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                      <img class="CenterCenter" src="./Images/Buttons/Save.png" />
+                                      <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
+                                    </button>
+
+                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                      <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
+                                      <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
+                                    </button>
+                                  </div>
+                                </td>
+
+                                <td *ngIf="HasMenuButtons" style="width: 15px; min-width: 15px;">
+                                  <div style="width: 1px; height: 20px; margin: auto; background: #D1D1D1"></div>
+                                </td>
+
+                                <td *ngIf="HasMenuButtons" style="width: 1px;">
+                                  <div #MenuButtons></div>
+                                </td>
+
+                                <!-- Split Button -->
+                                <td style="width: 27px; min-width: 27px;" *ngIf="IsSplitBtnVisible" (click)="SplitButtonClicked()">
+                                  <img class="SplitButton" src="./Images/Split/split-icon-right.png" [class.flipHoriz]="IsSplitComponentOpened" />
+                                </td>
+
+                                <td style="width: 2px; min-width: 2px;">
+                                  <div></div>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+
+                        <tr style="height: 5px;">
+                          <td>
+                            <div></div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <div class="MediaFill">
+
+                              <!-- HeaderScreen style="width: 130px;"-->
+                              <div [style.height.px]="HeaderScreenHeight" class="HeaderScreen" >
+                                <table [attr.id]="HeaderId">
+                                  <tr>
+                                    <td style="height: 100%;" *ngFor="let column of HeaderScreenColumns" [ngStyle]="{'width': column.Width}">
+
+                                      <div *ngIf="column.IsSeparator" style="width: 1px; height: 100%; margin:auto; background: #DADADA;"></div>
+
+                                      <table *ngIf="!column.IsSeparator" style="table-layout: fixed;">
+                                        <tr *ngFor="let row of column.Rows" [style.height.px]="HeaderScreenRowHeight">
+
+                                          <td *ngIf="row.HideField == false" class="HeaderScreenLable" [style.height.px]="HeaderScreenRowHeight" [ngStyle]="{'width': column.LabelWidth, 'max-width': column.LabelWidth}">
+                                            {{row.Label}}
+                                          </td>
+
+                                          <td *ngIf="row.HideField == false" class="HeaderScreenValue" [style.height.px]="HeaderScreenRowHeight">
+                                            <div [style.height.px]="HeaderScreenRowHeight" [style.line-height.px]="HeaderScreenRowHeight" style="width: 100%; position: relative;" *ngIf="EntityPM">
+                                              <ObjectFieldTemplate [ObjectTable]="ObjectTable" [ObjectField]="row.ObjectField" [Entity]="EntityPM" [IsHeaderScreenTemplate]="true"></ObjectFieldTemplate>
+                                            </div>
+                                          </td>
+                                        </tr>
+
+                                        <tr>
+                                          <td colspan="2">
+                                            <div></div>
+                                          </td>
+                                        </tr>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+
+                              <div class="MediaFillAbsolute CurvedEditArea" [style.top.px]="HeaderScreenHeight - 5">
+                                <table>
+                                  <tr>
+
+                                    <td [style.width]="WorkEnvironment=='customs'? '95px' : '130px' ">
+                                      <div [className]="LayoutDirection == 'rtl' ? 'MediaFill AppLeftMenuBackgroundRTL' : 'MediaFill AppLeftMenuBackground'">
+                                        <div class="MediaFillAbsolute" style="top: 5px;">
+                                          <ul>
+                                            <li class="DefaultMenuItem" id="{{ item.TextCode | IdGeneratorPipe  }}" *ngFor="let item of TabsItemsSource" (click)="SelectionChanged(item)" [class.SelectedMenuItem]="item === SelectedTab" [class.DisabledTabItem]="item.IsDisabled == true" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                              <div class="TextTrimming">{{item.TextCode | TextCodeTranslationPipe}}</div>
+                                              <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" [hidden]="item != SelectedTab" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </td>
+
+                                    <td>
+                                      <div class="MediaFill">
+                                        <div #TabControlBody></div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+
+                      </table>
                     </div>
 
 
@@ -485,7 +407,8 @@
                 </td>
 
                 <!-- Split Component-->
-                <td style="padding-right: 10px;min-width: 870px;" *ngIf="IsSplitComponentOpened">
+                <td style="padding-right: 10px;min-width: 870px;"
+                    *ngIf="IsSplitComponentOpened">
 
                     <div style="width: 100%; height: 100%;">
                         <div LocationDirective Code="SplitComponentLocation" Index="SplitComponentLocation"></div>
@@ -497,5 +420,4 @@
     </div>
 </div>
 
-<BusyIndicator [IdPrefix]="'EditComponent'" [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"
-    *ngIf="ShowBusyIndicator"></BusyIndicator>
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>

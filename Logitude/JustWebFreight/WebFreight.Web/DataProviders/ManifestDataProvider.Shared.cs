@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class ManifestDataProvider : BaseDataProvider
+    public class ManifestDataProvider
     {
         public ManifestDataProvider()
         {
@@ -82,30 +82,6 @@ namespace WebFreight.Web.DataProviders
         public DateTime? MainCarriageATD_DateTime { get; set; }
         public DateTime? MainCarriageATA_DateTime { get; set; }
 
-        public string MainCarriageLeg2Carrier { get; set; }
-        public string MainCarriageLeg2CarrierNumber { get; set; }
-        public string MAWBMainCarriageLeg2 { get; set; }
-        public DateTime? MainCarriageLeg2ETD_DateTime { get; set; }
-        public DateTime? MainCarriageleg2ETA_DateTime { get; set; }
-        public DateTime? MainCarriageLeg2ATD_DateTime { get; set; }
-        public DateTime? MainCarriageLeg2ATA_DateTime { get; set; }
-
-        public string MainCarriageLeg3Carrier { get; set; }
-        public string MainCarriageLeg3CarrierNumber { get; set; }
-        public string MAWBMainCarriageLeg3 { get; set; }
-        public DateTime? MainCarriageLeg3ETD_DateTime { get; set; }
-        public DateTime? MainCarriageleg3ETA_DateTime { get; set; }
-        public DateTime? MainCarriageLeg3ATD_DateTime { get; set; }
-        public DateTime? MainCarriageLeg3ATA_DateTime { get; set; }
-
-        public string MainCarriageLeg4Carrier { get; set; }
-        public string MainCarriageLeg4CarrierNumber { get; set; }
-        public string MAWBMainCarriageLeg4 { get; set; }
-        public DateTime? MainCarriageLeg4ETD_DateTime { get; set; }
-        public DateTime? MainCarriageleg4ETA_DateTime { get; set; }
-        public DateTime? MainCarriageLeg4ATD_DateTime { get; set; }
-        public DateTime? MainCarriageLeg4ATA_DateTime { get; set; }
-
         public double? OpenPayablesInLocalCurrency { get; set; }
         public double? OpenPayablesInProfitCurrency { get; set; }
 
@@ -129,56 +105,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField18 { get; set; }
         public string ShipmentField19 { get; set; }
         public string ShipmentField20 { get; set; }
-        public string ShipmentField21 { get; set; }
-        public string ShipmentField22 { get; set; }
-        public string ShipmentField23 { get; set; }
-        public string ShipmentField24 { get; set; }
-        public string ShipmentField25 { get; set; }
-        public string ShipmentField26 { get; set; }
-        public string ShipmentField27 { get; set; }
-        public string ShipmentField28 { get; set; }
-        public string ShipmentField29 { get; set; }
-        public string ShipmentField30 { get; set; }
-        public string ShipmentField31 { get; set; }
-        public string ShipmentField32 { get; set; }
-        public string ShipmentField33 { get; set; }
-        public string ShipmentField34 { get; set; }
-        public string ShipmentField35 { get; set; }
-        public string ShipmentField36 { get; set; }
-        public string ShipmentField37 { get; set; }
-        public string ShipmentField38 { get; set; }
-        public string ShipmentField39 { get; set; }
-        public string ShipmentField40 { get; set; }
-        public string ShipmentField41 { get; set; }
-        public string ShipmentField42 { get; set; }
-        public string ShipmentField43 { get; set; }
-        public string ShipmentField44 { get; set; }
-        public string ShipmentField45 { get; set; }
-        public string ShipmentField46 { get; set; }
-        public string ShipmentField47 { get; set; }
-        public string ShipmentField48 { get; set; }
-        public string ShipmentField49 { get; set; }
-        public string ShipmentField50 { get; set; }
-        public string ShipmentField51 { get; set; }
-        public string ShipmentField52 { get; set; }
-        public string ShipmentField53 { get; set; }
-        public string ShipmentField54 { get; set; }
-        public string ShipmentField55 { get; set; }
-        public string ShipmentField56 { get; set; }
-        public string ShipmentField57 { get; set; }
-        public string ShipmentField58 { get; set; }
-        public string ShipmentField59 { get; set; }
-        public string ShipmentField60 { get; set; }
-        public string ShipmentField61 { get; set; }
-        public string ShipmentField62 { get; set; }
-        public string ShipmentField63 { get; set; }
-        public string ShipmentField64 { get; set; }
-        public string ShipmentField65 { get; set; }
-        public string ShipmentField66 { get; set; }
-        public string ShipmentField67 { get; set; }
-        public string ShipmentField68 { get; set; }
-        public string ShipmentField69 { get; set; }
-        public string ShipmentField70 { get; set; }
 
         public string FMCNumber { get; set; }
 
@@ -193,74 +119,18 @@ namespace WebFreight.Web.DataProviders
 
         public string AgentPhoneNumber { get; set; }
         public string AgentContactName { get; set; }
-        public int NumberOfHBLs { get; set; }
-        public string TenantVATNumber { get; set; }
-        public string AgentVATNumber { get; set; }
-        public string FreightPC { get; set; }
-        public string DescriptionOfGoods { get; set; }
-        public string ChargeableWeight { get; set; }
-        public string AgentContactEmail { get; set; }
-        public string TrailerNumber { get; set; }
-        public string ProjectNumber { get; set; }
-        public string MasterPreCarriageCarrierNumber { get; set; }
-        public string MasterPreCarriageVesselName { get; set; }
-        public string MasterPreCarriageFromPortName { get; set; }
         #endregion
-        public string ShipmentType { get; set; }
-        public string ConsigneeName { get; set; }
-        public string ConsigneeAddress { get; set; }
-        public string ConsigneeContactName { get; set; }
-        public string ConsigneeContactEmail { get; set; }
-        public string ConsigneePhoneNumber { get; set; }
-        public string ConsigneeVATNumber { get; set; }
-        public string SalesmanName { get; set; }
-        public string HousesNumbers { get; set; }
-        public string FreightLocationName { get; set; }
-        public string FreightLocationAddress { get; set; }
-        public string ShipperContactPhone { get; set; }
-        public string ShipperContactName { get; set; }
-        public string Transshipment1FromPortName { get; set; }
-        public string Transshipment2FromPortName { get; set; }
-        public string Transshipment3FromPortName { get; set; }
-        public string Transshipment1ToPortName { get; set; }
-        public string Transshipment2ToPortName { get; set; }
-        public string Transshipment3ToPortName { get; set; }
-        public DateTime? ArrivalDate { get; set; }
-        public string PrintedByUserName { get; set; }
+
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
         public List<GroupedContainersClass> GroupedManifestDetailsList { get; set; }
-
-        public string DeparturePortName { get; set; }//(Same as DeparturePortCode but shows name instead of code)
-        public string DestinationPortName { get; set; }//(Same as DestinationPortCode but shows name instead of code)
-
-        public double? TotalChargeableWeight { get; set; }
-        public string Transshipment1VesselName { get; set; }
-        public string Transshipment2VesselName { get; set; }
-        public string Transshipment1VoyageNumber { get; set; }
-        public string Transshipment2VoyageNumber { get; set; }
-        public double? TotalWeightInKG { get; set; }
-        public double? TotalWeightInLBS { get; set; }
-        public double? TotalVolumeINCBM { get; set; }
-        public double? TotalVolumeINCBF { get; set; }
-
-        public string ShipperNotExporterName { get; set; }
-        public string ShipperNotExporterAddress { get; set; }
-        public string ConsigneeNotImporterName { get; set; }
-        public string ConsigneeNotImporterAddress { get; set; }
-        public int? HousesNumber { get; set; }
-        public string MasterMAWBNumber { get; set; }
-        public string Transshipment3VesselName { get; set; }
-        public string Transshipment3VoyageNumber { get; set; }
     }
 
     public class ManifestDetailsClass
     {
-        public string CustomerVatNumber { get; set; }
-        public string AMSBL { get; set; }
         public string FileNumber { get; set; } // shipment number.
         public string HAWB { get; set; }
-        public string ShipperName { get; set; }
+        public string ShipperName { get; set; }        
         public string ShipperAddress { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
@@ -281,15 +151,18 @@ namespace WebFreight.Web.DataProviders
         public string PC { get; set; } // for ocean
         public string VolumeUnit { get; set; }
         public string WeightUnit { get; set; }
+
         public string Incoterm { get; set; }
         public string House { get; set; }
         public string DestinationPortName { get; set; }
         public string NotifyName { get; set; }
         public string NotifyAddress { get; set; }
         public string PlaceOfDelivery { get; set; }
+
         public string ShipperVAT { get; set; }
         public string ConsigneeVAT { get; set; }
         public string Direction { get; set; }
+
         public string ShipperField1 { get; set; }
         public string ShipperField2 { get; set; }
         public string ShipperField3 { get; set; }
@@ -300,6 +173,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipperField8 { get; set; }
         public string ShipperField9 { get; set; }
         public string ShipperField10 { get; set; }
+
         public string ConsigneeField1 { get; set; }
         public string ConsigneeField2 { get; set; }
         public string ConsigneeField3 { get; set; }
@@ -310,8 +184,10 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeField8 { get; set; }
         public string ConsigneeField9 { get; set; }
         public string ConsigneeField10 { get; set; }
+
         public double? OpenPayablesInLocalCurrency { get; set; }
         public double? OpenPayablesInProfitCurrency { get; set; }
+
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
@@ -332,107 +208,31 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField18 { get; set; }
         public string ShipmentField19 { get; set; }
         public string ShipmentField20 { get; set; }
-        public string ShipmentField21 { get; set; }
-        public string ShipmentField22 { get; set; }
-        public string ShipmentField23 { get; set; }
-        public string ShipmentField24 { get; set; }
-        public string ShipmentField25 { get; set; }
-        public string ShipmentField26 { get; set; }
-        public string ShipmentField27 { get; set; }
-        public string ShipmentField28 { get; set; }
-        public string ShipmentField29 { get; set; }
-        public string ShipmentField30 { get; set; }
-        public string ShipmentField31 { get; set; }
-        public string ShipmentField32 { get; set; }
-        public string ShipmentField33 { get; set; }
-        public string ShipmentField34 { get; set; }
-        public string ShipmentField35 { get; set; }
-        public string ShipmentField36 { get; set; }
-        public string ShipmentField37 { get; set; }
-        public string ShipmentField38 { get; set; }
-        public string ShipmentField39 { get; set; }
-        public string ShipmentField40 { get; set; }
-        public string ShipmentField41 { get; set; }
-        public string ShipmentField42 { get; set; }
-        public string ShipmentField43 { get; set; }
-        public string ShipmentField44 { get; set; }
-        public string ShipmentField45 { get; set; }
-        public string ShipmentField46 { get; set; }
-        public string ShipmentField47 { get; set; }
-        public string ShipmentField48 { get; set; }
-        public string ShipmentField49 { get; set; }
-        public string ShipmentField50 { get; set; }
-        public string ShipmentField51 { get; set; }
-        public string ShipmentField52 { get; set; }
-        public string ShipmentField53 { get; set; }
-        public string ShipmentField54 { get; set; }
-        public string ShipmentField55 { get; set; }
-        public string ShipmentField56 { get; set; }
-        public string ShipmentField57 { get; set; }
-        public string ShipmentField58 { get; set; }
-        public string ShipmentField59 { get; set; }
-        public string ShipmentField60 { get; set; }
-        public string ShipmentField61 { get; set; }
-        public string ShipmentField62 { get; set; }
-        public string ShipmentField63 { get; set; }
-        public string ShipmentField64 { get; set; }
-        public string ShipmentField65 { get; set; }
-        public string ShipmentField66 { get; set; }
-        public string ShipmentField67 { get; set; }
-        public string ShipmentField68 { get; set; }
-        public string ShipmentField69 { get; set; }
-        public string ShipmentField70 { get; set; }
+
         public string FMCNumber { get; set; }
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
+
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public string AWBHandlingInformation { get; set; }
+
         public string ShipperContactName { get; set; } // (main contact English name for the shipper) 
         public string ConsigneeContactName { get; set; }// (main contact English name for the consignee ) 
-        public string ConsigneeContactEmail { get; set; }
-        public string ConsigneePhoneNumber { get; set; }
-        public string ConsigneeVATNumber { get; set; }
         public string ITNumber { get; set; } //(from the house\customs tab ) 
-        public string QuoteNumberConnectedToHouse { get; set; }
-        public double? ValueOfGoods { get; set; }
-        public string ValueOfGoodsCurrency { get; set; }
-        public string ShipperRefernce1 { get; set; }
-        public string PlaceOfReceipt { get; set; }
-        public string Dimensions { get; set; }
-        public string FreightLocationName { get; set; }
-        public string FreightLocationAddress { get; set; }
-        public string ShipperContactPhone { get; set; }
+
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
-        public string CustomerName { get; set; }
-        public string FirstPickupDriver { get; set; }
-        public string LastDeliveryDriver { get; set; }
-        public string FirstPickupTruckNumber { get; set; }
-        public string LastDeliveryTruckNumber { get; set; }
     }
 
     public class NewManifestDetailsClass
     {
-        public string CustomerVatNumber { get; set; }
-        public string PreForwardingFromPort { get; set; }
-        public string OnForwardingToPort { get; set; }
-        public string OnForwardingFromPort { get; set; }
-        public string OnCarriageToPort { get; set; }
-        public string OnCarriageFromPort { get; set; }
-        public string AMSBL { get; set; }
         public string FileNumber { get; set; }
         public string HAWB { get; set; }
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
-        public string ConsigneeContactName { get; set; }
-        public string ConsigneeContactEmail { get; set; }
-        public string ConsigneePhoneNumber { get; set; }
-        public string ConsigneeVATNumber { get; set; }
         public string DestinationPortCode { get; set; }
-        public string LastDeliveryFullAddress { get; set; }
-        public string FisrtPickupFullAddress { get; set; }
         public string PortOfDischarge { get; set; }
         public string ChargeableWeight { get; set; }
         public string Prepaid { get; set; }
@@ -446,12 +246,11 @@ namespace WebFreight.Web.DataProviders
         public string NotifyName { get; set; }
         public string NotifyAddress { get; set; }
         public string PlaceOfDelivery { get; set; }
-        public string PlaceOfReceipt { get; set; }
+
         public int? Quantity { get; set; }
         public double? Volume { get; set; }
-        public double? Weight { get; set; }
+        public double? Weight { get; set; }        
         public string DescriptionOfGoods { get; set; }
-        public string SpecialServicesType { get; set; }
 
         List<PackageDetails> packageDetails;
         public List<PackageDetails> PackageDetails
@@ -470,6 +269,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipperVAT { get; set; }
         public string ConsigneeVAT { get; set; }
         public string Direction { get; set; }
+
         public string ShipperField1 { get; set; }
         public string ShipperField2 { get; set; }
         public string ShipperField3 { get; set; }
@@ -480,6 +280,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipperField8 { get; set; }
         public string ShipperField9 { get; set; }
         public string ShipperField10 { get; set; }
+
         public string ConsigneeField1 { get; set; }
         public string ConsigneeField2 { get; set; }
         public string ConsigneeField3 { get; set; }
@@ -490,8 +291,10 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeField8 { get; set; }
         public string ConsigneeField9 { get; set; }
         public string ConsigneeField10 { get; set; }
+
         public double? OpenPayablesInLocalCurrency { get; set; }
         public double? OpenPayablesInProfitCurrency { get; set; }
+
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
@@ -512,88 +315,26 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField18 { get; set; }
         public string ShipmentField19 { get; set; }
         public string ShipmentField20 { get; set; }
-        public string ShipmentField21 { get; set; }
-        public string ShipmentField22 { get; set; }
-        public string ShipmentField23 { get; set; }
-        public string ShipmentField24 { get; set; }
-        public string ShipmentField25 { get; set; }
-        public string ShipmentField26 { get; set; }
-        public string ShipmentField27 { get; set; }
-        public string ShipmentField28 { get; set; }
-        public string ShipmentField29 { get; set; }
-        public string ShipmentField30 { get; set; }
-        public string ShipmentField31 { get; set; }
-        public string ShipmentField32 { get; set; }
-        public string ShipmentField33 { get; set; }
-        public string ShipmentField34 { get; set; }
-        public string ShipmentField35 { get; set; }
-        public string ShipmentField36 { get; set; }
-        public string ShipmentField37 { get; set; }
-        public string ShipmentField38 { get; set; }
-        public string ShipmentField39 { get; set; }
-        public string ShipmentField40 { get; set; }
-        public string ShipmentField41 { get; set; }
-        public string ShipmentField42 { get; set; }
-        public string ShipmentField43 { get; set; }
-        public string ShipmentField44 { get; set; }
-        public string ShipmentField45 { get; set; }
-        public string ShipmentField46 { get; set; }
-        public string ShipmentField47 { get; set; }
-        public string ShipmentField48 { get; set; }
-        public string ShipmentField49 { get; set; }
-        public string ShipmentField50 { get; set; }
-        public string ShipmentField51 { get; set; }
-        public string ShipmentField52 { get; set; }
-        public string ShipmentField53 { get; set; }
-        public string ShipmentField54 { get; set; }
-        public string ShipmentField55 { get; set; }
-        public string ShipmentField56 { get; set; }
-        public string ShipmentField57 { get; set; }
-        public string ShipmentField58 { get; set; }
-        public string ShipmentField59 { get; set; }
-        public string ShipmentField60 { get; set; }
-        public string ShipmentField61 { get; set; }
-        public string ShipmentField62 { get; set; }
-        public string ShipmentField63 { get; set; }
-        public string ShipmentField64 { get; set; }
-        public string ShipmentField65 { get; set; }
-        public string ShipmentField66 { get; set; }
-        public string ShipmentField67 { get; set; }
-        public string ShipmentField68 { get; set; }
-        public string ShipmentField69 { get; set; }
-        public string ShipmentField70 { get; set; }
+
         public string FMCNumber { get; set; }
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
+
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public string AWBHandlingInformation { get; set; }
-        public string QuoteNumberConnectedToHouse { get; set; }
-        public double? ValueOfGoods { get; set; }
-        public string ValueOfGoodsCurrency { get; set; }
-        public string ShipperRefernce1 { get; set; }
-        public string FreightLocationName { get; set; }
-        public string FreightLocationAddress { get; set; }
-        public string ShipperContactPhone { get; set; }
+
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
-        public string CustomerName { get; set; }
-        public string FirstPickupDriver { get; set; }
-        public string LastDeliveryDriver { get; set; }
-        public string FirstPickupTruckNumber { get; set; }
-        public string LastDeliveryTruckNumber { get; set; }
-        public string ShipperNotExporterName { get; set; }
-        public string ShipperNotExporterAddress { get; set; }
-        public string ConsigneeNotImporterName { get; set; }
-        public string ConsigneeNotImporterAddress { get; set; }
+
+        //public string MarksAndNumbers { get; set; }  //new
+        //public string PackageQtyKind { get; set; } //new
+        //public string Weight { get; set; } //new
+        //public string Volume { get; set; } //new
+        //public string DescriptionOfGoods { get; set; } //new
     }
 
     public class PackageDetails
     {
-        public PackageDetails()
-        {
-            this.InsidePackagesLines = new List<InsidePackageLine>();
-        }
-
         public string MarksAndNumbers { get; set; }
         public string PackageKind { get; set; }
         public string Quantity { get; set; }
@@ -603,31 +344,7 @@ namespace WebFreight.Web.DataProviders
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
-        public string Reference4 { get; set; }
         public string CommodityNumber { get; set; }
-        public string Notes { get; set; }
-        public string Harmonize { get; set; }
-        public double? Tare { get; set; }
-        public string HorseName { get; set; }
-        public int? HorseYearOfBirth { get; set; }
-        public string HorseColor { get; set; }
-        public string HorseGender { get; set; }
-        public string HorseBreed { get; set; }
-        public string HorseDiscipline { get; set; }
-        public string HorseTravelBehavior { get; set; }
-        public string HorseMicochipNumber { get; set; }
-        public string HorsePassportNumber { get; set; }
-        public string HorseCountryOfBirthName { get; set; }
-        public string HorseCurrentStable { get; set; }
-        public string HorseOwner { get; set; }
-        public string HorseRemarks { get; set; }
-        public string Dimensions { get; set; }
-        public double? Ventilation { get; set; }
-        public double? WeightInKG { get; set; }
-        public double? WeightInLBS { get; set; }
-        public double? VolumeInCBM { get; set; }
-        public double? VolumeInCBF { get; set; }
-        public List<InsidePackageLine> InsidePackagesLines { get; set; }
     }
 
     public class GroupedContainersClass

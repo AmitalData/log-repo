@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
        HybridPartnerRepository repository;
 
-
+        public HybridPartnerQuery()
+        {
+            repository = new HybridPartnerRepository();
+        }
 
         public HybridPartnerQuery(int tenant)
         {
@@ -42,8 +45,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        IsMislakaActivated = a.IsMislakaActivated,
                                                        IsExternalPartner = a.IsExternalPartner,
                                                        ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                                       AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
-                                                       InActive = a.InActive
+                                                       AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
+
 
                                                    };
 
@@ -68,8 +71,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsMislakaActivated = a.IsMislakaActivated,
                                           IsExternalPartner = a.IsExternalPartner,
                                           ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                          AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
-                                          InActive = a.InActive
+                                          AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
 
                                       }).FirstOrDefault();
 
@@ -95,8 +97,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  IsMislakaActivated = a.IsMislakaActivated,
                                                  IsExternalPartner = a.IsExternalPartner,
                                                  ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                                 AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
-                                                 InActive = a.InActive
+                                                 AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
+
                                              }).FirstOrDefault();
 
 
@@ -134,8 +136,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             IsMislakaActivated = a.IsMislakaActivated,
                                                             IsExternalPartner = a.IsExternalPartner,
                                                             ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                                            AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
-                                                            InActive = a.InActive
+                                                            AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
+
                                                         };
 
 
@@ -145,16 +147,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
-        public HybridPartnerPM GetSinglePMByPartnerTenant(int PartnerTenant)
-        {
-            string key = $"GetSinglePMByPartnerTenant({PartnerTenant})";
-            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<HybridPartnerPM>(key, () =>
-            {
-                return GetSinglePMByPartnerTenantReal(PartnerTenant);
-            });
 
-        }
-        HybridPartnerPM GetSinglePMByPartnerTenantReal(int PartnerTenant)
+        public HybridPartnerPM GetSinglePMByPartnerTenant(int PartnerTenant)
         {
             HybridPartnerPM entity = (from a in repository.context.HybridPartners
                                       where a.PartnerTenant == PartnerTenant
@@ -170,8 +164,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsMislakaActivated = a.IsMislakaActivated,
                                           IsExternalPartner = a.IsExternalPartner,
                                           ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                          AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
-                                          InActive = a.InActive
+                                          AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
+
                                       }).FirstOrDefault();
 
 
@@ -202,8 +196,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsMislakaActivated = b.IsMislakaActivated,
                                     IsExternalPartner = b.IsExternalPartner,
                                     ReceiveAllStatuses = b.ReceiveAllStatuses,
-                                    AllowSendingDocsToAgent = b.AllowSendingDocsToAgent,
-                                    InActive = b.InActive
+                                    AllowSendingDocsToAgent = b.AllowSendingDocsToAgent
                                 }).OrderByDescending(a => a.StatusName).ToList();
              
             return requestsList;
@@ -232,8 +225,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsMislakaActivated = a.IsMislakaActivated,
                                   IsExternalPartner = a.IsExternalPartner,
                                   ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                  AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
-                                  InActive = a.InActive
+                                  AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
                               }).OrderByDescending(a => a.StatusName).ToList();
 
 
@@ -258,7 +250,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LocalName = b.LocalName,
                               LogoId = b.LogoId,
                               Name = b.Name,
-                              InActive = b.InActive
                           }).ToList();
             }
 
@@ -282,7 +273,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LocalName = b.LocalName,
                               LogoId = b.LogoId,
                               Name = b.Name,
-                              InActive = b.InActive
                           }).ToList();
 
             }
@@ -301,19 +291,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
         }
-
-        public List<string> GetPartnersForRequest(int PartnerTenant, List<string> Ids)
-        {
-            List<string> partners = (from a in repository.context.HybridPartners
-                                  where a.PartnerTenant == PartnerTenant && Ids.Contains(a.Id)
-                                        select a.Id).ToList();
-             
-            return partners;
-
-
-        }
-
-       
 
 
 

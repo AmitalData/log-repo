@@ -10,14 +10,11 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -38,21 +35,21 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public ShipmentType GetShipmentTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public ShipmentType GetShipmentTypeById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ShipmentType with Id " + Id + " doesn't exist");
 
-				return ShipmentTypeDataMapping(temp,Tenant,ComputingPartnerName);
+				return ShipmentTypeDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -74,7 +71,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public ShipmentTypePM ShipmentTypeDataMappingAndValidatin(ShipmentType MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public ShipmentTypePM ShipmentTypeDataMappingAndValidatin(ShipmentType MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -83,39 +80,17 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 
-					
-					
-			  	   if(temp == null)
-					{   
+										   
+					if(temp == null)
+					{
 					    throw new ApplicationException("ShipmentType with Code " + MyEntity.Code + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-					   
-					    if(!string.IsNullOrEmpty(MyEntity.Code))
-					    {
-					        throw new ApplicationException("ShipmentType with provided key doesn't exist");
-						
-						}
-						//else
-						//{
-						//    temp.Id = MyEntity.Code;
-
-						//} 
-
-						
+						temp.Id = MyEntity.Code;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Name = MyEntity.Name;
-
-										}  
-
-										   
-					return temp;
+					temp.Name = MyEntity.Name;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -123,8 +98,6 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

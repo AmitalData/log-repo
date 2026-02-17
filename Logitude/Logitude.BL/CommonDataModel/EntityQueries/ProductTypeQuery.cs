@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.QuoteModel.EntityLists;
@@ -18,7 +18,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ProductTypeRepository repository;
 
-
+        public ProductTypeQuery()
+        {
+            repository = new ProductTypeRepository();             
+        }
 
         public ProductTypeQuery(int tenant)
         {
@@ -40,7 +43,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 SearchFields = entityPoco.SearchFields ,
                 Tenant=tenant,
                 QuotationDefaultTemplateId = entityPoco.QuotationDefaultTemplateId,
-                RoutingRQuoteDefaultTemplateId = entityPoco.RoutingRQuoteDefaultTemplateId,
             };
 
             ProductTypeModificationRepository modificationRep=new ProductTypeModificationRepository(tenant);
@@ -48,11 +50,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             entityPM.InActive = modification != null ? modification.InActive : false;
             entityPM.QuotationDefaultTemplateId = modification != null ? modification.QuotationDefaultTemplateId : null;
-            entityPM.RoutingRQuoteDefaultTemplateId = modification != null ? modification.RoutingRQuoteDefaultTemplateId : null;
-
-
-
-
             return entityPM;
         }
 
@@ -65,7 +62,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Name = a.Name,
                         SearchFields = a.SearchFields,
                         QuotationDefaultTemplateId = a.QuotationDefaultTemplateId,
-                        RoutingRQuoteDefaultTemplateId = a.RoutingRQuoteDefaultTemplateId,
                     });
         }
 
@@ -76,7 +72,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             var joinResult = from productType in iQueryable.ToList()
                              join modification in modifications on productType.Code equals modification.ProductTypeCode into j
                              from modificationJoin in j.DefaultIfEmpty()
-                             select new { Code = productType.Code, Name = productType.Name, QuotationDefaultTemplateId = modificationJoin != null ? modificationJoin.QuotationDefaultTemplateId : null  , SearchFields = productType.SearchFields, InActive = modificationJoin != null ? modificationJoin.InActive : false, Tenant = modificationJoin != null ? modificationJoin.Tenant : 0, RoutingRQuoteDefaultTemplateId = modificationJoin != null ? modificationJoin.RoutingRQuoteDefaultTemplateId : null };
+                             select new { Code = productType.Code, Name = productType.Name, QuotationDefaultTemplateId = modificationJoin != null ? modificationJoin.QuotationDefaultTemplateId : null  , SearchFields = productType.SearchFields, InActive = modificationJoin != null ? modificationJoin.InActive : false, Tenant = modificationJoin != null ? modificationJoin.Tenant : 0 };
 
             List<ProductTypeList> result = (from entity in joinResult
                                                  select new ProductTypeList()
@@ -87,7 +83,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      SearchFields = entity.SearchFields,
                                                      Id = entity.Code,
                                                      QuotationDefaultTemplateId = entity.QuotationDefaultTemplateId,
-                                                     RoutingRQuoteDefaultTemplateId = entity.RoutingRQuoteDefaultTemplateId,
                                                  }).ToList();
 
 
@@ -106,14 +101,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             foreach (ProductTypeList item in result)
             {
-                if (!string.IsNullOrEmpty(item.QuotationDefaultTemplateId) && quoteTemplateLists != null)
+                if (!string.IsNullOrEmpty(item.QuotationDefaultTemplateId) && quoteTemplateLists!=null)
                 {
                     QuoteTemplateList quoteTemplateList = quoteTemplateLists.Where(d => d.Id == item.QuotationDefaultTemplateId).FirstOrDefault();
                     if (quoteTemplateList != null) item.DefaultTemplate = quoteTemplateList.Name;
-
-
-                    quoteTemplateList = quoteTemplateLists.Where(d => d.Id == item.RoutingRQuoteDefaultTemplateId).FirstOrDefault();
-                    if (quoteTemplateList != null) item.RoutingRQuoteDefaultTemplate = quoteTemplateList.Name;
                 }
 
             }

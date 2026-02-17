@@ -4,7 +4,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {InvoiceDomainService} from '../../../Services/InvoiceDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './RecalculateExternalsComponent.html',
 })
 

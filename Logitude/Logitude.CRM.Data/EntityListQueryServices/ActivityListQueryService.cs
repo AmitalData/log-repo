@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -34,7 +34,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                 iQueryable = filter.RunFilter(iQueryable);
             }
 
-            IQueryable<ActivityList> query = (from a in iQueryable.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Opportunity").Include("BusinessUnit").Include("Owner.Contact").Include("CreatedByUser.Contact").Include("CallWith").Include("BusinessProcessQueue").Include("Team").Include("Opportunity.LeadSource")
+            IQueryable<ActivityList> query = (from a in iQueryable.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Opportunity").Include("BusinessUnit").Include("Owner.Contact").Include("CreatedByUser.Contact").Include("CallWith").Include("BusinessProcessQueue").Include("Team")
                                               select new ActivityList()
                                               {
                                                   Id = a.Id,
@@ -52,7 +52,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                   Notes = a.Notes,
                                                   CreateDate = a.CreateDate,
                                                   UpdateDate = a.UpdateDate,
-                                                  UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
+                                                  UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
                                                   AllDayEvent = a.AllDayEvent,
                                                   Location = a.Location,
                                                   SearchFields = a.SearchFields,
@@ -60,7 +60,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                   ActivityStatusCode = a.ActivityStatusCode,
                                                   ActivityStatusName = a.ActivityStatus == null ? "" : a.ActivityStatus.Name,
                                                   PriorityName = a.ActivityPriority == null ? "" : a.ActivityPriority.Name,
-                                                  OwnerName = a.Owner == null ? null : (a.Owner.Contact == null ? null : a.Owner.Contact.EnglishName),
+                                                  OwnerName = a.Owner == null ? "" : (a.Owner.Contact == null ? "" : a.Owner.Contact.EnglishName),
                                                   IsLeftVoiceMail = a.IsLeftVoiceMail,
                                                   OutlookId = a.OutlookId,
                                                   NeedSynchronization = a.NeedSynchronization,
@@ -87,9 +87,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                   CommunicationLogId = a.CommunicationLogId,
                                                   SenderEmail = a.SenderEmail,
                                                   CustomerName = a.Customer == null ? "" : a.Customer.EnglishName,
-                                                  CustomerCode = a.Customer == null ? "" : a.Customer.Code,
                                                   OwnerId = a.OwnerId,
-                                                  CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                                                  CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                                                   CreatedByUserId = a.CreatedByUserId,
                                                   QuoteId = a.QuoteId,
                                                   CustomerId = a.CustomerId,
@@ -107,8 +106,6 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                   TeamName = a.Team == null ? null : a.Team.Name,
                                                   DueDateDateField = a.DueDateDateField,
                                                   DueDateOffset = a.DueDateOffset,
-                                                  LeadSourceId = a.Opportunity != null ? a.Opportunity.LeadSourceId : null,
-                                                  LeadSourceName = a.Opportunity != null && a.Opportunity.LeadSource != null ? a.Opportunity.LeadSource.Name : null,
                                               });
             return query;
 		}
@@ -134,7 +131,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
 
             foreach (EntityLastActivity lastActivity in lastActivities)
             {
-                Activity entityPoco = (from a in entities.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Owner.Contact").Include("Opportunity").Include("BusinessUnit").Include("CreatedByUser.Contact").Include("CallWith").Include("Opportunity.LeadSource")
+                Activity entityPoco = (from a in entities.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Owner.Contact").Include("Opportunity").Include("BusinessUnit").Include("CreatedByUser.Contact").Include("CallWith")
                                        where a.Id == lastActivity.EntityId
                                        select a).FirstOrDefault();
 
@@ -164,7 +161,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         ActivityTypeCode = entityPoco.ActivityTypeCode,
                         ActivityStatusName = entityPoco.ActivityStatus == null ? "" : entityPoco.ActivityStatus.Name,
                         PriorityName = entityPoco.ActivityPriority == null ? "" : entityPoco.ActivityPriority.Name,
-                        OwnerName = entityPoco.Owner == null ? null : (entityPoco.Owner.Contact == null ? null : entityPoco.Owner.Contact.EnglishName),
+                        OwnerName = entityPoco.Owner == null ? "" : (entityPoco.Owner.Contact == null ? "" : entityPoco.Owner.Contact.EnglishName),
                         //LastActivityDate = lastActivity.ActivityDate,
                         //LastActivityTypeName = lastActivity.ActivityType.Name,
                         //LastActivityByUserName = lastActivity.User.Contact.EnglishName,
@@ -196,7 +193,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         CustomerName = entityPoco.Customer == null ? "" : entityPoco.Customer.EnglishName,
                         CustomerId = entityPoco.CustomerId,
                         OwnerId = entityPoco.OwnerId,
-                        CreatedByUserName = entityPoco.CreatedByUser == null ? null : (entityPoco.CreatedByUser.Contact == null ? null : entityPoco.CreatedByUser.Contact.EnglishName),
+                        CreatedByUserName = entityPoco.CreatedByUser == null ? "" : (entityPoco.CreatedByUser.Contact == null ? "" : entityPoco.CreatedByUser.Contact.EnglishName),
                         CreatedByUserId = entityPoco.CreatedByUserId,
                         QuoteId = entityPoco.QuoteId,
                         SortByDate = entityPoco.SortingDate,
@@ -207,8 +204,6 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         Cc = entityPoco.Cc,
                         To = entityPoco.To,
                         CallWithName = entityPoco.CallWith == null ? null : entityPoco.CallWith.EnglishName,
-                        LeadSourceId = entityPoco.Opportunity != null ? entityPoco.Opportunity.LeadSourceId : null,
-                        LeadSourceName = entityPoco.Opportunity != null && entityPoco.Opportunity.LeadSource != null ? entityPoco.Opportunity.LeadSource.Name : null,
                     };
 
                     entityList.Add(list);
@@ -283,7 +278,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                     ActivityTypeCode = entityPoco.ActivityTypeCode,
                     ActivityStatusName = entityPoco.ActivityStatus == null ? "" : entityPoco.ActivityStatus.Name,
                     PriorityName = entityPoco.ActivityPriority == null ? "" : entityPoco.ActivityPriority.Name,
-                    OwnerName = entityPoco.Owner == null ? null : (entityPoco.Owner.Contact == null ? null : entityPoco.Owner.Contact.EnglishName),
+                    OwnerName = entityPoco.Owner == null ? "" : (entityPoco.Owner.Contact == null ? "" : entityPoco.Owner.Contact.EnglishName),
                     IsLeftVoiceMail = entityPoco.IsLeftVoiceMail,
                     OutlookId = entityPoco.OutlookId,
                     NeedSynchronization = entityPoco.NeedSynchronization,
@@ -311,7 +306,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                     CustomerName = entityPoco.Customer == null ? "" : entityPoco.Customer.EnglishName,
                     OpportunityId = entityPoco.OpportunityId,
                     OwnerId = entityPoco.OwnerId,
-                    CreatedByUserName = entityPoco.CreatedByUser == null ? null : (entityPoco.CreatedByUser.Contact == null ? null : entityPoco.CreatedByUser.Contact.EnglishName),
+                    CreatedByUserName = entityPoco.CreatedByUser == null ? "" : (entityPoco.CreatedByUser.Contact == null ? "" : entityPoco.CreatedByUser.Contact.EnglishName),
                     CreatedByUserId = entityPoco.CreatedByUserId,
                     UpcomingDate = entityPoco.StartDateTime != null ? entityPoco.StartDateTime : entityPoco.DueDate,
                     SortByDate = entityPoco.StartDateTime != null ? entityPoco.StartDateTime : (entityPoco.DueDate != null ? entityPoco.DueDate : date),
@@ -341,7 +336,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
             ActivityBusinessUnitFilter filter = new ActivityBusinessUnitFilter(tenant);
             entities = filter.RunFilter(entities);
 
-            List<ActivityList> result = (from entityPoco in entities.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Owner.Contact").Include("UpdatedByUser").Include("Opportunity").Include("BusinessUnit").Include("CreatedByUser.Contact").Include("Opportunity.LeadSource")
+            List<ActivityList> result = (from entityPoco in entities.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Owner.Contact").Include("UpdatedByUser").Include("Opportunity").Include("BusinessUnit").Include("CreatedByUser.Contact")
                                          select new ActivityList()
                                          {
                                              Id = entityPoco.Id,
@@ -366,8 +361,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                              ActivityTypeCode = entityPoco.ActivityTypeCode,
                                              ActivityStatusName = entityPoco.ActivityStatus == null ? "" : entityPoco.ActivityStatus.Name,
                                              PriorityName = entityPoco.ActivityPriority == null ? "" : entityPoco.ActivityPriority.Name,
-                                             OwnerName = entityPoco.Owner == null ? null : (entityPoco.Owner.Contact == null ? null : entityPoco.Owner.Contact.EnglishName),
-                                             UpdatedByUserName = entityPoco.UpdatedByUser == null ? null : (entityPoco.UpdatedByUser.Contact == null ? null : entityPoco.UpdatedByUser.Contact.EnglishName),
+                                             OwnerName = entityPoco.Owner == null ? "" : (entityPoco.Owner.Contact == null ? "" : entityPoco.Owner.Contact.EnglishName),
+                                             UpdatedByUserName = entityPoco.UpdatedByUser == null ? "" : (entityPoco.UpdatedByUser.Contact == null ? "" : entityPoco.UpdatedByUser.Contact.EnglishName),
                                              IsLeftVoiceMail = entityPoco.IsLeftVoiceMail,
                                              OutlookId = entityPoco.OutlookId,
                                              NeedSynchronization = entityPoco.NeedSynchronization,
@@ -395,7 +390,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                              SenderEmail = entityPoco.SenderEmail,
                                              CustomerName = entityPoco.Customer == null ? "" : entityPoco.Customer.EnglishName,
                                              OwnerId = entityPoco.OwnerId,
-                                             CreatedByUserName = entityPoco.CreatedByUser == null ? null : (entityPoco.CreatedByUser.Contact == null ? null : entityPoco.CreatedByUser.Contact.EnglishName),
+                                             CreatedByUserName = entityPoco.CreatedByUser == null ? "" : (entityPoco.CreatedByUser.Contact == null ? "" : entityPoco.CreatedByUser.Contact.EnglishName),
                                              CreatedByUserId = entityPoco.CreatedByUserId,
                                              QuoteId = entityPoco.QuoteId,
                                              CustomerId = entityPoco.CustomerId,
@@ -406,8 +401,6 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                              From = entityPoco.From,
                                              Cc = entityPoco.Cc,
                                              To = entityPoco.To,
-                                             LeadSourceId = entityPoco.Opportunity != null ? entityPoco.Opportunity.LeadSourceId : null,
-                                             LeadSourceName = entityPoco.Opportunity != null && entityPoco.Opportunity.LeadSource != null ? entityPoco.Opportunity.LeadSource.Name : null,
                                          }).ToList();
 
             foreach (ActivityList list in result)
@@ -442,7 +435,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
             ActivityBusinessUnitFilter filter = new ActivityBusinessUnitFilter(tenant);
             entities = filter.RunFilter(entities);
 
-            List<ActivityList> result = (from entityPoco in entities.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Owner.Contact").Include("UpdatedByUser").Include("Opportunity").Include("BusinessUnit").Include("CreatedByUser.Contact").Include("Opportunity.LeadSource")
+            List<ActivityList> result = (from entityPoco in entities.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Owner.Contact").Include("UpdatedByUser").Include("Opportunity").Include("BusinessUnit").Include("CreatedByUser.Contact")
                                          select new ActivityList()
                                          {
                                              Id = entityPoco.Id,
@@ -467,8 +460,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                              ActivityTypeCode = entityPoco.ActivityTypeCode,
                                              ActivityStatusName = entityPoco.ActivityStatus == null ? "" : entityPoco.ActivityStatus.Name,
                                              PriorityName = entityPoco.ActivityPriority == null ? "" : entityPoco.ActivityPriority.Name,
-                                             OwnerName = entityPoco.Owner == null ? null : (entityPoco.Owner.Contact == null ? null : entityPoco.Owner.Contact.EnglishName),
-                                             UpdatedByUserName = entityPoco.UpdatedByUser == null ? null : (entityPoco.UpdatedByUser.Contact == null ? null : entityPoco.UpdatedByUser.Contact.EnglishName),
+                                             OwnerName = entityPoco.Owner == null ? "" : (entityPoco.Owner.Contact == null ? "" : entityPoco.Owner.Contact.EnglishName),
+                                             UpdatedByUserName = entityPoco.UpdatedByUser == null ? "" : (entityPoco.UpdatedByUser.Contact == null ? "" : entityPoco.UpdatedByUser.Contact.EnglishName),
                                              IsLeftVoiceMail = entityPoco.IsLeftVoiceMail,
                                              OutlookId = entityPoco.OutlookId,
                                              NeedSynchronization = entityPoco.NeedSynchronization,
@@ -496,7 +489,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                              SenderEmail = entityPoco.SenderEmail,
                                              CustomerName = entityPoco.Customer == null ? "" : entityPoco.Customer.EnglishName,
                                              OwnerId = entityPoco.OwnerId,
-                                             CreatedByUserName = entityPoco.CreatedByUser == null ? null : (entityPoco.CreatedByUser.Contact == null ? null : entityPoco.CreatedByUser.Contact.EnglishName),
+                                             CreatedByUserName = entityPoco.CreatedByUser == null ? "" : (entityPoco.CreatedByUser.Contact == null ? "" : entityPoco.CreatedByUser.Contact.EnglishName),
                                              CreatedByUserId = entityPoco.CreatedByUserId,
                                              QuoteId = entityPoco.QuoteId,
                                              CustomerId = entityPoco.CustomerId,
@@ -507,8 +500,6 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                              From = entityPoco.From,
                                              Cc = entityPoco.Cc,
                                              To = entityPoco.To,
-                                             LeadSourceId = entityPoco.Opportunity != null ? entityPoco.Opportunity.LeadSourceId : null,
-                                             LeadSourceName = entityPoco.Opportunity != null && entityPoco.Opportunity.LeadSource != null ? entityPoco.Opportunity.LeadSource.Name : null,
                                          }).ToList();
 
             foreach (ActivityList list in result)
@@ -565,7 +556,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
             ActivityBusinessUnitFilter filter = new ActivityBusinessUnitFilter(tenant);
             entities = filter.RunFilter(entities);
 
-            List<ActivityList> result = (from entityPoco in entities.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Owner.Contact").Include("UpdatedByUser").Include("Opportunity").Include("BusinessUnit").Include("CreatedByUser.Contact").Include("Ticket").Include("Opportunity.LeadSource")
+            List<ActivityList> result = (from entityPoco in entities.Include("Customer").Include("ActivityType").Include("ActivityStatus").Include("ActivityPriority").Include("Owner").Include("Owner.Contact").Include("UpdatedByUser").Include("Opportunity").Include("BusinessUnit").Include("CreatedByUser.Contact").Include("Ticket")
                                          select new ActivityList()
                                          {
                                              Id = entityPoco.Id,
@@ -590,8 +581,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                              ActivityTypeCode = entityPoco.ActivityTypeCode,
                                              ActivityStatusName = entityPoco.ActivityStatus == null ? "" : entityPoco.ActivityStatus.Name,
                                              PriorityName = entityPoco.ActivityPriority == null ? "" : entityPoco.ActivityPriority.Name,
-                                             OwnerName = entityPoco.Owner == null ? null : (entityPoco.Owner.Contact == null ? null : entityPoco.Owner.Contact.EnglishName),
-                                             UpdatedByUserName = entityPoco.UpdatedByUser == null ? null : (entityPoco.UpdatedByUser.Contact == null ? null : entityPoco.UpdatedByUser.Contact.EnglishName),
+                                             OwnerName = entityPoco.Owner == null ? "" : (entityPoco.Owner.Contact == null ? "" : entityPoco.Owner.Contact.EnglishName),
+                                             UpdatedByUserName = entityPoco.UpdatedByUser == null ? "" : (entityPoco.UpdatedByUser.Contact == null ? "" : entityPoco.UpdatedByUser.Contact.EnglishName),
                                              IsLeftVoiceMail = entityPoco.IsLeftVoiceMail,
                                              OutlookId = entityPoco.OutlookId,
                                              NeedSynchronization = entityPoco.NeedSynchronization,
@@ -619,7 +610,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                              SenderEmail = entityPoco.SenderEmail,
                                              CustomerName = entityPoco.Customer == null ? "" : entityPoco.Customer.EnglishName,
                                              OwnerId = entityPoco.OwnerId,
-                                             CreatedByUserName = entityPoco.CreatedByUser == null ? null : (entityPoco.CreatedByUser.Contact == null ? null : entityPoco.CreatedByUser.Contact.EnglishName),
+                                             CreatedByUserName = entityPoco.CreatedByUser == null ? "" : (entityPoco.CreatedByUser.Contact == null ? "" : entityPoco.CreatedByUser.Contact.EnglishName),
                                              CreatedByUserId = entityPoco.CreatedByUserId,
                                              QuoteId = entityPoco.QuoteId,
                                              CustomerId = entityPoco.CustomerId,
@@ -631,8 +622,6 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                              Cc = entityPoco.Cc,
                                              To = entityPoco.To,
                                              From = entityPoco.From,
-                                             LeadSourceId = entityPoco.Opportunity != null ? entityPoco.Opportunity.LeadSourceId : null,
-                                             LeadSourceName = entityPoco.Opportunity != null && entityPoco.Opportunity.LeadSource != null ? entityPoco.Opportunity.LeadSource.Name : null,
                                          }).ToList();
 
             foreach (ActivityList list in result)

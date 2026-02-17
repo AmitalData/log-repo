@@ -17,7 +17,7 @@ using System.Xml.XPath;
 using System.Xml;
 using System.Xml.Xsl;
 using WebFreight.Web.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;

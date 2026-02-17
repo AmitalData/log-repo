@@ -1,4 +1,4 @@
-import {ObjectTableRulePM} from '../EntityPMs/ObjectTableRulePM';
+﻿import {ObjectTableRulePM} from '../EntityPMs/ObjectTableRulePM';
 import {RuleConditionFieldPM} from '../EntityPMs/RuleConditionFieldPM';
 import {ObjectTableRuleFieldPM} from '../EntityPMs/ObjectTableRuleFieldPM';
 import {SessionLocator} from '../Utilities/SessionLocator';
@@ -82,7 +82,7 @@ export class EntityWarningsValidator {
         // var propertyValue: Object = null;
         for (var k in ruleFields) {
             var ruleField: ObjectTableRuleFieldPM = ruleFields[k];
-            var objectField: ObjectFieldPM = window.ObjectFields.filter(f => f.FieldCode === ruleField.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
+            var objectField: ObjectFieldPM = window.ObjectFields.filter(f => f.Id === ruleField.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
             //  propertyInf = type1.GetProperty(objectField.FieldName);
             //if (propertyInf != null) {
             var propertyValue = entity[objectField.FieldName];//propertyInf.GetValue(entity, null);

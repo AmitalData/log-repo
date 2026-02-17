@@ -19,8 +19,8 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-
-    templateUrl: './NewPartnerTamplate.html',
+    moduleId: module.id,
+    templateUrl: './NewPartnerTamplate.html',    
 })
 
 export class NewPartnerTamplate extends BaseComponent implements OnInit {
@@ -30,7 +30,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     public Address: AddressPM;
     public Contact: ContactPM;
     public Warehouse: WarehousePM;
-    public ObjectTableName: string = "Address";
+    public ObjectTableName: string = "Address";    
     public DataContext: NewPartnerTamplate = this;
     public PartnerTypeId: string = null;
     public IsCustomer: boolean = false;
@@ -43,11 +43,8 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     public IsWarehouseTypeCodeVisible: boolean = false;
     public IsWarehouseFirmCodeVisible: boolean = false;
     public DomainService: PartnersDomainService;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-
-    get IsFullAccounting(){ return SessionLocator.TenantPM.AccountingActivated; }
-
     constructor() {
         super();
 
@@ -96,7 +93,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
                 break;
             }
         }
-
+        
 
         //DefaultValues Abed Code
 
@@ -116,9 +113,9 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
                 this.Address1 = !AppTool.IsNullOrEmpty(DefaultValueData[1]) ? DefaultValueData[1] : "";
                 this.Address2 = !AppTool.IsNullOrEmpty(DefaultValueData[2]) ? DefaultValueData[2] : "";
                 this.City = !AppTool.IsNullOrEmpty(DefaultValueData[3]) ? DefaultValueData[3] : "";
-                this.CountryId = !AppTool.IsNullOrEmpty(DefaultValueData[4]) ? DefaultValueData[4] : "";
+                this.CountryId = !AppTool.IsNullOrEmpty(DefaultValueData[4]) ? DefaultValueData[4] : ""; 
             }
-
+   
 
         }
 
@@ -147,13 +144,13 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
 
     LoadChildComponent() {
-        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response2 => {
                 this.BuildAdditionalFields();
                 this.SimilaryCardsHeader = "Similar " + this.CardTableName + " in the system";
@@ -209,9 +206,9 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
                 this.IsAdditionalEnabled = isFieldsEnabled;
             }
         }
+        
 
-
-        //this.UIProperties.SetVisibility("VatNumber", this.ObjectTableName, this.IsCustomerPartner);
+        this.UIProperties.SetVisibility("VatNumber", this.ObjectTableName, this.IsCustomerPartner);
         this.UIProperties.SetVisibility("SalesmanUserId", this.ObjectTableName, this.IsCustomerPartner);
 
         this.SetUIProperties_Code();
@@ -219,19 +216,18 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         this.SetUIProperties_TelFax();
         this.SetUIProperties_State();
         this.SetUIProperties_Contact();
-        this.SetUIProperties_City();
     }
 
     private SetUIProperties_Code() {
         if (this.PartnerTypeId == "TR" || this.PartnerTypeId == "WH") {
 
-            var isRequired = false;
+            var isRequired = false;                        
             if (AppTool.IsNullOrEmpty(this.CardCode)) {
                 isRequired = true;
             }
 
             this.UIProperties.SetRequired("CardCode", this.ObjectTableName, isRequired);
-
+                     
             if (!isRequired) {
                 if (this.CardCode != null) {
                     if (this.CardTableName == "Trucker") {
@@ -256,36 +252,27 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         }
     }
     private SetUIProperties_VAT() {
-        //if (this.IsCustomerPartner) {
-        //    if (this.IsCustomer) {
-        var args = new VATValidatorArgs();
-        args.VATNumber = this.VatNumber;
-        args.IsCustomer = this.EntityPM.IsCustomer;
-        args.PartnerTypeId = this.PartnerTypeId;
-        args.CountryId = this.CountryId;
-        args.CountryName = this.CountryName;
-        args.CountryEnglishName = this.CountryEnglishName;
-        args.SetReady = false;
+        if (this.IsCustomerPartner) {
+            if (this.IsCustomer) {
+                var args = new VATValidatorArgs();
+                args.VATNumber = this.VatNumber;
+                args.IsCustomer = this.EntityPM.IsCustomer;
+                args.PartnerTypeId = this.PartnerTypeId;
+                args.CountryId = this.CountryId;
+                args.CountryName = this.CountryName;
+                args.CountryEnglishName = this.CountryEnglishName;
+                args.SetReady = false;
 
-        VatNumberValidator.ValidateVatFormat(args);
-        VatNumberValidator.ValidateVatMandatory(args);
-        if(!AppTool.IsNullOrEmpty(this.VatNumber)){
-            this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, args.Errors.length > 0 ? true : false);
-        }else{
-            if(SessionLocator.TenantPM.AccountingActivated){
-                this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, true);
+                VatNumberValidator.ValidateVatFormat(args);
+                VatNumberValidator.ValidateVatMandatory(args);
+
+                this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, args.Errors.length > 0 ? true : false);
+            }
+
+            else {
+                this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, false);
             }
         }
-
-       
-    
-        
-        //}
-
-        //else {
-        //    this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, false);
-        //}
-        //}
     }
 
     private SetUIProperties_TelFax() {
@@ -381,15 +368,6 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         this.UIProperties.SetRequired("ContactName", this.ObjectTableName, isRequired);
     }
 
-    SetUIProperties_City() {
-        var isRequired = false;
-
-        if (AppTool.IsNullOrEmpty(this.City) && this.PartnerTypeId != "PO") {
-            isRequired = true;
-        }
-        this.UIProperties.SetRequired("City", this.ObjectTableName, isRequired);
-    }
-
     // Address
     get CardCode() { return this.Address.CardCode; }
     set CardCode(newValue: string) {
@@ -409,7 +387,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
             if (code.length <= 4) {
 
                 if (this.PartnerTypeId == "TR") {
-                    this.DomainService.GetTruckerByCode(code, SessionLocator.Tenant).subscribe((myResult:any) => {
+                    this.DomainService.GetTruckerByCode(code, SessionLocator.Tenant).subscribe(myResult => {
                         if (myResult != null) {
                             this.CodeMessage = "This trucker already exists";
                             this.IsCodeAlreadyExists = true;
@@ -427,7 +405,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
                 }
 
                 else if (this.PartnerTypeId == "WH") {
-                    this.DomainService.GetWarehouseByCode(code, SessionLocator.Tenant).subscribe((myResult:any) => {
+                    this.DomainService.GetWarehouseByCode(code, SessionLocator.Tenant).subscribe(myResult => {
                         if (myResult != null) {
                             this.CodeMessage = "This Warehouse already exists";
                             this.IsCodeAlreadyExists = true;
@@ -475,7 +453,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     get LocalName() { return this.localName; }
     set LocalName(newValue: string) {
         if (this.localName != newValue) {
-            this.localName = newValue;
+            this.localName = newValue;           
         }
     }
 
@@ -548,7 +526,6 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     set City(newValue: string) {
         if (this.Address.City != newValue) {
             this.Address.City = newValue;
-            this.SetUIProperties_City();
         }
     }
 
@@ -627,8 +604,6 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
             this.SetUIProperties_VAT();
         }
     }
-
-
 
     get SalesmanUserId() { return this.Address.SalesmanUserId; }
     set SalesmanUserId(newValue: string) {
@@ -801,7 +776,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         }
 
         else {
-            this.DomainService.GetContactsByEmail(email).subscribe((myResult:any) => {
+            this.DomainService.GetContactsByEmail(email).subscribe(myResult => {
                 if (myResult != null) {
                     this.loadedContact = myResult[0];
                     this.SetUIProperties_Contact();
@@ -849,7 +824,8 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         this.ValidateCardCode(errors, msg);
-        this.ValidateAddress(errors);
+
+        Validator.TryValidateObject(this.Address, this.ObjectTableName, errors);
 
         var isLanguageValid = AddressValidator.IsMainAddressEnglishCharacters(this.Address);
         if (!isLanguageValid) {
@@ -870,9 +846,9 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
             }
         }
 
-        //if (this.IsCustomerPartner) {
-        this.ValidateCustomerFields(errors);
-        //}
+        if (this.IsCustomerPartner) {
+            this.ValidateCustomerFields(errors);
+        }
 
         if (this.IsAddContactChecked) {
             this.Contact.EnglishName = this.ContactName;
@@ -910,20 +886,6 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
 
         return errors;
     }
-
-    private ValidateAddress(errors: string[]) {
-        var newPotentialAddressCity = this.Address.City;
-        if (AppTool.IsNullOrEmpty(this.Address.City) && this.PartnerTypeId == "PO") {
-            this.Address.City = (AppTool.IsNullOrEmpty(this.Address.City) ? " Potential city " : this.Address.City);
-        }
-
-        Validator.TryValidateObject(this.Address, this.ObjectTableName, errors);
-
-        if (this.PartnerTypeId == "PO") {
-            this.Address.City = newPotentialAddressCity;
-        }
-    }
-
     private ValidateCardCode(errors: string[], msg:string) {
         if (this.PartnerTypeId == "TR" || this.PartnerTypeId == "WH") {
             if (AppTool.IsNullOrEmpty(this.CardCode)) {
@@ -945,55 +907,54 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         }
     }
     private ValidateCustomerFields(errors: string[]) {
-        //if (this.IsCustomerPartner) {
-        if (!SessionLocator.TenantPM.ApplyVATForAllPartners && !this.EntityPM?.IsCustomer) {
-            return;
+        if (this.IsCustomerPartner) {
+            if (this.IsCustomer) {
+                var args = new VATValidatorArgs();
+                args.VATNumber = this.VatNumber;
+                args.IsCustomer = this.EntityPM.IsCustomer;
+                args.PartnerTypeId = this.PartnerTypeId;
+                args.CountryId = this.CountryId;
+                args.CountryName = this.CountryName;
+                args.CountryEnglishName = this.CountryEnglishName;
+                args.SetReady = false;
+
+                VatNumberValidator.ValidateVatFormat(args);
+                VatNumberValidator.ValidateVatMandatory(args);
+
+                args.Errors.forEach(item => {
+                    errors.push(item);
+                });
+
+
+                if (this.PartnerTypeId == "CS") {
+                    if (SessionLocator.TenantPM.IsCustomerTelRequired) {
+                        if (AppTool.IsNullOrEmpty(this.PhoneNumber)) {
+                            errors.push("Phone Number is required");
+                        }
+                    }
+
+                    if (SessionLocator.TenantPM.IsCustomerFaxRequired) {
+                        if (AppTool.IsNullOrEmpty(this.FaxNumber)) {
+                            errors.push("Fax Number is required");
+                        }
+                    }
+                }
+
+                else if (this.PartnerTypeId == "PO") {
+                    if (SessionLocator.TenantPM.IsPotentialTelRequired) {
+                        if (AppTool.IsNullOrEmpty(this.PhoneNumber)) {
+                            errors.push("Phone Number is required");
+                        }
+                    }
+
+                    if (SessionLocator.TenantPM.IsPotentialFaxRequired) {
+                        if (AppTool.IsNullOrEmpty(this.FaxNumber)) {
+                            errors.push("Fax Number is required");
+                        }
+                    }
+                }
+            }
         }
-        var args = new VATValidatorArgs();
-        args.VATNumber = this.VatNumber;
-        args.IsCustomer = this.EntityPM.IsCustomer;
-        args.PartnerTypeId = this.PartnerTypeId;
-        args.CountryId = this.CountryId;
-        args.CountryName = this.CountryName;
-        args.CountryEnglishName = this.CountryEnglishName;
-        args.SetReady = false;
-
-        VatNumberValidator.ValidateVatFormat(args);
-        VatNumberValidator.ValidateVatMandatory(args);
-
-        args.Errors.forEach(item => {
-            errors.push(item);
-        });
-
-        if (this.PartnerTypeId == "CS") {
-            if (SessionLocator.TenantPM.IsCustomerTelRequired) {
-                if (AppTool.IsNullOrEmpty(this.PhoneNumber)) {
-                    errors.push("Phone Number is required");
-                }
-            }
-
-            if (SessionLocator.TenantPM.IsCustomerFaxRequired) {
-                if (AppTool.IsNullOrEmpty(this.FaxNumber)) {
-                    errors.push("Fax Number is required");
-                }
-            }
-        }
-
-        else if (this.PartnerTypeId == "PO") {
-            if (SessionLocator.TenantPM.IsPotentialTelRequired) {
-                if (AppTool.IsNullOrEmpty(this.PhoneNumber)) {
-                    errors.push("Phone Number is required");
-                }
-            }
-
-            if (SessionLocator.TenantPM.IsPotentialFaxRequired) {
-                if (AppTool.IsNullOrEmpty(this.FaxNumber)) {
-                    errors.push("Fax Number is required");
-                }
-            }
-        }
-        //}
-        //}
     }
     private ValidateContactExist() {
         var isContactAlreadyExist = false;

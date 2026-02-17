@@ -11,7 +11,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewCustomerComponent.html',
 })
 
@@ -22,7 +22,7 @@ export class NewCustomerComponent {
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
     private PartnerTamplate: NewPartnerTamplate;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private args: NewEntityArgs;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
@@ -74,7 +74,7 @@ export class NewCustomerComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -95,10 +95,6 @@ export class NewCustomerComponent {
                             if (!AppTool.IsNullOrEmpty(this.args.DefaultValues)) {
                                 this.PartnerTamplate.DefaultValues = this.args.DefaultValues;
                             }
-
-                            if (this.args.Address) {
-                                this.SetPartnerTamplateProperties();
-                            }
                         }
 
                         this.PartnerTamplate.InitTemplate();
@@ -106,19 +102,6 @@ export class NewCustomerComponent {
                     });
             });
         });
-    }
-
-    private SetPartnerTamplateProperties() {
-        this.PartnerTamplate.City = this.args.Address.City;
-        this.PartnerTamplate.CountryId = this.args.Address.CountryId;
-        this.PartnerTamplate.CountryCode = this.args.Address.CountryCode;
-        this.PartnerTamplate.StateId = this.args.Address.StateId;
-        this.PartnerTamplate.Address1 = this.args.Address.Address1;
-        this.PartnerTamplate.Address2 = this.args.Address.Address2;
-        this.PartnerTamplate.ZipCode = this.args.Address.ZipCode;
-        this.PartnerTamplate.PhoneNumber = this.args.Address.PhoneNumber;
-        this.PartnerTamplate.FaxNumber = this.args.Address.FaxNumber;
-        this.PartnerTamplate.Name = this.args.Address.Name;
     }
 
     public IsCustomerRadioEnabled: boolean = true;

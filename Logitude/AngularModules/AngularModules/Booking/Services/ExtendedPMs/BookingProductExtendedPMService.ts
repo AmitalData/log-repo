@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -15,22 +14,24 @@ import {BookingProductPM} from '../../EntityPMs/BookingProductPM';
 @Injectable()
 
 export class BookingProductExtendedPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bookingproductsextended';
     }
 
     get(id: string) {
 
 
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                map((response: HttpResponse<any>) => {
-                var pm = response.body;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
 
 
 
@@ -48,16 +49,18 @@ export class BookingProductExtendedPMService {
 
                 return serviceResponse;
 
-                }),
-
-                catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     insert(entityPM: BookingProductPM) {
 
         var callTime = new Date();
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
 
@@ -72,11 +75,10 @@ export class BookingProductExtendedPMService {
                 var mappedEntity: BookingProductPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                    map((response: HttpResponse<any>) => {
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((response) => {
 
-                        var pm = response.body;
+                        var pm = response.json();
                         if (pm) {
                             var mappedResult: BookingProductPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -90,16 +92,14 @@ export class BookingProductExtendedPMService {
 
                         return serviceResponse;
 
-                    }),
-
-                    catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             }
         }
@@ -110,7 +110,11 @@ export class BookingProductExtendedPMService {
     update(entityPM: BookingProductPM) {
 
         var callTime = new Date();
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
 
@@ -125,12 +129,11 @@ export class BookingProductExtendedPMService {
                 var mappedEntity: BookingProductPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                    map((response: HttpResponse<any>) => {
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((response) => {
 
 
-                        var pm = response.body;
+                        var pm = response.json();
                         if (pm) {
                             var mappedResult: BookingProductPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -142,16 +145,14 @@ export class BookingProductExtendedPMService {
 
                         return serviceResponse;
 
-                    }),
-
-                    catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             }
         }

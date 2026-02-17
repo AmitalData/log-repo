@@ -1,4 +1,4 @@
-
+﻿
 
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -11,16 +11,15 @@
         <td>
             <table>
                 <tr>
-                    <td style="width: 330px;" *ngIf="!IsMainPackage">
+                    <td style="width: 400px;">
                         <table>
 
-                            <!-- PackageCode -->
                             <tr class="FormFieldRow">
                                 <td style="width:130px;">
                                     <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td>
+                                <td style="width:230px;">
                                     <LogLov [ObjectFieldName]="'PackageCode'"
                                             [SelectedValue]="DataContext.PackageCode"
                                             [ObjectTableName]="ObjectTableName"
@@ -31,7 +30,6 @@
                                 </td>
                             </tr>
 
-                            <!-- NumberOfUsers -->
                             <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'NumberOfUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -39,111 +37,6 @@
 
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'NumberOfUsers'" [Text]="DataContext.NumberOfUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-                            </tr>
-
-                            <!-- FreeUsers -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'FreeUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'FreeUsers'" [Text]="DataContext.FreeUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-                            </tr>
-
-                            <!-- Price -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'Price'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'Price'" [Text]="DataContext.Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-                            </tr>
-
-                            <!-- TotalPrice -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'TotalPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'TotalPrice'" [Text]="DataContext.TotalPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="2">
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-
-                    <td style="width: 330px;" *ngIf="IsMainPackage">
-                        <table>
-
-                            <!-- PackageCode -->
-                            <tr class="FormFieldRow">
-                                <td style="width:130px;">
-                                    <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="'TenantManagement'" [DataContext]="MainDataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogLov [ObjectFieldName]="'PackageCode'"
-                                            [SelectedValue]="PackageCode"
-                                            [ObjectTableName]="'TenantManagement'"
-                                            [DataContext]="MainDataContext"
-                                            [DependencyFilter1Value]="'PK'"
-                                            [LookUpTableName]="'Package'">
-                                    </LogLov>
-                                </td>
-                            </tr>
-
-                            <!-- NumberOfUsers -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'NumberOfUsers'" [ObjectTableName]="'TenantManagement'" [DataContext]="MainDataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'NumberOfUsers'" [Text]="NumberOfUsers" [ObjectTableName]="'TenantManagement'" [DataContext]="MainDataContext"></LogTextBox>
-                                </td>
-                            </tr>
-
-                            <!-- FreeUsers -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'FreeUsers'" [ObjectTableName]="'TenantManagement'" [DataContext]="MainDataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'FreeUsers'" [Text]="FreeUsers" [ObjectTableName]="'TenantManagement'" [DataContext]="MainDataContext"></LogTextBox>
-                                </td>
-                            </tr>
-
-                            <!-- Price -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'LicensePrice'" [ObjectTableName]="'TenantManagement'" [DataContext]="MainDataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'LicensePrice'" [Text]="LicensePrice" [ObjectTableName]="'TenantManagement'" [DataContext]="MainDataContext"></LogTextBox>
-                                </td>
-                            </tr>
-
-                            <!-- TotalPrice -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'TotalPrice'" [ObjectTableName]="'TenantManagement'" [DataContext]="MainDataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'TotalPrice'" [Text]="TotalPrice" [ObjectTableName]="'TenantManagement'" [DataContext]="MainDataContext"></LogTextBox>
                                 </td>
                             </tr>
 

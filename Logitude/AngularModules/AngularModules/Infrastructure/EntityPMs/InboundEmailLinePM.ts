@@ -21,10 +21,10 @@ export class InboundEmailLinePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -113,9 +113,9 @@ export class InboundEmailLinePM {
     public set EntityLineId(newValue: string) { if (this.entityLineId != newValue) { this.entityLineId = newValue; this.MarkAsDirty("EntityLineId"); } }
        
 	 
-    private inboundEmail: any;
+    private inboundEmail: string;
     public get InboundEmail() { return this.inboundEmail; }
-    public set InboundEmail(newValue: any) { if (this.inboundEmail != newValue) { this.inboundEmail = newValue; this.MarkAsDirty("InboundEmail"); } }
+    public set InboundEmail(newValue: string) { if (this.inboundEmail != newValue) { this.inboundEmail = newValue; this.MarkAsDirty("InboundEmail"); } }
        
 	 
 
@@ -128,10 +128,7 @@ export class InboundEmailLinePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -141,7 +138,6 @@ export class InboundEmailLinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InboundEmailLine");
            
         }
-	 }
     }
     private MyClone: InboundEmailLinePM;
 

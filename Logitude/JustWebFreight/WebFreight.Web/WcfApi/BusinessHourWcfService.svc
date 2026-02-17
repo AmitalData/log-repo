@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="WebFreight.Web.WcfApi.BusinessHourWcfService" CodeBehind="BusinessHourWcfService.svc.cs" %>

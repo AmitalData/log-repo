@@ -61,11 +61,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (String.IsNullOrWhiteSpace(_GLAccountId))
                 {
-                    throw new ApplicationException("GLAccountId is must");
+                    throw new Exception("GLAccountId is must");
                 }
                 if (!_ListOfAccountId.Contains(_GLAccountId))
                 {
-                    throw new ApplicationException("_ListOfAccountId.Contains(_GLAccountId)");
+                    throw new Exception("_ListOfAccountId.Contains(_GLAccountId)");
                 }
                 if (_AccountingContext==null)
                 {
@@ -167,7 +167,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
 
             mess = mess + ":Took:" + _sw.Elapsed.ToString();
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
+            Debug.WriteLine(mess);
 
             _sw.Restart();
             _StringBuilder.AppendLine(mess);
@@ -179,7 +179,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var have = myJournalQueryService.GetAnyPendingApprovedDev(_ListOfAccountId, _Tenant);
             if (_sw.Elapsed > TimeSpan.FromSeconds(1))
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AnyAccountingQueued():Please make index  ");
+                Debug.WriteLine("AnyAccountingQueued():Please make index  ");
             }
             return have;
         }
@@ -253,7 +253,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (string.IsNullOrWhiteSpace(currencyId))
             {
-                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
+                throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
             }
             return GetCallBackBalance().Where(r => r.CurrencyId == currencyId).ToList();
          
@@ -273,7 +273,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (string.IsNullOrWhiteSpace(currencyId))
             {
-                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
+                throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
             }
             var tot = Totals.Where(r => r.CurrencyId == currencyId).FirstOrDefault();
             if (tot == null)
@@ -286,7 +286,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (string.IsNullOrWhiteSpace(currencyId))
             {
-                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
+                throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
             }
             //var accountingCurrencyId=  AccountingSettingResolver.ResolveAccountingCurrencyId(Tenant);
             //if (accountingCurrencyId == currencyId)

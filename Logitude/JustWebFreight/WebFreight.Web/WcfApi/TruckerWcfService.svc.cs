@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -15,9 +15,6 @@ using WebFreight.Web.Security;
 using Logitude.BL.Validators;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Accounting.BL.Utils;
-
 
 namespace WebFreight.Web.WcfApi
 {
@@ -40,7 +37,7 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.CheckContactFeature("Trucker", "UPDATE", entityPM.Tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    entityPM.CarrierTypeId = "TR";
+                   
                     ClassLevelValidator validationClass = new ClassLevelValidator("Trucker", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
@@ -56,7 +53,6 @@ namespace WebFreight.Web.WcfApi
 
                     CurrencyRepository currencyRepository = new CurrencyRepository(commoncontext);
                     VatTypeRepository vatTypeRepository = new VatTypeRepository(commoncontext);
-                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
 
                     if (entityPM.InvoiceCurrencyId != null)
                     {
@@ -87,22 +83,6 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
-
-                    if (entityPM.PaymentTermId != null)
-                    {
-                        var paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
-                        if (paymentTerm != null)
-                        {
-                            entityPM.PaymentTermId = paymentTerm.Id;
-                        }
-                        else
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
-                            return response;
-                        }
-                    }
-
                     if (entityPM.PrimaryContactId != null)
                     {
                         ContactRepository contactRepository = new ContactRepository(commoncontext);
@@ -130,9 +110,8 @@ namespace WebFreight.Web.WcfApi
                         service.SetChangeSet(entityPM.CardExternalCodeByCurrencies);
                         service.Update(entityPM);
                     }
-					CardGLAccountConnectBatch CardGLAccountConnectBatch = new CardGLAccountConnectBatch();
-					CardGLAccountConnectBatch.ConnectSingleCardToGLAccountInBatch(entityPM.Tenant, entityPM.Id);
-					response.Result = entityPM.Id;
+
+                    response.Result = entityPM.Id;
                     scope.Complete();
                     return response;
                 }
@@ -169,79 +148,6 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage += Environment.NewLine + ex.StackTrace;
                 }
                 return response;
-            }
-        }
-
-        public TruckerPM GetTruckerPM(string code, int tenant, ref Response response)
-        {
-
-            try
-            {
-                TruckerPM entityPM = null;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Trucker", "READ", tenant);//UPDATE//READ
-                if (CacheManager.CacheWrapper == null)
-                {
-                    CacheManager.CacheWrapper = new MockCacheWrapper();
-                }
-
-                ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-                UserRepository userReporistory = new UserRepository(objectContext);
-                CardRepository cardRepository = new CardRepository(objectContext);
-                ContactRepository contactRepository = new ContactRepository(objectContext);
-                CountryRepository countryRepository = new CountryRepository(objectContext);
-                RankRepository rankRepository = new RankRepository(objectContext);
-                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(objectContext);
-                TruckerQuery query = new TruckerQuery(tenant);
-
-                entityPM = query.GetSinglePMByCode(code, tenant);
-
-                if (entityPM != null)
-                { 
-
-                    if (entityPM.PrimaryContactId != null)
-                    {
-                        Contact contact = contactRepository.GetSingleContact(entityPM.PrimaryContactId, entityPM.Tenant);
-                        if (contact != null && !string.IsNullOrEmpty(contact.ExternalId))
-                        {
-                            entityPM.PrimaryContactId = contact.ExternalId;
-                            entityPM.PrimaryContactEmail = contact.Email;
-                            entityPM.PrimaryContactName = contact.EnglishName;
-                            entityPM.PrimaryContactPhone = contact.BusinessPhone;
-
-                        }
-                    }
-
-
-
-                    if (entityPM.PaymentTermId != null)
-                    {
-                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, entityPM.Tenant);
-                        if (paymentTerm != null)
-                        {
-                            entityPM.PaymentTermId = paymentTerm.Code;
-
-                        }
-                    }
-
-
-                }
-
-                return entityPM;
-            }
-            catch (Exception ex)
-            {
-                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
-                response.HasError = true;
-                response.ErrorMessage = ex.Message;
-                response.InnerErrorMessage = ex.InnerException != null ? ex.InnerException.Message : null;
-                if (!string.IsNullOrEmpty(ex.StackTrace))
-                {
-                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
-                }
-
-                return null;
-
             }
         }
     }

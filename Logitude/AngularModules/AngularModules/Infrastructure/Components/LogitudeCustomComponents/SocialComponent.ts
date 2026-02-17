@@ -9,7 +9,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {PostsArgs} from '../../../Infrastructure/DataContracts/PostsArgs';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'SocialComponent',
     templateUrl: './SocialComponent.html', 
@@ -20,7 +20,7 @@ import {PostsArgs} from '../../../Infrastructure/DataContracts/PostsArgs';
 
 export class SocialComponent implements OnInit {
 
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     QueryName: string = "";
     SubQueryName: string = "";
     EntityId: string = "";

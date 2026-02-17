@@ -6,9 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -21,22 +20,24 @@ import {CustomsPaymentTermList} from '../../EntityLists/CustomsPaymentTermList';
 @Injectable()
 
 export class CustomsPaymentTermListService {
-	private _http: HttpClient;
+	private _http: Http;
     private _apiUrl: string;   
 	public static CachedData: Array<CustomsPaymentTermList> = [];
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/customspaymenttermviews';  
     }
 
     getSingle(code: string) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-          return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
-            .pipe(
-              map((response: HttpResponse<any>) => {
-                var list = response.body;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
+                headers: authHeader
+            }).map(response => {
+                var list = response.json();
                     
                 var entity: CustomsPaymentTermList;
 				if(list)
@@ -48,7 +49,7 @@ export class CustomsPaymentTermListService {
                 serviceResponse.Result = entity;  
 
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -56,13 +57,14 @@ export class CustomsPaymentTermListService {
 
     getAll() {
 
+	   var authHeader = new Headers();
+       authHeader.append('Token', SessionInfo.Token);
+       return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getall', {
+                headers: authHeader
+            }).map(response => {
 
-       return defer(() => {
-         return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
-           .pipe(
-             map((response: HttpResponse<any>) => {
-
-               var allLists = response.body;
+              var allLists = response.json();
               var _mappedListsArray: Array< CustomsPaymentTermList> = [];
 		      if(allLists)
 			  {
@@ -79,7 +81,7 @@ export class CustomsPaymentTermListService {
                 serviceResponse.Result = _mappedListsArray;  
 
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -115,17 +117,18 @@ export class CustomsPaymentTermListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return defer(() => {
-         return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
-           .pipe(
-             map((response: HttpResponse<any>) => {
+	   return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
-               var serviceResponse: ServiceResponse;
-               serviceResponse = response.body;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
                 var _mappedListsArray: Array< CustomsPaymentTermList> = [];
 				if(serviceResponse.Result)
 				{
@@ -140,7 +143,7 @@ export class CustomsPaymentTermListService {
 
                 serviceResponse.Result = _mappedListsArray;                  
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });        
     }
 
@@ -155,18 +158,17 @@ export class CustomsPaymentTermListService {
 
         if (CustomsPaymentTermListService.CachedData.length > 0) {
 
-            return defer(() => {
+            return Observable.defer(() => {
 
                 var filteredData = CustomsPaymentTermListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.Result = filteredData; 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             });
         }
         else {
 
-          return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").pipe(
-            map((cachedJson:any) => {
+            return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").map(cachedJson=> {
 
                 var _mappedListsArray: Array<CustomsPaymentTermList> = [];
                 if (cachedJson) {
@@ -185,7 +187,7 @@ export class CustomsPaymentTermListService {
 				serviceResponse.Result = filteredData; 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
 
         }
 
@@ -211,7 +213,7 @@ export class CustomsPaymentTermListService {
 
         if (CustomsPaymentTermListService.CachedData.length > 0) {
 
-            return defer(() => {
+            return Observable.defer(() => {
                 if(filters.GetAll)
 				{
 					serviceResponse.Result = CustomsPaymentTermListService.CachedData; 
@@ -221,14 +223,13 @@ export class CustomsPaymentTermListService {
 					var filteredData = InfraGenericFilter.GetFilteredArray(CustomsPaymentTermListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
 				}
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             });
         }
         else {
 
-          return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").pipe(
-            map((cachedJson:any) => {
+            return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").map(cachedJson=> {
 
                 var _mappedListsArray: Array<CustomsPaymentTermList> = [];
                 if (cachedJson) {
@@ -256,7 +257,7 @@ export class CustomsPaymentTermListService {
 				}
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
 
         }		 
     }

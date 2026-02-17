@@ -8,7 +8,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {AWBStackDomainService, StockSeriesListClass, StockSeries} from '../../../Services/AWBStackDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AssignToShipperComponent.html',
 })
 

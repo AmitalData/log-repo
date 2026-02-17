@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -200,29 +200,6 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=name,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   name=value;
-		   }
-			
-		 }
-	   }
-	  private bool isCompleted ;
-	  	  
-       
-	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsCompleted  
-	   {
-	    
-	     get
-		{
-		   return isCompleted;
-		 }
-		 set
-		 {
-		   if(isCompleted != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCompleted",OldValue=isCompleted,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isCompleted=value;
 		   }
 			
 		 }

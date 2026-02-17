@@ -25,7 +25,7 @@
                     <IconButton [IsSmall]="true"
                                 [Name]="'Add'"
                                 (click)="AddRowSafetiesList()"
-                                style="float:left;" id="AddRowSafeties"></IconButton>
+                                style="float:left;"></IconButton>
                     
                 </div>
                 <div style="width:130px;float:left;margin-top:1px;margin-left:15px;">
@@ -57,8 +57,7 @@
                                                 [header]="'Customs.VehicleSafetyAccessory.F.VehicleSafetyAccessoryCode' | TextCodeTranslationPipe" 
                                                 [binding]="'VehicleSafetyAccessoryName'" [width]="'180'" [Editable]="true" [Alignment]="'right'">
 
-                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.VehicleSafetyAccessoryName}}</span>
                                             </div>
@@ -77,7 +76,6 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
 
                                     </log-column>
 
@@ -91,8 +89,7 @@
                                                  
                                                 [Alignment]="'right'">
 
-                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             
                                                 
                                                 
@@ -115,13 +112,11 @@
                                                 </div>
                                             
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
 
                                     <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteSafetiesList(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                             </div>
@@ -129,7 +124,6 @@
 
 
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -157,7 +151,7 @@
                         <IconButton [IsSmall]="true"
                                     [Name]="'Add'"
                                     (click)="AddOwnersList()"
-                                    style="float:left;" id="AddOwner"></IconButton>
+                                    style="float:left;"></IconButton>
                         
                     </div>
                 <div style="width:130px;float:left;margin-top:1px;margin-left:15px;">
@@ -191,8 +185,7 @@
                                     <log-column [header]="'Customs.VehicleOwner.F.ClientId' | TextCodeTranslationPipe"
                                                 [binding]="'VehicleSafetyAccessoryName'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
 
-                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ClientId}}</span>
                                             </div>
@@ -209,17 +202,18 @@
                                                 </LogLov>-->
 
                                                 <LogTextBox [ObjectFieldName]="'ClientId'" [DataContext]="item" [FocusOnMe]="true" 
-                                                            [Text]="item.ClientId" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                            [Text]="item.ClientId" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                            [InputType]="'unsDecimal'"
+                                                            ></LogTextBox>
+
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
 
                                     </log-column>
 
                                     <log-column [header]="'Customs.VehicleOwner.F.PassportNumber' | TextCodeTranslationPipe" [binding]="'PassportNumber'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PassportNumber}}</span>
                                             </div>
@@ -229,12 +223,10 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.VehicleOwner.F.PassCountryCode' | TextCodeTranslationPipe" [binding]="'PassCountryCode'" [width]="'100'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PassCountryName}}</span>
                                             </div>
@@ -251,12 +243,10 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.VehicleOwner.F.ImporterPassportTypeCode' | TextCodeTranslationPipe" [binding]="'ImporterPassportTypeCode'" [width]="'200'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ImporterPassportTypeName}}</span>
                                             </div>
@@ -273,7 +263,6 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.VehicleOwner.F.FirstName' | TextCodeTranslationPipe"
@@ -282,8 +271,7 @@
                                                 [Editable]="true"
                                                 [Alignment]="'right'">
 
-                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.FirstName}}</span>
                                             </div>
@@ -295,7 +283,6 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.VehicleOwner.F.LastNameOrCorporationName' | TextCodeTranslationPipe"
@@ -304,8 +291,7 @@
                                                 [Editable]="true"
                                                 [Alignment]="'right'">
 
-                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.LastNameOrCorporationName}}</span>
                                             </div>
@@ -317,14 +303,12 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.VehicleOwner.F.IsMain' | TextCodeTranslationPipe"
                                                 [binding]="'VehicleSafetyAccessoryName'" [width]="'110'" [Editable]="true" [Alignment]="'right'">
 
-                                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate>
                                             <!--style="text-align:right" class="TextTrimming"  --> 
                                             <div  style="position: absolute;left:50%;top:10%;" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <CheckBox (Checked)="item.IsMain = $event" [IsChecked]="item.IsMain"></CheckBox>
@@ -336,14 +320,12 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
 
                                     </log-column>
 
 
                                     <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteOwnersList(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                             </div>
@@ -351,7 +333,6 @@
 
 
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

@@ -12,8 +12,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ObjectFieldId { get; set; }
         public string Value { get; set; }
         public string Operator { get; set; }
-        public string ObjectFieldCode { get; set; }
-
+       
 
         ////[Include]
         ////[Association("RuleConditionFieldsObjectTableRule", "ObjectTableRuleId", "Id", IsForeignKey = true)]

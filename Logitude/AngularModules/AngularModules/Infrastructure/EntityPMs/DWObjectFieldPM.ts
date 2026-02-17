@@ -20,7 +20,7 @@ export class DWObjectFieldPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -145,79 +145,11 @@ export class DWObjectFieldPM {
     public set HelpText(newValue: string) { if (this.helpText != newValue) { this.helpText = newValue; this.MarkAsDirty("HelpText"); } }
        
 	 
-    private isCustom: boolean;
-    public get IsCustom() { return this.isCustom; }
-    public set IsCustom(newValue: boolean) { if (this.isCustom != newValue) { this.isCustom = newValue; this.MarkAsDirty("IsCustom"); } }
-       
-	 
-    private customPickListCode: string;
-    public get CustomPickListCode() { return this.customPickListCode; }
-    public set CustomPickListCode(newValue: string) { if (this.customPickListCode != newValue) { this.customPickListCode = newValue; this.MarkAsDirty("CustomPickListCode"); } }
-       
-	 
-    private originalObjectFieldCode: string;
-    public get OriginalObjectFieldCode() { return this.originalObjectFieldCode; }
-    public set OriginalObjectFieldCode(newValue: string) { if (this.originalObjectFieldCode != newValue) { this.originalObjectFieldCode = newValue; this.MarkAsDirty("OriginalObjectFieldCode"); } }
-       
-	 
-    private fullNameTextCodeCode: string;
-    public get FullNameTextCodeCode() { return this.fullNameTextCodeCode; }
-    public set FullNameTextCodeCode(newValue: string) { if (this.fullNameTextCodeCode != newValue) { this.fullNameTextCodeCode = newValue; this.MarkAsDirty("FullNameTextCodeCode"); } }
-       
-	 
-    private partnerFullNameTextCodeCode: string;
-    public get PartnerFullNameTextCodeCode() { return this.partnerFullNameTextCodeCode; }
-    public set PartnerFullNameTextCodeCode(newValue: string) { if (this.partnerFullNameTextCodeCode != newValue) { this.partnerFullNameTextCodeCode = newValue; this.MarkAsDirty("PartnerFullNameTextCodeCode"); } }
-       
-	 
-    private partnerOriginalObjectFieldCode: string;
-    public get PartnerOriginalObjectFieldCode() { return this.partnerOriginalObjectFieldCode; }
-    public set PartnerOriginalObjectFieldCode(newValue: string) { if (this.partnerOriginalObjectFieldCode != newValue) { this.partnerOriginalObjectFieldCode = newValue; this.MarkAsDirty("PartnerOriginalObjectFieldCode"); } }
-       
-	 
-    private viewFieldDisplayName: string;
-    public get ViewFieldDisplayName() { return this.viewFieldDisplayName; }
-    public set ViewFieldDisplayName(newValue: string) { if (this.viewFieldDisplayName != newValue) { this.viewFieldDisplayName = newValue; this.MarkAsDirty("ViewFieldDisplayName"); } }
-       
-	 
-    private dontDisplayInView: boolean;
-    public get DontDisplayInView() { return this.dontDisplayInView; }
-    public set DontDisplayInView(newValue: boolean) { if (this.dontDisplayInView != newValue) { this.dontDisplayInView = newValue; this.MarkAsDirty("DontDisplayInView"); } }
-       
-	 
-    private dimensionDataViewName: string;
-    public get DimensionDataViewName() { return this.dimensionDataViewName; }
-    public set DimensionDataViewName(newValue: string) { if (this.dimensionDataViewName != newValue) { this.dimensionDataViewName = newValue; this.MarkAsDirty("DimensionDataViewName"); } }
-       
-	 
-    private isMultipleSelection: boolean;
-    public get IsMultipleSelection() { return this.isMultipleSelection; }
-    public set IsMultipleSelection(newValue: boolean) { if (this.isMultipleSelection != newValue) { this.isMultipleSelection = newValue; this.MarkAsDirty("IsMultipleSelection"); } }
-       
-	 
-    private useUnitSelection: boolean;
-    public get UseUnitSelection() { return this.useUnitSelection; }
-    public set UseUnitSelection(newValue: boolean) { if (this.useUnitSelection != newValue) { this.useUnitSelection = newValue; this.MarkAsDirty("UseUnitSelection"); } }
-       
-	 
-    private recordType: string;
-    public get RecordType() { return this.recordType; }
-    public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
-       
-	 
-    private factTableCode: string;
-    public get FactTableCode() { return this.factTableCode; }
-    public set FactTableCode(newValue: string) { if (this.factTableCode != newValue) { this.factTableCode = newValue; this.MarkAsDirty("FactTableCode"); } }
-       
-	 
 
     public OldEntityPM: DWObjectFieldPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -225,7 +157,6 @@ export class DWObjectFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DWObjectField");
            
         }
-	 }
     }
     private MyClone: DWObjectFieldPM;
 

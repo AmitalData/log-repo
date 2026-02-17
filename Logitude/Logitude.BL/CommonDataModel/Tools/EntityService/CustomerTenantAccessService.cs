@@ -1,5 +1,4 @@
-﻿using Logitude.BL.CommonDataModel.EntityAMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.Security;
@@ -8,11 +7,11 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -34,7 +33,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private int tenant;
         private string serviceContextUser;
         public CustomerTenantAccess Poco { get; set; }
-        public CustomerTenantAccessCardPM customerTenantAccessCardPM;
         public ICommonDataContext ObjectContext
         {
             get { return objectContext; }
@@ -139,7 +137,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (paramentityPM != null)
             {
-                ValidateCustomerTenantAccessCards(paramentityPM);
                 this.entityPM = paramentityPM;
             }
             this.isNewEntity = false;
@@ -149,7 +146,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
             //IQueueService queueservice = new DbQueueService();
             //queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
-            //queueservice.Send(new Dictionary<string, string>() { { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } });
+            //queueservice.Send(new Dictionary<string, string>() { { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
             SetChangeSet(entityPM.CustomerTenantAccessCards);
             this.CustomerTenantAccessCardsCollection();
 
@@ -157,35 +154,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("CustomerTenantAccess", 0, true);
             //ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", entityPM.UpdatedByUserId);
-        }
-
-        private static void ValidateCustomerTenantAccessCards(CustomerTenantAccessPM paramentityPM)
-        {
-            if (paramentityPM.CustomerTenantAccessCards == null)
-                return;
-            ValidateCustomerTenantAccessCardPeriod(paramentityPM);
-            var InValidCustomerTenantAccessCards = paramentityPM.CustomerTenantAccessCards.Find(a => a.IsCustomsActivated == false && a.IsExportActivated == false);
-            if (InValidCustomerTenantAccessCards != null)
-            {
-                throw new Exception("You have to choose either Export or Customs option.");
-            }
-        }
-
-        private static void ValidateCustomerTenantAccessCardPeriod(CustomerTenantAccessPM paramentityPM)
-        {
-            var InValidCustomerTenantAccessCardPeriod = paramentityPM.CustomerTenantAccessCards.Find(card => IsNotValidInsertBatchBuildCustomerTenantAccessCardPeriod(card, -3));
-            if (InValidCustomerTenantAccessCardPeriod != null)
-            {
-                throw new Exception("You can\'t set start date more than three months ago");
-            }
-        }
-
-        private static bool IsNotValidInsertBatchBuildCustomerTenantAccessCardPeriod(CustomerTenantAccessCardPM customerTenantAccessCardPM, int period)
-        {
-            if (customerTenantAccessCardPM.ChangeSetOp != ChangeSetOperation.Insert) return false;
-            if (!customerTenantAccessCardPM.BuildBatch) return false;
-            DateTime threeMonthsAgoDate = DateTime.Now.AddMonths(period);
-            return DateTime.Compare(threeMonthsAgoDate, customerTenantAccessCardPM.HybridStartDate) > 0;
         }
 
         private void CustomerTenantAccessCardsCollection()
@@ -251,15 +219,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
                 
                 TempCustomer.IsLogBox = true;
-
-                CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
-                bool ishascard = customerTenantAccessCardQuery.IsCustomerTenantAccessHasCards(entityPM.Id);
-                if (!ishascard)
-                {
-                    InitializeCustomerTenantAccessQueue(itemPM);
-
-                }
-
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPoco.Tenant);
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
@@ -284,8 +243,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             try
             {
-                
-             
+                IQueueService queueservice = new DbQueueService();
+                CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
+                bool ishascard = customerTenantAccessCardQuery.IsCustomerTenantAccessHasCards(entityPM.Id);
+                if (!ishascard)
+                {
+                    //IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
+                    queueservice.Send(new Dictionary<string, string>() { { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+
+                }
 
                 if (BuildBatch)
                 {
@@ -306,7 +273,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     customerTenantAccessCardsBatchService.Create();
 
                     //queueservice.InitializeQueue("ImporterShipmentsQueueBuilderQueue", 0);
-                    //queueservice.Send(new Dictionary<string, string>() { { "CustomerId", CustomerTenantAccessCardsBatchPM.CustomerId.ToString() }, { "CustomerTenantAccessId", CustomerTenantAccessCardsBatchPM.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", CustomerTenantAccessCardsBatchPM.BatchNumber } });
+                    //queueservice.Send(new Dictionary<string, string>() { { "CustomerId", CustomerTenantAccessCardsBatchPM.CustomerId.ToString() }, { "CustomerTenantAccessId", CustomerTenantAccessCardsBatchPM.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", CustomerTenantAccessCardsBatchPM.BatchNumber }, { "CorrelationId", Guid.NewGuid().ToString() } });
 
                 }
             }
@@ -330,20 +297,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             bool BuildBatch = itemPM.BuildBatch;
             CustomerTenantAccessCard itemPoco = customerTenantAccessCardRepository.GetSingleCustomerTenantAccessCard(itemPM.CustomerTenantAccessId, itemPM.CustomerId, itemPM.Tenant);
-            CustomerTenantAccessMapping.MapCustomerTenantAccessCard(itemPM, itemPoco, false, loggedContact.Id, loggedTenant);
-            this.customerTenantAccessCardPM = itemPM;
-
-
-
+            CustomerTenantAccessMapping.MapCustomerTenantAccessCard(itemPM, itemPoco, false, loggedContact.Id, loggedTenant); 
             customerTenantAccessCardRepository.Update(itemPoco);
             customerTenantAccessCardRepository.SubmitChanges();
+           
 
-          
-             
             if (itemPM.StatusTypeCode == "A")
             {
-                InitializeCustomerTenantAccessQueue(itemPM);
-
                 CustomerQuery CustomerQuery = new CustomerQuery(itemPM.Tenant);
                 var TempCustomer = CustomerQuery.GetSinglePMForLogBox(itemPM.CustomerId, itemPM.Tenant);
                 if (this.entityPM.IsPrivateLabelCustomer == true)
@@ -360,11 +320,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPM.Tenant);
                 TempCustomer.CustomerTenant = this.entityPM.CustomerTenant;
-                TempCustomer.AddLogboxCustomerQueue = true;
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
-
                 CustomerService.Update();
-                TempCustomer.AddLogboxCustomerQueue = false;
             }
             else
             {
@@ -376,10 +333,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPM.Tenant);
                 TempCustomer.CustomerTenant = this.entityPM.CustomerTenant;
-                //TempCustomer.AddLogboxCustomerQueue = true;
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
                 CustomerService.Update();
-                TempCustomer.AddLogboxCustomerQueue = false;
             }
             string key = itemPM.CustomerId + "_" + tenant + "_info";
             if (CacheManager.CacheWrapper != null)
@@ -409,19 +364,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //    customerTenantAccessCardsBatchService.Create();
             //    IQueueService queueservice = new DbQueueService();
             //    queueservice.InitializeQueue("ImporterShipmentsQueueBuilderQueue", 0);
-            //    queueservice.Send(new Dictionary<string, string>() { { "CustomerId", CustomerTenantAccessCardsBatchPM.CustomerId.ToString() }, { "CustomerTenantAccessId", CustomerTenantAccessCardsBatchPM.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", CustomerTenantAccessCardsBatchPM.BatchNumber } });
+            //    queueservice.Send(new Dictionary<string, string>() { { "CustomerId", CustomerTenantAccessCardsBatchPM.CustomerId.ToString() }, { "CustomerTenantAccessId", CustomerTenantAccessCardsBatchPM.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", CustomerTenantAccessCardsBatchPM.BatchNumber }, { "CorrelationId", Guid.NewGuid().ToString() } });
 
             //}
 
         }
-
-        private void InitializeCustomerTenantAccessQueue(CustomerTenantAccessCardPM itemPM)
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CustomerTenantAccessQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "IsCustomsActivated", itemPM.IsCustomsActivated.ToString() }, { "IsExportActivated", itemPM.IsExportActivated.ToString() }, { "CustomerTenant", entityPM.CustomerTenant.ToString() }, { "PartnerTenant", entityPM.Tenant.ToString() }, { "Id", entityPM.Id.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
-        }
-
         private void DeleteCustomerTenantAccessCard(CustomerTenantAccessCardPM itemPM)
         {
             CustomerTenantAccessCard itemPoco = customerTenantAccessCardRepository.GetSingleCustomerTenantAccessCard(itemPM.CustomerTenantAccessId, itemPM.CustomerId, itemPM.Tenant);
@@ -431,85 +378,5 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         }
 
-        public static void UpdateAllCustomerTenantAccesses(CustomerTenantAccessUpdaterAM customerTenantAccessUpdaterAM)
-        {
-            if ((customerTenantAccessUpdaterAM.IsActive != null && customerTenantAccessUpdaterAM.IsActive == false) || (customerTenantAccessUpdaterAM.IsPassedTrialEndDate != null && customerTenantAccessUpdaterAM.IsPassedTrialEndDate == true))
-            {
-                UpdateStatusCustomerTenantAccesses(customerTenantAccessUpdaterAM);
-            }
-
-            if (customerTenantAccessUpdaterAM.IsPrivateLabel != null)
-            {
-                UpdateIsPrivateLabelCustomerTenantAccesses(customerTenantAccessUpdaterAM);
-            }
-        }
-
-        private static void UpdateStatusCustomerTenantAccesses(CustomerTenantAccessUpdaterAM customerTenantAccessUpdaterAM)
-        {
-            CustomerTenantAccessRepository CustomerTenantAccessRepository = new CustomerTenantAccessRepository(customerTenantAccessUpdaterAM.Tenant);
-            IQueryable<CustomerTenantAccess> CustomerTenantAccesses = CustomerTenantAccessRepository.GetCustomerTenantAccessesByCustomerTenant(customerTenantAccessUpdaterAM.CustomerTenant);
-            const string inActiveStatusCode = "IA";
-            foreach (CustomerTenantAccess customerTenantAccess in CustomerTenantAccesses)
-            {
-                customerTenantAccess.Status = inActiveStatusCode;
-                CustomerTenantAccessRepository.Update(customerTenantAccess);
-            }
-
-            CustomerTenantAccessRepository.SubmitChanges();
-        }
-
-        private static void UpdateIsPrivateLabelCustomerTenantAccesses(CustomerTenantAccessUpdaterAM customerTenantAccessUpdaterAM)
-        {
-            CustomerTenantAccessRepository CustomerTenantAccessRepository = new CustomerTenantAccessRepository(customerTenantAccessUpdaterAM.Tenant);
-            IQueryable<CustomerTenantAccess> CustomerTenantAccesses = CustomerTenantAccessRepository.GetCustomerTenantAccessesByCustomerTenant(customerTenantAccessUpdaterAM.CustomerTenant);
-            CustomerTenantAccessCardRepository customerTenantAccessCardRepository = new CustomerTenantAccessCardRepository(customerTenantAccessUpdaterAM.Tenant);
-            CustomerRepository customerRepository = new CustomerRepository(customerTenantAccessUpdaterAM.Tenant);
-
-            const string waitingStatusCode = "W";
-            const string acceptedStatusCode = "A";
-            CustomerTenantAccesses = CustomerTenantAccesses.Where(CustomerTenantAccess => CustomerTenantAccess.Status == waitingStatusCode || CustomerTenantAccess.Status == acceptedStatusCode);
-            foreach (CustomerTenantAccess customerTenantAccess in CustomerTenantAccesses)
-            {
-                UpdateCustomerTenantAccessAndCustomers(new CustomerTenantAccessUpdaterArgs {
-                    CustomerTenantAccessUpdaterAM = customerTenantAccessUpdaterAM,
-                    CustomerTenantAccessRepository = CustomerTenantAccessRepository, 
-                    CustomerTenantAccessCardRepository = customerTenantAccessCardRepository, 
-                    CustomerRepository = customerRepository, 
-                    CustomerTenantAccess = customerTenantAccess
-                });
-            }
-
-            CustomerTenantAccessRepository.SubmitChanges();
-            customerRepository.SubmitChanges();
-        }
-
-        private static void UpdateCustomerTenantAccessAndCustomers(CustomerTenantAccessUpdaterArgs customerTenantAccessUpdaterArgs)
-        {
-            customerTenantAccessUpdaterArgs.CustomerTenantAccess.IsPrivateLabelCustomer = (bool)customerTenantAccessUpdaterArgs.CustomerTenantAccessUpdaterAM.IsPrivateLabel;
-            customerTenantAccessUpdaterArgs.CustomerTenantAccessRepository.Update(customerTenantAccessUpdaterArgs.CustomerTenantAccess);
-
-            IQueryable<CustomerTenantAccessCard> allCustomerTenantAccessCards = customerTenantAccessUpdaterArgs.CustomerTenantAccessCardRepository.GetAllCustomerTenantAccessCardByCustomerTenantAccessId(customerTenantAccessUpdaterArgs.CustomerTenantAccess.Id, customerTenantAccessUpdaterArgs.CustomerTenantAccessUpdaterAM.Tenant);
-            List<string> allCustomersIds = allCustomerTenantAccessCards.Select(customerTenantAccessCard => customerTenantAccessCard.CustomerId).ToList();
-            List<Customer> customers = customerTenantAccessUpdaterArgs.CustomerRepository.GetCustomersByCardsIds(allCustomersIds, customerTenantAccessUpdaterArgs.CustomerTenantAccessUpdaterAM.Tenant);
-            foreach (Customer customer in customers)
-            {
-                UpdateIsPrivateLabelCustomerOrLogbox(customerTenantAccessUpdaterArgs, customer);
-            }
-        }
-
-        private static void UpdateIsPrivateLabelCustomerOrLogbox(CustomerTenantAccessUpdaterArgs customerTenantAccessUpdaterArgs, Customer customer)
-        {
-            customer.IsPrivateLabelCustomer = customerTenantAccessUpdaterArgs.CustomerTenantAccess.IsPrivateLabelCustomer;
-            customer.LogBoxActivated = !customer.IsPrivateLabelCustomer;
-            customerTenantAccessUpdaterArgs.CustomerRepository.Update(customer);
-        }
-    }
-    class CustomerTenantAccessUpdaterArgs
-    {
-        public CustomerTenantAccessUpdaterAM CustomerTenantAccessUpdaterAM { get; set; }
-        public CustomerTenantAccessRepository CustomerTenantAccessRepository { get; set; }
-        public CustomerTenantAccessCardRepository CustomerTenantAccessCardRepository { get; set; }
-        public CustomerRepository CustomerRepository { get; set; }
-        public CustomerTenantAccess CustomerTenantAccess { get; set; }
     }
 }

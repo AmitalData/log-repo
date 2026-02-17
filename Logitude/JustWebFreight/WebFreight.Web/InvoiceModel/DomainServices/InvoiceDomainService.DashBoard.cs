@@ -66,18 +66,18 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
             return arInvoiceQuery.GetDebtorExposure(tenant, currencyIndex);
         }
 
-        public List<DebtorsClass> GetDebrotExposureForGridControl(int tenant, int index, bool isBranchRestricted)
+        public List<DebtorsClass> GetDebrotExposureForGridControl(int tenant, int index)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             arInvoiceQuery = new ARInvoiceQuery(tenant);
-            return arInvoiceQuery.GetDebtorsExposureForGridControl(tenant, index, isBranchRestricted);
+            return arInvoiceQuery.GetDebtorsExposureForGridControl(tenant, index);
         }
 
-        public List<CreditorsClass> GetCreditorExposure(int tenant, int index, bool isBranchRestricted)
+        public List<CreditorsClass> GetCreditorExposure(int tenant, int index)
         {
             apInvoiceQuery = new APInvoiceQuery(tenant);
-            return apInvoiceQuery.GetDebtorsExposureForGridControl(tenant, index, isBranchRestricted);
+            return apInvoiceQuery.GetDebtorsExposureForGridControl(tenant, index);
         }
 
     }

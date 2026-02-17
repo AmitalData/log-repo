@@ -30,15 +30,13 @@ import { DeclarationPM } from '../../../../../../Customs/EntityPMs/DeclarationPM
 import {CustomsSettingExtendedListService} from '../../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SupplierInvoiceItemVehicleComponent.html',
 })
 
 
 
 export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
-  public ExcludeFromInterface: any;
-
     public ObjectTableName: string = "Customs.SupplierInvoiceItemVehicle";
     public DataContext = this;
     public invoiceItemPM: SupplierInvoiceItemPM;
@@ -72,8 +70,8 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
-            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemVehicle").subscribe((response:any) => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemVehicle").subscribe(response => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe(response => {
 
 
                     this.IsVisibile = true;
@@ -110,9 +108,25 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
 
                     var featureVehicle = FeatureLocator.Features.filter(f => f.Code == "LOADVEHICLESFROMUNI")[0];
                     if (featureVehicle) {
-               
+                        this.customsSettingListService.getAll().subscribe((response: ServiceResponse) => {
+                            var list: CustomsSettingList[] = response.Result;
+
+                            if (!AppTool.IsNullOrEmpty(list)) {
+                                var customsSetting = list.filter(d => d.Tenant == SessionLocator.Tenant)[0];
+
+                                if (!AppTool.IsNullOrEmpty(customsSetting)) {
+                                    if (customsSetting.IsConnectedToUniFreight) {
                                         this.VehiclesFilesButtonVisibility = true;
-                       
+                                        ////let myDec = this.CurrentSession.CurrentEditComponent.EntityPM;
+                                        //let myDec = args.declarationPM;
+                                        //if (AmitalGatewayUtil.Instance.IsDeclarationInUse(myDec.CustomFileNo, myDec.IsConvertedDeclaration, myDec.IsConnectedToUnifreight)) {
+                                        //    this.VehiclesFilesButtonVisibility = true;
+                                        //}
+                                    }
+                                }
+                            }
+                        });
+
                     }
                 });
             });
@@ -259,7 +273,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
             // validate it in server
             if (richbitNumbersList)
             {
-                this.vehicleExtendedPMService.GetCheckRichbitNumbersError(richbitNumbersList).subscribe((response:any) => {
+                this.vehicleExtendedPMService.GetCheckRichbitNumbersError(richbitNumbersList).subscribe(response => {
                     if (response) {
 
                         var vehicleValidationError: VehicleValidationError[] = [];
@@ -369,7 +383,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                                         }
                                     });
 
-                                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+                                    logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
                                     this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                                     
 
@@ -419,7 +433,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
 
         for (let item of this.invoiceItemPM.SupplierInvoiceItemVehicles) {
             Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-            if (AppTool.IsNullOrEmpty(item.RichbitFileNumber) && AppTool.IsNullOrEmpty(item.VehicleChassisNumber) && (AppTool.IsNullOrEmpty(item.IdentifierID))) {
+            if (AppTool.IsNullOrEmpty(item.RichbitFileNumber) && AppTool.IsNullOrEmpty(item.VehicleChassisNumber)) {
                 errors.push(TextCodeTranslator.Translate("Customs.General.O.EmptyVehicle"));
             }
 
@@ -439,17 +453,14 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
 
         if (errors.length == 0) {
             for (let item of this.invoiceItemPM.SupplierInvoiceItemVehicles) {
-                if ( this.declarationPM.Direction != 'E') {
-                    if (!AppTool.IsNullOrEmpty(item.VehicleId) || !AppTool.IsNullOrEmpty(item.RichbitFileNumber)) {
-                        item.VehicleTypeCode = "ZZZ";
-                    }
-
-
-                    else {
-                        item.VehicleTypeCode = "CN";
-                    }
+                if (!AppTool.IsNullOrEmpty(item.VehicleId) || !AppTool.IsNullOrEmpty(item.RichbitFileNumber)) {
+                    item.VehicleTypeCode = "ZZZ";
                 }
-            
+
+
+                else {
+                    item.VehicleTypeCode = "CN";
+                }
             }
             if (this.invoiceItemPM.SupplierInvoiceItemVehicles.length > 0) {
                 this.invoiceItemPM.VehicleStatus = true;
@@ -617,14 +628,14 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                         this.ItemsSource.Insert(new InvoiceItemVehicleLine(item, this, this.invoiceItemPM));
                     }
                 // this code moved to server.
-                    //this.vehiclePMService.get(vehicle.Id).subscribe((response:any) => {
+                    //this.vehiclePMService.get(vehicle.Id).subscribe(response => {
                     //    if (response) {
                     //        if (!response.HasError) {
                     //            var vehicle: VehiclePM = response.Result;
                     //            if (vehicle) {
                     //                vehicle.DeclarationId = this.invoiceItemPM.DeclarationId;
                     //            }
-                    //           this.vehiclePMService.update(vehicle).subscribe((response:any) => {
+                    //           this.vehiclePMService.update(vehicle).subscribe(response => {
                     //           });
                     //        }
                     //    }
@@ -653,7 +664,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicator("Loading ...");
 
         this.cardListService.getSingle(this.declarationPM.CustomerId)
-            .subscribe((res:any) => {
+            .subscribe(res => {
                 let cardList: CardList = res.Result;
                 let unifaceCustId: string = ""
                 if (!AppTool.IsNullOrEmpty(cardList)) {
@@ -797,13 +808,13 @@ export class InvoiceItemVehicleLine extends BaseComponent {
         this.parent = Parent;
         this.invoiceItem = Item;
 
-        /*if (this.RichbitFileNumber != null && this.VehicleChassisNumber == null) {
+        if (this.RichbitFileNumber != null && this.VehicleChassisNumber == null) {
             this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
-        }*/
+        }
 
-        /*if (this.RichbitFileNumber == null && this.VehicleChassisNumber != null) {
+        if (this.RichbitFileNumber == null && this.VehicleChassisNumber != null) {
             this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
-        }*/
+        }
        
 
     }
@@ -857,43 +868,13 @@ export class InvoiceItemVehicleLine extends BaseComponent {
 
         }
     }
-
-
-    public get IdentifierID() { return this.entityPM ? this.entityPM.IdentifierID : null; }
-    public set IdentifierID(newValue: string) {
-        this.entityPM.IdentifierID = newValue;
-        this.entityPM.IsDirty = true;
-    }
-
-
-    public get VehicleTypeCode() { return this.entityPM ? this.entityPM.VehicleTypeCode : null; }
-    public set VehicleTypeCode(newValue: string) {
-        this.entityPM.VehicleTypeCode = newValue;
-        this.entityPM.IsDirty = true;
-    }
-
-
-    public get VehicleTypeName() { return this.entityPM ? this.entityPM.VehicleTypeName : null; }
-    public set VehicleTypeName(newValue: string) {
-        this.entityPM.VehicleTypeName = newValue;
-        this.entityPM.IsDirty = true;
-    }
-
-    SetLocalName(entity, fieldName) {
-        if (!AppTool.IsNullOrEmpty(entity)) {
-            this[fieldName] = entity.LocalName;
-        } else {
-            this[fieldName] = null;
-        }
-
-    }
     
     //#endregion
    
 
     SetFileNumber(logCellTemplate: any, VehicleChassisNumberTextBox: any) {
         //popup validation removed due to some problems whith popup show 
-        this.vehicleExtendedPMService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(this.VehicleChassisNumber, null).subscribe((response:any) => {
+        this.vehicleExtendedPMService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(this.VehicleChassisNumber, null).subscribe(response => {
             if (response) {
                 this.vehicle = response.Result;
                 if (this.vehicle != null) {
@@ -958,7 +939,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
 
                         this.entityPM.VehicleId = this.vehicle.Id;
                         this.RichbitFileStatus = this.vehicle.StatusName;
-                        //this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
+                        this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
                         this.vehicle.DeclarationId = this.invoiceItem.DeclarationId;
                         this.oldVehicle = this.vehicle;
                         this.parent.EnableOkButton = true;
@@ -970,9 +951,9 @@ export class InvoiceItemVehicleLine extends BaseComponent {
                     this.vehicleSelected = true;
 
                     this.valid = true;
-                    //this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
+                    this.UIProperties.SetEnabled("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", false);
                     //this.UIProperties.SetValidity("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", true, null);
-                    //this.entityPM.RichbitFileNumber = null;
+                    this.entityPM.RichbitFileNumber = null;
                     this.entityPM.VehicleId = null;
                     this.RichbitFileStatus = null;
                     this.parent.EnableOkButton = true;
@@ -988,7 +969,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
 
     SetChassisNumber(logCellTemplate: any, RichbitFileNumbernTextBox: any) {
         //popup validation removed due to some problems whith popup show 
-        this.vehicleExtendedPMService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(null, this.RichbitFileNumber).subscribe((response:any) => {
+        this.vehicleExtendedPMService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(null, this.RichbitFileNumber).subscribe(response => {
             if (response) {
                 this.vehicle = response.Result;
                 if (this.vehicle != null) {
@@ -1054,7 +1035,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
                         this.parent.EnableOkButton = true;
 
                         //this.UIProperties.SetValidity("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", true, null);
-                        //this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
+                        this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
 
                         this.entityPM.VehicleChassisNumber = this.vehicle.VehicleChassisNumber;
                         this.entityPM.RichbitFileStatus = this.vehicle.StatusName;
@@ -1075,8 +1056,8 @@ export class InvoiceItemVehicleLine extends BaseComponent {
                     this.parent.EnableOkButton = true;
 
                     //this.UIProperties.SetValidity("RichbitFileNumber", "Customs.SupplierInvoiceItemVehicle", true, null);
-                    //this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
-                    //this.entityPM.VehicleChassisNumber = null;
+                    this.UIProperties.SetEnabled("VehicleChassisNumber", "Customs.SupplierInvoiceItemVehicle", false);
+                    this.entityPM.VehicleChassisNumber = null;
                     this.entityPM.VehicleId = null;
                     this.RichbitFileStatus = null;
                     if (this.oldVehicle != null) {
@@ -1110,14 +1091,14 @@ export class InvoiceItemVehicleLine extends BaseComponent {
                 if (!AppTool.IsNullOrEmpty(i)) this.parent.parent.addedVehicles.splice(i, 1);
             }
             ////Commentd=> moved to the server by mohammad
-            //this.vehicleExtendedPMService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(this.VehicleChassisNumber, this.RichbitFileNumber).subscribe((response:any) => {
+            //this.vehicleExtendedPMService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(this.VehicleChassisNumber, this.RichbitFileNumber).subscribe(response => {
             //    if (response) {
             //        if (!response.HasError) {
             //            var vehicle: VehiclePM = response.Result;
             //            if (vehicle) {
             //                vehicle.DeclarationId = null;
 
-            //                this.vehiclePMService.update(vehicle).subscribe((response:any) => {
+            //                this.vehiclePMService.update(vehicle).subscribe(response => {
             //                });
             //            } 
             //        }
@@ -1130,6 +1111,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
     }
 
     OnRichbitFileNumbernLostFocus(logCellTemplate: any, RichbitFileNumbernTextBox: any) {
+
         if (this.RichbitFileNumber) {
             if (!this.vehicleSelected)
                 this.SetChassisNumber(logCellTemplate, RichbitFileNumbernTextBox);
@@ -1145,6 +1127,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
     }
 
     OnVehicleChassisNumberLostFocus(logCellTemplate: any, VehicleChassisNumberTextBox: any) {
+
         if (this.VehicleChassisNumber) {
             if (!this.vehicleSelected)
                 this.SetFileNumber(logCellTemplate, VehicleChassisNumberTextBox);

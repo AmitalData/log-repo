@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr>
         <td>
@@ -54,22 +54,12 @@
                                         </td>
                                     </tr>
 
-                                    <tr *ngIf="!IsKRateClass" class="FormFieldRow">
+                                    <tr class="FormFieldRow">
                                         <td [style.width.px]="LabelColumnWidth">
                                             <LogLabel [ObjectFieldName]="'ChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightLabel" [ShowWarning]="ShowWarning_ChargeableWeight"></LogLabel>
                                         </td>
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'ChargeableWeight'" [Text]="ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                        </td>
-                                    </tr>
-
-
-                                    <tr *ngIf="IsKRateClass" class="FormFieldRow">
-                                        <td [style.width.px]="LabelColumnWidth">
-                                            <LogLabel [ObjectFieldName]="'ChargeableWeightInKG'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightKGLabel" [ShowWarning]="ShowWarning_ChargeableWeight"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <LogTextBox [ObjectFieldName]="'ChargeableWeightInKG'" [Text]="ChargeableWeightInKG" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
                                     </tr>
 
@@ -118,14 +108,16 @@
                                             <table>
                                                 <tr>
                                                     <td style="width: 70px;">
-                                                        <div>
-                                                            <RadioButton [Name]="'FreightPrepaidCollectRadio'" [IsChecked]="FreightPrepaidCollectId == 'P'" (Checked)="SetFreightPrepaidCollect('P')" [Text]="'Prepaid'"></RadioButton>
+                                                        <div class="RadioButton">
+                                                            <input id="FreightPrepaidRadio" type="radio" name="FreightPrepaidCollectRadio" [checked]="FreightPrepaidCollectId == 'P'" (click)="SetFreightPrepaidCollect('P')" [disabled]="!IsEditingEnabled" />
+                                                            <label for="FreightPrepaidRadio">Prepaid</label>
                                                         </div>
                                                     </td>
 
                                                     <td>
-                                                        <div>
-                                                            <RadioButton [Name]="'FreightPrepaidCollectRadio'" [IsChecked]="FreightPrepaidCollectId == 'C'" (Checked)="SetFreightPrepaidCollect('C')" [Text]="'Collect'"></RadioButton>                                                           
+                                                        <div class="RadioButton">
+                                                            <input id="FreightCollectRadio" type="radio" name="FreightPrepaidCollectRadio" [checked]="FreightPrepaidCollectId == 'C'" (click)="SetFreightPrepaidCollect('C')" [disabled]="!IsEditingEnabled" />
+                                                            <label for="FreightCollectRadio">Collect</label>
                                                         </div>
                                                     </td>
 

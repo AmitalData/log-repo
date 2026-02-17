@@ -15,7 +15,6 @@ using UnifreightIIG.Common.CommonIIGInterface;
 using UnifreightIIG.Common.Faults;
 using UnifreightIIG.Common.TheGateway;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.CustomsMessaging.FakeMessagingServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -46,14 +45,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
            my.RequestDescription = "הוראת תשלום " + requestParams.PaymentNumber;
            return my;
        }
-        protected override TSH_MSG2_PaymentOrderReply GetFakeCustomsResponse(GenericRequestParams requestParamsData)
-        {
-
-            var MyFake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService = new Fake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService();
-            return MyFake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.GetFakeCustomsResponse(requestParamsData);
-
-        }
-        protected override NewPaymentRequestParams CreateDefaultRequestParamsFromCustomsResponse(TSH_MSG2_PaymentOrderReply customsResponse)
+       
+       protected override NewPaymentRequestParams CreateDefaultRequestParamsFromCustomsResponse(TSH_MSG2_PaymentOrderReply customsResponse)
        {
            var tableName = "Customs.PaymentOrder";
 

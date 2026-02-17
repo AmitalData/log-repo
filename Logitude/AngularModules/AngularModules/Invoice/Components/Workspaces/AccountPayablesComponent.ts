@@ -23,7 +23,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'AccountPayablesComponent',
-    
+    moduleId: module.id,
     templateUrl: './AccountPayablesComponent.html',
 })
 
@@ -35,7 +35,6 @@ export class AccountPayablesComponent {
     public myViewsQueryVisibility = false;
     public APInvoiceErrorInTransferVisibility: boolean = false;
     public APPaymentErrorInTransferVisibility: boolean = false;
-    public IsNewEntityVisibile: boolean = false;
 
     public PayablesChartId: string = "PayablesChartId";
     FilterList: DashBoardFilters[] = [];
@@ -70,7 +69,7 @@ export class AccountPayablesComponent {
     }
 
     LoadBarQueries(months: number, days: number, index: number, currency: number) {
-        this.myChartsService.GetMoneyOutStatusForTenant(months, days, this.TenantPM.Id, index, currency).subscribe((myResult: ServiceResponse) => {
+        this.myChartsService.GetMoneyOutStatusForTenant(months, days, this.TenantPM.Id, index, currency).subscribe(myResult => {
             this.FillBarsMoney(myResult);
         });
     }
@@ -157,9 +156,8 @@ export class AccountPayablesComponent {
 
     InitComponent() {
         this.LoadAllScreenData();
-        this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoice.Q.ErrorInTransfer")) ? true : false;
-        this.APPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APPayment", "APPayment.Q.ErrorInTransfer")) ? true : false;
-        this.IsNewEntityVisibile = (FeatureLocator.HasFeaturePermession("APInvoice", "Module")) ? true : false;
+        this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APInvoice", "ErrorInTransfer")) ? true : false;
+        this.APPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APPayment", "ErrorInTransfer")) ? true : false;
     }
 
     LoadAllScreenData() {
@@ -213,7 +211,7 @@ export class AccountPayablesComponent {
             this.invoiceDomainService = new InvoiceDomainService();
         }
 
-        this.invoiceDomainService.GetCreditorExposure(this.SelectedCurrencyIndex_APGrid, SessionLocator.LoggedUserPM.IsBranchRestricted).subscribe((myResult: ServiceResponse) => {
+        this.invoiceDomainService.GetCreditorExposure(this.SelectedCurrencyIndex_APGrid).subscribe((myResult: ServiceResponse) => {
             if (myResult) {
 
                 if (!myResult.HasError) {
@@ -304,7 +302,7 @@ export class AccountPayablesComponent {
             this.invoiceDomainService = new InvoiceDomainService();
         }
 
-        this.invoiceDomainService.GetAccountPayablesSummary().subscribe((myResult:any) => {
+        this.invoiceDomainService.GetAccountPayablesSummary().subscribe(myResult => {
             if (myResult != null) {
                 this.APInvoicesDraftsCount = myResult.APInvoicesDraftsCount > 1000 ? "1000+" : myResult.APInvoicesDraftsCount.toString();
                 this.APInvoicesUnpaidCount = myResult.APInvoicesUnpaidCount > 1000 ? "1000+" : myResult.APInvoicesUnpaidCount.toString();
@@ -312,6 +310,7 @@ export class AccountPayablesComponent {
                 this.APPaymentsOpenedCount = myResult.APPaymentsOpenedCount > 1000 ? "1000+" : myResult.APPaymentsOpenedCount.toString();
                 this.APInvoiceErrorInTransferCount = myResult.ARInvoicesFailedCount > 1000 ? "1000+" : myResult.APInvoicesFailedCount.toString();
                 this.APPaymentErrorInTransferCount = myResult.ARPaymentFailedCount > 1000 ? "1000+" : myResult.APPaymentFailedCount.toString();
+
             }
         });
     }
@@ -350,7 +349,7 @@ export class AccountPayablesComponent {
             listArgs.QueryCode = queryCode;
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = backButtonTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

@@ -1,4 +1,4 @@
-<style type="text/css">
+﻿<style type="text/css">
     .TabCloseIcon:hover {
         background: url('./Images/Tab.X.Blue.png') no-repeat;
     }
@@ -145,13 +145,9 @@
             text-align: left;
             padding-left: 5px;
             padding-right: 3px;
-            background: #99969633;            
-        }
-
-        .LogTabControl .TabControlHead li:not(.NewTabItem).Selected .InnerChild {
             background: transparent;
         }
-        
+
         .LogTabControl .TabControlHead li.Selected {
             height: 25px;
             line-height: 25px;
@@ -160,7 +156,7 @@
             border: 1px solid #3BB3E2;
             border-bottom: 1px solid white;
         }
-        
+
         .LogTabControl .TabControlBody {
             position: absolute;
             left: 0;
@@ -170,21 +166,20 @@
             background: white;
             border-top: none !important;
         }
-        
+
         .LogTabControl .TabControlHead {
             width: 100%;
             height: 25px;
             position: relative;
             border-bottom: 1px solid #3BB3E2;
         }
-        
-        .LogTabControl .TabControlHead ul {
-            width: calc(100% - 130px);
-            margin-left: 5px;
-            margin-right: 5px;
-            display: inline-block;
-            overflow: hidden;
-        }
+
+            .LogTabControl .TabControlHead ul {
+        width: 100%;
+        height: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 
     .CloseButtonWrapper {
         BACKGROUND-COLOR: #fff;
@@ -216,65 +211,47 @@
         color: #2d71aa;
         border-radius: 50%;
     }
-
-    .btn-navigate {
-        width: 30px;
-        display: inline-block;
-        background: linear-gradient(to bottom, #f9fcff 9%,#e5f3ff 57%,#d4e4f7 100%);
-        position: relative;
-        top: -2px;
-    }
 </style>
 <table>
     <tr>
         <td>
-    <div style="height:20px;position: absolute; top: -15px;"  *ngIf="MultiLineTabs">     
-            <IconButton style="width:25px;height: 16px;" [style.float]="IsRTL ? 'right' : 'left'" [IsSmall]="true" [Name]="'Add'" (click)="AddTab()"></IconButton>
-            <button [style.float]="IsRTL ? 'right' : 'left'" style="width:25px;    height: 18px;" class="Button" (click)="BackTab()"><</button>
-            <button [style.float]="IsRTL ? 'right' : 'left'" style="width:25px;    height: 18px;" class="Button" (click)="NextTab()">></button>
-    </div>
-    <div class="TableHolder">
-        <table>
+            <div class="TableHolder">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="position: absolute; top: 0;" class="LogTabControl">
+                                <div class="TabControlHead" >
+                                    <ul>
+                                        <li *ngFor="let tab of TabsSource" [class.Selected]="tab.IsSelected" [style.float]="IsRTL ? 'right' : 'left'" (click)="SelectionChanged(tab)">
 
-            <tr>
-                <td>
-                    <div style="position: absolute; top: 0;" class="LogTabControl">
-                        <div class="TabControlHead" [ngStyle]="MultiLineTabs ? {'overflow':'auto'} : ''">
-                            <button *ngIf="showButton" (click)="scrollToStart()" class="btn-navigate "><span class="material-symbols-outlined">last_page</span></button>
-                            <button *ngIf="showButton" (click)="scrollleft()" class="btn-navigate"><span class="material-symbols-outlined">chevron_right</span></button>
-                            <ul [style.dir]="IsRTL ? 'rtl' : 'ltr'" #tabs>
-                                <li LocationDirective [IsSelected]="tab.IsSelected" [style.float]="'none'" *ngFor="let tab of TabsSource" [class.Selected]="tab.IsSelected" (click)="SelectionChanged(tab)">
+                                            <div style="position: relative; width: 100%;" class="InnerChild"
+                                                 [style.text-align]="IsRTL ? 'right' : 'left'"
+                                                 [title]="tab.Header"
+                                                 (mousedown)="onListMouseDown($event,tab)">
 
-                                    <div style="position: relative; width: 100%;" class="InnerChild"
-                                         [style.text-align]="IsRTL ? 'right' : 'left'"
-                                         [title]="tab.Title?tab.Title:tab.Header"
-                                         (mousedown)="onListMouseDown($event,tab)">
+                                                <div class="TextTrimming" [style.padding-left]="tab.IsSelected ? '3px' : ''">{{tab.Header}}</div>
+                                                <div *ngIf="!HideCloseButton && !Disabled && (tab.IsSelected && TabsSource.length > 1)" class="CloseButtonWrapper" [title]="'General.B.Close' | TextCodeTranslationPipe"><div class="CloseButton" (click)="CloseTab(tab)"></div></div>
+                                            </div>
 
-                                        <div class="TextTrimming" [style.padding-left]="tab.IsSelected ? '3px' : ''">{{tab.Header}}</div>
-                                        <div *ngIf="!HideCloseButton && !Disabled && (tab.IsSelected && TabsSource.length > 1)" class="CloseButtonWrapper" [title]="'General.B.Close' | TextCodeTranslationPipe"><div class="CloseButton" (click)="CloseTab(tab)"></div></div>
+                                        </li>
+
+                                        <li *ngIf="!IsFixedTabs" class="NewTabItem" (click)="AddTab($event)" [style.float]="IsRTL ? 'right' : 'left'">+</li>
+                                    </ul>
+                                </div>
+
+                                
+                                <div class="TabControlBody" style="background: white;" [style.border]="NoBorder ? 'none' : '1px solid #3bb3e2'">
+                                    <div class="MediaFillAbsolute" *ngFor="let tab of TabsSource;" [hidden]="!tab.IsSelected">
+                                        <div LocationDirective Code="{{tab.Code}}" Index="{{tab.Index}}"></div>
                                     </div>
-
-                                </li>
-
-                                <li *ngIf="!IsFixedTabs" class="NewTabItem" (click)="AddTab()" [style.float]="'none'">+</li>
-                            </ul>
-                            <button *ngIf="showButton" (click)="scrollRight()" class="btn-navigate"><span class="material-symbols-outlined">chevron_left</span></button>
-                            <button *ngIf="showButton" (click)="scrollToEnd()" class="btn-navigate"><span class="material-symbols-outlined">first_page</span></button>
-                        </div>
-
-
-                        <div class="TabControlBody" style="background: white;" [style.border]="NoBorder ? 'none' : '1px solid #3bb3e2'">
-                            <div class="MediaFillAbsolute" *ngFor="let tab of TabsSource;" [hidden]="!tab.IsSelected">
-                                <div LocationDirective Code="{{tab.Code}}" Index="{{tab.Index}}"></div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+                        </td>
+                    </tr>
+                </table>
 
-    </div>
-    </td>
+            </div>
+        </td>
     </tr>
 </table>
 <div *ngIf="TabsSource.length <= 0" style="background: #f5f5f5; height: 100px; text-align: center; color: #a3a3a3; font-style: italic; padding-top: 40px; font-family: Verdana;">

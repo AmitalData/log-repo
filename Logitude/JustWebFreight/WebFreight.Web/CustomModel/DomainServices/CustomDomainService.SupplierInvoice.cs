@@ -1543,10 +1543,8 @@ namespace WebFreight.Web.CustomModel.DomainServices
             }
 
             SecurityUtility.AuthenticationOnTenant(tenant);
-
-            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
-
-            string insurancePercent = defaultValueQueryService.GetDefault("ISRAEL", "CIM_INSUR_PERC", "NON", customerCode, tenant);
+       
+            string insurancePercent = GetDefault("ISRAEL", "CIM_INSUR_PERC", "NON", customerCode, tenant);
             return insurancePercent;
         }
     }

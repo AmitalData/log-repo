@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -26,18 +26,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             webFreightContext = WebFreightContext.GetContext(tenant);
         }
 
-        public Query GetSingleQuery(string Id)
+        public Query GetSingleQuery(string id)
         {
             return (from a in context.Queries.Include("ObjectTable")
-                   where a.Id == Id
-                    select a).FirstOrDefault();
-        }
-
-        public Query GetSingleQueryByUniqueCode(string UniqueCode)
-        {
-            return (from a in context.Queries.Include("ObjectTable")
-                    where a.UniqueCode == UniqueCode
-                    select a).FirstOrDefault();
+                   where a.Id == id
+                   select a).FirstOrDefault();
         }
 
         public Query GetSingleQueryByCode(string code,int tenant)
@@ -55,10 +48,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return queries.OrderBy(d => d.IndexOrder);
         }
 
-        public IQueryable<Query> GetQueriesByOrigionalQueryTenant(string origionalQueryCode,int tenant)
+        public IQueryable<Query> GetQueriesByOrigionalQueryTenant(string origionalQueryId,int tenant)
         {
             IQueryable<Query> queries = from a in webFreightContext.Queries
-                                        where a.Tenant == tenant && a.OriginalQueryCode == origionalQueryCode
+                                        where a.Tenant == tenant && a.OriginalQueryId == origionalQueryId
                                         select a;
             return queries.OrderBy(d => d.IndexOrder);
         }
@@ -79,15 +72,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                                         select a;
             return queries.OrderBy(d => d.IndexOrder);
         }
-
-        public Query GetDefaultQueryByObjectTableIdAndTenant(string objectTableId, int tenant)
-        {
-            Query query = (from a in webFreightContext.Queries
-                                        where a.ObjectTableId == objectTableId && a.Tenant == tenant && a.SystemLevel && a.IsDefault
-                                         select a).FirstOrDefault();
-            return query;
-        }
-
+     
         public void Add(Query entity)
         {
             context.Queries.Add(entity);

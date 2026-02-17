@@ -1,4 +1,4 @@
-export class Cloner {
+﻿export class Cloner {
     private Object: any = null;
     private Fields: ClonerField[] = [];
     private Entities: ClonerEntity[] = [];
@@ -30,30 +30,27 @@ export class Cloner {
         }
     }
     public RejectChanges() {
-     
-            if (this.Object != null) {
+        if (this.Object != null) {
 
-                this.Fields.forEach(item => {
-                    var currentValue = this.Object[item.FieldName];
-                    if (currentValue != item.FieldValue) {
-                        this.Object[item.FieldName] = item.FieldValue;
+            this.Fields.forEach(item => {
+                var currentValue = this.Object[item.FieldName];
+                if (currentValue != item.FieldValue) {
+                    this.Object[item.FieldName] = item.FieldValue;
+                }
+            });
 
+            this.Entities.forEach(item => {
+                if (item != null) {
+                    var currentValue = item.Entity['IsDirty']
+                    if (currentValue != item.IsDirty) {
+                        item.Entity['IsDirty'] = item.IsDirty;
                     }
-                });
-
-                this.Entities.forEach(item => {
-                    if (item != null) {
-                        var currentValue = item.Entity['IsDirty']
-
-                        if (currentValue != item.IsDirty) {
-                            item.Entity['IsDirty'] = item.IsDirty;
-                        }
-                    }
-                });
-            }
-       
+                }
+            });
+        }
     }
 }
+
 class ClonerField {
     public FieldName: string;
     public FieldValue: any;

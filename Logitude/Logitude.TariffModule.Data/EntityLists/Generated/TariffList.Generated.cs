@@ -33,7 +33,7 @@ namespace Logitude.TariffModule.Data.EntityLists
        [DataMember]
        public bool InActive  { get; set; }
        [DataMember]
-       public string Notes  { get; set; }
+       public string Description  { get; set; }
        [DataMember]
        public string SellerId  { get; set; }
        [DataMember]
@@ -51,51 +51,13 @@ namespace Logitude.TariffModule.Data.EntityLists
        [DataMember]
        public int LastVersion  { get; set; }
        [DataMember]
-       public string ContractNumber  { get; set; }
+       public int? ContractNumber  { get; set; }
        [DataMember]
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string SellerName  { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
-       [DataMember]
-       public string TariffNumber  { get; set; }
-       [DataMember]
-       public bool IsFromUpdateScreen  { get; set; }
-       [DataMember]
-       public bool IsFromCopy  { get; set; }
-       [DataMember]
-       public string LastActivityTypeName  { get; set; }
-       [DataMember]
-       public string LastActivityByUserName  { get; set; }
-       [DataMember]
-       public DateTime? LastActivityDate  { get; set; }
-       [DataMember]
-       public string TransportModeCode  { get; set; }
-       [DataMember]
-       public string TransportModeName  { get; set; }
-       [DataMember]
-       public string SellerPartnerTypeId  { get; set; }
-       [DataMember]
-       public DateTime? LastUsedDate  { get; set; }
-       [DataMember]
-       public string FreightChargeId  { get; set; }
-       [DataMember]
-       public string CustomsBrokerId  { get; set; }
-       [DataMember]
-       public string CustomsBrokerName  { get; set; }
-       [DataMember]
-       public string CustomsBrokerPartnerTypeId  { get; set; }
-       [DataMember]
-       public string DirectionCode  { get; set; }
-       [DataMember]
-       public string DirectionName  { get; set; }
-       [DataMember]
-       public string UnitOfMeasurementCode  { get; set; }
-       [DataMember]
-       public string CustomerGroupId  { get; set; }
-       [DataMember]
-       public string CustomerGroupName  { get; set; }
    }
 
 }

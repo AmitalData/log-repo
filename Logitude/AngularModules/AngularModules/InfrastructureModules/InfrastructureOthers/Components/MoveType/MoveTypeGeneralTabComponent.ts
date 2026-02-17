@@ -9,7 +9,7 @@ import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
     selector: 'MoveTypeGeneralTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './MoveTypeGeneralTabComponent.html',
 })
 

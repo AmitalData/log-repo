@@ -7,7 +7,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: 'StageGeneralTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './StageGeneralTabComponent.html',
 })
 

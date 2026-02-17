@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public TermsofUseRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public TermsofUseRepository(ICommonDataContext context)
         {
@@ -63,21 +66,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public TermsofUse GetSingleTermsofUse(DateTime toUdate, int version)
         {
-            return (from record in context.TermsofUses where record.Date == toUdate && record.VersionNumber == version select record).FirstOrDefault();
+            return (from record in context.TermsofUses where record.Date == toUdate && record.Version == version select record).FirstOrDefault();
         }
-
-
-        public int GetPrivateLabelLatestVersionNumber(string privateLabeldId)
-        { 
-            return (from record in context.TermsofUses where record.PrivateLabelId == privateLabeldId select record).OrderByDescending(d => d.VersionNumber).Select(d=>d.VersionNumber).FirstOrDefault();
-        }
-
-        public int GetDefaultLatestVersionNumber()
-        {
-             
-            return (from record in context.TermsofUses where record.Tenant == 0 select record).OrderByDescending(d => d.VersionNumber).Select(d => d.VersionNumber).FirstOrDefault();
-        }
-
 
         public IQueryable<TermsofUse> GetTermsofUses()
         {
@@ -87,15 +77,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<TermsofUse> GetTermsofUsesByVersion(int version)
         {
             IQueryable<TermsofUse> termsofUses = from a in context.TermsofUses
-                                                 where a.VersionNumber == version
-                                                 select a;
-            return termsofUses;
-        }
-
-        public IQueryable<TermsofUse> GetById(int id)
-        {
-            IQueryable<TermsofUse> termsofUses = from a in context.TermsofUses
-                                                 where a.Id == id
+                                                 where a.Version == version
                                                  select a;
             return termsofUses;
         }

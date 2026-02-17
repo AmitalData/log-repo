@@ -3,12 +3,12 @@ import {AppTool} from '../../Infrastructure/Tools';
 
 @Component({
     selector: 'Hyperlink',
-    inputs: ['Text', 'FontSize', 'Color', 'IsEnabled', 'Title', 'DataCy'],
+    inputs: ['Text', 'FontSize', 'Color', 'IsEnabled', 'Title'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
     `    
-        <button [attr.data-cy]="DataCy" class="HyperlinkButtonControl" [disabled]="!IsEnabled" [style.font-size.px]="FontSize" [style.color]="Color" tabindex="-1">
+        <button class="HyperlinkButtonControl" [disabled]="!IsEnabled" [style.font-size.px]="FontSize" [style.color]="Color" tabindex="-1">
             {{Text}}
             
             <span style="pointer-events: none;" [style.font-size.px]="FontSize" [style.color]="Color">            
@@ -47,8 +47,6 @@ import {AppTool} from '../../Infrastructure/Tools';
 export class Hyperlink implements OnInit {
     public FontSize: number = 10;
     public Title: string = null;
-    public DataCy: string = null;
-
     constructor(private elementRef: ElementRef) {
 
     }

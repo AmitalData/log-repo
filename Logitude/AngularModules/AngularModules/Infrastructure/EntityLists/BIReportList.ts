@@ -24,11 +24,6 @@ export class BIReportList {
 	BIReportFolderId: string;
 	CreatedByUserName: string;
 	UpdatedByUserName: string;
-	LastRunDate: Date;
-	LastRunByUserName: string;
-	FactTableName: string;
-	LastRunId: string;
-	AvailableForScheduling: boolean;
 	
 }
  

@@ -18,8 +18,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string PhysicalCheckId { get; set; }
         public bool BringQueueForwardIndicator { get; set; }
         public string CheckTypeCode { get; set; }
-        public int RequestToAdvanceAQueue { get; set; }
-        public string RequestDetails { get; set; }
        
     }
 }

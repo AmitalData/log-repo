@@ -57,7 +57,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
             SecurityUtility.AuthenticationOnTenant(tenant);
             customContext = CustomContext.GetContext(tenant);
             customsRequiredFieldQuery = new CustomsRequiredFieldQueryService(customContext);
-            return customsRequiredFieldQuery.GetCustomRequiredFieldsByObjectTableNoCache(objectTableId, tenant);
+            return customsRequiredFieldQuery.GetCustomRequiredFieldsByObjectTable(objectTableId, tenant);
         }
 
 

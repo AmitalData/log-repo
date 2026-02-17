@@ -22,7 +22,7 @@ export class FilingInboxPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -102,19 +102,11 @@ export class FilingInboxPM {
         }
     }
     //public FilingInboxAttachments: Array<FilingInboxAttachmentPMPM>= [];
-     private fileInfo: any;
-    public get FileInfo() { return this.fileInfo; }
-    public set FileInfo(newValue: any) { if (this.fileInfo != newValue) { this.fileInfo = newValue; this.MarkAsDirty("FileInfo"); } }
-       
-	 
-
+ 
     public OldEntityPM: FilingInboxPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -122,7 +114,6 @@ export class FilingInboxPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FilingInbox");
            
         }
-	 }
     }
     private MyClone: FilingInboxPM;
 

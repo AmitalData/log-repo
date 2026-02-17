@@ -13,8 +13,6 @@ import {ARInvoiceDetailsTabGeneral} from './Components/EditTabs/ARInvoiceDetails
 import {AddEditARGeneralInvoiceLineComponent} from './Components/EditTabs/AddEditARGeneralInvoiceLineComponent';
 import {ARInvoiceTransferTemplate} from './Components/NewEntity/ARInvoiceTransferTemplate';
 import {ARInvoiceGeneralTabComponent} from './Components/EditTabs/ARInvoiceGeneralTabComponent';
-import {ARInvoiceAuditTabComponent} from './Components/EditTabs/ARInvoiceAuditTabComponent';
-import {ARInvoiceSequenceListComponent} from './Components/EditTabs/ARInvoiceSequenceListComponent';
 
 export const Components =
     [
@@ -33,8 +31,6 @@ export const Components =
         AddEditARGeneralInvoiceLineComponent,
         ARInvoiceTransferTemplate,
         ARInvoiceGeneralTabComponent,
-        ARInvoiceAuditTabComponent,
-        ARInvoiceSequenceListComponent
     ];
 
 export class ModuleDeclarations {
@@ -58,10 +54,6 @@ export class ModuleDeclarations {
             case "AddEditARGeneralInvoiceLineComponent": { myResult = AddEditARGeneralInvoiceLineComponent; break; }
             case "ARInvoiceTransferTemplate": { myResult = ARInvoiceTransferTemplate; break; } 
             case "ARInvoiceGeneralTabComponent": { myResult = ARInvoiceGeneralTabComponent; break; }  
-            case "ARInvoiceAuditTabComponent": { myResult = ARInvoiceAuditTabComponent; break; }  
-            case "ARInvoiceSequenceListComponent": { myResult = ARInvoiceSequenceListComponent; break; }  
-
-                
         }
 
         return myResult;

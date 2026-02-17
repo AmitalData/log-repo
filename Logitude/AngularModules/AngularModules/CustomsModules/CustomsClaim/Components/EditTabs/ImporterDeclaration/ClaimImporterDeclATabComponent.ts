@@ -18,14 +18,11 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ClaimImporterDeclATabComponent.html',
 })
 
 export class ClaimImporterDeclATabComponent extends BaseComponent {
-  public IsDisplayOnly: boolean = false;
-  public FooterMethods: any;
-
     public DataContext: ClaimImporterDeclATabComponent = this;
     public EntityPM: ClaimPM = new ClaimPM();
     public ObjectTableName: string = "Customs.Claim";
@@ -46,11 +43,11 @@ export class ClaimImporterDeclATabComponent extends BaseComponent {
         this.CommercialSalelist = new ObservableCollection([]);
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsP3Loi").subscribe((response:any) => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3A").subscribe((response:any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsP3Loi").subscribe(response => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3A").subscribe(response => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3").subscribe(response => {
                             if (this.entityArgs.EntityPM != null) {
                                 this.EntityPM = this.entityArgs.EntityPM;
                                 this.BuildImporterDeclareList();
@@ -211,7 +208,7 @@ export class ClaimImporterDeclATabComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(item)) {
             this.ValidationErrorsList = [];
             if (AppTool.IsNullOrEmpty(item.ImporterLoiDeclarationTypeCode)) {
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.General.O.MandatoryImporterDeclaration"));
+                this.ValidationErrorsList.push("חובה להזין הצהרת יבואן");
                 return;
             }
 
@@ -265,7 +262,7 @@ export class ClaimImporterDeclATabComponent extends BaseComponent {
         }
 
         if (this.ClaimImporterDeclAlist != null && this.ClaimImporterDeclAlist.Length >= 3) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.General.O.CnnotAddMoreThanThree"));
+            this.ValidationErrorsList.push("לא ניתן להוסיף יותר מ 3 שורות לתצהיר היבואן");
             return;
         }
     }
@@ -314,13 +311,13 @@ export class ClaimImporterDeclATabComponent extends BaseComponent {
         if (this.CommercialSalelist != null && this.CommercialSalelist.Length > 0) {
             var nullVM = this.CommercialSalelist.Collection.filter(vm => vm.CommercialSaleTypeCode == null);
             if (nullVM.length > 0) {
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.UseEmptyRow") + TextCodeTranslator.Translate("Customs.General.O.CommercialPlaneDetails"));
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.UseEmptyRow") + " (פרטי המישור המסחרי)");
                 return;
             }
         }
 
         if (this.CommercialSalelist != null && this.CommercialSalelist.Length >= 4) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.General.O.CnnotAddMoreThanFour"));
+            this.ValidationErrorsList.push("לא ניתן להוסיף יותר מ 4 שורות לפרטי המישור המסחרי");
             return;
         }
 
@@ -394,7 +391,7 @@ export class ClaimImporterDeclarsPage3LineComponent extends BaseComponent {
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show(TextCodeTranslator.Translate("Customs.General.O.AddDeclarationNumber"));
+            messageWindow.Show("יש להזין מספר הצהרה");
 
             this.MyDeclarationList = "";
             return;

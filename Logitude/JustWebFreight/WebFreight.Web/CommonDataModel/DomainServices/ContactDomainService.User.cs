@@ -7,10 +7,10 @@ using System.ServiceModel.DomainServices.Server;
 using System.Transactions;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.GlobalModel;
@@ -34,7 +34,6 @@ using Logitude.BL.Helpers;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -57,7 +56,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             UserLastLogin entity = repository.GetSingleUserLastLogin(currentEntity.Id, currentEntity.Tenant, false);
 
             entity.ComputerId = currentEntity.ComputerId;
-            entity.WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment();
             repository.Update(entity);
         }
 
@@ -313,7 +311,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             List<UserList> userLists = query2.ToList();
 
-            if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 contactRepository = new ContactRepository(tenant);
                 Contact contact = (from a in contactRepository.context.Contacts
@@ -410,22 +408,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
-            List<UserFreelancerGroupPM> userFreelancerGroupPMChangeSet = ChangeSet.GetAssociatedChanges(currentUser, d => d.FreelancerGroups).Cast<UserFreelancerGroupPM>().ToList();
-            foreach (UserFreelancerGroupPM itemPM in userFreelancerGroupPMChangeSet)
-            {
-                switch (ChangeSet.GetChangeOperation(itemPM))
-                {
-                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
-                    case ChangeOperation.Update: { itemPM.ChangeSetOp = ChangeSetOperation.Update; break; }
-                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
-                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
-                }
-            }
-
             UserService service = new UserService(objectContext, currentUser.Tenant);
             service.SetChangeSet(userPermittedBranchPMChangeSet);
             service.SetProductChangeSet(userPermittedProductPMChangeSet);
-            service.SetFreeLancerGroupChangeSet(userFreelancerGroupPMChangeSet);
             service.Update(currentUser);
 
             TableLastUpdateClass.UpdateTableHistory(currentUser.Tenant, "User");
@@ -451,7 +436,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                     if (tenantManagement != null)
                     {
-                        myResult.LicensesCount = tenantManagement.NumberOfUsers == null ? 0 : tenantManagement.NumberOfUsers.Value;                        
+                        myResult.LicensesCount = tenantManagement.NumberOfUsers;                        
                     }
                     scope.Complete();
                 }
@@ -517,7 +502,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     UsersWorkspaceRecentItem myRecord = new UsersWorkspaceRecentItem()
                     {
                         Id = item.Id,
-                        Username = item.User == null ?  null : (item.User.Contact == null ? null: item.User.Contact.EnglishName),
+                        Username = item.User == null ? "" : (item.User.Contact == null ? "" : item.User.Contact.EnglishName),
                         BusinessUnit = item.User == null ? "" : (item.User.BusinessUnit == null ? "" : item.User.BusinessUnit.Name),
                     };
 
@@ -638,8 +623,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         public int ActiveUsersCount { get; set; }
         public int InactiveUsersCount { get; set; }
         public int ActiveLicensedCount { get; set; }
-        public int ActiveNotLicensedCount { get; set; }
-        public int ActiveNotAdditionalUsersCount { get; set; }
+        public int ActiveNotLicensedCount { get; set; }        
     }
 
     public class UsersWorkspaceRecentItem
@@ -652,6 +636,5 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         public string IP { get; set; }
         public string Countryname { get; set; }
         public bool BlockEditUser { get; set; }
-        public bool IsCustomerCareUser { get; set; }
     }
 }

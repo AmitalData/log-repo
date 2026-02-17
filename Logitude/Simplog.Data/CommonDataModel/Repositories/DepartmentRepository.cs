@@ -2,17 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
-    public class DepartmentRepository : IRepository<Department>
+    public class DepartmentRepository:IRepository<Department>
     {
         ICommonDataContext commonDataContext;
 
-
+        public DepartmentRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DepartmentRepository(int tenant)
         {
@@ -28,52 +31,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.Departments where record.Tenant == tenant select record);
         }
-        public Department GetSingleDepartmentCache(string id, int tenant)
-        {
-            string entityKeyString = $"GetSingleDepartment({id},{tenant})";
-            var res = CacheManager.GetOrInsertNewObject<Department>(entityKeyString, () =>
-            {
-                return this.GetSingleDepartment(id, tenant);
-            });
-            return res;
 
-        }
         public Department GetSingleDepartment(string id, int tenant)
         {
             return (from record in context.Departments where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
-        public Department GetSingleDepartmentByCode(string code, int tenant, bool getFromCache = false)
+        public Department GetSingleDepartmentByCode(string code, int tenant)
         {
-            if (!string.IsNullOrEmpty(code))
-            {
-                Department entity;
-                if (getFromCache)
-                {
-                    string entityKeyString = $"GetSingleDepartment({code},{tenant})";
-                    if (CacheManager.CacheWrapper.Get(entityKeyString) == null)
-                    {
-
-                        entity = (from record in context.Departments where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
-
-                        if (CacheManager.CacheWrapper.Get(entityKeyString) == null && entity != null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityKeyString, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
-                    }
-                    else
-                    {
-                        entity = (Department)CacheManager.CacheWrapper.Get(entityKeyString);
-                    }
-
-                }
-                else
-                {
-                    entity = (from record in context.Departments where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
-                }
-                return entity;
-            }
-            return null;
+            return (from record in context.Departments where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
         }
 
         public Department GetDepartmentByName(string name, int tenant)
@@ -85,7 +51,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                          where a.Tenant == tenant && a.EnglishName.ToLower() == name.ToLower()
                          select a).FirstOrDefault();
 
-            return query;
+            return query;            
         }
 
         public void Add(Department entity)

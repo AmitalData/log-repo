@@ -1,5 +1,4 @@
-declare var window: any;
-import { Component, OnDestroy } from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool, DateTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -10,7 +9,7 @@ import {ShipmentFollowUpPM} from '../../../../Shipment/EntityPMs/ShipmentFollowU
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './OverviewTabComponent.html',
 })
 
@@ -97,8 +96,6 @@ export class OverviewTabComponent implements OnDestroy {
     get MainCarriageCarrierName() { return this.EntityPM.MainCarriageCarrierName; }
     get MainCarriageCarrierNumber() { return this.EntityPM.MainCarriageCarrierNumber; }
     get MasterDepartureDate() { return this.EntityPM.MainCarriageATD != null ? this.EntityPM.MainCarriageATD : this.EntityPM.MainCarriageETD; }
-    get ConnectedHousesCount() { return this.EntityPM.ShipmentConsoleShipments.length; }
-
     public MasterLabel: string = "";
     public CarrierLabel: string = "";
     public CarrierNoLabel: string = "";
@@ -199,14 +196,10 @@ export class OverviewTabComponent implements OnDestroy {
 
         if (this.EntityPM != null && this.EntityPM !== undefined) {
 
-        // StatusCode
             if (this.IsByLocalCurrency) {
                 this.OpenPayables = this.EntityPM.OpenPayablesInLocalCurrency;
                 this.OpenReceivables = this.EntityPM.OpenReceivablesInLocalCurrency;
-                this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices.filter(f => f.StatusCode != 'DR'), "AmountInLocalCurrency");
-
-                // Bug 70465: Money Information - open Recievables
-                //this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices, "AmountInLocalCurrency");
+                this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices, "AmountInLocalCurrency");
                 //this.APInvoices = ArrayTool.Sum(this.EntityPM.ShipmentAPInvoices, "GrandTotalInLocalCurrency");
                 this.APInvoices = this.EntityPM.AccountedPayablesInLocalCurrency;            
                 this.Profit = this.EntityPM.ProfitInLocalCurrency;                
@@ -216,9 +209,7 @@ export class OverviewTabComponent implements OnDestroy {
 
                 this.OpenPayables = this.EntityPM.OpenPayablesInProfitCurrency;
                 this.OpenReceivables = this.EntityPM.OpenReceivablesInProfitCurrency;
-                this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices.filter(f => f.StatusCode != 'DR'), "AmountInProfitCurrency");
-
-                //this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices, "AmountInProfitCurrency");
+                this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices, "AmountInProfitCurrency");
                 //this.APInvoices = ArrayTool.Sum(this.EntityPM.ShipmentAPInvoices, "GrandTotalInProfitCurrency");
                 this.APInvoices = this.EntityPM.AccountedPayablesInProfitCurrency;
                 this.Profit = this.EntityPM.ProfitInProfitCurrency;                
@@ -325,12 +316,6 @@ export class OverviewTabComponent implements OnDestroy {
 
         this.BuildMoneyData();
     }
-
-    ConnectedHousesClicked() {
-        if (this.CurrentSession.CurrentEditComponent.TabsItemsSource.filter(p => p.Code == "SHCO")[0] != null) {
-            this.CurrentSession.CurrentEditComponent.SelectionChanged(this.CurrentSession.CurrentEditComponent.TabsItemsSource.filter(p => p.Code == "SHCO")[0]);
-        }
-    }
 }
 class Container {
     public Quantity: number;
@@ -362,7 +347,7 @@ class FollowupClass {
         this.Done = entityPM.Done;
         this.Date = entityPM.Date;
         this.Name = entityPM.EventTypeFollowUpName;
-        this.Notes = entityPM.Notes;
+        this.Notes = entityPM.Note;
 
         if (this.Date) {
             if (DateTool.GetDateParts(this.Date).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {

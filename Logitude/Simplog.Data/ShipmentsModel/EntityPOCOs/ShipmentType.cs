@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
@@ -15,7 +14,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Name { get; set; }
         public string TransportModeId { get; set; }
         public string SearchFields { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         ////[Include]
         ////[Association("ShipmentShipmentType", "Id", "ShipmentTypeId")]

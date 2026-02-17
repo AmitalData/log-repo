@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -27,7 +27,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.FromDate).HasColumnName("FromDate");
-            this.Property(t => t.Percentage).HasColumnName("Percentage").IsRequired();
+            this.Property(t => t.Percentage).HasColumnName("Percentage");
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
 
             // Relationships

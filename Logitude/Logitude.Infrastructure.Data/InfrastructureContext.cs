@@ -20,7 +20,6 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data; 
 using Logitude.Infrastructure.Data.EntityMapping;
-using Devart.Data.Oracle.Entity.Configuration;
 
 namespace Logitude.Infrastructure.Data
 {
@@ -41,28 +40,14 @@ namespace Logitude.Infrastructure.Data
 			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
 
-        public InfrastructureContext(string nameOrConnectionString) : base(nameOrConnectionString)
-        {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.AutoDetectChangesEnabled = false;
-            Database.SetInitializer<InfrastructureContext>(null);
-            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
-        }
-
         public static IInfrastructureContext GetContext(int tenant)
         {           
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-            {
-                DbConnection connection = DatabaseInitializer.GetConnection(currentDb.DBConnection);
-                return new InfrastructureContext(connection);
-            }
-            else
-            {
-                string dbConnectionInfo = DatabaseInitializer.GetConnectionString(currentDb.DBConnection);
-                return new InfrastructureContext(dbConnectionInfo);
-            }
+            string dbConnectionInfo = currentDb.DBConnection;
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            InfrastructureContext context = new InfrastructureContext(connection);
+            return context;
         }
 		public override LogitudeDBSchema LogitudeDBSchema
         {
@@ -73,7 +58,7 @@ namespace Logitude.Infrastructure.Data
 
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = OracleEntityProviderConfig.Instance;
+                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 
             }
@@ -81,19 +66,13 @@ namespace Logitude.Infrastructure.Data
             Database.SetInitializer<InfrastructureContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			
-            modelBuilder.Configurations.Add(new AuditLogMap());
-	
             modelBuilder.Configurations.Add(new BatchTaskExecutionMap());
 	
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
 	
-            modelBuilder.Configurations.Add(new BIFoldersPermissionMap());
-	
             modelBuilder.Configurations.Add(new BIReportMap());
 	
             modelBuilder.Configurations.Add(new BIReportFolderMap());
-	
-            modelBuilder.Configurations.Add(new BIReportsExecutionLogMap());
 	
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
 	
@@ -101,29 +80,9 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new BusinessRoleMap());
 	
-            modelBuilder.Configurations.Add(new ContainerSettingMap());
-	
-            modelBuilder.Configurations.Add(new DigitalFieldSecurityMap());
-	
-            modelBuilder.Configurations.Add(new DigitalPortalLanguageMap());
-	
-            modelBuilder.Configurations.Add(new DigitalPortalScreenMap());
-	
-            modelBuilder.Configurations.Add(new DigitalPreDefinedComponentMap());
-	
-            modelBuilder.Configurations.Add(new DigitalProfileMap());
-	
-            modelBuilder.Configurations.Add(new DigitalTextCodeMap());
-	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
 	
-            modelBuilder.Configurations.Add(new LastRunDetailMap());
-	
             modelBuilder.Configurations.Add(new LBPTeamMemberMap());
-	
-            modelBuilder.Configurations.Add(new PriceStepMap());
-	
-            modelBuilder.Configurations.Add(new SatisfactionSurveyMap());
 	
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
 	
@@ -151,6 +110,7 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -347,7 +307,6 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
-			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -412,12 +371,6 @@ namespace Logitude.Infrastructure.Data
 		}
  
 
-	 public IDbSet<AuditLog> AuditLogs 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<BatchTaskExecution> BatchTaskExecutions 
 	 {
 	      get; set;
@@ -430,12 +383,6 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
-	 public IDbSet<BIFoldersPermission> BIFoldersPermissions 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<BIReport> BIReports 
 	 {
 	      get; set;
@@ -443,12 +390,6 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<BIReportFolder> BIReportFolders 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<BIReportsExecutionLog> BIReportsExecutionLogs 
 	 {
 	      get; set;
 	 
@@ -472,73 +413,13 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
-	 public IDbSet<ContainerSetting> ContainerSettings 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<DigitalFieldSecurity> DigitalFieldSecurities 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<DigitalPortalLanguage> DigitalPortalLanguages 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<DigitalPortalScreen> DigitalPortalScreens 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<DigitalPreDefinedComponent> DigitalPreDefinedComponents 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<DigitalProfile> DigitalProfiles 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<DigitalTextCode> DigitalTextCodes 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<FeatureToggle> FeatureToggles 
 	 {
 	      get; set;
 	 
 	 }
 	
-	 public IDbSet<LastRunDetail> LastRunDetails 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<LBPTeamMember> LBPTeamMembers 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<PriceStep> PriceSteps 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<SatisfactionSurvey> SatisfactionSurveys 
 	 {
 	      get; set;
 	 

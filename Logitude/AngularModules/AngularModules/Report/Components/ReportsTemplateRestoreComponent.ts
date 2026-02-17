@@ -14,7 +14,6 @@ import {ReportsTemplatesVersionListExtendedService} from '../../Common/Services/
 import {ReportsTemplatesVersionList} from '../../Common/EntityLists/ReportsTemplatesVersionList';
 import {ReportsTemplatesVersionPMExtendedService} from '../../Common/Services/ExtendedPMs/ReportsTemplatesVersionPMExtendedService';
 import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
-import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
 @Component({
 
     moduleId: './Report/Components/',
@@ -50,7 +49,7 @@ export class ReportsTemplateRestoreComponent implements OnInit {
     DataViewModel: any;
     SetWindowArgs(args: any) {
 
-        this._entityResourceService.getEntityResourceByTableName("ReportsTemplatesVersion", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("ReportsTemplatesVersion", 0).subscribe(response => {
             this.IsVisibile = true;
             if (args) {
                 this.DataViewModel = args.DataViewModel;
@@ -108,9 +107,7 @@ export class ReportsTemplateRestoreComponent implements OnInit {
             windowArgs.DataViewModel = this;
             windowArgs.ProcessType = "ReportPreview";
             windowArgs.ReportTemplateId = item.ReportDocumentId;
-            windowArgs.ReportsTemplateId = this.ReportsTemplatePM.Id;
             windowArgs.Tenant = item.Tenant;
-            windowArgs.TemplateType = this.ReportsTemplatePM.TemplateType;
 
             var widthwindow = window.innerWidth;
             var heighthwindow = window.innerHeight;
@@ -193,11 +190,6 @@ export class ReportsTemplateRestoreComponent implements OnInit {
         });
 
 
-
-    }
-
-    DownloadButtonClicked(item: ReportsTemplateRestoreItem) {
-        DownloadManager.DownloadPage(item.ReportDocumentId, null, true);
 
     }
 }

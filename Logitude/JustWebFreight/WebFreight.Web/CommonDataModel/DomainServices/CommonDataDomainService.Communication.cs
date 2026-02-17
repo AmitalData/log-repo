@@ -6,9 +6,9 @@ using System.Reflection;
 using System.ServiceModel.DomainServices.Server;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -60,7 +60,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return communicationLogQuery.GetSinglePM(id, tenant);
         }
 
-        public List<CommunicationLogPM> GetCommunicationLogPMsByEntityId(string entityId, int tenant)
+        public IQueryable<CommunicationLogPM> GetCommunicationLogPMsByEntityId(string entityId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
             SecurityUtility.CheckContactFeature("CommunicationLog", "READ", tenant);
@@ -1039,7 +1039,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         {
             var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
 
-            List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, stepFilter,false,false);
+            List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, stepFilter);
             return stepLIstOut;
 #if false
            

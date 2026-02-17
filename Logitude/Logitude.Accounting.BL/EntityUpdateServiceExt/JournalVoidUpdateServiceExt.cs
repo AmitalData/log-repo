@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
             //    AccountingEntityId = journalPM.AccountingEntityId,
             //    AccountingEntityReference = journalPM.AccountingEntityReference,
             //};
-            service.VoidJournal(journalPM.Id, tenant, stornoOverrideM, journalPM.APPaymentCancelDate);
+            service.VoidJournal(journalPM.Id, tenant, stornoOverrideM);
 
         }
 

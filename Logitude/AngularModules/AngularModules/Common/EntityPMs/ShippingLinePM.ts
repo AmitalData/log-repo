@@ -15,15 +15,13 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
 
-export class ShippingLinePM extends ObjectCustomFieldPM {
+export class ShippingLinePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		  super("ShippingLine");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -269,11 +267,6 @@ export class ShippingLinePM extends ObjectCustomFieldPM {
     public set INTTRARegistrationNotes(newValue: string) { if (this.iNTTRARegistrationNotes != newValue) { this.iNTTRARegistrationNotes = newValue; this.MarkAsDirty("INTTRARegistrationNotes"); } }
        
 	 
-    private iNTTRAUpdatesShipment: boolean;
-    public get INTTRAUpdatesShipment() { return this.iNTTRAUpdatesShipment; }
-    public set INTTRAUpdatesShipment(newValue: boolean) { if (this.iNTTRAUpdatesShipment != newValue) { this.iNTTRAUpdatesShipment = newValue; this.MarkAsDirty("INTTRAUpdatesShipment"); } }
-       
-	 
     private primaryContactName: string;
     public get PrimaryContactName() { return this.primaryContactName; }
     public set PrimaryContactName(newValue: string) { if (this.primaryContactName != newValue) { this.primaryContactName = newValue; this.MarkAsDirty("PrimaryContactName"); } }
@@ -289,9 +282,9 @@ export class ShippingLinePM extends ObjectCustomFieldPM {
     public set PrimaryContactPhone(newValue: string) { if (this.primaryContactPhone != newValue) { this.primaryContactPhone = newValue; this.MarkAsDirty("PrimaryContactPhone"); } }
        
 	 
-    private card: any;
+    private card: string;
     public get Card() { return this.card; }
-    public set Card(newValue: any) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
+    public set Card(newValue: string) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
        
 	 
      
@@ -360,94 +353,11 @@ export class ShippingLinePM extends ObjectCustomFieldPM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
-    private imageDetailId: string;
-    public get ImageDetailId() { return this.imageDetailId; }
-    public set ImageDetailId(newValue: string) { if (this.imageDetailId != newValue) { this.imageDetailId = newValue; this.MarkAsDirty("ImageDetailId"); } }
-       
-	 
-    private cBSA: string;
-    public get CBSA() { return this.cBSA; }
-    public set CBSA(newValue: string) { if (this.cBSA != newValue) { this.cBSA = newValue; this.MarkAsDirty("CBSA"); } }
-       
-	 
-    private cAAT: string;
-    public get CAAT() { return this.cAAT; }
-    public set CAAT(newValue: string) { if (this.cAAT != newValue) { this.cAAT = newValue; this.MarkAsDirty("CAAT"); } }
-       
-	 
-    private gLAccountId: string;
-    public get GLAccountId() { return this.gLAccountId; }
-    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
-       
-	 
-    private accountingVATSplit: boolean;
-    public get AccountingVATSplit() { return this.accountingVATSplit; }
-    public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
-       
-	 
-    private uploadingUniqueKey: string;
-    public get UploadingUniqueKey() { return this.uploadingUniqueKey; }
-    public set UploadingUniqueKey(newValue: string) { if (this.uploadingUniqueKey != newValue) { this.uploadingUniqueKey = newValue; this.MarkAsDirty("UploadingUniqueKey"); } }
-       
-	 
-    private gLAccountNumber: string;
-    public get GLAccountNumber() { return this.gLAccountNumber; }
-    public set GLAccountNumber(newValue: string) { if (this.gLAccountNumber != newValue) { this.gLAccountNumber = newValue; this.MarkAsDirty("GLAccountNumber"); } }
-       
-	 
-    private billToId: string;
-    public get BillToId() { return this.billToId; }
-    public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
-       
-	 
-    private isSendingByContainer: boolean;
-    public get IsSendingByContainer() { return this.isSendingByContainer; }
-    public set IsSendingByContainer(newValue: boolean) { if (this.isSendingByContainer != newValue) { this.isSendingByContainer = newValue; this.MarkAsDirty("IsSendingByContainer"); } }
-       
-	 
-    private isSendingByBillOfLading: boolean;
-    public get IsSendingByBillOfLading() { return this.isSendingByBillOfLading; }
-    public set IsSendingByBillOfLading(newValue: boolean) { if (this.isSendingByBillOfLading != newValue) { this.isSendingByBillOfLading = newValue; this.MarkAsDirty("IsSendingByBillOfLading"); } }
-       
-	 
-    private regimenFiscalCode: string;
-    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
-    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
-       
-	 
-    private sATReceptorName: string;
-    public get SATReceptorName() { return this.sATReceptorName; }
-    public set SATReceptorName(newValue: string) { if (this.sATReceptorName != newValue) { this.sATReceptorName = newValue; this.MarkAsDirty("SATReceptorName"); } }
-       
-	 
-    private importLocalCustomerGroupId: string;
-    public get ImportLocalCustomerGroupId() { return this.importLocalCustomerGroupId; }
-    public set ImportLocalCustomerGroupId(newValue: string) { if (this.importLocalCustomerGroupId != newValue) { this.importLocalCustomerGroupId = newValue; this.MarkAsDirty("ImportLocalCustomerGroupId"); } }
-       
-	 
-    private exportLocalCustomerGroupId: string;
-    public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
-    public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
-       
-	 
-    private isAutomaticRequestsSent: boolean;
-    public get IsAutomaticRequestsSent() { return this.isAutomaticRequestsSent; }
-    public set IsAutomaticRequestsSent(newValue: boolean) { if (this.isAutomaticRequestsSent != newValue) { this.isAutomaticRequestsSent = newValue; this.MarkAsDirty("IsAutomaticRequestsSent"); } }
-       
-	 
-    private isSupportsContainerTracking: boolean;
-    public get IsSupportsContainerTracking() { return this.isSupportsContainerTracking; }
-    public set IsSupportsContainerTracking(newValue: boolean) { if (this.isSupportsContainerTracking != newValue) { this.isSupportsContainerTracking = newValue; this.MarkAsDirty("IsSupportsContainerTracking"); } }
-       
-	 
 
     public OldEntityPM: ShippingLinePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -455,7 +365,6 @@ export class ShippingLinePM extends ObjectCustomFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShippingLine");
            
         }
-	 }
     }
     private MyClone: ShippingLinePM;
 

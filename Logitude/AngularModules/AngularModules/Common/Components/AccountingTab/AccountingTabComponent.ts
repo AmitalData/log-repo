@@ -1,24 +1,15 @@
-import { Component, ViewChild, ViewContainerRef, OnInit, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
-import { AppTool } from '../../../Infrastructure/Tools';
-import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
-import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
-import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import { GLAccountPMService } from 'Accounting/Services/StandardPMs/GLAccountPMService';
-import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventManager';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     template:
-        `
+    `
     <div class="TabHolder">
         <table>
             <tr class="TabTitleRow">
-                 <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
-                     ({{AccountInfo}})
-               </td>
-
+                <td>{{TabTitleTextCode | TextCodeTranslationPipe}}</td>
             </tr>
 
             <tr>
@@ -33,54 +24,20 @@ import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventMana
     `,
 })
 
-export class AccountingTabComponent implements OnInit, AfterViewInit {
+export class AccountingTabComponent implements OnInit {
     public EntityPM: any = null;
     public ObjectTableName: string;
     public TabTitleTextCode: string = null;
-    public AccountInfo: string = null;
-    private _entityResourceService: EntityResourceService = new EntityResourceService();
-    // @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    private CurrentSession = SessionLocator.SelectedSession; 
+    @ViewChild("Child", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.TabTitleTextCode = this.ObjectTableName + ".TH.Accounting";
-
         this.InitializeComponent();
-
-
-    }
-    ngAfterViewInit(): void {
-        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
-            this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => {
-                this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
-                    this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => {
-                        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => {
-                            this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => {
-                                this._entityResourceService.getEntityResourceByTableName("GLAccountInterestPeriod").subscribe((response: any) => {
-                                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => {
-
-
-                                        this.LoadComponent();
-                                    });
-
-                                });
-
-                            });
-
-                        });
-                    });
-                });
-
-            });
-        });
-
     }
 
     ngOnInit() {
-
-        this.Listen();
+        this.LoadComponent();
     }
 
     private AccountingSystemPM: any = null;
@@ -113,7 +70,6 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
             case "Trucker":
             case "Warehouse":
             case "Vendor":
-            case "AccountingPartner":
                 {
                     this.isPartnerEntity = true;
                     break;
@@ -150,51 +106,7 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
         if (this.IsExternalCodesFromAPI && this.isQuickBooksOnlineEntity) {
             this.isQuickBooksOnline = true;
         }
-        this.GetAccountInfo();
     }
-    private GetAccountInfo() {
-        var myService: GLAccountPMService = new GLAccountPMService();
-        if (this.EntityPM?.card?.GLAccountId) {
-            myService.get(this.EntityPM?.card?.GLAccountId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError && myResponse != null) {
-                    var result = myResponse.Result;
-                    if (result != null) {
-                        if (result.CurrencySign != null) {
-                            this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + result.CurrencySign;
-                        }
-                        else {
-                            this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + "MULTI";
-                        }
-                    }
-                }
-            });
-        }
-
-
-
-    }
-    private LoadCompletedEvent: any = null;
-
-    private Listen() {
-        if (this.entityArgs.EditComponent != null) {
-
-            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.GetAccountInfo();
-                }
-            });
-        }
-        AccountingEventManager.CustomerChangedEvent.subscribe(($event) => {
-            if (!AppTool.IsNullOrEmpty($event)) {
-                if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
-                    return;
-                SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-                this.GetAccountInfo();
-            }
-        });
-    }
-
     LoadComponent() {
         var myComponentPath: string = null;
 
@@ -207,13 +119,7 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
             && this.ObjectTableName != 'AccountingPaymentMethod'
             && this.ObjectTableName != 'APPaymentMethod'
             && !this.isQuickBooksOnline) {
-            // this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { 
-            //     this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { 
-            //         this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { 
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Full";
-            //   });
-            //  });
-            // });
         }
         else if (this.isQuickBooksOnline) {
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_QuickBooksOnline";
@@ -261,7 +167,7 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
             }
         }
 
-        if (!AppTool.IsNullOrEmpty(myComponentPath) && this.viewContainerRef) {
+        if (!AppTool.IsNullOrEmpty(myComponentPath)) {
             SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
                 .then(cmpRef => {
                     //cmpRef.instance

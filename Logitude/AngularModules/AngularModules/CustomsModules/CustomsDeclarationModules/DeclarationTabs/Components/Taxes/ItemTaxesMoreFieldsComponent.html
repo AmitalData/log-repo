@@ -1,4 +1,4 @@
-<style>
+﻿<style>
         
     .MyLabel {
         text-align: center;
@@ -19,15 +19,15 @@
 
 </style>
 <div *ngIf="_IsVisible">
-    <table *ngIf="isExport!='E'">
+    <table>
         <tr style="height:25px;">
-            <td colspan="7" class="TabTitleRow">
-
+            <td colspan="7" class="TabTitleRow"  >
+            
                 {{'Customs.Declaration.TH.MoreFields'| TextCodeTranslationPipe}}
             </td>
         </tr>
         <tr class="FormFieldRow">
-            <td>
+            <td >
                 <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.DefinedPerUnitMeasure'| TextCodeTranslationPipe}}</div>
             </td>
             <td>
@@ -48,7 +48,7 @@
                 <div class="MyTextBox">  {{ AlternateRate}} </div>
             </td>
 
-
+            
         </tr>
 
 
@@ -107,99 +107,4 @@
             <td colspan="7"></td>
         </tr>
     </table>
-    <table *ngIf="isExport=='E'">
-        <tr style="height:25px;">
-            <td colspan="7" class="TabTitleRow">
-
-                {{'Customs.Declaration.TH.MoreFields'| TextCodeTranslationPipe}}
-            </td>
-        </tr>
-        <tr class="FormFieldRow">
-            <td>
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.DefinedPerUnitMeasure'| TextCodeTranslationPipe}}</div>
-            </td>
-            <td>
-                <div class="MyTextBox">  {{ DefinedPerUnitMeasure}} </div>
-            </td>
-
-            <td>
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.AlternateDefinedPerUnitMeasure'| TextCodeTranslationPipe}}</div>
-            </td>
-            <td>
-                <div class="MyTextBox">  {{ AlternateDefinedPerUnitMeasure}} </div>
-            </td>
-
-            <td>
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.AlternateRate'| TextCodeTranslationPipe}}</div>
-            </td>
-            <td>
-                <div class="MyTextBox">  {{ AlternateRate}} </div>
-            </td>
-
-
-        </tr>
-
-
-        <tr class="FormFieldRow">
-            <td>
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.DefinedPerUnitQuantity'| TextCodeTranslationPipe}}</div>
-            </td>
-            <td>
-                <div class="MyTextBox">  {{ DefinedPerUnitQuantity}} </div>
-            </td>
-
-            <td>
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.AlternateDefinedPerUnitQuant'| TextCodeTranslationPipe}}</div>
-            </td>
-            <td>
-                <div class="MyTextBox">  {{ AlternateDefinedPerUnitQuant}} </div>
-            </td>
-
-            <td>
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.TradeLevyNumber'| TextCodeTranslationPipe}}</div>
-            </td>
-            <td>
-                <div class="MyTextBox">  {{ TradeLevyNumber}} </div>
-            </td>
-
-
-        </tr>
-
-
-        <tr class="FormFieldRow">
-
-
-            <td *ngIf="AlternateMeasurementUnitCode">
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.AlternateMeasurementUnitCode'| TextCodeTranslationPipe}}</div>
-            </td>
-            <td  *ngIf="AlternateMeasurementUnitCode">
-                <div class="MyTextBox">  {{ AlternateMeasurementUnitCode}} </div>
-            </td>
-
-              <td *ngIf="!AlternateMeasurementUnitCode">
-                <div class="MyLabel">{{'Customs.SupplierInvoiceItemsTax.F.MeasurementUnitCode'| TextCodeTranslationPipe}}</div>
-            </td>
-            <td *ngIf="!AlternateMeasurementUnitCode">
-                <div class="MyTextBox">  {{ MeasurementUnitCode}} </div>
-            </td> 
-            <td>
-                <div class="MyLabel">ערך FOB של הסחורה בש"ח</div>
-            </td>
-            <td>
-                <div class="MyTextBox">  {{ ItemFOBAmountNIS}} </div>
-            </td>
-
-            <td>
-                <div class="MyLabel"> ערך FOB במטבע זר של החשבון</div>
-            </td>
-            <td>
-                <div class="MyTextBox">  {{ ItemFOBAmountForeign}} </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="7"></td>
-        </tr>
-    </table>
-
 </div>

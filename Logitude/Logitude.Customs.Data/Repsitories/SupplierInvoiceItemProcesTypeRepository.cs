@@ -61,12 +61,6 @@ namespace Logitude.Customs.Data.Repsitories
                 .DeleteWhere<SupplierInvoiceItemProcesType>(rec => rec.DeclarationId == entityKeyFields.DeclarationId && rec.InvoiceCounterKey == entityKeyFields.InvoiceCounterKey && supplierInvoiceItemsParentsLines.Contains(rec.InvoiceItemLineNumber));
 
         }
-        public int? GetMaxLineNumber(string declarationId, int invoiceCounterKey, int invoiceItemLineNum, int tenant)
-        {
-            return (from a in context.SupplierInvoiceItemProcesTypes
-                    where a.DeclarationId == declarationId && a.InvoiceCounterKey == invoiceCounterKey && a.InvoiceItemLineNumber == invoiceItemLineNum && a.Tenant == tenant
-                    select a).Max(d => (int?)d.LineNumber) ?? 0;
-        }
     }
 
 }

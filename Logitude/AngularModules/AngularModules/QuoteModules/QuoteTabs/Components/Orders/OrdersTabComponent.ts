@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
@@ -7,64 +7,32 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {QuoteTool} from '../../../../Quote/Tools';
-import { QuoteSettingPM } from '../../../../Quote/EntityPMs/QuoteSettingPM';
-import { QuoteDomainService } from '../../../../Quote/Services/QuoteDomainService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirective';
-import { ServiceLocator } from 'Infrastructure/Locators/ServiceLocator';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'OrdersTabComponent',
+    moduleId: module.id,
     templateUrl: './OrdersTabComponent.html',
 })
 
-export class OrdersTabComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
-   
+export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: QuotePM;
     public DataContext: OrdersTabComponent = this;
-    public ObjectTableName: string = "Quote";
-    public QuoteSetting: QuoteSettingPM = null;
-    public TransportModeId: string;
-    public IsQuoteClosedAutomaticallyEnabled: boolean;
-
-    @ViewChild(ChildDirective) Child: ChildDirective;
+    public ObjectTableName: string = "Quote";  
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    public TransportModeId: string; 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        this.GetQuoteSetting();
         this.Listen();
         this.ListenPropertyChanged();
     }
 
-    private GetQuoteSetting() {
-        var quoteDomainService = new QuoteDomainService();
-        quoteDomainService.GetQuoteSettings().subscribe((myResponse: ServiceResponse) => {
-            if (myResponse.HasError == false) {
-                if (myResponse.Result) {
-                    if (myResponse.Result.Id) {
-                        this.QuoteSetting = myResponse.Result;
-                    }
-                }
-            }
-        });
-    }
-
     ngOnInit() {
-        if (this.EntityPM) {
+        if (this.EntityPM != null) {
             this.TransportModeId = this.EntityPM.TransportModeId;
+            this.RunComponent();
             this.SetUIProperties();
             this.SetLabels();
-        }
-    }
-
-    ngAfterViewInit() {
-        if (this.EntityPM) {
-            this.InitalizeFeatureOfClosedAutomatically();
-            SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.Child.Location)
-                .then(cmpRef => {
-                    cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, "Quote.GeneralTabScreen");
-                });
         }
     }
 
@@ -75,7 +43,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         }
 
         else {
-            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Quote.F.ChargeableWeightUnitCode.Short");
+            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Quote.F.WtMsrUnitCode.Short");
         }
     }
 
@@ -131,6 +99,36 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         AppTool.KillEventEmitter(this.PropertyChangedEvent);
     }
 
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+    LoadChildComponent() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, "Quote.GeneralTabScreen");
+            });
+    }
+
     public IsLCLQuote: boolean = false;
     public IsQuoteEditEnabled = true;
     public IsDimFactorVisible: boolean = false
@@ -159,29 +157,22 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         this.UIProperties.SetEnabled("IncotermId", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("MoveTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("ExpirationDays", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsQuoteEditEnabled);
+
+        this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);        
         this.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("ChargeableWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("Ratio", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("DimFactor", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("TransitTime", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("DepartureFrequency", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("SpecialServicesTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("IncludeInsurance", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("IsStackable", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("IncludeImportDutyCharges", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("InsuranceValue", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("ValueOfGoodsCurrencyId", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("ValueOfGoodsCurrencyId", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.UIProperties.SetEnabled("ValueOfGoods", this.ObjectTableName, this.IsQuoteEditEnabled);
-        ServiceLocator.RulesValidator.ApplyAllConditionalBlockFieldRules(this.EntityPM, this.ObjectTableName);
     }
     private SetUIProperties_AutomaticallyClosed() {
-        this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, (this.IsAutomaticallyClosed && this.IsQuoteEditEnabled && this.IsQuoteClosedAutomaticallyEnabled));
-        this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, (this.IsAutomaticallyClosed && this.IsQuoteEditEnabled && this.IsQuoteClosedAutomaticallyEnabled));
-        this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, (this.IsQuoteEditEnabled && this.IsQuoteClosedAutomaticallyEnabled));
+        this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsAutomaticallyClosed && this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsAutomaticallyClosed && this.IsQuoteEditEnabled);
     }
 
     public DimensionsDependencyProperty1: string = null;
@@ -203,14 +194,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
             this.DimensionsDependencyProperty1IsList = false;
         }
 
-        //this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
-    }
-    private InitalizeFeatureOfClosedAutomatically() {
-        this.IsQuoteClosedAutomaticallyEnabled = FeatureLocator.HasFeaturePermession("Quote", "QuoteClosedAutomatically");
-        this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsQuoteClosedAutomaticallyEnabled);
-        this.UIProperties.SetEnabled("AutomaticallyCloseDays", this.ObjectTableName, this.IsQuoteClosedAutomaticallyEnabled);
-        this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, this.IsQuoteClosedAutomaticallyEnabled);
-        this.SetUIProperties_AutomaticallyClosed();
+        this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
 
     // Measurment Units
@@ -225,20 +209,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
 
         else {
             this.MeasurmentsButtonToolTip = TextCodeTranslator.Translate("Quote.B.Details.HideMeasurmentsSettings");
-        }
-    }
-
-    get ValueOfGoods() { return this.EntityPM.ValueOfGoods; }
-    set ValueOfGoods(newValue: number) {
-        if (this.EntityPM.ValueOfGoods != newValue) {
-            this.EntityPM.ValueOfGoods = newValue;
-        }
-    }
-
-    get ValueOfGoodsCurrencyId() { return this.EntityPM.GrossWeightUnitCode; }
-    set ValueOfGoodsCurrencyId(newValue: string) {
-        if (this.EntityPM.ValueOfGoodsCurrencyId != newValue) {
-            this.EntityPM.ValueOfGoodsCurrencyId = newValue;
         }
     }
 
@@ -289,7 +259,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
     set Ratio(newValue: number) {
         if (this.EntityPM.Ratio != newValue) {
             this.EntityPM.Ratio = newValue;
-
+            
             this.ComputeDimFactor();
             QuoteUtilities.OnQuoteRatioChanged(this.EntityPM);
         }
@@ -333,25 +303,14 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
             this.EntityPM.ExpirationDays = newValue;
 
             if (newValue == null) {
-                this.ExpirationDate = null;
+                this.EntityPM.ExpirationDate = null;
             }
 
             else {
-                this.SetExpirationDate();
-            }
-        }
-    }
+                var date = DateTool.GetDateByDay(newValue);
 
-    private SetExpirationDate() {
-        if (this.EntityPM.ExpirationDays == null && this.EntityPM.ExpirationDate == null) { }
-        else {
-            var date = DateTool.AddDays(this.StartDate, this.ExpirationDays);
-            if (date == null) {
-                this.EntityPM.ExpirationDays = null;
-            }
-            else {
-                if (this.ExpirationDate == null || (this.ExpirationDate != null && this.ExpirationDate.valueOf() != date.valueOf())) {
-                    this.ExpirationDate = date;
+                if (this.ExpirationDate.valueOf() != date.valueOf()) {
+                    this.EntityPM.ExpirationDate = date;
                 }
             }
         }
@@ -367,24 +326,11 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
             }
 
             else {
-                var days = this.GetDaysBetweenDates(newValue, this.StartDate);
+                var todayDate = DateTool.GetCurrentDateAsUtc();
+                var days = this.GetDaysBetweenDates(newValue, todayDate);
                 if (this.ExpirationDays != days) {
                     this.EntityPM.ExpirationDays = days;
                 }
-            }
-        }
-    }
-
-    get StartDate() { return this.EntityPM.StartDate; }
-    set StartDate(newValue: Date) {
-        if (this.EntityPM.StartDate != newValue) {
-            this.EntityPM.StartDate = newValue;
-
-            if (newValue == null) {
-                this.EntityPM.ExpirationDays = null;
-            }
-            else {
-                this.SetExpirationDate();
             }
         }
     }
@@ -396,16 +342,15 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
 
             if (newValue) {
                 var todayDate = DateTool.GetCurrentDateAsUtc();
-                var closeDays = this.QuoteSetting != null ? this.QuoteSetting.AutomaticallyCloseDays : 30;
-                this.EntityPM.AutomaticallyCloseDays = closeDays;
-                this.EntityPM.AutomaticallyCloseDate = DateTool.AddDays(todayDate, closeDays);
+
+                this.EntityPM.AutomaticallyCloseDays = 30;
+                this.EntityPM.AutomaticallyCloseDate = DateTool.AddDays(todayDate, 30);
             }
 
             else {
                 this.EntityPM.AutomaticallyCloseDays = null;
                 this.EntityPM.AutomaticallyCloseDate = null;
                 this.EntityPM.QuoteClosingReasonCode = null;
-                this.EntityPM.QuoteClosingReasonId = null;
             }
 
             this.SetUIProperties_AutomaticallyClosed();
@@ -489,48 +434,10 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         }
     }
 
-    get SpecialServicesTypeId() { return this.EntityPM.SpecialServicesTypeId; }
-    set SpecialServicesTypeId(newValue: string) {
-        if (this.EntityPM.SpecialServicesTypeId != newValue) {
-            this.EntityPM.SpecialServicesTypeId = newValue;
-        }
-    }
-
-    get IncludeInsurance() { return this.EntityPM.IncludeInsurance; }
-    set IncludeInsurance(newValue: boolean) {
-        if (this.EntityPM.IncludeInsurance != newValue) {
-            this.EntityPM.IncludeInsurance = newValue;
-        }
-    }
-
-    get IsStackable() { return this.EntityPM.IsStackable; }
-    set IsStackable(newValue: boolean) {
-        if (this.EntityPM.IsStackable != newValue) {
-            this.EntityPM.IsStackable = newValue;
-        }
-    }
-
-    get IncludeImportDutyCharges() { return this.EntityPM.IncludeImportDutyCharges; }
-    set IncludeImportDutyCharges(newValue: boolean) {
-        if (this.EntityPM.IncludeImportDutyCharges != newValue) {
-            this.EntityPM.IncludeImportDutyCharges = newValue;
-        }
-    }
-
-    get InsuranceValue() { return this.EntityPM.InsuranceValue; }
-    set InsuranceValue(newValue: number) {
-        if (this.EntityPM.InsuranceValue != newValue) {
-            this.EntityPM.InsuranceValue = newValue;
-        }
-    }
-
     get TransitTime() { return this.EntityPM.TransitTime; }
     set TransitTime(newValue: string) {
         if (this.EntityPM.TransitTime != newValue) {
             this.EntityPM.TransitTime = newValue;
         }
-    }
-
-
-
+    }    
 }

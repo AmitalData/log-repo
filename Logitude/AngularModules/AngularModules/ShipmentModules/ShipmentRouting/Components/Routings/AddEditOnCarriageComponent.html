@@ -1,4 +1,4 @@
-
+﻿
 
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
@@ -7,23 +7,7 @@
         </td>
     </tr>
 
-    <tr style="height: 1px;" *ngIf="IsCloseHouseInfoVisible">
-        <td>
-            <div class="OrangeInfo" style="margin: 5px;">
-                In house shipments, On Carriage should be edited from the master
-            </div>
-        </td>
-    </tr>
-
-    <tr style="height: 1px;" *ngIf="IsCloseMasterInfoVisible">
-        <td colspan="2">
-            <div class="OrangeInfo" style="margin: 5px;">
-                This master is departed and connected to house shipments, can't edit on carriage from or to ports
-            </div>
-        </td>
-    </tr>
-
-    <tr *ngIf="LegType =='On Carriage'">
+    <tr>
         <td>
             <div class="MediaFill">
                 <table>
@@ -132,13 +116,12 @@
                                                 </td>
 
                                                 <td>
-
-                                                    <!-- [DependencyFilter1Value]="CarrierDependencyProperty1" -->
                                                     <LogLov [ObjectFieldName]="'OnCarriageCarrierId'"
                                                             [SelectedValue]="OnCarriageCarrierId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Carrier'" [ShowInActive]="'true'" [ShowInActivePopUpWindow]="'true'">
+                                                            [LookUpTableName]="'Carrier'"
+                                                            [DependencyFilter1Value]="CarrierDependencyProperty1">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -154,34 +137,18 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- OnCarriageVesselName -->
-                                            <tr class="FormFieldRow" *ngIf="OnCarriageTransportModeId == 'O'">
+                                            <!-- OnCarriageVesselId -->
+                                            <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'OnCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'OnCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                                 </td>
 
-                                                <td *ngIf="IsVesselFreeTextVisible">
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'OnCarriageVesselName'" [Text]="OnCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                            </td>
-                                                            <td style="width: 20px; left:-15px;">
-                                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('O')">
-                                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-
-                                                <td *ngIf="!IsVesselFreeTextVisible">
+                                                <td>
                                                     <LogLov [ObjectFieldName]="'OnCarriageVesselId'"
                                                             [SelectedValue]="OnCarriageVesselId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Vessel'"
-                                                            (SelectedItemChanged)="OnCarriageVessel = $event">
+                                                            [LookUpTableName]="'Vessel'">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -386,7 +353,7 @@
                                                                                 </td>
 
                                                                                 <td style="width:30px;">
-                                                                                    <OnCarriageDate [EntityPM]="item.EntityPM" [State]="'Departure'" [IsEnabled]="IsOkButtonEnabled" (PopupClosed)="item.OnDateComponentClosed($event)"></OnCarriageDate>
+                                                                                    <OnCarriageDate [EntityPM]="item.EntityPM" [State]="'Departure'" (PopupClosed)="item.OnDateComponentClosed($event)"></OnCarriageDate>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -404,7 +371,7 @@
                                                                             </td>
 
                                                                             <td style="width:30px;">
-                                                                                <OnCarriageDate [EntityPM]="item.EntityPM" [State]="'Arrival'" [IsEnabled]="IsOkButtonEnabled" (PopupClosed)="item.OnDateComponentClosed($event)"></OnCarriageDate>
+                                                                                <OnCarriageDate [EntityPM]="item.EntityPM" [State]="'Arrival'" (PopupClosed)="item.OnDateComponentClosed($event)"></OnCarriageDate>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -413,7 +380,7 @@
                                                                 <!-- Tools -->
                                                                 <td class="CellTools">
                                                                     <span class="CellSeparator"></span>
-                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" [IsEnabled]="IsOkButtonEnabled" (click)="EditContainer(item)"></IconButton>
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditContainer(item)"></IconButton>
                                                                 </td>
                                                             </tr>
 
@@ -437,298 +404,6 @@
         </td>
     </tr>
 
-    <tr *ngIf="LegType =='On Forwarding'">
-        <td>
-            <div class="MediaFill">
-                <table>
-                    <tr style="height:1px;">
-                        <td>
-                            <table>
-                                <tr>
-                                    <td style="width: 340px;">
-                                        <table>
-
-                                            <!-- OnForwardingTransportModeId -->
-                                            <tr class="FormFieldRow">
-                                                <td style="width: 110px;">
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingTransportModeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.TransportMode'"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'OnForwardingTransportModeId'"
-                                                            [SelectedValue]="OnForwardingTransportModeId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'TransportMode'">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <!-- AdditionalTransportMode -->
-                                            <tr class="FormFieldRow" *ngIf="OnForwardingTransportModeId == 'I'">
-                                                <td style="width: 110px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <RadioButton [Name]="'ModeRadio'" [IsChecked]="OnForwardingAdditionalTransportModeCode == 'BYTR'" (Checked)="OnForwardingAdditionalTransportModeCode = 'BYTR'" [Text]="'By Truck'"></RadioButton>
-                                                            </td>
-
-                                                            <td>
-                                                                <RadioButton [Name]="'ModeRadio'" [IsChecked]="OnForwardingAdditionalTransportModeCode == 'BYRA'" (Checked)="OnForwardingAdditionalTransportModeCode = 'BYRA'" [Text]="'By Rail'"></RadioButton>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-
-                                            <!-- OnForwardingFromPortId -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.From'"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'OnForwardingFromPortId'"
-                                                            [SelectedValue]="OnForwardingFromPortId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'"
-                                                            [DependencyFilter1Value]="OnForwardingTransportModeId">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <!-- OnForwardingToPortId -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.To'"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'OnForwardingToPortId'"
-                                                            [SelectedValue]="OnForwardingToPortId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Port'"
-                                                            [DependencyFilter1Value]="OnForwardingTransportModeId">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <!-- OnForwardingCarrierId -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingCarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Carrier'"></LogLabel>
-                                                </td>
-
-                                                <td>
-
-                                                    <!-- [DependencyFilter1Value]="CarrierDependencyProperty1" -->
-                                                    <LogLov [ObjectFieldName]="'OnForwardingCarrierId'"
-                                                            [SelectedValue]="OnForwardingCarrierId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Carrier'" [ShowInActive]="'true'" [ShowInActivePopUpWindow]="'true'">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <!-- OnForwardingCarrierNumber -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingCarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.CarrierNo'"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogTextBox [ObjectFieldName]="'OnForwardingCarrierNumber'" [Text]="OnForwardingCarrierNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                </td>
-                                            </tr>
-
-                                            <!-- OnForwardingVesselName -->
-                                            <tr class="FormFieldRow" *ngIf="OnForwardingTransportModeId == 'O'">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
-                                                </td>
-
-                                                <td *ngIf="IsVesselFreeTextVisible">
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'OnForwardingVesselName'" [Text]="OnForwardingVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                            </td>
-                                                            <td style=" width: 20px; left:-15px;">
-                                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('F')">
-                                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-
-                                                <td *ngIf="!IsVesselFreeTextVisible">
-                                                    <LogLov [ObjectFieldName]="'OnForwardingVesselId'"
-                                                            [SelectedValue]="OnForwardingVesselId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Vessel'"
-                                                            (SelectedItemChanged)="OnForwardingVessel = $event">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan="2">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 340px;">
-                                        <table>
-
-                                            <!-- ETD -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <div>
-                                                        <button *ngIf="OnForwardingETD && !OnForwardingATD" (click)="SetActualDateClicked('OnForwardingETD')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
-                                                    </div>
-                                                </td>
-
-                                                <td style="width: 45px;">
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ETD'"></LogLabel>
-                                                </td>
-
-                                                <td style="width: 105px;">
-                                                    <LogDatePicker [ObjectFieldName]="'OnForwardingETD'" [SelectedDateValue]="OnForwardingETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                </td>
-
-                                                <td style="width: 2px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td style="width: 95px;">
-                                                    <LogDatePicker [ObjectFieldName]="'OnForwardingETD'" [SelectedDateValue]="OnForwardingETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
-                                                </td>
-
-                                                <td style="width: 18px;">
-                                                    <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'OnForwardingDeparture'"></FollowupButton>
-                                                </td>
-                                            </tr>
-
-                                            <!-- ETA -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <div>
-                                                        <button *ngIf="OnForwardingETA && !OnForwardingATA" (click)="SetActualDateClicked('OnForwardingETA')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ETA'"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'OnForwardingETA'" [SelectedDateValue]="OnForwardingETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'OnForwardingETA'" [SelectedDateValue]="OnForwardingETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
-                                                </td>
-
-                                                <td>
-                                                    <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'OnForwardingArrival'"></FollowupButton>
-                                                </td>
-                                            </tr>
-
-                                            <!-- ATD -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ATD'"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'OnForwardingATD'" [SelectedDateValue]="OnForwardingATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'OnForwardingATD'" [SelectedDateValue]="OnForwardingATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
-                                            <!-- ATA -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ATA'"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'OnForwardingATA'" [SelectedDateValue]="OnForwardingATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'OnForwardingATA'" [SelectedDateValue]="OnForwardingATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan="6">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </td>
-    </tr>
-
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
@@ -738,7 +413,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{ 'OnCarriageCancelBtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" id="{{ 'OnCarriageCancelBtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -746,7 +421,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled" id="{{ 'OnCarriageOKBtn' | IdGeneratorAsyncPipe | async}}">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{ 'OnCarriageOKBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

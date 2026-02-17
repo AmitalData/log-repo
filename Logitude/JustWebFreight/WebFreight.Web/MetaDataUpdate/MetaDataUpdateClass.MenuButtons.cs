@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +19,9 @@ namespace WebFreight.Web.MetaDataUpdate
             FeatureQuery featureQuery = new FeatureQuery(tenant);
             List<FeaturePM> features = featureQuery.GetFeaturePMsByTenant(tenant).ToList();
 
-            Dictionary<string, TextCode> TextCodes = TextCodeRepository.GetTextCodesByTenant(tenant).Where(d => d.TextCodeTypeCode == "B").GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
-            Dictionary<string, MenuButton> TenantMenuButtons = MenuButtonRepository.GetMenuButtonsByTenant(tenant).GroupBy(d => d.EventCode + d.MenuButtonGroupId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
-            Dictionary<string, MenuButtonGroup> TenantMenuButtonGroups = MenuButtonGroupRepository.GetMenuButtonGroupsByTenant(tenant).GroupBy(d => d.Name).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+            Dictionary<string, TextCode> TextCodes = TextCodeRepository.GetTextCodesByTenant(tenant).Where(d => d.TextCodeTypeCode == "B").ToDictionary(s => s.Code, a => a);
+            Dictionary<string, MenuButton> TenantMenuButtons = MenuButtonRepository.GetMenuButtonsByTenant(tenant).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);
+            Dictionary<string, MenuButtonGroup> TenantMenuButtonGroups = MenuButtonGroupRepository.GetMenuButtonGroupsByTenant(tenant).ToDictionary(d => d.Name, a => a);
 
             string ShipmentTableId = ObjectContext.ObjectTables.Where(f => f.Name == "Shipment" && f.Tenant == tenant).FirstOrDefault().Id;
             string MasterTableId = ObjectContext.ObjectTables.Where(f => f.Name == "Master" && f.Tenant == tenant).FirstOrDefault().Id;

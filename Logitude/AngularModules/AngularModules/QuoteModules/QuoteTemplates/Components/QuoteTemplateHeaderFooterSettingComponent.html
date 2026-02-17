@@ -1,4 +1,4 @@
-<table *ngIf="IsLoadPage">
+﻿<table>
     <tr style="height:5px"><td style="height:5px"></td></tr>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -6,278 +6,182 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
+    <tr style="height:30px"><td style="height:30px"> <div></div></td></tr>
+
 
     <tr>
         <td>
-            <div class="MediaFill">
-                <div style="border:0px;" class="TabControl">
-                    <div class="TabControlHead">
-                        <ul style="margin-left: 2px;">
-                            <li [class.Selected]="SelectedTabCode == 'QCS'" (click)="SelectedTabCode = 'QCS'" style="margin-left:2px;">
-                                <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                    <span>{{'QuoteTemplate.S.ColumnsSettings' | TextCodeTranslationPipe}}</span>
-                                </div>
-                            </li>
-
-                            <li *ngIf="QuoteTemplateSectionTypeName == 'Footer'" [class.Selected]="SelectedTabCode == 'QPN'" (click)="SelectedTabCode = 'QPN'">
-                                <div class="InnerChild" style="color:black;width:110px">
-
-                                    <div style="width:110px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                        <span>{{'QuoteTemplate.S.PageNumbering' | TextCodeTranslationPipe}}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="TabControlBody">
-
-                        <!--   Tab 1-->
-                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'QCS'">
-                            <div style="margin:10px" class="MediaFillAbsolute">
-
-                                <ScrollViewer>
+            <table>
+                <tr style="height:35%">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
                                     <table>
-                                        <tr style="height:35%">
-                                            <td>
+                                        <tr>
+                                            <td style="width:400px;">
                                                 <table>
-                                                    <tr>
-                                                        <td>
+                                                    <tr style="height:35px">
+       
+                                                        <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Column1' | TextCodeTranslationPipe}} </div></td>
+                                                        <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" [ItemsSource]="AreaType" (SelectedItemChanged)="PageAreaSelectedChanged('Area1',$event)"  [SelectedItem]="PageArea1Type" ></ComboBox></td>
+                                                        <td style="width:8px"><div style="width:8px"></div></td>
+                                                        <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
+                                                        <td style="width:85px">
+
                                                             <table>
                                                                 <tr>
-                                                                    <td style="width:400px;">
-                                                                        <table>
-                                                                            <tr style="height:35px">
-
-                                                                                <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Column1' | TextCodeTranslationPipe}} </div></td>
-                                                                                <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" [ItemsSource]="AreaType" (SelectedItemChanged)="PageAreaSelectedChanged('Area1',$event)" [SelectedItem]="PageArea1Type"></ComboBox></td>
-                                                                                <td style="width:8px"><div style="width:8px"></div></td>
-                                                                                <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
-                                                                                <td style="width:85px">
-
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width:60px"><input type="number" attr.data-cy="{{'CoulmnWidth1'}}" [(ngModel)]="Area1Width" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
-                                                                                            <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                            <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
-                                                                                        </tr>
-                                                                                    </table>
-
-
-
-
-                                                                                </td>
-                                                                                <td style="width:5px"><div style="width:5px"></div></td>
-                                                                                <td style="width: 18px;margin-left:-10px;margin-top:7px; float:left;vertical-align:middle;" class="EditButton">
-                                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPageArea('Area1')" style="display: block; float: left;"></IconButton>
-                                                                                </td>
-                                                                                <td><div></div></td>
-                                                                            </tr>
-
-                                                                            <tr style="height:35px">
-
-                                                                                <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Column2' | TextCodeTranslationPipe}}</div></td>
-                                                                                <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" [ItemsSource]="AreaType" (SelectedItemChanged)="PageAreaSelectedChanged('Area2',$event)" [SelectedItem]="PageArea2Type"></ComboBox></td>
-                                                                                <td style="width:8px"><div style="width:8px"></div></td>
-                                                                                <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
-                                                                                <td style="width:85px">
-
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width:60px"><input type="number" attr.data-cy="{{'CoulmnWidth2'}}" [(ngModel)]="Area2Width" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
-                                                                                            <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                            <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
-                                                                                        </tr>
-                                                                                    </table>
-
-
-
-
-
-
-                                                                                </td>
-                                                                                <td style="width:5px"><div style="width:5px"></div></td>
-                                                                                <td style="width: 18px;margin-left:-10px;margin-top:7px; float:left;vertical-align:middle;" class="EditButton">
-                                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPageArea('Area2')" style="display: block; float: left;"></IconButton>
-                                                                                </td>
-                                                                                <td><div></div></td>
-                                                                            </tr>
-
-                                                                            <tr style="height:35px">
-
-                                                                                <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Column3' | TextCodeTranslationPipe}}</div></td>
-                                                                                <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" (SelectedItemChanged)="PageAreaSelectedChanged('Area3',$event)" [ItemsSource]="AreaType" [SelectedItem]="PageArea3Type"></ComboBox></td>
-                                                                                <td style="width:8px"><div style="width:8px"></div></td>
-                                                                                <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
-                                                                                <td style="width:85px">
-
-
-
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width:60px"><input type="number" attr.data-cy="{{'CoulmnWidth3'}}" [(ngModel)]="Area3Width" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
-                                                                                            <td style="width:5px;"><div style="width:5px;"></div></td>
-                                                                                            <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
-                                                                                        </tr>
-                                                                                    </table>
-
-
-                                                                                </td>
-                                                                                <td style="width:5px"><div style="width:5px"></div></td>
-                                                                                <td style="width: 18px;margin-left:-10px;margin-top:7px; float:left;vertical-align:middle;" class="EditButton">
-                                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPageArea('Area3')" style="display: block; float: left;"></IconButton>
-                                                                                </td>
-                                                                                <td><div></div></td>
-                                                                            </tr>
-
-
-                                                                            <tr><td colspan="8"></td></tr>
-                                                                        </table>
-
-                                                                    </td>
-                                                                    <td><div></div></td>
-
-
-                                                                    <td style="width:350px;">
-                                                                        <table>
-                                                                            <tr style="height:30px">
-                                                                                <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteTemplate.S.Height' | TextCodeTranslationPipe}}:</div></td>
-                                                                                <td style="width:120px">
-
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width:80px"><input type="number" (blur)="HeightAreaLostFocusMethod()" [(ngModel)]="HeightArea" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:80px;float:left;color:gray;font-size:12px;display:inline"></td>
-                                                                                            <td style="width:3px;"><div style="width:3px;"></div></td>
-                                                                                            <td style="width:30px"><span style="font-size:12px;color:gray;width:30px;margin-top:2px">{{'QuoteTemplate.S.Cm' | TextCodeTranslationPipe}}</span></td>
-                                                                                        </tr>
-                                                                                    </table>
-
-
-                                                                                </td>
-                                                                                <td colspan="3"></td>
-                                                                            </tr>
-                                                                            <tr style="height:5px"><td style="height:5px" colspan="5"></td></tr>
-
-                                                                            <tr style="height:30px">
-
-                                                                                <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteTemplate.S.BorderType' | TextCodeTranslationPipe}}:</div></td>
-                                                                                <td style="width:120px"><ComboBox style="width:120px;height:22px;display:inline" (SelectedItemChanged)="BorderTypesSelectedChanged($event)" [ItemsSource]="BorderTypes" [SelectedItem]="BorderTypesSelected" [Binding]="'Name'"></ComboBox></td>
-                                                                                <td style="width:7px"><div style="width:7px"></div></td>
-
-                                                                                <td style="width: 70px;">
-                                                                                    <div>
-                                                                                        <button style="height:28px" class="Button" (click)="AdvanceButtonClicked()">{{'QuoteTemplate.B.Advanced' | TextCodeTranslationPipe}}</button>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td><div></div></td>
-                                                                            </tr>
-
-
-                                                                            <tr *ngIf="QuoteTemplateSectionTypeName == 'Footer'" style="height:5px"><td style="height:5px" colspan="5"></td></tr>
-
-                                                                            <tr *ngIf="QuoteTemplateSectionTypeName == 'Footer'" style="height:30px">
-                                                                                <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteTemplate.S.SpaceLinesBefore' | TextCodeTranslationPipe}}:</div></td>
-                                                                                <td style="width:120px">
-
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width:80px"><input type="number" [(ngModel)]="SpaceLinesBefore" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:80px;float:left;color:gray;font-size:12px;display:inline"></td>
-                                                                                            <td></td>
-                                                                                        </tr>
-                                                                                    </table>
-
-
-                                                                                </td>
-                                                                                <td colspan="3"></td>
-                                                                            </tr>
-
-
-
-                                                                            <tr><td colspan="5"></td></tr>
-                                                                        </table>
-
-                                                                    </td>
+                                                                    <td style="width:60px"><input type="number" [(ngModel)]="Area1Width" (blur)="AreaWidthLostFocusMethod('Area1')" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
+                                                                    <td style="width:5px;"><div style="width:5px;"></div></td>
+                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
                                                                 </tr>
                                                             </table>
+
+                                                            
+                                                            
+
                                                         </td>
+                                                        <td style="width:5px"><div style="width:5px"></div></td>
+                                                        <td style="width: 18px;margin-left:-10px;margin-top:7px; float:left;vertical-align:middle;" class="EditButton">
+                                                            <IconButton [Name]="'Edit'"  [IsSmall]="true" (click)="EditPageArea('Area1')" style="display: block; float: left;"></IconButton>
+                                                        </td>
+                                                        <td><div></div></td>
                                                     </tr>
-                                                    <tr style="height:25px">
-                                                        <td style="height:25px">
-                                                            <div style="text-align:center">
-                                                                <div class="CenterCenter" style="width:300px;height:30px;border-radius:2px;color:#1B90CB;border:1px solid #E4E3E1;background-color:#EDEDED;font-size:22px;text-align:center;vertical-align:central"> {{'QuoteTemplate.B.Preview' | TextCodeTranslationPipe}} </div>
-                                                            </div>
+
+                                                    <tr style="height:35px">
+
+                                                        <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Column2' | TextCodeTranslationPipe}}</div></td>
+                                                        <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" [ItemsSource]="AreaType" (SelectedItemChanged)="PageAreaSelectedChanged('Area2',$event)" [SelectedItem]="PageArea2Type"></ComboBox></td>
+                                                        <td style="width:8px"><div style="width:8px"></div></td>
+                                                        <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
+                                                        <td style="width:85px">
+                                                           
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:60px"><input type="number" [(ngModel)]="Area2Width" (blur)="AreaWidthLostFocusMethod('Area2')" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
+                                                                    <td style="width:5px;"><div style="width:5px;"></div></td>
+                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
+                                                                </tr>
+                                                            </table>
+
+
+
+
+
 
                                                         </td>
+                                                        <td style="width:5px"><div style="width:5px"></div></td>
+                                                        <td style="width: 18px;margin-left:-10px;margin-top:7px; float:left;vertical-align:middle;" class="EditButton">
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true"  (click)="EditPageArea('Area2')" style="display: block; float: left;"></IconButton>
+                                                        </td>
+                                                        <td><div></div></td>
                                                     </tr>
-                                                    <tr style="height:10px"><td></td></tr>
 
-                                                </table>
-                                            </td>
+                                                    <tr style="height:35px">
+
+                                                        <td style="width:85px;"><div style="width:85px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Column3' | TextCodeTranslationPipe}}</div></td>
+                                                        <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" (SelectedItemChanged)="PageAreaSelectedChanged('Area3',$event)" [ItemsSource]="AreaType" [SelectedItem]="PageArea3Type"></ComboBox></td>
+                                                        <td style="width:8px"><div style="width:8px"></div></td>
+                                                        <td style="width:60px;"><div style="width:60px;font-size:17px;color:Gray">{{'QuoteTemplate.S.Width' | TextCodeTranslationPipe}}:</div></td>
+                                                        <td style="width:85px">
+                                                         
+                                                           
+
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:60px"><input type="number" [(ngModel)]="Area3Width" (blur)="AreaWidthLostFocusMethod('Area3')" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;font-size:12px;display:inline"></td>
+                                                                    <td style="width:5px;"><div style="width:5px;"></div></td>
+                                                                    <td><span style="font-size:12px;color:gray;width:30px;margin-top:3px;">{{'QuoteTemplate.S.Percentage' | TextCodeTranslationPipe}}</span></td>
+                                                                </tr>
+                                                            </table>
 
 
-
-
-                                        </tr>
-
-
-
-                                        <tr style="height:65%;">
-
-                                            <td>
-                                                <div style="margin-left:5px;text-align:center;vertical-align:top;height:100%;">
-                                                    <FroalaEditor style="text-align:center;vertical-align:top;height:100%;margin-top:-5px" [EditorfroalaSetting]="froalaEditorSetting"></FroalaEditor>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </ScrollViewer>
-                            </div>
-                        </div>
-
-                        <!--   Tab 2-->
-                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'QPN'">
-
-                            <div style="margin:10px" class="MediaFillAbsolute">
-                                <ScrollViewer>
-                                    <table>
-                                        <tr style="height:10%;">
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:10%">
-                                                            <div style="width:10%">
-                                                                Hide Page Number
-                                                            </div>
                                                         </td>
-                                                        <td style="width:70%">
-                                                            <div style="width:70%">
-                                                                <CheckBox [IsChecked]="HidePageNumber" (Checked)="HidePageNumber = $event"></CheckBox>
-                                                            </div>
+                                                        <td style="width:5px"><div style="width:5px"></div></td>
+                                                        <td style="width: 18px;margin-left:-10px;margin-top:7px; float:left;vertical-align:middle;" class="EditButton">
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPageArea('Area3')" style="display: block; float: left;"></IconButton>
                                                         </td>
+                                                        <td><div></div></td>
                                                     </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr style="height:20%;width:50%">
-                                            <td><TextDesignComponent *ngIf="DesignTextDesignPM" [QuoteTemplateTextDesignPM]="DesignTextDesignPM"></TextDesignComponent></td>
-                                            <td style="width:50%"></td>
-                                        </tr>
-                                        <tr style="height:65%;">
-                                            <td><div style="height:65%;"></div></td>
-                                        </tr>
-                                    </table>
-                                </ScrollViewer>
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
             
+
+                                                    <tr><td colspan="8"></td></tr>
+                                                </table>
+
+                                            </td>
+                                            <td><div></div></td>
+
+
+                                            <td style="width:350px;">
+                                                <table>
+                                                    <tr style="height:30px">
+                                                        <td style="width:115px;"><div style="width:115px;font-size:17px;color:gray">{{'QuoteTemplate.S.Height' | TextCodeTranslationPipe}}:</div></td>
+                                                        <td style="width:120px">
+                                                          
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:80px"><input type="number" (blur)="HeightAreaLostFocusMethod()" [(ngModel)]="HeightArea" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:80px;float:left;color:gray;font-size:12px;display:inline"></td>
+                                                                    <td style="width:3px;"><div style="width:3px;"></div></td>
+                                                                    <td style="width:30px"><span style="font-size:12px;color:gray;width:30px;margin-top:2px">{{'QuoteTemplate.S.Cm' | TextCodeTranslationPipe}}</span></td>
+                                                                </tr>
+                                                            </table>
+
+
+                                                        </td>
+                                                        <td colspan="3"></td>
+                                                    </tr>
+                                                    <tr style="height:5px"><td style="height:5px" colspan="5"></td></tr>
+
+                                                    <tr style="height:30px">
+
+                                                        <td style="width:115px;"><div style="width:115px;font-size:17px;color:gray">{{'QuoteTemplate.S.BorderType' | TextCodeTranslationPipe}}:</div></td>
+                                                        <td style="width:120px"><ComboBox style="width:120px;height:22px;display:inline" (SelectedItemChanged)="BorderTypesSelectedChanged($event)" [ItemsSource]="BorderTypes" [SelectedItem]="BorderTypesSelected" [Binding]="'Name'"></ComboBox></td>
+                                                        <td style="width:7px"><div style="width:7px"></div></td>
+
+                                                        <td style="width: 70px;">
+                                                            <div>
+                                                                <button style="height:28px" class="Button" (click)="AdvanceButtonClicked()">{{'QuoteTemplate.B.Advanced' | TextCodeTranslationPipe}}</button>
+                                                            </div>
+                                                        </td>
+                                                        <td><div></div></td>
+                                                    </tr>
+                                                    <tr><td colspan="5"></td></tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="height:25px">
+                                <td style="height:25px">
+                                    <div style="text-align:center">
+                                        <div class="CenterCenter" style="width:300px;height:30px;border-radius:2px;color:#1B90CB;border:1px solid #E4E3E1;background-color:#EDEDED;font-size:22px;text-align:center;vertical-align:central"> {{'QuoteTemplate.B.Preview' | TextCodeTranslationPipe}} </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr style="height:10px"><td></td></tr>
+
+                        </table>
+                    </td>
+
+
+
+
+                </tr>
+
+
+
+                <tr style="height:65%;">
+
+                    <td>
+                        <div style="margin-left:5px;text-align:center;vertical-align:top;height:100%;">
+                            <FroalaEditor style="text-align:center;vertical-align:top;height:100%;margin-top:-5px" [EditorfroalaSetting]="froalaEditorSetting"></FroalaEditor>
+                        </div>
+                    </td>
+                </tr>
+            </table>
 
         </td>
     </tr>

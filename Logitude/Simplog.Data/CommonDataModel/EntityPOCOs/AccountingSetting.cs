@@ -30,18 +30,16 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? ARInvoiceTransferStartDate { get; set; }
         public DateTime? APInvoiceTransferStartDate { get; set; }
         public DateTime? ARPaymentTransferStartDate { get; set; }
-        public DateTime? APPaymentTransferStartDate { get; set; }
         public string QBOrealMeID { get; set; }
+        public string QBOAccessToken { get; set; }
+        public string QBOAccessTokenSecret { get; set; }
         public bool AllowMinusInvoicelines { get; set; }
         public bool AllowPositiveAmountsInTheCreditNote { get; set; }
         public bool EnableMultiPercentageVATTypes { get; set; }
         public bool NotifyPastDateOnInvoiceEdit { get; set; }
         public bool IsAPPaymentsTransferEnabled { get; set; }
 
-        public string RefreshToken { get; set; }
-        public int QBOOAuth { get; set; }
-
-
+        
         public string ReceivableVATCard { get; set; }
         public string PayableVATCard { get; set; }
 
@@ -63,16 +61,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool EnableNegativeOffsetARPayments { get; set; }
         public bool EnableNegativeOffsetAPPayments { get; set; }
         public bool EnableInvoiceStocksManagement { get; set; }
-        public bool AllowManualARPaymentNumber { get; set; }
-        public bool AllowRegionalTaxManagement { get; set; }
-        public bool EnableAPPaymentExternalPayment { get; set; }
-        public bool TransferToFTPActivated { get; set; }
-        public string TransferFTPDetailId { get; set; }
-
-        public virtual FTPDetail TransferFTPDetail { get; set; }
-
-        public bool EnableEnteringTotalVAT { get; set; }
-        public bool BlockSendInvoiceOriginalCopy { get; set; }
-
     }
 }

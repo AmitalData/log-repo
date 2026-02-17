@@ -9,7 +9,7 @@ import { ARInvoiceStockPMService } from '../../../../Invoice/Services/StandardPM
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewARInvoiceStockLinesComponent.html',
 })
 

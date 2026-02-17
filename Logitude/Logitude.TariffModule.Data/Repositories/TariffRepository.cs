@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.TariffModule.Data.Repositories
 {
@@ -22,93 +21,7 @@ namespace Logitude.TariffModule.Data.Repositories
 			throw new NotImplementedException();
         }
 
+   }
 
-        public IQueryable<TariffLine> GetAllTariffLines(int tenant)
-        {
-            return from a in context.TariffLines
-                   where a.Tenant == tenant
-                   select a;
-        }
-
-
-        public IQueryable<TariffLine> GetAllTariffLinesByTariffIds(string[] Ids,int tenant)
-        {
-            return from a in context.TariffLines
-                   where a.Tenant == tenant && Ids.Contains(a.TariffId)
-                   select a;
-        }
-
-        public IQueryable<Tariff> GetAllTariff(string[] Ids,int tenant)
-        {
-            return from a in context.Tariffs
-                   where a.Tenant == tenant && Ids.Contains(a.Id)
-                   select a;
-        }
-
-        public IQueryable<Tariff> GetActiveCustomsChargesTariffs(int tenant)
-        {
-            return from a in context.Tariffs.Include("Seller")
-                   where a.Tenant == tenant && !a.InActive && (a.TypeCode == "ICC" || a.TypeCode == "ECC")
-                   select a;
-        }
-        public IQueryable<Tariff> GetActiveSalesLocalChargesTariffs(int tenant)
-        {
-            return from a in context.Tariffs.Include("CustomerGroup")
-                   where a.Tenant == tenant && !a.InActive && (a.TypeCode == "ECS" || a.TypeCode == "ICS")
-                   select a;
-        }
-        public IQueryable<Tariff> GetSurchargeTariffsByCodeAndSellerId(string[] ids,string typeCode, int tenant)
-        {
-            var code = "ASC";
-            if(typeCode == "OLC")
-            {
-                code = "OSC";
-            }
-
-            else if (typeCode == "OFC")
-            {
-                code = "OFS";
-            }
-            else if (typeCode == "IFT")
-            {
-                code = "IFT";
-            }
-            return from a in context.Tariffs
-                   where a.Tenant == tenant && ids.Contains(a.SellerId) && a.TypeCode== code
-                   select a;
-        }
-
-        public IQueryable<TariffVersion> GetAllTariffVersionsByTariffIds(string[] Ids, int tenant)
-        {
-            return from a in context.TariffVersions
-                   where a.Tenant == tenant && Ids.Contains(a.TariffId) && a.IsDraft==false 
-                   select a;
-        }
-
-        public IQueryable<TariffVersionAllInCharge> GetAllTariffAllInOnVersionsByTariffIds(string[] Ids,int[]VersionIds, int tenant)
-        {
-            return from a in context.TariffVersionAllInCharges
-                   where a.Tenant == tenant && Ids.Contains(a.TariffId) && VersionIds.Contains(a.Version)
-                   select a;
-        }
-
-        public IQueryable<Tariff> GetAllFromIdList(List<string> ids, int tenant)
-        {
-            IQueryable<Tariff> entities = (from a in context.Tariffs where a.Tenant == tenant && (a.TypeCode != "ICS" && a.TypeCode != "ECS") && ids.Contains(a.Id) select a);
-            return entities;
-        }
-        public IQueryable<Tariff> GetAllSaleTariffFromIdList(List<string> ids, int tenant)
-        {
-            IQueryable<Tariff> entities = (from a in context.Tariffs where a.Tenant == tenant && (a.TypeCode == "ICS" || a.TypeCode == "ECS") && ids.Contains(a.Id) select a);
-            return entities;
-        }
-
-        public IQueryable<TariffLine> GetAllTariffLinesByTariffId(string tariffId, int tenant)
-        {
-            return from a in context.TariffLines
-                   where a.Tenant == tenant && a.TariffId == tariffId
-                   select a;
-        }
-    }
 }
    

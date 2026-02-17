@@ -8,10 +8,10 @@ using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using WebFreight.Web.InfrastructureModel.DomainServices;
 using WebFreight.Web.Security;
 using System.Web;
@@ -130,7 +130,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     Tenant = entityPoco.Tenant,
                     Description = entityPoco.Description,
                     LocalDescription = entityPoco.LocalDescription,
-                    ReceivablesExternalId = entityPoco.ReceivablesExternalId,
+                    ExternalVATCard = entityPoco.ExternalVATCard,
                     ExternalTAXItemId = entityPoco.ExternalTAXItemId
 
                 };

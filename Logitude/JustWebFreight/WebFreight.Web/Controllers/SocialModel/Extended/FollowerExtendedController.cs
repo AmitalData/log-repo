@@ -7,7 +7,7 @@ using Logitude.Social.Data.EntityListQueryServices;
 using Logitude.Social.Data.EntityLists;
 using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -29,7 +29,6 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
             ISocialContext socialContext = SocialContext.GetContext(authToken.Tenant);
 
 

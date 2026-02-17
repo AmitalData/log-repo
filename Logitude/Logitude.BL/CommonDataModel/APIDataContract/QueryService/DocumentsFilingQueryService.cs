@@ -1,100 +1,75 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
-using Logitude.CRM.Data.Repsitories;
-using Logitude.ShipmentOrderModule.Data.Repositories;
-using Logitude.BL.CommonDataModel.Tools.Validating;
-using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
     public partial class DocumentsFilingQueryService
     {
-
-        public DocumentsFilingPM DocumentsFilingCustomDataMappingAndValidating(DocumentsFiling documentsFiling, int Tenant, bool isNew, string ComputingPartnerCode = "")
+        public DocumentsFilingPM DocumentsFilingCustomDataMappingAndValidating(DocumentsFiling MyEntity, int Tenant, bool isNew, string ComputingPartnerCode = "")
         {
 
-            DocumentsFilingValidating.Validate(documentsFiling);
-            documentsFiling.DocumentType.Id = GetDocumentTypeId(documentsFiling, Tenant);
+            if (MyEntity.DocumentType == null)
+            {
+                throw new ApplicationException("DocumentType is required!");
+            }
 
-            DocumentsFilingPM temp = DocumentsFilingDataMappingAndValidatin(documentsFiling, Tenant);
+            if (MyEntity.EntityNumber == null)
+            {
+                throw new ApplicationException("EntityNumber is required!");
+            }
+
+            ContactRepository contactRep = new ContactRepository(Tenant);
+            var resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(Tenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, Tenant);
+
+            DocumentsFilingPM temp = DocumentsFilingDataMappingAndValidatin(MyEntity, Tenant);
             temp.Tenant = Tenant;
             temp.DirectionCode = "I";
             temp.HasFile = true;
             temp.ReceivedDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
             temp.Received = true;
-            temp.ReceivedByUserId = GetContact(Tenant).Id;
-            temp.EntityId = GetEntityIdForType(documentsFiling, Tenant);
-            temp.ReceivedByPartner = "External";
+            temp.ReceivedByUserId = loggedContact.Id;
+
+            if (MyEntity.EntityType.Name == "Shipment" && !string.IsNullOrEmpty(MyEntity.EntityNumber))
+            {
+                ShipmentRepository shipmentRepository = new ShipmentRepository(Tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipmentByNumberWithOutIncludes(MyEntity.EntityNumber, Tenant);
+                if (shipment != null)
+                    temp.EntityId = shipment.Id;
+                else
+                    throw new ApplicationException("Entity with Number " + MyEntity.EntityNumber + " doesn't exist");
+            }
+
+
+
+
             return temp;
 
-        }
-
-        private static Simplog.Data.CommonDataModel.EntityPOCOs.Contact GetContact(int Tenant)
-        {
-            ContactRepository contactRep = new ContactRepository(Tenant);
-            var resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(Tenant);
-            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, Tenant);
-            return loggedContact;
-        }
-
-        private string GetDocumentTypeId(DocumentsFiling documentsFiling, int tenant)
-        {
-            if (!string.IsNullOrEmpty(documentsFiling.DocumentType.Id) && string.IsNullOrEmpty(documentsFiling.DocumentType.Code))
-                return documentsFiling.Id;
-
-            var objectTableId = ObjectTableRepository.GetObjectTableByName(documentsFiling.EntityType.Name);
-            if (objectTableId == null) throw new ApplicationException("Invalid entity type");
-
-            var documentTypeId = new DocumentTypeRepository(tenant).GetDocumentTypeIdByCodeAndObjectTable(documentsFiling.DocumentType.Code, objectTableId, tenant);
-            if (string.IsNullOrEmpty(documentTypeId))
-                throw new ApplicationException("DocumentType with Code " + documentsFiling.DocumentType.Code + " doesn't exist");
-
-            return documentTypeId;
-        }
-
-        public string GetEntityIdForType(DocumentsFiling documentsFiling, int tenant)
-        {
-            string entityId;
-            switch (documentsFiling.EntityType.Name.ToLower())
-            {
-                case "shipment":
-                    entityId = GetShipmentIdByShipmentNumber(documentsFiling.EntityNumber, tenant);
-                    break;
-
-                case "ticket":
-                    TicketRepository ticketRepository = new TicketRepository(tenant);
-                    entityId = ticketRepository.GetTicketId(documentsFiling.EntityNumber, tenant);
-                    break;
-
-                case "shipmentorder":
-                    ShipmentOrderRepository shipmentRepository = new ShipmentOrderRepository(tenant);
-                    entityId = shipmentRepository.GetIdByCode(documentsFiling.EntityNumber, tenant);
-                    break;
-
-                default:
-                    throw new ApplicationException("Invalid entity type");
-
-            }
-
-            if (string.IsNullOrEmpty(entityId))
-                throw new ApplicationException("Entity with Number " + documentsFiling.EntityNumber + " doesn't exist");
-
-            return entityId;
-        }
-
-        public string GetShipmentIdByShipmentNumber(string shipmentNumber, int tenant)
-        {
-            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-            string shipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(shipmentNumber, tenant);
-            if (string.IsNullOrEmpty(shipmentId) && !string.IsNullOrEmpty(shipmentNumber) && shipmentNumber.ToUpper().StartsWith("A/") && FeatureToggleHelper.HasFeatureToggle("DFF ", tenant))
-            {
-                shipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(("AF/" + shipmentNumber.Substring(2)), tenant);
-            }
-            return shipmentId;
         }
     }
 }

@@ -32,10 +32,6 @@ namespace Logitude.CRM.Data
 		 IDbSet<EmployeeGroupLine> EmployeeGroupLines { get; }
 		 IDbSet<EscalationActionTimeIndicator> EscalationActionTimeIndicators { get; }
 		 IDbSet<EscalationPreDefinition> EscalationPreDefinitions { get; }
-		 IDbSet<Occasion> Occasions { get; }
-		 IDbSet<OccasionInvitee> OccasionInvitees { get; }
-		 IDbSet<OccasionStatus> OccasionStatuses { get; }
-		 IDbSet<OccasionType> OccasionTypes { get; }
 		 IDbSet<Opportunity> Opportunities { get; }
 		 IDbSet<OpportunityAdditionalService> OpportunityAdditionalServices { get; }
 		 IDbSet<OpportunityClosingReason> OpportunityClosingReasons { get; }
@@ -55,7 +51,6 @@ namespace Logitude.CRM.Data
 		 IDbSet<SLAHeader> SLAHeaders { get; }
 		 IDbSet<SLALine> SLALines { get; }
 		 IDbSet<Stage> Stages { get; }
-		 IDbSet<SupportMailbox> SupportMailboxes { get; }
 		 IDbSet<Ticket> Tickets { get; }
 		 IDbSet<TicketClassification> TicketClassifications { get; }
 		 IDbSet<TicketCreatedByType> TicketCreatedByTypes { get; }
@@ -65,7 +60,7 @@ namespace Logitude.CRM.Data
 		 IDbSet<TicketStage> TicketStages { get; }
 		 IDbSet<TicketType> TicketTypes { get; }
 		 IDbSet<TimeUnit> TimeUnits { get; }
-	     IDbSet<OpportunityAnalytic> OpportunityAnalytics { get; }
+	 
          void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();

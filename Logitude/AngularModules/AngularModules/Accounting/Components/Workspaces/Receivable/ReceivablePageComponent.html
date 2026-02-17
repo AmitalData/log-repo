@@ -12,11 +12,6 @@
     .red{
         color: #b91a1a !important;
     }
-    .dimmed{
-        pointer-events: none;
-        opacity: 0.65;
-
-    }
 </style>
 <div style="height: 100%;overflow: auto;">
 
@@ -36,9 +31,9 @@
 
                     <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
 
-                    <td style="width: 390px;">
+                    <td style="width: 300px;">
                         <!-- ObjectTableName = CardGLAccount to filter items by accountTypeCode in CommonDomainController.cs -->
-                        <SearchBox [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [DropDownWidth]="430" [ObjectTableName]="'CustomerGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
+                        <SearchBox [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [ObjectTableName]="'CustomerGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
                     </td>
 
                     <td>
@@ -58,7 +53,7 @@
 
     <tr>
         <td>
-            <table *ngIf="isReady">
+            <table>
                 <tr>
                     <!-- Queries -->
                     <td style="width:265px; min-width: 200px;">
@@ -100,18 +95,18 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="activeCustomersGLAVisibility" (click)="ViewCustomerQuery('ActiveCustomersGLAccounts')"> {{'GLAccounts.Q.ActiveCustomers' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" *ngIf="activeCustomersGLAVisibility" (click)="ViewCustomerQuery('ActiveCustomersGLAccounts')"> {{'GLAccounts.Q.ActiveCustomers' | TextCodeTranslationPipe}} ({{glAccountSummary.ActiveCustomersCount}})</p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="inactiveCustomersGlaVisibility" (click)="ViewCustomerQuery('InactiveCustomersGLAccount')"> {{'GLAccounts.Q.InactiveCustomers' | TextCodeTranslationPipe}}</p>
+                                                                            <p class="QueryLink" *ngIf="inactiveCustomersGlaVisibility" (click)="ViewCustomerQuery('InactiveCustomersGLAccount')"> {{'GLAccounts.Q.InactiveCustomers' | TextCodeTranslationPipe}} ({{glAccountSummary.InactiveCustomersCount}})</p>
                                                                         </td>
                                                                     </tr>
 
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="CLIENTGLACCOUNTSGlaVisibility" (click)="ViewCustomerQuery('All Customers')"> {{'GLAccounts.Q.AllCustomers' | TextCodeTranslationPipe}}</p>
+                                                                            <p class="QueryLink" *ngIf="CLIENTGLACCOUNTSGlaVisibility" (click)="ViewCustomerQuery('All Customers')"> {{'GLAccounts.Q.AllCustomers' | TextCodeTranslationPipe}} ({{glAccountSummary.AllCustomersCount}})</p>
                                                                         </td>
                                                                     </tr>
 
@@ -130,32 +125,22 @@
 
                                             <!-- General Invoices-->
                                             <div class="QueriesSection">
-                                                <div>{{'Accounting.General.O.ARInvoices' | TextCodeTranslationPipe}}</div>
+                                                <div>{{'Accounting.General.O.GeneralInvoice' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; position: absolute; top:0px; text-align:left;">
-                                                    <div  tabindex="0" id="{{'NewInvoice' | IdGeneratorAsyncPipe | async}}"  class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
+                                                    <div tabindex="0" class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
                                                         <label>{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</label>
                                                         <img src="./Images/ToggleIcon.png" />
-                                                        <div [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" class="ToggleButtonMenu" style="width: 120px;">
-                                                            <button [disabled]="!IsNewARInvoiceEnabled"  id="{{'NewGeneralInvoice' | IdGeneratorAsyncPipe | async}}" (click)="NewGeneralARInvoice('IN')">{{'Accounting.General.O.NewInvoice' | TextCodeTranslationPipe}} </button>
-                                                            <button [disabled]="!IsNewARInvoiceEnabled"  id="{{'NewCreditNote' | IdGeneratorAsyncPipe | async}}" *ngIf="IsNewCreditNoteVisibile" (click)="NewGeneralARInvoice('CD')">{{'Accounting.General.O.NewCreditNote' | TextCodeTranslationPipe}} </button>
+                                                        <div  [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" class="ToggleButtonMenu" style="width: 120px;">
+                                                            <button (click)="NewGeneralARInvoice('IN')">{{'Accounting.General.O.NewInvoice' | TextCodeTranslationPipe}} </button>
+                                                            <button (click)="NewGeneralARInvoice('CD')">{{'Accounting.General.O.NewCreditNote' | TextCodeTranslationPipe}} </button>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!--<button class="Button" style="width:45px;" (click)="NewGeneralARInvoice()">New</button>-->
                                                 <div>
-                                        
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:190px;">
-                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All Invoices')">{{'ARInvoice.Q.AllInvoices' | TextCodeTranslationPipe}}</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="width:190px;">
-                                                            <p class="QueryLink" (click)="ViewInvoiceSequence()">{{'ARInvoice.O.InvoiceSequence' | TextCodeTranslationPipe}}</p>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
+                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Draft Invoices')">{{'ARInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}} ({{ARGeneralInvoiceDraftCount}})</p>
+                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Approval General Invoices')">{{'ARInvoice.Q.ApprovalGeneralInvoices' | TextCodeTranslationPipe}}</p>
+                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All General Invoices')">{{'ARInvoice.Q.AllGeneralInvoices' | TextCodeTranslationPipe}}</p>
                                                 </div>
                                             </div>
 
@@ -163,8 +148,8 @@
 
                                             <!-- ARPayment -->
                                             <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Accounting.General.O.ARPayments' | TextCodeTranslationPipe}}</div>
-                                                <button id="{{'NewARPayment' | IdGeneratorAsyncPipe | async}}" [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'"  class="Button" style="width:45px;" (click)="NewARPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                <div>{{'Accounting.General.O.Payments' | TextCodeTranslationPipe}}</div>
+                                                <button [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'"  class="Button" style="width:45px;" (click)="NewARPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 <!--<div style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
                                                     <button class="Button" (click)="NewARPaymentMethod()">New</button>
                                                 </div>-->
@@ -173,50 +158,19 @@
                                                         <tr>
                                                             <td>
                                                                 <table>
-                                                                    <!--<tr>
+                                                                    <tr>
                                                                         <td style="width:190px;">
                                                                           <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Draft Payments')"> {{'Accounting.General.O.DraftPayments' | TextCodeTranslationPipe}} ({{ARPaymentsDraftsCount}})</p>
                                                                         </td>
-                                                                    </tr>-->
-                                                                   
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                          <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Open Payments')"> {{'Accounting.General.O.OpenPayments' | TextCodeTranslationPipe}} ({{ARPaymentsOpenedCount}})</p>
+                                                                        </td>
+                                                                    </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                           <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:All Payments')"> {{'Accounting.General.O.AllPayments' | TextCodeTranslationPipe}}</p>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                </table>
-
-
-                                                            </td>
-                                                        </tr>
-
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="QueriesSection" style="color: #58B8FF;" *ngIf="IsUnRedeemedChequesVisibile || IsAllChequesVisibile || IsPostponedChequesVisibile">
-                                                <div>{{'Accounting.General.O.ARPaymentCheques' | TextCodeTranslationPipe}}</div>
-                                                <!-- <button id="{{'NewARPayment' | IdGeneratorAsyncPipe | async}}" [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'"  class="Button" style="width:45px;" (click)="NewARPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button> -->
-                                              
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <table>
-                                                                  
-                                                                    <tr *ngIf="IsUnRedeemedChequesVisibile">
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewPaymentChequesQuery('ARPaymentCheque:UnRedeemed Cheques')"> {{'Accounting.General.O.UnRedeemedCheques' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr *ngIf="IsAllChequesVisibile">
-                                                                        <td style="width:190px;">
-                                                                          <p class="QueryLink" (click)="ViewPaymentChequesQuery('ARPaymentCheque:All Cheques')"> {{'Accounting.General.O.AllCheques' | TextCodeTranslationPipe}}</p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr *ngIf="IsPostponedChequesVisibile">
-                                                                        <td style="width:190px;">
-                                                                          <p class="QueryLink" (click)="ViewPaymentChequesQuery('ARPaymentCheque:Postponed Cheques')"> {{'Accounting.General.O.PostponedCheques' | TextCodeTranslationPipe}}</p>
                                                                         </td>
                                                                     </tr>
 
@@ -419,7 +373,7 @@
                                 </td>
 
                                 <!-- Top Deptors GRAPH -->
-                                <td style="width: 450px; padding-left: 15px;padding-right: 15px;">
+                                <td style="width: 350px; padding-left: 15px;padding-right: 15px;">
                                     <table>
                                         <tr class="SectionHeader">
                                             <td style="padding: 0px 5px;">

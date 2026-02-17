@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -10,7 +10,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public PackageFeatureRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public PackageFeatureRepository(ICommonDataContext context)
         {
@@ -35,14 +38,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where a.PackageCode == packageCode && a.FeatureId == featureId && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-
-        public PackageFeature GetSinglePackageFeatureByPackageAndFeatureUCode(string packageCode, string featureUniqeCode, int tenant)
-        {
-            return (from a in context.PackageFeatures
-                    where a.PackageCode == packageCode && a.FeatureUniqeCode == featureUniqeCode && a.Tenant == tenant
-                    select a).FirstOrDefault();
-        }
-
+        
         public IQueryable<PackageFeature> GetPackageFeaturesByTenant(int tenant)
         {
             return (from a in context.PackageFeatures

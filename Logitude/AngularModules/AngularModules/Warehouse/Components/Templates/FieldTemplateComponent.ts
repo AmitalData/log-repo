@@ -1,8 +1,8 @@
-import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FontTool} from '../../../Infrastructure/Tools';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
 })
 
@@ -35,11 +35,9 @@ export class FieldTemplateComponent {
                     this.BackgroudColor = this.transform(this.FieldValue, this.Entity['ExpectedEntryDate']);
                 }
 
-
-                if (this.ObjectTableName == "WarehouseEntry" && this.FieldName == "EntryReferencesAndDate") {
-                    this.FieldValue = this.Entity['ActualEntryDate'];
-                    this.BackgroudColor = this.transform(this.FieldValue, this.Entity['ExpectedEntryDate']);
-                }
+                //if (this.ObjectTableName == "WarehouseRelease" && this.FieldName == "ActualReleaseDate") {
+                //    this.BackgroudColor = this.transform(this.FieldValue, this.Entity['ExpectedReleaseDate']);
+                //}
 
                 if (this.ObjectTableName == "WarehouseRelease" && this.FieldName == "ReleaseDate") {
                     this.BackgroudColor = this.transform(this.Entity['ActualReleaseDate'], this.Entity['ExpectedReleaseDate']);
@@ -48,19 +46,23 @@ export class FieldTemplateComponent {
         }
     }
 
-    transform(actual: Date, expected: Date): string {
+    transform(actual: Date, expected: Date ): string {
 
         var myResult = FontTool.Black;
 
          if (actual != null) {
              myResult = FontTool.Green;
              this.WarehouseDateType = " (actual)";
+
+
         } else   if(expected != null) {
              myResult = FontTool.Red;
              this.WarehouseDateType = " (expected)";
-             var fieldDateName: string = this.ObjectTableName == "WarehouseRelease" ? "ExpectedReleaseDate" : "ExpectedEntryDate";
-             this.FieldValue = this.Entity[fieldDateName];
+             var name = this.FieldName.replace("Actual", "Expected");
+             this.FieldValue = this.Entity[name];
         }
+
+
 
         return myResult;
     }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.DomainServices.Hosting;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -12,7 +12,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Helpers;
@@ -28,7 +28,8 @@ using Logitude.BL.InvoiceModel;
 
 namespace WebFreight.Web.InvoiceModel.DomainServices
 {
-
+    // TODO: Create methods containing your application logic.
+    //[RequiresAuthentication]
     [EnableClientAccess()]
     public partial class InvoiceDomainService : LogitudeDomainService
     {
@@ -49,6 +50,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
         private APInvoiceStatusRepository aPInvoiceStatusRepository;
         private APInvoiceTypeRepository aPInvoiceTypeRepository;
      
+        private APPaymentMethodRepository aPPaymentMethodRepository;
         private APPaymentStatusRepository aPPaymentStatusRepository;
         private CreditCardTypeRepository creditCardTypeRepository;
         private ExternalSystemsTablesCodeRepository externalSystemsTablesCodeRepository;
@@ -63,9 +65,9 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
         private APInvoiceLineQuery apInvoiceLineQuery;
         private APInvoiceStatusQuery apInvoiceStatusQuery;
         private APInvoiceTypeQuery apInvoiceTypeQuery;
+        private APPaymentMethodQuery apPaymentMethodQuery;
         private APPaymentStatusQuery apPaymentStatusQuery;
         private ARInvoiceStatusQuery arInvoiceStatusQuery;
-        private ARInvoicesSignedStatusQuery aRInvoicesSignedStatusQuery;
         private ARInvoiceTotalVATQuery arInvoiceTotalVatQuery;
         private ARInvoiceTypeQuery arInvoiceTypeQuery;
         private AccountingPaymentMethodQuery paymentMethodQuery;
@@ -95,7 +97,6 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
             AccountReceivablesSummary result = new AccountReceivablesSummary();
 
-            
             if (SecurityUtility.CheckTableContactFeature("ARInvoice", "READ", tenant))
             {
                 aRInvoiceRepository = new ARInvoiceRepository(tenant);
@@ -106,13 +107,11 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
                 iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), iQueryable_Data, tenant);
 
                 result.ARInvoicesDraftsCount = iQueryable_Data.Where(d => d.StatusCode == "DR").Count();
-                result.ARInvoicesUnpaidCount = iQueryable_Data.Where(d => (d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.IsAutoCredit == false) || (d.IsConstituentInvoice && !string.IsNullOrEmpty(d.ConsolidationInvoiceId))).Count();
+                result.ARInvoicesUnpaidCount = iQueryable_Data.Where(d => (d.StatusCode != "DR" && d.StatusCode != "VD" && d.IsAutoCredit == false) || (d.IsConstituentInvoice && !string.IsNullOrEmpty(d.ConsolidationInvoiceId))).Count();
                 result.ARInvoicesOpenConstituentCount = iQueryable_Data.Where(d => d.IsConstituentInvoice && string.IsNullOrEmpty(d.ConsolidationInvoiceId) && d.StatusCode != "VD").Count();
                 result.ARGeneralInvoiceDraftCount = iQueryable_Data.Where(d => d.IsGeneralInvoice && d.StatusCode == "DR").Count();
                 result.ARInvoicesSATFailedCount = iQueryable_Data.Where(d => d.SATTransferStatusCode == "TE").Count();
                 result.ARInvoicesFailedCount = iQueryable_Data2.Where(d => d.TransferStatusCode == "ET").Count();
-                result.ARInvoicesSATVoidedNotTransferredCount = iQueryable_Data2.Where(d => d.StatusCode == "VD" && d.SATTransferStatusCode == "NT").Count();
-                result.ARInvoiceSATWaitingCancellationCount = iQueryable_Data2.Where(d => d.SATTransferStatusCode == "CS").Count();
 
 
             }
@@ -128,20 +127,11 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
                 result.ARPaymentsOpenedCount = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.IsClosed == false).Count();
                 result.ARPaymentsSATFailedCount = iQueryable_Data.Where(d => d.SATTransferStatusCode == "TE").Count();
                 result.ARPaymentFailedCount = iQueryable_Data2.Where(d => d.TransferStatusCode == "ET").Count();
-                result.ARPaymentSATWaitingCancellationCount = iQueryable_Data2.Where(d => d.SATTransferStatusCode == "CS").Count();
 
 
             }
 
             return result;
-        }
-
-        private static bool CheckFullAccountingEnabled(int tenant)
-        {
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            var tenantPoco = tenantRepository.GetSingleTenant(tenant);
-            var isFullAccounting = tenantPoco?.AccountingActivated == true;
-            return isFullAccounting;
         }
 
         public AccountPayablesSummary GetAccountingPayablesSummary(int tenant)
@@ -150,27 +140,21 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
             AccountPayablesSummary result = new AccountPayablesSummary();
 
-            bool isFullAccounting = CheckFullAccountingEnabled(tenant);
-
-
             if (SecurityUtility.CheckTableContactFeature("APInvoice", "READ", tenant))
             {
                 aPInvoiceRepository = new APInvoiceRepository(tenant);
                 IQueryable<APInvoice> apDraftResult = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetDraftsAPInvoices(tenant), tenant);
                 result.APInvoicesDraftsCount = apDraftResult.Count();
-
-                if (isFullAccounting == false)
-                {
-                    IQueryable<APInvoice> apUnpaidResult = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetUnpaidAPInvoices(tenant), tenant);
-                    result.APInvoicesUnpaidCount = apUnpaidResult.Count();
+                
+                IQueryable<APInvoice> apUnpaidResult = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetUnpaidAPInvoices(tenant), tenant);
+                result.APInvoicesUnpaidCount = apUnpaidResult.Count();
 
 
-                    IQueryable<APInvoice> APErrorInTransfer = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetErrorInTransferAPInvoices(tenant), tenant);
-                    result.APInvoicesFailedCount = APErrorInTransfer.Count();
-                }
+                IQueryable<APInvoice> APErrorInTransfer = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APInvoice>(new QueryOperations(), aPInvoiceRepository.GetErrorInTransferAPInvoices(tenant), tenant);
+                result.APInvoicesFailedCount = APErrorInTransfer.Count();
             }
 
-            if (SecurityUtility.CheckTableContactFeature("APPayment", "READ", tenant) )
+            if (SecurityUtility.CheckTableContactFeature("APPayment", "READ", tenant))
             {
                 aPPaymentRepository = new APPaymentRepository(tenant);
 
@@ -203,7 +187,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
                 IQueryable<ARInvoice> iQueryable_Data = aRInvoiceRepository.GetIQueryableInvoices(tenant);
                 
-                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
+                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
                 iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), iQueryable_Data, tenant);
 
                 myResult.ARInvoicesNotReadyCount = iQueryable_Data.Where(d => d.TransferStatusCode == "NR").Count();
@@ -272,7 +256,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
                 IQueryable<ARInvoice> iQueryable_Data = aRInvoiceRepository.GetIQueryableInvoices(tenant);
 
-                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
+                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
                 iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), iQueryable_Data, tenant);
                 iQueryable_Data = iQueryable_Data.Where(d => d.TransferStatusCode == "RD" || d.TransferStatusCode == "NR");
 
@@ -330,7 +314,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
                 IQueryable<ARInvoice> iQueryable_Data = aRInvoiceRepository.GetIQueryableInvoices(tenant);
 
-                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
+                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
                 iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), iQueryable_Data, tenant);
                 iQueryable_Data = iQueryable_Data.Where(d => d.TransferStatusCode == "NR");
 

@@ -26,7 +26,6 @@ declare @Tenant as int
 declare @ShipmentNumber as varchar(15)
 declare @ShipmentLevelCode as varchar(1)
 declare @TransportModeId as varchar(1)
-declare @DirectionId as varchar(1)
 declare @StatusId as varchar(15)
 declare @StatusCode as varchar(4)
 declare @StatusName as varchar(40)
@@ -46,8 +45,6 @@ declare @ImportManifest as varchar(50)
 declare @BookingConfirmationNumber as varchar(25)
 declare @CarrierTransportDocumentNumber as varchar(50)
 declare @ProjectNumber as varchar(100)
-declare @AMSBL as nvarchar(17)
-declare @WarehouseLegReference as nvarchar(50)
 END
 
 -- Ports Firlds
@@ -79,7 +76,6 @@ END
 BEGIN
 declare @PartnerId as varchar(15)
 declare @PartnerName as varchar(60)
-declare @CityName as varchar(120)
 declare @PartnerReference1 as varchar(50)
 declare @PartnerReference2 as varchar(50)
 declare @AgentId as varchar(15)
@@ -110,9 +106,6 @@ declare @ConsolidatorReference as varchar(50)
 declare @ReleasingAgentId as varchar(15)
 declare @ReleasingAgentReference1 as varchar(50)
 declare @ReleasingAgentReference2 as varchar(50)
-declare @MainCarriageFromAddressId as varchar(50)
-declare @MainCarriageToAddressId as varchar(50)
-
 END
 
 -- MasterData Fields
@@ -161,7 +154,7 @@ BEGIN
 		DECLARE ShipmentsCursor CURSOR READ_ONLY
 		FOR
 		SELECT
-		Id, Tenant, ShipmentNumber, ShipmentLevelCode, TransportModeId,DirectionId,
+		Id, Tenant, ShipmentNumber, ShipmentLevelCode, TransportModeId,
 		StatusId, QuoteId, SalesmanUserId, MasterShipmentDataId,
 		FromPortId, ToPortId, PreCarriageFromPortId, PreCarriageToPortId,
 		OnCarriageFromPortId, OnCarriageToPortId,
@@ -178,15 +171,14 @@ BEGIN
 		ConsolidatorId, ConsolidatorReference,
 		Field1, Field2, Field3, Field4, Field5, Field6, Field7, Field8, Field9, Field10,
 		CustomsDeclarationNumber, ForwarderShipmentNumber, TransportDocumentNumber,
-		ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber,
-		AMSBL, WarehouseLegReference
+		ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2, ProjectNumber
 		
 		FROM Shipments --where Tenant = 1435
 
 		OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor
 
 		INTO 
-		@Id, @Tenant, @ShipmentNumber, @ShipmentLevelCode, @TransportModeId,@DirectionId,
+		@Id, @Tenant, @ShipmentNumber, @ShipmentLevelCode, @TransportModeId,
 		@StatusId, @QuoteId, @SalesmanUserId, @MasterShipmentDataId,
 		@FromPortId, @ToPortId, @PreCarriageFromPortId, @PreCarriageToPortId,
 		@OnCarriageFromPortId, @OnCarriageToPortId,
@@ -206,10 +198,7 @@ BEGIN
 		@ConsolidatorId, @ConsolidatorReference,
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-		@AMSBL, @WarehouseLegReference
-
-		
+		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
 			
@@ -243,9 +232,7 @@ BEGIN
 					@CarrierTransportDocumentNumber = CarrierTransportDocumentNumber,
 					@Transshipment1AdditionalMAWBOBLBL = Transshipment1AdditionalMAWBOBLBL,
 					@Transshipment2AdditionalMAWBOBLBL = Transshipment2AdditionalMAWBOBLBL,
-					@Transshipment3AdditionalMAWBOBLBL = Transshipment3AdditionalMAWBOBLBL,
-					@MainCarriageFromAddressId = MainCarriageFromAddressId,
-					@MainCarriageToAddressId = MainCarriageToAddressId
+					@Transshipment3AdditionalMAWBOBLBL = Transshipment3AdditionalMAWBOBLBL
 					from ShipmentMasterDatas
 					where Id = @MasterShipmentDataId AND Tenant = @Tenant					
 				END
@@ -443,19 +430,6 @@ BEGIN
 					else set @MySearchFields = @MySearchFields + ',' + @SalesmanUserName	
 				end
 			end
-
-			if (@AMSBL is not null AND @AMSBL <> '')
-			begin
-				if (@MySearchFields = '') set @MySearchFields = @AMSBL
-				else set @MySearchFields = @MySearchFields + ',' + @AMSBL	
-			end
-
-			if (@WarehouseLegReference is not null AND @WarehouseLegReference <> '')
-			begin
-				if (@MySearchFields = '') set @MySearchFields = @WarehouseLegReference
-				else set @MySearchFields = @MySearchFields + ',' + @WarehouseLegReference	
-			end
-
 			END
 
 			-- Ports
@@ -1538,25 +1512,6 @@ BEGIN
 					else set @MySearchFields = @MySearchFields + ',' + @PartnerReference2	
 				end
 			end
-
-			if(@TransportModeId = 'I' and @DirectionId ='D' and @MasterShipmentDataId is not null)
-			begin
-			set @CityName = (select City from Addresses where Id = @MainCarriageFromAddressId AND Tenant = @Tenant)
-			if(@CityName is not null or @CityName != '')
-			begin
-			if (@MySearchFields = '') set @MySearchFields = @CityName
-					else set @MySearchFields = @MySearchFields + ',' + @CityName	
-					end
-
-
-					set @CityName = (select City from Addresses where Id = @MainCarriageToAddressId AND Tenant = @Tenant)
-			if(@CityName is not null or @CityName != '')
-			begin
-			if (@MySearchFields = '') set @MySearchFields = @CityName
-					else set @MySearchFields = @MySearchFields + ',' + @CityName	
-					end
-
-			end
 			END
 
 			-- Invoices
@@ -1786,7 +1741,7 @@ BEGIN
 
 		FETCH NEXT FROM ShipmentsCursor
 		INTO 
-		@Id, @Tenant, @ShipmentNumber, @ShipmentLevelCode, @TransportModeId,@DirectionId,
+		@Id, @Tenant, @ShipmentNumber, @ShipmentLevelCode, @TransportModeId,
 		@StatusId, @QuoteId, @SalesmanUserId, @MasterShipmentDataId,
 		@FromPortId, @ToPortId, @PreCarriageFromPortId, @PreCarriageToPortId,
 		@OnCarriageFromPortId, @OnCarriageToPortId,
@@ -1806,8 +1761,7 @@ BEGIN
 		@ConsolidatorId, @ConsolidatorReference,
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-		@AMSBL, @WarehouseLegReference
+		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber
 		END				
 		CLOSE ShipmentsCursor
 		DEALLOCATE ShipmentsCursor

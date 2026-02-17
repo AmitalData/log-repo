@@ -92,7 +92,7 @@ export class ContactMenuButtonsHandler {
             if (confirmWindow.Yes) {
 
                 var service: UserExtendedPMService = new UserExtendedPMService();
-                service.Anonymization(this.EntityPM.Id).subscribe((res:any) => {
+                service.Anonymization(this.EntityPM.Id).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();

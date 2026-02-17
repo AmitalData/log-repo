@@ -42,10 +42,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCB2750WithResponseContentHeader customsResponse)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            if (customsResponse.IsWorkSheetFromExcel)
-            {
-                objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
-            }
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
@@ -63,19 +59,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" שידור הצהרות בלדר " + customsResponse.master + " "
             };
-            if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
-
-            {
-                genericRequestParams.RequestName += " ראשי - מפצל";
-                genericRequestParams.SplitterModeLetCreateMyType = false;
-
-            }
-            else
-            {
-                genericRequestParams.RequestName += " מפוצל";
-                genericRequestParams.SplitterModeLetCreateMyType = true;
-
-            }
             return genericRequestParams;
         }
 
@@ -88,30 +71,105 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-     
+        public string  CreateCRS_OLD(int tenant, string LoggingUserId,string CourierMasterId,string master)
+        {
+
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+            var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, CourierMasterId, null, null, null, true);
+            if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+            {
+
+                //   throw new System.Exception("Requestsheet  with Interface Type  = UCB2750  already in progress  !!!");
+                return "קיים מסר זהה בתהליך";
+
+            }
+            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCB2750  !!!");
+
+
+
+
+
+            var genericRequestParams = new GenericRequestParams()
+            {
+                Tenant = tenant,
+                AppicationId = CourierMasterId,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                LoggingEnabled = true,
+                InterfaceTypeCode = "UCB2750",
+                MainInterfaceCode = "UCB2750",
+
+
+                LoggingObjectTableId = objectTableId,
+                LoggingEntityId = CourierMasterId,
+                LoggingEntityReference = master,
+                
+                LoggingUserId = LoggingUserId,
+                RequestName =  $" שידור הצהרות בלדר " + master + " "
+            };
+            //var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
+            //var responseData = messService.SendSheet(genericRequestParams);
+
+
+            using (var trans = TransactionFactory.GetNewTransaction())
+            {
+                try
+                {
+                    bool test = false;
+                    if (test)
+                    {
+                        genericRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+                        var res =this.Send(genericRequestParams);
+                    }
+                    else
+                    {
+                        SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.GenericRequestParams>(genericRequestParams
+                            , false//, DateTime.Now.AddMinutes(5)
+                            );
+                    }
+
+                    trans.Complete();
+                    return "המסר נבנה בהצלחה וישלח בתהליך רקע";
+                }
+                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+                {
+                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                    {
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCB2750 SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
+
+                    }
+                    else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
+                    {
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB2750 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
+                    }
+                    return "קיים מסר זהה בתהליך";
+                    //throw;
+                }
+            }
+
+
+
+        }
+
 
 
         public string CreateCRS(int tenant, string LoggingUserId,
             //string CourierMasterId, string master,string courierDeclarationStatusCode, List<string> DeclarationsList = null)
-            SendALLCorrectRequestParams mySendALLCorrectRequestParams,out string RequestInProgressListOut)
+            SendALLCorrectRequestParams mySendALLCorrectRequestParams)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            if (mySendALLCorrectRequestParams.IsWorkSheetFromExcel)
-            {
-                objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
-            }
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendALLCorrectRequestParams.CourierMasterId, null, null, null, true, null, mySendALLCorrectRequestParams.IsWorkSheetFromExcel, mySendALLCorrectRequestParams.LoggingUserId);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendALLCorrectRequestParams.CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
-                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCB2750  already in progress  !!!");
                 return "קיים מסר זהה בתהליך";
 
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCB2750  !!!");
-                
+
 
 
             string uniComm = null;
@@ -125,15 +183,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = LoggingUserId,
                 master = mySendALLCorrectRequestParams.HAWB,
                 CourierDeclarationStatusCode = mySendALLCorrectRequestParams.CourierDeclarationStatusCode,
-                ClientFilterDeclarationsList = mySendALLCorrectRequestParams.Declarations,
-                SelectedAvailableValue = mySendALLCorrectRequestParams.SelectedAvailableValue,
+                DeclarationsList = mySendALLCorrectRequestParams.Declarations,
+                 SelectedAvailableValue = mySendALLCorrectRequestParams.SelectedAvailableValue,
                 SelectedBOLValue= mySendALLCorrectRequestParams.SelectedBOLValue,
-                SelectedStatusValue = mySendALLCorrectRequestParams.SelectedStatusValue,
-                SelectedTotalInvoiceValue = mySendALLCorrectRequestParams.SelectedTotalInvoiceValue,
-                SelectedFastIndividualProcessValue = mySendALLCorrectRequestParams.SelectedFastIndividualProcessValue,
-                SelectedCustomStatusValue = mySendALLCorrectRequestParams.SelectedCustomStatusValue,
-                SelectedFinalReleaseValue = mySendALLCorrectRequestParams.SelectedFinalReleaseValue,
-                IsWorkSheetFromExcel = mySendALLCorrectRequestParams.IsWorkSheetFromExcel,
+                 SelectedStatusValue
+                 = mySendALLCorrectRequestParams.SelectedStatusValue,
+                  SelectedTotalInvoiceValue
+                  = mySendALLCorrectRequestParams.SelectedTotalInvoiceValue,
+
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
@@ -183,15 +240,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                     trans.Complete();
-                    RequestInProgressListOut = "";
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
-                }
-                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-                when (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.CourierForceSignException)
-                {    
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" CourierForceSignException!! " + myCustomsRequestsSheetServiceException.Message);
-                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
-                    return myCustomsRequestsSheetServiceException.InnerException.Message;
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 {
@@ -205,8 +254,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB2750 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
-                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
-                     return "קיים מסר זהה בתהליך";
+                    return "קיים מסר זהה בתהליך";
                     //throw;
                 }
             }
@@ -237,19 +285,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string CourierMasterId { get; set; }
         public string master { get; set; }
         public string CourierDeclarationStatusCode { get; set; }
-        public List<string> ClientFilterDeclarationsList { get; set; }
-        public List<string> ServerSplitDeclarationsList { get; set; }
+        public List<string> DeclarationsList { get; set; }
         public string MyMoreParams { get; set; }
-        public bool IsWorkSheetFromExcel { get; set; }
 
         //public SendALLCorrectRequestParams MySendALLCorrectRequestParams { get; set; }
         public string SelectedBOLValue { get; set; }
         public string SelectedStatusValue { get; set; }
         public string SelectedAvailableValue { get; set; }
         public string SelectedTotalInvoiceValue { get; set; }
-        public string SelectedFastIndividualProcessValue { get; set; }
-        public string SelectedCustomStatusValue { get; set; }
-        public string SelectedFinalReleaseValue { get; set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

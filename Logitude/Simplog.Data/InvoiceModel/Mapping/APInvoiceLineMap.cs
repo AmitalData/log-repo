@@ -13,28 +13,25 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.LineNumber).HasDatabaseGeneratedOption(null);
             this.Property(t => t.ChargesTypeId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VatTypeId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Notes).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.EntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.EntityPayableId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PayableDebitGLAcountId).HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ForiegnCurrencyId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ForiegnCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DebitAccount).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.Description).IsRequired().HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.LocalDescription).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.ChargeTypeGLAccountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VatPercentage).IsOptional();
             this.Property(t => t.PrepaidCollectId).HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.ContainerTypeId).HasMaxLength(15).IsUnicode(false);
 
             this.ToTable("APInvoiceLines");
             this.Property(t => t.APInvoiceId).HasColumnName("APInvoiceId");
             this.Property(t => t.LineNumber).HasColumnName("LineNumber");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ChargesTypeId).HasColumnName("ChargesTypeId");
-            this.Property(t => t.InvoiceCurrencyAmount).HasColumnName("InvoiceCurrencyAmount").IsRequired();
-            this.Property(t => t.LocalCurrencyAmount).HasColumnName("LocalCurrencyAmount").IsRequired();
-            this.Property(t => t.ProfitCurrencyAmount).HasColumnName("ProfitCurrencyAmount").IsRequired();
+            this.Property(t => t.InvoiceCurrencyAmount).HasColumnName("InvoiceCurrencyAmount");
+            this.Property(t => t.LocalCurrencyAmount).HasColumnName("LocalCurrencyAmount");
+            this.Property(t => t.ProfitCurrencyAmount).HasColumnName("ProfitCurrencyAmount");
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
             this.Property(t => t.Notes).HasColumnName("Notes");
             this.Property(t => t.EntityId).HasColumnName("EntityId");
@@ -51,17 +48,12 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ChargeTypeGLAccountId).HasColumnName("ChargeTypeGLAccountId");
             this.Property(t => t.AuthorizedSignatory).HasColumnName("AuthorizedSignatory");
             this.Property(t => t.PrepaidCollectId).HasColumnName("PrepaidCollectId");
-            this.Property(t => t.ContainerTypeId).HasColumnName("ContainerTypeId");
-            this.Property(t => t.Quantity).HasColumnName("Quantity");
-            this.Property(t => t.ExcludeFromTaxReport).HasColumnName("ExcludeFromTaxReport");
-            this.Property(t => t.PayableDebitGLAcountId).HasColumnName("PayableDebitGLAcountId");
-            this.Property(t => t.IsPrepaidExpenses).HasColumnName("IsPrepaidExpenses");
+
             this.HasRequired(t => t.APInvoice).WithMany().HasForeignKey(d => d.APInvoiceId);
             this.HasRequired(t => t.ChargesType).WithMany().HasForeignKey(d => d.ChargesTypeId);
             this.HasRequired(t => t.VatType).WithMany().HasForeignKey(d => d.VatTypeId);
-            this.HasOptional(t => t.Currency).WithMany().HasForeignKey(d => d.ForiegnCurrencyId);
+            this.HasRequired(t => t.Currency).WithMany().HasForeignKey(d => d.ForiegnCurrencyId);
             this.HasOptional(t => t.PrepaidCollect).WithMany().HasForeignKey(d => d.PrepaidCollectId);
-            this.HasOptional(t => t.ContainerType).WithMany().HasForeignKey(d => d.ContainerTypeId);
         }
     }
 }

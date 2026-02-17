@@ -15,7 +15,7 @@ import {DocumentTypeCustomFieldsViewModel} from '../ViewModel/DocumentTypeCustom
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddEditDocumentTypeCustomField',
     templateUrl: './AddEditDocumentTypeCustomFieldComponent.html',
     providers: [DocumentTypeCustomFieldService],
@@ -134,7 +134,7 @@ export class AddEditDocumentTypeCustomFieldComponent extends BaseComponent imple
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             if (this.Mode == "Add") {
-                this._documentTypeCustomFieldService.Insert(this.EntityPM).subscribe((res:any) => {
+                this._documentTypeCustomFieldService.Insert(this.EntityPM).subscribe(res => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -153,7 +153,7 @@ export class AddEditDocumentTypeCustomFieldComponent extends BaseComponent imple
 
             }
             else if (this.Mode == "Edit") {
-                this._documentTypeCustomFieldService.update(this.EntityPM).subscribe((res:any) => {
+                this._documentTypeCustomFieldService.update(this.EntityPM).subscribe(res => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {

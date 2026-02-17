@@ -6,7 +6,7 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 import {VatTypePM} from '../../EntityPMs/VatTypePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AccountingTab_VatType.html',
 })
 
@@ -48,17 +48,10 @@ export class AccountingTab_VatType extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    get ReceivablesExternalId() { return this.EntityPM.ReceivablesExternalId; }
-    set ReceivablesExternalId(value: string) {
-        if (this.EntityPM.ReceivablesExternalId != value) {
-            this.EntityPM.ReceivablesExternalId = value;
-        }
-    }
-
-    get PayablesExternalId() { return this.EntityPM.PayablesExternalId; }
-    set PayablesExternalId(value: string) {
-        if (this.EntityPM.PayablesExternalId != value) {
-            this.EntityPM.PayablesExternalId = value;
+    get ExternalVATCard() { return this.EntityPM.ExternalVATCard; }
+    set ExternalVATCard(value: string) {
+        if (this.EntityPM.ExternalVATCard != value) {
+            this.EntityPM.ExternalVATCard = value;
         }
     }
 }

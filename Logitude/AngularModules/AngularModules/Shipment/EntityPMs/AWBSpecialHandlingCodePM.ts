@@ -64,10 +64,7 @@ export class AWBSpecialHandlingCodePM {
     public OldEntityPM: AWBSpecialHandlingCodePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -75,7 +72,6 @@ export class AWBSpecialHandlingCodePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AWBSpecialHandlingCode");
            
         }
-	 }
     }
     private MyClone: AWBSpecialHandlingCodePM;
 

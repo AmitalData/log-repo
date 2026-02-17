@@ -1,8 +1,8 @@
 declare var window: any;
-import { Component, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
+import {Component, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {AppTool, ArrayTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
+import {AppTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool, AWBHelper, AWBCCSValidator} from '../../../../Shipment/Tools';
 import {AWBWizardArgs, SendAWBArgs} from '../../../../Shipment/Args';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -35,30 +35,16 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {InfrastructureDomainService} from '../../../../Infrastructure/Services/InfrastructureDomainService';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {BranchList} from '../../../../Common/EntityLists/BranchList';
-import { BranchListService } from '../../../../Common/Services/StandardLists/BranchListService';
-import { IATACodeList } from '../../../../Infrastructure/EntityLists/IATACodeList';
-import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
-import { DueTypeList } from '../../../../Common/EntityLists/DueTypeList';
-import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
-import { MeasurementList } from '../../../../Common/EntityLists/MeasurementList';
-import { IATACodeListService } from '../../../../Infrastructure/Services/StandardLists/IATACodeListService';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
-import { DueTypeListService } from '../../../../Common/Services/StandardLists/DueTypeListService';
-import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
-import { MeasurementListService } from '../../../../Common/Services/StandardLists/MeasurementListService';
-import { ShipmentAWBPrintOnlyPM } from '../../../../Shipment/EntityPMs/ShipmentAWBPrintOnlyPM';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
-import { ShipmentPayablePM } from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
-import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import {BranchListService} from '../../../../Common/Services/StandardLists/BranchListService';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     selector: 'AWBWizardComponent',
     templateUrl: './AWBWizardComponent.html',
     providers: [EntityArgs, DocumentTypeListExtendedService, DocumentOutPMService, DocumentTypePMExtendedService]
 })
 
-export class AWBWizardComponent implements AfterViewInit{
+export class AWBWizardComponent {
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter < boolean>();
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     public TenantPM: TenantPM;
@@ -74,29 +60,52 @@ export class AWBWizardComponent implements AfterViewInit{
     public ValidationErrorsList: string[] = [];
     public ValidationWarningsList: string[] = [];
     public IsValidationSingleLine: boolean = false;
-    public isEntityChange: boolean = false;
-    public IsImportWizard: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsUpdateQuantitiesVisible: boolean = false;
     constructor(public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService) {
         this.TenantPM = SessionLocator.TenantPM;
         this.myPartnersDomainService = new PartnersDomainService();
 
         ServiceLocator.SendTotangoUserActivity("AWBWizard", "View");
-
     }
 
     SetWindowArgs(windowArgs: AWBWizardArgs) {
         this.WindowArgs = windowArgs;
         this.InitializeWizard();
-        this.Clone();
+        this.RunComponent();
     }
 
     private isViewInited = false;
-    ngAfterViewInit() {
-        this.isViewInited = true;
-        this.InitializeComponent();
+    RunComponent() {
+        if (this.AllLocations) {
+
+            if (this.AllLocations.toArray().length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                this.isViewInited = true;
+                this.InitializeComponent();
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
     }
 
     public YellowIconHelpMessage: string;
@@ -147,11 +156,6 @@ export class AWBWizardComponent implements AfterViewInit{
             }
 
             this.entityArgs.EntityPM = this.EntityPM;
-
-            if (this.EntityPM.DirectionId == "I") {
-                this.IsImportWizard = true;
-            }
-
             this.entityArgs.ObjectTableName = this.ObjectTableName;
             this.BuildPrintDocuments();
             this.SetCargonautDEXXVisibility();
@@ -378,7 +382,6 @@ export class AWBWizardComponent implements AfterViewInit{
             this.EntityPM.TenantZeroAirlineGLSHKNeedsRegistration = masterPM.TenantZeroAirlineGLSHKNeedsRegistration;
             this.EntityPM.CarrierIsCheckDigit = masterPM.CarrierIsCheckDigit;
             this.EntityPM.CarrierIsLimitedLength = masterPM.CarrierIsLimitedLength;
-            this.EntityPM.SCI = masterPM.SCI;
             this.GetAWBSignature();
         }
 
@@ -470,151 +473,7 @@ export class AWBWizardComponent implements AfterViewInit{
             this.EntityPM.ConsolidatorContactId = oldShipment.ConsolidatorContactId;
             //this.EntityPM.ConsolidatorReference = oldShipment.ConsolidatorReference;
         }
-
-        else {
-            if (FeatureLocator.IsPackage_EAWB()) {
-                this.GenerateShipmentAWBPrintOnlies();
-            }
-        }
     }
-
-    private GenerateShipmentAWBPrintOnlies() {
-        var iCurrencyListService: CurrencyListService = new CurrencyListService();
-        var iChargesTypeListService: ChargesTypeListService = new ChargesTypeListService();
-        var iMeasurementListService: MeasurementListService = new MeasurementListService();
-        var iIATACodeListService: IATACodeListService = new IATACodeListService();
-
-        iChargesTypeListService.getAll().subscribe((iResponseCharges: ServiceResponse) => {
-            if (!iResponseCharges.HasError) {
-                var AllChargesTypes: ChargesTypeList[] = iResponseCharges.Result;
-
-                if (AllChargesTypes.length > 0) {
-                    AllChargesTypes = AllChargesTypes.filter(d => d.IsAir == true && d.InActive == false && d.ChargesGroupCode != "FRT");
-
-                    if (this.EntityPM.ShipmentLevelCode == "C") {
-                        AllChargesTypes = AllChargesTypes.filter(d => d.IsAutoDisplayInConsolidation);
-                    }
-
-                    else {
-                        AllChargesTypes = AllChargesTypes.filter(d => d.IsAutoDisplayInShipment == true);
-                    }
-                }
-
-                if (AllChargesTypes.length > 0) {
-                    iCurrencyListService.getAllFromCache().subscribe((iResponseCurrency: ServiceResponse) => {
-                        if (!iResponseCurrency.HasError) {
-                            var AllCurrencies: CurrencyList[] = iResponseCurrency.Result;
-
-                            iMeasurementListService.getAllFromCache().subscribe((iResponseMeasurement: ServiceResponse) => {
-                                if (!iResponseMeasurement.HasError) {
-                                    var AllMeasurements: MeasurementList[] = iResponseMeasurement.Result;
-
-                                    iIATACodeListService.getAllFromCache().subscribe((iResponseIATAs: ServiceResponse) => {
-                                        if (!iResponseIATAs.HasError) {
-                                            var AllIATACodes: IATACodeList[] = iResponseIATAs.Result;
-
-                                            AllChargesTypes.sort((a, b) => { return a.ViewOrder - b.ViewOrder }).forEach((item) => {
-                                                var itemPM: ShipmentAWBPrintOnlyPM = new ShipmentAWBPrintOnlyPM(this.EntityPM);
-                                                itemPM.Tenant = this.EntityPM.Tenant;
-                                                itemPM.ShipmentId = this.EntityPM.Id;
-                                                itemPM.MeasurementId = item.MeasurementId;
-                                                itemPM.DueTypeCode = item.DueTypeCode;
-                                                itemPM.DueTypeName = item.DueTypeName;
-                                                itemPM.IATACodeId = item.IATACodeId;
-                                                itemPM.CurrencyId = this.EntityPM.AWBCurrencyId;
-                                                itemPM.CurrencyCode = this.EntityPM.AWBCurrencyCode;
-                                                itemPM.PrepaidCollectId = this.EntityPM.OtherPrepaidCollectId;
-
-                                                if (itemPM.CurrencyId != null) {
-                                                    var myCurrencyList: CurrencyList = AllCurrencies.filter(d => d.Id == itemPM.CurrencyId)[0];
-                                                    if (myCurrencyList != null) {
-                                                        itemPM.CurrencyCode = myCurrencyList.Code;
-                                                    }
-
-                                                    else {
-                                                        iCurrencyListService.getSingle(itemPM.CurrencyId).subscribe((myResponse: ServiceResponse) => {
-                                                            if (myResponse != null) {
-                                                                if (!myResponse.HasError) {
-                                                                    AllCurrencies.push(myResponse.Result);
-                                                                    itemPM.CurrencyCode = myResponse.Result.Code;
-                                                                }
-                                                            }
-                                                        });
-                                                    }
-                                                }
-                                                if (itemPM.IATACodeId != null) {
-                                                    var myIATACodeList: IATACodeList = AllIATACodes.filter(d => d.Id == itemPM.IATACodeId)[0];
-                                                    if (myIATACodeList != null) {
-                                                        itemPM.IATACodeName = myIATACodeList.Name;
-                                                    }
-
-                                                    else {
-                                                        iIATACodeListService.getSingle(itemPM.IATACodeId).subscribe((myResponse: ServiceResponse) => {
-                                                            if (myResponse != null) {
-                                                                if (!myResponse.HasError) {
-                                                                    AllIATACodes.push(myResponse.Result);
-                                                                    itemPM.IATACodeName = myResponse.Result.Name;
-                                                                }
-                                                            }
-                                                        });
-                                                    }
-                                                }
-                                                if (itemPM.MeasurementId != null) {
-                                                    var myMeasurementList: MeasurementList = AllMeasurements.filter(d => d.Id == itemPM.MeasurementId)[0];
-                                                    if (myMeasurementList != null) {
-                                                        itemPM.MeasurementCode = myMeasurementList.Code;
-
-                                                        switch (itemPM.MeasurementCode) {
-                                                            case "GRWT": { itemPM.Quantity = this.EntityPM.GrossWeight; break; }
-                                                            case "CHWT": { itemPM.Quantity = this.EntityPM.ChargeableWeight; break; }
-                                                            case "VOLU": { itemPM.Quantity = this.EntityPM.Volume; break; }
-                                                            case "BTEU": { itemPM.Quantity = this.EntityPM.TEU; break; }
-                                                            case "FIXD": { itemPM.Quantity = 1; break; }
-                                                            case "PRVL": { itemPM.Quantity = this.EntityPM.ValueOfGoods; break; }
-                                                            case "GWTN": { itemPM.Quantity = this.EntityPM.GrossWeightPerTon; break; }
-                                                            case "QTY": { itemPM.Quantity = this.EntityPM.NumberOfPackages; break; }
-                                                            default: { break; }
-                                                        }
-                                                    }
-
-                                                    else {
-                                                        iMeasurementListService.getSingle(itemPM.MeasurementId).subscribe((myResponse: ServiceResponse) => {
-                                                            if (myResponse != null) {
-                                                                if (!myResponse.HasError) {
-                                                                    AllMeasurements.push(myResponse.Result);
-                                                                    itemPM.MeasurementCode = myResponse.Result.Code;
-
-                                                                    switch (itemPM.MeasurementCode) {
-                                                                        case "GRWT": { itemPM.Quantity = this.EntityPM.GrossWeight; break; }
-                                                                        case "CHWT": { itemPM.Quantity = this.EntityPM.ChargeableWeight; break; }
-                                                                        case "VOLU": { itemPM.Quantity = this.EntityPM.Volume; break; }
-                                                                        case "BTEU": { itemPM.Quantity = this.EntityPM.TEU; break; }
-                                                                        case "FIXD": { itemPM.Quantity = 1; break; }
-                                                                        case "PRVL": { itemPM.Quantity = this.EntityPM.ValueOfGoods; break; }
-                                                                        case "GWTN": { itemPM.Quantity = this.EntityPM.GrossWeightPerTon; break; }
-                                                                        case "QTY": { itemPM.Quantity = this.EntityPM.NumberOfPackages; break; }
-                                                                        default: { break; }
-                                                                    }
-                                                                }
-                                                            }
-                                                        });
-                                                    }
-                                                }
-
-                                                this.EntityPM.ShipmentAWBPrintOnlies.push(itemPM);
-                                            });
-
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            }
-        });
-    }
-
     private GetAWBSignature() {        
 
         if (this.EntityPM.BranchId) {
@@ -689,7 +548,6 @@ export class AWBWizardComponent implements AfterViewInit{
                                         .then(cmpRef => {
                                             this.PageChild_OVE = cmpRef.instance;
                                             this.PageChild_OVE.InitTab(this.EntityPM, this);
-                                            this.PageChild_OVE.PackagesResourcesReady = true;
                                         });
                                 });
                             }
@@ -761,13 +619,11 @@ export class AWBWizardComponent implements AfterViewInit{
                         }
                         case "PAC": {
                             if (this.PageChild_PAC == null) {
-                                this._entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response => {
-                                    this._entityResourceService.getEntityResourceByTableName("ShipmentCommodity").subscribe(response2 => {
-                                        SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBPackagesTabComponent', myLocation.viewContainerRef)
-                                            .then(cmpRef => {
-                                                this.PageChild_PAC = cmpRef.instance;
-                                                this.PageChild_PAC.InitTab(this);
-                                            });
+                                this._entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response=> {
+                                    SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBPackagesTabComponent', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.PageChild_PAC = cmpRef.instance;
+                                        this.PageChild_PAC.InitTab(this);
                                     });
                                 });
                             }
@@ -842,7 +698,7 @@ export class AWBWizardComponent implements AfterViewInit{
                         }
                         case "OCI": {
                             if (this.PageChild_OCI == null) {
-                                this._entityResourceService.getEntityResourceByTableName("AWBOCI", 0).subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("AWBOCI", 0).subscribe(response => {
                                     SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/OCI/OCITabComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.PageChild_OCI = cmpRef.instance;
@@ -999,7 +855,6 @@ export class AWBWizardComponent implements AfterViewInit{
             this.AirlineRulesList = [];
             this.ValidateAllTabs();
             this.RefreshTab(this.SelectedTabCode);
-            this.ValidateAllTabs();
         }
 
         else {
@@ -1023,12 +878,10 @@ export class AWBWizardComponent implements AfterViewInit{
                         this.RefreshTab(this.SelectedTabCode);
                     }
                 }
-
-                this.ValidateAllTabs();
             });
         }
     }
-    public RefreshTab(tabCode: string) {
+    private RefreshTab(tabCode: string) {
         switch (tabCode) {
 
             case "OVE": {
@@ -1205,7 +1058,6 @@ export class AWBWizardComponent implements AfterViewInit{
         this.ValidateScreen_GEN();
         this.ValidateScreen_OCI();
         this.ValidateScreen_OTP();
-        this.ValidateScreen_OTC_Quantities();
     }
     public ValidateScreen_PAR() {
         var screenErrors: string[] = [];
@@ -1213,11 +1065,10 @@ export class AWBWizardComponent implements AfterViewInit{
 
         this.ValidateScreen_PAR_Shipper(screenErrors, screenWarnings);
         this.ValidateScreen_PAR_Consignee(screenErrors, screenWarnings);
-        if (!this.IsImportWizard) {
-            this.ValidateScreen_PAR_Notify1(screenErrors, screenWarnings);
-            this.ValidateScreen_PAR_IssuingAgent(screenErrors, screenWarnings);
-            this.ValidateScreen_PAR_AirlineRules(screenErrors, screenWarnings);
-        }
+        this.ValidateScreen_PAR_Notify1(screenErrors, screenWarnings);
+        this.ValidateScreen_PAR_IssuingAgent(screenErrors, screenWarnings);
+        this.ValidateScreen_PAR_AirlineRules(screenErrors, screenWarnings);
+
         this.TabErrors_PAR = screenErrors;
         this.TabWarnings_PAR = screenWarnings;
         this.ApplyStyle(screenErrors.length > 0, screenWarnings.length > 0, "PAR");
@@ -1226,67 +1077,63 @@ export class AWBWizardComponent implements AfterViewInit{
     private ValidateScreen_PAR_Shipper(screenErrors: string[], screenWarnings: string[]) {
 
         if (this.EntityPM.ShipperId == null) {
-            if (!this.IsImportWizard) {
-                screenErrors.push(this.ValidationText.replace("%FieldName", "Shipper"));
-            }
+            screenErrors.push(this.ValidationText.replace("%FieldName", "Shipper"));
         }
 
         else {
-            if (!this.IsImportWizard) {
             if (!FormatTool.IsTextFormatted(this.EntityPM.ShipperName)) {
                 screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Shipper Name"));
             }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ShipperAddressId)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper Address"));
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ShipperAddressId)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper Address"));
+            }
+
+            else {
+                var myAddress1: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperAddress1) ? null : this.EntityPM.ShipperAddress1.trim();
+                var myAddress2: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperAddress2) ? null : this.EntityPM.ShipperAddress2.trim();
+                var myZipCode: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperZipCode) ? null : this.EntityPM.ShipperZipCode.trim();
+                var myCity: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperCity) ? null : this.EntityPM.ShipperCity.trim();
+                var myFaxNumber: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperFaxNumber) ? null : this.EntityPM.ShipperFaxNumber.trim();
+                var myPhoneNumber: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperPhoneNumber) ? null : this.EntityPM.ShipperPhoneNumber.trim();
+
+                if (!FormatTool.IsTextFormatted(myAddress1)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Shipper Address1"));
                 }
 
-                else {
-                    var myAddress1: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperAddress1) ? null : this.EntityPM.ShipperAddress1.trim();
-                    var myAddress2: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperAddress2) ? null : this.EntityPM.ShipperAddress2.trim();
-                    var myZipCode: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperZipCode) ? null : this.EntityPM.ShipperZipCode.trim();
-                    var myCity: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperCity) ? null : this.EntityPM.ShipperCity.trim();
-                    var myFaxNumber: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperFaxNumber) ? null : this.EntityPM.ShipperFaxNumber.trim();
-                    var myPhoneNumber: string = AppTool.IsNullOrEmpty(this.EntityPM.ShipperPhoneNumber) ? null : this.EntityPM.ShipperPhoneNumber.trim();
+                if (!FormatTool.IsTextFormatted(myAddress2)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Shipper Address2"));
+                }
 
-                    if (!FormatTool.IsTextFormatted(myAddress1)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Shipper Address1"));
+                if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper Address1 Or Address2"));
+                }
+
+                if (AppTool.IsNullOrEmpty(myZipCode)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper Zip Code"));
+                }
+
+                else if (!FormatTool.IsTextFormatted(myZipCode)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Shipper Zip Code"));
+                }
+
+                if (AppTool.IsNullOrEmpty(myCity)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper City"));
+                }
+
+                else if (!FormatTool.IsTextFormatted(myCity)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Shipper City"));
+                }
+
+                if (AppTool.IsNullOrEmpty(this.EntityPM.ShipperStateId)) {
+                    if (this.AllStates.filter(d => d.CountryId == this.EntityPM.ShipperCountryId).length > 0) {
+                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper address state"));
                     }
+                }
 
-                    if (!FormatTool.IsTextFormatted(myAddress2)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Shipper Address2"));
-                    }
-
-                    if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper Address1 Or Address2"));
-                    }
-
-                    if (AppTool.IsNullOrEmpty(myZipCode)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper Zip Code"));
-                    }
-
-                    else if (!FormatTool.IsTextFormatted(myZipCode)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Shipper Zip Code"));
-                    }
-
-                    if (AppTool.IsNullOrEmpty(myCity)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper City"));
-                    }
-
-                    else if (!FormatTool.IsTextFormatted(myCity)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Shipper City"));
-                    }
-
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.ShipperStateId)) {
-                        if (this.AllStates.filter(d => d.CountryId == this.EntityPM.ShipperCountryId).length > 0) {
-                            screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper address state"));
-                        }
-                    }
-
-                    if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
-                        if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
-                            screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper Phone Or Fax"));
-                        }
+                if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
+                    if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
+                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Shipper Phone Or Fax"));
                     }
                 }
             }
@@ -1295,70 +1142,63 @@ export class AWBWizardComponent implements AfterViewInit{
     private ValidateScreen_PAR_Consignee(screenErrors: string[], screenWarnings: string[]) {
 
         if (this.EntityPM.ConsigneeId == null) {
-            if (!this.IsImportWizard) {
-                screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee"));
-            }
-            else {
-                screenErrors.push(this.ValidationText.replace("%FieldName", "Consignee"));
-            }
+            screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee"));
         }
 
         else {
-            if (!this.IsImportWizard) {
-                if (!FormatTool.IsTextFormatted(this.EntityPM.ConsigneeName)) {
-                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee Name"));
+            if (!FormatTool.IsTextFormatted(this.EntityPM.ConsigneeName)) {
+                screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee Name"));
+            }
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeAddressId)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee Address"));
+            }
+
+            else {
+                var myAddress1: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeAddress1) ? null : this.EntityPM.ConsigneeAddress1.trim();
+                var myAddress2: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeAddress2) ? null : this.EntityPM.ConsigneeAddress2.trim();
+                var myZipCode: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeZipCode) ? null : this.EntityPM.ConsigneeZipCode.trim();
+                var myCity: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeCity) ? null : this.EntityPM.ConsigneeCity.trim();
+                var myFaxNumber: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeFaxNumber) ? null : this.EntityPM.ConsigneeFaxNumber.trim();
+                var myPhoneNumber: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneePhoneNumber) ? null : this.EntityPM.ConsigneePhoneNumber.trim();
+
+                if (!FormatTool.IsTextFormatted(myAddress1)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee Address1"));
                 }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeAddressId)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee Address"));
+                if (!FormatTool.IsTextFormatted(myAddress2)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee Address2"));
                 }
 
-                else {
-                    var myAddress1: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeAddress1) ? null : this.EntityPM.ConsigneeAddress1.trim();
-                    var myAddress2: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeAddress2) ? null : this.EntityPM.ConsigneeAddress2.trim();
-                    var myZipCode: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeZipCode) ? null : this.EntityPM.ConsigneeZipCode.trim();
-                    var myCity: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeCity) ? null : this.EntityPM.ConsigneeCity.trim();
-                    var myFaxNumber: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeFaxNumber) ? null : this.EntityPM.ConsigneeFaxNumber.trim();
-                    var myPhoneNumber: string = AppTool.IsNullOrEmpty(this.EntityPM.ConsigneePhoneNumber) ? null : this.EntityPM.ConsigneePhoneNumber.trim();
+                if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee Address1 Or Address2"));
+                }
 
-                    if (!FormatTool.IsTextFormatted(myAddress1)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee Address1"));
+                if (AppTool.IsNullOrEmpty(myZipCode)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee Zip Code"));
+                }
+
+                else if (!FormatTool.IsTextFormatted(myZipCode)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee Zip Code"));
+                }
+
+                if (AppTool.IsNullOrEmpty(myCity)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee City"));
+                }
+
+                else if (!FormatTool.IsTextFormatted(myCity)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee City"));
+                }
+
+                if (AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeStateId)) {
+                    if (this.AllStates.filter(d => d.CountryId == this.EntityPM.ConsigneeCountryId).length > 0) {
+                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee address state"));
                     }
+                }
 
-                    if (!FormatTool.IsTextFormatted(myAddress2)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee Address2"));
-                    }
-
-                    if (AppTool.IsNullOrEmpty(myAddress1) && AppTool.IsNullOrEmpty(myAddress2)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee Address1 Or Address2"));
-                    }
-
-                    if (AppTool.IsNullOrEmpty(myZipCode)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee Zip Code"));
-                    }
-
-                    else if (!FormatTool.IsTextFormatted(myZipCode)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee Zip Code"));
-                    }
-
-                    if (AppTool.IsNullOrEmpty(myCity)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee City"));
-                    }
-
-                    else if (!FormatTool.IsTextFormatted(myCity)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage("Consignee City"));
-                    }
-
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.ConsigneeStateId)) {
-                        if (this.AllStates.filter(d => d.CountryId == this.EntityPM.ConsigneeCountryId).length > 0) {
-                            screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee address state"));
-                        }
-                    }
-
-                    if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
-                        if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
-                            screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee Phone Or Fax"));
-                        }
+                if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
+                    if (AppTool.IsNullOrEmpty(myFaxNumber) && AppTool.IsNullOrEmpty(myPhoneNumber)) {
+                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Consignee Phone Or Fax"));
                     }
                 }
             }
@@ -1450,7 +1290,7 @@ export class AWBWizardComponent implements AfterViewInit{
                         screenWarnings.push(fieldName + " wrong format: must be 4 numeric digits max");
                     }
                 }
-                
+
                 if (AppTool.IsNullOrEmpty(this.EntityPM.IssuingCarrierAddressId)) {
                     screenWarnings.push(this.ValidationText.replace("%FieldName", "Issuing Carrier Agent Address"));
                 }
@@ -1512,32 +1352,30 @@ export class AWBWizardComponent implements AfterViewInit{
         }
 
         if (this.IsFWB) {
-            if (!this.IsImportWizard) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.Airline")));
+            if (AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.Airline")));
+            }
+
+            else {
+                var codePrefix = AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierPrefix) ? this.EntityPM.MainCarriageCarrierPrefix : this.EntityPM.MainCarriageCarrierPrefix.trim();
+                if (AppTool.IsNullOrEmpty(codePrefix)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Main Carriage Carrier Prefix"));
                 }
 
-                else {
-                    var codePrefix = AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierPrefix) ? this.EntityPM.MainCarriageCarrierPrefix : this.EntityPM.MainCarriageCarrierPrefix.trim();
-                    if (AppTool.IsNullOrEmpty(codePrefix)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Main Carriage Carrier Prefix"));
-                    }
-
-                    else if (codePrefix.length != 2) {
-                        screenWarnings.push("Main Carriage Carrier Prefix length must be 2");
-                    }
+                else if (codePrefix.length != 2) {
+                    screenWarnings.push("Main Carriage Carrier Prefix length must be 2");
                 }
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierNumber)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.FlightNo")));
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierNumber)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.FlightNo")));
+            }
 
-                else {
-                    if (this.isSendButtonClicked || this.isPrintButtonClicked || this.isPreviewButtonClicked) {
-                        if (!FormatTool.Validate_FlightNumber(this.EntityPM.MainCarriageCarrierNumber)) {
-                            var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".O." + "Routings.FlightNo");
-                            screenWarnings.push(fieldName + " wrong format: must be [3-4 numerics] Or [4 numerics plus 1 Alpha]");
-                        }
+            else {
+                if (this.isSendButtonClicked || this.isPrintButtonClicked || this.isPreviewButtonClicked) {
+                    if (!FormatTool.Validate_FlightNumber(this.EntityPM.MainCarriageCarrierNumber)) {
+                        var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".O." + "Routings.FlightNo");
+                        screenWarnings.push(fieldName + " wrong format: must be [3-4 numerics] Or [4 numerics plus 1 Alpha]");
                     }
                 }
             }
@@ -1548,46 +1386,44 @@ export class AWBWizardComponent implements AfterViewInit{
                     screenErrors.push(myMasterFieldError);
                 }
             }
-            if (!this.IsImportWizard) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.Master) && AppTool.IsNullOrEmpty(this.EntityPM.MAWBStackNumber)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.MAWB")));
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.Master) && AppTool.IsNullOrEmpty(this.EntityPM.MAWBStackNumber)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.MAWB")));
+            }
+
+            if (this.EntityPM.MAWBOBLDate == null) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.MAWBDate")));
+            }
+
+            if (this.EntityPM.MainCarriageETD == null) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", "Main Carriage ETD"));
+            }
+
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Transshipment1FromPortId) && !AppTool.IsNullOrEmpty(this.EntityPM.Transshipment1ToPortId)) {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.Transshipment1CarrierId)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Main carriage leg 2 carrier"));
                 }
+            }
 
-                if (this.EntityPM.MAWBOBLDate == null) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.MAWBDate")));
-                }
-
-                if (this.EntityPM.MainCarriageETD == null) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Main Carriage ETD"));
-                }
-
-
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.Transshipment1FromPortId) && !AppTool.IsNullOrEmpty(this.EntityPM.Transshipment1ToPortId)) {
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.Transshipment1CarrierId)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Main carriage leg 2 carrier"));
-                    }
-                }
-
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.Transshipment2FromPortId) && !AppTool.IsNullOrEmpty(this.EntityPM.Transshipment2ToPortId)) {
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.Transshipment2CarrierId)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", "Main carriage leg 3 carrier"));
-                    }
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Transshipment2FromPortId) && !AppTool.IsNullOrEmpty(this.EntityPM.Transshipment2ToPortId)) {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.Transshipment2CarrierId)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", "Main carriage leg 3 carrier"));
                 }
             }
         }
 
         else {
-            if (this.EntityPM.HasPreForwarding && AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingFromPortId)) {
-                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.PreForwardingFromPortId")));
+            if (this.EntityPM.HasPreCarriage && AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageFromPortId)) {
+                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.PreCarriageFromPortId")));
             }
 
-            if (this.EntityPM.HasOnForwarding && AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingToPortId)) {
-                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.OnForwardingToPortId")));
+            if (this.EntityPM.HasOnCarriage && AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortId)) {
+                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.OnCarriageToPortId")));
             }
-            if (!this.IsImportWizard) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.House)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", "House"));
-                }
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.House)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", "House"));
             }
         }
 
@@ -1609,18 +1445,9 @@ export class AWBWizardComponent implements AfterViewInit{
         //}
         
         if (AppTool.IsNullOrZero(this.EntityPM.GrossWeight)) {
-            if (!this.IsImportWizard) {
-                var msgField = TextCodeTranslator.Translate(this.ObjectTableName + ".F.GrossWeight");
-                msgField = msgField.replace("%GrossWeightCode", this.EntityPM.GrossWeightUnitCode);
-                screenWarnings.push(this.ValidationText.replace("%FieldName", msgField));
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.SLAC)) {
-            if (!FormatTool.Validate_SLAC(this.EntityPM.SLAC)) {
-                var fieldName: string = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "SLAC");
-                screenErrors.push(fieldName + " wrong format: must be 5 numeric digits max");
-            }
+            var msgField = TextCodeTranslator.Translate(this.ObjectTableName + ".F.GrossWeight");
+            msgField = msgField.replace("%GrossWeightCode", this.EntityPM.GrossWeightUnitCode);
+            screenWarnings.push(this.ValidationText.replace("%FieldName", msgField));
         }
 
         if (this.IsFWB) {
@@ -1628,12 +1455,10 @@ export class AWBWizardComponent implements AfterViewInit{
         }
 
         else {
-            if (!this.IsImportWizard) {
-                var myFieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F.DescriptionOfGoods");
+            var myFieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F.DescriptionOfGoods");
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.DescriptionOfGoods)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", myFieldName));
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.DescriptionOfGoods)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", myFieldName));
             }
         }
 
@@ -1644,132 +1469,128 @@ export class AWBWizardComponent implements AfterViewInit{
         this.ApplyStyle(screenErrors.length > 0, screenWarnings.length > 0, "PAC");
     }
     private ValidateScreen_PAC_FWB(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
-            if (AppTool.IsNullOrZero(this.EntityPM.ChargeableWeight)) {
-                var msgField = TextCodeTranslator.Translate(this.ObjectTableName + ".F.ChargeableWeight");
-                msgField = msgField.replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
 
-                screenWarnings.push(this.ValidationText.replace("%FieldName", msgField));
-            }
+        if (AppTool.IsNullOrZero(this.EntityPM.ChargeableWeight)) {
+            var msgField = TextCodeTranslator.Translate(this.ObjectTableName + ".F.ChargeableWeight");
+            msgField = msgField.replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
 
-            if (this.EntityPM.IsMultipleCommodities) {
+            screenWarnings.push(this.ValidationText.replace("%FieldName", msgField));
+        }
 
-                var BreakException = {};
+        if (this.EntityPM.IsMultipleCommodities) {
 
-                try {
-                    this.EntityPM.ShipmentCommodities.forEach((item) => {
+            var BreakException = {};
 
-                        if (!AppTool.IsNullOrEmpty(item.CommodityNumber)) {
-                            if (!FormatTool.Validate_CommodityNo(item.CommodityNumber)) {
-                                var fieldName = TextCodeTranslator.Translate("ShipmentCommodity.F.CommodityNumber");
-                                screenWarnings.push(fieldName + " must be 4-7 numeric");
-                                throw BreakException;
+            try {
+                this.EntityPM.ShipmentCommodities.forEach((item) => {
+
+                    if (!AppTool.IsNullOrEmpty(item.CommodityNumber)) {
+                        if (!FormatTool.Validate_CommodityNo(item.CommodityNumber)) {
+                            var fieldName = TextCodeTranslator.Translate("ShipmentCommodity.F.CommodityNumber");
+                            screenWarnings.push(fieldName + " must be 4-7 numeric");
+                            throw BreakException;
+                        }
+                    }
+
+                    if (AppTool.IsNullOrEmpty(item.RateClassCode)) {
+                        screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.RateClassCode")));
+                    }
+
+                    if (!this.EntityPM.AsAgreedFreight) {
+                        var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(item.RateClassCode);
+
+                        if (rateClassGroupCode != "S") {
+                            if (AppTool.IsNullOrZero(item.ChargeRate)) {
+                                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeRate")));
                             }
                         }
 
-                        if (AppTool.IsNullOrEmpty(item.RateClassCode)) {
-                            screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.RateClassCode")));
+                        if (AppTool.IsNullOrZero(item.ChargeAmount)) {
+                            screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.AWBChargeAmount")));
                         }
+                    }
+                });
+            }
 
-                        if (!this.EntityPM.AsAgreedFreight) {
-                            var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(item.RateClassCode);
+            catch (e) {
+                if (e !== BreakException) throw e;
+            }
+        }
 
-                            if (rateClassGroupCode != "S") {
-                                if (AppTool.IsNullOrZero(item.ChargeRate)) {
-                                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeRate")));
-                                }
+        else {
 
-                                if (AppTool.IsNullOrZero(item.ChargeAmount)) {
-                                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeAmount")));
-                                }
-                            }
-                        }
-                    });
-                }
+            if (this.EntityPM.ShipmentLevelCode == "C") {
+                if (this.EntityPM.MainCarriageCarrierCode == "AR") {
+                    var myFieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F.DescriptionOfGoods");
 
-                catch (e) {
-                    if (e !== BreakException) throw e;
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.DescriptionOfGoods)) {
+                        screenWarnings.push(this.ValidationText.replace("%FieldName", myFieldName));
+                    }
                 }
             }
 
-            else {
-
-                if (this.EntityPM.ShipmentLevelCode == "C") {
-                    if (this.EntityPM.MainCarriageCarrierCode == "AR") {
-                        var myFieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F.DescriptionOfGoods");
-
-                        if (AppTool.IsNullOrEmpty(this.EntityPM.DescriptionOfGoods)) {
-                            screenWarnings.push(this.ValidationText.replace("%FieldName", myFieldName));
-                        }
-                    }
-                }
-
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBCommodityItemNumber)) {
-                    if (!FormatTool.Validate_CommodityNo(this.EntityPM.AWBCommodityItemNumber)) {
-                        var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "AWBCommodityItemNumber");
-                        screenWarnings.push(fieldName + " must be 4-7 numeric");
-                    }
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBCommodityItemNumber)) {
+                if (!FormatTool.Validate_CommodityNo(this.EntityPM.AWBCommodityItemNumber)) {
+                    var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "AWBCommodityItemNumber");
+                    screenWarnings.push(fieldName + " must be 4-7 numeric");
                 }
             }
         }
     }
     private ValidateScreen_PAC_AirlineRules(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
-            if (!this.EntityPM.IsMultipleCommodities) {
-                if (this.IsFWB) {
-                    this.ValidateAirlineRule("AWBCommodityItemNumber", this.EntityPM.AWBCommodityItemNumber, screenWarnings);
-                }
 
-                this.ValidateAirlineRule("DescriptionOfGoods", this.EntityPM.DescriptionOfGoods, screenWarnings);
+        if (!this.EntityPM.IsMultipleCommodities) {
+            if (this.IsFWB) {
+                this.ValidateAirlineRule("AWBCommodityItemNumber", this.EntityPM.AWBCommodityItemNumber, screenWarnings);
             }
+
+            this.ValidateAirlineRule("DescriptionOfGoods", this.EntityPM.DescriptionOfGoods, screenWarnings);
         }
     }
 
     public ValidateScreen_FRE() {
-
         var screenErrors: string[] = [];
         var screenWarnings: string[] = [];
-        if (!this.IsImportWizard) {
-            if (this.IsFWB) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.AWBCurrencyId)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBCurrencyId")));
+
+        if (this.IsFWB) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.AWBCurrencyId)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBCurrencyId")));
+            }
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.AWBChargesCodeCode)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBChargesCodeCode")));
+            }
+
+            if (!this.EntityPM.IsMultipleCommodities) {
+                if (AppTool.IsNullOrZero(this.EntityPM.ChargeableWeight)) {
+                    var msgField = TextCodeTranslator.Translate(this.ObjectTableName + ".F.ChargeableWeight");
+                    msgField = msgField.replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", msgField));
                 }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.AWBChargesCodeCode)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBChargesCodeCode")));
+                if (AppTool.IsNullOrEmpty(this.EntityPM.RateClassCode)) {
+                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.RateClassCode")));
                 }
 
-                if (!this.EntityPM.IsMultipleCommodities) {
-                    if (AppTool.IsNullOrZero(this.EntityPM.ChargeableWeight)) {
-                        var msgField = TextCodeTranslator.Translate(this.ObjectTableName + ".F.ChargeableWeight");
-                        msgField = msgField.replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+                if (!this.EntityPM.AsAgreedFreight) {
+                    var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.EntityPM.RateClassCode);
 
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", msgField));
+                    if (rateClassGroupCode != "S") {
+                        if (this.EntityPM.AWBChargeRate == null || this.EntityPM.AWBChargeRate == 0) {
+                            screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBChargeRate")));
+                        }
                     }
 
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.RateClassCode)) {
-                        screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.RateClassCode")));
-                    }
-
-                    if (!this.EntityPM.AsAgreedFreight) {
-                        var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.EntityPM.RateClassCode);
-
-                        if (rateClassGroupCode != "S") {
-                            if (this.EntityPM.AWBChargeRate == null || this.EntityPM.AWBChargeRate == 0) {
-                                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBChargeRate")));
-                            }
-                        }
-
-                        if (this.EntityPM.AWBChargeAmount == null || this.EntityPM.AWBChargeAmount == 0) {
-                            screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBChargeAmount")));
-                        }
+                    if (this.EntityPM.AWBChargeAmount == null || this.EntityPM.AWBChargeAmount == 0) {
+                        screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBChargeAmount")));
                     }
                 }
             }
+        }
 
-            if (this.IsFHL) {
-                this.ValidateAirlineRule("AWBChargeRate", this.EntityPM.AWBChargeRate, screenWarnings)
-            }
+        if (this.IsFHL) {
+            this.ValidateAirlineRule("AWBChargeRate", this.EntityPM.AWBChargeRate, screenWarnings)
         }
 
         this.TabErrors_FRE = screenErrors;
@@ -1789,22 +1610,14 @@ export class AWBWizardComponent implements AfterViewInit{
             var myCount2 = this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode != "FRT" && d.CurrencyId == this.EntityPM.AWBCurrencyId && d.AWBPrint == true).length;
             var myCount3 = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode != "FRT" && d.CurrencyId == this.EntityPM.AWBCurrencyId && d.AWBPrint == true).length;
             var myCount = myCount1 + myCount2 + myCount3;
-            if (!this.IsImportWizard) {
-                if (myCount > 9) {
-                    screenWarnings.push("You have exceeded the allowable limit of 9 lines of other charges");
-                }
+            if (myCount > 9) {
+                screenWarnings.push("You have exceeded the allowable limit of 9 lines of other charges");
             }
         }
 
         this.TabErrors_OTC = screenErrors;
         this.TabWarnings_OTC = screenWarnings;
-
-        var warningLength: number = screenWarnings.length;
-        if (this.IsUpdateQuantitiesVisible) {
-            warningLength += 1;
-        }
-
-        this.ApplyStyle(screenErrors.length > 0, warningLength > 0, "OTC");
+        this.ApplyStyle(screenErrors.length > 0, screenWarnings.length > 0, "OTC");
     }
     public ValidateScreen_RAD() {
         var screenErrors: string[] = [];
@@ -1829,163 +1642,143 @@ export class AWBWizardComponent implements AfterViewInit{
         this.ApplyStyle(screenErrors.length > 0, screenWarnings.length > 0, "GEN");
     }
     private ValidateScreen_GEN_FWB(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
-            if (this.IsFWB) {
+        if (this.IsFWB) {
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.AWBSignature)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBSignature")));
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.AWBSignature)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBSignature")));
+            }
 
-                else if (!FormatTool.IsTextFormatted(this.EntityPM.AWBSignature)) {
-                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBSignature")));
-                }
+            else if (!FormatTool.IsTextFormatted(this.EntityPM.AWBSignature)) {
+                screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBSignature")));
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.AWBPlace)) {
-                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBPlace")));
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.AWBPlace)) {
+                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.AWBPlace")));
+            }
 
-                else if (!FormatTool.IsTextFormatted(this.EntityPM.AWBPlace)) {
-                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBPlace")));
-                }
+            else if (!FormatTool.IsTextFormatted(this.EntityPM.AWBPlace)) {
+                screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBPlace")));
+            }
 
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBAccountingInformation)) {
-                    if (!FormatTool.IsTextFormatted(this.EntityPM.AWBAccountingInformation)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBAccountingInformation")));
-                    }
-                }
-
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBHandlingInformation)) {
-                    if (!FormatTool.IsTextFormatted(this.EntityPM.AWBHandlingInformation)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBHandlingInformation")));
-                    }
-                }
-
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBComments)) {
-                    if (!FormatTool.IsTextFormatted(this.EntityPM.AWBComments)) {
-                        screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBComments")));
-                    }
-                }
-
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.MainHarmonize)) {
-                    var isValid = false;
-
-                    if (this.EntityPM.MainHarmonize.length >= 6 && this.EntityPM.MainHarmonize.length <= 18) {
-                        if (FormatTool.IsAlphaNumeric(this.EntityPM.MainHarmonize)) {
-                            isValid = true;
-                        }
-                    }
-
-                    if (!isValid) {
-                        var fieldName = TextCodeTranslator.Translate("Shipment.F.MainHarmonize");
-                        screenWarnings.push(fieldName + " must be 6-18 AlphaNumeric");
-                    }
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBAccountingInformation)) {
+                if (!FormatTool.IsTextFormatted(this.EntityPM.AWBAccountingInformation)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBAccountingInformation")));
                 }
             }
 
-            if ((this.IsFWB || this.IsFHL) && AppTool.IsNullOrEmpty(this.EntityPM.MainHarmonize)) {
-                var isValid = true;
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBHandlingInformation)) {
+                if (!FormatTool.IsTextFormatted(this.EntityPM.AWBHandlingInformation)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBHandlingInformation")));
+                }
+            }
 
-                if (this.EntityPM.ToCountryIsEC
-                    || this.EntityPM.Transshipment1ToCountryIsEC
-                    || this.EntityPM.Transshipment2ToCountryIsEC
-                    || this.EntityPM.Transshipment3ToCountryIsEC)
-                    isValid = false;
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBComments)) {
+                if (!FormatTool.IsTextFormatted(this.EntityPM.AWBComments)) {
+                    screenWarnings.push(FormatTool.GetWrongTextFormatMessage(TextCodeTranslator.Translate("Shipment.F.AWBComments")));
+                }
+            }
 
-                if (!isValid) 
-                    screenWarnings.push("Main Harmonize is Required for EC Countries");
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.MainHarmonize)) {
+                var isValid = false;
+
+                if (this.EntityPM.MainHarmonize.length >= 6 && this.EntityPM.MainHarmonize.length <= 18) {
+                    if (FormatTool.IsAlphaNumeric(this.EntityPM.MainHarmonize)) {
+                        isValid = true;
+                    }
+                }
+
+                if (!isValid) {
+                    var fieldName = TextCodeTranslator.Translate("Shipment.F.MainHarmonize");
+                    screenWarnings.push(fieldName + " must be 6-18 AlphaNumeric");
+                }
             }
         }
     }
     private ValidateScreen_GEN_Declared(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
-            if (!FormatTool.Validate_DeclaredCarriage(this.EntityPM.AWBDeclaredValueForCarriage)) {
-                var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "AWBDeclaredValueForCarriage");
-                screenWarnings.push(fieldName + " wrong format: must be numeric Or NVD");
-            }
+        if (!FormatTool.Validate_DeclaredCarriage(this.EntityPM.AWBDeclaredValueForCarriage)) {
+            var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "AWBDeclaredValueForCarriage");
+            screenWarnings.push(fieldName + " wrong format: must be numeric Or NVD");
+        }
 
-            if (!FormatTool.Validate_DeclaredCustoms(this.EntityPM.AWBDeclaredValueForCustoms)) {
-                var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "AWBDeclaredValueForCustoms");
-                screenWarnings.push(fieldName + " wrong format: must be numeric Or NCV");
-            }
+        if (!FormatTool.Validate_DeclaredCustoms(this.EntityPM.AWBDeclaredValueForCustoms)) {
+            var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "AWBDeclaredValueForCustoms");
+            screenWarnings.push(fieldName + " wrong format: must be numeric Or NCV");
+        }
 
-            if (!FormatTool.Validate_DeclaredInsurrence(this.EntityPM.AWBInsurrenceValue)) {
-                var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "AWBInsurrenceValue");
-                screenWarnings.push(fieldName + " wrong format: must be numeric Or XXX");
-            }
+        if (!FormatTool.Validate_DeclaredInsurrence(this.EntityPM.AWBInsurrenceValue)) {
+            var fieldName = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "AWBInsurrenceValue");
+            screenWarnings.push(fieldName + " wrong format: must be numeric Or XXX");
         }
     }
     private ValidateScreen_GEN_Dangerous(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
-            if (this.EntityPM.IsDangerous) {
-                var isValidSpecialHandling = false;
+        if (this.EntityPM.IsDangerous) {
+            var isValidSpecialHandling = false;
 
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId1)) {
-                    isValidSpecialHandling = true;
-                }
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId1)) {
+                isValidSpecialHandling = true;
+            }
 
-                else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId2)) {
-                    isValidSpecialHandling = true;
-                }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId2)) {
+                isValidSpecialHandling = true;
+            }
 
-                else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId3)) {
-                    isValidSpecialHandling = true;
-                }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId3)) {
+                isValidSpecialHandling = true;
+            }
 
-                else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId4)) {
-                    isValidSpecialHandling = true;
-                }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId4)) {
+                isValidSpecialHandling = true;
+            }
 
-                else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId5)) {
-                    isValidSpecialHandling = true;
-                }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId5)) {
+                isValidSpecialHandling = true;
+            }
 
-                else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId6)) {
-                    isValidSpecialHandling = true;
-                }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId6)) {
+                isValidSpecialHandling = true;
+            }
 
-                else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId7)) {
-                    isValidSpecialHandling = true;
-                }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId7)) {
+                isValidSpecialHandling = true;
+            }
 
-                else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId8)) {
-                    isValidSpecialHandling = true;
-                }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId8)) {
+                isValidSpecialHandling = true;
+            }
 
-                else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId9)) {
-                    isValidSpecialHandling = true;
-                }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.AWBSpecialHandlingCodeId9)) {
+                isValidSpecialHandling = true;
+            }
 
-                if (!isValidSpecialHandling) {
-                    screenWarnings.push("Shipments with Dangerous packages at least one of the special handling codes is required");
-                }
+            if (!isValidSpecialHandling) {
+                screenWarnings.push("Shipments with Dangerous packages at least one of the special handling codes is required");
             }
         }
     }
     private ValidateScreen_GEN_AirlineRules(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
-            this.ValidateAirlineRule("SCI", this.EntityPM.SCI, screenWarnings);
 
-            if (!ShipmentTool.IsAdvancedAccountingInformation(this.EntityPM)) {
-                this.ValidateAirlineRule("AWBAccountingInformation", this.EntityPM.AWBAccountingInformation, screenWarnings);
-            }
+        this.ValidateAirlineRule("SCI", this.EntityPM.SCI, screenWarnings);
 
-            this.ValidateAirlineRule("AWBHandlingInformation", this.EntityPM.AWBHandlingInformation, screenWarnings);
-            this.ValidateAirlineRule("AWBSpecialHandlingCodeId1", this.EntityPM.AWBSpecialHandlingCodeId1, screenWarnings);
-            this.ValidateAirlineRule("AWBSpecialHandlingCodeId2", this.EntityPM.AWBSpecialHandlingCodeId2, screenWarnings);
+        if (!ShipmentTool.IsAdvancedAccountingInformation(this.EntityPM)) {
+            this.ValidateAirlineRule("AWBAccountingInformation", this.EntityPM.AWBAccountingInformation, screenWarnings);
+        }
 
-            if (this.IsFWB) {
-                this.ValidateAirlineRule("AWBSpecialHandlingCodeId3", this.EntityPM.AWBSpecialHandlingCodeId3, screenWarnings);
-                this.ValidateAirlineRule("AWBSpecialHandlingCodeId4", this.EntityPM.AWBSpecialHandlingCodeId4, screenWarnings);
-                this.ValidateAirlineRule("AWBSpecialHandlingCodeId5", this.EntityPM.AWBSpecialHandlingCodeId5, screenWarnings);
-                this.ValidateAirlineRule("AWBSpecialHandlingCodeId6", this.EntityPM.AWBSpecialHandlingCodeId6, screenWarnings);
-                this.ValidateAirlineRule("AWBSpecialHandlingCodeId7", this.EntityPM.AWBSpecialHandlingCodeId7, screenWarnings);
-                this.ValidateAirlineRule("AWBSpecialHandlingCodeId8", this.EntityPM.AWBSpecialHandlingCodeId8, screenWarnings);
-                this.ValidateAirlineRule("AWBSpecialHandlingCodeId9", this.EntityPM.AWBSpecialHandlingCodeId9, screenWarnings);
+        this.ValidateAirlineRule("AWBHandlingInformation", this.EntityPM.AWBHandlingInformation, screenWarnings);
+        this.ValidateAirlineRule("AWBSpecialHandlingCodeId1", this.EntityPM.AWBSpecialHandlingCodeId1, screenWarnings);
+        this.ValidateAirlineRule("AWBSpecialHandlingCodeId2", this.EntityPM.AWBSpecialHandlingCodeId2, screenWarnings);
 
-                this.ValidateAirlineRule("ReferenceNumber", this.EntityPM.ReferenceNumber, screenWarnings);
-                this.ValidateAirlineRule("SupplementaryShipmentInformation1", this.EntityPM.SupplementaryShipmentInformation1, screenWarnings);
-                this.ValidateAirlineRule("SupplementaryShipmentInformation2", this.EntityPM.SupplementaryShipmentInformation2, screenWarnings);
-            }
+        if (this.IsFWB) {
+            this.ValidateAirlineRule("AWBSpecialHandlingCodeId3", this.EntityPM.AWBSpecialHandlingCodeId3, screenWarnings);
+            this.ValidateAirlineRule("AWBSpecialHandlingCodeId4", this.EntityPM.AWBSpecialHandlingCodeId4, screenWarnings);
+            this.ValidateAirlineRule("AWBSpecialHandlingCodeId5", this.EntityPM.AWBSpecialHandlingCodeId5, screenWarnings);
+            this.ValidateAirlineRule("AWBSpecialHandlingCodeId6", this.EntityPM.AWBSpecialHandlingCodeId6, screenWarnings);
+            this.ValidateAirlineRule("AWBSpecialHandlingCodeId7", this.EntityPM.AWBSpecialHandlingCodeId7, screenWarnings);
+            this.ValidateAirlineRule("AWBSpecialHandlingCodeId8", this.EntityPM.AWBSpecialHandlingCodeId8, screenWarnings);
+            this.ValidateAirlineRule("AWBSpecialHandlingCodeId9", this.EntityPM.AWBSpecialHandlingCodeId9, screenWarnings);
+
+            this.ValidateAirlineRule("ReferenceNumber", this.EntityPM.ReferenceNumber, screenWarnings);
+            this.ValidateAirlineRule("SupplementaryShipmentInformation1", this.EntityPM.SupplementaryShipmentInformation1, screenWarnings);
+            this.ValidateAirlineRule("SupplementaryShipmentInformation2", this.EntityPM.SupplementaryShipmentInformation2, screenWarnings);
         }
     }
 
@@ -2006,11 +1799,10 @@ export class AWBWizardComponent implements AfterViewInit{
                 }
             }
         });
-        if (!this.IsImportWizard) {
-            if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
-                if (this.EntityPM.AWBOCIPMs.length == 0) {
-                    screenWarnings.push("Please add at least one line in the OCI tab");
-                }
+
+        if (this.EntityPM.MainCarriageFinalDestinationPortCountryCode == "CN") {
+            if (this.EntityPM.AWBOCIPMs.length == 0) {
+                screenWarnings.push("Please add at least one line in the OCI tab");
             }
         }
 
@@ -2038,404 +1830,136 @@ export class AWBWizardComponent implements AfterViewInit{
         this.ApplyStyle(screenErrors.length > 0, screenWarnings.length > 0, "OTP");
     }
     private ValidateScreen_OTP_Participant1(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
         var isParticipantFilled = ShipmentTool.IsParticipant1Filled(this.EntityPM);
-            if (isParticipantFilled) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantIdCode1)) {
-                    screenWarnings.push("Other Partners Participant1 Id field is required");
-                }
-                else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode1)) {
-                    screenWarnings.push("Other Partners Participant1 Id field invalid format");
-                }
+        if (isParticipantFilled) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantIdCode1)) {
+                screenWarnings.push("Other Partners Participant1 Id field is required");
+            }
+            else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode1)) {
+                screenWarnings.push("Other Partners Participant1 Id field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationCode1)) {
-                    screenWarnings.push("Other Partners Participant1 Code field is required");
-                }
-                else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode1)) {
-                    screenWarnings.push("Other Partners Participant1 Code field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationCode1)) {
+                screenWarnings.push("Other Partners Participant1 Code field is required");
+            }
+            else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode1)) {
+                screenWarnings.push("Other Partners Participant1 Code field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationPortCode1)) {
-                    screenWarnings.push("Other Partners Participant1 Port/City field is required");
-                }
-                else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode1)) {
-                    screenWarnings.push("Other Partners Participant1 Port/City field invalid format");
-                }
-                else if (this.EntityPM.OtherParticipantInformationPortCode1.length != 3) {
-                    screenWarnings.push("Other Partners Participant1 Port/City field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationPortCode1)) {
+                screenWarnings.push("Other Partners Participant1 Port/City field is required");
+            }
+            else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode1)) {
+                screenWarnings.push("Other Partners Participant1 Port/City field invalid format");
+            }
+            else if (this.EntityPM.OtherParticipantInformationPortCode1.length != 3) {
+                screenWarnings.push("Other Partners Participant1 Port/City field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationName1)) {
-                    screenWarnings.push("Other Partners Participant1 Name field is required");
-                }
-                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName1)) {
-                    screenWarnings.push("Other Partners Participant1 Name field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationName1)) {
+                screenWarnings.push("Other Partners Participant1 Name field is required");
+            }
+            else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName1)) {
+                screenWarnings.push("Other Partners Participant1 Name field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationReference1)) {
-                    screenWarnings.push("Other Partners Participant1 Reference field is required");
-                }
-                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference1)) {
-                    screenWarnings.push("Other Partners Participant1 Reference field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationReference1)) {
+                screenWarnings.push("Other Partners Participant1 Reference field is required");
+            }
+            else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference1)) {
+                screenWarnings.push("Other Partners Participant1 Reference field invalid format");
             }
         }
     }
     private ValidateScreen_OTP_Participant2(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
-            var isParticipantFilled = ShipmentTool.IsParticipant2Filled(this.EntityPM);
-            if (isParticipantFilled) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantIdCode2)) {
-                    screenWarnings.push("Other Partners Participant2 Id field is required");
-                }
-                else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode2)) {
-                    screenWarnings.push("Other Partners Participant2 Id field invalid format");
-                }
+        var isParticipantFilled = ShipmentTool.IsParticipant2Filled(this.EntityPM);
+        if (isParticipantFilled) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantIdCode2)) {
+                screenWarnings.push("Other Partners Participant2 Id field is required");
+            }
+            else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode2)) {
+                screenWarnings.push("Other Partners Participant2 Id field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationCode2)) {
-                    screenWarnings.push("Other Partners Participant2 Code field is required");
-                }
-                else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode2)) {
-                    screenWarnings.push("Other Partners Participant2 Code field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationCode2)) {
+                screenWarnings.push("Other Partners Participant2 Code field is required");
+            }
+            else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode2)) {
+                screenWarnings.push("Other Partners Participant2 Code field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationPortCode2)) {
-                    screenWarnings.push("Other Partners Participant2 Port/City field is required");
-                }
-                else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode2)) {
-                    screenWarnings.push("Other Partners Participant2 Port/City field invalid format");
-                }
-                else if (this.EntityPM.OtherParticipantInformationPortCode2.length != 3) {
-                    screenWarnings.push("Other Partners Participant2 Port/City field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationPortCode2)) {
+                screenWarnings.push("Other Partners Participant2 Port/City field is required");
+            }
+            else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode2)) {
+                screenWarnings.push("Other Partners Participant2 Port/City field invalid format");
+            }
+            else if (this.EntityPM.OtherParticipantInformationPortCode2.length != 3) {
+                screenWarnings.push("Other Partners Participant2 Port/City field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationName2)) {
-                    screenWarnings.push("Other Partners Participant2 Name field is required");
-                }
-                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName2)) {
-                    screenWarnings.push("Other Partners Participant2 Name field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationName2)) {
+                screenWarnings.push("Other Partners Participant2 Name field is required");
+            }
+            else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName2)) {
+                screenWarnings.push("Other Partners Participant2 Name field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationReference2)) {
-                    screenWarnings.push("Other Partners Participant2 Reference field is required");
-                }
-                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference2)) {
-                    screenWarnings.push("Other Partners Participant2 Reference field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationReference2)) {
+                screenWarnings.push("Other Partners Participant2 Reference field is required");
+            }
+            else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference2)) {
+                screenWarnings.push("Other Partners Participant2 Reference field invalid format");
             }
         }
     }
     private ValidateScreen_OTP_Participant3(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
         var isParticipantFilled = ShipmentTool.IsParticipant3Filled(this.EntityPM);
-            if (isParticipantFilled) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantIdCode3)) {
-                    screenWarnings.push("Other Partners Participant3 Id field is required");
-                }
-                else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode3)) {
-                    screenWarnings.push("Other Partners Participant3 Id field invalid format");
-                }
+        if (isParticipantFilled) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantIdCode3)) {
+                screenWarnings.push("Other Partners Participant3 Id field is required");
+            }
+            else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode3)) {
+                screenWarnings.push("Other Partners Participant3 Id field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationCode3)) {
-                    screenWarnings.push("Other Partners Participant3 Code field is required");
-                }
-                else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode3)) {
-                    screenWarnings.push("Other Partners Participant3 Code field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationCode3)) {
+                screenWarnings.push("Other Partners Participant3 Code field is required");
+            }
+            else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode3)) {
+                screenWarnings.push("Other Partners Participant3 Code field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationPortCode3)) {
-                    screenWarnings.push("Other Partners Participant3 Port/City field is required");
-                }
-                else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode3)) {
-                    screenWarnings.push("Other Partners Participant3 Port/City field invalid format");
-                }
-                else if (this.EntityPM.OtherParticipantInformationPortCode3.length != 3) {
-                    screenWarnings.push("Other Partners Participant3 Port/City field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationPortCode3)) {
+                screenWarnings.push("Other Partners Participant3 Port/City field is required");
+            }
+            else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode3)) {
+                screenWarnings.push("Other Partners Participant3 Port/City field invalid format");
+            }
+            else if (this.EntityPM.OtherParticipantInformationPortCode3.length != 3) {
+                screenWarnings.push("Other Partners Participant3 Port/City field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationName3)) {
-                    screenWarnings.push("Other Partners Participant3 Name field is required");
-                }
-                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName3)) {
-                    screenWarnings.push("Other Partners Participant3 Name field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationName3)) {
+                screenWarnings.push("Other Partners Participant3 Name field is required");
+            }
+            else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName3)) {
+                screenWarnings.push("Other Partners Participant3 Name field invalid format");
+            }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationReference3)) {
-                    screenWarnings.push("Other Partners Participant3 Reference field is required");
-                }
-                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference3)) {
-                    screenWarnings.push("Other Partners Participant3 Reference field invalid format");
-                }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OtherParticipantInformationReference3)) {
+                screenWarnings.push("Other Partners Participant3 Reference field is required");
+            }
+            else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference3)) {
+                screenWarnings.push("Other Partners Participant3 Reference field invalid format");
             }
         }
     }
     private ValidateScreen_OTP_AirlineRules(screenErrors: string[], screenWarnings: string[]) {
-        if (!this.IsImportWizard) {
-            this.ValidateAirlineRule("NominatedHandlingPartyId", this.EntityPM.NominatedHandlingPartyId, screenWarnings);
-            this.ValidateAirlineRule("OtherParticipantIdCode1", this.EntityPM.OtherParticipantIdCode1, screenWarnings);
-            this.ValidateAirlineRule("OtherParticipantIdCode2", this.EntityPM.OtherParticipantIdCode2, screenWarnings);
-            this.ValidateAirlineRule("OtherParticipantIdCode3", this.EntityPM.OtherParticipantIdCode3, screenWarnings);
-        }
-    }
-
-    public ValidateScreen_OTC_Quantities() {
-        var validateReceivables: boolean = this.ValidateReceivablesQuantites();
-        var validatePayables: boolean = this.ValidatePayablesQuantites();
-
-        if (validateReceivables || validatePayables) {
-            this.IsUpdateQuantitiesVisible = true;
-            this.ValidateScreen_OTC();
-        }
-    }
-    private ValidateReceivablesQuantites(): boolean {
-        var activeLines: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables;
-        activeLines = activeLines.filter(d => d.ShipmentReceivableParentId == null);
-        activeLines = activeLines.filter(d => d.ARInvoiceId == null);
-        activeLines = activeLines.filter(d => d.UnitPrice != null);
-
-        if (activeLines.length > 0) {
-            var isDifferent: boolean = false;
-
-            activeLines.forEach(item => {
-                switch (item.MeasurementCode) {
-                    case "PFCL": {
-                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
-                        if (item.Quantity != quantity) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "SCGW": {
-                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "CWKG": {
-                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-                    case "GWKG": {
-                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "VCBM": {
-                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "GRWT": {
-                        if (item.Quantity != this.EntityPM.GrossWeight) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "GWTN": {
-                        if (item.Quantity != this.EntityPM.GrossWeightPerTon) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "QTY": {
-                        if (item.Quantity != this.EntityPM.NumberOfPackages) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "CHWT": {
-                        if (item.Quantity != this.EntityPM.ChargeableWeight) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "VOLU": {
-                        if (item.Quantity != this.EntityPM.Volume) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "BTEU": {
-                        if (item.Quantity != this.EntityPM.TEU) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "PRVL": {
-                        if (item.Quantity != this.EntityPM.ValueOfGoods) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "PRFR": {
-                        if (this.EntityPM.ShipmentReceivables.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
-                            var FRT_Quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount");
-
-                            if (item.Quantity != FRT_Quantity) {
-                                isDifferent = true;
-                            }
-
-                            if (this.EntityPM.ShipmentReceivables.filter(f => f.MeasurementCode == "PRFR" && f.Quantity != FRT_Quantity).length > 0) {
-                                isDifferent = true;
-                            }
-                        }
-
-                        break;
-                    }
-                }
-            });
-        }
-
-        return isDifferent;
-    }
-    private ValidatePayablesQuantites(): boolean {
-        var activeLines: ShipmentPayablePM[] = this.EntityPM.ShipmentPayables;
-        activeLines = activeLines.filter(d => d.ShipmentPayableParentId == null);
-        activeLines = activeLines.filter(d => d.ShipmentPayableAmountTypeCode != "NEXP");
-        activeLines = activeLines.filter(d => d.ShipmentPayableLineStatusCode != "ACCT");
-        activeLines = activeLines.filter(d => d.ShipmentPayableLineStatusCode != "PACC");
-        activeLines = activeLines.filter(d => d.UnitPrice != null);
-
-        if (activeLines.length > 0) {
-            var isDifferent: boolean = false;
-
-            activeLines.forEach(item => {
-                switch (item.MeasurementCode) {
-                    case "PFCL": {
-                        var quantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"), 3);
-                        if (item.Quantity != quantity) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "SCGW": {
-                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-                    case "CWKG": {
-                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-                    case "GWKG": {
-                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "GRWT": {
-                        if (item.Quantity != this.EntityPM.GrossWeight) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "GWTN": {
-                        if (item.Quantity != this.EntityPM.GrossWeightPerTon) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "QTY": {
-                        if (item.Quantity != this.EntityPM.NumberOfPackages) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "CHWT": {
-                        if (item.Quantity != this.EntityPM.ChargeableWeight) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "VOLU": {
-                        if (item.Quantity != this.EntityPM.Volume) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "BTEU": {
-
-                        if (item.Quantity != this.EntityPM.TEU) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "PRVL": {
-                        if (item.Quantity != this.EntityPM.ValueOfGoods) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "PRFR": {
-                        if (this.EntityPM.ShipmentPayables.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
-                            var FRT_Quantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount");
-
-                            if (item.Quantity != FRT_Quantity) {
-                                isDifferent = true;
-                            }
-
-                            if (this.EntityPM.ShipmentPayables.filter(f => f.MeasurementCode == "PRFR" && f.Quantity != FRT_Quantity).length > 0) {
-                                isDifferent = true;
-                            }
-                        }
-
-                        break;
-                    }
-
-                    case "VCBM": {
-                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-                }
-            });
-        }
-
-        return isDifferent;
+        this.ValidateAirlineRule("NominatedHandlingPartyId", this.EntityPM.NominatedHandlingPartyId, screenWarnings);
+        this.ValidateAirlineRule("OtherParticipantIdCode1", this.EntityPM.OtherParticipantIdCode1, screenWarnings);
+        this.ValidateAirlineRule("OtherParticipantIdCode2", this.EntityPM.OtherParticipantIdCode2, screenWarnings);
+        this.ValidateAirlineRule("OtherParticipantIdCode3", this.EntityPM.OtherParticipantIdCode3, screenWarnings);
     }
 
     ValidateAirlineRule(myFieldName: string, myFieldValue: any, validationList: string[]) {
@@ -2671,23 +2195,14 @@ export class AWBWizardComponent implements AfterViewInit{
     CancelShipmentClicked() {
         var confirmMsg: string;
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
-            var messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Title = "Cancelling Shipment";
-            messageWindow.Show("Can't cancel shipments that have a MAWB number, please remove it");
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
+            confirmMsg = "Cancelling this shipment will disconnect it from the Booking , are you sure you want to cancel?";
         }
 
-        else if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
-            confirmMsg = "Cancelling this shipment will disconnect it from the Booking , are you sure you want to cancel?";
-            this.ConfirmCanceling(confirmMsg);
-        }
-        
         else {
             confirmMsg = "Are you sure you want to cancel this Shipment?";
-            this.ConfirmCanceling(confirmMsg);
         }
-    }
-    ConfirmCanceling(confirmMsg: string) {
+
         var confirmWindow = new ConfirmWindow();
 
         confirmWindow.Show(confirmMsg);
@@ -2717,7 +2232,6 @@ export class AWBWizardComponent implements AfterViewInit{
             }
         });
     }
-
     ReactivateShipmentClicked() {
         this.InitFlags();
         this.isReactivateShipmentButtonClicked = true;
@@ -2965,9 +2479,6 @@ export class AWBWizardComponent implements AfterViewInit{
         });
     }
     private OnSaveCompletedSuccessfully() {
-        this.isEntityChange = true;
-        this.CurrentSession.FireEvent("RefreshShipmentsTabFromAWBWizard");
-
         if (this.isReloadingOnSave) {
             this.isReloadingOnSave = false;
             this.isExecutingMethod = true;
@@ -3034,21 +2545,19 @@ export class AWBWizardComponent implements AfterViewInit{
     Print() {
         var isRunningPrintingManager: boolean = false;
 
-        if (!this.IsImportWizard) {
-            if (FeatureLocator.IsPackage_EAWB()) {
-                if (SessionLocator.TenantManagementJS.IsAWBStockPrepaid) {
-                    var isDemoTenant = false;
+        if (FeatureLocator.IsPackage_EAWB()) {
+            if (SessionLocator.TenantManagementJS.IsAWBStockPrepaid) {
+                var isDemoTenant = false;
 
-                    if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
-                        isDemoTenant = true;
-                    }
+                if (this.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+                    isDemoTenant = true;
+                }
 
-                    if (!isDemoTenant) {
-                        if (this.EntityPM.ShipmentLevelCode != "H") {
-                            if (!AppTool.IsNullOrEmpty(this.EntityPM.TenantZeroAirlineTTY)) {
-                                if (this.EntityPM.FWBStatusCode == "NSEN") {
-                                    isRunningPrintingManager = true;
-                                }
+                if (!isDemoTenant) {
+                    if (this.EntityPM.ShipmentLevelCode != "H") {
+                        if (!AppTool.IsNullOrEmpty( this.EntityPM.TenantZeroAirlineTTY)) {
+                            if (this.EntityPM.FWBStatusCode == "NSEN") {
+                                isRunningPrintingManager = true;
                             }
                         }
                     }
@@ -3147,7 +2656,6 @@ export class AWBWizardComponent implements AfterViewInit{
     }
     StartPrint() {
         if (this.documentTypePM != null) {
-
             if (this.documentTypePM.DocumentTypeDefaultReportTemplateId) {
                 this.LoadPrintControl();
             }
@@ -3204,7 +2712,7 @@ export class AWBWizardComponent implements AfterViewInit{
     documentTypePM: DocumentTypePM;
     documentTypeList: DocumentTypeList;
     GetDocstOut() {
-        this._documentTypeListExtendedService.getDocumentTypeListByCode(this.documentTypeCode, this.TenantPM.Id).subscribe((res:any) => {
+        this._documentTypeListExtendedService.getDocumentTypeListByCode(this.documentTypeCode, this.TenantPM.Id).subscribe(res => {
 
 
 
@@ -3216,7 +2724,7 @@ export class AWBWizardComponent implements AfterViewInit{
 
                     this.documentTypeId = this.documentTypeList.Id;
                     this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-                    this._documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityPM.Id, this.TenantPM.Id, "", this.documentTypeId).subscribe((res:any) => {
+                    this._documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityPM.Id, this.TenantPM.Id, "", this.documentTypeId).subscribe(res => {
                
                         this.StopBusyIndicator();
 
@@ -3228,7 +2736,7 @@ export class AWBWizardComponent implements AfterViewInit{
 
                             if (!this.documentOutPM) {
 
-                                this._documentOutPMService.getCreateDocumentOut(this.documentTypeId, this.EntityPM.Id, null, null, this.targetObjectTableId, this.EntityPM.Tenant).subscribe((res:any) => {
+                                this._documentOutPMService.getCreateDocumentOut(this.documentTypeId, this.EntityPM.Id, null, null, this.targetObjectTableId, this.EntityPM.Tenant).subscribe(res => {
                                         var pmResponse: ServiceResponse = res;
                                         if (!pmResponse.HasError) {
                                             var myResult = pmResponse.Result;
@@ -3272,7 +2780,7 @@ export class AWBWizardComponent implements AfterViewInit{
     }
     LoadCreatedDocMethod() {
 
-        this._documentOutPMService.getSingleDocumentOutPM(this.documentOutPM.Id, this.TenantPM.Id).subscribe((res:any) => {
+        this._documentOutPMService.getSingleDocumentOutPM(this.documentOutPM.Id, this.TenantPM.Id).subscribe(res => {
      
 
 
@@ -3293,7 +2801,7 @@ export class AWBWizardComponent implements AfterViewInit{
     }
     LoadDocumentTypeMethod() {
 
-        this._documentTypePMService.getSingleDocumentType(this.documentTypeId, this.documentOutPM.Id, this.TenantPM.Id).subscribe((res:any) => {
+        this._documentTypePMService.getSingleDocumentType(this.documentTypeId, this.documentOutPM.Id, this.TenantPM.Id).subscribe(res => {
 
 
             var pmResponse: ServiceResponse = res;
@@ -3329,7 +2837,6 @@ export class AWBWizardComponent implements AfterViewInit{
 
 
         this.StopBusyIndicator();
-
 
         if (this.documentTypePM.DocumentTypeDefaultReportTemplateId) {
             this.LoadPreviewControl();
@@ -3422,6 +2929,19 @@ export class AWBWizardComponent implements AfterViewInit{
 
         this.GetDocstOut();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private ExecuteSend() {
 
@@ -3621,7 +3141,6 @@ export class AWBWizardComponent implements AfterViewInit{
     }
 
     private CloseWizardWindow() {
-        this.RejectChanges();
         this.CloseWindow();
     }
     private CloseWindow() {
@@ -3723,16 +3242,6 @@ export class AWBWizardComponent implements AfterViewInit{
                 this.CurrentSession.StopBusyIndicator();
             }
         });
-    }
-
-    private myCloner: Cloner;
-    private Clone() {
-        this.myCloner = new Cloner(this.EntityPM);
-        this.myCloner.AddField('IsMultipleCommodities');
-        this.myCloner.AddEntity(this.EntityPM);
-    }
-    private RejectChanges() {
-        this.myCloner.RejectChanges();
     }
 }
 

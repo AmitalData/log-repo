@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Web;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -31,46 +30,20 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             repository = new SATInterfaceSettingRepository(tenant);
         }
 
-        public SATInterfaceSettingPM GetSinglePM(int tenantId)
+        public SATInterfaceSettingPM GetSinglePM(int tenantId, int tenant)
         {
-            string entityName = "SATInterfaceSettingPM" + tenantId;
-            SATInterfaceSettingPM entity = null;
-            if (HttpContext.Current != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                {
-                    entity = (from a in repository.context.SATInterfaceSettings.Include("SATInterface")
-                              where a.Tenant == tenantId
-                              select new SATInterfaceSettingPM()
-                              {
-
-                                  Tenant = a.Tenant,
-                                  SATInterfaceCode = a.SATInterfaceCode,
-                                  Token = a.Token,
-                                  SATInterfaceName = a.SATInterface.Name,
-                                  ActivationDate = a.ActivationDate,
-                                  MetodoPagoCode = a.MetodoPagoCode,
-                                  IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
-                                  IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
-                                  SATCompanyName = a.SATCompanyName,
-                                  TransferExpenseCharges = a.TransferExpenseCharges,
-                              }).FirstOrDefault();
-
-                    if (entity != null)
+            return (from a in repository.context.SATInterfaceSettings.Include("SATInterface")
+                    where a.Tenant == tenantId
+                    select new SATInterfaceSettingPM()
                     {
-                        if (CacheManager.CacheWrapper.Get(entityName) == null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
-                    }
-                }
 
-                else
-                {
-                    entity = (SATInterfaceSettingPM)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            return entity;
+                        Tenant = a.Tenant,
+                        SATInterfaceCode = a.SATInterfaceCode,
+                        Token = a.Token,
+                        SATInterfaceName = a.SATInterface.Name,
+                        ActivationDate = a.ActivationDate,
+                        MetodoPagoCode = a.MetodoPagoCode,
+                    }).FirstOrDefault();
         }
 
 
@@ -87,10 +60,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         SATInterfaceName = a.SATInterface.Name,
                         ActivationDate = a.ActivationDate,
                         MetodoPagoCode = a.MetodoPagoCode,
-                        IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
-                        IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
-                        SATCompanyName = a.SATCompanyName,
-                        TransferExpenseCharges = a.TransferExpenseCharges,
+
                     }).FirstOrDefault();
         }
 
@@ -105,10 +75,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        SATInterfaceName = a.SATInterface.Name,
                        ActivationDate = a.ActivationDate,
                        MetodoPagoCode = a.MetodoPagoCode,
-                       IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
-                       IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
-                       SATCompanyName = a.SATCompanyName,
-                       TransferExpenseCharges = a.TransferExpenseCharges,
+
                    };
         }
 
@@ -123,10 +90,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                              Token = entity.Token,
                                                              ActivationDate = entity.ActivationDate,
                                                              MetodoPagoCode = entity.MetodoPagoCode,
-                                                             IsARInvoiceTransferEnabled = entity.IsARInvoiceTransferEnabled,
-                                                             IsCartaPorteTransferEnabled = entity.IsCartaPorteTransferEnabled,
-                                                             SATCompanyName = entity.SATCompanyName,
-                                                             TransferExpenseCharges = entity.TransferExpenseCharges,
+
                                                          };
             return result;
         }

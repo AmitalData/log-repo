@@ -2,42 +2,43 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
-import { NewPhoneCall } from '../../Activities/NewEntity/NewPhoneCall';
-import { NewTask } from '../../Activities/NewEntity/NewTask';
-import { NewAppointment } from '../../Activities/NewEntity/NewAppointment';
-import { OpportunityActions } from './OpportunitiesActions';
-
 
 export class EditOpportunityMainTab {
     private Helper: FieldsHelper;
     private Generator: GeneralFunctions;
-    private newTask: NewTask = new NewTask();
-    private newPhoneCall: NewPhoneCall = new NewPhoneCall();
-    private newAppointment: NewAppointment = new NewAppointment();
-    private opportunityActions: OpportunityActions = new OpportunityActions();
 
     constructor() {
         this.Helper = new FieldsHelper();
         this.Generator = new GeneralFunctions();
     }
     public EditMainTab(opportunityDesc: string) {
-        this.Helper.WaitByIdAndClick('Opportunity.TH.Overview');
+
         this.EditMainTabFeilds(opportunityDesc);
+        // this.Helper.WaitByIdAndClick('Activity-SaveClose');
+        // this.Helper.WaitBusyIndicator();
+
+
+        // var EC = protractor.ExpectedConditions;
+        // browser.wait(EC.invisibilityOf(element(by.id('Activity.B.MarkAsComplete'))), 100000).then(a => {
+        // });
     }
     EditMainTabFeilds(opportunityDesc: string) {
-        this.Helper.WaitByIdAndFill('Opportunity_NumberOfShipments', '25');
-        this.Helper.WaitByIdAndClick('AddPhoneCall');
-        this.newPhoneCall.FillPhoneCallFields('Created from Opportunity');
+        // this.Helper.WaitByIdAndFill('Activity_Subject', 'Edit Subject for ' + opportunityDesc);
 
-        this.Helper.WaitByIdAndClick('AddTask');
-        this.newTask.FillTaskFields('Created from Opportunity');
+        // this.Helper.WaitByIdAndFill('Activity_Description', 'Edit Description for ' + opportunityDesc);// test random number randomWholeNum
 
-        this.Helper.WaitByIdAndClick('AddAppointment');
-        this.newAppointment.FillAppointmentFields('Created from Opportunity');
 
-        this.Helper.WaitByIdAndClick('AddQuote');
-        this.opportunityActions.AddQuoteFromOpportunity();
+        // this.Helper.WaitByIdAndFill('Activity_OwnerId', 'r');
+        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
+
+        // this.Helper.WaitByIdAndFill('date_Activity_StartDateTime', '2');
+        // // this.Helper.WaitByIdAndFill('time_Activity_StartDateTime', '15');
+
+        // this.Helper.WaitByIdAndFill('date_Activity_DueDate', '3');
+        // // this.Helper.WaitByIdAndFill('time_Activity_DueDate', '17');
+
     }
+
 }
 
 

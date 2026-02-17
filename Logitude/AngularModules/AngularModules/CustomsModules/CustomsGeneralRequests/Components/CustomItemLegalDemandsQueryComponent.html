@@ -108,111 +108,93 @@
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.RequirementSource' | TextCodeTranslationPipe"
                                             [binding]="'RequirementSourceName'"
                                             [width]="'100'" [Alignment]="'right'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.RequirementSourceName}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- FullClassification -->
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.FullClassification' | TextCodeTranslationPipe"
                                             [width]="'100'" [Alignment]="'right'"
                                             [binding]="'FullClassification'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.FullClassification}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- RequirementGoodsDescription -->
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.RequirementGoodsDescription' | TextCodeTranslationPipe"
                                             [binding]="'RequirementGoodsDescription'"
                                             [width]="'180'" [Alignment]="'right'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.RequirementGoodsDescription}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- AuthoritiyName -->
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.AuthoritiyName' | TextCodeTranslationPipe"
                                             [width]="'100'" [Alignment]="'right'" [binding]="'AuthoritiyName'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.AuthoritiyName }}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- CertificateTypeName -->
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.CertificateTypeName' | TextCodeTranslationPipe"
                                             [width]="'100'" [Alignment]="'right'" [binding]="'CertificateTypeName'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CertificateTypeName }}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- TextualCondition -->
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.TextualCondition' | TextCodeTranslationPipe"
                                             [width]="'90'" [Alignment]="'right'" [binding]="'TextualCondition'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.TextualCondition }}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- InterConditionsRelationshipName -->
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.InterConditionsRelationshipName' | TextCodeTranslationPipe"
                                             [width]="'70'" [Alignment]="'right'" [binding]="'InterConditionsRelationshipName'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.InterConditionsRelationshipName }}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- IsPersonalImportIncluded -->
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.IsPersonalImportIncluded' | TextCodeTranslationPipe"
                                             [width]="'80'" [Alignment]="'right'" [binding]="'IsPersonalImportIncluded'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div>
                                             <img *ngIf="item.IsPersonalImportIncluded=='Visible'" title="Yes" src="./Images/CheckBoxIcon.png" />
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- IsCarnetIncluded -->
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.IsCarnetIncluded' | TextCodeTranslationPipe"
                                             [width]="'70'" [Alignment]="'right'" [binding]="'IsCarnetIncluded'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <img *ngIf="item.IsCarnetIncluded=='Visible'" title="Yes" src="./Images/CheckBoxIcon.png" />
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>
@@ -236,13 +218,11 @@
                                 <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.CountryName' | TextCodeTranslationPipe"
                                             [binding]="'CountryName'"
                                             [width]="'150'" [Alignment]="'right'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CountryName}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
                             </logitude-edit-grid>
                         </div>

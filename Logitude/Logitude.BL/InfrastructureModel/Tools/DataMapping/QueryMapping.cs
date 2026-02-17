@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -10,7 +10,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             if (isNewState)
             {
                 entityPOCO.Code = entityPM.Code;
-                entityPOCO.UniqueCode = entityPM.UniqueCode;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
 
@@ -20,8 +19,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.ObjectTableId = entityPM.ObjectTableId;
             entityPOCO.QueryGroupCode = entityPM.QueryGroupCode;
             entityPOCO.OriginalQueryId = entityPM.OriginalQueryId;
-            entityPOCO.OriginalQueryCode = entityPM.OriginalQueryCode;
-
             entityPOCO.SystemLevel = entityPM.SystemLevel;           
             entityPOCO.TenantLevel = entityPM.TenantLevel;
             entityPOCO.UserId = entityPM.UserId;
@@ -41,12 +38,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.SharedWithSpecificUsers = entityPM.SharedWithSpecificUsers;
             entityPOCO.SharedByUserId = entityPM.SharedByUserId;
             entityPOCO.SpotlightModeActivated = entityPM.SpotlightModeActivated;
-            entityPOCO.NameTextCodeCode = entityPM.NameTextCodeCode;
-            entityPOCO.FeatureUniqeCode = entityPM.FeatureUniqeCode;
-            entityPOCO.IsViewOnly = entityPM.IsViewOnly;
-            entityPOCO.IsDefault = entityPM.IsDefault;
-
-
+            
         }
     }
 }

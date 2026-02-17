@@ -204,36 +204,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
 
 
-        public List<string> GetQuoteTemplateSectionIdsByQuoteTemplateId(string templateId, string quoteId, int tenant, string defultQuoteTemplate = null, string quotationSections = null)
-        {
-            List<string> qUoteTemplateSectionsIds = new List<string>();
-
-            if (string.IsNullOrEmpty(defultQuoteTemplate) || string.IsNullOrEmpty(quotationSections) || defultQuoteTemplate != templateId)
-            {
-                qUoteTemplateSectionsIds = (from a in repository.quotesContext.QuoteTemplateSections
-                                            where a.Tenant == tenant && a.QuoteTemplateId == templateId && a.IsCancel != true
-                                            select a.Id).ToList();
-                                         
-
-            }
-            else
-            {
-                List<string> quoteTemplateIds = quotationSections.Split(',').ToList();
-                qUoteTemplateSectionsIds = (from a in repository.quotesContext.QuoteTemplateSections
-                                            where a.Tenant == tenant && quoteTemplateIds.Contains(a.Id)
-                                            select a.Id).ToList();
-            }
-
-
-           
-
-
-            return qUoteTemplateSectionsIds;
-
-        }
-
-
-
 
         public List<QuoteTemplateSectionPM> GetQuoteTemplateSectionPMsByTemplateId(string templateId, string quoteId, int tenant , string defultQuoteTemplate=null, string quotationSections = null)
         {

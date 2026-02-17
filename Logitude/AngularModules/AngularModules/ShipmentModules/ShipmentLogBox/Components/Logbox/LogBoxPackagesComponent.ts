@@ -6,7 +6,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-
+import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -30,7 +30,7 @@ import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibra
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './LogBoxPackagesComponent.html'
 })
 
@@ -40,21 +40,14 @@ export class LogBoxPackagesComponent implements OnInit, AfterViewInit {
    
     ShipmentPM: any;
     Title: string = "";
-    public showShipmentOrderPackages: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
-    private AirTransportModeId = 'A';
-    private LCLShipmentTypeId = 'LCLD';
-    private ExportDirectionId = 'E';
-
     constructor() {
 
 
     }
     ngOnInit() {
-        if ((!this.ShipmentPM.ForwarderShipmentNumber) || (this.ShipmentPM && this.ShipmentPM.ShipmentPackages.length == 0)) {
-            this.showShipmentOrderPackages = true;
-        }
+        
     }
     ngAfterViewInit() {
 
@@ -69,7 +62,4 @@ export class LogBoxPackagesComponent implements OnInit, AfterViewInit {
         this.CurrentSession.CloseCurrentWindow();
     } 
     
-    get IsPackageList(): boolean {
-        return this.ShipmentPM.DirectionId == this.ExportDirectionId && (this.ShipmentPM.TransportModeId == this.AirTransportModeId || this.ShipmentPM.ShipmentTypeId == this.LCLShipmentTypeId);
-    }
 }

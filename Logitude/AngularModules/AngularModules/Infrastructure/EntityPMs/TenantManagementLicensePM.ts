@@ -21,10 +21,10 @@ export class TenantManagementLicensePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -48,21 +48,6 @@ export class TenantManagementLicensePM {
     public set NumberOfUsers(newValue: number) { if (this.numberOfUsers != newValue) { this.numberOfUsers = newValue; this.MarkAsDirty("NumberOfUsers"); } }
        
 	 
-    private freeUsers: number;
-    public get FreeUsers() { return this.freeUsers; }
-    public set FreeUsers(newValue: number) { if (this.freeUsers != newValue) { this.freeUsers = newValue; this.MarkAsDirty("FreeUsers"); } }
-       
-	 
-    private price: number;
-    public get Price() { return this.price; }
-    public set Price(newValue: number) { if (this.price != newValue) { this.price = newValue; this.MarkAsDirty("Price"); } }
-       
-	 
-    private totalPrice: number;
-    public get TotalPrice() { return this.totalPrice; }
-    public set TotalPrice(newValue: number) { if (this.totalPrice != newValue) { this.totalPrice = newValue; this.MarkAsDirty("TotalPrice"); } }
-       
-	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
@@ -78,10 +63,7 @@ export class TenantManagementLicensePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -91,7 +73,6 @@ export class TenantManagementLicensePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TenantManagementLicense");
            
         }
-	 }
     }
     private MyClone: TenantManagementLicensePM;
 

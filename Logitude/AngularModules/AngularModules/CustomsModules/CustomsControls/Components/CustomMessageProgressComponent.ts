@@ -6,7 +6,6 @@ import { IIGGeneralMessagesService, ResultClientProgressBar } from '../../../Cus
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { SessionComponent } from '../../../Infrastructure/Components/Session/SessionComponent';
 
 //////////////////
 /// CustomMessageProgressComponent  is below 
@@ -15,31 +14,29 @@ import { SessionComponent } from '../../../Infrastructure/Components/Session/Ses
 
 @Component({
     selector: 'custom-message-progress',
-    
+    moduleId: module.id,
     templateUrl: './CustomMessageProgressComponent.html',
 })
 
 export class CustomMessageProgressComponent {
-    //private CurrentSession = SessionLocator.SelectedSession;
-    //private static StaticCurrentSession = SessionLocator.SelectedSession;
+    private CurrentSession = SessionLocator.SelectedSession;
+    private static StaticCurrentSession = SessionLocator.SelectedSession;
 
     public _Message: string;
     public static CurrCustomMessageProgressHelper: CustomMessageProgressHelper = null;
     public static ShowProgressBar
-        (currentSession: SessionComponent ,PBId: string, Title: string, OnSuccessCloseWin: boolean
+        (PBId: string, Title: string, OnSuccessCloseWin: boolean
         //, OnSuccessCloseWinMethod?: (response: any) => boolean
-            , myShowProgressBarParams?: ShowProgressBarParams
-            
+        , myShowProgressBarParams?: ShowProgressBarParams
         )
         : Promise<any> {
 
         let alreadyDone = false;
 
         return new Promise<any>((resolve, reject) => {
-            currentSession
-            //SessionLocator.SelectedSession
-            /*this.StaticCurrentSession*/.StartBusyIndicator("");
-            var currCustomMessageProgressHelper = new CustomMessageProgressHelper(currentSession);
+
+            this.StaticCurrentSession.StartBusyIndicator("");
+            var currCustomMessageProgressHelper = new CustomMessageProgressHelper();
             CustomMessageProgressComponent.CurrCustomMessageProgressHelper = currCustomMessageProgressHelper;
             currCustomMessageProgressHelper.StartProgress(PBId, 3, OnSuccessCloseWin);
             currCustomMessageProgressHelper.OnMessageArrived.subscribe(
@@ -49,9 +46,7 @@ export class CustomMessageProgressComponent {
                     alreadyDone = true;
 
                     try {
-                        currentSession
-                        //SessionLocator.SelectedSession
-                        /*this.StaticCurrentSession*/.StopBusyIndicator();
+                        this.StaticCurrentSession.StopBusyIndicator();
                         var response = currCustomMessageProgressHelper.ResponseData;
                         resolve(response);
 
@@ -73,9 +68,7 @@ export class CustomMessageProgressComponent {
                                 return;
                             }
                         }
-                        currentSession
-                        //SessionLocator.SelectedSession
-                        /*this.StaticCurrentSession*/.StopBusyIndicator();
+                        this.StaticCurrentSession.StopBusyIndicator();
 
                         if (myShowProgressBarParams) {
                             if (myShowProgressBarParams.OnSuccessAnalyzeCloseWinMethod) {
@@ -104,9 +97,7 @@ export class CustomMessageProgressComponent {
 
 
                     } finally {
-                        currentSession
-                        //SessionLocator.SelectedSession
-                        /*this.StaticCurrentSession*/.StopBusyIndicator();
+                        this.StaticCurrentSession.StopBusyIndicator();
 
                         currCustomMessageProgressHelper.ngOnDestroy();
 
@@ -144,8 +135,7 @@ export class CustomMessageProgressComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.SelectedSession
-        /*this.CurrentSession*/.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 
@@ -165,9 +155,9 @@ export class CustomMessageProgressHelper
 
     _DispatcherTimer: any; //DispatcherTimer
     private _PBId: string;
-    constructor(private CurrentSession) { } 
 
-    //private CurrentSession = SessionLocator.SelectedSession;
+
+    private CurrentSession = SessionLocator.SelectedSession;
 
     _LastUpdateCurrentStageLine: Date = DateTool.GetCurrentDateTimeAsUtc();
     _CurrentStageLine: string;
@@ -300,7 +290,7 @@ export class CustomMessageProgressHelper
     }
 
 
-    private async  ClientProgressBarIndicatorCurrentStageCompleted(serviceResponse: ServiceResponse) {
+    private ClientProgressBarIndicatorCurrentStageCompleted(serviceResponse: ServiceResponse) {
 
 
         if (this.MessageArrived) return;
@@ -349,24 +339,6 @@ export class CustomMessageProgressHelper
                 return;
             }
             if (e.stopMeNow) {
-
-                
-
-                
-                if (AppTool.IsNullOrEmpty(responseDataXml)) {
-                    try {
-                        console.log("responseDataXml is null avoid that .." );
-                        let myIIGGeneralMessagesService = new IIGGeneralMessagesService();
-                        let res: ServiceResponse = await myIIGGeneralMessagesService
-                            .GetClientProgressBarIndicatorCurrentStage(
-                                SessionLocator.Tenant, this._PBId, this.BasicResponse
-                            ).toPromise();
-                        let resultClientProgressBar: ResultClientProgressBar = res.Result;
-                        responseDataXml = resultClientProgressBar.responseDataXml;
-                    } catch (e) {
-                        console.warn("GetClientProgressBarIndicatorCurrentStage()" + e);
-                    }
-                }
 
                 if (AppTool.IsNullOrEmpty(responseDataXml)) {
                     this.CurrentStageLine = this._ContinueInBackgroundMess;//"המסר נבנה בהצלחה וישלח בתהליך רקע" + mess;

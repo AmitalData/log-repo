@@ -78,9 +78,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 DeclarationQueryService declarationQuery = new DeclarationQueryService(entityPOCO.Tenant);
                 DeclarationPM declaration = declarationQuery.GetSingle(entityPOCO.DeclarationId, false, false);
                 entityPM.CustomFileNo = declaration != null ? declaration.CustomFileNo : null;
-                entityPM.Direction= declaration != null ? declaration.Direction : null;
-                entityPM.TransportModeId = declaration != null ? declaration.TransportModeId : null;
-
             }
         }
 

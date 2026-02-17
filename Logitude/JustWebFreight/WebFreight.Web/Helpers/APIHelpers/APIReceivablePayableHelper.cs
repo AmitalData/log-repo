@@ -1,10 +1,9 @@
 ﻿using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.Resolvers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -22,7 +21,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private TenantRepository tenantRepository;
         private ChargesTypeRepository chargesTypeRepository;
         private MeasurementRepository measurementRepository;
-        private CardRepository cardRepository;
         RatesTableQuery ratesTableQuery;
         public APIReceivablePayableHelper(ShipmentPM shipment, int tenant)
         {
@@ -31,7 +29,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
             tenantRepository = new TenantRepository(commonContext);
             chargesTypeRepository = new ChargesTypeRepository(commonContext);
             measurementRepository = new MeasurementRepository(commonContext);
-            cardRepository = new CardRepository(commonContext);
             ratesTableQuery = new RatesTableQuery(tenant);
 
             this.shipmentPM = shipment;
@@ -294,14 +291,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
                         else
                         {
-                            if (measurementCode == "PRVL" || measurementCode == "PRFR")
-                            {
-                                price = (item.TotalAmount / item.Quantity) * 100;
-                            }
-                            else
-                            {
-                                price = item.TotalAmount / item.Quantity;
-                            }
+                            price = item.TotalAmount / item.Quantity;
                         }
                     }
 
@@ -420,20 +410,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     }
                 }
 
-                if (!string.IsNullOrEmpty(item.VendorId))
-                {
-                    Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(item.VendorId, tenant);
-                    if (card != null)
-                    {
-                        string [] allowedPartnerTypes = { "AG", "AL", "CG", "SG", "SL", "TR", "VD", "WH" };
-                      
-                        if (!allowedPartnerTypes.Contains(card.PartnerTypeId))
-                        {
-                            throw new ApplicationException("Payable vendor partner type is not allowed");
-                        }
-                    }
-                }
-
                 RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
                 if (item.Rate == null)
                 {
@@ -472,6 +448,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         }
                     }
                 }
+
 
                 string measurementCode = "";
                 Simplog.Data.CommonDataModel.EntityPOCOs.Measurement measurement = measurementRepository.GetSingleMeasurement(item.MeasurementId, tenant);
@@ -590,14 +567,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
                         else
                         {
-                            if (measurementCode == "PRVL" || measurementCode == "PRFR")
-                            {
-                                price = (item.ExpectedAmount / item.Quantity) * 100;
-                            }
-                            else
-                            {
-                                price = item.ExpectedAmount / item.Quantity;
-                            }
+                            price = item.ExpectedAmount / item.Quantity;
                         }
                     }
 
@@ -638,11 +608,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!chargesType.IsReceivable)
                         {
-                            string chtxt = TextCodesTranslator.TranslateText("General.O.Billings.ChargeType", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
-                            string rectxt = TextCodesTranslator.TranslateText("General.O.Billings.UsedRec", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
-
-                        //  throw new ApplicationException("Charge type " + chargesType.Code + " used in receivables should be marked as Receivable");
-                            throw new ApplicationException(chtxt + " " + chargesType.Code + " " + rectxt);
+                            throw new ApplicationException("Charge type " + chargesType.Code + " used in receivables should be marked as Receivable");
                         }
                         break;
                     }
@@ -651,11 +617,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!chargesType.IsPayable)
                         {
-                            string chtxt = TextCodesTranslator.TranslateText("General.O.Billings.ChargeType", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
-                            string paytxt = TextCodesTranslator.TranslateText("General.O.Billings.UsedPay", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
-
-                        //  throw new ApplicationException("Charge type " + chargesType.Code + " used in payables should be marked as Payable");
-                            throw new ApplicationException(chtxt + " " + chargesType.Code + " " + paytxt);
+                            throw new ApplicationException("Charge type " + chargesType.Code + " used in payables should be marked as Payable");
                         }
                         break;
                     }

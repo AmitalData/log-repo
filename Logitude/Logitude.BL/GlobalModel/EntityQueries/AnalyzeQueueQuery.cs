@@ -8,11 +8,10 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Security;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityLists;
 using System.Transactions;
 using Logitude.Server.Tools.Helpers;
-using System.IO;
 
 namespace Logitude.BL.GlobalModel
 {
@@ -55,7 +54,7 @@ namespace Logitude.BL.GlobalModel
                                                        ConnectedToTenant = a.ConnectedToTenant,
                                                        CreateDate = a.CreateDate,
                                                        ErrorMessage = a.ErrorMessage,
-                                                       Log = a.Log,
+                                                       Log=a.Log,
                                                        MessageBody = a.MessageBody,
                                                        Retries = a.Retries,
                                                        Status = a.AnalyzeQueueStatus.Name,
@@ -86,30 +85,9 @@ namespace Logitude.BL.GlobalModel
                         analyzeQueue.ObjectTableName = commLog.ObjectTable != null ? commLog.ObjectTable.Name : null;
                     }
 
-                    bool displayFileBody = true;
-                    if (!string.IsNullOrEmpty(analyzeQueue.FileName))
-                    {
-                        string extention = Path.GetExtension(analyzeQueue.FileName);
-                        if (extention != ".txt" && extention != ".xml")
-                        {
-                            displayFileBody = false;
-                            analyzeQueue.MessageBodyString = "File body can't be displayed, please click View to download it.";
-                        }
-                    }
-                    if (analyzeQueue.FileSize > 20000)
-                    {
-                        displayFileBody = false;
-                        analyzeQueue.MessageBodyString = "The file size is too big, please click View to download it.";
-                    }
-                    if (displayFileBody)
-                    {
-                        string str = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
-                        analyzeQueue.MessageBodyString = str;
-                    }
-
+                    string str = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
+                    analyzeQueue.MessageBodyString = str;
                     SecuredMapping.GetMappedPM(analyzeQueue, securedPm, "AnalyzeQueue", analyzeQueue.Tenant);
-
-                    securedPm.MessageBody = null;
 
                     return securedPm;
                 }
@@ -118,6 +96,7 @@ namespace Logitude.BL.GlobalModel
                     securedPm = (AnalyzeQueuePM)CacheManager.CacheWrapper.Get(entityName);
                 }
             }
+
             else
             {
                 AnalyzeQueuePM analyzeQueuepm = (from a in repository.context.AnalyzeQueues.Include("AnalyzeQueueStatus").Include("TenantManagement")

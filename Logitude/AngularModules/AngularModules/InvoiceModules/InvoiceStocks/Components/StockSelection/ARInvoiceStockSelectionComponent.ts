@@ -8,7 +8,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ARInvoiceStockSelectionComponent.html',
 })
 
@@ -22,8 +22,8 @@ export class ARInvoiceStockSelectionComponent {
     public StocksLineCount:number;
 
     constructor() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
-            this._entityResourceService.getEntityResourceByTableName("ARInvoiceStockLine", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("ARInvoiceStockLine", 0).subscribe(response => {
                 this.InitializeServices();
                 this.LoadData();
             });

@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
-using System.Windows.Media;
-using System.Data.Entity.Infrastructure;
-using System;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -14,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentRepository(ICommonDataContext context)
         {
@@ -39,13 +39,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
-        public Document GetSingleDocument(string id)
-        {
-            Document d = (from a in context.Documents
-                          where a.Id == id
-                          select a).FirstOrDefault();
-            return d;
-        }
+
 
         public List<Document> GetDocumentsByDocumentIds(List<string>documentIds, int tenant )
         {
@@ -60,18 +54,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                      where documentIds.Contains(a.Id) 
                                      select a).ToList();
             return result;
-        }
-        public string GetDocumentIdByFileName(string fileName,string extension,int tenant)
-        {
-           
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
-
-            char[] delimiterChars = {  '-' };
-             var query= (from a in context.Documents
-                    where a.Tenant== tenant &&  a.Extension == extension && a.FileName.StartsWith(fileName) 
-                    orderby a.CreateDate descending
-                    select a.Id);
-            return query.FirstOrDefault(); 
         }
 
         public void Add(Document entity)
@@ -156,13 +138,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return !isValid;
         }
 
-        public string GetFileNameByDocumentId(string id, int tenant)
-        {
-            string calculatedFileName = (from a in context.Documents
-                                         where a.Tenant == tenant && a.Id == id
-                                         select a.FileName).FirstOrDefault();
-            return calculatedFileName;
-        }
+
 
     }
 }

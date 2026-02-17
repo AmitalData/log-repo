@@ -1,19 +1,18 @@
-import {Injectable, Injector, Inject} from '@angular/core';
-import { defer, of } from 'rxjs';
+﻿import {Injectable, Injector, Inject} from '@angular/core';
+import {Http, Headers, ConnectionBackend, BaseRequestOptions} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {PortList} from '../../EntityLists/PortList';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators'
 
 @Injectable()
 
 export class PortService {
     private _apiUrl: string;
-    private _http: HttpClient;   
+    private _http: Http;   
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/portlistviewsexteded';
         //this.CachedData = [];
     }
@@ -28,9 +27,11 @@ export class PortService {
     GetPortCopyToCurrentTenant(zeroPortId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getportcopytocurrenttenant/?' + 'id=' + zeroPortId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var list = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getportcopytocurrenttenant/?' + 'id=' + zeroPortId, {
+                headers: authHeader
+            }).map(response => {
+                var list = response.json();
 
                 var entity: PortList;
                 if (list) {
@@ -38,7 +39,7 @@ export class PortService {
                 }
 
                 return entity;
-            }));
+            });
         }
 
         );
@@ -47,10 +48,10 @@ export class PortService {
     getAll() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/ngMetaData?tenant=' + SessionInfo.LoggedUserTenant + '&inActive=false&inland=true&air=true&ocean=true', ServiceHelper.GetHttpHeaders()).pipe(map(ports => {  return ports; }));
+        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/ngMetaData?tenant=' + SessionInfo.LoggedUserTenant +'&inActive=false&inland=true&air=true&ocean=true', { headers: authHeader })
+            .map(ports => { /*console.log(ports.json());*/ return ports.json(); });
     }
 
-    
     MapJsonToEntityList(jsonList: any) {
 
         var entityList: PortList;

@@ -1,7 +1,7 @@
 declare var System: any, window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-
+import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -28,18 +28,13 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
 import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { HttpClient } from '@angular/common/http';
-import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
-import { forEach } from 'cypress/types/lodash';
 
 @Component({
     selector: 'LogBoxDocuments',
-    
+    moduleId: module.id,
     templateUrl: './LogBoxDocumentsComponent.html',
     //providers: [ EntityListService, DocumentsFilingExtendedPMService],
-    inputs: ['ShipmentSelectedEvent', 'OnImporterShipmentsFilterChanged', 'SearchText', 'IsExportActivated'],
+    inputs: ['ShipmentSelectedEvent', 'OnImporterShipmentsFilterChanged', 'SearchText'],
     //pipes: [CountryFlagPipe, AttatchmentIconPipe]
 })
 
@@ -60,7 +55,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     ShowCancelled: boolean = false;
     RequestedCount: number = 0;
     SignRequiredCount: number = 0;
-    StopLoading: boolean = false;
     @Output() ArchiveDone = new EventEmitter();
     DataContext: LogBoxDocumentsComponent = this;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
@@ -77,33 +71,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     private messageWindow: MessageWindow = new MessageWindow();
     RefreshTimer: any;
     private CurrentSession = SessionLocator.SelectedSession;
-
-    public MainCarriageTA: any = "";
-    public MainCarriageTD: any = "";
-    public MainCarriageTALabel: string = "";
-    public MainCarriageTDLabel: string = "";
-  
-
-    public IsExportActivated: boolean = false;
-     
-    public hasDocumentTypeHighlightColor = SessionLocator.PrivateLableSettings ? (SessionLocator.PrivateLableSettings.DocumentTypeHighlightColor == null ? false : true) : false; 
-    public privateLabelClass = {
-        background: SessionLocator.PrivateLableSettings ? SessionLocator.PrivateLableSettings.DocumentTypeHighlightColor : "",
-        border: SessionLocator.PrivateLableSettings ? "1px solid #" + SessionLocator.PrivateLableSettings.DocumentTypeHighlightColor: "",
-    } 
-
-    public FromPortCountryCode: string;
-    public   FromPortCode: string;
-
-    public ToPortCountryCode: string;
-    public ToPortCode: string;
-    public ShipmentPackagesLabel: string = "";
-    public ShowShipmentPackagesLabelLink: boolean = false;
-    public ShipmentPackageTitle: string = "";
-    public ReferencesLabel: string = "";
-    public ShortReferencesLabel: string = "";
-
-    constructor(public http: HttpClient, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
+    constructor(public http: Http, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
         super();
         this.serviceArgs.http = this.http;
         this.SelectedTabCode = "CAT";
@@ -121,35 +89,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 this.StopBusyIndicator();
             }
         });
-         
     }
-
-
-
-    SetPortFields() {
-
-        if (this.SelectedShipment) {
-
-            this.FromPortCountryCode = this.SelectedShipment.MainCarriageFromPortCountryCode ? this.SelectedShipment.MainCarriageFromPortCountryCode : this.SelectedShipment.FromPortCountryCode;
-            this.ToPortCountryCode = this.SelectedShipment.MainCarriageToPortCountryCode ? this.SelectedShipment.MainCarriageToPortCountryCode : this.SelectedShipment.ToPortCountryCode;
-
-            this.FromPortCode = (this.SelectedShipment.MainCarriageFromPortCode && this.SelectedShipment.MainCarriageFromPortCode != '---') ? this.SelectedShipment.MainCarriageFromPortCode : this.SelectedShipment.FromPortCode;
-            this.ToPortCode = (this.SelectedShipment.MainCarriageToPortCode && this.SelectedShipment.MainCarriageToPortCode != '---') ? this.SelectedShipment.MainCarriageToPortCode : this.SelectedShipment.ToPortCode;
-
-            if (!this.FromPortCode) this.FromPortCode = "";
-            if (!this.ToPortCode) this.ToPortCode = "";
-
-        }
-    }
-
-    ClearPortFields() {
-
-        this.FromPortCountryCode = "";
-        this.ToPortCountryCode = "";
-        this.FromPortCode = "";
-        this.ToPortCode = "";
-    }
-
     IsPrivateLabel: boolean = false;
     AllowSendingDocsToAgent: boolean = false;
     DocsSentToAgent: boolean = false;
@@ -165,213 +105,57 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         }
         this.ShipmentSelectedEvent.subscribe((res) => {
             //this.CurrentSession.StartBusyIndicator("Loading ...");//
-          this.StopLoading = false;
-            if (res == null) {
-                this.StopLoading = true;
+            if (res == null)
+            {
                 this.externalDocs = [];
                 this.SignReqDocs = [];
                 this.externalRequestedDocs = [];
                 this.AllHeader = "By Category (0)";
                 this.RequestedCount = 0;
                 this.SignRequiredCount = 0;
-                this.SelectedShipment = null;
-                this.ClearPortFields();
-                this.SetReferencesLabel();
-            return;
-          }
-          
-            //this.DisableAddDocumentButton = true;
+                return;
+            }
+             
+            this.DisableAddDocumentButton = false;
             this.StartBusyIndicator("Loading ...");
             var div = document.getElementById("DocsTab");
             this.Style = { "max-height": div.clientHeight };
             this.SelectedShipment = res;
-
-            this.SetPortFields();
             //if (this.RefreshTimer) {
             //    clearTimeout(this.RefreshTimer);
             //}
             //this.RefreshTimer = setInterval(() => this.ReloadDocuments(false), 5000);//setTimeout(() => this.CheckIfSignDone(EntityPm.Id), 2000);
-            this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myResult: any) => {
-              if (!myResult.HasError) {
-                if (this.StopLoading) {
-                  this.StopBusyIndicator();
+            this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe(myResult => {
+                if (!myResult.HasError) {
+                    this.ShipmentPM = myResult.Result;
+                    this.ShipmentTypeId = myResult.Result.ShipmentTypeId;
+                    this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
+                    this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
+                        if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
+                            this.DisableAddDocumentButton = true;
+                        }
+                    });
+                    this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe(theResult => {
+                        if (!theResult.HasError) {
+                            this.AllowSendingDocsToAgent = theResult.Result.AllowSendingDocsToAgent;
+                        }
+                    });
+                    //this._HybridPartnerPMService.get(myResult.Result.ForwardingPartnerId).subscribe(theResult => {
+                    //    if (!theResult.HasError) {
+                    //        this.ForwardingPartner = theResult.Result;
+                    //    }
+                    //});
                 }
-                else {
-                  this.ShipmentPM = myResult.Result;
-                  this.ShipmentTypeId = myResult.Result.ShipmentTypeId;
-                  this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
-                    this.SetMainCarriageDates();
-                    this.SetShipmentPackageLabel();
-                    this.SetReferencesLabel();
-
-                  this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
-                    if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
-                      this.DisableAddDocumentButton = true;
-                    }
-                    else {
-                      this.DisableAddDocumentButton = false;
-                    }
-                    this.ReloadDocuments(true);
-                  });
-                  this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe((theResult: any) => {
-                      if (!theResult.HasError && theResult.Result) {
-                      this.AllowSendingDocsToAgent = theResult.Result.AllowSendingDocsToAgent;
-                    }
-                  });
-                  //this._HybridPartnerPMService.get(myResult.Result.ForwardingPartnerId).subscribe(theResult => {
-                  //    if (!theResult.HasError) {
-                  //        this.ForwardingPartner = theResult.Result;
-                  //    }
-                  //});
-                }
-              }
-              else {
-                this.ReloadDocuments(true);
-              }
             });
-          
+            
 
-            //this.ReloadDocuments(true);
+            this.ReloadDocuments(true);
 
         });
         this.OnImporterShipmentsFilterChanged.subscribe((res) => {
             this.OnImporterShipmentsFilterChangedMethod(res);
         });
     }
-    SetMainCarriageDates() {
-         
-            this.SetMainCarriageArrivalDate();
-            this.SetMainCarriageDepartureDate();
-
-    }
-
-    SetReferencesLabel() {
-        this.ReferencesLabel = "";
-        this.SetLogboxReferencesLabel();
-        if (this.SelectedShipment && this.IsPrivateLabel) {
-            this.SetPrivateLabelReferencesLabel();
-        }
-
-        this.ShortReferencesLabel = this.ReferencesLabel.length > 21 ? this.ReferencesLabel.substring(0, 21) + "..." : this.ReferencesLabel;
-    }
-
-    private SetPrivateLabelReferencesLabel() {
-
-        if (this.SelectedShipment.DirectionId == 'E' && !this.SelectedShipment.ForwarderShipmentNumber) {
-            this.ReferencesLabel = (this.SelectedShipment.CustomerReference3 ? this.SelectedShipment.CustomerReference3 : '') + (this.SelectedShipment.PrivateLabelInvoiceNumber ? '/' + this.SelectedShipment.PrivateLabelInvoiceNumber : '');
-        }
-        if (this.SelectedShipment.ForwarderShipmentNumber || this.SelectedShipment.DirectionId !='E') {
-            this.ReferencesLabel = this.GetCustomerReference3Or1And2();
-        } 
-    }
-
-    private SetLogboxReferencesLabel() {
-        if (this.IsPrivateLabel) return; 
-        this.ReferencesLabel = this.GetCustomerReference3Or1And2();
-         
-    }
-
-    private GetCustomerReference3Or1And2() {
-        return this.SelectedShipment != null && this.SelectedShipment.CustomerReference3 ? this.SelectedShipment.CustomerReference3 : this.GetCustomerReference1And2();
-    }
-
-    private GetCustomerReference1And2() {
-        if (!this.SelectedShipment) return '';
-
-        if (this.SelectedShipment.CustomerReference1 && this.SelectedShipment.CustomerReference2)
-            return this.SelectedShipment.CustomerReference1 + '/' + this.SelectedShipment.CustomerReference2;
-
-        if (this.SelectedShipment.CustomerReference1)
-            return this.SelectedShipment.CustomerReference1;
-
-        if (this.SelectedShipment.CustomerReference2)
-            return this.SelectedShipment.CustomerReference2;
-        return '';
-    }
-
-    SetShipmentPackageLabel() {
-        this.ShipmentPackagesLabel = "";
-        this.ShowShipmentPackagesLabelLink = false;
-        if (this.SelectedShipment && (this.ShipmentTypeId === 'FCL' || this.ShipmentTypeId === 'FCLD')) { 
-            this.SetFCLShipmentPackages();
-            return this.ShipmentPackagesLabel;
-         }
-
-        if (this.SelectedShipment && (this.ShipmentTypeId != 'FCL' && this.ShipmentTypeId != 'FCLD')) {
-            this.SetLCLShipmentPackage(); 
-            return this.ShipmentPackagesLabel;
-        }
-       
-    }
-  
-    private SetLCLShipmentPackage() {
-
-        this.ShipmentPackageTitle = "Packages";
-        this.ShipmentPackagesLabel = "0 Pcs / 0 Kgm";
-        if ((this.ShipmentPM.ShipmentPackages.length == 0) && (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0)) {
-            this.ShipmentPackagesLabel = this.SelectedShipment ? ((this.SelectedShipment.PackagesQuantity == null ? 0 : this.SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (this.SelectedShipment.GrossWeight == null ? 0 : this.SelectedShipment.GrossWeight) + ' Kgm') : '';
-            this.ShowShipmentPackagesLabelLink = false; 
-        }
-        if ((this.ShipmentPM.ShipmentPackages.length != 0)) {
-            this.ShipmentPackagesLabel = this.SelectedShipment ? ((this.SelectedShipment.PackagesQuantity == null ? 0 : this.SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (this.SelectedShipment.GrossWeight == null ? 0 : this.SelectedShipment.GrossWeight) + ' Kgm') : '';
-            this.ShowShipmentPackagesLabelLink = true; 
-        }
-
-        if (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length != 0 && (this.SelectedShipment.PackagesQuantity == null || this.SelectedShipment.PackagesQuantity == 0)) {
-            this.ShipmentPackagesLabel = this.ShipmentPM ? ((this.ShipmentPM.ShipmentOrderPackages.length == 0 ? 0 : this.GetShipmentOrderQuantity()) + ' Pcs' + ' / ' + (this.ShipmentPM.OrderGrossWeight == null ? 0 : this.ShipmentPM.OrderGrossWeight) + ' Kgm') : '';
-            this.ShowShipmentPackagesLabelLink = true; 
-        }
-    }
-
-    private SetFCLShipmentPackages() {
-
-        this.ShipmentPackageTitle = "Containers";
-        this.ShipmentPackagesLabel = "0 Containers";
-
-        if ((this.ShipmentPM.ShipmentPackages.length == 0) && (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length == 0)) {
-            this.ShipmentPackagesLabel = (this.SelectedShipment.PackagesQuantity == null ? "0" : this.SelectedShipment.PackagesQuantity) + ' Containers';
-            this.ShowShipmentPackagesLabelLink = false; 
-        }
-
-        if ((this.ShipmentPM.ShipmentPackages.length != 0)) {
-            this.ShipmentPackagesLabel = (this.SelectedShipment.PackagesQuantity == null ? 0 : this.SelectedShipment.PackagesQuantity) + ' Containers';
-            this.ShowShipmentPackagesLabelLink = true; 
-        }
-
-        if (this.ShipmentPM && this.ShipmentPM.ShipmentOrderPackages.length != 0) {
-            this.ShipmentPackagesLabel = this.ShipmentPM ? ((this.ShipmentPM.ShipmentOrderPackages.length == 0 ? 0 : this.ShipmentPM.ShipmentOrderPackages.length) + ' Containers') : '';
-            this.ShowShipmentPackagesLabelLink = true; 
-        }
-    }
-
-    private SetMainCarriageArrivalDate() {
-        this.IsExportActivated;
-        this.SelectedShipment.MainCarriageETA;
-        if (this.ShipmentPM.MainCarriageATA != null) {
-            this.MainCarriageTA = this.ShipmentPM.MainCarriageATA;
-            this.MainCarriageTALabel = 'ATA:';
-        } else if (this.ShipmentPM.MainCarriageETA != null) {
-            this.MainCarriageTA = this.ShipmentPM.MainCarriageETA;
-            this.MainCarriageTALabel = 'ETA:';
-        } else {
-            this.MainCarriageTA = "";
-            this.MainCarriageTALabel = "";
-        }
-    }
-
-    private SetMainCarriageDepartureDate() {
-        if (this.ShipmentPM.MainCarriageATD != null) {
-            this.MainCarriageTD = this.ShipmentPM.MainCarriageATD;
-            this.MainCarriageTDLabel = 'ATD:';
-        } else if (this.ShipmentPM.MainCarriageETD != null) {
-            this.MainCarriageTD = this.ShipmentPM.MainCarriageETD;
-            this.MainCarriageTDLabel = 'ETD:';
-        } else {
-            this.MainCarriageTD = '';
-            this.MainCarriageTDLabel = '';
-        }
-    }
-
     ngAfterViewInit() {
 
     }
@@ -387,7 +171,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     get TextChanged() {
         if (this.SelectedShipment != null && this.SelectedShipment.TransportModeId == "A") {
             if (AppTool.IsNullOrEmpty(this.SelectedShipment.House)) {
-               return this.textChanged = "Master:";
+                return this.textChanged = "Master:";
             }
             else {
                 return this.textChanged = "Hawb:";
@@ -408,39 +192,29 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     private valueChanged: string = "All";
-    private maxTextLength: number = 0;
     get ValueChanged() {
-        let value = "";
         if (this.SelectedShipment != null && this.SelectedShipment.TransportModeId == "A") {
             if (AppTool.IsNullOrEmpty(this.SelectedShipment.House)) {
-                this.maxTextLength = 15;
-                value = this.SelectedShipment.Master;
+                return this.SelectedShipment.Master;
             }
             else {
-                this.maxTextLength = 16;
-                value = this.SelectedShipment.House;
+                return this.SelectedShipment.House;
             }
         }
         else if (this.SelectedShipment != null && this.SelectedShipment.TransportModeId == "O") {
-            this.maxTextLength = 13;
-            value = this.SelectedShipment.Master;
+            return this.SelectedShipment.Master;
         }
         else {
             if (this.SelectedShipment != null) {
-                this.maxTextLength = 3;
-                value = this.SelectedShipment.CarrierTransportDocumentNumber;
+                return this.SelectedShipment.CarrierTransportDocumentNumber;
             }
+            return "";
         }
-        return value;
     }
     set ValueChanged(newValue: string) {
         if (this.valueChanged != newValue) {
             this.valueChanged = newValue;
         }
-    }
-    get ValueChangedAfterTriming() {
-        
-        return (!AppTool.IsNullOrEmpty(this.ValueChanged) && this.ValueChanged.length) > this.maxTextLength ? this.ValueChanged.substring(0, this.maxTextLength) + "..." : this.ValueChanged;
     }
 
     //    get ShareWithForwarder() { 
@@ -499,10 +273,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                             var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
                             EntityPm.SignDueDate.setMinutes(CurrMin);
                             EntityPm.CancellSignRequest = false;
-                            //this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
-                            this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
+                            //this._documentsFilingPMService.update(EntityPm).subscribe(myResult => {
+                            this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe(Result => {
                                 ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
-                                MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                                 if (Result.Result != null && Result.Result.HasError) {
                                     this.RunSignBusyIndicator(false, EntityPm.Id);
                                     this.messageWindow.Width = 300;
@@ -543,10 +316,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
                     EntityPm.SignDueDate.setMinutes(CurrMin);
                     EntityPm.CancellSignRequest = false;
-                    //this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
-                    this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
+                    //this._documentsFilingPMService.update(EntityPm).subscribe(myResult => {
+                    this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe(Result => {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
-                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                         if (Result.Result != null && Result.Result.HasError) {
                             this.RunSignBusyIndicator(false, EntityPm.Id);
                             this.messageWindow.Width = 300;
@@ -586,7 +358,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     CheckIfSignDone(DocId: string) {
-        this._documentsFilingPMService.get(DocId).subscribe((res:any) => {
+        this._documentsFilingPMService.get(DocId).subscribe(res => {
             var pmResponse: any = res;
             if (pmResponse != null && !pmResponse.HasError) {
                 var currentdocument = pmResponse.Result;
@@ -634,7 +406,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
 
             Document.DontAddToQueue = false;
             Document.ForwarderDocumentId = null;
-            this._documentsFilingPMService.update(Document).subscribe((myResult:any) => {
+            this._documentsFilingPMService.update(Document).subscribe(myResult => {
 
             });
         }
@@ -644,8 +416,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         EntityPM.DontAddToQueue = true;
         EntityPM.SignRequestByUserEmail = null;
         EntityPM.CancellSignRequest = true;
-        //this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
-        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPM).subscribe((Result:any) => {
+        //this._documentsFilingPMService.update(EntityPm).subscribe(myResult => {
+        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPM).subscribe(Result => {
             this.RunSignBusyIndicator(false, EntityPM.Id);
         });
     }
@@ -697,7 +469,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     AddDocumentClick() {
-        this._entityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response1:any) => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe(response1 => {
             var windowArgs: any = {};
             windowArgs.SelectedShipment = this.SelectedShipment;
             windowArgs.IsNewDocument = true;
@@ -707,7 +479,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             logitudeWindow.Width = 960;
             logitudeWindow.Height = 620;
             logitudeWindow.Title = "";
-          logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
+            logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
             logitudeWindow.WindowClosed.subscribe(($event: any) => {
                 this.ReloadDocuments();
             });
@@ -720,7 +492,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.IsDeleteClicked = false;
         }
         else {
-            this._entityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response1:any) => {
+            this._entityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe(response1 => {
                 var windowArgs: any = {};
                 windowArgs.SelectedShipment = this.SelectedShipment;
                 windowArgs.IsNewDocument = false;
@@ -730,7 +502,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 logitudeWindow.Width = 960;
                 logitudeWindow.Height = 620;
                 logitudeWindow.Title = "";
-              logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
+                logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
                     this.ReloadDocuments();
                 });
@@ -740,9 +512,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
     IsDeleteClicked: boolean = false;
     DeleteDocumentClicked(item) {
-        if (this.DisableAddDocumentButton == true) {
-            return;
-        }
         this.IsDeleteClicked = true;
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Title = "Confirm Deletion";
@@ -760,7 +529,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 item.FileExtension = null;
                 item.FileName = null;
                 item.DocumentId = null;
-                this._documentsFilingPMService.update(item).subscribe((myResult:any) => {
+                this._documentsFilingPMService.update(item).subscribe(myResult => {
                     this.ReloadDocuments();
                     //this.StopBusyIndicator();
                 });
@@ -773,9 +542,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         //alert(item.Id);
     }
     DeleteDocumentFile(item) {
-        if (this.DisableAddDocumentButton == true) {
-            return;
-        }
         this.IsDeleteClicked = true;
         if (item.IsCustomReference) {
             this.messageWindow.Width = 300;
@@ -801,7 +567,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     //item.FileExtension = null;
                     //item.FileName = null;
                     //item.DocumentId = null;
-                    this._documentsFilingPMService.update(item).subscribe((myResult:any) => {
+                    this._documentsFilingPMService.update(item).subscribe(myResult => {
                         this.ReloadDocuments();
                         //this.StopBusyIndicator();
                     });
@@ -842,8 +608,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     DownloadDocumentFile(item) {
         this.IsDeleteClicked = true;
         ServiceLocator.SendTotangoUserActivity("LogBox", "Document Viewed");
-        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Download Document" });
-        //this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res:any) => {
+        //this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe(res => {
             var EntityNumber = "";
             if (this.SelectedShipment != null) {
                 if (this.SelectedShipment.ForwarderShipmentNumber == null) {
@@ -861,34 +626,65 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     ShareWithAgent(EntityPm) {
-        if (this.SelectedShipment.StatusName == "In Progress") {
-            return;
-        }
-
         this.IsDeleteClicked = true;
-        if (EntityPm.IsSharedWithCustomer || EntityPm.IsSharedWithForwarder) {
-            return;
+        if ((EntityPm.IsSharedWithCustomer == false && EntityPm.IsSharedWithForwarder == false)) {
+            if (!EntityPm.IsSharedWithForwarder) {
+                //var window = new ConfirmWindow();
+
+                //window.Title = "Confirm sharing";
+                //window.Width = 450;
+                //window.Height = 190;
+                //window.YesButtonText = "Ok";
+                //window.NoButtonText = "Cancel";
+                //window.Show("Are you sure you want to share this document with agent?");
+                //window.WindowClosed.subscribe((event: any) => {
+                //    if (window.Yes) {
+                       
+                //    }
+
+                //    else {
+
+                //    }
+                //});
+                //this.CurrentSession.StartBusyIndicator("Loading ...");//
+                ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
+                this.StartBusyIndicator("Loading ...");
+                if (EntityPm.IsSharedWithForwarder == true) {
+                    EntityPm.IsSharedWithForwarder = false;
+                    EntityPm.DontAddToQueue = true;
+                    //BlueSharedWithAgentVisibility = Visibility.Visible;
+                    //GraySharedWithAgentVisibility = Visibility.Collapsed;
+                }
+                //&& (!AppTool.IsNullOrEmpty(this.SelectedShipment.ForwarderShipmentNumber) || SessionLocator.PrivateLableSettings)
+                else {
+                    EntityPm.IsSharedWithForwarder = true;
+                    if (AppTool.IsNullOrEmpty(this.SelectedShipment.ForwarderShipmentNumber)) {
+                        EntityPm.DontAddToQueue = true;
+                    }
+                    else {
+                        EntityPm.DontAddToQueue = false;
+                    }
+
+                    //BlueSharedWithAgentVisibility = Visibility.Collapsed;
+                    //GraySharedWithAgentVisibility = Visibility.Visible;
+
+                }
+                this._documentsFilingPMService.update(EntityPm).subscribe(myResult => {
+                    //this.CurrentSession.StopBusyIndicator();//
+                    this.StopBusyIndicator();
+                    //this.IssharedWithAgentButtonEnabled = false;
+                    this.ReloadDocuments();
+                    //this.StopBusyIndicator();
+                });
+
+                        //if (!importerDocumentDataViewModel.EntityPM.IsSharedWithForwarder) {
+                        //    importerDocumentDataViewModel.EntityPM.DontAddToQueue = true;
+                        //}
+            }
         }
-
-        ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
-        EntityPm.IsSharedWithForwarder = true;
-        EntityPm.DontAddToQueue = AppTool.IsNullOrEmpty(this.SelectedShipment.ForwarderShipmentNumber) ? true : false;
-
-        this.UpdateDocumentPM(EntityPm);
-    }
-
-    UpdateDocumentPM(EntityPm: any) {
-        this.StartBusyIndicator("Loading ...");
-        this._documentsFilingPMService.update(EntityPm).subscribe((myResult: any) => {
-            this.StopBusyIndicator();
-            this.ReloadDocuments();
-        });
     }
 
     RefreshBtnClick() {
-        if(!this.SelectedShipment){
-            return;
-        }
         this.ReloadDocuments();
     }
     archiveButtonText: string = "Archive";
@@ -899,12 +695,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     public set ArchiveButtonText(newValue: string) { this.archiveButtonText = newValue; }
 
     ArchiveClicked() {
-        if(!this.SelectedShipment){
-            return;
-        }
         //this.CurrentSession.StartBusyIndicator("Saving ...");
         this.StartBusyIndicator("Saving ...");
-        this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myResult:any) => {
+        this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe(myResult => {
             if (!myResult.HasError) {
                 myResult.Result.IsImporterShipment = true;
                 if (this.ArchiveButtonText == "Archive") {
@@ -920,7 +713,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 myResult.Result.DimensionsUnitCode = "Cm";
                 myResult.Result.ChargeableWeightUnitCode = "KG";
                 myResult.Result.VolumeUnitCode = "CBF";
-                this._ShipmentPMService.update(myResult.Result).subscribe((myResult:any) => {
+                this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Shipment Archived");
                         if (myResult.Result.IsOperationalClosed == true) {
@@ -964,7 +757,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
     SignReqPureDocs: any[] = [];
     DeletedDocsCount: number = 0;
-    AllUnDeletedDocsCount: number = 0;
     ReloadDocuments(ChangeTab: boolean = false) {
         var MyDate: Date = DateTool.GetCurrentDateTimeAsUtc();// new Date();
         if (this.TimerStartDate && (MyDate.getMinutes() > (this.TimerStartDate.getMinutes() + 5))) {
@@ -991,11 +783,10 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 this.SelectedTabCode = 'CAT';
             }
         }
-        this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
+        this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
             var Result = [];
             var ResultSignReq = [];
             this.DeletedDocsCount = res.Result.filter(a => a.IsDeleted == true).length;
-            this.AllUnDeletedDocsCount = res.Result.filter(a => a.IsDeleted == false).length;
             if (!this.ShowDeleted) {
                 if (res.Result){
                     Result = res.Result.filter(a => a.IsDeleted == false);
@@ -1095,7 +886,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             //this.CurrentSession.StopBusyIndicator();
             this.StopBusyIndicator();
         });
-        this._documentsFilingExtendedPMService.getRequestedDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
+        this._documentsFilingExtendedPMService.getRequestedDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
             var Count = 0;
             var Result = [];
             //this.DeletedDocsCount = res.Result.filter(a => a.IsDeleted == true).length;
@@ -1129,9 +920,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     DownloadAllClicked() {
-        if(!this.SelectedShipment){
-            return;
-        }
         var windowArgs: any = {};
         var OTable = window.ObjectTables.filter(a => a.Name == "Shipment")[0];
         windowArgs.ObjectTableId = OTable.Id;
@@ -1142,110 +930,80 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         logitudeWindow.Width = 570;
         logitudeWindow.Height = 200;
         logitudeWindow.Title = "Exporting All Documents To ZIP File";
-      logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DownloadAllFilesComponent');
+        logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DownloadAllFilesComponent');
 
     }
-    DisableAddDocumentButton: boolean = true;
-
+    DisableAddDocumentButton: boolean = false;
     ShareDocumentsClick() {
-        if (this.SharedDocs.length <= 0) {
-            this.ShowNoSharedDocumentsWindow();
-            return;
-        }
+        if (this.SharedDocs.length > 0) {
+            var window = new ConfirmWindow();
 
-        var window = new ConfirmWindow();
-        this.ShowConfirmSharingDocumentsWindow(window);
-        window.WindowClosed.subscribe((event: any) => {
-            this.OnClosedConfirmSharingDocumentsWindow(window);
-        });
-    }
-
-    ShowNoSharedDocumentsWindow() {
-        this.messageWindow.Width = 300;
-        this.messageWindow.Height = 150;
-        this.messageWindow.Title = "No Shared Documents !";
-        this.messageWindow.Show("There are no shared documents, please share the related documents before.");
-    }
-
-    ShowConfirmSharingDocumentsWindow(window: ConfirmWindow) {
-        window.Title = "Confirm sharing";
-        window.Width = 450;
-        window.Height = 190;
-        window.YesButtonText = "Ok";
-        window.NoButtonText = "Cancel";
-        let windowMessage = "The shared documents will be send to the agent .";
-        if (this.SharedDocs.length == this.AllUnDeletedDocsCount) {
-            window.Show(windowMessage);
-        }
-        else {
-            window.ShowWarningImage = true;
-            windowMessage += "You are about to share the envelope but not all the documents are marked as shared with agent, are you sure?";
-            window.Show(windowMessage);
-        }
-    }
-
-    OnClosedConfirmSharingDocumentsWindow(window: ConfirmWindow) {
-        if (window.Yes) {
-            this.StartSharingDocumentsWithAgent();
-        }
-        else {
-        }
-    }
-
-    StartSharingDocumentsWithAgent() {
-        var SharedDocsIds = [];
-        this.CurrentSession.StartBusyIndicator("Sharing ...");
-        this.SharedDocs.forEach((docin) => {
-            SharedDocsIds.push(docin.Id);
-        });
-        this.ShareDocumentsWithAgent(SharedDocsIds);
-    }
-
-    ShareDocumentsWithAgent(SharedDocsIds: any[]) {
-        this._documentsFilingExtendedPMService.ShareDocumentsWithAgent(SharedDocsIds).subscribe((myResult: any) => {
-            if (myResult.HasError) {
-                return;
-            }
-
-            this.DocsSentToAgent = true;
-            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
-                if (Status.Result) {
-                    this.UpdateSelectedShipmentPM(Status);
+            window.Title = "Confirm sharing";
+            window.Width = 450;
+            window.Height = 190;
+            window.YesButtonText = "Ok";
+            window.NoButtonText = "Cancel";
+            window.Show("The shared documents will be send to the agent .");
+            window.WindowClosed.subscribe((event: any) => {
+                if (window.Yes) {
+                    var SharedDocsIds = [];
+                    this.CurrentSession.StartBusyIndicator("Sharing ...");
+                    this.SharedDocs.forEach((docin) => {
+                        SharedDocsIds.push(docin.Id);
+                    });
+                    this._documentsFilingExtendedPMService.ShareDocumentsWithAgent(SharedDocsIds).subscribe(myResult => {
+                        if (!myResult.HasError) {
+                            this.DocsSentToAgent = true;
+                            this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
+                                if (Status.Result) {
+                                    this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe(myShipmentResult => {
+                                        if (!myShipmentResult.HasError) {
+                                            this.ShipmentPM = myShipmentResult.Result;
+                                            this.ShipmentPM.StatusId = Status.Result.Id;
+                                            this.ShipmentPM.ShipperReference1 = this.ShipmentPM.CustomerReference1;
+                                            this.ShipmentPM.ShipperReference2 = this.ShipmentPM.CustomerReference2;
+                                            this.ShipmentPM.ShipperId = this.ShipmentPM.CustomerId;
+                                            this.ShipmentPM.DontAddToForwarderQueue = true;
+                                            this._ShipmentPMService.update(this.ShipmentPM).subscribe(myResult => {
+                                                if (!myResult.HasError) {
+                                                    this.DisableAddDocumentButton = true;
+                                                    this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
+                                                    this.CurrentSession.StopBusyIndicator();
+                                                }
+                                                //else {
+                                                //    this.ValidationErrorsList = myResult.ErrorsArray;
+                                                //}
+                                            });
+                                        }
+                                    });
+                                }
+                                else {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    this.messageWindow.Width = 300;
+                                    this.messageWindow.Height = 150;
+                                    this.messageWindow.Title = "No Status In progress !";
+                                    this.messageWindow.Show("There are no Status In progress.");
+                              
+                                }
+                            });
+                           
+                        }
+                    });
                 }
+
                 else {
-                    this.ShowNoStatusInProgressWindow();
+
                 }
             });
-        });
-    }
-
-    UpdateSelectedShipmentPM(Status: ServiceResponse) {
-        this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myShipmentResult: any) => {
-            if (!myShipmentResult.HasError) {
-                this.ShipmentPM = myShipmentResult.Result;
-                this.ShipmentPM.StatusId = Status.Result.Id;
-                this.ShipmentPM.ShipperReference1 = AppTool.IsNullOrEmpty(this.ShipmentPM.ShipperName) ? this.ShipmentPM.CustomerReference1 : this.ShipmentPM.ShipperReference1;
-                this.ShipmentPM.ShipperReference2 = AppTool.IsNullOrEmpty(this.ShipmentPM.ShipperName) ? this.ShipmentPM.CustomerReference2 : this.ShipmentPM.ShipperReference2;
-                this.ShipmentPM.ShipperId = AppTool.IsNullOrEmpty(this.ShipmentPM.ShipperName) ? this.ShipmentPM.CustomerId : this.ShipmentPM.ShipperId;
-                this.ShipmentPM.DontAddToForwarderQueue = true;
-                this.ShipmentPM.IsImporterShipment = true;
-                this._ShipmentPMService.update(this.ShipmentPM).subscribe((myResult: any) => {
-                    if (!myResult.HasError) {
-                        this.DisableAddDocumentButton = true;
-                        this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
-                        this.CurrentSession.StopBusyIndicator();
-                    }
-                });
-            }
-        });
-    }
-
-    ShowNoStatusInProgressWindow() {
-        this.CurrentSession.StopBusyIndicator();
-        this.messageWindow.Width = 300;
-        this.messageWindow.Height = 150;
-        this.messageWindow.Title = "No Status In progress !";
-        this.messageWindow.Show("There are no Status In progress.");
+            
+           
+        }
+        else {
+            this.messageWindow.Width = 300;
+            this.messageWindow.Height = 150;
+            this.messageWindow.Title = "No Shared Documents !"; 
+            this.messageWindow.Show("There are no shared documents, please share the related documents before.");
+        }
     }
 
     SignAllClick() {
@@ -1289,7 +1047,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 Ids.push(docin.Id);
             }
         });
-        this._LogBoxSignatureClientService.GetMultiSignRequestReceived(Ids).subscribe((Result:any) => {
+        this._LogBoxSignatureClientService.GetMultiSignRequestReceived(Ids).subscribe(Result => {
             //ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
             if (Result.Result != null && Result.Result.HasError) {
                 //this.RunSignBusyIndicator(false, EntityPm.Id);
@@ -1323,16 +1081,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         });
     }
 
-    GetShipmentOrderQuantity() {
-        var shipmentOrderQuantity = 0;
-
-        this.ShipmentPM.ShipmentOrderPackages.forEach((item) => {
-            shipmentOrderQuantity = shipmentOrderQuantity + item.Quantity
-        }); 
-
-        return shipmentOrderQuantity;
-    }
-
     OnPackagesClick(Title) {
         var windowArgs: any = {};
         windowArgs.ShipmentPM = this.ShipmentPM;
@@ -1342,23 +1090,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         logitudeWindow.Width = 690;
         logitudeWindow.Height = 200;
         logitudeWindow.Title = Title;
-      logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxPackagesComponent');
-    }
-
-    public IsSHOVisible(selectedShipment: any) : boolean {
-        return selectedShipment && selectedShipment.DirectionId != 'C' && selectedShipment.TransportModeId == 'O' && selectedShipment.IsShipmentOrder == true;
-    }
-
-    public IsSHONumberVisible(): boolean {
-        if (this.ShipmentPM && this.ShipmentPM.ShipmentAdditionalData && this.ShipmentPM.ShipmentAdditionalData.ShipmentOrderNumber) {
-            return this.ShipmentPM && this.ShipmentPM.DirectionId != 'C' && this.ShipmentPM.TransportModeId == 'O' && this.ShipmentPM.IsShipmentOrder != true;
-        }
-        return false;
-    }
-
-    public GetSHONumber(): string {
-        if (this.ShipmentPM && this.ShipmentPM.ShipmentAdditionalData && this.ShipmentPM.ShipmentAdditionalData.ShipmentOrderNumber)
-            return this.ShipmentPM.ShipmentAdditionalData.ShipmentOrderNumber;
-        return "SHO NotFound";
+        logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxPackagesComponent');
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs; 
 using Simplog.Data.CommonDataModel;
 
@@ -47,139 +47,6 @@ namespace Logitude.BL.CommonDataModel
                 Code = "P01", 
                 SearchFields = "P01,Por definir", 
                 Name = "Por definir", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "I02", 
-                Name = "Mobilario y equipo de oficina por inversiones", 
-                SearchFields = "I02,Mobilario y equipo de oficina por inversiones", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "I03", 
-                Name = "Equipo de transporte", 
-                SearchFields = "I03,Equipo de transporte", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "I04", 
-                Name = "Equipo de computo y accesorios", 
-                SearchFields = "I04,Equipo de computo y accesorios", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "I06", 
-                Name = "Comunicaciones telefónicas", 
-                SearchFields = "I06,Comunicaciones telefónicas", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "I01", 
-                Name = "Construcciones.", 
-                SearchFields = "I01,Construcciones.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "I05", 
-                Name = "Dados, troqueles, moldes, matrices y herramental.", 
-                SearchFields = "I05,Dados, troqueles, moldes, matrices y herramental.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "I07", 
-                Name = "Comunicaciones satelitales.", 
-                SearchFields = "I07,Comunicaciones satelitales.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "I08", 
-                Name = "Otra maquinaria y equipo.", 
-                SearchFields = "I08,  Otra maquinaria y equipo.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D01", 
-                Name = "Honorarios médicos, dentales y gastos hospitalarios.", 
-                SearchFields = "D01,  Honorarios médicos, dentales y gastos hospitalarios.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D02", 
-                Name = "Gastos médicos por incapacidad o discapacidad.", 
-                SearchFields = "D02,  Gastos médicos por incapacidad o discapacidad.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D03", 
-                Name = "Gastos funerales.", 
-                SearchFields = "D03,Gastos funerales.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D04", 
-                Name = "Donativos.", 
-                SearchFields = "D04,Donativos.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D05", 
-                Name = "Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación).", 
-                SearchFields = "D05,Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación).", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D06", 
-                Name = "Aportaciones voluntarias al SAR.", 
-                SearchFields = "D06,Aportaciones voluntarias al SAR.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D07", 
-                Name = "Primas por seguros de gastos médicos.", 
-                SearchFields = "D07,Primas por seguros de gastos médicos.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D08", 
-                Name = "Gastos de transportación escolar obligatoria.", 
-                SearchFields = "D08,Gastos de transportación escolar obligatoria.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D09", 
-                Name = "Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones.", 
-                SearchFields = "D09,Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones.", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "D10", 
-                Name = "Pagos por servicios educativos (colegiaturas).", 
-                SearchFields = "D10,Pagos por servicios educativos (colegiaturas).", 
-			});
-			 
-            all.Add(new UsoCFDIDetails()
-            {    
-                Code = "S01", 
-                Name = "Sin efectos fiscales.", 
-                SearchFields = "S01,Sin efectos fiscales.", 
 			});
 			
             return all;

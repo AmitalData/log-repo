@@ -13,7 +13,6 @@ namespace Logitude.TimeManagement.BLs
        public const string Client = "C";  
        public const string Home = "H";  
        public const string Office = "O";  
-       public const string DayOff = "D";  
     }
 }
 

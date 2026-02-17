@@ -1,59 +1,30 @@
-import { TextCodeTranslator } from './../../../Utilities/TextCodeTranslator';
 import { ObjectsLocator } from './../../../Locators/ObjectsLocator';
-import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import { AppTool } from './../../../Tools';
-import { ControlsIdCounter } from 'Infrastructure/Utilities/ControlsIdCounter';
 
 @Component({
+    moduleId: module.id,
     selector: 'LogToolTip',
     templateUrl: './LogToolTipComponent.html',
     styleUrls: ['./LogToolTipComponent.css']
 })
 
-export class LogToolTipComponent implements AfterViewInit {
-
+export class LogToolTipComponent {
     public isRTL: boolean = false;
-    public ArrowTop:number = 36;
+
 
     @Input() public title: string;
     @Input() public name: string = 'no1';
     @Input() public direction: string = 'bottomright';
-    @Input() public mode: string = 'Info';
-    @Input() public float: string = null;
-    @Input() public bottom: number = 0;
-    @Input() public Scrollable: boolean = false;
-
-
-     public MaxWidthOfToolTip: number = null;
-
-    private counterId:number;
 
     constructor() {
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-    }
-    ngOnInit(){
-        this.SetComponentId();
-    }
-    SetComponentId(){
-        this.counterId=ControlsIdCounter.GetNextControlIdCounter(this.name);
-        this.name+=this.counterId;
-    }
-    ngAfterViewInit(): void {
-
-        switch (this.mode) {
-            case 'Warning':
-                if(this.title==null){
-                    this.title = TextCodeTranslator.Translate("General.O.Warning"); // "Warning";
-                }
-                break;
-
-            default:
-                break;
-        }
 
     }
+
+
     private isMouseIn: boolean = false;
     OnMouseOver() {
         this.isMouseIn = true;
@@ -78,11 +49,6 @@ export class LogToolTipComponent implements AfterViewInit {
         //}
 
     }
-
-    OnClickInsideToolTip(){
-        document.getElementById("tooltip-body" + this.name).style.visibility = "hidden";
-    }
-
     draw(){
 
 
@@ -104,26 +70,8 @@ export class LogToolTipComponent implements AfterViewInit {
         switch (this.direction) {
             case 'topright':
             {
-                element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + (this.bottom||0) + 'px';
-                element.style.left = (itemRect.left - 15) + 'px';
-
-                var ImgItem = document.getElementById(this.mode+this.name);
-                var ImgItemRect = ImgItem.getBoundingClientRect();
-                this.MaxWidthOfToolTip =  document.body.clientWidth - ImgItemRect.left ;
-
-                break;
-            }
-            case 'topleft':
-            {
-                var bodyItem = document.getElementById("tooltip-body" + this.name);
-                var bodyItemRect = bodyItem.getBoundingClientRect();
-
-                var ImgItem = document.getElementById(this.mode+this.name);
-                var ImgItemRect = ImgItem.getBoundingClientRect();
-                this.MaxWidthOfToolTip = ImgItemRect.left ;
-
-                element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + 'px';
-                element.style.left = (itemRect.right - bodyItemRect.width  + 20) + 'px';
+                element.style.bottom = (this.getScreenHeight() - itemRect.top - 10) + 'px';
+                element.style.left = (itemRect.left + 15) + 'px';
                 break;
             }
             case 'bottomright':
@@ -162,40 +110,19 @@ export class LogToolTipComponent implements AfterViewInit {
     }
     GetArrowClassName(){
         var className = "small-tooltip-arrow";
-
-
         switch (this.direction) {
             case 'topright':
             {
-
-                var bodyItem = document.getElementById("tooltip-body" + this.name);
-                var bodyItemRect = bodyItem.getBoundingClientRect();
-                this.ArrowTop =  bodyItemRect.height - 2;
-
-
-                className += " arrow-top"
-                break;
-            }
-            case 'topleft':
-
-            {
-                var bodyItem = document.getElementById("tooltip-body" + this.name);
-                var bodyItemRect = bodyItem.getBoundingClientRect();
-                this.ArrowTop =  bodyItemRect.height - 2;
-
-
-                className += " arrow-topleft"
                 break;
             }
             case 'bottomright':
             {
-                this.ArrowTop =  6;
+
                 className += " arrow-left"
                 break;
             }
             case 'bottomleft':
             {
-                this.ArrowTop =  6;
                 className += " arrow-right"
                 break;
             }

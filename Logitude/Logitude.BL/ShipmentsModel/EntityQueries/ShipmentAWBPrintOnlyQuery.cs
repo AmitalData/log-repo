@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -108,7 +108,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        CurrencyCode = a.Currency.Code,
                                                        IATACodeName = a.IATACode.Name,
                                                        MeasurementCode = a.Measurement == null ? null : a.Measurement.Code,
-                                                   }).OrderBy(a => a.Id).ToList();
+                                                   }).ToList();
 
 
             return result;

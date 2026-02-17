@@ -10,15 +10,9 @@ export class HybridTenantStateList {
    		Tenant: number;
 		FailedQueue: number;
 		WaitingQueue: number;
-		HybridWaitingQueue: number;
-		HybridFailedQueue: number;
 		LastUpdateDateTimeTextColor: string;
 		WaitingQueueTextColor: string;
 		FailedQueueTextColor: string;
-		TenantName: string;
 		LastUpdateDateTime: Date;
-		LastQueueDateTime: Date;
-		VersionNumber: string;
-		VersionDate: Date;
 	
-}
+}

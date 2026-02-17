@@ -1,26 +1,29 @@
-import { ServiceResponse } from '../DataContracts/ServiceResponse';
-import { ServiceHelper } from '../Utilities/ServiceHelper';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import {ServiceHelper} from '../Utilities/ServiceHelper';
+import {ServiceResponse} from '../DataContracts/ServiceResponse';
+import {SessionInfo} from '../Utilities/SessionInfo';
 
 @Injectable()
+
 export class BusinessProcessDomainService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/BusinessProcessDomain';
     }
 
     GetQueuesWithCounts(myFilter: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var url = this._apiUrl + '/GetQueuesWithCounts?myFilter=' + myFilter;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var allLists: any = response;
+                var allLists: QueueData[] = response.json();
                 var myList: Array<QueueData> = new Array<QueueData>();
                 for (var key in allLists) {
                     var entity: QueueData;
@@ -33,23 +36,26 @@ export class BusinessProcessDomainService {
                 serviceResponse.Result = myList;
                 return serviceResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetTeamsForLoggedUser(loggedUserId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
         var url = this._apiUrl + '/GetTeamsForLoggedUser?loggedUserId=' + loggedUserId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 

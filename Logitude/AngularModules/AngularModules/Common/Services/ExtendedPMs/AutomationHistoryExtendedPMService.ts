@@ -1,8 +1,7 @@
 ﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -17,10 +16,10 @@ import {AutomationHistoryPM} from '../../EntityPMs/AutomationHistoryPM';
 @Injectable()
 export class AutomationHistoryExtendedPMService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AutomationHistoryExtended';
     }
 
@@ -28,9 +27,9 @@ export class AutomationHistoryExtendedPMService {
     getAutomationHistoryesByAutomationId(automationId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/getautomationhistoryesbyautomationId" + '?automationId=' + automationId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/getautomationhistoryesbyautomationId" + '?automationId=' + automationId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result :any = response;
+            var result = response.json();
 
          var pmresponse: ServiceResponse = new ServiceResponse();
 
@@ -40,16 +39,16 @@ export class AutomationHistoryExtendedPMService {
 
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
     getAutomationBackupDataByAutomationId(automationId: string, version: number, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/getautomationbackupdatabyautomationid" + '?automationId=' + automationId + '&version=' + version+ '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/getautomationbackupdatabyautomationid" + '?automationId=' + automationId + '&version=' + version+ '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result :any = response;
+            var result = response.json();
 
             var pmresponse: ServiceResponse = new ServiceResponse();
 
@@ -59,7 +58,7 @@ export class AutomationHistoryExtendedPMService {
 
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     

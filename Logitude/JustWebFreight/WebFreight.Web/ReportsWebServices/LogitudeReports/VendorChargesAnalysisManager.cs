@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -12,11 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
-using WebFreight.Web.Services;
-using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -35,11 +32,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private string AccountingType = null;
         private string Direction = null;
         private string TransportMode = null;
-        private string ShipmentNumber = null;
-        private IShipmentsContext shipmentsContext;
-        private AddressRepository addressRepository;
-        private PortRepository portRepository;
-        private WebServiceHelper webServiceHelper;
+
         public VendorChargesAnalysisManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -66,7 +59,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             QueryFilterItem filterItem_AccountingType = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountingType").FirstOrDefault();
             QueryFilterItem filterItem_Direction = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "Direction").FirstOrDefault();
             QueryFilterItem filterItem_TransportMode = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "TransportMode").FirstOrDefault();
-            QueryFilterItem filterItem_ShipmentNumber = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipmentNumber").FirstOrDefault();
 
             if (filterItem_VendorId != null)
             {
@@ -157,20 +149,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     TransportMode = filterItem_TransportMode.FieldValue.ToString();
                 }
             }
-
-            if (filterItem_ShipmentNumber != null)
-            {
-                if (filterItem_ShipmentNumber.FieldValue != null)
-                {
-                    ShipmentNumber = filterItem_ShipmentNumber.FieldValue.ToString();
-                }
-            }
         }
 
         public byte[] GetData()
         {
             VendorChargesAnalysisDataProvider myDataProvider = this.LoadDataProvider();
-            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(VendorChargesAnalysisDataProvider), tenant);
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(VendorChargesAnalysisDataProvider));
+            MemoryStream memoryStream = new MemoryStream();
+            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            StreamReader streamReader = new StreamReader(memoryStream);
+            string content = streamReader.ReadToEnd();
+            byte[] bytearray = memoryStream.ToArray();
+            return bytearray;
         }
 
         private VendorChargesAnalysisDataProvider LoadDataProvider()
@@ -179,13 +172,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myDataProvider.Shipments = new List<VendorChargesShipment>();
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-            addressRepository = new AddressRepository(commonContext);
-            portRepository = new PortRepository(commonContext);
-            shipmentsContext = ShipmentsContext.GetContext(tenant);
-            webServiceHelper = new WebServiceHelper(tenant);
-
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
-            ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(shipmentsContext);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+            PortRepository portRepository = new PortRepository(commonContext);
+            IShipmentsContext context = ShipmentsContext.GetContext(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(context);
+            ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(context);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             IQueryable<ShipmentList> iQueryable_shipments = shipmentQuery.GetAllShipmentListTenant(tenant);
 
@@ -199,11 +190,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 if (!string.IsNullOrEmpty(TransportMode) && TransportMode != "All")
                 {
                     iQueryable_shipments = iQueryable_shipments.Where(d => d.TransportModeId == TransportMode);
-                }
-
-                if (!string.IsNullOrEmpty(ShipmentNumber))
-                {
-                    iQueryable_shipments = iQueryable_shipments.Where(d => d.ShipmentNumber == ShipmentNumber);
                 }
 
                 switch (DateType)
@@ -303,13 +289,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                     List<ShipmentsJoinPayablesList> myResult = (from myShipment in iQueryable_shipments
                                                                 join myPayable in iQueryable_payables on myShipment.Id equals myPayable.ShipmentId into myShipmentPayable
-                                                                join shipmentComputed in shipmentsContext.ShipmentComputedFields
-                                                                on new { Id = myShipment.Id }
-                                                                equals new { Id = shipmentComputed.Id }
                                                                 from myItem in myShipmentPayable.DefaultIfEmpty()
                                                                 select new ShipmentsJoinPayablesList()
                                                                 {
-                                                                    MainCarriageCarrierNumber = myShipment.MainCarriageCarrierNumber,
                                                                     ShipmentId = myShipment.Id,
                                                                     CreateDateTime = myShipment.CreateDateTime,
                                                                     FirstOpCloseDate = myShipment.FirstOperationalCloseDate,
@@ -323,11 +305,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     ChargeableWeight = myShipment.ChargeableWeightInKG,
                                                                     VolumeInCBM = myShipment.VolumeInCBM,
                                                                     PreCarriageFromPortId = myShipment.PreCarriageFromPortId,
-                                                                    PreForwardingFromPortId = myShipment.PreForwardingFromPortId,
                                                                     MainCarriageFromPortId = myShipment.MainCarriageFromPortId,
                                                                     MainCarriageToPortId = myShipment.MainCarriageToPortId,
                                                                     OnCarriageToPortId = myShipment.OnCarriageToPortId,
-                                                                    OnForwardingToPortId = myShipment.OnForwardingToPortId,
                                                                     Transshipment1ToPortId = myShipment.Transshipment1ToPortId,
                                                                     Transshipment2ToPortId = myShipment.Transshipment2ToPortId,
                                                                     Transshipment3ToPortId = myShipment.Transshipment3ToPortId,
@@ -338,16 +318,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     Notes = myItem.Notes,
                                                                     Payables_OPEN = IsLocalCurrency ? myItem.OpenAmountInLocalCurrency : myItem.OpenAmountInProfitCurrency,
                                                                     Payables_ACCT = IsLocalCurrency ? myItem.AccountedAmountInLocalCurrency : myItem.AccountedAmountInProfitCurrency,
-                                                                    FinalArrivalDate = myShipment.ActualFinalArrivalDate,
-                                                                    TransportModeId = myShipment.TransportModeId,
-                                                                    ContainersNumbersAndTypesArray = shipmentComputed.ContainersNumbersAndTypesArray,
-                                                                    TruckNumber = myShipment.TruckNumber,
-                                                                    DirectionId = myShipment.DirectionId,
-                                                                    ForeignCurrency = myItem.Currency.Code,
-                                                                    Payables_ACCTInForeignCurrency = myItem.AccountedAmount,
-                                                                    Payables_OPENInForeignCurrency = myItem.OpenAmount,
-                                                                    Payables_EXPE = myItem.ExpectedAmount,
                                                                 }).ToList();
+
                     if (myResult.Count > 0)
                     {
                         foreach (ShipmentsJoinPayablesList item in myResult)
@@ -366,25 +338,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.Carrier = item.VendorName;
                             myRecord.ChargesTypeId = item.ChargeTypeId;
                             myRecord.ChargesType = item.ChargeTypeName;
-                            myRecord.FinalArrivalDate = item.FinalArrivalDate;
-                            myRecord.TruckContainerNumber = this.GetContainerNumbers(item);
-                            myRecord.ForeignCurrency = item.ForeignCurrency;
+
                             if (IncludeAccountedOnly)
                             {
                                 myRecord.OpenAmount = null;
-                                myRecord.OpenAmountInForeignCurrency = null;
-
                             }
                             else
                             {
                                 myRecord.OpenAmount = item.Payables_OPEN;
-                                myRecord.OpenAmountInForeignCurrency = item.Payables_OPENInForeignCurrency;
                             }
 
                             myRecord.AccountedAmount = item.Payables_ACCT;
-                            myRecord.AccountedAmountInForeignCurrency = item.Payables_ACCTInForeignCurrency;
-                            myRecord.ExpectedAmount = item.Payables_EXPE;
-                            
                             myRecord.Notes = item.Notes;
 
                             if (!string.IsNullOrEmpty(item.ShipmentType))
@@ -397,8 +361,201 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Type = item.Level;
                             }
 
-                            this.ComputeFromLocationProperties(myRecord, item);
-                            this.ComputeToLocationProperties(myRecord, item);
+
+                            //From
+                            ShipmentPickUpDelivery myFirstPickup = (from d in context.ShipmentPickUpDeliveries
+                                                                    where d.ShipmentId == item.ShipmentId && d.PickUpDeliveryTypeCode == "PICK"
+                                                                    select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                            if (myFirstPickup != null)
+                            {
+                                switch (myFirstPickup.PickUpDeliveryFromTypeCode)
+                                {
+                                    case "PART":
+                                        {
+                                            if (!string.IsNullOrEmpty(myFirstPickup.FromAddressId))
+                                            {
+                                                Address fromAddress = addressRepository.GetSingleAddress(myFirstPickup.FromAddressId, tenant);
+                                                if (fromAddress != null)
+                                                {
+                                                    myRecord.From = fromAddress.City;
+                                                    myRecord.FromState = fromAddress.State == null ? null : fromAddress.State.EnglishName;
+                                                    myRecord.FromCountry = fromAddress.Country == null ? null : fromAddress.Country.EnglishName;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+
+                                    case "PORT":
+                                        {
+                                            if (!string.IsNullOrEmpty(myFirstPickup.FromPortId))
+                                            {
+                                                Port myPort = portRepository.GetSinglePort(tenant, myFirstPickup.FromPortId);
+                                                if (myPort != null)
+                                                {
+                                                    myRecord.From = myPort.EnglishName;
+                                                    myRecord.FromState = myPort.State == null ? null : myPort.State.EnglishName;
+                                                    myRecord.FromCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+
+                                    case "CASL":
+                                        {
+                                            myRecord.From = myFirstPickup.FromAddressCity;
+
+                                            if (!string.IsNullOrEmpty(myFirstPickup.FromAddressCountryId))
+                                            {
+                                                Country fromAddressCountry = CountryRepository.GetSingleCountry(myFirstPickup.FromAddressCountryId, tenant, false);
+                                                if (fromAddressCountry != null)
+                                                {
+                                                    myRecord.FromCountry = fromAddressCountry.EnglishName;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+                                }
+                            }
+
+                            else if (item.PreCarriageFromPortId != null)
+                            {
+                                Port myPort = portRepository.GetSinglePort(tenant, item.PreCarriageFromPortId);
+                                if (myPort != null)
+                                {
+                                    myRecord.From = myPort.EnglishName;
+                                    myRecord.FromState = myPort.State == null ? null : myPort.State.EnglishName;
+                                    myRecord.FromCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                                }
+                            }
+
+                            else
+                            {
+                                Port myPort = portRepository.GetSinglePort(tenant, item.MainCarriageFromPortId);
+                                if (myPort != null)
+                                {
+                                    myRecord.From = myPort.EnglishName;
+                                    myRecord.FromState = myPort.State == null ? null : myPort.State.EnglishName;
+                                    myRecord.FromCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                                }
+                            }
+
+                            //To
+                            ShipmentPickUpDelivery myLastDelivery = (from d in context.ShipmentPickUpDeliveries
+                                                                     where d.ShipmentId == item.ShipmentId && d.PickUpDeliveryTypeCode == "DELV"
+                                                                     select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                            if (myLastDelivery != null)
+                            {
+                                switch (myLastDelivery.PickUpDeliveryToTypeCode)
+                                {
+                                    case "PART":
+                                        {
+                                            if (!string.IsNullOrEmpty(myLastDelivery.ToAddressId))
+                                            {
+                                                Address toAddress = addressRepository.GetSingleAddress(myLastDelivery.ToAddressId, tenant);
+                                                if (toAddress != null)
+                                                {
+                                                    myRecord.To = toAddress.City;
+                                                    myRecord.ToState = toAddress.State == null ? null : toAddress.State.EnglishName;
+                                                    myRecord.ToCountry = toAddress.Country == null ? null : toAddress.Country.EnglishName;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+
+                                    case "PORT":
+                                        {
+                                            if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
+                                            {
+                                                Port myPort = portRepository.GetSinglePort(tenant, myLastDelivery.ToPortId);
+                                                if (myPort != null)
+                                                {
+                                                    myRecord.To = myPort.EnglishName;
+                                                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
+                                                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+
+                                    case "CASL":
+                                        {
+                                            myRecord.To = myLastDelivery.ToAddressCity;
+
+                                            if (!string.IsNullOrEmpty(myLastDelivery.ToAddressCountryId))
+                                            {
+                                                Country toAddressCountry = CountryRepository.GetSingleCountry(myLastDelivery.ToAddressCountryId, tenant, false);
+                                                if (toAddressCountry != null)
+                                                {
+                                                    myRecord.ToCountry = toAddressCountry.EnglishName;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+                                }
+                            }
+
+                            else if (item.OnCarriageToPortId != null)
+                            {
+                                Port myPort = portRepository.GetSinglePort(tenant, item.OnCarriageToPortId);
+                                if (myPort != null)
+                                {
+                                    myRecord.To = myPort.EnglishName;
+                                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
+                                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                                }
+                            }
+
+                            else if (item.Transshipment3ToPortId != null)
+                            {
+                                Port myPort = portRepository.GetSinglePort(tenant, item.Transshipment3ToPortId);
+                                if (myPort != null)
+                                {
+                                    myRecord.To = myPort.EnglishName;
+                                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
+                                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                                }
+                            }
+
+                            else if (item.Transshipment2ToPortId != null)
+                            {
+                                Port myPort = portRepository.GetSinglePort(tenant, item.Transshipment2ToPortId);
+                                if (myPort != null)
+                                {
+                                    myRecord.To = myPort.EnglishName;
+                                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
+                                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                                }
+                            }
+
+                            else if (item.Transshipment1ToPortId != null)
+                            {
+                                Port myPort = portRepository.GetSinglePort(tenant, item.Transshipment1ToPortId);
+                                if (myPort != null)
+                                {
+                                    myRecord.To = myPort.EnglishName;
+                                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
+                                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                                }
+                            }
+
+                            else
+                            {
+                                Port myPort = portRepository.GetSinglePort(tenant, item.MainCarriageToPortId);
+                                if (myPort != null)
+                                {
+                                    myRecord.To = myPort.EnglishName;
+                                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
+                                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                                }
+                            }
 
                             myDataProvider.Shipments.Add(myRecord);
                         }
@@ -408,157 +565,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             return myDataProvider;
         }
-
-        private string GetContainerNumbers(ShipmentsJoinPayablesList item)
-        {
-            var containerNumbers = "";
-            bool isInlandDomesticShipment = (item.DirectionId == "D" && item.TransportModeId == "I");
-            if (item.TransportModeId == "O")
-            {
-                if (!string.IsNullOrEmpty(item.ContainersNumbersAndTypesArray))
-                {
-                    containerNumbers = Regex.Replace(item.ContainersNumbersAndTypesArray, "(\\[.*?\\])", "");
-                }
-            }
-
-            else
-            {
-                containerNumbers = isInlandDomesticShipment ? item.TruckNumber : item.MainCarriageCarrierNumber;
-            }
-
-            return containerNumbers;
-        }
-
-        private void ComputeToLocationProperties(VendorChargesShipment myRecord, ShipmentsJoinPayablesList item)
-        {
-            ShipmentPickUpDelivery myLastDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
-                                                     where d.ShipmentId == item.ShipmentId && d.PickUpDeliveryTypeCode == "DELV"
-                                                     select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
-
-            if (myLastDelivery != null)
-            {
-                PickUpDeliveryPlaceData myLastDeliveryResult = webServiceHelper.GetPickUpDeliveryPlaceData(myLastDelivery, "Delivery");
-
-                if (myLastDeliveryResult != null)
-                {
-                    myRecord.To = myLastDeliveryResult.City;
-                    myRecord.ToState = myLastDeliveryResult.StateName;
-                    myRecord.ToCountry = myLastDeliveryResult.CountryName;
-                }
-            }
-
-            else
-            {
-                string toLocationPortId = this.GetToLocationPortId(item);
-
-                if (!string.IsNullOrEmpty(toLocationPortId))
-                {
-                    Port myPort = portRepository.GetSinglePort(tenant, toLocationPortId);
-                    if (myPort != null)
-                    {
-                        myRecord.To = myPort.EnglishName;
-                        myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
-                        myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
-                    }
-                }
-            }
-        }
-
-        private string GetToLocationPortId(ShipmentsJoinPayablesList item)
-        {
-            if (item.OnForwardingToPortId != null)
-            {
-                return item.OnForwardingToPortId;
-            }
-
-            else if (item.OnCarriageToPortId != null)
-            {
-                return item.OnCarriageToPortId;
-            }
-
-            else if (item.Transshipment3ToPortId != null)
-            {
-                return item.Transshipment3ToPortId;
-            }
-
-            else if (item.Transshipment2ToPortId != null)
-            {
-                return item.Transshipment2ToPortId;
-            }
-
-            else if (item.Transshipment1ToPortId != null)
-            {
-                return item.Transshipment1ToPortId;
-            }
-
-            else
-            {
-                return item.MainCarriageToPortId;
-            }
-        }
-
-        private void ComputeFromLocationProperties(VendorChargesShipment myRecord, ShipmentsJoinPayablesList item)
-        {
-            ShipmentPickUpDelivery myFirstPickup = (from d in shipmentsContext.ShipmentPickUpDeliveries
-                                                    where d.ShipmentId == item.ShipmentId && d.PickUpDeliveryTypeCode == "PICK"
-                                                    select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
-
-            if (myFirstPickup != null)
-            {
-                PickUpDeliveryPlaceData myFirstPickupResult = webServiceHelper.GetPickUpDeliveryPlaceData(myFirstPickup, "Pickup");
-
-                if (myFirstPickupResult != null)
-                {
-                    myRecord.From = myFirstPickupResult.City;
-                    myRecord.FromState = myFirstPickupResult.StateName;
-                    myRecord.FromCountry = myFirstPickupResult.CountryName;
-                }
-            }
-
-            else
-            {
-                string fromLocationPortId = this.GetFromLocationPortId(item);
-
-                if (!string.IsNullOrEmpty(fromLocationPortId))
-                {
-                    Port myPort = portRepository.GetSinglePort(tenant, fromLocationPortId);
-                    if (myPort != null)
-                    {
-                        myRecord.To = myPort.EnglishName;
-                        myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
-                        myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
-                    }
-                }
-            }
-        }
-
-        private string GetFromLocationPortId(ShipmentsJoinPayablesList item)
-        {
-            if (item.PreForwardingFromPortId != null)
-            {
-                return item.PreForwardingFromPortId;
-            }
-
-            else if (item.PreCarriageFromPortId != null)
-            {
-                return item.PreCarriageFromPortId;
-            }
-
-            else
-            {
-                return item.MainCarriageFromPortId;
-            }
-        }
     }
-
+    
     public class ShipmentsJoinPayablesList
     {
-        public string MainCarriageCarrierNumber { get; set; }
-        public string DirectionId { get; set; }
-        public string TruckNumber { get; set; }
-        public string ContainersNumbersAndTypesArray { get; set; }
-        public string TransportModeId { get; set; }
-        public string TruckContainerNumber { get; set; }
         public string ShipmentId { get; set; }
         public string ShipmentNumber { get; set; }
         public string CustomerName { get; set; }
@@ -566,17 +576,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public DateTime? FirstOpCloseDate { get; set; }
         public string OpenedBy { get; set; }
         public string Level { get; set; }
-        public string ShipmentType { get; set; }
+        public string ShipmentType { get; set; }        
         public string SpecialServices { get; set; }
         public double? ChargeableWeightInKG { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? VolumeInCBM { get; set; }
         public string PreCarriageFromPortId { get; set; }
-        public string PreForwardingFromPortId { get; set; }
         public string MainCarriageFromPortId { get; set; }
         public string MainCarriageToPortId { get; set; }
         public string OnCarriageToPortId { get; set; }
-        public string OnForwardingToPortId { get; set; }
         public string Transshipment1ToPortId { get; set; }
         public string Transshipment2ToPortId { get; set; }
         public string Transshipment3ToPortId { get; set; }
@@ -588,13 +596,5 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public double? Payables_OPEN { get; set; }
         public double? Payables_ACCT { get; set; }
         public string Notes { get; set; }
-        public DateTime? FinalArrivalDate { get; set; }
-
-        public double? Payables_ACCTInForeignCurrency { get; set; }
-        public double? Payables_OPENInForeignCurrency { get; set; }
-        public string ForeignCurrency { get; set; }
-        public double? Rate { get; set; }
-
-        public double? Payables_EXPE { get; set; }
     }
 }

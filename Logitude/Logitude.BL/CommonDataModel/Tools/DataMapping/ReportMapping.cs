@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -25,11 +25,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             report.FilterHtmlComponentUrl = reportPM.FilterHtmlComponentUrl;
             report.DefaultTemplateId = reportPM.DefaultTemplateId;
             report.DefaultMessageTemplateId = reportPM.DefaultMessageTemplateId;
-            report.DefaultExcelNoStimId = reportPM.DefaultExcelNoStimId;
-            report.FeatureUniqeCode = reportPM.FeatureUniqeCode;
-            report.DisablePreview = reportPM.DisablePreview;
-            report.DefaultExcelTemplateId = reportPM.DefaultExcelTemplateId;
-            report.AvailableForScheduling = reportPM.AvailableForScheduling;
         }
     }
 }

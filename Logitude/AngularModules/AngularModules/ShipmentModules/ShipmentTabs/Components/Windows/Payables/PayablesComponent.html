@@ -1,256 +1,209 @@
-
+﻿
 <table>
     <tr>
         <td>
             <div class="MediaFill">
-                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource" [UseVirtuallization]="IsUsingVirtuallization">
+                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource">
 
                     <!-- Code -->
                     <log-column [width]="'50'" [header]="'Shipment.O.Receivables.Code' | TextCodeTranslationPipe">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.ChargesTypeCode}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.ChargesTypeCode}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Name -->
                     <log-column [width]="'150'" [header]="'Shipment.O.Receivables.Name' | TextCodeTranslationPipe">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.ChargesTypeName}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.ChargesTypeName}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Measurement -->
                     <log-column [width]="'50'" [header]="'ShipmentReceivable.F.MeasurementId.Short' | TextCodeTranslationPipe" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
-                                {{item.MeasurementCode}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
+                            {{item.MeasurementCode}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Currency -->
-                    <log-column [width]="'40'" [header]="'ShipmentReceivable.CH.CurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
-                                {{item.CurrencyCode}}
-                            </log-cell-template>
-                        </ng-template>
+                    <log-column [width]="'40'" [header]="'ShipmentReceivable.CH.CurrencyIdListFieldLable' | TextCodeTranslationPipe" [Alignment]="'center'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
+                            {{item.CurrencyCode}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Payable|Quantity -->
                     <log-column [width]="'80'">
+                        <log-header-template template="let item">
+                            <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
+                                <div style="font-size:11px;">{{PayableText}}</div>
+                                <div style="font-size:11px;">{{QuantityText}}</div>
+                            </div>
+                        </log-header-template>
 
-                        <ng-template let-item>
-                            <log-header-template>
-                                <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
-                                    <div style="font-size:11px;">{{PayableText}}</div>
-                                    <div style="font-size:11px;">{{QuantityText}}</div>
-                                </div>
-                            </log-header-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                {{item.PayableQuantity | NumbersPipe:'N2'}}
+                            </div>
 
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.PayableQuantity | NumbersPipe:'N2'}}
-                                </div>
-
-                                <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'PayableQuantity'" [NoObjectField]="true" [Text]="item.PayableQuantity" [DataContext]="item" [ObjectTableName]="'ShipmentPayable'" [HideColumns]="true"></LogTextBox>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                            <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'PayableQuantity'" [NoObjectField]="true" [Text]="item.PayableQuantity" [DataContext]="item" [ObjectTableName]="'ShipmentPayable'" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Payable|UnitPrice -->
                     <log-column [width]="'80'" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-header-template>
-                                <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
-                                    <div style="font-size:11px;">{{PayableText}}</div>
-                                    <div style="font-size:11px;">{{UnitPriceText}}</div>
-                                </div>
-                            </log-header-template>
-                        </ng-template>
+                        <log-header-template template="let item">
+                            <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
+                                <div style="font-size:11px;">{{PayableText}}</div>
+                                <div style="font-size:11px;">{{UnitPriceText}}</div>
+                            </div>
+                        </log-header-template>
 
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.PayableUnitPrice | NumbersPipe:'N3'}}
-                                </div>
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                {{item.PayableUnitPrice | NumbersPipe:'N3'}}
+                            </div>
 
-                                <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'PayableUnitPrice'" [NoObjectField]="true" [Text]="item.PayableUnitPrice" [DataContext]="item" [ObjectTableName]="'ShipmentPayable'" [HideColumns]="true"></LogTextBox>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                            <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'PayableUnitPrice'" [NoObjectField]="true" [Text]="item.PayableUnitPrice" [DataContext]="item" [ObjectTableName]="'ShipmentPayable'" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Payable|Amount -->
                     <log-column [width]="'90'" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-header-template>
-                                <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
-                                    <div style="font-size:11px;">{{PayableText}}</div>
-                                    <div style="font-size:11px;">{{AmountText}}</div>
-                                </div>
-                            </log-header-template>
-                        </ng-template>
+                        <log-header-template template="let item">
+                            <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
+                                <div style="font-size:11px;">{{PayableText}}</div>
+                                <div style="font-size:11px;">{{AmountText}}</div>
+                            </div>
+                        </log-header-template>
 
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                {{item.PayableAmount | NumbersPipe:'N2'}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                            {{item.PayableAmount | NumbersPipe:'N2'}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Payable|AmountLocal -->
                     <log-column [width]="'90'" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-header-template>
-                                <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
-                                    <div style="font-size:11px;">{{PayableText}}</div>
-                                    <div style="font-size:11px;">{{AmountLocalText}}</div>
-                                </div>
-                            </log-header-template>
-                        </ng-template>
+                        <log-header-template template="let item">
+                            <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
+                                <div style="font-size:11px;">{{PayableText}}</div>
+                                <div style="font-size:11px;">{{AmountLocalText}}</div>
+                            </div>
+                        </log-header-template>
 
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                {{item.PayableAmountLocal | NumbersPipe:'N2'}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                            {{item.PayableAmountLocal | NumbersPipe:'N2'}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Markup -->
                     <log-column [width]="'75'" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-header-template>
-                                <div style="width: 100%;height: 100%; position: absolute;">
-                                    <table>
-                                        <tr>
-                                            <td>{{'Shipment.O.Receivables.Markup' | TextCodeTranslationPipe}}</td>
-                                            <td style="width:14px;">
-                                                <HelpIcon [IconSize]="14" [Header]="'Shipment.O.Receivables.Markup' | TextCodeTranslationPipe" [Text]="'ShipmentReceivable.MarkupHelpText' | TextCodeTranslationPipe"></HelpIcon>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </log-header-template>
-                        </ng-template>
+                        <log-header-template template="let item">
+                            <div style="width: 100%;height: 100%; position: absolute;">
+                                <table>
+                                    <tr>
+                                        <td>{{'Shipment.O.Receivables.Markup' | TextCodeTranslationPipe}}</td>
+                                        <td style="width:14px;">
+                                            <HelpIcon [IconSize]="14" [Header]="'Shipment.O.Receivables.Markup' | TextCodeTranslationPipe" [Text]="'ShipmentReceivable.MarkupHelpText' | TextCodeTranslationPipe"></HelpIcon>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </log-header-template>
 
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.Markup}}
-                                </div>
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                {{item.Markup}}
+                            </div>
 
-                                <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Markup'" [NoObjectField]="true" [Text]="item.Markup" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                            <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Markup'" [NoObjectField]="true" [Text]="item.Markup" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Recievable|Quantity -->
                     <log-column [width]="'80'" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-header-template>
-                                <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
-                                    <div style="font-size:11px;">{{ReceivableText}}</div>
-                                    <div style="font-size:11px;">{{QuantityText}}</div>
-                                </div>
-                            </log-header-template>
-                        </ng-template>
+                        <log-header-template template="let item">
+                            <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
+                                <div style="font-size:11px;">{{ReceivableText}}</div>
+                                <div style="font-size:11px;">{{QuantityText}}</div>
+                            </div>
+                        </log-header-template>
 
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.ReceivableQuantity | NumbersPipe:'N2'}}
-                                </div>
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                {{item.ReceivableQuantity | NumbersPipe:'N2'}}
+                            </div>
 
-                                <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'ReceivableQuantity'" [NoObjectField]="true" [Text]="item.ReceivableQuantity" [DataContext]="item" [ObjectTableName]="'ShipmentReceivable'" [HideColumns]="true"></LogTextBox>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                            <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'ReceivableQuantity'" [NoObjectField]="true" [Text]="item.ReceivableQuantity" [DataContext]="item" [ObjectTableName]="'ShipmentReceivable'" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Recievable|UnitPrice -->
                     <log-column [width]="'80'" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-header-template>
-                                <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
-                                    <div style="font-size:11px;">{{ReceivableText}}</div>
-                                    <div style="font-size:11px;">{{UnitPriceText}}</div>
-                                </div>
-                            </log-header-template>
-                        </ng-template>
+                        <log-header-template template="let item">
+                            <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
+                                <div style="font-size:11px;">{{ReceivableText}}</div>
+                                <div style="font-size:11px;">{{UnitPriceText}}</div>
+                            </div>
+                        </log-header-template>
 
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.ReceivableUnitPrice | NumbersPipe:'N3'}}
-                                </div>
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                {{item.ReceivableUnitPrice | NumbersPipe:'N3'}}
+                            </div>
 
-                                <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'ReceivableUnitPrice'" [NoObjectField]="true" [Text]="item.ReceivableUnitPrice" [DataContext]="item" [ObjectTableName]="'ShipmentReceivable'" [HideColumns]="true"></LogTextBox>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                            <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'ReceivableUnitPrice'" [NoObjectField]="true" [Text]="item.ReceivableUnitPrice" [DataContext]="item" [ObjectTableName]="'ShipmentReceivable'" [HideColumns]="true"></LogTextBox>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Recievable|Amount -->
                     <log-column [width]="'90'" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-header-template>
-                                <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
-                                    <div style="font-size:11px;">{{ReceivableText}}</div>
-                                    <div style="font-size:11px;">{{AmountText}}</div>
-                                </div>
-                            </log-header-template>
-                        </ng-template>
+                        <log-header-template template="let item">
+                            <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
+                                <div style="font-size:11px;">{{ReceivableText}}</div>
+                                <div style="font-size:11px;">{{AmountText}}</div>
+                            </div>
+                        </log-header-template>
 
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                {{item.ReceivableAmount | NumbersPipe:'N2'}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                            {{item.ReceivableAmount | NumbersPipe:'N2'}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Recievable|AmountLocal -->
                     <log-column [width]="'90'" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-header-template>
-                                <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
-                                    <div style="font-size:11px;">{{ReceivableText}}</div>
-                                    <div style="font-size:11px;">{{AmountLocalText}}</div>
-                                </div>
-                            </log-header-template>
-                        </ng-template>
+                        <log-header-template template="let item">
+                            <div style="width: 100%;height: 100%; position: absolute; text-align: center;">
+                                <div style="font-size:11px;">{{ReceivableText}}</div>
+                                <div style="font-size:11px;">{{AmountLocalText}}</div>
+                            </div>
+                        </log-header-template>
 
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                {{item.ReceivableAmountLocal | NumbersPipe:'N2'}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                            {{item.ReceivableAmountLocal | NumbersPipe:'N2'}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Add -->
                     <log-column [width]="'40'" [header]="'Shipment.O.Receivables.Add' | TextCodeTranslationPipe" [Alignment]="'center'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                <div style="height: 100%; width: 100%; position: absolute;">
-                                    <div class="CenterCenter" style="width: 16px;">
-                                        <CheckBox [IsChecked]="item.IsAdded" (Checked)="item.IsAdded = $event"></CheckBox>
-                                    </div>
+                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                            <div style="height: 100%; width: 100%; position: absolute;">
+                                <div class="CenterCenter" style="width: 16px;">
+                                    <CheckBox [IsChecked]="item.IsAdded" (Checked)="item.IsAdded = $event"></CheckBox>
                                 </div>
-                            </log-cell-template>
-                        </ng-template>
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                 </logitude-edit-grid>
@@ -373,7 +326,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -381,7 +334,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" [disabled]="!IsOkButtonEnabled" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" [disabled]="!IsOkButtonEnabled" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

@@ -8,33 +8,23 @@ using System.Runtime.Serialization;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Newtonsoft.Json;
-using System.Xml.Serialization;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentValidator), "IsShipmentValid")]
-    public class ShipmentPM 
+    public class ShipmentPM//: EntityPMBase
     {
         [Key]
         public string Id { get; set; }
 
         public bool IsHybrid { get; set; }
-        public bool IsMultiUpdate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BaseShipmentNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ConcurrencyGUID { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string OIConcurrencyGUID { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string OINewConcurrencyGUID { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CASSCode { get; set; }
@@ -71,8 +61,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         #region Fields
 
-        public VerticalTimeLineData TimeLineData { get; set; }
-
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CountryForStatisticsId { get; set; }
 
@@ -93,7 +81,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageCarrierWebSite { get; set; }
-        public string MainCarriageCarrierTypeName { get; set; }
 
         public bool IsFSRSent { get; set; }
 
@@ -249,12 +236,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string DepartmentId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string DepartmentName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Notes { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string NotesSharedWithCustomer { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string DescriptionOfGoods { get; set; }
@@ -270,7 +252,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MAWBStackNumber { get; set; }
 
         public bool IsOperationalClosed { get; set; }
-        public bool IsHouseUpdatedByMaster { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field1 { get; set; }
@@ -372,66 +353,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public CustomFieldClass Field39 { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field40 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field41 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field42 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field43 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field44 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field45 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field46 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field47 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field48 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field49 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field50 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field51 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field52 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field53 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field54 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field55 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field56 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field57 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field58 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field59 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field60 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field61 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field62 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field63 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field64 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field65 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field66 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field67 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field68 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field69 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field70 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SearchFields { get; set; }
@@ -502,22 +423,16 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StatusName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string StatusCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? StatusDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string StatusLocation { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string PartialStatusAmount { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int StatusWeight { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteId { get; set; }
-        public string QuoteNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BookingId { get; set; }
@@ -530,6 +445,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentType { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string FollowUpType { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string FollowUpId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? FollowUpDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentPMId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -537,6 +461,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool NewMessage { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string FollowUpNotes { get; set; }
         public bool IsAnyConversation { get; set; }
         public int NumberOfShipments { get; set; }
 
@@ -552,9 +478,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFinalDestinationPortCountryCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string MainCarriageFinalDestinationPortCountryId{ get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFinalDestinationPortCountryName { get; set; }
@@ -648,6 +571,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? NumberOfFollowUps { get; set; }
 
+        public string QuoteNumber { get; set; }
         #endregion
 
         #region Partners
@@ -671,9 +595,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CustomerReference2 { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string CustomerReference3 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CustomerName { get; set; }
@@ -725,7 +646,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string FreightForwarderNote { get; set; }
-       
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipperId { get; set; }
 
@@ -740,9 +661,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipperReference2 { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipperReference3 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipperName { get; set; }
@@ -766,16 +684,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ConsigneeContactId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ConsigneeVatNumber { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ConsigneeReference1 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ConsigneeReference2 { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ConsigneeReference3 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ConsigneeName { get; set; }
@@ -810,9 +722,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AgentName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string Agent { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AgentNote { get; set; }
@@ -1056,17 +965,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? PreCarriageATD { get; set; }
         public DateTime? PreCarriageETA { get; set; }
         public DateTime? PreCarriageATA { get; set; }
+
         public string PreCarriageCarrierWebSite { get; set; }
-        public string PreCarriageVesselId { get; set; }
-        public string PreCarriageVesselName { get; set; }
-        public bool HasPreCarriage { get; set; }
-        public DateTime? PreCarriageATD_Original { get; set; }
-        public DateTime? PreCarriageETD_Original { get; set; }
-        public DateTime? PreCarriageATA_Original { get; set; }
-        public DateTime? PreCarriageETA_Original { get; set; }
-        public string MasterPreCarriageCarrierNumber { get; set; }
-        public string MasterPreCarriageVesselName { get; set; }
-        public string MasterPreCarriageFromPortName { get; set; }
 
         public string OnCarriageTransportModeId { get; set; }
         public string OnCarriageFromPortId { get; set; }
@@ -1088,18 +988,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
         public string OnCarriageCarrierWebSite { get; set; }
-        public string OnCarriageVesselId { get; set; }
-        public string OnCarriageVesselName { get; set; }
-        public string OnCarriageAdditionalTransportModeCode { get; set; }
-        public bool HasOnCarriage { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool SplitOnCarriage { get; set; }
-        public DateTime? OnCarriageATD_Original { get; set; }
-        public DateTime? OnCarriageETD_Original { get; set; }
-        public DateTime? OnCarriageATA_Original { get; set; }
-        public DateTime? OnCarriageETA_Original { get; set; }
-
         public string MainCarriageTransportModeId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -1115,16 +1003,20 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MainCarriageToPortName { get; set; }
         public string MainCarriageToPortCountryCode { get; set; }
         public string MainCarriageToPortCountryName { get; set; }
+        public bool MainCarriageFromPortCountryEC { get; set; }
+        public bool MainCarriageToPortCountryEC { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageVesselId { get; set; }
-
+        public string PreCarriageVesselId { get; set; }
+        public string OnCarriageVesselId { get; set; }
         public string Transshipment1VesselId { get; set; }
         public string Transshipment2VesselId { get; set; }
         public string Transshipment3VesselId { get; set; }
 
         public string MainCarriageVesselName { get; set; }
-
+        public string PreCarriageVesselName { get; set; }
+        public string OnCarriageVesselName { get; set; }
         public string Transshipment1VesselName { get; set; }
         public string Transshipment2VesselName { get; set; }
         public string Transshipment3VesselName { get; set; }
@@ -1145,7 +1037,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment1CarrierNumber { get; set; }
         public string Transshipment1CarrierId { get; set; }
         public string Transshipment1CarrierName { get; set; }
-        public string Transshipment1CarrierTypeName { get; set; }
         public string Transshipment1CarrierCode { get; set; }
         public string Transshipment1FromPortCode { get; set; }
         public string Transshipment1FromPortName { get; set; }
@@ -1167,7 +1058,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? Transshipment2ETA { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Transshipment2CarrierNumber { get; set; }
-        public string Transshipment2CarrierTypeName { get; set; }
         public string Transshipment2CarrierId { get; set; }
         public string Transshipment2CarrierName { get; set; }
         public string Transshipment2CarrierCode { get; set; }
@@ -1188,7 +1078,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? Transshipment3ETA { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Transshipment3CarrierNumber { get; set; }
-        public string Transshipment3CarrierTypeName { get; set; }
         public string Transshipment3CarrierId { get; set; }
         public string Transshipment3CarrierName { get; set; }
         public string Transshipment3CarrierCode { get; set; }
@@ -1200,6 +1089,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment3ToPortName { get; set; }
         public string Transshipment3ToPortCountryCode { get; set; }
         public string Transshipment3ToPortCountryName { get; set; }
+
+        public bool Transshipment1ToPortCountryEC { get; set; }
+        public bool Transshipment2ToPortCountryEC { get; set; }
+        public bool Transshipment3ToPortCountryEC { get; set; }
 
         public string FinalDistenationPortId { get; set; }
 
@@ -1408,7 +1301,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MoveTypeName { get; set; }
 
         public bool IsCreatedFromAgentSharedManifest { get; set; }
-        public bool IsDocumentsNeedApprove { get; set; }
 
         public string AMSBL { get; set; }
         public string CustomFileId { get; set; }
@@ -1534,9 +1426,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment2ToPortStateCode { get; set; }
         public string Transshipment1ToPortStateCode { get; set; }
 
-        public string StandaloneShipmentId { get; set; }
-        public bool IsConnectToMasterShipment { get; set; }
-
+        public string OnCarriageAdditionalTransportModeCode { get; set; }
 
         private List<ShipmentFollowUpPM> followUps;
         [Include]
@@ -1636,32 +1526,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
-        private List<ShipmentPackagePM> connectedMasterPackages;
-        [Include]
-        [DataMember]
-        [Composition]
-        [Association("MasterPackagePMShipment", "Id", "ShipmentId")]
-        public virtual List<ShipmentPackagePM> ConnectedMasterPackages
-        {
-            get
-            {
-                if (connectedMasterPackages == null)
-                {
-                    connectedMasterPackages = new List<ShipmentPackagePM>();
-                }
-
-                return this.connectedMasterPackages;
-            }
-
-            set
-            {
-                if (value != null)
-                {
-                    connectedMasterPackages = value;
-                }
-            }
-        }
-
         private List<ShipmentOrderPackagePM> shipmentOrderPackages;
         [Include]
         [Composition]
@@ -1751,24 +1615,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             set
             {
                 if (value != null) { shipmentArInvoices = value; }
-            }
-        }
-
-        private List<ShipmentReferancePM> shipmentReferances;
-        [Include]
-        [Composition]
-        [Association("ShipmentReferancePMShipment", "Id", "ShipmentId")]
-        public List<ShipmentReferancePM> ShipmentReferances
-        {
-            get
-            {
-                if (shipmentReferances == null) { shipmentReferances = new List<ShipmentReferancePM>(); }
-                return shipmentReferances;
-            }
-
-            set
-            {
-                if (value != null) { shipmentReferances = value; }
             }
         }
 
@@ -1985,6 +1831,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
+
+
         public string MainCarriageFromPartnerId { get; set; }
         public string MainCarriageFromAddressId { get; set; }
         public string MainCarriageToPartnerId { get; set; }
@@ -1992,9 +1840,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Driver { get; set; }
         public string TruckNumber { get; set; }
         public string TrailerNumber { get; set; }
-        public string Transshipment1TrailerNumber { get; set; }
-        public string Transshipment2TrailerNumber { get; set; }
-        public string Transshipment3TrailerNumber { get; set; }
         public bool AsAgreedFreight { get; set; }
         public bool AsAgreedOtherCharges { get; set; }
         public bool ARInvoiceIssued { get; set; }
@@ -2044,6 +1889,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsSendFSRCreatingShipment { get; set; }
         public string ToCountryId { get; set; }
         public string FromCountryId { get; set; }
+        public bool ToCountryIsEC { get; set; }
+        public bool FromCountryIsEC { get; set; }
         public string CopyFromShipmentId { get; set; }
         public bool IsCopyFromShipment { get; set; }
         public bool IsBuildFromQuote { get; set; }
@@ -2052,6 +1899,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipperPickAddressId { get; set; }
         public string ConsigneeMainAddressId { get; set; }
         public string ConsigneePickAddressId { get; set; }
+        public bool HasPreCarriage { get; set; }
+        public bool HasOnCarriage { get; set; }
 
         public bool IncludePickUp { get; set; }
         public string FromAddressCity { get; set; }
@@ -2066,30 +1915,17 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string DeliveryAddressId { get; set; }
         public string SpecialServicesTypeId { get; set; }
         public string SpecialServicesTypeName { get; set; }
-
-        public string ContainerNumber1 { get; set; }
-        public string ContainerNumber2 { get; set; }
-        public string ContainerNumber3 { get; set; }
-        public string ContainerNumber4 { get; set; }
-        public string ContainerNumber5 { get; set; }
-
         #region Dummy fields needed for the Build from Quote screen
         public int? Quantity1 { get; set; }
         public int? Quantity2 { get; set; }
         public int? Quantity3 { get; set; }
         public int? Quantity4 { get; set; }
         public int? Quantity5 { get; set; }
-         
         public string PackageTypeId1 { get; set; }
         public string PackageTypeId2 { get; set; }
         public string PackageTypeId3 { get; set; }
         public string PackageTypeId4 { get; set; }
         public string PackageTypeId5 { get; set; }
-
-        public double? Weight1 { get; set; }
-        public double? Weight2 { get; set; }
-        public double? Weight3 { get; set; }
-        public double? Weight4 { get; set; }
         #endregion
         public string NewConcurrencyGUID { get; set; }
 
@@ -2100,7 +1936,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public string AccountManagerUserId { get; set; }
         public string AccountManagerUserName { get; set; }
-        public string AccountManagerUserEmail { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ManifestReason { get; set; }
@@ -2208,28 +2043,19 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsUpdatedByChampAnalyzer { get; set; }
         public bool IsUpdatedByGLSHKAnalyzer { get; set; }
         public bool IsUpdatedByINTTRAAnalyzer { get; set; }
-        public bool IsUpdatedOceanInsightsAnalyzer { get; set; }
-        public bool IsUpdatedVizionAnalyzer { get; set; }
-        public bool IsUpdatedOceanInsightsMainCarriageDates { get; set; }
-        public bool IsUpdatedVizionMainCarriageDates { get; set; }
-        public bool ShipmentUpdatedFromContainer { get; set; }
+
         public bool IsCreatedFromCustomerOverview { get; set; }
+
         public string DeclarationXMLData { get; set; }
-        public DateTime? DocumentInspection { get; set; }
-        public DateTime? GatepassDocumentsReady { get; set; }
-        public DateTime? GoodsClassification { get; set; }
-        public DateTime? InvoiceIssuedDate { get; set; }
         public bool IsImporterApprovalRequired { get; set; }
         public bool SendUpdatesToAgentEnabled { get; set; }
         public bool UpdateSendUpdatesToAgentEnabledField { get; set; }
         public bool DocsSentToAgent { get; set; }
         public string VersionApproved { get; set; }
         public string ApprovedBy { get; set; }
-        public string DocumentsApprovedByUserName { get; set; }
         public DateTime? ApproveDateTime { get; set; }
         public bool IsNewARInvoiceBlocked { get; set; }
         public string ShipmentAddtionalDataXML { get; set; }
-        public ShipmentAdditionalData ShipmentAdditionalData { get; set; }
         //public bool IsMappingXSDFields { get; set; }
         //public bool StopConcurrencyValidating { get; set; }
         public string OriginShipmentId { get; set; }
@@ -2242,8 +2068,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? TerminalAvailable { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? Terminal2Available { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ISFNumber { get; set; }
@@ -2269,62 +2093,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? ENSDate { get; set; }
 
+        #region WarehouseLeg
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string TruckerId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string TruckerName { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string TruckerNote { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string TruckerAddressId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string TruckerContactId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string TruckerReference1 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string TruckerReference2 { get; set; }
-        
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? AssignedToTruckerDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? AssginedToCustomsAgentDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? PaymentRequestDateTime { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ReferantUserId { get; set; }
-        public string ReferantUserName { get; set; }
-        public string IskaNumber { get; set; }
-        public string DeclarationOfficeCode { get; set; }
-        public DateTime? HatraDate { get; set; }
-        public string CarrierCodeMawb { get; set; }
-        public string Hawb { get; set; }
-        public string ProcedureCurrentCode { get; set; }
-        public string ExternalDeclarationNumber { get; set; }
-        public string Status { get; set; }
-        public string DeclarationStatusTypeCode { get; set; }
-        public string CarrierCode { get; set; }
-        public string Mawb { get; set; }
-        public DateTime? MawbDate { get; set; }
-        public DateTime? ArrivalDate { get; set; }
-        public DateTime? EstimatedArrivalDate { get; set; }
-        public string PackageTypeCode { get; set; }
-        public string Vessel { get; set; }
-        public string FlightVoyageNumber { get; set; }
-        public string Commodity { get; set; }
-        public bool IsCustomShipment { get; set; }
-		public string OriginCountryCode { get; set; }
-        public bool UniCloudShipment { get; set; }
-
-
-		#region WarehouseLeg
-		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-		[DataMember]
-		public string WarehouseLegWarehouseName { get; set; }
-		[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string WarehouseLegWarehouseId { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string WarehouseLegAddressId { get; set; }
@@ -2371,7 +2141,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string WarehouseLegReference { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember]
         public string WarehouseLegTerminalName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2385,65 +2154,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? WarehouseLegCutOffDate { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2WarehouseId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2AddressId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2TerminalCode { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? WarehouseLeg2ExpectedEntryDate { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? WarehouseLeg2ActualEntryDate { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? WarehouseLeg2ExpectedReleaseDate { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? WarehouseLeg2ActualReleaseDate { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2Remarks { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2AddressName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2AddressAddress1 { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2AddressAddress2 { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2AddressCity { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2AddressCountryName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2AddressCountryCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2AddressPhoneNumber { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2AddressFaxNumber { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WarehouseLeg2Reference { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember]
-        public string WarehouseLeg2TerminalName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? WarehouseLeg2EntryDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? WarehouseLeg2ReleaseDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? WarehouseLeg2VGMCutOffDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? WarehouseLeg2CutOffDate { get; set; }
         #endregion 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2468,10 +2178,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? GrossWeightPerTon { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember]
-        public double? GrossWeightPerStorageDays { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstOperationalCloseDate { get; set; }
@@ -2522,38 +2228,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string INTTRADocumentTypeCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string INTTRABookingTransStatusCode { get; set; }
-        public string INTTRABookingTransStatusName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string INTTRABookingStatusCode { get; set; }
-        public string INTTRABookingStatusName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? INTTRALastEBbookingSendDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string INTTRABookingError { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string INTTRALastBookingResponse { get; set; }
-
-        public string INTTRABookingResponse_Voyage { get; set; }
-        public DateTime INTTRABookingResponse_POLDate { get; set; }
-        public string INTTRABookingResponse_POFPort { get; set; }
-        public string INTTRABookingResponse_POFPortCode { get; set; }
-        public string INTTRABookingResponse_POFCCode { get; set; }
-        public string INTTRABookingResponse_POFCName { get; set; }
-        public DateTime INTTRABookingResponse_PODDate { get; set; }
-        public string INTTRABookingResponse_PODPort { get; set; }
-        public string INTTRABookingResponse_PODPortCode { get; set; }
-        public string INTTRABookingResponse_PODCCode { get; set; }
-        public string INTTRABookingResponse_PODCName { get; set; }
-        public string INTTRABookingResponse_ShippingLine { get; set; }
-        public string INTTRABookingResponse_Vessel { get; set; }
-        public string INTTRABookingResponse_VesselId { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastFinalDestination { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2572,6 +2246,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? FirstPickupETA { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool SplitOnCarriage { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? INTTRALastStatusDate { get; set; }
 
         public bool IsPaymentRequired { get; set; }
@@ -2584,9 +2261,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Notify1Reference { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string Notify1Reference2 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Notify2Reference { get; set; }
@@ -2656,7 +2330,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool HasContainerException { get; set; }
 
-        public DateTime? FirstARInvoiceApprovalDate { get; set; }
+
 
 
         //ShipmentComputedFields
@@ -2671,508 +2345,14 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsDepositionRequired { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
         public bool IsShipmentComputedFieldChange { get; set; }
-        public bool IsShipmentAdditionalCloudDataChange { get; set; }
-        public bool IsStatusChange { get; set; }
-        public bool IsOperationalStatusChange { get; set; }
 
         public string PackagesTypesNames { get; set; }
         public string PackagesTypesPrintAs { get; set; }
-        public string ContainersNumbers { get; set; }
+        public string ContainersNumbers  { get; set; }
         public string ARInvoices { get; set; }
         public bool ConvertShipmentToLCL { get; set; }
         public bool ConvertShipmentToFCL { get; set; }
 
-        public bool ConvertShipmentToLTL { get; set; }
-        public bool ConvertShipmentToFTL { get; set; }
-        public string HousesNumbers { get; set; }
-
         public bool ShipmentDirectionConverted { get; set; }
-        public bool ShipmentConvertedNewNumber { get; set; }
-        public string OldShipmentNumber { get; set; }
-        public bool FromCountryIsEC { get; set; }
-        public bool ToCountryIsEC { get; set; }
-        public bool Transshipment1ToCountryIsEC { get; set; }
-        public bool Transshipment2ToCountryIsEC { get; set; }
-        public bool Transshipment3ToCountryIsEC { get; set; }
-        public bool PackagesDeleted { get; set; }
-        public string MasterCreatedFromHouseId { get; set; }
-        public bool IsDeletingAllPayables { get; set; }
-        public double? NotInvoicedReceivablesAmount { get; set; }
-        public string CreatedByPartner { get; set; }
-
-        // Fields of Champ analyzer Concurrency
-        public string FWBStatusCode_Original { get; set; }
-        public DateTime? FWBStatusDate_Original { get; set; }
-        public string FHLStatusCode_Original { get; set; }
-        public DateTime? FHLStatusDate_Original { get; set; }
-        public string CarrierLastStatusCode_Original { get; set; }
-        public DateTime? CarrierLastStatusDate_Original { get; set; }
-        public string MainCarriageToPortId_Original { get; set; }
-        public int? NumberOfPackages_Original { get; set; }
-        public double? GrossWeight_Original { get; set; }
-        public double? ChargeableWeight_Original { get; set; }
-        public string GrossWeightUnitCode_Original { get; set; }
-        public DateTime? MainCarriageATD_Original { get; set; }
-        public DateTime? MainCarriageETD_Original { get; set; }
-        public DateTime? MainCarriageSTD_Original { get; set; }
-        public DateTime? Transshipment1ATD_Original { get; set; }
-        public DateTime? Transshipment1ETD_Original { get; set; }
-        public DateTime? Transshipment1STD_Original { get; set; }
-        public DateTime? Transshipment2ATD_Original { get; set; }
-        public DateTime? Transshipment2ETD_Original { get; set; }
-        public DateTime? Transshipment2STD_Original { get; set; }
-        public DateTime? Transshipment3ATD_Original { get; set; }
-        public DateTime? Transshipment3ETD_Original { get; set; }
-        public DateTime? Transshipment3STD_Original { get; set; }
-        public DateTime? MainCarriageATA_Original { get; set; }
-        public DateTime? MainCarriageETA_Original { get; set; }
-        public DateTime? MainCarriageSTA_Original { get; set; }
-        public DateTime? Transshipment1ATA_Original { get; set; }
-        public DateTime? Transshipment1ETA_Original { get; set; }
-        public DateTime? Transshipment1STA_Original { get; set; }
-        public DateTime? Transshipment2ATA_Original { get; set; }
-        public DateTime? Transshipment2ETA_Original { get; set; }
-        public DateTime? Transshipment2STA_Original { get; set; }
-        public DateTime? Transshipment3ATA_Original { get; set; }
-        public DateTime? Transshipment3ETA_Original { get; set; }
-        public DateTime? Transshipment3STA_Original { get; set; }
-        public string INTTRABookingStatusCode_Original { get; set; }
-        public string BookingConfirmedBy_Original { get; set; }
-        public string MAN_FromPortId_Original { get; set; }
-        public string FIN_PortId_Original { get; set; }
-        public string TR3_ToPortId_Original { get; set; }
-        public string TR2_ToPortId_Original { get; set; }
-        public string TR1_ToPortId_Original { get; set; }
-        public string BookingConfNumber_Original { get; set; }
-        public string MAN_CarrierNumber_Original { get; set; }
-
-        public bool IsUserIDNumberRequired { get; set; }
-        public DateTime? UserIdNumberUpdateDate { get; set; }
-        public string UserIdNumberXMLData { get; set; }
-        public string UserIdNumber { get; set; }
-        public string WarehouseReleasesIds { get; set; }
-        public int? WarehouseStorageFreeDays { get; set; }
-        public bool IsDeclarationApprovalRequest { get; set; }
-        public bool CreatedFromDigital { get; set; }
-
-        public string DocumentFilingIds { get; set; }
-
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string SLAC { get; set; }
-
-        public string MasterProjectNumber { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipmentSubTypeId { get; set; }
-        public string ShipmentSubTypeName { get; set; }
-        public bool IsUpdateWarehouseLegData { get; set; }
-        public bool IsUpdateEntityException { get; set; }
-        public string MasterHousesNumbers { get; set; }
-        public string HousesDescriptionofGoods { get; set; }
-        public DateTime? BookingConfirmationSentDate { get; set; }
-        public DateTime? PreAlertSentDate { get; set; }
-        public DateTime? DeliveryNoticeSentDate { get; set; }
-        public DateTime? ExpectedArrivalNoticeSentDate { get; set; }
-        public DateTime? ArrivalNoticeSentDate { get; set; }
-        public DateTime? T1ReceivedDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool ChargeStorage { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ChargeStorageCurrencyId { get; set; }
-        public string ChargeStorageCurrencyCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WeightMeasurementCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string WeightRoundingCode { get; set; }
-
-        private List<ShipmentStoragePricingPM> shipmentStoragePricings;
-        [Include]
-        [Association("shipmentStoragePricingShipment", "Id", "ShipmentId")]
-        [Composition]
-        public virtual List<ShipmentStoragePricingPM> ShipmentStoragePricings
-        {
-            get
-            {
-                if (this.shipmentStoragePricings == null)
-                {
-                    shipmentStoragePricings = new List<ShipmentStoragePricingPM>();
-                }
-                return this.shipmentStoragePricings;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    shipmentStoragePricings = value;
-                }
-            }
-        }
-
-        public List<TransshipmentLeg> MainCarriageLegs { get; set; }
-        public bool IsCFSWarehouse { get; set; }
-        public bool IsCFSWarehouseChanged { get; set; }
-        public string ViewSharedDocuments { get; set; }
-        public bool IsAccrualsApproved { get; set; }
-        public DateTime? AccrualsApprovalDate { get; set; }
-        public bool IsExternalAPI { get; set; }
-        public double? HousesOpenPayablesInLocal { get; set; }
-        public double? HousesOpenPayablesInProfit { get; set; }
-        public double? HousesACCTPayablesInLocal { get; set; }
-        public double? HousesACCTPayablesInProfit { get; set; }
-        public double? HousesOpenReceivablesInLocal { get; set; }
-        public double? HousesOpenReceivablesInProfit { get; set; }
-        public double? HousesACCTReceivablesInLocal { get; set; }
-        public double? HousesACCTReceivablesInProfit { get; set; }
-        public string ExternalStatuses { get; set; }
-        public bool IsGroupageHousesUpdated { get; set; }
-
-        public string PreForwardingTransportModeId { get; set; }
-        public string PreForwardingFromPortId { get; set; }
-        public string PreForwardingToPortId { get; set; }
-        public string PreForwardingCarrierId { get; set; }
-        public string PreForwardingCarrierNumber { get; set; }
-        public string PreForwardingCarrierName { get; set; }
-        public string PreForwardingCarrierCode { get; set; }
-        public string PreForwardingFromPortCode { get; set; }
-        public string PreForwardingFromPortName { get; set; }
-        public string PreForwardingFromPortCountryCode { get; set; }
-        public string PreForwardingFromPortCountryName { get; set; }
-        public string PreForwardingToPortCode { get; set; }
-        public string PreForwardingToPortName { get; set; }
-        public string PreForwardingToPortCountryCode { get; set; }
-        public string PreForwardingToPortCountryName { get; set; }
-        public DateTime? PreForwardingETD { get; set; }
-        public DateTime? PreForwardingATD { get; set; }
-        public DateTime? PreForwardingETA { get; set; }
-        public DateTime? PreForwardingATA { get; set; }
-        public string PreForwardingCarrierWebSite { get; set; }
-        public string PreForwardingVesselId { get; set; }
-        public string PreForwardingVesselName { get; set; }
-        public bool HasPreForwarding { get; set; }
-        public DateTime? PreForwardingATD_Original { get; set; }
-        public DateTime? PreForwardingETD_Original { get; set; }
-        public DateTime? PreForwardingATA_Original { get; set; }
-        public DateTime? PreForwardingETA_Original { get; set; }
-
-        public string OnForwardingTransportModeId { get; set; }
-        public string OnForwardingFromPortId { get; set; }
-        public string OnForwardingToPortId { get; set; }
-        public string OnForwardingCarrierId { get; set; }
-        public string OnForwardingCarrierNumber { get; set; }
-        public string OnForwardingCarrierName { get; set; }
-        public string OnForwardingCarrierCode { get; set; }
-        public string OnForwardingFromPortCode { get; set; }
-        public string OnForwardingFromPortName { get; set; }
-        public string OnForwardingFromPortCountryCode { get; set; }
-        public string OnForwardingFromPortCountryName { get; set; }
-        public string OnForwardingToPortCode { get; set; }
-        public string OnForwardingToPortName { get; set; }
-        public string OnForwardingToPortCountryCode { get; set; }
-        public string OnForwardingToPortCountryName { get; set; }
-        public DateTime? OnForwardingETD { get; set; }
-        public DateTime? OnForwardingATD { get; set; }
-        public DateTime? OnForwardingETA { get; set; }
-        public DateTime? OnForwardingATA { get; set; }
-        public string OnForwardingCarrierWebSite { get; set; }
-        public string OnForwardingVesselId { get; set; }
-        public string OnForwardingVesselName { get; set; }
-        public string OnForwardingAdditionalTransportModeCode { get; set; }
-        public bool HasOnForwarding { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool SplitOnForwarding { get; set; }
-        public DateTime? OnForwardingATD_Original { get; set; }
-        public DateTime? OnForwardingETD_Original { get; set; }
-        public DateTime? OnForwardingATA_Original { get; set; }
-        public DateTime? OnForwardingETA_Original { get; set; }
-        public string OriginPreCarriageFromPortId { get; set; }
-        public string OriginOnCarriageToPortId { get; set; }
-        public string OriginPreCarriageToPortId { get; set; }
-        public string OriginOnCarriageFromPortId { get; set; }
-        public string TotalTax { get; set; }
-        public string WarehouseLegLocalName { get; set; }
-        public string WarehouseLegEnglishName { get; set; }
-        public bool IsHTSMissing { get; set; }
-        public bool IsProductItemsUpdated { get; set; }
-        public List<CustomChildEntity> CustomChildEntities { get; set; }
-
-        private List<ShipmentProductItemPM> shipmentProductItems;
-        [Include]
-        [Association("ShipmentProductItemShipment", "Id", "ShipmentId")]
-        [Composition]
-        public virtual List<ShipmentProductItemPM> ShipmentProductItems
-        {
-            get
-            {
-
-                if (this.shipmentProductItems == null)
-                {
-                    shipmentProductItems = new List<ShipmentProductItemPM>();
-                }
-                return this.shipmentProductItems;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    shipmentProductItems = value;
-                }
-            }
-        }
-
-        private List<ShipmentUnassignedFieldPM> shipmentUnassignedFields;
-        [Include]
-        [Association("ShipmentUnassignedFields", "Id", "ShipmentId")]
-        [Composition]
-        public virtual List<ShipmentUnassignedFieldPM> ShipmentUnassignedFields
-        {
-            get
-            {
-
-                if (this.shipmentUnassignedFields == null)
-                {
-                    shipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
-                }
-                return this.shipmentUnassignedFields;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    shipmentUnassignedFields = value;
-                }
-            }
-        }
-		private List<FreightForwarderReferencePM> freightForwarderReferences;
-		[Include]
-		[Composition]
-		[Association("FreightForwarderReferencePMShipment", "Id", "ShipmentId")]
-		public List<FreightForwarderReferencePM> FreightForwarderReferences
-		{
-			get
-			{
-				if (freightForwarderReferences == null) { freightForwarderReferences = new List<FreightForwarderReferencePM>(); }
-				return freightForwarderReferences;
-			}
-
-			set
-			{
-				if (value != null) { freightForwarderReferences = value; }
-			}
-		}
-		// Standalone shipment
-		public bool IsStandalonePickupDelivery { get; set; }
-        public string StandalonePickupDeliveryId { get; set; }
-        public string StandalonePickupDeliveryNumber { get; set; }
-        public string ForwarderStandaloneShipmentId { get; set; }
-        public string ForwarderPickUpDeliveryType { get; set; }
-        public string ParentShipmentNumber { get; set; }
-        public string ParentShipmentType { get; set; }
-        public string ParentShipmentDirectionId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string PrivateLabelInvoiceNumber { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? RequestedFlightDate { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool PrivateLabelIncludePickup { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool PrivateLabelIncludeDelivery { get; set; }
-
-        public DateTime? PlannedCargoReadyDate { get; set; }
-        public DateTime? ApprovedCargoReadyDate { get; set; }
-        public string HandlerUserId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticFromZipCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticToZipCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticFromCity { get; set; }
-        public string InlandDomesticFromStateId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticToCity { get; set; }
-        public string InlandDomesticToStateId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticFromCountryId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticToCountryId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticFromTypeCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticToTypeCode { get; set; }
-        public string MainCarriageFromPortAddress { get; set; }
-        public string MainCarriageToPortAddress { get; set; }
-
-        public string ShipperNotExporterReference1 { get; set; }
-        public string ShipperNotExporterReference2 { get; set; }
-        public string OperationalStatusId { get; set; }
-        public string OperationalStatusName { get; set; }
-        public string BillingStatusId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AccountingClosedByUserId { get; set; }
-        public string HouseMasterConcurrencyGUID { get; set; }
-        public string HouseMasterNewConcurrencyGUID { get; set; }
-        public bool IsPODReceived { get; set; }
-        public DateTime? PODReceivedDate { get; set; }
-        public bool IsDocsKPIsUpdatedFromWR{ get; set; }
-        public string UnassignedShipperAddressId { get; set; }
-        public string UnassignedConsigneeAddressId { get; set; }
-        public bool HasUnassignedData { get; set; }
-        public string DestinationWarehouseId { get; set; }
-        public string DestinationWarehouseName { get; set; }
-        public List<TraceEventPM> EventList { get; set; }
-        public List<TraceEventPM> AddManualEvents { get; set; }
-        public string ShippingAgent { get; set; }
-        public string PrivateLabelAgentName { get; set; }
-        public bool IsShipmentOrder { get; set; }
-
-        public string FirstPickupFullAddress { get; set; }
-        public string LastDeliveryFullAddress { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? QuoteFreightExpirationDate { get; set; }
-        public string CarrierServiceLineId { get; set; }
-        public string UnassignedShipperNotExporterAddressId { get; set; }
-        public string UnassignedConsigneeNotImporterAddressId { get; set; }
-
-        public string InlandDomesticToAddress1 { get; set; }
-        public string InlandDomesticToAddress2 { get; set; }
-        public string InlandDomesticToPhone { get; set; }
-        public string InlandDomesticToFax { get; set; }
-        public string InlandDomesticFromAddress1 { get; set; }
-        public string InlandDomesticFromAddress2 { get; set; }
-        public string InlandDomesticFromPhone { get; set; }
-        public string InlandDomesticFromFax { get; set; }
-        public int? NumberOfTransshipments { get; set; }
-        public string Transshipments { get; set; }
-        public bool FromCTool { get; set; }
-        public string SalesmanEmail { get; set; }
-        public bool IsPartiallyInvoiced { get; set; }
-        public bool IsFullInvoiced { get; set; }
-        public bool IsCustomerArchived { get; set; }
-        public bool IsINTTRAFROB { get; set; }
-        public string MainCarriageFromStateId { get; set; }
-        public string MainCarriageToStateId { get; set; }
-        public double? GrossWeightInLB { get; set; }
-        public double? VolumeInCBF { get; set; }
-        public double? ChargeableWeightInLB { get; set; }
-        public string ShippingLine { get; set; }
-        public string PlaceOfDelivery { get; set; }
-        public string PickupPlace { get; set; }
-        public string SealNo { get; set; }
-        public string HSCode { get; set; }
-        public string OrderNumber { get; set; }
-        public bool IsUpdatedByAutomationSetValueResult { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string LockerCode { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-         public string LockerName { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string LockerAddress { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string LockerCity { get; set; }
-
-    }
-
-    public class TransshipmentLeg
-    {
-        public string Id { get; set; }
-        public int LegIndex { get; set; }
-        public string FromPortId { get; set; }
-        public string FromPortCode { get; set; }
-        public string FromPortName { get; set; }
-        public string ToPortId { get; set; }
-        public string ToPortCode { get; set; }
-        public string ToPortName { get; set; }
-        public string CarrierId { get; set; }
-        public string CarrierName { get; set; }
-        public string CarrierNumber { get; set; }
-        public string VesselId { get; set; }
-        public string VesselName { get; set; }
-        public string MasterNumber { get; set; }
-        public DateTime? ETD { get; set; }
-        public DateTime? ETA { get; set; }
-        public DateTime? ATD { get; set; }
-        public DateTime? ATA { get; set; }
-        public string CarrierTypeName { get; set; }
-    }
-
-    [JsonObject(IsReference = false)]
-    public class VerticalTimeLineData
-    {
-        [DataMember]
-        public VerticalTimeLineStop Pickup { get; set; }
-        public VerticalTimeLineStop MainCarriageFrom { get; set; }
-        [DataMember]
-        public VerticalTimeLineStop MainCarriageTo { get; set; }
-        [DataMember]
-        public VerticalTimeLineStop Delivery { get; set; }
-        [DataMember]
-        public VerticalTimeLineStop Transshipment1 { get; set; }
-        [DataMember]
-        public VerticalTimeLineStop Transshipment2 { get; set; }
-        [DataMember]
-        public VerticalTimeLineStop Transshipment3 { get; set; }
-        [DataMember]
-        public VerticalTimeLineStop PreCarriage { get; set; }
-        [DataMember]
-        public VerticalTimeLineStop OnCarriage { get; set; }
-        [DataMember]
-        public VerticalTimeLineStop Warehouse1 { get; set; }
-        [DataMember]
-        public VerticalTimeLineStop Warehouse2 { get; set; }
-
-    }
-
-    [JsonObject(IsReference = false, ItemIsReference = false)]
-    public class VerticalTimeLineStop
-    {
-        [DataMember]
-        public string Title { get; set; }
-        [DataMember]
-        public string CountryName { get; set; }
-        [DataMember]
-        public string CountryCode { get; set; }
-        [DataMember]
-        public string City { get; set; }
-        [DataMember]
-        public DateTime? ATDDate { get; set; }
-        [DataMember]
-        public string ATDDateType { get; set; }
-        [DataMember]
-        public DateTime? Date { get; set; }
-        [DataMember]
-        public string DateType { get; set; }
-        [DataMember]
-        public DateTime? ATADate { get; set; }
-        [DataMember]
-        public string ATADateType { get; set; }
-        [DataMember]
-        public bool IsViaPortsDatesFilled { get; set; }
-        [DataMember]
-        public string TransportModeId { get; set; }
-        public string LegTransportModeId { get; set; }
-        [XmlIgnore]
-        public Dictionary<string, string> LegDetails { get; set; }
     }
 }

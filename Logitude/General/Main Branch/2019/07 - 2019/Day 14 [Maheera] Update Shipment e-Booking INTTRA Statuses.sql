@@ -1,1 +1,0 @@
-update  shipments set INTTRABookingStatusCode = 'NS', INTTRABookingTransStatusCode = 'NST'

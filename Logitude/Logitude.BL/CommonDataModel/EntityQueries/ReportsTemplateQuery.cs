@@ -10,7 +10,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -22,7 +22,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ReportsTemplateRepository repository;
 
-
+        public ReportsTemplateQuery()
+        {
+            repository = new ReportsTemplateRepository();
+        }
 
         public ReportsTemplateQuery(int tenant)
         {
@@ -54,8 +57,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              From = a.From,
                                                              Subject = a.Subject,
                                                              ReplyTo = a.ReplyTo,
-                                                             ObjectTableId = a.ObjectTableId,
-                                                             EntityId = a.EntityId
                                    
                                                          };
 
@@ -87,9 +88,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 From = a.From,
                                                 Subject = a.Subject,
                                                 ReplyTo = a.ReplyTo,
-                                                ObjectTableId = a.ObjectTableId,
-                                                EntityId = a.EntityId,
-                                                UseStimul = a.UseStimul
                                             }).FirstOrDefault();
 
 
@@ -128,8 +126,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                            From = a.From,
                                                                            Subject = a.Subject,
                                                                            ReplyTo = a.ReplyTo,
-                                                                           ObjectTableId = a.ObjectTableId,
-                                                                           EntityId = a.EntityId
                                                                        };
             return ReportsTemplatePMs;
         }
@@ -156,8 +152,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                From = a.From,
                                                                                Subject = a.Subject,
                                                                                ReplyTo = a.ReplyTo,
-                                                                               ObjectTableId = a.ObjectTableId,
-                                                                               EntityId = a.EntityId
                                                                            };
             return ReportsTemplateLists;
         }
@@ -165,7 +159,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<ReportsTemplateList> GetReportsTemplateListsByReportId(string reportId, int tenant , string templateType = null)
         {
-            IQueryable<ReportsTemplateList> reportsTemplateLists = from a in repository.context.ReportsTemplates.Include("Report")
+            IQueryable<ReportsTemplateList> reportsTemplateLists = from a in repository.context.ReportsTemplates
                                                                    where a.Tenant == tenant && a.ReportId == reportId && !a.InActive
                                                                    select new ReportsTemplateList()
                                                                    {
@@ -185,10 +179,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                        From = a.From,
                                                                        Subject = a.Subject,
                                                                        ReplyTo = a.ReplyTo,
-                                                                       ObjectTableId = a.ObjectTableId,
-                                                                       EntityId = a.EntityId,
-                                                                       UseStimul = a.UseStimul,
-                                                                       IsDefault = (a.Report.DefaultTemplateId == a.Id) || (a.Report.DefaultExcelTemplateId == a.Id) || (a.Report.DefaultExcelNoStimId == a.Id)
 
                                                                    };
             if (!string.IsNullOrEmpty(templateType))
@@ -220,10 +210,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       From = a.From,
                                                                       Subject = a.Subject,
                                                                       ReplyTo = a.ReplyTo,
-                                                                      ObjectTableId = a.ObjectTableId,
-                                                                      IsCopiedAtSignup = a.IsCopiedAtSignup,
-                                                                      UseStimul = a.UseStimul,
-                                                                      EntityId = a.EntityId,
                                                                   };
 
             if (!string.IsNullOrEmpty(templateType))

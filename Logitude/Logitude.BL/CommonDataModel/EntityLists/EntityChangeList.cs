@@ -34,16 +34,12 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SetSLAAutomationFailedXml { get; set; }
         public string FollowUpAutomationSsucceedXml { get; set; }
         public string SetSLAAutomationSsucceedXml { get; set; }
-        public string QueuedTaskAutomationFailedXml { get; set; }
-        public string QueuedTaskAutomationSsucceedXml { get; set; }
-        public string SendInterfaceAutomationFailedXml { get; set; }
-        public string SendInterfaceAutomationSsucceedXml { get; set; }
+
         public DateTime? CheckStartDate { get; set; }
         public DateTime? DoneDate { get; set; }
         public bool HasExecutedRecord { get; set; }
         public int ExecutionTime { get; set; }
+        
 
-        public string CreateTaskAutomationFailedXml { get; set; }
-        public string CreateTaskAutomationSsucceedXml { get; set; }
     }
 }

@@ -8,7 +8,7 @@ import {ShipmentOrderPackageItem} from './OrdersTabComponent';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditOrderPackageComponent.html',
 })
 

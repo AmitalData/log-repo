@@ -58,10 +58,7 @@ export class ActivityOwnerHistoryPM {
     public OldEntityPM: ActivityOwnerHistoryPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -69,7 +66,6 @@ export class ActivityOwnerHistoryPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ActivityOwnerHistory");
            
         }
-       }
     }
 
     private MyClone: ActivityOwnerHistoryPM;

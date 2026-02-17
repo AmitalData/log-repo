@@ -19,11 +19,11 @@ using Simplog.Data.CommonDataModel;
 using System.IO;
 using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Diagnostics;
 using Logitude.Customs.Data.Repsitories;
 using System.Configuration;
@@ -35,183 +35,43 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Server.Tools.Utils;
 using Logitude.Customs.BL.TraceEvents;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.Customs.BL.BL;
-using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class CustomsDocumentUpdateService : EntityUpdateService<CustomsDocument, CustomsDocumentPM, EntityPM>
     {
-        private string declarationObjectTableId;
-        private string customsDocumentObjecttTableId;
+
         protected override void OnCreating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
         {
-
+            
             //entityPM.DocumentInId = IdCounter.GetNumber("Customs.CustomsDocument", entityPM.Tenant);
             entityPM.DocumentVersion = 1;
 
-
         }
-	
-		//לאחר ממשק UD2LT - קישור מסמך לטיקט, אם התיק הינו תיק בלדרות יש לבצע העלאה של המסמך למכס - מסר קלוט צרופה
-		public void AddPerfectCustomsDocumentMetaDataValues(CustomsDocumentPM entityPM)
-        {
-            LogitudeSettings.HandleLogMe("start  MetaData:" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
 
-            if (entityPM.CustomsDocumentMetaDataValues.Count == 0)
-            {
-                LogitudeSettings.HandleLogMe("if (entityPM.CustomsDocumentMetaDataValues.Count == 0)" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
-
-                var customContext = CustomContext.GetContext(entityPM.Tenant);
-                var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
-                var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
-                entityPM.CustomsDocumentMetaDataValues = CustomDocumentTypeMetaData.Select(r => new CustomsDocumentMetaDataValuePM()
-                {
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    Tenant = entityPM.Tenant,
-                    CustomsDocumentId = entityPM.CustomsDocId,
-                    MetaDataTypeCode = r.MetaDataTypeCode,
-                    MetaDataValue = null,
-                }).ToList();
-
-                LogitudeSettings.HandleLogMe("before AutoSetOriginalDocumentTrue" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
-                AutoSetOriginalDocumentTrue(entityPM);
-                LogitudeSettings.HandleLogMe("after AutoSetOriginalDocumentTrue" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
-
-                this._AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady = true;
-            }
-
-			if (IsSendFromAutoClosing && entityPM.DocumentTypeCode == "707")
-			{
-
-				ExportDeclarationClosingDataQueryService exportDeclarationClosingDataQueryService = new ExportDeclarationClosingDataQueryService(entityPM.Tenant);
-				var exportDeclarationClosingData = exportDeclarationClosingDataQueryService.GetSingle(entityPM.DeclarationId, false, false);
-                entityPM.CustomsDocumentMetaDataValues.ForEach(x => {
-
-                    if (x.MetaDataTypeCode == "100") {
-                        x.MetaDataValue = exportDeclarationClosingData.FinalManifestNumber;
-                        x.ChangeSetOp = ChangeSetOperation.Update;
-                    }
-                    if (x.MetaDataTypeCode == "99") {
-                        x.MetaDataValue = exportDeclarationClosingData.FinalCargoTypeCode;
-						x.ChangeSetOp = ChangeSetOperation.Update;
-					}
-                });
-			}
-
-		}
         protected override void UpdateComposition(CustomsDocumentPM entityPM)
         {
-            AutoSetOriginalDocumentTrue(entityPM);
-            var customContext = CustomContext.GetContext(entityPM.Tenant);
+            ICustomContext context = MainContext as CustomContext;
+            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
+            CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
 
-            //if (entityPM.DeclarationId != null)
-            //{
-            //DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
-
-            //var declaration = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
-
-            //if (declaration?.Direction == "E")
-            //{
-            var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
-            var customsDocumentMetaDataValueQueryService = new CustomsDocumentMetaDataValueQueryService(customContext);
-            var metaDataPoco = customsDocumentMetaDataValueQueryService.GetMulti(new Data.EntityKeys.CustomsDocumentKeys { DocumentsFilingId = entityPM.DocumentsFilingId }, false);
-            var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
-
-            var deleteItems = metaDataPoco.Where(x => CustomDocumentTypeMetaData.Find(y => x.MetaDataTypeCode == y.MetaDataTypeCode) == null).ToList();
-
-
-            entityPM.CustomsDocumentMetaDataValues.RemoveAll(x => CustomDocumentTypeMetaData.Find(y => x.MetaDataTypeCode == y.MetaDataTypeCode) == null);
-            if (deleteItems != null && deleteItems.Count() > 0)
+            foreach (CustomsDocumentMetaDataValuePM val in entityPM.CustomsDocumentMetaDataValues)
             {
-                deleteItems.ForEach(x => x.ChangeSetOp = ChangeSetOperation.Delete);
-                entityPM.DeletedCustomsDocumentMetaDataValues.AddRange(deleteItems);
+                if (docType != null && docType.AutoSetOriginalDocumentTrue && val.MetaDataTypeCode == "87" && val.ChangeSetOp == ChangeSetOperation.Insert)
+                {
+                    val.MetaDataValue = "True";
+                }
             }
-            //    }
-
-
-            //}
 
             CustomsDocumentMetaDataValueUpdateService customsDocumentMetaDataValueUpdateService = new CustomsDocumentMetaDataValueUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             customsDocumentMetaDataValueUpdateService.UpdateMulti(entityPM.CustomsDocumentMetaDataValues, entityPM.DeletedCustomsDocumentMetaDataValues, entityPM, false);
 
         }
-
-        private void AutoSetOriginalDocumentTrue(CustomsDocumentPM entityPM)
-        {
-            DateTime stopLogAt = new DateTime(2021, 12, 29);
-
-            LogitudeSettings.HandleLogMe("start AutoSetOriginalDocumentTrue" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
-
-            ICustomContext context = MainContext as CustomContext;
-            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
-            CustomDocumentTypePM docType = docTypeQuery.GetSingleCustomDocumentTypeWithTenant(entityPM.DocumentTypeCode, entityPM.Tenant);
-            DocumentsFilingMetaDataValuePM MyDocumentMetaDataValues = null;
-            ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
-            var myDocumentsFilingService = new DocumentsFilingService(commonContext, entityPM.Tenant);
-
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AutoSetMetaDataValue");
-            string logData = "";
-
-            foreach (CustomsDocumentMetaDataValuePM val in entityPM.CustomsDocumentMetaDataValues)
-            {
-                LogitudeSettings.HandleLogMe(" loop " + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
-
-              
-                if (docType != null && docType.AutoSetOriginalDocumentTrue && val.MetaDataTypeCode == "87" && val.ChangeSetOp == ChangeSetOperation.Insert)
-                {
-                    LogitudeSettings.HandleLogMe(" if (docType != null && docType.AutoSetOriginalDocumentTrue && val.MetaDataTypeCode == '87' && val.ChangeSetOp == ChangeSetOperation.Insert) " + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
-
-                    val.MetaDataValue = "True";
-                }
-
-                if (string.IsNullOrWhiteSpace(val.MetaDataValue))
-                {
-                    LogitudeSettings.HandleLogMe("if (string.IsNullOrWhiteSpace(val.MetaDataValue))" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
-
-
-                    MyDocumentMetaDataValues = myDocumentsFilingService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(entityPM.DocumentsFilingId, val.MetaDataTypeCode);
-                    if (MyDocumentMetaDataValues != null && !string.IsNullOrWhiteSpace(MyDocumentMetaDataValues.MetaDataValue))
-                    {
-                        LogitudeSettings.HandleLogMe("if (MyDocumentMetaDataValues != null && !string.IsNullOrWhiteSpace(MyDocumentMetaDataValues.MetaDataValue))" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
-
-                        val.MetaDataValue = MyDocumentMetaDataValues.MetaDataValue;
-                        if (val.ChangeSetOp != ChangeSetOperation.Insert) val.ChangeSetOp = ChangeSetOperation.Update;
-                    }
-                }
-                logData += $"CustomsDocumentPM.DocumentsFilingId={entityPM.DocumentsFilingId},CustomsDocumentMetaDataValuePM.MetaDataTypeCode={val.MetaDataTypeCode},CustomsDocumentMetaDataValuePM.MetaDataValue={val.MetaDataValue},CustomsDocumentMetaDataValuePM.ChangeSetOp={val.ChangeSetOp}";
-                if (MyDocumentMetaDataValues != null)
-                {
-                    logData += $"DocumentsFilingMetaDataValuePM.MetaDataValue={MyDocumentMetaDataValues.MetaDataValue}";
-                }
-
-            }
-            LogitudeSettings.HandleLogMe("log- " + logData + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
-
-            LogitudeSettings.HandleLogMe("AutoSetMetaDataValue" + logData, false, "AutoSetMetaDataValue", stopLogAt);
-        }
-
         public const string SetCustomsRequestSheetStatus = "SetCustomsRequestSheetStatus";
-        private void AddHybridTaskDocumentFilingChange(DocumentsFilingPM documentsFilingPM, CustomsDocumentPM currentCustomsDoc = null)//Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
+        private void AddHybridTaskDocumentFilingChange(DocumentsFilingPM documentsFilingPM)//Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
         {
-
-            //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('HCD', 'Hybrid Courier document-Prevent feedback', 'Hybrid document-Prevent feedback')
-            //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('HCD', '1', TO_TIMESTAMP('2022-03-06 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-03-06 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'HCD', '1', '0', 'HCD')
-            if(CustomsSettingQueryService.GetSettingByTenant(documentsFilingPM.Tenant).StandAlone) return;
-
             var tenant = documentsFilingPM.Tenant;
-            var customsSettingQueryService = new CustomsSettingQueryService(tenant);
-            if (customsSettingQueryService.IsCourierTenant(tenant))
-            {
-                if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("HCD", Tenant))
-                {
-                    return;
-                }
-            }
-
-
-            var loggedUserId = AuthenticationUtil.ResolveUserId(tenant, true);
+            var loggedUserId = AuthenticationUtil.ResolveUserId(tenant);
             var table = ObjectTableQuery.GetObjectTableByCode("DocumentsFiling", 0);
 
 
@@ -231,7 +91,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 Subject = "New Documents Filing Created",
                 FolderName = "ExternalTasksQueue",
             };
-            DocumentsFilingPM mappedPM = DocumentsFilingHybridMapping.MapEntityToHybrid(documentsFilingPM,currentCustomsDoc);
+            DocumentsFilingPM mappedPM = DocumentsFilingHybridMapping.MapEntityToHybrid(documentsFilingPM);
 
             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedPM);
             List<QueueTask> queue1Tasks = new List<QueueTask>();
@@ -250,18 +110,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             Communications.AddCommunicationLog(logParams);
         }
 
-
-        DateTime stopLogAt = new DateTime(2021, 12, 29);
-
-
         protected override void OnUpdating(CustomsDocumentPM entityPM, CustomsDocument entityPOCO)
         {
             try
             {
-
-                LogitudeSettings.HandleLogMe("start update :" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
-                LogMessagingUtil.Instance.AppendLine($"IsPartOfDeclaration changed → PM={entityPM.IsPartOfDeclaration}, POCO={entityPOCO.IsPartOfDeclaration}");
                 if (entityPM.IsPartOfDeclaration != entityPOCO.IsPartOfDeclaration)
                 {
                     string documentsFilingId = entityPM.DocumentsFilingId ?? EntityPOCO.DocumentsFilingId;
@@ -271,12 +123,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         var pm = documentsFilingQuery.GetSinglePM(documentsFilingId, entityPM.Tenant);
                         if (pm.ExternalEntityName == "CFIFILEM" && !string.IsNullOrWhiteSpace(pm.ExternalEntityReference))
                         {
-                                var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
-                                unifreightFUStatusTaskService.DeleteINAFUStatus(entityPM.Tenant, pm.ExternalEntityReference);
-                            
+                            var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
+                            unifreightFUStatusTaskService.DeleteINAFUStatus(entityPM.Tenant, pm.ExternalEntityReference);
                         }
-                        LogMessagingUtil.Instance.AppendLine("documentsFilingId resolved: " + documentsFilingId);
-                        AddHybridTaskDocumentFilingChange(pm, entityPM); //Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
+                        AddHybridTaskDocumentFilingChange(pm); //Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
                     }
 
                 }
@@ -294,21 +144,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     !string.IsNullOrWhiteSpace(entityPM.DocumentRemarks) &&
                     entityPM.DocumentRemarks.Contains(LoadTestSendMessageToQueue) &&
                         entityPM.DocumentVersion == entityPOCO.DocumentVersion + 1);
-
-                LogitudeSettings.HandleLogMe("before try send update :" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
                 TrySendMessageToQueue(entityPM, forceDueLoadTest);
-                LogitudeSettings.HandleLogMe("after try send update :" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
                 base.OnUpdating(entityPM, entityPOCO);
-                if (entityPM.DocumentStatusCode == "7" 
-                    || entityPM.DocumentStatusCode == "2")
+                if (entityPM.DocumentStatusCode == "7")
                 {
                     UpdateDeclarationCourierStatus(entityPM);
-                }
-                if (string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
-                {
-                    UpdateDeclarationCourierStatus380(entityPM);
                 }
 
             }
@@ -394,27 +234,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public const string LoadTestSendMessageToQueue = "LoadTestSendMessageToQueue";
         public const string WhileAnalayzeCostomResponseSendDEC = "WhileAnalayzeCostomResponseSendDEC";
-        public const int HugeFileSizeSendToDCA = 25 * 1000000;
-        public const int MaxFileSizeDONOTSendToDCA = 200 * 1000000;
+
 
         protected override void OnUpdating(CustomsDocumentPM entityPM)
         {
             ICustomContext context = MainContext as CustomContext;
-
+            
             CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQueryService = new CustomsDocumentMetaDataValueQueryService(context);
             CustomDocumentTypeMetaDataQueryService customDocumentTypeMetaDataQueryService = new CustomDocumentTypeMetaDataQueryService(context);
             //List<CustomsDocumentMetaDataValuePM> metadataValues = customsDocumentMetaDataValueQueryService.GetCustomDocumentMetaDataValues(entityPM.DocumentsFilingId, entityPM.Tenant);
             List<CustomDocumentTypeMetaDataPM> documentTypeMetaDatas = customDocumentTypeMetaDataQueryService.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
             List<CustomDocumentTypeMetaDataPM> requireddocumentTypeMetaDatas = documentTypeMetaDatas.Where(d => d.Mandatory).ToList();
-
-
+           
+          
 
             bool ready = true;
             if (requireddocumentTypeMetaDatas.Count == 0)
             {
-                ready = true;
+                ready = false;
             }
-
             foreach (CustomDocumentTypeMetaDataPM documentTypeMetaData in requireddocumentTypeMetaDatas)
             {
                 CustomsDocumentMetaDataValuePM value = entityPM.CustomsDocumentMetaDataValues.Where(d => d.MetaDataTypeCode == documentTypeMetaData.MetaDataTypeCode).FirstOrDefault();
@@ -430,13 +268,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
-            //if (_AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady)
-            //{
-            //    if (requireddocumentTypeMetaDatas.Count == 0)
-            //    {
-            //        ready = true;
-            //    }
-            //}
             if (ready)
             {
                 entityPM.IsMetaDataReady = true;
@@ -453,7 +284,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 entityPM.ExternalAttachmentId = documentIn.Code + "-" + entityPM.DocumentVersion;//entityPM.DocumentsFilingCode + "-" + entityPM.DocumentVersion;
             }
-            ObjectTableRepository objecttableRep = new ObjectTableRepository(entityPM.Tenant);
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(0);
             ObjectTable objectTable = objecttableRep.GetObjectTableById(documentIn.ObjectTableId, 0);
 #if true//cloudExc 11:22 ‎24/‎08/‎2016
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
@@ -524,18 +355,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.ExternalEntityReference = documentIn.ExternalEntityReference;
             entityPM.ExternalEntityName = documentIn.ExternalEntityName;
             // this.UpdateIsPartOfDeclaration(entityPM, documentIn);
-            var myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(entityPM.Tenant);
-            List<CustomsDocumentsTicketPM> customsDocumentsTicketListPM = new List<CustomsDocumentsTicketPM>();
-            customsDocumentsTicketListPM = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(documentIn.Id, entityPM.Tenant);
-            if (customsDocumentsTicketListPM != null)
-            {
-                var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
-                foreach (var customsDocumentsTicketPM in customsDocumentsTicketListPM)
-                {
-                    myCustomsDocumentsTicketUpdateService.UpdateIsPartOfDeclaration(entityPM, customsDocumentsTicketPM);
-                }
-            }
         }
 
         private static void UpdateObjectTableIfDeclaration(CustomsDocumentPM entityPM, DocumentsFilingRepository documentInRep, DocumentsFiling documentIn, ObjectTable objectTable, DeclarationQueryService declarationQueryService)
@@ -558,69 +378,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public const string AvoidSendToCustoms = "Logitude.Customs.BL.EntityUpdateServices.CustomsDocumentUpdateService.AvoidSendToCustoms";
 
-        protected override void AfterUpdating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
-        {
-
-            DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
-            if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
-            {
-                ICustomContext context = MainContext as CustomContext;
-                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
-                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
-                if (currentDeclarationCourierStatusPM != null)
-                {
-                    string prevValMissingDocumentStatusCode = null;
-                    string currvValMissingDocumentStatusCode = null;
-
-                    prevValMissingDocumentStatusCode = currentDeclarationCourierStatusPM.MissedDocumentStatusCode;
-
-                    calculateDeclarationCourierStatus.CalcMissingDocumentStatusCode(currentDeclarationCourierStatusPM);
-                    currvValMissingDocumentStatusCode = currentDeclarationCourierStatusPM.MissedDocumentStatusCode;
-
-                    if (prevValMissingDocumentStatusCode != currvValMissingDocumentStatusCode)
-                    {
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
-                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                    }
-                }
-                if (entityPM.DocumentStatusCode == "1")
-                {
-
-                    if (currentDeclarationCourierStatusPM == null)
-                    {
-                        LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
-                        calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
-
-                        if (currentDeclarationCourierStatusPM.DocumentStatusCode != "M")
-                        {
-                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
-                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
-                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                        }
-                    }
-                }
-            }
-        }
-
-        public string LoginUserId = "";
-		public bool IsSendFromAutoClosing = false;
-		public bool IgnoreSendFailure = false;
-        private bool _AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady;
-
+        //protected override void AfterUpdating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
         void TrySendMessageToQueue(CustomsDocumentPM entityPM, bool forceDueLoadTest = false)
         {
             var send = false;
 
             if (entityPM.DocumentStatusCode != "7" && entityPM.IsSendToQueue)
             {
-                LogitudeSettings.HandleLogMe("  try send update if (entityPM.DocumentStatusCode != '7' && entityPM.IsSendToQueue):" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
                 if (entityPM.IsMetaDataReady)
                 {
-                    LogitudeSettings.HandleLogMe("if (entityPM.IsMetaDataReady):" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
 
                     send = true;
                     //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -631,21 +397,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(entityPM.CollateralId)
-                //&& !string.IsNullOrWhiteSpace(entityPM.CustomsDocId)) 
-                && string.IsNullOrWhiteSpace(entityPM.CustomsDocId))
-            // Send automatically if from Collateral screen
+            if (!string.IsNullOrWhiteSpace(entityPM.CollateralId) && !string.IsNullOrWhiteSpace(entityPM.CustomsDocId)) // Send automatically if from Collateral screen
             {
-
-                LogitudeSettings.HandleLogMe("!string.IsNullOrWhiteSpace(entityPM.CollateralId):" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
                 send = true;
             }
 
             if (send || forceDueLoadTest)
             {
-                LogitudeSettings.HandleLogMe("if (send || forceDueLoadTest):" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
                 if (SendMessageToQueue(entityPM, forceDueLoadTest))
                 {
                     if (forceDueLoadTest)
@@ -692,16 +450,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogMessagingUtil.Instance.AppendLine("DocumentTypeCode is null ,disconnect - dont sent 2 mehes ");
                     return send;
                 }
-
-
-                LogitudeSettings.HandleLogMe("start send:" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
-
                 var currentCustomsDocumentsTicketId = entityPM.CurrentCustomsDocumentsTicketId;
 
                 ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant); //this.currentContext 
-                //var customContext = MainContext as ICustomContext;
-                ICustomContext customContext = CustomContext.GetContext(entityPM.Tenant);
+                var customContext = MainContext as ICustomContext;
                 var repo = new Logitude.Customs.Data.Repsitories.CustomsDocumentPointerRepository(entityPM.Tenant);
                 var declarationId = entityPM.DeclarationId;
                 var collateralId = entityPM.CollateralId;
@@ -738,10 +490,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 if (String.IsNullOrWhiteSpace(declarationId))//move up ??
                 {
-                    if ((entityPM.ExternalEntityName == "CFIFILEM" || entityPM.ExternalEntityName == "EFIFILEM") && !string.IsNullOrWhiteSpace(entityPM.ExternalEntityReference))
+                    if (entityPM.ExternalEntityName == "CFIFILEM" && !string.IsNullOrWhiteSpace(entityPM.ExternalEntityReference))
                     {
                         var declarationQueryService = new DeclarationQueryService(customContext);
-                        declarationId = declarationQueryService.GetIdByCustomFileNoOrExportFile(entityPM.ExternalEntityReference, entityPM.Tenant);
+                        declarationId = declarationQueryService.GetIdByCustomFileNo(entityPM.ExternalEntityReference, entityPM.Tenant);
                     }
                 }
                 //if (String.IsNullOrWhiteSpace(declarationId))
@@ -749,66 +501,31 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //    throw new Exception("CustomsDocument must conncted to declaration "); ////task10676  yaron said it must be conncted to declaration !!
 
                 //}
-
-                //get field from interfaceManagment
-
-                //var interfaceManagementQueryService = new InterfaceManagementQueryService(customContext);
-                //var time = interfaceManagementQueryService.GetSingle("2715", false, true)?.SendTime;
-                var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(customContext);
-                var time = interfaceTenantDefinitionQueryService.GetByTenatCode(entityPM.Tenant, "2715")?.SendTime;
-
-                var date = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null;
-                var courierSchedulerService = new CourierSchedulerService();
-                date = courierSchedulerService.Send2715Immediate(entityPM.Tenant, declarationId, date);// if date === null  => SendImmediate
-
-                //if is EffectiveFlight : TenantPriority = 98
-                CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(customContext);
-                bool isEffectiveFlight = myCourierMasterQueryService.GetByDeclarationId(declarationId, entityPM.Tenant)?.EffectiveFlight ?? false;
-
-
-
-                var objectTableRepository = new ObjectTableRepository(entityPM.Tenant); 
-                declarationObjectTableId = objectTableRepository.GetObjectTableByName("Customs.Declaration", 0,true, entityPM.Tenant).Id ?? ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                customsDocumentObjecttTableId = objectTableRepository.GetObjectTableByName("Customs.CustomsDocument", 0, true, entityPM.Tenant).Id ?? ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument");
-
-
                 var requestParams = new Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam()
                 {
-                    MainInterfaceCode = "2715",
                     ///AppicationId = entityPM.DocumentsFilingId,
                     DocumentsFilingId = entityPM.DocumentsFilingId,
                     DeclaretionId = declarationId,
                     DocumentsTicketId = entityPM.CurrentCustomsDocumentsTicketId,
                     Tenant = entityPM.Tenant,
-                    LoggingObjectTableId = string.IsNullOrWhiteSpace(declarationId) ? null : declarationObjectTableId,//task10676 
+                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),//task10676 
                     LoggingEntityId = declarationId,
-                    LoggingObjectTableId2 = customsDocumentObjecttTableId,//task10676 
+                    LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"),//task10676 
                     LoggingEntityId2 = entityPM.DocumentsFilingId,
-                    FutureSendDateTime = date,
-                    RequestVIAChangeDue = date.HasValue ? string.Concat("נרשמה בקשה מתוזמנת לשעה ", date.GetValueOrDefault().ToShortTimeString()) : "",
-                    ParentId = entityPM.ParentRequestId,
-					IsFromAutoClosing = IsSendFromAutoClosing,
-                   
-                    
-
-				};
+                };
                 if (String.IsNullOrWhiteSpace(declarationId) && !String.IsNullOrWhiteSpace(entityPM.ClaimId))
                 {
                     requestParams.LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Claim");
-                    requestParams.LoggingEntityId = entityPM.ClaimId;
+                    requestParams.LoggingEntityId = entityPM.ClaimId;//ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
 
 
-                }
-                if (isEffectiveFlight)
-                {
-                    requestParams.TenantPriority = 98;
                 }
                 byte[] byteArray = null;
                 var documentrepository = new DocumentRepository(commonContext);
                 var document = documentrepository.GetSingleDocument(entityPM.Tenant, entityPM.DocumentsFilingId);
                 var mySBQMessage = new SBQMessageService();
 
-                requestParams.LoggingUserId =!string.IsNullOrEmpty(LoginUserId)? LoginUserId: AuthenticationUtil.ResolveUserId(entityPM.Tenant); ;
+                requestParams.LoggingUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant); ;
                 requestParams.RequestName = "CustomsDocument Request";
                 requestParams.ResponseName = "שליחת צרופה " + entityPM.ExternalAttachmentId;
                 requestParams.InterfaceTypeCode = "2715";
@@ -819,31 +536,37 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     requestParams.ForcePersonalSign = true;
                 }
                 var my9mb = 9000000;
-
+                var my3mb = 3000000;
+                //if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > my3mb)
+                //{
+                //    SendDCA(requestParams);
+                //}
+                //else
                 {
-                    DocumentsFilingRepository rep = new DocumentsFilingRepository(entityPM.Tenant);
-                    var fileSize = rep.GetDocumentFileSizeByDocumentFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
                     var hugeFile = false;
- 
-                    if (fileSize > HugeFileSizeSendToDCA)
+                    var repo1 = new GDMFILEVERRepository(requestParams.Tenant);
+                    var list = repo1.GetList(requestParams.DocumentsFilingId);
+                    if (list.Count > 0)
                     {
-                        if (fileSize > MaxFileSizeDONOTSendToDCA)
+                        var lastVer = list.Max(r => r.VERSION);
+                        var lastGDMFILEVER = list.First(r => r.VERSION == lastVer);
+                        //9558452
+                        //7000000
+                        if (lastGDMFILEVER.FILESIZE > my3mb)
                         {
-                            throw new Exception("המסמך מעל 200MB - לא תתאפשר שליחה");
+
+                            hugeFile = true;
+
                         }
-                        hugeFile = true;
-
                     }
-
                     else
                     {
 
-                        if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > HugeFileSizeSendToDCA)
+                        if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > my3mb)
                         {
                             hugeFile = true;
                         }
                     }
-
                     if (hugeFile)
                     {
                         SendDCA(requestParams);
@@ -851,36 +574,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 var _CustomsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(requestParams.Tenant);
+
+                //var   listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
+                //            requestParams.Tenant, requestParams.InterfaceTypeCode,
+                //        ObjectTabelRepository.GetObjectTableByName("Customs.Declaration"), requestParams.DeclaretionId,
+                //        ObjectTabelRepository.GetObjectTableByName("Customs.CustomsDocument"), requestParams.DocumentsFilingId, 
+                //        null);
+                //if (listRequestInProgress != null && listRequestInProgress.Count >0)
+                //{
+                //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("2715 RequestInProgress stop create a new one !! ");
+                //    return;
+                //}
+
                 try
                 {
-                    LogitudeSettings.HandleLogMe("start send2:" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
-                    //var courierForceSignService = new CourierForceSignService();
-                    //courierForceSignService.ApplyForceSign(ref requestParams);
                     SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>(requestParams
-                        , false, requestParams.FutureSendDateTime
+                        , false
                         );
                     send = true;
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("send 2715 ");
-                }
-                catch (CourierForceSignException courierForceSignException)
-                {
-                    entityPM.DocumentStatusCode = "2";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 {
-                    LogitudeSettings.HandleLogMe("catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
                     if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
                     {
-                        LogitudeSettings.HandleLogMe("2715 RequestInProgress stop create a new one !! " + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("2715 RequestInProgress stop create a new one !! " + myCustomsRequestsSheetServiceException.Message);
                         return send;
                     }
                     else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
                     {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("No Available Sign Server, 2715 Request will not be sent !! " + myCustomsRequestsSheetServiceException.Message);
+
                     }
                     throw;
                 }
@@ -888,14 +610,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             catch (Exception e)
             {
 
-                LogitudeSettings.HandleLogMe("send failed : " + e.Message + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-                if (!IgnoreSendFailure)
-                {
-                    LogitudeSettings.HandleLogMe("שליחת מסמך למכס נכשל : " + e.Message + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
-
-                    e.ChangeExceptionMessage(@"שליחת מסמך למכס נכשל" + Environment.NewLine);
-                    throw e;
-                }
+                e.ChangeExceptionMessage(@"שליחת מסמך למכס נכשל" + Environment.NewLine);
+                throw e;
             }
             return send;
 
@@ -926,33 +642,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateDeclarationCourierStatus(CustomsDocumentPM entityPM)
         {
-            string status = null;
-            if ( entityPM.DocumentStatusCode == "7")
-            {
-                status = "I";
-            }
-            else if (entityPM.DocumentStatusCode == "2")
-            {
-                status = "X";
-            }
-            if (string.IsNullOrWhiteSpace( status))
-            {
-                return;
-            }
 
-            if (!string.IsNullOrWhiteSpace(entityPM.DeclarationId) /*&& entityPM.DocumentStatusCode == "7"*/)
+            if (!string.IsNullOrWhiteSpace(entityPM.DeclarationId) && entityPM.DocumentStatusCode == "7")
             {
                 ICustomContext context = MainContext as CustomContext;
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
                 if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
                 {
-                    //string status = "I";
-
+                    string status = "I";
+                    
                     if (!string.IsNullOrWhiteSpace(status))
                     {
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, false, false);
                         if (currentDeclarationCourierStatusPM == null)
                         {
                             currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
@@ -975,48 +678,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-
-        private void UpdateDeclarationCourierStatus380(CustomsDocumentPM entityPM)
-        {
-            ICustomContext context = MainContext as CustomContext;
-
-
-            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
-            CustomDocumentTypePM docType = docTypeQuery.GetSingleCustomDocumentTypeWithTenant(entityPM.DocumentTypeCode, entityPM.Tenant);
-            if (docType != null && docType.IsCourierManadatory)
-            //if (entityPM.DocumentTypeCode == "380")
-            {
-                //ICustomContext context = MainContext as CustomContext;
-
-                DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
-                if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
-                {
-                    string status = "M";
-                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
-                    if (currentDeclarationCourierStatusPM == null)
-                    {
-                        currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
-                        {
-                            DeclarationId = connectedDeclarationPM.Id,
-                            Tenant = connectedDeclarationPM.Tenant,
-                            IsClosedForFollowUp = false,
-                            IsCourierMissingClassification = false,
-                        };
-                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
-                    }
-                    else
-                    {
-                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                    }
-                    currentDeclarationCourierStatusPM.DocumentStatusCode = status;
-                    currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
-                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                }
-            }
-        }
-
         private DeclarationPM GetConnectedDeclarationPM(CustomsDocumentPM dirtyEntityPM)
         {
             DeclarationPM myDBEntity = null;
@@ -1028,5 +689,4 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return myDBEntity ?? new DeclarationPM();
         }
     }
-
 }

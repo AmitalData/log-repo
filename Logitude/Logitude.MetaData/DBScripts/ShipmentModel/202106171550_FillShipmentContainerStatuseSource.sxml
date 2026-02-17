@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Shipment">
-  <Sql Version="1">
-    <![CDATA[
-    
-    Update ShipmentContainerStatuses Set StatusSource = 'INT'
-
-    ]]>
-  </Sql>
-</Script>

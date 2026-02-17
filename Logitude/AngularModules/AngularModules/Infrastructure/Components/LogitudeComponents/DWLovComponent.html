@@ -455,7 +455,7 @@
                     <div class="LogLovContainer">
 
                         <!-- LogLov Input textbox -->
-                        <div class="LogLovInputDiv" [ngStyle]="InputDivStyle" title="{{DisplayTextNgModel}}">
+                        <div class="LogLovInputDiv" [ngStyle]="InputDivStyle" >
                             <table>
                                 <tr>
                                     <td style="position:relative;">
@@ -467,7 +467,7 @@
                                                (blur)="OnSearchInputBlur()"
                                                (mouseover)='OnMouseHover()'
                                                (mouseleave)='OnMouseLeave()'
-                                               [placeholder]="ObjectTableName == 'DIM_Partners'? 'Name' : ObjectFieldName.replace('[','').replace(']','')"
+                                               [placeholder]="ObjectFieldName.replace('[','').replace(']','')"
                                                style="border:1px solid transparent;
                                                       border-radius:3px;
                                                       text-indent:5px;
@@ -576,8 +576,8 @@
 
             <!-- Search Icon Button -->
             <td style="width: 18px; position: relative;">
-                <img (click)="SearchButtonClicked()" class="{{LayoutDirectionClassName}} {{'LogLovDIMTable' | IdGeneratorAsyncPipe | async}}"  style="width: 14px; height: 14px; cursor: pointer;"
-                     src="./Images/LOVSearch.png" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" [ngStyle]="imgNgStyle" [id]="SearchIconId"/>
+                <img (click)="SearchButtonClicked()" [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" style="width: 14px; height: 14px; cursor: pointer;"
+                     src="./Images/LOVSearch.png" [class.FlipImgHoriz]="LayoutDirection == 'rtl'"  [ngStyle]="imgNgStyle" [id]="SearchIconId"/>
             </td>
              
         </tr>

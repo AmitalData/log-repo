@@ -1,6 +1,5 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -31,11 +30,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get { return "8211"; }
         }
-        protected override COLT_NG_8211_MSG10040_CollateralRequestMsg GetFakeCustomsResponse(GenericRequestParams requestParamsData)
-        {
-            var MyFake_DCAInDF_8211_CollateralRequestMsgMessagingServices = new Fake_DCAInDF_8211_CollateralRequestMsgMessagingServices();
-            return MyFake_DCAInDF_8211_CollateralRequestMsgMessagingServices.GetFakeCustomsResponse(requestParamsData);
-        }
+
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(COLT_NG_8211_MSG10040_CollateralRequestMsg customsResponse)
         {
             var tableName = "Customs.CustomsCollateral";

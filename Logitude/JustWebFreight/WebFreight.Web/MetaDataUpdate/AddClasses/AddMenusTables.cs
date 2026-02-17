@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
@@ -27,11 +27,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 menusTable.TextCode = menusTableDetails.TextCode;
                 menusTable.UserControlName = menusTableDetails.UserControlName;
                 menusTable.HtmlView = menusTableDetails.HtmlView;
-                menusTable.FeatureUniqeCode = menusTableDetails.FeatureUniqeCode;
-                menusTable.QuerySection = menusTableDetails.QuerySection;
-
-
-                
                 menusTableRepository.Update(menusTable);
             }
 
@@ -49,11 +44,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     FeatureId = menusTableDetails.FeatureId,
                     CategoryTypeCode = menusTableDetails.CategoryTypeCode,
                     Code = menusTableDetails.Code,
-                    FeatureUniqeCode = menusTableDetails.FeatureUniqeCode,
-                    QuerySection = menusTableDetails.QuerySection,
-
-
-                Id = IdCounter.GetNumber("MenusTable",menusTableDetails.Tenant).ToString(),
+                    Id = IdCounter.GetNumber("MenusTable",menusTableDetails.Tenant).ToString(),
                 };
                 menusTableRepository.Add(newMenusTable);
             }

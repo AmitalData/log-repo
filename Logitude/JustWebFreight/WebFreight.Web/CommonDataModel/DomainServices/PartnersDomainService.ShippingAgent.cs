@@ -8,10 +8,10 @@ using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -250,8 +250,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             entity.Tenant = entityPm.Tenant;
             entity.ForwarderCreditNumber = entityPm.ForwarderCreditNumber;
             entity.ForwarderAccountNumber = entityPm.ForwarderAccountNumber;
-            card.AccountingVATSplit = entityPm.AccountingVATSplit;
-            card.BillToId = entityPm.BillToId;
             card.ReceivablesAccountingCard = entityPm.ReceivablesAccountingCard;
             card.PayablesAccountingCard = entityPm.PayablesAccountingCard;
             card.CreateDate = entityPm.CreateDate;
@@ -338,7 +336,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
             service.Update(currentEntity);
         }
-
 
         public void DeleteShippingAgent(ShippingAgentPM shippingAgent)
         {

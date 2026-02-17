@@ -62,13 +62,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 
 
-        public ChargesType ChargesTypeCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
+        public ChargesType ChargesTypeCustomDataMapping(string Id, int Tenant)
         {
             try
             {
 
                 ChargesTypeQueryService ChargesTypeService0 = new ChargesTypeQueryService(Tenant);
-                var ChargeType = ChargesTypeService0.GetChargesTypeById(Id, Tenant,ComputingPartnerName);
+                var ChargeType = ChargesTypeService0.GetChargesTypeById(Id, Tenant);
                 return ChargeType;
             }
             catch (Exception ex)

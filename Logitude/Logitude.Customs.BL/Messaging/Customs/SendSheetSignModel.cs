@@ -16,9 +16,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
         public string CustomsRequestsSheetId { get; set; }
 
-
         
-        public string ExportTaskQueueId { get; set; }
-        public string ExportTaskMarkAsFailedMessage { get; set; }
     }
 }

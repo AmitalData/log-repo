@@ -29,7 +29,7 @@ namespace Logitude.TariffModule.Data.EntityLists
        [DataMember]
        public int Version  { get; set; }
        [DataMember]
-       public decimal? MinPrice  { get; set; }
+       public int? MinPrice  { get; set; }
        [DataMember]
        public string OriginPortName  { get; set; }
        [DataMember]
@@ -38,22 +38,6 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string DestinationPortName  { get; set; }
        [DataMember]
        public string DestinationPortCode  { get; set; }
-       [DataMember]
-       public string CurrencyId  { get; set; }
-       [DataMember]
-       public string CurrencyCode  { get; set; }
-       [DataMember]
-       public string OriginPortCombinedCode  { get; set; }
-       [DataMember]
-       public string DestinationPortCombinedCode  { get; set; }
-       [DataMember]
-       public string TransitTime  { get; set; }
-       [DataMember]
-       public string ViaPortName  { get; set; }
-       [DataMember]
-       public string ViaPortCombinedCode  { get; set; }
-       [DataMember]
-       public string ViaPortCode  { get; set; }
    }
 
 }

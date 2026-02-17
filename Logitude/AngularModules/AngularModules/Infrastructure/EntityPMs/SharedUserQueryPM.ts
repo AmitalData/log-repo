@@ -28,10 +28,6 @@ export class SharedUserQueryPM {
     public get QueryId() { return this.queryId; }
     public set QueryId(newValue: string) { this.queryId = newValue; }
 
-    private queryCode: string;
-    public get QueryCode() { return this.queryCode; }
-    public set QueryCode(newValue: string) { this.queryCode = newValue; }
-
     private entityParentPM: any;
     public get EntityParentPM() { return this.entityParentPM; }
     public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }

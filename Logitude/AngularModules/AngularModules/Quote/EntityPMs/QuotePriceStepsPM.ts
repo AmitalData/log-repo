@@ -21,10 +21,10 @@ export class QuotePriceStepsPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -73,11 +73,6 @@ export class QuotePriceStepsPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
-    private measurementUnit: string;
-    public get MeasurementUnit() { return this.measurementUnit; }
-    public set MeasurementUnit(newValue: string) { if (this.measurementUnit != newValue) { this.measurementUnit = newValue; this.MarkAsDirty("MeasurementUnit"); } }
-       
-	 
 
     public OldEntityPM: QuotePriceStepsPM;
 	    
@@ -88,10 +83,7 @@ export class QuotePriceStepsPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -101,7 +93,6 @@ export class QuotePriceStepsPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuotePriceSteps");
            
         }
-	 }
     }
     private MyClone: QuotePriceStepsPM;
 

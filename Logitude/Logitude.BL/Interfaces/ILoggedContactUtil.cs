@@ -4,14 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-
 
 namespace Logitude.BL.Interfaces
 {
     public interface ILoggedContactUtil
     {
         ContactPM GetLoggedContact(int tenant);
-        Contact GetLoggedContactsIncludingCustomerCareForWR(int tenant);
     }
 }

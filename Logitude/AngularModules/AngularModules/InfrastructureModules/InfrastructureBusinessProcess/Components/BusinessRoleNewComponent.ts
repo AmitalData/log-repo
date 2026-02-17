@@ -11,7 +11,7 @@ import {BusinessRolePMInitService} from '../../../Infrastructure/EntityPMInitSer
 
 @Component({
     selector: 'BusinessRoleNewComponent',
-    
+    moduleId: module.id,
     templateUrl: './BusinessRoleNewComponent.html',
 })
 

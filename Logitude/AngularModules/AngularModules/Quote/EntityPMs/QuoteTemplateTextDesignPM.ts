@@ -73,36 +73,26 @@ export class QuoteTemplateTextDesignPM {
     private alignment: string;
     public get Alignment() { return this.alignment; }
     public set Alignment(newValue: string) { if (this.alignment != newValue) { this.alignment = newValue; this.MarkAsDirty("Alignment"); } }
-       
-	 
+
+
+
     private title: string;
     public get Title() { return this.title; }
-    public set Title(newValue: string) { if (this.title != newValue) { this.title = newValue; this.MarkAsDirty("Title"); } }
-       
-	 
+    public set Title(newValue: string) { if (this.title != newValue) { this.title = newValue;  } }
+
     private textValue: string;
     public get TextValue() { return this.textValue; }
-    public set TextValue(newValue: string) { if (this.textValue != newValue) { this.textValue = newValue; this.MarkAsDirty("TextValue"); } }
-       
-	 
+    public set TextValue(newValue: string) { if (this.textValue != newValue) { this.textValue = newValue; } }
+
     private hideAlignment: boolean;
     public get HideAlignment() { return this.hideAlignment; }
-    public set HideAlignment(newValue: boolean) { if (this.hideAlignment != newValue) { this.hideAlignment = newValue; this.MarkAsDirty("HideAlignment"); } }
-       
-	 
-    private sampleText: string;
-    public get SampleText() { return this.sampleText; }
-    public set SampleText(newValue: string) { if (this.sampleText != newValue) { this.sampleText = newValue; this.MarkAsDirty("SampleText"); } }
-       
-	 
+    public set HideAlignment(newValue: boolean) { if (this.hideAlignment != newValue) { this.hideAlignment = newValue; } }
+
 
     public OldEntityPM: QuoteTemplateTextDesignPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -110,7 +100,6 @@ export class QuoteTemplateTextDesignPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTemplateTextDesign");
            
         }
-	 }
     }
     private MyClone: QuoteTemplateTextDesignPM;
 

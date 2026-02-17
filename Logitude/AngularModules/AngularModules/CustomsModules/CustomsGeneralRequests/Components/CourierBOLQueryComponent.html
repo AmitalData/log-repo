@@ -66,66 +66,56 @@
                                 <log-column [width]="'110'" [Alignment]="'right'"
                                             [header]="'Customs.CourierBOLQuery.F.cargoIdentiferTypeId' | TextCodeTranslationPipe"
                                             [binding]="'CargoIdentifierType'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.cargoIdentifierType}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- CargoIdentifierKey1 -->
                                 <log-column [width]="'180'" [Alignment]="'right'"
                                             [header]="'Customs.CourierBOLQuery.F.cargoIdentifierKey1' | TextCodeTranslationPipe"
                                             [binding]="'CargoIdentifierKey1'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.cargoIdentifierKey1}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- CargoIdentifierKey2 -->
                                 <log-column [width]="'120'" [Alignment]="'right'"
                                             [header]="'Customs.CourierBOLQuery.F.CourierVAT' | TextCodeTranslationPipe"
                                             [binding]="'CargoIdentifierKey2'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.cargoIdentifierKey2 }}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- CargoIdentifierKey3 -->
                                 <log-column [width]="'120'" [Alignment]="'right'"
                                             [header]="'Customs.CourierBOLQuery.F.cargoIdentifierKey3' | TextCodeTranslationPipe"
                                             [binding]="'CargoIdentifierKey3'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.cargoIdentifierKey3 }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>     
                                 
                                 <!-- Edit Button -->
                                 <log-column *ngIf="IsFromDeclaration" [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                    <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                         <span class="CellSeparator" style="float: right;"></span>
                                         <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
                                             <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>                          
 
                             </logitude-edit-grid>

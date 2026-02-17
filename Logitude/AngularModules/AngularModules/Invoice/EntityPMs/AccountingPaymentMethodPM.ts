@@ -80,19 +80,11 @@ export class AccountingPaymentMethodPM {
     public set IsAP(newValue: boolean) { if (this.isAP != newValue) { this.isAP = newValue; this.MarkAsDirty("IsAP"); } }
        
 	 
-    private localName: string;
-    public get LocalName() { return this.localName; }
-    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
-       
-	 
 
     public OldEntityPM: AccountingPaymentMethodPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -100,7 +92,6 @@ export class AccountingPaymentMethodPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AccountingPaymentMethod");
            
         }
-	 }
     }
     private MyClone: AccountingPaymentMethodPM;
 

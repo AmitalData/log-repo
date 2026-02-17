@@ -16,7 +16,6 @@ export class ARInvoiceList {
 		BillToPartnerName: string;
 		BillToId: string;
 		BillToName: string;
-		BillToLocalName: string;
 		BillToCode: string;
 		BillToAddressId: string;
 		VatNumber: string;
@@ -41,7 +40,6 @@ export class ARInvoiceList {
 		PaymentTermName: string;
 		IsAutoCredit: boolean;
 		IsCancelled: boolean;
-		IsFromInterestBatchInvoice: boolean;
 		CancelledByARInvoiceId: string;
 		InternalNotes: string;
 		PrintNotes: string;
@@ -61,7 +59,6 @@ export class ARInvoiceList {
 		AmountDueInLocalCurrency: number;
 		AmountDueInProfitCurrency: number;
 		MainEntityId: string;
-		MasterEntityId: string;
 		HouseNumber: string;
 		MasterNumber: string;
 		Description: string;
@@ -74,7 +71,6 @@ export class ARInvoiceList {
 		UpdateDate: Date;
 		UpdatedByUserId: string;
 		BranchId: string;
-		BranchName: string;
 		IsPrinted: boolean;
 		PaymentTermExternalId: string;
 		IsConstituentInvoice: boolean;
@@ -100,13 +96,12 @@ export class ARInvoiceList {
 		AccountingExternalCode: string;
 		ReadyForTransfer: boolean;
 		IsDueDateColorRed: boolean;
-		IsDigitalDueDateColorRed: boolean;
 		IsExpectedPaymentDateColorRed: boolean;
 		ApprovedDate: Date;
 		ApprovedByUserId: string;
 		ApprovedByUserName: string;
 		OperationalDate: Date;
-		DateForInterest: Date;
+		DateForVATInterest: Date;
 		SplitJournalByCurrency: boolean;
 		IsExternalEntity: boolean;
 		IsGeneralInvoice: boolean;
@@ -120,9 +115,6 @@ export class ARInvoiceList {
 		CreditedByARInvoiceTypeCode: string;
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
-		PeriodCode: string;
-		RegimenFiscalCode: string;
-		Period: string;
 		SATTransferStatusCode: string;
 		SATTransferStatusName: string;
 		TransmissionError: string;
@@ -130,52 +122,13 @@ export class ARInvoiceList {
 		SATInvoiceStatusName: string;
 		Intercompany: boolean;
 		BankAccountLiteId: string;
-		HasInterestFeature: boolean;
 		IsMultiCurrency: boolean;
 		TotalAmountForTaxReport: number;
 		TotaVatableAmountForTaxReport: number;
 		TotalVAT: number;
 		SATApprovalDate: Date;
-		DocumentFilingId: string;
 		IsFullAccounting: boolean;
 		ARInvoiceStockId: string;
 		IsInvoiceNumberFromStock: boolean;
-		BillToCity: string;
-		BillToCountry: string;
-		CreatedByPartner: string;
-		SATXML: string;
-		BillToGLAccountId: string;
-		RegionalTaxId: string;
-		RegionalTaxPercentage: number;
-		PaidStatus: string;
-		PaidDate: Date;
-		PartnerId: string;
-		PartnerName: string;
-		ShipmentsNumbers: string;
-		MasterNumbers: string;
-		MasterShipmentNumbers: string;
-		HouseNumbers: string;
-		GlobalTaxCalculation: string;
-		PaymentReferences: string;
-		SATCancelReasonCode: string;
-		DigitalPortalSearchFields: string;
-		TotalExamptFortaxReport: number;
-		DocumentTemplateId: string;
-		ConcurrencyGUID: string;
-		TotalAmountNotForTaxReport: number;
 	
-		IsSigned: string;
-		IsSignedName: string;
-		ConfirmationNumber: string;
-		ConfirmationNumberStatus: string;
-		ConfirmationNumberStatusName: string;
-
-	    APIResponseToConfirmation:string;
-		IsApprovalFailed: boolean;
-		ApprovalInProgress: boolean;
-
-		SequenceStatus:string;
-	    InvoiceNumberPart:string;
-	    InvoiceSeries:string;
-
-}
+}

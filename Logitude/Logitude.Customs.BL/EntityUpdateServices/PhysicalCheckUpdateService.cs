@@ -12,7 +12,7 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.NotificationBL;
 using System.Diagnostics;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.BL.Models;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -35,7 +35,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //if (setting.IsConnectedToUniFreight)
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
-            if (declarationPM != null && (declarationPM.IsConnectedToUnifreight || declarationPM.IsAmendment==true))
+            if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
             {
                 UpdateUnifreight(entityPM);
             }
@@ -84,9 +84,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     case EventContextTagModel.ProccessEnum.CH_NG_190_MSG1_NoticeToClientResponseServiceDelete:
                         notificationDefinitionCode = "190C";
                         break;
-                    case EventContextTagModel.ProccessEnum.CH_NG_192_MSG1_QueueAdvanceDeniedResponseService:
-                        notificationDefinitionCode = "192F";
-                        break;
                     default:
                         break;
                 }
@@ -97,7 +94,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (String.IsNullOrWhiteSpace(dirtyEntityPM.DeclarationId))
                 {
                     errMessage = "Piscal check is not connected to Declaration ";
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(errMessage);
+                    Debug.WriteLine(errMessage);
                     return;
                 }
                 else
@@ -106,7 +103,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (connectedDeclarationPM == null)
                     {
                         errMessage = "Can not found connected declaration" + dirtyEntityPM.DeclarationId;
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(errMessage);
+                        Debug.WriteLine(errMessage);
                         return;
                     }                   
                 }
@@ -212,16 +209,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         desc = "בוטלה בדיקה פיזית ל " + DeclarationConvertionText + "\n" + "מספר בדיקה - " + dirtyEntityPM.CheckId + "\n" + "תאריך הבדיקה -" + convertedDate;
                     }
                     //Yuval Chalup 19.11.2015 TASK-17450 --->
-                break;
-            case "192F":
-                    if (string.IsNullOrWhiteSpace(DeclarationConvertionText))
-                    {
-                        desc = "הקדמת תור נדחתה " + connectedDeclarationPM.CustomFileNo + "\n" + "מספר בדיקה - " + dirtyEntityPM.CheckId;
-                    }
-                    else
-                    {
-                        desc = "הקדמת תור נדחתה " + DeclarationConvertionText + "\n" + "מספר בדיקה - " + dirtyEntityPM.CheckId + "\n" + "תאריך הבדיקה -" + DateTime.Now.ToString("O").Substring(0, 19);
-                    }
                 break;
             }
             

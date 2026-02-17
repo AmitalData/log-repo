@@ -7,7 +7,7 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
@@ -48,7 +48,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 Tenant = entityPM.Tenant,
             };
 
-            RoleValidating.Validate(entityPM, isNewEntity, entityRepository);
+            RoleValidating.Validate(entityPM);
             RoleTracing.Trace(entityPM, Poco, isNewEntity);
             RoleMapping.MapEntity(entityPM, Poco, isNewEntity);
 
@@ -69,16 +69,32 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM = entityPM;
             this.Poco = entityRepository.GetSingleRole(entityPM.Id, entityPM.Tenant);
 
-
-            RoleValidating.Validate(entityPM, isNewEntity, entityRepository);
-            RoleTracing.Trace(entityPM, Poco, isNewEntity);
-            RoleMapping.MapEntity(entityPM, Poco, isNewEntity);
-
             if (entityPM.UserId != null)
             {
+                RoleValidating.Validate(entityPM);
+                RoleTracing.Trace(entityPM, Poco, isNewEntity);
+                RoleMapping.MapEntity(entityPM, Poco, isNewEntity);
+
                 if (entityPM.Added)
                 {
                     this.AddRoleUser();
+
+                    //ContactTenant myContactTenant = contactTenantsRepository.GetContactTenantForContactId(entityPM.UserId, tenant);
+                    //ContactTenantRole myContactTenantRole = contactTenantRolesRepository.GetContactTenantRoleByRoleIdAndContactTenant(entityPM.Id, myContactTenant.Id, tenant);
+
+                    //if (myContactTenantRole == null)
+                    //{
+                    //    myContactTenantRole = new ContactTenantRole()
+                    //    {
+                    //        ContactTenantId = myContactTenant.Id,
+                    //        RoleId = entityPM.Id,
+                    //        Id = IdCounter.GetNumber("ContactTenantRole", entityPM.CurrentTenant).ToString(),
+                    //        Tenant = tenant
+                    //    };
+
+                    //    contactTenantRolesRepository.Add(myContactTenantRole);
+                    //    contactTenantRolesRepository.SubmitChanges();
+                    //}
                 }
 
                 if (entityPM.Removed)
@@ -93,14 +109,23 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             contactTenantRolesRepository.Remove(item);
                         }
 
-                        contactTenantRolesRepository.SubmitChanges();
+                        contactTenantRolesRepository.SubmitChanges();                        
                     }
-                }
-            }
 
-            entityRepository.Update(Poco);
-            entityRepository.SubmitChanges();
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Role");
+                    // Ayman: Cant do this chech here...
+                    // one of the reasons is that the remove meight happen before the addition
+
+                    //bool hasOtherRoles = contactTenantRolesRepository.CheckIfLastUserRole(entityPM.Id, myContactTenant.Id, tenant);
+                    //if (!hasOtherRoles)
+                    //{
+                    //    throw new ApplicationException("User must have one role at least");
+                    //}
+                }
+
+                entityRepository.Update(Poco);
+                entityRepository.SubmitChanges();
+                TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Role");
+            }
         }
 
         private void AddRoleUser()

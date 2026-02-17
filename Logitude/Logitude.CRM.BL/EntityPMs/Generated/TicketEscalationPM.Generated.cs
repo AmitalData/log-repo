@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -315,29 +315,6 @@ namespace Logitude.CRM.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EscalationForName",OldValue=escalationForName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   escalationForName=value;
-		   }
-			
-		 }
-	   }
-	  private string searchFields ;
-	  	  
-       
-	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SearchFields  
-	   {
-	    
-	     get
-		{
-		   return searchFields;
-		 }
-		 set
-		 {
-		   if(searchFields != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   searchFields=value;
 		   }
 			
 		 }

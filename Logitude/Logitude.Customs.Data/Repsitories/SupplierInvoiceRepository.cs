@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
-using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -49,21 +48,10 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<SupplierInvoice> GetSupplierInvoicesForDeclaration(string declarationId, int tenant)
         {
-            var q = (from a in context.SupplierInvoices
-                     where a.Tenant== tenant && a.DeclarationId == declarationId
-                     orderby a.SequenceNumeric
-                     select a);
-            return q.ToList();
-        }
-
-        public List<SupplierInvoice> GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant)
-        {
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
-
             return (from a in context.SupplierInvoices
-                                      where a.DeclarationId == declarationId && (a.InvoiceNumber == invoiceNumber || string.IsNullOrEmpty(a.InvoiceNumber)) && a.Tenant == tenant
-                                      select a).ToList();
-            
+                    where a.DeclarationId == declarationId
+                    orderby a.SequenceNumeric 
+                    select a).ToList();
         }
 
         public IQueryable<SupplierInvoice> GetSupplierInvoicesQueryForDeclaration(string declarationId, int tenant)
@@ -81,11 +69,11 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).Count();
         }
 
-        public int? GetMaxSequenceNumeric(string declarationId, int tenant)
+        public int? GetMaxCounterKey(string declarationId, int tenant)
         {
             return (from a in context.SupplierInvoices
                     where a.DeclarationId == declarationId && a.Tenant == tenant
-                    select a).Max(d => (int?)d.SequenceNumeric > (int?)d.InvoiceCounterKey ? (int?)d.SequenceNumeric : (int?)d.InvoiceCounterKey) ?? 0;
+                    select a).Max(d => (int?)d.InvoiceCounterKey) ?? 0;
         }
 
         public SupplierInvoice GetSupplierInvoiceBySequenceNumeric(string declarationId, int sequenceNumeric)
@@ -156,19 +144,11 @@ namespace Logitude.Customs.Data.Repsitories
             return exists;
         }
 
-
-        
         public List<SupplierInvoice> GetSupplierInvoicesWithoutTotalFrieght(int tenant)
         {
                 return (from a in context.SupplierInvoices
                         where a.Tenant == tenant && a.TotalFreightInNIS == null && a.TotalFreightInFreightCurrency !=null && a.TotalFreightInFreightCurrency !=0
                         select a).ToList();
-        }
-        public List<string> GetDeclarationIdfromInvoiceNumber(string invoicenumber,int tenant)
-        {
-            return (from a in context.SupplierInvoices
-                    where a.Tenant == tenant && a.InvoiceNumber == invoicenumber
-                    select a.DeclarationId).ToList();
         }
     }
 }

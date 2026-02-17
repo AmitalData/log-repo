@@ -1,3 +1,5 @@
+﻿/// <reference path="../entitypms/documentoutpm.ts" />
+
 import {DocumentOutPM} from '../EntityPMs/DocumentOutPM';
 import {DocumentsFilingPM} from '../EntityPMs/DocumentsFilingPM';
 export class ShipmentShareDocumentsData {

@@ -68,8 +68,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             listOfState2Check.Add(new Tuple<JournalPM, string>(
                 new JournalPM()
                 {
-                    //AccountingDate = new DateTime(2017, 1, 1), //ClosedMonth = 1, OpenMonth = 9 
-                    AccountingDate = new DateTime(2017, 1, 20), //ClosedMonth = 1, OpenMonth = 9 
+                    AccountingDate = new DateTime(2017, 1, 1), //ClosedMonth = 1, OpenMonth = 9 
                     StatusCode = "0",
                     JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){ 
@@ -388,7 +387,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 new JournalPM()
                 {
                     AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
-                    StatusCode = "6", //var isApproved=myJournalPM.StatusCode=="2";
+                    StatusCode = "2", //var isApproved=myJournalPM.StatusCode=="2";
                     JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){ 
                     Line=1,
@@ -409,7 +408,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 new JournalPM()
                 {
                     AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
-                    StatusCode = "6",
+                    StatusCode = "2",
                     JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){ 
                     Line=1,
@@ -456,7 +455,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 new JournalPM()
                 {
                     AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
-                    StatusCode = "6", //var isApproved=myJournalPM.StatusCode=="2";
+                    StatusCode = "2", //var isApproved=myJournalPM.StatusCode=="2";
                     JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){ 
                     Line=1,
@@ -479,7 +478,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 new JournalPM()
                 {
                     AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
-                    StatusCode = "6",
+                    StatusCode = "2",
                     JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){ 
                     Line=1,

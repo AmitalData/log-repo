@@ -72,43 +72,13 @@
 
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:120px;">
-                            <table style="table-layout: fixed;">
-                                <tr>
-                                    <td style="width:10px; vertical-align: middle;">
-                                        <div *ngIf="!SelectedObjectTableId" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
-                                    </td>
-                                    <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
-                                        <label class="Label" [style.color]="SelectedObjectTableId ? '#6E7172':'red'" style="color:#6E7172">Object Table:</label>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
+                        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'ObjectTableId'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel></td>
                         <td colspan="2">
                             <table>
 
                                 <tr>
 
-                                    <td style="width:192px">
-
-                                        <LogLov *ngIf="IsLogLovReady"
-                                                [IsDisabled]="!IsEnableEdit || IsDisableObjectTable"
-                                                [ObjectFieldName]="'SelectedObjectTableId'"
-                                                [ObjectTableName]="'ObjectTable'"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'ObjectTable'"
-                                                [NoValidation]="true"
-                                                [IsFreeText]="true"
-                                                [SelectedValue]="SelectedObjectTableId"
-                                                [HideColumns]="true"
-                                                [HideLastColumn]="true"
-                                                [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
-                                                [IsDecendingSort]="false"
-                                                [QueryFilterItems]="ObjectTablesFilterItems"
-                                                [CustomizedWidth]="'193px'"
-                                                style="width: 193px">
-                                        </LogLov>
-                                    </td>
+                                    <td style="width:192px"><ComboBox [IsDisabled]="!IsEnableEdit" style="width:192px;" [ItemsSource]="ObjectTablesList" (SelectedItemChanged)="ObjectTableValueChanged($event)" [SelectedItem]="SelectedObjectTable" [Binding]="'Name'"></ComboBox></td>
                                     <td><div style="text-align:left"><a  *ngIf="IsShowAdvanceLink && IsEnableEdit" style="margin-left:12px;color:#0094ff;font-size:11px;" (click)="AdvanceLinkMethod()">Advance</a></div></td>
                                 </tr>
                             </table>
@@ -131,7 +101,7 @@
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsDocOut'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel></td>
-                        <td style="width:230px;text-align:left"><LogCheckBox [IsDisabled]="IsCustomObject" [Value]="IsDocOut" (ValueChanged)="IsDocOutChange($event)" [LogitudeForm]="myForm" [ObjectFieldName]="'IsDocOut'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogCheckBox></td>
+                        <td style="width:230px;text-align:left"><LogCheckBox (ValueChanged)="IsDocOutChange($event)"   [LogitudeForm]="myForm" [ObjectFieldName]="'IsDocOut'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogCheckBox></td>
                         <td><div></div></td>
                     </tr>
 
@@ -246,7 +216,7 @@
 
                 <div  [style.opacity]="OpacityAreaStimulDocument"   [style.pointer-events]="PointerEventsAreaStimulDocument"   *ngIf="IsLoadTemplate" style="height:45%;vertical-align:top;">
 
-                    <DocumentTypeTemplate style="vertical-align:top;width:100%"  [DocumentTypeTemplates]="DocumentTypeTemplates" [DocumentType]="EntityPM" [TypeTab]="'Document'" (ReloadTemplates)="LoadTemplate()"> </DocumentTypeTemplate>
+                    <DocumentTypeTemplate style="vertical-align:top;width:100%"  [DocumentTypeTemplates]="DocumentTypeTemplates" [DocumentType]="EntityPM" [TypeTab]="'Document'"> </DocumentTypeTemplate>
 
                 </div>
 

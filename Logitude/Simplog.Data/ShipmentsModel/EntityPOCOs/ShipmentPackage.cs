@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
@@ -27,7 +27,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? Length { get; set; }
         public string UnNumber { get; set; }
         public string ClassNumber { get; set; }
-        public string Temperature { get; set; }
+        public double? Temperature { get; set; }
         public double? Ventilation { get; set; }
         public int? SOC { get; set; }
         public string MarksAndNumbers { get; set; }
@@ -76,19 +76,14 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool MarinePollutant { get; set; }
         public string Notes { get; set; }
         public bool NonActiveContainer { get; set; }
-        public int InUse { get; set; }
-
+        
         public DateTime? OnCarriageETD { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
 
-        public string WarehouseReleaseNumber { get; set; }
-
-        public string ContainerStatusSourceCode { get; set; }
-        [ForeignKey("ContainerStatusSourceCode")]
-        public virtual ContainerStatusSource ContainerStatusSource { get; set; }
-
+        [ForeignKey("LastStatusCode")]
+        public INTTRAStatus LastStatus { get; set; }
         public string LastStatusCode { get; set; }
         public DateTime? LastStatusDate { get; set; }
 
@@ -142,13 +137,5 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }
 
-        public string HorseId { get; set; }
-        public virtual Horse Horse { get; set; }
-
-        public string LCLContainerTypeId { get; set; }
-        [ForeignKey("LCLContainerTypeId")]
-        public virtual PackageType LCLPackageType { get; set; }
-        public string ContainerEntityId { get; set; }
-        public DateTime? ContainerStrippedDate { get; set; }
     }
 }

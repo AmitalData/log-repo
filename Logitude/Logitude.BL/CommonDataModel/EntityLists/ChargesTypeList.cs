@@ -1,10 +1,9 @@
-﻿using Logitude.BL.InfrastructureModel.EntityLists;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class ChargesTypeList: CustomFieldList
+    public class ChargesTypeList
     {
         public string Code { get; set; }
 
@@ -26,11 +25,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ChargesGroupId { get; set; }
         public string ChargesGroupCode { get; set; }
         public string ChargesGroupName { get; set; }
-
-        public string QuoteChargesGroupCode { get; set; }
-        public string QuoteChargesGroupId { get; set; }
-        public string QuoteChargesGroupName { get; set; }
-
+        
         public string VatTypeId { get; set; }
         public string VatTypeName { get; set; }
         public double VatTypePercentage { get; set; }
@@ -68,8 +63,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PayablesChargesTypeExternalCode { get; set; }
         public string PayableDebitGLAcountId { get; set; }
         public string ReceivableCreditGLAccountId { get; set; }
-        public string RecCreditGLAcountLocalName { get; set; }
-        public string PayDebitGLAcountLocalName { get; set; }
         public bool IsBackToBack { get; set; }
         public bool IsAutoDisplayInCustoms { get; set; }
         public bool IsCustoms { get; set; }
@@ -80,18 +73,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsDomestic { get; set; }
         public bool IsExport { get; set; }
         public bool IsDrop { get; set; }
-
-        public string ReceivablesDefaultCurrencyId { get; set; }
-        public string PayablesDefaultCurrencyId { get; set; }
-        public bool ApplyRegionalTax { get; set; }
-
-        public bool HasPickup { get; set; }
-        public bool HasDelivery { get; set; }
-
-        public bool IsDirectionRestricted { get; set; }
-        public bool IsActiveInExport { get; set; }
-        public bool IsActiveInImport { get; set; }
-        public bool IsActiveInDomestic { get; set; }
-        public bool IsActiveInDrop { get; set; }
     }
 }

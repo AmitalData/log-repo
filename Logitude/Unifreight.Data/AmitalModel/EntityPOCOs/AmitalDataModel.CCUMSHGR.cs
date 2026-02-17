@@ -21,7 +21,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUMSHGR in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference = true)]
-    public partial class CCUMSHGR : UNIFBASICPOCO, INotifyPropertyChanged
+    public partial class CCUMSHGR : INotifyPropertyChanged
     {
 
         public CCUMSHGR()

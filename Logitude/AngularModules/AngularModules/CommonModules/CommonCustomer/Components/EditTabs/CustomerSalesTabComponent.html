@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .Box {
         position: absolute;
@@ -110,26 +110,23 @@
                                                                     <ScrollViewer>
                                                                         <ul>
                                                                             <li class="RecentEntityItem" style="position: relative; " *ngFor="let item of OpportunityObsList" (click)="ViewEntity('Opportunity',item.Id)" [ngStyle]="{background: item.ListBoxBackground}">
-                                                                                <table style="table-layout:fixed">
+                                                                                <table>
                                                                                     <tr>
                                                                                         <td style="width:5px;min-width:5px; overflow:hidden;">
                                                                                             <div [title]="item.RatingName" class="MediaFill" [ngStyle]="{background: item.RatingCode | StringToColorPipe:'QuoteRatingCode'}"></div>
                                                                                         </td>
-
-                                                                                        <td style="padding-left:5px;" rowspan="2">
+                                                                                        <td style="width:120px;min-width:120px; position: relative; padding-left:5px;" rowspan="2">
                                                                                             <div style="width:auto;height:50%;color:black">{{item.Topic}}</div>
                                                                                             <div style="width:120px; max-width:120px; color:#282E30; font-size:11px;">{{item.DisplayDate| DateTimeToDatePipe}}</div>
                                                                                         </td>
-
-                                                                                        <td style="width: 5px;">
+                                                                                        <td>
                                                                                             <div></div>
                                                                                         </td>
-
-                                                                                        <td style="text-align:right;padding-right:5px; width: 85px;">
-                                                                                            <div style="font-size:10px;height:50%;vertical-align:central;">
+                                                                                        <td style="text-align:right;padding-right:5px;">
+                                                                                            <div style="font-size:10px;height:50%;width:100%;vertical-align:central;">
                                                                                                 <label [ngStyle]="{color: item.StageName | StringToColorPipe:'OpportunityStage'}" style="width:60%">{{item.StageName}}</label>
                                                                                             </div>
-                                                                                            <div style="height:50%;vertical-align:central; text-align:right" *ngIf="item.NumberOfShipments != 0 && item.NumberOfShipments != null">
+                                                                                            <div style="width:100px;min-width:100px;height:50%;vertical-align:central; float:right;" *ngIf="item.NumberOfShipments != 0 && item.NumberOfShipments != null">
                                                                                                 <label style="color:#282E30;font-size:12px;">{{item.NumberOfShipments}}</label>
                                                                                             </div>
                                                                                             <div *ngIf="item.NumberOfShipments == null" style="height:50%;width:100%"></div>
@@ -174,18 +171,32 @@
                                     </td>
 
                                     <!-- Activity -->
-                                    <td *ngIf="IsTicketTabDim" style="min-width:400px;width:400px;max-width:400px;">
+                                    <td style="min-width:400px;width:400px;max-width:400px;">
                                         <div class="Box">
                                             <table>
                                                 <tr class="BoxHeader">
                                                     <td>
                                                         <label>Last 5 Activities</label>
                                                     </td>
+                                                    <!--<td style="width:40px;height:15px;padding:3px;">
+                                                        <div tabindex="0" class="ToggleButton" title="Add Activity">
+                                                            <img class="LeftCenter" style="width:17px;height:12px;padding-left:2px;padding-right:2px;" src="./Images/Buttons/AddGreenSolid.png" />
+                                                            <span style="line-height:12px;margin: 5px;min-height: 1px;">&nbsp;</span>
+                                                            <img class="RightCenter" style="vertical-align:central;padding-right:2px;" src="./Images/ToggleIcon.png" />
+                                                            <div class="ToggleButtonMenu">
+                                                                <button (click)="NewEntity('TS')">Task</button>
+                                                                <button (click)="NewEntity('CL')">Phone Call</button>
+                                                                <button (click)="NewEntity('AP')">Appointment</button>
+                                                                <button (click)="AddEmailActivity()">Email</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>-->
+
                                                     <td style="float:right;height:22px;">
                                                         <table>
                                                             <tr style="height:22px;vertical-align:middle;padding:3px;">
                                                                 <td style="width: 35px;">
-                                                                    <button class="Button" (click)="NewEntity('CL')" [disabled]="!EnableNewActivity">
+                                                                    <button class="Button" (click)="NewEntity('CL')"  [disabled]="!EnableNewActivity" >
                                                                         <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                         <img style="left:5px;" src="./Images/Buttons/Call.png" />
                                                                     </button>
@@ -207,7 +218,7 @@
                                                                 </td>
 
                                                                 <td style="width: 35px;">
-                                                                    <button class="Button" (click)="NewEntity('AP')" [disabled]="!EnableNewActivity">
+                                                                    <button class="Button" (click)="NewEntity('AP')"  [disabled]="!EnableNewActivity">
                                                                         <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                         <img style="left:5px;" src="./Images/Buttons/Appointment.png" />
                                                                     </button>
@@ -218,7 +229,7 @@
                                                                 </td>
 
                                                                 <td style="width: 35px;">
-                                                                    <button class="Button" (click)="AddEmailActivity()" [disabled]="!EnableNewActivity">
+                                                                    <button class="Button" (click)="AddEmailActivity()"  [disabled]="!EnableNewActivity">
                                                                         <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                         <img style="left:5px;" src="./Images/Buttons/Email.png" />
                                                                     </button>
@@ -289,168 +300,12 @@
                                                                                             </td>
                                                                                         </tr>
                                                                                         <!--<tr style="height:2px;max-height:2px;min-height:2px;">
-                                                            <td colspan="3">
-                                                                <div>
-                                                                    &nbsp;
-                                                                </div>
-                                                            </td>
-                                                        </tr>-->
-                                                                                    </table>
-                                                                                </div>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </ScrollViewer>
-
-                                                                    <div *ngIf="ActivityObsList == null || ActivityObsList.length == 0" class="NoDataText" style="top:5px;">No Activities</div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="height:10px;">
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="height:32px;">
-                                                                <td>
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td style="vertical-align: bottom; float:right;">
-                                                                                <Hyperlink (click)="ViewAllData('ACT')" [Text]="'All Activities'" [IsEnabled]="NoActDataIsEnabled"></Hyperlink>
-                                                                            </td>
-                                                                            <td style="width:10px;">
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </td>
-
-                                    <td  *ngIf="!IsTicketTabDim" style="min-width:400px;width:400px;max-width:400px;" rowspan="3">
-                                        <div class="Box">
-                                            <table>
-                                                <tr class="BoxHeader">
-                                                    <td>
-                                                        <label>Last 10 Activities</label>
-                                                    </td>
-                                                    <td style="float:right;height:22px;">
-                                                        <table>
-                                                            <tr style="height:22px;vertical-align:middle;padding:3px;">
-                                                                <td style="width: 35px;">
-                                                                    <button class="Button" (click)="NewEntity('CL')" [disabled]="!EnableNewActivity">
-                                                                        <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
-                                                                        <img style="left:5px;" src="./Images/Buttons/Call.png" />
-                                                                    </button>
-                                                                </td>
-
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
-
-                                                                <td style="width: 35px;">
-                                                                    <button class="Button" (click)="NewEntity('TS')" [disabled]="!EnableNewActivity">
-                                                                        <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
-                                                                        <img style="left:5px;" src="./Images/Buttons/Task.png" />
-                                                                    </button>
-                                                                </td>
-
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
-
-                                                                <td style="width: 35px;">
-                                                                    <button class="Button" (click)="NewEntity('AP')" [disabled]="!EnableNewActivity">
-                                                                        <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
-                                                                        <img style="left:5px;" src="./Images/Buttons/Appointment.png" />
-                                                                    </button>
-                                                                </td>
-
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
-
-                                                                <td style="width: 35px;">
-                                                                    <button class="Button" (click)="AddEmailActivity()" [disabled]="!EnableNewActivity">
-                                                                        <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
-                                                                        <img style="left:5px;" src="./Images/Buttons/Email.png" />
-                                                                    </button>
-                                                                </td>
-
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-
-                                                    <td style="width:5px;">
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
-                                                        <table class="FixedTable">
-                                                            <tr style="height:10px;">
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <ScrollViewer>
-                                                                        <ul>
-                                                                            <li class="RecentEntityItem" style="position: relative;" *ngFor="let item of ActivityObsList" (click)="ViewEntity('Activity',item.Id)" [ngStyle]="{background: item.ListBoxBackground}">
-                                                                                <div class="MediaFill" style="padding-top:2px;padding-bottom:2px;">
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <table>
-                                                                                                    <tr>
-                                                                                                        <td style="width:10px;min-width:10px;max-width:10px;"></td>
-                                                                                                        <td colspan="4" style="min-width:120px;width:auto; margin:0;padding:0; position: relative;">
-                                                                                                            <div style="width:350px;font-size:12px;color:#282E30;text-align:left;line-height:12px;" class="TextTrimming">{{item.Subject}}</div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                    <tr>
-                                                                                                        <td style="width:10px;"></td>
-                                                                                                        <td style="width:80px;min-width:80px;margin:0;padding:0; position: relative;">
-                                                                                                            <div style="width:80px;color:#6E7172;font-size:10px;line-height:12px;">Owner</div>
-                                                                                                            <div style="width:80px;color:#6E7172;font-size:10px;line-height:12px;">{{item.ModifiedOrCompleted}}</div>
-                                                                                                        </td>
-                                                                                                        <td style="width:3px;"></td>
-                                                                                                        <td style="min-width:120px; position: relative;">
-                                                                                                            <div style="width:120px;color:#282E30;font-size:10px;line-height:12px;" class="TextTrimming">{{item.OwnerName}}</div>
-                                                                                                            <div style="width:220px;color:#1B90CB;font-size:10px;line-height:12px;" class="TextTrimming">
-                                                                                                                {{item.UpdatedByUserName}}
-                                                                                                                <span style="margin: 5px; font-size: 10px; color: #282E30;">{{item.UpdateDate| DateTimeToDatePipe}}</span>
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                    </tr>
-
-                                                                                                </table>
+                                                                                            <td colspan="3">
+                                                                                                <div>
+                                                                                                    &nbsp;
+                                                                                                </div>
                                                                                             </td>
-                                                                                            <td style="width:25px;max-width:25px;min-width:25px;vertical-align:top;padding-right:2px;">
-                                                                                                <img *ngIf="item.ActivityTypePathCode =='TS'" class="CenterCenter" [title]="item.ActivityTypeName" style="width:13px;height:20px;" [attr.src]="item.ImageSrc" />
-                                                                                                <img *ngIf="item.ActivityTypePathCode =='AP'" class="CenterCenter" [title]="item.ActivityTypeName" style="width:16px;height:21px;" [attr.src]="item.ImageSrc" />
-                                                                                                <img *ngIf="item.ActivityTypePathCode =='CL' " class="CenterCenter" [title]="item.ActivityTypeName" style="width:18px;height:21px;" [attr.src]="item.ImageSrc" />
-                                                                                                <img *ngIf="item.ActivityTypePathCode =='EO' || item.ActivityTypePathCode =='EI'" class="CenterCenter" [title]="item.ActivityTypeName" style="width:25px;height:15px;" [attr.src]="item.ImageSrc" />
-                                                                                                <img *ngIf="item.ActivityTypePathCode =='VM'" class="CenterCenter" [title]="item.ActivityTypeName" style="width:23px;height:20px;" [attr.src]="item.ImageSrc" />
-                                                                                            </td>
-                                                                                            <td style="width:3px;min-width:3px;max-width:3px;">
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <!--<tr style="height:2px;max-height:2px;min-height:2px;">
-                                                            <td colspan="3">
-                                                                <div>
-                                                                    &nbsp;
-                                                                </div>
-                                                            </td>
-                                                        </tr>-->
+                                                                                        </tr>-->
                                                                                     </table>
                                                                                 </div>
                                                                             </li>
@@ -636,8 +491,8 @@
                                     </td>
 
                                     <!-- Tickets -->
-                                    <td *ngIf="IsTicketTabDim" style="min-width:400px;width:400px;max-width:400px;">
-                                        <div class="Box">
+                                    <td style="min-width:400px;width:400px;max-width:400px;">
+                                        <div class="Box" [class.Disabled]="!IsTicketTabDim">
                                             <table>
                                                 <tr class="BoxHeader">
                                                     <td>

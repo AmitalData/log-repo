@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,9 +21,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool HasStates { get; set; }
         public bool IsStateRequired { get; set; }
         public bool HasCitiesList { get; set; }
-        public bool IsNorthAmerica { get; set; }
-        public bool IsGreaterChina { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
+
         public string GlobalZoneId { get; set; }
         [ForeignKey("GlobalZoneId")]
         public virtual GlobalZone GlobalZone { get; set; }

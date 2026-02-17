@@ -26,11 +26,11 @@ using Simplog.Data.ShipmentsModel;
    public partial class AirPackageQueryService
     {
    		
-		public List<AirPackage> AirPackageCustomDataMapping(ShipmentPM EntityPm, List<ShipmentPackagePM> MyEntityPMs,int Tenant, string ComputingPartnerName = "")
+		public List<AirPackage> AirPackageCustomDataMapping(ShipmentPM EntityPm, List<ShipmentPackagePM> MyEntityPMs,int Tenant)
         {
             if (EntityPm.TransportModeId == "A")
             {
-                return this.AirPackageDataMapping(MyEntityPMs, Tenant, ComputingPartnerName);
+                return this.AirPackageDataMapping(MyEntityPMs, Tenant);
             }
             else
             {
@@ -38,23 +38,19 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentPackagePM> AirPackageCustomDataMappingAndValidatin(House MainEntity, List<AirPackage> MyEntities,int Tenant,string ComputingPartnerName = "", bool IsUpdate = false)
+		public List<ShipmentPackagePM> AirPackageCustomDataMappingAndValidatin(House MainEntity, List<AirPackage> MyEntities,int Tenant,string ComputingPartnerName = "")
         {
-            return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+            return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
         }
 
-        public List<ShipmentPackagePM> AirPackageCustomDataMappingAndValidatin(Direct MainEntity, List<AirPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public List<ShipmentPackagePM> AirPackageCustomDataMappingAndValidatin(Direct MainEntity, List<AirPackage> MyEntities, int Tenant, string ComputingPartnerName = "")
         {
-            return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+            return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
         }
 
-        public List<ShipmentPackagePM> AirPackageCustomDataMappingAndValidatin(Master MainEntity, List<AirPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public List<ShipmentPackagePM> AirPackageCustomDataMappingAndValidatin(Customs MainEntity, List<AirPackage> MyEntities, int Tenant, string ComputingPartnerName = "")
         {
-            return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
-        }
-        public List<ShipmentPackagePM> AirPackageCustomDataMappingAndValidatin(Customs MainEntity, List<AirPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
-        {
-            return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+            return this.AirPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
         }
 
     }

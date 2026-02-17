@@ -1,7 +1,6 @@
 ﻿using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.AmitalMessaging.Infrastructure.FuStatus;
 using Logitude.AmitalMessaging.Infrastructure.Transmission;
-using Logitude.AmitalMessaging.Infrastructure;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
@@ -17,9 +16,9 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -36,14 +35,6 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
-using System.Xml.Linq;
-using Logitude.Customs.BL.Validators;
-using System.Configuration;
-using System.Globalization;
-using Logitude.Customs.BL.EntityDataMappings;
-using Logitude.Customs.Data.Repsitories;
-using Logitude.Customs.Data.EntityPOCOs;
-using System.Data.Entity.Validation;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -57,44 +48,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateUnifreight(DeclarationPM dirtyDeclarationPM)
         {
-            if (CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).StandAlone)
-            {
-                return;
-            }
-            bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
-            DateTime stopLogAt = DateTime.MinValue;
-
-            bool fromAmendment = false;
-
-            if (string.IsNullOrEmpty(dirtyDeclarationPM.DeclarationNumber)) fromAmendment = true; 
-
-            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20210427HD368109.LogUntilDateyyyyMMdd"];
-            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
-            {
-                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
-                                                    "yyyyMMdd",
-                                                    CultureInfo.InvariantCulture,
-                                                    DateTimeStyles.None);
-            }
-            string logData = "";
-
             if (dirtyDeclarationPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update &&
-                dirtyDeclarationPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Insert &&  !fromAmendment
-                ) //Yuval Chalup 02.06.2015 AMI-53891 (Update CCUFILEM on creating a new Declaration)
+                dirtyDeclarationPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Insert) //Yuval Chalup 02.06.2015 AMI-53891 (Update CCUFILEM on creating a new Declaration)
             {
-                LogitudeSettings.HandleLogMe("ChangeSetOperation == " + dirtyDeclarationPM.ChangeSetOp, false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
                 return;
             }
             OurVersionToUpdateDeclarationPlatformFeeAndPrimaryInvoice(dirtyDeclarationPM);
-
-
-            bool isFrom2470 =dirtyDeclarationPM.CurrentContextTag is EventContextTagModel ectm && 
-                ectm.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate;
-
-            if (dirtyDeclarationPM.IsAmendment==true && !isFrom2470)
+            //var setting = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant);
+            //if (!setting.IsConnectedToUniFreight)
+            if(!dirtyDeclarationPM.IsConnectedToUnifreight)
             {
-                LogitudeSettings.HandleLogMe("IsAmendment", false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
-
                 return;
             }
 
@@ -111,7 +74,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
 
             IsUpdateUnifreight = true; // moran 14.6.16 - Task 21737 
-            DeclarationPM dbOccDeclarationPM = GetDBEntity(dirtyDeclarationPM.Id, dirtyDeclarationPM.Tenant);
+            DeclarationPM dbOccDeclarationPM = GetDBEntity(dirtyDeclarationPM);
 
             //<--- Yuval Chalup 10.05.2015 TASK-13252
             string xmlStatus = null;
@@ -167,41 +130,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (dirtyDeclarationPM.CurrentContextTag.ToString().Contains("Upsert"))  // moran 28.7.16 - Task 22249
             {
-                if (dirtyDeclarationPM.CurrentContextTag != null && dirtyDeclarationPM.CurrentContextTag.ToString() == "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()+CourierMasterChange")
-                {
-                    dirtyDeclarationPM.CurrentContextTag = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()";
-                }
-                else
-                {
-                    doTask = false;
-                }
-            }
-
-            if ( !(string.IsNullOrEmpty(dirtyDeclarationPM.AmendmentOriginalDeclartation) && dirtyDeclarationPM.AmendmentDontDisplayInList==false ))
-            {
-                var eventContextTagModel2 = dirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
-                if (eventContextTagModel2 != null)
-                {
-                    if (eventContextTagModel2.CallProccessID != EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
-                     {
-
-                    }
-                    doTask = false;
-
-                    if (fromAmendment) doTask = true;
-
-                    //if (dirtyDeclarationPM.HatraDate != dbOccDeclarationPM.HatraDate)
-                    //{
-                    //  //  doTask = true;
-                    //}
-
-                }
-            }
-
-            if (dirtyDeclarationPM.Direction != "E" && dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L" )
-            {
-                OpenLogBoxUnifreighTask(dirtyDeclarationPM, "LDR2C", "", false, "");
-                return;
+                doTask = false;
             }
             bool deleteStatus = false;
             try
@@ -269,12 +198,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     Logitude.Customs.BL.EntityQueryServices.ConsignmentQueryService consignmentQueryService = new Logitude.Customs.BL.EntityQueryServices.ConsignmentQueryService(dirtyDeclarationPM.Tenant);
                     dirtyDeclarationPM.Consignments = consignmentQueryService.GetMulti(declarationKeys, true);
                 }
-
-                if (dirtyDeclarationPM.SupplierInvoices != null && dirtyDeclarationPM.SupplierInvoices.Count() > 0)
-                {
-                    dirtyDeclarationPM.TotalInvoiceAmountInUSD = 0;
-                    dirtyDeclarationPM.TotalInvoiceAmountInUSD = dirtyDeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD);
-                }
                 var myUnifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, dbOccDeclarationPM, loggingUserId);
                 myUnifrightDeclarationUpdateService.Update(doTask);
                 this._NO_LD2U = myUnifrightDeclarationUpdateService._NO_LD2U;
@@ -323,17 +246,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if(dirtyDeclarationPM.PaymentDate.HasValue)
                 {
                     DateTime paymentDateTime = dirtyDeclarationPM.PaymentDate.Value;
-                    // if(this.DE)
-                    if (!dirtyDeclarationPM.IsCourierDeclaration)
+                    if (statusDateTimeLP2U.Subtract(paymentDateTime).TotalMinutes > 30 || (paymentDateTime.Hour == 13 && paymentDateTime.Minute >= 45) || (paymentDateTime.Hour == 14 && paymentDateTime.Minute <= 15))
                     {
-                        if (statusDateTimeLP2U.Subtract(paymentDateTime).TotalMinutes > 30 || (paymentDateTime.Hour == 13 && paymentDateTime.Minute >= 45) || (paymentDateTime.Hour == 14 && paymentDateTime.Minute <= 15))
-                        {
-                            using (var trans = TransactionFactory.GetNewTransaction())
-                            {
-                                SendDelayedDeclarationStatusRequest(dirtyDeclarationPM);
-                                trans.Complete();
-                            }
-                        }
+                        SendDelayedDeclarationStatusRequest(dirtyDeclarationPM);
                     }
                     statusDateTimeLP2U = dirtyDeclarationPM.PaymentDate.Value; // Task 36100
                 }
@@ -391,8 +306,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                         break;
                     case EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServiceCancel: // moran 8.9.16 - Task 20303  
-                    case EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance:
-                    case EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServiceMessageToAgent:
                         {
                             if (!string.IsNullOrWhiteSpace(eventContextTagModel.EventCode))
                             {
@@ -418,176 +331,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         }
 
-        public static void DeclarationRepositoryUpdatePOCO(DeclarationPM dec, bool toUpdateUnifreight)
-        {
-            if (dec == null) return;
-            if (dec.ChangeSetOp == ChangeSetOperation.Update || dec.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                try
-                {
-                    ICustomContext context = CustomContext.GetContext(dec.Tenant);
-                    DeclarationRepository repository = new DeclarationRepository(context);
-                    DeclarationDataMapping mapping = new DeclarationDataMapping();
-                    Declaration declaration = new Declaration();
-                    mapping.CustomPMToPOCO(dec, declaration);
-                    mapping.PMToPOCO(dec, declaration);
-                    repository.Update(declaration);
-
-                    repository.SubmitChanges();
-
-                    if (toUpdateUnifreight)
-                    {
-                        if (dec.Direction!="E" && !(dec.PaymentDate.HasValue && string.IsNullOrEmpty(dec.DeclarationNumber)))
-                        {
-                            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context);
-                            declarationUpdateService.UpdateUnifreight(dec);
-                        }
-                    }
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                    LogMessagingUtil.Instance.AppendLine("UpdatePOCO():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                    return;
-                }
-                catch (Exception e)
-                {
-                    LogMessagingUtil.Instance.AppendLine("UpdatePOCO():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                    return;
-                }
-            }
-        }
-
-        private void OpenLogBoxUnifreighTask(DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlStatus)
-        {
-            var sw = Stopwatch.StartNew();
-            TransactionScope scope = null;
-            var statusDateTime = DateTime.Now;
-
-            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
-            {
-                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
-            }
-            try
-            {
-                AmitalContext _AmitalContext = null;
-                var requestData = "";
-                string vendorCode = null;
-                string vendorName = null;
-                if (dirtyDeclarationPM.SupplierInvoices != null && dirtyDeclarationPM.SupplierInvoices.Count() > 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(dirtyDeclarationPM.SupplierInvoices[0].VendorId))
-                    {
-                        var myQueryService = new CustomsVendorQueryService(this.currentContext);
-                        var custVendor = myQueryService.GetSingle(dirtyDeclarationPM.SupplierInvoices[0].VendorId, false, true);
-                        if (custVendor != null)
-                        {
-                            vendorCode = custVendor.VendorNumber;
-                            vendorName = custVendor.VendorName;
-                        }
-                    }
-                }
-                if (vendorCode == null) return;
-
-                var XMLData = new XDocument(
-                    new XElement("DepositionRequestPM",
-                        new XElement("RequestDateTime", DateTime.Now.ToString("o")),
-                        new XElement("ForwarderShipmentNumber", dirtyDeclarationPM.CustomFileNo),
-                        new XElement("VendorCode", vendorCode),
-                        new XElement("VendorName", vendorName)
-                        )
-                        );
-
-
-                requestData = XMLData.ToString(SaveOptions.None);
-                string unifreightUser = null;
-
-                if (String.IsNullOrWhiteSpace(unifreightUser))
-                {
-                    unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
-                }
-
-                var myYCULTASKPM = new YCULTASKPM()
-                {
-                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                    STATUS = "W",
-                    REQUESTDATA = requestData,
-                    ENTNAME = "DEPOSITION",
-                    PRIMARYNUM = dirtyDeclarationPM.Id,
-                    PRIORITY = YCULTASKPM.calcPriority(taskType),
-                    TYPE = taskType,
-                    USRCODE = unifreightUser,
-                    ARCHIVE = "F",
-                };
-                
-                myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
-                
-                _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
-                var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                myGGGQUpdateService.DontAddTransaction = true;
-                var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                myYCULTASKUpdateService.DontAddTransaction = true;
-                myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
-                var myGGGQPM = new GGGQPM()
-                {
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    ORIGINQUE = "LGT",
-                    STATUS = "1",
-                    EXPTASKTIME = 5,
-                    EXECDATE = DateTime.Now,
-                    TRY = 9,
-                    PRIORITY = 8,
-                    ENTNAME = "DEPOSITION",
-                    PRIMARYNUM = "0",
-                    FORMID = "LGT_UPDATE_FCI",
-                    DEBUG = "F",
-                    DONEOPERATION = "D",
-                    //GSTRING1 = myYCULTASKPM.TASKID,
-                };
-                 
-                myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
-                
-                myGGGQUpdateService.Update(myGGGQPM, true);
-                
-                
-
-
-                if (scope != null)
-                {
-                    scope.Complete();
-                }
-
-            }
-            finally
-            {
-                if (scope != null)
-                {
-                    scope.Dispose();
-                }
-            }
-
-            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
-        }
-
-
         public void SendDelayedDeclarationStatusRequest(DeclarationPM dirtyDeclarationPM)
         {
-            //bool DoNotsendDelayedDeclarationStatusRequest = String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20181024.SendDelayedDeclarationStatusRequest"]);
-            //if (DoNotsendDelayedDeclarationStatusRequest)
-            //{
-            //    LogMessagingUtil.Instance.AppendLine("DoNotsendDelayedDeclarationStatusRequest ==String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings[20181024.SendDelayedDeclarationStatusRequest]) 14:45 til 15:15");
-            //    return;
-            //}
-            if (this.IsDelayedDeclarationStatusRequestSent == true) return;
-            LogMessagingUtil.Instance.AppendLine("SendDelayedDeclarationStatusRequest 13:45 til 14:15");
-            LogitudeSettings.HandleLogMe(
-                "DeclarationId:" + dirtyDeclarationPM.Id + Environment.NewLine + Environment.StackTrace.ToString()
-                , false, "8250", new DateTime(2021, 1, 1));
-
+            if(this.IsDelayedDeclarationStatusRequestSent == true)return;
             string user = null;
-            if (RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
-            if (RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+            if(RequestSheetContext.Current != null) user = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
             if (string.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
             DateTime? execTime = DateTime.Now;
             execTime = execTime.Value.AddMinutes(10);
@@ -624,7 +372,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
                 }
-              //  throw;
+                throw;
             }
             this.IsDelayedDeclarationStatusRequestSent = true;
         }
@@ -727,9 +475,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void OpenUnifreighTask(DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlStatus, DateTime statusDateTime)
         {
-            if (dirtyDeclarationPM.Direction == "E")
-                return;
-            AmitalContext _AmitalContext = null;
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
             if (statusDateTime == null)
@@ -742,14 +487,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             try
             {
-                
-             
-                    _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
+                using (_AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant))
+                {
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                   
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo,dirtyDeclarationPM.Tenant, false);
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    var requestData = "";
+                    var addStatus = ""; // moran 17.9.15 - Task 15458
+                    var comment = ""; // moran 20.9.15 - Task 15458
+                    var addComment = ""; // moran 20.9.15 - Task 15458
+
+                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -758,26 +510,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             ENTNAME = "CFIFILEM",
                             FILENO = dirtyDeclarationPM.CustomFileNo,
                         };
-
-                        
-                        myCCUQUELOCKPM.Tenant = EntityPM.Tenant;
-                        
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
-               
-               //we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var requestData = "";
-                    var addStatus = ""; // moran 17.9.15 - Task 15458
-                    var comment = ""; // moran 20.9.15 - Task 15458
-                    var addComment = ""; // moran 20.9.15 - Task 15458
-                    string unifreightUser = null;
-                    if (String.IsNullOrWhiteSpace(unifreightUser))
-                    {
-                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
-                    }
-                  
-                    
-                  
                     if (taskType == "LD2U" && dirtyDeclarationPM.IsSignedVersion) // moran 17.9.15 - Task 15458
                     {
                         if (raiseStatus != true)
@@ -794,7 +528,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
 
                     //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
-                   
+                    string unifreightUser = null;
                     if (RequestSheetContext.Current != null)
                     {
                         var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
@@ -811,7 +545,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
-                    
+                    if (String.IsNullOrWhiteSpace(unifreightUser))
+                    {
+                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
+                    }
                     
                     if (raiseStatus == true)
                     {
@@ -851,7 +588,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (dirtyDeclarationPM != null && dirtyDeclarationPM.IsCourierDeclaration)
                     {
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(dirtyDeclarationPM.Tenant);
-                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(dirtyDeclarationPM.Id, true, false);
+                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(dirtyDeclarationPM.Id, false, false);
                         if (currentDeclarationCourierStatusPM != null && taskType == "LP2U" && string.IsNullOrWhiteSpace(dirtyDeclarationPM.PaymentOrderNumber) && dirtyDeclarationPM.TotalTax > 5)
                         {
                             if (raiseStatus == true)
@@ -874,62 +611,66 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                     
-                        
+                        //eitan h 12/3/15 moved to static -->
+                        //short priority = 9;
+                        //switch (taskType)
+                        //{
+                        //    case "L2U":
+                        //        priority = 1;
+                        //        break;
+                        //    case "LD2U":
+                        //        priority = 2;
+                        //        break;
+                        //    case "LP2U":
+                        //        priority = 3;
+                        //        break;
+                        //    default:
+                        //        break;
+                        //}
+                        //<--eitan h 12/3/15 moved to static
 
                         var myYCULTASKPM = new YCULTASKPM()
-                        {
-                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                            STATUS = "W",
-                            REQUESTDATA = requestData,
-                            ENTNAME = "CFIFILEM",
-                            PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
-                            PRIORITY = YCULTASKPM.calcPriority(taskType),//eitan h 12/3/15 new static operation
-                            //PRIORITY = priority,
-                            TYPE = taskType,
-                            USRCODE = unifreightUser,
-                            ARCHIVE = "F", // moran 28.6.16 - AMI-57170
-                                       //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
+                    {
+                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        STATUS = "W",
+                        REQUESTDATA = requestData,
+                        ENTNAME = "CFIFILEM",
+                        PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
+                        PRIORITY = YCULTASKPM.calcPriority(taskType),//eitan h 12/3/15 new static operation
+                        //PRIORITY = priority,
+                        TYPE = taskType,
+                        USRCODE = unifreightUser,
+                        ARCHIVE = "F", // moran 28.6.16 - AMI-57170
+                        //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
+                    };
+                    //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
 
-                        };
-                //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                        
-                        myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
-                        
-                        var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                        myYCULTASKUpdateService.DontAddTransaction = true;
-                        myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
-                
-                        var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                        myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-
-                        var myGGGQPM = new GGGQPM()
-                        {
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            ORIGINQUE = "LGT", //LugitudeRequest
-                            STATUS = "1",
-                            EXPTASKTIME = 5,
-                            EXECDATE = DateTime.Now,
-                            TRY = 9,
-                            PRIORITY = 8,
-                            ENTNAME = "CFIFILEM",
-                            PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
-                            FORMID = "LGT_UPDATE_FCI",
-                            DEBUG = "F",
-                            DONEOPERATION = "D",
-                            //GSTRING1 = myYCULTASKPM.TASKID,
-                        };
-                        
-                        myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
-                        
-                        myGGGQUpdateService.Update(myGGGQPM, true);
-                   
+                    var myGGGQPM = new GGGQPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        ORIGINQUE = "LGT", //LugitudeRequest
+                        STATUS = "1",
+                        EXPTASKTIME = 5,
+                        EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
+                        TRY = 9,
+                        PRIORITY = 8,
+                        ENTNAME = "CFIFILEM",
+                        PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
+                        FORMID = "LGT_UPDATE_FCI",
+                        DEBUG = "F",
+                        DONEOPERATION = "A",
+                        //GSTRING1 = myYCULTASKPM.TASKID,
+                    };
+                    myGGGQUpdateService.Update(myGGGQPM, true);
 
                     if (scope != null)
                     {
                         scope.Complete();
                     }
                 }
+            }
             finally
             {
                 if (scope != null)
@@ -1341,62 +1082,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 throw;
             }
         }
-
-        public static void SetCLSHWB(String DeclarationID , string loggingUserId, int a_tenent, UnifreightEventMode a_Mode)
-        {
-            DeclarationPM myDeclarationPM;
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(a_tenent);
-            
-            var customContext = CustomContext.GetContext(a_tenent);
-            DeclarationCourierStatusQueryService courierStatusQueryService = new DeclarationCourierStatusQueryService(a_tenent);
-            DeclarationCourierStatusPM mydeclarationCourierStatusPM = courierStatusQueryService.GetSingle(DeclarationID, true, false);
-            DeclarationCourierStatusUpdateService courierStatusUpdateService =  new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), a_tenent);
-
-            try
-            {
-                myDeclarationPM = declarationQueryService.GetSingleDeclarationById(DeclarationID, a_tenent);
-
-                if (a_Mode == UnifreightEventMode.@new)
-                {
-                    mydeclarationCourierStatusPM.IsClosedForFollowUp = true;
-                }
-                else
-                {
-                    mydeclarationCourierStatusPM.IsClosedForFollowUp = false;
-                }
-
-                
-                mydeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                courierStatusUpdateService.Update(mydeclarationCourierStatusPM,true);
-
-                string unifrieghtEvent = "CLSHWB"; //"CLSHWB";
-                //string eventRemarks = remarks;
-                var MyUnifreightEventParam = new UnifreightEventParam()
-                {
-                    Code = unifrieghtEvent,
-                    // Mode = UnifreightEventMode.@new,
-                    Mode = a_Mode,
-                    EventDateTime = DateTime.Now,
-                    Entname = "CFIFILEM",
-                    PrimaryNum = myDeclarationPM.CustomFileNo
-                    //EventRemarks = eventRemarks,
-                };
-                LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-                var myOpenUnifreighTask = new UnifreightEventTaskService();
-                myOpenUnifreighTask.UpsertEventLE2U(
-                    a_tenent,
-                    loggingUserId,
-                    MyUnifreightEventParam);
-
-            }
-            catch (Exception)
-            {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
-                throw;
-            }
-        }
-
-
         private static void RaiseFuturePaymentEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string eventCode)
         {
             try
@@ -1436,33 +1121,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 throw;
             }
         }
-        DeclarationPM _DBEntityB4Commit = null;
-        DeclarationPM _DBEntityAfterCommit = null;
-        bool _AfterCommitUpdate = false;
-        public DeclarationPM GetDBEntity(string DeclarationId, int Tenant)
+
+        private DeclarationPM GetDBEntity(DeclarationPM dirtyDeclarationPM)
         {
-            if (_DBEntityB4Commit!=null && !_AfterCommitUpdate)
-            {
-                return _DBEntityB4Commit;
-            }
-            if (_DBEntityAfterCommit!=null)
-            {
-                return _DBEntityAfterCommit;
-            }
-            var declarationQueryService = new DeclarationQueryService(Tenant);
-            declarationQueryService.LoadSupplierInvoicesWithItems = false;
-            var myDBEntity = declarationQueryService.GetSingle(DeclarationId, true, false);
-            if (!_AfterCommitUpdate)
-            {
-                _DBEntityB4Commit= myDBEntity ?? new DeclarationPM();
-                return _DBEntityB4Commit;
-            }
-            else
-            {
-                _DBEntityAfterCommit = myDBEntity ?? new DeclarationPM();
-                return _DBEntityAfterCommit;
-            }
             
+            var declarationQueryService = new DeclarationQueryService(dirtyDeclarationPM.Tenant);
+           // declarationQueryService.LoadSupplierInvoices = false;
+            declarationQueryService.LoadSupplierInvoicesWithItems = false;
+            //if (IsUpdateUnifreight == true) ; //declarationQueryService.LoadSupplierInvoices = true; // moran 14.6.16 - Task 21737
+            var myDBEntity = declarationQueryService.GetSingle(dirtyDeclarationPM.Id, true, false);
+            return myDBEntity ?? new DeclarationPM();
   
         }
         void UpdateUnifreightCustomFile(DeclarationPM entityPM)
@@ -1601,18 +1269,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        public static void DelDeclarationStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string eventCode)
+        private static void DelDeclarationStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string eventCode)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
                     Tenant = dirtyDeclarationPM.Tenant,
                     objectTableName = "Customs.Declaration",
                     EventCode = eventCode,
-                    //notes = "Delete FU Status " + eventCode + " in unifreight ",
-                    notes = "DO_NOT_RAISE_EVENT",
+                    notes = "Delete FU Status " + eventCode + " in unifreight ",
                     CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
                     EntityId = dirtyDeclarationPM.Id,
                     UserId = loggingUserId,
@@ -1626,6 +1292,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         xml_status = "del",
                         status_id = eventCode,
                         status_DateTime = DateTime.Now,
+                        //status_place = "DFP",
+                        //status_save = "no_fail",
                         comments = "",
                     }
                 };
@@ -1673,230 +1341,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             mytransmission.transmission_details = mytransmission_details.ToArray();
             return mytransmission;
         }
-
-        public bool CheckFileStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status)
-        {
-            if (dirtyDeclarationPM == null || String.IsNullOrWhiteSpace(dirtyDeclarationPM.CustomFileNo) || String.IsNullOrWhiteSpace(status))
-            {
-                throw new Exception("data is missing");
-            }
-            var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
-               Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
-               "CWSFLOGIFILE", "DeclarationCheckFileStatus")
-            {
-                Tenant = dirtyDeclarationPM.Tenant,
-                objectTableName = "Customs.Declaration",
-                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
-                EntityId = dirtyDeclarationPM.Id,
-                UserId = loggingUserId,
-                CommunicationSubject = "Logitude Declaration check File Status",
-
-            };
-
-            var myLOGIGENREQ = new LOGIGENREQ();
-            myLOGIGENREQ.LogitudeGeneralRequest = new LogitudeGeneralRequest[] { new LogitudeGeneralRequest() };
-            myLOGIGENREQ.LogitudeGeneralRequest[0].Code = status;
-            myLOGIGENREQ.LogitudeGeneralRequest[0].Param1 = dirtyDeclarationPM.CustomFileNo;
-            bool myImmediately = true;
-            var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
-                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, LOGIGENREQ>(
-                amitalCustomFileCommunicationModel, myLOGIGENREQ);
-            var info = myUServerCommunicationService.Send(myImmediately);
-            if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
-            {
-                throw new Exception("ImmediatelyResponse is null" + " Urouter is failed, Try to restart urouter service");
-            }
-            var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
-            var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
-            if (genericResponseObj == null)
-            {
-                throw new Exception("GenericResponse.GenericResponseObj is null" + " Urouter is failed, Try to restart urouter service");
-            }
-
-            if (!String.IsNullOrWhiteSpace(genericResponseObj.Status))
-            {
-                int sts;
-                int.TryParse(genericResponseObj.Status, out sts);
-                if (sts < 0)
-                {
-                    string mess = "Failed To check File Status in Unifreight";
-                    if (!String.IsNullOrWhiteSpace(genericResponseObj.ErrorDescription))
-                    {
-                        mess = mess + Environment.NewLine + genericResponseObj.ErrorDescription;
-                    }
-                    if (!String.IsNullOrWhiteSpace(genericResponseObj.Message))
-                    {
-                        mess = mess + Environment.NewLine + genericResponseObj.Message;
-                    }
-                    LogMessagingUtil.Instance.AppendLine("CheckFileStatus>genericResponseObj>Message= " + mess);
-                    throw new Exception(mess);
-                }
-            }
-
-            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message))
-            {
-                LogMessagingUtil.Instance.AppendLine("CheckFileStatus>genericResponseObj>Message= " + genericResponseObj.Message);
-            }
-            LogMessagingUtil.Instance.AppendLine("CheckFileStatus>genericResponseObj>Status= " + genericResponseObj.Status);
-
-            bool isStatusExist = false;
-            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message) && !genericResponseObj.Message.Contains("does not Exist"))
-            {
-                isStatusExist = true;
-            }
-            return (isStatusExist);
-
-        }
-
-        public bool CheckFileEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string CFIEvent)
-        {
-            if(dirtyDeclarationPM == null || String.IsNullOrWhiteSpace(dirtyDeclarationPM.CustomFileNo) || String.IsNullOrWhiteSpace(CFIEvent))
-            {
-                throw new Exception("data is missing");
-            }
-            var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
-               Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
-               "CWSFLOGIFILE", "DeclarationCheckFileEvent")
-            {
-                Tenant = dirtyDeclarationPM.Tenant,
-                objectTableName = "Customs.Declaration",
-                CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
-                EntityId = dirtyDeclarationPM.Id,
-                UserId = loggingUserId,
-                CommunicationSubject = "Logitude Declaration check File Event",
-
-            };
-
-            var myLOGIGENREQ = new LOGIGENREQ();
-            myLOGIGENREQ.LogitudeGeneralRequest = new LogitudeGeneralRequest[] { new LogitudeGeneralRequest() };
-            myLOGIGENREQ.LogitudeGeneralRequest[0].Code = CFIEvent;
-            myLOGIGENREQ.LogitudeGeneralRequest[0].Param1 = dirtyDeclarationPM.CustomFileNo;
-            bool myImmediately = true;
-            var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
-                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, LOGIGENREQ>(
-                amitalCustomFileCommunicationModel, myLOGIGENREQ);
-            var info = myUServerCommunicationService.Send(myImmediately);
-            if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
-            {
-                throw new Exception("ImmediatelyResponse is null" + " Urouter is failed, Try to restart urouter service");
-            }
-            var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
-            var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
-            if (genericResponseObj == null)
-            {
-                throw new Exception("GenericResponse.GenericResponseObj is null" + " Urouter is failed, Try to restart urouter service");
-            }
-
-            if (!String.IsNullOrWhiteSpace(genericResponseObj.Status))
-            {
-                int sts;
-                int.TryParse(genericResponseObj.Status, out sts);
-                if (sts < 0)
-                {
-                    string mess = "Failed To check File Event in Unifreight";
-                    if (!String.IsNullOrWhiteSpace(genericResponseObj.ErrorDescription))
-                    {
-                        mess = mess + Environment.NewLine + genericResponseObj.ErrorDescription;
-                    }
-                    if (!String.IsNullOrWhiteSpace(genericResponseObj.Message))
-                    {
-                        mess = mess + Environment.NewLine + genericResponseObj.Message;
-                    }
-                    LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Message= " + mess);
-                    throw new Exception(mess);
-                }
-            }
-
-            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message))
-            {
-                LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Message= " + genericResponseObj.Message);
-            }
-            LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Status= " + genericResponseObj.Status);
-
-            bool isStatusExist = false;
-            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message) && !genericResponseObj.Message.Contains("does not Exist"))
-            {
-                isStatusExist = true;
-            }
-            return (isStatusExist);
-
-        }
-
-        public bool CheckLeadingFileEvent(CourierMasterPM dirtyCourierMasterPM, string loggingUserId, string CFIEvent)
-        {
-            if (dirtyCourierMasterPM == null || String.IsNullOrWhiteSpace(dirtyCourierMasterPM.UnifreightLeadingFile) || String.IsNullOrWhiteSpace(CFIEvent))
-            {
-                throw new Exception("data is missing");
-            }
-            var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
-               Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
-               "CWSFLOGIFILE", "DeclarationCheckFileEvent")
-            {
-                Tenant = dirtyCourierMasterPM.Tenant,
-                objectTableName = "Customs.CourierMaster",
-                CommunicationLoggingEntityReference = dirtyCourierMasterPM.MAWB,
-                EntityId = dirtyCourierMasterPM.Id,
-                UserId = loggingUserId,
-                CommunicationSubject = "Logitude Master Courier check File Event",
-
-            };
-
-            var myLOGIGENREQ = new LOGIGENREQ();
-            myLOGIGENREQ.LogitudeGeneralRequest = new LogitudeGeneralRequest[] { new LogitudeGeneralRequest() };
-            myLOGIGENREQ.LogitudeGeneralRequest[0].Code = CFIEvent;
-            myLOGIGENREQ.LogitudeGeneralRequest[0].Param1 = dirtyCourierMasterPM.UnifreightLeadingFile;
-            bool myImmediately = true;
-            var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
-                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, LOGIGENREQ>(
-                amitalCustomFileCommunicationModel, myLOGIGENREQ);
-            var info = myUServerCommunicationService.Send(myImmediately);
-            if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
-            {
-                throw new Exception("ImmediatelyResponse is null" + " Urouter is failed, Try to restart urouter service");
-            }
-            var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
-            var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
-            if (genericResponseObj == null)
-            {
-                throw new Exception("GenericResponse.GenericResponseObj is null" + " Urouter is failed, Try to restart urouter service");
-            }
-
-            if (!String.IsNullOrWhiteSpace(genericResponseObj.Status))
-            {
-                int sts;
-                int.TryParse(genericResponseObj.Status, out sts);
-                if (sts < 0)
-                {
-                    string mess = "Failed To check File Event in Unifreight";
-                    if (!String.IsNullOrWhiteSpace(genericResponseObj.ErrorDescription))
-                    {
-                        mess = mess + Environment.NewLine + genericResponseObj.ErrorDescription;
-                    }
-                    if (!String.IsNullOrWhiteSpace(genericResponseObj.Message))
-                    {
-                        mess = mess + Environment.NewLine + genericResponseObj.Message;
-                    }
-                    LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Message= " + mess);
-                    throw new Exception(mess);
-                }
-            }
-
-            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message))
-            {
-                LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Message= " + genericResponseObj.Message);
-            }
-            LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Status= " + genericResponseObj.Status);
-            bool isStatusExist = false;
-            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message) && !genericResponseObj.Message.Contains("does not Exist"))
-            {
-                isStatusExist = true;
-            }
-            return (isStatusExist);
-        }
     }
     public class amitalInfo
     {
         public string DeclarationId { get; set; }
     }
-
 }

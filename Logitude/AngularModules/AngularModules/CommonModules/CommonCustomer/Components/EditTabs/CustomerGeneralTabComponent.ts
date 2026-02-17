@@ -8,11 +8,15 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
+import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImageParameter';
+import {FilterField, FilterFieldsClass, FieldsValues} from '../../../../Infrastructure/Components/LogitudeComponents/QueryListComponent/FilterField';
 import {DateTool} from '../../../../Infrastructure/Tools';
 import {CustomerAdditionalServicePM} from '../../../../Common/EntityPMs/CustomerAdditionalServicePM';
 import {CustomerProductPM} from '../../../../Common/EntityPMs/CustomerProductPM';
 import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
+import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
 import {RankList} from '../../../../Common/EntityLists/RankList';
 import {RankListService} from '../../../../Common/Services/StandardLists/RankListService';
 import {AdditionalServiceListService} from '../../../../Common/Services/StandardLists/AdditionalServiceListService'; 
@@ -24,6 +28,12 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {CustomerCompetitorPM} from '../../../../Common/EntityPMs/CustomerCompetitorPM';
 import {CompetitorList} from '../../../../Common/EntityLists/CompetitorList';
 import {CompetitorListService} from '../../../../Common/Services/StandardLists/CompetitorListService';
+import {CustomerAccountManagerByProductSplitComponentARGS} from '../../../../Common/Args';
+import {CustomerSalesmanByProductPM}  from '../../../../Common/EntityPMs/CustomerSalesmanByProductPM';
+import {CustomerAccountManagerByProductPM}  from '../../../../Common/EntityPMs/CustomerAccountManagerByProductPM';
+import {CustomerMediatorByProductPM}  from '../../../../Common/EntityPMs/CustomerMediatorByProductPM';
+import {CustomerForwarderByProductPM}  from '../../../../Common/EntityPMs/CustomerForwarderByProductPM';
+import {CustomerCustomsAgentByProductPM}  from '../../../../Common/EntityPMs/CustomerCustomsAgentByProductPM';
 import {GroupByPipe} from '../../../../Infrastructure/Pipes/GroupByPipe';
 import {ProductTypeListService} from '../../../../Common/Services/StandardLists/ProductTypeListService';
 import {LeadSourceListService} from '../../../../Common/Services/StandardLists/LeadSourceListService';
@@ -32,9 +42,9 @@ declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 import {CustomerFieldsUpdateSettingListService} from '../../../../Common/Services/StandardLists/CustomerFieldsUpdateSettingListService';
 import {CustomerFieldsUpdateSettingList} from '../../../../Common/EntityLists/CustomerFieldsUpdateSettingList';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './CustomerGeneralTabComponent.html',
     providers: [ImageLibraryService, EntityPMService]
 })
@@ -59,12 +69,9 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     LogoInput: string = Guid.NewRandomString();
     IsShowMessageComplate: boolean = false;
     IsShowProgressLoading: boolean = false;
-    IsCustomer: boolean = false;
     public ScreenCode: string = "Customer.AdditionalFields";
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
-    private groupByPipe: GroupByPipe;
-    public IsAmitalCloudEnvironment: boolean = false;
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef, private entityPMService: EntityPMService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -73,10 +80,8 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.IndustryId = this.EntityPM.IndustryId;
         this.EntityName = "Customer";
         this.EntityId = this.EntityPM.Id;
-        this.IsCustomer = this.EntityPM.IsCustomer;
         this.LeadSourceId = this.EntityPM.LeadSourceId;
 
-        this.groupByPipe = new GroupByPipe();
         this.Listen();
 
         var myService = new ProductTypeListService();
@@ -86,12 +91,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             }
         });
 
-        this.customerFieldsUpdateSettingListService.getAll().subscribe((response:any) => {
+        this.customerFieldsUpdateSettingListService.getAll().subscribe(response => {
             if (!response.HasError) {
                 this.customerFieldsUpdateSettingList = response.Result;
             }
-                        
+
             this.SetUIProperties();
+            this.CloseScreen();
         });
 
        
@@ -99,7 +105,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.AllCompetitors = new Array<CompetitorList>();
 
         this.rankListService = new RankListService();
-        this.rankListService.getAllFromCache().subscribe((result:any) => {
+        this.rankListService.getAllFromCache().subscribe(result => {
             this.RankListArr = result.Result;
         });
     }   
@@ -110,7 +116,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "EntityActivated") {
-                    this.SetUIProperties();
+                    this.CloseScreen();
                 }
             });
         }
@@ -131,7 +137,6 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             this.RankSource2();
             this.RankSource3();
             this.SetMoreButtonsVisibility();
-            this.CheckAmitalCloudEnviroment();
         }
 
         else {
@@ -148,7 +153,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -156,9 +161,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
-                //cmpRef.instance.HideColumns = true;
-                cmpRef.instance.HideLastColumn = true;
-                cmpRef.instance.LabelWidth = 120;
+
                 cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
             });
     }
@@ -208,7 +211,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public Services: Array<ServiceViewModelData> = [];
     GetAdditionalSerivceList() {
         var AddtionalService: AdditionalServiceListService = new AdditionalServiceListService();
-        AddtionalService.getAllFromCache().subscribe((result:any) => {
+        AddtionalService.getAllFromCache().subscribe(result => {
             this.ToggleButtonListService = [];
             this.ToggleButtonListService = result.Result.filter(s => !s.InActive);
             this.ToggleButtonListService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
@@ -245,7 +248,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public AllCompetitors: Array<CompetitorList> = [];
     GetCompetitorList() {
         var competitorListService: CompetitorListService = new CompetitorListService();
-        competitorListService.getAll().subscribe((result:any) => {
+        competitorListService.getAll().subscribe(result => {
             this.AllCompetitors = result.Result;
 
             this.BuildCompetitorToggleButtonList();
@@ -255,12 +258,10 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
     BuildCompetitorToggleButtonList() {
         this.CompetitorToggleButtonList = [];
-        var ActiveCompetitors: Array<CompetitorList> = [];
-        ActiveCompetitors = this.AllCompetitors.filter(compatitor => compatitor.InActive == false);
-        var data: Array<any> = ActiveCompetitors;
+        var data: Array<any> = this.AllCompetitors;
 
         if (!AppTool.IsNullOrEmpty(this.SearchTextCompetitor)) {
-            data = ActiveCompetitors.filter(f => f.Name.toLowerCase().indexOf(this.SearchTextCompetitor.toLowerCase()) > -1);
+            data = this.AllCompetitors.filter(f => f.Name.toLowerCase().indexOf(this.SearchTextCompetitor.toLowerCase()) > -1);
         }
 
         data.forEach(item => {
@@ -406,50 +407,11 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
     public isRAFieldsVisibile: boolean = false;
     public IsBlockMessageVisible: boolean = false;
-    public IsEditEnabled: boolean = true;
     SetUIProperties() {
         if (this.TenantPM.RegulatedAgentRegimeActivated) {
             this.isRAFieldsVisibile = true;
         }
-
-        ///////////////////
-        var enabled: boolean = true;
-        if (this.TenantPM.IsHybrid && (this.EntityPM.CustomerStatusCode == "ACT" || this.EntityPM.CustomerStatusCode == "WAC")) {
-            enabled = false;
-            this.IsBlockMessageVisible = true;
-        }
-
-        //General
-        this.UIProperties.SetEnabled("EnglishName", "Customer", enabled);
-        this.UIProperties.SetEnabled("LocalName", "Customer", enabled);
-        this.UIProperties.SetEnabled("VatNumber", "Customer", enabled);
-        this.UIProperties.SetEnabled("EORInumber", "Customer", enabled);
-        this.UIProperties.SetEnabled("PaymentTermId", "Customer", enabled);
-        this.UIProperties.SetEnabled("Website", "Customer", enabled);
-        this.UIProperties.SetEnabled("StorageFreeDays", "Customer", enabled);
-
-        //Details
-        this.UIProperties.SetEnabled("IndustryId", "Customer", enabled);
-        this.UIProperties.SetEnabled("LeadSourceId", "Customer", enabled);
-        this.UIProperties.SetEnabled("LeadDescription", "Customer", enabled);
-        this.UIProperties.SetEnabled("CustomerSizeId", "Customer", enabled);
-        this.UIProperties.SetEnabled("RegionId", "Customer", enabled);
-
-        //Responsibilities
-        this.UIProperties.SetEnabled("AccountManagerUserId", "Customer", enabled);
-        this.UIProperties.SetEnabled("SalesmanUserId", "Customer", enabled);
-        this.UIProperties.SetEnabled("ClassifierId", "Customer", enabled);
-        this.UIProperties.SetEnabled("CollectorId", "Customer", enabled);
-        this.UIProperties.SetEnabled("TeamId", "Customer", enabled);
-        //Partners
-        this.UIProperties.SetEnabled("ForwarderId", "Customer", enabled);
-        this.UIProperties.SetEnabled("CustomsAgentId", "Customer", enabled);
-        this.UIProperties.SetEnabled("MediatorId", "Customer", enabled);
-        this.UIProperties.SetEnabled("KnownConsignor", "Customer", enabled);
-        this.UIProperties.SetEnabled("KCExpirationDate", "Customer", enabled);
-        this.IsEditEnabled = enabled;
-        //////////
-
+        
         this.UIProperties.SetVisibility("KnownConsignor", this.ObjectTableName, this.isRAFieldsVisibile);
         this.UIProperties.SetVisibility("KCExpirationDate", this.ObjectTableName, this.isRAFieldsVisibile);
 
@@ -461,7 +423,6 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.SearchProductsModeCustomerId += this.CurrentSession.GetNewId("SearchProductsModeId_1");
 
         this.SetUIProperties_Partners();
-        this.SetLabels();
     }
 
     public IsSplitted_AccountManager: boolean = false;
@@ -481,13 +442,14 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         var isEnabled = false;
         var isSplitted = false;
 
-        var accountManagers = this.groupByPipe.transform(this.EntityPM.CustomerAccountManagerByProducts.filter(f => f.AccountManagerId != null), "AccountManagerId");
+        var myPipe = new GroupByPipe();
+        var Forwarders = myPipe.transform(this.EntityPM.CustomerAccountManagerByProducts.filter(f => f.AccountManagerId != null), "AccountManagerId");
 
-        if (accountManagers.length == 0) {
-            isEnabled = this.IsEditEnabled ? true : false;
+        if (Forwarders.length == 0) {
+            isEnabled = true;
         }
 
-        else {
+        else if (Forwarders.length > 1) {
             isSplitted = true;
         }
 
@@ -498,17 +460,19 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         var isEnabled = false;
         var isSplitted = false;
 
-        var salesmens = this.groupByPipe.transform(this.EntityPM.CustomerSalesmanByProducts.filter(f => f.SalesmanUserId != null), "SalesmanUserId");
+        var myPipe = new GroupByPipe();
+        var Salesmens = myPipe.transform(this.EntityPM.CustomerSalesmanByProducts.filter(f => f.SalesmanUserId != null), "SalesmanUserId");
 
-        if (salesmens.length == 0) {
-            isEnabled = this.IsEditEnabled ? true : false;
+        if (Salesmens.length == 0) {
+            isEnabled = true;
         }
 
-        else {
+        else if (Salesmens.length > 1) {
             isSplitted = true;
         }
 
-        this.IsSplitted_SalesmanUser = isSplitted;       
+        this.IsSplitted_SalesmanUser = isSplitted;
+        //this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
 
         var salesmanSettings: CustomerFieldsUpdateSettingList = this.customerFieldsUpdateSettingList.filter(f => f.ObjectFieldName == "SalesmanUserId")[0];
         if (salesmanSettings != null) {
@@ -516,27 +480,20 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
                 this.IsUnifreightEditable = true;
                 this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, false);
             }
-
-            //else {
-            //    this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
-            //}
         }
-
-        //else {
-        //     this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
-        //}
     }
     SetUIProperties_Forwarder() {
         var isEnabled = false;
         var isSplitted = false;
 
-        var forwarders = this.groupByPipe.transform(this.EntityPM.CustomerForwarderByProducts.filter(f => f.ForwarderId != null), "ForwarderId");
+        var myPipe = new GroupByPipe();
+        var Forwarders = myPipe.transform(this.EntityPM.CustomerForwarderByProducts.filter(f => f.ForwarderId != null), "ForwarderId");
 
-        if (forwarders.length == 0) {
-            isEnabled = this.IsEditEnabled ? true : false;
+        if (Forwarders.length == 0) {
+            isEnabled = true;
         }
 
-        else {
+        else if (Forwarders.length > 1) {
             isSplitted = true;
         }
 
@@ -547,13 +504,14 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         var isEnabled = false;
         var isSplitted = false;
 
-        var customsAgents = this.groupByPipe.transform(this.EntityPM.CustomerCustomsAgentByProducts.filter(f => f.CustomsAgentId != null), "CustomsAgentId");
+        var myPipe = new GroupByPipe();
+        var Forwarders = myPipe.transform(this.EntityPM.CustomerCustomsAgentByProducts.filter(f => f.CustomsAgentId != null), "CustomsAgentId");
 
-        if (customsAgents.length == 0) {
-            isEnabled = this.IsEditEnabled ? true : false;
+        if (Forwarders.length == 0) {
+            isEnabled = true;
         }
 
-        else {
+        else if (Forwarders.length > 1) {
             isSplitted = true;
         }
 
@@ -564,13 +522,14 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         var isEnabled = false;
         var isSplitted = false;
 
-        var mediators = this.groupByPipe.transform(this.EntityPM.CustomerMediatorByProducts.filter(f => f.MediatorId != null), "MediatorId");
+        var myPipe = new GroupByPipe();
+        var Forwarders = myPipe.transform(this.EntityPM.CustomerMediatorByProducts.filter(f => f.MediatorId != null), "MediatorId");
 
-        if (mediators.length == 0) {
-            isEnabled = this.IsEditEnabled ? true : false;
+        if (Forwarders.length == 0) {
+            isEnabled = true;
         }
 
-        else {
+        else if (Forwarders.length > 1) {
             isSplitted = true;
         }
 
@@ -578,43 +537,25 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.UIProperties.SetEnabled("MediatorId", this.ObjectTableName, isEnabled);
     }
 
-    public AccountManagerMoreLabel: string;
-    public SalesmanMoreLabel: string;
-    public ForwarderMoreLabel: string;
-    public CustomsAgentMoreLabel: string;
-    public MediatorMoreLabel: string;
-    private SetLabels() {
-        var accountManagerMoreLabel: string = "More";
-        var salesmanMoreLabel: string = "More";
-        var forwarderMoreLabel: string = "More";
-        var customsAgentMoreLabel: string = "More";
-        var mediatorMoreLabel: string = "More";
-
-        if (this.IsSplitted_AccountManager) {
-            accountManagerMoreLabel = "Splitted by Product";
+    private CloseScreen() {
+        var enabled: boolean = true;
+        if (this.TenantPM.IsHybrid && (this.EntityPM.CustomerStatusCode == "ACT" || this.EntityPM.CustomerStatusCode == "WAC")) {
+            enabled = false;
+            this.IsBlockMessageVisible = true;
         }
 
-        if (this.IsSplitted_SalesmanUser) {
-            salesmanMoreLabel = "Splitted by Product";
-        }
-
-        if (this.IsSplitted_Forwarder) {
-            forwarderMoreLabel = "Splitted by Product";
-        }
-
-        if (this.IsSplitted_CustomsAgent) {
-            customsAgentMoreLabel = "Splitted by Product";
-        }
-
-        if (this.IsSplitted_Mediator) {
-            mediatorMoreLabel = "Splitted by Product";
-        }
-
-        this.AccountManagerMoreLabel = accountManagerMoreLabel;
-        this.SalesmanMoreLabel = salesmanMoreLabel;
-        this.ForwarderMoreLabel = forwarderMoreLabel;
-        this.CustomsAgentMoreLabel = customsAgentMoreLabel;
-        this.MediatorMoreLabel = mediatorMoreLabel;
+        this.UIProperties.SetEnabled("EnglishName", "Customer", enabled);
+        this.UIProperties.SetEnabled("LocalName", "Customer", enabled);
+        this.UIProperties.SetEnabled("VatNumber", "Customer", enabled);
+        this.UIProperties.SetEnabled("PaymentTermId", "Customer", enabled);
+        this.UIProperties.SetEnabled("AccountManagerUserId", "Customer", enabled);
+        this.UIProperties.SetEnabled("ClassifierId", "Customer", enabled);
+        this.UIProperties.SetEnabled("CollectorId", "Customer", enabled);
+        this.UIProperties.SetEnabled("ForwarderId", "Customer", enabled);
+        this.UIProperties.SetEnabled("CustomsAgentId", "Customer", enabled);
+        this.UIProperties.SetEnabled("MediatorId", "Customer", enabled);
+        this.UIProperties.SetEnabled("KnownConsignor", "Customer", enabled);
+        this.UIProperties.SetEnabled("KCExpirationDate", "Customer", enabled);
     }
 
     public get StartWorkingDate() { return this.EntityPM.StartWorkingDate; }
@@ -712,7 +653,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         editWindow.Height = 350;
         editWindow.WindowArgs = item;
         this.Clone(item);
-        editWindow.WindowClosed.subscribe((result:any) => {
+        editWindow.WindowClosed.subscribe(result => {
             if (result == "Cancel") {
                 this.RejectChanges();
             }
@@ -1069,12 +1010,6 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         }
     }
 
-    get EORInumber() { return this.EntityPM.EORInumber; }
-    set EORInumber(newValue: string) {
-        if (this.EntityPM.EORInumber != newValue) {
-            this.EntityPM.EORInumber = newValue;
-        }
-    }
     get PaymentTermId() { return this.EntityPM.PaymentTermId; }
     set PaymentTermId(newValue: string) {
         if (this.EntityPM.PaymentTermId != newValue) {
@@ -1108,13 +1043,6 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public set AccountManagerUserId(value: string) {
         if (this.EntityPM.AccountManagerUserId != value) {
             this.EntityPM.AccountManagerUserId = value;
-        }
-    }
-
-    public get TeamId() { return this.EntityPM.TeamId; }
-    public set TeamId(value: string) {
-        if (this.EntityPM.TeamId != value) {
-            this.EntityPM.TeamId = value;
         }
     }
 
@@ -1172,26 +1100,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         }
     }
 
-    get StorageFreeDays() { return this.EntityPM.StorageFreeDays; }
-    set StorageFreeDays(newValue: number) {
-        if (this.EntityPM.StorageFreeDays != newValue) {
-            this.EntityPM.StorageFreeDays = newValue;
-        }
-    }
-
     // More Button
     public IsMoreButtonVisible_AccountManager: boolean = false;
     public IsMoreButtonVisible_Salesman: boolean = false;
     public IsMoreButtonVisible_Forwarder: boolean = false;
     public IsMoreButtonVisible_CustomsAgent: boolean = false;
     public IsMoreButtonVisible_Mediator: boolean = false;
-    public ShowCustomerTeamField: boolean = false;
     SetMoreButtonsVisibility() {
-
-        var customerTeamFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTF")[0];
-        if (customerTeamFieldFeatureToggle) {
-            this.ShowCustomerTeamField = true;
-        }
 
         if (FeatureLocator.HasFeaturePermession("Customer", "CUSTOMERACCOUNTMANAGERBYPRODUCT")) {
             this.IsMoreButtonVisible_AccountManager = true;
@@ -1213,14 +1128,6 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             this.IsMoreButtonVisible_Mediator = true;
         }
     }
-
-    CheckAmitalCloudEnviroment() {
-        var amitalEnvironment = "amitalstorage"
-        if (ObjectsLocator.GlobalSetting?.DeploymentStage == amitalEnvironment) {
-            this.IsAmitalCloudEnvironment = true;
-        }
-    }
-
     MoreButtonClicked(field: string) {
 
         var windowTitle: string = null;
@@ -1261,11 +1168,12 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         if (windowComponent != null) {
             var window = new LogitudeWindow();
             window.Title = windowTitle;
-            window.WindowArgs = { EntityPM: this.EntityPM, ProductTypes: this.AllProductTypes, IsUnifreightEditable :this.IsUnifreightEditable, IsDisabled : this.IsBlockMessageVisible }
+            window.WindowArgs = { EntityPM: this.EntityPM, ProductTypes: this.AllProductTypes, IsUnifreightEditable :this.IsUnifreightEditable }
             window.Show(windowComponent);
             window.WindowClosed.subscribe(s => {
-                if (s == "OK") {         
-                    this.SetUIProperties();
+                if (s == "OK") {
+                    this.SetUIProperties_Partners();
+                    this.CloseScreen();
                 }
             });
         }
@@ -1384,8 +1292,10 @@ export class ProductTypeItemClass {
                 }
                 if (flag) {
                     this.entityPM.AddCustomerProductPM(newItem);
-                    if (!this.entityPM.ActivityWatch) this.entityPM.ActivityWatch = true;
                 }
+
+                if (!this.entityPM.ActivityWatch)
+                    this.entityPM.ActivityWatch = true;
             }
             else {
                 var item: CustomerProductPM = this.entityPM.CustomerProducts.filter(d => d.ProductTypeCode == this.Code)[0];
@@ -1692,7 +1602,7 @@ class ServiceItemClass {
                 var type: string = null;
 
                 var addtionalService: AdditionalServiceListService = new AdditionalServiceListService();
-                addtionalService.getSingleFromCache(this.Id).subscribe((result:any) => {
+                addtionalService.getSingleFromCache(this.Id).subscribe(result => {
                     var typeList = result.Result;
                     if (typeList != null) {
                         type = typeList.Name;

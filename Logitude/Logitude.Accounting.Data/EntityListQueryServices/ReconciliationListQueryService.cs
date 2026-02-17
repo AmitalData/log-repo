@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -18,8 +18,6 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Server.Tools.Helpers;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
-using Logitude.Accounting.Data.EntityMapping;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
@@ -43,83 +41,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                  AccountName = a.Account != null ? a.Account.EnglishName : null,
                                                  IsCancelled = a.IsCancelled,
                                              });
-
             return query;
         }
 
 		private IQueryable<Reconciliation> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Reconciliation> iQueryable,int tenant)
         {
-            var reconciliationLinesQueryOperations = GetReconciliationLinesQueryOperations(queryOperations);
-            if (reconciliationLinesQueryOperations == null)
-                return iQueryable;
-            GenericFilter filter = new GenericFilter();
-            var reconciliationLinesQuery = GetIQueryableReconciliation(tenant);
-            reconciliationLinesQuery = filter.GetFilteredQuery(reconciliationLinesQueryOperations, reconciliationLinesQuery);
-            iQueryable = iQueryable.Where(w => reconciliationLinesQuery.Where(e=>e.ReconciliationId == w.Id).Any());
-            
             return iQueryable;
 		}
 
-        private IQueryable<ReconciliationLineList> GetIQueryableReconciliation(int tenant)
-        {
-            return context.ReconciliationLines.Include(e=>e.LedgerTransaction.Account).Select(a=>
-            new ReconciliationLineList()
-            {
-                ReconciliationId = a.ReconciliationId,
-                TransactionId = a.TransactionId,
-                TransactionAmount = 
-                (a.LedgerTransaction != null ? 
-                    a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit
-                    : 0
-                ) == 0 ?
-                    -1 * (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0)
-                    : (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountCredit : a.LedgerTransaction.ForeignAmountCredit : 0)
-                   
-
-                
-
-            }
-            );
-        }
-
-        private QueryOperations GetReconciliationLinesQueryOperations(QueryOperations queryOperations)
-        {
-            var filterFieldName = "TransactionAmount";
-            var reconciliationAmountFieldOperations = queryOperations.QueryFilterItems.Where(e => e.FieldName == filterFieldName).FirstOrDefault();
-            if (reconciliationAmountFieldOperations == null)
-                return null;
-            var reconciliationLinesQueryOperations = CreateReconciliationLinesQueryOperations(reconciliationAmountFieldOperations);
-            return reconciliationLinesQueryOperations;
-        }
-
-        private QueryOperations CreateReconciliationLinesQueryOperations(QueryFilterItem reconciliationAmountFieldOperations)
-        {
-           
-            return new QueryOperations()
-            {
-                GetAll = true,
-                QueryFilterItems = new List<QueryFilterItem>()
-                {
-                    new QueryFilterItem()
-                    {
-                        FieldName = reconciliationAmountFieldOperations.FieldName,
-                        FieldValue = TryParseStrigToDecimal(reconciliationAmountFieldOperations.FieldValue.ToString()),
-                        FieldValue2 = reconciliationAmountFieldOperations.FieldValue2 != null ?
-                        TryParseStrigToDecimal(reconciliationAmountFieldOperations.FieldValue2.ToString())
-                         : reconciliationAmountFieldOperations.FieldValue2,
-                        Operator = reconciliationAmountFieldOperations.Operator
-                    }
-                }
-            };
-        }
-        private decimal TryParseStrigToDecimal(string inputString)
-        {
-            var result = 0.0M;
-            decimal.TryParse(inputString, out result);
-            return result;
-        }
-
-        private IQueryable<Reconciliation> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Reconciliation> iQueryable,int tenant)
+		private IQueryable<Reconciliation> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Reconciliation> iQueryable,int tenant)
         {
 			return iQueryable;
 		}
@@ -227,27 +157,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return recoList;
         }
 
-        public List<ReconciliationList> GetReconciliationsByJournalId(string journalId, int tenant)
-        {
-            IQueryable<Reconciliation> reconciliationQuery = context.Reconciliations
-                .Join(context.ReconciliationLines,
-                      r => r.Id,
-                      rl => rl.ReconciliationId,
-                      (r, rl) => new { r, rl })
-                .Join(context.LedgerTransactions,
-                      x => x.rl.TransactionId,
-                      lt => lt.Id,
-                      (x, lt) => new { x.r, x.rl, lt })
-                .Where(x => x.lt.JournalId == journalId && x.rl.Tenant == tenant)
-                .Select(x => x.r)
-                .Distinct(); 
-
-            IQueryable<ReconciliationList> reconciliationListQuery = this.GetIqueryableList(reconciliationQuery);
-            List<ReconciliationList> rvList = reconciliationListQuery.ToList();
-            return rvList;
-        }
-
-
+       
     }
 
 

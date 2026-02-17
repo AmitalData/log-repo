@@ -32,7 +32,7 @@ namespace WebFreight.Web.CommonDataModel
 
                 SqlParameter param2 = new SqlParameter("@Tenant", SqlDbType.Int);
                 param2.Direction = ParameterDirection.Input;
-                param2.Value = tenant; 
+                param2.Value = tenant;
                 cmd.Parameters.Add(param2);
 
                 cmd.CommandTimeout = 10800; //3 Hours
@@ -90,7 +90,7 @@ namespace WebFreight.Web.CommonDataModel
 
                 cmd.Parameters.AddWithValue("@Tenant", tenant);
                 cmd.Parameters.AddWithValue("@StartDateTime", startDateTime);
-
+ 
                 cn.Open();
 
                 var iResult = cmd.ExecuteScalar();
@@ -106,7 +106,7 @@ namespace WebFreight.Web.CommonDataModel
         }
 
 
-        public static void InsertCustomerActualDataHistory(int tenant, DateTime? startDateTime, DateTime? endDateTime, bool hasException, string exceptionMessage)
+        public static void InsertCustomerActualDataHistory(int tenant, DateTime? startDateTime, DateTime? endDateTime)
         {
             string strConnString = GetConnection(tenant);
 
@@ -116,22 +116,11 @@ namespace WebFreight.Web.CommonDataModel
                 {
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = @"insert into CustomerActualDataHistory(Tenant, StartDateTime, EndDateTime, HasException, ExceptionMessage) VALUES(@Tenant, @StartDateTime, @EndDateTime, @HasException, @ExceptionMessage)";
+                    cmd.CommandText = @"insert into CustomerActualDataHistory(Tenant, StartDateTime, EndDateTime) VALUES(@Tenant, @StartDateTime, @EndDateTime)";
 
                     cmd.Parameters.AddWithValue("@Tenant", tenant);
                     cmd.Parameters.AddWithValue("@StartDateTime", startDateTime);
                     cmd.Parameters.AddWithValue("@EndDateTime", endDateTime);
-                    cmd.Parameters.AddWithValue("@HasException", hasException);
-                    if (exceptionMessage == null)
-                    {
-                        cmd.Parameters.AddWithValue("@ExceptionMessage", DBNull.Value);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@ExceptionMessage", exceptionMessage);
-                    }
-
-
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -151,9 +140,8 @@ namespace WebFreight.Web.CommonDataModel
             }
 
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;

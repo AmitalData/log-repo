@@ -1,14 +1,12 @@
-import {Component, ViewChildren, QueryList} from '@angular/core';
+﻿import {Component, ViewChildren, QueryList} from '@angular/core';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-declare var window: any;
 
 @Component({
     selector: 'FullAccountingComponent',
-    
+    moduleId: module.id,
     templateUrl: './AccountingWorkspaceComponent.html',
 })
 
@@ -16,23 +14,10 @@ export class AccountingWorkspaceComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 
     public isRTL: boolean = false;
-    public IsMainTabVisibile: boolean = false;
-    public IsCustomersTabVisibile: boolean = false;
-    public IsVendorsTabVisibile: boolean = false;
-    public IsBanksTabVisibile: boolean = false;
-    public IsJournalTabVisibile: boolean = false;
-    public IsGLAccountsTabVisibile: boolean = false;
-    public IsMiscTabVisibile: boolean = false;
-    public IsInterestTabVisibile: boolean = false;
+
 
     constructor(private _entityResourceService: EntityResourceService) {
         this.RunComponent();
-        this.GetResources();
-        this.CheckFeatures();
-    }
-
-    private GetResources() {
-        this._entityResourceService.getEntityResourceByTableName("ChequeCounterSerial").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("BankDeposit").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("BankDepositLine").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ARPaymentCheque").subscribe((response: any) => { });
@@ -45,47 +30,9 @@ export class AccountingWorkspaceComponent {
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("BankAccount").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => { });
-        this._entityResourceService.getEntityResourceByTableName("InterestBasesType").subscribe((response: any) => { });
-        this._entityResourceService.getEntityResourceByTableName("InterestBasesPeriod").subscribe((response: any) => { });        
-        this._entityResourceService.getEntityResourceByTableName("InterestReport").subscribe((response: any) => { });
 
-    }
-
-    CheckFeatures() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        var table = window.ObjectTables.filter(d => d.Name === 'General')[0];
-        // var mainTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMAIN") && f.ObjectTableId == table.Id)[0];
-        // if (mainTabFeature) {
-            this.IsMainTabVisibile = true;
-        // }
-        // var CustomersTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCCustomers") && f.ObjectTableId == table.Id)[0];
-        // if (CustomersTabFeature) {
-            this.IsCustomersTabVisibile = true;
-       // }
-       // var VendorsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCVendors") && f.ObjectTableId == table.Id)[0];
-        //if (VendorsTabFeature) {
-           this.IsVendorsTabVisibile = true;
-       // }
-       // var BanksTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCBanks") && f.ObjectTableId == table.Id)[0];
-       // if (BanksTabFeature) {
-            this.IsBanksTabVisibile = true;
-      //  }
-       // var journalTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCJORN") && f.ObjectTableId == table.Id)[0];
-      //  if (journalTabFeature) {
-            this.IsJournalTabVisibile = true;
-       // }
-      //  var GLAccountsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCGLAccounts") && f.ObjectTableId == table.Id)[0];
-       // if (GLAccountsTabFeature) {
-            this.IsGLAccountsTabVisibile = true;
-      //  }
-      //  var MiscTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMisc") && f.ObjectTableId == table.Id)[0];
-      //  if (MiscTabFeature) {
-            this.IsMiscTabVisibile = true;
-     //   }
-        var InterestTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCInterest") && f.ObjectTableId == table.Id)[0];
-        if (InterestTabFeature) {
-            this.IsInterestTabVisibile = true;
-        }
+
     }
 
     private isLoaderReady: boolean = false;
@@ -98,50 +45,12 @@ export class AccountingWorkspaceComponent {
 
             else {
                 this.isLoaderReady = true;
-
-                this.InitSelectedTab();
-
+                this.SelectedItem = "Main";
             }
         }
 
         else {
             this.RunComponentTimer();
-        }
-    }
-
-    InitSelectedTab(){
-
-        // if (this.IsMainTabVisibile) {
-        //     this.SelectedItem = "Main";
-        // }
-        // else
-        if (this.IsCustomersTabVisibile) {
-            this.SelectedItem = "CS";
-
-        }
-        else if (this.IsVendorsTabVisibile) {
-            this.SelectedItem = "VND";
-
-        }
-        else if (this.IsBanksTabVisibile) {
-            this.SelectedItem = "BNKS";
-
-        }
-        else if (this.IsJournalTabVisibile) {
-            this.SelectedItem = "JORN";
-
-        }
-        else if (this.IsGLAccountsTabVisibile) {
-            this.SelectedItem = "GLAccounts";
-
-        }
-        else if (this.IsMiscTabVisibile) {
-            this.SelectedItem = "MISC";
-
-        }
-        else if (this.IsInterestTabVisibile) {
-            this.SelectedItem = "Interest";
-
         }
     }
 
@@ -154,7 +63,7 @@ export class AccountingWorkspaceComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -175,8 +84,6 @@ export class AccountingWorkspaceComponent {
     private Page_Payable: any = null;
     private Page_Banks: any = null;
     private Page_Misc: any = null;
-    private Page_Interest: any = null;
-    
     SelectionChanged() {
         if (this.isLoaderReady) {
             if (this.SelectedItem != null) {
@@ -208,27 +115,22 @@ export class AccountingWorkspaceComponent {
                             }
                             break;
                         }
-                        case "CS": {
+                        case "RCV": {
                             if (this.Page_Receivable == null) {
                                 this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
                                     this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {
-                                        this._entityResourceService.getEntityResourceByTableName("GLAccountInterestPeriod",0).subscribe((response: any) => {
-                                            this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
-                                                SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Receivable/ReceivablePageComponent", myLocation.viewContainerRef)
-                                                    .then(cmpRef => {
-                                                        this.Page_Receivable = cmpRef.instance;
-                                                        this.Page_Receivable.InitComponent();
-                                                    });
-                                            });
 
-                                        });
-                               
+                                        SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Receivable/ReceivablePageComponent", myLocation.viewContainerRef)
+                                            .then(cmpRef => {
+                                                this.Page_Receivable = cmpRef.instance;
+                                                this.Page_Receivable.InitComponent();
+                                            });
                                     });
                                 });
                             }
                             break;
                         }
-                        case "VND": {
+                        case "PAY": {
                             if (this.Page_Payable == null) {
                                 this._entityResourceService.getEntityResourceByTableName("APInvoice", 0).subscribe((response: any) => {
                                 SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Payable/PayablePageComponent", myLocation.viewContainerRef)
@@ -268,22 +170,6 @@ export class AccountingWorkspaceComponent {
                                             this.Page_GLAccounts = cmpRef.instance;
                                             this.Page_GLAccounts.InitComponent();
                                         });
-                                });
-                            }
-                            break;
-                        }
-                        case "Interest": {
-                            if (this.Page_Interest == null) {
-                                this._entityResourceService.getEntityResourceByTableName("InterestBasesType", 0).subscribe((response: any) => {
-                                    this._entityResourceService.getEntityResourceByTableName("InterestReportLinesByDate", 0).subscribe((response: any) => {
-                                        this._entityResourceService.getEntityResourceByTableName("InterestTransaction", 0).subscribe((response: any) => {
-                                    SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Interest/InterestPageComponent", myLocation.viewContainerRef)
-                                        .then(cmpRef => {
-                                            this.Page_Interest = cmpRef.instance;
-                                            this.Page_Interest.InitComponent();
-                                                });
-                                        });
-                                    });
                                 });
                             }
                             break;

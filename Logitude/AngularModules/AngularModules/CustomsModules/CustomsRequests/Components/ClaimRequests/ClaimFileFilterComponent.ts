@@ -20,7 +20,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'ClaimFileFilterComponent',
-    
+    moduleId: module.id,
     templateUrl: './ClaimFileFilterComponent.html',
 })
 
@@ -192,7 +192,7 @@ export class ClaimFileFilterComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לתביעות", true)
             .then((res) => {
                 this.ResponseData = res;

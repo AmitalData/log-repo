@@ -1,26 +1,17 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
-using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using NetCommonHelper.Logger;
-using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -31,17 +22,14 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Unifreight.Data.AmitalModel.EntityPOCOs;
-using Unifreight.Data.AmitalModel.Repsitories;
 using UnifreightIIG.Common.SystemTableServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
+
     public class SYSTBL_NG_9001_MSG_SystemTablesResponseService
         : ResponseServiceBase<SystemTableResponseData, SYSTBL_NG_9001_MSG_SystemTablesResponse, SystemTableRequestParams>
     {
-        private readonly DevLog logger = DevLog.Instance;
-
         public override void Update(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
         {
             bool anatWantAsDataSetExample = false;
@@ -66,7 +54,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 return;
             }
-
+            
             if (requestParams.Pseudo)
             {
                 return;
@@ -77,12 +65,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //    return;
             //}
             var listOf9001TDExt = ManipulateCustomResponse(requestParams.TableId, customResponse);
-            if ((requestParams.TableId == "1344" || requestParams.TableId == "2653") && listOf9001TDExt.Count == 0)
-            {
-                LogMessagingUtil.Instance.AppendLine("1344 dataset is null>> no update");
-                return;
 
-            }
             var done = false;
 
             if (
@@ -91,10 +74,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 )
             {
 
-                //var customContext = CustomContext.GetContext(tenant);
+                //var customContext = CustomContext.GetContext(0);
                 //closedTableService can dispose the customContext
                 var closedTableService = Logitude.CustomsMessaging.Helpers.ClosedTable.ClosedTableServiceFactory.CreateNew(
-                    CustomContext.GetContext(requestParams.Tenant),//closedTableService can dispose the customContext //customContext,
+                    CustomContext.GetContext(0),//closedTableService can dispose the customContext //customContext,
                                                 //requestParams.TableId,
                     customResponse.tableName,
                     //customResponse.TableData.ToList(),
@@ -113,7 +96,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         throw;
                     }
 
-                    CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(requestParams.Tenant));
+                    CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(0));
                     CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = requestParams.TableId });
                     ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
 
@@ -131,8 +114,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     }
-
-                    table.LastUpdateDate = DateTime.Now;
+                    
                     table.StatusCode = "3";
                     closedTableRep.Update(table);
                     closedTableRep.SubmitChanges();
@@ -144,58 +126,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LoadCustomClosedTables.UpdateSingleClosedTable(requestParams.TableId, requestParams, customResponse);
             }
             bool allways_try_To_Build_Custom_Zip_File = true;
-            if (allways_try_To_Build_Custom_Zip_File)
+            if (allways_try_To_Build_Custom_Zip_File )
             {
                 UpdateCustomZipFile(requestParams.Tenant, requestParams.LoggingUserId);//allways try To Build Custom Zip File !!! 
             }
-            
-            bool syncUnifreight = SystemTables.SyncUnifreight(requestParams.TableId);
-            logger.WriteDebug($"syncUnifreight: {syncUnifreight}");
+
+            //others ...
+            var syncUnifreight = SystemTables.SyncUnifreight(requestParams.TableId);
             if (syncUnifreight)
             {
                 var list = customResponse.TableData.OrderBy(rec => rec.id).ToList();
-                bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight;
-                if (isConnectedToUniFreight)
-                {
-                    logger.WriteDebug($"sending to Unifreight from onPomise, TableId: {requestParams.TableId}, tenant: {requestParams.Tenant}");
-                    SystemTables.Send2Amital(requestParams.TableId, list, requestParams.Tenant);
-                }
-                else
-                {
-                    logger.WriteDebug($"sending to Unifreight from cloud, TableId: {requestParams.TableId}, tenant: {requestParams.Tenant}");
-                    SystemTables.Send2AmitalFromCloud(requestParams.TableId, list, requestParams.Tenant);
-                }
+                SystemTables.Send2Amital(requestParams.TableId, list, requestParams.Tenant);
             }
-
-
-
         }
-        void UpdateSyncRecord(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
-        {
-            ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
-            var qs = new CustomsClosedTableQueryService(customContext);
-            string objecttableid = qs.GetObjectTableIdById(requestParams.TableId);
-            var tableName = "";
-            if (!string.IsNullOrWhiteSpace(objecttableid))
-            {
-                ObjectTableQuery objectTableQuery = new ObjectTableQuery(requestParams.Tenant);
-                tableName = objectTableQuery.GetSinglePM(objecttableid, requestParams.Tenant).DBTableName;
-            }
 
-            var syncRecord = new SyncRecord();
-            syncRecord.CreateDate = DateTime.Now;
-            syncRecord.Id = Guid.NewGuid().ToString();
-            syncRecord.Tenant = 0;
-            syncRecord.KeyVal = "ALL";
-            syncRecord.Entname = tableName;
-            syncRecord.TrigAction = "U";
-            syncRecord.IsSync = 0;
-            syncRecord.FileNo = "0";
-            var syncRecordRepository = new SyncRecordRepository(requestParams.Tenant);
-            syncRecordRepository.Add(syncRecord);
-            syncRecordRepository.SubmitChanges();
-        }
-        private void UpdateCustomZipFile(int tenant, string LoggingUserId)
+        private void UpdateCustomZipFile(int tenant,string LoggingUserId)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsClosedTable");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
@@ -267,15 +212,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
         }
+    
 
 
 
-
-
+    
 
         private List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt> ManipulateCustomResponse(string tableId, SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse)
         {
-           
+
             var writeHighlight = false;
             switch (tableId)
             {
@@ -286,7 +231,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         customResponse.TableData = RemoveMoreThen(customResponse.TableData, 3);
                     }
                     break;
-
+                
                 case "1339": //כמו כן , יש נפילה בשל אורך שדות , יש לשים טיפול שיתעלם משדות באורך גדול מ 17 (ייתכן שזה גם הגורם לכך שלא מתעדכן שדה SiteTypeCode )
                     {
                         customResponse.TableData = RemoveMoreThen(customResponse.TableData, 17);
@@ -296,24 +241,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case "1344": //EnglishName must be a string or array type with a maximum length of '40'.
                     {
                         //customResponse.TableData = TruncateNameTo(customResponse.TableData, 40);
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        if (!String.IsNullOrWhiteSpace(customResponse.TableAsDataSetTableData))
-                        {
 
-                            Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                        ManipulateCustomResponse.
-                                                    DataSetToTableData(customResponse,
-                                                    (newResponseTableData, dr) =>
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt =
+                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyInternationalSite = new Helpers.ClosedTable.InternationalSiteP();
+                                                    if (!writeHighlight)
                                                     {
-                                                        var newExt =
-                                                            SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                        newExt.MyInternationalSite = new Helpers.ClosedTable.InternationalSiteP();
-                                                        if (!writeHighlight)
-                                                        {
-                                                            LogMessagingUtil.Instance.Append(
-                            @"1344:InternationalSite:Calc=
+                                                        LogMessagingUtil.Instance.Append(
+                        @"1344:InternationalSite:Calc=
  if (!string.IsNullOrWhiteSpace(dr[""extraNumericData""].ToString()))
-     CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(tenant));
+     CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
         var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
         if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
         {
@@ -321,48 +264,47 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 ID List :
 ");
-                                                            writeHighlight = true;
-                                                        }
-                                                        /*
-                                                        if (!string.IsNullOrWhiteSpace(dr["ExtraNumericData"].ToString()))
+                                                        writeHighlight = true;
+                                                    }
+                                                    /*
+                                                    if (!string.IsNullOrWhiteSpace(dr["ExtraNumericData"].ToString()))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
+                                                        if (!string.IsNullOrWhiteSpace(newResponseTableData.extraNumericData.ToString()))
                                                         {
-                                                            LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(tenant));
-                                                            if (!string.IsNullOrWhiteSpace(newResponseTableData.extraNumericData.ToString()))
+                                                            var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
+
+                                                            if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
                                                             {
-                                                                var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
-
-                                                                if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
-                                                                {
-                                                                    LogMessagingUtil.Instance.Append("amitalCountryMalamID = " + newResponseTableData.extraNumericData.ToString() + " Translated to " + myCountry.Code);
-                                                                    newExt.MyInternationalSite.CountryTypeCode = myCountry.Code;
-                                                                }
-                                                            }
-                                                        }*/
-
-                                                        if (!string.IsNullOrWhiteSpace(dr["ID"].ToString()))
-                                                        {
-                                                            LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
-                                                            if (!string.IsNullOrWhiteSpace(newResponseTableData.id))
-                                                            {
-                                                                var myCountry = customsCountryQueryService.GetSingle(newResponseTableData.id.Substring(0, 2), false, true);
-
-                                                                if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
-                                                                {
-                                                                    LogMessagingUtil.Instance.Append("Country ID = " + myCountry.Code);
-                                                                    newExt.MyInternationalSite.CountryTypeCode = myCountry.Code;
-                                                                }
+                                                                LogMessagingUtil.Instance.Append("amitalCountryMalamID = " + newResponseTableData.extraNumericData.ToString() + " Translated to " + myCountry.Code);
+                                                                newExt.MyInternationalSite.CountryTypeCode = myCountry.Code;
                                                             }
                                                         }
+                                                    }*/
 
-                                                        if (newResponseTableData.name.Length > 40)
+                                                    if (!string.IsNullOrWhiteSpace(dr["ID"].ToString()))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
+                                                        if (!string.IsNullOrWhiteSpace(newResponseTableData.id))
                                                         {
-                                                            newExt.name = newResponseTableData.name.Substring(0, 40);
+                                                            var myCountry = customsCountryQueryService.GetSingle(newResponseTableData.id.Substring(0,2),false,true);
+
+                                                            if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
+                                                            {
+                                                                LogMessagingUtil.Instance.Append("Country ID = " + myCountry.Code);
+                                                                newExt.MyInternationalSite.CountryTypeCode = myCountry.Code;
+                                                            }
                                                         }
-                                                        extList.Add(newExt);
-                                                    });
-                        }
+                                                    }
+
+                                                    if (newResponseTableData.name.Length > 40)
+                                                    {
+                                                        newExt.name = newResponseTableData.name.Substring(0, 40);
+                                                    }
+                                                    extList.Add(newExt);
+                                                });
                         return extList;
                     }
                     break;
@@ -436,9 +378,6 @@ ID List :
                 case "1354":
                 case "GovernmentProcedureType":
                     {
-                        // Task #96550 
-                        customResponse.TableAsDataSetTableData = RemoveNotActive(customResponse.TableAsDataSetTableData);
-
                         var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
                         Logitude.CustomsMessaging.Helpers.ClosedTable.
                                                     ManipulateCustomResponse.
@@ -464,709 +403,12 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyGovernmentProcedureType.IsImport = true;
                                                     }
-                                                    if (dr["InUseByExportDeclaration"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyGovernmentProcedureType.IsExport = true;
-                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;
                         break;
                     }
 
-                case "1416":
-                case "ModificationAndDiscountType":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyModificationAndDiscountType = new Helpers.ClosedTable.ModificationAndDiscountType();
-                                                    if (!writeHighlight)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(
-                        @"1416:ModificationAndDiscountType:Calc=
- if (dr[""IsRelevantInvoice""].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-        newExt.MyModificationAndDiscountType.IsRelevantInvoice = true;
-if (dr[""IsRelevantGoodsItem""].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-        newExt.MyModificationAndDiscountType.IsRelevantGoodsItem = true;
-ID List :
-");
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["IsRelevantInvoice"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.IsRelevantInvoice = true;
-                                                    }
-                                                    if (dr["IsRelevantGoodsItem"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.IsRelevantGoodsItem = true;
-                                                    }
-                                                    if (dr["IsRelevantGoodsItemExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.IsRelevantGoodsItemExport = true;
-                                                    }
-                                                    if (dr["IsRelevantInvoiceExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.IsRelevantInvoiceExport = true;
-                                                    }
-                                                    if (dr["ExtraNumericData"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.ExtraNumericData = dr["ExtraNumericData"].ToString();
-                                                    }
-                                                    if (dr["IsCustomsValueComponent"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.IsCustomsValueComponent = true;
-                                                    }
-                                                    if (dr["IsCustomsValueComponentExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.IsCustomsValueComponentExport = true;
-                                                    }
-
-                                                    if (dr["CurrencyMustBeSameAsInvoice"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.CurrencyMustBeSameAsInvoice = true;
-                                                    }
-                                                    if (dr["CurrencyMustBeSameAsInvoiceExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.CurrencyMustSameInvoiceExport = true;
-                                                    }
-                                                    if (dr["IsCustomUseExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.IsCustomUseExport = true;
-                                                    }
-                                                    if (dr["ExportNetoValuesModificationAffectTypeID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.ExportNetoValuesModificationAffectTypeID = dr["ExportNetoValuesModificationAffectTypeID"].ToString();
-                                                    }
-                                                    if (dr["ExportFOBValuesModificationAffectTypeID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyModificationAndDiscountType.ExportFOBValuesModificationAffectTypeID = dr["ExportFOBValuesModificationAffectTypeID"].ToString();
-                                                    }
-
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-                        break;
-
-                    }
-                case "1259":
-                case "CargoIdentifireType":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyCargoIdentifireType = new Helpers.ClosedTable.CargoIdentifireType();
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["IsForDeclarationExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCargoIdentifireType.IsForDeclarationExport = true;
-                                                    }
-                                                    if (dr["IsForDeclarationImport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCargoIdentifireType.IsForDeclarationImport = true;
-                                                    }
-                                                    if (dr["IsForManifest"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCargoIdentifireType.IsForManifest = true;
-                                                    }
-                                                    if (dr["IsKey2Mandatory"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCargoIdentifireType.IsKey2Mandatory = true;
-                                                    }
-                                                    if (dr["IsKey3Mandatory"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCargoIdentifireType.IsKey3Mandatory = true;
-                                                    }
-                                                    if (dr["CargoIdentifierKey1Name"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCargoIdentifireType.CargoIdentifierKey1Name = dr["CargoIdentifierKey1Name"].ToString();
-                                                    }
-                                                    if (dr["CargoIdentifierKey2Name"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCargoIdentifireType.CargoIdentifierKey2Name = dr["CargoIdentifierKey2Name"].ToString();
-                                                    }
-                                                    if (dr["CargoIdentifierKey3Name"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCargoIdentifireType.CargoIdentifierKey3Name = dr["CargoIdentifierKey3Name"].ToString();
-                                                    }
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-
-                    }
-                case "2009":
-                case "TradeAgreementTypeView":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyTradeAgreement = new Helpers.ClosedTable.TradeAgreement();
-
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["CustomsBookTypeID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        int.TryParse(dr["CustomsBookTypeID"]?.ToString(), out int val);
-                                                        newExt.MyTradeAgreement.CustomsBookTypeID = val;
-                                                    }
-                                                    if (dr["CountryGroupID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        int.TryParse(dr["CountryGroupID"]?.ToString(), out int val);
-                                                        newExt.MyTradeAgreement.CountryGroupID = val;
-                                                    }
-
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-
-                    }
-                case "1977":
-                case "OriginCriterion":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyOriginCriterion = new Helpers.ClosedTable.OriginCriterion();
-
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["CertificateOfOriginTypeCodeID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        int.TryParse(dr["CertificateOfOriginTypeCodeID"]?.ToString(), out int val);
-                                                        newExt.MyOriginCriterion.CertificateOfOriginTypeCodeID = val;
-                                                    }
-                                                    if (dr["OriginCriterionCode"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyOriginCriterion.OriginCriterionCode = dr["OriginCriterionCode"]?.ToString();
-                                                    }
-
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-
-                    }
-                case "1958":
-                case "CertificateOfOriginTypeCodeEnum":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyCertificateOfOriginTypeCodeEnum = new Helpers.ClosedTable.CertificateOfOriginTypeCodeEnum();
-
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["IsCustomApprovalRequired"] != DBNull.Value && dr["IsCustomApprovalRequired"] != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCustomApprovalRequired = Convert.ToBoolean(dr["IsCustomApprovalRequired"]);
-                                                    }
-
-                                                    if (dr["IsCriterionMandatory"] != DBNull.Value && dr["IsCriterionMandatory"] != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCriterionMandatory = Convert.ToBoolean(dr["IsCriterionMandatory"]);
-                                                    }
-
-                                                    if (dr["IsCustomsItemMandatory"] != DBNull.Value && dr["IsCustomsItemMandatory"] != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCustomsItemMandatory = Convert.ToBoolean(dr["IsCustomsItemMandatory"]);
-                                                    }
-
-                                                    if (dr["IsZipcodeMandatory"] != DBNull.Value && dr["IsZipcodeMandatory"] != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsZipcodeMandatory = Convert.ToBoolean(dr["IsZipcodeMandatory"]);
-                                                    }
-
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-
-                    }    
-                case "239684":
-                case "CertificateOfOriginMandatoryFields":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyCertificateOfOriginMandatoryFields = new Helpers.ClosedTable.CertificateOfOriginMandatoryFields();
-
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["CertificateOfOriginTypeCodeID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        int d;
-                                                        if (dr["CertificateOfOriginTypeCodeID"] != DBNull.Value && int.TryParse(dr["CertificateOfOriginTypeCodeID"].ToString(), out d))
-                                                        {
-                                                            newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeCodeID = d;
-                                                        }
-                                                    } 
-                                                    if (dr["CertificateOfOriginTypeCodeName"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeName = dr["CertificateOfOriginTypeCodeName"]?.ToString();
-                                                    }
-                                                    if (dr["ConstraintTypeEnumID"] != DBNull.Value && dr["ConstraintTypeEnumID"] != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        //string constraintTypeValue = dr["ConstraintTypeEnumID"]?.ToString();
-                                                        //if(constraintTypeValue != null) 
-                                                        //{
-                                                        //    newExt.MyCertificateOfOriginMandatoryFields.IsMandatory = constraintTypeValue == "1" ? true : false;
-                                                        //}
-
-                                                        string constraintTypeName = dr["ConstraintTypeName"]?.ToString();
-                                                        if (constraintTypeName != null && constraintTypeName == "Mandatory" || constraintTypeName == "Optional" || constraintTypeName == "Condition")
-                                                            newExt.MyCertificateOfOriginMandatoryFields.IsMandatory = constraintTypeName;
-                                                    }
-
-
-                                                    //if (dr["Location"].ToString() != null)
-                                                    //{
-                                                    //    LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                    //    newExt.MyCertificateOfOriginMandatoryFields.Location = (int)dr["ID"];
-                                                    //}
-                                                    //if (dr["LastUpdatedDate"].ToString() != null)
-                                                    //{
-                                                    //    LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                    //    newExt.MyCertificateOfOriginMandatoryFields.LastUpdatedDate = (DateTime)dr["LastUpdatedDate"];
-                                                    //}
-
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-
-                    } 
-                case "1957":
-                case "CertificateOfOriginStatusCodeEnum":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyCertificateOfOriginStatusCodeEnum = new Helpers.ClosedTable.CertificateOfOriginStatusCodeEnum();
-
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if(dr["RecordEditable"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-
-                                                        // Task #96160 add close custom table 
-                                                        
-                                                        int.TryParse(dr["ID"]?.ToString(), out int statusId);
-
-                                                        if (statusId == 4 || statusId == 5 || statusId == 6 || statusId == 8) 
-                                                            newExt.MyCertificateOfOriginStatusCodeEnum.RecordEditable = true;
-                                                        else
-                                                            newExt.MyCertificateOfOriginStatusCodeEnum.RecordEditable = false;
-                                                    }
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-
-                    }
-                case "1423":
-                case "CertificateExemptionType":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyCertificateExemptionType = new Helpers.ClosedTable.CertificateExemptionType();
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["IsImportDeclaration"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateExemptionType.IsImportDeclaration = true;
-                                                    }
-                                                    if (dr["IsExportDeclaration"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateExemptionType.IsExportDeclaration = true;
-                                                    }
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-                        break;
-
-                    }
-                case "1604":
-                case "ConfirmationType":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyConfirmationType = new Helpers.ClosedTable.ConfirmationType();
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (CheckDRString(dr["MalamID"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        int val = IntFromDR(dr["MalamID"]);
-                                                        newExt.MyConfirmationType.MalamID = val;
-                                                    }
-                                                    if (CheckDRString(dr["State"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        int val = IntFromDR(dr["State"]);
-                                                        newExt.MyConfirmationType.State = val;
-                                                    }
-                                                    if (CheckDRString(dr["Exempt_CertificateDocumentCategoryTypeID"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        int val = IntFromDR(dr["Exempt_CertificateDocumentCategoryTypeID"]);
-                                                        newExt.MyConfirmationType.Exempt_CertificateDocumentCategoryTypeID = val;
-                                                    }
-                                                    if (CheckDRBool(dr["IsImport"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsImport = true;
-                                                    }
-                                                    if (CheckDRBool(dr["IsExemptOtherAuthority"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsExemptOtherAuthority = true;
-                                                    }
-                                                    if (CheckDRString(dr["ConfirmationComputerizationLevelTypeID"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        int val = IntFromDR(dr["ConfirmationComputerizationLevelTypeID"]);
-                                                        newExt.MyConfirmationType.ConfirmationComputerizationLevelTypeID = val;
-                                                    }
-                                                    if (CheckDRBool(dr["IsCEO"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsCEO = true;
-                                                    }
-                                                    if (CheckDRBool(dr["IsNeedDeclaration"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsNeedDeclaration = true;
-                                                    }
-                                                    if (CheckDRString(dr["CertificateDocumentCategoryTypeID"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        int val = IntFromDR(dr["CertificateDocumentCategoryTypeID"]);
-                                                        newExt.MyConfirmationType.CertificateDocumentCategoryTypeID = val;
-                                                    }
-                                                    if (CheckDRString(dr["AuthorityID"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        int val = IntFromDR(dr["AuthorityID"]);
-                                                        newExt.MyConfirmationType.AuthorityID = val;
-                                                    }
-                                                    if (CheckDRBool(dr["IsQuotaCheckNeeded"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsQuotaCheckNeeded = true;
-                                                    }
-                                                    if (CheckDRString(dr["ExternalIDNumPerAuthority"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        int val = IntFromDR(dr["ExternalIDNumPerAuthority"]);
-                                                        newExt.MyConfirmationType.ExternalIDNumPerAuthority = val;
-                                                    }
-                                                    if (CheckDRBool(dr["IsForCustomsItem"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsForCustomsItem = true;
-                                                    }
-                                                    if (CheckDRBool(dr["IsPharmacy"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsPharmacy = true;
-                                                    }
-                                                    if (CheckDRBool(dr["IsVeterinarian"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsVeterinarian = true;
-                                                    }
-                                                    if (CheckDRBool(dr["IsVehicleStandardization"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsVehicleStandardization = true;
-                                                    }
-                                                    if (CheckDRBool(dr["IsQuantityMandatory"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsQuantityMandatory = true;
-                                                    }
-                                                    if (CheckDRBool(dr["IsForCE"]))
-                                                    {
-                                                        LogAddRow(newResponseTableData);
-                                                        newExt.MyConfirmationType.IsForCE = true;
-                                                    }
-
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-                        break;
-
-                    }
-                case "23928":
-                case "IncotemrsFileValidation":
-                    {
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyIncotemrsFileValidation = new Helpers.ClosedTable.IncotemrsFileValidation();
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["TermsOfSaleTypeID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyIncotemrsFileValidation.TermsOfSaleTypeID = dr["TermsOfSaleTypeID"].ToString();
-                                                    }
-                                                    if (dr["IsFreightCharge"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyIncotemrsFileValidation.IsFreightCharge = true;
-                                                    }
-                                                    if (dr["IsPortIsraelCharge"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyIncotemrsFileValidation.IsPortIsraelCharge = true;
-                                                    }
-                                                    if (dr["IsInsurance"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyIncotemrsFileValidation.IsInsurance = true;
-                                                    }
-                                                    if (dr["CargoIdentifierTypeID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyIncotemrsFileValidation.CargoIdentifierTypeID = dr["CargoIdentifierTypeID"].ToString(); ;
-                                                    }
-                                                    if (dr["CargoIdentifierTypeName"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyIncotemrsFileValidation.CargoIdentifierTypeName = dr["CargoIdentifierTypeName"].ToString(); ;
-                                                    }
-                                                    if (dr["LeadDocumentTypeID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyIncotemrsFileValidation.LeadDocumentTypeID = dr["LeadDocumentTypeID"].ToString(); ;
-                                                    }
-                                                    if (dr["LeadDocumentTypeName"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyIncotemrsFileValidation.LeadDocumentTypeName = dr["LeadDocumentTypeName"].ToString(); ;
-                                                    }
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-                        break;
-
-                    }
-                case "1998":
-                case "NDMessageActionCode":
-                    {
-
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyNDMessageActionCode = new Helpers.ClosedTable.NDMessageActionCode();
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["StartDate"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyNDMessageActionCode.StartDate = DateTime.Parse(dr["StartDate"].ToString());
-
-                                                    }
-                                                    if (dr["StartDate"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyNDMessageActionCode.EndDate = DateTime.Parse(dr["EndDate"].ToString());
-                                                    }
-
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-                        break;
-
-                    }
-                case "1366":
-                case "ContainerType":
-                    {
-
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyContainerType = new Helpers.ClosedTable.ContainerType();
-                                                    if (!writeHighlight)
-                                                    {
-                                                        writeHighlight = true;
-                                                    }
-                                                    if (dr["IsIsoTankContainer"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        if (dr["IsIsoTankContainer"].ToString() == "true")
-                                                        {
-                                                            newExt.MyContainerType.IsIsoTankContainer = true;
-                                                        }
-                                                    }
-                                                    if (dr["IsNeedSeal"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        if (dr["IsNeedSeal"].ToString() == "true")
-                                                        {
-                                                            newExt.MyContainerType.IsNeedSeal = true;
-                                                        }
-                                                    }
-                                                    if (dr["IsAerial"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        if (dr["IsAerial"].ToString() == "true")
-                                                        {
-                                                            newExt.MyContainerType.IsAerial = true;
-                                                        }
-                                                    }
-
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-                        break;
-
-                    }
-                case "1422":
-                case "ItemGovernmentProcedureType":
-                    {
-
-                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
-                        Logitude.CustomsMessaging.Helpers.ClosedTable.
-                                                    ManipulateCustomResponse.
-                                                DataSetToTableData(customResponse,
-                                                (newResponseTableData, dr) =>
-                                                {
-                                                    var newExt =
-                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
-                                                    newExt.MyItemGovernmentProcedureType = new Helpers.ClosedTable.ItemGovernmentProcedureType();
-                                                    if (!writeHighlight)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(
-                       @"1422:ItemGovernmentProcedureType:Calc=
- if (dr[""LeadDocumentTypeID""].ToString() != null)
-       newExt.MyItemGovernmentProcedureType.LeadDocumentTypeID = dr[""LeadDocumentTypeID""].ToString();");
-
-                                                        writeHighlight = true;
-                                                    }
-
-                                                    if (dr["LeadDocumentTypeID"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyItemGovernmentProcedureType.LeadDocumentTypeID = dr["LeadDocumentTypeID"].ToString(); ;
-                                                    }
-
-                                                    extList.Add(newExt);
-                                                });
-                        return extList;
-                        break;
-
-                    }
                 default:
                     break;
             }
@@ -1181,24 +423,6 @@ ID List :
             }
             return ext;
         }
-
-        private static int IntFromDR(object data)
-        {
-            int.TryParse(data?.ToString(), out int val);
-            return val;
-        }
-
-        private static bool CheckDRString(object data) =>
-            data.ToString() != null;
-
-
-        private static bool CheckDRBool(object data) =>
-            data.ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase);
-
-
-        private static void LogAddRow(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData newResponseTableData) =>
-            LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-
 
         private SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] TruncateNameTo(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] sYSTBL_NG_9001_MSG_SystemTablesResponseTableData, int iTrancateNameTo)
         {
@@ -1224,40 +448,6 @@ ID List :
             return list.ToArray();
         }
 
-        private string RemoveNotActive(string TableAsDataSetTableData)
-        {
-            if (!String.IsNullOrWhiteSpace(TableAsDataSetTableData))
-            {
-                var ds = SystemTables.DataSetReadXML(TableAsDataSetTableData);
-               
-                var dt = ds.Tables[0];
-                
-                // Use Select method to filter rows based on the condition
-                DataRow[] rowsToDelete = dt.Select("State = 0");
-
-                // Delete the rows that meet the condition
-                foreach (DataRow row in rowsToDelete)
-                {
-                    dt.Rows.Remove(row);
-                }
-                
-                
-
-                TableAsDataSetTableData = DataTableToXML(dt);
-            }
-            return TableAsDataSetTableData;
-        }
-        // Add this method to convert DataTable to XML
-        private string DataTableToXML(DataTable dataTable)
-        {
-            using (StringWriter writer = new StringWriter())
-            {
-                // Use WriteXml method to write the DataTable to the StringWriter
-                dataTable.WriteXml(writer);
-                return writer.ToString();
-            }
-        }
-     
         private void Update1892(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
         {
             throw new NotImplementedException();
@@ -1274,107 +464,7 @@ ID List :
         }
 
 
-        public static string UNLOCODEinternationalSiteUpSert(List<string> lines)
-        {
-            var sw = Stopwatch.StartNew();
-            var sb = new StringBuilder();
-            try
-            {
-                int i = 0;
-                var CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-                string name = "";
-                string code = "";
-                string country = "";
-                ICustomContext MyContext = CustomContext.GetContext(1);
-                var updateService = new InternationalSiteUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(), 1);
-                var queryService = new InternationalSiteQueryService(MyContext);
 
-                foreach (var line in lines)
-                {
-                    //Separating columns to array
-                    //string[] X = CSVParser.Split(line);
-
-                    var parts = //line.Split(',');
-                        CSVParser.Split(line);
-                    if (parts.Length < 5)
-                    {
-                        throw new System.Exception(@"(parts.Length < 12) Line no " + i + @"" + line);
-                    }
-
-                    country = parts[1];
-                    if (country.Length > 3)
-                    {
-                        country = country.Substring(1, country.Length - 2);
-                    }
-                    if (parts[2].Length > 3)
-                    {
-                        parts[2] = parts[2].Substring(1, parts[2].Length - 2);
-                    }
-                     if (country.Length == 2 && parts[2].Length == 3)
-                    {
-
-                        code = country + parts[2];
-                        if (parts[4].Length > 3)
-                        {
-                            parts[4] = parts[4].Substring(1, parts[4].Length - 2);
-                        }
-                        name = code + " " + parts[4];
-                        if (name.Length > 40)
-                        {
-                            name = name.Substring(0, 40);
-                        }
-
-                        var entity = queryService.GetSingle(code, false, false);
-                        if (entity != null)
-                        {
-                            Boolean changes = false;
-                            if (entity.CountryTypeCode != country)
-                            {
-                                entity.CountryTypeCode = country;
-                                entity.ChangeSetOp = ChangeSetOperation.Update;
-                            }
-                            if (entity.EnglishName != name)
-                            {
-                                entity.CountryTypeCode = country;
-                                entity.EnglishName = name;
-                                entity.LocalName = name;
-                                entity.SearchFields = name;
-                                entity.ChangeSetOp = ChangeSetOperation.Update;
-                            }
-                            if (entity.ChangeSetOp == ChangeSetOperation.Update)
-                            {
-                                updateService.Update(entity, true);
-                            }
-                        }
-                        else
-                        {
-                            var newEntity = new InternationalSitePM();
-                            newEntity.CountryTypeCode = country;
-                            newEntity.ChangeSetOp = ChangeSetOperation.Insert;
-                            newEntity.LocalName = name;
-                            newEntity.EnglishName = name;
-                            newEntity.Code = code;
-                            newEntity.SearchFields = name;
-                            updateService.Update(newEntity, true);
-                        }
-
-                    }
-                }
-
-            }
-            catch (System.Exception eee)
-            {
-
-                sb.AppendLine(eee.ToString());
-            }
-            sb
-                .Append("end")
-                .AppendLine(sw.Elapsed.ToString());
-
-            return sb.ToString();
-
-
-        }
         public static string internationalSiteUpSert(List<string> lines)
         {
             var sw = Stopwatch.StartNew();
@@ -1425,11 +515,11 @@ ID List :
                         throw new System.Exception(@"(name,state,id is must !!) Line no " + i + @"
 " + line);
                     }
-                    if (name.StartsWith(id, StringComparison.OrdinalIgnoreCase))
+                    if ( name.StartsWith(id, StringComparison.OrdinalIgnoreCase))
                     {
                         name = name.Substring(id.Length);
                         name = name.Trim();
-
+ 
                     }
 
 
@@ -1500,7 +590,7 @@ ID List :
         }
         public override void OnRequestFail(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
         {
-            CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(requestParams.Tenant));
+            CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(0));
             CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = requestParams.TableId });
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
 

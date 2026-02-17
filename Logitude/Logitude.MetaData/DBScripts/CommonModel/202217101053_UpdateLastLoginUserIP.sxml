@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Common">
-	<Sql Version="1">
-		<![CDATA[
-update UserLastLogins set [IP] = (select top(1) [ip] from UserLoginLogs where UserId =UserLastLogins.Id order by LocalDateTime desc )
-    ]]>
-	</Sql>
-</Script>

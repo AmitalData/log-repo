@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -9,7 +9,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class EmailProviderRepository : IRepository<EmailProvider>
     {
         ICommonDataContext commonDataContext;
-
+        public EmailProviderRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public EmailProviderRepository(ICommonDataContext context)
         {

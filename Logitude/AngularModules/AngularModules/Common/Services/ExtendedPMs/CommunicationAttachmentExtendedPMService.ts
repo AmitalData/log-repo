@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 
 
-import { defer, of } from 'rxjs';
+import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,10 +12,10 @@ import {CommunicationAttachmentPM} from '../../EntityPMs/CommunicationAttachment
 @Injectable() 
 export class CommunicationAttachmentExtendedPMService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommunicationAttachmentExtended';
     }
 
@@ -25,8 +25,8 @@ export class CommunicationAttachmentExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '?tenant=' + tenant ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result :any = response;
+        return this._http.get(this._apiUrl + '?tenant=' + tenant , { headers: authHeader }).map(response => {
+            var result = response.json();
             var entity: CommunicationAttachmentPM;
             var communicationAttachmentPMLists: CommunicationAttachmentPM[];
             communicationAttachmentPMLists = new Array<CommunicationAttachmentPM>();
@@ -45,7 +45,7 @@ export class CommunicationAttachmentExtendedPMService {
 
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
@@ -53,8 +53,8 @@ export class CommunicationAttachmentExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '?communicationLogId=' + communicationLogId + "&tenant="+ tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result :any = response;
+        return this._http.get(this._apiUrl + '?communicationLogId=' + communicationLogId + "&tenant="+ tenant, { headers: authHeader }).map(response => {
+            var result = response.json();
             var entity: CommunicationAttachmentPM;
             var communicationAttachmentPMLists: CommunicationAttachmentPM[];
             communicationAttachmentPMLists = new Array<CommunicationAttachmentPM>();
@@ -73,7 +73,7 @@ export class CommunicationAttachmentExtendedPMService {
 
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 

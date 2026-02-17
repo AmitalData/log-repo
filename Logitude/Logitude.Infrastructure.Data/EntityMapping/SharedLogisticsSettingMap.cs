@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data;
@@ -64,58 +64,6 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.IsShipperShared).HasColumnName("IsShipperShared");
 
             this.Property(t => t.IsConsigneeShared).HasColumnName("IsConsigneeShared");
-
-            this.Property(t => t.IsShowAmountLocalCurrency).HasColumnName("IsShowAmountLocalCurrency");
-
-            this.Property(t => t.IsShipperShowContactTS).HasColumnName("IsShipperShowContactTS");
-
-            this.Property(t => t.IsConsigneeShowContactTS).HasColumnName("IsConsigneeShowContactTS");
-
-            this.Property(t => t.IsAgentShowContactTS).HasColumnName("IsAgentShowContactTS");
-
-            this.Property(t => t.IsShipperNotExShowContactTS).HasColumnName("IsShipperNotExShowContactTS");
-
-            this.Property(t => t.IsConsigneeNotImShowContactTS).HasColumnName("IsConsigneeNotImShowContactTS");
-
-            this.Property(t => t.IsNotify1ShowContactTS).HasColumnName("IsNotify1ShowContactTS");
-
-            this.Property(t => t.IsNotify2ShowContactTS).HasColumnName("IsNotify2ShowContactTS");
-
-            this.Property(t => t.IsFreightForwardShowContactTS).HasColumnName("IsFreightForwardShowContactTS");
-
-            this.Property(t => t.IsColoaderShowContactTS).HasColumnName("IsColoaderShowContactTS");
-
-            this.Property(t => t.IsCustomAgentExShowContactTS).HasColumnName("IsCustomAgentExShowContactTS");
-
-            this.Property(t => t.IsCustomAgentImShowContactTS).HasColumnName("IsCustomAgentImShowContactTS");
-
-            this.Property(t => t.IsCustomCleaPointShowContactTS).HasColumnName("IsCustomCleaPointShowContactTS");
-
-            this.Property(t => t.IsConsolidatorShowContactTS).HasColumnName("IsConsolidatorShowContactTS");
-
-            this.Property(t => t.IsReleasingAgentShowContactTS).HasColumnName("IsReleasingAgentShowContactTS");
-
-            this.Property(t => t.IsIssuingCarAgentShowContactTS).HasColumnName("IsIssuingCarAgentShowContactTS");
-
-            this.Property(t => t.IsCustomerShared).HasColumnName("IsCustomerShared");
-
-            this.Property(t => t.IsCustomerShowContactTS).HasColumnName("IsCustomerShowContactTS");
-
-            this.Property(t => t.IsAccountManagerShared).HasColumnName("IsAccountManagerShared");
-
-            this.Property(t => t.IsAccountManagerShowContactTS).HasColumnName("IsAccountManagerShowContactTS");
-
-            this.Property(t => t.IsSalesmanShared).HasColumnName("IsSalesmanShared");
-
-            this.Property(t => t.IsSalesmanShowContactTS).HasColumnName("IsSalesmanShowContactTS");
-
-            this.Property(t => t.IsCollectorShared).HasColumnName("IsCollectorShared");
-
-            this.Property(t => t.IsCollectorShowContactTS).HasColumnName("IsCollectorShowContactTS");
-
-            this.Property(t => t.IsPickDelivCarShowContactTS).HasColumnName("IsPickDelivCarShowContactTS");
-
-            this.Property(t => t.IsMainCarShowContactTS).HasColumnName("IsMainCarShowContactTS");
         }
     }
 }

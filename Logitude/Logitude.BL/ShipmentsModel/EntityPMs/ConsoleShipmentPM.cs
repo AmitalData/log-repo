@@ -49,20 +49,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public int? NumberOfPackages { get; set; }
         public int? NumberOfContainers { get; set; }
 
-        public string House { get; set; }
-        public string DescriptionOfGoods { get; set; }
-        public string PreForwardingFromPortId { get; set; }
-        public string PreForwardingToPortId { get; set; }
-        public string OnForwardingFromPortId { get; set; }
-        public string OnForwardingToPortId { get; set; }
-
         [Include]
         [Association("ConsoleShipmentContainerPackage", "Id", "ConsoleId")]
         public List<HouseContainerPackage> FCLDataList { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
-
-        public double? GrossWeightPerStorageDays { get; set; }
     }
 
     public class HouseContainerPackage

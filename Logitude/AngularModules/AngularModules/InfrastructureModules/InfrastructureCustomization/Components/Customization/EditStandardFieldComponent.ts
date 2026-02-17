@@ -12,7 +12,7 @@ import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM'
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditStandardFieldComponent.html',
 })
 
@@ -36,7 +36,7 @@ export class EditStandardFieldComponent extends BaseComponent {
     SetWindowArgs(args: StandardFieldItem) {
         this.EditedFieldItem = args;  
 
-        this.generalService.GetSingleObjectFieldByFieldCodeFromZeroTenant(args.ObjectFieldCode).subscribe((myResult: ServiceResponse) => {
+        this.generalService.GetSingleObjectFieldFromZeroTenant(args.ObjectFieldId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
@@ -55,9 +55,6 @@ export class EditStandardFieldComponent extends BaseComponent {
     public IsListHeaderLabelEnabled: boolean = false;
     public IsHelpTextEnabled: boolean = false;
     public IsRequieredEnabled: boolean = true;
-    public IsShowMaxLength: boolean = true;
-
-
     private SetUIProperties() {
         var isMaxLengthEnabled: boolean = true;
         var isControlFieldsVisible: boolean = false;
@@ -66,16 +63,10 @@ export class EditStandardFieldComponent extends BaseComponent {
         var isListHeaderLabelEnabled: boolean = false;
         var isHelpTextEnabled: boolean = false;
         var isRequieredEnabled: boolean = true;
-        var isShowMaxLength: boolean = false;
 
         if (this.EntityPM.DataTypeCode == "LookUp" || this.EntityPM.DataTypeCode == "DateTime") {
             isMaxLengthEnabled = false;
         }
-
-        if (this.EntityPM.DataTypeCode == "Text" || this.EntityPM.DataTypeCode == "nText") {
-            isShowMaxLength = true;
-        }
-
 
         if (this.EntityPM.DataTypeCode == "LookUp") {
             isControlFieldsVisible = true;
@@ -100,7 +91,7 @@ export class EditStandardFieldComponent extends BaseComponent {
         if (this.EntityPM.TenantZeroIsRequired) {
             isRequieredEnabled = false;
         }
-        this.IsShowMaxLength = isShowMaxLength;
+
         this.IsMaxLengthEnabled = isMaxLengthEnabled;
         this.IsControlFieldsVisible = isControlFieldsVisible;
         this.IsFullLabelEnabled = isFullLabelEnabled;
@@ -249,12 +240,11 @@ export class EditStandardFieldComponent extends BaseComponent {
             if (this.EntityPM.IsDirty) {
                 this.CurrentSession.StartBusyIndicatorSaving();
 
-                this.myService.update(this.EntityPM).subscribe((myResult:any) => {
+                this.myService.update(this.EntityPM).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
-                        CachedDataManager.RefreshObjectFieldsModifications();
                         if (list.length == 0) {
-                            CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
+                            CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
                                 this.CurrentSession.StopBusyIndicator();
                                 this.CurrentSession.CloseCurrentWindowEmit("Ok");
                             });
@@ -276,7 +266,7 @@ export class EditStandardFieldComponent extends BaseComponent {
                     }
 
                     else {
-                        CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
+                        CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
                             this.CurrentSession.StopBusyIndicator();
                             this.CurrentSession.CloseCurrentWindowEmit("Ok");
                         });

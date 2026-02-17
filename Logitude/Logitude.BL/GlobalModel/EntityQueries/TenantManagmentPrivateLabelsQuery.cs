@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -29,7 +29,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             this.repository = repository;
         }
 
-
         public TenantManagmentPrivateLabelsPM GetSinglePM(string id)
         {
             TenantManagmentPrivateLabelsPM entity = (from a in repository.context.TenantManagmentPrivateLabels
@@ -40,7 +39,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              PrivateLabelName = a.PrivateLabelName,
                                              PrivateLabelShortName = a.PrivateLabelShortName,
                                              PrivateLabelUrl = a.PrivateLabelUrl,
-                                             PrivateLabelDomain = a.PrivateLabelDomain,
                                              ReceiveAllStatuses = a.ReceiveAllStatuses,
                                              MainLogo = a.MainLogo,
                                              InActive = a.InActive,
@@ -48,35 +46,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              ContactUsEmail = a.ContactUsEmail,
                                              SearchFields = a.SearchFields,
                                              SmallLogo = a.SmallLogo,
-                                             BackgroundImageId = a.BackgroundImageId,
-                                             LoginImageId = a.LoginImageId,
-                                             MainColor = a.MainColor,
-                                             LoginProgressImageId = a.LoginProgressImageId,
-                                             ForgetPasswordImageId = a.ForgetPasswordImageId,
-                                             SecondaryColor = a.SecondaryColor,
-                                             HasLogboxAccess = a.HasLogboxAccess,
-                                             MainTabHighlightColor = a.MainTabHighlightColor,
-                                             DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                                             IsCustomsActivated = a.IsCustomsActivated,
-                                             IsExportActivated = a.IsExportActivated,
-                                             QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
-                                             CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
-                                             CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
-                                             FilingInboxDomain = a.FilingInboxDomain,
-                                             DistributorCode = a.DistributorCode
-                                             }).FirstOrDefault();
+                                         }).FirstOrDefault();
 
             return entity;
-        }
-
-        public TenantManagmentPrivateLabelsPM GetSingleActivePMByUrl_Cache(string url)
-        {
-            string entityKeyString = $"GetSingleActivePMByUrl_Cache({url})";
-            var res = CacheManager
-                .GetOrInsertNewObject<TenantManagmentPrivateLabelsPM>(entityKeyString,
-                () => { return this.GetSingleActivePMByUrl(url); });
-            return res;
-
         }
         public TenantManagmentPrivateLabelsPM GetSingleActivePMByUrl(string url)
         {
@@ -88,7 +60,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          PrivateLabelName = a.PrivateLabelName,
                                                          PrivateLabelShortName = a.PrivateLabelShortName,
                                                          PrivateLabelUrl = a.PrivateLabelUrl,
-                                                         PrivateLabelDomain = a.PrivateLabelDomain,
                                                          ReceiveAllStatuses = a.ReceiveAllStatuses,
                                                          MainLogo = a.MainLogo,
                                                          InActive = a.InActive,
@@ -96,27 +67,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          ContactUsEmail = a.ContactUsEmail,
                                                          SearchFields = a.SearchFields,
                                                          SmallLogo = a.SmallLogo,
-                                                         BackgroundImageId = a.BackgroundImageId,
-                                                         LoginImageId = a.LoginImageId,
-                                                         MainColor = a.MainColor,
-                                                         LoginProgressImageId = a.LoginProgressImageId,
-                                                         ForgetPasswordImageId = a.ForgetPasswordImageId,
-                                                         SecondaryColor = a.SecondaryColor,
-                                                         HasLogboxAccess = a.HasLogboxAccess,
-                                                         MainTabHighlightColor = a.MainTabHighlightColor,
-                                                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                                                         IsCustomsActivated = a.IsCustomsActivated,
-                                                         IsExportActivated = a.IsExportActivated,
-                                                         QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
-                                                         CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
-                                                         CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
-                                                         FilingInboxDomain = a.FilingInboxDomain,
-                                                         DistributorCode = a.DistributorCode
+
                                                      }).FirstOrDefault();
 
             return entity;
         }
-
         public TenantManagmentPrivateLabelsList GetSingleList(string id)
         {
             TenantManagmentPrivateLabelsList entity = (from a in repository.context.TenantManagmentPrivateLabels
@@ -127,7 +82,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            PrivateLabelName = a.PrivateLabelName,
                                                            PrivateLabelShortName = a.PrivateLabelShortName,
                                                            PrivateLabelUrl = a.PrivateLabelUrl,
-                                                           PrivateLabelDomain = a.PrivateLabelDomain,
                                                            ReceiveAllStatuses = a.ReceiveAllStatuses,
                                                            MainLogo = a.MainLogo,
                                                            InActive = a.InActive,
@@ -135,28 +89,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            ContactUsEmail = a.ContactUsEmail,
                                                            SearchFields = a.SearchFields,
                                                            SmallLogo = a.SmallLogo,
-                                                           BackgroundImageId = a.BackgroundImageId,
-                                                           LoginImageId = a.LoginImageId,
-                                                           MainColor = a.MainColor,
-                                                           LoginProgressImageId = a.LoginProgressImageId,
-                                                           ForgetPasswordImageId = a.ForgetPasswordImageId,
-                                                           SecondaryColor = a.SecondaryColor,
-                                                           HasLogboxAccess = a.HasLogboxAccess,
-                                                           MainTabHighlightColor = a.MainTabHighlightColor,
-                                                           DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                                                           IsCustomsActivated = a.IsCustomsActivated,
-                                                           IsExportActivated = a.IsExportActivated,
-                                                           QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
-                                                           CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
-                                                           CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
-                                                           FilingInboxDomain = a.FilingInboxDomain,
-                                                           DistributorCode = a.DistributorCode
+
                                                        }).FirstOrDefault();
 
             return entity;
         }
-
-       
         public IQueryable<TenantManagmentPrivateLabelsPM> GetTenantManagmentPrivateLablesPMs()
         {
             return (from a in repository.context.TenantManagmentPrivateLabels
@@ -166,7 +103,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         PrivateLabelName = a.PrivateLabelName,
                         PrivateLabelShortName = a.PrivateLabelShortName,
                         PrivateLabelUrl = a.PrivateLabelUrl,
-                        PrivateLabelDomain = a.PrivateLabelDomain,
                         ReceiveAllStatuses = a.ReceiveAllStatuses,
                         MainLogo = a.MainLogo,
                         InActive = a.InActive,
@@ -174,62 +110,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         ContactUsEmail = a.ContactUsEmail,
                         SearchFields = a.SearchFields,
                         SmallLogo = a.SmallLogo,
-                        BackgroundImageId = a.BackgroundImageId,
-                        LoginImageId = a.LoginImageId,
-                        MainColor = a.MainColor,
-                        LoginProgressImageId = a.LoginProgressImageId,
-                        ForgetPasswordImageId = a.ForgetPasswordImageId,
-                        SecondaryColor = a.SecondaryColor,
-                        HasLogboxAccess = a.HasLogboxAccess,
-                        MainTabHighlightColor = a.MainTabHighlightColor,
-                        DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                        IsCustomsActivated = a.IsCustomsActivated,
-                        IsExportActivated = a.IsExportActivated,
-                        QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
-                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
-                        CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
-                        FilingInboxDomain = a.FilingInboxDomain,
-                        DistributorCode = a.DistributorCode
+
                     });
         }
-
-        public IQueryable<TenantManagmentPrivateLabelsPM> GetByHybridPartnerId(string hybridPartnerId)
-        {
-            return (from a in repository.context.TenantManagmentPrivateLabels
-                    where a.HybridPartnerId == hybridPartnerId
-                    select new TenantManagmentPrivateLabelsPM()
-                    {
-                        Id = a.Id,
-                        PrivateLabelName = a.PrivateLabelName,
-                        PrivateLabelShortName = a.PrivateLabelShortName,
-                        PrivateLabelUrl = a.PrivateLabelUrl,
-                        PrivateLabelDomain = a.PrivateLabelDomain,
-                        ReceiveAllStatuses = a.ReceiveAllStatuses,
-                        MainLogo = a.MainLogo,
-                        InActive = a.InActive,
-                        HybridPartnerId = a.HybridPartnerId,
-                        ContactUsEmail = a.ContactUsEmail,
-                        SearchFields = a.SearchFields,
-                        SmallLogo = a.SmallLogo,
-                        BackgroundImageId = a.BackgroundImageId,
-                        LoginImageId = a.LoginImageId,
-                        MainColor = a.MainColor,
-                        LoginProgressImageId = a.LoginProgressImageId,
-                        ForgetPasswordImageId = a.ForgetPasswordImageId,
-                        SecondaryColor = a.SecondaryColor,
-                        HasLogboxAccess = a.HasLogboxAccess,
-                        MainTabHighlightColor = a.MainTabHighlightColor,
-                        DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                        IsCustomsActivated = a.IsCustomsActivated,
-                        IsExportActivated = a.IsExportActivated,
-                        QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
-                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
-                        CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
-                        FilingInboxDomain = a.FilingInboxDomain,
-                        DistributorCode = a.DistributorCode
-                    });
-        }
-
         public IQueryable<TenantManagmentPrivateLabelsList> GetTenantManagmentPrivateLablesLists()
         {
             return (from a in repository.context.TenantManagmentPrivateLabels
@@ -239,7 +122,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         PrivateLabelName = a.PrivateLabelName,
                         PrivateLabelShortName = a.PrivateLabelShortName,
                         PrivateLabelUrl = a.PrivateLabelUrl,
-                        PrivateLabelDomain = a.PrivateLabelDomain,
                         ReceiveAllStatuses = a.ReceiveAllStatuses,
                         MainLogo = a.MainLogo,
                         InActive = a.InActive,
@@ -247,24 +129,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         ContactUsEmail = a.ContactUsEmail,
                         SearchFields = a.SearchFields,
                         SmallLogo = a.SmallLogo,
-                        BackgroundImageId = a.BackgroundImageId,
-                        LoginImageId = a.LoginImageId,
-                        MainColor = a.MainColor,
-                        LoginProgressImageId = a.LoginProgressImageId,
-                        ForgetPasswordImageId = a.ForgetPasswordImageId,
-                        SecondaryColor = a.SecondaryColor,
-                        HasLogboxAccess = a.HasLogboxAccess,
-                        MainTabHighlightColor = a.MainTabHighlightColor,
-                        DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                        IsCustomsActivated = a.IsCustomsActivated,
-                        IsExportActivated = a.IsExportActivated,
-                        QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
-                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
-                        CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
-                        FilingInboxDomain = a.FilingInboxDomain,
-                        DistributorCode = a.DistributorCode
+
                     });
         }
+
 
         public IQueryable<TenantManagmentPrivateLabelsList> GetIQueryableEntityList(IQueryable<TenantManagmentPrivateLabels> iQueryable)
         {
@@ -275,7 +143,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        PrivateLabelName = a.PrivateLabelName,
                        PrivateLabelShortName = a.PrivateLabelShortName,
                        PrivateLabelUrl = a.PrivateLabelUrl,
-                       PrivateLabelDomain = a.PrivateLabelDomain,
                        ReceiveAllStatuses = a.ReceiveAllStatuses,
                        MainLogo = a.MainLogo,
                        InActive = a.InActive,
@@ -283,33 +150,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        ContactUsEmail = a.ContactUsEmail,
                        SearchFields = a.SearchFields,
                        SmallLogo = a.SmallLogo,
-                       BackgroundImageId = a.BackgroundImageId,
-                       LoginImageId = a.LoginImageId,
-                       MainColor = a.MainColor,
-                       LoginProgressImageId = a.LoginProgressImageId,
-                       ForgetPasswordImageId = a.ForgetPasswordImageId,
-                       SecondaryColor = a.SecondaryColor,
-                       HasLogboxAccess = a.HasLogboxAccess,
-                       MainTabHighlightColor = a.MainTabHighlightColor,
-                       DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                       IsCustomsActivated = a.IsCustomsActivated,
-                       IsExportActivated = a.IsExportActivated,
-                       QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
-                       CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
-                       CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
-                       FilingInboxDomain = a.FilingInboxDomain,
-                       DistributorCode = a.DistributorCode
                    };
 
-        }
-
-        public List<string> GetLogboxAccessibleTenantManagmentPrivateLabelsIds()
-        {
-            List<string> entity = (from a in repository.context.TenantManagmentPrivateLabels
-                                                     where a.InActive == false && a.HasLogboxAccess
-                                                     select a.Id).ToList();
-
-            return entity;
         }
 
     }

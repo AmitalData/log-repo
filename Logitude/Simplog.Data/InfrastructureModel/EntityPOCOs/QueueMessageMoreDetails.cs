@@ -11,7 +11,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     {
         [Key]
         public long  Id { get; set; }
-        public int Tenant { get; set; }
         public string QueueDefinitionCode { get; set; }
         public DateTime CreateDateTime { get; set; }
         public int Status { get; set; }

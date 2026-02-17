@@ -29,7 +29,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ReplyTo { get; set; }
         public string CC { get; set; }
         public string Subject { get; set; }
-        public bool IsSystemReportFixed { get; set; }
 
 
         [ForeignKey("ReportId")]
@@ -40,11 +39,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         [ForeignKey("CreatedByUserId")]
         public virtual User CreatedByUser { get; set; }
-
-        public string ObjectTableId { get; set; }
-        public string EntityId { get; set; }
-        public bool IsCopiedAtSignup { get; set; }
-        public bool UseStimul { get; set; }
-        public string OriginalTemplateId { get; set; }
     }
 }

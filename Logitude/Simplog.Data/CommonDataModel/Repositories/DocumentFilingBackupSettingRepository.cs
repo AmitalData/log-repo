@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentFilingBackupSettingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentFilingBackupSettingRepository(ICommonDataContext context)
         {
@@ -25,7 +28,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
  
 
-        public DocumentFilingBackupSetting GetSingleDocumentFilingBackupSetting(int id, int otherTenant = 0)
+        public DocumentFilingBackupSetting GetSingleDocumentFilingBackupSetting(int id, int otherTenant)
         {
             return (from a in this.context.DocumentFilingBackupSettings
                     where a.Tenant == id

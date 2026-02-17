@@ -20,7 +20,7 @@ export class SystemDataPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -45,9 +45,9 @@ export class SystemDataPM {
     public set SignatureHtml(newValue: string) { if (this.signatureHtml != newValue) { this.signatureHtml = newValue; this.MarkAsDirty("SignatureHtml"); } }
        
 	 
-    private date: Date;
+    private date: string;
     public get Date() { return this.date; }
-    public set Date(newValue: Date) { if (this.date != newValue) { this.date = newValue; this.MarkAsDirty("Date"); } }
+    public set Date(newValue: string) { if (this.date != newValue) { this.date = newValue; this.MarkAsDirty("Date"); } }
        
 	 
     private localCurrencyId: string;
@@ -95,19 +95,11 @@ export class SystemDataPM {
     public set Supportemail(newValue: string) { if (this.supportemail != newValue) { this.supportemail = newValue; this.MarkAsDirty("Supportemail"); } }
        
 	 
-    private userSignatureImage: string;
-    public get UserSignatureImage() { return this.userSignatureImage; }
-    public set UserSignatureImage(newValue: string) { if (this.userSignatureImage != newValue) { this.userSignatureImage = newValue; this.MarkAsDirty("UserSignatureImage"); } }
-       
-	 
 
     public OldEntityPM: SystemDataPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -115,7 +107,6 @@ export class SystemDataPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "SystemData");
            
         }
-	 }
     }
     private MyClone: SystemDataPM;
 

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -134,14 +134,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            this.Property(t => t.AdditionalFields)
-               .IsMaxLength()
-               .IsUnicode(true);
-
-            this.Property(t => t.UniqueNumber)
-              .HasMaxLength(20)
-              .IsUnicode(false);
-
             // Table & Column Mappings
             this.ToTable("CommunicationLogs");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -165,10 +157,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsSecured).HasColumnName("IsSecured");
             this.Property(t => t.EmailDeliveryError).HasColumnName("EmailDeliveryError");
             this.Property(t => t.ResponseDocumentId).HasColumnName("ResponseDocumentId");
-            this.Property(t => t.AdditionalFields).HasColumnName("AdditionalFields");
-            this.Property(t => t.UniqueNumber).HasColumnName("UniqueNumber");
-            this.Property(t => t.WasAnalyzed).HasColumnName("WasAnalyzed");
 
+            
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

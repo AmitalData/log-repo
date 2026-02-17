@@ -21,10 +21,9 @@ declare var insertAtSubject: any;
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import {CountryListService} from '../../../../Common/Services/StandardLists/CountryListService';
 import {DocumentTypeTemplatePM} from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'DocumentTypeGeneral',
     templateUrl: './DocumentTypeGeneralTabComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService],
@@ -52,25 +51,18 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
      OpacityAreaHTMLDocument: string = "1";
      CountryLists: CountryList[] = [];
      DocumentTypeTemplates: DocumentTypeTemplatePM[];
-     IsDisableObjectTable: boolean = false;
 
-    public IsLogLovReady: boolean = false;
-    public ObjectTablesFilterItems: ApiQueryFilters;
-    public IsCustomObject: boolean = false;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, public entityArgs: EntityArgs, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService) {
         super();
         this.myForm = fb.group({});
-        this.CurrentSession.StartBusyIndicatorLoading();
-
-
-
+       this.CurrentSession.StartBusyIndicatorLoading();
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate", 0).subscribe(response => {
 
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
@@ -104,7 +96,6 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
 
 
     Run() {
-
         this.EntityPM.UIProperties.SetEnabled("Code", "DocumentType", false);
 
         if (this.EntityPM.Code == "SLCIN" || this.EntityPM.Code == "SLCRP") {
@@ -124,21 +115,62 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         }
 
 
+        var tempList: ObjectTablePM[] = [];
 
+        window.ObjectTables.forEach(item => {
+            switch (item.Name) {
+                case "Shipment":
+                case "Master":
+                case "Quote":
+                case "Opportunity":
+                case "Ticket":
+                case "APInvoice":
+                case "ARInvoice":
+                case "APPayment":
+                case "ARPayment":
+                case "Agent":
+                case "Customer":
+                case "Customs.Declaration":
+                case "Customs.CheckRepresentativeType":
+                case "LogitudeMessagesTransmissionLog":
+                case "SharedLogistics":
+                case "ShipmentPickUpDelivery":
+                case "Journal":
+                case "BankDeposit":
+                case "GLAccount":
+                case "WarehouseEntry":
+                case "TaxReport":
+                case "PaymentCheque":
+                case "WarehouseRelease":
+                case "Airline":
+                case "CustomAgent":
+                case "Participant":
+                case "ShippingAgent":
+                case "ShippingLine":
+                case "Trucker":
+                case "Vendor":
+                case "Warehouse":
+                    {
 
+                    if (tempList.filter(f => f.Name == item.Name).length == 0) {
+                        tempList.push(item);
+                    }
 
-        if (!this.EntityPM.AddedManually) {
-
-            if (!SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.Tenant != 0) {
-                this.IsDisableObjectTable = true;
+                    break;
+                }
             }
-        } 
+        });
 
+        this.ObjectTablesList = tempList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
 
- 
-        this.InitLOVFilters();
-        this.IsLogLovReady = true;
-        this.SetSelectedObjectTable();
+        this.ObjectTablesList.forEach((item) => {
+
+            // if (item.Name == "WarehouseEntry" || item.Name == "WarehouseRelease") {
+            //     item.DisplayName = item.Name == "WarehouseEntry" ? "CrossDockEntry" : "CrossDockRelease";
+            // }
+            // else item.DisplayName = item.Name;
+
+        });
 
         this.SelectedObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.EntityPM.ObjectTableId)[0];
         if (!this.SelectedObjectTable) {
@@ -176,47 +208,15 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         if (FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPEPROPERTIES")) this.ShowFeildTenant0 = true;
         else this.ShowFeildTenant0 = false;
 
-        //if (this.SelectedObjectTable.Name == "Shipment" || this.SelectedObjectTable.Name == "Quote") {
-        //    this.IsShowAdvanceLink = true;
-        //}
-        //else this.IsShowAdvanceLink = false;
+        if (this.SelectedObjectTable.Name == "Shipment" || this.SelectedObjectTable.Name == "Quote") {
+            this.IsShowAdvanceLink = true;
+        }
+        else this.IsShowAdvanceLink = false;
 
         if (this.EntityPM.IsDocOut) {
             this.IsEnableFormat = true;
         }
-    }
 
-    InitLOVFilters() {
-        this.ObjectTablesFilterItems = new ApiQueryFilters();
-        this.ObjectTablesFilterItems.addAdditionalFilter("AvailableInDocumentTypes", true, null, null, "Equals", true, false, false, "string");
-        this.ObjectTablesFilterItems.Tenant = SessionLocator.Tenant;
-    }
-    SetSelectedObjectTable() {
-        this.SelectedObjectTableId = this.EntityPM.ObjectTableId;
-    }
-    public LoadTemplateEvent() {
-
-        this.LoadTemplate();
-    }
-    public get IsDocOut() { return this.EntityPM.IsDocOut }
-    public set IsDocOut(value: boolean) {
-        if (value == this.EntityPM.IsDocOut) return;
-        this.EntityPM.IsDocOut = value;
-    }
-    private selectedObjectTableId: string;
-    public get SelectedObjectTableId() { return this.selectedObjectTableId; }
-    public set SelectedObjectTableId(value: string) {
-        if (this.selectedObjectTableId == value) return;
-        this.selectedObjectTableId = value;
-        let objectTable = window.ObjectTables.filter(table => table.Id == value)[0];
-        this.SetIsDocOutProperties(objectTable);
-        this.ObjectTableValueChanged(objectTable);
-    }
-    private SetIsDocOutProperties(objectTable: any) {
-        this.IsCustomObject = objectTable?.IsCustom && AppTool.IsNullOrEmpty(objectTable?.ParentObjectTableId);
-        this.IsDocOut = this.IsCustomObject ? false : this.IsDocOut;
-        this.IsDocOutChange(this.IsDocOut);
-        this.EntityPM.UIProperties.SetEnabled("IsDocOut", "DocumentType", !this.IsCustomObject);
     }
 
     AdvanceLinkMethod() {
@@ -257,8 +257,6 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
     }
 
     ObjectTableValueChanged(table: any) {
-        var oldTalbeId: string = this.EntityPM.ObjectTableId; 
-        var newTableID = table != null ? table.Id : null;
         if (table) {
             this.EntityPM.ObjectTableName = table.Name;
             this.EntityPM.ObjectTableId = table.Id;
@@ -268,14 +266,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             else this.IsShowAdvanceLink = false;
         } else {
             this.EntityPM.ObjectTableId = null;
-            this.EntityPM.ObjectTableName = null
             this.SelectedObjectTable = null;
-        }
-
-        if (newTableID != oldTalbeId) {
-            this.EntityPM.OnSendPopulateDateFieldName = null;
-            this.EntityPM.OnPrintPopulateDateFieldName = null;
-            this.EntityPM.OnUploadPopulateDateFieldName = null;
         }
 
     }
@@ -324,7 +315,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             var table = window.ObjectTables.filter(d => d.Id == this.EntityPM.ObjectTableId)[0];
             if (table) tableId = table.Id;
 
-            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe(response => {
                 var windowArgs: any = {};
                 windowArgs.ObjectTypeField = "DocuemntFileName";
                windowArgs.HideSystemDataTab = true;
@@ -361,7 +352,6 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 var result = pmResponse.Result;
                 if (result) {
                     this.DocumentTypeTemplates = result;
-
                 }
             }
             this.IsLoadTemplate = true;

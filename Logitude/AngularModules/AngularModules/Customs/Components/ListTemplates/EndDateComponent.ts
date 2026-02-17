@@ -4,7 +4,7 @@ import { DateTool} from '../../../Infrastructure/Tools';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EndDateComponent.html',
 })
 

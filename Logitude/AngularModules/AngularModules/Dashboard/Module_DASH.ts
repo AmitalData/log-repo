@@ -1,13 +1,12 @@
-﻿import { NgModule } from '@angular/core';
-import { InfrastructureModule } from '../Infrastructure/Module_INFR';
-import { Components, ModuleDeclarations, Directives } from './ModuleDeclarations';
-import { ModuleProviders } from './ModuleProviders';
+﻿import {NgModule} from '@angular/core';
+import {InfrastructureModule} from '../Infrastructure/Module_INFR';
+import {Components, ModuleDeclarations} from './ModuleDeclarations';
+import {ModuleProviders} from './ModuleProviders';
 
 @NgModule({
     imports: [InfrastructureModule],
-    declarations: [...Directives, ...Components],
+    declarations: [...Components],
     entryComponents: [...Components],
-    exports: [...Directives],
 })
 
 export class DashboardModule {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {VatTypePM} from '../../../EntityPMs/VatTypePM';
@@ -10,9 +10,10 @@ import {EntityArgs} from  '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {CommonDomainService} from '../../../Services/CommonDomainService';
+import {AccountingSettingPM} from '../../../EntityPMs/AccountingSettingPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './VatTypeGeneralTabComponent.html',
 })
 
@@ -23,33 +24,23 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
     public ObjectTableName: string = "VatType";
     public ItemsSource: MultiPercentageItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    IsAccountingActivated: boolean = false;
-    public IsMultiPercentageEnabled = true;
-    public IsRegionalTaxActivated = false; 
-
     constructor(public args: EntityArgs) {
         super();
+
         this.EntityPM = args.EntityPM;
-        if (SessionLocator.TenantPM.AccountingActivated) {
-            this.IsAccountingActivated = true;
-        }
+
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             this.IsNewEntity = true;
             this.NewEntityPercentageDate = DateTool.GetCurrentDateAsUtc();
-          //  this.EntityPM.RecognizedPercentage = 100;
         }
+
         else{
             this.IsNewEntity = false;
             this.Listen();
         }
-        if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
-            this.IsRegionalTaxActivated = true; 
-        }
+
         this.SetUIProperties();
         this.LoadMultiPercentages();
-    }
-
-    ngOnInit() {
     }
 
     private SaveCompletedEvent: any = null;
@@ -114,8 +105,6 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
             else {
                 isPercentagesAreaVisible = false;
             }
-
-            this.UIProperties.SetEnabled("IsRegionalTax", this.ObjectTableName, false);
         }
 
         this.IsPercentagesAreaVisible = isPercentagesAreaVisible;
@@ -161,12 +150,6 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
         }
     }
 
-    get RecognizedPercentage() { return this.EntityPM.RecognizedPercentage;}
-    set RecognizedPercentage(value: number) {
-        if (this.EntityPM.RecognizedPercentage != value) {
-            this.EntityPM.RecognizedPercentage = value;
-        }
-    }
     get Code() { return this.EntityPM.Code; }
     set Code(value: string) {
         if (this.EntityPM.Code != value) {
@@ -230,13 +213,6 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
         if (this.EntityPM.IsMultiPercentage != value) {
             this.EntityPM.IsMultiPercentage = value;
             this.SetUIProperties();
-        }
-    }
-
-    get IsRegionalTax() { return this.EntityPM.IsRegionalTax; }
-    set IsRegionalTax(value: boolean) {
-        if (this.EntityPM.IsRegionalTax != value) {
-            this.EntityPM.IsRegionalTax = value;            
         }
     }
 }

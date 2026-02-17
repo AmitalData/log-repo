@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -24,27 +24,27 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.CreatedBy)
                 .IsRequired()
-                .HasMaxLength(40)
+                .HasMaxLength(15)
                 .IsUnicode(false);
 
             this.Property(t => t.UpdatedBy)
                 .IsRequired()
-                .HasMaxLength(40)
+                .HasMaxLength(15)
                 .IsUnicode(false);
 
             this.Property(t => t.Name)
                 .HasMaxLength(100)
-                .IsUnicode(true);
+                .IsUnicode(false);
 
             this.Property(t => t.Description)
                 .HasMaxLength(200)
-                .IsUnicode(true);
+                .IsUnicode(false);
 
             this.Property(t => t.LastRunResult)
                 .HasMaxLength(150)
                 .IsUnicode(false);
 
-            this.Property(t => t.ProcedureCode)
+            this.Property(t => t.ServiceClassName)
            .HasMaxLength(100)
            .IsUnicode(false);
 
@@ -61,30 +61,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                  .IsMaxLength()
                  .IsUnicode(true);
             this.Property(t => t.RepeatInMinutes).IsOptional();
-            this.Property(t => t.Status)
-              .HasMaxLength(25)
-              .IsUnicode(false);
-            this.Property(t => t.AverageRunTime);
 
-            this.Property(t => t.EntityId)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-
-            this.Property(t => t.ResultType)
-               .HasMaxLength(10)
-               .IsUnicode(false);
-
-            this.Property(t => t.Format)
-                .HasMaxLength(20)
-                .IsUnicode(true);
-
-            this.Property(t => t.AdvancedFormat)
-               .HasMaxLength(20)
-               .IsUnicode(true);
-
-            this.Property(t => t.ExecutedByServerName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("TasksScheduler");
@@ -99,14 +76,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsLastRunError).HasColumnName("IsLastRunError");
 
             this.Property(t => t.LastRunResult).HasColumnName("LastRunResult");
-            this.Property(t => t.LastRunStartTime).HasColumnName("LastRunStartTime");
+            this.Property(t => t.LastRunTime).HasColumnName("LastRunTime");
             this.Property(t => t.Monday).HasColumnName("Monday");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.NextRunTime).HasColumnName("NextRunTime");
             this.Property(t => t.RepeatInMinutes).HasColumnName("RepeatInMinutes");
             this.Property(t => t.Satarday).HasColumnName("Satarday");
 
-            this.Property(t => t.ProcedureCode).HasColumnName("ProcedureCode");
+            this.Property(t => t.ServiceClassName).HasColumnName("ServiceClassName");
             this.Property(t => t.StartDateTime).HasColumnName("StartDateTime");
             this.Property(t => t.Sunday).HasColumnName("Sunday");
             this.Property(t => t.Thursday).HasColumnName("Thursday");
@@ -121,19 +98,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.SchedulerDetailsXML).HasColumnName("SchedulerDetailsXML");
             this.Property(t => t.Type).HasColumnName("Type");
             this.Property(t => t.NextRunTimeUTC).HasColumnName("NextRunTimeUTC");
-            this.Property(t => t.LastRunStartTimeUTC).HasColumnName("LastRunStartTimeUTC");
+            this.Property(t => t.LastRunTimeUTC).HasColumnName("LastRunTimeUTC");
             this.Property(t => t.StartDateTimeUTC).HasColumnName("StartDateTimeUTC");
-            this.Property(t => t.Version).HasColumnName("Version");
-            this.Property(t => t.Status).HasColumnName("Status");
-            this.Property(t => t.Retries).HasColumnName("Retries");
-            this.Property(t => t.LastRunEndTimeUTC).HasColumnName("LastRunEndTimeUTC"); 
-            this.Property(t => t.LastRunEndTime).HasColumnName("LastRunEndTime");
-            this.Property(t => t.AverageRunTime).HasColumnName("AverageRunTime");
-            this.Property(t => t.EntityId).HasColumnName("EntityId");
-            this.Property(t => t.ResultType).HasColumnName("ResultType");
-            this.Property(t => t.Format).HasColumnName("Format");
-            this.Property(t => t.AdvancedFormat).HasColumnName("AdvancedFormat");
-            this.Property(t => t.ExecutedByServerName).HasColumnName("ExecutedByServerName");
 
 
         }

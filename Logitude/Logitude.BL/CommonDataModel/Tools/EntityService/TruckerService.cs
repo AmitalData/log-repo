@@ -9,7 +9,7 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -19,9 +19,6 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.BL.DataContracts;
-using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -39,9 +36,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactRepository contactRepository;
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
-        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
-        private CardService cardService;
-
+        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;  
         public TruckerService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -52,8 +47,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            cardService = new CardService(objectContext, tenant);
-
             this.GetLoggedContact();
         }
 
@@ -69,8 +62,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
-            cardService = new CardService(objectContext, tenant);
-
         }
 
         private void GetLoggedContact()
@@ -89,14 +80,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.entityPM = entityPM;
             this.isNewEntity = true;
-            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) || this.entityPM.IsHybrid ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
+            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
-                PartnerTypeId = "TR",
-                UploadingUniqueKey = entityPM.UploadingUniqueKey,
+                PartnerTypeId = "TR",                
             };
 
             this.entityPOCO = new Trucker()
@@ -107,6 +97,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
 
+            TruckerValidating.Validate(entityPM);
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {
@@ -129,25 +120,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             TruckerMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-            TruckerValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
-            entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Trucker", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<TruckerPM> { entityPM }.Cast<object>().ToList() }).Update();
+            entityRepository.SubmitChanges(); 
 
-            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
-            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
-            }
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }
+        }
         }
 
         public void Update(TruckerPM entityPM, bool mapComposition = false)
@@ -160,6 +144,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
 
+            TruckerValidating.Validate(entityPM);
             if (mapComposition)
             {
                 this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies);
@@ -180,27 +165,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();
+
             if (!entityPM.IsHybrid)
             {
                 TruckerTracing.Trace(entityPM, entityPOCO, isNewEntity);
             }
 
             TruckerMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-            TruckerValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Trucker", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<TruckerPM> { entityPM }.Cast<object>().ToList() }).Update();
-            cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityCard.Tenant);
 
-            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
-            //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
         }
 
         private void InitializeComponent()
@@ -272,14 +250,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryId = entityCard.CountryId;
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
-            }
-            if (entityCard != null)
-            {
-                entityCard.EmailForSendingSingArinvoice = entityPM.Card != null ? entityPM.Card?.EmailForSendingSingArinvoice : null ;
-                entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
-                entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
-                entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-
             }
         }
 
@@ -393,7 +363,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             itemContactPM.CardId = this.entityPM.Id;
             itemContactPM.CompanyName = this.entityPM.EnglishName;
-            itemContactPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             if (itemContactPM.IsCreatedWithPartner)
             {
@@ -483,23 +452,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     #endregion
 
                     #endregion
-                }
-                else
-                {
-                    Contact newContact = contactRepository.GetSingleContact(itemContactPM.Id, itemContactPM.Tenant);
-
-                    ContactMapping.MapEntity(itemContactPM, newContact, isNewEntity);
-                    contactRepository.Update(newContact);
-                }
-
-                if (isNewEntity)
-                {
-                    if (itemContactPM.SetAsPrimaryForCard)
-                    {
-                        entityPM.PrimaryContactId = itemContactPM.Id;
-                        entityPM.PrimaryContactPhone = itemContactPM.BusinessPhone;
-                        entityPM.PrimaryContactName = itemContactPM.EnglishName;
-                    }
                 }
 
                 CardContact newCardContact = new CardContact()

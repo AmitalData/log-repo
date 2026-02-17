@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .NotesBox {
         border: 1px solid gray;
         border-radius: 5px;
@@ -87,8 +87,7 @@
                                                         <!-- ImporterLoiDeclarationTypeCode -->
                                                         <log-column [header]="'Customs.ClaimImporterDeclarsPage3.F.ImporterLoiDeclarationTypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'300'" [Alignment]="'right'" [binding]="'ImporterLoiDeclarationTypeCode'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" [attr.title]="getItemTitle(item)" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.ImporterDeclarationTypeName}}</span>
                                                                 </div>
@@ -104,14 +103,12 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- MyDeclarationList -->
                                                         <log-column [header]="'Customs.Declaration.O.Declarations' | TextCodeTranslationPipe"
                                                                     [width]="'120'" [Alignment]="'right'" [binding]="'MyDeclarationList'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.MyDeclarationList}}</span>
                                                                 </div>
@@ -122,13 +119,11 @@
                                                                                 [DataContext]="item" [Text]="item.MyDeclarationList"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'50'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditImporterDeclareCommand(item)"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
 
@@ -136,7 +131,6 @@
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>
@@ -182,8 +176,7 @@
                                                         <!-- CommercialSale -->
                                                         <log-column [header]="'Customs.ClaimImporterDeclarsPage3A.F.CommercialSaleTypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'180'" [Alignment]="'right'" [binding]="'CommercialSaleTypeCode'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.CommercialSaleTypeName}}</span>
                                                                 </div>
@@ -199,18 +192,15 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'30'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteCommercialSaleCommand(item)"
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>

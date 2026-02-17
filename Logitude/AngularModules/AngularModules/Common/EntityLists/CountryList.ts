@@ -21,7 +21,5 @@ export class CountryList {
 		GlobalZoneName: string;
 		SearchFields: string;
 		HasCitiesList: boolean;
-		IsNorthAmerica: boolean;
-		IsGreaterChina: boolean;
 	
 }

@@ -1,5 +1,4 @@
 ﻿using Logitude.Customs.Data;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using System;
@@ -70,7 +69,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         newTransactionResult.PaymentDate = transactionItem.PaymentDate.Value.ToString("dd/MM/yyyy");
                     }
-                    newTransactionResult.PaymentID = transactionItem.PaymentID.ToString();
+                    newTransactionResult.PaymentID = String.Format("{0:N2}", transactionItem.PaymentID);
                     newTransactionResult.PaymentStatus = transactionItem.PaymentStatus;
                     newTransactionResult.RTGSBalance = String.Format("{0:N2}", transactionItem.RTGSBalance);
                     if (transactionItem.TransactionAmount != null && transactionItem.TransactionAmountSpecified == true)
@@ -79,15 +78,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     newTransactionResult.TransactionType = transactionItem.TransactionType;
                     newTransactionResult.UpdateUser = transactionItem.UpdateUser;
-
-                    if(transactionItem.EntityType.Equals("הצהרת יבוא") && !string.IsNullOrEmpty(transactionItem.EntityID))
-                    {
-                        DeclarationRepository declarationRepository = new DeclarationRepository(context);
-                        var myDeclaration = declarationRepository.GetSingleDeclarationByNumber(transactionItem.EntityID, requestParams.Tenant);
-                        if(myDeclaration != null)
-                        newTransactionResult.CustomFileNo = !string.IsNullOrEmpty(myDeclaration.CustomFileNo) ? myDeclaration.CustomFileNo : "";
-
-                    }
 
                     MyResponseData.TransactionsList.Add(newTransactionResult);
                 }

@@ -1,7 +1,4 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.InfrastructureModel.EntityLists
@@ -33,12 +30,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsSharedLogisticsEnabled { get; set; }
         public DateTime? EventDateTime { get; set; }
         public bool AllowedInAutomation { get; set; }
-        public string CustomField { get; set; }
-        public int? EntityStatusWeight { get; set; }
-        public string EventTrigger { get; set; }
-        public virtual List<EventRemark> EventRemarks { get; set; }
-
-        public int? Weight { get; set; }
-
+        
     }
 }

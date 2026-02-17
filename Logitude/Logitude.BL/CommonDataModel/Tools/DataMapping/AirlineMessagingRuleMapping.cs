@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.InActive = entityPM.InActive;
             poco.UpdateDate = entityPM.UpdateDate;
             poco.UpdatedByUserId = entityPM.UpdatedByUserId;
-            poco.RuleFieldCode = entityPM.RuleFieldCode;
         }
     }
 }

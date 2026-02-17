@@ -15,9 +15,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int FailedQueue { get; set; }
         public int WaitingQueue { get; set; }
         public DateTime LastUpdateDateTime { get; set; }
-        public DateTime? LastQueueDateTime { get; set; }
 
-        public string VersionNumber { get; set; }
-        public DateTime? VersionDate { get; set; }
+
     }
 }

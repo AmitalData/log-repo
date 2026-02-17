@@ -5,10 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceModel.DomainServices.Server;
 using System.Xml.Serialization;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -22,8 +22,6 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using static Stimulsoft.Report.Func;
-using CHAMP17;
 
 namespace WebFreight.Web.InfrastructureModel.DomainServices
 {
@@ -190,32 +188,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
             return count;
         }
 
-        public ServiceResponse GetCurrenciesExchangeRateByCurrencyId(string foreignCurrencyId, int tenant, int pageSize, int pageIndex)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-
-            
-            objectContext = objectContext ?? WebFreightContext.GetContext(tenant);
-            var ratesTableRepository = new RatesTableRepository(objectContext);
-            var ratesTableQuery = new RatesTableQuery(ratesTableRepository, tenant);
-
-            var result = ratesTableQuery.GetCurrenciesExchangeRateByCurrencyId(tenant, foreignCurrencyId);
-
-            ServiceResponse response = new ServiceResponse();
-            response.Count = result.Count();
-            var pagedResult = result.Skip(pageIndex).Take(pageSize).ToList();
-
-            CurrencyRateRepository currencyRateRepository = new CurrencyRateRepository(tenant);
-            foreach (var rate in pagedResult)
-            {
-                rate.CurrencyRates = currencyRateRepository.GetSingleByExchangeRateId(rate.Id);
-            }
-
-            response.Result = pagedResult;
-
-            return response;
-        }
-        public List<LastRate> GetCurrenciesExchangeRateByValueDate(int tenant, string baseCurrencyId, DateTime? date,bool calculateRateAccordingNumberUnit = false)
+        public List<LastRate> GetCurrenciesExchangeRateByValueDate(int tenant, string baseCurrencyId, DateTime? date)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
@@ -233,26 +206,18 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
             }
 
             ratesTablesRepository = new RatesTableRepository(objectContext);
-            ratesTableQuery = new RatesTableQuery(ratesTablesRepository,tenant);
+            ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
             CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
             Currency baseCurrency = currencyRepository.GetCurrencies(tenant).Where(r => r.Id == baseCurrencyId).FirstOrDefault();
             List<Currency> foreignCurrencies = currencyRepository.GetCurrencies(tenant).Where(c => c.Id != baseCurrencyId).ToList();
 
             foreach (Currency currency in foreignCurrencies)
             {
-                LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, currency.Id, baseCurrencyId, date, calculateRateAccordingNumberUnit);
+                LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, currency.Id, baseCurrencyId, date);
                 if (lastRate != null)
                 {
                     lastRate.BaseCurrencyId = baseCurrencyId;
                     lastRate.BaseCurrencyCode = baseCurrency.Code;
-
-                    CurrencyRateRepository currencyRateRepository = new CurrencyRateRepository(tenant);
-                    lastRate.CurrencyRates = currencyRateRepository.GetSingleByExchangeRateId(lastRate.Id)?.Select(r =>
-                    {
-                        r.Rate *= lastRate.Unit ?? 1;
-                        return r;
-                    }).ToList();
-
                     resultList.Add(lastRate);
                 }
                 else

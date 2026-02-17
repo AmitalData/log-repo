@@ -33,7 +33,7 @@
 
                     <td style="width:50px;">Origin:</td>
                     <td style="width:185px;">
-                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'MainCarriageFromPortId'"
+                        <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
                                 [ObjectTableName]="'Booking'"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Port'"
@@ -48,7 +48,7 @@
 
                     <td style="width:80px;">Destination:</td>
                     <td style="width:185px;">
-                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
+                        <LogLov [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
                                 [ObjectTableName]="'Booking'"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Port'"
@@ -71,7 +71,7 @@
                         <div></div>
                     </td>
                     <td style="width:80px;">
-                        <button class="GreenButton" (click)="RunReport(true)">{{RunReportTitle}}</button>
+                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
                     </td>
 
                     <td>

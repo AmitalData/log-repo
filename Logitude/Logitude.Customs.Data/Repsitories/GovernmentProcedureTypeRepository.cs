@@ -20,15 +20,8 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-		public GovernmentProcedureType GetSingleGovernmentProcedureType(EntityKeyFields entityKeys)
-		{
-			GovernmentProcedureTypeKeys keys = entityKeys as GovernmentProcedureTypeKeys;
-			return (from a in context.GovernmentProcedureTypes
-					where a.Code == keys.Code
-					select a).FirstOrDefault();
-		}
 
-	}
+   }
 
 }
    

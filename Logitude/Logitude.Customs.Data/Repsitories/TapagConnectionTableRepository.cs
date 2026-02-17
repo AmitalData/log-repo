@@ -22,26 +22,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
-        public List<TapagConnectionTable> GetDearationsTapagConnectionTables(List<string> declarationIds, string tapagId, int tenant)
-        {
-            List<TapagConnectionTable> connections = new List<TapagConnectionTable>();
-            if (declarationIds.Count()==0)
-            {
-                connections = (from a in context.TapagConnectionTables
-                               where declarationIds.Contains(a.DeclarationId)  && a.Tenant == tenant
-                               select a).ToList();
-            }
-            else if (!string.IsNullOrEmpty(tapagId))
-            {
-                connections = (from a in context.TapagConnectionTables
-                               where a.TapagId == tapagId && a.Tenant == tenant
-                               select a).ToList();
-            }
-
-            return connections;
-        }
-
-
+        
 
         public List<TapagConnectionTable> GetDearationTapagConnectionTables(string declarationId, string tapagId,  int tenant)
         {
@@ -61,8 +42,6 @@ namespace Logitude.Customs.Data.Repsitories
 
             return connections;
         }
-
-
 
 
         public string GetTapagIdByFileAndNumeral(string fileNumber, int numeral, int tenant)

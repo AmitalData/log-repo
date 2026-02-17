@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -35,7 +35,6 @@ namespace Logitude.XSD
         public bool IsViaColoader { get; set; }
         public string ColoaderKey { get; set; }
         public string MainHarmonize { get; set; }
-        public string SLAC { get; set; }
 
         #region Amounts
         public int NumberOfPackages { get; set; }
@@ -125,11 +124,6 @@ namespace Logitude.XSD
             this.ShipmentNumber = string.IsNullOrEmpty(Shipment.ShipmentNumber) ? null : Shipment.ShipmentNumber;
             this.MasterShipmentNumber = string.IsNullOrEmpty(MasterData.MasterShipmentNumber) ? null : MasterData.MasterShipmentNumber;
             this.MainHarmonize = string.IsNullOrEmpty(Shipment.MainHarmonize) ? null : FormatHelper.FormatString(Shipment.MainHarmonize, FormatHelper.PatternType.AlphaNumeric, 18);
-
-            if (!string.IsNullOrEmpty(Shipment.SLAC))
-            {
-                this.SLAC = FormatHelper.FormatInteger(5, Shipment.SLAC);
-            }
 
             if (Shipment.ViaColoader)
             {

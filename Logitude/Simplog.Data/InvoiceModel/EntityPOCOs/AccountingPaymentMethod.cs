@@ -17,7 +17,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public bool Inactive { get; set; }
         public bool IsAR { get; set; }
         public bool IsAP { get; set; }
-        public string LocalName { get; set; }
 
     }
 }

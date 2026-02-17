@@ -18,7 +18,7 @@ using System.Web;
 using System.Runtime.Remoting.Messaging;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -30,7 +30,7 @@ using Simplog.Global.Data.GlobalModel;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Counters;
@@ -39,8 +39,6 @@ using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.Repositories;
-using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -51,28 +49,14 @@ namespace CommunicationWorkerRole
         string URI = "";//"http://localhost:9996";
         APILogsService apiLogsService;
         IWebFreightContext webFreightContext;
-        private string queueName;
 
-        public ImporterShipmentsWorkerRole(string tenant, string priority)
+        public ImporterShipmentsWorkerRole(string tenant)
         {
             Tenant = int.Parse(tenant);
             IGlobalContext objectContext = GlobalContext.GetContext();
             SettingRepository SettingRepository = new SettingRepository(objectContext);
             SettingQuery SettingQuery = new SettingQuery(SettingRepository);
             URI = SettingQuery.GetSinglePM().CustomerTenantsURL.TrimEnd('/') + "/api/";
-            switch (priority)
-            {
-                case "Low":
-                    {
-                        queueName = "ImportersShipmentQueue";
-                        break;
-                    }
-                case "Digital":
-                    {
-                        queueName = "ImportersDigitalShipmentQueue";
-                        break;
-                    }
-            }
         }
 
         public override bool OnStart()
@@ -85,7 +69,7 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
         string Token;
-        public override void Run()
+        public override async void AsyncRun()
         {
             try
             {
@@ -101,9 +85,8 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = client.PostAsync(AuthURI, content);
-                    result.Wait();
-                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
+                    var result = await client.PostAsync(AuthURI, content);
+                    var tempUser = result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -117,10 +100,8 @@ namespace CommunicationWorkerRole
                         {
                             //int tenant = 0;
 
-                            queueservice = new DbQueueService(queueName, 0);
-                            //queueservice.InitializeQueue("ImportersShipmentQueue", Tenant);
-                            //using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
-                            //{
+                            queueservice = new DbQueueService();
+                            queueservice.InitializeQueue("ImportersShipmentQueue", Tenant);
                             var response = queueservice.Receive();
                             LastActivity = DateTime.UtcNow;
                             int tenant = 0;
@@ -132,14 +113,14 @@ namespace CommunicationWorkerRole
                                 string ShipmentId = response.MessageValues["ShipmentId"].ToString();
                                 int.TryParse(response.MessageValues["Tenant"], out tenant);
                                 int.TryParse(response.MessageValues["ImporterTenant"], out importerTenant);
-                                string CorrelationId = response.MessageId;
+                                string CorrelationId = response.MessageValues["CorrelationId"].ToString();
                                 string CustomerId = response.MessageValues["CustomerId"].ToString();
                                 string CustomerChanged = response.MessageValues.ContainsKey("CustomerChanged") ? response.MessageValues["CustomerChanged"].ToString() : "false";
                                 webFreightContext = WebFreightContext.GetContext(tenant);
                                 #region APILogs
                                 var aPILogsRepository = new APILogsRepository(webFreightContext);
                                 APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(CorrelationId, tenant);
-
+                               
                                 bool IsNewLog = false;
                                 if (Log == null)
                                 {
@@ -197,7 +178,7 @@ namespace CommunicationWorkerRole
                                         LogPM.EntityId = ShipmentId;
                                         //LogPM.Refrence = Shipment.ShipmentNumber;
                                         LogPM.Tenant = tenant;
-
+                                        
                                         ShipmentQuery shipmentQuery = new ShipmentQuery(Tenant);
                                         bool IsCanclled = false;
                                         bool CancleByChangeCustomer = false;
@@ -205,8 +186,7 @@ namespace CommunicationWorkerRole
                                         var ForwarderShipment = shipmentQuery.GetSinglePMWithoutComposition(ShipmentId, tenant);
                                         CustomerTenantAccessCardBatchQuery customerTenantAccessCardBatchQuery = new CustomerTenantAccessCardBatchQuery(tenant);
                                         var customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(Shipment.CustomerId, tenant, importerTenant);
-                                        var oldCustomerTenantAccessCardsBatch = (Shipment.CustomerId != CustomerId || CustomerChanged == "true") ? customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(CustomerId, tenant, importerTenant) : null;
-                                        if (SendShipmentUpdates(Shipment, customerTenantAccessCardsBatch, oldCustomerTenantAccessCardsBatch))
+                                        if (Shipment != null && (customerTenantAccessCardsBatch != null ? (Shipment.CreateDateTime >= customerTenantAccessCardsBatch.FromDatetime):true))
                                         {
                                             LogPM.Refrence = Shipment.ShipmentNumber;
                                             if (((Shipment.CustomerId != CustomerId) || CustomerChanged == "true") && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
@@ -242,9 +222,8 @@ namespace CommunicationWorkerRole
                                                         };
                                                         var serializedObject = JsonConvert.SerializeObject(shipmentAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = client.PutAsync(ImporterShipmentsURI, content);
-                                                        result.Wait();
-                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = await client.PutAsync(ImporterShipmentsURI, content);
+                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
                                                             if (ForwarderShipment == null)
                                                             {
@@ -276,14 +255,13 @@ namespace CommunicationWorkerRole
                                                                     DocumentsFilingService documentsFilingService = new DocumentsFilingService(CommonContext, ForwarderShipment.Tenant);
                                                                     documentsFilingService.Update(item, null);
                                                                 }
-                                                                var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
+                                                                var ResponseData = result.Content.ReadAsStringAsync().Result;
                                                                 var Donemsg = "Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " Done Successfully /" + DateTime.Now;
                                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
                                                                 //importerTenant = customerTenantAccessInfo.CustomerTenant;
                                                             }
                                                             catch (Exception ex)
                                                             {
-                                                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role, Cancelling Shipment", "", null);
                                                                 string errorMessage = ex.Message + Environment.NewLine;
 
                                                                 if (ex.InnerException != null)
@@ -300,7 +278,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
                                                             if (EXC != null)
                                                             {
                                                                 var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
@@ -345,14 +323,13 @@ namespace CommunicationWorkerRole
                                                     };
                                                     var serializedObject = JsonConvert.SerializeObject(shipmentAM);
                                                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                    var result = client.PutAsync(ImporterShipmentsURI, content);
-                                                    result.Wait();
-                                                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                    var result = await client.PutAsync(ImporterShipmentsURI, content);
+                                                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                                     {
                                                         if (ForwarderShipment == null)
                                                         {
                                                             ForwarderShipment = shipmentQuery.GetSinglePMWithoutComposition(ShipmentId, tenant);
-
+                                                           
                                                         }
                                                         try
                                                         {
@@ -371,13 +348,12 @@ namespace CommunicationWorkerRole
                                                             //var shipmentService = new ShipmentService(objectContext, ForwarderShipment, systemEmail);
                                                             //shipmentService.Update();
                                                             queueservice.Complete();
-                                                            var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
+                                                            var ResponseData = result.Content.ReadAsStringAsync().Result;
                                                             var Donemsg = "Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " Done Successfully /" + DateTime.Now;
                                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
                                                         }
                                                         catch (Exception ex)
                                                         {
-                                                            ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role, Cancelling Shipment", "", null);
                                                             string errorMessage = ex.Message + Environment.NewLine;
 
                                                             if (ex.InnerException != null)
@@ -394,7 +370,7 @@ namespace CommunicationWorkerRole
                                                     }
                                                     else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                     {
-                                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
                                                         if (EXC != null)
                                                         {
                                                             var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
@@ -413,13 +389,12 @@ namespace CommunicationWorkerRole
                                                 using (var client = new HttpClient())
                                                 {
                                                     client.DefaultRequestHeaders.Add("Token", Token);
-                                                    using (var apiresponse = client.GetAsync(GetURI))
+                                                    using (var apiresponse = await client.GetAsync(GetURI))
                                                     {
-                                                        apiresponse.Wait();
-                                                        if (apiresponse.Result.IsSuccessStatusCode)
+                                                        if (apiresponse.IsSuccessStatusCode)
                                                         {
 
-                                                            var IsShipmentExistJsonString = apiresponse.Result.Content.ReadAsStringAsync().Result;
+                                                            var IsShipmentExistJsonString = apiresponse.Content.ReadAsStringAsync().Result;
                                                             var tempResult = JsonConvert.DeserializeObject(IsShipmentExistJsonString);
                                                             if (tempResult != null)
                                                             {
@@ -445,7 +420,6 @@ namespace CommunicationWorkerRole
                                                     Card Customer = cardsReporistory.GetSingleCard(Shipment.CustomerId, Shipment.Tenant);
                                                     Branch Branch = branchRepository.GetSingleBranch(Shipment.BranchId, Shipment.Tenant);
                                                     Department Department = departmentRepository.GetSingleDepartment(Shipment.DepartmentId, Shipment.Tenant);
-                                                    Card Agent = cardsReporistory.GetSingleCard(Shipment.AgentId, Shipment.Tenant);
                                                     HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePMByPartnerTenant(tenant);
                                                     TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
                                                     EntityStatus status = EntityStatusRepository.GetSingleEntityStatus(Shipment.StatusId, Shipment.Tenant, true);
@@ -461,8 +435,6 @@ namespace CommunicationWorkerRole
                                                     string BranchCode = "";
                                                     string DepartmentCode = "";
                                                     string CustomerCode = "";
-                                                    string AgentCode = GetCardCode(Agent);
-
                                                     if (Shipper != null)
                                                     {
                                                         ShipperCode = Shipper.Code;
@@ -557,7 +529,6 @@ namespace CommunicationWorkerRole
                                                             MainCarriageATA = Shipment.MainCarriageATA,
                                                             MainCarriageETA = Shipment.MainCarriageETA,
                                                             MainCarriageATD = Shipment.MainCarriageATD,
-                                                            MainCarriageETD = Shipment.MainCarriageETD,
                                                             OnCarriageATA = Shipment.OnCarriageATA,
                                                             OnCarriageATD = Shipment.OnCarriageATD,
                                                             PreCarriageATA = Shipment.PreCarriageATA,
@@ -576,11 +547,9 @@ namespace CommunicationWorkerRole
                                                             CustomerReference1 = Shipment.CustomerReference1,
                                                             ConsigneeReference2 = Shipment.ConsigneeReference2,
                                                             CustomerReference2 = Shipment.CustomerReference2,
-                                                            CustomerReference3 = Shipment.CustomerReference3,
                                                             ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                             IsCancelled = Shipment.IsCancelled,
                                                             ShipperName = Shipment.ShipperName,
-                                                            ConsigneeName = Shipment.ConsigneeName,
                                                             CarrierTransportDocumentNumber = Shipment.CarrierTransportDocumentNumber,
                                                             //ForwarderPartnerId = Partner.Id,
                                                             FreightPrepaidCollectId = Shipment.FreightPrepaidCollectId,
@@ -590,7 +559,7 @@ namespace CommunicationWorkerRole
                                                             ExceptionDescription = Shipment.ExceptionDescription,
                                                             //IsOperationalClosed = Shipment.IsOperationalClosed,
                                                             DeclarationXMLData = Shipment.DeclarationXMLData,
-                                                            IsImporterApprovalRequired = GetIsImporterApprovalRequiredShipmentAM(Shipment),
+                                                            IsImporterApprovalRequired = Shipment.IsImporterApprovalRequired,
                                                             VersionApproved = Shipment.VersionApproved,
                                                             ApproveDateTime = Shipment.ApproveDateTime,
                                                             ShipmentAddtionalDataXML = Shipment.ShipmentAddtionalDataXML,
@@ -603,19 +572,6 @@ namespace CommunicationWorkerRole
                                                             DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
-                                                            IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
-                                                            AgentName = Shipment.PrivateLabelAgentName,
-                                                            IsShipmentOrder = Shipment.IsShipmentOrder,
-                                                            ShippingLine = Shipment.ShippingLine,
-                                                            PlaceOfDelivery = Shipment.PlaceOfDelivery,
-                                                            PickupPlace = Shipment.PickupPlace,
-                                                            SealNo = Shipment.SealNo,
-                                                            HSCode = Shipment.HSCode,
-
-                                                            Agent = new CodeProperties()
-                                                            {
-                                                                Code = AgentCode
-                                                            },
                                                             Customer = new CodeProperties()
                                                             {
                                                                 Code = CustomerCode
@@ -695,12 +651,9 @@ namespace CommunicationWorkerRole
                                                                     MyPackage.PackageTypeCode = type.Code;
                                                                 }
                                                             }
-
+                                                           
                                                             shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                         }
-
-                                                        shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
-                                                        shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                         //if (TakeDate)
                                                         //{
                                                         //    shipmentAM.StatusDate = Shipment.StatusDate;
@@ -723,11 +676,10 @@ namespace CommunicationWorkerRole
 
                                                         var serializedObject = JsonConvert.SerializeObject(shipmentAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = client.PutAsync(ImporterShipmentsURI, content);
-                                                        result.Wait();
-                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = await client.PutAsync(ImporterShipmentsURI, content);
+                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
-                                                            var temp = result.Result.Content.ReadAsStringAsync().Result;
+                                                            var temp = result.Content.ReadAsStringAsync().Result;
                                                             List<string> ImporterShipmentNoId = JsonConvert.DeserializeObject<List<string>>(temp);
 
                                                             if (ForwarderShipment == null)
@@ -754,13 +706,12 @@ namespace CommunicationWorkerRole
                                                                 var shipmentService = new ShipmentService(objectContext, ForwarderShipment, systemEmail);
                                                                 shipmentService.Update();
                                                                 queueservice.Complete();
-                                                                var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
+                                                                var ResponseData = result.Content.ReadAsStringAsync().Result;
                                                                 var Donemsg = "Updates Of Shipment Sent To Importer Successfully " + DateTime.Now;
                                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
                                                             }
                                                             catch (Exception ex)
                                                             {
-                                                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role, Updates Of Shipment", "", null);
                                                                 string errorMessage = ex.Message + Environment.NewLine;
 
                                                                 if (ex.InnerException != null)
@@ -777,7 +728,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
                                                             if (EXC != null)
                                                             {
                                                                 var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
@@ -807,7 +758,6 @@ namespace CommunicationWorkerRole
                                                             MainCarriageATA = Shipment.MainCarriageATA,
                                                             MainCarriageETA = Shipment.MainCarriageETA,
                                                             MainCarriageATD = Shipment.MainCarriageATD,
-                                                            MainCarriageETD = Shipment.MainCarriageETD,
                                                             OnCarriageATA = Shipment.OnCarriageATA,
                                                             OnCarriageATD = Shipment.OnCarriageATD,
                                                             PreCarriageATA = Shipment.PreCarriageATA,
@@ -826,11 +776,9 @@ namespace CommunicationWorkerRole
                                                             CustomerReference1 = Shipment.CustomerReference1,
                                                             ConsigneeReference2 = Shipment.ConsigneeReference2,
                                                             CustomerReference2 = Shipment.CustomerReference2,
-                                                            CustomerReference3 = Shipment.CustomerReference3,
                                                             ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                             IsCancelled = Shipment.IsCancelled,
                                                             ShipperName = Shipment.ShipperName,
-                                                            ConsigneeName = Shipment.ConsigneeName,
                                                             CarrierTransportDocumentNumber = Shipment.CarrierTransportDocumentNumber,
                                                             //ForwarderPartnerId = Partner.Id,
                                                             FreightPrepaidCollectId = Shipment.FreightPrepaidCollectId,
@@ -840,7 +788,7 @@ namespace CommunicationWorkerRole
                                                             ExceptionDate = Shipment.ExceptionDate,
                                                             ExceptionDescription = Shipment.ExceptionDescription,
                                                             DeclarationXMLData = Shipment.DeclarationXMLData,
-                                                            IsImporterApprovalRequired = GetIsImporterApprovalRequiredShipmentAM(Shipment),
+                                                            IsImporterApprovalRequired = Shipment.IsImporterApprovalRequired,
                                                             VersionApproved = Shipment.VersionApproved,
                                                             ApproveDateTime = Shipment.ApproveDateTime,
                                                             Master = Shipment.Master,
@@ -852,20 +800,6 @@ namespace CommunicationWorkerRole
                                                             DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
-                                                            Notes = Shipment.Notes,
-                                                            IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
-                                                            AgentName = Shipment.PrivateLabelAgentName,
-                                                            IsShipmentOrder = Shipment.IsShipmentOrder,
-                                                            ShippingLine = Shipment.ShippingLine,
-                                                            PlaceOfDelivery = Shipment.PlaceOfDelivery,
-                                                            PickupPlace = Shipment.PickupPlace,
-                                                            SealNo = Shipment.SealNo,
-                                                            HSCode = Shipment.HSCode,
-
-                                                            Agent = new CodeProperties()
-                                                            {
-                                                                Code = AgentCode
-                                                            },
                                                             Customer = new CodeProperties()
                                                             {
                                                                 Code = CustomerCode
@@ -944,12 +878,9 @@ namespace CommunicationWorkerRole
                                                                     MyPackage.PackageTypeCode = type.Code;
                                                                 }
                                                             }
-
+                                                            
                                                             shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                         }
-
-                                                        shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
-                                                        shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                         //if (TakeDate)
                                                         //{
                                                         //    shipmentAM.StatusDate = Shipment.StatusDate;
@@ -973,11 +904,10 @@ namespace CommunicationWorkerRole
 
                                                         var serializedObject = JsonConvert.SerializeObject(shipmentAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = client.PostAsync(ImporterShipmentsURI, content);
-                                                        result.Wait();
-                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = await client.PostAsync(ImporterShipmentsURI, content);
+                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
-                                                            var temp = result.Result.Content.ReadAsStringAsync().Result;
+                                                            var temp = result.Content.ReadAsStringAsync().Result;
                                                             List<string> ImporterShipmentNoId = JsonConvert.DeserializeObject<List<string>>(temp);
                                                             if (ForwarderShipment == null)
                                                             {
@@ -1023,8 +953,6 @@ namespace CommunicationWorkerRole
                                                             }
                                                             catch (Exception ex)
                                                             {
-                                                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role, Update CustomerShipmentNumber ", "", null);
-
                                                                 string errorMessage = ex.Message + Environment.NewLine;
 
                                                                 if (ex.InnerException != null)
@@ -1058,7 +986,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                                            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
                                                             var Failmsg = EXC.ErrorType + " Faild To Send Updates To Importer Tenant " + DateTime.Now;
                                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
                                                             if (EXC != null)
@@ -1156,15 +1084,11 @@ namespace CommunicationWorkerRole
                                     }
                                     #endregion
                                 }
-
-                                //scope.Complete();
                             }
                             else
                             {
-                                //scope.Complete();
                                 Thread.Sleep(10000);
                             }
-                            //}
                         }
                         catch (Exception ex)
                         {
@@ -1174,7 +1098,6 @@ namespace CommunicationWorkerRole
                                 //LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
                                 try
                                 {
-                                    ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role,", "", null);
                                     string errorMessage = ex.Message + Environment.NewLine;
 
                                     if (ex.InnerException != null)
@@ -1196,7 +1119,7 @@ namespace CommunicationWorkerRole
 
                                     ExceptionHandler.HandleException(e, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
                                 }
-
+                               
                             }
                             ConnectClient();
                             ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
@@ -1217,45 +1140,6 @@ namespace CommunicationWorkerRole
                 Thread.Sleep(10000);
             }
 
-        }
-
-        private static bool GetIsImporterApprovalRequiredShipmentAM(Logitude.BL.ShipmentsModel.EntityPMs.ShipmentPM Shipment)
-        {
-            if(Shipment.StatusCode?.ToLower() == "ccd" || Shipment.CustomsClearanceDate != null)
-            {
-                return false;
-            }
-            return Shipment.IsImporterApprovalRequired;
-        }
-
-        private static bool SendShipmentUpdates(Logitude.BL.ShipmentsModel.EntityPMs.ShipmentPM Shipment, CustomerTenantAccessCardsBatchPM customerTenantAccessCardsBatch, CustomerTenantAccessCardsBatchPM oldCustomerTenantAccessCardsBatch)
-        {
-            if (Shipment == null) return false;
-            if (customerTenantAccessCardsBatch == null) return true;
-            if (Shipment.CreateDateTime >= customerTenantAccessCardsBatch.FromDatetime) return true;
-            if (oldCustomerTenantAccessCardsBatch != null && Shipment.CreateDateTime >= oldCustomerTenantAccessCardsBatch.FromDatetime && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber)) return true;
-
-            return false;
-        }
-
-        private string GetFirstReferenceFromUNFSideOnly(string customerReference)
-        {
-            if (!string.IsNullOrEmpty(customerReference))
-            {
-                return customerReference.Split(',')[0];
-            }
-            return customerReference;
-        }
-
-        private static string GetCardCode(Card card)
-        {
-            string CardCode = "";
-            if (card != null)
-            {
-                CardCode = card.Code;
-            }
-
-            return CardCode;
         }
 
         private void ConnectClient()

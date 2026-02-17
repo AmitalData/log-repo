@@ -16,8 +16,6 @@ namespace Logitude.Server.Tools.Helpers
 
             else
                 return str;
-
-            //sb.ToString().TrimEnd( '\r', '\n' );
         }
 
         public static string GetRandomString(int length)

@@ -24,7 +24,6 @@ export class AgentList {
 		PaymentTermId: string;
 		SearchFields: string;
 		SharedLogisticsInvitationStatusName: string;
-		CargoTrackingInvitationStatusName: string;
 		LastLoginDate: Date;
 		EnableConsolidationInvoices: boolean;
 		CityName: string;
@@ -51,10 +50,5 @@ export class AgentList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
-		StateName: string;
-		StorageFreeDays: number;
-		GLAccountNumber: string;
-		RegimenFiscalCode: string;
-		SATReceptorName: string;
 	
 }

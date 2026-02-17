@@ -15,7 +15,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using Simplog.Data.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.QuoteModel.BusinessUnitFilters;
 using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 

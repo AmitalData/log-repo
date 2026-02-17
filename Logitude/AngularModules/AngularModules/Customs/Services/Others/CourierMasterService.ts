@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, Observable, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -10,30 +9,16 @@ import {CourierMasterPM} from '../../EntityPMs/CourierMasterPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { SendPayReadyLowRequestParams } from '../../DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../DataContract/RequestParams/SendALLCorrectRequestParams';
-import { GatepassRequestMessageRequestParams } from '../../DataContract/RequestParams/GatepassRequestMessageRequestParams';
-import { SendALLStorageSiteRequestParams } from '../../DataContract/RequestParams/SendALLStorageSiteRequestParams';
-import { SendUnCorrectDocumentsRequestParams } from '../../DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
-import { AppTool } from '../../../Infrastructure/Tools';
-import { PendingRequestParams } from 'Customs/DataContract/RequestParams/PendingRequestParams';
-import { SendALLDelayFormParams } from '../../DataContract/RequestParams/SendALLDelayFormParams';
-import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { GenericRequestParams } from 'Customs/DataContract/RequestParams/GenericRequestParams';
-import { List } from 'cypress/types/lodash';
-import { CustomsRequestsSheetPM } from 'Customs/EntityPMs/CustomsRequestsSheetPM';
-import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
-import { SendRecoverDecRequestParams } from 'Customs/DataContract/RequestParams/SendRecoverDecRequestParams';
-
 
 @Injectable()
 
 
 export class CourierMasterService {
 
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster';
     }
 
@@ -42,26 +27,19 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
 
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetIfCourierMasterExists?' + 'Id=' + Id + '&airlineId=' + airlineId + '&HAWB=' + HAWB + '&MAWB=' + MAWB, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetIfCourierMasterExists?' + 'Id=' + Id + '&airlineId=' + airlineId + '&HAWB=' + HAWB + '&MAWB=' + MAWB, { headers: authHeader }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
 
 
         });
 
 
     }
-
-    public connectedSelectAll: boolean;
-    public disconnectedSelectAll: boolean;
-    public connectedItems: ObservableCollection = new ObservableCollection([]);
-    public disconnectedItems: ObservableCollection = new ObservableCollection([]);
-
-    public isNotDirty: boolean;
 
     getPromiseByFilters(filters: ApiQueryFilters) {
 
@@ -105,11 +83,13 @@ export class CourierMasterService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                serviceResponse = response.json();
                 var _mappedListsArray: Array<DeclarationPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -123,7 +103,7 @@ export class CourierMasterService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -169,11 +149,13 @@ export class CourierMasterService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                serviceResponse = response.json();
                 var _mappedListsArray: Array<DeclarationPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -187,12 +169,12 @@ export class CourierMasterService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetRequiredFieldsForCourierMaster(courierMasterId: string) {
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -200,30 +182,14 @@ export class CourierMasterService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetRequiredFieldsForCourierMaster/?courierMasterId=" + courierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetRequiredFieldsForCourierMaster/?courierMasterId=" + courierMasterId, {
+                headers: authHeader
+            }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetRequiredFieldsForCourierMasterIncludeManifest(courierMasterId: string) {
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.get(this._apiUrl + "/GetRequiredFieldsForCourierMasterIncludeManifest/?courierMasterId=" + courierMasterId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -261,9 +227,11 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getCourierMasterByDeclarationId?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pm = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getCourierMasterByDeclarationId?' + 'declarationId=' + declarationId, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
 
 
 
@@ -280,16 +248,18 @@ export class CourierMasterService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetStatistic(CourierMasterId,IsWorkSheetFromExcel:boolean,userId:string) {
+    GetStatistic(CourierMasterId) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetStatistic?' + 'CourierMasterId=' + CourierMasterId + '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel+ '&userId=' + userId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var KeyValuePairList = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetStatistic?' + 'CourierMasterId=' + CourierMasterId, {
+                headers: authHeader
+            }).map(response => {
+                var KeyValuePairList = response.json();
 
 
 
@@ -303,29 +273,35 @@ export class CourierMasterService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetSendPayReadyLow2755(CourierMasterId, HAWB, InternalBankId:string,IsWorkSheetFromExcel:boolean=false) {
+    GetSendPayReadyLow2755(CourierMasterId, HAWB, InternalBankId:string ) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId + '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel + '&UserId=' + SessionLocator.LoggedUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                    return serviceResponse;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId, {
+                headers: authHeader
+            }).map(response => {
+                var messString = response.json();
+                
 
-            }),catchError(ServiceHelper.HandleServiceError));
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = messString;
+
+                
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
         });
 
     }
 
     PostSendPayReadyLow2755(requestParams: SendPayReadyLowRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -334,29 +310,9 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendPayReadyLow2755/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-            ;
-
-        });
-    }
-    PostSend2750AndUpdaeClassificationByCourierMaster(requestParams: GenericRequestParams) {
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostSend2750AndUpdaeClassificationByCourierMaster/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
+                this._apiUrl + '/PostSendPayReadyLow2755/', JSON.stringify(requestParams), { headers: authHeader })
+                .map((res) => {
+                    var messString = res.json();
 
 
                     var serviceResponse: ServiceResponse;
@@ -365,37 +321,15 @@ export class CourierMasterService {
 
 
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
             ;
 
         });
     }
 
-    PostSendALLTerminal(requestParams: SendALLCorrectRequestParams) {
-
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostSendALLTerminal/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-            ;
-
-        });
-    }
     PostSendALLCorrectDec(requestParams: SendALLCorrectRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -404,36 +338,18 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLCorrectDec/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
+                this._apiUrl + '/PostSendALLCorrectDec/', JSON.stringify(requestParams), { headers: authHeader })
+                .map((res) => {
+                    var messString = res.json();
+
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-            ;
-
-        });
-    }
-
-    PostSendDelayFormForDeclarations(requestParams: SendALLDelayFormParams) {
-
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostSendDelayFormForDeclarations/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
             ;
 
         });
@@ -441,7 +357,7 @@ export class CourierMasterService {
 
     PostSendALLCorrectManifest(requestParams: SendALLCorrectRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -450,94 +366,46 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLCorrectManifest/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                var res:any=response;
-                var serviceResponse: DataResult=new DataResult();
-                serviceResponse.Message =res?.Message ;
-                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-            ;
+                this._apiUrl + '/PostSendALLCorrectManifest/', JSON.stringify(requestParams), { headers: authHeader })
+                .map((res) => {
+                    var messString = res.json();
 
-        });
-    }
 
-    PostSendALLChangeStorageSiteCode(requestParams: SendALLStorageSiteRequestParams) {
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
 
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostSendALLChangeStorageSiteCode/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
             ;
 
         });
     }
 
-    PostSendUnCorrectDocuments(requestParams: SendUnCorrectDocumentsRequestParams) {
-
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostSendUnCorrectDocuments/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-            ;
-
-        });
-    }
-    
-    GetSendDocumentsFromQueue(courierMasterId, MAWB) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendDocumentsFromQueue?' + 'courierMasterId=' + courierMasterId + '&MAWB=' + MAWB, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var res:any=response;
-                var serviceResponse: DataResult=new DataResult();
-                serviceResponse.Message =res?.Message ;
-                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                return serviceResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-
-    }
     GetSendALLCorrectManifest(CourierMasterId, HAWB, CourierDeclarationStatusCode) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendALLCorrectManifest?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var res:any=response;
-                var serviceResponse: DataResult=new DataResult();
-                serviceResponse.Message =res?.Message ;
-                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSendALLCorrectManifest?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, {
+                headers: authHeader
+            }).map(response => {
+                var messString = response.json();
+
+
+
+
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = messString;
+
+
+
                 return serviceResponse;
 
-
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
 
     }
@@ -546,38 +414,44 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendALLCorrectDec?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                    return serviceResponse;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSendALLCorrectDec?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, {
+                headers: authHeader
+            }).map(response => {
+                var messString = response.json();
 
-            }),catchError(ServiceHelper.HandleServiceError));
+
+
+
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = messString;
+
+
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
         });
 
     }
 
-    GetSendALLDeclarationsStatusRequest(CourierMasterId, testerSendOption: string = null,IsWorkSheetFromExcel:boolean,userId:string=null) {
-        let sTesterSendOption = '';
-        if (!AppTool.IsNullOrEmpty(testerSendOption)){
-            sTesterSendOption =   testerSendOption
-        }
+    GetSendALLDeclarationsStatusRequest(CourierMasterId) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId +
-                '&testerSendOption=' +  sTesterSendOption+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel+ '&workSheetLoggedUser=' + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                   
-                var res:any=response;
-                var serviceResponse: DataResult=new DataResult();
-                serviceResponse.Message =res?.Message ;
-                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId, {
+                headers: authHeader
+            }).map(response => {
+                var messString = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = messString;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     
@@ -585,15 +459,17 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendECTHRDataMaman?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var messString = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSendECTHRDataMaman?' + 'declarationId=' + declarationId, {
+                headers: authHeader
+            }).map(response => {
+                var messString = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = messString;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -601,38 +477,17 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendFTPMamanRequest?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var messString = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSendFTPMamanRequest?' + 'CourierMasterId=' + CourierMasterId, {
+                headers: authHeader
+            }).map(response => {
+                var messString = response.json();
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = messString;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    PostSendRecoverDeclaration(requestParams: SendRecoverDecRequestParams) {
-
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostSendRecoverDeclaration/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                var res:any=response;
-                var serviceResponse: DataResult=new DataResult();
-                serviceResponse.Message =res?.Message ;
-                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-            ;
-
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -663,133 +518,4 @@ export class CourierMasterService {
         return entity;
     }
 
-    PostGatepassRequestMessage(requestParams: GatepassRequestMessageRequestParams) {
-
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostGatepassRequestMessage/',
-                JSON.stringify(requestParams),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-
-                    serviceResponse.Result = res;
-
-                    return serviceResponse;
-
-                }),catchError(ServiceHelper.HandleServiceError));
-
-        });
-    }
-
-    GetPending(CourierMasterId,IsWorkSheetFromExcel : boolean=false) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId + '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel + '&UserId=' + SessionLocator.LoggedUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var KeyValuePairList = response;
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = KeyValuePairList;
-
-                return serviceResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-
-    GetIfAllowToCancelCourierMaster(CourierMasterId) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetIfAllowToCancelCourierMaster?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
- 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
-
-                return serviceResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-
-    }
-
-    PostSendClosePending(requestParams: PendingRequestParams) {
-
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostSendClosePending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-            ;
-
-        });
-    }
-
-
-    
- 
-    sendConnectDeclaration(courierMasterId: string, tenant: number, MAWB: string, connectedAll: boolean, disconnectedAll: boolean, connectedItems: string[], disconnectedItems: string[]) {
-        const ajax: Observable<any> = this._http.post(
-            this._apiUrl + "/sendConnectDeclaration",
-            { courierMasterId: courierMasterId, tenant: tenant, MAWB: MAWB || '', connectedAll: !!connectedAll, disconnectedAll: !!disconnectedAll, connectedItems: connectedItems, disconnectedItems: disconnectedItems },
-            { headers: ServiceHelper.GetHttpHeaders().headers }
-        );
-
-        return  LogtuideTableDataService.createInstance().sendAjaxAndGetDataStandart(ajax);
-    }
-    PostApprovePending(requestParams: PendingRequestParams) {
-
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostApprovePending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                    var res:any=response;
-                    var serviceResponse: DataResult=new DataResult();
-                    serviceResponse.Message =res?.Message ;
-                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
-                    return serviceResponse;
-
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-            ;
-
-        });
-    }
-
-   
-      
 }
-export class DataResult {
-    RequestInProgressList: string;
-    Message: string;
-  }
-  

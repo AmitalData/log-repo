@@ -1,4 +1,4 @@
-declare var System: any;
+﻿declare var System: any;
 
 import {Component, ElementRef, OnInit} from '@angular/core';
 
@@ -13,7 +13,6 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 })
 
 export class ListHeaderTemplateComponent implements OnInit {
-  public col: any;
 
     public colDef: any;
 

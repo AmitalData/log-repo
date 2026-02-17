@@ -26,6 +26,9 @@
         background: red;
     }
 
+
+
+
     .SaveTMButton {
         background: #349BDB;
         height: 30px;
@@ -54,29 +57,11 @@
                 <tr style="height:5px">
                     <td></td>
                 </tr>
-
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;padding-top:5px">
                     <td>
                         <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
                     </td>
                 </tr>
-
-                <tr style="height:5px" *ngIf="!IsHRUser">
-                    <td></td>
-                </tr>
-
-                <tr style="height:28px;" *ngIf="!IsHRUser">
-                    <td>
-                        <div class="MediaFill">
-                            <div class="MediaFillAbsolute OrangeInfo" style="top: 2px; bottom: 2px; padding: 0px;">
-                                <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">
-                                    Talk to the HR Administrator if you need to update any clock values
-                                </div>                                
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-
                 <tr style="height:20px;">
                     <td>
                         <div></div>
@@ -105,6 +90,9 @@
                                     <div></div>
                                 </td>
 
+
+                                <!-- Filters -->
+
                                 <td style="width:80px;">
                                     <LogLabel [Text]="'From Date'" [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -112,7 +100,6 @@
                                 <td style="width:120px;">
                                     <LogDatePicker [InputType]="'date'" [HideColumns]="true" [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext"></LogDatePicker>
                                 </td>
-
                                 <td style="width:10px"></td>
                                 <td style="width:80px;">
                                     <LogLabel [Text]="'To Date'" [DataContext]="DataContext"></LogLabel>
@@ -129,7 +116,7 @@
                                 <td></td>
 
                                 <td style="width: 90px;">
-                                    <button class="Button" (click)="AddNewClockHour()" style="height:25px" [disabled]="!IsHRUser">
+                                    <button class="Button" (click)="AddNewClockHour()" style="height:25px">
                                         <img class="LeftCenter" style="width:17px;height:12px;padding-left:2px;padding-right:2px;" src="./Images/Buttons/AddGreenSolid.png" />
                                         Add Line
                                     </button>
@@ -180,91 +167,92 @@
 
                                 <!-- WorkDate -->
                                 <log-column [width]="'100'" [header]="'Work Date'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
-                                                {{item.WorkDate  | DateTimePipe:'SD'}}
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                        <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                            {{item.WorkDate  | DateTimePipe:'SD'}}
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- EntryTime -->
                                 <log-column [width]="'100'" [header]="'Entry Time'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IsEnabled]="!item.Inactive && IsHRUser">
-                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
-                                                {{item.EntryTime  | DateTimePipe:'T'}}
-                                                <img src="./Images/EditPencilActiving.png" title="{{item.EditedManualyEntryTime}}" *ngIf="item.RecordedEntryAddedManually" />
-                                            </div>
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.Inactive">
+                                        <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                            {{item.EntryTime  | DateTimePipe:'T'}}
+                                            <img src="./Images/EditPencilActiving.png" title="{{item.EditedManualyEntryTime}}" *ngIf="item.RecordedEntryAddedManually" />
 
-                                            <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                                <LogDatePicker [FocusOnMe]="'true'" [ObjectFieldName]="'EntryTime'" [InputType]="'time'" [TimeMode]="24" [NoObjectField]="true" [SelectedDateValue]="EntryTime" [ObjectTableName]="'TMOfficeHour'" [DataContext]="item.DataContext" [HideColumns]="true"></LogDatePicker>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+
+                                        <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                            <LogDatePicker [FocusOnMe]="'true'" [ObjectFieldName]="'EntryTime'" [InputType]="'time'" [TimeMode]="24" [NoObjectField]="true" [SelectedDateValue]="EntryTime" [ObjectTableName]="'TMOfficeHour'" [DataContext]="item.DataContext" [HideColumns]="true"></LogDatePicker>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- ExitTime -->
                                 <log-column [width]="'100'" [header]="'Exit Time'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IsEnabled]="!item.Inactive && IsHRUser">
-                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
-                                                {{item.ExitTime  | DateTimePipe:'T'}}
-                                                <img src="./Images/EditPencilActiving.png" title="{{item.EditedManualyExitTime}}" *ngIf="item.RecordedExitAddedManually" />
-                                            </div>
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.Inactive">
+                                        <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                            {{item.ExitTime  | DateTimePipe:'T'}}
+                                            <img src="./Images/EditPencilActiving.png" title="{{item.EditedManualyExitTime}}" *ngIf="item.RecordedExitAddedManually" />
 
-                                            <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                                <LogDatePicker [FocusOnMe]="'true'" [ObjectFieldName]="'ExitTime'" [InputType]="'time'" [TimeMode]="24" [NoObjectField]="true" [SelectedDateValue]="ExitTime" [ObjectTableName]="'TMOfficeHour'" [DataContext]="item.DataContext" [HideColumns]="true"></LogDatePicker>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+
+                                        </div>
+
+                                        <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                            <LogDatePicker [FocusOnMe]="'true'" [ObjectFieldName]="'ExitTime'" [InputType]="'time'" [TimeMode]="24" [NoObjectField]="true" [SelectedDateValue]="ExitTime" [ObjectTableName]="'TMOfficeHour'" [DataContext]="item.DataContext" [HideColumns]="true"></LogDatePicker>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Duration -->
                                 <log-column [width]="'80'" [header]="'Duration'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{'color':item.Minutes < 0 ?'red':'black'}">
-                                                {{item.Minutes | TimeToHoursMinutesPipe}}
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                        <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{'color':item.Minutes < 0 ?'red':'black'}">
+                                            {{item.Minutes | TimeToHoursMinutesPipe}}
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Description -->
                                 <log-column [width]="'200'" [header]="'Description'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IsEnabled]="!item.Inactive">
-                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
-                                                {{item.Description}}
-                                            </div>
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.Inactive">
+                                        <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                            {{item.Description}}
+                                        </div>
 
-                                            <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Description'" [Text]="Description" [NoObjectField]="true" [ObjectTableName]="'TMOfficeHour'" [DataContext]="item.DataContext"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Description'" [Text]="Description" [NoObjectField]="true" [ObjectTableName]="'TMOfficeHour'" [DataContext]="item.DataContext"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Inactive -->
                                 <log-column [width]="'80'" [header]="'Inactive'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div style="height: 100%; width: 100%; position:relative;">
-                                                <div class="CenterCenter" style="width: 16px;">
-                                                    <CheckBox (Checked)="item.Inactive=$event" [IsChecked]="item.Inactive" [IsEnabled]="IsHRUser"></CheckBox>
-                                                </div>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="height: 100%; width: 100%; position:relative;">
+                                            <div class="CenterCenter" style="width: 16px;">
+                                                <CheckBox (Checked)="item.Inactive=$event" [IsChecked]="item.Inactive"></CheckBox>
                                             </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+
+                                        <!--<table>
+                                            <tr>
+                                                <td style="width:50px;min-width:50px;max-width:50px;align-items:center;justify-content:center;padding-left:25px;margin-top:3px">
+                                                    <CheckBox (Checked)="item.Inactive=$event" [IsChecked]="item.Inactive"></CheckBox>
+                                                </td>
+                                            </tr>
+                                        </table>-->
+                                    </log-cell-template>
                                 </log-column>
+
                             </logitude-edit-grid>
                         </div>
+
 
                     </td>
                 </tr>
@@ -290,7 +278,6 @@
                         </div>
                     </td>
                 </tr>
-
                 <tr style="height: 15px;">
                     <td>
                         <div></div>

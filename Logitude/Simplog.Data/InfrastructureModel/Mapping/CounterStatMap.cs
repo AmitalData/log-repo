@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -13,16 +13,12 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             // Properties
             this.Property(t => t.Prefix)
-                .HasMaxLength(15)
+                .HasMaxLength(10)
                 .IsUnicode(false);
 
             this.Property(t => t.CounterId)
                 .IsRequired()
                 .HasMaxLength(15)
-                .IsUnicode(false);
-
-            this.Property(t => t.BranchCounterCode)
-                .HasMaxLength(5)
                 .IsUnicode(false);
 
             // Table & Column Mappings
@@ -32,7 +28,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Prefix).HasColumnName("Prefix");
             this.Property(t => t.LastValue).HasColumnName("LastValue");
             this.Property(t => t.CounterId).HasColumnName("CounterId");
-            this.Property(t => t.BranchCounterCode).HasColumnName("BranchCounterCode");
 
             // Relationships
             //this.HasRequired(t => t.Counter)

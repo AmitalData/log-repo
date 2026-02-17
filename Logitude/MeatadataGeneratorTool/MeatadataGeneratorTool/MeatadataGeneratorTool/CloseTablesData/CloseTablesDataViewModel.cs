@@ -24,14 +24,6 @@ namespace MeatadataGeneratorTool.CloseTablesData
         {
             ViewModel = OTViewModel;
         }
-
-        public bool IsEditMode { get; set; }
-        public CloseTablesDataViewModel(ObjectTableViewModel OTViewModel, bool isEditMode)
-        {
-            this.IsEditMode = isEditMode;
-            ViewModel = OTViewModel;
-        }
-
         Grid grid = null;
         public Grid CLoseTableFields
         {
@@ -68,12 +60,6 @@ namespace MeatadataGeneratorTool.CloseTablesData
                             txtControl.Margin = new Thickness() { Right = 10, Top = 5, Left = 10, Bottom = 5 };
                             Grid.SetColumn(txtControl, 2);
                             Grid.SetRow(txtControl, row);
-
-                            if (IsEditMode && ViewModel.FieldsDictionary.ContainsKey(objectField.FieldName))
-                            {
-                                txtControl.Text = ViewModel.FieldsDictionary[objectField.FieldName];
-                            }
-
                             txtControl.TextChanged += (ss1, ee1) =>
                             {
                                 TextBox t = ss1 as TextBox;
@@ -90,8 +76,6 @@ namespace MeatadataGeneratorTool.CloseTablesData
 
 
                             };
-
-                            
                             grid.Children.Add(txtControl);
                         }
                         #endregion
@@ -105,21 +89,10 @@ namespace MeatadataGeneratorTool.CloseTablesData
                             Grid.SetColumn(chkControl, 2);
                             Grid.SetRow(chkControl, row);
                             //FieldsValues.SetFieldValue(objectField.Id, null);
-                            
-
-                            if (IsEditMode && ViewModel.FieldsDictionary.ContainsKey(objectField.FieldName))
+                            if (ViewModel.FieldsDictionary.Keys.Contains(objectField.FieldName))
                             {
-                                chkControl.IsChecked = (ViewModel.FieldsDictionary[objectField.FieldName]) == "true" ;
+                                ViewModel.FieldsDictionary[objectField.FieldName] = "false";
                             }
-                            else
-                            {
-                                if (ViewModel.FieldsDictionary.Keys.Contains(objectField.FieldName))
-                                {
-                                    ViewModel.FieldsDictionary[objectField.FieldName] = "false";
-                                }
-                            }
-
-
                             chkControl.Checked += (sender, e) =>
                             {
                                 CheckBox chk = sender as CheckBox;
@@ -146,10 +119,6 @@ namespace MeatadataGeneratorTool.CloseTablesData
                                     ViewModel.FieldsDictionary.Add(objectField.FieldName, "false");
                                 }
                             };
-
-
-                            
-
                             grid.Children.Add(chkControl);
                         }
                         #endregion
@@ -180,135 +149,50 @@ namespace MeatadataGeneratorTool.CloseTablesData
 
             ErrorMessages = string.Empty;
 
-            if (!IsEditMode)
+
+            if (ViewModel.rows == null)
             {
-                if (ViewModel.rows == null)
+                ViewModel.rows = new ObservableCollection<Row>();
+            }
+            Row row = new Row();
+            if (ViewModel.FieldsDictionary.Count < ViewModel.CLoseTableDataGrid.Columns.Count)
+            {
+                ErrorMessages = "All Fields Are Required";
+            }
+            if (ErrorMessages == "")
+            {
+                foreach (var item in ViewModel.FieldsDictionary)
                 {
-                    ViewModel.rows = new ObservableCollection<Row>();
+                    row[item.Key] = item.Value;
                 }
+                ViewModel.rows.Add(row);
 
-                Row newDataRow = new Row();
-
-
-                bool codeExists = ViewModel.rows.Any(row => row._data.TryGetValue("Code", out object codeValue) && codeValue?.ToString() == ViewModel.FieldsDictionary["Code"].ToString());
-                if (codeExists)
-                {
-                    ErrorMessages = "Code Already Exist";
-                }
-
-                else if (ViewModel.FieldsDictionary.Count < ViewModel.CLoseTableDataGrid.Columns.Count)
-                {
-                    ErrorMessages = "All Fields Are Required";
-                }
-                else if (ViewModel.FieldsDictionary.Count > ViewModel.CLoseTableDataGrid.Columns.Count)
-                {
-                    //var itemWithMaxColumns = ViewModel.rows.OrderByDescending(r => r._data.Count).FirstOrDefault();
-                    //if (newDataRow._data.Count > itemWithMaxColumns._data.Count)
-                    //{
-                    //    var missingDataRows = ViewModel.rows.Where(r => r._data.Count < newDataRow._data.Count);
-                    //    foreach (var item in missingDataRows)
-                    //    {
-                    //        var list = newDataRow._data.Where(d => !item._data.ContainsKey(d.Key)).ToList();
-                    //        foreach (var missedData in list)
-                    //        {
-                    //            item._data.Add(missedData.Key, null);
-                    //        }
-
-                    //    }
-                    //}
-
-                    AddMissingDataColumns();
-                }
-
-                if (ErrorMessages == "")
+                if (ViewModel.CLoseTableDataGrid.Columns.Count == 0)
                 {
                     foreach (var item in ViewModel.FieldsDictionary)
                     {
-                        newDataRow[item.Key] = item.Value;
+                        var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
+                        TempColumn.Header = item.Key;
+                        Binding bind = new Binding();
+                        bind.Mode = BindingMode.OneWay;
+                        bind.Converter = new RowIndexConverter();
+                        bind.ConverterParameter = item.Key;
+
+                        TempColumn.Binding = bind;
+                        ViewModel.CLoseTableDataGrid.Columns.Add(TempColumn);
                     }
-                    ViewModel.rows.Add(newDataRow);
-
-                    if (ViewModel.CLoseTableDataGrid.Columns.Count == 0)
-                    {
-                        foreach (var item in ViewModel.FieldsDictionary)
-                        {
-                            var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
-                            TempColumn.Header = item.Key;
-                            Binding bind = new Binding();
-                            bind.Mode = BindingMode.OneWay;
-                            bind.Converter = new RowIndexConverter();
-                            bind.ConverterParameter = item.Key;
-
-                            TempColumn.Binding = bind;
-                            ViewModel.CLoseTableDataGrid.Columns.Add(TempColumn);
-                        }
-                    }
-
-
-                    ViewModel.CLoseTableDataGrid.ItemsSource = ViewModel.rows;
-                    ViewModel.TableDataWindow.Close();
                 }
-                else
-                {
-                    ErrorsVisibility = Visibility.Visible;
-                }
-
+                ViewModel.CLoseTableDataGrid.ItemsSource = ViewModel.rows;
+                ViewModel.TableDataWindow.Close();
             }
             else
             {
-
-                if (ViewModel.FieldsDictionary.Count < ViewModel.CLoseTableDataGrid.Columns.Count)
-                {
-                    ErrorMessages = "All Fields Are Required";
-                }
-
-                if (ErrorMessages == "")
-                {
-                    var rowData = (ViewModel.CLoseTableDataGrid.SelectedItem as Row)._data;
-                    foreach (var k in ViewModel.FieldsDictionary.Keys)
-                    {
-                        if (rowData.ContainsKey(k))
-                            rowData[k] = ViewModel.FieldsDictionary[k];
-                        else
-                            rowData.Add(k, ViewModel.FieldsDictionary[k]);
-                    }
-
-                    AddMissingDataColumns();
-                    ViewModel.CLoseTableDataGrid.ItemsSource = ViewModel.rows;
-                    ViewModel.BuildRowsData(ViewModel.rows.ToList());
-                    ViewModel.TableDataWindow.Close();
-                }
-                else
-                {
-                    ErrorsVisibility = Visibility.Visible;
-                }
+                ErrorsVisibility = Visibility.Visible;
             }
 
+
+
         }
-
-        private void AddMissingDataColumns()
-        {
-            var newColumns = ViewModel.FieldsDictionary.Where(f => !ViewModel.CLoseTableDataGrid.Columns.Any(c => c.Header.ToString() == f.Key));
-            foreach (var newColumnItem in newColumns)
-            {
-                var rowsWithoutNewColumn = ViewModel.rows.Where(r => !r._data.ContainsKey(newColumnItem.Key));
-                foreach (var rowItem in rowsWithoutNewColumn)
-                {
-                    rowItem._data.Add(newColumnItem.Key, null);
-                }
-                var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
-                TempColumn.Header = newColumnItem.Key;
-                Binding bind = new Binding();
-                bind.Mode = BindingMode.OneWay;
-                bind.Converter = new RowIndexConverter();
-                bind.ConverterParameter = newColumnItem.Key;
-                TempColumn.Binding = bind;
-                ViewModel.CLoseTableDataGrid.Columns.Add(TempColumn);
-
-
-            }
-        }
-
         Visibility errorsVisibility = Visibility.Collapsed;
         public Visibility ErrorsVisibility
         {
@@ -338,7 +222,7 @@ namespace MeatadataGeneratorTool.CloseTablesData
         {
             get
             {
-                return _data.ContainsKey(index) ? _data[index] : null;
+                return _data[index];
 
             }
             set { _data[index] = value; }

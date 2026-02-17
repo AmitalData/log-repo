@@ -1,4 +1,4 @@
-
+﻿
 <div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
     <table style="height:100%">
         <tr style="height:22px;">
@@ -150,7 +150,7 @@
                                                     <div class="QueriesSection">
                                                         <div>Users</div>
                                                         <div style="height:22px; width: 45px; position: absolute; top:0px; right:0px;">
-                                                            <button id="{{'NewUserId' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="ViewNewUserWindow()">New User</button>
+                                                            <button class="Button" (click)="ViewNewUserWindow()">New User</button>
                                                         </div>
                                                         <div>
                                                             <div>
@@ -322,7 +322,7 @@
 
                                                                                                                     </span>
 
-                                                                                                                    <span class="EditButton" (click)="EditUser(item)" style="display:inline;width:18px;margin-left:0px;float: right" *ngIf="!item.IsCustomerCareUser">
+                                                                                                                    <span class="EditButton" (click)="EditUser(item)" style="display:inline;width:18px;margin-left:0px;float: right">
                                                                                                                         <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: inline; float: right;margin-top:0px;"></IconButton>
                                                                                                                     </span>
 

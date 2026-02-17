@@ -20,15 +20,12 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TenantManagementPMService} from '../../../Infrastructure/Services/StandardPMs/TenantManagementPMService';
 import {TenantManagementPM} from '../../../Infrastructure/EntityPMs/TenantManagementPM';
 import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
-import { CardExtendedPMService } from '../../Services/ExtendedPMs/CardExtendedPMService';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 
 export class CustomerMenuButtonsHandler {
     public EntityPM: CustomerPM;
     public entityArgs: EntityArgs
     public TenantPM: TenantPM;
     public ObjectTableName: string = "Customer"
-    cardExtendedPMService: CardExtendedPMService = new CardExtendedPMService();
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -36,10 +33,9 @@ export class CustomerMenuButtonsHandler {
         this.Listen();
     }
     private Listen() {
-        
         if (this.entityArgs.EditComponent != null) {
             this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                 if (isSaveSuccess) {
+                if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
                     if (this.isSetAsPotential) {
@@ -99,38 +95,16 @@ export class CustomerMenuButtonsHandler {
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     switch (button.EventCode) {
-                        case "InviteCustomerContacts":
-                        case "LoginToCustomerPortal":
+
+                        case "SetAsPotential":
                             {
-                                if (this.EntityPM.CustomerStatusCode !== "ACT" || !this.TenantPM.IsDigitalPortalAccessActivated) {
+                                if (this.EntityPM.CustomerStatusCode == "POT") {
                                     button.IsDisabled = true;
                                 }
+
                                 else {
                                     button.IsDisabled = false;
                                 }
-                                break;
-                            }
-                        case "SetAsPotential":
-                            {
-                                if (this.TenantPM.IsHybrid) {
-                                    if (this.EntityPM.CustomerStatusCode == "POT") {
-                                        button.IsDisabled = true;
-                                    }
-
-                                    else {
-                                        button.IsDisabled = false;
-                                    }
-                                }
-
-                                else {
-                                    if (this.EntityPM.CustomerStatusCode == "POT" || this.EntityPM.CustomerStatusCode == "INA") {
-                                        button.IsDisabled = true;
-                                    }
-
-                                    else {
-                                        button.IsDisabled = false;
-                                    }
-                                }                             
 
                                 break;
                             }
@@ -268,34 +242,6 @@ export class CustomerMenuButtonsHandler {
                                 else button.IsHidden = false;
                                 break;
                             }
-                        case "Disconnect": {
-
-                            if (!SessionLocator.TenantPM.AccountingActivated) {
-                                button.IsHidden = true;
-                            }
-                            else {
-                                if (this.EntityPM.Card.GLAccountId) {
-                                    button.IsDisabled = false;
-                                }
-                                else {
-                                    button.IsDisabled = true;
-                                }
-                            }
-
-
-
-
-                            break;
-                        }
-                        //case "More": {
-                        //    if (!SessionLocator.TenantPM.AccountingActivated) {
-                        //        button.IsHidden = true;
-                        //    }
-                        //    else {
-                        //        button.IsHidden = false;
-                        //    }
-                        //    break;
-                        //}
                     }
                 }
             }
@@ -384,19 +330,6 @@ export class CustomerMenuButtonsHandler {
                     this.CreateTenantMethod();
                     break;
                 }
-
-            case "Disconnect": {
-                this.DisconnectGLAccount();
-                break;
-            }
-            case "InviteCustomerContacts": {
-                this.InviteCustomerContacts();
-                break;
-            }
-            case "LoginToCustomerPortal": {
-                this.RedirctToDigital();
-                break;
-            }
         }
     }
 
@@ -424,11 +357,17 @@ export class CustomerMenuButtonsHandler {
         this.isActivate = false;
         this.isMarkAsReadyActivation = false;
     }
-
     private CurrentSession = SessionLocator.SelectedSession;
-    SetAsPotential()
-    {
-       this.IsCustomerConnectedToEntities();    
+    SetAsPotential() {
+
+        if (this.EntityPM.LastShipmentDate != null) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            var validationErrorMessage = "This customer can't be set as potential since it has shipment(s).";
+            messageWindow.Show(validationErrorMessage);
+        }
+        else {
+            this.IsCustomerConnectedToEntities();
+        }
     }
 
     private isCustomerConnectedToEntities: boolean = false;
@@ -438,14 +377,12 @@ export class CustomerMenuButtonsHandler {
             if (!myResponse.HasError) {
                 this.isCustomerConnectedToEntities = myResponse.Result;
 
-                if (this.isCustomerConnectedToEntities)
-                {
+                if (this.isCustomerConnectedToEntities) {
                     var messageWindow: MessageWindow = new MessageWindow();
                     var validationErrorMessage = "This customer can't be set as potential since it has shipment(s).";
                     messageWindow.Show(validationErrorMessage);
                 }
-                else
-                {
+                else {
                     this.EntityPM.SetAsPotential = true;
                     this.EntityPM.CustomerStatusCode = "POT";
                     this.isSetAsPotential = false;
@@ -634,20 +571,6 @@ export class CustomerMenuButtonsHandler {
         }
     }
 
-    private DisconnectGLAccount() {
-        this.CurrentSession.StartBusyIndicator("Loading...");
-        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "CS", "CSDS").subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                this.CurrentSession.StopBusyIndicator();
-            }
-            else {
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-            }
-        });
-
-    }
 
     StartEditing(id) {
         var editWindow: LogitudeWindow = new LogitudeWindow();
@@ -701,27 +624,9 @@ export class CustomerMenuButtonsHandler {
 
     }
 
-    private RedirctToDigital() {
-        window.open(`https://${SessionLocator.TenantManagementJS.CustomerURL}/online-visibility?securitykey=${ServiceHelper.GetLoggedUserToken()}&cid=${this.EntityPM.Id}&ctype=${this.EntityPM.PartnerTypeId}`, "_blank");
-    }
-
-    private InviteCustomerContacts() {
-        var windowArgs: any = {};
-        windowArgs.IsDigitalPortal = true;
-        windowArgs.CurrentEntity = this.EntityPM;
-        windowArgs.IsFromCustomerEdit = true;
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 1100;
-        logWindow.Height = 570;
-        logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Contacts";
-        logWindow.WindowArgs = windowArgs;
-        logWindow.IsShowCloseButton = true;
-        logWindow.Show('./SharedLogistics/Components/InviteCustomersComponent');
-        logWindow.WindowClosed.subscribe(($event1: any) => {
 
 
-        });
-    }
+
 
 
     private StartBusyIndicator(message: string) {

@@ -1,35 +1,34 @@
-import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComponent';
+import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 
 // Workspaces
-import { TimeManagementWorkspaceComponent } from './Components/Workspaces/TimeManagementWorkspaceComponent';
-import { TimeSheetWorkspaceComponent } from './Components/Workspaces/TimeSheet/TimeSheetWorkspaceComponent';
-import { DailyTimeSheetComponent } from './Components/Workspaces/TimeSheet/DailyTimeSheetComponent';
-import { WeeklyTimeSheetComponent } from './Components/Workspaces/TimeSheet/WeeklyTimeSheetComponent';
-import { MonthlyTimeSheetComponent } from './Components/Workspaces/TimeSheet/MonthlyTimeSheetComponent';
-import { SettingsWorkspaceComponent } from './Components/Workspaces/SettingsWorkspaceComponent';
-import { ReportsWorkspaceComponent } from './Components/Workspaces/ReportsWorkspaceComponent';
-import { ProjectsWorkspaceComponent } from './Components/Workspaces/Projects/ProjectsWorkspaceComponent';
-import { ClockTimeComponent } from './Components/Workspaces/TimeSheet/ClockTimeComponent';
+import {TimeManagementWorkspaceComponent} from './Components/Workspaces/TimeManagementWorkspaceComponent';
+import {TimeSheetWorkspaceComponent} from './Components/Workspaces/TimeSheet/TimeSheetWorkspaceComponent';
+import {DailyTimeSheetComponent} from './Components/Workspaces/TimeSheet/DailyTimeSheetComponent';
+import {WeeklyTimeSheetComponent} from './Components/Workspaces/TimeSheet/WeeklyTimeSheetComponent';
+import {MonthlyTimeSheetComponent} from './Components/Workspaces/TimeSheet/MonthlyTimeSheetComponent';
+import {SettingsWorkspaceComponent} from './Components/Workspaces/SettingsWorkspaceComponent';
+import {ReportsWorkspaceComponent} from './Components/Workspaces/ReportsWorkspaceComponent';
+import {ProjectsWorkspaceComponent} from './Components/Workspaces/Projects/ProjectsWorkspaceComponent';
+import {ClockTimeComponent} from './Components/Workspaces/TimeSheet/ClockTimeComponent';
 import { VacationsComponent } from './Components/Workspaces/TimeSheet/VacationsComponent';
 
-
 //Helpers
-import { TMProjectHelperComponent } from './Components/Helpers/TMProjectHelperComponent';
+import {TMProjectHelperComponent} from './Components/Helpers/TMProjectHelperComponent';
 
 
 //Connections
-import { ConnectToParentComponent } from './Components/Connections/ConnectToParentComponent';
+import {ConnectToParentComponent} from  './Components/Connections/ConnectToParentComponent';
 
 
 
 // New Screens 
-import { NewLineComponent } from './Components/NewEntity/NewLineComponent';
-import { NewProjectComponent } from './Components/NewEntity/NewProjectComponent';
-import { NewOfficeHourComponent } from './Components/NewEntity/NewOfficeHourComponent';
-import { NewSprintComponent } from './Components/NewEntity/NewSprintComponent';
+import {NewLineComponent} from './Components/NewEntity/NewLineComponent'; 
+import {NewProjectComponent} from  './Components/NewEntity/NewProjectComponent';
+import {NewOfficeHourComponent} from  './Components/NewEntity/NewOfficeHourComponent';
+import {NewSprintComponent} from  './Components/NewEntity/NewSprintComponent';
 import { NewProjectCategoryComponent } from './Components/NewEntity/NewProjectCategoryComponent';
 import { NewGetProjectComponent } from './Components/NewEntity/NewGetProjectComponent';
-import { NewMoveHBProjectsComponent } from './Components/NewEntity/NewMoveHBProjectsComponent';
+
 export const Components =
     [
         FieldTemplateComponent,
@@ -59,7 +58,6 @@ export const Components =
         NewSprintComponent,
         NewProjectCategoryComponent,
         NewGetProjectComponent,
-        NewMoveHBProjectsComponent,
     ];
 
 export class ModuleDeclarations {
@@ -81,16 +79,17 @@ export class ModuleDeclarations {
             case "ClockTimeComponent": { myResult = ClockTimeComponent; break; }
             case "VacationsComponent": { myResult = VacationsComponent; break; }
 
-
             // Helpers
             case "TMProjectHelperComponent": { myResult = TMProjectHelperComponent; break; }
 
 
-            //Connections
+          //Connections
 
             case "ConnectToParentComponent": { myResult = ConnectToParentComponent; break; }
 
+                
 
+                
             // New Screens 
             case "NewLineComponent": { myResult = NewLineComponent; break; }
             case "NewProjectComponent": { myResult = NewProjectComponent; break; }
@@ -98,7 +97,7 @@ export class ModuleDeclarations {
             case "NewSprintComponent": { myResult = NewSprintComponent; break; }
             case "NewProjectCategoryComponent": { myResult = NewProjectCategoryComponent; break; }
             case "NewGetProjectComponent": { myResult = NewGetProjectComponent; break; }
-            case "NewMoveHBProjectsComponent": { myResult = NewMoveHBProjectsComponent; break; }
+                
         }
 
         return myResult;

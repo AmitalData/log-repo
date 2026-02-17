@@ -1,4 +1,4 @@
-import {INF_MSG_GenericResponseData} from './INF_MSG_GenericResponseData';
+﻿import {INF_MSG_GenericResponseData} from './INF_MSG_GenericResponseData';
 
 export class DeclarationStatusResponseData extends INF_MSG_GenericResponseData {
 
@@ -21,10 +21,7 @@ export class DeclarationStatusResponseData extends INF_MSG_GenericResponseData {
     public HandeledWroker: string;
 
     public AvailabiltyQuantitiesList: Array<AvailabiltyLogDeclarationCargoQuantities>;
-    public MultiDeclaration: Array<MultiDeclaration>;
-
 }
-
 
 export class AvailabiltyLogDeclarationCargoQuantities {
 
@@ -47,26 +44,4 @@ export class AvailabiltyLogDeclarationCargoQuantities {
     public DeclarationWeightMeasurementUnitCode: string;
     public DeclarationWeightMeasurementUnitText: string;
     public ComparisonResult: string;
-}
-
-
-export class MultiDeclaration extends INF_MSG_GenericResponseData {
-
-    public ResponseStatusXML: string;
-    public DeclarationID: string;
-    public DeclarationStatusColor: string;
-    public DeclarationVersion: string;
-    public DeclarationStatusCode: string;
-    public DeclarationStatusText: string;
-    public LogisticStatusCode: string;
-    public LogisticStatusText: string;
-    public TaxationDateTime: Date;
-    public ReleaseDateTime: Date;
-    public DeclarationOfficeID: string;
-    public DeclarationOfficeText: string;
-    public FinancialStatusCode: string;
-    public FinancialStatusText: string;
-    public SubmitDateTime:  Date;
-    public WarningMessage: string;
-    public HandeledWroker: string;
 }

@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public UserLicenseRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public UserLicenseRepository(ICommonDataContext context)
         {
@@ -93,16 +96,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public List<UserLicense> GetUserLicensesByUserId(string userId, int tenant)
         {
             return (from d in context.UserLicenses where d.Tenant == tenant && d.UserId == userId select d).ToList();
-        }
-
-        public int? GetUserLicensesCountByPackageCode(string packageCode,int tenant)
-        {
-            return (from d in context.UserLicenses where d.PackageCode == packageCode && d.Tenant == tenant select d).Count();
-        }
-
-        public List<UserLicense> GetUserLicensesByPackageCode(string packageCode, int tenant)
-        {
-            return (from d in context.UserLicenses where d.Tenant == tenant && d.PackageCode == packageCode select d).ToList();
         }
     }
 }

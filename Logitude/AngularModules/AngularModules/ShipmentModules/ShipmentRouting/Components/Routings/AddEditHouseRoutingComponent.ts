@@ -12,7 +12,7 @@ import {PortListService} from '../../../../Common/Services/StandardLists/PortLis
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditHouseRoutingComponent.html',
 })
 

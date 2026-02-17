@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data.Repositories;
@@ -22,10 +22,6 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
-using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Simplog.Data.Helpers;
 //using Logitude.BL.CommonDataModel.EntityPMs;
 //using Logitude.BL.CommonDataModel.EntityQueries;
 //using Logitude.BL.Security;
@@ -42,54 +38,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(AccountingPeriodPM entityPM, AccountingPeriod entityPOCO)
         {
-            if (entityPM.ClosedMonth > entityPOCO.ClosedMonth) // Closed Month incremented
+            if(entityPM.ClosedMonth > entityPOCO.ClosedMonth) // Closed Month incremented
             {
                 //check
                 JournalRepository repo = new JournalRepository(entityPM.Tenant);
-                List<string> exist = repo.CheckIfThereNonTranslatedJournalsByMonth(entityPM.Year, (entityPM.ClosedMonth == null ? 0 : entityPM.ClosedMonth.Value), entityPM.Tenant);
+                bool exist = repo.CheckIfThereNonTranslatedJournalsByMonth(entityPM.Year, (entityPM.ClosedMonth == null ? 0 : entityPM.ClosedMonth.Value), entityPM.Tenant);
 
-                if (exist.Count > 0)
+                if (exist)
                 {
-                    string existingJournals = string.Join(", ", exist);
-                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-
-                    throw new ApplicationException(TextCodesTranslator.TranslateText("AccountingPeriods.O.therearejournalsdidnottranslated", entityPM.Tenant, showLocal) + ": " + existingJournals);
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("AccountingPeriods.O.therearejournalsdidnottranslated", entityPM.Tenant));
                 }
             }
-
-            //if (entityPM.OpenMonth < entityPOCO.OpenMonth) // Open Month decremented
-            //{
-            //    LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(entityPM.Tenant);
-            //    for (int _month = entityPOCO.OpenMonth; _month >= entityPM.OpenMonth; _month--)
-            //    {
-            //        //IQueryable<LedgerTransaction> monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonth(entityPOCO.Year, _month, entityPOCO.Tenant);
-
-            //        IQueryable<LedgerTransaction> monthTransactions = null;
-
-            //        switch (entityPM.PeriodTypeCode)
-            //        {
-            //            case "1": // Accounting
-            //                monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonthBySourceTypeMode(entityPOCO.Year, _month, entityPOCO.Tenant, "!=2", "");
-            //                break;
-            //            case "2": // Invoice
-            //                monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonthBySourceTypeMode(entityPOCO.Year, _month, entityPOCO.Tenant, "2", "!=IT");
-            //                break;
-            //            case "3": // Interest Invoice
-            //                monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonthBySourceTypeMode(entityPOCO.Year, _month, entityPOCO.Tenant, "2", "IT");
-            //                break;
-            //            default:
-            //                break;
-            //        }
-            //        bool monthHasTransactions = monthTransactions.Any();
-            //        if (monthHasTransactions)
-            //        {
-            //            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-            //            string msg = TextCodesTranslator.TranslateText("AccountingPeriod.O.CantCancelOpenMonth", 0, showLocal);
-            //            throw new ApplicationException(msg);
-            //        }
-            //    }
-                
-            //}
         }
 
 
@@ -233,10 +192,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
 
-        public virtual DateTime GetCurrentDateTime(int tenant)
-        {
-            return TenantServerConfigration.GetCurrentDateTime(tenant);
-        }
 
 
         public virtual ContactPM GetLoggedContact(int tenant)

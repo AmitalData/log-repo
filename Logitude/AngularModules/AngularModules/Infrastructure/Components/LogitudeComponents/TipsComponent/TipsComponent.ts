@@ -1,4 +1,4 @@
-
+﻿
 declare var System: any;
 declare var window: any;
 
@@ -11,7 +11,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './TipsComponent.html',
     inputs: ['ObjectTableName', 'Code','IsInternalTips' , 'IsFirstTipLoad'],
@@ -137,7 +137,7 @@ export class TipsComponent implements OnInit {
                 tipVisibility.IsVisible = this.isTipVisible;
                 window.TipsVisibilities = window.TipsVisibilities.filter(d=> d.TipCode != this.Tip.Code && d.UserId != SessionInfo.LoggedUserId);
                 window.TipsVisibilities.push(tipVisibility);
-                this._tipsVisibilityService.update(tipVisibility).subscribe((res: ServiceResponse) => {
+                this._tipsVisibilityService.update(tipVisibility).subscribe(res => {
                     this.IsStartSave = false;
                 });
                 // Update
@@ -148,8 +148,8 @@ export class TipsComponent implements OnInit {
                 tipVisibility.TipCode = this.Tip.Code;
                 tipVisibility.UserId = SessionInfo.LoggedUserId;
                 tipVisibility.Tenant = SessionInfo.LoggedUserTenant;
-
-                this._tipsVisibilityService.insert(tipVisibility).subscribe((res: ServiceResponse) => {
+        
+                this._tipsVisibilityService.insert(tipVisibility).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     this.IsStartSave = false;
                     if (!pmResponse.HasError) {

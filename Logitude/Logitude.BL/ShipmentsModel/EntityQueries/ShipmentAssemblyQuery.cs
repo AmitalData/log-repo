@@ -67,7 +67,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
                        UpdatedByUserId = a.UpdatedByUserId,
                        UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
-                   }).OrderBy(a => a.Id).ToList();
+                   }).ToList();
 
             return shipmentAssembleies;
         }

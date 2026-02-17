@@ -18,13 +18,9 @@ import {Guid} from '../../../../../Infrastructure/Utilities/Guid';
 declare var attachmentUploader, ResultAsArray: any;
 import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
-import { Console } from 'console';
-import { CommonDomainService } from '../../../../../Common/Services/CommonDomainService';
-import { DownloadManager } from '../../../../../Infrastructure/Utilities/DownloadManager';
-declare var require: any
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AttachExternal',
     templateUrl: './AttachmentUploaderComponent.html',
     providers: [DocumentsFilingExtendedPMService, ImageLibraryService, DocumentsFilingPMService],
@@ -55,7 +51,6 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     UploadButtonIsEnabled: boolean = true;
     IsUploadDone: boolean = false;
     UploadFileId: string;
-    DragDropUploadFileId: string;
     IsCloseButtonVisibile: boolean = false;
     IsCancelVisibile: boolean = true;
     public documentsFilingPMService: DocumentsFilingPMService;
@@ -66,26 +61,17 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     Tenant: number;
     RequsetPageName: string;
     ProgressBarId: string = Guid.newGuid();
-    DragDropProgressBarId: string = Guid.newGuid();
-    EntityNumber: string;
-    ExternalEntityReference: string;
-    ExternalEntityName: string;
-    public IFrameURI: string = "";
-    public IsPDF = false;
-    public HasUploadDragDropFeature = false;
-    private imageLibraryService: ImageLibraryService;
+
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor( public _imageLibraryService: ImageLibraryService, fb: FormBuilder, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.myForm = fb.group({});
         this.UploadFileId = Guid.NewRandomString();
-        this.DragDropUploadFileId = Guid.NewRandomString();
         if (this.documentsFilingPMService == null) {
             this.documentsFilingPMService = new DocumentsFilingPMService();
         }
-        this.imageLibraryService = new ImageLibraryService();
-        this.HasUploadDragDropFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "UDD")[0] ? true : false;
+
     }
 
     ngOnInit() {
@@ -101,13 +87,10 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
    
         this.CurrentDocument = args.CurrentDocument;
         this.EntityId = args.EntityId;
-        this.ObjectTableId = AppTool.IsNullOrEmpty(args.ObjectTableId) ? args.CurrentDocument?.ObjectTableId: args.ObjectTableId;
+        this.ObjectTableId = args.ObjectTableId;
         this.Tenant = SessionLocator.Tenant;
         this.RequsetPageName = args.RequsetPageName;
         this.TiggerViewModel = args.TiggerViewModel;
-        this.EntityNumber = args.EntityNumber;
-        this.ExternalEntityName = args.ExternalEntityName;
-        this.ExternalEntityReference = args.ExternalEntityReference;
         this.Entity = args.Entity;
         var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
   
@@ -129,7 +112,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
 
     LoadDocumentsFiling() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-        this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTable(this.EntityId, this.childEntityId, this.ObjectTableId, "I", this.Tenant, false).subscribe((res:any) => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTable(this.EntityId, this.childEntityId, this.ObjectTableId, "I", this.Tenant, false).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
 
@@ -160,7 +143,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                 this.CurrentDocument = this.externalDocs.filter(d=> d.DocumentTypeId == this.DocumentTypeId)[0];
                 if (this.CurrentDocument == null) {
                     this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-                    this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.DocumentTypeId, this.EntityId, this.childEntityId, "", this.ObjectTableId, "I", this.Tenant, this.ExternalEntityName, this.ExternalEntityReference, this.EntityNumber).subscribe((res: any) => {
+                    this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.DocumentTypeId, this.EntityId, this.childEntityId, "", this.ObjectTableId, "I", this.Tenant).subscribe(res => {
 
                         var pmResponse: ServiceResponse = res;
 
@@ -189,7 +172,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     }
     public ShowMessage(message: string) {
 
-        const messageWindow: MessageWindow = new MessageWindow();
+        var messageWindow: MessageWindow = new MessageWindow();
         messageWindow.Show(message);
     }
 
@@ -213,7 +196,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
         else {
             if (this.IsUploadInProgress) {
                 this.IsUploadCanceled = true;
-                this._imageLibraryService.CancelUpload(this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe((result:any) => {
+                this._imageLibraryService.CancelUpload(this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(result => {
                     this.IsUploadInProgress = false;
                     this.IsUploadDone = false;
                     this.IsUploadCanceled = true;
@@ -229,27 +212,14 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     }
 
 
-    onDragOver(event: any): void {
-        event.preventDefault();
-    }
-
-    onDrop(event: any): void {
-        if (this.UploadedSuccessfully) return;
-        event.preventDefault();
-        const files: File[] = event.dataTransfer.files;
-        if (files[0]) this.UploadFile(event, files[0]);
-    }
-
     OpenUpLoadFile() {
-        document.getElementById(this.GetUploadElementId()).click();
+        document.getElementById(this.UploadFileId).click();
     }
 
-    private GetUploadElementId() {
-        return this.HasUploadDragDropFeature ? this.DragDropUploadFileId : this.UploadFileId;
-    }
+    UploadFile(event: any) {
 
-    UploadFile(event: any, uploadedFile = null) {
-        var file: any = uploadedFile ? uploadedFile : attachmentUploader(this.GetUploadElementId());
+
+        var file: any = attachmentUploader(this.UploadFileId);
         //document.querySelector('#UploadFile').files[0];
         if (file && file.size>0) {
 
@@ -263,10 +233,9 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
             else {
                 this.FileExtension = fileInfo[1];
             }
+            
 
-            this.IsPDF = this.FileExtension.toLowerCase() == "pdf";
-
-            this._documentsFilingExtendedPMService.GetFileSizeAndUnit(file.size).subscribe((res:any) => {
+            this._documentsFilingExtendedPMService.GetFileSizeAndUnit(file.size).subscribe(res => {
 
                 var pmResponse: ServiceResponse = res;
 
@@ -298,13 +267,9 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
 
                     this.File = file;
                     var filebuffer = null;
-                    var ChunkSize = 100000;
-                    if (this.File.size > 2000000) {
-                        ChunkSize = 1000000;
-                    }
-                    this.filterImageParameter.PartsNumber = this.File.size / ChunkSize;
+                    this.filterImageParameter.PartsNumber = this.File.size / 100000;
 
-                    if (this.filterImageParameter.PartsNumber > 1) filebuffer = this.File.slice(0, ChunkSize);
+                    if (this.filterImageParameter.PartsNumber > 1) filebuffer = this.File.slice(0, 100000);
                     else filebuffer = this.File.slice(0, file.size);
 
                   
@@ -357,147 +322,99 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     SendBlockToServer(filter: ImageParameter) {
 
 
-        this._imageLibraryService.UploadFile(filter).subscribe((res:any) => {
+        this._imageLibraryService.UploadFile(filter).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             var result= null;
-            if (!pmResponse.HasError && pmResponse.Result) {
+            if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     result = myResult;
-                    if (result) {
-                        this.filterImageParameter = result;
-                        var ChunkSize = 100000;
-                        if (result.FileSize > 2000000) {
-                            ChunkSize = 1000000;
-                        }
-                        if (result.SentSize < result.FileSize && !this.IsUploadCanceled) {
-                            var filebuffer = null;
-                            if ((result.FileSize - result.SentSize) >= ChunkSize) {
-                                filebuffer = this.File.slice(result.SentSize, result.SentSize + ChunkSize);
+                }
+            }
+
+            if (result) {
+                this.filterImageParameter = result;
+
+                if (result.SentSize < result.FileSize && !this.IsUploadCanceled) {
+                    var filebuffer = null;
+                    if ((result.FileSize - result.SentSize) >= 100000 ) {
+                        filebuffer = this.File.slice(result.SentSize, result.SentSize + 100000);
+                    }
+                    else {
+                        filebuffer = this.File.slice(result.SentSize, result.FileSize);
+                    }
+
+                    this.ArrayBufferToBase64(filebuffer, this);
+                    this.IsUploadInProgress = true;
+
+                }
+                else {
+                    if (result.Result) {
+
+                        if (this.CurrentDocument) {
+                            this.CurrentDocument.DocumentId = result.Result.split('.')[0];
+                            this.CurrentDocument.HasFile = true;
+                            this.CurrentDocument.Received = true;
+                            this.CurrentDocument.ReceivedDate = DateTool.GetCurrentDateAsUtc();
+                            this.CurrentDocument.ReceivedByUserId = SessionLocator.LoggedUserId;
+                            this.CurrentDocument.FileExtension = this.FileExtension;
+                            this.CurrentDocument.FileSize = result.FileSize;
+                            this.CurrentDocument.FileName = this.FileName;
+
+                            this.CurrentDocument.ReceivedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+
+                            if (this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") {
+                                if (this.CurrentDocument.IsSharedOut) {
+
+                                    this.CurrentDocument.IsUpdateSharedDocument = true;
+                                }
                             }
-                            else {
-                                filebuffer = this.File.slice(result.SentSize, result.FileSize);
-                            }
+                            this.documentsFilingPMService.update(this.CurrentDocument).subscribe((myownResult: ServiceResponse) => {
 
-                            this.ArrayBufferToBase64(filebuffer, this);
-                            this.IsUploadInProgress = true;
-                            this.IncreaseProgressBar(result);
+                                var pmResponse: ServiceResponse = myownResult;
 
-                        }
-                        else {
-                            if (result.Result) {
-
-                                if (this.CurrentDocument) {
-                                    this.CurrentDocument.DocumentId = result.Result.split('.')[0];
-                                    this.CurrentDocument.HasFile = true;
-                                    this.CurrentDocument.Received = true;
-                                    this.CurrentDocument.ReceivedDate = DateTool.GetCurrentDateTimeAsUtc();
-                                    this.CurrentDocument.ReceivedByUserId = SessionLocator.LoggedUserId;
-                                    this.CurrentDocument.FileExtension = this.FileExtension;
-                                    this.CurrentDocument.FileSize = result.FileSize;
-                                    this.CurrentDocument.FileName = this.FileName;
-                                    this.CurrentDocument.ReceivedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                                    this.CurrentDocument.ObjectTableName = this.ObjectTableName;
-
-                                    if (this.RequsetPageName == "DocIn") this.CurrentDocument.IsUoloadedField = true;
-
-
-
-                                    if (this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") {
-                                        if (this.CurrentDocument.IsSharedOut) {
-
-                                            this.CurrentDocument.IsUpdateSharedDocument = true;
+                                if (!pmResponse.HasError) {
+                                    var myResult1 = pmResponse.Result;
+                                    if (myResult1) {
+                                        this.CurrentDocument.IsUpdateSharedDocument = false;
+                                        this.IsCloseButtonVisibile = true;
+                                        this.IsCancelVisibile = false;
+                                        this.IsUploadDone = true;
+                                        this.IsUploadInProgress = false;
+                                        this.UploadedSuccessfully = true;
+                                        if ((this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") &&  this.TiggerViewModel) {
+                                            if (this.RequsetPageName == "DocIn") this.TiggerViewModel.OnUploadComplete();
+                                            else if (this.RequsetPageName == "SharedDocument") this.TiggerViewModel.OnUploadComplete(this.Entity);
                                         }
                                     }
-                                    console.log("Rabaia - dublicate documentsFiling attachement")
-                                    this.documentsFilingPMService.update(this.CurrentDocument).subscribe((myownResult: ServiceResponse) => {
+                                }
+                                else {
 
-                                        var pmResponse: ServiceResponse = myownResult;
-
-                                        if (!pmResponse.HasError) {
-                                            var myResult1 = pmResponse.Result;
-                                            if (myResult1) {
-                                                this.IncreaseProgressBar(result);
-                                                this.CurrentDocument.IsUpdateSharedDocument = false;
-                                                this.IsCloseButtonVisibile = true;
-                                                this.IsCancelVisibile = false;
-                                                this.IsUploadDone = true;
-                                                this.IsUploadInProgress = false;
-                                                this.UploadedSuccessfully = true;
-                                                this.PreviewUploadedFile();
-                                                if ((this.RequsetPageName == "DocIn" || this.RequsetPageName == "SharedDocument") && this.TiggerViewModel) {
-                                                    if (this.RequsetPageName == "DocIn") this.TiggerViewModel.OnUploadComplete();
-                                                    else if (this.RequsetPageName == "SharedDocument") this.TiggerViewModel.OnUploadComplete(this.Entity);
-
-
-
-
-
-                                                }
-                                            }
-                                        }
-                                        else {
-
-                                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                                                this.ShowMessage(pmResponse.ErrorsArray[0]);
-                                            }
-
-                                        }
-
-
-
-
-
-                                    });
+                                    if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length>0) {
+                                        this.ShowMessage(pmResponse.ErrorsArray[0]);
+                                    }
+                                    
                                 }
 
 
-                            }
 
+                               
+
+                            });
                         }
+                   
+
                     }
+                  
                 }
-            }
-            else {
-
-
-                this.IsCloseButtonVisibile = true;
-                this.IsCancelVisibile = false;
-
-                let error = "Upload file Failed"; 
-                if(pmResponse.HasError && pmResponse.ErrorsArray &&pmResponse.ErrorsArray.length > 0)
-                    error = error + ": " + pmResponse.ErrorsArray[0];
-
-                this.ShowMessage(error);
-                
+                this.IncreaseProgressBar(result);
             }
 
-           
-
         });
 
     }
 
-    private PreviewUploadedFile() {
-        if (!this.HasUploadDragDropFeature || !this.IsPDF) return;
-        let commonDomainService: CommonDomainService = new CommonDomainService();
-        commonDomainService.GetFilingAttachPdfReport(this.CurrentDocument.DocumentId).subscribe((response: ServiceResponse) => {
-            if (response.HasError) return;
-            var buffer = EntityResourceService.base64ToBufferConvertor(response.Result);
-            var blob = new Blob([buffer], { type: 'application/pdf' });
-            var objectURL = URL.createObjectURL(blob);
-            this.IFrameURI = objectURL;
-        });
-    }
-
-    DownloadDocumentFile() {
-        this.imageLibraryService.DownloadFile(this.CurrentDocument.DocumentId, this.CurrentDocument.FileExtension, this.CurrentDocument.Folder, SessionLocator.Tenant).subscribe((res: any) => {
-            let documentName = this.CurrentDocument.DocumentId + "*";
-            documentName += (this.FileName && this.FileExtension) ? this.FileName.replace("." + this.FileExtension, "") : "UploadedFile";
-            DownloadManager.DownloadPage(documentName);
-        });
-    }
 
     ProgressBarPercentText: string;
     IncreaseProgressBar(filter: ImageParameter) {
@@ -506,8 +423,8 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
             var pre = 100 / filter.BlocksNumber;
             var ProgressBarValue = (filter.BufferNumber + 1) * pre;
 
-            let progressBarElementId = this.HasUploadDragDropFeature ? this.DragDropProgressBarId : this.ProgressBarId;
-            var elem = document.getElementById(progressBarElementId);
+
+            var elem = document.getElementById(this.ProgressBarId);
             if (elem) {
 
                 if (ProgressBarValue == 100) {

@@ -3,7 +3,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {QuoteTotalVATPM} from '../../../Quote/EntityPMs/QuoteTotalVATPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuoteVATDetailsComponent.html',
 })
 

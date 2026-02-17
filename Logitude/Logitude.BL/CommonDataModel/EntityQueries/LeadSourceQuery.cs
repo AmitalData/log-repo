@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class LeadSourceQuery
     {
         LeadSourceRepository repository;
-
+        public LeadSourceQuery()
+        {
+               repository = new LeadSourceRepository(); 
+        }
 
         public LeadSourceQuery(int tenant)
         {
@@ -84,21 +87,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 return entity;
             }
             return null;
-        }
-
-        public LeadSourcePM GetSinglePMByCode(string code, int tenant)
-        {
-            return (from a in repository.context.LeadSources
-                    where a.Tenant == tenant && a.Code == code
-                    select new LeadSourcePM()
-                    {
-                        Name = a.Name,
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        SearchFields = a.SearchFields,
-                        Code = a.Code,
-                        InActive = a.InActive,
-                    }).FirstOrDefault();
         }
 
         public IQueryable<LeadSourcePM> GetLeadSourcePMsByTenant(int tenant)

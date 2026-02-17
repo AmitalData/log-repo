@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Server.Infrastructure.Helpers;
+
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
@@ -92,7 +92,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public List<APInvoiceTotalVAT> GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(string invoiceId, int tenant)
         {
-            return (from a in context.APInvoiceTotalVATs.Include("VatType")
+            return (from a in context.APInvoiceTotalVATs
                     where a.Tenant == tenant && a.APInvoiceId == invoiceId && a.VatPercent != 0
                     select a).ToList();
         }

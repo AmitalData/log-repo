@@ -12,8 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.Security;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -64,17 +63,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.DocumentTypeCode != null)
             {
                 CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(entityPOCO.Tenant);
-                CustomDocumentTypePM customDocumentType = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(entityPOCO.DocumentTypeCode, entityPOCO.Tenant);
-                if (customDocumentType == null)
-                {
-                    SIIDocumentTypeQueryService siiDocumentTypeQueryService = new SIIDocumentTypeQueryService(entityPOCO.Tenant);
-                    var siiDocument = siiDocumentTypeQueryService.GetSingle(entityPOCO.DocumentTypeCode, false,false);
-                    entityPM.DocumentTypeName = siiDocument?.LocalName;
-                }
-                else
-                {
-                    entityPM.DocumentTypeName = customDocumentType.LocalName;
-                }
+                CustomDocumentTypePM customDocumentType = customDocumentTypeQueryService.GetSingle(entityPOCO.DocumentTypeCode, false, true);
+                entityPM.DocumentTypeName = customDocumentType.LocalName;
             }
 
 
@@ -84,8 +74,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.DocumentsFilingId != null)
             {
                 DocumentsFilingRepository documentInRep = new DocumentsFilingRepository(entityPOCO.Tenant);
-                var documentsFiling = 
-                    documentInRep.GetSingleDocumentsFilingDocument(entityPOCO.DocumentsFilingId, entityPOCO.Tenant);
+                DocumentsFiling documentsFiling = documentInRep.GetSingleDocumentsFiling(entityPOCO.DocumentsFilingId, entityPOCO.Tenant);
                 if (documentsFiling != null)
                 {
                     entityPM.CurrentEntityId = documentsFiling.EntityId;
@@ -102,18 +91,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     {
                         entityPM.Name = documentsFiling.DocumentType.Name;
                     }
-                    if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant))
-                    {
-                        OcrDocumentQueryService ocrDocumentQueryService = new OcrDocumentQueryService(entityPOCO.Tenant);
-                        var ocrDocument = ocrDocumentQueryService.GetOcrDocumentByDocumentFilingId(entityPOCO.DocumentsFilingId, entityPOCO.Tenant);
-                        if (ocrDocument != null )
-                        {
-                            entityPM.OcrStatusCode = ocrDocument.StatusCode;
-                            entityPM.OcrReference = ocrDocument.Reference;
-                            entityPM.OcrScore = entityPM.OcrScore = ocrDocument?.Score ?? 0;
-                            entityPM.OcrId = ocrDocument?.OcrId;
-                        }
-                    }
+
 
                 }
 

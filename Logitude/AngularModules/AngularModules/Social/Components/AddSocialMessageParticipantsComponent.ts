@@ -17,7 +17,7 @@ import {ConversationHeaderParticipantExtendedPMService} from '../Services/Extend
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddSocialMessageParticipantsComponent',
     templateUrl: './AddSocialMessageParticipantsComponent.html',
 
@@ -83,7 +83,7 @@ export class AddSocialMessageParticipantsComponent implements OnInit {
                 this.ConversationHeaderParticipantPMLists.push(this.GetNewConversationHeaderParticipantPM(userid, name));
             });
 
-            this.conversationHeaderParticipantExtendedPMService.SaveConversationHeaderParticipantPMLists(this.ConversationHeaderParticipantPMLists).subscribe((res:any) => {
+            this.conversationHeaderParticipantExtendedPMService.SaveConversationHeaderParticipantPMLists(this.ConversationHeaderParticipantPMLists).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!pmResponse.HasError && pmResponse.Result) {

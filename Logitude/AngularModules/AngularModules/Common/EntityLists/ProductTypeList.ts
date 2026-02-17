@@ -14,7 +14,5 @@ export class ProductTypeList {
 		SearchFields: string;
 		QuotationDefaultTemplateId: string;
 		DefaultTemplate: string;
-		RoutingRQuoteDefaultTemplateId: string;
-		RoutingRQuoteDefaultTemplate: string;
 	
 }

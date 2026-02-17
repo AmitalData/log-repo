@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../Infrastructure/Services/EntityResourc
 
 @Component({
   selector: 'split-button',
-  
+  moduleId: module.id,
   //templateUrl: 'CustomsRequestsComponent.html',
   host: {
     '(document:click)': 'handleClick($event)',
@@ -44,10 +44,7 @@ export class SplitButtonComponent implements OnInit {
 
 
   @Input()
-    public OnClickedShowMenuContent: boolean = false;
-
-    @Input()
-    public AsRegularButton: boolean = false;
+  public OnClickedShowMenuContent: boolean = false;
 
   @Input()
   public get ButtonCodeText() { return this._ButtonCodeText; }
@@ -60,15 +57,15 @@ export class SplitButtonComponent implements OnInit {
 
 
 
-  _DropdownDisplay: string = 'none';
+  private _DropdownDisplay: string = 'none';
   private _ElementRef: any;
 
   static MyCounterId: number = 0;
   static LastSplitButtonClickedId: number = 0;
   MyCurrentSplitButtonComponentId: number = 0;
 
-  _SplitButtonComponentId: string;
-  _SplitButtonComponentMenuId: string;
+  private _SplitButtonComponentId: string;
+  private _SplitButtonComponentMenuId: string;
   _IsLoaded: boolean = false;
   private EntityResourceService: EntityResourceService;
 
@@ -148,7 +145,7 @@ export class SplitButtonComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+    this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
       this._IsLoaded = true;
       /// alert("this._IsLoaded");
       if (AppTool.IsNullOrEmpty(this.ButtonText)) {
@@ -204,7 +201,7 @@ export class SplitButtonComponent implements OnInit {
       document.getElementById(this._SplitButtonComponentMenuId).style.top =
         itemRect.top + 'px';
 
-      let DDLHeight = 87;//    height: 22px; * 3 +30 
+      let DDLHeight = 67;//    height: 22px; * 3 +30 
       let MENUDivExtraTop = Number(this.MENUDivExtraTop); //22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN 
       if (itemRect.bottom + DDLHeight > this.getScreenHeight()) {//this.PaintTop = true                
         document.getElementById(this._SplitButtonComponentMenuId).style.top =

@@ -12,7 +12,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
     selector: 'BusinessUnitGeneralTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './BusinessUnitGeneralTabComponent.html',
 })
 

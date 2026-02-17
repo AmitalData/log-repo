@@ -1,11 +1,13 @@
 import { DateTool } from './../../../../Infrastructure/Tools';
 import { CardList } from './../../../../Common/EntityLists/CardList';
 import { CardListService } from './../../../../Common/Services/StandardLists/CardListService';
+import { CreditLimitSettingPM } from './../../../../Common/EntityPMs/CreditLimitSettingPM';
 import { AccountingNotePMService } from './../../../Services/StandardPMs/AccountingNotePMService';
 import { AccountingNotePM } from './../../../EntityPMs/AccountingNotePM';
 import { MessageWindow } from './../../../../Controls/Windows/MessageWindow';
 import { AccountingNoteExtendedListService } from './../../../Services/ExtendedLists/AccountingNoteExtendedListService';
 import { AccountingNoteList } from './../../../EntityLists/AccountingNoteList';
+import { RegionList } from './../../../../Common/EntityLists/RegionList';
 import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
 import { EntityResourceService } from './../../../../Infrastructure/Services/EntityResourceService';
 import { LedgerTransactionList } from './../../../EntityLists/LedgerTransactionList';
@@ -15,27 +17,28 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
 import { GLAccountMoreDataList } from '../../../EntityLists/GLAccountMoreDataList';
+import {GLAccountValidator} from '../../../Validators/GLAccountValidator';
 import { GLAccountMoreDataListService } from '../../../Services/StandardLists/GLAccountMoreDataListService';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { GLAccountListService } from '../../../Services/StandardLists/GLAccountListService';
 import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
 import { LedgerTransactionExtendedListService } from '../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GLAccountSummary } from '../../../DataContracts/AccountingSummery';
 import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
-import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLAccountFollowUpDataPM';
-import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLaccountFollowUpDataExtendedPMService';
-import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
-import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
-import { PaymentTermPMService } from 'Common/Services/StandardPMs/PaymentTermPMService';
-import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
+import { AccountingNoteListService } from '../../../Services/StandardLists/AccountingNoteListService';
 declare var makeAmBarChart;
-@Component({
 
+@Component({
+    moduleId: module.id,
     templateUrl: './GLAccountOverviewComponent.html',
 })
 
@@ -46,21 +49,15 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public ObjectTableName = "GLAccount";
     txtcode_Amount: string = TextCodeTranslator.Translate("Accounting.General.O.Amount");
     txtcode_AgingDetails: string = TextCodeTranslator.Translate("GLAccounts.O.AgingDetails");
-    public IsFollowUpVisible: boolean;
+
     // Variables
-    public EntityPM: GLAccountPM = null;
+    public AccountPM: GLAccountPM = null;
     public GLAccountMoreData: GLAccountMoreDataList = null;
     public isRTL: boolean = false;
     public showLocal: boolean = false;
     public isUsedOutside: boolean = false; // when view tab inside customer ..
-    public OpenShipments:number=0;
-    public CreditLimitAmount: number = 0;
-    public InsuredCreditLimit: number = 0;
-    public gLAccountFollowUpDataPM: GLAccountFollowUpDataPM;
-    public TotalOpenChequesInLocalCur = 0;
 
     //Services
-    _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
     _EntityResourceService: EntityResourceService = new EntityResourceService();
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
@@ -68,24 +65,21 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
     _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
     _CardListService: CardListService = new CardListService();
-    private gLAccountFollowUpDataPMService: GLaccountFollowUpDataExtendedPMService = new GLaccountFollowUpDataExtendedPMService();
-    private paymentTermPMService: PaymentTermPMService = new PaymentTermPMService();
-    private gLAccountCardsDataPMService: GLAccountCardsDataPMService = new GLAccountCardsDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (SessionLocator.LoggedUserPM) this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
-        //Resources // Use Less
-        this._EntityResourceService.getEntityResourceByTableName("GLAccountFollowUpData").subscribe((response: any) => { this.IsFollowUpVisible=true});
-        //this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
-        //this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
+        //Resources
+        this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
+        this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
+        this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
 
         // Set Entity
         if(entityArgs && entityArgs.ObjectTableName == "GLAccount")
         {
-            this.EntityPM = entityArgs.EntityPM;
+            this.AccountPM = entityArgs.EntityPM;
             this.LoadAllData();
         }
         else
@@ -95,11 +89,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         this.chartId = "CustomerOverview_" + this.CurrentSession.GetChartId();
         this.Listen();
-    }
-
-
-    ngAfterViewInit(): void {
-        this.CD.detectChanges();
     }
 
     private SaveCompletedEvent: any = null;
@@ -147,37 +136,24 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.LoadChartData();
         this.SetUIProperties();
         this.LoadCreditDetailsData();
-        //this.LoadGLAccountFollowUpData();
 
     }
 
-    
+    //#region Properties
+    //get DisplayNumber() { return this.AccountPM.DisplayNumber; }
+    //set DisplayNumber(value: string) {
+    //    if (this.AccountPM.DisplayNumber != value) {
+    //        this.AccountPM.DisplayNumber = value;
+    //    }
+    //}
+    //#endregion
     TenantCurrency:string;
-    AmitalBrowserInUse: boolean = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
-    accountCardlist: CardList[];
-    accountCardnumberLists:string[]=[];
-    GLaccountConnectedMoreOneCardText:string =TextCodeTranslator.Translate("GLAccount.O.GLaccountConnectedMoreOneCard");
-    Connected10CardsText:string =TextCodeTranslator.Translate("GLAccount.O.Connected10Cards");
-    firstConnectedCardPaymentTermName;
-    private LoadExternalTransactionTotal()
-    {
-        this._GLAccountExtendedListService.GetGLAccountExternalTransactionsTotal(this.EntityPM.Id).subscribe((myResult: any) =>
-        {
-            console.log("GetAccountOpenTransactionsCount", myResult);
-            var result: ServiceResponse = myResult;
-            if (!result.HasError) {
-                this.externalTransactionsTotal = result.Result || 0;
-            }
-            else {
-            }
-        });
-    }
-
+    accountCardlist: CardList;
     GetDefaultValues() {
-        //if (this.EntityPM.GLAccountFollowUpDate == null) this.EntityPM.GLAccountFollowUpDate = new Date();
+
         // Get GLAccountMoreData
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._GLAccountMoreDataListService.getSingle(this.EntityPM.Id).subscribe((myResult:any) => {
+        this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe(myResult => {
             this.CurrentSession.StopBusyIndicator();
             console.log("_GLAccountMoreDataListService.getSingle", myResult);
 
@@ -192,7 +168,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
 
         // Get GLAccount Open Transactions Count
-        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(this.EntityPM.Id).subscribe((myResult:any) => {
+        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(this.AccountPM.Id).subscribe(myResult => {
             console.log("GetAccountOpenTransactionsCount", myResult);
             var result: ServiceResponse = myResult;
             if (!result.HasError)
@@ -203,60 +179,22 @@ export class GLAccountOverviewComponent extends BaseComponent {
             }
         });
 
+        // Get connect card
+        this._CardListService.getSingle(this.AccountPM.CardId).subscribe(myResult => {
+            console.log("_CardListService.getSingle", myResult);
+            var result: ServiceResponse = myResult;
+            if (!result.HasError)
+            {
+                this.accountCardlist = result.Result;
+                this.LoadCreditDetailsData();
 
+            }
+            else {
+                console.log("[!] cannot get glaccount card");
 
-            this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-                var connectedCards = myResponse.Result;
-                this.accountCardlist = connectedCards;
-                if(this.accountCardlist != null && this.accountCardlist.length > 0){
-                    var IsAllCardHasCriedtLimitNull:boolean=true;
-                    var IsAllCardHasOpenShipmentNull:boolean=true;
-                    this.CreditLimitAmount=0;
-                    this.OpenShipments = 0;
+            }
+        });
 
-                    this.accountCardlist.forEach(s=>{
-                        this.accountCardnumberLists.push(s.Code);
-                        if(s.OpenShipments!=null){
-                            this.OpenShipments+=s.OpenShipments;
-                            IsAllCardHasOpenShipmentNull=false;
-                        }
-                        if(s.CreditLimitAmount!=null){
-                            IsAllCardHasCriedtLimitNull = false;
-                            this.CreditLimitAmount += s.CreditLimitAmount + s.AccountingPartnerCreditLimit;
-                        }
-                        if (s.AccountingPartnerCreditLimit != null) {
-                            IsAllCardHasCriedtLimitNull = false;
-                            this.CreditLimitAmount += s.AccountingPartnerCreditLimit;
-                        }
-                    });
-                    if(this.accountCardlist.length >= 10){
-                        this.GLaccountConnectedMoreOneCardText = this.Connected10CardsText;
-                    }
-                    else{
-                        this.GLaccountConnectedMoreOneCardText+=" ";
-                        this.GLaccountConnectedMoreOneCardText+= this.accountCardnumberLists.toString();
-                    }
-
-                    if(IsAllCardHasCriedtLimitNull){
-                        this.CreditLimitAmount=null;
-                    }
-                    if(IsAllCardHasOpenShipmentNull){
-                        this.OpenShipments=null;
-                    }
-                    this.LoadCreditDetailsData();
-                }
-
-            });
-
-
-        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTP")[0]) {
-            this._GLAccountExtendedListService.GetTotalOpenChequesInLocalCurById(this.EntityPM.Id).subscribe((myResult) => {           
-                this.TotalOpenChequesInLocalCur = myResult;
-            });
-        }
-        else {
-            this.TotalOpenChequesInLocalCur = this.EntityPM.TotalOpenChequesInLocalCur;
-        }
 
         // Get tenant currency
         this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
@@ -264,17 +202,17 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     SetUIProperties() {
-        //if (!this.EntityPM || this.DisableGLAccount)
+        //if (!this.AccountPM || this.DisableGLAccount)
         //    return;
 
-        //if (this.EntityPM.IsMultiCurrency) {
+        //if (this.AccountPM.IsMultiCurrency) {
         //    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
         //}
-        //if (this.EntityPM.ChartOfAccountsTypeCode) {
-        //    this.ChartOfAccountsTypeCode = this.EntityPM.ChartOfAccountsTypeCode;
+        //if (this.AccountPM.ChartOfAccountsTypeCode) {
+        //    this.ChartOfAccountsTypeCode = this.AccountPM.ChartOfAccountsTypeCode;
         //}
-        //if (this.EntityPM.ChartOfAccountsId) {
-        //    this.ChartOfAccountsId = this.EntityPM.ChartOfAccountsId;
+        //if (this.AccountPM.ChartOfAccountsId) {
+        //    this.ChartOfAccountsId = this.AccountPM.ChartOfAccountsId;
         //    this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
         //}
 
@@ -283,51 +221,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //#region Balance Section
     GLAccountOpenTransactionsCount: number = 0.0;
 
-    private timerToken: any;
-    private isMouseIn: boolean = false;
-    OnMouseOver(HeadId:string,ElementId:string) {
-        this.isMouseIn = true;
-        var HeadClassString = "."+HeadId;
-        var ElementClassString = "."+ElementId;
-        var AllHeaditems :NodeListOf<HTMLElement> = document.querySelectorAll(HeadClassString);
-        var MainHeadIndex:number=0;
-        for(let i =0 ; i < AllHeaditems.length ; i++){
-         if(AllHeaditems[i].clientLeft!=0 ||   AllHeaditems[i].clientTop!=0 || AllHeaditems[i].clientWidth!=0 || AllHeaditems[i].clientHeight!=0){
-            MainHeadIndex = i ;
-            break;
-         }
-        }
-            this.timerToken = setTimeout(() => {
-                if (AppTool.IsNullOrEmpty(AllHeaditems))
-                    return;
-                var itemRect = AllHeaditems[MainHeadIndex].getBoundingClientRect();
-                if (this.isMouseIn) {
-                    var AllSessionElements :NodeListOf<HTMLElement> = document.querySelectorAll(ElementClassString);
-                    AllSessionElements.forEach(s=>{
-                        s.style.position = "fixed";
-                        s.style.top = (itemRect.top - 35) + 'px';
-                        s.style.left = (itemRect.left + 145) + 'px';
-                        s.style.visibility = "visible";
-                        s. style.display = "initial";
-                    });
-                }
-
-            }, 100);
-
-    }
-    OnMouseLeave(ElementId:string) {
-          this.isMouseIn = false;
-          var ElementClassString = "."+ElementId;
-          var AllSessionElements :NodeListOf<HTMLElement> = document.querySelectorAll(ElementClassString);
-             this.timerToken = setTimeout(() => {
-                        AllSessionElements.forEach(s=>{
-                            s.style.visibility = "hidden";
-                            s.style.display = "none";
-                        });
-
-                    }, 500);
-
-    }
 
     DisplayTransactionsLinkClicked() {
 
@@ -336,11 +229,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
             var editWindow = new LogitudeWindow();
 
             editWindow.ShowHeaderButtons = true;
+            //editWindow.Title = windowTitle;
             editWindow.Height = 770;
             editWindow.Width = 1500;
             editWindow.IsHideHeader  = true;
-            editWindow.ShowEditComponent(this.EntityPM.Id, "GLAccount", "GATR");
-            editWindow.WindowClosed.subscribe((res:any) => {
+            editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
+            editWindow.WindowClosed.subscribe(res => {
                 this.LoadAllData();
             });
         }
@@ -358,33 +252,29 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
-        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.AccountPM.Id).subscribe((serviceResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
 
             if (serviceResponse.Result) {
-                var transaction = serviceResponse.Result;
+                var result = serviceResponse.Result;
+                var transaction = result.Result; // get the data
                 var openAmountCurrency = transaction.OpenAmountCurrencySign;
 
                 // original amount currency
                 var originalAmountCurrency;
-                if (this.EntityPM.ReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
-                else if (this.EntityPM.ReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
+                if (this.AccountPM.ReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
+                else if (this.AccountPM.ReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
 
 
                 var windowArgs: any = {};
-                windowArgs.GLAccountPM = this.EntityPM;
+                windowArgs.GLAccountPM = this.AccountPM;
                 windowArgs.openAmountCurrency = openAmountCurrency;
                 windowArgs.originalAmountCurrency = originalAmountCurrency;
-
-                this.FillPaymentTermName(windowArgs);
-
-
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Width = (screenWidth > 1024) ? (screenWidth > 1200 ? 1500 : screenWidth - 20) : 900;
                 logitudeWindow.Height = (screenHeight > 768) ? (screenHeight > 800 ? 700 : screenHeight - 70) : screenHeight - 70;
-                logitudeWindow.IsHideHeader = true;
 
-                // logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
+                logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
 
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
@@ -398,20 +288,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
     }
 
-    private FillPaymentTermName(windowArgs: any)
-    {
-        let firstAccount = this.accountCardlist.length > 0 ? this.accountCardlist[0] : null;
-        let paymentTermName = '';
-        if (firstAccount) {
-            const showLocals = !SessionLocator.LoggedUserPM.DontShowLocalLabels;
-            paymentTermName = showLocals ? (firstAccount.PaymentTermLocalName || firstAccount.PaymentTermEnglishName): (firstAccount.PaymentTermEnglishName || firstAccount.PaymentTermLocalName);
-        }
-        windowArgs.PaymentTermName = paymentTermName;
-    }
-
     GetNonReconciledTransactionsCount() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe((myResult:any) => {
+        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
+
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
 
@@ -456,30 +336,17 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     //#endregion
 
-    get GLAccountFollowUpRemarks() { return this.EntityPM.GLAccountFollowUpRemarks; }
-    set GLAccountFollowUpRemarks(value: string) {
-        if (this.EntityPM.GLAccountFollowUpRemarks != value) {
-            this.EntityPM.GLAccountFollowUpRemarks = value;
-        }
-    }
-    get GLAccountFollowUpDate() { return this.EntityPM.GLAccountFollowUpDate; }
-    set GLAccountFollowUpDate(value: Date) {
-        if (this.EntityPM.GLAccountFollowUpDate != value) {
-            this.EntityPM.GLAccountFollowUpDate = value;
-        }
-    }
-
     //#region Accounting Notes
     accountingNotesList: AccountingNoteList[] = [];
     isNotesLoading:boolean = false;
 
     GetAccountingNotes(){
-        if(this.EntityPM.CardId){
+        if(this.AccountPM.CardId){
             this.accountingNotesList = [];
             this.isNotesLoading = true;
             // setTimeout(() => {
 
-            this._AccountingNoteExtendedListService.GetNotesByCard(this.EntityPM.CardId)
+            this._AccountingNoteExtendedListService.GetNotesByCard(this.AccountPM.CardId)
                 .subscribe((res:ServiceResponse) =>
                 {
                         this.isNotesLoading = false;
@@ -501,12 +368,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
     OpenAccountingNote(notePM: AccountingNotePM){
 
         var windowArgs: any = {};
-        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.AccountPM = this.AccountPM;
         windowArgs.AccountingNotePM = notePM;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 450;
-        logitudeWindow.Height = 350;
+        logitudeWindow.Height = 320;
         logitudeWindow.Title = notePM ? '' : TextCodeTranslator.Translate("Accounting.O.NewAccountingNote");
 
         logitudeWindow.WindowArgs = windowArgs;
@@ -521,7 +388,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this._AccountingNotePMService.get(_noteList.Id)
-            .subscribe((myResult:any) => {
+            .subscribe(myResult => {
+
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var _notePM = mm.Result;
@@ -539,7 +407,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     ItemDeleteButton(item: AccountingNoteList){
         this._AccountingNoteExtendedListService.DeleteNote(item.Id)
-            .subscribe((myResult:any) => {
+            .subscribe(myResult => {
+
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var res = mm.Result;
@@ -594,12 +463,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     GetLastTransactions() {
-        this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+        this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.AccountPM.Id).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError)
             {
-                this.lastTransactionsList = mm.Result;
+                this.lastTransactionsList = mm.Result.Result;
             }
             else
             {
@@ -615,8 +484,74 @@ export class GLAccountOverviewComponent extends BaseComponent {
         // Type:    SourceTypeCode
         // Id:      SourceId
         // Display: SourceNumber
-        var tableName = AccountingEntityHelper.getEntityObjectTableName(transaction.SourceTypeCode);
 
+        var tableName = "Journal";
+
+        switch (transaction.SourceTypeCode) {
+
+            // 1-Journal
+            case '1': {
+                tableName = "Journal";
+                break;
+            }
+
+            // 2-ARInvoice
+            case '2': {
+                tableName = "ARInvoice";
+                break;
+            }
+
+            // 3-ARPayment
+            case '3': {
+                tableName = "ARPayment";
+
+                break;
+            }
+
+            // 4-APInvoice
+            case '4': {
+                tableName = "APInvoice";
+
+                break;
+            }
+
+            // 5-APPayment
+            case '5': {
+                tableName = "APPayment";
+
+                break;
+            }
+
+            // 6-Cheque Deposit
+            case '6': {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 7-Cash Deposit
+            case '7': {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 8-Revaluation
+            case '8': {
+                tableName = "Revaluation";
+
+                break;
+            }
+
+
+            // 9-PaymentCheque
+            case '9': {
+                tableName = "PaymentCheque";
+
+                break;
+            }
+
+        }
 
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
@@ -642,10 +577,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     CalculateOriginalAmount(transaction) {
-        var gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
-        if (!AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)) {
+        if (!AppTool.IsNullOrEmpty(ReconcileEventManager.GLAccountReconcileMethodCode)) {
 
-            if (gLAccountReconcileMethodCode == "0") { // 0-local currency
+            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") { // 0-local currency
 
                 if (transaction['LocalAmountCredit'] == 0) {
                     return transaction['LocalAmountDebit'];
@@ -653,7 +587,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
                     return -1 * transaction['LocalAmountCredit'];
                 }
 
-            } else if (gLAccountReconcileMethodCode == "1") { // 1-foreign currency
+            } else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") { // 1-foreign currency
 
                 if (transaction['ForeignAmountCredit'] == 0) {
                     return transaction['ForeignAmountDebit'];
@@ -679,14 +613,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     //#region Credit limit
     creditPercentage:number = 0;
-    accountTotal: number = 0;
-    creditStatusAmount: number = 0;
-    externalTransactionsTotal: number = 0;
     LoadCreditDetailsData(){
 
 
-        this.LoadExternalTransactionTotal();
-        this.GetInsuredCreditLimit();
         console.log("LoadCreditDetailsData");
 
         // Calculate credit percentage
@@ -696,17 +625,13 @@ export class GLAccountOverviewComponent extends BaseComponent {
             percentage =
                 (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
             +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
-            + (this.OpenShipments?this.OpenShipments:0 );
+            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
+            //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
 
-            this.accountTotal = percentage;
-
-            if(this.CreditLimitAmount && this.CreditLimitAmount != 0)
-                percentage = percentage / (this.CreditLimitAmount ? this.CreditLimitAmount : 0);
+            if(this.accountCardlist.CreditLimitAmount && this.accountCardlist.CreditLimitAmount != 0)
+                percentage = percentage / (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0);
             else
                 percentage = 0;
-
-            this.creditStatusAmount = -1 * ((this.CreditLimitAmount ? this.CreditLimitAmount : 0) - this.accountTotal);
         }
 
         if (!percentage) percentage = 0;
@@ -719,126 +644,16 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     }
 
-    GetInsuredCreditLimit() {
-        this.gLAccountCardsDataPMService.get(this.EntityPM.CardsDataId).subscribe((myResult: ServiceResponse) => {
-            var myResult: ServiceResponse ;
-            if (!myResult.HasError) {
-                this.InsuredCreditLimit =myResult.Result? myResult.Result.InsuredcreditLimit: null;
-            }
-        });
+    DisplayChequelistClicked(){
+
     }
-
-    DisplayChequelistClicked(id) {
-        
-       var windowArgs: any = {};
-        windowArgs.EntityPM = this.EntityPM;
-        windowArgs.IsUnpaidChecks = true;
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 1200;
-        logWindow.Height = 600;
-        logWindow.Title = TextCodeTranslator.Translate('GLAccount.O.ChequesList');
-        logWindow.ShowCloseButton = false;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => { });
-        logWindow.Show('./Accounting/Components/EditTabs/GLAccount/GLAccountChequeListComponent');
-    }
-
-    DisplayFutureChequelistClicked(id) {
-
-        var windowArgs: any = {};
-         windowArgs.EntityPM = this.EntityPM;
-         windowArgs.IsFutureOpenCheques = true;
-         var logWindow = new LogitudeWindow();
-         logWindow.Width = 1200;
-         logWindow.Height = 600;
-         logWindow.Title = TextCodeTranslator.Translate('GLAccount.O.ChequesList');
-         logWindow.ShowCloseButton = false;
-         logWindow.WindowArgs = windowArgs;
-         logWindow.WindowClosed.subscribe(($event: any) => { });
-         logWindow.Show('./Accounting/Components/EditTabs/GLAccount/GLAccountChequeListComponent');
-     }
-
-    
     CardIndexClicked(){
         this.DisplayTransactionsLinkClicked();
     }
-    IsOverCredit(){
-        var total =
-        (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
-    +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-    +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
-        + (this.OpenShipments ? this.OpenShipments : 0);
-
-
-        return (total > this.CreditLimitAmount);
-    }
-    IsCreditNotDefined(){
-        return this.CreditLimitAmount == null;
-    }
-
-    IsInsuredCreditLimitDefined() {
-        return this.InsuredCreditLimit != 0;
-    }
-
-    GetTotalObligo() {
-        return this.OpenShipments +
-            ((this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)) +
-            (this.GLAccountMoreData.BalanceInLocalCurrency ?this. GLAccountMoreData.BalanceInLocalCurrency : 0) +
-            ((SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTP")[0] && this.TotalOpenChequesInLocalCur )? this.TotalOpenChequesInLocalCur : 0);
-    }
-
-    /**
-     * Handler for "Display Open Files" link click.
-     * @param accountCardlist list of account cards, each may contain an OpenFiles array
-     */
-    DisplayOpenFilesClicked(accountCardlist: any[]): void {
-        // guard against empty input
-        if (!accountCardlist?.length) {
-            console.info('No account cards provided.');
-            return;
-        }
-
-        const myViewModelName = 'Logitude.Accounting.Components.EditTabs.GLAccount.MyEnterViewUnifreightController';
-
-
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        const sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-            .subscribe(
-                (mess: UnifreightMessageM) => {
-                    const isMatchUnifreightCallbackCommand = (
-                        mess.LogitudeEntity === AmitalGatewayUtil.Instance.GeneralMessaging.ShowOpenFiles &&
-                        mess.LogitudeEntityNumber === this.EntityPM.Id &&
-                        mess.LogitudeViewModel === myViewModelName);
-                    if (isMatchUnifreightCallbackCommand) {
-                        sub.unsubscribe();
-                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-                    }
-                    SessionLocator.SelectedSession.StopBusyIndicator();
-                }
-            );
-
-        const cardNumber = this.accountCardnumberLists?.[0];
-
-        var message =
-            AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(cardNumber, this.EntityPM.Id, myViewModelName
-                    , 'GNDUNF');
-        message.Requset.push(['CardList', this.accountCardnumberLists?.toString()]);
-
-        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            'ScriptableGatewayUtil.ShowOpenFiles',
-            'GNDHMAIN.LogitudeTask',
-            'ShowOpenFiles',
-            message,
-            'Show Open Files');
-    }
-
+    //
 
     //#endregion
 
-
-
-    
     //#region Aging Details
     chartId: string = "";
 
@@ -900,7 +715,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             args.AgingForDate = new Date();
         args.NumberOfmonthsbackwards = numberOfmonthsbackwards == null ? 3 : numberOfmonthsbackwards;
         //args.VendorCustomerId = AppTool.IsNullOrEmpty(this.accSettings) ? "" : this.accSettings.CustomerControlAccountId;
-        args.VendorCustomerId = this.EntityPM.Id;
+        args.VendorCustomerId = this.AccountPM.Id;
         //args.Category1Id = "";
         //args.Category2Id = "";
         //args.Category3Id = "";
@@ -1019,8 +834,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //
 
     //#endregion
-
-
 
 
 }

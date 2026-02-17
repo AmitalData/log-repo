@@ -1,17 +1,14 @@
-import {Output, EventEmitter} from '@angular/core';
+﻿import {Output, EventEmitter} from '@angular/core';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPickUpDeliveryPackagePM} from './ShipmentPickUpDeliveryPackagePM';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';
 
-export class ShipmentDeliveryPM extends ChildEntitiesCustomFieldPM {
+export class ShipmentDeliveryPM {
     public UIProperties: UIProperties;
     @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
     constructor(_entityParentPM: any) {
-        super("ShipmentDelivery");
-
         this.EntityParentPM = _entityParentPM;
         this.UIProperties = new UIProperties;
         this.IsDirty = false;
@@ -32,14 +29,6 @@ export class ShipmentDeliveryPM extends ChildEntitiesCustomFieldPM {
     private pickUpDeliveryNumber: string;
     public get PickUpDeliveryNumber() { return this.pickUpDeliveryNumber; }
     public set PickUpDeliveryNumber(newValue: string) { this.pickUpDeliveryNumber = newValue; this.MarkAsDirty(); }
-
-    private pickUpDeliveryIndex: number;
-    public get PickUpDeliveryIndex() { return this.pickUpDeliveryIndex; }
-    public set PickUpDeliveryIndex(newValue: number) { this.pickUpDeliveryIndex = newValue; this.MarkAsDirty(); }
-
-    private childIndex: number;
-    public get ChildIndex() { return this.childIndex; }
-    public set ChildIndex(newValue: number) { this.childIndex = newValue; this.MarkAsDirty(); }
 
     private pickUpDeliveryTypeCode: string;
     public get PickUpDeliveryTypeCode() { return this.pickUpDeliveryTypeCode; }
@@ -297,78 +286,6 @@ export class ShipmentDeliveryPM extends ChildEntitiesCustomFieldPM {
         return this.allConnectedPackagesId;
     }
     public set AllConnectedPackagesId(newValue: string[]) { this.allConnectedPackagesId = newValue; this.MarkAsDirty(); }   
-
-    private parentPickUpDeliveryId: string;
-    public get ParentPickUpDeliveryId() { return this.parentPickUpDeliveryId; }
-    public set ParentPickUpDeliveryId(newValue: string) { this.parentPickUpDeliveryId = newValue; this.MarkAsDirty(); }
-
-    private childDeliveryIndex: number;
-    public get ChildDeliveryIndex() { return this.childDeliveryIndex; }
-    public set ChildDeliveryIndex(newValue: number) { this.childDeliveryIndex = newValue; this.MarkAsDirty(); }
-
-    private standaloneShipmentId: string;
-    public get StandaloneShipmentId() { return this.standaloneShipmentId; }
-    public set StandaloneShipmentId(newValue: string) { this.standaloneShipmentId = newValue; this.MarkAsDirty(); }
-
-    private standaloneShipmentNumber: string;
-    public get StandaloneShipmentNumber() { return this.standaloneShipmentNumber; }
-    public set StandaloneShipmentNumber(newValue: string) { this.standaloneShipmentNumber = newValue; this.MarkAsDirty(); }
-
-    private deliveryContact: string;
-    public get DeliveryContact() { return this.deliveryContact; }
-    public set DeliveryContact(newValue: string) { this.deliveryContact = newValue; this.MarkAsDirty(); }
-
-    private responsibility: string;
-    public get Responsibility() { return this.responsibility; }
-    public set Responsibility(newValue: string) { this.responsibility = newValue; this.MarkAsDirty(); }
-
-    private packageTypeName: string;
-    public get PackageTypeName() { return this.packageTypeName; }
-    public set PackageTypeName(newValue: string) { this.packageTypeName = newValue; this.MarkAsDirty(); }
-
-    private quantity: number;
-    public get Quantity() { return this.quantity; }
-    public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty(); } }
-
-    private grossWeight: number;
-    public get GrossWeight() { return this.grossWeight; }
-    public set GrossWeight(newValue: number) { if (this.grossWeight != newValue) { this.grossWeight = newValue; this.MarkAsDirty(); } }
-
-    private volume: number;
-    public get Volume() { return this.volume; }
-    public set Volume(newValue: number) { if (this.volume != newValue) { this.volume = newValue; this.MarkAsDirty(); } }
-
-    private commodity: string;
-    public get Commodity() { return this.commodity; }
-    public set Commodity(newValue: string) { if (this.commodity != newValue) { this.commodity = newValue; this.MarkAsDirty("Commodity"); } }
-
-    private truckerChargeableWeight: number;
-    public get TruckerChargeableWeight() { return this.truckerChargeableWeight; }
-    public set TruckerChargeableWeight(newValue: number) { if (this.truckerChargeableWeight != newValue) { this.truckerChargeableWeight = newValue; this.MarkAsDirty("TruckerChargeableWeight"); } }
-
-    private customerChargeableWeight: number;
-    public get CustomerChargeableWeight() { return this.customerChargeableWeight; }
-    public set CustomerChargeableWeight(newValue: number) { if (this.customerChargeableWeight != newValue) { this.customerChargeableWeight = newValue; this.MarkAsDirty("CustomerChargeableWeight"); } }
-
-    private descriptionOfGoods: string;
-    public get DescriptionOfGoods() { return this.descriptionOfGoods; }
-    public set DescriptionOfGoods(newValue: string) { if (this.descriptionOfGoods != newValue) { this.descriptionOfGoods = newValue; this.MarkAsDirty("DescriptionOfGoods"); } }
-
-    private fromAddressCityId: string;
-    public get FromAddressCityId() { return this.fromAddressCityId; }
-    public set FromAddressCityId(newValue: string) { if (this.fromAddressCityId != newValue) { this.fromAddressCityId = newValue; this.MarkAsDirty(); } }
-
-    private toAddressCityId: string;
-    public get ToAddressCityId() { return this.toAddressCityId; }
-    public set ToAddressCityId(newValue: string) { if (this.toAddressCityId != newValue) { this.toAddressCityId = newValue; this.MarkAsDirty(); } }
-
-    private responsibilityCode: string;
-    public get ResponsibilityCode() { return this.responsibilityCode; }
-    public set ResponsibilityCode(newValue: string) { if (this.responsibilityCode != newValue) { this.responsibilityCode = newValue; this.MarkAsDirty(); } }
-
-    private packageTypeCode: string;
-    public get PackageTypeCode() { return this.packageTypeCode; }
-    public set PackageTypeCode(newValue: string) { if (this.packageTypeCode != newValue) { this.packageTypeCode = newValue; this.MarkAsDirty(); } }
 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }

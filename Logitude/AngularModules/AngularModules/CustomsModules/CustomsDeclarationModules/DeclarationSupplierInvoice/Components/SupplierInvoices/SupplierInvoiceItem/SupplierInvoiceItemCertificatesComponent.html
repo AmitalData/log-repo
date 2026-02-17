@@ -1,27 +1,26 @@
+﻿
 
-
-<table *ngIf="!allowExport">
+<table>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="7">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
     </tr>
-    <tr>
-
+    <tr >
+        
         <td style="width:110px">
             <LogLabel [ObjectFieldName]="'CatalogNumber'" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
                       [DataContext]="DataContext"></LogLabel>
         </td>
         <td style="width:150px">
-            <!--[ObjectTableName]="ObjectTableName"-->
-            <LogTextBox [ObjectFieldName]="'CatalogNumber'" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
+            <LogTextBox [ObjectFieldName]="'CatalogNumber'" [ObjectTableName]="ObjectTableName"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
         </td>
 
         <!-- ClassificationCode -->
-        <td style="width:85px; padding-right: 15px;">
+        <td style="width:85px; padding-right: 15px;" >
             <div *ngIf="IsHeaderVisible" style="color: #3b95d5;">{{'Customs.SupplierInvoiceItem.F.ClassificationCode'  | TextCodeTranslationPipe}}</div>
         </td>
         <td style="width:90px">
@@ -38,7 +37,7 @@
 
 
         <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
-            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
+            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;" ></IconButton></div>
         </td>
     </tr>
 
@@ -63,37 +62,32 @@
 
 
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.SequenceNumeric' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <div style="text-align:right" class="TextTrimming">
-                                                <span>{{item.SequenceNumeric}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                        <div style="text-align:right" class="TextTrimming">
+                                            <span>{{item.SequenceNumeric}}</span>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
 
 
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ReqConfirmationTypeCode' | TextCodeTranslationPipe" [binding]="'ConfirmationTypeCode'" [width]="'85'" [Editable]="true" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.ConfirmationTypeName}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogLov [ObjectFieldName]="'ConfirmationTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'Customs.ConfirmationType'"
-                                                        (SelectedItemChanged)="item.ConfirmationType = $event"
-                                                        [FocusOnMe]="'true'"
-                                                        [HideColumns]="true"
-                                                        [QueryFilterItems]="confirmationTypeFilter">
-                                                </LogLov>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.ConfirmationTypeName}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogLov [ObjectFieldName]="'ConfirmationTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.ConfirmationType'"
+                                                    (SelectedItemChanged)="item.ConfirmationType = $event"
+                                                    [FocusOnMe]="'true'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
 
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+                                    </log-cell-template>
 
 
                                 </log-column>
@@ -101,165 +95,147 @@
 
 
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.AttachmentTypeCode' | TextCodeTranslationPipe" [binding]="'AttachmentTypeCode'" [width]="'95'" [Editable]="true" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.AttachmentTypeName}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogLov [ObjectFieldName]="'AttachmentTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'Customs.AttachmentType'"
-                                                        (SelectedItemChanged)="item.AttachmentType = $event"
-                                                        [FocusOnMe]="'true'"
-                                                        [HideColumns]="true">
-                                                </LogLov>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.AttachmentTypeName}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogLov [ObjectFieldName]="'AttachmentTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.AttachmentType'"
+                                                    (SelectedItemChanged)="item.AttachmentType = $event"
+                                                    [FocusOnMe]="'true'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
 
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+                                    </log-cell-template>
 
 
                                 </log-column>
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateNumber' | TextCodeTranslationPipe" [binding]="'CertificateNumber'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.CertificateNumber}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CertificateNumber'" [DataContext]="item"
-                                                            [Text]="item.CertificateNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.CertificateNumber}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CertificateNumber'" [DataContext]="item"
+                                                        [Text]="item.CertificateNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
 
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+                                    </log-cell-template>
 
 
                                 </log-column>
 
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateExemptionTypeCode' | TextCodeTranslationPipe" [width]="'85'"
-                                            [Editable]="true" [Alignment]="'right'" [binding]="'CertificateExemptionTypeCode'">
+                                 [Editable]="true" [Alignment]="'right'" [binding]="'CertificateExemptionTypeCode'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.CertificateExemptionTypeName}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'Customs.CertificateExemptionType'"
-                                                        (SelectedItemChanged)="item.CertificateExemptionType = $event"
-                                                        [FocusOnMe]="'true'"
-                                                        [HideColumns]="true"
-                                                        [QueryFilterItems]="TypeCodeFilterItems">
-                                                </LogLov>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.CertificateExemptionTypeName}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.CertificateExemptionType'"
+                                                    (SelectedItemChanged)="item.CertificateExemptionType = $event"
+                                                    [FocusOnMe]="'true'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
 
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+                                    </log-cell-template>
 
                                 </log-column>
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ResConfirmationTypeCode' | TextCodeTranslationPipe" [width]="'70'"
-                                            [Editable]="true" [Alignment]="'right'" [binding]="'ResConfirmationTypeCode'">
+                                 [Editable]="true" [Alignment]="'right'" [binding]="'ResConfirmationTypeCode'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.ResConfirmationTypeName}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogLov [ObjectFieldName]="'ResConfirmationTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'Customs.ConfirmationType'"
-                                                        (SelectedItemChanged)="item.ResConfirmationType = $event"
-                                                        [FocusOnMe]="'true'"
-                                                        [HideColumns]="true"
-                                                        [QueryFilterItems]="confirmationTypeFilter">
-                                                </LogLov>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.ResConfirmationTypeName}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogLov [ObjectFieldName]="'ResConfirmationTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.ConfirmationType'"
+                                                    (SelectedItemChanged)="item.ResConfirmationType = $event"
+                                                    [FocusOnMe]="'true'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
 
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+                                    </log-cell-template>
 
 
                                 </log-column>
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CustomsAttachmentID' | TextCodeTranslationPipe" [width]="'145'"
-                                            [Editable]="true" [Alignment]="'right'" [binding]="'CustomsAttachmentID'">
+                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CustomsAttachmentID' | TextCodeTranslationPipe" [width]="'145'" 
+                                [Editable]="true" [Alignment]="'right'" [binding] ="'CustomsAttachmentID'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.CustomsAttachmentID}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [ObjectFieldName]="'CustomsAttachmentID'" [DataContext]="item" [FocusOnMe]="'true'"
-                                                            [Text]="item.CustomsAttachmentID" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.CustomsAttachmentID}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [ObjectFieldName]="'CustomsAttachmentID'" [DataContext]="item" [FocusOnMe]="'true'"
+                                                        [Text]="item.CustomsAttachmentID" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
 
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+                                    </log-cell-template>
 
                                 </log-column>
 
-
+                                 
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ExternalRequestTypeCode' | TextCodeTranslationPipe" [width]="'100'"
-                                            [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature" [binding]="'ExternalRequestTypeCode'">
+                                 [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature" [binding]="'ExternalRequestTypeCode'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.ExternalRequestTypeCode}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [ObjectFieldName]="'ExternalRequestTypeCode'" [DataContext]="item" [FocusOnMe]="'true'"
-                                                            [Text]="item.ExternalRequestTypeCode" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.ExternalRequestTypeCode}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [ObjectFieldName]="'ExternalRequestTypeCode'" [DataContext]="item" [FocusOnMe]="'true'"
+                                                        [Text]="item.ExternalRequestTypeCode" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
 
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+                                    </log-cell-template>
 
                                 </log-column>
 
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ApprovalRequestNumber' | TextCodeTranslationPipe" [width]="'110'"
-                                            [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature" [binding]="'ApprovalRequestNumber'">
+                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ApprovalRequestNumber' | TextCodeTranslationPipe" [width]="'110'" 
+                                [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature" [binding]="'ApprovalRequestNumber'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.ApprovalRequestNumber}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [ObjectFieldName]="'ApprovalRequestNumber'" [DataContext]="item" [FocusOnMe]="'true'"
-                                                            [Text]="item.ApprovalRequestNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.ApprovalRequestNumber}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [ObjectFieldName]="'ApprovalRequestNumber'" [DataContext]="item" [FocusOnMe]="'true'"
+                                                        [Text]="item.ApprovalRequestNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
 
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+                                    </log-cell-template>
 
                                 </log-column>
 
 
 
                                 <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
-                                    <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                            <div style="width: 30px; float: right; height:20px;padding-top:3px">
-                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
-                                            </div>
+                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                        <div style="width: 30px; float: right; height:20px;padding-top:3px">
+                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                        </div>
 
 
 
-                                        </log-cell-template>
-                                    </ng-template>
+                                    </log-cell-template>
                                 </log-column>
 
 
@@ -274,262 +250,7 @@
                 </tr>
             </table>
         </td>
-
-
-
-    </tr>
-
-    <tr style="height: 32px;">
-        <td colspan="7" style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                    </td>
-
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly" id="CreateCertificate">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-</table>
-<table *ngIf="allowExport">
-
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="7">
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
-        </td>
-    </tr>
-    <tr>
- 
-        <!-- ClassificationCode -->
-        <td style="width:85px; padding-right: 15px;">
-            <div *ngIf="IsHeaderVisible" style="color: #3b95d5;">{{'Customs.SupplierInvoiceItem.F.ClassificationCode'  | TextCodeTranslationPipe}}</div>
-        </td>
-        <td style="width:90px">
-            <div *ngIf="IsHeaderVisible">{{ClassificationCode}}</div>
-        </td>
-
-        <!-- InvoiceNumber -->
-        <td style="width:80px; padding-right: 10px;">
-            <div *ngIf="IsHeaderVisible" style="color: #3b95d5;">{{'Customs.SupplierInvoice.F.InvoiceNumber'  | TextCodeTranslationPipe}}</div>
-        </td>
-        <td style="">
-            <div *ngIf="IsHeaderVisible">{{InvoiceNumber}}</div>
-        </td>
-
-
-        <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
-            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
-        </td>
-    </tr>
-
-    <tr style="height:5px"></tr>
-    <tr style="height:100%;bottom:5px">
-        <td colspan="7">
-            <table>
-                <tr>
-                    <td style="width:10px"></td>
-                    <td colspan="5" style="padding-right:10px">
-
-                        <div class="CellContent" style="bottom: 5px;padding:5px">
-                            <logitude-edit-grid GridWidth="100%"
-                                                GridHeight="100%"
-                                                (RowEnded)="OnRowEnded($event)"
-                                                (Ondblclick)="OnFocus()"
-                                                [IsReadOnly]="IsDisplayOnly"
-                                                [ItemSource]="ItemsSource"
-                                                (SelectedItemChanged)="OnRowSelected($event)"
-                                                [SelectedRow]="SelectedRow">
-
-
-
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.SequenceNumeric' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <div style="text-align:right" class="TextTrimming">
-                                                <span>{{item.SequenceNumeric}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
-
-
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ReqConfirmationTypeCode' | TextCodeTranslationPipe" [binding]="'ConfirmationTypeCode'" [width]="'85'" [Editable]="true" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.ConfirmationTypeName}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogLov [ObjectFieldName]="'ConfirmationTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'Customs.ConfirmationType'"
-                                                        (SelectedItemChanged)="item.ConfirmationType = $event"
-                                                        [FocusOnMe]="'true'"
-                                                        [HideColumns]="true"
-                                                        [QueryFilterItems]="confirmationTypeFilter">
-                                                </LogLov>
-
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-
-
-                                </log-column>
-
-
-
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.AttachmentTypeCode' | TextCodeTranslationPipe" [binding]="'AttachmentTypeCode'" [width]="'95'" [Editable]="true" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.AttachmentTypeName}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogLov [ObjectFieldName]="'AttachmentTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'Customs.AttachmentType'"
-                                                        (SelectedItemChanged)="item.AttachmentType = $event"
-                                                        [FocusOnMe]="'true'"
-                                                        [HideColumns]="true">
-                                                </LogLov>
-
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-
-
-                                </log-column>
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateNumber' | TextCodeTranslationPipe" [binding]="'CertificateNumber'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.CertificateNumber}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CertificateNumber'" [DataContext]="item"
-                                                            [Text]="item.CertificateNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-
-
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-
-
-                                </log-column>
-
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateExemptionTypeCode' | TextCodeTranslationPipe" [width]="'85'"
-                                            [Editable]="true" [Alignment]="'right'" [binding]="'CertificateExemptionTypeCode'">
-
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.CertificateExemptionTypeName}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'Customs.CertificateExemptionType'"
-                                                        (SelectedItemChanged)="item.CertificateExemptionType = $event"
-                                                        [FocusOnMe]="'true'"
-                                                        [HideColumns]="true"
-                                                        [QueryFilterItems]="TypeCodeFilterItems">
-                                                </LogLov>
-
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-
-                                </log-column>
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ResConfirmationTypeCode' | TextCodeTranslationPipe" [width]="'70'"
-                                            [Editable]="true" [Alignment]="'right'" [binding]="'ResConfirmationTypeCode'">
-
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.ResConfirmationTypeName}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogLov [ObjectFieldName]="'ResConfirmationTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'Customs.ConfirmationType'"
-                                                        (SelectedItemChanged)="item.ResConfirmationType = $event"
-                                                        [FocusOnMe]="'true'"
-                                                        [HideColumns]="true"
-                                                        [QueryFilterItems]="confirmationTypeFilter">
-                                                </LogLov>
-
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-
-
-                                </log-column>
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CustomsAttachmentID' | TextCodeTranslationPipe" [width]="'145'"
-                                            [Editable]="true" [Alignment]="'right'" [binding]="'CustomsAttachmentID'">
-
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.CustomsAttachmentID}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [ObjectFieldName]="'CustomsAttachmentID'" [DataContext]="item" [FocusOnMe]="'true'"
-                                                            [Text]="item.CustomsAttachmentID" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-
-
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
-
-                                </log-column>
-
- 
-
-
-                                <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
-                                    <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                            <div style="width: 30px; float: right; height:20px;padding-top:3px">
-                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
-                                            </div>
-
-
-
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
-
-
-
-
-
-                            </logitude-edit-grid>
-                        </div>
-                    </td>
-
-                </tr>
-            </table>
-        </td>
-
+    
 
 
     </tr>
@@ -543,7 +264,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()" >{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -559,4 +280,3 @@
     </tr>
 
 </table>
-

@@ -23,7 +23,7 @@ import { SystemTableRequestParams } from '../../../Customs/DataContract/RequestP
 import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './InterfaceManagementsListTemplate.html',
 })
 
@@ -37,7 +37,7 @@ export class InterfaceManagementsListTemplate {
 
         //if (AppTool.IsNullOrEmpty(InterfaceManagementsListTemplate.translate_CommunicationLogBView)) {
         //    this._entityResourceService.getEntityResourceByTableName("CommunicationLog")
-        //        .subscribe((response:any) => {
+        //        .subscribe(response => {
         //            InterfaceManagementsListTemplate.translate_CommunicationLogBView = TextCodeTranslator.Translate("CommunicationLog.B.View");// itzik : Translate +_entityResourceService - its bad :due that i done this- 
         //        });
         //}

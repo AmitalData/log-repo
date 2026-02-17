@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -89,7 +89,6 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Quote", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("Quote", entityPM.Tenant, authToken.Tenant);
                 
                         IQuotesContext MyContext = QuotesContext.GetContext(entityPM.Tenant);
                         QuoteService service = new QuoteService(MyContext, entityPM.Tenant);
@@ -137,7 +136,6 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Quote", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("Quote", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "Quote" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "QuotePM" + entityPM.Id + entityPM.Tenant;

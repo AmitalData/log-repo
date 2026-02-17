@@ -24,11 +24,7 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
-        public bool AnyDeclarationPaymentProtest(string declarationId, int tenant)
-        {
-            return this.GetAll(tenant).Any(r => r.DeclarationId == declarationId);
-        }
-    }
+   }
 
 }
    

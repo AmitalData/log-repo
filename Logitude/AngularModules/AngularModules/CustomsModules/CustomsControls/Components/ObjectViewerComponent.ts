@@ -16,7 +16,7 @@ interface IMyElement {
 /////////////////////////////////////////////////
 //<span *ngSwitchCase="2" > <hr/></span>
 @Component({
-    
+    moduleId: module.id,
     selector: 'object-viewer',
     templateUrl: './ObjectViewerComponent.html',
 })

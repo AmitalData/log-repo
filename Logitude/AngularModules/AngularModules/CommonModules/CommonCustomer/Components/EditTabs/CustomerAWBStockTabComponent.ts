@@ -10,7 +10,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerAWBStockTabComponent.html',
 })
 

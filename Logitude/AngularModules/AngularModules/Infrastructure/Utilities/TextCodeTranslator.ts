@@ -1,31 +1,11 @@
 declare var window: any;
 import {SessionLocator} from '../Utilities/SessionLocator';
 import { AppTool } from '../Tools';
-import { isNullOrUndefined } from 'util';
-import { ObjectsLocator } from '../Locators/ObjectsLocator';
+import { retry } from 'rxjs/operator/retry';
 
 export class TextCodeTranslator {
 
-
-
-    static BIReportTranslate(value: string) {
-        var translation = "";
-        var translationObject = window.TextCodes?.filter(d => d.Code == value)[0];
-        if (translationObject) {
-            var codeTranslation = window.TenantTranslations?.filter((d: any) => d.TextCodeCode === translationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM?.Language)[0];
-            if (codeTranslation) {
-                translation = codeTranslation.TranslatedText;
-            }
-        }
-
-        return translation;
-    }
-
-
-
-
-
-    static Translate(value: string, Fix: boolean = true): string {        
+    static Translate(value: string, Fix: boolean = true): string {
         if (SessionLocator.UseCachedData) {
 
             return this.TranslateCached(value, Fix);
@@ -33,22 +13,22 @@ export class TextCodeTranslator {
         //console.log('88888888888888:', value);
 
         var translation: string = "";
-        var cachedTranslationObject = window.TranslationsCache?.filter((d: any) => d.Code === value)[0];
+        var cachedTranslationObject = window.TranslationsCache.filter((d: any) => d.Code === value)[0];
 
         if (cachedTranslationObject) {
             translation = cachedTranslationObject.TranslatedText;
         }
 
         else {
-            var translationObject = window.TextCodesTranslations?.filter((d: any) => d.Code == value)[0];
+            var translationObject = window.TextCodesTranslations.filter((d: any) => d.Code == value)[0];
             if (translationObject) {
                 translation = translationObject.TranslatedText;
-                window.TranslationsCache?.push(translationObject);
+                window.TranslationsCache.push(translationObject);
             }
         }
 
-        if (window.TranslationsCache?.length > 200) {
-            window.TranslationsCache?.splice(0, 50);
+        if (window.TranslationsCache.length > 200) {
+            window.TranslationsCache.splice(0, 50);
         }
 
         if (Fix == true) {
@@ -64,10 +44,10 @@ export class TextCodeTranslator {
         //console.log('88888888888888:', value);
 
         var translation: string = "";
-        var cachedTranslationObject = window.TextCodesCache?.filter((d: any) => d.Code === value)[0];
+        var cachedTranslationObject = window.TextCodesCache.filter((d: any) => d.Code === value)[0];
 
         if (cachedTranslationObject) {
-            if (SessionLocator.LoggedUserPM?.DontShowLocal) {
+            if (SessionLocator.LoggedUserPM.DontShowLocal) {
                 translation = cachedTranslationObject.DefaultText;
             }
             else {
@@ -79,12 +59,12 @@ export class TextCodeTranslator {
                 }
             }
 
-            var codeTranslation = window.TenantTranslations?.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM?.Language)[0];
+            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
             if (codeTranslation) {
                 translation = codeTranslation.TranslatedText;
             }
             else {
-                var languageTranslation = window.TenantLanguageTranslations?.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code)[0];
+                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id)[0];
                 if (languageTranslation) {
                     translation = languageTranslation.TranslatedText;
                 }
@@ -92,9 +72,9 @@ export class TextCodeTranslator {
         }
 
         else {
-            var translationObject = window.TextCodes?.filter(d => d.Code == value)[0];
+            var translationObject = window.TextCodes.filter(d => d.Code == value)[0];
             if (translationObject) {
-                if (SessionLocator.LoggedUserPM?.DontShowLocal) {
+                if (SessionLocator.LoggedUserPM.DontShowLocal) {
                     translation = translationObject.DefaultText;
 
                 }
@@ -108,33 +88,23 @@ export class TextCodeTranslator {
 
                 }
 
-                var codeTranslation = window.TenantTranslations?.filter((d: any) => d.TextCodeCode === translationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM?.Language)[0];
+                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === translationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
                 if (codeTranslation) {
                     translation = codeTranslation.TranslatedText;
                 }
                 else {
-                    var languageTranslation = window.TenantLanguageTranslations?.filter((d: any) => d.TextCodeCode === translationObject.Code)[0];
+                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === translationObject.Id)[0];
                     if (languageTranslation) {
                         translation = languageTranslation.TranslatedText;
                     }
                 }
 
-                window.TextCodesCache?.push(translationObject);
-            }
-            else {
-              console.log("TextCodeTranslator - TranslateCached - Not Found Translation for Code: " + value); ;
-
-                // if (this.ShowAlertMessage(value)) {
-                //     if (SessionLocator.LoggedUserPM.Email?.includes("logitudeworld.com")) 
-                //     {
-                //         alert("This Code '" + value + "' Not Found!");
-                //     } 
-                // }
+                window.TextCodesCache.push(translationObject);
             }
         }
 
-        if (window.TextCodesCache?.length > 200) {
-            window.TextCodesCache?.splice(0, 50);
+        if (window.TextCodesCache.length > 200) {
+            window.TextCodesCache.splice(0, 50);
         }
 
         if (Fix == true) {
@@ -145,20 +115,6 @@ export class TextCodeTranslator {
             return translation;
         }
     }
-    static ShowAlertMessage(value) {
-        if (isNullOrUndefined(value) || value.indexOf(".NewButton") >= 0 || value == "No Filter")
-            return false;
-        if (value == "AccountingPartner.F.SearchFields")
-            return false;
-        var productionStages: Array<string> = ["simplog", "logboxwe1", "amitalstorage"];
-        if(ObjectsLocator.GlobalSetting?.DeploymentStage === null || ObjectsLocator.GlobalSetting?.DeploymentStage === undefined) {return false};
-
-        if (!productionStages.find(stage => stage == ObjectsLocator.GlobalSetting.DeploymentStage?.toLowerCase())) {
-            if (!SessionLocator.ProtractorEmails?.find(userEmail => userEmail == SessionLocator.LoggedUserPM?.Email?.toLowerCase()))
-                return true;
-        }
-        return false;
-    }
     static TranslateTable(value: string): string {
 
         if (SessionLocator.UseCachedData) {
@@ -166,22 +122,22 @@ export class TextCodeTranslator {
         }
 
         var translation: string = "";
-        var cachedTranslationObject = window.TranslationsCache?.filter((d: any) => d.Code === value)[0];
+        var cachedTranslationObject = window.TranslationsCache.filter((d: any) => d.Code === value)[0];
 
         if (cachedTranslationObject) {
             translation = cachedTranslationObject.TranslatedText;
         }
 
         else {
-            var translationObject = window.TextCodesTranslations?.filter((d: any) => d.Code == value)[0];
+            var translationObject = window.TextCodesTranslations.filter((d: any) => d.Code == value)[0];
             if (translationObject) {
                 translation = translationObject.TranslatedText;
-                window.TranslationsCache?.push(translationObject);
+                window.TranslationsCache.push(translationObject);
             }
         }
 
-        if (window.TranslationsCache?.length > 200) {
-            window.TranslationsCache?.splice(0, 50);
+        if (window.TranslationsCache.length > 200) {
+            window.TranslationsCache.splice(0, 50);
         }
 
         return TextCodeTranslator.FixTranslation(translation);
@@ -193,22 +149,22 @@ export class TextCodeTranslator {
         }
 
         var translation: string = "";
-        var cachedTranslationObject = window.TranslationsCache?.filter((d: any) => d.Code === value)[0];
+        var cachedTranslationObject = window.TranslationsCache.filter((d: any) => d.Code === value)[0];
 
         if (cachedTranslationObject) {
             translation = cachedTranslationObject.TranslatedTextPlural;
         }
 
         else {
-            var translationObject = window.TextCodesTranslations?.filter((d: any) => d.Code == value)[0];
+            var translationObject = window.TextCodesTranslations.filter((d: any) => d.Code == value)[0];
             if (translationObject) {
                 translation = translationObject.TranslatedTextPlural;
-                window.TranslationsCache?.push(translationObject);
+                window.TranslationsCache.push(translationObject);
             }
         }
 
-        if (window.TranslationsCache?.length > 200) {
-            window.TranslationsCache?.splice(0, 50);
+        if (window.TranslationsCache.length > 200) {
+            window.TranslationsCache.splice(0, 50);
         }
 
         return TextCodeTranslator.FixTranslation(translation);
@@ -218,17 +174,17 @@ export class TextCodeTranslator {
         //console.log('88888888888888:', value);
 
         var translation: string = "";
-        var cachedTranslationObject = window.TextCodesCache?.filter((d: any) => d.Code === value)[0];
+        var cachedTranslationObject = window.TextCodesCache.filter((d: any) => d.Code === value)[0];
 
         if (cachedTranslationObject) {
             //translation = cachedTranslationObject.DefaultText;
             translation = cachedTranslationObject.DefaultTextPlural;
-            var codeTranslation = window.TenantTranslations?.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM?.Language)[0];
+            var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
             if (codeTranslation) {
                 translation = codeTranslation.TranslatedTextPlural;
             }
             else {
-                var languageTranslation = window.TenantLanguageTranslations?.filter((d: any) => d.TextCodeCode === cachedTranslationObject.Code)[0];
+                var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === cachedTranslationObject.Id)[0];
                 if (languageTranslation) {
                     translation = languageTranslation.TranslatedText;
                 }
@@ -236,27 +192,27 @@ export class TextCodeTranslator {
         }
 
         else {
-            var translationObject = window.TextCodes?.filter(d => d.Code == value)[0];
+            var translationObject = window.TextCodes.filter(d => d.Code == value)[0];
             if (translationObject) {
                 translation = translationObject.DefaultTextPlural;
 
-                var codeTranslation = window.TenantTranslations?.filter((d: any) => d.TextCodeCode === translationObject.Code && d.TranslationHeaderCode == SessionLocator.TenantPM?.Language)[0];
+                var codeTranslation = window.TenantTranslations.filter((d: any) => d.TextCodeId === translationObject.Id && d.TranslationHeaderCode == SessionLocator.TenantPM.Language)[0];
                 if (codeTranslation) {
                     translation = codeTranslation.TranslatedTextPlural;
                 }
                 else {
-                    var languageTranslation = window.TenantLanguageTranslations?.filter((d: any) => d.TextCodeCode === translationObject.Code)[0];
+                    var languageTranslation = window.TenantLanguageTranslations.filter((d: any) => d.TextCodeId === translationObject.Id)[0];
                     if (languageTranslation) {
                         translation = languageTranslation.TranslatedText;
                     }
                 }
 
-                window.TextCodesCache?.push(translationObject);
+                window.TextCodesCache.push(translationObject);
             }
         }
 
-        if (window.TextCodesCache?.length > 200) {
-            window.TextCodesCache?.splice(0, 50);
+        if (window.TextCodesCache.length > 200) {
+            window.TextCodesCache.splice(0, 50);
         }
 
         return TextCodeTranslator.FixTranslation(translation);
@@ -266,9 +222,9 @@ export class TextCodeTranslator {
         var fieldName = TextCodeTranslator.Translate(fieldNameTextCode);
         var tableName = TextCodeTranslator.Translate(tableNameTextCode);
 
-        message = message?.replace('%FieldName', fieldName);
-        message = message?.replace('%TableName', tableName);
-        message = message?.replace('%EntityReference', entityReference ? entityReference : "");
+        message = message.replace('%FieldName', fieldName);
+        message = message.replace('%TableName', tableName);
+        message = message.replace('%EntityReference', entityReference ? entityReference : "");
 
         return message;
     }

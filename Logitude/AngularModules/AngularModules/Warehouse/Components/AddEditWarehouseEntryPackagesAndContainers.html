@@ -32,9 +32,9 @@
             </td> 
         </tr>
 
-        <tr *ngIf="warehouseEntryPackageItem && warehouseEntryPackageItem.WarningErrorsList != null && warehouseEntryPackageItem.WarningErrorsList.length > 0" style="height:1px;">
+        <tr *ngIf="WarningErrorsList != null && WarningErrorsList.length > 0" style="height:1px;">
             <td colspan="3">
-                <WarningSummary [ItemsSource]="warehouseEntryPackageItem.WarningErrorsList" [SingleLine]="true"></WarningSummary>
+                <WarningSummary [ItemsSource]="WarningErrorsList" [SingleLine]="true"></WarningSummary>
             </td>
         </tr>
          
@@ -58,7 +58,7 @@
                     <tr *ngIf="warehouseEntryPackageItem && warehouseEntryPackageItem.IsContainer" style="vertical-align:top;height:35px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:150px;">  <LogLabel [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogLabel></td>
-                        <td style="width:270px"><LogTextBox style="width:230px" (LostFocus)="warehouseEntryPackageItem.ContainerNumberLostFocus($event)" [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox></td>
+                        <td style="width:270px"><LogTextBox style="width:230px" (LostFocus)="ContainerNumberLostFocus($event)" [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="'WarehouseEntryPackage'" [DataContext]="warehouseEntryPackageItem"></LogTextBox></td>
                         <td><div></div></td>
                     </tr>
 

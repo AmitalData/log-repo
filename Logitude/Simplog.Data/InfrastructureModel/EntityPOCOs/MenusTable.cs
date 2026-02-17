@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -20,10 +20,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string FeatureId { get; set; }
         public string Code { get; set; }
         public string HtmlView { get; set; }
-        public string FeatureUniqeCode { get; set; }
-        public string QuerySection { get; set; }
 
-        
         //[Include]
         //[Association("MenuTypeMenusTable", "MenuTypeCode", "Code", IsForeignKey = true)]
         [ForeignKey("MenuTypeCode")]
@@ -38,7 +35,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
          [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
 
-        //[ForeignKey("FeatureId")]
+        [ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
     }
 }

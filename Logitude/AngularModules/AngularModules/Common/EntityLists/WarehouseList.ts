@@ -26,8 +26,6 @@ export class WarehouseList {
 		VatTypeId: string;
 		EnableConsolidationInvoices: boolean;
 		CityName: string;
-		Address1: string;
-		Address2: string;
 		CountryId: string;
 		CountryCode: string;
 		CountryName: string;
@@ -43,19 +41,5 @@ export class WarehouseList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
-		StateName: string;
-		ChargeStorage: boolean;
-		CurrencyId: string;
-		AirWeightMeasurementCode: string;
-		OceanWeightMeasurementCode: string;
-		InlandWeightMeasurementCode: string;
-		AirWeightRoundingCode: string;
-		OceanWeightRoundingCode: string;
-		InlandWeightRoundingCode: string;
-		RegimenFiscalCode: string;
-		SATReceptorName: string;
-		GLAccountNumber: string;
-		StorageFreeDays: number;
-		PaymentTermEnglishName: string;
 	
 }

@@ -35,7 +35,7 @@ export class OpportunityPMInitService {
             entityPM.RatingCode = "N";
 
             var stageListService: StageListService = new StageListService();
-            stageListService.getAllFromCache().subscribe((result:any) => {
+            stageListService.getAllFromCache().subscribe(result => {
                 var myStage: StageList = result.Result.filter(d => d.Code == "QUA" && d.Tenant == SessionLocator.Tenant)[0];
 
                 if (myStage != null) {
@@ -57,7 +57,7 @@ export class OpportunityPMInitService {
     public static ApplyUIPoperties(entityPM: OpportunityPM, isNew: boolean) {
         
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe((result:any) => {
+        oppTypeListService.getAllFromCache().subscribe(result => {
 
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == entityPM.OpportunityTypeId)[0];
             var typeCode: string = typeList == null ? null : typeList.Code;

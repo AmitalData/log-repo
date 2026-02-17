@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .BoxItemRow td span {
         color: #0B3861;
@@ -67,7 +67,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button id="{{'addAddress' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddAddressClicked()" [disabled]="!IsEditingEnabled">{{'Address.B.NewAddress' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" (click)="AddAddressClicked()" [disabled]="!IsEditingEnabled">{{'Address.B.NewAddress' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>
@@ -77,7 +77,7 @@
         <tr style="height: 1px;" *ngIf="IsBlockingUnifreightCustomer">
             <td>
                 <div class="OrangeInfo" style="margin: 5px;">
-                    <label class="Value">Customer connected to Unifreight, updates allowed from Unifreight only</label>
+                    <label class="Value">Customer connected to uni-freight, updates allowed from Unifreight only</label>
                 </div>
             </td>
         </tr>
@@ -85,7 +85,7 @@
         <tr>
             <td>
                 <div class="ScrollViewer">
-
+          
                         <ul class="ScrollContent">
                             <li class="TemplateBoxItem" *ngFor="let item of ItemsSource">
                                 <table>
@@ -141,7 +141,7 @@
                                                     <td>{{item.CityLineText}}</td>
                                                 </tr>
 
-                                                <tr id="{{'rowid' | IdGeneratorAsyncPipe | async}}" class="BoxItemRow">
+                                                <tr class="BoxItemRow">
                                                     <td>{{item.CountryName}}</td>
                                                 </tr>
 
@@ -168,9 +168,7 @@
                                             </table>
 
                                             <!--<img style="position: absolute; right:0px; top:0px; width: 45px; height: 45px;" [attr.src]="item.CountryCode | CountryFlagPipe" />-->
-                                            <div style="position: absolute; right:0px; top:0px; width: 45px; height: 45px;"
-                                            [style.right]="isRTL?'initial':'0px'"
-                                            [style.left]="!isRTL?'initial':'0px'">
+                                            <div style="position: absolute; right:0px; top:0px; width: 45px; height: 45px;">
                                                 <Image [Width]="45" [Height]="45" [Src]="item.Src"></Image>
 
                                             </div>
@@ -182,7 +180,7 @@
                                 </table>
                             </li>
                         </ul>
-
+                
                 </div>
             </td>
         </tr>

@@ -1,11 +1,12 @@
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'advancedocumentType',
     templateUrl: './AdvanceDocumentTypeComponent.html',
 })

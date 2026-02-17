@@ -14,7 +14,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'NewGetProjectComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewGetProjectComponent.html',
 })
 

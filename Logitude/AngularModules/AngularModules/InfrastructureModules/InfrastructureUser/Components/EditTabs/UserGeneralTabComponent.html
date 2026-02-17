@@ -1,21 +1,4 @@
-<style>  
-    .ImageName {
-        position: absolute;
-        top: 44px;
-    }
 
-    .removeLink {
-        margin-left: 40px;
-    }
-
-    .ImageSize {
-        font-size: 11px;
-        top: 65px;
-        position: relative;
-        left: 10px;
-    }
-
-</style>
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -26,12 +9,12 @@
             <td>
                 <table>
                     <tr>
-                        <td style="width: 390px;">
+                        <td style="width: 350px;">
                             <table>
 
                                 <!-- Email -->
                                 <tr class="FormFieldRow">
-                                    <td style="width: 170px;">
+                                    <td style="width: 130px;">
                                         <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
@@ -126,24 +109,26 @@
                                 </tr>
 
                                 <!-- Technology -->
-                                <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td>
-            <table>
-                <tr>
-                    <td>
-                        <ComboBox [IsDisabled]="!IsEditingEnabled" [ItemsSource]="TechnologyList" (SelectedItemChanged)="TechnologyValueChanged($event)" [SelectedItem]="SelectedTechnology" [Binding]="'Name'"></ComboBox>
-                    </td>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <ComboBox [IsDisabled]="!IsEditingEnabled" [ItemsSource]="TechnologyList" (SelectedItemChanged)="TechnologyValueChanged($event)" [SelectedItem]="SelectedTechnology" [Binding]="'Name'"></ComboBox>
+                                                </td>
 
-                    <td style="width: 36px;">
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>-->
+                                                <td style="width: 36px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+
                                 <!-- Mobile -->
                                 <tr class="FormFieldRow">
                                     <td>
@@ -153,6 +138,8 @@
                                         <LogTextBox [ObjectFieldName]="'Mobile'" [Text]="Mobile" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                     </td>
                                 </tr>
+
+
 
 
                                 <!-- IsSalesman -->
@@ -214,93 +201,6 @@
                                     <td>
                                         <LogCheckBox [ObjectFieldName]="'ShowLocalNameInLOV'" [Checked]="ShowLocalNameInLOV" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                     </td>
-                                </tr>
-
-                                <!-- SecurityLevel -->
-                                <tr class="FormFieldRow" *ngIf="IsSecurityLevelVisibile">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'SecurityLevel'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td style="top:10px;">
-                                        <div style="width:110px">
-                                            <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1" [max]="10" [allowNull]="true"></NumberInput>
-                                        </div>
-                                    </td>
-                                    <td><div></div></td>
-                                </tr>
-
-                                <!-- DontShowLocalLabels  -->
-                                <tr class="FormFieldRow" *ngIf="IsDontShowLocalLabelsVisibile">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'DontShowLocalLabels'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogCheckBox [ObjectFieldName]="'DontShowLocalLabels'" [Checked]="DontShowLocalLabels" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                    </td>
-                                </tr>
-
-                                <!-- AdditionalPackagesOnly  -->
-                                <tr class="FormFieldRow" *ngIf="IsAdditionalPackagesOnlyVisible">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'AdditionalPackagesOnly'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogCheckBox [ObjectFieldName]="'AdditionalPackagesOnly'" [Checked]="AdditionalPackagesOnly" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                    </td>
-                                </tr>
-
-
-                                <!-- LayoutDirection  -->
-                                <tr class="FormFieldRow" *ngIf="IsLayoutDirectionVisibile">
-                                    <td colspan="2">
-                                        <table>
-                                            <tr>
-                                                <td style="width:170px">
-                                                    <LogLabel [ObjectFieldName]="'LayoutDirection'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td style="width:180px">
-                                                    <ComboBox [ItemsSource]="LayoutDirections" [Binding]="'Name'" [SelectedItem]="SelectedDirection" (SelectedItemChanged)="SelectedDirection=$event"></ComboBox>
-                                                </td>
-                                                <td></td>
-
-                                            </tr>
-
-                                        </table>
-
-
-
-                                    </td>
-
-                                </tr>
-
-                                <!-- SignatureId  -->
-                                <tr class="FormFieldRow">
-
-                                    <td style="width:190px;height:22px; vertical-align:top">
-                                        <span class="ImageName">
-                                            <LogLabel [Text]="'Signature Image'" [ObjectFieldName]="'SignatureImageId'" [ObjectTableName]="'ObjectTableName'"
-                                                      [DataContext]="DataContext"></LogLabel>
-                                        </span>
-                                        <span class="ImageSize">Size: (100X100 pixels)</span>
-                                    </td>
-
-                                    <td style="vertical-align:top">
-                                        <div style="width:120px;height:120px">
-                                            <ImageComponent [KeepOriginalSize]="false" [WidthImage]="'100px'"
-                                                            [ImageResizeHeight]="'100'" [ImageResizeWidth]="'100'"
-                                                            [HeightImage]="'100px'" [ImageId]="SignatureImageId"
-                                                            [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
-                                                            (UploadCompleted)="SignatureUploadedCompleted($event)"
-                                                            style="height:72px;width:72px">
-                                            </ImageComponent>
-                                        </div>
-                                        <a class="removeLink" (click)="RemoveImage('SignatureImageId')">remove</a>
-
-                                    </td>
-
-                                    <td></td>
                                 </tr>
 
                                 <!-- Notes -->

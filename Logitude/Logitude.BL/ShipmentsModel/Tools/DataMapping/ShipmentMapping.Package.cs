@@ -4,8 +4,7 @@ using System.Linq;
 using System.Web;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.Tools.DataMapping;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
@@ -95,11 +94,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.RoutingIds = itemPM.RoutingIds;
             itemPoco.VoyageTripNumber = itemPM.VoyageTripNumber;
             itemPoco.HasContainerException = itemPM.HasContainerException;
-            itemPoco.WarehouseReleaseNumber = itemPM.WarehouseReleaseNumber;
-            itemPoco.InUse = itemPM.InUse;
-            itemPoco.HorseId = itemPM.HorseId;
-            itemPoco.LCLContainerTypeId = itemPM.LCLContainerTypeId;
-            itemPoco.ContainerEntityId = itemPM.ContainerEntityId;
+
             if (itemPM.TemperatureUnitCode == null)
             {
                 itemPM.TemperatureUnitCode = loggedTenant.TemperatureUnitCode;
@@ -127,7 +122,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.LastStatusDate = itemPM.LastStatusDate;
             itemPoco.DeliveryTransportModeCode = itemPM.DeliveryTransportModeCode;
             itemPoco.ECRTransportModeCode = itemPM.ECRTransportModeCode;
-            itemPoco.ContainerStatusSourceCode = itemPM.ContainerStatusSourceCode;
 
             itemPoco.Make = itemPM.Make;
             itemPoco.Year = itemPM.Year;
@@ -136,7 +130,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ChassisNumber = itemPM.ChassisNumber;
             itemPoco.RegistrationNumber = itemPM.RegistrationNumber;
             itemPoco.CountryId = itemPM.CountryId;
-            itemPoco.ContainerStrippedDate = itemPM.ContainerStrippedDate;
         }
 
         public static void MapCommodityPackage(CommodityPackagePM itemPM, ShipmentPackage itemPoco, bool isNewEntity)

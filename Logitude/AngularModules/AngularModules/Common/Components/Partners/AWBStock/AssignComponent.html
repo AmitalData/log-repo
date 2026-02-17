@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr style="height: 1px;">
         <td>
@@ -31,7 +31,7 @@
 
                     <div class="SimpleGridViewBody">
                         <table>
-                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource">
+                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
                                 <td class="GridViewCell">
                                     <div>{{item.AirlineName}}</div>
                                 </td>

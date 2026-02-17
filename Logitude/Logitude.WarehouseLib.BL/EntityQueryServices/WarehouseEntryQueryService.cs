@@ -2,17 +2,15 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.WarehouseLib.BL.EntityPMs;
-using Logitude.WarehouseLib.BL.EntityUpdateServices;
 using Logitude.WarehouseLib.BL.Helpers;
-using Logitude.WarehouseLib.BL.Service;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.Data.EntityKeys;
 using Logitude.WarehouseLib.Data.EntityLists;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -23,7 +21,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace Logitude.WarehouseLib.BL.EntityQueryServices
 {
@@ -69,41 +66,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return myResult;
         }
 
-        public List<WarehouseEntryList> GetActiveWarehouseEntryListsByshipmentId(string shipmentId, int tenant)
-        {
 
-            List<WarehouseEntryList> myResult = (from a in context.WarehouseEntries
-                                                 where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode != "CAEA"
-                                                 select new WarehouseEntryList()
-                                                 {
-                                                     Id = a.Id,
-                                                     EntryNumber = a.EntryNumber,
-                                                     CreateDate = a.CreateDate,
-                                                     ConnectedToReferenceNumber = a.ConnectedToReferenceNumber,
-                                                 }).ToList();
-            return myResult;
-        }
-
-        public List<WarehouseEntryList> GetActiveWarehouseEntryListsByWarehouseId(string warehouseId, int tenant)
-        {
-
-            List<WarehouseEntryList> myResult = (from a in context.WarehouseEntries
-                                                 where a.WarehouseId == warehouseId && a.Tenant == tenant && a.StatusCode != "CAEA"
-                                                 select new WarehouseEntryList()
-                                                 {
-                                                     Id = a.Id,
-                                                     EntryNumber = a.EntryNumber,
-                                                     CreateDate = a.CreateDate,
-                                                     DirectionId = a.DirectionId,
-                                                     TransportModeId = a.TransportModeId,
-                                                     ShipmentId = a.ShipmentId,
-                                                     StatusCode = a.StatusCode,
-                                                     ConnectedToShipment = a.ConnectedToShipment,
-                                                     CustomerId = a.CustomerId,
-                                                     ConnectedToReferenceNumber = a.ConnectedToReferenceNumber,
-                                                 }).ToList();
-            return myResult;
-        }
 
         public override void GetComposition(EntityKeyFields entityKeys, WarehouseEntryPM entityPM)
         {
@@ -113,24 +76,6 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             WarehouseEntryPackageQueryService queryService = new WarehouseEntryPackageQueryService(context);
             entityPM.WarehouseEntryPackages = queryService.GetMulti(warehouseEntryKeys, true);
             PackageTypeRepository packageTypeRepository = new PackageTypeRepository(entityPM.Tenant);
-
-            #region Related Releases
-            List<string> warehouseEntryPackagesIds = entityPM.WarehouseEntryPackages.Where(d=>d.Instock!=d.Quantity).Select(d => d.Id).ToList();
-            List<WarehouseReleasePackageList> warehouseReleasePackagesLists = null;
-            List<WarehouseEntryPackagesReleaseList> warehouseEntryPackagesReleaseLists = null;
-
-            if (warehouseEntryPackagesIds.Count > 0)
-            {
-                WarehouseEntryPackagesReleaseQueryService warehouseEntryPackagesReleaseQueryService = new WarehouseEntryPackagesReleaseQueryService(entityPM.Tenant);
-                warehouseEntryPackagesReleaseLists = warehouseEntryPackagesReleaseQueryService.GetWarehouseEntryPackagePMListsByCustomerIdIdAndWarehouseId(warehouseEntryPackagesIds, entityPM.Tenant);
-                if (warehouseEntryPackagesReleaseLists.Count > 0)
-                {
-                    WarehouseReleasePackageQueryService warehouseReleasePackageQueryService = new WarehouseReleasePackageQueryService(entityPM.Tenant);
-                    warehouseReleasePackagesLists = warehouseReleasePackageQueryService.GetWarehouseReleasePackageListsByIds(warehouseEntryPackagesReleaseLists.Select(d => d.ReleasePackageId).ToList(), entityPM.Tenant);
-                }
-            }
-            #endregion
-
             foreach (WarehouseEntryPackagePM item in entityPM.WarehouseEntryPackages)
             {
                 PackageType packageType = packageTypeRepository.GetSinglePackageType(item.PackageTypeId, item.Tenant);
@@ -144,24 +89,6 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                 item.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
                 item.DimensionUnitCode = entityPM.DimensionsUnitCode;
                 item.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
-
-                #region Related Releases
-                if (warehouseEntryPackagesReleaseLists != null && warehouseReleasePackagesLists != null)
-                {
-                    var releasePackageIds = warehouseEntryPackagesReleaseLists.Where(d => d.EntryPackageId == item.Id).Select(d => d.ReleasePackageId).ToList();
-                    if (releasePackageIds.Count > 0)
-                    {
-                        var lists = warehouseReleasePackagesLists.Where(d => releasePackageIds.Contains(d.Id)).GroupBy(d => d.ReleaseNumber).Select(d => d.FirstOrDefault().ReleaseNumber).ToList();
-                        foreach (string releaseNumber in lists)
-                        {
-                            if (string.IsNullOrEmpty(item.ReleasesNumber)) item.ReleasesNumber = releaseNumber;
-                            else item.ReleasesNumber += ("," + releaseNumber);
-                        }
-                    }
-                }
-
-                #endregion
-
             }
 
         }
@@ -195,11 +122,18 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             if (warehouseEntries.Count > 0)
             {
                 List<string> cardIds = new List<string>();
+                List<string> portIds = new List<string>();
+                List<string> addressIds = new List<string>();
+
                 foreach (WarehouseEntry warehouseEntry in warehouseEntries)
                 {
                     var isInlandDomestic = warehouseEntry.TransportModeId == "I" && warehouseEntry.DirectionId == "D" ? true : false;
                     if (!string.IsNullOrEmpty(warehouseEntry.WarehouseId) && !cardIds.Contains(warehouseEntry.WarehouseId)) cardIds.Add(warehouseEntry.WarehouseId);
                     if (!string.IsNullOrEmpty(warehouseEntry.CustomerId) && !cardIds.Contains(warehouseEntry.CustomerId)) cardIds.Add(warehouseEntry.CustomerId);
+                    if (!isInlandDomestic  && !string.IsNullOrEmpty(warehouseEntry.FromPortId) && !cardIds.Contains(warehouseEntry.FromPortId)) portIds.Add(warehouseEntry.FromPortId);
+                    if (!isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.ToPortId) && !cardIds.Contains(warehouseEntry.ToPortId)) portIds.Add(warehouseEntry.ToPortId);
+                    if (isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.FromAddressId) && !addressIds.Contains(warehouseEntry.FromAddressId)) addressIds.Add(warehouseEntry.FromAddressId);
+                    if (isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.ToAddressId) && !addressIds.Contains(warehouseEntry.ToAddressId)) addressIds.Add(warehouseEntry.ToAddressId);
                 }
 
 
@@ -208,6 +142,19 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                 {
                     CardQuery cardQuery = new CardQuery(tenant);
                     cardLists = cardQuery.GetCardListsByListIds(cardIds, tenant);
+                }
+
+                List<PortList> portLists = new List<PortList>();
+                if (portIds.Count > 0)
+                {
+                    PortQuery portQuery = new PortQuery(tenant);
+                    portLists = portQuery.GetPortListsByListIds(portIds, tenant);
+                }
+                List<AddressList> addressLists = new List<AddressList>();
+                if (addressIds.Count > 0)
+                {
+                    AddressQuery addressQuery = new AddressQuery(tenant);
+                    addressLists = addressQuery.GetAddressListsByIds(addressIds, tenant);
                 }
 
                 foreach (EntityLastActivity activity in lastActivities)
@@ -232,7 +179,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             CreateDate = warehouseEntry.CreateDate,
                             ActivityDate = activity.ActivityDate,
                             ActivityTypeName = activity.ActivityType!=null? activity.ActivityType.Name:"",
-                            ActivityByUserName = activity.User!=null? activity.User.Contact.EnglishName:null,
+                            ActivityByUserName = activity.User!=null? activity.User.Contact.EnglishName:"",
                             DirectionName = warehouseEntry.Direction != null ? warehouseEntry.Direction.Name : "",
                             TransportModeName = warehouseEntry.TransportMode != null ? warehouseEntry.TransportMode.Name : "",
                         };
@@ -253,14 +200,39 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
                         }
 
+                        if (!isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.FromPortId) && !string.IsNullOrEmpty(warehouseEntry.ToPortId))
+                        {
+                            string fromPorCode = "";
+                            string toPorCode = "";
 
-                        #region Routing
-                        WarehouseEntryRoutingService warehouseEntryRoutingService = new WarehouseEntryRoutingService();
-                        WarehouseEntryRouting warehouseEntryRouting = warehouseEntryRoutingService.GetWarehouseEntryRouting(new WarehouseEntryRoutingArgs() { TransportModeId = warehouseEntry.TransportModeId, DirectionId = warehouseEntry.DirectionId, FromAddressId = warehouseEntry.FromAddressId, ToAddressId = warehouseEntry.ToAddressId, FromPortId = warehouseEntry.FromPortId, ToPortId = warehouseEntry.ToPortId, ToCountryId = warehouseEntry.ToCountryId, FromCountryId = warehouseEntry.FromCountryId, FromTypeCode = warehouseEntry.FromTypeCode, ToTypeCode = warehouseEntry.ToTypeCode, Tenant = warehouseEntry.Tenant });
-                        warehouseEntryList.Origin = warehouseEntryRouting.Origin;
-                        warehouseEntryList.Destination = warehouseEntryRouting.Destination;
-                        warehouseEntryList.Routing = warehouseEntryRouting.Routing;
-                        #endregion
+                            PortList fromPort = portLists.Where(d => d.Id == warehouseEntry.FromPortId).FirstOrDefault();
+                            if (fromPort != null) fromPorCode = fromPort.Code;
+
+
+                            PortList toPor = portLists.Where(d => d.Id == warehouseEntry.ToPortId).FirstOrDefault();
+                            if (toPor != null) toPorCode = toPor.Code;
+
+                            warehouseEntryList.Routing = (fromPorCode + " > " + toPorCode);
+
+                        }
+
+
+                        if (isInlandDomestic && !string.IsNullOrEmpty(warehouseEntry.FromAddressId) && !string.IsNullOrEmpty(warehouseEntry.ToAddressId))
+                        {
+                            string fromAddressCity = "";
+                            string toAddressCity = "";
+
+                            AddressList fromAddress =addressLists.Where(d => d.Id == warehouseEntry.FromAddressId).FirstOrDefault();
+                            if (fromAddress != null) fromAddressCity = fromAddress.City;
+
+
+                            AddressList toAddress = addressLists.Where(d => d.Id == warehouseEntry.ToAddressId).FirstOrDefault();
+                            if (toAddress != null) toAddressCity = toAddress.City;
+
+                            warehouseEntryList.Routing = (fromAddressCity + " > " + toAddressCity);
+
+                        }
+
 
                         #endregion
 
@@ -281,139 +253,6 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return warehouseEntryLists;
         }
 
-        
-
-        public void PutCancelWarehouseEntry(WarehouseEntryPM entityPM)
-        {
-            IWarehouseContext MyContext = WarehouseContext.GetContext(entityPM.Tenant);
-            WarehouseEntryUpdateService service = new WarehouseEntryUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            service.InitializeEntityPM(entityPM);
-
-            entityPM.StatusCode = "CAEA";
-            entityPM.StatusName = "Cancelled";
-            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-            service.Update(entityPM, true);
-            PutInstockPackagesToZero(entityPM);
-            //WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository = null;
-            //WarehouseEntryPackageRepository warehouseEntryPackageRepository = null;
-            //List<string> warehousePackagesReleaseIds = null;
-
-            //if (entityPM.WarehouseEntryPackages != null && entityPM.WarehouseEntryPackages.Count > 0)
-            //{
-            //    warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(entityPM.Tenant);
-            //    warehouseEntryPackagesReleaseRepository = new WarehouseEntryPackagesReleaseRepository(entityPM.Tenant);
-            //    warehousePackagesReleaseIds = CanceledPackagesEntryAndGetPackagesReleaseIds(entityPM, warehouseEntryPackagesReleaseRepository, warehouseEntryPackageRepository);
-            //}
-
-            //EmptyconnectedWarehouseReleasePackages(warehousePackagesReleaseIds, entityPM.Tenant);
-            //SubmitEntryPackagesChanges(entityPM, warehouseEntryPackagesReleaseRepository, warehouseEntryPackageRepository);
-        }
-
-        private void PutInstockPackagesToZero(WarehouseEntryPM entityPM)
-        {
-            WarehouseEntryPackageRepository warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(entityPM.Tenant);
-            List<string> entryPackageIds = entityPM.WarehouseEntryPackages.Select(d => d.Id).ToList();
-            List<WarehouseEntryPackage> warehouseEntryPackages = warehouseEntryPackageRepository.GetWarehouseEntryPackageByIds(entryPackageIds, entityPM.Tenant);
-
-            foreach (WarehouseEntryPackagePM item in entityPM.WarehouseEntryPackages)
-            {
-                WarehouseEntryPackage warehouseEntryPackage = warehouseEntryPackages.Where(d => d.Id == item.Id).FirstOrDefault();
-                if (warehouseEntryPackage != null)
-                {
-                    item.Instock = 0;
-                    warehouseEntryPackage.Instock = 0;
-                }
-
-                warehouseEntryPackageRepository.Update(warehouseEntryPackage);
-            }
-            warehouseEntryPackageRepository.SubmitChanges();
-        }
-
-
-        private List<string> CanceledPackagesEntryAndGetPackagesReleaseIds(WarehouseEntryPM entityPM, WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository, WarehouseEntryPackageRepository warehouseEntryPackageRepository)
-        {
-            List<string> entryPackageIds = entityPM.WarehouseEntryPackages.Select(d => d.Id).ToList();
-            List<WarehouseEntryPackage> warehouseEntryPackages = warehouseEntryPackageRepository.GetWarehouseEntryPackageByIds(entryPackageIds, entityPM.Tenant);
-            List<string> warehousePackagesReleaseIds = new List<string>();
-
-            List<WarehouseEntryPackagesRelease> warehouseEntryPackagesReleases = warehouseEntryPackagesReleaseRepository.GetWarehouseEntryPackagesReleaseByEntryPackageIds(entryPackageIds, entityPM.Tenant);
-
-            foreach (WarehouseEntryPackagePM item in entityPM.WarehouseEntryPackages)
-            {
-                List<WarehouseEntryPackagesRelease> warehouseEntryPackagesRelease = warehouseEntryPackagesReleases.Where(d => d.EntryPackageId == item.Id).ToList();
-
-                if (warehouseEntryPackagesRelease != null && warehouseEntryPackagesRelease.Count > 0)
-                {
-                    foreach (WarehouseEntryPackagesRelease entryPackagesRelease in warehouseEntryPackagesRelease)
-                    {
-                        warehousePackagesReleaseIds.Add(entryPackagesRelease.ReleasePackageId);
-                        WarehouseEntryPackage warehouseEntryPackage = warehouseEntryPackages.Where(d => d.Id == item.Id).FirstOrDefault();
-                        if (warehouseEntryPackage != null)
-                        {
-                            item.Instock += entryPackagesRelease.Quantity;
-                        }
-
-                        item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-                        entryPackagesRelease.IsCanceled = true;
-                        warehouseEntryPackagesReleaseRepository.Update(entryPackagesRelease);
-                    }
-                }
-
-            }
-
-            return warehousePackagesReleaseIds;
-        }
-
-        private static void EmptyconnectedWarehouseReleasePackages(List<string> warehousePackagesReleaseIds, int tenant)
-        {
-            WarehouseReleasePackageRepository warehouseReleasePackageRepository = new WarehouseReleasePackageRepository(tenant);
-            List<WarehouseReleasePackage> warehouseReleasePackagePMs = warehouseReleasePackageRepository.GetWarehouseReleasePackagesByIds(warehousePackagesReleaseIds, tenant);
-
-            foreach (WarehouseReleasePackage item in warehouseReleasePackagePMs)
-            {
-                if (item != null)
-                {
-                    item.Quantity = 0;
-                    warehouseReleasePackageRepository.Update(item);
-                }
-            }
-
-            if (warehouseReleasePackageRepository != null) warehouseReleasePackageRepository.SubmitChanges();
-        }
-
-        private static void SubmitEntryPackagesChanges(WarehouseEntryPM entityPM, WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository, WarehouseEntryPackageRepository warehouseEntryPackageRepository)
-        {
-            IWarehouseContext MyContext = WarehouseContext.GetContext(entityPM.Tenant);
-            WarehouseEntryUpdateService service = new WarehouseEntryUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            service.InitializeEntityPM(entityPM);
-
-            entityPM.StatusCode = "CAEA";
-            entityPM.StatusName = "Cancelled";
-            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-            service.Update(entityPM, true);
-
-            if (warehouseEntryPackageRepository != null) warehouseEntryPackageRepository.SubmitChanges();
-            if (warehouseEntryPackagesReleaseRepository != null) warehouseEntryPackagesReleaseRepository.SubmitChanges();
-        }
-
-        private void i(List<string> warehousePackagesReleaseIds, int tenant)
-        {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
-                IWarehouseContext MyContext = WarehouseContext.GetContext(tenant);
-                WarehouseReleasePackageRepository warehouseReleasePackageRepository = new WarehouseReleasePackageRepository(MyContext);
-                WarehouseReleasePackageQueryService warehouseReleasePackageQueryService = new WarehouseReleasePackageQueryService(tenant);
-                List<WarehouseReleasePackage> warehouseReleasePackagePMs = warehouseReleasePackageQueryService.GetWarehouseReleasePackagesByIds(warehousePackagesReleaseIds, tenant);
-                foreach (WarehouseReleasePackage item in warehouseReleasePackagePMs)
-                {
-                    item.Quantity = 0;
-                    warehouseReleasePackageRepository.Update(item);
-                }
-                if (warehouseReleasePackageRepository != null) warehouseReleasePackageRepository.SubmitChanges();
-                scope.Complete();
-            }
-        }
     }
 
 }

@@ -20,7 +20,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
     
     [TestClass]
-    [Ignore("Disabled: relies on environment/data not available in this run")]
     public partial class JournalValidatorUnitTest
     {
         const string C_ExternalNoExist = "ExternalNoExist";
@@ -37,12 +36,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     return textCodeCode;
                 }
             );
-            JournalValidatorNotStatic.OverrideITextCodeTranslator = textCodeTranslatorFake;
+            JournalValidator.OverrideITextCodeTranslator = textCodeTranslatorFake;
         }
         [TestCleanup]
         public void TestCleanup1()
         {
-            JournalValidatorNotStatic.OverrideITextCodeTranslator = null;
+            JournalValidator.OverrideITextCodeTranslator = null;
         }
 
         [TestMethod]
@@ -55,7 +54,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             //var actual = Validator.TryValidateObject(entityPM, new ValidationContext(entityPM), validationResults);
 
             System.ComponentModel.DataAnnotations.ValidationContext validationcontext = new System.ComponentModel.DataAnnotations.ValidationContext(entityPM);
-            JournalValidatorNotStatic.OverrideGetLoggedContactFunc =
+            JournalValidator.OverrideGetLoggedContactFunc =
                     new Func<int, BL.CommonDataModel.EntityPMs.ContactPM>(
                         (tenant) => new BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true }
                      );
@@ -74,7 +73,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             }
             finally
             {
-                JournalValidatorNotStatic.OverrideGetLoggedContactFunc = null;
+                JournalValidator.OverrideGetLoggedContactFunc = null;
             }
             
         }
@@ -300,7 +299,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
             ValidationResult validationresult = JournalValidator.IsJournalValid(myJournalPM, myNewJournalValidatorContext);
             var errList = new List<String>(validationresult.MemberNames);
             string basic_text = basic_text_ExternalExist(myJournalPM);
-            var mExist = errList.Any(r=> r.StartsWith(JournalValidator.M_ExternalNoAlreadyExists_1) && r.EndsWith(JournalValidator.M_ExternalNoAlreadyExists_2));
+
+            var mExist = errList.Contains(basic_text);
             var LocalDefaultText = "פקודת יומן עם מספר חיצוני ";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + LocalDefaultText);
 
@@ -359,7 +359,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_2));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_4));
             var LocalDefaultText = "פקודת יומן עם מספר חיצוני ";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + LocalDefaultText);
 
@@ -367,17 +367,11 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
         private static string basic_text_ExternalExist(JournalPM myJournalPM)
         {
-            //string basic_text = JournalValidator.M_ExternalNoAlreadyExists_1
-            //                + myJournalPM.ExternalNo
-            //                + JournalValidator.M_ExternalNoAlreadyExists_2
-            //                + myJournalPM.ExternalSystem
-            //                + JournalValidator.M_ExternalNoAlreadyExists_3;
-
             string basic_text = JournalValidator.M_ExternalNoAlreadyExists_1
-                            + myJournalPM.JournalNumber
+                            + myJournalPM.ExternalNo
                             + JournalValidator.M_ExternalNoAlreadyExists_2
-                            
-                            ;
+                            + myJournalPM.ExternalSystem
+                            + JournalValidator.M_ExternalNoAlreadyExists_3;
             return basic_text;
         }
 
@@ -406,7 +400,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_2));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_4));
             var LocalDefaultText = " כפקודת יומן מספר ";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + LocalDefaultText);
 
@@ -437,7 +431,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_2));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_4));
             var LocalDefaultText = "פקודת יומן עם מספר חיצוני ";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + LocalDefaultText);
 
@@ -1453,25 +1447,9 @@ namespace Logitude.UnitTest.Accounting.UniTests
         private static ValidationContext GetValidationContext(JournalPM entityPM, AccountingPeriodPM MyAccountingPeriodPM = null, bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false)
         {
 
-
-            var percentagesQuery = new List<VatTypePercentagePM>()
-                {
-                    new  VatTypePercentagePM(){ Tenant=entityPM.Tenant , FromDate=new DateTime(2008,1,1)  , Percentage=18}
-
-                };
-
-
-
-            var fakeAccountingSettingResolver = A.Fake<AccountingSettingResolver>(opt => opt.CallsBaseMethods());
-            A.CallTo(() => fakeAccountingSettingResolver.GetAccountingVatList(entityPM.Tenant)).
-                Returns(percentagesQuery);
-
-
             MyAccountingPeriodPM = MyAccountingPeriodPM ?? new AccountingPeriodPM() { Year = 2016, ClosedMonth = 1, OpenMonth = 9 ,PeriodTypeCode="1"  };
             //string journalNumber = "";
             IJournalValidatorContextDataProvider myStubIJournalValidatorContextDataProvider = A.Fake<IJournalValidatorContextDataProvider>( );
-            IExternalReconcileDataProvider myIExternalReconcileDataProvider = A.Fake<IExternalReconcileDataProvider>();
-
             
             {
                 A.CallTo(() =>myStubIJournalValidatorContextDataProvider.GetGLAccount(A<string>.Ignored,A<int>.Ignored))
@@ -1562,26 +1540,13 @@ namespace Logitude.UnitTest.Accounting.UniTests
             };
             DateTime? dateTimeUtcNow = new DateTime(2017, 01, 12); 
             var myFullAccountingSettingPM = new FullAccountingSettingPM();
-
-
-
-            IJournalValidatorRateDataProvider myStubIJournalValidatorRateDataProvider = A.Fake<IJournalValidatorRateDataProvider>();
-            A.CallTo(() => myStubIJournalValidatorRateDataProvider
-            .ExistRate(A<string>.Ignored, A<string>.Ignored, A<DateTime?>.Ignored, A<int>.Ignored))
-                   .ReturnsLazily(
-                (string TenantCurrency, string foreignCurrencyId, DateTime? date, int tenent) => { return true; }
-                );
-
             var myNewJournalValidatorContext = AccountingValidationContextServiceProvider
                 .NewJournalValidatorContext(
                 entityPM, 
                 AccountingPeriodList, 
                 myStubIJournalValidatorContextDataProvider,
-                myIExternalReconcileDataProvider,
-                fakeAccountingSettingResolver,
                 myFullAccountingSettingPM ,
                 SuppressCheckGLAccountIsMultiCurrencyWI40640,
-                myStubIJournalValidatorRateDataProvider, "tenantCurrencyId",
                 dateTimeUtcNow);
 
             return myNewJournalValidatorContext;

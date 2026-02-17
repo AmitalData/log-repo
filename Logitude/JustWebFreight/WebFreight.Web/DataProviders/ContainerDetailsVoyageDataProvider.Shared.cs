@@ -43,7 +43,7 @@ namespace WebFreight.Web.DataProviders
         public string LoadingPortCode { get; set; }
         public string DischargePortCode { get; set; }
         public string BookingNumber { get; set; }
-        public string REEFTemp { get; set; }
+        public double? REEFTemp { get; set; }
         public string IMO { get; set; }
         public string IMDGNumber { get; set; }
         public string IMOClass { get; set; }

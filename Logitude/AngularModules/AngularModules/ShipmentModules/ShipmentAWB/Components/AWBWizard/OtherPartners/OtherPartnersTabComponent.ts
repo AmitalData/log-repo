@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -7,7 +7,7 @@ import {AppTool,FormatTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'OtherPartnersTabComponent',
     templateUrl: './OtherPartnersTabComponent.html',   
@@ -89,160 +89,152 @@ export class OtherPartnersTabComponent extends BaseComponent {
         this.Validate_Participant3();
     }
     private Validate_Nominated() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
+        var isValid = true;
 
-            var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "NominatedHandlingPartyId")[0];
-            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.NominatedHandlingPartyId)) {
+        var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "NominatedHandlingPartyId")[0];
+        if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.NominatedHandlingPartyId)) {
+            isValid = false;
+        }
+
+        this.ShowWarning_NominatedHandlingPartyId = !isValid;
+    }
+    private Validate_Participant1() {
+        var isValid = true;
+
+        var isFieldFilled = ShipmentTool.IsParticipant1Filled(this.EntityPM);
+        if (isFieldFilled) {
+            var isMissingData = ShipmentTool.IsParticipant1MissingData(this.EntityPM);
+            if (isMissingData) {
                 isValid = false;
             }
 
-            this.ShowWarning_NominatedHandlingPartyId = !isValid;
-        }
-    }
-    private Validate_Participant1() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
-
-            var isFieldFilled = ShipmentTool.IsParticipant1Filled(this.EntityPM);
-            if (isFieldFilled) {
-                var isMissingData = ShipmentTool.IsParticipant1MissingData(this.EntityPM);
-                if (isMissingData) {
+            else {
+                if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode1)) {
                     isValid = false;
                 }
 
-                else {
-                    if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode1)) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode1)) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode1)) {
-                        isValid = false;
-                    }
-
-                    else if (this.EntityPM.OtherParticipantInformationPortCode1.length != 3) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName1)) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference1)) {
-                        isValid = false;
-                    }
+                else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode1)) {
+                    isValid = false;
                 }
-            }
 
-            if (isValid) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "OtherParticipantIdCode1")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.OtherParticipantIdCode1)) {
+                else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode1)) {
+                    isValid = false;
+                }
+
+                else if (this.EntityPM.OtherParticipantInformationPortCode1.length != 3) {
+                    isValid = false;
+                }
+
+                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName1)) {
+                    isValid = false;
+                }
+
+                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference1)) {
                     isValid = false;
                 }
             }
-
-            this.ShowWarning_Participant1 = !isValid;
         }
+
+        if (isValid) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "OtherParticipantIdCode1")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.OtherParticipantIdCode1)) {
+                isValid = false;
+            }
+        }
+
+        this.ShowWarning_Participant1 = !isValid;
     }
     private Validate_Participant2() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
+        var isValid = true;
 
-            var isFieldFilled = ShipmentTool.IsParticipant2Filled(this.EntityPM);
-            if (isFieldFilled) {
-                var isMissingData = ShipmentTool.IsParticipant2MissingData(this.EntityPM);
-                if (isMissingData) {
+        var isFieldFilled = ShipmentTool.IsParticipant2Filled(this.EntityPM);
+        if (isFieldFilled) {
+            var isMissingData = ShipmentTool.IsParticipant2MissingData(this.EntityPM);
+            if (isMissingData) {
+                isValid = false;
+            }
+
+            else {
+                if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode2)) {
                     isValid = false;
                 }
 
-                else {
-                    if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode2)) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode2)) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode2)) {
-                        isValid = false;
-                    }
-
-                    else if (this.EntityPM.OtherParticipantInformationPortCode2.length != 3) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName2)) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference2)) {
-                        isValid = false;
-                    }
+                else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode2)) {
+                    isValid = false;
                 }
-            }
 
-            if (isValid) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "OtherParticipantIdCode2")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.OtherParticipantIdCode2)) {
+                else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode2)) {
+                    isValid = false;
+                }
+
+                else if (this.EntityPM.OtherParticipantInformationPortCode2.length != 3) {
+                    isValid = false;
+                }
+
+                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName2)) {
+                    isValid = false;
+                }
+
+                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference2)) {
                     isValid = false;
                 }
             }
-
-            this.ShowWarning_Participant2 = !isValid;
         }
+
+        if (isValid) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "OtherParticipantIdCode2")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.OtherParticipantIdCode2)) {
+                isValid = false;
+            }
+        }
+
+        this.ShowWarning_Participant2 = !isValid;
     }
     private Validate_Participant3() {
-        if (!this.Wizard.IsImportWizard) {
-            var isValid = true;
+        var isValid = true;
 
-            var isFieldFilled = ShipmentTool.IsParticipant3Filled(this.EntityPM);
-            if (isFieldFilled) {
-                var isMissingData = ShipmentTool.IsParticipant3MissingData(this.EntityPM);
-                if (isMissingData) {
+        var isFieldFilled = ShipmentTool.IsParticipant3Filled(this.EntityPM);
+        if (isFieldFilled) {
+            var isMissingData = ShipmentTool.IsParticipant3MissingData(this.EntityPM);
+            if (isMissingData) {
+                isValid = false;
+            }
+
+            else {
+                if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode3)) {
                     isValid = false;
                 }
 
-                else {
-                    if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantIdCode3)) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode3)) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode3)) {
-                        isValid = false;
-                    }
-
-                    else if (this.EntityPM.OtherParticipantInformationPortCode3.length != 3) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName3)) {
-                        isValid = false;
-                    }
-
-                    else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference3)) {
-                        isValid = false;
-                    }
+                else if (!FormatTool.IsAlphaNumeric(this.EntityPM.OtherParticipantInformationCode3)) {
+                    isValid = false;
                 }
-            }
 
-            if (isValid) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "OtherParticipantIdCode3")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.OtherParticipantIdCode3)) {
+                else if (!FormatTool.IsAlpha(this.EntityPM.OtherParticipantInformationPortCode3)) {
+                    isValid = false;
+                }
+
+                else if (this.EntityPM.OtherParticipantInformationPortCode3.length != 3) {
+                    isValid = false;
+                }
+
+                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationName3)) {
+                    isValid = false;
+                }
+
+                else if (!FormatTool.IsText(this.EntityPM.OtherParticipantInformationReference3)) {
                     isValid = false;
                 }
             }
-
-            this.ShowWarning_Participant3 = !isValid;
         }
+
+        if (isValid) {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "OtherParticipantIdCode3")[0];
+            if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.EntityPM.OtherParticipantIdCode3)) {
+                isValid = false;
+            }
+        }
+
+        this.ShowWarning_Participant3 = !isValid;
     }
     
 

@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,18 +36,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.HideTree = entityPM.HideTree;
             entityPOCO.CannotFilter = entityPM.CannotFilter;
             entityPOCO.HelpText = entityPM.HelpText;
-            entityPOCO.IsCustom = entityPM.IsCustom;
-            entityPOCO.OriginalObjectFieldCode = entityPM.OriginalObjectFieldCode;
-            entityPOCO.DontDisplayInView = entityPM.DontDisplayInView;
-            entityPOCO.ViewFieldDisplayName = entityPM.ViewFieldDisplayName;
-            entityPOCO.DimensionDataViewName = entityPM.DimensionDataViewName;
-            entityPOCO.IsMultipleSelection = entityPM.IsMultipleSelection;
-            entityPOCO.UseUnitSelection = entityPM.UseUnitSelection;
-            entityPOCO.RecordType = entityPM.RecordType;
-
-
-
-
 
         }
     }

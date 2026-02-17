@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DistributorRepository repository;
 
-
+        public DistributorQuery()
+        {
+            repository = new DistributorRepository();
+        }
 
         public DistributorQuery(int tenant)
         {
@@ -54,7 +57,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             IQueryable<DistributorList> result = from entity in iQueryable
                                              select new DistributorList()
                                              {
-                                                 Id = entity.Code,
                                                  EnglishName = entity.EnglishName,
                                                  Code = entity.Code,
                                                  LocalName=entity.LocalName,

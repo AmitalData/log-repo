@@ -20,7 +20,7 @@ export class DWObjectTablePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -60,84 +60,11 @@ export class DWObjectTablePM {
     public set DefaultFilterBy(newValue: string) { if (this.defaultFilterBy != newValue) { this.defaultFilterBy = newValue; this.MarkAsDirty("DefaultFilterBy"); } }
        
 	 
-    private dataViewName: string;
-    public get DataViewName() { return this.dataViewName; }
-    public set DataViewName(newValue: string) { if (this.dataViewName != newValue) { this.dataViewName = newValue; this.MarkAsDirty("DataViewName"); } }
-       
-	 
-    private hasPivotColumn: boolean;
-    public get HasPivotColumn() { return this.hasPivotColumn; }
-    public set HasPivotColumn(newValue: boolean) { if (this.hasPivotColumn != newValue) { this.hasPivotColumn = newValue; this.MarkAsDirty("HasPivotColumn"); } }
-       
-	 
-    private pivotFieldCode: string;
-    public get PivotFieldCode() { return this.pivotFieldCode; }
-    public set PivotFieldCode(newValue: string) { if (this.pivotFieldCode != newValue) { this.pivotFieldCode = newValue; this.MarkAsDirty("PivotFieldCode"); } }
-       
-	 
-    private additionalFactCode: string;
-    public get AdditionalFactCode() { return this.additionalFactCode; }
-    public set AdditionalFactCode(newValue: string) { if (this.additionalFactCode != newValue) { this.additionalFactCode = newValue; this.MarkAsDirty("AdditionalFactCode"); } }
-       
-	 
-    private additionalFactForeignKey: string;
-    public get AdditionalFactForeignKey() { return this.additionalFactForeignKey; }
-    public set AdditionalFactForeignKey(newValue: string) { if (this.additionalFactForeignKey != newValue) { this.additionalFactForeignKey = newValue; this.MarkAsDirty("AdditionalFactForeignKey"); } }
-       
-	 
-    private parentFactCode: string;
-    public get ParentFactCode() { return this.parentFactCode; }
-    public set ParentFactCode(newValue: string) { if (this.parentFactCode != newValue) { this.parentFactCode = newValue; this.MarkAsDirty("ParentFactCode"); } }
-       
-	 
-    private recordType: string;
-    public get RecordType() { return this.recordType; }
-    public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
-       
-	 
-    private displayName: string;
-    public get DisplayName() { return this.displayName; }
-    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
-       
-	 
-    private objectTableName: string;
-    public get ObjectTableName() { return this.objectTableName; }
-    public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
-       
-	 
-    private maxNumberOfCustomFields: number;
-    public get MaxNumberOfCustomFields() { return this.maxNumberOfCustomFields; }
-    public set MaxNumberOfCustomFields(newValue: number) { if (this.maxNumberOfCustomFields != newValue) { this.maxNumberOfCustomFields = newValue; this.MarkAsDirty("MaxNumberOfCustomFields"); } }
-       
-	 
-    private hasCustomFields: boolean;
-    public get HasCustomFields() { return this.hasCustomFields; }
-    public set HasCustomFields(newValue: boolean) { if (this.hasCustomFields != newValue) { this.hasCustomFields = newValue; this.MarkAsDirty("HasCustomFields"); } }
-       
-	 
-    private additionalFactRelationType: string;
-    public get AdditionalFactRelationType() { return this.additionalFactRelationType; }
-    public set AdditionalFactRelationType(newValue: string) { if (this.additionalFactRelationType != newValue) { this.additionalFactRelationType = newValue; this.MarkAsDirty("AdditionalFactRelationType"); } }
-       
-	 
-    private additionalConditions: string;
-    public get AdditionalConditions() { return this.additionalConditions; }
-    public set AdditionalConditions(newValue: string) { if (this.additionalConditions != newValue) { this.additionalConditions = newValue; this.MarkAsDirty("AdditionalConditions"); } }
-       
-	 
-    private description: string;
-    public get Description() { return this.description; }
-    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
-       
-	 
 
     public OldEntityPM: DWObjectTablePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -145,7 +72,6 @@ export class DWObjectTablePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DWObjectTable");
            
         }
-	 }
     }
     private MyClone: DWObjectTablePM;
 

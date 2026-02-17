@@ -224,21 +224,6 @@ namespace MeatadataGeneratorTool.DataContractsModule
             }
         }
 
-        private bool isUpdateAllowed;
-        public bool IsUpdateAllowed
-        {
-            get
-            {
-                return isUpdateAllowed;
-            }
-            set
-            {
-                isUpdateAllowed = value;
-                FirePropertyChanged("IsUpdateAllowed");
-            }
-        }
-        
-
         string closeTableCode;
         public string CloseTableCode
         {

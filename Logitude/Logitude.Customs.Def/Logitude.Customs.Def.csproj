@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,21 +9,19 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Customs.Def</RootNamespace>
     <AssemblyName>Logitude.Customs.Def</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,83 +29,23 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.8.0.0\lib\net462\System.Text.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -117,10 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClosedTable\AmedmentTypeDetails.Generated.cs" />
     <Compile Include="ClosedTable\CustomsDeploymentStage.cs" />
     <Compile Include="ClosedTable\CustomsRequestsSheetStatusDetails.cs" />
-    <Compile Include="ClosedTable\CustomsSchedulerProcedureDetails.cs" />
     <Compile Include="ClosedTable\ICloseTable.cs" />
     <Compile Include="ClosedTable\InterfaceManagementDetails.cs" />
     <Compile Include="ClosedTable\InterfaceSendOptionsDetails.cs" />
@@ -128,200 +63,12 @@
     <Compile Include="Contracts\IIIGClosedTable.cs" />
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
-    <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
-    <Compile Include="EntityPMs\CertificateOfOriginMandatoryFieldsPM.cs" />
-    <Compile Include="EntityPMs\CertificateOfOriginStatusCodeEnumPM.cs" />
-    <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
-    <Compile Include="EntityPMs\DeclarationCourierStatusPM.cs" />
-    <Compile Include="EntityPMs\Generated\CarEngineVolumePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CarWeightPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_AdditionRulesDetailsHistoryPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_ComputationMethodDataPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_CountriesExclusionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_CustomsBookAdditionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_CustomsBookAdditionsDetailsHistoryPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_CustomsItemComputedDataPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_CustomsItemDetailsHistoryPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_CustomsItemExclusionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_CustomsItemLinkagePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_CustomsItemPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_LevyConditionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_LevyExclusionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_PreferencePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_PropertiesDetailsHistoryPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_QuotaComputedDataPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_QuotaDetailsHistoryPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_QuotaPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_QuotaRenewalPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_RegularityInceptionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_RegularityRequiredCertificatePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_RegularityRequirementPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_RequirementComputedDataPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_RuleClassificationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_RuleDetailsHistoryPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_RulePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_TariffComputedDataPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_TariffDetailsHistoryPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_TariffPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_TradeAgreementHistoryPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_TradeAgreementPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_TradeLevyPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CB_VendorPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CertificateOfOriginConnectionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ChangeTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ComputationMethodPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ConditionalExemptionTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsEntityStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsGeneralPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsItemCategoryPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsItemGroupPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsItemHierarchicLocationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DiscountTypeRegulationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\EntryExitTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\InceptionCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\InterConditionsRelationshipPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\NUnicloudPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\PerYearFrequencyPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\QuotaComputationBasisPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\QuotaIncrementPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\RegularityPublicationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\RegularityRequirementWarningPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\RegularitySourcePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\RemarksClassificationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\RenewalMethodPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\LevyTrustPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\RequestHandlingAuthorityPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ConfirmationNumberTokenLogPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CertificateOfOriginInvoicePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CertificateOfOriginItemPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CertificateOfOriginMandatoryFieldsPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CertificateOfOriginPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CertificateOfOriginStatusCodeEnumPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CertificateOfOriginTypeCodeEnumPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\OriginCriterionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\RequestReasonCodeEnumPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SIIDocumentTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SIIRequestLineStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SIIRequestPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SIIRequestStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SupplierInvioceItemCertificatDefaultPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsReqListPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\TarifRelatedToQuotaPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\TradeLevyStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\InternalBorderSiteTypePM.cs" />
-    <Compile Include="EntityPMs\Generated\AmedmentTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\AmendmentFieldStatusTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\AmendRequestRejectReasonTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\AmountTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\AutonomyRegionTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\BuyerRoleTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CancellationReasonRequestTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CancellationRequestStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CargoTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CancelRequestRejectReasonTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ClaimReasonTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ClassificationTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\CustomsShipPM.cs" />
-    <Compile Include="EntityPMs\Generated\ClientItemPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ClientIndicationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ClientsPoaPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ClientsTapagPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ContainerizationHataraStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ContainerizationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ContainerizationStatusCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ContainerTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CoolingReportingMethodPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CountryCurrencyPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CourierHawbFromExcelPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomDocumentTypeTenantPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomerClassificationTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomerIdentificationTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomerIndicationTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsCountryTenantPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsDocumentUploadPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsEnvironmentSettingPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsHouseTypeTenantPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeclarationCasualDetailsPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeclarationCounterPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeclarationFollowUpPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeclarationStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DefaultTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DefaultValuePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeliveryTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DocumentRejectTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExportDeclarationClosingDataPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExportDeliveryDocumentMessagePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExporterRoleTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExportLogisticPermitActionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExportReferencePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExportStoragePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExportStorgePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExternalFieldMappingPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\FclLclCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\FullnessCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\GovernmentProcTypeTenantPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\GTBFUSTATUPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\HandingCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\IncotemrsFileValidationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\InternationalSiteTenantPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\LogisticActionRequestPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\LogisticActionRequestTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\LogisticActionResponseReqSPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\LogisticPermitPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\LogisticsReferenceTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\OcrDocumentPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\OcrStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\PhysicalCheckCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\PoaAuthorizationTypeLookupPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\PhysicalCheckSearchResultTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\PoaStatusTypeLookUpPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ReferantTeamPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ReferenceInputTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ReferenceStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ReleaseMessageTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SchedulerParamPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SecurityClearenceTypeCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SignStationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\StatusCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\StorageStatusTablePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ServersNamePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\StatusFieldTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\StuffingSiteTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SupplierInvioceExportDefaultPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsPricePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SupplierInvoicePaymentPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SupplierInvoiceUCRPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SupplierPartyTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\TradeAgreementProtocolPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\TransactionNatureTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\TransportMeansTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\ContainerTypePM.cs" />
-    <Compile Include="EntityPMs\CertificateExemptionTypePM.cs" />
-    <Compile Include="EntityPMs\Generated\UIMessageTenantPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\VendorCurrencyPM.Generated.cs" />
-    <Compile Include="EntityPMs\IncotemrsFileValidationPM.cs" />
-    <Compile Include="EntityPMs\NDMessageActionCodePM.cs" />
-    <Compile Include="EntityPMs\ModificationAndDiscountTypePM.cs" />
-    <Compile Include="EntityPMs\CertificateOfOriginTypeCodeEnumPM.cs" />
-    <Compile Include="EntityPMs\PhysicalCheckPMRequest.cs" />
     <Compile Include="EntityPMs\CityPM.cs" />
     <Compile Include="EntityPMs\ClaimsRelatedEntityPM.cs" />
     <Compile Include="EntityPMs\ClientAddressPM.cs" />
     <Compile Include="EntityPMs\ConsignmentPackagePM.cs" />
     <Compile Include="EntityPMs\ConsignmentPM.cs" />
     <Compile Include="EntityPMs\CourierMasterPM.cs" />
-    <Compile Include="EntityPMs\CurrencyTypePM.cs" />
     <Compile Include="EntityPMs\CustomBankPM.cs" />
     <Compile Include="EntityPMs\CustomDocumentTypePM.cs" />
     <Compile Include="EntityPMs\CustomsBranchPM.cs" />
@@ -355,9 +102,6 @@
     <Compile Include="EntityPMs\Generated\AgentTalkBackTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentRequestStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\AmendmentStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\AmendmentTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ApprovedProfessionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AssigneeNotificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AttachmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AuthorityPM.Generated.cs" />
@@ -366,8 +110,6 @@
     <Compile Include="EntityPMs\Generated\BankPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoIdentifireTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoIdentityQualifierPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CargoSealIdentifierPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CargoSealPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoSplitRequestStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CargoStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CertificateExemptionTypePM.Generated.cs" />
@@ -408,7 +150,6 @@
     <Compile Include="EntityPMs\Generated\ConfirmationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConsignmentInternalTransitionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConsignmentPackagePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ConsignmentPackDangerPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConsignmentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConstraintApprovalDecisionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConstraintProcessTypePM.Generated.cs" />
@@ -416,7 +157,6 @@
     <Compile Include="EntityPMs\Generated\ConstraintTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContactRoleTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContinuousMessagesTypeCodePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ContinuousRequestTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConverterTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CountryGroupPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CourierCustomStatusPM.Generated.cs" />
@@ -430,7 +170,6 @@
     <Compile Include="EntityPMs\Generated\CouriersVatPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CourtInstancePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CurrencyTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CurrencyTypeTenantPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomBankPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomBanksCardPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomDocumentTypeMetaDataPM.Generated.cs" />
@@ -442,7 +181,6 @@
     <Compile Include="EntityPMs\Generated\CustomMetaDataTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsAddressTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsAirlinePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\CustomsAutonomyKeywordPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBookPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBookTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsBranchPM.Generated.cs" />
@@ -475,14 +213,11 @@
     <Compile Include="EntityPMs\Generated\CustomsVendorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsVerificationStatusTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DangerousGoodsPackingReqPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DBMigrationLinePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DBMigrationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DebtNotificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecCargoSplitCargoIdentifierPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecCargoSplitConPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecCargoSplitConsItemPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecCargoSplitConsPackDetPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DecDangersContactsPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecisionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationCargoSplitPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationConsAcceptancePM.Generated.cs" />
@@ -493,14 +228,11 @@
     <Compile Include="EntityPMs\Generated\DeclarationPaymentMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationPaymentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationPaymentProtestPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeclarationPendingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeclarationReferantDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationStatementTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationStatusTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationTaxPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeficitConnFileParagraphTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeficitDecisionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeficitPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeliverySiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DemanderTypePM.Generated.cs" />
@@ -516,15 +248,12 @@
     <Compile Include="EntityPMs\Generated\FaultInspectionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FreightPaymentMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FuelTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\GatepassRequestPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\GatepassReturnCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GenderPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GovernmentProcedureTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GuaranteeCertificateTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GuaranteeConditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GuaranteeCustomerActivityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GuaranteePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\HazardousSubstancePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ImporterDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ImporterDespositionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ImporterPeriodicDeclarStatusPM.Generated.cs" />
@@ -572,7 +301,6 @@
     <Compile Include="EntityPMs\Generated\PaymentProcessPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentProtestTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\PendingByKeywordPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PendingErrorPlacePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PhysicalCheckOperationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PhysicalCheckPM.Generated.cs" />
@@ -592,13 +320,9 @@
     <Compile Include="EntityPMs\Generated\RefundCustomerActivityTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RegisteredWarehouseSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\RequestTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequiredGuaranteeTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReturnConditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SalesTaxExemptionTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SealCompletenesPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SealTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SealUpdateReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SeizureFactorTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SeizureMethodTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SignatureTypePM.Generated.cs" />
@@ -634,12 +358,10 @@
     <Compile Include="EntityPMs\Generated\TPGFileTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TradeAgreementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TradeLevyExamptTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\TransferCargoMethodTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TreatmentWayPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\UIMessageAdditionalPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\UIMessagePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\UnloadingSiteTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\UpdateCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ValidCustomsItemPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\VehicleManufacturerPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\VehicleOwnerPM.Generated.cs" />
@@ -674,17 +396,12 @@
     <Compile Include="EntityPMs\SupplierInvoiceItemVehiclePM.cs" />
     <Compile Include="EntityPMs\SupplierInvoicePM.cs" />
     <Compile Include="EntityPMs\TapagConnectionTablePM.cs" />
-    <Compile Include="EntityPMs\ItemGovernmentProcedureTypePM.cs" />
-    <Compile Include="EntityPMs\OriginCriterionPM.cs" />
     <Compile Include="EntityPMs\TradeAgreementPM.cs" />
     <Compile Include="EntityPMs\UIMessagePM.cs" />
     <Compile Include="EntityPMs\ValidCustomsItemPM.cs" />
     <Compile Include="EntityPMs\VehiclePM.cs" />
     <Compile Include="EntityPMs\VehicleValidator.cs" />
-    <Compile Include="EntityQueryServicesExt\ICreateUD2LTService.cs" />
-    <Compile Include="EntityQueryServicesExt\ICustomsAutoDecClosing.cs" />
     <Compile Include="EntityQueryServicesExt\ICustomsDocumentQueryServiceExt.cs" />
-    <Compile Include="EntityQueryServicesExt\ICustomsRequiredFieldsValidatorExt.cs" />
     <Compile Include="Messaging\Customs\RequestSheetContext.cs" />
     <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DeclarationErrorView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -730,23 +447,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="App.config" />
-    <None Include="Nlog.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

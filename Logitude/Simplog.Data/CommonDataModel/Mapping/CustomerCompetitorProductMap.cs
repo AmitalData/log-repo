@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -13,7 +13,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public CustomerCompetitorProductMap()
         {
             // Primary Keys
-            this.HasKey(t => new { t.CustomerId, t.CompetitorId, t.ProductTypeCode });
+            this.HasKey(t => t.CustomerId);
+
+            this.HasKey(t => t.CompetitorId);
+
+            this.HasKey(t => t.ProductTypeCode);
 
             // Properties
             this.Property(t => t.CustomerId)

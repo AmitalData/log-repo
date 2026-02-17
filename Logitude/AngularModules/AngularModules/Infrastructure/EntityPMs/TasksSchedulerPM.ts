@@ -20,7 +20,7 @@ export class TasksSchedulerPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -70,6 +70,11 @@ export class TasksSchedulerPM {
     public set NextRunTime(newValue: Date) { if (this.nextRunTime != newValue) { this.nextRunTime = newValue; this.MarkAsDirty("NextRunTime"); } }
        
 	 
+    private lastRunTime: Date;
+    public get LastRunTime() { return this.lastRunTime; }
+    public set LastRunTime(newValue: Date) { if (this.lastRunTime != newValue) { this.lastRunTime = newValue; this.MarkAsDirty("LastRunTime"); } }
+       
+	 
     private lastRunResult: string;
     public get LastRunResult() { return this.lastRunResult; }
     public set LastRunResult(newValue: string) { if (this.lastRunResult != newValue) { this.lastRunResult = newValue; this.MarkAsDirty("LastRunResult"); } }
@@ -80,9 +85,9 @@ export class TasksSchedulerPM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
-    private procedureCode: string;
-    public get ProcedureCode() { return this.procedureCode; }
-    public set ProcedureCode(newValue: string) { if (this.procedureCode != newValue) { this.procedureCode = newValue; this.MarkAsDirty("ProcedureCode"); } }
+    private serviceClassName: string;
+    public get ServiceClassName() { return this.serviceClassName; }
+    public set ServiceClassName(newValue: string) { if (this.serviceClassName != newValue) { this.serviceClassName = newValue; this.MarkAsDirty("ServiceClassName"); } }
        
 	 
     private triggerType: string;
@@ -160,84 +165,14 @@ export class TasksSchedulerPM {
     public set NextRunTimeUTC(newValue: Date) { if (this.nextRunTimeUTC != newValue) { this.nextRunTimeUTC = newValue; this.MarkAsDirty("NextRunTimeUTC"); } }
        
 	 
+    private lastRunTimeUTC: Date;
+    public get LastRunTimeUTC() { return this.lastRunTimeUTC; }
+    public set LastRunTimeUTC(newValue: Date) { if (this.lastRunTimeUTC != newValue) { this.lastRunTimeUTC = newValue; this.MarkAsDirty("LastRunTimeUTC"); } }
+       
+	 
     private startDateTimeUTC: Date;
     public get StartDateTimeUTC() { return this.startDateTimeUTC; }
     public set StartDateTimeUTC(newValue: Date) { if (this.startDateTimeUTC != newValue) { this.startDateTimeUTC = newValue; this.MarkAsDirty("StartDateTimeUTC"); } }
-       
-	 
-    private version: number;
-    public get Version() { return this.version; }
-    public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
-       
-	 
-    private status: string;
-    public get Status() { return this.status; }
-    public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
-       
-	 
-    private retries: number;
-    public get Retries() { return this.retries; }
-    public set Retries(newValue: number) { if (this.retries != newValue) { this.retries = newValue; this.MarkAsDirty("Retries"); } }
-       
-	 
-    private duration: number;
-    public get Duration() { return this.duration; }
-    public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
-       
-	 
-    private entityId: string;
-    public get EntityId() { return this.entityId; }
-    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
-       
-	 
-    private recepients: string;
-    public get Recepients() { return this.recepients; }
-    public set Recepients(newValue: string) { if (this.recepients != newValue) { this.recepients = newValue; this.MarkAsDirty("Recepients"); } }
-       
-	 
-    private lastRunEndTime: Date;
-    public get LastRunEndTime() { return this.lastRunEndTime; }
-    public set LastRunEndTime(newValue: Date) { if (this.lastRunEndTime != newValue) { this.lastRunEndTime = newValue; this.MarkAsDirty("LastRunEndTime"); } }
-       
-	 
-    private lastRunEndTimeUTC: Date;
-    public get LastRunEndTimeUTC() { return this.lastRunEndTimeUTC; }
-    public set LastRunEndTimeUTC(newValue: Date) { if (this.lastRunEndTimeUTC != newValue) { this.lastRunEndTimeUTC = newValue; this.MarkAsDirty("LastRunEndTimeUTC"); } }
-       
-	 
-    private lastRunStartTimeUTC: Date;
-    public get LastRunStartTimeUTC() { return this.lastRunStartTimeUTC; }
-    public set LastRunStartTimeUTC(newValue: Date) { if (this.lastRunStartTimeUTC != newValue) { this.lastRunStartTimeUTC = newValue; this.MarkAsDirty("LastRunStartTimeUTC"); } }
-       
-	 
-    private lastRunStartTime: Date;
-    public get LastRunStartTime() { return this.lastRunStartTime; }
-    public set LastRunStartTime(newValue: Date) { if (this.lastRunStartTime != newValue) { this.lastRunStartTime = newValue; this.MarkAsDirty("LastRunStartTime"); } }
-       
-	 
-    private averageRunTime: number;
-    public get AverageRunTime() { return this.averageRunTime; }
-    public set AverageRunTime(newValue: number) { if (this.averageRunTime != newValue) { this.averageRunTime = newValue; this.MarkAsDirty("AverageRunTime"); } }
-       
-	 
-    private resultType: string;
-    public get ResultType() { return this.resultType; }
-    public set ResultType(newValue: string) { if (this.resultType != newValue) { this.resultType = newValue; this.MarkAsDirty("ResultType"); } }
-       
-	 
-    private format: string;
-    public get Format() { return this.format; }
-    public set Format(newValue: string) { if (this.format != newValue) { this.format = newValue; this.MarkAsDirty("Format"); } }
-       
-	 
-    private advancedFormat: string;
-    public get AdvancedFormat() { return this.advancedFormat; }
-    public set AdvancedFormat(newValue: string) { if (this.advancedFormat != newValue) { this.advancedFormat = newValue; this.MarkAsDirty("AdvancedFormat"); } }
-       
-	 
-    private executedByServerName: string;
-    public get ExecutedByServerName() { return this.executedByServerName; }
-    public set ExecutedByServerName(newValue: string) { if (this.executedByServerName != newValue) { this.executedByServerName = newValue; this.MarkAsDirty("ExecutedByServerName"); } }
        
 	 
     private schedulerDetailsData: any;
@@ -246,15 +181,10 @@ export class TasksSchedulerPM {
        
 	 
 
-    public DocumentTypeTemplateIds: Array<string>= [];
-		 
     public OldEntityPM: TasksSchedulerPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -262,7 +192,6 @@ export class TasksSchedulerPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TasksScheduler");
            
         }
-	 }
     }
     private MyClone: TasksSchedulerPM;
 

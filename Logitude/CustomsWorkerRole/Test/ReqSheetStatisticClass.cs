@@ -50,8 +50,7 @@ namespace CustomsWorkerRole.Test
 
                          )
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Starting Send Email");
-                       
+                        WriteLog("Starting Send Email");
                         _LastSendReqSheetStatistic = DateTime.Now;
                         //LastClacReqSheetStatistic = DateTime.Now;
                         var reqSheetStatisticClass = new ReqSheetStatisticClass();
@@ -67,17 +66,23 @@ namespace CustomsWorkerRole.Test
             catch (Exception stsE)
             {
 
-             
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(stsE);
+                MySheetStatistic = "ReqSheetStatisticClass failed :" + stsE.ToString();
+                //Debug.WriteLine(MySheetStatistic);
+                WriteLog(MySheetStatistic);
             }
         }
 
-       
+        private static void WriteLog(string mess)
+        {
+            if (DateTime.Now < new DateTime(2018, 02, 01))
+            {
+                Logger.LogMe(mess, false, "Statistic");
+            }
+        }
 
         private static void SendIt(Action<string, string> sendEmail)
         {
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Start SendIt");
-           
+            WriteLog("Start SendIt");
             //_LastSendReqSheetStatistic = DateTime.Now;
             var doNotSendEmail = true;
             if (doNotSendEmail)
@@ -85,7 +90,7 @@ namespace CustomsWorkerRole.Test
                 Task.Factory.StartNew(() =>
                 {
                     sendEmail(MySheetStatistic, MySheetStatisticSubject);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Email Sent !!!");
+                    WriteLog("Email Sent !!!");
                 }); ;
             }
         }
@@ -220,8 +225,7 @@ namespace CustomsWorkerRole.Test
             myYCULTASKRepository.GetStatisticWeekly(
 out totalTasks,
 //out over30sectoanalyze,out over30secfromlog2start,
-out problemTasks,
-1
+out problemTasks
 );
 
             
@@ -271,7 +275,7 @@ pordInfo,//24
 TotWithHATARA,//25
 logBoxDocuments//26
             );
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(val);
+            Debug.WriteLine(val);
             return val;
         }
 

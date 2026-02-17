@@ -12,12 +12,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
    
-    public partial class AirPackage
+    public class AirPackage
     {
 
 	    
@@ -47,10 +46,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string CommodityNumber { get; set; }
     
     public string Reference4 { get; set; }
-    
-    public string Notes { get; set; }
-    
-    public string ChangeSetOp { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

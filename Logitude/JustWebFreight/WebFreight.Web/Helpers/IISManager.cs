@@ -21,7 +21,7 @@ namespace WebFreight.Web.Helpers
                 var SiteName = ConfigurationManager.AppSettings["20181101.OnMaxPoolRecycle.SiteName"];
                 if (string.IsNullOrWhiteSpace(SiteName))
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("RecycleMe:ConfigurationManager.AppSettings[20181101.OnMaxPoolRecycle.SiteName]is null -- Abort  ");
+                    Debug.WriteLine("RecycleMe:ConfigurationManager.AppSettings[20181101.OnMaxPoolRecycle.SiteName]is null -- Abort  ");
                     return;
                 }
 

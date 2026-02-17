@@ -26,14 +26,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.GGGQ in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class GGGQ : UNIFBASICPOCO, INotifyPropertyChanged    {
+    public partial class GGGQ : INotifyPropertyChanged    {
 
         public GGGQ()
         {
         }
 
         #region Properties
-
+    
         /// <summary>
         /// There are no comments for QUEID in the schema.
         /// </summary>
@@ -282,7 +282,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for EXPTASKTIME in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> EXPTASKTIME
+        public virtual global::System.Nullable<double> EXPTASKTIME
         {
             get
             {
@@ -297,7 +297,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _EXPTASKTIME;
+        private global::System.Nullable<double> _EXPTASKTIME;
 
     
         /// <summary>

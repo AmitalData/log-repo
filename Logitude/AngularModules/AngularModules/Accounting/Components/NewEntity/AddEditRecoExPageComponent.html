@@ -17,8 +17,7 @@
         display: inline-block;
         border: 1px solid #ffd800;
         border-radius: 5px;
-        background: #faf5c0;
-        /*fbebbc*/
+        background: #faf5c0; /*fbebbc*/
         padding: 4px 10px;
         color: gray;
         font-family: sans-serif;
@@ -61,11 +60,10 @@
         -webkit-box-shadow: 0px -3px 1px #ececec !important;
     }
 
-    .green {
+    .green{
         color: forestgreen;
     }
-
-    .red {
+    .red{
         color: #f84a4a !important;
     }
 </style>
@@ -94,8 +92,7 @@
                                     </td>
                                     <td class="HeaderScreenValue">
                                         <div class="TextTrimming" style="width: 100%; position: relative;">
-                                            <a style="font-size: 11px;" *ngIf="PreviousPagePM" href="#"
-                                                (click)="OpenPrevPage()" id="PreviousPageNo">{{PreviousPagePM.PageNo}}</a>
+                                            <a style="font-size: 11px;" *ngIf="PrevBankPagePM" href="#" (click)="OpenPrevPage()">{{PrevBankPagePM.PageNo}}</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -179,8 +176,8 @@
                                     </td>
                                     <td class="HeaderScreenValue">
                                         <div class="TextTrimming" style="width: 100%; position: relative;"
-                                            [class.green]="ReconcileExternalPagePM.StatusCode == '2'"
-                                            [class.red]="ReconcileExternalPagePM.StatusCode == '3'">
+                                             [class.green]="ReconcileExternalPagePM.StatusCode == '2'"
+                                             [class.red]="ReconcileExternalPagePM.StatusCode == '3'" >
                                             {{ReconcileExternalPagePM.StatusName}}
                                         </div>
                                     </td>
@@ -221,82 +218,55 @@
                                                 <!-- FromDate -->
                                                 <tr class="FormFieldRow">
                                                     <td style="width: 100px;">
-                                                        <LogLabel [ObjectFieldName]="'FromDate'"
-                                                            [ObjectTableName]="'ReconcileExternalPage'"
-                                                            [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'FromDate'" [ObjectTableName]="'ReconcileExternalPage'" [DataContext]="DataContext"></LogLabel>
                                                     </td>
 
                                                     <td style="width: 140px;">
-                                                        <LogDatePicker [ObjectFieldName]="'FromDate'"
-                                                            [ObjectTableName]="ExternalPageTable" [NoObjectField]="true"
-                                                            [SelectedDateValue]="FromDate" [DataContext]="DataContext"
-                                                            [HideColumns]="true"></LogDatePicker>
+                                                        <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                                       [NoObjectField]="true" [SelectedDateValue]="FromDate"
+                                                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                     </td>
 
-                                                    <td style="width: 80px;">
-                                                        <div></div>
-                                                    </td>
+                                                    <td style="width: 80px;"><div></div></td>
 
                                                     <td style="width: 100px;">
-                                                        <LogLabel [ObjectFieldName]="'ToDate'"
-                                                            [ObjectTableName]="'ReconcileExternalPage'"
-                                                            [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'ToDate'" [ObjectTableName]="'ReconcileExternalPage'" [DataContext]="DataContext"></LogLabel>
                                                     </td>
 
                                                     <td style="width: 140px;">
-                                                        <LogDatePicker [ObjectFieldName]="'ToDate'"
-                                                            [ObjectTableName]="ExternalPageTable" [NoObjectField]="true"
-                                                            [SelectedDateValue]="ToDate" [DataContext]="DataContext"
-                                                            [HideColumns]="true"></LogDatePicker>
+                                                        <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                                       [NoObjectField]="true" [SelectedDateValue]="ToDate"
+                                                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                     </td>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
+                                                    <td><div></div></td>
                                                 </tr>
 
                                                 <!-- StartBalance -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'StartBalance'"
-                                                            [ObjectTableName]="'ReconcileExternalPage'"
-                                                            [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'StartBalance'" [ObjectTableName]="'ReconcileExternalPage'" [DataContext]="DataContext"></LogLabel>
                                                     </td>
                                                     <td>
-                                                        <LogTextBox [ObjectFieldName]="'StartBalance'"
-                                                            [ObjectTableName]="ExternalPageTable"
-                                                            [Text]="StartBalance"
-                                                            [DataContext]="DataContext" [HideColumns]="true"
-                                                            [InputType]="'decimal'"></LogTextBox>
+                                                        <LogTextBox [ObjectFieldName]="'StartBalance'" [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'decimal'"></LogTextBox>
                                                     </td>
 
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
+                                                    <td><div></div></td>
 
                                                     <!-- CloseBalance -->
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'CloseBalance'"
-                                                            [ObjectTableName]="'ReconcileExternalPage'"
-                                                            [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'CloseBalance'" [ObjectTableName]="'ReconcileExternalPage'" [DataContext]="DataContext"></LogLabel>
                                                     </td>
                                                     <td>
-                                                        <LogTextBox [ObjectFieldName]="'CloseBalance'"
-                                                            [ObjectTableName]="ExternalPageTable"
-                                                            [DataContext]="DataContext" [HideColumns]="true"
-                                                            [InputType]="'decimal'"></LogTextBox>
+                                                        <LogTextBox [ObjectFieldName]="'CloseBalance'" [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'decimal'"></LogTextBox>
                                                     </td>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
+                                                    <td><div></div></td>
                                                 </tr>
 
                                             </table>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
+                                    <tr><td><div></div></td></tr>
 
                                 </table>
                             </td>
@@ -307,29 +277,9 @@
                             <td colspan="3" style="width: 310px;">
 
                                 <div style="width: 30px; float: left;">
-                                    <IconButton *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked"
-                                                [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
+                                    <IconButton *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked" [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
                                 </div>
-                                <div *ngIf="!IsLeumi && (ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked)" style="width: 50px; float: left;">
-                                    <input class="upload" style="display: none;width:65px"
-                                           type="file" (change)="OnFileChanged($event)"
-                                           (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
-                                           #fileInput>
-                                    <a href="#" style="text-decoration:none">
-                                        <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="openFileUploader()">Upload</button>
-                                        <input #myInput accept=".xlsx, .xls" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
-                                    </a>
-                                </div>
-                                <div *ngIf="IsLeumi && (ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked)" style="width: 50px; float: left;">
-                                    <input class="upload" style="display: none;width:65px"
-                                           type="file" (change)="OnTextFileChanged($event)"
-                                           (click)="fileInput.value = null" value="" accept=".dat"
-                                           #fileInput>
-                                    <a href="#" style="text-decoration:none">
-                                        <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="openFileUploader()">Upload</button>
-                                        <input #myInput accept=".dat" type="file" [(ngModel)]="FileData" (change)="UploadTextFile($event)" (click)="UploadTextFile($event)" style="display:none;width:65px" class="upload" />
-                                    </a>
-                                </div>
+
                                 <div style="width: 220px; float: right;">
                                     <!--<SearchTextBox [ObjectTableName]="'ReconcileExternalPage'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>-->
                                 </div>
@@ -346,161 +296,92 @@
                         <tr style="height: 110px;">
                             <td colspan="3" style="height: 250px;">
                                 <div class="CellContent" *ngIf="AmountColHeader">
-
-                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                            [IsReadOnly]="ReconcileExternalPagePM.StatusCode != '1'"
-                                                            [ItemSource]="PageLinesList" (RowEnded)="OnRowEnded($event)"
-                                                            (Ondblclick)="OnFocus()">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [IsReadOnly]="ReconcileExternalPagePM.StatusCode != '1'"
+                                                        [ItemSource]="PageLinesList"
+                                                        (RowEnded)="OnRowEnded($event)"
+                                                        (Ondblclick)="OnFocus()">
 
                                         <!-- LineNumber -->
-                                        <log-column
-                                            [header]="'ReconcileExternalPageLine.F.LineNumber' | TextCodeTranslationPipe"
-                                            [width]="'50'" [Alignment]="isRTL ? 'right' : 'left'"
-                                            [binding]="'LineNumber'">
-                                            <ng-template let-item>
-                                            <log-cell-template [TabIndex]="-1"   #logcelltemplate
-                                                [IgnoreMods]="true">
+                                        <log-column [header]="'ReconcileExternalPageLine.F.LineNumber' | TextCodeTranslationPipe" [width]="'50'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'LineNumber'">
+                                            <log-cell-template [TabIndex]="-1" template="let item" #logcelltemplate [IgnoreMods]="true">
                                                 <div style="text-align: center;" class="TextTrimming">
                                                     <span>{{item.LineNumber}}</span>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                         <!-- ReferenceDate -->
-                                        <log-column
-                                            [header]="'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe"
-                                            [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'"
-                                            [binding]="'ReferenceDate'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
-                                                <div   [style.text-align]="isRTL ? 'right' : 'left'"
-                                                    class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-column [header]="'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ReferenceDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="" [style.text-align]="isRTL ? 'right' : 'left'"  class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.ReferenceDate | DateTimeToDatePipe}}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogDatePicker [ObjectFieldName]="'ReferenceDate'"
-                                                        [ObjectTableName]="item.ObjectTableName" [DataContext]="item"
-                                                        [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
+                                                    <LogDatePicker [ObjectFieldName]="'ReferenceDate'" [ObjectTableName]="item.ObjectTableName"
+                                                                   [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
-
-
-                                        <!-- DebitAmount -->
-                                        <log-column [header]="DebitAmountColHeader" [width]="'130'"
-                                            [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DebitAmount'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
-                                                <div style="text-align: right;" class="TextTrimming"
-                                                    *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span   >{{ item.DebitAmount | NumbersPipe:'n2' }}</span>
+                                        <!-- Amount -->
+                                        <log-column [header]="AmountColHeader" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Amount'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span style="color:#00a24d;" [class.red]='item.Amount<0'>{{ item.Amount | NumbersPipe:'n2' }}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [ObjectFieldName]="'DebitAmount'"
-                                                        [InputType]="'sigdouble'" [DataContext]="item"
-                                                        [Text]="item.DebitAmount" [AlignTextToRight]="true"
-                                                        [ObjectTableName]="'ReconcileExternalPageLine'"
-                                                        [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                                [Text]="item.Amount" [AlignTextToRight]="true"
+                                                                [ObjectTableName]="'ReconcileExternalPageLine'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
-
-                                        <!-- CreditAmount -->
-                                        <log-column [header]="CreditAmountColHeader" [width]="'130'"
-                                            [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAmount'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
-                                                <div style="text-align: right;" class="TextTrimming"
-                                                    *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span  >{{ item.CreditAmount | NumbersPipe:'n2' }}</span>
-                                                </div>
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [ObjectFieldName]="'CreditAmount'"
-                                                        [InputType]="'sigdouble'" [DataContext]="item"
-                                                        [Text]="item.CreditAmount" [AlignTextToRight]="true"
-                                                        [ObjectTableName]="'ReconcileExternalPageLine'"
-                                                        [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                        </log-column>
-
 
                                         <!-- Reference -->
-                                        <log-column
-                                            [header]="'ReconcileExternalPageLine.F.Reference' | TextCodeTranslationPipe"
-                                            [width]="'160'" [Alignment]="isRTL ? 'right' : 'left'"
-                                            [binding]="'Reference'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
-                                                <div   [style.text-align]="isRTL ? 'right' : 'left'"
-                                                    class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-column [header]="'ReconcileExternalPageLine.F.Reference' | TextCodeTranslationPipe" [width]="'160'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="" [style.text-align]="isRTL ? 'right' : 'left'"  class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span style="padding: 0px 3px;">{{item.Reference}}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Reference'"
-                                                        [InputType]="'ntext'" [DataContext]="item"
-                                                        [Text]="item.Reference"
-                                                        [ObjectTableName]="'ReconcileExternalPageLine'"
-                                                        [HideColumns]="true"></LogTextBox>
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Reference'" [InputType]="'ntext'" [DataContext]="item"
+                                                                [Text]="item.Reference" [ObjectTableName]="'ReconcileExternalPageLine'" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                         <!-- IsReconciled -->
-                                        <log-column *ngIf="ReconcileExternalPagePM.StatusCode == '2'"
-                                            [header]="'ReconcileExternalPageLine.F.IsReconciled' | TextCodeTranslationPipe"
-                                            [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'"
-                                            [binding]="'IsReconciled'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
-                                                <div style="text-align: center;">
-                                                    <span style="padding-left:30px; padding-right:30px"><img
-                                                            *ngIf="item.IsReconciled"
-                                                            [attr.title]="item.ReconciliationNumber"
-                                                            src="./Images/CheckBoxIcon.png" /></span>
+                                        <log-column *ngIf="ReconcileExternalPagePM.StatusCode == '2'" [header]="'ReconcileExternalPageLine.F.IsReconciled' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'IsReconciled'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="text-align: center;" >
+                                                    <span style="padding-left:30px; padding-right:30px"><img *ngIf="item.IsReconciled"  [attr.title]="item.ReconciliationNumber" src="./Images/CheckBoxIcon.png"  /></span>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                         <!-- Notes -->
-                                        <log-column
-                                            [header]="'ReconcileExternalPageLine.F.Notes' | TextCodeTranslationPipe"
-                                            [width]="'220'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Notes'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
-                                                <div   [style.text-align]="isRTL ? 'right' : 'left'"
-                                                    class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-column [header]="'ReconcileExternalPageLine.F.Notes' | TextCodeTranslationPipe" [width]="'220'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Notes'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="" [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span style="padding: 0px 3px;">{{item.Notes}}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Notes'"
-                                                        [InputType]="'ntext'" [DataContext]="item" [Text]="item.Notes"
-                                                        [ObjectTableName]="'ReconcileExternalPageLine'"
-                                                        [HideColumns]="true"></LogTextBox>
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Notes'" [InputType]="'ntext'" [DataContext]="item"
+                                                                [Text]="item.Notes" [ObjectTableName]="'ReconcileExternalPageLine'" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                         <!-- Buttons -->
-                                        <log-column *ngIf="ReconcileExternalPagePM.StatusCode == '1'" [width]="'55'"
-                                            [Alignment]="'right'">
-                                            <ng-template let-item>
-                                            <log-cell-template  [IgnoreMods]="true">
+                                        <log-column *ngIf="ReconcileExternalPagePM.StatusCode == '1'" [width]="'55'" [Alignment]="'right'">
+                                            <log-cell-template template="let item" [IgnoreMods]="true">
                                                 <!--<span class="CellSeparator" style="float: left;"></span>-->
-                                                <IconButton [Name]="'Delete'" [IsSmall]="true"
-                                                    (click)="RemoveLineClicked(item)" [IsEnabled]="!IsDisplayOnly"
-                                                    style="display: inline-block; float: left; margin-left:12px; margin-top:4px;">
-                                                </IconButton>
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveLineClicked(item)"
+                                                            [IsEnabled]="!IsDisplayOnly"
+                                                            style="display: inline-block; float: left; margin-left:12px; margin-top:4px;"></IconButton>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -525,55 +406,20 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 90px;" *ngIf="!IsRestoreButtonVisibile">
-                        <button class="Button" (click)="CancelApprovalButtonClicked()"
-                            [disabled]="!IsCancelApprovedEnabled">{{'BankAccounts.O.CancelPage' | TextCodeTranslationPipe}}</button>
-                    </td>
-                    <td style="width: 90px;" *ngIf="IsRestoreButtonVisibile">
-                        <button class="Button" (click)="RestoreButtonClicked()"
-                            [disabled]="!IsRestoreButtonEnabled">{{'Accounting.General.O.Restore' |TextCodeTranslationPipe}}</button>
-                    </td>
-
-                    <td style="width: 7px;">
-                        <div></div>
-                    </td>
                     <td style="width: 90px;">
-                        <button class="Button" (click)="EditButtonClicked()" [disabled]="IsEditButtonDisabled">
-                            {{'Accounting.General.O.Edit' |TextCodeTranslationPipe}} </button>
+                        <button class="Button" (click)="CancelApprovalButtonClicked()" [disabled]="!IsCancelApprovedEnabled">{{'BankAccounts.O.CancelPage' | TextCodeTranslationPipe}}</button>
                     </td>
-                    <td style="width: 15px;">
-                        <div>
-                            <LogToolTip
-                                *ngIf="IsEditButtonDisabled || (!IsRestoreButtonVisibile && RestoreToolTipMessage != null)"
-                                [direction]="isRTL?'bottomleft':'bottomright'">
-                                <p><span *ngIf="IsEditButtonDisabled">
-                                        {{
-                                    EditWindowToolTip
-    }}
 
-                                        <br>
-                                    </span> {{
-                                    RestoreToolTipMessage
-                                    }}
-                                </p>
-                                <!-- <br /> -->
-                            </LogToolTip>
-                        </div>
-                    </td>
                     <td>
                         <div class="Footer" style="text-align: center;">
-                            <span style="font-size: 13px;">{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}:
-                                {{ TotalSum | NumbersPipe:'N2' }}</span>
-                            <span
-                                style="font-size: 13px; padding-left: 50px;padding-right: 50px;">{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}:
-                                {{ Difference | NumbersPipe:'N2' }}</span>
+                            <span style="font-size: 13px;" >{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{ TotalSum | NumbersPipe:'N2' }}</span>
+                            <span style="font-size: 13px; padding-left: 50px;padding-right: 50px;" >{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}: {{ Difference | NumbersPipe:'N2' }}</span>
                         </div>
                         <div></div>
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button"
-                            (click)="CancelButtonClicked()" id="Close">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 7px;">
@@ -581,8 +427,7 @@
                     </td>
 
                     <td style="width: 90px;">
-                        <button class="RedButton" (click)="SaveAsDraftButtonClicked()"
-                            [disabled]="(ReconcileExternalPagePM.StatusCode == '2' && !isApprovedButtonClicked) || ReconcileExternalPagePM.StatusCode == '3'">{{'Accounting.General.O.Saveasdraft' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="SaveAsDraftButtonClicked()" [disabled]="(ReconcileExternalPagePM.StatusCode == '2' && !isApprovedButtonClicked) || ReconcileExternalPagePM.StatusCode == '3'">{{'Accounting.General.O.Saveasdraft' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 7px;">
@@ -590,8 +435,7 @@
                     </td>
 
                     <td style="width: 75px;">
-                        <button class="GreenButton" (click)="ApproveButtonClicked()" id="Approve"
-                            [disabled]="(ReconcileExternalPagePM.StatusCode == '2' && !isApprovedButtonClicked) || ReconcileExternalPagePM.StatusCode == '3'">{{'Accounting.General.O.Approve' | TextCodeTranslationPipe}}</button>
+                        <button class="GreenButton" (click)="ApproveButtonClicked()" [disabled]="(ReconcileExternalPagePM.StatusCode == '2' && !isApprovedButtonClicked) || ReconcileExternalPagePM.StatusCode == '3'">{{'Accounting.General.O.Approve' | TextCodeTranslationPipe}}</button>
                     </td>
 
 
@@ -605,3 +449,4 @@
     </tr>
 
 </table>
+

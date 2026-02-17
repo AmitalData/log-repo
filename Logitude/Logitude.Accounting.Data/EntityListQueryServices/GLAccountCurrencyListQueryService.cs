@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -66,18 +66,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return myList;
         }
 
-        public GLAccountCurrencyList GetByAccountAndCurrency(string accountId,string currencyId, int tenant)
-        {
-            IQueryable<GLAccountCurrency> query = (from a in context.GLAccountCurrencies
-                                                   where a.Tenant == tenant 
-                                                   && a.MainGLAccountId == accountId
-                                                   && a.CurrencyId == currencyId
-                                                   select a);
-
-            IQueryable<GLAccountCurrencyList> result = GetIqueryableList(query);
-            var acc = result.FirstOrDefault();
-            return acc;
-        }
 
 
         private IQueryable<GLAccountCurrency> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<GLAccountCurrency> iQueryable, int tenant)

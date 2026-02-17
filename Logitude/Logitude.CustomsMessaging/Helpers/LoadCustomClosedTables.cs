@@ -10,7 +10,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Helpers;
 using UnifreightIIG.Common.SystemTableServiceReference;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using System.Reflection;
 using System.Collections;
@@ -26,7 +26,6 @@ using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
 using Logitude.Customs.Data.EntityMapping;
 using Logitude.BL.Helpers;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.Helpers
 {
@@ -36,7 +35,7 @@ namespace Logitude.CustomsMessaging.Helpers
         {
 
             InitializeSettings();
-            ICustomContext customContext = CustomContext.GetContext((int)tenant);
+            ICustomContext customContext = CustomContext.GetContext(0);
 
             var myMehesSystemTables = new SystemTables();
 
@@ -224,13 +223,13 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
         public static void FillCustomsClosedTablesInDb(int tenant, ClientProgressBarIndicatorService clientProgressBarIndicatorService=null)
         {
             InitializeSettings();
-            ICustomContext customContext = CustomContext.GetContext(tenant);
+            ICustomContext customContext = CustomContext.GetContext(0);
             var myMehesSystemTables = new SystemTables();
             if (clientProgressBarIndicatorService != null) clientProgressBarIndicatorService.StartBroadcast("ממתין לתשובת המכס (סכמת טבלאות מכס)");
             var closedSystemTables = myMehesSystemTables.GetTableData("TableConfiguration", tenant);
             CustomsClosedTableRepository customsClosedTableRepository = new CustomsClosedTableRepository(customContext);
             Dictionary<string, CustomsClosedTable> customsClosedTables = customsClosedTableRepository.GetAll().ToDictionary(d => d.Id, t => t);
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
             List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> addedClosedTables = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData>();
             if (clientProgressBarIndicatorService != null) clientProgressBarIndicatorService.StartBroadcast("בונה סכמת טבלאות מכס");
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData leadDocumentExceptionTypeTable = closedSystemTables.Where(d => d.id == "1517").FirstOrDefault();
@@ -242,38 +241,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable tradeAgreementObjectTable = objectTableRepository.GetObjectTableByName("Customs.TradeAgreement", 0, false);
             InsertClosedTableRecord(tradeAgreementTable, tradeAgreementObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(tradeAgreementTable);
-
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData requestToAdvanceAQueueTable = closedSystemTables.Where(d => d.id == "239678").FirstOrDefault();
-            ObjectTable requestToAdvanceAQueueTableObjectTable = objectTableRepository.GetObjectTableByName("Customs.RequestToAdvanceAQueue", 0, false);
-            InsertClosedTableRecord(requestToAdvanceAQueueTable, requestToAdvanceAQueueTableObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(requestToAdvanceAQueueTable);
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData originCriterionTable = closedSystemTables.Where(d => d.id == "1977").FirstOrDefault();
-            ObjectTable originCriterionObjectTable = objectTableRepository.GetObjectTableByName("Customs.OriginCriterion", 0, false);
-            InsertClosedTableRecord(originCriterionTable, originCriterionObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(originCriterionTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData requestReasonCodeEnumTable = closedSystemTables.Where(d => d.id == "1960").FirstOrDefault();
-            ObjectTable requestReasonCodeEnumObjectTable = objectTableRepository.GetObjectTableByName("Customs.RequestReasonCodeEnum", 0, false);
-            InsertClosedTableRecord(requestReasonCodeEnumTable, requestReasonCodeEnumObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(requestReasonCodeEnumTable);
-                                                              
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData certificateOfOriginTypeCodeEnumTable = closedSystemTables.Where(d => d.id == "1958").FirstOrDefault();
-            ObjectTable certificateOfOriginTypeCodeEnumObjectTable = objectTableRepository.GetObjectTableByName("Customs.CertificateOfOriginTypeCodeEnum", 0, false);
-            InsertClosedTableRecord(certificateOfOriginTypeCodeEnumTable, certificateOfOriginTypeCodeEnumObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(certificateOfOriginTypeCodeEnumTable);  
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData certificateOfOriginStatusCodeEnumTable = closedSystemTables.Where(d => d.id == "1957").FirstOrDefault();
-            ObjectTable certificateOfOriginStatusCodeEnumObjectTable = objectTableRepository.GetObjectTableByName("Customs.CertificateOfOriginStatusCodeEnum", 0, false);
-            InsertClosedTableRecord(certificateOfOriginStatusCodeEnumTable, certificateOfOriginStatusCodeEnumObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(certificateOfOriginStatusCodeEnumTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData MandatoryFieldsPerCertificateOfOriginTable = closedSystemTables.Where(d => d.id == "239684").FirstOrDefault();
-            ObjectTable MandatoryFieldsPerCertificateOfOriginObjectTable = objectTableRepository.GetObjectTableByName("Customs.CertificateOfOriginMandatoryFields", 0, false);
-            InsertClosedTableRecord(MandatoryFieldsPerCertificateOfOriginTable, MandatoryFieldsPerCertificateOfOriginObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(MandatoryFieldsPerCertificateOfOriginTable);
-
-          
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData deliverySiteTypeTable = closedSystemTables.Where(d => d.id == "2012").FirstOrDefault();
             ObjectTable deliverySiteTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.DeliverySiteType", 0, false);
@@ -382,20 +349,10 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(confirmationTypeTable, confirmationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(confirmationTypeTable);
 
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData IncotemrsFileValidationTable = closedSystemTables.Where(d => d.id == "23928").FirstOrDefault();
-            ObjectTable IncotemrsFileValidationObjectTable = objectTableRepository.GetObjectTableByName("Customs.IncotemrsFileValidation", 0, false);
-            InsertClosedTableRecord(IncotemrsFileValidationTable, IncotemrsFileValidationObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(IncotemrsFileValidationTable);
-
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData modificationAndDiscountTypeTable = closedSystemTables.Where(d => d.id == "1416").FirstOrDefault();
             ObjectTable modificationAndDiscountTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ModificationAndDiscountType", 0, false);
             InsertClosedTableRecord(modificationAndDiscountTypeTable, modificationAndDiscountTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(modificationAndDiscountTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData transportMeansTypeTable = closedSystemTables.Where(d => d.id == "1307").FirstOrDefault();
-            ObjectTable transportMeansTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.TransportMeansType", 0, false);
-            InsertClosedTableRecord(transportMeansTypeTable, transportMeansTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(transportMeansTypeTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData customerTypeGeneralTable = closedSystemTables.Where(d => d.id == "1294").FirstOrDefault();
             ObjectTable customerTypeGeneralObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerTypeGeneral", 0, false);
@@ -507,81 +464,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(vendorTypeTable, vendorTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(vendorTypeTable);
 
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PoaStatusTypeLookUpTable = closedSystemTables.Where(d => d.id == "1599").FirstOrDefault();
-            ObjectTable PoaStatusTypeLookUpObjectTable = objectTableRepository.GetObjectTableByName("Customs.PoaStatusTypeLookUp", 0, false);
-            InsertClosedTableRecord(PoaStatusTypeLookUpTable, PoaStatusTypeLookUpObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(PoaStatusTypeLookUpTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerClassificationTypeTable = closedSystemTables.Where(d => d.id == "1055").FirstOrDefault();
-            ObjectTable CustomerClassificationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerClassificationType", 0, false);
-            InsertClosedTableRecord(CustomerClassificationTypeTable, CustomerClassificationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomerClassificationTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData SecurityClearenceTypeCodeTable = closedSystemTables.Where(d => d.id == "23674").FirstOrDefault();
-            ObjectTable SecurityClearenceTypeCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.SecurityClearenceTypeCode", 0, false);
-            InsertClosedTableRecord(SecurityClearenceTypeCodeTable, SecurityClearenceTypeCodeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(SecurityClearenceTypeCodeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData SupplierPartyTypeTable = closedSystemTables.Where(d => d.id == "1609").FirstOrDefault();
-            ObjectTable SupplierPartyTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.SupplierPartyType", 0, false);
-            InsertClosedTableRecord(SupplierPartyTypeTable, SupplierPartyTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(SupplierPartyTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ExportDeliveryDocumentMessageSenderCodeTable = closedSystemTables.Where(d => d.id == "23676").FirstOrDefault();
-            ObjectTable ExportDeliveryDocumentMessageSenderCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ExportDeliveryDocumentMessage", 0, false);
-            InsertClosedTableRecord(ExportDeliveryDocumentMessageSenderCodeTable, ExportDeliveryDocumentMessageSenderCodeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ExportDeliveryDocumentMessageSenderCodeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData NDMessageActionCodeTable = closedSystemTables.Where(d => d.id == "1998").FirstOrDefault();
-            ObjectTable NDMessageActionCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.NDMessageActionCode", 0, false);
-            InsertClosedTableRecord(NDMessageActionCodeTable, NDMessageActionCodeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(NDMessageActionCodeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData HandingCodeTable = closedSystemTables.Where(d => d.id == "23793").FirstOrDefault();
-            ObjectTable HandingCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.HandingCode", 0, false);
-            InsertClosedTableRecord(HandingCodeTable, HandingCodeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(HandingCodeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerIdentificationTypeTable = closedSystemTables.Where(d => d.id == "93").FirstOrDefault();
-            ObjectTable CustomerIdentificationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerIdentificationType", 0, false);
-            InsertClosedTableRecord(CustomerIdentificationTypeTable, CustomerIdentificationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomerIdentificationTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerIndicationTypeTable = closedSystemTables.Where(d => d.id == "98").FirstOrDefault();
-            ObjectTable CustomerIndicationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerIndicationType", 0, false);
-            InsertClosedTableRecord(CustomerIndicationTypeTable, CustomerIndicationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomerIndicationTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LogisticActionRequestTypeTable = closedSystemTables.Where(d => d.id == "23747").FirstOrDefault();
-            ObjectTable LogisticActionRequestTypeTableObjectTable = objectTableRepository.GetObjectTableByName("Customs.LogisticActionRequestType", 0, false);
-            InsertClosedTableRecord(LogisticActionRequestTypeTable, LogisticActionRequestTypeTableObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(LogisticActionRequestTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LogisticActionResponseRequestSTable = closedSystemTables.Where(d => d.id == "23748").FirstOrDefault();
-            ObjectTable LogisticActionResponseRequestSObjectTable = objectTableRepository.GetObjectTableByName("Customs.LogisticActionResponseReqS", 0, false);
-            InsertClosedTableRecord(LogisticActionResponseRequestSTable, LogisticActionResponseRequestSObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(LogisticActionResponseRequestSTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData DeliveryTypeTable = closedSystemTables.Where(d => d.id == "23675").FirstOrDefault();
-            ObjectTable DeliveryTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.DeliveryType", 0, false);
-            InsertClosedTableRecord(DeliveryTypeTable, DeliveryTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(DeliveryTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PoaAuthorizationTypeLookupeTable = closedSystemTables.Where(d => d.id == "1595").FirstOrDefault();
-            ObjectTable PoaAuthorizationTypeLookupObjectTable = objectTableRepository.GetObjectTableByName("Customs.PoaAuthorizationTypeLookup", 0, false);
-            InsertClosedTableRecord(PoaAuthorizationTypeLookupeTable, PoaAuthorizationTypeLookupObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(PoaAuthorizationTypeLookupeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CoolingReportingMethodTable = closedSystemTables.Where(d => d.id == "23799").FirstOrDefault();
-            ObjectTable CoolingReportingMethodObjectTable = objectTableRepository.GetObjectTableByName("Customs.CoolingReportingMethod", 0, false);
-            InsertClosedTableRecord(CoolingReportingMethodTable, CoolingReportingMethodObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CoolingReportingMethodTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CargoTypeTable = closedSystemTables.Where(d => d.id == "1558").FirstOrDefault();
-            ObjectTable CargoTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CargoType", 0, false);
-            InsertClosedTableRecord(CargoTypeTable, CargoTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CargoTypeTable);
-
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData paymentTypeTable = closedSystemTables.Where(d => d.id == "1897").FirstOrDefault();
             ObjectTable paymentTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.PaymentType", 0, false);
             InsertClosedTableRecord(paymentTypeTable, paymentTypeObjectTable, customsClosedTables, customsClosedTableRepository);
@@ -602,21 +484,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(dangerousGoodsPackingReqTable, dangerousGoodsPackingReqObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(dangerousGoodsPackingReqTable);
 
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LogisticsReferenceTypeTable = closedSystemTables.Where(d => d.id == "2032").FirstOrDefault();
-            ObjectTable LogisticsReferenceTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.LogisticsReferenceType", 0, false);
-            InsertClosedTableRecord(LogisticsReferenceTypeTable, LogisticsReferenceTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(LogisticsReferenceTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ReferenceStatusTable = closedSystemTables.Where(d => d.id == "2130").FirstOrDefault();
-            ObjectTable ReferenceStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.ReferenceStatus", 0, false);
-            InsertClosedTableRecord(ReferenceStatusTable, ReferenceStatusObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ReferenceStatusTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ReferenceInputTypeTable = closedSystemTables.Where(d => d.id == "1713").FirstOrDefault();
-            ObjectTable ReferenceInputTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ReferenceInputType", 0, false);
-            InsertClosedTableRecord(ReferenceInputTypeTable, ReferenceInputTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ReferenceInputTypeTable);
-
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData itemGovernmentProcedureTypeTable = closedSystemTables.Where(d => d.id == "1422").FirstOrDefault();
             ObjectTable itemGovernmentProcedureTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ItemGovernmentProcedureType", 0, false);
             InsertClosedTableRecord(itemGovernmentProcedureTypeTable, itemGovernmentProcedureTypeObjectTable, customsClosedTables, customsClosedTableRepository);
@@ -626,16 +493,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable customerActivityTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerActivityType", 0, false);
             InsertClosedTableRecord(customerActivityTypeTable, customerActivityTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(customerActivityTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData StuffingSiteTypeTable = closedSystemTables.Where(d => d.id == "23792").FirstOrDefault();
-            ObjectTable StuffingSiteTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.StuffingSiteType", 0, false);
-            InsertClosedTableRecord(StuffingSiteTypeTable, StuffingSiteTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(StuffingSiteTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ContainerTypeTable = closedSystemTables.Where(d => d.id == "1366").FirstOrDefault();
-            ObjectTable ContainerTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ContainerType", 0, false);
-            InsertClosedTableRecord(ContainerTypeTable, ContainerTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ContainerTypeTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData paymentOrderTypeTable = closedSystemTables.Where(d => d.id == "1116").FirstOrDefault();
             ObjectTable paymentOrderTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.PaymentOrderType", 0, false);
@@ -666,11 +523,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable bankObjectTable = objectTableRepository.GetObjectTableByName("Customs.Bank", 0, false);
             InsertClosedTableRecord(bankTable, bankObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(bankTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData FullnessCodeTable = closedSystemTables.Where(d => d.id == "1365").FirstOrDefault();
-            ObjectTable FullnessCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.FullnessCode", 0, false);
-            InsertClosedTableRecord(FullnessCodeTable, FullnessCodeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(FullnessCodeTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData customsBranchTable = closedSystemTables.Where(d => d.id == "1118").FirstOrDefault();
             ObjectTable customsBranchObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsBranch", 0, false);
@@ -762,11 +614,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable vendorTransactionTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.VendorTransactionType", 0, false);
             InsertClosedTableRecord(vendorTransactionType, vendorTransactionTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(vendorTransactionType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CancelRequestRejectReasonType = closedSystemTables.Where(d => d.id == "1927").FirstOrDefault();
-            ObjectTable CancelRequestRejectReasonTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CancelRequestRejectReasonType", 0, false);
-            InsertClosedTableRecord(CancelRequestRejectReasonType, CancelRequestRejectReasonTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CancelRequestRejectReasonType);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData validCustomsItem = closedSystemTables.Where(d => d.id == "1966").FirstOrDefault();
             ObjectTable validCustomsItemObjectTable = objectTableRepository.GetObjectTableByName("Customs.ValidCustomsItem", 0, false);
@@ -1062,284 +909,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(refundCustomerActivityType, refundCustomerActivityTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(refundCustomerActivityType);
 
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData transferCargoMethodType = closedSystemTables.Where(d => d.id == "42").FirstOrDefault();
-            ObjectTable transferCargoMethodTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.TransferCargoMethodType", 0, false);
-            InsertClosedTableRecord(transferCargoMethodType, transferCargoMethodTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(transferCargoMethodType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData gatepassReturnCode = closedSystemTables.Where(d => d.id == "1589").FirstOrDefault();
-            ObjectTable gatepassReturnCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.GatepassReturnCode", 0, false);
-            InsertClosedTableRecord(gatepassReturnCode, gatepassReturnCodeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(gatepassReturnCode);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData updateCode = closedSystemTables.Where(d => d.id == "1564").FirstOrDefault();
-            ObjectTable updateCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.UpdateCode", 0, false);
-            InsertClosedTableRecord(updateCode, updateCodeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(updateCode);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData continuousRequestType = closedSystemTables.Where(d => d.id == "1156").FirstOrDefault();
-            ObjectTable continuousRequestTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ContinuousRequestType", 0, false);
-            InsertClosedTableRecord(continuousRequestType, continuousRequestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(continuousRequestType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData requestType = closedSystemTables.Where(d => d.id == "1653").FirstOrDefault();
-            ObjectTable requestTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.RequestType", 0, false);
-            InsertClosedTableRecord(requestType, requestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(requestType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData approvedProfession = closedSystemTables.Where(d => d.id == "1644").FirstOrDefault();
-            ObjectTable approvedProfessionObjectTable = objectTableRepository.GetObjectTableByName("Customs.ApprovedProfession", 0, false);
-            InsertClosedTableRecord(approvedProfession, approvedProfessionObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(approvedProfession);
-
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData hazardousSubstance = closedSystemTables.Where(d => d.id == "1363").FirstOrDefault();
-            ObjectTable hazardousSubstanceObjectTable = objectTableRepository.GetObjectTableByName("Customs.HazardousSubstance", 0, false);
-            InsertClosedTableRecord(hazardousSubstance, hazardousSubstanceObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(hazardousSubstance);
-
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData amendmentType = closedSystemTables.Where(d => d.id == "1430").FirstOrDefault();
-            ObjectTable amendmentTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendmentType", 0, false);
-            InsertClosedTableRecord(amendmentType, amendmentTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(amendmentType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData sealReason = closedSystemTables.Where(d => d.id == "1459").FirstOrDefault();
-            ObjectTable sealReasonObjectTable = objectTableRepository.GetObjectTableByName("Customs.SealUpdateReasonType", 0, false);
-            InsertClosedTableRecord(sealReason, sealReasonObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(sealReason);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData sealCompletenes = closedSystemTables.Where(d => d.id == "1273").FirstOrDefault();
-            ObjectTable sealCompletenesObjectTable = objectTableRepository.GetObjectTableByName("Customs.SealCompletenes", 0, false);
-            InsertClosedTableRecord(sealCompletenes, sealCompletenesObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(sealCompletenes);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData sealType = closedSystemTables.Where(d => d.id == "1272").FirstOrDefault();
-            ObjectTable sealTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.SealType", 0, false);
-            InsertClosedTableRecord(sealType, sealTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(sealType);
-
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsShip = closedSystemTables.Where(d => d.id == "1308").FirstOrDefault();
-            ObjectTable CustomsShipObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsShip", 0, false);
-            InsertClosedTableRecord(CustomsShip, CustomsShipObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomsShip);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerRoleType = closedSystemTables.Where(d => d.id == "1432").FirstOrDefault();
-            ObjectTable CustomerRoleTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerRoleType", 0, false);
-            InsertClosedTableRecord(CustomerRoleType, CustomerRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomerRoleType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PartyRelationshipType = closedSystemTables.Where(d => d.id == "2113").FirstOrDefault();
-            ObjectTable PartyRelationshipTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.PartyRelationshipType", 0, false);
-            InsertClosedTableRecord(PartyRelationshipType, PartyRelationshipTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(PartyRelationshipType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ClassificationType = closedSystemTables.Where(d => d.id == "1384").FirstOrDefault();
-            ObjectTable ClassificationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ClassificationType", 0, false);
-            InsertClosedTableRecord(ClassificationType, ClassificationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ClassificationType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TransactionNatureType = closedSystemTables.Where(d => d.id == "1328").FirstOrDefault();
-            ObjectTable TransactionNatureTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.TransactionNatureType", 0, false);
-            InsertClosedTableRecord(TransactionNatureType, TransactionNatureTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(TransactionNatureType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ClaimReasonType = closedSystemTables.Where(d => d.id == "1528").FirstOrDefault();
-            ObjectTable ClaimReasonTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ClaimReasonType", 0, false);
-            InsertClosedTableRecord(ClaimReasonType, ClaimReasonTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ClaimReasonType);
-
-
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData AmountType = closedSystemTables.Where(d => d.id == "1436").FirstOrDefault();
-            ObjectTable AmountTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmountType", 0, false);
-            InsertClosedTableRecord(AmountType, AmountTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(AmountType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData NbcDeclarationType = closedSystemTables.Where(d => d.id == "2112").FirstOrDefault();
-            ObjectTable NbcDeclarationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.NbcDeclarationType", 0, false);
-            InsertClosedTableRecord(NbcDeclarationType, NbcDeclarationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(NbcDeclarationType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ExporterRoleType = closedSystemTables.Where(d => d.id == "23783").FirstOrDefault();
-            ObjectTable ExporterRoleTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ExporterRoleType", 0, false);
-            InsertClosedTableRecord(ExporterRoleType, ExporterRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ExporterRoleType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData BuyerRoleTypeType = closedSystemTables.Where(d => d.id == "23784").FirstOrDefault();
-            ObjectTable BuyerRoleTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.BuyerRoleType", 0, false);
-            InsertClosedTableRecord(BuyerRoleTypeType, BuyerRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(BuyerRoleTypeType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData AutonomyRegionType = closedSystemTables.Where(d => d.id == "1937").FirstOrDefault();
-            ObjectTable AutonomyRegionTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AutonomyRegionType", 0, false);
-            InsertClosedTableRecord(AutonomyRegionType, AutonomyRegionTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(AutonomyRegionType);
-
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CancellationRequestStatus = closedSystemTables.Where(d => d.id == "1932").FirstOrDefault();
-            ObjectTable CancellationRequestStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CancellationRequestStatus", 0, false);
-            InsertClosedTableRecord(CancellationRequestStatus, CancellationRequestStatusObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CancellationRequestStatus);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CancellationReasonRequestType = closedSystemTables.Where(d => d.id == "1906").FirstOrDefault();
-            ObjectTable CancellationReasonRequestTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CancellationReasonRequestType", 0, false);
-            InsertClosedTableRecord(CancellationReasonRequestType, CancellationReasonRequestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CancellationReasonRequestType);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData amendRequestRejectReasonTypeTable = closedSystemTables.Where(d => d.id == "1606").FirstOrDefault();
-            ObjectTable amendRequestRejectReasonTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendRequestRejectReasonType", 0, false);
-            InsertClosedTableRecord(amendRequestRejectReasonTypeTable, amendRequestRejectReasonTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(amendRequestRejectReasonTypeTable);
-
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData amendmentFieldStatusTypeTable = closedSystemTables.Where(d => d.id == "1431").FirstOrDefault();
-            ObjectTable amendmentFieldStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendmentFieldStatusType", 0, false);
-            InsertClosedTableRecord(amendmentFieldStatusTypeTable, amendmentFieldStatusObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(amendmentFieldStatusTypeTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData loadingSiteTypeTable = closedSystemTables.Where(d => d.id == "23774").FirstOrDefault();
-            ObjectTable loadingSiteTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.LoadingSiteType", 0, false);
-            InsertClosedTableRecord(loadingSiteTypeTable, loadingSiteTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(loadingSiteTypeTable);
-
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData  amendCancellRequestInitiatorTable = closedSystemTables.Where(d => d.id == "1451").FirstOrDefault();
-            ObjectTable amendCancellRequestInitiatorObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmendCancellRequestInitiator", 0, false);
-            InsertClosedTableRecord(amendCancellRequestInitiatorTable, amendCancellRequestInitiatorObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(amendCancellRequestInitiatorTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData documentRejectTypeInitiatorTable = closedSystemTables.Where(d => d.id == "1665").FirstOrDefault();
-            ObjectTable documentRejectTypeInitiatorObjectTable = objectTableRepository.GetObjectTableByName("Customs.DocumentRejectType", 0, false);
-            InsertClosedTableRecord(documentRejectTypeInitiatorTable, documentRejectTypeInitiatorObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(documentRejectTypeInitiatorTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData releaseMessageTypeInitiatorTable = closedSystemTables.Where(d => d.id == "1967").FirstOrDefault();
-            ObjectTable ReleaseMessageTypeInitiatorObjectTable = objectTableRepository.GetObjectTableByName("Customs.ReleaseMessageType", 0, false);
-            InsertClosedTableRecord(releaseMessageTypeInitiatorTable, ReleaseMessageTypeInitiatorObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(releaseMessageTypeInitiatorTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TradeAgreementProtocolTable = closedSystemTables.Where(d => d.id == "23900").FirstOrDefault();
-            ObjectTable TradeAgreementProtocolObjectTable = objectTableRepository.GetObjectTableByName("Customs.TradeAgreementProtocol", 0, false);
-            InsertClosedTableRecord(TradeAgreementProtocolTable, TradeAgreementProtocolObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(TradeAgreementProtocolTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ExportLogisticPermitActionTable = closedSystemTables.Where(d => d.id == "23766").FirstOrDefault();
-            ObjectTable ExportLogisticPermitActionObjectTable = objectTableRepository.GetObjectTableByName("Customs.ExportLogisticPermitAction", 0, false);
-            InsertClosedTableRecord(ExportLogisticPermitActionTable, ExportLogisticPermitActionObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ExportLogisticPermitActionTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsItemCategoryTable = closedSystemTables.Where(d => d.id == "2073").FirstOrDefault();
-            ObjectTable CustomsItemCategoryObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsItemCategory", 0, false);
-            InsertClosedTableRecord(CustomsItemCategoryTable, CustomsItemCategoryObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomsItemCategoryTable);
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsItemHierarchicLocationTable = closedSystemTables.Where(d => d.id == "2015").FirstOrDefault();
-            ObjectTable CustomsItemHierarchicLocationObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsItemHierarchicLocation", 0, false);
-            InsertClosedTableRecord(CustomsItemHierarchicLocationTable, CustomsItemHierarchicLocationObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomsItemHierarchicLocationTable); 
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsEntityStatusTable = closedSystemTables.Where(d => d.id == "1103").FirstOrDefault();
-            ObjectTable CustomsEntityStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsEntityStatus", 0, false);
-            InsertClosedTableRecord(CustomsEntityStatusTable, CustomsEntityStatusObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomsEntityStatusTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ConditionalExemptionTypeTable = closedSystemTables.Where(d => d.id == "1315").FirstOrDefault();
-            ObjectTable ConditionalExemptionTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ConditionalExemptionType", 0, false);
-            InsertClosedTableRecord(ConditionalExemptionTypeTable, ConditionalExemptionTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ConditionalExemptionTypeTable);
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CarEngineVolumeTable = closedSystemTables.Where(d => d.id == "1620").FirstOrDefault();
-            ObjectTable CarEngineVolumeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CarEngineVolume", 0, false);
-            InsertClosedTableRecord(CarEngineVolumeTable, CarEngineVolumeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CarEngineVolumeTable);
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CarWeightTable = closedSystemTables.Where(d => d.id == "1621").FirstOrDefault();
-            ObjectTable CarWeightObjectTable = objectTableRepository.GetObjectTableByName("Customs.CarWeight", 0, false);
-            InsertClosedTableRecord(CarWeightTable, CarWeightObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CarWeightTable);
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ComputationMethodTable = closedSystemTables.Where(d => d.id == "1060").FirstOrDefault();
-            ObjectTable ComputationMethodObjectTable = objectTableRepository.GetObjectTableByName("Customs.ComputationMethod", 0, false);
-            InsertClosedTableRecord(ComputationMethodTable, ComputationMethodObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ComputationMethodTable);
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TarifRelatedToQuotaTable = closedSystemTables.Where(d => d.id == "1069").FirstOrDefault();
-            ObjectTable TarifRelatedToQuotaObjectTable = objectTableRepository.GetObjectTableByName("Customs.TarifRelatedToQuota", 0, false);
-            InsertClosedTableRecord(TarifRelatedToQuotaTable, TarifRelatedToQuotaObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(TarifRelatedToQuotaTable);
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData QuotaComputationBasisTable = closedSystemTables.Where(d => d.id == "1061").FirstOrDefault();
-            ObjectTable QuotaComputationBasisObjectTable = objectTableRepository.GetObjectTableByName("Customs.QuotaComputationBasis", 0, false);
-            InsertClosedTableRecord(QuotaComputationBasisTable, QuotaComputationBasisObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(QuotaComputationBasisTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData QuotaIncrementTable = closedSystemTables.Where(d => d.id == "1062").FirstOrDefault();
-            ObjectTable QuotaIncrementObjectTable = objectTableRepository.GetObjectTableByName("Customs.QuotaIncrement", 0, false);
-            InsertClosedTableRecord(QuotaIncrementTable, QuotaIncrementObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(QuotaIncrementTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData RenewalMethodTable = closedSystemTables.Where(d => d.id == "1064").FirstOrDefault();
-            ObjectTable RenewalMethodObjectTable = objectTableRepository.GetObjectTableByName("Customs.RenewalMethod", 0, false);
-            InsertClosedTableRecord(RenewalMethodTable, RenewalMethodObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(RenewalMethodTable);
-             
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PerYearFrequencyTable = closedSystemTables.Where(d => d.id == "1337").FirstOrDefault();
-            ObjectTable PerYearFrequencyObjectTable = objectTableRepository.GetObjectTableByName("Customs.PerYearFrequency", 0, false);
-            InsertClosedTableRecord(PerYearFrequencyTable, PerYearFrequencyObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(PerYearFrequencyTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LevyTrustTable = closedSystemTables.Where(d => d.id == "1361").FirstOrDefault();
-            ObjectTable LevyTrustObjectTable = objectTableRepository.GetObjectTableByName("Customs.LevyTrust", 0, false);
-            InsertClosedTableRecord(LevyTrustTable, LevyTrustObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(LevyTrustTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData InceptionCodeTable = closedSystemTables.Where(d => d.id == "1066").FirstOrDefault();
-            ObjectTable InceptionCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.InceptionCode", 0, false);
-            InsertClosedTableRecord(InceptionCodeTable, InceptionCodeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(InceptionCodeTable);
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData RegularityPublicationTable = closedSystemTables.Where(d => d.id == "1135").FirstOrDefault();
-            ObjectTable RegularityPublicationObjectTable = objectTableRepository.GetObjectTableByName("Customs.RegularityPublication", 0, false);
-            InsertClosedTableRecord(RegularityPublicationTable, RegularityPublicationObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(RegularityPublicationTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TradeLevyStatusTable = closedSystemTables.Where(d => d.id == "1068").FirstOrDefault();
-            ObjectTable TradeLevyStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.TradeLevyStatus", 0, false);
-            InsertClosedTableRecord(TradeLevyStatusTable, TradeLevyStatusObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(TradeLevyStatusTable);
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData RegularitySourceTable = closedSystemTables.Where(d => d.id == "1123").FirstOrDefault();
-            ObjectTable RegularitySourceObjectTable = objectTableRepository.GetObjectTableByName("Customs.RegularitySource", 0, false);
-            InsertClosedTableRecord(RegularitySourceTable, RegularitySourceObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(RegularitySourceTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ChangeTypeTable = closedSystemTables.Where(d => d.id == "1233").FirstOrDefault();
-            ObjectTable ChangeTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ChangeType", 0, false);
-            InsertClosedTableRecord(ChangeTypeTable, ChangeTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(ChangeTypeTable);
-            
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData InterConditionsRelationshipTable = closedSystemTables.Where(d => d.id == "1147").FirstOrDefault();
-            ObjectTable InterConditionsRelationshipObjectTable = objectTableRepository.GetObjectTableByName("Customs.InterConditionsRelationship", 0, false);
-            InsertClosedTableRecord(InterConditionsRelationshipTable, InterConditionsRelationshipObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(InterConditionsRelationshipTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData EntryExitTypeTable = closedSystemTables.Where(d => d.id == "1270").FirstOrDefault();
-            ObjectTable EntryExitTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.EntryExitType", 0, false);
-            InsertClosedTableRecord(EntryExitTypeTable, EntryExitTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(EntryExitTypeTable);
-
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsItemGroupTable = closedSystemTables.Where(d => d.id == "2217").FirstOrDefault();
-            ObjectTable CustomsItemGroupObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsItemGroup", 0, false);
-            InsertClosedTableRecord(CustomsItemGroupTable, CustomsItemGroupObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomsItemGroupTable);
-
-            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData DiscountTypeRegulationTable = closedSystemTables.Where(d => d.id == "2317").FirstOrDefault();
-            ObjectTable DiscountTypeRegulationObjectTable = objectTableRepository.GetObjectTableByName("Customs.DiscountTypeRegulation", 0, false);
-            InsertClosedTableRecord(DiscountTypeRegulationTable, DiscountTypeRegulationObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(DiscountTypeRegulationTable);
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);
@@ -1433,12 +1002,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> entitySystemTables = null;
             bool errorHandel = false;
             int rowUpdateAdded = 0;
-            int tenant= SettingUtil.GetCurrentTenant();
-            if(tenant == -1)
-            {
-                tenant = requestParams.Tenant;
-            }
-            ICustomContext customContext = CustomContext.GetContext(tenant);
+            ICustomContext customContext = CustomContext.GetContext(0);
             CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(customContext);
             CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = tableId });
             try
@@ -1449,7 +1013,8 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                    
 
                     InitializeSettings();
-                    ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+
+                    ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
 
                     table.StatusCode = "2";
                     closedTableRep.Update(table);
@@ -1641,7 +1206,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                         myTableLastUpdateM.AlternativeUserTenant = requestParams.Tenant;
 
                     }
-                    UpdateStatusCode(closedTableRep, table, DateTime.Now, (rowUpdateAdded + rowUpdateAdded > 0), myTableLastUpdateM, tenant);
+                    UpdateStatusCode(closedTableRep, table, DateTime.Now, (rowUpdateAdded + rowUpdateAdded > 0), myTableLastUpdateM);
                 }
                 else
                 {
@@ -1680,7 +1245,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
         }
         
         private static void UpdateStatusCode(CustomsClosedTableRepository closedTableRep, CustomsClosedTable table, DateTime? LastUpdateDate, bool hasChanged,
-            TableLastUpdateM myTableLastUpdateM,int tenant=0)
+            TableLastUpdateM myTableLastUpdateM)
         {
             table.StatusCode = "3";
             if (LastUpdateDate.HasValue)
@@ -1689,7 +1254,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             }
             if (hasChanged)
             {
-                TableLastUpdateClass.UpdateTableHistory(tenant, table.DbName, myTableLastUpdateM);
+                TableLastUpdateClass.UpdateTableHistory(0, table.DbName, myTableLastUpdateM);
             }
             closedTableRep.Update(table);
             closedTableRep.SubmitChanges();
@@ -1742,7 +1307,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                     id = systemrecord.id + "," + bankCode;
                 }
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(systemrecord.id + "-" + (bankCode ?? ""));
+                Debug.WriteLine(systemrecord.id + "-" + (bankCode ?? ""));
                 bankCodeInfo.SetValue(existedRecord, bankCode);
                 bankIdKeyInfo.SetValue(existedRecord, id);
             }
@@ -1849,7 +1414,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                             MetaDataTypeCode = GetMetaDataTypeCode(row),
                             Format = row.ItemArray[4].ToString(),
                             Mandatory = bool.Parse(row.ItemArray[6].ToString()),
-                            ValuesTable = row.ItemArray[8]?.ToString(),
                         };
                         //if (metadataRecord.MetaDataTypeCode == "87") //13419
                         //{
@@ -1871,10 +1435,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                         }
                         metadataRecord.Format = row.ItemArray[4].ToString();
                         metadataRecord.Mandatory = bool.Parse(row.ItemArray[6].ToString());
-                        if (row.ItemArray[8] != null)
-                        {
-                            metadataRecord.ValuesTable = row.ItemArray[8].ToString();
-                        }
                         //if (metadataRecord.MetaDataTypeCode == "87") //13419
                         //{
                         //    metadataRecord.Mandatory = true;
@@ -2249,9 +1809,9 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
 
                 Stopwatch stopwatch = new Stopwatch();
                 InitializeSettings();
-                ICustomContext customContext = CustomContext.GetContext(tenant);
+                ICustomContext customContext = CustomContext.GetContext(0);
                 CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(customContext);
-                ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+                ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
                 Dictionary<string, ObjectTable> objectTables = objectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Id, o => o);
                 List<CustomsClosedTable> closedTables = closedTableRep.GetExistedClosedTables();
                 closedTables = closedTables.OrderBy(d => int.Parse(d.Id)).ToList();

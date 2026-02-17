@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -19,16 +18,16 @@ import { ClaimValidator } from '../../Validators/ClaimValidator';
 @Injectable()
 
 export class ClaimsRelatedEntityExtendedPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/claimsRelatedEntities';
     }
 
     insert(entityPM: ClaimsRelatedEntityPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -45,8 +44,8 @@ export class ClaimsRelatedEntityExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: ClaimsRelatedEntityPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -54,21 +53,21 @@ export class ClaimsRelatedEntityExtendedPMService {
                         }
                         return serviceResponse;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
             }
         });
     }
 
     update(entityPM: ClaimsRelatedEntityPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -85,8 +84,8 @@ export class ClaimsRelatedEntityExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: ClaimsRelatedEntityPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -96,14 +95,14 @@ export class ClaimsRelatedEntityExtendedPMService {
 
                         return serviceResponse;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             }
         }

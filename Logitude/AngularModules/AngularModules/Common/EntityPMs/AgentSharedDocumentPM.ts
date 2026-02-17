@@ -14,13 +14,14 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
+import {DocumentSL} from '../../Common/DataContracts/DocumentSL';
 
 export class AgentSharedDocumentPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -70,24 +71,21 @@ export class AgentSharedDocumentPM {
     public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
        
 	 
+    private documentSL: DocumentSL;
+    public get DocumentSL() { return this.documentSL; }
+    public set DocumentSL(newValue: DocumentSL) { if (this.documentSL != newValue) { this.documentSL = newValue; this.MarkAsDirty("DocumentSL"); } }
+
     private agentSharedManifestRef: string;
     public get AgentSharedManifestRef() { return this.agentSharedManifestRef; }
     public set AgentSharedManifestRef(newValue: string) { if (this.agentSharedManifestRef != newValue) { this.agentSharedManifestRef = newValue; this.MarkAsDirty("AgentSharedManifestRef"); } }
-       
-	 
-    private documentSL: any;
-    public get DocumentSL() { return this.documentSL; }
-    public set DocumentSL(newValue: any) { if (this.documentSL != newValue) { this.documentSL = newValue; this.MarkAsDirty("DocumentSL"); } }
-       
-	 
+    
+
+
 
     public OldEntityPM: AgentSharedDocumentPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -95,7 +93,6 @@ export class AgentSharedDocumentPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AgentSharedDocument");
            
         }
-	 }
     }
     private MyClone: AgentSharedDocumentPM;
 

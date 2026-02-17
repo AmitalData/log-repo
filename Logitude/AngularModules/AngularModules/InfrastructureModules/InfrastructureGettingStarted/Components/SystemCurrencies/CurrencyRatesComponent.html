@@ -1,4 +1,4 @@
-
+﻿
 <table>
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
             <td>
@@ -37,46 +37,44 @@
         <!-- Grid -->
         <tr *ngIf="RatesListVisibility">
             <td>
-                <div class="MediaFill">
-                    <div class="SimpleGridView">
-                        <div class="SimpleGridViewHeader">
-                            <table>
-                                <tr>
-                                    <td style="width: 100px;min-width: 100px">{{'RatesTable.F.ForeignCurrencyId' | TextCodeTranslationPipe}}</td>
-                                    <td style="width: 100px;min-width: 100px">{{'RatesTable.O.ExchangeDate' | TextCodeTranslationPipe}}</td>
-                                    <td style="width: 150px;min-width: 150px">{{'RatesTable.F.Rate' | TextCodeTranslationPipe}}</td>
-                                    <td><div></div></td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="SimpleGridViewBody">
-                            <table>
-                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
-                                    <td class="GridViewCell" style="width: 100px;min-width: 100px">
-                                        {{item.Code}}
-                                    </td>
-
-                                    <td class="GridViewCell" style="width: 100px;min-width: 100px">
-                                        {{item.ValueDate | DateTimeToDatePipe}}
-                                    </td>
-
-                                    <td class="GridViewCell" style="width: 150px;min-width: 150px">
-                                        <LogTextBox [ObjectFieldName]="'Rate'" [Text]="item.Rate" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                    </td>
-
-                                    <td><div></div></td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="4">
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 100px;min-width: 100px">{{'RatesTable.F.ForeignCurrencyId' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 100px;min-width: 100px">{{'RatesTable.O.ExchangeDate' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 150px;min-width: 150px">{{'RatesTable.F.Rate' | TextCodeTranslationPipe}}</td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
                     </div>
-                </div>                
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
+                                <td class="GridViewCell" style="width: 100px;min-width: 100px">
+                                    {{item.Code}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px;min-width: 100px">
+                                    {{item.ValueDate | DateTimeToDatePipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 150px;min-width: 150px">
+                                    <LogTextBox   [ObjectFieldName]="'item.Rate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </td>
         </tr>
 

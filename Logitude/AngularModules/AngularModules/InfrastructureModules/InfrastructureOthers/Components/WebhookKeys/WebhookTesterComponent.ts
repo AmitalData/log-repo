@@ -10,7 +10,7 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WebhookTesterComponent.html',
 })
 

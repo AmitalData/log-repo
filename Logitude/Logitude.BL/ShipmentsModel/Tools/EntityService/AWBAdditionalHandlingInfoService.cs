@@ -15,28 +15,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
     {
         private int tenant;
         private bool isNewEntity;
+        private string serviceContextUser;
         private IShipmentsContext objectContext;
         private AWBAdditionalHandlingInfoPM entityPM;
         private AWBAdditionalHandlingInfo entityPoco;
-        private AWBAdditionalHandlingInfoRepository entityRepository;       
-
-        public AWBAdditionalHandlingInfoService(IShipmentsContext objectContext, int tenant)
+        private AWBAdditionalHandlingInfoRepository entityRepository;
+        public AWBAdditionalHandlingInfoService(IShipmentsContext objectContext, AWBAdditionalHandlingInfoPM entityPM, string serviceContextUser)
         {
+            this.entityPM = entityPM;
             this.tenant = entityPM.Tenant;
             this.objectContext = objectContext;
+            this.serviceContextUser = serviceContextUser;
             this.entityRepository = new AWBAdditionalHandlingInfoRepository(objectContext);
         }
 
-        public void Create(AWBAdditionalHandlingInfoPM entityPM)
-        {
-            
-        }
-
-        public void Update(AWBAdditionalHandlingInfoPM entityPM)
+        public void Update()
         {
             this.isNewEntity = false;
-            this.entityPM = entityPM;
-            this.entityPoco = entityRepository.GetSingleAWBAdditionalHandlingInfo(entityPM.Id, tenant);
+            this.entityPoco = entityRepository.GetSingleAWBAdditionalHandlingInfo(entityPM.Id);
 
             this.MapEntityFields();
 
@@ -49,11 +45,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (isNewEntity)
             {
                 entityPoco.Id = entityPM.Id;
-                entityPoco.Tenant = entityPM.Tenant;                
+                entityPoco.Tenant = entityPM.Tenant;
+                entityPoco.Code = entityPM.Code;
+                entityPoco.Name = entityPM.Name;
             }
 
-            entityPoco.Code = entityPM.Code;
-            entityPoco.Name = entityPM.Name;
             entityPoco.PrintDescription = entityPM.PrintDescription;
 
             this.BuildSearchField();

@@ -14,7 +14,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SCACCode { get; set; }
         public bool IsINTTRARegistered { get; set; }
         public string INTTRARegistrationNotes { get; set; }
-        public bool INTTRAUpdatesShipment { get; set; }
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
@@ -24,12 +23,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("ShippingAgentId")]
         public virtual ShippingAgent ShippingAgent { get; set; }
 
-        public string CBSA { get; set; }
-        public string CAAT { get; set; }
-        public bool IsSendingByContainer { get; set; } 
-        public bool IsSendingByBillOfLading { get; set; }
-
-        public bool IsSupportsContainerTracking { get; set; }
-        public bool IsAutomaticRequestsSent { get; set; }
     }
 }

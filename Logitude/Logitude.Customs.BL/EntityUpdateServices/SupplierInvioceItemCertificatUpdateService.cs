@@ -22,22 +22,18 @@ using System.Transactions;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class SupplierInvioceItemCertificatUpdateService
     {
-        const string SIICerExemptionHD379305 = "SIICerExemptionHD379305.LogUntilDateyyyyMMdd";//Bug 149964: CALL #379305 פטור 92 מאותחל באישור עם מענה
         int? maxCounter;
         protected override void OnCreating(SupplierInvioceItemCertificatPM entityPM, SupplierInvoiceItemPM entityParentPM)
         {
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.InvoiceCounterKey = entityParentPM.CounterKey;
             entityPM.LineNumber = entityParentPM.LineNumber;
-            entityPM.Tenant = entityParentPM.Tenant;
-
-            bool yaronRevertCS7859 = false;
+            bool yaronRevertCS7859 = false; 
             ICustomContext _Context = MainContext as CustomContext;
             if (yaronRevertCS7859)
             {
@@ -52,10 +48,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 entityPM.ItemCertificateCounterKey = maxCounter.Value + 1;
                 maxCounter = entityPM.ItemCertificateCounterKey;
+
             }
-
             base.OnCreating(entityPM, entityParentPM);
-
         }
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
@@ -90,18 +85,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (resConfirmationTypeCode != null)
             {
-                resConfirmationTypeCode = resConfirmationTypeCode == "" ? null : "'" + resConfirmationTypeCode + "'";
+                resConfirmationTypeCode = "'" + resConfirmationTypeCode + "'";
 
             }
 
             if (reqConfirmationTypeCode != null)
             {
-                reqConfirmationTypeCode = reqConfirmationTypeCode == "" ? null : "'" + reqConfirmationTypeCode + "'";
+                reqConfirmationTypeCode = "'" + reqConfirmationTypeCode + "'";
             }
 
             string updateCmd;
             string cmd = null;
-            string updateCmd1="";
+            string updateCmd1;
             string statusCode;
             string strConnString = GetConnection(tenant);
             List<CertificateConnectedItems> validItems = new List<CertificateConnectedItems>();
@@ -112,28 +107,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (OracleConnection cn = new OracleConnection(strConnString))
                 {
+                    updateCmd = "Update SupplierInvioceItemCertificats set AttachmentTypeCode='" + attachmentTypeCode + "',CertificateNumber= " + (string.IsNullOrEmpty(certificateNumber) ? "NULL" : certificateNumber) + " ,ReqConfirmationTypeCode= " + (string.IsNullOrEmpty(reqConfirmationTypeCode) ? "NULL" : reqConfirmationTypeCode) + ",ResConfirmationTypeCode= " + (string.IsNullOrEmpty(resConfirmationTypeCode) ? "NULL" : resConfirmationTypeCode) + ",CertificateExemptionTypeCode= " + (string.IsNullOrEmpty(certificateExemptionTypeCode) ? "NULL" : certificateExemptionTypeCode) + " where ";
 
-                    if (!String.IsNullOrWhiteSpace(certificateExemptionTypeCode))
-                    {
-                        if (attachmentTypeCode != "4")
-                        {
-                            certificateExemptionTypeCode = null;
-
-                            var stringBuilder1 = new StringBuilder();
-                            stringBuilder1
-                                .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
-                                .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
-                                .AppendLine(updateCmd1)
-                                .AppendLine(cmd);
-                            var logChangesService1 = new LogChangesService();
-                            logChangesService1.SBLog(
-                                SIICerExemptionHD379305,
-                                stringBuilder1);
-                        }
-                    }
-                    
-                    updateCmd = "Update SupplierInvioceItemCertificats set  AttachmentTypeCode='" + attachmentTypeCode + "',CertificateNumber= " + (string.IsNullOrEmpty(certificateNumber) ? "NULL" : certificateNumber) + " ,ReqConfirmationTypeCode= " + (string.IsNullOrEmpty(reqConfirmationTypeCode) ? "NULL" : reqConfirmationTypeCode) + ",ResConfirmationTypeCode= " + (string.IsNullOrEmpty(resConfirmationTypeCode) ? "NULL" : resConfirmationTypeCode) + ",CertificateExemptionTypeCode= " + (string.IsNullOrEmpty(certificateExemptionTypeCode) ? "NULL" : certificateExemptionTypeCode) + " where ";
-                    
 
                     int count = 0;
 
@@ -216,18 +191,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     cn.Open();
                     command.ExecuteNonQuery();
                     cn.Close();
-
-                    var stringBuilder = new StringBuilder();
-                    stringBuilder
-                        .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
-                        .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
-                        .AppendLine(updateCmd1)
-                        .AppendLine(cmd);
-
-                    var logChangesService = new LogChangesService();
-                    logChangesService.SBLog(
-                        SIICerExemptionHD379305,
-                        stringBuilder);
                 }
             }
 
@@ -412,7 +375,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (OracleConnection cn = new OracleConnection(strConnString))
                 {
-                    //updateCmd = "Update SupplierInvioceItemCertificats set "+ GetReset92(attachmentTypeCode)+" AttachmentTypeCode='" + attachmentTypeCode + "',CertificateNumber= " + (string.IsNullOrEmpty(certificateNumber) ? "NULL" : certificateNumber) + " ,ReqConfirmationTypeCode= " + (string.IsNullOrEmpty(reqConfirmationTypeCode) ? "NULL" : reqConfirmationTypeCode) + ",ResConfirmationTypeCode= " + (string.IsNullOrEmpty(resConfirmationTypeCode) ? "NULL" : resConfirmationTypeCode) + ",CertificateExemptionTypeCode= " + (string.IsNullOrEmpty(certificateExemptionTypeCode) ? "NULL" : certificateExemptionTypeCode) + " where ";
                     updateCmd = "Update SupplierInvioceItemCertificats set AttachmentTypeCode='" + attachmentTypeCode + "',CertificateNumber= " + (string.IsNullOrEmpty(certificateNumber) ? "NULL" : certificateNumber) + " ,ReqConfirmationTypeCode= " + (string.IsNullOrEmpty(reqConfirmationTypeCode) ? "NULL" : reqConfirmationTypeCode) + ",ResConfirmationTypeCode= " + (string.IsNullOrEmpty(resConfirmationTypeCode) ? "NULL" : resConfirmationTypeCode) + ",CertificateExemptionTypeCode= " + (string.IsNullOrEmpty(certificateExemptionTypeCode) ? "NULL" : certificateExemptionTypeCode) + " where ";
 
 
@@ -438,15 +400,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             cn.Close();
                             count = 0;
                             cmd = null;
-                            var stringBuilder1 = new StringBuilder();
-                            stringBuilder1
-                                .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
-                                .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
-                                .AppendLine(cmd);
-                            var logChangesService1 = new LogChangesService();
-                            logChangesService1.SBLog(
-                                SIICerExemptionHD379305,
-                                stringBuilder1);
                         }
                     }
                     char[] Chars = { 'o', 'r' };
@@ -456,17 +409,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     cn.Open();
                     command.ExecuteNonQuery();
                     cn.Close();
-
-                    var stringBuilder = new StringBuilder();
-                    stringBuilder
-                        .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
-                        .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
-                        .AppendLine(cmd);
-                    var logChangesService = new LogChangesService();
-                    logChangesService.SBLog(
-                        SIICerExemptionHD379305,
-                        stringBuilder);
-
                 }
             }
 
@@ -597,16 +539,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             cn.Open();
                             sqlCommand.ExecuteNonQuery();
                             cn.Close();
-
-                            var stringBuilder = new StringBuilder();
-                            stringBuilder
-                                .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
-                                .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
-                                .AppendLine(updateCmd);
-                            var logChangesService = new LogChangesService();
-                            logChangesService.SBLog(
-                                SIICerExemptionHD379305,
-                                stringBuilder);
                         }
                     }
 
@@ -664,16 +596,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             cn.Open();
                             sqlCommand.ExecuteNonQuery();
                             cn.Close();
-
-                            var stringBuilder = new StringBuilder();
-                            stringBuilder
-                                .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
-                                .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
-                                .AppendLine(updateCmd);
-                            var logChangesService = new LogChangesService();
-                            logChangesService.SBLog(
-                                SIICerExemptionHD379305,
-                                stringBuilder);
                         }
                     }
                     else
@@ -708,64 +630,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
         }
-        public void InsertSupplierInvioceItemCertificatByCsvFile(string certificateNumber,string requestNumber,int tenant,string decId,int lineNumber,int invoiceCounterkey, SupplierInvoiceItemPM invoiceItem)
-        {
-            SupplierInvioceItemCertificatRepository supplierInvioceItemCertificatRepository = new SupplierInvioceItemCertificatRepository(tenant);
-            ICustomContext customContext = CustomContext.GetContext(tenant);
-            SupplierInvioceItemCertificatQueryService supplierInvioceItemCertificatQueryService = new SupplierInvioceItemCertificatQueryService(customContext);
-            SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-            var entity = supplierInvioceItemCertificatQueryService.GetSupplierInvioceItemCertificatWithExternalRequestTypeCode("0402", decId,invoiceItem.LineNumber);
-            if (entity == null)
-            {
-                entity = new SupplierInvioceItemCertificatPM();
-                entity.ChangeSetOp = ChangeSetOperation.Insert;
-            }
-            else
-            {
-                entity.ChangeSetOp = ChangeSetOperation.Update;
-            }
-            entity.InvoiceCounterKey = invoiceCounterkey;
-            entity.Tenant = tenant;
-            entity.CertificateNumber = certificateNumber;
-            entity.ResConfirmationTypeCode = "2402";
-            entity.ReqConfirmationTypeCode = "2402";
-            entity.AttachmentTypeCode = "2";
-            if(entity.SequenceNumeric == 0 )
-            {
-                entity.SequenceNumeric = supplierInvioceItemCertificatRepository.getNextSequenceNumber(decId, tenant, invoiceItem.LineNumber);
-            }
-            entity.ApprovalRequestNumber = requestNumber;
-            invoiceItem.SupplierInvioceItemCertificats.Add(entity);
-            invoiceItem.ChangeSetOp = ChangeSetOperation.Update;
-            updateService.Update(invoiceItem, true);
-        }
-      
-        public void UpdateCertificateWithoutCertificateExemptionTypeCode(SupplierInvioceItemCertificatPM cert, int tenant)
-        {
-            SupplierInvoiceItemQueryService query = new SupplierInvoiceItemQueryService(tenant);
-            SupplierInvoiceItemPM item = query.GetSingle(cert.DeclarationId, cert.InvoiceCounterKey, cert.LineNumber, false, false);
-            if (!item.SupplierInvioceItemCertificats.Contains(cert))
-            {
-                item.SupplierInvioceItemCertificats.Add(cert);
-            }
-            ICustomContext customContext = CustomContext.GetContext(tenant);
-            SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-            item.ChangeSetOp = ChangeSetOperation.Update;
-            updateService.Update(item, true);
-        }
-
 
         public void FastDeleteMultiParents(SupplierInvoiceKeys entityKeyFields, List<int> supplierInvoiceItemsParentsLines)
         {
             (Repository as Logitude.Customs.Data.Repsitories.SupplierInvioceItemCertificatRepository).FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
         }
 
-        public string UpdateCertificateStatus(SupplierInvioceItemCertificatPM cert, int tenant, bool onlyReturnStatus=false)
+        public void UpdateCertificateStatus(SupplierInvioceItemCertificatPM cert, int tenant)
         {
             // update item
             SupplierInvoiceItemQueryService query = new SupplierInvoiceItemQueryService(tenant);
             //SupplierInvoiceItemPM item = query.GetSingleSupplierInvoicePMBySequence(cert.DeclarationId, cert.InvoiceCounterKey, cert.SequenceNumeric);
-       
+            SupplierInvoiceItemPM item = query.GetSingle(cert.DeclarationId, cert.InvoiceCounterKey,cert.LineNumber,false,false);
+
             if (cert != null)
             {
 
@@ -776,7 +653,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 else if (cert.AttachmentTypeCode == "1" || cert.AttachmentTypeCode == "2")
                 {
-                    if (string.IsNullOrWhiteSpace(cert.CertificateNumber) || string.IsNullOrWhiteSpace(cert.ReqConfirmationTypeCode) || string.IsNullOrWhiteSpace(cert.ResConfirmationTypeCode) || !string.IsNullOrWhiteSpace(cert.CertificateExemptionTypeCode))
+                    if (string.IsNullOrEmpty(cert.CertificateNumber) || string.IsNullOrEmpty(cert.ReqConfirmationTypeCode) || string.IsNullOrEmpty(cert.ResConfirmationTypeCode) || !string.IsNullOrEmpty(cert.CertificateExemptionTypeCode))
                     {
                         statusCode = "2";
                     }
@@ -787,7 +664,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 else if (cert.AttachmentTypeCode == "4")
                 {
-                    if (string.IsNullOrWhiteSpace(cert.CertificateExemptionTypeCode) || string.IsNullOrWhiteSpace(cert.ReqConfirmationTypeCode) || !string.IsNullOrWhiteSpace(cert.CertificateNumber) || !string.IsNullOrWhiteSpace(cert.ResConfirmationTypeCode))
+                    if (string.IsNullOrEmpty(cert.CertificateExemptionTypeCode) || string.IsNullOrEmpty(cert.ReqConfirmationTypeCode) || !string.IsNullOrEmpty(cert.CertificateNumber) || !string.IsNullOrEmpty(cert.ResConfirmationTypeCode))
                     {
                         statusCode = "2";
                     }
@@ -800,25 +677,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     statusCode = "1";
                 }
-                if (!onlyReturnStatus)
-                {
-                    SupplierInvoiceItemPM item = query.GetSingle(cert.DeclarationId, cert.InvoiceCounterKey, cert.LineNumber, false, false);
 
-                    item.CertificatesStatusCode = statusCode;
+                item.CertificatesStatusCode = statusCode;
 
-                    ICustomContext customContext = CustomContext.GetContext(tenant);
-                    SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-                    item.ChangeSetOp = ChangeSetOperation.Update;
-                    updateService.Update(item, true);
-                }
-
-                return statusCode;
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+                item.ChangeSetOp = ChangeSetOperation.Update;
+                updateService.Update(item, true);
             }
-            return "";
 
         }
-
-
 
         private static string GetConnection(int tenant)
         {
@@ -831,192 +699,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;
         }
-
-        public int UpdateAllCertificateWithoutResponse(string declarationId, int tenant)
-        {
-    
-            string strConnString = GetConnection(tenant);
-            int count = 0;
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-
-
-            if (dbms == "oracle")
-            {
-                using (OracleConnection con = new OracleConnection(strConnString))
-                {
-                    string cmd = @"Update (select i.DECLARATIONID , I.TENANT,AttachmentTypeCode, CertificateExemptionTypeCode, CertificateNumber from  SupplierInvioceItemCertificats SIIC 
-                               inner join  SupplierInvoiceItems I
-                               on SIIC.DECLARATIONID =i.DECLARATIONID  and SIIC.linenumber=i.linenumber and i.CounterKey  =SIIC.InvoiceCounterKey ) t
-                               set t.AttachmentTypeCode = '4', t.CertificateExemptionTypeCode = '92'
-                               where AttachmentTypeCode is null and CertificateExemptionTypeCode is null and CertificateNumber  is null and tenant =:p2 and  DECLARATIONID=:p1
-                                  ";
-
-
-                    string cmd1 = @"
-                                Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
-                                where s.DeclarationId =:p1 and tenant=:p2";
-
-
-
-
-                    OracleCommand oracleCommand = new OracleCommand(cmd, con);
-                    OracleCommand oracleCommand1 = new OracleCommand(cmd1, con);
-
-                    oracleCommand.Parameters.Add(new OracleParameter("p1", declarationId));
-                    oracleCommand.Parameters.Add(new OracleParameter("p2", tenant));
-
-                    oracleCommand1.Parameters.Add(new OracleParameter("p1", declarationId));
-                    oracleCommand1.Parameters.Add(new OracleParameter("p2", tenant));
-
-
-                    con.Open();
-                    count = oracleCommand.ExecuteNonQuery();
-                    oracleCommand1.ExecuteNonQuery();
-                    con.Close();
-
-
-                }
-            }
-
-            else
-            {
-                using (SqlConnection con = new SqlConnection(strConnString))
-                {
-                    string cmd = @"Update   customs.SupplierInvioceItemCertificats   
-                               set  AttachmentTypeCode = '4',  CertificateExemptionTypeCode = '92'
-							   from   customs.SupplierInvioceItemCertificats   
-                               inner join  customs.SupplierInvoiceItems I
-                               on customs.SupplierInvioceItemCertificats.DECLARATIONID =i.DECLARATIONID  and customs.SupplierInvioceItemCertificats.linenumber=i.linenumber and i.CounterKey  =customs.SupplierInvioceItemCertificats.InvoiceCounterKey 
-                               where AttachmentTypeCode is null and CertificateExemptionTypeCode is null and CertificateNumber  is null and i.tenant =@p2 and  i.DECLARATIONID=@p1
-                                  ";
-
-
-                    string cmd1 = @"
-                                Update customs.supplierInvoiceItems  set CertificatesStatusCode = '1'
-                                where DeclarationId =@p1 and tenant=@p2";
-
-
-                    SqlCommand sqlCommand = new SqlCommand(cmd, con);
-                    SqlCommand sqlCommand1 = new SqlCommand(cmd1, con);
-
-                    sqlCommand.Parameters.Add(new SqlParameter("p1", declarationId));
-                    sqlCommand.Parameters.Add(new SqlParameter("p2", tenant));
-
-                    sqlCommand1.Parameters.Add(new SqlParameter("p1", declarationId));
-                    sqlCommand1.Parameters.Add(new SqlParameter("p2", tenant));
-
-
-                    con.Open();
-
-                    count = sqlCommand.ExecuteNonQuery();
-                    sqlCommand1.ExecuteNonQuery();
-                    con.Close();
-
-                }
-            }
-
-            return count;
-        }
-
-        public void CreateCertificateForInvoiceItems(string declarationId, int tenant, string attachmentTypeCode,
-            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber, string certificateExemptionTypeCode, List<SupplierInvoiceItemPM> invoiceItems)
-        {
-            SupplierInvioceItemCertificatRepository supplierInvioceItemCertificatRepository = new SupplierInvioceItemCertificatRepository(tenant);
-            ICustomContext customContext = CustomContext.GetContext(tenant);
-            //SupplierInvioceItemCertificatQueryService supplierInvioceItemCertificatQueryService = new SupplierInvioceItemCertificatQueryService(customContext);
-            SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-
-            foreach (var invoiceItem in invoiceItems)
-            {
-                var entity = new SupplierInvioceItemCertificatPM();
-                entity.ChangeSetOp = ChangeSetOperation.Insert;
-                entity.InvoiceCounterKey = invoiceItem.CounterKey;
-                entity.Tenant = tenant;
-                if (attachmentTypeCode == "4")
-                    entity.CertificateExemptionTypeCode = certificateExemptionTypeCode;
-                else
-                {
-                    entity.CertificateNumber = certificateNumber;
-                    entity.ResConfirmationTypeCode = resConfirmationTypeCode;
-                }
-
-                entity.ReqConfirmationTypeCode = reqConfirmationTypeCode;
-                entity.AttachmentTypeCode = attachmentTypeCode;
-                if (entity.SequenceNumeric == 0)
-                {
-                    entity.SequenceNumeric = supplierInvioceItemCertificatRepository.getNextSequenceNumber(declarationId, tenant, invoiceItem.LineNumber);
-                }
-                invoiceItem.SupplierInvioceItemCertificats.Add(entity);
-                invoiceItem.ChangeSetOp = ChangeSetOperation.Update;
-                updateService.Update(invoiceItem, true);
-            }
-        }
-
-        protected override void OnUpdating(SupplierInvioceItemCertificatPM entityPM, SupplierInvioceItemCertificat entityPOCO)
-        {
-            if (entityPM?.CertificateExemptionTypeCode != entityPOCO?.CertificateExemptionTypeCode &&
-                entityPM?.CertificateExemptionTypeCode == "92"
-                )
-            {
-                var logChangesService = new LogChangesService();
-                logChangesService.LogIt<SupplierInvioceItemCertificatPM, SupplierInvioceItemCertificat>(
-                    SIICerExemptionHD379305,
-                    entityPM, entityPOCO);
-            }
-        }
-        private static string GetReset92(string attachmentTypeCode)
-        {
-
-
-            string reset92 = "";
-            if (LogChangesService.IsLogEnable(SIICerExemptionHD379305) && attachmentTypeCode != "4")
-            {
-                reset92 = "  CertificateExemptionTypeCode= NULL ,";
-            }
-
-            return reset92;
-        }
-        protected override void Validate(SupplierInvioceItemCertificatPM entityPM)
-        {
-            if (!LogChangesService.IsLogEnable(SIICerExemptionHD379305))
-            {
-                return;
-            }
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
-            {
-                return;
-            }
-            if (entityPM.AttachmentTypeCode == "4")//"פטור מאישור/רישיון"
-            {
-                if (!String.IsNullOrWhiteSpace(entityPM.CertificateNumber))
-                {
-                    throw new Exception("הזנת תעודת מקור כש סוג הרשומה היא פטור מאישור - אסורה");
-                }
-                if (!String.IsNullOrWhiteSpace(entityPM.CustomsAttachmentID))
-                {
-                    throw new Exception("הזנת מספר צרופה במכס כש סוג הרשומה היא פטור מאישור - אסורה");
-                }
-                //if (!String.IsNullOrWhiteSpace(entityPM.))
-                //{
-                //    throw new Exception("הזנת תעודת מקור כש סוג הרשומה היא פטור מאישור - אסורה");
-                //}
-            }
-            else
-            {
-                if (!string.IsNullOrWhiteSpace(entityPM.CertificateExemptionTypeCode))
-                {
-                    throw new Exception("הזנת קוד פטור אישור - רק בבחירת  פטור מאישור/רישיון");
-                }
-            }
-            base.Validate(entityPM);
-        }
-
     }
 }

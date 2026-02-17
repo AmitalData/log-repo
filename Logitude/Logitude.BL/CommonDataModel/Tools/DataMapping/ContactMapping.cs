@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -21,12 +21,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                entityPOCO.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                TenantPM tenant = GetCurrentTenant(entityPM.Tenant);
-                entityPOCO.DontShowLocalLabels = tenant.LayoutDirection == "rtl" ? false : true; //bug 44449
             }
 
-            entityPOCO.ComputedKey = (!string.IsNullOrEmpty(entityPM.Email) ? entityPM.Email : entityPM.Id);
+            entityPOCO.ComputedKey = (!string.IsNullOrEmpty(entityPOCO.Email) ? entityPOCO.Email : entityPOCO.Id);
             entityPOCO.Anniversary = entityPM.Anniversary;
             entityPOCO.Birthday = entityPM.Birthday;
             entityPOCO.BusinessPhone = entityPM.BusinessPhone;
@@ -49,15 +46,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.BirthDayOfYear = entityPM.Birthday != null ? entityPM.Birthday.Value.DayOfYear : 0;
             entityPOCO.ContactDoneMethodCode = entityPM.ContactDoneMethodCode;
             entityPOCO.Position = entityPM.Position;
-            entityPOCO.UpdateDate = entityPM.UpdateDate;
-            entityPOCO.DigitalPortalLanguage = entityPM.DigitalPortalLanguage;
-           
-            
-                entityPOCO.DontShowLocalLabels = !isNewState ? entityPM.DontShowLocalLabels : entityPOCO.DontShowLocalLabels;
-
-           
-
             //entityPOCO.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; //bug 44449
+
             if (entityPM.CompanyName != null)
             {
                 if (entityPM.CompanyName.Length > 1000)
@@ -67,15 +57,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             }
 
             entityPOCO.CompanyName = entityPM.CompanyName;
-            entityPOCO.ContactForAccounting = entityPM.ContactForAccounting;
             BuildSearchFields(entityPM, entityPOCO);
-        }
-
-        public static TenantPM GetCurrentTenant(int id)
-        {
-            TenantQuery tenantQuery = new TenantQuery(id);
-            TenantPM tenant = tenantQuery.GetTenantFromDB(id);
-            return tenant;
         }
 
         public static void BuildSearchFields(ContactPM entityPM, Contact entityPOCO)

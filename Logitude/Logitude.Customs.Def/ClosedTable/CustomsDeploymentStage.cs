@@ -14,7 +14,6 @@ namespace Logitude.Customs.Def.ClosedTable
         Pilot = 2,
         Production = 3,
         Test = 4,
-        PREPROD=5,
     }
 
 }

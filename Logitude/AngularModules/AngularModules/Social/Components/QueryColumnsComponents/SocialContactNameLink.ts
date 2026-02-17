@@ -6,7 +6,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SocialContactNameLink',
     templateUrl: './SocialContactNameLink.html',
 

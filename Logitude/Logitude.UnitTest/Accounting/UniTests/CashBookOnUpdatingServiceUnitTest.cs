@@ -32,7 +32,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 CashBookTypeName = cashBookTypeName
             };
 
-            var fakeCashBookOnUpdatingUpdateService = A.Fake<CashBookOnUpdatingService>(option => option.Implements<ICashBookOnUpdatingUpdateService>());
+            var fakeCashBookOnUpdatingUpdateService = A.Fake<CashBookOnUpdatingService>(option => option.CallsBaseMethods());
 
             A.CallTo(() => fakeCashBookOnUpdatingUpdateService.GetLogContactId(entityPM)).Returns(expectedLoggedUserId);
             A.CallTo(() => fakeCashBookOnUpdatingUpdateService.GetCurrentDateTime(entityPM)).Returns(DateTime.Now);

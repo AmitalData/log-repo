@@ -26,8 +26,6 @@ namespace Logitude.BL.CommonDataModel.CloseTables
        public const string Vendor = "VD";  
        public const string Warehouse = "WH";  
        public const string CustomsShipper = "CH";  
-       public const string AccountingPartner = "AC";  
-       public const string ShipperConsignee = "SC";  
     }
 }
 

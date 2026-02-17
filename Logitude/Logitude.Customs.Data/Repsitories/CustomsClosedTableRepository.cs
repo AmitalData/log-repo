@@ -12,13 +12,13 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-    public partial class CustomsClosedTableRepository : IRepository<CustomsClosedTable>
-    {
-
-        public List<CustomsClosedTable> GetMulti(EntityKeyFields entityKeys)
+   public partial class CustomsClosedTableRepository:IRepository<CustomsClosedTable>
+   {
+        
+		public List<CustomsClosedTable> GetMulti(EntityKeyFields entityKeys)
         {
-
-            throw new NotImplementedException();
+            
+			throw new NotImplementedException();
         }
 
         public List<CustomsClosedTable> GetExistedClosedTables()
@@ -27,20 +27,8 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Existed
                     select a).ToList();
         }
-        public CustomsClosedTable  GetCustomsClosedTableByObjectTableId(string ObjectTableId)
-        {
-            return (from a in context.CustomsClosedTables
-                    where a.ObjectTableId == ObjectTableId
-                    select a).FirstOrDefault();
-        }
 
-        public string GetObjectTableIdById(string id)
-        {
-            return (from a in context.CustomsClosedTables
-                    where a.Id == id
-                    select a.ObjectTableId).FirstOrDefault();
-        }
-    }
+   }
 
 }
    

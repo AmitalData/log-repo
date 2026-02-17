@@ -21,7 +21,7 @@ declare var HTMLID: any;
 import {ConversationHeaderMessagePMService} from '../Services/StandardPMs/ConversationHeaderMessagePMService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'ConversationMessageComponent',
     templateUrl: './ConversationMessageComponent.html',
     inputs: ['SocialMessagesComponent', 'ConversationHeader', 'Area'],
@@ -111,7 +111,7 @@ export class ConversationMessageComponent implements OnInit {
 
    
  
-        this.conversationHeaderMessageExtendedPMService.GetAllConversationMessageForHeaderQuery(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe((res:any) => {
+        this.conversationHeaderMessageExtendedPMService.GetAllConversationMessageForHeaderQuery(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
 
             this.ConversationHeaderMessagePMLists = [];
@@ -174,7 +174,7 @@ export class ConversationMessageComponent implements OnInit {
                 this.ConversationHeader.EntityPM.IsWaitingForResponse = true;
             }
 
-            this.conversationHeaderPMService.update(this.ConversationHeader.EntityPM).subscribe((res:any) => {
+            this.conversationHeaderPMService.update(this.ConversationHeader.EntityPM).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 this.IsStartWaitingLoading = false;
 
@@ -190,7 +190,7 @@ export class ConversationMessageComponent implements OnInit {
 
     MakeMeReadMessage() {
         this.ConversationHeader.IsChange = true;
-        this.conversationHeaderParticipantExtendedPMService.MakeMeReadMessage(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe((res:any) => {
+        this.conversationHeaderParticipantExtendedPMService.MakeMeReadMessage(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.ConversationHeader.EntityPM.IsRead = true;
@@ -216,7 +216,7 @@ export class ConversationMessageComponent implements OnInit {
         this.BusyIndicatorText = "Saving...";
         this.ShowBusyIndicator = true;
 
-        this.conversationHeaderParticipantExtendedPMService.MakeConversationHeaderParticipantReadAndUnRead(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId, this.ConversationHeader.MarkAsReadLable).subscribe((res:any) => {
+        this.conversationHeaderParticipantExtendedPMService.MakeConversationHeaderParticipantReadAndUnRead(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId, this.ConversationHeader.MarkAsReadLable).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.ShowBusyIndicator = false;
             if (!pmResponse.HasError) {
@@ -272,7 +272,7 @@ export class ConversationMessageComponent implements OnInit {
                 this.BusyIndicatorText = "Saving...";
                 this.ShowBusyIndicator = true;
 
-                this.conversationHeaderParticipantExtendedPMService.DeleteConversationHeaderParticipant(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe((res:any) => {
+                this.conversationHeaderParticipantExtendedPMService.DeleteConversationHeaderParticipant(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     this.ShowBusyIndicator = false;
                     if (!pmResponse.HasError) {
@@ -312,7 +312,7 @@ export class ConversationMessageComponent implements OnInit {
 
                 this.MessageBody = "";
 
-                this.conversationHeaderMessagePMService.insert(message).subscribe((res:any) => {
+                this.conversationHeaderMessagePMService.insert(message).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     this.ShowBusyIndicator = false;
                     if (!pmResponse.HasError && pmResponse.Result) {
@@ -374,7 +374,7 @@ export class ConversationMessageComponent implements OnInit {
 
 
 
-                        this.conversationHeaderPMService.update(this.ConversationHeader.EntityPM).subscribe((res:any) => {
+                        this.conversationHeaderPMService.update(this.ConversationHeader.EntityPM).subscribe(res => {
                             var pmResponse: ServiceResponse = res;
                             this.MakeMessageRepliedOrRead("Replied");
                             this.MakeMessageRead();
@@ -423,7 +423,7 @@ export class ConversationMessageComponent implements OnInit {
 
         if(isLoad){
 
-            this.conversationHeaderParticipantExtendedPMService.MakeConversationHeaderParticipantRepliedOrRead(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId, type).subscribe((res:any) => {
+            this.conversationHeaderParticipantExtendedPMService.MakeConversationHeaderParticipantRepliedOrRead(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId, type).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
             });
         }
@@ -433,7 +433,7 @@ export class ConversationMessageComponent implements OnInit {
     MakeMessageRead() {
         this.ConversationHeader.IsChange = true;
 
-        this.conversationHeaderParticipantExtendedPMService.MakeConversationHeaderParticipantReadMessage(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe((res:any) => {
+        this.conversationHeaderParticipantExtendedPMService.MakeConversationHeaderParticipantReadMessage(this.ConversationHeader.ConversationHeaderId, SessionLocator.LoggedUserId).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
             });
         
@@ -443,7 +443,7 @@ export class ConversationMessageComponent implements OnInit {
     MakeDeleteParticioantsUnDelete() {
         this.ConversationHeader.IsChange = true;
 
-        this.conversationHeaderParticipantExtendedPMService.MakeDeleteParticipantUnDelete(this.ConversationHeader.ConversationHeaderId).subscribe((res:any) => {
+        this.conversationHeaderParticipantExtendedPMService.MakeDeleteParticipantUnDelete(this.ConversationHeader.ConversationHeaderId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
         });
 

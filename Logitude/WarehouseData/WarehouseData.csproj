@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WarehouseData</RootNamespace>
     <AssemblyName>WarehouseData</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <PublishUrl>publish\</PublishUrl>
@@ -32,16 +31,13 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,37 +46,19 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Simplog.Data">
       <HintPath>..\Simplog.Data\bin\Debug\Simplog.Data.dll</HintPath>
@@ -95,7 +73,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -114,32 +91,19 @@
     <Compile Include="BuildWarehouseForm.Designer.cs">
       <DependentUpon>BuildWarehouseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Service\DataWarehouseBatchService.cs" />
-    <Compile Include="Service\EnvironmentDWTableUnUseSqlProvider.cs" />
-    <Compile Include="Service\FeatureDataWarehouseService.cs" />
-    <Compile Include="Service\WarehouseHelper.cs" />
-    <Compile Include="Service\CustomFieldWarehouseService.cs" />
-    <Compile Include="Service\DimensionWarehouseService.cs" />
-    <Compile Include="Service\DWDataWarehouseService.cs" />
-    <Compile Include="Service\FactWarehouseService.cs" />
-    <Compile Include="Service\FinalDataWarehouseService.cs" />
-    <Compile Include="Service\GeneralDataWarehouseService.cs" />
-    <Compile Include="Service\MainDataWarehouseService.cs" />
-    <Compile Include="Service\ObjectFieldDataWarehouseService.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Service\PrivateTenantDataWarehouse.cs" />
-    <Compile Include="Service\WaterMarkDataWarehouseService.cs" />
     <Compile Include="UpdateWarehouseForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UpdateWarehouseForm.Designer.cs">
       <DependentUpon>UpdateWarehouseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\WarehouseHelper.cs" />
     <Compile Include="PrivateDBForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,11 +135,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -192,29 +154,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildAddressDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildARInvoiceTransferStatusDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildBrancheDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildCardsDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildChargesTypeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildContainerStatusesDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildCountriesDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildCurrencyDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildCustomPickListDimensionsTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildDateDimensionsTable.sql">
@@ -229,52 +175,10 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildEntityStatusDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildFactARInvoicesTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildFactChargesTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildFactContainerTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildFactInvoicesTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildFactQuotesTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildIncotermDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildInvoiceMainTypesDimensionsTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildInvoiceStatusDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildInvoiceTypesDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildMoveTypeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildOBLTypeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildPackageTypesDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildPaymentTermsDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildQuoteClosingReasonsDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildQuoteStagesDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentReceivableStatusDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildPortsDimensionTable.sql">
@@ -286,22 +190,13 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentSubTypeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildSpecialServicesTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildTenantDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentPayableStatusDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildTransportModeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildContactDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildUsersDimensionTable.sql">
@@ -310,47 +205,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildFactShipmentTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildVatTypeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildVesselDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateAddressDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateARInvoiceTransferStatusDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateChargesTypeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateContainerStatusesDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCountriesDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCustomPickListDimensionsTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactARInvoicesTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactChargesTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactContainerTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactInvoicesTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactQuoteTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateInvoiceStatusDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateInvoiceTypesDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateMoveTypeDimensionTable.sql">
@@ -380,25 +235,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateIncotermDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdatePackageTypesDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdatePaymentTermsDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdatePortsDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateOBLTypeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateQuoteClosingReasonsDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateQuoteStagesDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentPayableStatusDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentLevelDimensionTable.sql">
@@ -407,37 +244,21 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentSubTypeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateSpecialServicesTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateTenantDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentReceivableStatusDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateTransportModeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateContactDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateUsersDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateVatTypeDimensionTable.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateVesselDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\AddAdditionalIndexesToFactTables.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\Others\Day 04_New [Wesam] AddTriggerToColumnAutomaticLastUpdate.sql" />
     <Content Include="WarehouseScript\Others\Day 04 [Abed] AddTriggerToColumnAutomaticLastUpdate.sql" />
     <Content Include="WarehouseScript\Others\Day 01[Abed] AddColumnAutomaticLastUpdateDate.sql" />
     <Content Include="WarehouseScript\Others\Day 02 [Abed] CreateIndexesOnCloumnAutomaticLastUpdateDate.sql" />
@@ -453,21 +274,6 @@
     <Content Include="WarehouseScript\Others\Day 17[AbedAddFuncationResolveCustomFieldDateValue].sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\Day 18[AbedAddFuncationSplitString].sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\Others\Day 19 [Wesam] Build Categories.sql" />
-    <Content Include="WarehouseScript\Others\Day 20 [Abed ] Connect DWFields To Categories.sql" />
-    <Content Include="WarehouseScript\Others\AddAdditionalIndexesToDWTables.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\Others\UpdateSharedFactDWWaterMark.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="WarehouseScript\Others\[Abed] FillDWHEnvironmentSettingsTable.sql" />
-    <Content Include="WarehouseScript\Others\[Wesam] UnitSelectionAndConverter.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -481,21 +287,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WarehouseDataViews\WarehouseDataViews.csproj">
-      <Project>{3ff3b8d8-d4fb-4e48-8e08-f28ba6904fa0}</Project>
-      <Name>WarehouseDataViews</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

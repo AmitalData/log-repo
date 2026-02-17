@@ -5,7 +5,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {SearchTextBox} from '../../../Controls/SearchTextBox';
 import {IconButton} from '../../../Controls/IconButton';
 import {LogGridComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-
+import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -20,12 +20,9 @@ import {ShipmentPMService} from '../../../Shipment/Services/StandardPMs/Shipment
 import {EntityStatusExtendedListService} from '../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { SystemEnvironmentService } from '../../../Infrastructure/Utilities/SystemEnvironmentService';
-import { CustomerTenantAccessRequestExtendedPMService } from '../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ForwarderChooseShipmentsComponent.html',
 })
 
@@ -33,12 +30,6 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
     private myShipmentDomainService: ShipmentDomainService;
     public AgentShortName: string = "";
     public IsPrivateLabel: boolean = false;
-    public IsLogbox: boolean = SystemEnvironmentService.IsLogBox();
-    public IsPrivateLabelExportActivated: boolean = false;
-    public IsPrivateLabelCustomsActivated: boolean = false;
-    public IsExportActivated: boolean = false;
-    public IsCustomsActivated: boolean = false;
-    public IsPrivateLabelWithMoreThanOneDirectionFilter: boolean = false;
     private messageWindow: MessageWindow = new MessageWindow();
     DataContext: ForwarderChooseShipmentsComponent = this;
     public _PortExtendedPMService: PortExtendedPMService;
@@ -52,79 +43,14 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
         super();
         this.myShipmentDomainService = new ShipmentDomainService();
         if (SessionLocator.PrivateLableSettings) {
-            this.InitializePrivateLabel();
+            this.ValidationErrorsList = [];
+            this.AgentShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+            this.IsPrivateLabel = true;
+            this._PortExtendedPMService = new PortExtendedPMService();
+            this._ShipmentPMService = new ShipmentPMService();
+            this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
         }
     }
-    private InitializePrivateLabel() {
-        this.ValidationErrorsList = [];
-        this.AgentShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
-        this.IsPrivateLabelExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
-        this.IsPrivateLabelCustomsActivated = SessionLocator.PrivateLableSettings.IsCustomsActivated;
-        this.IsPrivateLabel = true;
-        this._PortExtendedPMService = new PortExtendedPMService();
-        this._ShipmentPMService = new ShipmentPMService();
-        this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
-        let hybridPartnerId = SessionLocator.PrivateLableSettings.HybridPartnerId;
-        let customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
-        this.CurrentSession.StartBusyIndicatorLoading();
-        customerTenantAccessRequestExtendedPMService.getByForwarderId(SessionLocator.Tenant, hybridPartnerId).subscribe((serviceResponse: any) => {
-            if (!serviceResponse.HasError) {
-                this.SetCustomerTenantAccessRequest(serviceResponse.Result);
-            }
-            this.CurrentSession.StopBusyIndicator();
-        });
-    }
-
-    private SetCustomerTenantAccessRequest(CustomerTenantAccessRequestPartner: any) {
-        this.IsCustomsActivated = (CustomerTenantAccessRequestPartner.IsCustoms && this.IsPrivateLabelCustomsActivated);
-        this.IsExportActivated = (CustomerTenantAccessRequestPartner.IsExport && this.IsPrivateLabelExportActivated);
-        this.IsPrivateLabelWithMoreThanOneDirectionFilter = this.HaveDirectionFilters();
-        this.SetPrivateLabelDirectionFilters();
-    }
-
-    HaveDirectionFilters() {
-        if (this.IsPrivateLabel && this.HasTwoDirectionFilter()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private HasTwoDirectionFilter() {
-        return !(this.IsExportActivated && this.IsCustomsActivated);
-    }
-
-    private SetPrivateLabelDirectionFilters() {
-        this.SetPrivateLabelDriectionId();
-
-        if (!this.IsCustomsActivated && !this.IsExportActivated) {
-            this.SetDefalutFilter();
-        }
-    }
-
-    private SetPrivateLabelDriectionId() {
-        this.SetCustomShipmentFilters();
-        this.SetExportShipmentFilters();
-    }
-
-    private SetCustomShipmentFilters() {
-        if (this.IsCustomsActivated && !this.IsExportActivated) {
-            this.SelectedDirectionFilter = "C";
-        }
-    }
-
-    private SetExportShipmentFilters() {
-        if (this.IsExportActivated && !this.IsCustomsActivated) {
-            this.SelectedDirectionFilter = "E";
-        }
-    }
-
-    private SetDefalutFilter() {
-        this.IsCustomsActivated = true;
-        this.SelectedDirectionFilter = "C";
-        this.IsPrivateLabelWithMoreThanOneDirectionFilter = false;
-    }
-
     ngOnInit() {
         this.LoadImporterShipments();
     }
@@ -143,15 +69,6 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
     public RecentImg: string = "./Images/LogBox/Recent.png";
     SearchFilter: string = "";
     SourceEntity: any;
-
-    private selectedDirectionFilter: string = "All";
-    get SelectedDirectionFilter() { return this.selectedDirectionFilter; }
-    set SelectedDirectionFilter(newValue: string) {
-        if (this.selectedDirectionFilter == newValue) return;
-        this.selectedDirectionFilter = newValue;
-        this.LoadImporterShipments();
-    }
-
     private mySelectedTransportFilter: string = "All";
     get SelectedTransportFilter() { return this.mySelectedTransportFilter; }
     set SelectedTransportFilter(newValue: string) {
@@ -351,8 +268,6 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
         }
         this.filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
 
-        this.SetSelectedDirectionToFilterArgs();
-
         if (this.SelectedTransportFilter != "All") {
             this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
         }
@@ -381,18 +296,6 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
         //this.filterAgrs.SortBy = "StatusDate";
         //this.filterAgrs.SortDirection = "Descending";
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-    }
-
-    private SetSelectedDirectionToFilterArgs() {
-        if (this.SelectedDirectionFilter != "All") {
-            this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string", this.SelectedDirectionFilter == "All" ? true : false);
-            return;
-        }
-
-        if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'DirectionId').length > 0) {
-            this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'DirectionId');
-            return;
-        }
     }
 
     GridAfterViewInitCompleted($event) {
@@ -496,7 +399,7 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
         if (this.ValidationErrorsList.length == 0) {
-            this._ShipmentPMService.GetSingleByCustomerReference1(this.CustomerReference1).subscribe((myResult:any) => {
+            this._ShipmentPMService.GetSingleByCustomerReference1(this.CustomerReference1).subscribe(myResult => {
                 if (myResult.Result) {
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Title = "Warning !";
@@ -526,11 +429,11 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
     }
 
     ContinueCreateShipmentProcess() {
-        this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe((myResult:any) => {
+        this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe(myResult => {
             if (myResult.Result) {
                 this.ToPortId = myResult.Result.Id;
                 if (AppTool.IsNullOrEmpty(this.SourceEntity.FromPortId)) {
-                    this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result:any) => {
+                    this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe(Result => {
                         this.FromPortId = Result.Result.Id;
                         this.SaveData();
                     });
@@ -564,9 +467,9 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
             this.SourceEntity.MainCarriageFromPortId = this.SourceEntity.FromPortId;
             this.SourceEntity.MainCarriageToPortId = this.SourceEntity.ToPortId;
             this.SourceEntity.MainCarriageToPortId = this.SourceEntity.ToPortId;
-            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
+            this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
                 this.SourceEntity.StatusId = Status.Result.Id;
-                this._ShipmentPMService.update(this.SourceEntity).subscribe((myResult:any) => {
+                this._ShipmentPMService.update(this.SourceEntity).subscribe(myResult => {
                     if (!myResult.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });

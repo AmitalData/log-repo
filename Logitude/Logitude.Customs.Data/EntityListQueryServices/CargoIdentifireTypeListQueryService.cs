@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -28,15 +28,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          EnglishName = a.EnglishName,
                                                          LocalName = a.LocalName,
                                                          SearchFields = a.SearchFields,
-                                                         Inactive = a.Inactive,
-                                                         IsForDeclarationExport=a.IsForDeclarationExport,
-                                                         IsForDeclarationImport=a.IsForDeclarationImport,
-                                                         IsForManifest=a.IsForManifest,
-                                                         IsKey2Mandatory=a.IsKey2Mandatory,
-                                                         IsKey3Mandatory=a.IsKey3Mandatory,
-                                                         CargoIdentifierKey1Name=a.CargoIdentifierKey1Name,
-                                                         CargoIdentifierKey2Name=a.CargoIdentifierKey2Name,
-                                                         CargoIdentifierKey3Name=a.CargoIdentifierKey3Name,
+                                                         Inactive = a.Inactive
+
                                                      });
             return query;
 		}

@@ -10,14 +10,11 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -49,22 +46,18 @@ using Simplog.Data.InvoiceModel;
 				   
 				   var temp = new ARInvoiceLine(); 
 				   temp.Id = item.Id;
-				   temp.LineNumber = item.LineNumber; 
-
-			  
+				   temp.LineNumber = item.LineNumber;			  
 				   if(item.ChargesTypeId != null)
 				   {
 					   ChargesTypeQueryService ChargesTypeService0 = new ChargesTypeQueryService(Tenant);
-					   					   temp.ChargesType = ChargesTypeService0.ChargesTypeCustomDataMapping(item.ChargesTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.ChargesType = ChargesTypeService0.ChargesTypeCustomDataMapping(item.ChargesTypeId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(item.ForiegnCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService1 = new CurrencyQueryService(Tenant);
-					   					   temp.ForeignCurrency = CurrencyService1.CurrencyCustomDataMapping(item.ForiegnCurrencyId,Tenant,ComputingPartnerName); 
+					   					   temp.ForeignCurrency = CurrencyService1.CurrencyCustomDataMapping(item.ForiegnCurrencyId,Tenant); 
 			       
 					   				   }
 				   
@@ -74,13 +67,11 @@ using Simplog.Data.InvoiceModel;
 				   temp.LocalDescription = item.LocalDescription;
 				   temp.Notes = item.Notes;
 				   temp.ValueDate = item.ValueDate;
-				   temp.DateForInterest = item.DateForInterest; 
-
-			  
+				   temp.DateForInterest = item.DateForInterest;			  
 				   if(item.VatTypeId != null)
 				   {
 					   VatTypeQueryService VatTypeService2 = new VatTypeQueryService(Tenant);
-					   					   temp.VatType = VatTypeService2.VatTypeCustomDataMapping(item.VatTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.VatType = VatTypeService2.VatTypeCustomDataMapping(item.VatTypeId,Tenant); 
 			       
 					   				   }
 				   
@@ -92,17 +83,14 @@ using Simplog.Data.InvoiceModel;
 				   temp.ExchangeRateDate = item.ExchangeRateDate;
 				   temp.Quantity = item.Quantity;
 				   temp.Tenant = item.Tenant;
-				   temp.GLAccountId = item.GLAccountId; 
-
-			  
+				   temp.GLAccountId = item.GLAccountId;			  
 				   if(item.LineActionCode != null)
 				   {
 					   ARInvoiceLineActionQueryService ARInvoiceLineActionService3 = new ARInvoiceLineActionQueryService(Tenant);
-					   					   temp.ARInvoiceLineAction = ARInvoiceLineActionService3.GetARInvoiceLineActionByCode(item.LineActionCode,Tenant,ComputingPartnerName); 
+					   					   temp.ARInvoiceLineAction = ARInvoiceLineActionService3.GetARInvoiceLineActionByCode(item.LineActionCode,Tenant); 
 			       
 					   				   }
-				   
-				   temp.InvoiceCurrencyExchangeRate = item.InvoiceCurrencyExchangeRate;					
+				   					
 					MyList.Add(temp);
 				}
 					
@@ -115,7 +103,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public List<ARInvoiceLinePM> ARInvoiceLineDataMappingAndValidatin(List<ARInvoiceLine> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<ARInvoiceLinePM> ARInvoiceLineDataMappingAndValidatin(List<ARInvoiceLine> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -128,262 +116,80 @@ using Simplog.Data.InvoiceModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
-					{   
+										   
+					if(temp == null)
+					{
 					    throw new ApplicationException("ARInvoiceLine with Id " + item.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-					   
-					    if(!string.IsNullOrEmpty(item.Id))
-					    {
-					        throw new ApplicationException("ARInvoiceLine with provided key doesn't exist");
-						
-						}
-						//else
-						//{
-						//    temp.Id = item.Id;
-
-						//} 
-
-						
+						temp.Id = item.Id;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.LineNumber = item.LineNumber;
-
-										}  
-
-					
-					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
+					temp.LineNumber = item.LineNumber;					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
 						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeCustomDataMappingAndValidatin(item.ChargesType,Tenant);
-						
-						if(myChargesTypePM != null)
-						{ 
-
+												if(myChargesTypePM != null)
+						{
+							temp.ChargesTypeId = myChargesTypePM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.ChargesTypeId = myChargesTypePM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
-					
-					CurrencyQueryService ForeignCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+										CurrencyQueryService ForeignCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.ForeignCurrency != null)
 					{
 						var myForeignCurrencyPM = ForeignCurrencyCurrencyService.CurrencyCustomDataMappingAndValidatin(item.ForeignCurrency,Tenant);
-						
-						if(myForeignCurrencyPM != null)
-						{ 
-
+												if(myForeignCurrencyPM != null)
+						{
+							temp.ForiegnCurrencyId = myForeignCurrencyPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.ForiegnCurrencyId = myForeignCurrencyPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ForiegnExchangeRate = item.ForeignExchangeRate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalCurrencyAmount = item.LocalCurrencyAmount;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ForiegnCurrencyAmount = item.ForeignCurrencyAmount;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalDescription = item.LocalDescription;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Notes = item.Notes;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ValueDate = item.ValueDate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.DateForInterest = item.DateForInterest;
-
-										}  
-
-					
-					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
+					temp.ForiegnExchangeRate = item.ForeignExchangeRate;
+					temp.LocalCurrencyAmount = item.LocalCurrencyAmount;
+					temp.ForiegnCurrencyAmount = item.ForeignCurrencyAmount;
+					temp.LocalDescription = item.LocalDescription;
+					temp.Notes = item.Notes;
+					temp.ValueDate = item.ValueDate;
+					temp.DateForInterest = item.DateForInterest;					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
 					if(item.VatType != null)
 					{
 						var myVatTypePM = VatTypeVatTypeService.VatTypeCustomDataMappingAndValidatin(item.VatType,Tenant);
-						
-						if(myVatTypePM != null)
-						{ 
-
+												if(myVatTypePM != null)
+						{
+							temp.VatTypeId = myVatTypePM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.VatTypeId = myVatTypePM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Description = item.Description;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.VatPercentage = item.VatPercentage;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.UnitPrice = item.UnitPriceInForeignCurrency;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ExchangeRateDate = item.ExchangeRateDate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Quantity = item.Quantity;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Tenant = item.Tenant;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.GLAccountId = item.GLAccountId;
-
-										}  
-
-					
-					ARInvoiceLineActionQueryService ARInvoiceLineActionARInvoiceLineActionService = new ARInvoiceLineActionQueryService(Tenant);
+					temp.Description = item.Description;
+					temp.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
+					temp.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+					temp.VatPercentage = item.VatPercentage;
+					temp.UnitPrice = item.UnitPriceInForeignCurrency;
+					temp.ExchangeRateDate = item.ExchangeRateDate;
+					temp.Quantity = item.Quantity;
+					temp.Tenant = item.Tenant;
+					temp.GLAccountId = item.GLAccountId;					ARInvoiceLineActionQueryService ARInvoiceLineActionARInvoiceLineActionService = new ARInvoiceLineActionQueryService(Tenant);
 					if(item.ARInvoiceLineAction != null)
 					{
-						var myARInvoiceLineActionPM = ARInvoiceLineActionARInvoiceLineActionService.ARInvoiceLineActionDataMappingAndValidatin(item.ARInvoiceLineAction,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myARInvoiceLineActionPM != null)
-						{ 
-
+						var myARInvoiceLineActionPM = ARInvoiceLineActionARInvoiceLineActionService.ARInvoiceLineActionDataMappingAndValidatin(item.ARInvoiceLineAction,Tenant,ComputingPartnerName);
+												if(myARInvoiceLineActionPM != null)
+						{
+							temp.LineActionCode = myARInvoiceLineActionPM.Code;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.LineActionCode = myARInvoiceLineActionPM.Code;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.InvoiceCurrencyExchangeRate = item.InvoiceCurrencyExchangeRate;
-
-										}  
-
 										   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {
@@ -391,8 +197,6 @@ using Simplog.Data.InvoiceModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

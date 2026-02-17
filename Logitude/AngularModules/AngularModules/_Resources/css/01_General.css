@@ -1,4 +1,4 @@
-.FixedTable {
+﻿.FixedTable {
     table-layout: fixed;
 }
 
@@ -124,8 +124,4 @@ a, .hyperlink {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-.HideCell {
-    display:none;
 }

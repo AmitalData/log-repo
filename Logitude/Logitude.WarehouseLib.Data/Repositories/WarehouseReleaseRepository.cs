@@ -28,41 +28,14 @@ namespace Logitude.WarehouseLib.Data.Repositories
             return myResult;
         }
 
-        public IQueryable<WarehouseRelease> GetActiveWarehouseReleasesByshipmentId(string shipmentId, int tenant)
-        {
-            IQueryable<WarehouseRelease> myResult = (from a in context.WarehouseReleases 
-                                                     where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode != "CARE"
-                                                     select a);
-            IQueryable<WarehouseRelease>  result = myResult.OrderByDescending(r => r.ActualReleaseDate);
-            return result;
-        }
-
-
-        public WarehouseRelease GetWarehouseReleasesByReleaseNumberAndShipmentId(string releaseNumber,string shipmentId, int tenant)
-        {
-            WarehouseRelease myResult = (from a in context.WarehouseReleases
-                                                     where a.ReleaseNumber == releaseNumber && a.Tenant == tenant && a.ShipmentId == shipmentId
-                                         select a).FirstOrDefault();
-            return myResult;
-        }
-
-
-
 
         public List<WarehouseRelease> GetWarehouseReleasesFromIdList(List<string> ids, int tenant)
         {
 
-            List<WarehouseRelease> myResult = (from a in context.WarehouseReleases.Include("WarehouseReleaseStatus").Include("Direction").Include("TransportMode").Include("ToAddress.Country").Include("ToAddressCountry")
+            List<WarehouseRelease> myResult = (from a in context.WarehouseReleases.Include("WarehouseReleaseStatus")
                                              where a.Tenant == tenant && ids.Contains(a.Id)
                                              select a).ToList();
             return myResult;
-        }
-
-        public int GetNumberofConnectedWarehouseReleasesByChildEntityReference(string childEntityReference, int tenant)
-        {
-            return (from a in context.WarehouseReleases
-                    where a.Tenant == tenant && a.StatusCode != "CARE" && a.ChildEntityReference == childEntityReference
-                    select a).Count();
         }
 
 

@@ -1,3 +1,4 @@
+/// <reference path="../../../tools.ts" />
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -16,12 +17,11 @@ import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
 
 @Component({
     selector: 'WarehouseEntryRoutingsTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './WarehouseEntryRoutingsTabComponent.html',
 })
 
 export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
-  public CarrierDependencyProperty1: any;
 
     public EntityPM: WarehouseEntryPM;
     public ObjectTableName: string = null;
@@ -33,7 +33,6 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
     ConsigneePartnerTypeId: string;
     public FromPortText = ""; 
     public ToPortText = "";
-
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -53,38 +52,26 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
 
 
     }
-    IsEnableEdit: boolean = true;
     IswarehouseEntryConnectedToShipment: boolean = false;
     ngOnInit() {
         if (this.EntityPM != null) {
             this.IsInlandDomestic = this.IsInlandDomesticWarehouse(this.EntityPM);
+
+
             if (this.EntityPM.ConnectedToShipment) {
-                this.IsEnableEdit = false;
                 this.IswarehouseEntryConnectedToShipment = true;
                 if (this.IsInlandDomestic) {
-                    this.UIProperties.SetEnabled("FromPartnerId", this.ObjectTableName, this.IsEnableEdit);
-                    this.UIProperties.SetEnabled("ToPartnerId", this.ObjectTableName, this.IsEnableEdit);
+                    this.UIProperties.SetEnabled("FromPartnerId", this.ObjectTableName, !this.EntityPM.ConnectedToShipment);
+                    this.UIProperties.SetEnabled("ToPartnerId", this.ObjectTableName, !this.EntityPM.ConnectedToShipment);
 
-                    this.UIProperties.SetEnabled("FromAddressId", this.ObjectTableName, this.IsEnableEdit);
-                    this.UIProperties.SetEnabled("ToAddressId", this.ObjectTableName, this.IsEnableEdit);
+                    this.UIProperties.SetEnabled("FromAddressId", this.ObjectTableName, !this.EntityPM.ConnectedToShipment);
+                    this.UIProperties.SetEnabled("ToAddressId", this.ObjectTableName, !this.EntityPM.ConnectedToShipment);
 
                 }
                 else {
-
-                    if ((!this.FromPortId && !this.FromCountryId) || (!this.ToPortId && !this.ToCountryId)) {
-                        this.IsEnableEdit = true;
-                    }
-
-                    this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, this.IsEnableEdit);
-                    this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, this.IsEnableEdit);
-                    this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, this.IsEnableEdit);
-                    this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, this.IsEnableEdit);
-
-
+                    this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, !this.EntityPM.ConnectedToShipment);
+                    this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, !this.EntityPM.ConnectedToShipment);
                 }
-            }
-            if (this.EntityPM.StatusCode == "CAEA") {
-                this.DisableEditing();
             }
 
         }
@@ -94,10 +81,6 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    if (this.EntityPM.StatusCode == "CAEA") {
-                        this.DisableEditing();
-                    }
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                   
                 }
             });
@@ -105,24 +88,10 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    if (this.EntityPM.StatusCode == "CAEA") {
-                        this.DisableEditing();
-                    }
 
                 }
             });
-
         }
-    }
-
-    private DisableEditing() {
-        this.IsEnableEdit = false;
-        this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("TruckerId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("TruckerReference", this.ObjectTableName, this.IsEnableEdit);
     }
 
     IsInlandDomesticWarehouse(entityPM: WarehouseEntryPM) {
@@ -150,8 +119,6 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
     set FromPortId(value: string) {
         if (this.EntityPM.FromPortId != value) {
             this.EntityPM.FromPortId = value;
-            if (value) this.FromCountryId = null;
-
             this.SetUIProperties_Ports();
             if (AppTool.IsNullOrEmpty(value)) {
                 this.FromPortList = null;
@@ -188,37 +155,6 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
 
         }
     }
-
-    get FromTypeCode() { return this.EntityPM.FromTypeCode; }
-    set FromTypeCode(newValue: string) {
-        if (this.EntityPM.FromTypeCode != newValue) {
-            this.EntityPM.FromTypeCode = newValue;
-        }
-    }
-
-    get ToTypeCode() { return this.EntityPM.ToTypeCode; }
-    set ToTypeCode(newValue: string) {
-        if (this.EntityPM.ToTypeCode != newValue) {
-            this.EntityPM.ToTypeCode = newValue;
-        }
-    }
-
-    get FromCountryId() { return this.EntityPM.FromCountryId; }
-    set FromCountryId(newValue: string) {
-        if (this.EntityPM.FromCountryId != newValue) {
-            this.EntityPM.FromCountryId = newValue;
-            if (newValue) this.FromPortId = null;
-        }
-    }
-
-    get ToCountryId() { return this.EntityPM.ToCountryId; }
-    set ToCountryId(newValue: string) {
-        if (this.EntityPM.ToCountryId != newValue) {
-            this.EntityPM.ToCountryId = newValue;
-            if (newValue)   this.ToPortId = null;
-        }
-    }
-
 
     get FromPartnerId() {
 
@@ -293,7 +229,6 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
     set ToPortId(value: string) {
         if (this.EntityPM.ToPortId != value) {
             this.EntityPM.ToPortId = value;
-            if (value)  this.ToCountryId = null;
             this.SetUIProperties_Ports();
 
             if (AppTool.IsNullOrEmpty(value)) {
@@ -327,8 +262,8 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
 
         }
 
-        //this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
-        //this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
+        this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
+        this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
     }
     
     public ToAddressList: AddressList;
@@ -405,8 +340,8 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -460,8 +395,8 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {

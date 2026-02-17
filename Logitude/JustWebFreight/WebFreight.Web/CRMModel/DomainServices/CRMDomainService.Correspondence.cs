@@ -17,7 +17,7 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -123,7 +123,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             ContactRepository contactRep = new ContactRepository(entityPm.Tenant);
             string contactEmail = contactRep.GetEmailContactByIdAndTenant(entityPm.Tenant, entityPm.CreatedByContactId);
 
-            string senderEmail = this.GetSenderEmail(entityPm.Tenant, ticket.GuidId, ticket.SupportMailboxId);
+            string senderEmail = this.GetSenderEmail(entityPm.Tenant, ticket.GuidId);
             InboundEmailLinePM line = new InboundEmailLinePM()
             {
                 Tenant = entityPm.Tenant,
@@ -141,37 +141,29 @@ namespace WebFreight.Web.CRMModel.DomainServices
                 InternalUsers = entityPm.InternalUsers,
             };
 
-            inboundEmailService.ApplyEmailSending(line, entityPm.EntityId, myTable.Id, ticket.GuidId, entityPm.NotifyMe, entityPm.CreatedByContactId, myInboundEmail.ObjectTableId, entityPm.IsContainsQuotationAttachment);
+            inboundEmailService.ApplyEmailSending(line, entityPm.EntityId, myTable.Id, ticket.GuidId, entityPm.NotifyMe, entityPm.CreatedByContactId, myInboundEmail.ObjectTableId);
         }
 
-        public string GetSenderEmail(int tenant,string guidId, string supportMailboxId)
+        public string GetSenderEmail(int tenant,string guidId)
         {
             string email = "";
-            var mailBox = this.GetDefaultSupportMailBox(supportMailboxId, tenant);
+            //string senderEmail = "support+" + ticket.GuidId + "@sandboxf630eae2c7034dd681286d71bd2f47bf.mailgun.org";
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                 TenantManagement myTenant = tenantManagementRepository.GetSingleTenantManagement(tenant);
                 if (myTenant != null)
                 {
-                    string supportDomain = myTenant.SupportDomain;
-                    if (!string.IsNullOrEmpty(supportDomain))
-                        email = mailBox + "+"+ guidId + "@" + supportDomain;
+                    string supportEmail = myTenant.SupportEmail;
+                    if (!string.IsNullOrEmpty(supportEmail))
+                        email = supportEmail.Split('@')[0] +"+"+ guidId + "@" + supportEmail.Split('@')[1];
                 }
+
                 scope.Complete();
             }
+          
             return email; 
         }
-
-        private string GetDefaultSupportMailBox(string supportMailboxId, int tenant)
-        {
-            string mailBox = null;
-            SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(tenant);
-            SupportMailbox supportMailbox = mailboxRepository.GetSingle(supportMailboxId, tenant);
-            mailBox = supportMailbox != null ? supportMailbox.Mailbox : null;
-            return mailBox;
-        }
-
 
         private int CalculateLinesForCurrentTicket(CorrespondencePM entityPm)
         {
@@ -248,7 +240,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             //}
             //#endregion 
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Correspondence", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }

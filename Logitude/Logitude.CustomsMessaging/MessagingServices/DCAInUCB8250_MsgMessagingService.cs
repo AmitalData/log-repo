@@ -20,9 +20,6 @@ using System.Xml.Serialization;
 using UnifreightIIG.Common.CommonIIGInterface;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck;
 using UnifreightIIG.Common.SystemTableServiceReference;
-using Logitude.Customs.Data.Repsitories;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -57,19 +54,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" שידור סטטוס הצהרות לבלדר " + customsResponse.CourierMasterId + " "
             };
-            if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
-
-            {
-                genericRequestParams.RequestName += " ראשי - מפצל";
-                genericRequestParams.SplitterModeLetCreateMyType = false;
-
-            }
-            else
-            {
-                genericRequestParams.RequestName += " מפוצל";
-                genericRequestParams.SplitterModeLetCreateMyType = true;
-
-            }
             return genericRequestParams;
         }
 
@@ -79,54 +63,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string testerSendOption,Boolean IsWorkSheetFromExcel,string workSheetLoggedUser,out string RequestInProgressListOut)
+        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
-                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+                ///throw new System.Exception("Requestsheet  with Interface Type  = UCB8250  already in progress  !!!");
                 return "קיים מסר זהה בתהליך";
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCB8250  !!!");
-            var repo = new DeclarationCourierStatusRepository(tenant);
-
-            //List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDDeclarationCourierStatus(tenant, CourierMasterId);
-            //if(listPoco!= null)
-            //{
-            //List<string> Ids = listPoco.Select(x => x.DeclarationId).ToList();
-
-            //foreach (var item in listPoco)
-            //{
-            //var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgressByIds(tenant, "8250", objectTableId2, Ids, false);
-            List<CustomsRequestsSheetPM> RequestInProgressList2 ;
-            FeatureQuery featureQuery = new FeatureQuery(tenant);
-
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(LoggingUserId, tenant);
-
-            var feature = features.Features.FirstOrDefault(x => x.Code == "StatusDeclarationOldVersion");
-            if (feature != null && !IsWorkSheetFromExcel)
-            {
-                  RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgress(tenant, "8250", null, null, objectTableId, CourierMasterId, null, false);
-            }
-            else
-            {
-                  RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgress(tenant, "8250", objectTableId, CourierMasterId, null, null, null, false);
-
-            }
-
-
-            if (RequestInProgressList2 != null && RequestInProgressList2.Count > 0)
-                {
-                RequestInProgressListOut = string.Join(",", RequestInProgressList2.Select(request => request.Id.ToString())); 
-                return "קיים מסר זהה בתהליך";
-                }
-                // }
-
-            //}
 
 
             string uniComm = null;
@@ -137,12 +84,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myDCAInUCB8250WithResponseContentHeader = new DCAInUCB8250WithResponseContentHeader()
             {
                 CourierMasterId = CourierMasterId,
-                TesterSendOption = testerSendOption,
                 LoggingUserId = LoggingUserId,
-                WorkSheeetLogUser = workSheetLoggedUser,
                 tenant = tenant,
                 MyMoreParams = "",
-                IsWorkSheetFromExcel = IsWorkSheetFromExcel,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -185,8 +129,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
-                    RequestInProgressListOut = "";
-
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -199,7 +141,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB8250 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
-                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                 }
             }
@@ -225,11 +166,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public string MyMoreParams { get; set; }
-        public bool IsWorkSheetFromExcel { get; set; }
-        public string WorkSheeetLogUser { get; set; }
-
-        public List<string> ServerSplitDeclarationsList { get; set; }
-        public string TesterSendOption { get;  set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

@@ -9,7 +9,7 @@
     <tr>
         <td>
             <table>
-                <tr style="height:22px" [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)">
+                <tr style="height:22px">
                     <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
                 </tr>
 
@@ -23,17 +23,17 @@
 
                                 <td style="width:70px">From Date:</td>
                                 <td style="width:130px">
-                                    <AdvancedDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext" [ShowToolTip]="true" [InputType]="'date'" [TimeMode]="'12'"></AdvancedDatePicker>
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
                                 </td>
 
                                 <td style="width:15px"></td>
                                 <td style="width:60px">To Date:</td>
                                 <td style="width:130px">
-                                    <AdvancedDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext" [ShowToolTip]="true" [InputType]="'date'" [TimeMode]="'12'"></AdvancedDatePicker>
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
                                 </td>
                                 <td style="width:20px"><div></div></td>
                                 <td style="width:90px;">
-                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">{{RunReportTitle}}</button>
+                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
                                 </td>
 
                                 <td>

@@ -35,17 +35,14 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {AccountingPeriodExtendedListService} from '../../../../Accounting/Services/ExtendedLists/AccountingPeriodExtendedListService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { reject } from 'q';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     selector: 'NewGeneralARInvoiceComponent',
-
+    moduleId: module.id,
     templateUrl: './NewGeneralARInvoiceComponent.html',
 })
 
 export class NewGeneralARInvoiceComponent extends BaseComponent {
-  public BillToDependencyValue1IsList: any;
-
     public EntityPM: ARInvoicePM;
     public ObjectTableName: string = "ARInvoice";
     public DataContext = this;
@@ -55,25 +52,17 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     public DisplaySATPaymentMethod: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-    IsAccountingActivated:boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
-    DisplayFieldsFromList:string;
-    DisplayLocalFieldsFromList:string;
-    BillToLovSizeForFullAccounting:number;
-    public GLAccountsFilterItems: ApiQueryFilters;
 
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
-         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
-         this.InitLOVFilters();
-         this.InitializeBillToLov();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.InitializeServices();
 
         });
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             this.DisplaySATPaymentMethod = true;
         }
 
@@ -81,17 +70,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             this.IsEditExchangeRateVisible = true;
         }
     }
-    InitLOVFilters() {
-        this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
-    }
-    private InitializeBillToLov() {
-        if (this.IsAccountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
-            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
-            this.BillToLovSizeForFullAccounting = 550;
-        }
-    }
+
     private TypeCode = "";
     SetWindowArgs(args: any) {
         this.TypeCode = args["InvoiceTypeCode"];
@@ -121,7 +100,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     private accountingPeriod: any;
     private GetClosedMonth() {
         return new Promise(resolve => {
-            var periodTypeCode = "2" // 2-Invoice
+            var periodTypeCode = "1" // 1-Regular
             this.myAccountingPeriodListService.getByYear(this.InvoiceDate.getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
@@ -137,10 +116,9 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     CreateNewEntity() {
         var todayDate = DateTool.GetCurrentDateAsUtc();
         this.EntityPM = new ARInvoicePM();
-        this.EntityPM.BillToPartnerTypeId = null;
+        this.EntityPM.BillToPartnerTypeId = "CS";
         this.EntityPM.StatusCode = "DR";
         this.EntityPM.StatusName = "Draft";
-        this.EntityPM.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.IssuedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -185,7 +163,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.SetUIProperties_BillToAddress();
         this.SetUIProperties_VatNumber();
         this.SetUIProperties_ExchangeRate();
-        this.SetUIProperties_PrintNotes();
         //this.SetUIProperties_General(false);
         this.SetUIProperties_DueDate();
         this.SetUIProperties_Payment();
@@ -210,17 +187,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, isFieldRequired);
         }
     }
-
-
-    SetUIProperties_PrintNotes() {
-        var isFieldRequired = false;
-
-
-
-        this.UIProperties.SetRequired("PrintNotes", this.ObjectTableName, isFieldRequired);
-
-    }
-
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = false;
 
@@ -254,7 +220,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     SetUIProperties_Payment() {
         this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, false);
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, true);
             }
@@ -262,14 +228,12 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     }
 
     // BillTo
-    public BillToDependencyValue1: string = "CS";
-    public BillToDependencyValue2: boolean = false;
-    public BillToDependencyProperty1IsList: boolean = false;
+    public BillToDependencyProperty1: string = null;
+    public BillToDependencyProperty1IsList: boolean = true;
     BuildPartnersTypes() {
 
-      //  this.BillToDependencyProperty1 = "CS";
-        this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
-        this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
+        this.BillToDependencyProperty1 = "CS";
+
         if (this.EntityPM.Id == null) {
             //if (this.args.EntityTableName == "Shipment") {
             //    var customer: InvoicePartnerType = this.InvoicePartners.filter(d => d.Code == "CUS")[0];
@@ -285,25 +249,8 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
 
-
     public SelectedPartnerType: InvoicePartnerType = null;
-    PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
-        if (this.SelectedPartnerType != selected) {
-            this.SelectedPartnerType = selected;
 
-            this.BillToId = null;
-            this.BillToAddressId = null;
-            this.BillToPartnerTypeId = null;
-
-            if (selected) {
-                this.BillToPartnerTypeId = selected.PartnerTypeId;
-                this.BillToDependencyValue1 = selected.PartnerTypeId;
-                this.BillToDependencyValue2 = selected.IsCustomer;
-            }
-
-            this.SetUIProperties();
-        }
-    }
     private billToPartnerTypeId: string;
     get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
     set BillToPartnerTypeId(newValue: string) {
@@ -323,7 +270,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.VatNumber = null;
                 this.BillToName = null;
-                this.BillToLocalName = null;
                 this.BillToAddressId = null;
                 this.SATPaymentMethodCode = null;
                 this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
@@ -338,7 +284,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
                         if (list != null) {
                             this.VatNumber = list.VatNumber;
                             this.BillToName = list.EnglishName;
-                            this.BillToLocalName = list.LocalName;
                             if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
                                 this.SATPaymentMethodCode = list.SATPaymentMethodCode;
                             }
@@ -410,14 +355,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     set BillToName(newValue: string) {
         if (this.EntityPM.BillToName != newValue) {
             this.EntityPM.BillToName = newValue;
-        }
-    }
-
-
-    get BillToLocalName() { return this.EntityPM.BillToLocalName; }
-    set BillToLocalName(newValue: string) {
-        if (this.EntityPM.BillToLocalName != newValue) {
-            this.EntityPM.BillToLocalName = newValue;
         }
     }
 
@@ -516,13 +453,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             this.SetUIProperties_VatNumber();
         }
     }
-    get PrintNotes() { return this.EntityPM.PrintNotes; }
-    set PrintNotes(newValue: string) {
-        if (this.EntityPM.PrintNotes != newValue) {
-            this.EntityPM.PrintNotes = newValue;
-            this.SetUIProperties_PrintNotes();
-        }
-    }
 
     get PaymentTermId() { return this.EntityPM.PaymentTermId; }
     set PaymentTermId(newValue: string) {
@@ -593,13 +523,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         if (this.EntityPM.SATPaymentMethodCode != newValue) {
             this.EntityPM.SATPaymentMethodCode = newValue;
             this.SetUIProperties_Payment();
-        }
-    }
-
-    get BranchId() { return this.EntityPM.BranchId; }
-    set BranchId(value: string) {
-        if (this.EntityPM.BranchId != value) {
-            this.EntityPM.BranchId = value;
         }
     }
 
@@ -727,7 +650,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     }
     OkButtonClicked() {
 
-        this.EntityPM.BillToPartnerTypeId = this.BillToPartnerTypeId;
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this.GetClosedMonth().then(res => {
@@ -740,9 +662,9 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             if (isEntityValid) {
 
                 this.CurrentSession.StartBusyIndicatorLoading();
-               // this.LoadCurrencyRates().then(res => {
+                this.LoadCurrencyRates().then(res => {
                     this.SubmitChanges();
-              //  });
+                });
 
             }
 
@@ -782,9 +704,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
 
         else {
             var date1 = new Date(this.InvoiceDate.toString());
-            var date2 = new Date();
-            date2.setHours(23);
-            date2.setMinutes(59);
+            var date2 = DateTool.GetCurrentDateAsUtc();
 
             if (date1.valueOf() > date2.valueOf()) {
                 this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
@@ -801,7 +721,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             }
         }
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
             }

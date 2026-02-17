@@ -20,7 +20,7 @@ export class HybridTenantThresholdPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -39,17 +39,12 @@ export class HybridTenantThresholdPM {
     public get WaitingThresold() { return this.waitingThresold; }
     public set WaitingThresold(newValue: number) { if (this.waitingThresold != newValue) { this.waitingThresold = newValue; this.MarkAsDirty("WaitingThresold"); } }
        
+	 
 
-    private typeCode: number;
-    public get TypeCode() { return this.typeCode; }
-    public set TypeCode(newValue: number) { if (this.typeCode != newValue) { this.typeCode = newValue; this.MarkAsDirty("TypeCode"); } }
-       
     public OldEntityPM: HybridTenantThresholdPM;
-	public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
+		
+    public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -57,7 +52,6 @@ export class HybridTenantThresholdPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "HybridTenantThreshold");
            
         }
-	 }
     }
     private MyClone: HybridTenantThresholdPM;
 
@@ -69,4 +63,4 @@ export class HybridTenantThresholdPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

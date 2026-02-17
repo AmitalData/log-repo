@@ -10,7 +10,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 @Component({
     selector: 'BlockedCustomerComponent',
-    
+    moduleId: module.id,
     templateUrl: './BlockedCustomerComponent.html',
 })
 

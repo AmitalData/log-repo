@@ -1,3 +1,4 @@
+
 <style>
     .FilterItem {
         height: 22px;
@@ -36,14 +37,14 @@
         -moz-border-radius-bottomright: 1px;
         -webkit-border-bottom-left-radius: 1px;
         -webkit-border-bottom-right-radius: 1px;
-        background: rgba(229, 244, 253, 1);
-        background: -moz-linear-gradient(top, rgba(229, 244, 253, 1) 0%, rgba(157, 199, 217, 1) 100%);
-        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(229, 244, 253, 1)), color-stop(100%, rgba(157, 199, 217, 1)));
-        background: -webkit-linear-gradient(top, rgba(229, 244, 253, 1) 0%, rgba(157, 199, 217, 1) 100%);
-        background: -o-linear-gradient(top, rgba(229, 244, 253, 1) 0%, rgba(157, 199, 217, 1) 100%);
-        background: -ms-linear-gradient(top, rgba(229, 244, 253, 1) 0%, rgba(157, 199, 217, 1) 100%);
-        background: linear-gradient(to bottom, rgba(229, 244, 253, 1) 0%, rgba(157, 199, 217, 1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e5f4fd', endColorstr='#9dc7d9', GradientType=0);
+        background: rgba(229,244,253,1);
+        background: -moz-linear-gradient(top, rgba(229,244,253,1) 0%, rgba(157,199,217,1) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(229,244,253,1)), color-stop(100%, rgba(157,199,217,1)));
+        background: -webkit-linear-gradient(top, rgba(229,244,253,1) 0%, rgba(157,199,217,1) 100%);
+        background: -o-linear-gradient(top, rgba(229,244,253,1) 0%, rgba(157,199,217,1) 100%);
+        background: -ms-linear-gradient(top, rgba(229,244,253,1) 0%, rgba(157,199,217,1) 100%);
+        background: linear-gradient(to bottom, rgba(229,244,253,1) 0%, rgba(157,199,217,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5f4fd', endColorstr='#9dc7d9', GradientType=0 );
     }
 
     .RelatedDocItem {
@@ -54,16 +55,11 @@
         border: solid 1px #BABABA;
         height: 85px;
         /*width: 100%;*/
-        background: white;
-        /* For browsers that do not support gradients */
-        background: -webkit-linear-gradient(#E7F5FE, #62AAC4);
-        /* For Safari 5.1 to 6.0 */
-        background: -o-linear-gradient(#E7F5FE, #62AAC4);
-        /* For Opera 11.1 to 12.0 */
-        background: -moz-linear-gradient(#E7F5FE, #62AAC4);
-        /* For Firefox 3.6 to 15 */
-        background: linear-gradient(#E7F5FE, #62AAC4);
-        /* Standard syntax */
+        background: white; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#E7F5FE, #62AAC4); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#E7F5FE, #62AAC4); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#E7F5FE, #62AAC4); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#E7F5FE, #62AAC4); /* Standard syntax */
     }
 
     .disconnectIcon {
@@ -97,16 +93,11 @@
         border-radius: 2px;
         padding: 4px;
         border: solid 1px #BABABA;
-        background: white;
-        /* For browsers that do not support gradients */
-        background: -webkit-linear-gradient(#E7F5FE, #62AAC4);
-        /* For Safari 5.1 to 6.0 */
-        background: -o-linear-gradient(#E7F5FE, #62AAC4);
-        /* For Opera 11.1 to 12.0 */
-        background: -moz-linear-gradient(#E7F5FE, #62AAC4);
-        /* For Firefox 3.6 to 15 */
-        background: linear-gradient(#E7F5FE, #62AAC4);
-        /* Standard syntax */
+        background: white; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#E7F5FE, #62AAC4); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#E7F5FE, #62AAC4); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#E7F5FE, #62AAC4); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#E7F5FE, #62AAC4); /* Standard syntax */
     }
 </style>
 
@@ -155,85 +146,45 @@
                 </tr>
                 <tr style="height:30px;">
                     <td style="width:80px;">
-                        <span
-                            style="width:80px; margin-right:8px;">{{'Customs.CustomsDocumentsTicket.F.DocumentTypeCode'
-                            | TextCodeTranslationPipe}}</span>
+                        <span style="width:80px; margin-right:8px;">{{'Customs.CustomsDocumentsTicket.F.DocumentTypeCode' | TextCodeTranslationPipe}}</span>
 
                     </td>
                     <td style="width:160px;">
-                        <div *ngIf="!IsFromSIIRequest">
-                            <LogLov [ObjectFieldName]="'CustomDocumentTypeCode'"
-                                [ObjectTableName]="'Customs.CustomsDocument'" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CustomDocumentType'" [HideColumns]="true"
+                        <LogLov [ObjectFieldName]="'CustomDocumentTypeCode'"
+                                [ObjectTableName]="'Customs.CustomsDocument'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomDocumentType'"
+                                [HideColumns]="true"
                                 [PlaceHolder]="'Customs.CustomsDocument.SearchDocTypeWaterMark' | TextCodeTranslationPipe"
                                 [QueryFilterItems]="DocTypesFilterItems">
-                            </LogLov>
-                        </div>
-                        <div *ngIf="IsFromSIIRequest">
-                            <LogLov [ObjectFieldName]="'CustomDocumentTypeCode'" [ObjectTableName]="'Customs.CustomsDocument'"
-                                [DataContext]="DataContext" [LookUpTableName]="'Customs.SIIDocumentType'"
-                                [PlaceHolder]="'Customs.CustomsDocument.SearchDocTypeWaterMark' | TextCodeTranslationPipe"
-                                [HideColumns]="true" [QueryFilterItems]="DocTypesFilterItems"></LogLov>
-                        </div>
+                        </LogLov>
                     </td>
-                    <td style=" width:395px; padding-right:4px;">
-                        <ul *ngIf="!IsFromSIIRequest" class="FiltersMenu"
-                            style="direction:rtl; float:right; margin-right:5px;">
-                            <li id="requireddocs" (click)="FilterItemClicked('requireddocs')" class="FilterItem"
-                                style="width:80px" [class.SelectedFilter]="FilterSelectedValue === 'requireddocs'">
-                                {{'Customs.CustomsDocument.RequiredDocument' | TextCodeTranslationPipe}}
-                                ({{RequiredDocsCount}})
+                    <td style="width:395px; padding-right:4px;">
+                        <ul class="FiltersMenu" style="direction:rtl; float:right; margin-right:5px;">
+                            <li id="requireddocs" (click)="FilterItemClicked('requireddocs')" class="FilterItem" style="width:80px"
+                                [class.SelectedFilter]="FilterSelectedValue === 'requireddocs'">
+                                {{'Customs.CustomsDocument.RequiredDocument' | TextCodeTranslationPipe}} ({{RequiredDocsCount}})
                             </li>
-                            <li id="uploaded" (click)="FilterItemClicked('uploaded')" class="FilterItem"
-                                style="width:80px" [class.SelectedFilter]="FilterSelectedValue === 'uploaded'">
-                                {{'Customs.CustomsDocument.UploadedToCustoms' | TextCodeTranslationPipe}}
-                                ({{UploadedCount}})
+                            <li id="uploaded" (click)="FilterItemClicked('uploaded')" class="FilterItem" style="width:80px"
+                                [class.SelectedFilter]="FilterSelectedValue === 'uploaded'">
+                                {{'Customs.CustomsDocument.UploadedToCustoms' | TextCodeTranslationPipe}} ({{UploadedCount}})
                             </li>
-                            <li id="notuploaded" (click)="FilterItemClicked('notuploaded')" class="FilterItem"
-                                style="width:80px" [class.SelectedFilter]="FilterSelectedValue === 'notuploaded'">
-                                {{'Customs.CustomsDocument.NotSentToCustoms' | TextCodeTranslationPipe}}
-                                ({{NotUploadedCount}})
+                            <li id="notuploaded" (click)="FilterItemClicked('notuploaded')" class="FilterItem" style="width:80px"
+                                [class.SelectedFilter]="FilterSelectedValue === 'notuploaded'">
+                                {{'Customs.CustomsDocument.NotSentToCustoms' | TextCodeTranslationPipe}} ({{NotUploadedCount}})
                             </li>
-                            <li id="alltickets" (click)="FilterItemClicked('alltickets')" class="FilterItem"
-                                style="width:60px" [class.SelectedFilter]="FilterSelectedValue === 'alltickets'">
-                                {{'Customs.CustomsDocument.AllTicketsLabel' | TextCodeTranslationPipe}}
-                                ({{AllTicketsCount}})
+                            <li id="alltickets" (click)="FilterItemClicked('alltickets')" class="FilterItem" style="width:60px"
+                                [class.SelectedFilter]="FilterSelectedValue === 'alltickets'">
+                                {{'Customs.CustomsDocument.AllTicketsLabel' | TextCodeTranslationPipe}} ({{AllTicketsCount}})
                             </li>
                         </ul>
                     </td>
                     <td></td>
-                    <td style="width:125px;padding-left:5px;">
-                        <div *ngIf="IsDocumentRequestCodeButton && EntityPM.Direction != 'E' && !IsFromSIIRequest">
-                            <span>
-                                <button class="Button" *ngIf="DocumentRequestCodeIcon == 'DEFAULT'"
-                                    (click)="DocumentRequestbuttonclicked()" tabindex="-1">
-                                    <img [src]="src" style="margin-right: -4px; margin-top: 1px" /> בקש מסמך מיבואן
-                                </button>
-                            </span>
-
-                            <span>
-                                <button class="Button" *ngIf="DocumentRequestCodeIcon == 'LOGBOX'"
-                                    (click)="DocumentRequestbuttonclicked()" tabindex="-1">
-                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png"
-                                        style="margin-right: -4px; margin-top: 1px" /> בקש מסמך מיבואן
-                                </button>
-                            </span>
-                        </div>
-                    </td>
                     <td style="width:75px;padding-left:5px;">
-                        <button class="Button" style="padding-left:5px;"
-                            *ngIf="bulkUploadDocumentsPermission && !IsFromSIIRequest" (click)="BulkUploadDocuments()"
-                            [disabled]="IsDisplayOnly">{{'Customs.CustomsDocument.BulkUploadDocuments' |
-                            TextCodeTranslationPipe}}</button>
-                    </td>
-                    <td style="width:75px;padding-left:5px;">
-                        <button class="Button" style="padding-left:5px;" (click)="AddCustomsDocumentsTicket()"
-                            [disabled]="IsDisplayOnly">{{'Customs.CustomsDocument.AddDocumentsTicket' |
-                            TextCodeTranslationPipe}}</button>
+                        <button class="Button" style="padding-left:5px;" (click)="AddCustomsDocumentsTicket()" [disabled]="IsDisplayOnly">{{'Customs.CustomsDocument.AddDocumentsTicket' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td style="width:25px; padding-left:5px">
-                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"
-                            [disabled]="IsRefreshButtonDisabled"></IconButton>
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()" [disabled]="IsRefreshButtonDisabled"></IconButton>
                     </td>
                 </tr>
             </table>
@@ -255,20 +206,19 @@
 
                     <td>
                         <ul class="FiltersMenu" style="direction:rtl;float:right; margin-right:10px ">
-                            <li id="all" (click)="DocumentFilterItemClicked('all')" class="FilterItem"
-                                style="width:50px" [class.SelectedFilter]="DocumentFilterSelectedValue === 'all'">
+                            <li id="all" (click)="DocumentFilterItemClicked('all')" class="FilterItem" style="width:50px"
+                                [class.SelectedFilter]="DocumentFilterSelectedValue === 'all'">
                                 הכל
                             </li>
 
-                            <li id="forwarding" (click)="DocumentFilterItemClicked('forwarding')" class="FilterItem"
-                                style="width:50px"
+                            <li id="forwarding" (click)="DocumentFilterItemClicked('forwarding')" class="FilterItem" style="width:50px"
                                 [class.SelectedFilter]="DocumentFilterSelectedValue === 'forwarding'">
-                                {{forwarding}}
+                                שילוח
                             </li>
 
-                            <li id="customs" (click)="DocumentFilterItemClicked('customs')" class="FilterItem"
-                                style="width:50px" [class.SelectedFilter]="DocumentFilterSelectedValue === 'customs'">
-                                {{customs}}
+                            <li id="customs" (click)="DocumentFilterItemClicked('customs')" class="FilterItem" style="width:50px"
+                                [class.SelectedFilter]="DocumentFilterSelectedValue === 'customs'">
+                                עמילות
                             </li>
 
                         </ul>
@@ -292,12 +242,10 @@
                 <div class="MediaFillRelative">
                     <ScrollViewer>
 
-                        <div *ngFor="let ticket of CustomsDocumentsTicketViewModels"
-                            style="float: right; width: 240px; height: 220px; position: relative;">
+                        <div *ngFor="let ticket of CustomsDocumentsTicketViewModels" style="float: right; width: 240px; height: 220px; position: relative;">
                             <div class="MarginAbsolute10" style="">
 
-                                <div (click)="EditCustomsDocumentsTicket(ticket)" class="ConnectedTicketItem"
-                                    *ngIf="ticket.DocumentsFilingId">
+                                <div (click)="EditCustomsDocumentsTicket(ticket)" class="ConnectedTicketItem" *ngIf="ticket.DocumentsFilingId">
                                     <table>
                                         <!--Header tr-->
                                         <tr>
@@ -306,69 +254,50 @@
                                                     <tr>
                                                         <td colspan="3">
                                                             <div>
-                                                                <div *ngIf="ticket.ShowMustSend()"
-                                                                    style="color:coral;text-align:center">חובה לשליחה
-                                                                </div>
-                                                                <img *ngIf="ticket.ApprovedImageVisibility"
-                                                                    src="./Images/ApprovedDocument.png"
-                                                                    style="width: 60px;height: 25px;left: 2px;margin-left: 5px;margin-top: 9px;cursor: pointer;transform: rotate(-40deg);top: 10px;position: absolute;" />
-                                                                <img *ngIf="ticket.DeniedImageVisibility"
-                                                                    src="./Images/DeniedStamp.png"
-                                                                    style="width: 60px;height: 25px;left: 2px;margin-left: 5px;margin-top: 9px;cursor: pointer;transform: rotate(-40deg);top: 10px;position: absolute;" />
+                                                                <div *ngIf="ticket.ShowMustSend()"  style="color:coral;text-align:center" >חובה לשליחה</div>
+                                                                <img *ngIf="ticket.ApprovedImageVisibility" src="./Images/ApprovedDocument.png" style="width: 60px;height: 25px;left: 2px;margin-left: 5px;margin-top: 9px;cursor: pointer;transform: rotate(-40deg);top: 10px;position: absolute;" />
+                                                                <img *ngIf="ticket.DeniedImageVisibility" src="./Images/DeniedStamp.png" style="width: 60px;height: 25px;left: 2px;margin-left: 5px;margin-top: 9px;cursor: pointer;transform: rotate(-40deg);top: 10px;position: absolute;" />
                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td style="vertical-align:top;">
-                                                            <div (mouseover)="ticket.PreventEditTicket()"
-                                                                (mouseout)="ticket.AllowEditTicket()">
-                                                                <img [src]="ticket.Extension | AttatchmentIconPipe"
-                                                                    style="width:22px;height:25px;margin-left:5px; margin-right:6px; margin-top:8px; cursor:pointer;"
-                                                                    (click)="DownloadDocumentFile(ticket.DocumentsFilingId)" />
+                                                            <div (mouseover)="ticket.PreventEditTicket()" (mouseout)="ticket.AllowEditTicket()">
+                                                                <img [src]="ticket.Extension | AttatchmentIconPipe" style="width:22px;height:25px;margin-left:5px; margin-right:6px; margin-top:8px; cursor:pointer;" (click)="DownloadDocumentFile(ticket.DocumentsFilingId)" />
+
                                                                 <!-- sign mark -->
                                                                 <img *ngIf="ticket.customsDocumentsTicketPM.IsDigitallySigned"
-                                                                    style="width: 23px;position: absolute;top: 10px;right: 27px;"
-                                                                    src="./Images/medalicon.png"
-                                                                    [attr.title]="ticket.customsDocumentsTicketPM.SignersList" />
-
-
-
+                                                                     style="width: 23px;position: absolute;top: 10px;right: 27px;"
+                                                                     src="./Images/medalicon.png"
+                                                                     [attr.title]="ticket.customsDocumentsTicketPM.SignersList" />
 
                                                             </div>
                                                         </td>
                                                         <td style="vertical-align:top;text-align:center;">
                                                             <div style="font-size:12px;color:#E46C0A;font-weight:bold;">
                                                                 <table style="margin-top:8px;">
-
                                                                     <tr *ngIf="ticket.RequestedDocumentId">
                                                                         <td>
-                                                                            <div
-                                                                                style="font-size:12px;color:#E46C0A;font-weight:bold;">
-                                                                                {{'Customs.Declaration.O.RequestedDocument'
-                                                                                | TextCodeTranslationPipe}}
+                                                                            <div style="font-size:12px;color:#E46C0A;font-weight:bold;">
+                                                                                {{'Customs.Declaration.O.RequestedDocument' | TextCodeTranslationPipe}}
                                                                             </div>
                                                                         </td>
                                                                     </tr>
                                                                     <tr *ngIf="ticket.RequestedDocumentId">
                                                                         <td>
-                                                                            <div
-                                                                                style="font-size:12px;color:#E46C0A;font-weight:bold; margin-right:5px;">
+                                                                            <div style="font-size:12px;color:#E46C0A;font-weight:bold; margin-right:5px;">
                                                                                 {{ticket.RequestedDocumentId}}
                                                                             </div>
                                                                         </td>
                                                                     </tr>
                                                                     <tr *ngIf="ticket.IsMetaDataVisible">
                                                                         <td>
-                                                                            <div
-                                                                                style="font-size:12px;color:#E46C0A;font-weight:bold;">
+                                                                            <div style="font-size:12px;color:#E46C0A;font-weight:bold;">
 
-                                                                                <span
-                                                                                    style="font-weight:bold; color:#E46C0A;font-size:12px;">
-                                                                                    {{'Customs.Declaration.O.MissingFields'
-                                                                                    | TextCodeTranslationPipe}}
+                                                                                <span style="font-weight:bold; color:#E46C0A;font-size:12px;">
+                                                                                    {{'Customs.Declaration.O.MissingFields' | TextCodeTranslationPipe}}
                                                                                 </span>
-                                                                                <span
-                                                                                    style="margin-right:3px; font-weight:bold;color:#E46C0A;">
+                                                                                <span style="margin-right:3px; font-weight:bold;color:#E46C0A;">
                                                                                     {{ticket.MetaDataCount}}
                                                                                 </span>
                                                                             </div>
@@ -382,11 +311,7 @@
                                                         <td style="padding-left:5px; vertical-align:top;">
                                                             <div style="margin-top:8px; margin-left:3px;">
 
-                                                                <IconButton (mouseover)="ticket.PreventEditTicket()"
-                                                                    (mouseout)="ticket.AllowEditTicket()"
-                                                                    class="disconnectIcon" [Name]="'connect'"
-                                                                    (click)="ticket.DisconnectButtonClicked(DataContext)">
-                                                                </IconButton>
+                                                                <IconButton (mouseover)="ticket.PreventEditTicket()" (mouseout)="ticket.AllowEditTicket()" class="disconnectIcon" [Name]="'connect'" (click)="ticket.DisconnectButtonClicked(DataContext)"></IconButton>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -398,8 +323,7 @@
                                         <!--body tr-->
                                         <tr>
                                             <td>
-                                                <div style="font-size:18px;color:#312C31;margin-right:8px; max-width:174px;overflow:hidden;"
-                                                    class="TextTrimming">
+                                                <div style="font-size:18px;color:#312C31;margin-right:8px; max-width:174px;overflow:hidden;" class="TextTrimming">
                                                     {{ticket.DocumentTypeName}}
                                                 </div>
                                             </td>
@@ -407,18 +331,13 @@
 
                                         <tr>
                                             <td>
-                                                <div *ngIf="ticket._SInvoiceNumber  == null" class="TextTrimming"
-                                                    style="max-width: 174px;font-size:14px;color:#312C31; margin-right:8px; white-space:normal">
+                                                <div *ngIf="ticket._SInvoiceNumber  == null" class="TextTrimming" style="max-width: 174px;font-size:14px;color:#312C31; margin-right:8px;">
                                                     {{ticket.LeadingMetaDataName}}
                                                     {{ticket.LeadingMetaDataValue}}
                                                 </div>
 
-                                                <div *ngIf="ticket._SInvoiceNumber  != null" class="TextTrimming"
-                                                    style="max-width: 174px;font-size:14px;color:#312C31; margin-right:8px;">
-                                                    חשבון ספק <span
-                                                        style="font-weight:bold;">{{ticket._SInvoiceNumber}}</span>
-                                                    <span style="color:forestgreen"
-                                                        *ngIf="ticket._IsClassified">(מסווג)</span>
+                                                <div *ngIf="ticket._SInvoiceNumber  != null" class="TextTrimming" style="max-width: 174px;font-size:14px;color:#312C31; margin-right:8px;">
+                                                    חשבון ספק <span style="font-weight:bold;">{{ticket._SInvoiceNumber}}</span> <span style="color:forestgreen" *ngIf="ticket._IsClassified">(מסווג)</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -430,19 +349,12 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <div *ngIf="!IsFromSIIRequest"
-                                                                    style="font-size:11px; font-weight:bold; margin-right:8px; width:190px;"
-                                                                    [style.color]="ticket.GetStatusFontColor()"
-                                                                    class="TextTrimming">
-                                                                    <span
-                                                                        style="float:right;font-weight:bold; font-size:12px;"
-                                                                        class="TextTrimming">
+                                                                <div style="font-size:11px; font-weight:bold; margin-right:8px; width:190px;" [style.color]="ticket.GetStatusFontColor()" class="TextTrimming">
+                                                                    <span style="float:right;font-weight:bold; font-size:12px;" class="TextTrimming">
                                                                         {{ticket.DocumentStatusName}}
                                                                         {{ticket.CustomsDocIdLabelText}}
                                                                     </span>
-                                                                    <span
-                                                                        style="float:right;margin-right:8px; font-size:12px; font-weight:bold;"
-                                                                        class="TextTrimming">
+                                                                    <span style="float:right;margin-right:8px; font-size:12px; font-weight:bold;" class="TextTrimming">
                                                                         {{ticket.CustomsDocId}}
                                                                     </span>
                                                                 </div>
@@ -450,52 +362,23 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <div *ngIf="!IsFromSIIRequest"
-                                                                    [attr.title]="ticket.CustomAnswerTitle"
-                                                                    (click)="ShowCustomAnswerClicked($event,ticket)"
-                                                                    class="showCustomAnswerButton"
-                                                                    style="margin-right:4px;margin-left:4px;">
-                                                                    <img *ngIf="ticket.Status2ImageGreen"
-                                                                        src="./Images/CheckBoxIcon.png"
-                                                                        style="width:14px; margin-top:3px;" />
-                                                                    <img *ngIf="ticket.Status2ImageGray"
-                                                                        src="./Images/CheckBoxIcon.png"
-                                                                        style="width:14px;filter:grayscale(100%); margin-top:3px;" />
-                                                                    <img *ngIf="ticket.Status2ErrorImage"
-                                                                        src="./Images/RedX.png"
-                                                                        style="width:14px; margin-top:3px; " />
+                                                                <div [attr.title]="ticket.CustomAnswerTitle"
+                                                                     (click)="ShowCustomAnswerClicked($event,ticket)"
+                                                                     class="showCustomAnswerButton"
+                                                                     style="margin-right:4px;margin-left:4px;">
+                                                                    <img *ngIf="ticket.Status2ImageGreen" src="./Images/CheckBoxIcon.png" style="width:14px; margin-top:3px;" />
+                                                                    <img *ngIf="ticket.Status2ImageGray" src="./Images/CheckBoxIcon.png" style="width:14px;filter:grayscale(100%); margin-top:3px;" />
+                                                                    <img *ngIf="ticket.Status2ErrorImage" src="./Images/RedX.png" style="width:14px; margin-top:3px; " />
 
-                                                                    <img *ngIf="ticket.Status1ImageGreen"
-                                                                        src="./Images/CheckBoxIcon.png"
-                                                                        style="width:14px; margin-top:3px;" />
-                                                                    <img *ngIf="ticket.Status1ImageGray"
-                                                                        src="./Images/CheckBoxIcon.png"
-                                                                        style="width:14px;filter:grayscale(100%); margin-top:3px;" />
+                                                                    <img *ngIf="ticket.Status1ImageGreen" src="./Images/CheckBoxIcon.png" style="width:14px; margin-top:3px;" />
+                                                                    <img *ngIf="ticket.Status1ImageGray" src="./Images/CheckBoxIcon.png" style="width:14px;filter:grayscale(100%); margin-top:3px;" />
 
 
-                                                                    <div style="font-size:11px;display: inline-block;vertical-align: bottom;overflow:hidden;"
-                                                                        *ngIf="ticket.ExternalAttachmentIdVisibility">
-                                                                        <span
-                                                                            style="float:right; font-size:11px;font-weight:bold; vertical-align: bottom;">
-                                                                            {{'Customs.CustomsDocument.ExternalAttachmentIdLabel'
-                                                                            | TextCodeTranslationPipe}}
+                                                                    <div style="font-size:11px;display: inline-block;vertical-align: bottom;overflow:hidden;" *ngIf="ticket.ExternalAttachmentIdVisibility">
+                                                                        <span style="float:right; font-size:11px;font-weight:bold; vertical-align: bottom;">
+                                                                            {{'Customs.CustomsDocument.ExternalAttachmentIdLabel' | TextCodeTranslationPipe}}
                                                                         </span>
-                                                                        <span
-                                                                            style="float:right;margin-right:3px; font-size:11px;font-weight:bold; vertical-align: bottom;">
-                                                                            {{ticket.ExternalAttachmentId}}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <div *ngIf="IsFromSIIRequest">
-                                                                    <div style="font-size:11px;display: inline-block;vertical-align: bottom;overflow:hidden;"
-                                                                        *ngIf="ticket.ExternalAttachmentIdVisibility">
-                                                                        <span
-                                                                            style="float:right; font-size:11px;font-weight:bold; vertical-align: bottom;">
-                                                                            {{'Customs.CustomsDocument.ExternalAttachmentIdLabel'
-                                                                            | TextCodeTranslationPipe}}
-                                                                        </span>
-                                                                        <span
-                                                                            style="float:right;margin-right:3px; font-size:11px;font-weight:bold; vertical-align: bottom;">
+                                                                        <span style="float:right;margin-right:3px; font-size:11px;font-weight:bold; vertical-align: bottom;">
                                                                             {{ticket.ExternalAttachmentId}}
                                                                         </span>
                                                                     </div>
@@ -512,10 +395,7 @@
 
                                 </div>
 
-                                <div (click)="EditCustomsDocumentsTicket(ticket)" class="DisConnectedTicketItem"
-                                    *ngIf="!ticket.DocumentsFilingId"
-                                    (drop)="ticket.ConnectDocumentToTicket($event,RelatedDocuments,DataContext)"
-                                    dropzone="true" (dragover)="ticket.allowDrop($event)">
+                                <div (click)="EditCustomsDocumentsTicket(ticket)" class="DisConnectedTicketItem" *ngIf="!ticket.DocumentsFilingId" (drop)="ticket.ConnectDocumentToTicket($event,RelatedDocuments,DataContext)" dropzone="true" (dragover)="ticket.allowDrop($event)">
                                     <table>
                                         <!--Header tr-->
                                         <tr>
@@ -526,30 +406,23 @@
                                                             <table>
                                                                 <tr>
                                                                     <td style="width:40px;">
-
+                                                                        
                                                                         <div></div>
                                                                     </td>
                                                                     <td style="vertical-align:top;text-align:center;">
-                                                                        <div *ngIf="ticket.ShowMustSend()"
-                                                                            style="color:coral;text-align:center">חובה
-                                                                            לשליחה</div>
-                                                                        <div
-                                                                            style="font-size:12px;color:#E46C0A;font-weight:bold;margin-right:10px;">
+                                                                        <div *ngIf="ticket.ShowMustSend()" style="color:coral;text-align:center">חובה לשליחה</div>
+                                                                        <div style="font-size:12px;color:#E46C0A;font-weight:bold;margin-right:10px;">
                                                                             <table style="margin-top:8px;">
-
                                                                                 <tr *ngIf="ticket.RequestedDocumentId">
                                                                                     <td>
-                                                                                        <div
-                                                                                            style="font-size:12px;color:#E46C0A;font-weight:bold;">
-                                                                                            {{'Customs.Declaration.O.RequestedDocument'
-                                                                                            | TextCodeTranslationPipe}}
+                                                                                        <div style="font-size:12px;color:#E46C0A;font-weight:bold;">
+                                                                                            {{'Customs.Declaration.O.RequestedDocument' | TextCodeTranslationPipe}}
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr *ngIf="ticket.RequestedDocumentId">
                                                                                     <td>
-                                                                                        <div
-                                                                                            style="font-size:12px;color:#E46C0A;font-weight:bold;">
+                                                                                        <div style="font-size:12px;color:#E46C0A;font-weight:bold;">
                                                                                             {{ticket.RequestedDocumentId}}
                                                                                         </div>
                                                                                     </td>
@@ -559,17 +432,9 @@
 
                                                                         </div>
                                                                     </td>
-                                                                    <td
-                                                                        style="padding-left:5px; vertical-align:top; width:40px;">
-                                                                        <div style="margin-top:8px;"
-                                                                            class="IconButtonHidden"
-                                                                            (mouseover)="ticket.PreventEditTicket()"
-                                                                            (mouseout)="ticket.AllowEditTicket()">
-                                                                            <IconButton [disabled]="IsDisplayOnly"
-                                                                                class="deletebuttonicon"
-                                                                                [Name]="'delete'"
-                                                                                (click)="ticket.DeleteButtonClicked(DataContext)">
-                                                                            </IconButton>
+                                                                    <td style="padding-left:5px; vertical-align:top; width:40px;">
+                                                                        <div style="margin-top:8px;" class="IconButtonHidden" (mouseover)="ticket.PreventEditTicket()" (mouseout)="ticket.AllowEditTicket()">
+                                                                            <IconButton [disabled]="IsDisplayOnly" class="deletebuttonicon" [Name]="'delete'" (click)="ticket.DeleteButtonClicked(DataContext)"></IconButton>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -578,27 +443,19 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <div
-                                                                style="font-size:16px;color:#312C31;margin-right:8px; max-width:174px;overflow:hidden;">
+                                                            <div style="font-size:16px;color:#312C31;margin-right:8px; max-width:174px;overflow:hidden;">
                                                                 {{ticket.DocumentTypeName}}
                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <div *ngIf="ticket._SInvoiceNumber  == null"
-                                                                class="TextTrimming"
-                                                                style="max-width: 174px;font-size:14px;color:#312C31; margin-right:8px;white-space:normal">
+                                                            <div *ngIf="ticket._SInvoiceNumber  == null"  class="TextTrimming" style="max-width: 174px;font-size:14px;color:#312C31; margin-right:8px;">
                                                                 {{ticket.LeadingMetaDataName}}
                                                                 {{ticket.LeadingMetaDataValue}}
                                                             </div>
-                                                            <div *ngIf="ticket._SInvoiceNumber  != null"
-                                                                class="TextTrimming"
-                                                                style="max-width: 174px;font-size:14px;color:#312C31; margin-right:8px;">
-                                                                חשבון ספק <span
-                                                                    style="font-weight:bold;">{{ticket._SInvoiceNumber}}</span>
-                                                                <span style="color:forestgreen"
-                                                                    *ngIf="ticket._IsClassified">(מסווג)</span>
+                                                            <div *ngIf="ticket._SInvoiceNumber  != null" class="TextTrimming" style="max-width: 174px;font-size:14px;color:#312C31; margin-right:8px;">
+                                                                חשבון ספק <span style="font-weight:bold;">{{ticket._SInvoiceNumber}}</span> <span style="color:forestgreen" *ngIf="ticket._IsClassified">(מסווג)</span>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -610,8 +467,7 @@
 
                                         <tr>
                                             <td style="text-align:center;">
-                                                <span
-                                                    style="text-align:center; width:100%;font-size:17px;color:#94969C">
+                                                <span style="text-align:center; width:100%;font-size:17px;color:#94969C">
                                                     {{'Customs.Declaration.O.DragHere' | TextCodeTranslationPipe}}
                                                 </span>
 
@@ -620,8 +476,7 @@
 
                                         <tr>
                                             <td style="text-align:center;">
-                                                <span
-                                                    style="text-align:center; width:100%;font-size:17px;color:#94969C">
+                                                <span style="text-align:center; width:100%;font-size:17px;color:#94969C">
                                                     {{'Customs.Declaration.O.Or' | TextCodeTranslationPipe}}
                                                 </span>
 
@@ -630,13 +485,7 @@
 
                                         <tr>
                                             <td style="text-align:center;">
-                                                <button class="Button"
-                                                    style="width:100px;margin-bottom:5px;margin: 0 auto;"
-                                                    (click)="ticket.ViewDocumentsQuery(IsClose)"
-                                                    (mouseover)="ticket.PreventEditTicket()"
-                                                    (mouseout)="ticket.AllowEditTicket()">
-                                                    {{'Customs.Declaration.O.ViewDocumentsQuery' |
-                                                    TextCodeTranslationPipe}}</button>
+                                                <button class="Button" style="width:100px;margin-bottom:5px;margin: 0 auto;" (click)="ticket.ViewDocumentsQuery()" (mouseover)="ticket.PreventEditTicket()" (mouseout)="ticket.AllowEditTicket()"> {{'Customs.Declaration.O.ViewDocumentsQuery' | TextCodeTranslationPipe}}</button>
                                             </td>
                                         </tr>
 
@@ -658,10 +507,8 @@
         <td style="width:222px;vertical-align:top;border-right:1px solid #C5BFC5;" *ngIf="IsRelatedDocsVisible">
             <div class="MediaFill">
                 <ScrollViewer>
-                    <div *ngFor="let relatedDoc of RelatedDocuments"
-                        style="padding:5px;float:left;width:100%;cursor:grab;cursor:-moz-grab;cursor:-webkit-grab;">
-                        <div (click)="EditRelatedDocument(relatedDoc)" class="RelatedDocItem" draggable="true"
-                            (dragstart)="relatedDoc.OnDragStart($event)" style="margin-right: 7px;">
+                    <div *ngFor="let relatedDoc of RelatedDocuments" style="padding:5px;float:left;width:100%;cursor:grab;cursor:-moz-grab;cursor:-webkit-grab;">
+                        <div (click)="EditRelatedDocument(relatedDoc)" class="RelatedDocItem" draggable="true" (dragstart)="relatedDoc.OnDragStart($event)" style="margin-right: 7px;">
                             <table>
                                 <!--Header-->
                                 <tr>
@@ -670,49 +517,20 @@
                                             <tr>
                                                 <td>
                                                     <table>
-                                                        <tr *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '3';">
-                                                            <td>
-                                                                <div
-                                                                    style="font-size:13px; color:orange;text-align: center;font-weight: bolder;height: 1px;margin-right: 50%;">
-                                                                    {{'Customs.OcrDocument.O.InTyping' |
-                                                                    TextCodeTranslationPipe}} </div>
-                                                            </td>
-                                                        </tr>
                                                         <tr>
                                                             <td>
-
-                                                                <div
-                                                                    style="font-size:10px;color:#312C31;margin-right:6px; margin-top:5px; float:right;">
+                                                                <div style="font-size:10px;color:#312C31;margin-right:6px; margin-top:5px; float:right;">
                                                                     {{relatedDoc.Name}}
                                                                 </div>
                                                             </td>
-                                                            <td
-                                                                style="width: 55px;vertical-align:top; margin-top:5px; margin-left:3px;">
-
-                                                                <!-- ocr Document -->
-                                                                <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode"
-                                                                    style="width: 25px;position: absolute;top: 3px;left: 1px;"
-                                                                    src="./Images/Ocr.png" />
-
-
-
-                                                                <img [src]="relatedDoc.Extension | AttatchmentIconPipe"
-                                                                    style="width:22px;height:25px;margin-left:10px; margin-top:3px; cursor:pointer;"
-                                                                    [ngStyle]="{'left': relatedDoc.documentsFilingPM.OcrStatusCode ? '50px' : '1px' }"
-                                                                    (mouseout)="AllowEditRelatedDoc()"
-                                                                    (mouseover)="PreventEditRelatedDoc()"
-                                                                    (click)="DownloadDocumentFile(relatedDoc.Id)" />
-
-
+                                                            <td style="width: 55px;vertical-align:top; margin-top:5px; margin-left:3px;">
+                                                                <img [src]="relatedDoc.Extension | AttatchmentIconPipe" style="width:22px;height:25px;margin-left:10px; margin-top:3px; cursor:pointer;" (mouseout)="AllowEditRelatedDoc()" (mouseover)="PreventEditRelatedDoc()" (click)="DownloadDocumentFile(relatedDoc.Id)" />
 
                                                                 <!-- sign mark -->
                                                                 <img *ngIf="relatedDoc.documentsFilingPM.IsDigitallySigned"
-                                                                    style="width: 23px;position: absolute;top: 7px;"
-                                                                    [ngStyle]="{'left': relatedDoc.documentsFilingPM.OcrStatusCode ? '52px' : '11px' }"
-                                                                    src="./Images/medalicon.png"
-                                                                    [attr.title]="relatedDoc.documentsFilingPM.SignersList" />
-
-
+                                                                     style="width: 23px;position: absolute;top: 7px;left: 11px;"
+                                                                     src="./Images/medalicon.png"
+                                                                     [attr.title]="relatedDoc.documentsFilingPM.SignersList" />
 
                                                             </td>
                                                         </tr>
@@ -724,40 +542,19 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <div class="TextTrimming"
-                                                                    style="font-size:10px;color:#312C31;margin-right:6px;float:right;width:170px;">
-                                                                    <span
-                                                                        *ngIf="!relatedDoc.documentsFilingPM.OcrReference"
-                                                                        style="font-size:10px;">
-                                                                        {{relatedDoc.DocumentTypeName}}
-                                                                        {{relatedDoc.Notes}}
-                                                                    </span>
-
-                                                                    <span
-                                                                        *ngIf="relatedDoc.documentsFilingPM.OcrReference"
-                                                                        style="font-size:10px;">
-                                                                        {{relatedDoc.documentsFilingPM.OcrReference}}
-                                                                    </span>
-                                                                    <span
-                                                                        *ngIf="relatedDoc.documentsFilingPM.OcrScore != -1 && (relatedDoc.documentsFilingPM.OcrStatusCode == '3' || relatedDoc.documentsFilingPM.OcrStatusCode == '2' || relatedDoc.documentsFilingPM.OcrStatusCode == '4')"
-                                                                        style="position: absolute;left: 2px;top: 3px;font-weight: bold">
-                                                                        {{relatedDoc.documentsFilingPM.OcrScore * 100}}%
-                                                                    </span>
+                                                                <div class="TextTrimming" style="font-size:10px;color:#312C31;margin-right:6px;float:right;width:170px;">
+                                                                    {{relatedDoc.DocumentTypeName}}
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <div class="TextTrimming"
-                                                                    style="font-size:10px;color:#312C31; margin-right:6px;float:right;width:170px; white-space:normal">
+                                                                <div class="TextTrimming" style="font-size:10px;color:#312C31; margin-right:6px;float:right;width:170px;">
                                                                     {{relatedDoc.LeadingMetaDataName}}
                                                                     {{relatedDoc.LeadingMetaDataValue}}
                                                                 </div>
                                                             </td>
-
-
                                                         </tr>
-
                                                     </table>
                                                 </td>
 
@@ -775,57 +572,30 @@
                                             <tr>
                                                 <td>
                                                     <div style="margin-right:6px;overflow:hidden">
-                                                        <img *ngIf="relatedDoc.Status2ImageGreen"
-                                                            src="./Images/CheckBoxIcon.png"
-                                                            style="width:14px; margin-top:3px;" />
-                                                        <img *ngIf="relatedDoc.Status2ImageGray"
-                                                            src="./Images/CheckBoxIcon.png"
-                                                            style="width:14px;filter:grayscale(100%); margin-top:3px;" />
-                                                        <img *ngIf="relatedDoc.Status2ErrorImage"
-                                                            src="./Images/RedX.png"
-                                                            style="width:14px; margin-top:3px;" />
+                                                        <img *ngIf="relatedDoc.Status2ImageGreen" src="./Images/CheckBoxIcon.png" style="width:14px; margin-top:3px;" />
+                                                        <img *ngIf="relatedDoc.Status2ImageGray" src="./Images/CheckBoxIcon.png" style="width:14px;filter:grayscale(100%); margin-top:3px;" />
+                                                        <img *ngIf="relatedDoc.Status2ErrorImage" src="./Images/RedX.png" style="width:14px; margin-top:3px;" />
 
-                                                        <img *ngIf="relatedDoc.Status1ImageGreen"
-                                                            src="./Images/CheckBoxIcon.png"
-                                                            style="width:14px; margin-top:3px;" />
-                                                        <img *ngIf="relatedDoc.Status1ImageGray"
-                                                            src="./Images/CheckBoxIcon.png"
-                                                            style="width:14px;filter:grayscale(100%); margin-top:3px;" />
+                                                        <img *ngIf="relatedDoc.Status1ImageGreen" src="./Images/CheckBoxIcon.png" style="width:14px; margin-top:3px;" />
+                                                        <img *ngIf="relatedDoc.Status1ImageGray" src="./Images/CheckBoxIcon.png" style="width:14px;filter:grayscale(100%); margin-top:3px;" />
 
 
-                                                        <div style="font-size:11px;display: inline-block;vertical-align: bottom;"
-                                                            *ngIf="relatedDoc.ExternalAttachmentIdVisibility">
-                                                            <span
-                                                                style="float:right; font-size:11px;overflow:hidden;width:50px;">
-                                                                {{'Customs.CustomsDocument.ExternalAttachmentIdLabel' |
-                                                                TextCodeTranslationPipe}}
+                                                        <div style="font-size:11px;display: inline-block;vertical-align: bottom;" *ngIf="relatedDoc.ExternalAttachmentIdVisibility">
+                                                            <span style="float:right; font-size:11px;overflow:hidden;width:50px;">
+                                                                {{'Customs.CustomsDocument.ExternalAttachmentIdLabel' | TextCodeTranslationPipe}}
                                                             </span>
-                                                            <span class="TextTrimming"
-                                                                style="float:right;margin-right:3px; font-size:11px;overflow:hidden; width:80px;">
+                                                            <span class="TextTrimming" style="float:right;margin-right:3px; font-size:11px;overflow:hidden; width:80px;">
                                                                 {{relatedDoc.ExternalAttachmentId}}
                                                             </span>
                                                         </div>
-                                                        <div style="font-size:10px;display: inline-block;vertical-align: bottom;"
-                                                            *ngIf="relatedDoc.CodeVisibility">
-                                                            <span
-                                                                style="float:right;font-size:11px; overflow:hidden;width:50px;">
-                                                                {{'Customs.CustomsDocument.ExternalAttachmentIdLabel' |
-                                                                TextCodeTranslationPipe}}
+                                                        <div style="font-size:10px;display: inline-block;vertical-align: bottom;" *ngIf="relatedDoc.CodeVisibility">
+                                                            <span style="float:right;font-size:11px; overflow:hidden;width:50px;">
+                                                                {{'Customs.CustomsDocument.ExternalAttachmentIdLabel' | TextCodeTranslationPipe}}
                                                             </span>
-                                                            <span class="TextTrimming"
-                                                                style="float:right;margin-right:3px; font-size:11px;overflow:hidden; width:80px;">
+                                                            <span class="TextTrimming" style="float:right;margin-right:3px; font-size:11px;overflow:hidden; width:80px;">
                                                                 {{relatedDoc.Code}}
                                                             </span>
                                                         </div>
-                                                        <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '1' || relatedDoc.documentsFilingPM.OcrStatusCode == '3'"
-                                                            style="width: 17px;position: absolute;left: 5px;top: 5px;"
-                                                            src="./Images/in_progress@2x.png" />
-                                                        <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '2' || relatedDoc.documentsFilingPM.OcrStatusCode == '4'"
-                                                            style="width: 17px;position: absolute;left: 5px;top: 5px;"
-                                                            src="./Images/Successful_process@2x.png" />
-                                                        <img *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '7' || relatedDoc.documentsFilingPM.OcrStatusCode == '8' || relatedDoc.documentsFilingPM.OcrStatusCode == '9'"
-                                                            style="width: 17px;position: absolute;left: 5px;top: 5px;"
-                                                            src="./Images/process_failed@2x.png" />
                                                     </div>
 
                                                 </td>
@@ -856,9 +626,7 @@
                                         <div></div>
                                     </td>
                                     <td style="width: 57px;vertical-align: bottom;">
-                                        <button class="Button"
-                                            (click)="CloseButtonClicked()">{{'Customs.General.B.Close'
-                                            |TextCodeTranslationPipe}}</button>
+                                        <button class="Button" (click)="CloseButtonClicked()">{{'Customs.General.B.Close' |TextCodeTranslationPipe}}</button>
                                     </td>
 
                                 </tr>
@@ -879,3 +647,6 @@
     </tr>
 
 </table>
+
+
+

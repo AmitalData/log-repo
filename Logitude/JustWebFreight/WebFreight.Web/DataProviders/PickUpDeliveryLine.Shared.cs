@@ -15,8 +15,6 @@ namespace WebFreight.Web.DataProviders
         [Key]
         public string Id { get; set; }
         public string Address { get; set; }
-        public string FromAddress { get; set; }
-        public string ToAddress { get; set; }
         public DateTime? ETD { get; set; }
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
@@ -31,6 +29,5 @@ namespace WebFreight.Web.DataProviders
         public string EmptyContainerReturnAddress { get; set; }
         public List<PackageLine> PickUpDeliveryPackages { get; set; }
         public string TruckerContactName { get; set; }
-        public string CarrierName { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Logitude.DatabaseMigration.Migrations
+namespace Logitude.DatabaseMigration.Migrations
 {
     using System;
     using System.Data.Entity;

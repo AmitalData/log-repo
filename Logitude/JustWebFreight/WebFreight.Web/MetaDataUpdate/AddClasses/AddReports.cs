@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -60,8 +60,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 Report.SearchFields = ReportDetails.Code + "," + ReportDetails.Name + "," + ReportDetails.FilterControlName + "," + ReportDetails.Description;
                 Report.FeatureId = ReportDetails.FeatureId;
                 Report.FilterHtmlComponentUrl = ReportDetails.FilterHtmlComponentUrl;
-                Report.FeatureUniqeCode = ReportDetails.FeatureUniqeCode;
-                Report.AvailableForScheduling = ReportDetails.AvailableForScheduling;
                 ReportRepository.Update(Report);
             }
 
@@ -79,8 +77,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Id = IdCounter.GetNumber("Report", ReportDetails.Tenant).ToString(),
                     FeatureId = ReportDetails.FeatureId,
                     FilterHtmlComponentUrl = ReportDetails.FilterHtmlComponentUrl,
-                    FeatureUniqeCode = ReportDetails.FeatureUniqeCode,
-                    AvailableForScheduling = ReportDetails.AvailableForScheduling,
                 };
 
                 ReportRepository.Add(newReport);

@@ -1,6 +1,9 @@
-import {EventEmitter, Output, OnInit, OnChanges, Component} from '@angular/core';
+﻿import {EventEmitter, Output, OnInit, OnChanges, Component} from '@angular/core';
+import * as Rx from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {LogEvents} from '../../../../Infrastructure/Utilities/LogEvents';
 
 interface IRow {
     pageIndex: number;
@@ -14,7 +17,6 @@ export class VirtualRowController implements OnInit, OnChanges {
     private rowsRequested: IRow[];
     @Output() requestedRowsReady = new EventEmitter();
     @Output() requestedRowCount = new EventEmitter();
-    @Output() allRecords = new EventEmitter();
     firstRow: number = 0;
 
 
@@ -87,7 +89,7 @@ export class VirtualRowController implements OnInit, OnChanges {
                 this.dataSource.getRows(pageIndex * PSize, PSize, sortingCol, sortingDir, getCount, searchfields, Filters).then(res => {
                     res.subscribe((viewResponse: ServiceResponse) => {
                         if (!viewResponse.HasError) {
-                            // if (this.MyCallTime == null || viewResponse.CallTime > this.MyCallTime) {
+                            if (this.MyCallTime == null || viewResponse.CallTime > this.MyCallTime || SearchFieldChanged == false) {
                                 this.MyCallTime = viewResponse.CallTime;
                                 console.log("this.MyCallTime " + this.MyCallTime);
                                 this.RecievedDataCount = viewResponse.Result.length;
@@ -115,12 +117,9 @@ export class VirtualRowController implements OnInit, OnChanges {
                                     this.requestedRowsReady.emit(result);
                                 }
                                 else {
-                           
-                                   
                                     this.requestedRowCount.emit(viewResponse.Count);
-                                    this.allRecords.emit(viewResponse.Result);
                                 }
-                            // }
+                            }
                         }
                     });
                 });

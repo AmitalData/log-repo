@@ -1,14 +1,14 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTranslationPipe';
+import {Http} from '@angular/http';
 import {WebFreightDomainService} from '../../../../Infrastructure/Services/WebFreightDomainService';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './DownloadAllFilesComponent.html',
     //pipes: [TextCodeTranslationPipe],
@@ -22,8 +22,9 @@ export class DownloadAllFilesComponent {
     Filters: ApiQueryFilters;
     url: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
-
+    constructor(private http: Http) {
+        ServiceHelper.Http = http;
+        //serviceArgs.http = http;
     }
     ObjectTableId: string;
     FileName : string;
@@ -34,7 +35,7 @@ export class DownloadAllFilesComponent {
         this.ObjectTableId = args.ObjectTableId;
         this.tenant = SessionLocator.Tenant; 
         this.ShipmentId = args.ShipmentId;
-        myService.DownLoadAllFilesForShipments(this.ShipmentId, this.ObjectTableId, this.tenant).subscribe((myResult:any) => {
+        myService.DownLoadAllFilesForShipments(this.ShipmentId, this.ObjectTableId, this.tenant).subscribe(myResult => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;
@@ -58,7 +59,6 @@ export class DownloadAllFilesComponent {
     }
 
     SaveBtnCLicked() {
-        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Download all shipment docs" });
         this.SaveExcelFile(this.tenant, this.FileName);
     }
     RetryBtnClicked() {
@@ -66,7 +66,7 @@ export class DownloadAllFilesComponent {
         this.busyExportingVisibile = true;
         this.btnSaveToFileVisibile = false;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.DownLoadAllFilesForShipments(this.ShipmentId, this.ObjectTableId, this.tenant).subscribe((myResult:any) => {
+        myService.DownLoadAllFilesForShipments(this.ShipmentId, this.ObjectTableId, this.tenant).subscribe(myResult => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;

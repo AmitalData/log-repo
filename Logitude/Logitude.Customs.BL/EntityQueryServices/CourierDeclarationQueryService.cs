@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -17,25 +16,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return courierDeclarationRepository.GetCourierMasterMaxSequenceNumeric(courierMasterId, tenant);
         }
 
-        //public CourierDeclarationPM GetCourierDeclarationByDeclarationId(string declarationId, int Tenant)
-        //{
-        //    string entityKeyString = $"GetCourierDeclarationByDeclarationId({declarationId},{Tenant})";
-        //    var res = CacheManager.GetOrInsertNewObject<CourierDeclarationPM>(entityKeyString, () =>
-        //    {
-        //        return this.GetCourierDeclarationByDeclarationIdCore(declarationId, Tenant);
-        //    });
-        //    return res;
-        //}
-        public CourierDeclarationPM GetCourierDeclarationByDeclarationId_Cache(string declarationId, int tenant)
-        {
-            string key = $"GetCourierDeclarationByDeclarationId_Cache({declarationId}, {tenant})";
-            var res = CacheManager.GetOrInsertNewObject<CourierDeclarationPM>(key,
-                () =>
-                {
-                    return this.GetCourierDeclarationByDeclarationId(declarationId, tenant);
-                });
-            return res;
-        }
         public CourierDeclarationPM GetCourierDeclarationByDeclarationId(string declarationId, int tenant)
         {
             CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);
@@ -54,29 +34,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);
             return courierDeclarationRepository.GetMAWBCourierMasterByDeclarationId(declarationId, tenant);
         }
-        public string GetCourierMasterIdByDeclarationId(string declarationId,int tenant)
-        {
-            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);
-            return courierDeclarationRepository.GetCourierMasterIdByDeclarationId(declarationId, tenant);
-        }
-        public List<string> GetDeclarationIdsByCourierMasterID(string courierMasterid, int tenant)
-        {
-            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);
-            return courierDeclarationRepository.GetDeclarationIdsByCourierMasterID(courierMasterid, tenant);
-        }
-        public int CountNoOfCourierHawbwWithoutHatara(string couriermasterid, int tenant)
-        {
-            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);
-            return courierDeclarationRepository.CounNoOfCourierHawbwWithoutHatara(couriermasterid, tenant);
-        }
-        public int CountNoOfCourierHawbWithoutDelivery(string couriermasterid, int tenant)
-        {
-            CourierDeclarationRepository courierMasterRepository = new CourierDeclarationRepository(context);
-            return courierMasterRepository.CountNoOfCourierHawbWithoutDelivery(couriermasterid, tenant);
-        }
-        public string GetFirstDeclarationCustomFileByCourierMasterId(string courierMasterId, int tenant)
-        {
-            return  repository.GetFirstDeclarationCustomFileByCourierMasterId(tenant, courierMasterId);
-        }
+
     }
 }

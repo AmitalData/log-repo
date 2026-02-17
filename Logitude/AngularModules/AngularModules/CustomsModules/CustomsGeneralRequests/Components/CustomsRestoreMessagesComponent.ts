@@ -1,27 +1,26 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { CustomMessageWrapperComponent } from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
+﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
-import { MessageRestoreRequestParams, MessageWaitingRequestParams } from '../../../Customs/DataContract/RequestParams/MessageRestoreRequestParams';
+import { MessageRestoreRequestParams } from '../../../Customs/DataContract/RequestParams/MessageRestoreRequestParams';
 import { ExchangeRatesQueryResponseData, ExchangeRatesQueryResult } from '../../../Customs/DataContract/ResponseData/ExchangeRatesQueryResponseData';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
-import { CustomSendOptionsArgs, SendRequestVIA, TestCase } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { CustomMessageProgressComponent } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { InterfaceManagementList } from '../../../Customs/EntityLists/InterfaceManagementList';
-import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
 
 @Component({
     selector: 'CustomsRestoreMessagesComponent',
-
+    moduleId: module.id,
     templateUrl: './CustomsRestoreMessagesComponent.html',
 })
 
@@ -42,12 +41,12 @@ export class CustomsRestoreMessagesComponent
     private _FromDateTime: Date;
     private _ToDateTime: Date;
     private _TodayDate: Date;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
 
-        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate", 0).subscribe((response: any) => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate", 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe(response => {
                 this._isVisible = true;
                 this._TodayDate = DateTool.GetCurrentDateTimeAsUtc();
             });
@@ -67,7 +66,7 @@ export class CustomsRestoreMessagesComponent
     }
 
     OnMassageDisplayMethod() {
-
+        
         if (this.RequestParams == null) {
             this.RequestParams = new MessageRestoreRequestParams();
             //this.UIProperties.SetRequired("FromDate", this.ObjectTableName, true);
@@ -288,7 +287,7 @@ export class CustomsRestoreMessagesComponent
                 }
             }
 
-            if (AppTool.IsNullOrEmpty(this.FromDate) || AppTool.IsNullOrEmpty(this.FromDateTime)) {
+            if (AppTool.IsNullOrEmpty(this.FromDate) || AppTool.IsNullOrEmpty(this.FromDateTime)){
                 var msg = TextCodeTranslator.Translate("Customs.ExchangeRate.O.FromDateMandatory");
                 if (AppTool.IsNullOrEmpty(this.FromDateTime)) {
                     msg = msg + " (כולל שעה)";
@@ -336,96 +335,7 @@ export class CustomsRestoreMessagesComponent
         }
 
 
-        this.PostMessageWaitingRequestParams(dcaPrefix, interfaceManagementsCodeValue, customSendOptionsArgs);
-        //this.PostMessageRestoreRequestParams(dcaPrefix, interfaceManagementsCodeValue, customSendOptionsArgs);
-    }
-
-
-    private PostMessageWaitingRequestParams(dcaPrefix: string, interfaceManagementsCodeValue: string, customSendOptionsArgs: CustomSendOptionsArgs) {
-        var currRequestParams = new MessageWaitingRequestParams();
-        currRequestParams.LoggingEnabled = true;
-        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-        currRequestParams.Tenant = SessionLocator.Tenant;
-        if (AppTool.IsNullOrEmpty(this.CorrelationNo)) {
-            currRequestParams.CorrelationID = "";
-        } else {
-            currRequestParams.CorrelationID = this.CorrelationNo;
-        }
-        currRequestParams.ServiceName = dcaPrefix;
-        currRequestParams.ServiceNameCode = this.InterfaceManagementsCode;
-        currRequestParams.FromDate = this.FromDate;
-        if (this.FromDateTime != null) {
-            var fromDate = this.FromDate;
-            fromDate.setHours(this.FromDateTime.getHours());
-            fromDate.setMinutes(this.FromDateTime.getMinutes());
-            currRequestParams.FromDate = fromDate;
-        }
-        currRequestParams.ToDate = this.ToDate;
-        if (this.ToDateTime != null) {
-            var toDate = this.ToDate;
-            toDate.setHours(this.ToDateTime.getHours());
-            toDate.setMinutes(this.ToDateTime.getMinutes());
-            currRequestParams.ToDate = toDate;
-        }
-        currRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;//must 
-        currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
-        if (customSendOptionsArgs.TestCase) {
-            const logWindow = new LogitudeWindow();
-            logWindow.Width = 600;
-            logWindow.Height = 400;
-            logWindow.Title = "תרחשי 9100";
-            logWindow.ShowCloseButton = false;
-            logWindow.WindowArgs = { SincroScreen: "SincroSend9100" };
-
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(result => {
-                    if (!AppTool.IsNullOrEmpty(result) && result === "Ok") {
-
-                        const tc = new TestCase();
-                        tc.Code = comp._ScenarioCode;
-                        tc.Param1 = comp.Param1;
-                        tc.Param2 = comp.Param2;
-                        currRequestParams.TestCase = tc;
-                        currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
-
-                        this._IIGGeneralMessagesService.PostMessageWaitingRequestParams(currRequestParams)
-                            .subscribe(
-                                (myServiceResponse: ServiceResponse) => { },
-                                (err) => this.ValidationErrorsList.push(err),
-                                () => this.CurrentSession.StopBusyIndicator()
-                            );
-                    }
-                });
-            });
-
-            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
-            return;
-        }
-
-
-
-        CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId,
-                "שליחת שאילתא לשיחזור מסרים",
-                false)
-            .then((res) => {
-                this.ResponseData = res;
-                this.OnMassageDisplayMethod();
-            }
-            ).catch((err) => {
-                this.ValidationErrorsList.push(err);
-            });
-        ////
-        this._IIGGeneralMessagesService.PostMessageWaitingRequestParams(currRequestParams)
-            .subscribe(
-                (myServiceResponse: ServiceResponse) => { },
-                (err) => this.ValidationErrorsList.push(err),
-                () => this.CurrentSession.StopBusyIndicator()
-            );
-    }
-
-    private PostMessageRestoreRequestParams(dcaPrefix: string, interfaceManagementsCodeValue: string, customSendOptionsArgs: CustomSendOptionsArgs) {
-        var currRequestParams = new MessageRestoreRequestParams(); ///Force new GUID On Each Send !!
+        var currRequestParams = new MessageRestoreRequestParams();///Force new GUID On Each Send !!
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
@@ -454,9 +364,9 @@ export class CustomsRestoreMessagesComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId,
-                "שליחת שאילתא לשיחזור מסרים",
-                false)
+            .ShowProgressBar(currRequestParams.PBId,
+            "שליחת שאילתא לשיחזור מסרים"
+            , false)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();
@@ -464,9 +374,13 @@ export class CustomsRestoreMessagesComponent
             ).catch((err) => {
                 this.ValidationErrorsList.push(err);
             });
-        ////
+
         this._IIGGeneralMessagesService.PostMessageRestoreRequestParams(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
+
             });
     }
+
+
+
 }

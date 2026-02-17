@@ -9,7 +9,7 @@ import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomai
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ChooseShipmentComponent.html',
 })
 

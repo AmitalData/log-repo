@@ -1,40 +1,26 @@
-import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
-import { TransportsFilter } from '../../../../Controls/TransportsFilter';
-import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
-import { ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { SearchTextBox } from '../../../../Controls/SearchTextBox';
-import { IconButton } from '../../../../Controls/IconButton';
-import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { ShipmentDomainService, ImporterQueriesDataCounts, ShipmentsQueriesCountsArgs } from '../../../../Shipment/Services/ShipmentDomainService';
-import { AppTool } from '../../../../Infrastructure/Tools';
-import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
-import { UserExtendedPMService } from '../../../../Common/Services/ExtendedPMs/UserExtendedPMService';
-import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import { ShipmentAdditionalCloudDataService } from '../../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
-import { UserLastSettingsPM } from '../../../../Common/EntityPMs/UserLastSettingsPM';
-import { UserLastSettingsPMService } from '../../../../Common/Services/StandardPMs/UserLastSettingsPMService';
-import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/ExtendedPMs/UserLastSettingsExtendedPMService';
-import { QueryColumnPM} from '../../../../Infrastructure/EntityPMs/QueryColumnPM';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract/LogboxShipmentExportExcelArgs';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
-import { CustomerTenantAccessRequestExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
-import { AddEditLogboxShipmentService } from '../../Services/AddEditLogboxShipmentService';
-import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
-import { GeneralEntitiesArgs } from '../../../../Infrastructure/DataContracts/GeneralEntitiesArgs';
-import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
-import { GeneralEntitiesService } from '../../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
-import { QueryColumnsPMService } from '../../../../Infrastructure/Services/StandardPMs/QueryColumnsPMService';
-declare var window: any;
+import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
+import {TransportsFilter} from '../../../../Controls/TransportsFilter';
+import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {SearchTextBox} from '../../../../Controls/SearchTextBox';
+import {IconButton} from '../../../../Controls/IconButton';
+import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
+import {Http, Response} from '@angular/http';
+import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {LogBoxDocumentsComponent} from './LogBoxDocumentsComponent';
+import {ShipmentDomainService, ImporterQueriesDataCounts} from '../../../../Shipment/Services/ShipmentDomainService';
+import {AppTool} from '../../../../Infrastructure/Tools';
+import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import {UserExtendedPMService} from '../../../../Common/Services/ExtendedPMs/UserExtendedPMService'; 
+import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import {ShipmentAdditionalCloudDataService} from '../../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
 
 @Component({
+    moduleId: module.id,
     templateUrl: './LogBoxMainComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })
@@ -43,73 +29,38 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     private myShipmentDomainService: ShipmentDomainService;
     private myUserPMService: UserExtendedPMService;
     public LogoURL: string = ""
-    public MainColor: string = "#1B90CB";
-    public SecondaryColor: string = "transparent";
-    public QueryFiltersHighlightColor: string = "transparent";
-
-    public IsDSV: boolean = false;
     public preventSelect: boolean = false;
     public DontShowLogboxToolTip: boolean = false;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _ShipmentPMService: ShipmentPMService;
     private CurrentSession = SessionLocator.SelectedSession;
-    public _UserLastSettingsPMService: UserLastSettingsPMService;
-    public _UserLastSettingsExtendedPMService: UserLastSettingsExtendedPMService;
-    RefTemplateWidth: string = '220px';
-    public IsLongAgentName: boolean = false;
-    public CustomerTenantAccessRequestPartner: any;
-    public AgentLabelClass = {
-        "ShortName": true,
-        "LongName": false
-    }
-    private entityResourceService: EntityResourceService;
-
-    public IsPrivateLabelExportActivated: boolean = false;
-    public IsPrivateLabelCustomsActivated: boolean = false;
-
-    public IsExportActivated: boolean = false;
-    public IsCustomsActivated: boolean = false;
-    public ShowDirectionFilters: boolean = false;
-
-    public customerTenantAccessRequestExtendedPMService: CustomerTenantAccessRequestExtendedPMService;
-
-    public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
-
-    public HasQueryFiltersHighlightColor: boolean = false;
-    private LogboxShipmentQueryCode: string;
-    private ShipmentObjectTable: any;
-    private logboxShipmentQueryColumnsComputingPartner: LogboxShipmentQueryColumnsComputingPartner<string>;
-
+    public ToggleIsExportShipments: boolean = false;
     constructor(private _entityListService: EntityListService) {
-        this.InitializeServices();
-        this.LoadEntityResource("Shipment");
-    }
-
-    private InitializeServices() {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
         this._ShipmentPMService = new ShipmentPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
-        this._UserLastSettingsPMService = new UserLastSettingsPMService();
-        this._UserLastSettingsExtendedPMService = new UserLastSettingsExtendedPMService();
-        this.entityResourceService = new EntityResourceService();
-        this.customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
+        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (FeatureToggle) {
+            this.ToggleIsExportShipments = true;
+        }
     }
-
-
     ngOnInit() {
         this.DontShowLogboxToolTip = SessionLocator.LoggedUserPM.ShowLogBoxToolTip;
-        this.ShowDirectionFilters = SessionLocator.PrivateLableSettings ? false : true;
-        this.handlePrivateLable();
+        if (SessionLocator.PrivateLableSettings) {
+            this.isPrivateLabel = true;
+            this.AgentShipmentsLabel = SessionLocator.PrivateLableSettings.PrivateLabelShortName + " Shipments";
+            this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
+            this.SelectedFilter = this.AgentShipmentsLabel;
+            this.RequestedDocsLable = "Action Required";
+        }
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event.Name == "ReloadShipments") {
                 this.SelectedFilter = "My Shipments";
-                this.RefreshBtnClick();
-                console.log("5");
+                this.LoadImporterShipments();
             }
             if ($event.Name == "CustomReloadShipments") {
-                this.RefreshBtnClick();
-                console.log("6");
+                this.LoadImporterShipments();
             }
             if ($event.Name == "ReloadPublicShipments") {
                 //this.LoadImporterShipments();
@@ -130,85 +81,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 }
             })
         );
-        this.handleExternalParams();
-    }
 
-    SetDirectionsFilters() {
-        if (this.isPrivateLabel && this.HasOneDirectionFilter()) {
-            this.ShowDirectionFilters = false;
-        }
-        else {
-            this.ShowDirectionFilters = true;
-        }
-    }
-    private handlePrivateLable() {
-        if (SessionLocator.PrivateLableSettings) {
-            this.isPrivateLabel = true;
-            this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
-            let AgentName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
-            this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
-            this.MainColor = SessionLocator.PrivateLableSettings.MainColor;
-            this.SecondaryColor = SessionLocator.PrivateLableSettings.SecondaryColor;
-            this.QueryFiltersHighlightColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
-            if (this.QueryFiltersHighlightColor) this.HasQueryFiltersHighlightColor = true;
-            this.SelectedFilter = this.AgentShipmentsLabel;
-            this.setAgentLabelClass(AgentName);
-            this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);
-            this.SelectedFilter = this.AgentShipmentsLabel;
-            this.RequestedDocsLable = "Action Required";
-            this.RefTemplateWidth = '150px';
-            this.IsPrivateLabelExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
-            this.IsPrivateLabelCustomsActivated = SessionLocator.PrivateLableSettings.IsCustomsActivated;
-            this.SetCustomerTenantAccessRequestsDirections(SessionLocator.PrivateLableSettings.HybridPartnerId);
-        }
-        else {
-            this.RefTemplateWidth =  '250px';
-        }
-    }
-    SetCustomerTenantAccessRequestsDirections(hybridPartnerId: any) {
-
-        var tenant = SessionLocator.Tenant;
-        this.customerTenantAccessRequestExtendedPMService.getByForwarderId(tenant, hybridPartnerId).subscribe((res: any) => {
-            if (!res.HasError) {
-                this.SetDitections(res);
-            }
-        });
-    }
-
-    private SetDitections(res: any) {
-        this.CustomerTenantAccessRequestPartner = res.Result;
-        this.IsCustomsActivated = (res.Result.IsCustoms && this.IsPrivateLabelCustomsActivated);
-        this.IsExportActivated = (res.Result.IsExport && this.IsPrivateLabelExportActivated);
-        if (this.IsExportActivated) this.RefTemplateWidth = '165px';
-        this.SetDirectionsFilters();
-    }
-    private HasOneDirectionFilter() {
-        return !(this.IsExportActivated && this.IsCustomsActivated);
-    }
-
-
-    private getAgentShipmentsLabel(agentName: string) {
-        let agentShipmentsLabel = "";
-        if (agentName.length < 10 && this.AgentLabelClass.LongName) {
-            agentShipmentsLabel = agentName + '\n' + " Shipments";
-        } else {
-
-            agentShipmentsLabel = agentName + " Shipments";
-        }
-        return agentShipmentsLabel;
-    }
-
-    private setAgentLabelClass(agentName: string) {
-        if (agentName.length > 7) {
-            this.AgentLabelClass.ShortName = false;
-            this.AgentLabelClass.LongName = true;
-        }
-    }
-
-    private handleExternalParams() {
         if (SessionLocator.IsExternalParams) {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "logbox") {
+
                     SessionLocator.ExternalParams.Args.forEach(arg => {
                         if (arg.FieldName == 'SearchField') {
                             this.searchFields = arg.FieldValue;
@@ -216,30 +93,34 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                         }
                     });
                     this.SelectedFilter = "All Shipments";
+
                     SessionLocator.ClearExternalParams();
+
                 }
                 else if (SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp") {
+
+
+
                     let me: any = SessionLocator.ExternalParams;
                     if (me.ForwarderShipmentNumber) {
                         this.SearchFilter = me.ForwarderShipmentNumber;
-                        this._ShipmentPMService.getSingleByForwarderShipmentNumber(me.ForwarderShipmentNumber).subscribe((myResult: any) => {
+                        this._ShipmentPMService.getSingleByForwarderShipmentNumber(me.ForwarderShipmentNumber).subscribe(myResult => {
                             if (!myResult.HasError) {
-                                this._ShipmentAdditionalCloudDataService.get(myResult.Result.Id).subscribe((AdditionalResult: any) => {
+                                this._ShipmentAdditionalCloudDataService.get(myResult.Result.Id).subscribe(AdditionalResult => {
                                     //this.CurrentSession.StopBusyIndicator();
                                     var newWindow = new LogitudeWindow();
                                     newWindow.Width = 665;
                                     newWindow.Height = 700;
                                     newWindow.RTL = true;
                                     //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
-                                    newWindow.Title = TextCodeTranslator.Translate("Shipment.O.ImporterApprovalForSubmitting");
+                                    newWindow.Title = "אישור היבואן להגשת הצהרת יבוא למכס";
                                     var windowArgs: any = {};
                                     //windowArgs.IsNew = false;
-                                    windowArgs.EntityPm = myResult.Result;
-                                    windowArgs.AdditionalData = AdditionalResult.Result;
+                                    windowArgs.EntityPm = myResult.Result
+                                    windowArgs.AdditionalData = AdditionalResult.Result
                                     newWindow.WindowArgs = windowArgs;
                                     //newWindow.Add(control); 
-                                    let privateLabelApprovePaymentComponentPath = this.GetPrivateLabelApprovePaymentComponentPath();
-                                    newWindow.Show(privateLabelApprovePaymentComponentPath);
+                                    newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
                                     newWindow.WindowClosed.subscribe(($event: any) => {
                                         this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                                         //if ($event == "MyShipmentAdded") {
@@ -247,38 +128,46 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                                         //}
                                     });
                                 });
+
                             }
                         });
                     }
                     //this.SelectedFilter = this.RequestedDocsLable;
                     this.SelectedFilter = "All Shipments";
                     SessionLocator.ClearExternalParams();
+
                 }
             }
         }
-    }
+        this.LoadImporterShipments();
 
-    GetPrivateLabelApprovePaymentComponentPath() {
-        let isDSV = SessionLocator?.PrivateLableSettings?.PrivateLabelDomain?.toLowerCase()?.indexOf("dsv") > -1;
-        let privateLabelApprovePaymentComponentPath = './ShipmentModules/ShipmentLogBox/Components/Logbox/' + (isDSV ? 'DSVApprovePaymentComponent' : 'PrivateLabelApprovePaymentComponent');
-        return privateLabelApprovePaymentComponentPath;
     }
-
     ngAfterViewInit() {
 
     }
-
     ArchiveDone(Ship) {
-        var element = document.getElementById('row' + this.SelectedRowIndex);
-        if (element) {
-            element.style.backgroundColor = Ship.Action == "A" ? "#EAEAEB" : "#DFECF7";
+        //this.LoadImporterShipments();
+        if (Ship.Action == "A") {
+            var element = document.getElementById('row' + this.SelectedRowIndex);
+            if (element) {
+                element.style.backgroundColor = "#EAEAEB";
+            }
+            var elem = document.getElementById(Ship.Ship.Id);
+            if (elem) {
+                elem.style.visibility = "visible";
+            }
         }
-        var elem = document.getElementById(Ship.Ship.Id);
-        if (elem) {
-            elem.style.visibility = Ship.Action == "A" ? "visible" : "hidden";
+        else {
+            var element = document.getElementById('row' + this.SelectedRowIndex);
+            if (element) {
+                element.style.backgroundColor = "#DFECF7";
+            }
+            var elem = document.getElementById(Ship.Ship.Id);
+            if (elem) {
+                elem.style.visibility = "hidden";
+            }
         }
     }
-
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() ShipmentSelectedEvent = new EventEmitter();
     @Output() OnImporterShipmentsFilterChanged = new EventEmitter();
@@ -289,388 +178,151 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public SelectedFilter: string = "Agent Shipments";
     public RecentImg: string = "./Images/LogBox/Recent.png";
     SearchFilter: string = "";
-
     private mySelectedTransportFilter: string = "All";
     get SelectedTransportFilter() { return this.mySelectedTransportFilter; }
     set SelectedTransportFilter(newValue: string) {
         if (this.mySelectedTransportFilter != newValue) {
             this.mySelectedTransportFilter = newValue;
-            this.RefreshBtnClick();
-            console.log("2");
-            this.SaveUserLastSettings("SelectedTransportFilter", this.mySelectedTransportFilter);
+         
+            this.LoadImporterShipments();
             ServiceLocator.SendTotangoUserActivity("LogBox", "Transportation type filter changed");
-            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Transportation filter" });
-
         }
     }
-
     private mySelectedDirectionFilter: string = "All";
     get SelectedDirectionFilter() { return this.mySelectedDirectionFilter; }
     set SelectedDirectionFilter(newValue: string) {
         if (this.mySelectedDirectionFilter != newValue) {
             this.mySelectedDirectionFilter = newValue;
-            this.RefreshBtnClick();
-            console.log("3");
-            this.SaveUserLastSettings("SelectedDirectionFilter", this.mySelectedDirectionFilter);
+
+            this.LoadImporterShipments();
             ServiceLocator.SendTotangoUserActivity("LogBox", "Direction filter changed");
         }
     }
-
     private mySelectedArchiveFilter: string = "O";
     get SelectedArchiveFilter() { return this.mySelectedArchiveFilter; }
     set SelectedArchiveFilter(newValue: string) {
         if (this.mySelectedArchiveFilter != newValue) {
             this.mySelectedArchiveFilter = newValue;
-            this.RefreshBtnClick();
-            console.log("4");
-            this.SaveUserLastSettings("SelectedArchiveFilter", this.mySelectedArchiveFilter);
+
+            //if (this.filterAgrs == null) {
+            //    this.filterAgrs = new ApiQueryFilters();
+            //}
+            //if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'IsOperationalClosed').length > 0) {
+            //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsOperationalClosed');
+            //}
+            //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", this.SelectedTransportFilter == "O" ? false : true, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
+            //this.LoadQueriesCounts();
+            //this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: this.SelectedTransportFilter == "All" ? true : false });
+            this.LoadImporterShipments();
             ServiceLocator.SendTotangoUserActivity("LogBox", "Open/Close filter changed");
-            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Open/Close filter" });
-
         }
     }
-
-    SaveUserLastSettings(FilterName: string, FilterValue: string) {
-        this._UserLastSettingsExtendedPMService.getsingleByUserIdFilterName(SessionLocator.LoggedUserId, FilterName).subscribe((Result:any) => {
-            if (!Result.HasError && Result.Result == null) {
-                this.upsertUserLastSettings(FilterName, FilterValue);
-            }
-            else if (!Result.HasError && Result.Result != null) {
-                this.upsertUserLastSettings(FilterName, FilterValue, Result);
-            }
-        });
-    }
-
-    private upsertUserLastSettings(FilterName: string, FilterValue: string, Result: any = null, ) {
-        let myFilterSettings = new UserLastSettingsPM();
-        if (Result != null) myFilterSettings = Result.Result;
-        myFilterSettings.FilterName = FilterName;
-        myFilterSettings.FilterValue = FilterValue;
-        myFilterSettings.ControlNameSpace = "ShipmentModules.ShipmentLogBox.LogBoxMainComponent";
-        myFilterSettings.Tenant = SessionLocator.Tenant;
-        myFilterSettings.UserId = SessionLocator.LoggedUserId;
-        if (Result != null) {
-            this._UserLastSettingsPMService.update(myFilterSettings).subscribe((myResult: any) => {
-            });
-        }
-        else {
-            this._UserLastSettingsPMService.insert(myFilterSettings).subscribe((myResult: any) => {
-            });
-        }
-    }
-
-    setUserLastSettings() {
-        const nameSpace = "ShipmentModules.ShipmentLogBox.LogBoxMainComponent";
-        this._UserLastSettingsExtendedPMService.getallByUserIdNameSpace(SessionLocator.LoggedUserId, nameSpace).subscribe((Result:any) => {
-            if (!Result.HasError && Result.Result != null) {
-                var myFiltersSettings = Result.Result;
-                var myArchiveFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedArchiveFilter');
-                var myDirectionFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedDirectionFilter');
-                var myTransportFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedTransportFilter');
-
-                if (myArchiveFilter.length > 0) {
-                    this.mySelectedArchiveFilter = myArchiveFilter[0].FilterValue;
-                }
-                if (myDirectionFilter.length > 0) {
-                    this.mySelectedDirectionFilter = myDirectionFilter[0].FilterValue;
-                }
-                if (myTransportFilter.length > 0) {
-                    this.mySelectedTransportFilter = myTransportFilter[0].FilterValue;
-                }
-            }
-            this.RefreshBtnClick();
-        });
-    }
-
     public AgentShipmentsCount: string;
     public MyShipmentsCount: string;
     public RequestedCount: string;
     public AllShipmentsCount: string;
-    public searchFields: string = null;
+    public searchFields: string;
     public AgentShipmentsLabel: string = "Agent Shipments";
     public RequestedDocsLable: string = "Action Required";
     public isPrivateLabel: boolean = false;
     @Output() SearchFieldchangeevent = new EventEmitter();
-
     LoadQueriesCounts() {
-        const shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs  = {
-            Tenant: SessionLocator.Tenant,
-            TransportModeId: this.SelectedTransportFilter == "All" ? "" : this.SelectedTransportFilter,
-            DirectionId: this.SelectedDirectionFilter == "All" ? "" : this.SelectedDirectionFilter,
-            SearchFilter: this.SearchFilter == null ? "" : this.SearchFilter,
-            ServiceContextUser: SessionLocator.LoggedUserId,
-            TypeCode: this.SelectedArchiveFilter == "All" ? "" : this.SelectedArchiveFilter,
-            ForwarderPartnerId: this.isPrivateLabel && !this.IsDSV ? SessionLocator.PrivateLableSettings.HybridPartnerId : '',
-            DirectionOperator : 'Equal',
-        };
-        if (this.isLogbox) this.SetDirectionFilter(shipmentsQueriesCountsArgs);
-
-        if (this.isPrivateLabel) this.SetPrivateLabelDirectionFilters(shipmentsQueriesCountsArgs);
-
-
-
-        this.myShipmentDomainService.GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs).subscribe((myResult: ImporterQueriesDataCounts) => {
+        this.myShipmentDomainService.GetShipmentsQueriesCounts(SessionLocator.Tenant, this.SelectedTransportFilter == "All" ? "" : this.SelectedTransportFilter, this.SelectedDirectionFilter == "All" ? "" : this.SelectedDirectionFilter, this.SearchFilter == null ? "" : this.SearchFilter, SessionLocator.LoggedUserId, this.SelectedArchiveFilter == "All" ? "" : this.SelectedArchiveFilter).subscribe((myResult: ImporterQueriesDataCounts) => {
             if (myResult != null) {
-                this.setAllShipmentsQueriesCounts(myResult);
+                this.AgentShipmentsCount = myResult.AgentShipmentsCount > 1000 ? "1000+" : myResult.AgentShipmentsCount.toString();
+                this.MyShipmentsCount = myResult.ImporterShipmentsCount > 1000 ? "1000+" : myResult.ImporterShipmentsCount.toString();
+                if (this.isPrivateLabel) {
+                    this.RequestedCount = myResult.RequiredActionsCount > 1000 ? "1000+" : myResult.RequiredActionsCount.toString();
+                }
+                else {
+                    this.RequestedCount = myResult.RequestedDocsCount > 1000 ? "1000+" : myResult.RequestedDocsCount.toString();
+                }
+                this.AllShipmentsCount = myResult.AllShipmentsCount > 1000 ? "1000+" : myResult.AllShipmentsCount.toString();
             }
         });
     }
-
-    HoverTemplateIndex: number = 7;
-
+    HoverTemplateIndex: number = 6;
     DataSource = {
         pageSize: 20,
         rowCount: null,
+        //sortingCol: "StatusDate",
+        //sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            //if (!this.SelectedFilter) {
+            //    this.SelectedFilter = tempo.rowData;
+            //    this.ShipmentSelectedEvent.emit(this.SelectedRow);
+            //}
             return tempo;
         },
     };
-
-    private SetDirectionFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        shipmentsQueriesCountsArgs.DirectionId = 'E';
-        shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual';
-    }
-
-    SetPrivateLabelDirectionFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-
-        if (!shipmentsQueriesCountsArgs.DirectionId && this.ShowDirectionFilters) {
-            this.ExecludeImportShipmentsFilters(shipmentsQueriesCountsArgs);
-        } else {
-            this.SetPrivateLabelDriectionId(shipmentsQueriesCountsArgs);
-        }
-
-        if (!this.IsCustomsActivated && !this.IsExportActivated) {
-            this.SetDefalutFilter(shipmentsQueriesCountsArgs);
-        }
-
-    }
-    private SetPrivateLabelDriectionId(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        this.SetCustomShipmentFilters(shipmentsQueriesCountsArgs);
-        this.SetExportShipmentFilters(shipmentsQueriesCountsArgs);
-    }
-
-    private ExecludeImportShipmentsFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        shipmentsQueriesCountsArgs.DirectionId = 'I';
-        shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual';
-    }
-
-    SetFilterOptions(directionId: string, directionOperator: string, shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        this.SelectedDirectionFilter = directionId;;
-        shipmentsQueriesCountsArgs.DirectionId = directionId;
-        shipmentsQueriesCountsArgs.DirectionOperator = directionOperator;
-    }
-
-    private SetExportShipmentFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        if (this.IsExportActivated && !this.IsCustomsActivated) {
-            this.SetFilterOptions('E', 'Equal', shipmentsQueriesCountsArgs);
-        }
-    }
-
-    private SetCustomShipmentFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        if (this.IsCustomsActivated && !this.IsExportActivated) {
-            this.SetFilterOptions('C', 'Equal', shipmentsQueriesCountsArgs);
-
-        }
-    }
-
-    private SetDefalutFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        this.IsCustomsActivated = true;
-        this.SetFilterOptions('C', 'Equal', shipmentsQueriesCountsArgs);
-        this.ShowDirectionFilters = false;
-    }
-
-
-
-
-    private setAllShipmentsQueriesCounts(myResult: ImporterQueriesDataCounts) {
-        this.AgentShipmentsCount = myResult.AgentShipmentsCount > 1000 ? "1000+" : myResult.AgentShipmentsCount.toString();
-        this.MyShipmentsCount = myResult.ImporterShipmentsCount > 1000 ? "1000+" : myResult.ImporterShipmentsCount.toString();
-        this.AllShipmentsCount = myResult.AllShipmentsCount > 1000 ? "1000+" : myResult.AllShipmentsCount.toString();
-        if (this.isPrivateLabel)
-            this.RequestedCount = myResult.RequiredActionsCount > 1000 ? "1000+" : myResult.RequiredActionsCount.toString();
-        else
-            this.RequestedCount = myResult.RequestedDocsCount > 1000 ? "1000+" : myResult.RequestedDocsCount.toString();
-    }
-
-    GetQueryColumn(fieldName: string, dataTypeCode: string, displayText:string) {
-        let queryColum: QueryColumnPM = new QueryColumnPM();
-        queryColum.ObjectFieldDataTypeCode = dataTypeCode;
-        queryColum.ObjectFieldName = fieldName;
-        queryColum.DisplayText = displayText;
-        queryColum.ObjectFieldListLabelTextCodeCode = fieldName;
-
-        return queryColum;
-    }
-
-
-    ColumnResisedevent(Param) {
-        ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionLocator.Tenant + "&queryCode=" + this.LogboxShipmentQueryCode + "&objecttableid=" + this.ShipmentObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId + "&getfromsystemlevel=false")
-            .subscribe((response: any) => {
-                this.SaveQueryColumnsChanges(response, Param);
-            });
-    }
-
-    private SaveQueryColumnsChanges(queryColumns: any, Param: any) {
-        if (queryColumns == null) return;
-
-        if (AppTool.IsNullOrEmpty(queryColumns[0].UserId)) {
-            this.InsertQueryColumns(queryColumns, Param);
-            return;
-        }
-
-        this.UpdateQueryColumns(queryColumns, Param);
-    }
-
-
-    private InsertQueryColumns(queryColumns: any, Param: any) {
-        let serviceArgs = new ServiceArgs();
-        serviceArgs.http = ServiceHelper.HttpClient;
-        let generalEntitiesArgs = new GeneralEntitiesArgs();
-        generalEntitiesArgs.QueryColumnsPMs = [];
-        generalEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
-
-        queryColumns.forEach((querycolumn, key) => {
-            if (Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0] && Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0].Width > 0) {
-                querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0].Width;
-            }
-            querycolumn.UserId = SessionInfo.LoggedUserId;
-            querycolumn.Tenant = SessionInfo.LoggedUserTenant;
-            generalEntitiesArgs.QueryColumnsPMs.push(querycolumn);
-        });
-
-        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
-        myGeneralService.setServiceArgs(serviceArgs);
-        myGeneralService.insert(generalEntitiesArgs).subscribe((myResult: any) => { });
-    }
-
-    private UpdateQueryColumns(queryColumns: any, Param: any) {
-        let serviceArgs = new ServiceArgs();
-        serviceArgs.http = ServiceHelper.HttpClient;
-        let generalEntitiesArgs = new GeneralEntitiesArgs();
-        generalEntitiesArgs.QueryColumnsPMs = [];
-        generalEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
-
-        let myQueryColumnsPMService = new QueryColumnsPMService();
-        myQueryColumnsPMService.setServiceArgs(serviceArgs);
-
-        queryColumns.forEach((querycolumn, key) => {
-            if (Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0] && Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0].Width > 0) {
-                querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == this.logboxShipmentQueryColumnsComputingPartner[querycolumn.ObjectFieldName])[0].Width;
-            }
-            generalEntitiesArgs.QueryColumnsPMs.push(querycolumn);
-        });
-
-        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
-        myGeneralService.setServiceArgs(serviceArgs);
-        myGeneralService.update(generalEntitiesArgs).subscribe((myResult: any) => { });
-    }
-
-    QueryColumns: QueryColumnPM[] = [];
-    BuildColumns(userQueryColumns) {
-        if (userQueryColumns == null) userQueryColumns = [];
-        this.QueryColumns = [];
-        this.HoverTemplateIndex = 7;
+    BuildColumns() {
+        this.HoverTemplateIndex = 6;
         this.columns = [];
-        let shipmentNumberUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.ShipmentNumber")[0];
-        if (shipmentNumberUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[shipmentNumberUserQueryColumn.ObjectFieldName] = this.SelectedFilter;
         this.columns.push({
             FieldName: this.SelectedFilter,//"ShipmentNumber",
             DataTypeCode: 'String',
             Display: 'Shipment #',
-            Styles: { width: shipmentNumberUserQueryColumn && shipmentNumberUserQueryColumn.Tenant == SessionLocator.Tenant ? shipmentNumberUserQueryColumn.ColumnWidth + 'px' : this.RefTemplateWidth },
+            Styles: { width: !SessionLocator.PrivateLableSettings ? '220px' : '120px' },
             HtmlListComponentName: 'ReferenceNumberCellDisplayListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/ReferenceNumberCellDisplayListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "ShipmentNumber"
         });
-
-        this.QueryColumns.push(
-            this.GetQueryColumn("PartnerName", 'Text', 'Agent Name')
-        );
-
-        this.QueryColumns.push(
-            this.GetQueryColumn("ForwarderShipmentNumber", 'Text', 'Shipment #')
-        );
-
-        let shipperUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.Shipper")[0];
-        if (shipperUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[shipperUserQueryColumn.ObjectFieldName] = 'ShipperName';
         this.columns.push({
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
-            Display: this.IsExportActivated ? 'Supplier / Consignee' : 'Supplier',
-            Styles: { width: shipperUserQueryColumn && shipperUserQueryColumn.Tenant == SessionLocator.Tenant ? shipperUserQueryColumn.ColumnWidth + 'px' : '150px' },
-            HtmlListComponentName: 'SupplierConsigneeListTemplate',
-            HtmlListComponentUrl: './Shipment/Components/ListTemplates/SupplierConsigneeListTemplate',
+            Display: 'Supplier',
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "ShipperName"
         });
-
-        this.QueryColumns.push(
-            this.GetQueryColumn("ShipperName", 'Text', this.IsExportActivated ? 'Supplier / Consignee' : 'Supplier')
-        );
-
-        if (this.IsExportActivated) {
-            this.DisplayAgentColumn(userQueryColumns);
-        }
-
-        let logboxTaskUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxTask")[0];
-        if (logboxTaskUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxTaskUserQueryColumn.ObjectFieldName] = 'Task';
         if (this.SelectedFilter == "Action Required") {
             this.columns.push({
                 FieldName: 'Task',
                 DataTypeCode: 'String',
                 Display: 'Task',
-                Styles: { width: logboxTaskUserQueryColumn && logboxTaskUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxTaskUserQueryColumn.ColumnWidth + 'px' : '220px' },
+                Styles: { width: '220px' },
                 HtmlListComponentName: 'TaskCellDisplayListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/TaskCellDisplayListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: false,
                 SortByName: "Task"
             });
-            this.HoverTemplateIndex = this.IsExportActivated ? 7 : 6;
-
-            this.QueryColumns.push(this.GetQueryColumn("Task", 'Text', 'Task'));
+            this.HoverTemplateIndex = 5;
         }
         else {
-            let statusNameUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.StatusName")[0];
-            if (statusNameUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[statusNameUserQueryColumn.ObjectFieldName] = 'StatusName';
             this.columns.push({
                 FieldName: 'StatusName',
                 DataTypeCode: 'String',
                 Display: 'Status',
-                Styles: { width: statusNameUserQueryColumn && statusNameUserQueryColumn.Tenant == SessionLocator.Tenant ? statusNameUserQueryColumn.ColumnWidth + 'px' : '120px' },
+                Styles: { width: '120px' },
                 HtmlListComponentName: 'StatusCellDisplayListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/StatusCellDisplayListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: true,
                 SortByName: "StatusName"
             });
-            this.QueryColumns.push(this.GetQueryColumn("StatusName", 'Text', 'Status'));
-
-            let statusDateUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.StatusDate")[0];
-            if (statusDateUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[statusDateUserQueryColumn.ObjectFieldName] = 'ComputedStatusDate';
-            if (this.showComputedStatusDateField()) {
+            if (this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"))) {
                 this.columns.push({
-                    FieldName: 'ComputedStatusDate',
+                    FieldName: 'StatusDate',
                     DataTypeCode: 'String',
                     Display: 'Status Date',
-                    Styles: { width: statusDateUserQueryColumn && statusDateUserQueryColumn.Tenant == SessionLocator.Tenant ? statusDateUserQueryColumn.ColumnWidth + 'px' : '125px' },
+                    Styles: { width: '125px' },
                     HtmlListComponentName: 'DateCellDisplayListTemplate',
                     HtmlListComponentUrl: './Shipment/Components/ListTemplates/DateCellDisplayListTemplate',
                     IsCustomTemplate: true,
                     ServerSideSortable: true,
-                    SortByName: "ComputedStatusDate"
+                    SortByName: "StatusDate"
                 });
-                this.QueryColumns.push(this.GetQueryColumn("ComputedStatusDate", 'DateTime', 'Status Date' ));
             }
             else {
-                this.HoverTemplateIndex = this.IsExportActivated ? 7 : 6;
+                this.HoverTemplateIndex = 5;
             }
         }
-
+        
         //this.columns.push({
         //    FieldName: 'RequestedDocumentsCount',
         //    DataTypeCode: 'String',
@@ -681,69 +333,34 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //    IsCustomTemplate: true,
         //    ServerSideSortable: true
         //});
-
-        let customerReference1UserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.CustomerReference1")[0];
-        if (customerReference1UserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[customerReference1UserQueryColumn.ObjectFieldName] = 'CustomerReference3';
         this.columns.push({
-            FieldName: 'CustomerReference3',
+            FieldName: 'CustomerReference2',
             DataTypeCode: 'String',
             Display: 'Reference #',
-            Styles: { width: customerReference1UserQueryColumn && customerReference1UserQueryColumn.Tenant == SessionLocator.Tenant ? customerReference1UserQueryColumn.ColumnWidth + 'px' : '108px' },
+            Styles: { width: '108px' },
             HtmlListComponentName: 'CustomReferenceListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/CustomReferenceListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: "CustomerReference3"
-        });
-
-        let customerReference2UserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.CustomerReference2")[0];
-        if (customerReference2UserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[customerReference2UserQueryColumn.ObjectFieldName] = 'CustomerReference2';
-        this.columns.push({
-            FieldName: 'CustomerReference2',
-            DataTypeCode: 'String',
-            Display: 'My Reference',
-            Styles: { width: customerReference2UserQueryColumn && customerReference2UserQueryColumn.Tenant == SessionLocator.Tenant ? customerReference2UserQueryColumn.ColumnWidth + 'px' : '108px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
             SortByName: "CustomerReference2"
         });
-
-        this.QueryColumns.push(
-            this.GetQueryColumn("CustomerReference3", 'Text', 'Reference #')
-        );
-
-        let isOperationalClosedUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.IsOperationalClosed")[0];
-        if (isOperationalClosedUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[isOperationalClosedUserQueryColumn.ObjectFieldName] = 'IsOperationalClosed';
         this.columns.push({
             FieldName: 'IsOperationalClosed',
             DataTypeCode: 'String',
             Display: '',
-            Styles: { width: isOperationalClosedUserQueryColumn && isOperationalClosedUserQueryColumn.Tenant == SessionLocator.Tenant ? isOperationalClosedUserQueryColumn.ColumnWidth + 'px' : '73px' },
+            Styles: { width: '73px' },
             HtmlListComponentName: 'ArchiveListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/ArchiveListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "IsOperationalClosed"
         });
-
-        this.QueryColumns.push(
-            this.GetQueryColumn("IsOperationalClosed", 'Boolean', 'Archived')
-        );
-
-        let logboxActionButtonUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxActionButton")[0];
-        if (logboxActionButtonUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxActionButtonUserQueryColumn.ObjectFieldName] = 'ActionButtonsListTemplate';
-        let logboxActionRequiredUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxActionRequired")[0];
-        if (logboxActionRequiredUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxActionRequiredUserQueryColumn.ObjectFieldName] = 'ActionRequired';
-        let logboxEditButtonUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxEditButton")[0];
-        if (logboxEditButtonUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxEditButtonUserQueryColumn.ObjectFieldName] = 'EditShipmentButtonListTemplate' + this.SelectedFilter;
-        let logboxRemoveTaskButtonUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.LogboxRemoveTaskButton")[0];
-        if (logboxRemoveTaskButtonUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[logboxRemoveTaskButtonUserQueryColumn.ObjectFieldName] = 'RemoveTasksButtonListTemplate';
         if (this.SelectedFilter == "My Shipments") {
             this.columns.push({
                 FieldName: 'ActionButtonsListTemplate',//'MyShipments',
                 DataTypeCode: 'String',
                 Display: '',
-                Styles: { width: logboxActionButtonUserQueryColumn && logboxActionButtonUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxActionButtonUserQueryColumn.ColumnWidth + 'px' : SessionLocator.PrivateLableSettings ? '270px' : '200px' },
+                Styles: { width: SessionLocator.PrivateLableSettings ? '270px' : '200px' },
                 HtmlListComponentName: 'ActionButtonsListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/ActionButtonsListTemplate',
                 IsCustomTemplate: true,
@@ -756,7 +373,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 FieldName: 'ActionRequired',
                 DataTypeCode: 'String',
                 Display: '',
-                Styles: { width: logboxActionRequiredUserQueryColumn && logboxActionRequiredUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxActionRequiredUserQueryColumn.ColumnWidth + 'px' : '346px' },
+                Styles: { width: '346px' },
                 HtmlListComponentName: 'ActionButtonsListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/ApprovePaymentButtonListTemplate',
                 IsCustomTemplate: true,
@@ -770,7 +387,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     FieldName: 'EditShipmentButtonListTemplate' + this.SelectedFilter,//this.SelectedFilter,//'EditShipmentButtonListTemplate',
                     DataTypeCode: 'String',
                     Display: '',
-                    Styles: { width: logboxEditButtonUserQueryColumn && logboxEditButtonUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxEditButtonUserQueryColumn.ColumnWidth + 'px' : '100px' },
+                    Styles: { width: '100px' },
                     HtmlListComponentName: 'ActionButtonsListTemplate',
                     HtmlListComponentUrl: './Shipment/Components/ListTemplates/EditShipmentButtonListTemplate',
                     IsCustomTemplate: true,
@@ -783,7 +400,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     FieldName: 'RemoveTasksButtonListTemplate',
                     DataTypeCode: 'String',
                     Display: '',
-                    Styles: { width: logboxRemoveTaskButtonUserQueryColumn && logboxRemoveTaskButtonUserQueryColumn.Tenant == SessionLocator.Tenant ? logboxRemoveTaskButtonUserQueryColumn.ColumnWidth + 'px' : '300px' },
+                    Styles: { width: '200px' },
                     HtmlListComponentName: 'RemoveTasksButtonListTemplate',
                     HtmlListComponentUrl: './Shipment/Components/ListTemplates/RemoveTasksButtonListTemplate',
                     IsCustomTemplate: true,
@@ -792,76 +409,35 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 });
             }
         }
-
-        let shipperReference1UserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.ShipperReference1")[0];
-        if (shipperReference1UserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[shipperReference1UserQueryColumn.ObjectFieldName] = this.SearchFilter ? this.SearchFilter : '';
-        if (this.RequestedDocsLable != "Action Required") {
-            this.columns.push({
-                FieldName: this.SearchFilter ? this.SearchFilter : '',
-                DataTypeCode: 'String',
-                Display: '',
-                Styles: { width: shipperReference1UserQueryColumn && shipperReference1UserQueryColumn.Tenant == SessionLocator.Tenant ? shipperReference1UserQueryColumn.ColumnWidth + 'px' : '40px' },
-                HtmlListComponentName: 'DocumentSearchResultListTemplate',
-                HtmlListComponentUrl: './Shipment/Components/ListTemplates/DocumentSearchResultListTemplate',
-                IsCustomTemplate: true,
-                EnableHoverVisibility: true,
-                ServerSideSortable: false
-            });
-        }
+       
+        this.columns.push({
+            FieldName: this.SearchFilter ? this.SearchFilter : '',
+            DataTypeCode: 'String',
+            Display: '',
+            Styles: { width: '40px' },
+            HtmlListComponentName: 'DocumentSearchResultListTemplate',
+            HtmlListComponentUrl: './Shipment/Components/ListTemplates/DocumentSearchResultListTemplate',
+            IsCustomTemplate: true,
+            EnableHoverVisibility: true,
+            ServerSideSortable: false
+        });
         this.CustomColumnsReady.emit(this.columns);
     }
-
-    private DisplayAgentColumn(userQueryColumns) {
-        let privateLabelAgentNameUserQueryColumn = userQueryColumns.filter(queryColumn => queryColumn.ObjectFieldCode === "Shipment.PrivateLabelAgentName")[0];
-        if (privateLabelAgentNameUserQueryColumn) this.logboxShipmentQueryColumnsComputingPartner[privateLabelAgentNameUserQueryColumn.ObjectFieldName] = 'PrivateLabelAgentName';
-        this.columns.push({
-            FieldName: 'PrivateLabelAgentName',
-            DataTypeCode: 'String',
-            Display: 'Agent',
-            Styles: { width: privateLabelAgentNameUserQueryColumn && privateLabelAgentNameUserQueryColumn.Tenant == SessionLocator.Tenant ? privateLabelAgentNameUserQueryColumn.ColumnWidth + 'px' : '150px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: "PrivateLabelAgentName"
-        });
-        this.QueryColumns.push(this.GetQueryColumn("PrivateLabelAgentName", 'Text', 'Agent'));
-        this.HoverTemplateIndex = this.HoverTemplateIndex + 1;
-    }
-
-
-
-    private showComputedStatusDateField() {
-        return this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"));
-    }
-
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        filters = this.getApiQueryFiltersWithAdditionalFilters(searchfields);
-        filters.SortBy = "ComputedStatusDate";
+        //if (filters == null) {
+        filters = new ApiQueryFilters();
+        filters.SortBy = "StatusDate";
         filters.SortDirection = "Descending";
-        filters.GetCount = getCount;
-        filters.PageIndex = skip;
-        filters.PageSize = take;
-        if (sortingCol) {
-            filters.SortBy = sortingCol;
-        }
-        if (sortingDir) {
-            filters.SortDirection = sortingDir;
-        }
-        filters.Tenant = SessionLocator.Tenant;
-        return this._entityListService.getByFilters("Shipment", filters, "LogBoxShipment");
-    }
-
-    private getApiQueryFiltersWithAdditionalFilters(searchfields: string) {
-        let filters = new ApiQueryFilters();
-        if (this.isPrivateLabel && !this.IsDSV) {
-            filters.addAdditionalFilter("ForwarderPartnerId", SessionLocator.PrivateLableSettings.HybridPartnerId, null, null, "Equal", true, true, false, "String");
-        }
+        //}
         if (!AppTool.IsNullOrEmpty(searchfields)) {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
             filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
+            //this.searchFields = searchfields;
         }
         else {
             filters.Filter1Value = "";
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
+            //this.searchFields = undefined;
         }
         if (this.filterAgrs != null) {
             if (this.filterAgrs.AdditionalFilters.length > 0) {
@@ -886,104 +462,44 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             }
         }
 
-        return filters;
-    }
 
-    GetExportToExcelArgs() {
-        debugger
-        this.filterAgrs = this.GetApiQueryFilters();
-        this.filterAgrs.Tenant = SessionLocator.Tenant;
-        let logboxShipmentExportExcelArgs: LogboxShipmentExportExcelArgs = new LogboxShipmentExportExcelArgs();
-        logboxShipmentExportExcelArgs.Tenant = SessionLocator.Tenant;
-        this.filterAgrs.addAdditionalFilter("ColumnName?", this.SelectedFilter.replace(" ",""), null, null, "Equals", true, true, false, "String");
-        logboxShipmentExportExcelArgs.AdditionalFilters = this.filterAgrs.AdditionalFilters;
-        logboxShipmentExportExcelArgs.PageIndex = this.filterAgrs.PageIndex;
-        logboxShipmentExportExcelArgs.PageSize = this.filterAgrs.PageSize;
-        logboxShipmentExportExcelArgs.ObjectTableName = "Shipment";
-        logboxShipmentExportExcelArgs.QueryColumns = this.QueryColumns;
-        logboxShipmentExportExcelArgs.UserId = SessionLocator.LoggedUserId;
-        logboxShipmentExportExcelArgs.SortBy = this.filterAgrs.SortBy;
-        logboxShipmentExportExcelArgs.SortDirection = this.filterAgrs.SortDirection;
-        logboxShipmentExportExcelArgs.QueryName = this.SelectedFilter;
-        logboxShipmentExportExcelArgs.QuerySection = "ShipmentLogBox";
-        logboxShipmentExportExcelArgs.Filters = this.filterAgrs;
-
-        return logboxShipmentExportExcelArgs;
-    }
-
-
-    onMouseEnter(label, id) {
-        if (!this.HasQueryFiltersHighlightColor) return;
-        var element = document.getElementById(id);
-        if (element && (label == this.SelectedFilter)) {
-            this.SetQueryFilterOptions(element, "1");
-        } else if (element) {
-            this.SetQueryFilterOptions(element, "0.5");
+        filters.GetCount = getCount;
+        filters.PageIndex = skip;
+        filters.PageSize = take;
+        if (sortingCol) {
+            filters.SortBy = sortingCol;
         }
-
-    }
-
-    onMouseLeave(label, id) {
-        if (!this.HasQueryFiltersHighlightColor) return;
-        var element = document.getElementById(id);
-        if (element) {
-            this.SetQuereyFilterForHover(label, element);
+        if (sortingDir) {
+            filters.SortDirection = sortingDir;
         }
-    }
-    private SetQuereyFilterForHover(label: any, element: HTMLElement) {
-        if (label == this.SelectedFilter) {
-            this.SetQueryFilterOptions(element, "1");
-        } else {
-            this.ClearQuereFilter(element);
-        }
-    }
+        filters.Tenant = SessionLocator.Tenant;
 
-    private ClearQuereFilter(element: HTMLElement) {
-        element.style.backgroundColor = null;
-        element.style.opacity = "1";
+
+
+
+        return this._entityListService.getByFilters("Shipment", filters);
     }
 
-    private SetQueryFilterOptions(element: HTMLElement, opacity: string) {
-        element.style.backgroundColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
-        element.style.opacity = opacity;
-    }
-
-
-
-    MenuFiltersClicked(Selected, id) {
-        this.SetQueryFiltersColor(id, Selected);
-
+    MenuFiltersClicked(Selected) {
         this.SelectedFilter = Selected;
         this.SelectedRow = null;
-        this.RecentImg = Selected == "Recent" ? "./Images/LogBox/RecentW.png" : "./Images/LogBox/Recent.png";
-        const isRecentSelected = Selected == "Recent";
-        const isRequestedSelected = Selected == "Recent" ? false : Selected == this.RequestedDocsLable;
-        this.OnImporterShipmentsFilterChanged.emit({ IsRecentSelected: isRecentSelected, IsRequestedSelected: isRequestedSelected});
-        this.RefreshBtnClick();
-        console.log("7");
-    }
-
-    private SetQueryFiltersColor(id: any, Selected: any) {
-        var element = document.getElementById(id);
-        if (this.HasQueryFiltersHighlightColor && element && (Selected == this.AgentShipmentsLabel)) {
-            element.style.backgroundColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
-            element.style.opacity = "1";
+        if (Selected == "Recent") {
+            this.RecentImg = "./Images/LogBox/RecentW.png";
+            this.OnImporterShipmentsFilterChanged.emit({ IsRecentSelected: true, IsRequestedSelected: false });
         }
+        else if (Selected == this.RequestedDocsLable) {
+            this.RecentImg = "./Images/LogBox/Recent.png";
+            this.OnImporterShipmentsFilterChanged.emit({ IsRecentSelected: false, IsRequestedSelected: true });
+        }
+        else {
+            this.RecentImg = "./Images/LogBox/Recent.png";
+            this.OnImporterShipmentsFilterChanged.emit({ IsRecentSelected: false, IsRequestedSelected: false });
+        }
+        this.LoadImporterShipments();
     }
-
-
     SelectedRow: any;
     SelectedRowIndex: any;
-    RowSelectedTimerToken: any;
-
     onRowSelected(CurrentRow) {
-        if (this.RowSelectedTimerToken) {
-            clearTimeout(this.RowSelectedTimerToken);
-        }
-        this.RowSelectedTimerToken = setTimeout(() => this.TriggerShipmentSelectedEvent(CurrentRow), 500);
-    }
-
-    TriggerShipmentSelectedEvent(CurrentRow) {
         if (this.preventSelect == false) {
             this.SelectedRow = CurrentRow.rowData;
             this.SelectedRowIndex = CurrentRow.rowIndex;
@@ -995,30 +511,19 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private LoadImporterShipments() {
-        console.log("LoadImporterShipments");
         this.SelectedRow = null;
         this.ShipmentSelectedEvent.emit(this.SelectedRow);
-        ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionLocator.Tenant + "&queryCode=" + this.LogboxShipmentQueryCode + "&objecttableid=" + this.ShipmentObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId + "&getfromsystemlevel=false")
-            .subscribe((response: any) => {
-                this.BuildColumns(response);
-                this.LoadQueriesCounts();
-                this.filterAgrs = this.GetApiQueryFilters();
-                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-            });
-    }
-
-    GetApiQueryFilters() {
+        this.BuildColumns();
+        this.LoadQueriesCounts();
+        //if (this.filterAgrs == null) {
         this.filterAgrs = new ApiQueryFilters();
+        //}
+        //if (!string.IsNullOrEmpty(SearchFilter)) {
+        //    searchValue = String.IsNullOrEmpty(SearchFilter.Trim()) ? null : SearchFilter.Trim();
+        //}
         if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'ImportersFilter').length > 0) {
             this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'ImportersFilter');
         }
-        if (this.isPrivateLabel && !this.IsDSV) {
-            this.filterAgrs.addAdditionalFilter("ForwarderPartnerId", SessionLocator.PrivateLableSettings.HybridPartnerId, null, null, "Equal", true, true, false, "String");
-        }
-        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-            this.filterAgrs.addAdditionalFilter("ImportersFilter", this.SearchFilter, null, null, "Contains", true, false, false, "String");
-        }
-
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             this.filterAgrs.addAdditionalFilter("ImportersFilter", this.SearchFilter, null, null, "Contains", true, false, false, "String");
         }
@@ -1034,7 +539,6 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, false, false, "Boolean");
         //this.filterAgrs.addAdditionalFilter("ForwarderShipmentNumber", false, null, null, "Equals", false, false, false, "Boolean");
         //this.filterAgrs.addAdditionalFilter("IsRequestedDocuments", false, null, null, "Equals", false, false, false, "Boolean");
-
         if (this.SelectedTransportFilter != "All") {
             this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
         }
@@ -1079,7 +583,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsOperationalClosed');
                 //}
                 //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, true, false, "Boolean");
-                this.filterAgrs.SortBy = "ComputedStatusDate";
+                this.filterAgrs.SortBy = "StatusDate";
                 this.filterAgrs.SortDirection = "Descending";
 
             }
@@ -1125,7 +629,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 //this.filterAgrs.SortDirection = "Descending"; 
             }
             else if (this.SelectedFilter == "All Shipments") {
-                this.filterAgrs.SortBy = "ComputedStatusDate";
+                this.filterAgrs.SortBy = "StatusDate";
                 this.filterAgrs.SortDirection = "Descending";
             }
             else if (this.SelectedFilter == "My Shipments") {
@@ -1136,92 +640,52 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'ForwarderShipmentsFilter');
                 }
                 this.filterAgrs.addAdditionalFilter("NotForwarderShipmentsFilter", "null", null, null, "Equals", true, true, false, "String");
-                this.filterAgrs.SortBy = "ComputedStatusDate";
+                this.filterAgrs.SortBy = "StatusDate";
                 this.filterAgrs.SortDirection = "Descending";
+
             }
         }
         else {
             this.filterAgrs.addAdditionalFilter("ForwarderShipmentsFilter", "null", null, null, "NotEqual", true, true, false, "String");
-            this.filterAgrs.SortBy = "ComputedStatusDate";
+            this.filterAgrs.SortBy = "StatusDate";
             this.filterAgrs.SortDirection = "Descending";
+
         }
-
-        this.FilterLogboxShipments();
-        this.FilterPrivateLabelShipments();
-        return this.filterAgrs;
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
-
-    FilterPrivateLabelShipments() {
-
-        if (this.ShowDirectionFilters && this.isPrivateLabel) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
-        } else {
-            if (this.IsCustomsActivated) {
-                this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
-            }
-            if (this.IsExportActivated) {
-                this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
-            }
-        }
-
-    }
-    private FilterLogboxShipments() {
-        if (this.isLogbox) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "NotEqual", true, true, false, "String");
-        }
-    }
-
     GridAfterViewInitCompleted($event) {
-        this.setUserLastSettings();
-        console.log("8");
+        this.LoadImporterShipments();
     }
-
-    timerToken: any;
     RefreshBtnClick() {
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-        this.timerToken = setTimeout(() => this.LoadImporterShipments(), 500);
-    }
-
-    btnExcelCLicked() {
-        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Export shipment query to excel" });
-        let windowArgs: any = {};
-        windowArgs.ExportExcelArgs = this.GetExportToExcelArgs();
-        windowArgs.tenant = SessionLocator.Tenant;
-        windowArgs.ObjectTableName = "Shipment";
-        windowArgs.QueryName = this.SelectedFilter;
-        windowArgs.QueryType = "LogBox";
-        windowArgs.Type = "SaveToMicrosoftExcel2007";
-        let logitudeWindow = new LogitudeWindow();
-
-        logitudeWindow.Width = 500;
-        logitudeWindow.Height = 200;
-        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");//"Exporting View Data List To Excel File";
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./Infrastructure/Components/Export2ExcelControl/Export2ExcelControl');
+        this.LoadImporterShipments();
     }
 
     AddNewEntity() {
-        let addEditLogboxShipmentService: AddEditLogboxShipmentService = new AddEditLogboxShipmentService(this.CustomerTenantAccessRequestPartner);
-        let newWindowArgs: any = [];
-        let newWindow: LogitudeWindow = addEditLogboxShipmentService.GetNewShipmentWindow(newWindowArgs);
-        this.HandleWindowClosed(newWindow);
-    }
+        var NewShip = new ShipmentPM();
+        NewShip.Tenant = SessionLocator.Tenant;
+        //AddEditImporterShipmentViewModel viewModel = new AddEditImporterShipmentViewModel(NewShip, shipmentsContext, this);
+        //AddEditImporterShipment control = new AddEditImporterShipment() { DataContext = viewModel };
 
-    private HandleWindowClosed(logitudeWindow: LogitudeWindow) {
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+        var newWindow = new LogitudeWindow();
+        newWindow.Width = 600;
+        newWindow.Height = 350;
+        newWindow.Title = "Create New Shipment";
+        var windowArgs: any = {};
+        windowArgs.IsNew = true;
+        newWindow.WindowArgs = windowArgs;
+        //newWindow.Add(control);
+        if (SessionLocator.PrivateLableSettings) {
+            newWindow.Height = 376;
+            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
+        }
+        else {
+            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
+        }
+        newWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "MyShipmentAdded") {
-                this.MenuFiltersClicked('My Shipments', 'myShipment');
+                this.SelectedFilter = "My Shipments";
+                this.LoadImporterShipments();
             }
-        });
-    }
-
-    LoadEntityResource(objectTableName: string) {
-        this.entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => {
-            this.LogboxShipmentQueryCode = "Shipment.LogboxShipments";
-            this.ShipmentObjectTable = window.ObjectTables.filter(f => f.Name === objectTableName)[0];
-            this.logboxShipmentQueryColumnsComputingPartner = {};
         });
     }
 
@@ -1230,31 +694,30 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         if (event) {
             temp = event.replace(/\s+$/, '');
         }
-        if (this.searchFields != temp) {
-            this.searchFields = temp;
-            this.SearchFilter = temp;
-            this.LoadImporterShipments();
-            ServiceLocator.SendTotangoUserActivity("LogBox", "SearchFields filter changed");
-            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Free text search" });
-        }
+        this.searchFields = temp;
+        this.SearchFilter = temp;
+        this.LoadImporterShipments();
+        ServiceLocator.SendTotangoUserActivity("LogBox", "SearchFields filter changed");
+        //this.SearchFieldchangeevent.emit(this.searchFields);
+        //this.SelectedRow = null;
     }
 
-    FirstRowSelectedTimerToken: any;
     OnFirstRowSelected(event) {
-        this.onRowSelected(event);
-    }
-
-    FirstShipmentSelectedEvent(event) {
         this.SelectedRow = event.SelectedRow;
         this.SelectedRowIndex = event.index;
         this.ShipmentSelectedEvent.emit(this.SelectedRow);
     }
 
     LearnMoreToolTipArea() {
-        let newWindow = new LogitudeWindow();
+        var newWindow = new LogitudeWindow();
         newWindow.Width = 600;
         newWindow.Height = 350;
         newWindow.Title = "Define document types for digital sign";
+        //var windowArgs: any = {};
+        //windowArgs.IsNew = true;
+        //newWindow.WindowArgs = windowArgs;
+        //newWindow.Add(control);
+
         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DigitalSignDocTypeComponent');
 
         newWindow.WindowClosed.subscribe(($event: any) => {
@@ -1267,33 +730,27 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     CloseToolTipArea() {
         SessionLocator.LoggedUserPM.ShowLogBoxToolTip = true;
-        let myPM = SessionLocator.LoggedUserPM;
+        var myPM = SessionLocator.LoggedUserPM;
         this.DontShowLogboxToolTip = true;
-        this.myUserPMService.update(myPM).subscribe((myResult:any) => {
+        this.myUserPMService.update(myPM).subscribe(myResult => {
 
         });
     }
 
     MultiArchiveClicked() {
-        let newWindow = new LogitudeWindow();
+        var newWindow = new LogitudeWindow();
         newWindow.Width = 1050;
         newWindow.Height = 700;
-        newWindow.Title = "Multi Archive Open Shipments";
 
-        let windowArgs: any = {};
+        newWindow.Title = "Multi Archive Open Shipments"; 
+
+        var windowArgs: any = {};
         //windowArgs.SourceEntity = myResult.Result;//this.rowData;
         //windowArgs.HasSharedDocs = this.HasSharedDocs;
         newWindow.WindowArgs = windowArgs;
-        windowArgs.IsCustomsActivated = this.IsCustomsActivated;
-        windowArgs.IsExportActivated = this.IsExportActivated;
-        windowArgs.ShowDirectionFilters = this.ShowDirectionFilters;
         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/MultiArchiveShipmentsComponent');
         newWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
         });
     }
-}
-
-interface LogboxShipmentQueryColumnsComputingPartner<T> {
-    [key: string]: T;
 }

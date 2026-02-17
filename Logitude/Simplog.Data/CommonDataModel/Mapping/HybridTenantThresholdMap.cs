@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,12 +16,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public HybridTenantThresholdMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.Tenant ,t.TypeCode});
+            this.HasKey(t => t.Tenant);
             this.Property(t => t.Tenant).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            this.Property(t => t.TypeCode).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             // Properties
-
+           
 
             // Table & Column Mappings
             this.ToTable("HybridTenantThresholds");
@@ -29,7 +27,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.FailedThresold).HasColumnName("FailedThresold");
             this.Property(t => t.FailedThresold).HasColumnName("FailedThresold");
-            this.Property(t => t.TypeCode).HasColumnName("TypeCode");
-        }
+         }
     }
 }

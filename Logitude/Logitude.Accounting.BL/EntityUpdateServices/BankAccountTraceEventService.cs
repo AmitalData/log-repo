@@ -7,17 +7,16 @@ using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Resolvers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -36,27 +35,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             // get the logged contact.
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
-            string eventNotes = "";
-            // this code needs to check for nulls
-            //Type bankAccountTypePM = entityPM.GetType();
-
-            //PropertyInfo[] properties = bankAccountTypePM.GetProperties();
-            //PropertyInfo[] pocoProperties = entityPOCO.GetType().GetProperties();
-            //foreach (PropertyInfo pi in properties)
-            //{
-            //    var pmPropertyName = pi.Name;
-            //    var pmPropertyValue = pi.GetValue(entityPM, null);
-
-            //    var pocoProperty = pocoProperties.Where(d => d.Name == pmPropertyName).FirstOrDefault();
-            //    var pocoPropertyValue = pocoProperty.GetValue(entityPOCO);
-            //    if (!pocoPropertyValue.Equals(pmPropertyValue))
-            //    {
-            //        eventNotes = pmPropertyName + " updated new value:" + pmPropertyValue + " old value: " + pocoPropertyValue;
-            //    }
-
-
-
-            //}
 
             //create trace event with created type.
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -68,7 +46,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 // Get the Event notes
-              
+                string eventNotes = "";
                 eventNotes = this.GetEventNotes(entityPM, entityPOCO);
                 
                 // in case the inactive field changed
@@ -76,17 +54,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                    this.CreateActivateOrDeactivateEvent(entityPM,loggedContact,eventNotes);
                 }
-                if (entityPM.FactoringBank != entityPOCO.FactoringBank)
-                {
-                    this.CreateActivateOrDeactivateFactoringBankEvent(entityPM, loggedContact, eventNotes);
-                }
+
                 // create the updated event
                 this.CreateTraceEventForUpdate(entityPM, loggedContact, eventNotes);
             }
             
             base.Trace(entityPM, entityPOCO, changesXml);
         }
-        
+
         public void CreateActivateOrDeactivateEvent(BankAccountPM entityPM,ContactPM loggedContact,string eventNotes)
         {
             if (entityPM.Inactive == true)
@@ -121,25 +96,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
         }
-        public void CreateActivateOrDeactivateFactoringBankEvent(BankAccountPM entityPM, ContactPM loggedContact, string eventNotes)
-        {
-            var eventTypeCode = (entityPM.FactoringBank.HasValue && entityPM.FactoringBank.Value )? "FBAC" : "FBDA";
-                       
-            EventTracerArgs eventTracerArgs0 = new EventTracerArgs()
-             {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "BankAccount",
-                    IsAddedManually = false,
-                    EventTypeCode = eventTypeCode,
-                    Notes = eventNotes,
 
-              };
-            AddEventToList(GetNewTraceEvent(eventTracerArgs0));
-           
-
-        }
         public virtual void InsertTraceEvents()
         {
             foreach (TraceEventResponse response in TraceEventResponses)
@@ -182,7 +139,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (eventType == null)
                 {
-                    //throw new ApplicationException("Event Type is not recognized:" + args.EventTypeCode);
+                    //throw new Exception("Event Type is not recognized:" + args.EventTypeCode);
                     response.ErrorsList.Add("Event Type is not recognized:" + args.EventTypeCode);
                     return response;
                 }
@@ -322,7 +279,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 string email = HttpContext.Current.User.Identity.Name;
                 if (!string.IsNullOrEmpty(email))
                 {
-                    UserRepository userRepository = new UserRepository(tenant);
+                    UserRepository userRepository = new UserRepository(0);
                     User user = userRepository.GetSingleUserByEmail(email, 0, false);
                     if (user != null)
                     {
@@ -366,27 +323,36 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public string GetEventNotes(BankAccountPM bankAccountPM,BankAccount bankAccount)
         {
-            string myEventNotes = "";            
-            myEventNotes += AddNote(bankAccountPM.LocalName, bankAccount.LocalName, "Local Name");
-            myEventNotes += AddNote(bankAccountPM.EnglishName, bankAccount.EnglishName, "English Name");
-            myEventNotes += AddNote(bankAccountPM.BranchNumber, bankAccount.BranchNumber, "Branch Number");
-            myEventNotes += AddNote(bankAccountPM.AccountNumber, bankAccount.AccountNumber, "Account Number");
-            myEventNotes += AddNote(Convert.ToString(bankAccountPM.ChequeCounter), Convert.ToString(bankAccount.ChequeCounter), "Cheque Counter");
+            string myEventNotes = "";
+            if (bankAccountPM.LocalName != bankAccount.LocalName && (!string.IsNullOrEmpty(bankAccountPM.LocalName) || !string.IsNullOrEmpty(bankAccount.LocalName)))
+            {
+                //myEventNotes = "Previous Local Name: " + (entityPOCO.LocalName == null ? "" : entityPOCO.LocalName);
+                //myEventNotes += " Local Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.LocalName 
+                //                              + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.LocalName + ". ";
+                myEventNotes += GetOldNewEventNote("Local Name", bankAccount.LocalName, bankAccountPM.LocalName);
+            }
+            if (bankAccountPM.EnglishName != bankAccount.EnglishName && (!string.IsNullOrEmpty(bankAccountPM.EnglishName) || !string.IsNullOrEmpty(bankAccount.EnglishName)))
+            {
+                //myEventNotes += " English Name Changed" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.EnglishName
+                //                              + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.EnglishName + ". ";
+                myEventNotes += GetOldNewEventNote("English Name", bankAccount.EnglishName, bankAccountPM.EnglishName);
+            }
+
+            if (bankAccountPM.BranchNumber != bankAccount.BranchNumber && (!string.IsNullOrEmpty(bankAccountPM.BranchNumber) || !string.IsNullOrEmpty(bankAccount.BranchNumber)))
+            {
+                myEventNotes += GetOldNewEventNote("Branch Number", bankAccount.BranchNumber, bankAccountPM.BranchNumber);
+            }
+
+            if (bankAccountPM.AccountNumber != bankAccount.AccountNumber && (!string.IsNullOrEmpty(bankAccountPM.AccountNumber) || !string.IsNullOrEmpty(bankAccount.AccountNumber)))
+            {
+                myEventNotes += GetOldNewEventNote("Account Number", bankAccount.AccountNumber, bankAccountPM.AccountNumber);
+            }
 
             return myEventNotes;
         }
 
-        private string AddNote(string pmValue, string pocoValue, string fieldName)
-        {
-            if (pmValue != pocoValue && (!string.IsNullOrEmpty(pmValue) || !string.IsNullOrEmpty(pocoValue)))
-                return GetOldNewEventNote(fieldName, pocoValue, pmValue);
-
-            return "";
-        }
-
         public void CreateTraceEventForUpdate(BankAccountPM bankAccountPM, ContactPM loggedContact,string eventNotes)
         {
-
             EventTracerArgs eventTracerArgs = new EventTracerArgs()
             {
                 EntityId = bankAccountPM.Id,

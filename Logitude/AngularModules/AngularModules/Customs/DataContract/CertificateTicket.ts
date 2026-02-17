@@ -27,6 +27,5 @@ export class CertificateTicket {
     public IsAllSelected: boolean;
     public ConnectedItemsKeys: string;
     public ExcludedItemsKeys: string;
-    public SearchFields:string;
 
 }

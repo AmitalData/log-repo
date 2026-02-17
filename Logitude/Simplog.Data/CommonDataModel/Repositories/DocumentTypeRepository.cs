@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -9,17 +9,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentTypeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentTypeRepository(ICommonDataContext context)
         {
             commonDataContext = context;
             
-        }
-
-        public bool IsQuotationDocumentType(string id , int tenant)
-        {
-            return (from record in context.DocumentTypes where record.Id == id && record.Tenant == tenant && record.Code == "QUOTE" select record).Any();
         }
 
         public DocumentTypeRepository(int tenant)
@@ -133,30 +131,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.DocumentTypes where record.Code == code && record.Tenant == tenant select record.Id).FirstOrDefault();
         }
-        public string GetDocumentTypeCodeById(string id, int tenant)
-        {
-            return (from record in context.DocumentTypes where record.Id == id && record.Tenant == tenant select record.Code).FirstOrDefault();
-        }
-        public string GetDocumentTypeIdByCodeAndObjectTable(string code, string objectTableId ,int tenant)
-        {
-            return (from record in context.DocumentTypes where record.Code == code && record.Tenant == tenant && record.ObjectTableId == objectTableId select record.Id).FirstOrDefault();
-        }
 
         public DocumentType GetDocumentTypeByCode(string code, int tenant)
         {
             return (from record in context.DocumentTypes where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
         }
-
-        public DocumentType GetByCodeAndObjectTable(string code, string objectTableId, int tenant)
-        {
-            return (from record in context.DocumentTypes where record.Code == code && record.Tenant == tenant && record.ObjectTableId == objectTableId select record).FirstOrDefault();
-        }
-
-
-        public string GetObjectTableIdByDocumentCode(string code, int tenant)
-        {
-            return (from record in context.DocumentTypes where record.Code == code && record.Tenant == tenant select record.ObjectTableId).FirstOrDefault();
-        }
-
     }
 }

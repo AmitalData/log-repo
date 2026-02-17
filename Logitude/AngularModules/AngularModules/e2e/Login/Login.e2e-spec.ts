@@ -11,9 +11,7 @@ describe('Login Module', () => {
 
   it('Login Success', function () {
     browser.ignoreSynchronization = true;
-      page.navigateTo(browser.params.Link);
-      page.DoLogin(browser.params.Login.Email, browser.params.Login.Password);
-      //page.navigateTo('http://localhost:4200/');
-      //page.DoLogin('sgautomation@pro.com', 'Sg0592463934!');
+    page.navigateTo('https://system.logitudeworld.com');
+    page.DoLogin('razan@salesman.com', '!R123j456');
   });
 });

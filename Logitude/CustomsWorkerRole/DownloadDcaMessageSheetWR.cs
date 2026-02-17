@@ -20,11 +20,8 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using System.Diagnostics;
 using Logitude.CustomsMessaging.Dca;
-using System.Configuration;
-using Logitude.Server.Tools.Utils;
-using UnifreightIIG.DCA;
-using Logitude.Customs.Data.EntityPOCOs;
-using Simplog.Server.Infrastructure.Helpers;
+
+
 
 namespace CustomsWorkerRole
 {
@@ -34,62 +31,52 @@ namespace CustomsWorkerRole
 
 
         private readonly int _SeedDefaultTenant;
-        private readonly DedicatedCourierDCAModel _DedicatedCourierDCAModel = null;
         private bool _OnStartDone;
         private List<Logitude.Customs.Def.EntityPMs.CustomsSettingPM> _AllCustomsSetting;
 
         public DownloadDcaMessageSheetWR()
         {
-            _SeedDefaultTenant = SettingUtil.GetCurrentTenant();
-            if(_SeedDefaultTenant == -1)
-            {
-                _SeedDefaultTenant = 0;
-            }
 
-            var dedicatedCourierDCAService = new DedicatedCourierDCAService();
-
-            this._DedicatedCourierDCAModel = dedicatedCourierDCAService.CreateDedicatedCourierDCA();
+            _SeedDefaultTenant = 1;
+            _SeedDefaultTenant = 0;
         }
-
         public override void Run()
         {
 
-            while (!WorkerRoleServiceLocator.PleaseShutDown)
+            while (true)
             {
 
                 if (!General.IsUpdating())
                 {
 
-
+                    
                     try
                     {
                         WorkOnce();
-                        Thread.Sleep(TimeSpan.FromSeconds(1));
+                        Thread.Sleep(TimeSpan.FromSeconds(2)); 
                     }
                     catch (Exception e)
                     {
                         ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "DownloadDcaMessageSheetWR : Run() Method", null);
-                        //Thread.Sleep(TimeSpan.FromMinutes(1)); ///+1 MIN
-                        Thread.Sleep(TimeSpan.FromSeconds(3));
+                        Thread.Sleep(TimeSpan.FromMinutes(1)); ///+1 MIN
                     }
                 }
 
 
                 //Thread.Sleep(TimeSpan.FromMinutes(1));
+                
 
-
-
+                
             }
 
         }
 
-
-
+      
+   
         public override bool OnStart()
         {
             if (_OnStartDone) return true;
             _OnStartDone = true;
-            DoneItemsInRange = new Dictionary<DateTime, int>();
             MessagingServiceFactoryHelper.InitContainer();
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>("190"))
             {
@@ -98,7 +85,7 @@ namespace CustomsWorkerRole
                 ///return;
             }
 
-
+            
 
 
             // Set the maximum number of concurrent connections 
@@ -125,20 +112,20 @@ namespace CustomsWorkerRole
         //}
         static DateTime _LastActiveAt;
         static DateTime _LastReadAllCustomsSetting;
-
+        
         public override void WorkOnce()
         {
             OnStart();
             if (DateTime.Now.Subtract(_LastActiveAt) < TimeSpan.FromSeconds(10))
             {
                 Thread.Sleep(TimeSpan.FromSeconds(2));
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("do not disturb the DCAServer Wait 10 sec ");
+                Debug.WriteLine("do not disturb the DCAServer Wait 10 sec ");
                 return;
             }
             _LastActiveAt = DateTime.Now;
             if (DateTime.Now.Subtract(_LastReadAllCustomsSetting) > TimeSpan.FromMinutes(20))//cache 20 min
             {
-                //CustomsWorkerRole.Utils.GenUtil.CollectGC();
+                CustomsWorkerRole.Utils.GenUtil.CollectGC();
                 _LastReadAllCustomsSetting = DateTime.Now;
                 ///_AllCustomsSetting.Clear();
                 _AllCustomsSetting = null;
@@ -149,14 +136,14 @@ namespace CustomsWorkerRole
                 _AllCustomsSetting = customsSettingQueryService.GetAll();
             }
 
-
-
+            
+            
             var debugIIGMessageId = "";
             var debugTenant = this.Tenant;
             if (this.DebugObject != null)
             {
                 debugIIGMessageId = this.DebugObject.ToString();
-
+                
             }
 
             var costomSettingDCAList = _AllCustomsSetting.Where(env => !String.IsNullOrEmpty(env.DCAServiceAddress));
@@ -164,57 +151,25 @@ namespace CustomsWorkerRole
             {
                 costomSettingDCAList = costomSettingDCAList.Where(rec => rec.Tenant == debugTenant.GetValueOrDefault());
             }
-            if (_DedicatedCourierDCAModel != null)
-            {
-                costomSettingDCAList = _AllCustomsSetting
-                    //.Where(env => env.CompanyType == "B")
-                    .Where(env => env.Tenant == _DedicatedCourierDCAModel.Tenant);//Courier
-                if (!costomSettingDCAList.Any())
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError("_DedicatedCourierDCAModel.Tenant is not valid!!!! must env.CompanyType == B and in customssetting !!");
-                    //Thread.Sleep(TimeSpan.FromMinutes(3));
-                    Thread.Sleep(TimeSpan.FromSeconds(3));
-                    return;
-                }
-            }
-            var sw = Stopwatch.StartNew();
             //var suppressTest = false;
             foreach (var costomSetting in costomSettingDCAList)
             {
                 try
                 {
-                    LastActivity = DateTime.UtcNow;
                     var myDcaService = new DcaDownloadTenantService(costomSetting);
-
-                    myDcaService.SetLastActivity = () =>
-                    {
-                        this.LastActivity = DateTime.UtcNow;
-                    };
                     myDcaService.LogDoneItemInMemoryAction = this.LogDoneItemInMemory;
-                    myDcaService.DownloadAll(debugIIGMessageId, _DedicatedCourierDCAModel);
+                    myDcaService.DownloadAll(debugIIGMessageId);
                 }
                 catch (Exception e)
                 {
 
                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "DownloadDcaMessageSheetWR :DownloadAll" + costomSetting.DCAPartnerVault, null);
-                    Thread.Sleep(TimeSpan.FromSeconds(2));
+
                 }
 
             }
-            SleepTil1Min(sw);
+            
 
-        }
-
-        private static void SleepTil1Min(Stopwatch sw)
-        {
-            var ts = sw.Elapsed;
-            sw.Stop();
-            if (ts < TimeSpan.FromMinutes(1))
-            {
-                //Thread.Sleep(TimeSpan.FromMinutes(1).Subtract(ts));
-                Thread.Sleep(TimeSpan.FromSeconds(5));
-            }
         }
     }
-
 }

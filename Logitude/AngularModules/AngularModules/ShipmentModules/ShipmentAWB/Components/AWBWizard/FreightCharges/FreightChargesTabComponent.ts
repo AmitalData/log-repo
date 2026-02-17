@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -8,7 +8,7 @@ import {AppTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'FreightChargesTabComponent',
     templateUrl: './FreightChargesTabComponent.html',    
@@ -20,8 +20,6 @@ export class FreightChargesTabComponent extends BaseComponent {
     public DataContext: FreightChargesTabComponent = this;
     public ObjectTableName: string;
     public LabelColumnWidth: number = 150;
-    public IsKRateClass: boolean = false;
-
     constructor() {
         super();
     }
@@ -34,7 +32,6 @@ export class FreightChargesTabComponent extends BaseComponent {
         this.Listen();
         this.Validate();
         this.SetUIProperties();
-        this.CheckKRateClassCode();
     }
 
     RefreshTab() {
@@ -70,7 +67,6 @@ export class FreightChargesTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("AsAgreedFreight", this.ObjectTableName, this.IsEditingEnabled);                
         this.UIProperties.SetEnabled("RateClassCode", this.ObjectTableName, !this.EntityPM.IsMultipleCommodities && this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("ChargeableWeightInKG", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("AWBFreightAmountPrepaid", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("AWBFreightAmountCollect", this.ObjectTableName, false);
         this.SetRateClassUIProperties();
@@ -84,25 +80,23 @@ export class FreightChargesTabComponent extends BaseComponent {
         else {
             var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.EntityPM.RateClassCode);
 
-            //if (rateClassGroupCode == "S") {
-            //    this.AWBChargeRate = null;
-            //    this.UIProperties.SetEnabled("AWBChargeRate", this.ObjectTableName, false);
-            //    this.UIProperties.SetEnabled("AWBChargeAmount", this.ObjectTableName, this.IsEditingEnabled);
+            if (rateClassGroupCode == "S") {
+                this.AWBChargeRate = null;
+                this.UIProperties.SetEnabled("AWBChargeRate", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("AWBChargeAmount", this.ObjectTableName, this.IsEditingEnabled);
 
-            //}
+            }
 
-            //else {
+            else {
                 this.UIProperties.SetEnabled("AWBChargeRate", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetEnabled("AWBChargeAmount", this.ObjectTableName, false);
-           // }
+            }
         }
     }
 
     public ChargeableWeightLabel: string;
-    public ChargeableWeightKGLabel: string;
     private SetLabels() {
         this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight").replace('%ChargWeightCode', this.EntityPM.ChargeableWeightUnitCode);
-        this.ChargeableWeightKGLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight").replace('%ChargWeightCode', "KG");
     }
 
     // Validate    
@@ -117,62 +111,60 @@ export class FreightChargesTabComponent extends BaseComponent {
         this.Wizard.ValidateScreen_FRE();
     }
     private Validate() {
-        if (!this.Wizard.IsImportWizard) {
-            var isShowWarning_AWBCurrencyId = false;
-            var isShowWarning_RateClassCode = false;
-            var isShowWarning_AWBChargeRate = false;
-            var isShowWarning_ChargeableWeight = false;
-            var isShowWarning_AWBChargeAmount = false;
-            var isShowWarning_AWBChargesCodeCode = false;
+        var isShowWarning_AWBCurrencyId = false;
+        var isShowWarning_RateClassCode = false;
+        var isShowWarning_AWBChargeRate = false;
+        var isShowWarning_ChargeableWeight = false;
+        var isShowWarning_AWBChargeAmount = false;
+        var isShowWarning_AWBChargesCodeCode = false;
 
-            if (this.Wizard.IsFWB) {
-                if (AppTool.IsNullOrEmpty(this.AWBCurrencyId)) {
-                    isShowWarning_AWBCurrencyId = true;
+        if (this.Wizard.IsFWB) {
+            if (AppTool.IsNullOrEmpty(this.AWBCurrencyId)) {
+                isShowWarning_AWBCurrencyId = true;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.AWBChargesCodeCode)) {
+                isShowWarning_AWBChargesCodeCode = true;
+            }
+
+            if (!this.EntityPM.IsMultipleCommodities) {
+                if (AppTool.IsNullOrEmpty(this.RateClassCode)) {
+                    isShowWarning_RateClassCode = true;
                 }
 
-                if (AppTool.IsNullOrEmpty(this.AWBChargesCodeCode)) {
-                    isShowWarning_AWBChargesCodeCode = true;
+                if (AppTool.IsNullOrZero(this.ChargeableWeight)) {
+                    isShowWarning_ChargeableWeight = true;
                 }
 
-                if (!this.EntityPM.IsMultipleCommodities) {
-                    if (AppTool.IsNullOrEmpty(this.RateClassCode)) {
-                        isShowWarning_RateClassCode = true;
-                    }
+                if (!this.AsAgreedFreight) {
 
-                    if (AppTool.IsNullOrZero(this.ChargeableWeight)) {
-                        isShowWarning_ChargeableWeight = true;
-                    }
-
-                    if (!this.AsAgreedFreight) {
-
-                        var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.RateClassCode);
-                        //if (rateClassGroupCode != "S") {
-                            if (AppTool.IsNullOrZero(this.AWBChargeRate)) {
-                                isShowWarning_AWBChargeRate = true;
-                            }
-                        //}
-
-                        if (AppTool.IsNullOrZero(this.AWBChargeAmount)) {
-                            isShowWarning_AWBChargeAmount = true;
+                    var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.RateClassCode);
+                    if (rateClassGroupCode != "S") {
+                        if (AppTool.IsNullOrZero(this.AWBChargeRate)) {
+                            isShowWarning_AWBChargeRate = true;
                         }
                     }
+
+                    if (AppTool.IsNullOrZero(this.AWBChargeAmount)) {
+                        isShowWarning_AWBChargeAmount = true;
+                    }
                 }
             }
-
-            else {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBChargeRate")[0];
-                if (!ShipmentTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBChargeRate)) {
-                    isShowWarning_AWBChargeRate = true;
-                }
-            }
-
-            this.ShowWarning_AWBCurrencyId = isShowWarning_AWBCurrencyId;
-            this.ShowWarning_RateClassCode = isShowWarning_RateClassCode;
-            this.ShowWarning_AWBChargeRate = isShowWarning_AWBChargeRate;
-            this.ShowWarning_ChargeableWeight = isShowWarning_ChargeableWeight;
-            this.ShowWarning_AWBChargeAmount = isShowWarning_AWBChargeAmount;
-            this.ShowWarning_AWBChargesCodeCode = isShowWarning_AWBChargesCodeCode;
         }
+
+        else {
+            var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBChargeRate")[0];
+            if (!ShipmentTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBChargeRate)) {
+                isShowWarning_AWBChargeRate = true;
+            }
+        }
+
+        this.ShowWarning_AWBCurrencyId = isShowWarning_AWBCurrencyId;
+        this.ShowWarning_RateClassCode = isShowWarning_RateClassCode;
+        this.ShowWarning_AWBChargeRate = isShowWarning_AWBChargeRate;
+        this.ShowWarning_ChargeableWeight = isShowWarning_ChargeableWeight;
+        this.ShowWarning_AWBChargeAmount = isShowWarning_AWBChargeAmount;
+        this.ShowWarning_AWBChargesCodeCode = isShowWarning_AWBChargesCodeCode;
     }
 
     // Properties
@@ -194,16 +186,6 @@ export class FreightChargesTabComponent extends BaseComponent {
             this.FireWizardEvent();
             this.ComputeAWBChargeAmount();
             this.SetRateClassUIProperties();
-            this.CheckKRateClassCode();
-        }
-    }
-
-    private CheckKRateClassCode() {
-        if (this.RateClassCode == "K") {
-            this.IsKRateClass = true;
-        }
-        else {
-            this.IsKRateClass = false;
         }
     }
 
@@ -230,14 +212,6 @@ export class FreightChargesTabComponent extends BaseComponent {
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
-            this.ComputeAWBChargeAmount();
-        }
-    }
-
-    get ChargeableWeightInKG() { return AppTool.IsNullOrZero(this.EntityPM.ChargeableWeightInKG) ? 0 : this.EntityPM.ChargeableWeightInKG; }
-    set ChargeableWeightInKG(newValue: number) {
-        if (this.EntityPM.ChargeableWeightInKG != newValue) {
-            this.EntityPM.ChargeableWeightInKG = AppTool.Round(newValue, 3);
             this.ComputeAWBChargeAmount();
         }
     }
@@ -302,7 +276,7 @@ export class FreightChargesTabComponent extends BaseComponent {
         //}
     }
     private ComputeAWBChargeAmount() {
-        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
+        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM.RateClassCode, this.EntityPM.AWBChargeRate, this.EntityPM.ChargeableWeight);
     }
     private ComputeAWBFrieghtAmount() {
         var computedAmount = this.AWBChargeAmount;

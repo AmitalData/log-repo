@@ -11,7 +11,7 @@ import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ARInvoiceStockInputTemplate.html',
 })
 

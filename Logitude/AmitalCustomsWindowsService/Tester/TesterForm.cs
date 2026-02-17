@@ -1,40 +1,25 @@
-﻿using AmitalCustomsWindowsService.Tester.CustomMessage;
-using AmitalCustomsWindowsService.Tester.SU;
-using CommunicationWorkerRole;
-using CustomsWorkerRole;
-using CustomsWorkerRole.Test;
-using Logitude.Customs.BL.CloseTables;
-using Logitude.Customs.BL.Messaging;
-using Logitude.Customs.BL.Messaging.Maman;
-using Logitude.CustomsMessaging.Dca;
-using Logitude.CustomsMessaging.Dca.Restore9100;
-using Logitude.CustomsMessaging.MessagingServices;
-using Logitude.CustomsMessaging.RabbitMQ;
-using Logitude.CustomsMessaging.ResponseServices;
-using Logitude.CustomsMessaging.U2L.CommDec;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.Utils;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.Serialization;
+using AmitalCustomsWindowsService.Tester.CustomMessage;
 using Unifreight.Data.AmitalModel;
-using WebFreight.Web.CustomWebServices;
+using CustomsWorkerRole;
+using CustomsWorkerRole.Test;
+using AmitalCustomsWindowsService.Utils;
+using AmitalCustomsWindowsService.Tester.SU;
+using System.Xml.Linq;
+using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.Server.Tools.Utils;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.Messaging.Maman;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -44,8 +29,8 @@ namespace AmitalCustomsWindowsService.Tester
         public TesterForm()
         {
             InitializeComponent();
-            //TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
-            //Debug.Listeners.Add(debugListener);
+            TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
+            Debug.Listeners.Add(debugListener);
             _CBWorkerRole.Items.Add("CustomsCommandGetCustomRequestWR");
             _CBWorkerRole.Items.Add("CustomsCommandSignRequestWR");
             _CBWorkerRole.Items.Add("CustomsCommandSendDCAWR");
@@ -56,27 +41,13 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("SendWEBAPIMessage2MamanWR");
             _CBWorkerRole.Items.Add("FTPToAnalyzeQueueWR");
             _CBWorkerRole.Items.Add("CustomsAnalyzeQueueWR");
-            _CBWorkerRole.Items.Add("CustomsSchedularWR");
-            _CBWorkerRole.Items.Add("RabbitMQReceiveWR");
-            _CBWorkerRole.Items.Add("CustomsHSMSignWR");
-            _CBWorkerRole.Items.Add("ReportExecutionLogWR");
-			_CBWorkerRole.Items.Add("DocumentAzureQueueWR");
-			_CBWorkerRole.Items.Add("DocumentSFTPAnalyzeWR");
-            _CBWorkerRole.Items.Add("SiiStatusAzureQueueWR");
 
-			NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Env:");
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(LogitudeSettings.LogitudeURL);
-
-            var t = new Thread(GetENV);
-            t.Start();
-        }
-
-        private static void GetENV()
-        {
-
-            var pmCustomsSetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(SettingUtil.GetCurrentTenant());
-            var jsonSetting = ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(jsonSetting);
+            Debug.WriteLine("Env:");
+            Debug.WriteLine(LogitudeSettings.LogitudeURL);
+            var pmCustomsSetting= Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
+            var jsonSetting=ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
+            Debug.WriteLine(jsonSetting);
+            ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
 
         private void BlobToolStripMenuItem_Click(object sender, EventArgs e)
@@ -90,24 +61,24 @@ namespace AmitalCustomsWindowsService.Tester
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             Logitude.Server.Tools.Communications.SetBolb(1, filename, "Amital", GetByte());
             stopwatch.Stop();
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SetBlob:" + filename + ":Took:" + stopwatch.Elapsed.ToString());
+            Debug.WriteLine("SetBlob:" + filename + ":Took:" + stopwatch.Elapsed.ToString());
         }
 
         private byte[] GetByte()
         {
-            return File.ReadAllBytes(toolStripTextBoxBolbXml.Text);
-
+            return File.ReadAllBytes(toolStripTextBoxBolbXml.Text); 
+            
         }
 
         private void multiBlobToolStripMenuItem_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < 5; i++)
             {
-                setBlob();
+                 setBlob();
             }
         }
 
-
+        
 
         private void toDcaToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -117,7 +88,7 @@ namespace AmitalCustomsWindowsService.Tester
             }
         }
 
-
+        
 
         private void stToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -130,33 +101,32 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void updateCloseTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //    var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.UpdateClosedTablesWR>(1, 1, true) { ServiceStarted = true };
-            //  d.ExecuteTask(); 
+        //    var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.UpdateClosedTablesWR>(1, 1, true) { ServiceStarted = true };
+          //  d.ExecuteTask(); 
         }
 
+        
 
-
-
+        
 
         private void customsMessagingSheetWRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.CustomsMessagingSheetWR>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
-            d.ExecuteTask();
+            d.ExecuteTask(); 
         }
 
         private void sendDataToExternalServicesWRToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
             var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.SendDataToExternalServicesWR>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
-            d.ExecuteTask();
+            d.ExecuteTask(); 
         }
 
         async Task DownloadDcaMessageSheetWRAsync()
         {
 
             var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.DownloadDcaMessageSheetWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text, GetTenant())
-            { ServiceStarted = true, FromTesterForm = true };
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text, GetTenant()) { ServiceStarted = true, FromTesterForm=true };
             d.ExecuteTask();
 
         }
@@ -164,8 +134,7 @@ namespace AmitalCustomsWindowsService.Tester
         private async void downloadDcaMessageSheetWRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.DownloadDcaMessageSheetWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text, GetTenant())
-            { ServiceStarted = true, FromTesterForm = true };
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text, GetTenant()) { ServiceStarted = true, FromTesterForm = true };
             d.ExecuteTask();
         }
 
@@ -177,7 +146,7 @@ namespace AmitalCustomsWindowsService.Tester
                 return i;
             }
             throw new Exception("Please insert tenant in setting !!!");
-
+            
         }
 
         private void _CBInterfaceID_Click(object sender, EventArgs e)
@@ -190,68 +159,54 @@ namespace AmitalCustomsWindowsService.Tester
             try
             {
                 var AllQ = CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(AllQ);
+                Debug.WriteLine(AllQ);
             }
             catch (Exception eee)
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee,"CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" );
+                Debug.WriteLine("CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" + eee.ToString());
             }
 
         }
 
+        
 
-
-
-
-
+       
+       
+       
 
         private void testItToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dynamic d;
             switch (_CBWorkerRole.Text)
             {
-                case "CustomsSchedularWR":
-                    {
-                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsSchedularWR>(
-                                        10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                        { ServiceStarted = true, };
-                    }
-                    break;
                 case "CustomsCommandGetCustomRequestWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandGetCustomRequestWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                    { ServiceStarted = true, };
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
                     break;
                 case "CustomsCommandSignRequestWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandSignRequestWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                    { ServiceStarted = true, };
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
                     break;
                 case "CustomsCommandSendDCAWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandSendDCAWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                    { ServiceStarted = true, };
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
                     break;
                 case "CustomsCommandSendDCAUploadStatusWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandSendDCAUploadStatusWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                    { ServiceStarted = true, };
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
                     break;
                 case "CustomsCommandSendWSReceiveCorrelationWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandSendWSReceiveCorrelationWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                    { ServiceStarted = true, };
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
                     break;
                 case "CustomsCommandDownloadDcaReceiveCorrelationWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandDownloadDcaReceiveCorrelationWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                    { ServiceStarted = true, };
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
                     break;
                 case "CustomsCommandAnalyzeResponseWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandAnalyzeResponseWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                    { ServiceStarted = true, };
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
                     break;
                 case "SendWEBAPIMessage2MamanWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<SendWEBAPIMessage2MamanWR>(
@@ -264,83 +219,16 @@ namespace AmitalCustomsWindowsService.Tester
                     { ServiceStarted = true, };
                     break;
 
-
-                case "RabbitMQReceiveWR":
-                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<RabbitMQReceiveWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                    { ServiceStarted = true, };
-                    break;
-
                 case "CustomsAnalyzeQueueWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsAnalyzeQueueWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
                     { ServiceStarted = true, };
                     break;
-
-                case "CustomsHSMSignWR":
-                    {
-                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsHSMSignWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                        { ServiceStarted = true, };
-                    }
-                    break;
-
-                case "ReportExecutionLogWR":
-                    {
-                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<ReportExecutionLogWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                        { ServiceStarted = true, };
-                    }
-                    break;
-				case "DocumentAzureQueueWR":
-					{
-						d = new AmitalCustomsWindowsService.BL.WorkerOnce<DocumentAzureQueueWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                        { ServiceStarted = true, };
-                    }
-                    break;
-				case "DocumentSFTPAnalyzeWR":
-					{
-						d = new AmitalCustomsWindowsService.BL.WorkerOnce<DocumentSFTPAnalyzeWR>(
-				10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-						{ ServiceStarted = true, };
-					}
-					break;
-                case "SiiStatusAzureQueueWR":
-                    {
-                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<SiiStatusAzureQueueWR>(
-                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-                        { ServiceStarted = true, };
-                    }
-                    break;
+                    
                 default:
                     return;
             }
-
-
-            if (!String.IsNullOrWhiteSpace(textBoxOverrideRMQ.Text))
-            {
-                d.OverrideRMQ = textBoxOverrideRMQ.Text;
-            }
-            Logitude.Server.Tools.WorkerRoleServiceLocator.PleaseShutDown = false;
-            if (checkBoxDebugMode.Checked)
-            {
-                Task.Run(async () =>
-                {
-
-                    var sw = Stopwatch.StartNew();
-                    while (sw.Elapsed < TimeSpan.FromSeconds(120))
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(2));
-                        Application.DoEvents();
-                    }
-
-                    Logitude.Server.Tools.WorkerRoleServiceLocator.PleaseShutDown = true;
-
-                });
-            }
-
-            d.ExecuteTask();
+            d.ExecuteTask(); 
 
         }
 
@@ -354,178 +242,21 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception ex)
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex); 
-
+                Debug.WriteLine(ex.ToString()); 
             }
-
+            
         }
 
-        bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-
-            try
-            {
-                clsTester.TestUpdateLOGITUDE_FILE();
-            }
-            catch (Exception EX)
-            {
-
-                ///throw;
-            }
-
-            return;
-
-            TestMaman();
-            return;
-
-
-
-
-            //Logitude.CustomsMessaging.Dca.RestoreWaitingImport.RestoreWaitingImportMessagesService.TestMe();
-
-            ///RestoreWaitingImportMessagesService.TestMe();
-
-            return;
-
-            clsTester.HSMSignTests();
-            return;
-
-
-
-            clsTester.Check_UserWcfService(GetTenant());
-            return;
-
-            Oracle2SQL sql2Oracle = new Oracle2SQL();
-            sql2Oracle.GetReNameLongColumns(root: @"C:\log2004\Logitude\Simplog.Global.Data\GlobalModel\Mapping\");
-            return;
-
-            clsTester.Check_CourierSchedulerServiceIsTimeRange();
-            return;
-
-            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
-
-            //Oracle2SQL sql2Oracle = new Oracle2SQL();
-            //sql2Oracle.GetReNameLongColumns(root:@"C:\log2004\Logitude\Simplog.Global.Data\GlobalModel\Mapping\");
-            //return;
-
-
-
-            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
-            return;
-
-            clsTester.TestSP();
-
-            return;
-            ///clsTester.RequeByID(GetTenant(), _TBID.Text);
-            int maxTry = int.Parse(_CBInterfaceID.Text);
-            clsTester.ReAnalyze2470_CustomsWithheld(GetTenant(), maxTry);
-            return;
-
-
-
-            clsTester.FeatureToggle();
-
-            var sw = Stopwatch.StartNew();
-            int tenant = GetTenant();
-            _MultiThreard = !_MultiThreard;
-            var res=clsTester.CheckWSCourierStatistic(tenant, _MultiThreard);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{0} in {1}ms",res,sw.ElapsedMilliseconds));
-
-
-            return;
-            return;
-
-
-            //clsTester.GetListByCourierHAWB();
-
-            return;
-            clsTester.MultiProccessTestLockTab();
-            string customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-43468729.xml");
-            WebFreight.Web.CustomWebServices.Testers.Tester.DeSerializeObject3052(customsResponseXml);
-            customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-20980020.xml");
-            WebFreight.Web.CustomWebServices.Testers.Tester.DeSerializeObject3052(customsResponseXml);
-
             //http://lodmpn05/DSVWebFreightDebug/api/DeclarationWebService/GetDeclarationMandatoryTicketList/?parentEntityId=1-92241&parentEntityCode=Declaration
             //DbContextBaseUtil.ToLog = true;
-            //WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
+            WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
 
             //clsTester.GetDeclarationMandatoryTicketList(parentEntityId: "1-92241", parentEntityCode: "Declaration");
             //clsTester.TestLockTab();
-            //return;
+            return;
             clsTester.TestNull();
-        }
-
-        private void TestMaman()
-        {
-            var t = Task.Run(() =>
-            {
-                string communicationLogId = "1-6851300";
-                for (int i = 0; i < 100; i++)
-                {
-                    SendECTHRToMaman(communicationLogId);
-                }
-            });
-
-
-            var t2 = Task.Run(() =>
-            {
-                string communicationLogId = "1-6856383";
-                for (int i = 0; i < 100; i++)
-                {
-                    SendECTHRToMaman(communicationLogId);
-                }
-            });
-
-            var t3 = Task.Run(() =>
-            {
-                string communicationLogId = "1-6856804";
-                for (int i = 0; i < 100; i++)
-                {
-                    SendECTHRToMaman(communicationLogId);
-                }
-            });
-            var t4 = Task.Run(() =>
-            {
-                string communicationLogId = "1-6855943";
-                for (int i = 0; i < 100; i++)
-                {
-                    SendECTHRToMaman(communicationLogId);
-                }
-            });
-
-
-            var t5 = Task.Run(() =>
-            {
-                string communicationLogId = "1-6856959";
-                for (int i = 0; i < 100; i++)
-                {
-                    SendECTHRToMaman(communicationLogId);
-                }
-            });
-            var t6 = Task.Run(() =>
-            {
-                string communicationLogId = "1-6856749";
-                for (int i = 0; i < 100; i++)
-                {
-                    SendECTHRToMaman(communicationLogId);
-                }
-            });
-
-            Task.WaitAll(t, t2, t3, t4, t5, t6);
-
-
-
-        }
-
-        private static void SendECTHRToMaman(string communicationLogId)
-        {
-
-            int Tenant = 3;
-            string @intarface = "ECTHR";
-            var SendWEBAPIMessage2MamanWR = new SendWEBAPIMessage2MamanWR();
-            SendWEBAPIMessage2MamanWR.DebugStep(communicationLogId, @intarface, Tenant);
         }
 
         private void signUpWorkerRoleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -534,36 +265,34 @@ namespace AmitalCustomsWindowsService.Tester
             //{
 
 
-            string email; string Company;
-            using (var signUpForm = new SignUpForm())
-            {
-                if (signUpForm.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                string email; string Company;
+                using (var signUpForm = new SignUpForm())
                 {
-                    return;
+                    if (signUpForm.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                    {
+                        return;
+                    }
+                    email = signUpForm.Email;
+                    Company = signUpForm.Company;
+
                 }
-                email = signUpForm.Email;
-                Company = signUpForm.Company;
 
-            }
-
-            var signUpWorkerRole = new CommunicationWorkerRole.SignUpWorkerRoleWinService();
-            var dardcODED = true;
-            if (dardcODED)
-            {
-                var password = signUpWorkerRole.CreatTenant(email, Company);
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreatTenant:email=" + email + ":Pass=" + password);
-                   
-            }
-            else
-            {
-                signUpWorkerRole.WorkOnceSuppressClearQ();
-            }
-
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("signUpWorkerRole.WorkOnce END !!");
+                var signUpWorkerRole = new CommunicationWorkerRole.SignUpWorkerRoleWinService();
+                var dardcODED = true;
+                if (dardcODED)
+                {
+                    var password = signUpWorkerRole.CreatTenant(email, Company);
+                    Logger.LogMe("CreatTenant:email=" + email + ":Pass=" + password, false);
+                }
+                else
+                {
+                    signUpWorkerRole.WorkOnceSuppressClearQ();
+                }
+                Debug.WriteLine("signUpWorkerRole.WorkOnce END !!");
             //}
             //catch (Exception ee)
             //{
-            
+            //    Logger.LogMe(ee.ToString(), true); 
             //    //throw;
             //}
         }
@@ -572,20 +301,22 @@ namespace AmitalCustomsWindowsService.Tester
         {
             var parameters = new CommunicationWorkerRole.EmailParameters()
             {
-                From = SettingUtil.Emails.FromNoReply,
-                To = SettingUtil.Emails.DevTeamManagers,
-                Subject = "SignUp complete successfully for ",
+                From = "admin@fnarsoft.com",
+                To = "jalal@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
+                Cc = "",
+                Bcc = "",
+                Subject = "SignUp complete successfully for " ,
                 Body = "emailbody",
             };
-
-            parameters.Tenant = 92;
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(parameters.To);
+                    parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
+                    parameters.Tenant = 92;
+            Debug.WriteLine(parameters.To);
             CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
         }
 
         private void send1966ByDCAToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clsTester.SendDCA19666();
+            clsTester.SendDCA19666(); 
         }
 
         private void logErrorSmtpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -597,7 +328,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception e1)
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1);  
+                Logger.LogMe(e1.ToString(), true);  
             }
         }
 
@@ -605,12 +336,12 @@ namespace AmitalCustomsWindowsService.Tester
         {
             var wr = new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService();
             wr.WorkOnce();
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CommunicationWorkerRole.WorkOnce END !!");
+            Debug.WriteLine("CommunicationWorkerRole.WorkOnce END !!");
         }
 
         private void repushQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var customsRequestsSheetsId = _txCustomsRequestsSheetsId.Text;
+            var customsRequestsSheetsId =_txCustomsRequestsSheetsId.Text;
             clsTester.RepushQ(customsRequestsSheetsId);
         }
 
@@ -640,20 +371,20 @@ namespace AmitalCustomsWindowsService.Tester
 
             if (openFileDialog1.ShowDialog() != DialogResult.OK)
             {
-                return;
+                return ;
             }
             var dcaFile = openFileDialog1.FileName;
             var bytsDcaFile = File.ReadAllBytes(dcaFile);
-            var base64InnerUTF8 = Base64InnerUTF8(dcaFile, new StringBuilder());
+            var base64InnerUTF8 =Base64InnerUTF8(dcaFile, new StringBuilder());
             openFileDialog1.Dispose();
-            dcaFile = Path.GetFileName(dcaFile);
+            dcaFile=Path.GetFileName(dcaFile);
 
-
-            CustomsWorkerRole.DCA.DCATester.DownloadFile(GetTenant(), dcaFile,
+            
+            CustomsWorkerRole.DCA.DCATester.DownloadFile(GetTenant(), dcaFile, 
                 //bytsDcaFile
-                base64InnerUTF8
+                base64InnerUTF8 
                 );
-
+            
         }
         private static string Base64InnerUTF8(string CurFileName, StringBuilder sbLog)
         {
@@ -698,47 +429,47 @@ namespace AmitalCustomsWindowsService.Tester
 
             CustomsWorkerRole.Test.clsTester.SpeedTest(this.IIGGatewayServiceURLStripMenuItem.Text, GetTenant());
 
+            
 
-
-            Task[] taskArray = new Task[10];
+            Task[] taskArray = new Task[10 ];
             for (int i = 0; i < taskArray.Length; i++)
             {
                 taskArray[i] = Task.Factory.StartNew((Object obj) =>
                 {
-
+                    
                     //data.ThreadNum = Thread.CurrentThread.ManagedThreadId;
                     //Console.WriteLine("Task #{0} created at {1} on thread #{2}.",
                     //                  data.Name, data.CreationTime, data.ThreadNum);
                     for (int j = 0; j < 2; j++)
                     {
-                        CustomsWorkerRole.Test.clsTester.SpeedTest(this.IIGGatewayServiceURLStripMenuItem.Text, GetTenant());
+                        CustomsWorkerRole.Test.clsTester.SpeedTest(this.IIGGatewayServiceURLStripMenuItem.Text, GetTenant());    
                     }
                 },
                                                      i);
             }
-            Task.WaitAll(taskArray);
+            Task.WaitAll(taskArray);     
         }
         LoadTesterForm _LoadTest;
 
-
+        
 
         private void loadTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_LoadTest == null)
+            if (_LoadTest==null)
             {
                 _LoadTest = new LoadTesterForm();
-                _LoadTest.Initialize(GetTenant());
-                _LoadTest.Show();
+                _LoadTest.Initialize(GetTenant()); 
+                _LoadTest.Show();    
             }
-
+            
 
         }
 
+        
 
+        
 
-
-
-
+        
 
         private void testSpeedTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -747,72 +478,10 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void debugStepToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            switch (_CBWorkerRole.Text)
-            {
-                case "CustomsSchedularWR":
-                    {
-                        var customsSchedularWR = new CustomsSchedularWR();
-                        customsSchedularWR.WorkOnce();
-                    }
-                    break;
-                case "CustomsAnalyzeQueueWR":
-                    {
-                        var customsAnalyzeQueueWR = new CustomsAnalyzeQueueWR();
-                        customsAnalyzeQueueWR.CheckParamsAndExec(_TBID.Text, _CBInterfaceID.Text, GetTenant());
 
-                    }
-                    break;
-                case "SendWEBAPIMessage2MamanWR":
-                    {
-                        var SendWEBAPIMessage2MamanWR = new SendWEBAPIMessage2MamanWR();
-                        SendWEBAPIMessage2MamanWR.DebugStep(_TBID.Text, _CBInterfaceID.Text, GetTenant());
-
-                    }
-                    break;
-
-                case "CustomsHSMSignWR":
-                    {
-                        var SendWEBAPIMessage2MamanWR = new CustomsHSMSignWR();
-                        SendWEBAPIMessage2MamanWR.DebugStep(_TBID.Text, _CBInterfaceID.Text, GetTenant(),
-                            "032443830", "SignQueueByPersonId");
-
-                    }
-                    break;
-                case "ReportExecutionLogWR":
-                    {
-                        var reportExecutionLogWR = new ReportExecutionLogWR();
-                        reportExecutionLogWR.DebugStep();
-
-                    }
-                    break;
-				case "DocumentAzureQueueWR":
-					{
-						var documentAzureQueueWR = new DocumentAzureQueueWR();
-						documentAzureQueueWR.DebugStep();
-
-					}
-					break;
-				case "DocumentSFTPAnalyzeWR":
-					{
-						var documentSFTPAnalyzeWR = new DocumentSFTPAnalyzeWR();
-						documentSFTPAnalyzeWR.DebugStep();
-
-					}
-					break;
-                case "SiiStatusAzureQueueWR":
-                    {
-                        var siiStatusAzureQueueWR = new SiiStatusAzureQueueWR();
-                        siiStatusAzureQueueWR.DebugStep();
-                    }
-                    break;
-                default:
-                    CustomsWorkerRole.Test.clsTester.DebugRQStep(
+            CustomsWorkerRole.Test.clsTester.DebugRQStep(
                 _CBInterfaceID.Text, GetTenant(), _TBID.Text,
                 _CBWorkerRole.Text);
-                    break;
-            }
-
-
 
 
         }
@@ -827,20 +496,22 @@ namespace AmitalCustomsWindowsService.Tester
                 {
                     var parameters = new CommunicationWorkerRole.EmailParameters()
                     {
-                        From = SettingUtil.Emails.FromNoReply,
+                        From = "admin@fnarsoft.com",
                         SwitchFromWithUserNameIfValid = true,
-                        To = SettingUtil.Emails.DevTeamManagers,
+                        To = "itzik@amital.co.il;YaronC@AMITAL.CO.IL;bbwrweim@mailparser.io",
+                        Cc = "",
+                        Bcc = "",
                         Subject = subj,
-                        Body = "ReqSheetStatistic " + Environment.MachineName + "/ " + Environment.UserDomainName +
+                        Body ="ReqSheetStatistic " + Environment.MachineName + "/ " + Environment.UserDomainName +
                         emailbody,
                     };
                     //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
                     //parameters.Tenant = 92;
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(parameters.To);
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(emailbody);
-
+                    Debug.WriteLine(parameters.To);
+                    Debug.WriteLine(emailbody);
+                    
                     CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
-                }, true);
+                },true);
         }
 
         private void memLeakToolStripMenuItem_Click(object sender, EventArgs e)
@@ -853,23 +524,23 @@ namespace AmitalCustomsWindowsService.Tester
             try
             {
                 MessageBox.Show("Move to Logitude.Update");
-
+                
                 //Debug.WriteLine(CustomsWorkerRole.Test.clsTester.GrantCCUTo(GetTenant()));
             }
             catch (Exception ee)
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee);
+                Debug.WriteLine(ee.ToString());
                 MessageBox.Show("maybe tenant not exist !!!");
             }
-
+            
         }
 
         private void buildDcaAggregrateTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
             CustomsWorkerRole.Test.clsTester.BuildDcaAggregrateFile(@"c:\temp\");
-
+            
         }
 
         private void frizGetDecXmlToolStripMenuItem_Click(object sender, EventArgs e)
@@ -877,12 +548,12 @@ namespace AmitalCustomsWindowsService.Tester
             var tenant = GetTenant();
             var DecId = "1-2642";
             var xml = CustomsWorkerRole.Test.clsTester.GetDeclarationXml(tenant, DecId);
-            var file = Path.Combine(@"c:\", DecId + ".xml");
+            var file= Path.Combine(@"c:\",DecId +".xml");
             File.WriteAllText(file, xml);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(file); 
+            Debug.WriteLine(file); 
 
             var checkXml = @"C:\Program Files (x86)\Microsoft Visual Studio 11.0\DeclarationPM.FromXsd.xml";
-            var xmlCheck = File.ReadAllText(checkXml);
+            var xmlCheck=File.ReadAllText(checkXml);
             CustomsWorkerRole.Test.clsTester.PutDeclarationXml(xmlCheck);
 
         }
@@ -904,8 +575,8 @@ namespace AmitalCustomsWindowsService.Tester
         private void loadTestAPIToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //var createCustomFile = new Logitude.CustomsMessaging.Testers.LoadTest.CreateCustomFileService();
-
-
+            
+            
             //var fileNo = createCustomFile.SendHybridInterface(createCustomFile.GetShipmentAM());
 
             //Debug.WriteLine("Created File :" + fileNo);
@@ -949,19 +620,19 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void clearCacheToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory(0);
+            Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
             Logitude.BL.Helpers.TableLastUpdateClass.UpdateSystemMetaDataHistory();
         }
 
         private void uploadMultiToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-
+           
         }
 
         private void checkUniqueUploadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void UploadMultiDoit_Click(object sender, EventArgs e)
@@ -989,22 +660,22 @@ namespace AmitalCustomsWindowsService.Tester
                     .GroupBy(r => r.Length)
                     .Where(g => g.Count() > 1)
                     .SelectMany(r => r)
-                    .Select(fi => fi.Name)
+                    .Select( fi=> fi.Name)
                     .ToList()
                     ;
-
-
-                ;
+               
+                    
+                    ;
                 notUniqeNames.ForEach(r =>
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(r);
+                    Debug.WriteLine(r);
                 }
                 );
 
             }
             else
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("folder Not Exist ");
+                Debug.WriteLine("folder Not Exist ");
             }
         }
 
@@ -1013,11 +684,9 @@ namespace AmitalCustomsWindowsService.Tester
             bool testIt = false;
             if (testIt)
             {
-                int Tenant = GetTenant();
                 var tst = new CustomsWorkerRole.Test.clsTester();
-                tst.FtpTester(Tenant);
+                tst.FtpMamanTester();
             }
-
             var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
             d.ExecuteTask();
         }
@@ -1035,40 +704,22 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void hAWBALDARMamanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WebAPINetworkCredentialMessage.OVSUpdateHawbStatusTester();
-            //WebAPI2BearerMamanMessage.OVSUpdateHawbStatusTesterNotWork();
-
-            //MamanBaldarTest();
-
-        }
-
-        private static void MamanBaldarTest()
-        {
             var wr = new SendWEBAPIMessage2MamanWR();
             string data =
                 @"{""BaldarCode"":""2026"",""BaldarAwb"":""baldarAWb35"",""AirlineAwbPref"":""001"",""Master"":22222211,""Awb8"":88888888,""HawbExtnd"":""abcd1234 update"",""AirlineCode"":""1X"",""FltNo"":null,""FltDate"":null,""LandTime"":null,""DecNoOfPackags"":1,""DecWeight"":100.1,""DolarValue"":200.12345,""StoreTypeReq"":""67"",""Description"":""Description1 - 2026 update"",""CustomerName"":""Miriam"",""CustomerAddress"":""Ein Gedi"",""CustomerPhone"":""026765544"",""DestLineDesc"":""DestLineDesc"",""BaldarMessageTime"":""2018 - 10 - 16T17: 38:33.1365366 + 03:00"",""BaldarHp"":""2323231"",""OpenBaldarAwbDate"":""2018 - 10 - 15T17: 38:33.1365366 + 03:00"",""ResponseStatusCode"":null,""ResponseStatusMsg"":null}";
-            var service = new WebAPI2BearerMamanMessage(new CourierWEBAPICommSettings()
+            var service = new WebAPI2BearerMamanMessage(new Logitude.Customs.BL.Messaging.Maman.Courier2MamanCommSettings()
             {
                 DeclarationId = "",
                 username = "F_unitedf",
                 password = "Unit2019",
-                //URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
-                //URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae",
-
-                //URIToken = @"http://localhost:52013/api/Token",
-                //URIBaldarCreateECTHRMessgae = @"http://localhost:52013/api/MamanCreateECTHRMessgae",
-
-                URIToken = @"http://192.116.221.103/WebApp3PartySimulator/api/Token",
-                URIMethod = @"http://192.116.221.103/WebApp3PartySimulator/api/MamanCreateECTHRMessgae",
-
-
+                URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
+                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae",
                 Tenant = 1
 
-
             });
-
-
             var res = service.PostIt(data);
+
+            
         }
 
         private void mamanCreateECSpclMessgaeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1090,13 +741,13 @@ namespace AmitalCustomsWindowsService.Tester
   ""SpLabel5"": ""sample string 9"",
   ""SpSpclCode"": ""sample string 10""
 }";
-            var service = new WebAPI2BearerMamanMessage(new CourierWEBAPICommSettings()
+            var service = new WebAPI2BearerMamanMessage(new Logitude.Customs.BL.Messaging.Maman.Courier2MamanCommSettings()
             {
                 DeclarationId = "",
                 username = "F_unitedf",
                 password = "Unit2019",
                 URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
-                URIMethod = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECSpclMessgae",
+                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECSpclMessgae",
                 Tenant = 1
 
             });
@@ -1112,334 +763,7 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void TesterForm_Load(object sender, EventArgs e)
         {
-            WebFreight.Web.CustomWebServices.Testers.Tester.GetSingleDeclarationPMByNumber();
-
-            AmitalContext.TestIt();
-
-            if (DBWorkerService.IsOldDB())
-            {
-                MessageBox.Show("DBWorkerService.IsOldDB !!! - Please do Logitute.Update> Update DB !!!");
-            }
-            ;
 
         }
-
-        private void buildMamanBaldarSTBToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var AirlineIdMAWB = _tstbMamanBaldarSTB.Text;
-            AirlineIdMAWB = AirlineIdMAWB.Trim();
-            if (string.IsNullOrEmpty(AirlineIdMAWB))
-            {
-                MessageBox.Show("AirlineId-MAWB is must");
-            }
-            var my = new Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue.MamanStatusAvailabilityTesterService();
-            var list = my.Tester(AirlineIdMAWB);
-            string dir = @"C:\inetpub\wwwroot\FTP_MAMAN";
-            if (!Directory.Exists(dir))
-            {
-                dir = Path.Combine(Path.GetTempPath(), "FTP_MAMAN");
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-
-            }
-            System.Diagnostics.Process.Start(dir);
-            foreach (var item in list)
-            {
-                var f = Path.Combine(dir, item.Key);
-                File.WriteAllText(f, item.Value);
-            }
-        }
-
-        private void textBoxLogger_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void downloadFTPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string interfaceID = _CBInterfaceID.Text;
-            if (string.IsNullOrWhiteSpace(interfaceID))
-            {
-                MessageBox.Show("_CBInterfaceID.Text is null");
-                return;
-            }
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            try
-            {
-                openFileDialog1.InitialDirectory = "c:\\";
-                openFileDialog1.Filter = "All files (*.*)|*.*";
-                openFileDialog1.FilterIndex = 2;
-                openFileDialog1.RestoreDirectory = true;
-
-                if (openFileDialog1.ShowDialog() != DialogResult.OK)
-                {
-                    return;
-                }
-                var fileName = openFileDialog1.FileName;
-                var bytsDcaFile = File.ReadAllBytes(fileName);
-                fileName = Path.GetFileName(fileName);
-
-                int Tenant = GetTenant();
-
-                FTPToAnalyzeQueueWR.SaveAnalyzeQueueFromCode(Tenant, interfaceID, fileName, bytsDcaFile);
-            }
-            finally
-            {
-                openFileDialog1.Dispose();
-            }
-
-
-
-
-
-        }
-
-        private void commDecServiceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            for (int i = 0; i < 9; i++)
-            {
-                try
-                {
-                    string MoreParams = "";
-                    string MessageOut = "";
-                    var ListEntry = new Dictionary<string, string>();
-                    ListEntry.Add("tenant", "1");
-                    ListEntry.Add("UNIFREIGHT_USER_ID", "ITZIK");
-
-
-
-
-                    var s = new CommDecService();
-
-                    string AssemblyQualifiedName = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService";
-                    string DataIn1 = s.GetExampleDataIn1();
-                    var rep = "0987800" + i.ToString();
-                    DataIn1 = DataIn1.Replace("09878498", rep);
-                    string DataIn2 = "";
-                    MoreParams = UnifreightListsUtil.Serialize(ListEntry);
-                    string DataOut1 = "";
-                    string DataOut2 = "";
-                    string SUCCESS = "";
-
-                    var gw = new UnifreightGatewayService();
-                    gw.ProccessRequest(
-                        AssemblyQualifiedName,
-                DataIn1,
-                DataIn2,
-                out DataOut1,
-                out DataOut2,
-                out SUCCESS,
-                ref MoreParams,
-                out MessageOut);
-
-
-
-                }
-                catch (Exception E)
-                {
-                    //throw;
-                }
-            }
-        }
-
-        private void sendToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //            var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-            //            using (var connection = factory.CreateConnection())
-            //            using (var channel = connection.CreateModel())
-            //            {
-
-            //                //var factory = new ConnectionFactory() { HostName = "localhost" };
-            //                //using (var connection = factory.CreateConnection())
-            //                //using (var channel = connection.CreateModel())
-            //                //{
-            //                channel.QueueDeclare(queue: "connectToTicket",
-            //                                     durable: false,
-            //                                     exclusive: false,
-            //                                     autoDelete: false,
-            //                                     arguments: null);
-
-            //                string message = @"<DCAInUCBUD2LTWithResponseContentHeader xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://amital.com/customs/Prod/DCAInUCBUD2LTWithResponseContentHeader'>
-            //<ResponseContentHeader>
-            //<ApplicationID>0</ApplicationID>
-            //<TransmitionDateTime>2021-09-12T18:31:55.5180688+03:00</TransmitionDateTime>
-            //</ResponseContentHeader>
-            //<tenant>3</tenant>
-            //<LoggingUserId>1-7</LoggingUserId>
-            //<DeclarationId>1-1479599</DeclarationId>
-            //<MyMoreParams/>
-            //<DocumentsFilingCode>E526108</DocumentsFilingCode>
-            //<DocumentsFilingId>PATLCHNAXUSVBJPZLLS+8A00000000</DocumentsFilingId>
-            //<DocumentTypeCode>CWB</DocumentTypeCode>
-            //</DCAInUCBUD2LTWithResponseContentHeader>"; ;
-            //                var body = Encoding.UTF8.GetBytes(message);
-
-            //                channel.BasicPublish(exchange: "",
-            //                                     routingKey: "connectToTicket",
-            //                                     basicProperties: null,
-            //                                     body: body);
-            //                Console.WriteLine(" [x] Sent {0}", message);
-            //            }
-
-        }
-
-        private void recivedToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                var args = new Dictionary<string, object>();
-                //lazy = store messages to disk => no lost messages in case on rabbitmq restart 
-                args.Add("x-queue-mode", "lazy");
-                //channel.QueueDeclare(queue: "ucbud2lt__",
-                //                    durable: true,
-                //                    exclusive: false,
-                //                    autoDelete: false,
-                //                    arguments: args);
-
-
-                channel.QueueDeclare(queue: "ucbud2lt__",
-                                                           durable: false,
-                                                           exclusive: false,
-                                                           autoDelete: false,
-                                                           arguments: null);
-
-                var consumer = new EventingBasicConsumer(channel);
-                consumer.Received += (model, ea) =>
-                {
-                    // var body = null; ea.Body.ToArray();
-                    var message = "";// Encoding.UTF8.GetString(body);
-
-                    UniCourierBatchSendUCBUD2LT_MsgResponseService uniCourierBatchSendUCBUD2LT_MsgResponseService = new UniCourierBatchSendUCBUD2LT_MsgResponseService();
-                    XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
-                    DCAInUCBUD2LTWithResponseContentHeader mySTBMessage;
-                    using (TextReader reader = new StringReader(message))
-                    {
-
-
-                        XmlDocument doc = new XmlDocument();
-                        doc.Load(reader);
-
-                        //Display all the book titles.
-                        XmlNodeList elemList = doc.GetElementsByTagName("Body");
-                        //XmlNodeList elemList2 = elemList.GetElementsByTagName("ResponseContentHeader");
-
-                        //  mySTBMessage = GetSTBMessage(elemList[0].LastChild.InnerXml);
-
-                        mySTBMessage = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(new StringReader(elemList[0].InnerXml));
-
-                        //    dynamic test = XmlGenericUtil<dynamic>.DeSerializeObject(elemList[0].InnerXml);//serializer.Deserialize(reader);
-                        //    result = (DCAInUCBUD2LTWithResponseContentHeader)test.body.DCAInUCBUD2LTWithResponseContentHeader;
-                    }
-
-                    uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(mySTBMessage);
-                    //   channel.BasicAck(ea.DeliveryTag, false);
-                    //Console.WriteLine(" [x] Received {0}", message);
-                };
-
-                channel.BasicConsume(queue: "ucbud2lt__",
-                                     autoAck: true,
-                                     consumer: consumer);
-
-                // Console.WriteLine(" Press [enter] to exit.");
-                // Console.ReadLine();
-            }
-        }
-
-        private void checkBoxMQ_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-        private void singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
-            d.ExecuteTask();
-        }
-
-        private void uW2LToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ///פתיחת הצהרה מאינטגרטור
-
-            var rabbitMQReceiveWR = new RabbitMQReceiveWR();
-            var customRabbitMQQueue = new CustomRabbitMQQueue();
-            var allQueueDetails = customRabbitMQQueue.GetAllQueueDetails()
-             .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
-            .ToList();
-            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-            string log = "";
-            bool success = false;
-
-            string communicationLogId = _TBID.Text;//1-5898221
-            int tenant = GetTenant();
-            var _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
-            if (_CommunicationLog == null)
-            {
-                throw new Exception("Cannnot GetCommunicationLog");
-            }
-            string communicationsData = Communications.GetData(_CommunicationLog); ;
-
-
-            var c = allQueueDetails.FirstOrDefault(r => r.Code == "uw2l");
-            rabbitMQReceiveWR.Exec(
-                customRabbitMQQueue, c,
-                analyzeQueueRepository,
-                /*"1-5898221"*/
-                communicationLogId, tenant, communicationsData, out log, out success);
-            ;
-
-
-        }
-
-        private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-
-
-
-
-
-            //var message = Encoding.UTF8.GetBytes(Get("CorrelationId", "ExternalId", "body"));
-
-
-            //string InterfaceTypeCode = "ucbud2lt";
-            //String rabbitMQCode = RabbitmqHelper.GetRabbitMQCode(1);
-            //rabbitMQCode = "itziktest_" + rabbitMQCode;
-
-            ////var rabbitPublishService = new RabbitPublishService();
-            //RabbitPublishService.Publish(message, "communicationLogId", InterfaceTypeCode, rabbitMQCode, 5);
-
-
-        }
-
-        private void _TBID_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            DcaDirect9200TenantService.SkipCorrelationClearForTests = true;
-            var DownloadDcaMessageSheetWR = new DownloadDcaMessageSheetWR();
-            DownloadDcaMessageSheetWR.WorkOnce();
-            DcaDirect9200TenantService.SkipCorrelationClearForTests = false;
-        }
-
-        //private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void _TBID_TextChanged(object sender, EventArgs e)
-        //{
-
-        //}
     }
 }

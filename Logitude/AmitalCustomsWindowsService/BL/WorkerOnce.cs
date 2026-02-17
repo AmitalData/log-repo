@@ -42,14 +42,12 @@ namespace AmitalCustomsWindowsService.BL
             }
 
             _TWorker =  new TWorker();
-            _TWorker.QueueGroupCodeRabbit = this.QueueDefinitionCode;
-            _TWorker.WorkerQueueType = this.WorkerQueueType;
             _TWorker.DebugMode = debugMode;
             _TWorker.DebugObject = DebugObject;
             _TWorker.Tenant = Tenant;
             _TWorker.ThreadId = ///_TWorker.GetHashCode().ToString(); //
             Guid.NewGuid().ToString();
-            _TWorker.BatchServiceCode = this.QueueDefinitionCode != null ? this.QueueDefinitionCode : typeof(TWorker).Name;
+            _TWorker.BatchServiceCode = typeof(TWorker).Name;
             _intervalInSec =interval;
             this.MyType = _TWorker.NameOf();
             Simplog.Server.Infrastructure.WebFreightEntryPoint.UsingAzure = true; // For Log -ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "DCA Wroker role", log);
@@ -61,7 +59,7 @@ namespace AmitalCustomsWindowsService.BL
         {
             DateTime lastRunTime = DateTime.MinValue;
             
-            while (ServiceStarted && !WorkerRoleServiceLocator.PleaseShutDown)
+            while (ServiceStarted)
             {
                 // check the current time against the last run plus interval
                 var lastRun = ((TimeSpan)(DateTime.UtcNow.Subtract(lastRunTime))).TotalSeconds;
@@ -70,7 +68,7 @@ namespace AmitalCustomsWindowsService.BL
                 {
                     // if time to do something, do so
                     // exception handling omitted here for simplicity
-                    
+                    //Logger.LogMe("Multithreaded Service working; id = " + this._id.ToString(), false);
                     try
                     {
                         _TWorker.WorkOnce();
@@ -78,7 +76,7 @@ namespace AmitalCustomsWindowsService.BL
                     catch (Exception e)
                     {
                         //_TWorker.
-                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                        Logger.LogMe(this.GetType().FullName + ":" + e.ToString(), true);
                         Thread.Sleep(TimeSpan.FromMinutes(1));
                     }
 
@@ -86,22 +84,22 @@ namespace AmitalCustomsWindowsService.BL
                     // set new run time
                     lastRunTime = DateTime.UtcNow;
                 }
-                if (_TWorker.DebugMode && (Environment.UserInteractive || this.MyType == "LoadTestWR"))
+                if (_TWorker.DebugMode && Environment.UserInteractive  )
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_TWorker.DebugMode && Environment.UserInteractive");
+                    Logger.LogMe("_TWorker.DebugMode && Environment.UserInteractive", false);
                     return;
                 }
                 if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
                 {
                     _LastReprtAt = DateTime.Now;
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":Still Alive");
+                    Logger.LogMe(typeof(TWorker).FullName + ":Still Alive", false);
                 }
                 Thread.Sleep(TimeSpan.FromSeconds(_intervalInSec));
 
             }
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":ServiceStarted=" + ServiceStarted.ToString());
-           
+            Logger.LogMe(typeof(TWorker).FullName + ":ServiceStarted=" + ServiceStarted.ToString() , false);
+            Logger.LogMe(typeof(TWorker).FullName + ":ExecuteTask:OUtOUtOUtOUtOUtOUtOUtOUt !!OUt !!", false);
             WhileServiceStarted_IsOut = true;
             if (_TWorker.DebugMode)
             {
@@ -151,26 +149,6 @@ namespace AmitalCustomsWindowsService.BL
         }
 
         public bool WhileServiceStarted_IsOut { get; private set; }
-        public string QueueDefinitionCode
-        {
-            get { return _TWorker.QueueGroupCodeRabbit; }
-            set { _TWorker.QueueGroupCodeRabbit = value; }
-
-        }
-        public WorkerQueueType WorkerQueueType
-        {
-            get { return _TWorker.WorkerQueueType; }
-            set { _TWorker.WorkerQueueType = value; }
-
-        }
-
-        public string OverrideRMQ
-        {
-            get { return _TWorker.OverrideRMQ; }
-            set { _TWorker.OverrideRMQ = value; }
-
-        }
-
 
         int _ManagedThreadId;
         

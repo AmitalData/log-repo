@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -16,7 +16,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public WarehouseRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public WarehouseRepository(int tenant)
         {
@@ -25,7 +28,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Warehouse GetSingleWarehouse(string id,int tenant = 0)
         {
-            return (from a in context.Warehouses.Include("Card").Include("Card.PaymentTerm")
+            return (from a in context.Warehouses.Include("Card")
                     where a.Id == id
                     select a).FirstOrDefault();
         }
@@ -44,18 +47,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                    select a;
         }
 
-        public string GetWarehouseTypeById(string warehouseId, int tenant)
-        {
-            string warehouseTypeCode = "";
-            WarehouseType warehouseType = (from a in context.Warehouses.Include("Card")
-                   where a.Tenant == tenant && a.Id == warehouseId
-                   select a.WarehouseType).FirstOrDefault();
-            if (warehouseTypeCode != null) warehouseTypeCode = warehouseType.Code;
 
-            return warehouseTypeCode;
-        }
-
-
+        
 
         public void Add(Warehouse entity)
         {
@@ -98,12 +91,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Warehouse GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
-        }
-        public Warehouse GetFirstSingleByCode(string code, int tenant)
-        {
-            return (from record in context.Warehouses.Include("Card")
-                    where record.Card.Code == code && record.Tenant == tenant
-                    select record).FirstOrDefault();
         }
     }
 }

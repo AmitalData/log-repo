@@ -12,12 +12,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
    
-    public partial class Contact
+    public class Contact
     {
 
 	    
@@ -31,20 +30,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 	[XmlAttribute]
     public string Code { get; set; }
     
-	[XmlAttribute]
     public string Email { get; set; }
-    
-    public string Position { get; set; }
-    
-    public string BusinessPhone { get; set; }
-    
-    public string Mobile { get; set; }
-    
-    public bool IsPrimaryContact { get; set; }
-    
-    public bool InActive { get; set; }
-    
-    public string Notes { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

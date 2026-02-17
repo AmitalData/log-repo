@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -12,8 +12,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTableHelperControl.Tenant = objectTableHelperControlPM.Tenant;
             objectTableHelperControl.Code = objectTableHelperControlPM.Code;
             objectTableHelperControl.FeatureId = objectTableHelperControlPM.FeatureId;
-            objectTableHelperControl.FeatureUniqeCode = objectTableHelperControlPM.FeatureUniqeCode;
-
         }
     }
 }

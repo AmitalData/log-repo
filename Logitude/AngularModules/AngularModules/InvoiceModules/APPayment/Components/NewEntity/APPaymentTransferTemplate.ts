@@ -13,10 +13,9 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {APPaymentPMService} from '../../../../Invoice/Services/StandardPMs/APPaymentPMService';
-import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './APPaymentTransferTemplate.html',
 })
 
@@ -91,10 +90,7 @@ export class APPaymentTransferTemplate extends BaseComponent {
             if (!response.HasError) {
                 var card: CardList = response.Result;
                 if (card != null) {
-                    var invoiceDomainService = new InvoiceDomainService();
-                    invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(card.Id, this.EntityPM.PaymentCurrencyId, true).subscribe((myResult: ServiceResponse) => {
-                        this.VendorExternalId = myResult.Result;
-                    });
+                    this.VendorExternalId = card.PayablesAccountingCard;
                 }
                 this.isVendorFinished = true;
                 this.BuildList();
@@ -463,10 +459,7 @@ export class APTransferLineArgs extends BaseComponent {
                 var entity = s.EntityPM;
                 if (entity != null) {
                     if (this.Code == "VNDR") {
-                        var invoiceDomainService = new InvoiceDomainService();
-                        invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(entity.Id, this.EntityPM.PaymentCurrencyId, true).subscribe((myResult: ServiceResponse) => {
-                            this.EditingFieldValue = myResult.Result;
-                        });
+                        this.EditingFieldValue = entity.PayablesAccountingCard;
                     }
                     else if (this.Code == "CURR") {
                         this.EditingFieldValue = entity.AccountingExternalCode;

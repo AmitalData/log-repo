@@ -1,28 +1,24 @@
-import {Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
+﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {AgentPM} from '../../../../Common/EntityPMs/AgentPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AgentBillingTabComponent.html',
 })
 
-export class AgentBillingTabComponent extends BaseComponent implements OnInit, OnDestroy {
+export class AgentBillingTabComponent extends BaseComponent implements OnInit {
     public EntityPM: AgentPM;
     public ObjectTableName: string = "Agent";
     public DataContext = this;
     public HasCreditLimitFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
     public DisplaySATSettings: boolean = false;
-    public Profact4Enabled: boolean = false;
-    public IsBlockMessageVisible: boolean = false;
-    @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
+    @ViewChild('BillingChild', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -32,85 +28,45 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
         if (this.HasCreditLimitFeature) {
             this.IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
         }
-
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
-            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
 
     }
 
     ngOnInit() {
         this.SetUIProperties();
-        this.LoadGeneratedComponents();
+        this.RunComponent();
     }
 
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
-    private Listen() {
-        if (this.entityArgs.EditComponent != null) {
-            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                }
-            });
-
-            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                }
-            });
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
         }
-    }
 
-    ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);
-        AppTool.KillEventEmitter(this.LoadCompletedEvent);
-    }
-
-    LoadGeneratedComponents() {
-        if (!this.viewContainerRef) {
-            this.RunComponentTimer("Child");
-            return;
+        else {
+            this.RunComponentTimer();
         }
-        this.LoadChildComponent(this.viewContainerRef);
     }
 
     private Retries: number = 0;
     private timerToken: any;
-    private RunComponentTimer(componentName: String) {
+    private RunComponentTimer() {
         this.Retries++;
 
         if (this.timerToken) {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
-            this.timerToken = componentName == "ARInvoiceDocumentTypeTemplateComponent" ? setTimeout(() => this.LoadARInvoiceDocumentTypeTemplateComponent(), 1) : setTimeout(() => this.LoadGeneratedComponents(), 1);
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-    private LoadChildComponent(viewContainerRef) {
+    private LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, "Agent.BillingTabScreen");
-                if (viewContainerRef == this.viewContainerRef) this.LoadARInvoiceDocumentTypeTemplateComponent();
             });
-    }
-
-    IsARInvoiceDocumentTypeTemplateAreaLoaded: boolean = false;
-    public LoadARInvoiceDocumentTypeTemplateComponent() {
-        if (this.IsARInvoiceDocumentTypeTemplateAreaLoaded) return;
-        this.Retries = 0;
-        if (!this.documentTemplateViewContainerRef) {
-            this.RunComponentTimer("ARInvoiceDocumentTypeTemplateComponent");
-            return;
-        }
-
-        SessionLocator.DynamicLoader.Load('./CommonModules/CommonPartners/Components/Templates/PartnerARInvoiceDocumentTypeTemplateComponent', this.documentTemplateViewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.Run(this.EntityPM);
-            });
-        this.IsARInvoiceDocumentTypeTemplateAreaLoaded = true;
     }
 
     SetUIProperties() {
@@ -124,11 +80,6 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
             }
         }
 
-        if (this.EntityPM?.Card?.ExternalSystem == "UNIFREIGHT") {
-            this.IsBlockMessageVisible = true;
-            this.UIProperties.SetEnabled("IsAutonomy", "Card", false);
-
-        }
         this.UIProperties.SetEnabled("BlockNewInvoiceCreation", this.ObjectTableName, isFieldActivated);
         this.UIProperties.SetEnabled("BlockNewShipmentCreation", this.ObjectTableName, isFieldActivated);
     }
@@ -175,31 +126,10 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    get RegimenFiscalCode() { return this.EntityPM.RegimenFiscalCode; }
-    set RegimenFiscalCode(newValue: string) {
-        if (this.EntityPM.RegimenFiscalCode != newValue) {
-            this.EntityPM.RegimenFiscalCode = newValue;
-        }
-    }
-
-    get SATReceptorName() { return this.EntityPM.SATReceptorName; }
-    set SATReceptorName(newValue: string) {
-        if (this.EntityPM.SATReceptorName != newValue) {
-            this.EntityPM.SATReceptorName = newValue;
-        }
-    }
-
     get SATForeignRFC() { return this.EntityPM.SATForeignRFC; }
     set SATForeignRFC(newValue: string) {
         if (this.EntityPM.SATForeignRFC != newValue) {
             this.EntityPM.SATForeignRFC = newValue;
         }
     }
-    get IsAutonomy() { return this.EntityPM.Card?.IsAutonomy; }
-    set IsAutonomy(newValue: boolean) {
-        if (this.EntityPM?.Card != null && this.EntityPM.Card?.IsAutonomy != newValue) {
-            this.EntityPM.Card.IsAutonomy = newValue;
-            this.EntityPM.IsDirty = true;
-        }
-    }  
 }

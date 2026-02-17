@@ -1,6 +1,0 @@
---delete from states where rowid not in(
---select min(rowid)
---from   states
---group  by code,countryid,tenant);
---/
---ALTER TABLE "STATES" ADD CONSTRAINT "UQ_STATES_TENANT_CODE_CO_A8S2J" UNIQUE("TENANT","CODE","COUNTRYID");

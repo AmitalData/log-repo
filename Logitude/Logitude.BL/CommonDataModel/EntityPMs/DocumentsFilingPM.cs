@@ -111,9 +111,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public int LastVersion { get; set; }// field for Itzik-----Mohammad.
 
 
-        public bool IsUoloadedField { get; set; }// field for Itzik-----Mohammad.
 
-
+        
         public DateTime? LastShareDate { get; set; }
         public bool IsSharedIn { get; set; }
         public bool IsSharedOut { get; set; }
@@ -167,30 +166,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CustomReference { get; set; }
         public bool IsDigitalSignRequired { get; set; }
         public bool BackedupExternally { get; set; }
-        public string OcrStatusCode { get; set; }
-        public decimal OcrScore { get; set; }
-        public string OcrReference { get; set; }
-        public bool OcrNotConnect { get; set; }
-		public bool IsNotCustomsDocId { get; set; }
-		public string DeclarationId { get; set; }
-		public string LoggedUserId { get; set; }
-
-        public bool? IsTransferdToQBO { get; set; }
-        public bool IsAgentSharedInHouse { get; set; }
-        public bool IsAgentSharedInDirect { get; set; }
-        public bool IsAgentSharedInMaster { get; set; }
-
-        public bool FromCTool { get; set; }
-        public string ReceivedByByContactId { get; set; }
-        public bool IsCustomerUploadPermission { get; set; }
-        public bool IsApprovalRequired { get; set; }
-        public bool IsFromDigital { get; set; }
-        public string ReceivedByPartner { get; set; }
-        public string InvoiceBillTo { get; set; }
-        public string BillToId { get; set; }
-
-        public bool IsFromCloud { get; set; }
-        public string FileDataMD5Hash { get; set; }
-
     }
 }

@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using SilverlightExpressions;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
  
@@ -30,7 +30,7 @@ using WebFreight.Web.InfrastructureModel.DomainServices;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.InfrastructureModel;
 using Logitude.BL.Interfaces;
-using WebFreight.Web.Helpers;
+
 
 namespace WebFreight.Web.Validators
 {
@@ -45,7 +45,7 @@ namespace WebFreight.Web.Validators
         private QuotesDomainService quotesDomainService;
         private ShipmentsDomainService shipmentsDomainService;
         private InvoiceDomainService invoiceDomainService;
-        private EntityPropertyValueService entityPropertyValueService;
+
         private List<ObjectTableRule> blockRules = new List<ObjectTableRule>();
         private List<ObjectTableRule> entityLevelRules = new List<ObjectTableRule>();
         private List<ObjectTableRule> requiredFieldRules = new List<ObjectTableRule>();
@@ -174,7 +174,7 @@ namespace WebFreight.Web.Validators
             foreach (ObjectTableRuleField ruleField in ruleFields)
             {
                 ObjectField objectField = (from a in objectFieldList
-                                           where a.FieldCode == ruleField.ObjectFieldCode && (a.Tenant == tenant || a.Tenant == 0)
+                                           where a.Id == ruleField.ObjectFieldId && (a.Tenant == tenant || a.Tenant == 0)
                                            select a).FirstOrDefault();
                 if (ruleField.RuleNotificationTypeCode == "ERR")
                 {
@@ -308,17 +308,14 @@ namespace WebFreight.Web.Validators
 
             string objectTableId = table.Id;
             Dictionary<string, object> conditionFieldsDic = new Dictionary<string, object>();
-            entityPropertyValueService = new EntityPropertyValueService(entity);
-            List<ObjectTableRule> entityTableRules = GetEntityObjectTableRule(tenant, objectTableId);
+            List<ObjectTableRule> entityTableRules = duplicationRules.Where(r => r.ObjectTableId == objectTableId && (r.Tenant == tenant || r.Tenant == 0) && r.RuleTypeCode == "DUPL").ToList();
 
             if (entityTableRules.Count > 0)
             {
-                List<RuleConditionField> AllRulesConditionFields = RuleConditionFieldRepository.GetObjectRuleConditionFieldsByTenant(tenant).ToList();
-
                 foreach (ObjectTableRule rule in entityTableRules)
                 {
                     List<ObjectTableRuleField> ruleFields = GetRuleFields(rule, tenant);
-                    List<RuleConditionField> RuleConditionFields = AllRulesConditionFields.Where(f => f.ObjectTableRuleId == rule.Id).ToList();
+                    List<RuleConditionField> RuleConditionFields = RuleConditionFieldRepository.GetObjectRuleConditionFieldsByTenant(tenant).ToList(); ;
                     bool enableRun = true;
                     if (rule.TriggerTypeCode == "COND")
                     {
@@ -335,9 +332,92 @@ namespace WebFreight.Web.Validators
                     if (enableRun)
                     {
                         string methodName = "Get" + objectTableName + "FiltersCount";
-                        var entityMethodInfo = GetEntityMethodInfo(methodName, tenant);
-                        object context = entityMethodInfo.Context;
-                        MethodInfo insideMethodInfo = entityMethodInfo.MethodInfo;
+
+                        object context = null;
+                        if (commonDataDomainService == null)
+                        {
+                            commonDataDomainService = new CommonDataDomainService(CommonDataContext.GetContext(tenant));
+                        }
+
+                        MethodInfo insideMethodInfo = commonDataDomainService.GetType().GetMethod(methodName);
+
+                        if (insideMethodInfo != null)
+                        {
+                            context = commonDataDomainService;
+                        }
+
+                        if (generalService == null)
+                        {
+                            generalService = new GeneralDomainService(WebFreightContext.GetContext(tenant));
+                        }
+
+                        if (insideMethodInfo == null)
+                        {
+                            insideMethodInfo = generalService.GetType().GetMethod(methodName);
+
+                            if (insideMethodInfo != null)
+                            {
+                                context = generalService;
+                            }
+                        }
+
+                        if (webFreightDomainService == null)
+                        {
+                            webFreightDomainService = new WebFreightDomainService(WebFreightContext.GetContext(tenant));
+                        }
+
+                        if (insideMethodInfo == null)
+                        {
+                            insideMethodInfo = webFreightDomainService.GetType().GetMethod(methodName);
+
+                            if (insideMethodInfo != null)
+                            {
+                                context = webFreightDomainService;
+                            }
+                        }
+
+                        if (quotesDomainService == null)
+                        {
+                            quotesDomainService = new QuotesDomainService();
+                        }
+
+                        if (insideMethodInfo == null)
+                        {
+                            insideMethodInfo = quotesDomainService.GetType().GetMethod(methodName);
+
+                            if (insideMethodInfo != null)
+                            {
+                                context = quotesDomainService;
+                            }
+                        }
+
+                        if (shipmentsDomainService == null)
+                        {
+                            shipmentsDomainService = new ShipmentsDomainService(ShipmentsContext.GetContext(tenant));
+                        }
+                        if (insideMethodInfo == null)
+                        {
+                            insideMethodInfo = shipmentsDomainService.GetType().GetMethod(methodName);
+
+                            if (insideMethodInfo != null)
+                            {
+                                context = shipmentsDomainService;
+                            }
+                        }
+
+                        if (invoiceDomainService == null)
+                        {
+                            invoiceDomainService = new InvoiceDomainService();
+                        }
+                        if (insideMethodInfo == null)
+                        {
+                            insideMethodInfo = invoiceDomainService.GetType().GetMethod(methodName);
+
+                            if (insideMethodInfo != null)
+                            {
+                                context = invoiceDomainService;
+                            }
+                        }
 
                         if (insideMethodInfo != null)
                         {
@@ -419,119 +499,6 @@ namespace WebFreight.Web.Validators
             }
 
             return isValid;
-        }
-
-        private List<ObjectTableRule> GetEntityObjectTableRule(int tenant, string objectTableId)
-        {
-            List<ObjectTableRule> entityTableRules = duplicationRules.Where(r => r.ObjectTableId == objectTableId && (r.Tenant == tenant || r.Tenant == 0) && r.RuleTypeCode == "DUPL").ToList();
-            if (FeatureToggleHelper.HasFeatureToggle("SDE", tenant) && entityPropertyValueService.GetPropertyInfo("Id") != null)
-            {
-                entityTableRules = FilterEntityTableRuleBasedOnEntityId(entityTableRules);
-            }
-
-            return entityTableRules;
-        }
-
-        private List<ObjectTableRule> FilterEntityTableRuleBasedOnEntityId(List<ObjectTableRule> entityTableRules)
-        {
-            object propertyValue = entityPropertyValueService.Get("Id");
-
-            if (propertyValue == null ||  string.IsNullOrEmpty(propertyValue.ToString()))
-            {
-                return entityTableRules.Where(d => d.ActiveForNew).ToList();
-            }
-            return entityTableRules.Where(d => d.ActiveForUpdate).ToList();
-        }
-
-        private EntityMethodInfo GetEntityMethodInfo(string methodName, int tenant)
-        {
-            object context = null;
-            MethodInfo insideMethodInfo = null;
-            if (commonDataDomainService == null)
-            {
-                commonDataDomainService = new CommonDataDomainService(CommonDataContext.GetContext(tenant));
-            }
-
-            insideMethodInfo = commonDataDomainService.GetType().GetMethod(methodName);
-            if (insideMethodInfo != null)
-            {
-                context = commonDataDomainService;
-            }
-
-            if (generalService == null)
-            {
-                generalService = new GeneralDomainService(WebFreightContext.GetContext(tenant));
-            }
-
-            if (insideMethodInfo == null)
-            {
-                insideMethodInfo = generalService.GetType().GetMethod(methodName);
-
-                if (insideMethodInfo != null)
-                {
-                    context = generalService;
-                }
-            }
-
-            if (webFreightDomainService == null)
-            {
-                webFreightDomainService = new WebFreightDomainService(WebFreightContext.GetContext(tenant));
-            }
-
-            if (insideMethodInfo == null)
-            {
-                insideMethodInfo = webFreightDomainService.GetType().GetMethod(methodName);
-
-                if (insideMethodInfo != null)
-                {
-                    context = webFreightDomainService;
-                }
-            }
-
-            if (quotesDomainService == null)
-            {
-                quotesDomainService = new QuotesDomainService();
-            }
-
-            if (insideMethodInfo == null)
-            {
-                insideMethodInfo = quotesDomainService.GetType().GetMethod(methodName);
-
-                if (insideMethodInfo != null)
-                {
-                    context = quotesDomainService;
-                }
-            }
-
-            if (shipmentsDomainService == null)
-            {
-                shipmentsDomainService = new ShipmentsDomainService(ShipmentsContext.GetContext(tenant));
-            }
-            if (insideMethodInfo == null)
-            {
-                insideMethodInfo = shipmentsDomainService.GetType().GetMethod(methodName);
-
-                if (insideMethodInfo != null)
-                {
-                    context = shipmentsDomainService;
-                }
-            }
-
-            if (invoiceDomainService == null)
-            {
-                invoiceDomainService = new InvoiceDomainService();
-            }
-            if (insideMethodInfo == null)
-            {
-                insideMethodInfo = invoiceDomainService.GetType().GetMethod(methodName);
-
-                if (insideMethodInfo != null)
-                {
-                    context = invoiceDomainService;
-                }
-            }
-
-            return new EntityMethodInfo() { Context = context, MethodInfo = insideMethodInfo };
         }
 
         #endregion
@@ -680,26 +647,28 @@ namespace WebFreight.Web.Validators
 
         public bool ValidateConditionFieldsRule(object entity, List<RuleConditionField> ruleConditionFields, int tenant, string objectTableName)
         {
-            bool validateCondition = true;
+            bool validcondition = true;
             Type type1 = entity.GetType();
+            PropertyInfo propertyInf = null;
+
             foreach (RuleConditionField condfield in ruleConditionFields)
             {
-                PropertyInfo propertyInfo = type1.GetProperty(condfield.ObjectField.FieldName);
-                if (propertyInfo == null) continue;
-                validateCondition = ValidateRuleConditionField(condfield, propertyInfo, entity);
-                if (!validateCondition) break;
+                propertyInf = type1.GetProperty(condfield.ObjectField.FieldName);
+                if (propertyInf != null)
+                {
+                    string value = FieldValueResolver.GetFieldStringValue(condfield.ObjectField, propertyInf.GetValue(entity, null));
+
+                    if (condfield.Value != value)
+                    {
+                        validcondition = false;
+                        break;
+                    }
+                }
             }
 
-            return validateCondition;
+            return validcondition;
         }
-        private bool ValidateRuleConditionField(RuleConditionField ruleConditionField, PropertyInfo propertyInfo, object entity)
-        {
-            string value = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldStringValue(ruleConditionField.ObjectField, propertyInfo.GetValue(entity, null));
-            if (ruleConditionField.Operator == "Equals") return ruleConditionField.Value == value;
-            if (ruleConditionField.Operator == "NotEqual") return ruleConditionField.Value != value;
 
-            return ruleConditionField.Value == value;
-        }
         #endregion
 
         public List<ObjectField> GetObjectFieldsList(string objectTableName, int tenant)
@@ -960,14 +929,6 @@ namespace WebFreight.Web.Validators
         #endregion
 
 
-    }
-
-    public class EntityMethodInfo
-    {
-        public object Context { get; set; }
-        public MethodInfo MethodInfo { get; set; }
-
-       
     }
 }
  

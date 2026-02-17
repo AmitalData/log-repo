@@ -16,7 +16,7 @@ import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDa
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditPickListComponent.html',
 })
 
@@ -46,7 +46,7 @@ export class AddEditPickListComponent extends BaseComponent {
             this.PickListsList = new ObservableCollection([]);
         }
         else {
-            this.myService.GetCustomPickListsByCode(this.PickListCode).subscribe((myResult: ServiceResponse) => {
+            this.myService.GetCustomPickListsByCode(this.PickListCode).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
 
@@ -80,7 +80,7 @@ export class AddEditPickListComponent extends BaseComponent {
         //logWindow.Title = "Add New Custom Field";
         //var windowArgs: any = {};
         //this.myService = new GeneralDomainService();
-        //this.myService.GetFieldDataTypes().subscribe((myResult:any) => {
+        //this.myService.GetFieldDataTypes().subscribe(myResult => {
         //    var myResponse: ServiceResponse = myResult;
         //    if (!myResponse.HasError) {
         //        windowArgs.IsNew = true;
@@ -96,7 +96,7 @@ export class AddEditPickListComponent extends BaseComponent {
         //        logWindow.WindowArgs = windowArgs;
         //        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
         //        logWindow.WindowClosed.subscribe((event: any) => {
-        //            this.myService.GetCustomFieldsByTableId(this.ObjecttableId).subscribe((myResult:any) => {
+        //            this.myService.GetCustomFieldsByTableId(this.ObjecttableId).subscribe(myResult => {
         //                var myResponse: ServiceResponse = myResult;
         //                if (!myResponse.HasError) {
 
@@ -128,7 +128,7 @@ export class AddEditPickListComponent extends BaseComponent {
         //logWindow.Title = "Add New Custom Field";
         //var windowArgs: any = {};
         //this.myService = new GeneralDomainService();
-        //this.myService.GetFieldDataTypes().subscribe((myResult:any) => {
+        //this.myService.GetFieldDataTypes().subscribe(myResult => {
         //    var myResponse: ServiceResponse = myResult;
         //    if (!myResponse.HasError) {
         //        windowArgs.IsNew = false;
@@ -144,7 +144,7 @@ export class AddEditPickListComponent extends BaseComponent {
         //        logWindow.WindowArgs = windowArgs;
         //        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
         //        logWindow.WindowClosed.subscribe((event: any) => {
-        //            this.myService.GetCustomFieldsByTableId(this.ObjecttableId).subscribe((myResult:any) => {
+        //            this.myService.GetCustomFieldsByTableId(this.ObjecttableId).subscribe(myResult => {
         //                var myResponse: ServiceResponse = myResult;
         //                if (!myResponse.HasError) {
 
@@ -194,7 +194,7 @@ export class AddEditPickListComponent extends BaseComponent {
                     this.GeneralEntitiesArgs.CustomPickListPMs.push(mappedEntity);
                 });
                 if (this.isNew) {
-                    this.myService.insertPickListGeneralEntities(this.GeneralEntitiesArgs).subscribe((myResult: ServiceResponse) => {
+                    this.myService.insertPickListGeneralEntities(this.GeneralEntitiesArgs).subscribe(myResult => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                         CachedDataManager.RefreshTableData("CustomPickList", true);
@@ -209,7 +209,7 @@ export class AddEditPickListComponent extends BaseComponent {
                     });
                 }
                 else {
-                    this.myService.updatePickListGeneralEntities(this.GeneralEntitiesArgs).subscribe((myResult: ServiceResponse) => {
+                    this.myService.updatePickListGeneralEntities(this.GeneralEntitiesArgs).subscribe(myResult => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                         CachedDataManager.RefreshTableData("CustomPickList", true);

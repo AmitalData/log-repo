@@ -17,7 +17,7 @@ declare var HTMLID: any;
 declare var System: any;
 declare var window: any;
 @Component({
-    
+    moduleId: module.id,
     selector: 'SocialMessagesComponent',
     templateUrl: './SocialMessagesComponent.html',
 
@@ -170,7 +170,7 @@ export class SocialMessagesComponent implements OnInit {
             this.MessageFilters.PageIndex = this.PageIndex;
             this.MessageFilters.PageSize = this.PageSize;
 
-            this.conversationHeaderExtendedPMService.GetMessageByFiltered(this.MessageFilters).subscribe((res:any) => {
+            this.conversationHeaderExtendedPMService.GetMessageByFiltered(this.MessageFilters).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 this.IsLoadedMessages = true;
                 this.StopBusyIndicator();
@@ -288,7 +288,7 @@ export class SocialMessagesComponent implements OnInit {
                 item.EntityPM.IsWaitingForResponse = true;
             }
 
-            this.conversationHeaderPMService.update(item.EntityPM).subscribe((res:any) => {
+            this.conversationHeaderPMService.update(item.EntityPM).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 this.IsStartWaitingLoading = false;
 
@@ -627,7 +627,7 @@ export class ConversationHeaderViewModelData {
         if (!AppTool.IsNullOrEmpty(item.EntityPM.EntityId) && !AppTool.IsNullOrEmpty(item.EntityPM.ObjectTableId)) {
             var table = window.ObjectTables.filter(d => d.Id == item.EntityPM.ObjectTableId)[0];
             if (table) {
-                this._entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe(response => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
 

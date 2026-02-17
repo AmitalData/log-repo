@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.InfrastructureModel.EntityLists;
@@ -42,10 +42,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LocalName = a.LocalName,
                         Code = a.Code,
                         Name = a.Name,
-                        SearchFields = a.SearchFields,
-                        ViewOrder = a.ViewOrder,
-                        QuoteGroupSectionID =a.QuoteGroupSectionID
-
+                        SearchFields = a.SearchFields
                     }).FirstOrDefault();
         }
 
@@ -60,10 +57,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LocalName = a.LocalName,
                         Code = a.Code,
                         Name = a.Name,
-                        SearchFields = a.SearchFields,
-                        ViewOrder = a.ViewOrder,
-                        QuoteGroupSectionID = a.QuoteGroupSectionID
-
+                        SearchFields = a.SearchFields
                     }).FirstOrDefault();
         }
 
@@ -80,10 +74,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LocalName = a.LocalName,
                         Code = a.Code,
                         Name = a.Name,
-                        SearchFields = a.SearchFields,
-                        ViewOrder = a.ViewOrder,
-                        QuoteGroupSectionID = a.QuoteGroupSectionID
-
+                        SearchFields = a.SearchFields
                     }).FirstOrDefault();
         }
 
@@ -102,10 +93,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       LocalName = entity.LocalName,
                                                       Code = entity.Code,
                                                       Name = entity.Name,
-                                                      SearchFields = entity.SearchFields,
-                                                      ViewOrder = entity.ViewOrder,
-                                                      QuoteGroupSectionID = entity.QuoteGroupSectionID
-
+                                                      SearchFields = entity.SearchFields
                                                   };
             return result;
         }
@@ -122,35 +110,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     LocalName = a.LocalName,
                                                     Code = a.Code,
                                                     Name = a.Name,
-                                                    SearchFields = a.SearchFields,
-                                                     ViewOrder = a.ViewOrder,
-                                                     QuoteGroupSectionID = a.QuoteGroupSectionID
-
-                                                 };
+                                                    SearchFields = a.SearchFields
+                                                };
             return charges;
         }
-
-
-
-        public IQueryable<ChargesGroupList> GetChargesGroupListsByTenant(int tenant)
-        {
-
-            IQueryable<ChargesGroupList> charges = from a in repository.context.ChargesGroups
-                                                 where a.Tenant == tenant
-                                                 select new ChargesGroupList()
-                                                 {
-                                                     Id = a.Id,
-                                                     Tenant = a.Tenant,
-                                                     LocalName = a.LocalName,
-                                                     Code = a.Code,
-                                                     Name = a.Name,
-                                                     SearchFields = a.SearchFields,
-                                                     ViewOrder = a.ViewOrder,
-                                                     QuoteGroupSectionID = a.QuoteGroupSectionID
-
-                                                 };
-            return charges;
-        }
-
+       
     }
 }

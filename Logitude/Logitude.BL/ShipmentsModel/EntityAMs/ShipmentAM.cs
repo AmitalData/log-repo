@@ -24,7 +24,6 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public DateTime? MainCarriageETA { get; set; }
         public DateTime? MainCarriageATA { get; set; }
         public DateTime? MainCarriageATD { get; set; }
-        public DateTime? MainCarriageETD { get; set; }
         public DateTime? OnCarriageATA { get; set; }
         public DateTime? PreCarriageATA { get; set; }
         public DateTime? PreCarriageATD { get; set; }
@@ -39,7 +38,6 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string DescriptionOfGoods { get; set; }
         public CodeProperties Customer { get; set; }
         public string ShipperName { get; set; }
-        public string ConsigneeName { get; set; }
         public CodeProperties PreCarriageFromPort { get; set; }
         public CodeProperties PreCarriageToPort { get; set; }
         public CodeProperties OnCarriageToPort { get; set; }
@@ -62,7 +60,6 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string ExceptionDescription { get; set; }
 
         public string DeclarationXMLData { get; set; }
-  
         public bool IsImporterApprovalRequired { get; set; }
         public string VersionApproved { get; set; }
         public DateTime? ApproveDateTime { get; set; }
@@ -75,23 +72,14 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public DateTime? CustomsClearanceDate { get; set; }
         public bool SendUpdatesToAgentEnabled { get; set; }
         public CodeProperties Incoterm { get; set; }
-        public List<ShipmentPackageAM> ShipmentPackagesAM { get; set; }
+        public List<ShipmentPackageAM> ShipmentPackagesAM { get; set; } 
         public string GrossWeightUnitCode { get; set; }
         public string DimensionsUnitCode { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
         public string VolumeUnitCode { get; set; }
         public string ForwardingPartnerId { get; set; }
         public string ForwardingPartnerTenant { get; set; }
-        public CodeProperties Agent { get; set; }
-        public string CustomerReference3 { get; set; }
-        public bool IsDangerouseOfGoods { get; set; }
-        public string AgentName { get; set; }
-        public bool IsShipmentOrder { get; set; }
-        public string ShippingLine { get; set; }
-        public string PlaceOfDelivery { get; set; }
-        public string PickupPlace { get; set; }
-        public string SealNo { get; set; }
-        public string HSCode { get; set; }
+
         /*
         HasException , ExceptionDate , ExceptionDescription
 ShipmentNumber

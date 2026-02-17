@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
@@ -24,7 +24,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
 
 
-            IQueryable<PaymentChequeList> query = (from a in iQueryable.Include("PaymentChequeStatus").Include("APPayment")
+            IQueryable<PaymentChequeList> query = (from a in iQueryable.Include("PaymentChequeStatus")
                                             select new PaymentChequeList()
 											{
                      
@@ -86,10 +86,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          PaymentChequeStatusName= a.PaymentChequeStatus != null? a.PaymentChequeStatus.LocalName:null,
                                               BankAccountName= a.BankAccount != null? a.BankAccount.LocalName :null,
                                               GLAccountNumber = a.PayToGLAccount != null ? a.PayToGLAccount.DisplayNumber : null,
-                                              GLAccountName = a.PayToGLAccount != null? a.PayToGLAccount.LocalName : null,
-                                              StatusEnglishName= a.PaymentChequeStatus != null? a.PaymentChequeStatus.EnglishName :null,
-										      APPaymentNo = a.APPayment != null ? a.APPayment.PaymentNo : null,
-											});
+                                            GLAccountName = a.PayToGLAccount != null? a.PayToGLAccount.LocalName : null,
+                                           StatusEnglishName= a.PaymentChequeStatus != null? a.PaymentChequeStatus.EnglishName :null,
+                                            });
             return query;
 		}
 

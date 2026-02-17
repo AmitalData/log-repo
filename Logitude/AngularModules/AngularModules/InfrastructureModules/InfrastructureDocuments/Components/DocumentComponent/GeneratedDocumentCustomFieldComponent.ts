@@ -20,7 +20,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'GeneratedDocumentCustomFieldComponent',
     templateUrl: './GeneratedDocumentCustomFieldComponent.html',
     inputs: ['DocumentCustomArgs'],    
@@ -78,7 +78,7 @@ export class GeneratedDocumentCustomFieldComponent extends BaseComponent impleme
                 var myObjectFields = window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ObjectTableId);
                 //this.OnCreateAutomationList = this.OnCreateAutomationList.sort((a, b) => { return a.Order - b.Order });
                 myScreenFields.sort((a, b) => { return a.Row - b.Row }).forEach(screenFields => {
-                    var myObjectField = myObjectFields.filter((f: any) => f.FieldCode == screenFields.ObjectFieldCode)[0];
+                    var myObjectField = myObjectFields.filter((f: any) => f.Id == screenFields.ObjectFieldId)[0];
                     if (myObjectField) {
 
                         this.CustomFieldLists.push(new CustomFieldViewModel(myObjectField, this.DocumentCustomArgs.EntityPM, this.DocumentCustomArgs.EditCustomField, this.ObjectTableName));

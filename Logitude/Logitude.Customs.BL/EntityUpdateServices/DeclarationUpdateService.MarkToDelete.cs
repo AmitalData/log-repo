@@ -13,27 +13,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     public partial class DeclarationUpdateService
     {
         //START - Mark to delete Supplier Invoice including all tables below
-        public Boolean markChangeSetOperationDeleteOnly = false;
         public void MarkToDeleteSupplierInvoice(DeclarationPM declarationPM)
         {
             foreach (var si in declarationPM.SupplierInvoices)
             {
-                if (markChangeSetOperationDeleteOnly)
-                {
-                    if(si.ChangeSetOp == ChangeSetOperation.Delete)
-                    {
-                        MarkToDeleteSupplierInvoiceModifications(si);
-                        MarkToDeleteSupplierInvoiceItems(si);
-                        MarkToDeleteSupplierInvoiceFreightAmounts(si);
-                    }
-                }
-                else
-                {
-                    MarkToDeleteSupplierInvoiceModifications(si);
-                    MarkToDeleteSupplierInvoiceItems(si);
-                    MarkToDeleteSupplierInvoiceFreightAmounts(si);
-                    si.ChangeSetOp = ChangeSetOperation.Delete;
-                }
+                MarkToDeleteSupplierInvoiceModifications(si);
+                MarkToDeleteSupplierInvoiceItems(si);
+                MarkToDeleteSupplierInvoiceFreightAmounts(si);
+                si.ChangeSetOp = ChangeSetOperation.Delete;
             }
         }
 
@@ -227,9 +214,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var myDeclarationConstraintUpdateService = new DeclarationConstraintUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             myDeclarationConstraintUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-          
-            DeclarationConsignmentsFastDelete(declarationPM, dbContext);
-            DeclarationRecipientFastDelete(declarationPM,dbContext);
+
+            DeclarationConsignmentsFastDelete(declarationPM,dbContext);
             DeclarationSupplierInvoicesFastDelete(declarationPM,dbContext);
 
             var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
@@ -248,10 +234,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var mySupplierInvoiceInvoiceFreightAmountUpdateService = new SupplierInvoiceFreightAmountUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             mySupplierInvoiceInvoiceFreightAmountUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-            var mySupplierInvoiceInvoicePaymentUpdateService = new SupplierInvoicePaymentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceInvoicePaymentUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
 
             DeclarationSupplierInvoiceItemsFastDelete(declarationPM,dbContext);
 
@@ -301,18 +283,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var mySupplierInvoiceInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             mySupplierInvoiceInvoiceItemModVehicleUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-             
-            var mySupplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySupplierInvoiceItemsPriceUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+
             var mySupplierInvoiceItemUpdateService = new SupplierInvoiceItemUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             mySupplierInvoiceItemUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-          
-
-            var mySuppInvoiceItemsAbachStatementUpdateService = new SuppInvoiceItemsAbachStatementUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            mySuppInvoiceItemsAbachStatementUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-
-
         }
 
 
@@ -327,23 +300,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var myConsignmentUpdateService = new ConsignmentUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             myConsignmentUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
         }
-
-        public void DeclarationRecipientFastDelete(DeclarationPM declarationPM, ICustomContext dbContext)
-        {
-            
-
-            var declarationExportRecipientUpdateService = new DeclarationExportRecipientUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            declarationExportRecipientUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-        }
-
-        public void DeclarationClosingDataFastDelete(DeclarationPM declarationPM, ICustomContext dbContext)
-        {
-
-
-            var declarationExportClosingDataUpdateService = new ExportDeclarationClosingDataUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
-            declarationExportClosingDataUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
-        }
-
 
         public void DeclarationSupplierInvoiceItemsParentsFastDelete(DeclarationPM declarationPM)
         {

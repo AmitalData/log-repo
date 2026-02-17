@@ -1,8 +1,0 @@
-﻿<Script DBType="Main">
-  <Sql Version="1">
-    <![CDATA[
-      Update WarehouseEntries SET ChargeableWeightUnitCode = (SELECT ChargeableWeightUnitCode FROM Tenants AS t WHERE WarehouseEntries.Tenant = t.Id) WHERE WarehouseEntries.ChargeableWeightUnitCode IS NULL AND WarehouseEntries.TransportModeId = 'A'
-      Update WarehouseEntries SET ChargeableWeightUnitCode = (SELECT WeightMeasurementUnitCode FROM Tenants AS t WHERE WarehouseEntries.Tenant = t.Id) WHERE WarehouseEntries.ChargeableWeightUnitCode IS NULL AND (WarehouseEntries.TransportModeId = 'O' OR WarehouseEntries.TransportModeId = 'I')
-    ]]>       
-  </Sql>
-</Script>

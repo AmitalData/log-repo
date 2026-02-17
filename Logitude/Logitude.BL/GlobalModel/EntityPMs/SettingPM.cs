@@ -44,15 +44,5 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         
         public int System2RedirectFraction { get; set; }
 
-        public int QBOOAuthDefault { get; set; }
-        public string QBOClientID { get; set; }
-        public string QBOClientSecret { get; set; }
-        public string PrivateKey { get; set; }
-        public string AmitalTaxesUrl { get; set; }
-        public string TaxesRediractUrl { get; set; }
-        public string AmitalApiAddress { get; set; }
-        public string AmitalApiXFunctionsKey { get; set; }
-        public string ExportUrl { get; set; }
-        public string TempStorageConnection { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -32,7 +32,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SearchFields { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public DateTime? InvitationDate { get; set; }
-        public DateTime? CargoTrackingInvitationDate { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public bool IsCustomer { get; set; }
@@ -50,7 +49,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Phone { get; set; }
-        public string GLAccountDisplayNumber { get; set; }
 
         [ForeignKey("SalesmanUserId")]
         public virtual User SalesmanUser { get; set; }
@@ -100,9 +98,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("SharedLogisticsInvitationStatusCode")]
         public virtual SharedLogisticsInvitationStatus SharedLogisticsInvitationStatus { get; set; }
         public int? SharedLogisticsInvitationStatusCode { get; set; }
-        [ForeignKey("CargoTrackingInvitationStatusCode")]
-        public virtual SharedLogisticsInvitationStatus CargoTrackingInvitationStatus { get; set; }
-        public int? CargoTrackingInvitationStatusCode { get; set; }
+
         [ForeignKey("CollectorId")]
         public virtual User CollectorUser { get; set; }
         public string CollectorId { get; set; }
@@ -119,10 +115,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string UsoCFDICode { get; set; }
 
         [ForeignKey("UsoCFDICode")]
-        public virtual UsoCFDI UsoCFDI { get; set; }  
-        public string RegimenFiscalCode { get; set; }
-        [ForeignKey("RegimenFiscalCode")]
-        public virtual RegimenFiscal RegimenFiscal { get; set; }
+        public virtual UsoCFDI UsoCFDI { get; set; }     
 
         public virtual Trucker Trucker { get; set; }
         public virtual Airline Airline { get; set; }
@@ -135,42 +128,13 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual Vendor Vendor { get; set; }
         public virtual Participant Participant { get; set; }
         public virtual CustomsShipper CustomsShipper { get; set; }
-        public virtual AccountingPartner AccountingPartner { get; set; }
-        
+
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
 
-        public string CreatedByPartner { get; set; }
+  
 
-        public int? StorageFreeDays { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
 
-        public bool AccountingVATSplit { get; set; }
 
-        public string UploadingUniqueKey { get; set; }
-
-        public string BillToId { get; set; }
-        public string SATCustomerName { get; set; }
-
-        public string ImportLocalCustomerGroupId { get; set; }
-        public string ExportLocalCustomerGroupId { get; set; }
-        [ForeignKey("ImportLocalCustomerGroupId")]
-        public virtual CustomerGroup ImportLocalCustomerGroup { get; set; }
-        [ForeignKey("ExportLocalCustomerGroupId")]
-        public virtual CustomerGroup ExportLocalCustomerGroup { get; set; }
-        public string EORInumber { get; set; }
-        public string SingleInvoiceTemplateId { get; set; }
-        public virtual DocumentTypeTemplate SingleInvoiceTemplate { get; set; }
-        public string CustomsInvoiceTemplateId { get; set; }
-        public virtual DocumentTypeTemplate CustomsInvoiceTemplate { get; set; }
-        public string ConsolidationInvoiceTemplateId { get; set; }
-        public virtual DocumentTypeTemplate ConsolidationInvoiceTemplate { get; set; }
-        public string ManifestInvoiceTemplateId { get; set; }
-        public virtual DocumentTypeTemplate ManifestInvoiceTemplate { get; set; }
-        public string EmailForSendingSingArinvoice { get; set; }
-        public bool SendingInterestReport { get; set; }
-        public string ExternalSystem { get; set; }
-        public string BankCodeId { get; set; }
-        public string BankBranch { get; set; }
     }
 }

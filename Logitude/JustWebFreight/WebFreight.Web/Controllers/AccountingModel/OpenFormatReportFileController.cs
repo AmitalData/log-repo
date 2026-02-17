@@ -1,7 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Infrastructure.BL.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
+namespace WebFreight.Web.Controllers.AccountingModel
 {
     public class OpenFormatReportFileController: ApiController
     {

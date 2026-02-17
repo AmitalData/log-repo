@@ -7,7 +7,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
@@ -31,10 +31,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         ARPaymentCancellation ARPaymentCancellation = null;
         UserPM user;
-        ARPaymentPM paymentPM;
         public HttpResponseMessage Put(ARPaymentCancellation entity)
         {
-             paymentPM = null;
+            ARPaymentPM paymentPM = null;
             try
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
@@ -44,16 +43,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                    SecurityUtility.AuthenticateAccessibleAPI("Cancel ARPayment", authToken.Tenant);
-
                     ARPaymentCancellation = entity;
 
                     ARPaymentQueryService Service = new ARPaymentQueryService(tenant);
                     ServiceResponse response = new ServiceResponse();
                     var Result = new ARPayment();
-
-                    CheckPaymentNumber(entity.PaymentNo, tenant);
-                   
+                  
+                    paymentPM = GetARPaymentPMByNumber(entity.PaymentNo, tenant);
+                    if(paymentPM == null)
+                    {
+                        throw new Exception("Payment with number  " + entity.PaymentNo + " does not exist");
+                    }
                     CheckPaymentStatus(paymentPM);
                     SetPaymentVoided(paymentPM);
                     UpdateARPayment(paymentPM);
@@ -67,8 +67,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
             catch (Exception ex)
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                APIHelper.AddCommunicationLog("F", paymentPM, apiExceptionResult.Exception + ex.StackTrace , "ARPayment", null, "ARPayment API");
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception+";" + ex.StackTrace);
+                APIHelper.AddCommunicationLog("F", paymentPM, apiExceptionResult.Exception, "ARPayment", null, "ARPayment API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
 
@@ -102,49 +102,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         public void CheckPaymentStatus(ARPaymentPM paymentPM)
         {
-            if(paymentPM.StatusCode != "AD" && paymentPM.StatusCode !="CL")
+            if(paymentPM.StatusCode == "AD")
             {
-                throw new Exception("Payment Status <> Approved/Closed - Cant Void");
+                throw new Exception("Payment Status = Approved - Cant Void");
             }
         }
 
         public void GetUser(int tenant)
         {
             UserQuery userQuery = new UserQuery(tenant);
-            if (!string.IsNullOrEmpty(ARPaymentCancellation.CancelledbyUser))
-            {
-                user = userQuery.GetSinglePMByCode(ARPaymentCancellation.CancelledbyUser, tenant);
-                if (user == null)
-                {
-                    throw new Exception("User with code " + ARPaymentCancellation.CancelledbyUser + " doesn't exist");
-                }
-            }
+            user = userQuery.GetSinglePMByCode(ARPaymentCancellation.CancelledbyUser, tenant);
 
-            else
-            {
-                throw new Exception("CancelledbyUser is required");
-            }
         }
-
-        public void CheckPaymentNumber(string paymentNo, int tenant)
-        {
-            if (!string.IsNullOrEmpty(paymentNo))
-            {
-                paymentPM = GetARPaymentPMByNumber(paymentNo, tenant);
-                if (paymentPM == null)
-                {
-                    throw new Exception("Payment with number  " + paymentNo + " does not exist");
-                }
-
-            }
-
-            else
-            {
-                throw new Exception("ARPayment number is required");
-            }
-        }
-
-        
 
 
     }

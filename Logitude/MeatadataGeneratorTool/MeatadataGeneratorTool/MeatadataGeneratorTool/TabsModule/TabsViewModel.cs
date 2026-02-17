@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -172,21 +171,8 @@ namespace MeatadataGeneratorTool.TabsModule
                 FirePropertyChanged("IndexOrder");
             }
         }
-		private bool isLocked;
-		public bool IsLocked
-		{
-			get
-			{
-				return isLocked;
-			}
-			set
-			{
-				isLocked = value;
-				FirePropertyChanged("IsLocked");
-			}
-		}
 
-		private Visibility buttonsVisibility = Visibility.Collapsed;
+        private Visibility buttonsVisibility = Visibility.Collapsed;
         public Visibility ButtonsVisibility
         {
             get
@@ -253,10 +239,6 @@ namespace MeatadataGeneratorTool.TabsModule
             {
                 str.AppendLine("Tab Name is Required");
             }
-            else if (ContainsHebrewCharacters(this.Name))
-            {
-                str.AppendLine("Tab Name cannot contain Hebrew characters");
-            }
 
             if (string.IsNullOrEmpty(this.Code))
             {
@@ -274,12 +256,8 @@ namespace MeatadataGeneratorTool.TabsModule
             {
                 ErrorsVisibility = Visibility.Visible;
             }
-            else
-            {
-                ErrorsVisibility = Visibility.Collapsed;
-            }
 
-                FirePropertyChanged("ErrorMessages");
+            FirePropertyChanged("ErrorMessages");
         }
 
         Visibility errorsVisibility = Visibility.Collapsed;
@@ -294,11 +272,6 @@ namespace MeatadataGeneratorTool.TabsModule
         {
             get { return tabDetailsVisibility; }
             set { tabDetailsVisibility = value; FirePropertyChanged("TabDetailsVisibility"); }
-        }
-
-        private bool ContainsHebrewCharacters(string text)
-        {
-            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
         }
 
         public string FeatureCode { get; internal set; }

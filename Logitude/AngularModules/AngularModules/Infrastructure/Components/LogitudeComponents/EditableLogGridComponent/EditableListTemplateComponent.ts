@@ -2,7 +2,7 @@
 import {Component, ElementRef, OnInit, EventEmitter, Output, Injector} from '@angular/core';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'edit-list-template',
     //template: `<div style="{{customestyle}}" tabindex={{temp}} (click)="onclick()" (keyup)="keyupHandler($event)"> 

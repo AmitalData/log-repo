@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DW_Editor_Tool.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="800"
+             d:DesignHeight="550" d:DesignWidth="800"
              x:Name="ThisWindow">
     <Grid>
         <Grid Margin="10">
@@ -138,56 +138,11 @@
                                 <TextBlock Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Cannot Filter:" />
                                 <CheckBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" IsChecked="{Binding CannotFilter , Mode=TwoWay}" IsThreeState="False"/>
                             </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                                <TextBlock Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Is Custom:" />
-                                <CheckBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" IsChecked="{Binding IsCustom, Mode=TwoWay}" IsThreeState="False"/>
-                            </StackPanel>
-
-
                             <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
                                 <TextBlock  Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Help Text:" />
                                 <TextBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" Text="{Binding HelpText, Mode=TwoWay}" />
 
                             </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                                <TextBlock  Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Original Object Field Code:" />
-                                <TextBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" Text="{Binding OriginalObjectFieldCode, Mode=TwoWay}" />
-
-                            </StackPanel>
-
-                            
-                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                                <TextBlock  Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="View Field Display Name:" />
-                                <TextBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" Text="{Binding ViewFieldDisplayName, Mode=TwoWay}" />
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                                <TextBlock  Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Dimension Data View Name:" />
-                                <TextBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" Text="{Binding DimensionDataViewName, Mode=TwoWay}" />
-                            </StackPanel>
-                            
-                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                                <TextBlock Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Dont Display In View:" />
-                                <CheckBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" IsChecked="{Binding DontDisplayInView , Mode=TwoWay}" IsThreeState="False"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                                <TextBlock Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Is Multiple Selection:" />
-                                <CheckBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" IsChecked="{Binding IsMultipleSelection , Mode=TwoWay}" IsThreeState="False"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                                <TextBlock Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Use Unit Selection:" />
-                                <CheckBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" IsChecked="{Binding UseUnitSelection , Mode=TwoWay}" IsThreeState="False"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                                <TextBlock  Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Record Type:" />
-                                <TextBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" Text="{Binding RecordType, Mode=TwoWay}" />
-                            </StackPanel>
-
                         </StackPanel>
 
                       

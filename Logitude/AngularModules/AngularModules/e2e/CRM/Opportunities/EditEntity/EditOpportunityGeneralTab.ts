@@ -12,18 +12,33 @@ export class EditOpportunityGeneralTab {
         this.Generator = new GeneralFunctions();
     }
     public EditGeneralTab(opportunityDesc: string) {
-        this.Helper.WaitByIdAndClick('Opportunity.TH.General');
+
         this.EditGeneralTabFeilds(opportunityDesc);
+        // this.Helper.WaitByIdAndClick('Activity-SaveClose');
+        // this.Helper.WaitBusyIndicator();
+
+
+        // var EC = protractor.ExpectedConditions;
+        // browser.wait(EC.invisibilityOf(element(by.id('Activity.B.MarkAsComplete'))), 100000).then(a => {
+        // });
     }
     EditGeneralTabFeilds(opportunityDesc: string) {
-        this.Helper.WaitByIdAndFill('Opportunity_LeadSourceId','Advertisement');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        // this.Helper.WaitByIdAndFill('Activity_Subject', 'Edit Subject for ' + opportunityDesc);
 
-        this.Helper.WaitByIdAndFill('Opportunity_LeadDescription','Lead Details');
+        // this.Helper.WaitByIdAndFill('Activity_Description', 'Edit Description for ' + opportunityDesc);// test random number randomWholeNum
 
-        this.Helper.WaitByIdAndFill('Opportunity_LeadPartnerId', 'TestShipper');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);        
+
+        // this.Helper.WaitByIdAndFill('Activity_OwnerId', 'r');
+        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
+
+        // this.Helper.WaitByIdAndFill('date_Activity_StartDateTime', '2');
+        // // this.Helper.WaitByIdAndFill('time_Activity_StartDateTime', '15');
+
+        // this.Helper.WaitByIdAndFill('date_Activity_DueDate', '3');
+        // // this.Helper.WaitByIdAndFill('time_Activity_DueDate', '17');
+
     }
+
 }
 
 

@@ -41,13 +41,6 @@ namespace Logitude.TimeManagement.BL.CLoseTable
                 Name = "Office", 
                 SearchFields = "O,Office,", 
 			});
-			 
-            all.Add(new TMLocationDetails()
-            {    
-                Code = "D", 
-                Name = "Day Off", 
-                SearchFields = "D,Day Off", 
-			});
 			
             return all;
        }

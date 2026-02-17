@@ -8,10 +8,10 @@ import {APInvoiceStatusListService} from './Services/StandardLists/APInvoiceStat
 import {APInvoiceTransferStatusListService} from './Services/StandardLists/APInvoiceTransferStatusListService';
 import {APInvoiceTypeListService} from './Services/StandardLists/APInvoiceTypeListService';
 import {APPaymentListService} from './Services/StandardLists/APPaymentListService';
+import {APPaymentMethodListService} from './Services/StandardLists/APPaymentMethodListService';
 import {APPaymentStatusListService} from './Services/StandardLists/APPaymentStatusListService';
 import {ARInvoiceListService} from './Services/StandardLists/ARInvoiceListService';
 import {ARInvoiceStatusListService} from './Services/StandardLists/ARInvoiceStatusListService';
-import {ARInvoicesSignedStatusListService} from './Services/StandardLists/ARInvoicesSignedStatusListService';
 import {ARInvoiceTransferStatusListService} from './Services/StandardLists/ARInvoiceTransferStatusListService';
 import {ARInvoiceTypeListService} from './Services/StandardLists/ARInvoiceTypeListService';
 import {ARPaymentListService} from './Services/StandardLists/ARPaymentListService';
@@ -36,23 +36,14 @@ import {CreditCardTypePMService} from './Services/StandardPMs/CreditCardTypePMSe
 import {SATInterfaceSettingPMService} from './Services/StandardPMs/SATInterfaceSettingPMService';
 import {BankAccountLitePMService} from './Services/StandardPMs/BankAccountLitePMService';
 import {BankAccountLiteListService} from './Services/StandardLists/BankAccountLiteListService';
+import {APPaymentMethodPMService} from './Services/StandardPMs/APPaymentMethodPMService';
+import {ARPaymentMethodPMService} from './Services/StandardPMs/ARPaymentMethodPMService';
 
 import {APInvoiceMenuButtonsHandler} from './Components/MenuButtons/APInvoiceMenuButtonsHandler';
 import {APPaymentMenuButtonsHandler} from './Components/MenuButtons/APPaymentMenuButtonsHandler';
 import {ARInvoiceMenuButtonsHandler} from './Components/MenuButtons/ARInvoiceMenuButtonsHandler';
 import { ARPaymentMenuButtonsHandler } from './Components/MenuButtons/ARPaymentMenuButtonsHandler';
 import { ARInvoiceStockMenuButtonsHandler } from './Components/MenuButtons/ARInvoiceStockMenuButtonsHandler';
-import { ARInvoiceExtendedService } from './Services/ExtendedPMs/ARInvoiceExtendedService';
-import { QBOGlobalTaxCalculationListService } from './Services/StandardLists/QBOGlobalTaxCalculationListService';
-import { ConfirmationNumberDefaultListService } from './Services/StandardLists/ConfirmationNumberDefaultListService';
-import { ConfirmationNumberDefaultPMService } from './Services/StandardPMs/ConfirmationNumberDefaultPMService';
-import { ConfirmationNumberStatusListService } from './Services/StandardLists/ConfirmationNumberStatusListService';
-import { ConfirmationNumberDefaultExtendedService } from './Services/ExtendedPMs/ConfirmationNumberDefaultExtendedService';
-import { MasavInterfaceListService } from './Services/StandardLists/MasavInterfaceListService';
-import { MasavInterfaceStatusListService } from './Services/StandardLists/MasavInterfaceStatusListService';
-import { MasavInterfacePMService } from './Services/StandardPMs/MasavInterfacePMService';
-import { MasavInterfaceMenuButtonsHandler } from './Components/MenuButtons/MasavInterfaceMenuButtonsHandler';
-import { APPaymentExtendedService } from './Services/ExtendedPMs/APPaymentExtendedService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -71,10 +62,10 @@ export class ModuleProviders {
             case "ARPaymentTransferStatusListService": { myResult = new ARPaymentTransferStatusListService(); break; }               
             case "APInvoiceTypeListService": { myResult = new APInvoiceTypeListService(); break; }
             case "APPaymentListService": { myResult = new APPaymentListService(); break; }
+            case "APPaymentMethodListService": { myResult = new APPaymentMethodListService(); break; }
             case "APPaymentStatusListService": { myResult = new APPaymentStatusListService(); break; }
             case "ARInvoiceListService": { myResult = new ARInvoiceListService(); break; }
             case "ARInvoiceStatusListService": { myResult = new ARInvoiceStatusListService(); break; }
-            case "ARInvoicesSignedStatusListService": { myResult = new ARInvoicesSignedStatusListService(); break; }
             case "ARInvoiceTransferStatusListService": { myResult = new ARInvoiceTransferStatusListService(); break; }
             case "ARInvoiceTypeListService": { myResult = new ARInvoiceTypeListService(); break; }
             case "ARPaymentListService": { myResult = new ARPaymentListService(); break; }
@@ -94,29 +85,18 @@ export class ModuleProviders {
             case "BankAccountLiteListService": { myResult = new BankAccountLiteListService(); break; }
             case "BankAccountLitePMService": { myResult = new BankAccountLitePMService(); break; }
             case "SATInvoiceStatusListService": { myResult = new SATInvoiceStatusListService(); break; }
+            case "APPaymentMethodPMService": { myResult = new APPaymentMethodPMService(); break; }
+            case "ARPaymentMethodPMService": { myResult = new ARPaymentMethodPMService(); break; }
             case "AccountingPaymentMethodPMService": { myResult = new AccountingPaymentMethodPMService(); break; }
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
-            case "ConfirmationNumberDefaultListService": { myResult = new ConfirmationNumberDefaultListService(); break; }
-            case "ConfirmationNumberDefaultPMService": { myResult = new ConfirmationNumberDefaultPMService(); break; }
-            case "ConfirmationNumberStatusListService": { myResult = new ConfirmationNumberStatusListService(); break; }
-
             case "APPaymentTransferStatusListService": { myResult = new APPaymentTransferStatusListService(); break; }
             case "ARInvoiceStockPMService": { myResult = new ARInvoiceStockPMService(); break; }
-            case "ARInvoiceExtendedService": { myResult = new ARInvoiceExtendedService(); break; }
-            case "ConfirmationNumberDefaultExtendedService": { myResult = new ConfirmationNumberDefaultExtendedService(); break; }
 
             case "APInvoiceMenuButtonsHandler": { myResult = new APInvoiceMenuButtonsHandler(); break; }
             case "APPaymentMenuButtonsHandler": { myResult = new APPaymentMenuButtonsHandler(); break; }
             case "ARInvoiceMenuButtonsHandler": { myResult = new ARInvoiceMenuButtonsHandler(); break; }
             case "ARPaymentMenuButtonsHandler": { myResult = new ARPaymentMenuButtonsHandler(); break; }
-            case "ARInvoiceStockMenuButtonsHandler": { myResult = new ARInvoiceStockMenuButtonsHandler(); break; } 
-            case "QBOGlobalTaxCalculationListService": { myResult = new QBOGlobalTaxCalculationListService(); break; } 
-            case "MasavInterfaceListService": { myResult = new MasavInterfaceListService(); break; }           
-            case "MasavInterfaceStatusListService": { myResult = new MasavInterfaceStatusListService(); break; }           
-            case "MasavInterfacePMService": { myResult = new MasavInterfacePMService(); break; }           
-            case "MasavInterfaceMenuButtonsHandler": { myResult = new MasavInterfaceMenuButtonsHandler(); break; }           
-            case "APPaymentExtendedService": { myResult = new APPaymentExtendedService(); break; }
-
+            case "ARInvoiceStockMenuButtonsHandler": { myResult = new ARInvoiceStockMenuButtonsHandler(); break; }
         }
 
         return myResult;

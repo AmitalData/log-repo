@@ -8,7 +8,7 @@ import {SessionLocator} from '../../../../../../Infrastructure/Utilities/Session
 import {SupplierInvoiceItemVehicleComponent} from './SupplierInvoiceItemVehicleComponent';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './VehiclesSearchComponent.html',
 })
 
@@ -31,7 +31,7 @@ export class VehiclesSearchComponent extends BaseComponent {
     LaodVehicles() {
        // this.vahicles.Clear();
         this.tempSelectedRows = [];
-        this.vehicleListService.GetVehiclesForSelection().subscribe((response:any) => {
+        this.vehicleListService.GetVehiclesForSelection().subscribe(response => {
             if (response) {
 
                 //response.Result.forEach((vehicle) => {
@@ -57,7 +57,7 @@ export class VehiclesSearchComponent extends BaseComponent {
 
     SetWindowArgs(args:any) {
         this.Parent = args.Parent;
-        this.entityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe(response => {
             this.LaodVehicles();
         });
     }

@@ -1,25 +1,17 @@
 ﻿
 
 using System.Linq;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Collections.Generic;
-using System;
-using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
     public class DWObjectTableQuery
     {
         DWObjectTableRepository repository;
-        private readonly Dictionary<string, string> FactTablesFeatureToggle = new Dictionary<string, string>
-        {
-            {"BIF","Invoices"}, 
-            {"IDS", "Inland Domestic Shipments"},
-            {"OIC", "Containers"}
-        };
 
         public DWObjectTableQuery()
         {
@@ -45,28 +37,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         Name = a.Name,
-                        TypeCode = a.TypeCode,
+                        TypeCode =a.TypeCode,
                         Code = a.Code,
-                        IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy,
-                        DataViewName = a.DataViewName,
-                        HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode,
-                        AdditionalFactCode = a.AdditionalFactCode,
-                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
-                        RecordType = a.RecordType,
-                        ParentFactCode = a.ParentFactCode,
-                        DisplayName = a.DisplayName,
-                        ObjectTableName = a.ObjectTableName ,
-                        HasCustomFields = a.HasCustomFields , 
-                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                        AdditionalFactRelationType = a.AdditionalFactRelationType,
-                        Description = a.Description,
-
+                        IsClosed=  a.IsClosed,
+                        DefaultFilterBy = a.DefaultFilterBy
                     }).FirstOrDefault();
         }
 
-  
 
         public IQueryable<DWObjectTablePM> GetDWObjectTablePMsByTenant(int tenant)
         {
@@ -80,21 +57,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy,
-                        DataViewName = a.DataViewName,
-                        HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode,
-                        AdditionalFactCode = a.AdditionalFactCode,
-                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
-                        RecordType = a.RecordType,
-                        ParentFactCode = a.ParentFactCode,
-                        DisplayName = a.DisplayName,
-                        ObjectTableName = a.ObjectTableName,
-                        HasCustomFields = a.HasCustomFields,
-                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                        AdditionalFactRelationType = a.AdditionalFactRelationType,
-                        Description = a.Description,
-                    });
+                        DefaultFilterBy = a.DefaultFilterBy
+                    }
+                  );
         }
 
         public DWObjectTablePM GetSinglePM(string id, int tenant)
@@ -109,22 +74,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy,
-                        DataViewName = a.DataViewName,
-                        HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode,
-                        AdditionalFactCode = a.AdditionalFactCode,
-                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
-                        RecordType = a.RecordType,
-                        ParentFactCode = a.ParentFactCode,
-                        DisplayName = a.DisplayName,
-                        ObjectTableName = a.ObjectTableName,
-                        HasCustomFields = a.HasCustomFields,
-                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                        AdditionalFactRelationType = a.AdditionalFactRelationType,
-                        AdditionalConditions = a.AdditionalConditions,
-                        Description = a.Description,
-
+                        DefaultFilterBy = a.DefaultFilterBy
                     }).FirstOrDefault();
         }
 
@@ -140,51 +90,23 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TypeCode = a.TypeCode,
                         Code = a.Code,
                         IsClosed = a.IsClosed,
-                        DefaultFilterBy = a.DefaultFilterBy,
-                        DataViewName = a.DataViewName,
-                        HasPivotColumn = a.HasPivotColumn,
-                        PivotFieldCode = a.PivotFieldCode,
-                        AdditionalFactCode = a.AdditionalFactCode,
-                        AdditionalFactForeignKey = a.AdditionalFactForeignKey,
-                        RecordType = a.RecordType,
-                        ParentFactCode = a.ParentFactCode,
-                        DisplayName = a.DisplayName,
-                        ObjectTableName = a.ObjectTableName,
-                        HasCustomFields = a.HasCustomFields,
-                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                        AdditionalFactRelationType = a.AdditionalFactRelationType,
-                        Description = a.Description,
-
+                        DefaultFilterBy = a.DefaultFilterBy
                     });
         }
 
         public IQueryable<DWObjectTableList> GetIQueryableEntityList(IQueryable<DWObjectTable> iQueryable)
         {
             IQueryable<DWObjectTableList> result = from a in iQueryable
-                                                   select new DWObjectTableList()
-                                                   {
-                                                       Id = a.Id,
-                                                       Tenant = a.Tenant,
-                                                       Name = a.Name,
-                                                       TypeCode = a.TypeCode,
-                                                       Code = a.Code,
-                                                       IsClosed = a.IsClosed,
-                                                       DefaultFilterBy = a.DefaultFilterBy,
-                                                       DataViewName = a.DataViewName,
-                                                       HasPivotColumn = a.HasPivotColumn,
-                                                       PivotFieldCode = a.PivotFieldCode,
-                                                       AdditionalFactCode = a.AdditionalFactCode,
-                                                       AdditionalFactForeignKey = a.AdditionalFactForeignKey,
-                                                       RecordType = a.RecordType,
-                                                       ParentFactCode = a.ParentFactCode,
-                                                       DisplayName = a.DisplayName,
-                                                       ObjectTableName = a.ObjectTableName,
-                                                       HasCustomFields = a.HasCustomFields,
-                                                       MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                                       AdditionalFactRelationType = a.AdditionalFactRelationType,
-                                                       Description = a.Description,
-
-                                                   };
+                                              select new DWObjectTableList()
+                                              {
+                                                  Id = a.Id,
+                                                  Tenant = a.Tenant,
+                                                  Name = a.Name,
+                                                  TypeCode = a.TypeCode,
+                                                  Code = a.Code,
+                                                  IsClosed = a.IsClosed,
+                                                  DefaultFilterBy = a.DefaultFilterBy
+                                              };
 
             return result;
         }
@@ -198,47 +120,5 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public List<ShortFactTableDetails> GetFactTablesNames()
-        {
-            return (from a in repository.webFreightContext.DWObjectTables
-                    where a.Tenant == 0 && a.TypeCode == "Fact"
-                    select new ShortFactTableDetails()
-                    { 
-                        DisplayName = a.DisplayName,
-                        Code = a.Code,
-                        Description = a.Description
-                    }).ToList();
-        }
-
-        public List<ShortFactTableDetails> CheckFactTablesFeatureToggle(List<ShortFactTableDetails> dwFactTablesNames, int tenant)
-        {
-            foreach (KeyValuePair<string, string> factTable in FactTablesFeatureToggle)
-            { 
-                if (!FeatureToggleHelper.HasFeatureToggle(factTable.Key, tenant))
-                {
-                    RemoveFactTable(factTable.Value, dwFactTablesNames);
-                }
-            }
-            return dwFactTablesNames;
-        }
-         
-        private static void RemoveFactTable(string factTableName, List<ShortFactTableDetails> dwFactTablesNames)
-        {
-            var factTale = dwFactTablesNames.SingleOrDefault(s => s.DisplayName == factTableName);
-            if (factTale != null)
-            {
-                dwFactTablesNames.Remove(factTale);
-            }
-        } 
-
-}
-
-
-
-public class ShortFactTableDetails
-    { 
-        public string DisplayName { get; set; }
-        public string Code { get; set; }
-        public string Description { get; set; }
     }
 }

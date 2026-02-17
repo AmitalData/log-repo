@@ -13,7 +13,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'InviteeCheckBoxComponent',
     templateUrl: './InviteeCheckBoxComponent.html',
 })

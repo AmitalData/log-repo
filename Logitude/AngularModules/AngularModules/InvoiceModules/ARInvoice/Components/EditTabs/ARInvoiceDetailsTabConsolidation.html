@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr>
         <td>
@@ -43,27 +43,6 @@
                                 <tr>
                                     <td style="width: 375px;">
                                         <table>
-                                            <!-- PartnerId -->
-                                            <tr class="FormFieldRow">
-                                                <td style="width: 135px;">
-                                                    <LogLabel [ObjectFieldName]="'PartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'PartnerId'"
-                                                            [SelectedValue]="PartnerId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Card'"
-                                                            [DependencyFilter1Value]="BillToDependencyValue1"
-                                                            [DependencyFilter1IsList]="true"
-                                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
-                                                    </LogLov>
-                                                </td>
-
-                                            </tr>
 
                                             <!-- BillToId -->
                                             <tr class="FormFieldRow">
@@ -77,9 +56,8 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Card'"
-                                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
+                                                            [DependencyFilter1Value]="BillToDependencyValue1"
+                                                            [DependencyFilter1IsList]="true">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -182,37 +160,37 @@
                                                     <LogLabel [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td *ngIf="!AllowManualInvoiceNumber && !AllowStockInvoiceNumber">
+                                                <td *ngIf="!AllowManualInvoiceNumber">
                                                     <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
 
-                                                <td *ngIf="AllowManualInvoiceNumber || AllowStockInvoiceNumber">
+                                                <td *ngIf="AllowManualInvoiceNumber">
                                                     <table>
                                                         <tr>
-                                                            <td style="width: 100px;">
+                                                            <td>
                                                                 <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                             </td>
 
-                                                            <td style="width: 5px;">
+                                                            <td style="width: 20px;">
                                                                 <div></div>
                                                             </td>
 
-                                                            <td style="min-width: 100px;max-width: 100px;width:100px;">
-                                                                <ComboBox [IsDisabled]="!IsEditingEnabled || !IsInvoiceNumberComboBoxEnabled" [ItemsSource]="InvoiceNumberFilterList" [Binding]="'Name'" [SelectedItem]="SelectedInvoiceNumberFilter" (SelectedItemChanged)="SelectedInvoiceNumberFilter = $event"></ComboBox>
-                                                            </td>
 
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
+                                                            <td style="width: 136px;">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 16px;">
+                                                                            <CheckBox [IsChecked]="IsInvoiceNumberManuallySet" (Checked)="IsInvoiceNumberManuallySet = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                                        </td>
 
-                                                            <td style="width: 18px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='MAS'">
-                                                                <HelpIcon [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
-                                                            </td>
+                                                                        <td style="padding-left: 2px; padding-right: 2px; width: 1px;" class="Label">{{'ARInvoice.F.IsInvoiceNumberManuallySet' | TextCodeTranslationPipe}}</td>
 
-                                                            <td *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code !='MAS'" style="width: 18px;">
-                                                                <div></div>
+                                                                        <td>
+                                                                            <HelpIcon [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
                                                             </td>
-
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -239,7 +217,6 @@
                                                     <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
-
                                         </table>
                                     </td>
 
@@ -255,19 +232,8 @@
                                                 </td>
                                             </tr>
 
-                                            <tr class="FormFieldRow">
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <Hyperlink (click)=" GetInvoiceNumberFromStock()" [Text]="'Get from stock'" [IsEnabled]="IsEditingEnabled" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' && ARInvoiceStockId == null"></Hyperlink>
-                                                    <Hyperlink (click)=" ReturnInvoiceNumberToStock()" [Text]="'Return to stock'" [IsEnabled]="IsEditingEnabled" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' &&ARInvoiceStockId != null"></Hyperlink>
-                                                </td>
-                                            </tr>
-
                                             <tr>
-                                                <td colspan="2">
+                                                <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
@@ -331,12 +297,12 @@
                                                     <div></div>
                                                 </td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoice.CH.InvoiceNumberListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoice.CH.CustomerRefListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'ARInvoice.CH.MasterNumberListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'ARInvoice.CH.HouseNumberListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoice.CH.CustomerRefLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'ARInvoice.CH.MasterNumberLabel' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'ARInvoice.CH.HouseNumberLabel' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoice.CH.MainEntityReferenceListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.S.Details.Subtotal' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.O.VATListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.CH.SubTotalInInvoiceCurrencyListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.CH.VATListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.CH.AmountInInvoiceCurrencyListLable' | TextCodeTranslationPipe}}</td>
                                                 <td class="LastChild">
                                                     <div></div>
@@ -352,14 +318,14 @@
                                                 <td style="padding:0; width: 25px; min-width: 25px; max-width: 25px;">
                                                     <div class="MediaFill">
                                                         <div class="CenterCenter" style="width: 16px;">
-                                                            <CheckBox id="{{'IsConsolidationChecked' | IdGeneratorAsyncPipe | async}}"attr.data-cy="{{'CheckBox' + item.InvoiceNumber | IdGeneratorAsyncPipe | async}}" *ngIf="item.IsMatched" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                            <CheckBox *ngIf="item.IsMatched" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
                                                             <img *ngIf="!item.IsMatched" src="./Images/Info.png" class="CenterCenter" [attr.title]="'Not matched due to currency'" />
                                                         </div>
                                                     </div>
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                    <Hyperlink (click)="item.ViewEntityClicked('ARInvoice')">{{item.InvoiceNumber}}</Hyperlink>
+                                                    <Hyperlink (click)="item.ViewEntityClicked()">{{item.InvoiceNumber}}</Hyperlink>
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
@@ -375,7 +341,7 @@
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                    <Hyperlink (click)="item.ViewEntityClicked('Shipment')">{{item.MainEntityReference}}</Hyperlink>
+                                                    {{item.MainEntityReference}}
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">

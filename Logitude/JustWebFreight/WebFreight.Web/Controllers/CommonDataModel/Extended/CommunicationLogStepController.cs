@@ -4,32 +4,30 @@
 //Regards,
 //Islam.
 
-using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.Common.RequestParams;
-using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.MessagingServices;
-using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web;
 using System.Web.Http;
-using System.Xml;
-using WebFreight.Web.CustomWebServices.BL.XLSExport;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.Helpers;
+using System.Web;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
+using System.Linq;
+using System.Xml;
+using Newtonsoft.Json;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.AmitalMessaging.Utils;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.BL.Messaging.Customs;
+using System.IO;
+using System.Net.Http.Headers;
+using WebFreight.Web.CustomWebServices.BL.XLSExport;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
@@ -37,7 +35,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
     {
         public HttpResponseMessage GetCommunicationLogStepsListsByLogId(string logId, int tenant)
         {
-            Authentication(tenant);
+            //  Authentication();
 
             CommunicationLogStepQuery communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
             List<CommunicationLogStepList> myResult = communicationLogStepQuery.GetCommunicationLogStepListsByLogId(logId, tenant);
@@ -49,7 +47,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             string mainInterfaceCode, string logId, int tenant)
         {
 
-            Authentication(tenant);
+
             var myXLSExportService = new XLSExportService();
 
             var result =
@@ -63,53 +61,42 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             response.Content = new StreamContent(new MemoryStream(result));
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
             response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            response.Content.Headers.ContentDisposition.FileName =
-                mainInterfaceCode + "_" + logId + ".xls";
+            response.Content.Headers.ContentDisposition.FileName = 
+                mainInterfaceCode +"_" + logId + ".xls";
             return response;
         }
 
         public HttpResponseMessage GetExportExcelByRequestId(
             string mainInterfaceCode, string requestId, int tenant)
         {
-            Authentication(tenant);
-            try
-            {
-                var qs = new CustomsRequestsSheetQueryService(tenant);
-                var crsPM = qs.GetSingle(requestId, false, false);
-                return GetExportExcelByLogId(
-                mainInterfaceCode, crsPM.RequestComminicationId, tenant);
 
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
+            var qs = new CustomsRequestsSheetQueryService(tenant);
+            var crsPM =qs.GetSingle(requestId, false, false);
+            return GetExportExcelByLogId(
+            mainInterfaceCode, crsPM.RequestComminicationId, tenant);
+            
         }
 
-        private static void Authentication(int tenant)
+        private static void Authentication()
         {
-            string token = HttpContext.Current?.Request?.Headers["Token"];
-            if (token != null)
-            {
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-            }
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            //no feature  SecurityUtility.CheckContactFeature("CommunicationLogStep", "READ", authToken.Tenant);
         }
+        
 
-
-        public HttpResponseMessage GetCommunicationLogStepsRequestParamResponseData(string mainInterfaceCode, string logId, int tenant)
+        public HttpResponseMessage GetCommunicationLogStepsRequestParamResponseData(string mainInterfaceCode,string logId, int tenant)
         {
             try
             {
-                Authentication(tenant);
+                Authentication();
 
-
-
+                
+                
                 var stepFilter = new CustomsStepEnum[] { CustomsStepEnum.StartRequestParams, CustomsStepEnum.AnalyzeResponseData };
                 var myFilter = new int[] { 0, 30 };
-                List<CommunicationLogStepList> myResult = GetCommunicationLogStepsDocumentData(mainInterfaceCode, logId, tenant, myFilter, false);
+                List<CommunicationLogStepList> myResult = GetCommunicationLogStepsDocumentData(mainInterfaceCode ,logId, tenant, myFilter,false);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -118,9 +105,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public List<CommunicationLogStepList> GetCommunicationLogStepsDocumentDataBystringStepFilter(string mainInterfaceCode, string communicationLogId, int tenant, string stringStepFilter, bool suppressHugeData)
+        public List<CommunicationLogStepList> GetCommunicationLogStepsDocumentDataBystringStepFilter(string mainInterfaceCode, string communicationLogId, int tenant, string stringStepFilter,bool suppressHugeData)
         {
-            var list = stringStepFilter.Split(',').Select(r => int.Parse(r)).ToArray();
+            var list=stringStepFilter.Split(',').Select ( r=>int.Parse(r)).ToArray();
             return GetCommunicationLogStepsDocumentData(mainInterfaceCode, communicationLogId, tenant, list, suppressHugeData);
 
         }
@@ -138,7 +125,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                Authentication(tenant);
+                Authentication();
 
 
 
@@ -163,26 +150,21 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
         /// <returns></returns>
 
+        
 
-
-        public List<CommunicationLogStepList> GetCommunicationLogStepsDocumentData(string mainInterfaceCode, string communicationLogId, int tenant, int[] stepFilter, bool suppressHugeData)
+        public List<CommunicationLogStepList> GetCommunicationLogStepsDocumentData(string mainInterfaceCode,string communicationLogId, int tenant, int[] stepFilter, bool suppressHugeData)
         {
             var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
             IMessagingServiceInterfaceType messagingService = null;
-            if (!String.IsNullOrWhiteSpace(mainInterfaceCode))
+            if (!String.IsNullOrWhiteSpace (mainInterfaceCode))
             {
-                var swSvc = Stopwatch.StartNew();
-                messagingService = MessagingServiceFactoryHelper.GetMessagingService(mainInterfaceCode);
-                swSvc.Stop();
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"[CommLog] GetMessagingService({mainInterfaceCode}) took {swSvc.ElapsedMilliseconds} ms. logId={communicationLogId}");
+                messagingService= MessagingServiceFactoryHelper.GetMessagingService(mainInterfaceCode);
             }
-            var swQuery = Stopwatch.StartNew();
-            List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, stepFilter,false,false);
-            swQuery.Stop();
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"[CommLog] Query.GetCommunicationLogStepsDocumentData took {swQuery.ElapsedMilliseconds} ms. steps={(stepLIstOut?.Count ?? 0)} filter=[{string.Join(",", stepFilter ?? new int[0])}] logId={communicationLogId}");
+            
+            List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, stepFilter);
             foreach (var item in stepLIstOut)
             {
-                if (!String.IsNullOrWhiteSpace(item.DocumentData) && messagingService != null)
+                if (!String.IsNullOrWhiteSpace(item.DocumentData) && messagingService!=null)
                 {
                     int sizeOf200KB = 200000;
                     if (suppressHugeData && item.DocumentData != null && (item.DocumentData.Length * sizeof(Char) > sizeOf200KB))
@@ -191,16 +173,42 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     }
                     else
                     {
-                        var swConv = Stopwatch.StartNew();
                         item.DocumentData = messagingService.ConvertStepDataToJSON(item.StepNumber, item.DocumentData);
-                        swConv.Stop();
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"[CommLog] ConvertStepDataToJSON step={item.StepNumber} took {swConv.ElapsedMilliseconds} ms. logId={communicationLogId}");
                     }
+                    //var test = true;
+                    //if (test)
+                    //{
+                    //    switch (item.StepNumber)
+                    //    {
+                    //        case 0:
+                    //            {
+                    //                var req =XmlGenericUtil<MorningMessageRequestParams>.DeSerializeObject(item.DocumentData);
+                    //                item.DocumentData = JsonConvert.SerializeObject(req);
+                    //                break;
+                    //            }
+                    //        case 30:
+                    //            {
+                    //                var res = XmlGenericUtil<MorningMessageResponseData>.DeSerializeObject(item.DocumentData);
+                    //                item.DocumentData = JsonConvert.SerializeObject(res);
+                    //                break;
+                    //            }
+                    //        default:
+                    //            break;
+                    //    }
+
+
+                    //}
+                    //else
+                    //{
+                    //    XmlDocument doc = new XmlDocument();
+                    //    doc.LoadXml(item.DocumentData);
+                    //    item.DocumentData = JsonConvert.SerializeXmlNode(doc.DocumentElement); //doc.DocumentElement
+                    //}
                 }
             }
-
+            
             return stepLIstOut;
         }
-
+        
     }
 }

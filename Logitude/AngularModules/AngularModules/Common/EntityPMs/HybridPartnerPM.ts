@@ -20,7 +20,7 @@ export class HybridPartnerPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -93,21 +93,13 @@ export class HybridPartnerPM {
     private allowSendingDocsToAgent: boolean;
     public get AllowSendingDocsToAgent() { return this.allowSendingDocsToAgent; }
     public set AllowSendingDocsToAgent(newValue: boolean) { if (this.allowSendingDocsToAgent != newValue) { this.allowSendingDocsToAgent = newValue; this.MarkAsDirty("AllowSendingDocsToAgent"); } }
-
-
-    private inActive: boolean;
-    public get InActive() { return this.inActive; }
-    public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
-
+       
 	 
 
     public OldEntityPM: HybridPartnerPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -115,7 +107,6 @@ export class HybridPartnerPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "HybridPartner");
            
         }
-	 }
     }
     private MyClone: HybridPartnerPM;
 

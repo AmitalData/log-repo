@@ -9,10 +9,9 @@ import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
-import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './GroupageComponent.html',
 })
 
@@ -91,7 +90,7 @@ export class GroupageComponent {
                 itemString += ": " + item.ContainerNumber;
             }
 
-            this.ToggleItems.push(new ToggleItem(itemString, item.ContainerNumber, index));
+            this.ToggleItems.push(new ToggleItem(itemString, item.ContainerNumber));
         });
 
         this.ToggleItems.push(new ToggleItem("New Container", null));
@@ -101,6 +100,7 @@ export class GroupageComponent {
         if (toggleItem.Label == "New Container") {
             this.AddToNewContainer(toggleItem, shipmentListItem);
         }
+
         else {
             this.AddToExistingContainer(toggleItem, shipmentListItem);
         }
@@ -142,63 +142,38 @@ export class GroupageComponent {
         logWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Groupage/GroupageContainerComponent");
     }
     AddToExistingContainer(toggleItem: ToggleItem, shipmentListItem: GroupageListItem) {
-
-        var allMatchedContainers = this.MyGroupagePackages.filter(f => f.ContainerNumber == toggleItem.ContainerNumber);
-
-        if (allMatchedContainers.length > 1) {
-            allMatchedContainers = this.MyGroupagePackages.filter(f => f.Index == toggleItem.Index);
-        }
-
-        var MasterListItem: GroupageListItem = allMatchedContainers[0];
+        var MasterListItem: GroupageListItem = this.MyGroupagePackages.filter(f => f.ContainerNumber == toggleItem.ContainerNumber)[0];
         if (MasterListItem) {
 
-            if (shipmentListItem.EntityPM.LCLContainerTypeId != MasterListItem.EntityPM.PackageTypeId) {
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Show(" Please notice that the container type on the package level will be adjusted ");
-                confirmWindow.NoButtonText = "Cancel";
-                confirmWindow.YesButtonText = "Ok";
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.Yes) {
-                        this.EntityPM.IsGroupageHousesUpdated = true;
-                        this.AddInsideShipmentPackage(MasterListItem, toggleItem, shipmentListItem);
-                    }
-                });
+            var insideShipmentPack = new InsideShipmentPackagePM(null);
+            insideShipmentPack.Quantity = shipmentListItem.EntityPM.Quantity;
+            insideShipmentPack.Height = shipmentListItem.EntityPM.Height;
+            insideShipmentPack.Length = shipmentListItem.EntityPM.Length;
+            insideShipmentPack.Width = shipmentListItem.EntityPM.Width;
+            insideShipmentPack.Weight = shipmentListItem.EntityPM.Weight;
+            insideShipmentPack.PackageTypeId = shipmentListItem.EntityPM.PackageTypeId;
+            insideShipmentPack.PackageTypeName = shipmentListItem.EntityPM.PackageTypeName;
+            insideShipmentPack.Volume = shipmentListItem.EntityPM.Volume;
+            insideShipmentPack.VolumetricWeight = shipmentListItem.EntityPM.VolumetricWeight;
+            insideShipmentPack.Tenant = shipmentListItem.EntityPM.Tenant;
+            insideShipmentPack.Description = shipmentListItem.EntityPM.Description;
+            insideShipmentPack.OriginalShipmentPackageId = shipmentListItem.EntityPM.Id;
+            insideShipmentPack.Reference1 = shipmentListItem.Reference1;
+            insideShipmentPack.Reference2 = shipmentListItem.Reference2;
+            insideShipmentPack.Reference3 = shipmentListItem.Reference3;
+            insideShipmentPack.Reference4 = shipmentListItem.Reference4;
+            insideShipmentPack.CommodityNumber = shipmentListItem.CommodityNumber;
+            insideShipmentPack.CommodityName = shipmentListItem.CommodityName;
+            MasterListItem.EntityPM.AddInsideShipmentPackagePM(insideShipmentPack);
+
+            var indexOfItem = this.ShipmentsPackages.indexOf(shipmentListItem);
+            if (indexOfItem > -1) {
+                this.ShipmentsPackages.splice(indexOfItem, 1);
             }
-            else {
-                this.AddInsideShipmentPackage(MasterListItem, toggleItem, shipmentListItem);
-            }
+
+            MasterListItem.BuildItems();
+            MasterListItem.ComputeFromInsidePackages();
         }
-    }
-
-    AddInsideShipmentPackage(MasterListItem: GroupageListItem, toggleItem: ToggleItem, shipmentListItem: GroupageListItem) {
-        var insideShipmentPack = new InsideShipmentPackagePM(null);
-        insideShipmentPack.Quantity = shipmentListItem.EntityPM.Quantity;
-        insideShipmentPack.Height = shipmentListItem.EntityPM.Height;
-        insideShipmentPack.Length = shipmentListItem.EntityPM.Length;
-        insideShipmentPack.Width = shipmentListItem.EntityPM.Width;
-        insideShipmentPack.Weight = shipmentListItem.EntityPM.Weight;
-        insideShipmentPack.PackageTypeId = shipmentListItem.EntityPM.PackageTypeId;
-        insideShipmentPack.PackageTypeName = shipmentListItem.EntityPM.PackageTypeName;
-        insideShipmentPack.Volume = shipmentListItem.EntityPM.Volume;
-        insideShipmentPack.VolumetricWeight = shipmentListItem.EntityPM.VolumetricWeight;
-        insideShipmentPack.Tenant = shipmentListItem.EntityPM.Tenant;
-        insideShipmentPack.Description = shipmentListItem.EntityPM.Description;
-        insideShipmentPack.OriginalShipmentPackageId = shipmentListItem.EntityPM.Id;
-        insideShipmentPack.Reference1 = shipmentListItem.Reference1;
-        insideShipmentPack.Reference2 = shipmentListItem.Reference2;
-        insideShipmentPack.Reference3 = shipmentListItem.Reference3;
-        insideShipmentPack.Reference4 = shipmentListItem.Reference4;
-        insideShipmentPack.CommodityNumber = shipmentListItem.CommodityNumber;
-        insideShipmentPack.CommodityName = shipmentListItem.CommodityName;
-        MasterListItem.EntityPM.AddInsideShipmentPackagePM(insideShipmentPack);
-
-        var indexOfItem = this.ShipmentsPackages.indexOf(shipmentListItem);
-        if (indexOfItem > -1) {
-            this.ShipmentsPackages.splice(indexOfItem, 1);
-        }
-
-        MasterListItem.BuildItems();
-        MasterListItem.ComputeFromInsidePackages();
     }
 
     CancelButtonClicked() {
@@ -230,7 +205,6 @@ export class GroupageComponent {
                 newPackage.MarksAndNumbers = item.EntityPM.MarksAndNumbers;
                 newPackage.MaterialDescription = item.EntityPM.MaterialDescription;
                 newPackage.PackageTypeId = item.EntityPM.PackageTypeId;
-                newPackage.LCLContainerTypeId = item.EntityPM.LCLContainerTypeId;
                 newPackage.PackageTypeName = item.EntityPM.PackageTypeName;
                 newPackage.PackagingGroup = item.EntityPM.PackagingGroup;
                 newPackage.Quantity = item.EntityPM.Quantity;
@@ -252,8 +226,6 @@ export class GroupageComponent {
                 newPackage.Reference4 = item.EntityPM.Reference4;
                 newPackage.CommodityNumber = item.EntityPM.CommodityNumber;
                 newPackage.CommodityName = item.EntityPM.CommodityName;
-                newPackage.HorseId = item.EntityPM.HorseId;
-                newPackage.HorseName = item.EntityPM.HorseName;
                 this.EntityPM.AddPackage(newPackage);
 
                 item.EntityPM.InsideShipmentPackages.forEach(insideItem => {
@@ -285,8 +257,6 @@ export class GroupageComponent {
             ServiceLocator.SendTotangoUserActivity("Master", "Building packages for ocean groupage");
 
             this.CurrentSession.CloseCurrentWindowEmit("OK");
-            //this.FatherComponent.entityArgs.EditComponent.SaveChanges();
-            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
 
 
@@ -546,11 +516,9 @@ export class GroupageInsideItem {
     }
 }
 class ToggleItem {
-    public Index: number = null;
     public Label: string;
     public ContainerNumber: string;
-    constructor(label: string, myContainerNumber: string, index: number = null) {
-        this.Index = index;
+    constructor(label: string, myContainerNumber: string) {
         this.Label = label;
         this.ContainerNumber = myContainerNumber;        
     }

@@ -14,7 +14,6 @@ namespace Logitude.BL.ShipmentsModel.CloseTables
        public const string Error = "EROR";  
        public const string Notsent = "NSEN";  
        public const string Sent = "SENT";  
-       public const string BlockedForSending = "BLOK";  
     }
 }
 

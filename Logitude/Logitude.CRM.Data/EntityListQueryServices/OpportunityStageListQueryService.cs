@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -56,7 +56,6 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      IsCancelled = a.Opportunity == null ? false : a.Opportunity.IsCancelled,
                                                      LeadSourceId = a.Opportunity == null ? null : a.Opportunity.LeadSourceId,
                                                      OpportunityTypeId = a.Opportunity != null ? (a.Opportunity.OpportunityType != null ? a.Opportunity.OpportunityType.Id : null) : null,
-                                                     CustomerId = a.Opportunity != null ? a.Opportunity.CustomerId : null,
                                                  });
             return query;
         }

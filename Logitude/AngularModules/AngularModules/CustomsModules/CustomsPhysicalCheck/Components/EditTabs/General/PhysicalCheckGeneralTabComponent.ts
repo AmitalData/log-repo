@@ -23,12 +23,10 @@ import { CH_NG_192_MSG3_ApproveChangeTimeResponseData } from '../../../../../Cus
 import { IIGGeneralMessagesService } from '../../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
-import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
-import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     selector:'PhysicalCheckAvailableTimes',
-    
+    moduleId: module.id,
     templateUrl: './PhysicalCheckGeneralTabComponent.html',
 })
 
@@ -50,21 +48,6 @@ export class PhysicalCheckGeneralTabComponent
     public AvailableTimeChecked: boolean = false;
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
 
-
-    
-    private _RequestToAdvanceAQueue: string;
-    get RequestToAdvanceAQueue() { return this._RequestToAdvanceAQueue; }
-    set RequestToAdvanceAQueue(value: string) {
-        this._RequestToAdvanceAQueue = value;
-        this.EntityPM.RequestToAdvanceAQueue = value;
-    }
-    
-    private _RequestDetails: string;
-    get RequestDetails() { return this._RequestDetails; }
-    set RequestDetails(value: string) {
-        this._RequestDetails = value;
-        this.EntityPM.RequestDetails = value;
-    }
     private _FromDate: Date;
     get FromDate() { return this._FromDate; }
     set FromDate(value: Date) {
@@ -113,8 +96,8 @@ export class PhysicalCheckGeneralTabComponent
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
                 this.Init();
                 //this.EntityPM = this.entityArgs.EntityPM;
                 //this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -123,19 +106,12 @@ export class PhysicalCheckGeneralTabComponent
                                
             });
         });
-       
 
     }
 
     Init() {
         if (this.entityArgs == null || (this.entityArgs != null && this.entityArgs.EntityPM == null)) return;
         this.EntityPM = this.entityArgs.EntityPM;
-
-        if (this.EntityPM.RequestToAdvanceAQueue)
-            this.RequestToAdvanceAQueue = this.EntityPM.RequestToAdvanceAQueue;
-        if (this.EntityPM.RequestDetails)
-            this.RequestDetails = this.EntityPM.RequestDetails;
-
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.Listen();
     }
@@ -182,34 +158,8 @@ export class PhysicalCheckGeneralTabComponent
                     }
                 })
             );
-
-            // todo: BringQueueForwardIndicatorStatus=004  יש להציג הודעה “הקדמת תור הועברה לבחינה של עובד מכס”
-            this.ShowAlertBringQueueForwardIndicatorStatus();
         }
     }
-
-    public IsDisplayOnly: boolean = false;
-    public DisplayOnlyMessage: string = "";
-    public ShowStorageStatusMessage: boolean = false;
-
-    ShowAlertBringQueueForwardIndicatorStatus() {
-        if(this.EntityPM.BringQueueForwardIndicatorS == "4"){
-            this.IsDisplayOnly =true;
-            this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + "הקדמת תור הועברה לבחינה של עובד מכס";
-            DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
-            if (this.CurrentSession.CurrentEditComponent) {
-                this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
-            }
-        }
-    }
-
-    
-    RefreshEntity() {
-        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-    }
-
 
     // log tab
     selectedTab: LogTab;
@@ -252,23 +202,6 @@ export class PhysicalCheckGeneralTabComponent
         this.SetDateEnable(false);
         
     }
-
-    checkEarlierDateFeature() {
-        return FeatureLocator.HasFeaturePermession("Customs.PhysicalCheck", "EarlierDateFeature");
-    }
-
-    SetEarlierDateFieldsEnable(enable: boolean) {
-        this.UIProperties.SetEnabled("RequestToAdvanceAQueue", this.ObjectTableName, enable);
-        this.UIProperties.SetEnabled("RequestDetails", this.ObjectTableName, enable);
-
-        this.UIProperties.SetEnabled("ByAskForAnEarlierDate", this.ObjectTableName, enable);
-        this.UIProperties.SetEnabled("ByAskForAnLaterDate", this.ObjectTableName, enable);
-        this.UIProperties.SetEnabled("ByAvailableTimeChecked", this.ObjectTableName, enable);
-
-        this.SetDateEnable(enable);
-        
-    }
-    
     SetDateEnable(enable: boolean) {
         this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, enable);
@@ -335,14 +268,6 @@ export class PhysicalCheckGeneralTabComponent
                 //case 3: // In Case of automatic update
             }
         }
-        
-        if(this.AskForAnEarlierDate){
-            
-        
-            //todo: after update iig:    
-            // checkParams.RequestToAdvanceAQueue = this.EntityPM.RequestToAdvanceAQueue;
-            // checkParams.RequestDetails = this.EntityPM.RequestDetails;
-        }
         let objecttable: ObjectTablePM = window.ObjectTables.filter(d => d.Name == "Customs.PhysicalCheck")[0];
 
 
@@ -366,9 +291,7 @@ export class PhysicalCheckGeneralTabComponent
         checkParams.CheckTypeCode = this.EntityPM.CheckTypeCode;
 
 
-        checkParams.RequestToAdvanceAQueue = this.EntityPM.RequestToAdvanceAQueue;
-        checkParams.RequestDetails = this.EntityPM.RequestDetails;
-        
+
         //if (sendOption == null) {
         checkParams.RequestVIA = SendRequestVIA.Default;
         //}
@@ -384,7 +307,7 @@ export class PhysicalCheckGeneralTabComponent
         //}
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,checkParams.PBId, "שליחת בקשה- בדיקה פיזית", true)
+            .ShowProgressBar(checkParams.PBId, "שליחת בקשה- בדיקה פיזית", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.AnalyzeResponseMessage(this.ResponseData);
@@ -395,20 +318,9 @@ export class PhysicalCheckGeneralTabComponent
 
             });
 
-        
         this._IIGGeneralMessagesService.PostChangingTimeRequestParams(checkParams)
-            .subscribe((myServiceResponse: ServiceResponse) => {
-                if (!myServiceResponse.HasError && myServiceResponse.Result != null && myServiceResponse.Result.HasException != true) {
-                    var messageWindow = new MessageWindow();
-                    messageWindow.Width = 400;
-                    messageWindow.Height = 200;
-                    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                    messageWindow.Show("בקשה נשלחה בהצלחה.");
-
-                }
-                SessionLocator.SelectedSession.CloseCurrentWindow();
-            }
-        );
+            .subscribe(() => { }
+            );
 
 
         //customServiceReference.SendCheckRequestCompleted += customServiceReference_SendCheckRequestCompleted;

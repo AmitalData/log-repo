@@ -24,9 +24,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 		     None,  
 	         Code, 
 	         Name, 
-	         SearchFields, 
-	         TransportModeCode, 
-	         DirectionCode,
+	         SearchFields,
 	      }
 
 
@@ -35,9 +33,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 		     None,  
 	         Code, 
 	         Name, 
-	         SearchFields, 
-	         TransportModeCode, 
-	         DirectionCode,
+	         SearchFields,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -54,16 +50,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModeCode))
-            {
-				entityPOCO.TransportModeCode = entityPM.TransportModeCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionCode))
-            {
-				entityPOCO.DirectionCode = entityPM.DirectionCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -87,16 +73,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransportModeCode))
-            {
-					entityPM.TransportModeCode = entityPOCO.TransportModeCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DirectionCode))
-            {
-					entityPM.DirectionCode = entityPOCO.DirectionCode;
-            }
-
 		}
 
 		public void PMToOldPM(TariffTypePM entityPM, TariffTypePM oldEntityPM)
@@ -111,16 +87,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModeCode))
-            {
-                oldEntityPM.TransportModeCode = entityPM.TransportModeCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionCode))
-            {
-                oldEntityPM.DirectionCode = entityPM.DirectionCode;
             }
 			
 		}

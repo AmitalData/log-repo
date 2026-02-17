@@ -14,7 +14,7 @@ import {CardList} from '../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TariffsComponent.html',
 })
 
@@ -169,8 +169,8 @@ export class TariffsComponent {
                     chargePM.MarkUpValue = 0;
                     chargePM.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
                     chargePM.SaleCurrencyId = this.EntityPM.SaleCurrencyId;
-                    chargePM.SaleCurrencyCode = this.fatherComponent.EntityPM.SaleCurrencyCode;
-                    chargePM.SaleExchangeRate = this.fatherComponent.EntityPM.ExchangeRate;                    
+                    chargePM.SaleCurrencyCode = this.fatherComponent.GetCurrencyCode(this.EntityPM.SaleCurrencyId);
+                    chargePM.SaleExchangeRate = this.fatherComponent.GetCurrencyRate(this.EntityPM.SaleCurrencyId);                    
                     this.EntityPM.AddQuoteChargePM(chargePM);
                     
                     chargeItem = new QuoteChargeItem(chargePM, this.fatherComponent, false);

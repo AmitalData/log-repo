@@ -7,7 +7,6 @@ using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +14,26 @@ using System.Threading.Tasks;
 namespace Logitude.Customs.BL.Messaging.Maman
 {
     
-   
+    public enum MamanActionCodeUpdateOrCancel
+    {
+        Upsert,
+        Cancel
+    }
+    public enum MamanSpecialCode
+    {
+        /// <summary>
+        /// קליטת עיכוב (ללא ששודרה קודם השהיה)
+        /// </summary>
+        ReceivingDelayCertificate_DelayIt = 2,
+        StickerPrinting =4,
+        PrintDocuments= 5
+//2	קליטה תעודת עיכוב	2, קליטה תעודת עיכוב Receiving a delay certificate	0
+//4	הדפסת מדבקה	4, הדפסת מדבקה   Sticker Printing	0
+//5	הדפסת מסמכים	5, הדפסת מסמכים  Printing Documents	0
+    }
 
 
-    public class CourierGWMessageECSpclMamanRequestService : ICourierGWMessageECSpcRequestService
+    public class CourierGWMessageECSpclMamanRequestService
     {
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
@@ -70,11 +85,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //var myWebAPICourierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanResponseService();
                 //myWebAPICourierGWMessageECTHRDataMamanService.BuildCommunicationLog(bytearray, tenant, declarationId);
 
-                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-                var interfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails().FirstOrDefault(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECMMNSPCL_REQUEST);
-                int priority = interfaceDetails.Priority == PriorityEnum.High ? 20 : 89;
-                var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
-                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECMMNSPCL_REQUEST, CustomsPartnerFtpDetails.PartnerCode_Mamam, priority);
+                var webAPISendMessage2MamanService = new WebAPISendMessage2MamanService();
+                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECSPCL);
 
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
@@ -110,17 +122,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 case MamanSpecialCode.PrintDocuments:
                     mamanSpecialActionCode = "5";
                     break;
-                case MamanSpecialCode.Sban:
-                    mamanSpecialActionCode = "6";
-                    break;
-
+             
             }
             return new ECSpclMamanMessage()
             {
                 ActionCode = mamanActionCodeUpdateOrCancel,
                 BaldarAwb = _DeclarationPM.CourierHAWB ?? "",
                 BaldarHp = _DeclarationPM.AgentId ?? "",
-                OpenBaldarAwbDate = FormatDateTimeForJson(CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM)),
+                OpenBaldarAwbDate = CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM),
                 SpSpclCode = mamanSpecialActionCode ?? "",
                 SpLabel1 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText1 ?? "" : "",
                 SpLabel2 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText2 ?? "" : "",
@@ -131,25 +140,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             };
         }
-        static string FormatDateTimeForJson(DateTime? dateTime)
-        {
-            if (dateTime.HasValue)
-            {
-                return dateTime.Value.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                return null;
-            }
-        }
     }
-    
     public class ECSpclMamanMessage
     {
         public string ActionCode { get; set; }
         public string BaldarAwb { get; set; }
         public string BaldarHp { get; set; }
-        public string OpenBaldarAwbDate { get; set; }
+        public DateTime OpenBaldarAwbDate { get; set; }
         public string SpSpclCode { get; set; }
         
         public string SpLabel1 { get; set; }

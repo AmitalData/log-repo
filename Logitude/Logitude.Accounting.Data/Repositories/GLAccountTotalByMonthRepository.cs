@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
-using System.Data.Entity;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -259,55 +258,13 @@ namespace Logitude.Accounting.Data.Repositories
             return rv;
         }
 
-        public List<int> GetActiveTenantPerYear(int year)
-        {
-            var q=
-            context
-                .GLAccountTotalByMonths
-                .Where(r => r.Year == year)
-                .Select(r => r.Tenant).Distinct();
-            return q.ToList();
-             
-        }
 
-        public void DeleteControlByTanent(int tenant)
-        {            
-            List<GLAccountTotalByMonth> controller = 
-                (from x in context. GLAccountTotalByMonths.Include("GLAccount")
-                where  x.Tenant == tenant && x.GLAccount.IsControlAccount.Value && x.DateTypeCode == "1"
-                select x).ToList();
 
-            controller.ForEach(x => context.GLAccountTotalByMonths.Remove(x));
-            SubmitChanges();
-        }
-
-        public void AddRange(List<GLAccountTotalByMonthsDTO> gLAccountTotalByMonths)
-        {
-            foreach (var  g in gLAccountTotalByMonths)
-                context.GLAccountTotalByMonths.Add(new GLAccountTotalByMonth()
-                {
-                    AccountId = g.AccountId,
-                    CurrencyId = g.CurrencyId,
-                    DateTypeCode = g.DateTypeValue,
-                    ForeignAmountCredit = g.ForeignAmountCredit,
-                    ForeignAmountDebit = g.ForeignAmountDebit,
-                    LocalAmountCredit = g.LocalAmountCredit,
-                    LocalAmountDebit = g.LocalAmountDebit,
-                    Month = g.Month,
-                    Year = g.Year,
-                    Tenant = g.Tenant
-                });
-
-            SubmitChanges();
-        }
 
    }
-    public class CurrencySum
+   public class CurrencySum
    {
        public string AccountId { get; set; }
-
-        public string AccountDisplayNumber { get; set; }
-        
        public string CurrencyId { get; set; }
 
        public decimal ForeignAmountCredit { get; set; }
@@ -334,13 +291,6 @@ namespace Logitude.Accounting.Data.Repositories
         public int Tenant { get; set; }
         
         public string AccountId { get; set; }
-
-        public string DisplayNumber { get; set; }
-        public string LocalName { get; set; }
-
-        public string AccountDisplayNumber { get; set; }
-        
-
         public string CurrencyId { get; set; }
 
         public int Year { get; set; }
@@ -383,16 +333,9 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         public string GLAccountCurrencyId { get; set; }
-        public int TotalOpenTransactions { get;  set; }
-    }
 
-    public class CurrencySumOpenAmount
-    {
-        public string AccountId { get; set; }
-        public string OpenAmountCurrencyId { get; set; }
-        public decimal OpenAmount { get; set; }
     }
-
 }
-
-
+   
+   
+   

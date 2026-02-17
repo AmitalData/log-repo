@@ -10,12 +10,12 @@ using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -28,11 +28,6 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.TariffModule.Data.Repositories;
-using Logitude.TariffModule.Data.EntityPOCOs;
-using Logitude.BL.CommonDataModel.Tools.Validating;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -65,13 +60,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             if (objectContext == null)
             {
                 objectContext = CommonDataContext.GetContext(tenant.Id);
-            }
-
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            if (authToken == null || (authToken != null && authToken.Tenant != tenant.Id))
-            {
-                throw new ApplicationException("You are not authorized to do this operation");
             }
 
             tenantRepository = new TenantRepository(objectContext);
@@ -193,66 +181,31 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             string entityPmName = "TenantPM" + currentTenant.Id;
             string datetimeoffset = "datetimeoffset" + currentTenant.Id;
 
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            if (authToken == null || (authToken != null && authToken.Tenant != currentTenant.Id))
+            if (CacheManager.CacheWrapper.Get(datetimeoffset) != null)
             {
-                throw new ApplicationException("You are not authorized to do this operation");
+                CacheManager.CacheWrapper.Invalidate(datetimeoffset);
             }
-            Setting setting;
-            using (TransactionScope setScope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 0, 0)))
-            {
-                SettingRepository settingRepository = new SettingRepository();
-                setting = settingRepository.GetSingleSetting("1");
-                setScope.Complete();
-            }
-            if(setting.WorkEnvironment != "customs")
-            TenantValidating.Validate(currentTenant);
 
             if (CacheManager.CacheWrapper.Get(entityName) != null)
             {
                 CacheManager.CacheWrapper.Invalidate(entityName);
             }
 
-            if (CacheManager.CacheWrapper.Get(datetimeoffset) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(datetimeoffset);
-            }
-
-
             if (CacheManager.CacheWrapper.Get(entityPmName) != null)
             {
                 CacheManager.CacheWrapper.Invalidate(entityPmName);
             }
-
+                     
             if (!string.IsNullOrEmpty(currentTenant.CurrencyId))
             {
                 CommonDataDomainService service = new CommonDataDomainService();
                 currentTenant.CurrencyId = service.GetTenantCurrency(currentTenant.CurrencyId, currentTenant.Id);
             }
-           
 
-
-            if (!string.IsNullOrEmpty(currentTenant.ProfitCurrencyId) && setting.WorkEnvironment!="customs")
+            if (!string.IsNullOrEmpty(currentTenant.ProfitCurrencyId))
             {
                 CommonDataDomainService service = new CommonDataDomainService();
                 currentTenant.ProfitCurrencyId = service.GetTenantCurrency(currentTenant.ProfitCurrencyId, currentTenant.Id);
-
-                TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(currentTenant.Id);
-                IQueryable<TariffSetting> tariffSettings = tariffSettingRepository.GetAll(currentTenant.Id);
-                if(tariffSettings != null && tariffSettings.Count() > 0)
-                {
-                    TariffSetting myTariffSetting = tariffSettings.FirstOrDefault();
-                    if(myTariffSetting != null)
-                    {
-                        if (string.IsNullOrEmpty(myTariffSetting.DefaultCurrencyId))
-                        {
-                            myTariffSetting.DefaultCurrencyId = currentTenant.ProfitCurrencyId;
-                            tariffSettingRepository.Update(myTariffSetting);
-                            tariffSettingRepository.SubmitChanges();
-                        }
-                    }
-                }
             }
 
             AddressPM address = null;
@@ -267,7 +220,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 addressRepository = new AddressRepository(objectContext);
                 addressQuery = new AddressQuery(addressRepository);
                 address = addressQuery.GetSinglePM(currentTenant.AddressId, currentTenant.Id);
-                if (address != null)
+                if(address != null)
                 {
                     currentTenant.CountryCode = address.CountryCode;
                     currentTenant.CountryName = address.CountryEnglishName;
@@ -325,8 +278,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     currentTenant.InvoiceSection2 = currentTenant.Company;
                 }
             }
-
-
+            
             TenantMapping.MapEntity(currentTenant, entity, false);
 
             if (entity.PasswordPolicyCode == null)
@@ -337,9 +289,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             tenantRepository.Update(entity);
             tenantRepository.SubmitChanges();
-
-            UpdateLogboxTenantSettings(currentTenant);
-
             using (TransactionScope scop = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
             {
                 GlobalTenantRepository globalTenantRep = new GlobalTenantRepository();
@@ -349,30 +298,13 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 globalTenantRep.SubmitChanges();
 
                 TenantManagementRepository tenantMngmentRep = new TenantManagementRepository();
-                TenantManagement tenantMngment = tenantMngmentRep.GetSingleTenantManagement(currentTenant.Id,false);
+                TenantManagement tenantMngment = tenantMngmentRep.GetSingleTenantManagement(currentTenant.Id);
                 tenantMngment.Name = currentTenant.Company;
-                tenantMngment.DPArchiveShipmentArrivalFilter = currentTenant.DPArchiveShipmentArrivalFilter;
-                tenantMngment.DPArchiveShipmentDepartFilter = currentTenant.DPArchiveShipmentDepartFilter;
-                tenantMngment.DPArchiveShipmentCreateFilter = currentTenant.DPArchiveShipmentCreateFilter;
                 tenantMngmentRep.Update(tenantMngment);
                 tenantMngmentRep.SubmitChanges();
 
                 scop.Complete();
             }
-        }
-
-        private static void UpdateLogboxTenantSettings(TenantPM currentTenant)
-        {
-            LogBoxTenantSettingRepository logBoxTenantSettingRepository = new LogBoxTenantSettingRepository(currentTenant.Id);
-            LogBoxTenantSetting logBoxTenantSetting = logBoxTenantSettingRepository.GetSingleLogBoxTenantSetting(currentTenant.Id);
-            logBoxTenantSetting.CustomerTenantShareImportFile = currentTenant.CustomerTenantShareImportFile;
-            logBoxTenantSetting.AutoArchiveOnInvoice = currentTenant.AutoArchiveOnInvoice;
-            logBoxTenantSetting.AutoArchiveOnPODExport = currentTenant.AutoArchiveOnPODExport;
-            logBoxTenantSetting.DocumentShareAsDefault = currentTenant.DocumentShareAsDefault;
-            logBoxTenantSetting.LogBoxAdminUserId = currentTenant.LogBoxAdminUserId;
-
-            logBoxTenantSettingRepository.Update(logBoxTenantSetting);
-            logBoxTenantSettingRepository.SubmitChanges();
         }
 
         public void DeleteTenantPM(TenantPM tenant)

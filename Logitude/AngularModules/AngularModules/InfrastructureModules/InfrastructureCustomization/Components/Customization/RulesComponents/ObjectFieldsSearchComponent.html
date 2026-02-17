@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .TitleBackGround {
         background: #F0F0F0; /* For browsers that do not support gradients */
         background: -webkit-linear-gradient(#F0F0F0, #C5C7C7); /* For Safari 5.1 to 6.0 */
@@ -61,7 +61,7 @@
                                 <tr>
                                     <td style="height:23px;width:100%">
                                         <div style="width:100%;height:100%;">
-                                            <input [attr.data-cy]="'SearchField'" type="text" [id]="SearchFieldsId" placeholder="Search" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;width:100%;height:100%;"><br>
+                                            <input type="text" [id]="SearchFieldsId" placeholder="Search" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;width:100%;height:100%;"><br>
                                         </div>
                                     </td>
                                 </tr>
@@ -106,7 +106,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button [attr.data-cy]="'OK'" class="RedButton" (click)="SaveChanges()">OK</button>
+                        <button class="RedButton" (click)="SaveChanges()">OK</button>
                     </td>
                 </tr>
             </table>

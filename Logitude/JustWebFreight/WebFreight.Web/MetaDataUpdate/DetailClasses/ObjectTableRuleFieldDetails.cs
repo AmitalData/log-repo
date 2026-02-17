@@ -8,6 +8,5 @@
         public string ObjectTableRuleId { get; set; }
         public string Expression { get; set; }
         public string RuleNotificationTypeCode { get; set; }
-        public string ObjectFieldCode { get; set; }
     }
 }

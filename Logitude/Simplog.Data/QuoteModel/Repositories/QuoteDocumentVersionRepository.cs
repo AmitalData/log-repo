@@ -65,10 +65,6 @@ namespace Simplog.Data.QuoteModel.Repositories
             return result;
         }
 
-        public string GetLastQuoteQuotationDocumentIdByQuoteIdAndQuoteTemplateId(string quoteId, string quoteTemplateId,  int tenant)
-        {
-           return this.quotesContext.QuoteDocumentVersions.Where(d => d.QuoteId == quoteId && d.QuoteTemplateId == quoteTemplateId  && d.Tenant == tenant).OrderByDescending(d => d.VersionNumber).Select(d=>d.DocumentId).FirstOrDefault();
-        }
 
 
         public void Add(QuoteDocumentVersion entity)

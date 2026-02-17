@@ -39,12 +39,6 @@
                                    Margin="5"
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
-                                   Text="Code :" />
-
-                        <TextBlock Height="25"
-                                   Margin="5"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
                                    Text="Name :" />
 
                         <TextBlock Width="80"
@@ -63,11 +57,6 @@
                                    Text="Is Header :" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <TextBox Height="25"
-                                 Margin="5"
-                                 VerticalAlignment="Center"
-                                 Text="{Binding Code,
-                                                Mode=TwoWay}"  />
                         <TextBox Height="25"
                                  Margin="5"
                                  VerticalAlignment="Center"

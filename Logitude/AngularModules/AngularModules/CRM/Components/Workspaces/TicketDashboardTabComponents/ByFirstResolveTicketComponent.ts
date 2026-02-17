@@ -21,7 +21,7 @@ import {EmployeeGroupPM} from '../../../EntityPMs/EmployeeGroupPM';
 declare var makeAmBarChart, BarClick, PieClick, makePieChart, ResetItemPie, ResetItem, makeAMLineChart, Lineclick, ResetLineclick: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ByFirstResolveTicketComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
@@ -204,7 +204,7 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
 
                         var service: CRMDomainService = new CRMDomainService();
                         if (employeeGroupLinesdIds != null && employeeGroupLinesdIds.length > 0) {
-                            service.GetUsersByEmployeeGroupIds(myIds).subscribe((myResult:any) => {
+                            service.GetUsersByEmployeeGroupIds(myIds).subscribe(myResult => {
                                 var myResponse: ServiceResponse = myResult;
                                 if (!myResponse.HasError) {
                                     loadedUsersList = myResponse.Result.sort((a, b) => { return (a.EnglishName === b.EnglishName) ? 0 : (a.EnglishName < b.EnglishName) ? -1 : 1 });
@@ -555,7 +555,7 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
     }
 
     LoadClosedSolvedTicketData() {
-        this.crmDomainService.GetClosedTicketsBySolvedStage(this.SelectedDateIndex, this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetClosedTicketsBySolvedStage(this.SelectedDateIndex, this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             try {
                 var elm = document.getElementById(this.ClosedSolvedTicketsId);
                 elm.innerHTML = "";
@@ -645,7 +645,7 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
     }
 
     LoadClosedSLAViolationData() {
-        this.crmDomainService.GetClosedTicketsBySLAViolation(this.SelectedDateIndex, this.SelectedDateFilter.Code, this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetClosedTicketsBySLAViolation(this.SelectedDateIndex, this.SelectedDateFilter.Code, this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             if (result.Result.length == 0) {
                 this.ClosedSLAViolationIdExistance = false;
                 try {
@@ -799,7 +799,7 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
     }
 
     LoadClosedTicketsTypeData() {
-        this.crmDomainService.GetClosedTicketsGroupByType(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetClosedTicketsGroupByType(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             if (this.CurrentTicketByTicketTypeChart != null) {
                 this.CurrentTicketByTicketTypeChart.clear();
                 this.CurrentTicketByTicketTypeChart = null;
@@ -822,7 +822,7 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
     }
 
     LoadClosedTicketsSeverityData() {
-        this.crmDomainService.GetClosedTicketsGroupBySeverity(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetClosedTicketsGroupBySeverity(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             try {
                 if (this.CurrentTicketBySeverityChart != null) {
                     this.CurrentTicketBySeverityChart.clear();
@@ -845,7 +845,7 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
     }
 
     LoadClosedTicketsClassificationData() {
-        this.crmDomainService.GetClosedTicketsGroupByClassification(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetClosedTicketsGroupByClassification(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             try {
                 if (this.CurrentTicketByClassificationChart != null) {
                     this.CurrentTicketByClassificationChart.clear();

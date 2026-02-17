@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AutomationResultEmailRecipientQuery
     {
         AutomationResultEmailRecipientRepository repository;
-
+        public AutomationResultEmailRecipientQuery()
+        {
+            repository = new AutomationResultEmailRecipientRepository();
+        }
 
         public AutomationResultEmailRecipientQuery(int tenant)
         {
@@ -38,8 +41,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                                 RecipientValue = a.RecipientValue,
                                                                                                 RecipientType = a.RecipientType,
                                                                                                 Tenant = a.Tenant,
-                                                                                                PartnerObjectFieldCode = a.PartnerObjectFieldCode,
-                                                                                                IsNotifyBack = a.IsNotifyBack,
+
                                                                                             }).ToList();
             return AutomationResultEmailRecipientes;
         }
@@ -55,8 +57,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                                    RecipientValue = a.RecipientValue,
                                                                                                    RecipientType = a.RecipientType,
                                                                                                    Tenant = a.Tenant,
-                                                                                                   PartnerObjectFieldCode = a.PartnerObjectFieldCode,
-                                                                                                   IsNotifyBack = a.IsNotifyBack,
+
                                                                                                });
             return automationResultEmailRecipientes;
         }
@@ -75,7 +76,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              RecipientValue = a.RecipientValue,
                              RecipientType = a.RecipientType,
                              Tenant = a.Tenant,
-                             IsNotifyBack = a.IsNotifyBack,
+
                          }).FirstOrDefault();
             return query;
         }
@@ -90,8 +91,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         RecipientValue = a.RecipientValue,
                                                                         RecipientType = a.RecipientType,
                                                                         Tenant = a.Tenant,
-                                                                        PartnerObjectFieldCode = a.PartnerObjectFieldCode,
-                                                                        IsNotifyBack = a.IsNotifyBack,
                                                                     };
             return result;
         }
@@ -113,8 +112,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                            RecipientValue = a.RecipientValue,
                                                                                            RecipientType = a.RecipientType,
                                                                                            AutomationsId = a.AutomationsId,
-                                                                                           PartnerObjectFieldCode = a.PartnerObjectFieldCode,
-                                                                                           IsNotifyBack = a.IsNotifyBack,
                                                                                        }).ToList();
             return AutomationResultEmailRecipientes;
         }

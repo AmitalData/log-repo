@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -36,11 +36,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             eventType.IsCustomerView = eventTypePM.IsCustomerView;
             eventType.IsSharedLogisticsEnabled = eventTypePM.IsSharedLogisticsEnabled;
             eventType.AllowedInAutomation = eventTypePM.AllowedInAutomation;
-            eventType.CustomField = eventTypePM.CustomField;
-            eventType.IsStatusNotModified = eventTypePM.IsStatusNotModified;
-            eventType.EventTrigger = eventTypePM.EventTrigger;
-            eventType.Weight = eventTypePM.Weight;
-
         }
     }
 }

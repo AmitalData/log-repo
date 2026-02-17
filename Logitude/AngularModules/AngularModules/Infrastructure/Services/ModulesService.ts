@@ -1,57 +1,69 @@
-import { ServiceResponse } from '../DataContracts/ServiceResponse';
-import { ServiceHelper } from '../Utilities/ServiceHelper';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {Observable}     from 'rxjs/Rx';
+import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
+import {ServiceHelper} from '../Utilities/ServiceHelper';
+import {ServiceResponse} from '../DataContracts/ServiceResponse';
 
 @Injectable()
+
 export class ModulesService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FollowerExtended';
+        this._http = ServiceHelper.Http;
     }
+
 
     GetUserFollowEntityLists(entityid: string, objecttableid: string) {
-        var url = this._apiUrl + '/GetUserFollowEntityLists/?' + 'entityid=' + entityid + '&objecttableid=' + objecttableid;
-        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response;
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            serviceResponse.Result = result;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FollowerExtended';
 
-            return serviceResponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetUserFollowEntityLists/?' + 'entityid=' + entityid + '&objecttableid=' + objecttableid, { headers: authHeader }).map(response => {
+
+            var result = response.json();
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = result;
+
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
     }
-
     AddFollowEntity(entityid: string, objecttableid: string, followerUserId: string) {
-        var url = this._apiUrl + '/GetAddFollowEntity/?' + 'entityid=' + entityid + '&objecttableid=' + objecttableid + '&followerUserId=' + followerUserId;
 
-        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FollowerExtended';
 
-            var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetAddFollowEntity/?' + 'entityid=' + entityid + '&objecttableid=' + objecttableid + '&followerUserId=' + followerUserId, { headers: authHeader }).map(response => {
+
+            var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
 
             return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
-
     DeleteFollowEntity(userid: string) {
-        var url = this._apiUrl + '/GetDeleteFollowEntity/?' + 'userid=' + userid;
 
-        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FollowerExtended';
 
-            var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetDeleteFollowEntity/?' + 'userid=' + userid, { headers: authHeader }).map(response => {
+
+            var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
 
             return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
+
 }

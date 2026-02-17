@@ -14,8 +14,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.BL.Messaging.Customs;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -34,21 +33,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(UIMessagePM entityPM, UIMessage entityPOCO)
         {
-            if (HttpContext.Current != null && HttpContext.Current.Request != null)
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken != null)
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                if (authToken != null)
-                {
-                    int tenant = authToken.Tenant;
+                int tenant = authToken.Tenant;
 
-                    UIMessageAdditionalRepository additionalRep = new UIMessageAdditionalRepository(tenant);
-                    UIMessageAdditional additional = additionalRep.GetSingleAdditionalByCode(entityPM.Code, tenant);
-                    if (additional != null)
-                    {
-                        entityPM.Tenant = tenant;
-                        entityPM.Sort = additional.Sort;
-                    }
+                UIMessageAdditionalRepository additionalRep = new UIMessageAdditionalRepository(tenant);
+                UIMessageAdditional additional = additionalRep.GetSingleAdditionalByCode(entityPM.Code, tenant);
+                if (additional != null)
+                {
+                    entityPM.Tenant = tenant;
+                    entityPM.Sort = additional.Sort;
                 }
             }
         }

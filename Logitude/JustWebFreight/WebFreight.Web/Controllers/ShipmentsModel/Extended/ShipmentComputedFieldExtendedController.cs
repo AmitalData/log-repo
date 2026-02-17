@@ -9,7 +9,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 {
                     shipmentComputedFields.IsDepositionRequired = false;
                     ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                    shipmentComputedFieldsHelper.UpdateShipmentComputedFields(shipmentComputedFields, shipmentComputedFieldsRepository.context);
+                    shipmentComputedFieldsHelper.UpdateShipmentComputedFields(shipmentComputedFields);
         
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                     var objecttable = objectTabelRepository.GetObjectTableByName("Shipment", 0, true);

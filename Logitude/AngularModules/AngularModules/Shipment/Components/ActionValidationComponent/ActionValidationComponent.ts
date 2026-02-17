@@ -11,7 +11,7 @@ import {CCSWebService, CCSResult, AWBResultClass, FHLShipmentValidator} from '..
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './ActionValidationComponent.html',
 })

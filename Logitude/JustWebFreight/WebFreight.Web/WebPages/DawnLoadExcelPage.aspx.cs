@@ -17,7 +17,7 @@ using System.Xml.XPath;
 using System.Xml;
 using System.Xml.Xsl;
 using WebFreight.Web.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
@@ -41,7 +41,7 @@ namespace WebFreight.Web.WebPages
 
         public bool CheckAvailablityTenantsForEmail(string email, int tenant)
         {
-            UserRepository userRep = new UserRepository(tenant);
+            UserRepository userRep = new UserRepository(0);
             Simplog.Data.CommonDataModel.EntityPOCOs.User user = userRep.GetSingleUserByEmail(email, 0, false);
 
             bool available = true;
@@ -81,11 +81,7 @@ namespace WebFreight.Web.WebPages
             string FileName = Request["fileName"] ?? "";
             string QName = Request["qname"] ?? "";
             string Type = Request["Type"] ?? "";
-            string requestArea = Request["requestArea"] ?? "";
 
-
-
-            
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
             bool isValid = securityDocumentResult.IsValid;
             string email = securityDocumentResult.Email;
@@ -95,12 +91,12 @@ namespace WebFreight.Web.WebPages
             if (isValid)
             {
                 isValid = false;
-                if (IsUser(email, (int)tenant)  || CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0) isValid = true;
+                if (IsUser(email, (int)tenant) && CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0) isValid = true;
             }
 
             if (isValid)
             {
-                ICommonDataContext context = CommonDataContext.GetContext((int)tenant);
+                ICommonDataContext context = CommonDataContext.GetContext(0);
 
 
                 //StiReport stiReport = new StiReport();
@@ -155,16 +151,8 @@ namespace WebFreight.Web.WebPages
                     if (Type == "SaveToMicrosoftExcel2007")
                     {
                         HttpContext.Current.Response.ContentType = "application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                        var fileName = FileName;
-                        if (fileName.Contains("!BIReportName="))
-                        {
-                            fileName = fileName.Split(new string[] { "!BIReportName=" }, StringSplitOptions.None)[1];
-                        }
-                         if(QName != null)
-                            documentName = QName + ".xlsx";
-                        else
-                            documentName = fileName + ".xlsx";
-                     }
+                        documentName = FileName + ".xlsx";
+                    }
                     else
                     {
                         HttpContext.Current.Response.ContentType = "application/" + "vnd.ms-excel";
@@ -180,6 +168,11 @@ namespace WebFreight.Web.WebPages
                     //            documentName = FileName + ".pdf";
                     //            ShowType = "inline";
                     //            break;
+                    //        }
+
+
+
+                    //}
 
                     if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
                     {

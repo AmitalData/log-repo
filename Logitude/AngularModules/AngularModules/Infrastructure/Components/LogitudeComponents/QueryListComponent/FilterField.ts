@@ -12,11 +12,10 @@ import { FeatureLocator } from '../../../Utilities/FeatureLocator';
 
 export class FilterField extends BaseComponent {
     AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]
-    ParentClass: any;
+    ParentClass: any; 
     filters: ApiQueryFilters;
     iswidnowMode: boolean = false;
     QueryId: string;
-    QueryCode: string;
     public ControlId: string = null;
     SessionIdx: number = 0;
     public IsCustomFilter: boolean = false;
@@ -28,11 +27,11 @@ export class FilterField extends BaseComponent {
     public DateFiltersEnabled: boolean = false;
     public PickFiltersEnabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(objectField: any, queryCode: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
+    constructor(objectField: any, queryId: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
-         this.SessionIdx = this.CurrentSession.SessionIndex;
+        this.SessionIdx = this.CurrentSession.SessionIndex;
         this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
-        this.QueryCode = queryCode;
+        this.QueryId = queryId;
         this.Filterchangeevent = filterchangeevent;
         this.ParentClass = parentClass;
         this.AdvancedQueryFilterPMs = AdvancedQFPMs;
@@ -43,14 +42,13 @@ export class FilterField extends BaseComponent {
         this.FieldName = this.ObjectField.FieldName;
         this.IsCustomFilter = this.ObjectField.IsCustomFilter;
         
-        if (queryCode != null && queryCode != undefined && queryCode != "") {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == objectField.FieldCode)[0];
+        if (queryId != null && queryId != undefined && queryId != "") {
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == objectField.Id)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {
                     this.EnableDelete = false;
                     this.IsPreDefined = true;
-                    this.CustomPredefined = preDefinedFilter.CustomPredefined;
                     if (preDefinedFilter.PredefinedValue.toLowerCase() == "false") {
                         this.TextValue = "false";
                     }
@@ -65,7 +63,6 @@ export class FilterField extends BaseComponent {
                 else {
                     this.EnableDelete = true;
                 }
-                
                 this.Operation = this.Operators.filter(a => a.Code == preDefinedFilter.Operator)[0];
             }
             else {
@@ -74,13 +71,12 @@ export class FilterField extends BaseComponent {
         }
 
         else {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldCode == objectField.FieldCode)[0];
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldId == objectField.Id)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {
                     this.EnableDelete = false;
                     this.IsPreDefined = true;
-                    this.CustomPredefined = preDefinedFilter.CustomPredefined;
                     if (preDefinedFilter.PredefinedValue.toLowerCase() == "false") {
                         this.TextValue = "false";
                     }
@@ -95,7 +91,6 @@ export class FilterField extends BaseComponent {
                 else {
                     this.EnableDelete = true;
                 }
-                
                 this.Operation = this.Operators.filter(a => a.Code == preDefinedFilter.Operator)[0];
             }
             else {
@@ -103,7 +98,7 @@ export class FilterField extends BaseComponent {
             }
         }
 
-        var currentQuery = window.Queries.filter(d => d.UniqueCode == this.QueryCode)[0];
+        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
         if (currentQuery != null) {
             if (!AppTool.IsNullOrEmpty(currentQuery.SharedByUserId) && currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
                 if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
@@ -155,7 +150,7 @@ export class FilterField extends BaseComponent {
             this.UIProperties.SetEnabled(this.ObjectField.FieldName, this.ObjectTable.Name, this.PickFiltersEnabled);
         }
     }
-
+    
     private filterchangeevent: PubSubService;
     public get Filterchangeevent() { return this.filterchangeevent; }
     public set Filterchangeevent(newValue: PubSubService) { this.filterchangeevent = newValue; }
@@ -188,17 +183,8 @@ export class FilterField extends BaseComponent {
     public get IsPreDefined() { return this.isPreDefined; }
     public set IsPreDefined(newValue: boolean) { this.isPreDefined = newValue; }
 
-    private customPredefined: boolean = false;
-    public get CustomPredefined() { return this.customPredefined; }
-    public set CustomPredefined(newValue: boolean) { this.customPredefined = newValue; }
-
     private exists: boolean;
-    public get Exists() {
-        //if (this.IsPreDefined == true)
-        //    return true;
-        //else
-        return this.exists;
-    }
+    public get Exists() { return this.exists; }
     public set Exists(newValue: boolean) {
         //if (this.ParentClass.SelectedObjectFields && (this.ParentClass.SelectedObjectFields.length) > 10 && newValue == true) {
         //    this.ParentClass.ValidationErrorsList = [];
@@ -221,8 +207,8 @@ export class FilterField extends BaseComponent {
                     //if (this.exists == false) {
                     tempField.IsDeleted = true;
                     //if (!this.IsDeleted){
-                    if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode == this.ObjectField.FieldCode).length > 0) {
-                        this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode != this.ObjectField.FieldCode);
+                    if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId == this.ObjectField.Id).length > 0) {
+                        this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId != this.ObjectField.Id);
                     }
                     this.ParentClass.DeteteFilter(this);
                     //if (this.TextValue != null && this.TextValue != '') {
@@ -256,9 +242,7 @@ export class FilterField extends BaseComponent {
     }
 
     private operation: ObjectFieldOperator;
-    public get Operation()
-    {
-        
+    public get Operation() {
         if (!this.operation) {
             if ((this.ObjectField.DataTypeCode == "Text" || this.ObjectField.DataTypeCode == "nText") && AppTool.IsNullOrEmpty(this.operation)) {
                 this.operation = new ObjectFieldOperator("StartsWith", "Starts With");
@@ -411,8 +395,8 @@ export class FilterField extends BaseComponent {
         //this.AdvancedQueryFilterPM = filter;
         var temp = this;
         temp.IsDeleted = true;
-        if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode == this.ObjectField.FieldCode).length > 0) {
-            this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode != this.ObjectField.FieldCode);
+        if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId == this.ObjectField.Id).length > 0) {
+            this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId != this.ObjectField.Id);
         }
         this.ParentClass.DeteteFilter(this);
         if (this.TextValue != null) {
@@ -425,7 +409,7 @@ export class FilterField extends BaseComponent {
     list: ObjectFieldOperator[];
     private GetFieldOperators(field: ObjectFieldPM) {
 
-        
+
         this.list = [];
 
         if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText") {
@@ -437,8 +421,6 @@ export class FilterField extends BaseComponent {
             //}
             //else {
             this.list.push(this.startsWithOp);
-            this.list.push(this.ContainsOp);
-
             //}
         }
 
@@ -454,7 +436,6 @@ export class FilterField extends BaseComponent {
             if (field.DataTypeCode == "DateTime" || field.DataTypeCode == "Date") {
                 this.list.push(this.BetweenOp);
             }
-            this.AddNumberFilters(field);
         }
 
 
@@ -469,7 +450,7 @@ export class FilterField extends BaseComponent {
 
 
 
-    ContainsOp: ObjectFieldOperator = new ObjectFieldOperator("Contains", "Contains");
+
     startsWithOp: ObjectFieldOperator = new ObjectFieldOperator("StartsWith", "Starts With");
     equalsOp: ObjectFieldOperator = new ObjectFieldOperator("Equals", "Equals to");
     notEqualsOp: ObjectFieldOperator = new ObjectFieldOperator("NotEqual", "Not Equal to");
@@ -479,13 +460,6 @@ export class FilterField extends BaseComponent {
     lessThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("LessThanOrEqual", "Less Than Or Equal");
     BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
 
-
-    private AddNumberFilters(field: ObjectFieldPM) {
-        if (field.DataTypeCode == "DateTime" || field.DataTypeCode == "Date") {
-            return;
-        }
-        this.list.push(this.notEqualsOp);
-    }
 }
 
 
@@ -501,7 +475,7 @@ export class FilterFieldsClass {
         this.FilterFields = [];
     }
 
-    AddFiltersList(objectsList: any, queryCode: string, AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]) {
+    AddFiltersList(objectsList: any, queryId: string, AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]) {
         //ObservableCollection
         if (this.ParentClass == null) {
             var ss = "";
@@ -509,7 +483,7 @@ export class FilterFieldsClass {
         var newList = [];
         //.sort((a, b) => { return (a.FieldName === b.FieldName) ? 0 : a ? -1 : 1 })
         objectsList.sort((a, b) => { return (a.FieldName === b.FieldName) ? 0 : (a.FieldName < b.FieldName) ? -1 : 1 }).forEach((item, key) => {
-            newList.push(new FilterField(item, queryCode, this.IsWindowMode, AdvancedQueryFilterPMs, this.ParentClass, this.event));
+            newList.push(new FilterField(item, queryId, this.IsWindowMode, AdvancedQueryFilterPMs, this.ParentClass, this.event));
         });
 
         this.FilterFields = newList.sort((a, b) => { return (TextCodeTranslator.Translate(a.ObjectField.FullNameTextCodeCode).toLowerCase() === TextCodeTranslator.Translate(b.ObjectField.FullNameTextCodeCode).toLowerCase()) ? 0 : (TextCodeTranslator.Translate(a.ObjectField.FullNameTextCodeCode).toLowerCase() < TextCodeTranslator.Translate(b.ObjectField.FullNameTextCodeCode).toLowerCase()) ? -1 : 1 });

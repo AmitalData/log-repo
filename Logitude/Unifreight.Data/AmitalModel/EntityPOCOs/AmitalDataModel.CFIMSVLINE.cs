@@ -164,7 +164,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TOP in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? TOP
+        public virtual global::System.Nullable<int> TOP
         {
             get
             {
@@ -179,14 +179,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _TOP;
+        private global::System.Nullable<int> _TOP;
 
 
         /// <summary>
         /// There are no comments for HEIGHT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? HEIGHT
+        public virtual global::System.Nullable<int> HEIGHT
         {
             get
             {
@@ -201,14 +201,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _HEIGHT;
+        private global::System.Nullable<int> _HEIGHT;
 
 
         /// <summary>
         /// There are no comments for GROUPNUM in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? GROUPNUM
+        public virtual global::System.Nullable<int> GROUPNUM
         {
             get
             {
@@ -223,7 +223,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _GROUPNUM;
+        private global::System.Nullable<int> _GROUPNUM;
 
 
         /// <summary>
@@ -335,12 +335,11 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _SUGGESTDET1;
 
-
         /// <summary>
         /// There are no comments for STATUS in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? STATUS
+        public virtual global::System.Nullable<int> STATUS
         {
             get
             {
@@ -355,411 +354,8 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _STATUS;
+        private global::System.Nullable<int> _STATUS;
 
-
-        /// <summary>
-        /// There are no comments for TAXEXEMPT in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string TAXEXEMPT
-        {
-            get
-            {
-                return _TAXEXEMPT;
-            }
-            set
-            {
-                if (_TAXEXEMPT != value)
-                {
-                    _TAXEXEMPT = value;
-                    OnPropertyChanged("TAXEXEMPT");
-                }
-            }
-        }
-        private string _TAXEXEMPT;
-
-
-        /// <summary>
-        /// There are no comments for INVOICEQUANTITY in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual double? INVOICEQUANTITY
-        {
-            get
-            {
-                return _INVOICEQUANTITY;
-            }
-            set
-            {
-                if (_INVOICEQUANTITY != value)
-                {
-                    _INVOICEQUANTITY = value;
-                    OnPropertyChanged("INVOICEQUANTITY");
-                }
-            }
-        }
-        private double? _INVOICEQUANTITY;
-
-
-        /// <summary>
-        /// There are no comments for INVOICEQUANTITYTYPE in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string INVOICEQUANTITYTYPE
-        {
-            get
-            {
-                return _INVOICEQUANTITYTYPE;
-            }
-            set
-            {
-                if (_INVOICEQUANTITYTYPE != value)
-                {
-                    _INVOICEQUANTITYTYPE = value;
-                    OnPropertyChanged("INVOICEQUANTITYTYPE");
-                }
-            }
-        }
-        private string _INVOICEQUANTITYTYPE;
-
-
-        /// <summary>
-        /// There are no comments for QUETYPE in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string QUETYPE
-        {
-            get
-            {
-                return _QUETYPE;
-            }
-            set
-            {
-                if (_QUETYPE != value)
-                {
-                    _QUETYPE = value;
-                    OnPropertyChanged("QUETYPE");
-                }
-            }
-        }
-        private string _QUETYPE;
-
-
-        /// <summary>
-        /// There are no comments for CATALOGID in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string CATALOGID
-        {
-            get
-            {
-                return _CATALOGID;
-            }
-            set
-            {
-                if (_CATALOGID != value)
-                {
-                    _CATALOGID = value;
-                    OnPropertyChanged("CATALOGID");
-                }
-            }
-        }
-        private string _CATALOGID;
-
-
-        /// <summary>
-        /// There are no comments for CATALOGNAME in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string CATALOGNAME
-        {
-            get
-            {
-                return _CATALOGNAME;
-            }
-            set
-            {
-                if (_CATALOGNAME != value)
-                {
-                    _CATALOGNAME = value;
-                    OnPropertyChanged("CATALOGNAME");
-                }
-            }
-        }
-        private string _CATALOGNAME;
-
-
-        /// <summary>
-        /// There are no comments for AMOUNT in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual double? AMOUNT
-        {
-            get
-            {
-                return _AMOUNT;
-            }
-            set
-            {
-                if (_AMOUNT != value)
-                {
-                    _AMOUNT = value;
-                    OnPropertyChanged("AMOUNT");
-                }
-            }
-        }
-        private double? _AMOUNT;
-
-
-        /// <summary>
-        /// There are no comments for STATAMOUNT in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual double? STATAMOUNT
-        {
-            get
-            {
-                return _STATAMOUNT;
-            }
-            set
-            {
-                if (_STATAMOUNT != value)
-                {
-                    _STATAMOUNT = value;
-                    OnPropertyChanged("STATAMOUNT");
-                }
-            }
-        }
-        private double? _STATAMOUNT;
-
-
-        /// <summary>
-        /// There are no comments for STATTYPE in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string STATTYPE
-        {
-            get
-            {
-                return _STATTYPE;
-            }
-            set
-            {
-                if (_STATTYPE != value)
-                {
-                    _STATTYPE = value;
-                    OnPropertyChanged("STATTYPE");
-                }
-            }
-        }
-        private string _STATTYPE;
-
-
-        /// <summary>
-        /// There are no comments for ORIGINID in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string ORIGINID
-        {
-            get
-            {
-                return _ORIGINID;
-            }
-            set
-            {
-                if (_ORIGINID != value)
-                {
-                    _ORIGINID = value;
-                    OnPropertyChanged("ORIGINID");
-                }
-            }
-        }
-        private string _ORIGINID;
-
-
-        /// <summary>
-        /// There are no comments for ITEMPRICE in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual decimal? ITEMPRICE
-        {
-            get
-            {
-                return _ITEMPRICE;
-            }
-            set
-            {
-                if (_ITEMPRICE != value)
-                {
-                    _ITEMPRICE = value;
-                    OnPropertyChanged("ITEMPRICE");
-                }
-            }
-        }
-        private decimal? _ITEMPRICE;
-
-
-        /// <summary>
-        /// There are no comments for OCRQUANTITY in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual double? OCRQUANTITY
-        {
-            get
-            {
-                return _OCRQUANTITY;
-            }
-            set
-            {
-                if (_OCRQUANTITY != value)
-                {
-                    _OCRQUANTITY = value;
-                    OnPropertyChanged("OCRQUANTITY");
-                }
-            }
-        }
-        private double? _OCRQUANTITY;
-
-
-        /// <summary>
-        /// There are no comments for OCRQUANTITYTYPE in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string OCRQUANTITYTYPE
-        {
-            get
-            {
-                return _OCRQUANTITYTYPE;
-            }
-            set
-            {
-                if (_OCRQUANTITYTYPE != value)
-                {
-                    _OCRQUANTITYTYPE = value;
-                    OnPropertyChanged("OCRQUANTITYTYPE");
-                }
-            }
-        }
-        private string _OCRQUANTITYTYPE;
-
-
-        /// <summary>
-        /// There are no comments for LINECOUNTER in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual int? LINECOUNTER
-        {
-            get
-            {
-                return _LINECOUNTER;
-            }
-            set
-            {
-                if (_LINECOUNTER != value)
-                {
-                    _LINECOUNTER = value;
-                    OnPropertyChanged("LINECOUNTER");
-                }
-            }
-        }
-        private int? _LINECOUNTER;
-
-        /// <summary>
-        /// There are no comments for LINECOUNTER in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string PROTESTREMARK
-        {
-            get
-            {
-                return _PROTESTREMARK;
-            }
-            set
-            {
-                if (_PROTESTREMARK != value)
-                {
-                    _PROTESTREMARK = value;
-                    OnPropertyChanged("PROTESTREMARK");
-                }
-            }
-        }
-        private string _PROTESTREMARK;
-
-
-
-        /// <summary>
-        /// There are no comments for LINECOUNTER in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string MAKATREMARK
-        {
-            get
-            {
-                return _MAKATREMARK;
-            }
-            set
-            {
-                if (_MAKATREMARK != value)
-                {
-                    _MAKATREMARK = value;
-                    OnPropertyChanged("MAKATREMARK");
-                }
-            }
-        }
-        private string _MAKATREMARK;
-
-        [System.Runtime.Serialization.DataMember]
-        public virtual string PRATMEHES2
-        {
-            get
-            {
-                return _PRATMEHES2;
-            }
-            set
-            {
-                if (_PRATMEHES2 != value)
-                {
-                    _PRATMEHES2 = value;
-                    OnPropertyChanged("PRATMEHES2");
-                }
-            }
-        }
-        private string _PRATMEHES2;
-
-        public virtual decimal? WEIGHT
-        {
-            get { return _WEIGHT; }
-            set
-            {
-                if (_WEIGHT != value)
-                {
-                    _WEIGHT = value;
-                    OnPropertyChanged("WEIGHT");
-                }
-            }
-        }
-        private decimal? _WEIGHT;
-
-        public virtual string WEIGHT_UNIT
-        {
-            get { return _WEIGHT_UNIT; }
-            set
-            {
-                if (_WEIGHT_UNIT != value)
-                {
-                    _WEIGHT_UNIT = value;
-                    OnPropertyChanged("WEIGHT_UNIT");
-                }
-            }
-        }
-        private string _WEIGHT_UNIT;
-    
-
-        #endregion
-
-        #region Extensibility Method Definitions
-        partial void OnCreated();
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -775,5 +371,6 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
 
         #endregion
     }
+
 
 }

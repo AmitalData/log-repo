@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         TemperatureUnitRepository repository;
 
+        public TemperatureUnitQuery()
+        {
+            repository = new TemperatureUnitRepository();
+        }
 
         public TemperatureUnitQuery(int tenant)
         {

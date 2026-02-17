@@ -13,7 +13,7 @@ import { AppTool} from '../../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ErrorLogExceptionComponent.html',
     selector: 'ErrorLogExceptionComponent',
 

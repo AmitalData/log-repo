@@ -4,7 +4,7 @@ import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPickUpPM} from '../../../../../Shipment/EntityPMs/ShipmentPickUpPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PickupDocsOutTabComponent.html',
 })
 

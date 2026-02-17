@@ -11,8 +11,6 @@ export class TermsofUseSignatureList {
 		Tenant: number;
 		SignedDatetime: Date;
 		ContactId: string;
-		TermsofUseId: number;
-		VersionNumber: number;
-		VersionDocumentId: string;
+		TermsofUseVersion: number;
 	
 }

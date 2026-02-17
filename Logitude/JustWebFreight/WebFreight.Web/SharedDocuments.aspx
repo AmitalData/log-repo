@@ -8,23 +8,21 @@
 
     <title>Shared Documents</title>
 
-    <link href="css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
-    <script src="js/kendo.all.min.js" type="text/javascript"></script>
-    <script src="js/knockout-3.5.1.js" type="text/javascript"></script>
-    <script src="js/knockout-kendo.min.js" type="text/javascript"></script>
-
     <link href="HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>    
     <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
+    <link href="HtmlHelpers/CSS/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
+    <link href="HtmlHelpers/Kendo.2013.2.918/kendo.common.min.css" rel="stylesheet" type="text/css"/>
+    <link href="HtmlHelpers/Kendo.2013.2.918/kendo.default.min.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
+
+    <script src="HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/jquery.dateFormat-1.0.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>   
-    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     
     <style type="text/css">
         #EntityHeaderArea {
@@ -52,6 +50,9 @@
 
 <body>
 
+    <script src="HtmlHelpers/JS/knockout-2.2.0.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/knockout-kendo.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/app.js" type="text/javascript"></script>
 
     <div id="ContainerHeader" style="position:absolute; top:0px; z-index:0; width:100%; height:40px; background: url('HtmlHelpers/Images/Bars_Images/HeaderBar.png') repeat-x; border-bottom:1px solid #D1D1D1"></div>
@@ -67,7 +68,7 @@
                             <tr>
                                 <td style="width:5px;"></td>
 
-                                <td id="companyLogoArea" style="width:50px;">
+                                <td style="width:50px;">
                                     <img id="companyLogo" src="HtmlHelpers/Images/Icons/Logo.png" style="width:50px; height:35px; vertical-align:bottom; position:absolute; top:2px;"/>                    
                                 </td>
 
@@ -527,14 +528,12 @@
     </script>
         
     <script type="text/javascript">
-        function OnDownloadDocument(url) {
+        function OnDownloadDocument(documentId) {
             $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open(url);
         }
 
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open("../WebPages/CorrespondenceDownloadpage.aspx?securitykey=" + $.CurrentEntityKey + ":" + $.CurrentEntityId + ":" + $.CurrentCardType + ":" + $.CurrentTenant + "&DA=1");
         }
 
         function GetURL() {

@@ -12,7 +12,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditMamanStickerComponent.html',
 })
 
@@ -25,18 +25,17 @@ export class AddEditMamanStickerComponent
     isWindowMode: boolean = true;
     ValidationErrorsList: any[] = [];
     IsLoaded: boolean = false;
-    IsNew: boolean = false;
 
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     private _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService;
-    private currentSession=SessionLocator.SelectedSession;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
 
-        this.currentSession.StartBusyIndicator("");
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
-            this.currentSession.StopBusyIndicator();
+        this.CurrentSession.StartBusyIndicator("");
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            this.CurrentSession.StopBusyIndicator();
             this.IsLoaded = true;
         });
     }
@@ -50,11 +49,9 @@ export class AddEditMamanStickerComponent
                 this.EntityPM.Tenant = SessionLocator.Tenant;
                 this.EntityPM.DeclarationId = entityArgs.DeclarationId;
                 this.EntityPM.MamanSpecialActionCode = "4";
-                this.IsNew = true;
             }
             else {
                 this.EntityPM = entityArgs.EntityPM;
-                this.IsNew = false;
             }
         }
     }
@@ -89,42 +86,27 @@ export class AddEditMamanStickerComponent
     //#endregion\
 
     OkButtonClicked() {
-        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        if (this.IsNew) {
-            this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe((res:any) => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
-                this.SendMamanSpecialAction();
+        this.CurrentSession.StartBusyIndicatorCreating();
+        this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(res => {
+            this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe(myResult => {
+                if (myResult.HasError) {
+                    this.ValidationErrorsList = [];
+                    this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
+                    return;
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                    var myMessageWindow = new MessageWindow();
+                    myMessageWindow.Show(myResult.Result);
+                }
+                this.CancelButtonClicked();
             });
-        }
-        else {
-            this._DeclarationMamanSpecialActionPMService.update(this.EntityPM).subscribe((res: any) => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
-                this.SendMamanSpecialAction();
-            });
-        }
+        });
         
     }
 
-    SendMamanSpecialAction() {
-        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe((myResult :any)=> {
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            if (myResult.HasError) {
-                this.ValidationErrorsList = [];
-                this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
-                return;
-            }
-            else {
-                var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(myResult.Result);
-            }
-            this.CancelButtonClicked();
-        });
-
-    }
-
     CancelButtonClicked() {
-        SessionLocator.SelectedSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

@@ -5,12 +5,12 @@
             <table>
                 <tr>
                     <td style="width: 100px;">
-                        <LogLabel [ObjectFieldName]="'QuoteClosingReasonId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.O.DeclineReason'" [HideColumns]="true"></LogLabel>
+                        <LogLabel [ObjectFieldName]="'QuoteClosingReasonCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.O.DeclineReason'" [HideColumns]="true"></LogLabel>
                     </td>
 
                     <td style="width: 250px;">
-                        <LogLov [ObjectFieldName]="'QuoteClosingReasonId'"
-                                [SelectedValue]="QuoteClosingReasonId"
+                        <LogLov [ObjectFieldName]="'QuoteClosingReasonCode'"
+                                [SelectedValue]="QuoteClosingReasonCode"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'QuoteClosingReason'">
@@ -40,35 +40,13 @@
         <td class="Label">{{NotesHeader}}</td>
     </tr>
 
-    <tr style="height: 5px;">
-        <td><div></div></td>
-    </tr>
-
-    <tr *ngIf="!ShowClosingReasonNotes" style="height: 90px;">
+    <tr style="height: 90px;">
         <td>
             <table>
                 <tr>
                     <td style="width: 350px; height: 90px;">
                         <div style="height: 90px;">
                             <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'EventNote'" [Text]="EventNote" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-    <tr *ngIf="ShowClosingReasonNotes" style="height: 90px;">
-        <td>
-            <table>
-                <tr>
-                    <td style="width: 350px; height: 90px;">
-                        <div style="height: 90px;">
-                            <LogTextBox [ObjectFieldName]="'QuoteClosingReasonNotes'" [Text]="QuoteClosingReasonNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                         </div>
                     </td>
 
@@ -95,7 +73,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'CancelApproved' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -103,7 +81,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'ConfrimApproved' | IdGeneratorAsyncPipe | async}}" (click)="OkButtonClicked()">{{'General.B.Confirm' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="OkButtonClicked()">{{'General.B.Confirm' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

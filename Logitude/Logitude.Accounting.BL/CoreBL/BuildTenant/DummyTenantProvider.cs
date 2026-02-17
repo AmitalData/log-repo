@@ -72,7 +72,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             int count = 0;
             for (int MM = 1; MM <= 12; MM++)
             {
-                if (!JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), new DateTime(forYear, MM, 1)))
+                if (!JournalValidator.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), new DateTime(forYear, MM, 1)))
                 {
                     continue;
                 }
@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
                         sw = Stopwatch.StartNew();
                         var id = journalTesterClass.InsertRandomJournal(accountingContext, tenant, forYear, MM);
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("create journal " + id.ToString() + " TOOK:" + sw.Elapsed.ToString());
+                        Debug.WriteLine("create journal " + id.ToString() + " TOOK:" + sw.Elapsed.ToString());
                         count++;
 
                     }
@@ -444,7 +444,9 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             ChartOfAccountProvider chartOfAccountProvider,
             DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int times)
         {
-            GLAccountUpdateService us = GetGLAccountUpdateService(accountingContext, fullAccountingSetting);
+
+
+            var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
             //for (int i =
             //    displayNumberProvider
             //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
@@ -459,7 +461,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
 
-                    int iClient = (new CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
+                    int iClient = (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
                     us.Update(new Def.EntityPMs.GLAccountPM()
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -482,20 +484,9 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     }, true);
                     scope.Complete();
                 }
-
+                
             }
-
-        }
-        int _CountGLAccountUpdateService = 0;
-        private GLAccountUpdateService GetGLAccountUpdateService(IAccountingContext accountingContext, FullAccountingSetting fullAccountingSetting)
-        {
-            if (_CountGLAccountUpdateService > 100)
-            {
-                accountingContext = AccountingContext.GetContext(fullAccountingSetting.Tenant);
-                _CountGLAccountUpdateService = 0;
-            }
-            _CountGLAccountUpdateService++;
-            return new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
+            
         }
 
         bool amount2addMore = false;
@@ -516,8 +507,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             ChartOfAccountProvider chartOfAccountProvider,
             DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int amount)
         {
-            var us = //new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), 
-                GetGLAccountUpdateService(accountingContext, fullAccountingSetting);
+            var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
             //for (int i = displayNumberProvider
             //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
             //    ; i < times; i++)
@@ -801,7 +791,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         {
                             AccountingDate = j.AccountingDate,
                             //ActionName = "4", 
-                            ActionTypeCodeEnum = JournalActionTypeEnum.DebitAndCredit,
+                            ActionTypeCodeEnum = MyJournalActionTypeEnum.DebitAndCredit,
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             CreditAccountId = creditCard,
                             DebitAccountId = debitCard,
@@ -822,7 +812,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         {
                             AccountingDate = j.AccountingDate,
                             //ActionName = "4", 
-                            ActionTypeCodeEnum = JournalActionTypeEnum.DebitCreditAndVatdeduction,
+                            ActionTypeCodeEnum = MyJournalActionTypeEnum.DebitCreditAndVatdeduction,
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             CreditAccountId = creditCard,
                             DebitAccountId = debitCard,
@@ -845,7 +835,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         {
                             AccountingDate = j.AccountingDate,
                             //ActionName = "1", 
-                            ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
+                            ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             CreditAccountId = creditCard,
                             DebitAccountId = null,
@@ -867,7 +857,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                            {
                                AccountingDate = j.AccountingDate,
                                //ActionName = "2", 
-                               ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
+                               ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
                                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                                //CreditAccountId = "35", 
 

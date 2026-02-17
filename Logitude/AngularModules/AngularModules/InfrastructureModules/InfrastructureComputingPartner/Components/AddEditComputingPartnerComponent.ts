@@ -14,7 +14,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 declare var window: any;
 @Component({
     selector: 'AddEditComputingPartnerComponent',
-    
+    moduleId: module.id,
     templateUrl: './AddEditComputingPartnerComponent.html',
 })
 

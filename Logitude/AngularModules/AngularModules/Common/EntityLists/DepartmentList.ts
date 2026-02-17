@@ -14,6 +14,5 @@ export class DepartmentList {
 		Notes: string;
 		InActive: boolean;
 		SearchFields: string;
-		Code: string;
 	
 }

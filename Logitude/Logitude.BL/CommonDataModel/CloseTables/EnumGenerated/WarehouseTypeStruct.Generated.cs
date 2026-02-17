@@ -12,7 +12,6 @@ namespace Logitude.BL.CommonDataModel.CloseTables
     {   
        public const string Bonded = "BO";  
        public const string Terminal = "TM";  
-       public const string CFS = "CFS";  
     }
 }
 

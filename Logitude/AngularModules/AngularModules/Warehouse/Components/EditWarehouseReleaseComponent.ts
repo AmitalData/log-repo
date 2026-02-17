@@ -1,9 +1,8 @@
 declare var System: any;
 declare var window: any;
 
-
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
-import {Component, OnInit, ViewChildren, QueryList}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
 import {EntityArgs} from '../../Infrastructure/DataContracts/EntityArgs';
@@ -11,22 +10,19 @@ import {WarehouseReleasePackagePM} from '../../Warehouse/EntityPMs/WarehouseRele
 import {WarehouseReleasePM} from '../../Warehouse/EntityPMs/WarehouseReleasePM';
 import {BaseComponent} from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool, DateTool, FormatTool} from '../../Infrastructure/Tools';
+import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
-
+import {TraceEventExtendedPMService } from '../../Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
 import {ShipmentPMService } from '../../Shipment/Services/StandardPMs/ShipmentPMService';
 import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
-import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
-
+import {EventTypeClass} from '../../Infrastructure/DataContracts/EventTypeArgs';
 @Component({
-    
+    moduleId: module.id,
     selector: 'EditWarehouseReleaseComponent',
     templateUrl: './EditWarehouseReleaseComponent.html',
-
+    providers: [TraceEventExtendedPMService],
 })
 export class EditWarehouseReleaseComponent extends BaseComponent implements OnInit {
-  public ExpectedReleaseDate: any;
-  public SpecialInstruction: any;
-  public Notes: any;
 
     DataContext: any = this;
     public ValidationErrorsList: string[];
@@ -34,6 +30,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
     WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
   
+    EventTypeCodeList: EventTypeClass[];
     ShipmentPM: any;
     SelectedWarehouseReleasePackage: WarehouseReleasePackagePM;
     warehouseReleasePM: WarehouseReleasePM;
@@ -50,7 +47,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
     ActualReleaseDateOldValue: Date;
     ExpectedReleaseDateOldValue: Date;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, public _traceEventExtendedPMService: TraceEventExtendedPMService) {
         super();
         this.myShipmentPMService = new ShipmentPMService();
 
@@ -74,7 +71,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
     ) {
 
-        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease", 0).subscribe(response => {
 
             if (this.entityArgs.EntityPM) {
                 this.InitializeEditWarehouseRelease();
@@ -95,7 +92,20 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
             if (!this.SaveCompletedChangedEvent) {
                 this.SaveCompletedChangedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.CurrentSession.FireEvent("LoadEventTabData");
+                        this.EventTypeCodeList = [];
+                        this.warehouseReleasePM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EventTypeCodeList.push(new EventTypeClass("UPRE", null));
+                        if (this.warehouseReleasePM.ExpectedReleaseDate != this.ExpectedReleaseDateOldValue) {
+                            this.ExpectedReleaseDateOldValue = this.warehouseReleasePM.ExpectedReleaseDate;
+                            this.EventTypeCodeList.push(new EventTypeClass("EXRE", this.warehouseReleasePM.ExpectedReleaseDate));
+                        }
+
+                        if (this.warehouseReleasePM.ActualReleaseDate != this.ActualReleaseDateOldValue) {
+                            this.ActualReleaseDateOldValue = this.warehouseReleasePM.ActualReleaseDate;
+                            this.EventTypeCodeList.push(new EventTypeClass("ENRE", this.warehouseReleasePM.ActualReleaseDate));
+                        }
+
+                        this.UpdateEventType();
                     }
                 });
             }
@@ -148,7 +158,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
             else if (!AppTool.IsNullOrEmpty(this.warehouseReleasePM.ShipmentId)) {
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe((res:any) => {
+                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe(res => {
                     var shipResponse: ServiceResponse = res;
                     this.CurrentSession.StopBusyIndicator();
                     if (!shipResponse.HasError) {
@@ -167,7 +177,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
       
             this.ActualReleaseDateOldValue = this.warehouseReleasePM.ActualReleaseDate;
             this.ExpectedReleaseDateOldValue = this.warehouseReleasePM.ExpectedReleaseDate;
-            this.RunComponent();
+
           
             this.SetLabel();
             this.SetUIProperties();
@@ -216,7 +226,19 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
     }
 
 
-   
+    UpdateEventType() {
+        if (this.EventTypeCodeList && this.EventTypeCodeList.length != 0) {
+            var traceEventArgs: EventTypeArgs = new EventTypeArgs();
+            traceEventArgs.EventTypeList = this.EventTypeCodeList;
+            traceEventArgs.Tenant = SessionLocator.Tenant;
+            traceEventArgs.ObjectTableId = this.ObjectTableId;
+            traceEventArgs.EntityId = this.warehouseReleasePM.Id;
+            traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
+            this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
+                this.CurrentSession.FireEvent("LoadEventTabData");
+            });
+        }
+    }
 
    
 
@@ -258,62 +280,11 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
 
 
-    SetActualDateClicked() {
+    SetActualDateClicked(fieldName: string) {
         this.ActualReleaseDate = DateTool.GetDateParts(this.warehouseReleasePM.ExpectedReleaseDate).DateObject;
     }
 
 
-    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    private timerToken: any;
-    private Retries: number = 0;
-    private GeneratedComponent: any;
-
-    RunComponent() {
-        if (this.AllLocations) {
-
-            if (this.AllLocations.length == 0) {
-                this.RunComponentTimer();
-            }
-
-            else {
-                this.LoadChildComponent();
-            }
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-
-    RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
-    LoadChildComponent() {
-
-        let warehouseEntryPackagesDetailsComponenttLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "WRPD")[0];
-        if (warehouseEntryPackagesDetailsComponenttLocation != null) {
-            SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
-                .then(cmpRef => {
-                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM, IsEditMode: true };
-                    cmpRef.instance.SetWindowArgs(windowArgs);
-
-                });
-
-        }
-
-
-
-    }
-
+  
 
 }

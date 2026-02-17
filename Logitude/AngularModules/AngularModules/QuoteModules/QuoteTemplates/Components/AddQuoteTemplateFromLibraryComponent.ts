@@ -14,7 +14,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'AddQuoteTemplateFromLibraryComponent',
-    
+    moduleId: module.id,
     templateUrl: './AddQuoteTemplateFromLibraryComponent.html',
 })
 
@@ -46,7 +46,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
         this.AreaName = args.AreaName;
         this.QuoteTypeCode = !AppTool.IsNullOrEmpty(args.QuoteTypeCode) ? args.QuoteTypeCode:"" ;
         
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe(response => {
             this.IsLoadTextCode = true;
             this.QuoteTemplateLists = [];
             this.FullQuoteTemplateLists = [];
@@ -84,7 +84,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
 
 
 
-        this.quoteTemplateExtendedPMService.GetQuoteTemplateListsFromLibrary(this.QuoteTypeCode).subscribe((res:any) => {
+        this.quoteTemplateExtendedPMService.GetQuoteTemplateListsFromLibrary(this.QuoteTypeCode).subscribe(res => {
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -122,7 +122,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
 
 
 
-        this.quoteTemplateExtendedPMService.GetCopyQuoteTemplateFromLibrary(item.Id, SessionLocator.LoggedUserId).subscribe((res:any) => {
+        this.quoteTemplateExtendedPMService.GetCopyQuoteTemplateFromLibrary(item.Id, SessionLocator.LoggedUserId).subscribe(res => {
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

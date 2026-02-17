@@ -10,10 +10,9 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {GroupageComponent, GroupageListItem} from './GroupageComponent';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './GroupageContainerComponent.html',
 })
 
@@ -36,7 +35,7 @@ export class GroupageContainerComponent extends BaseComponent {
         this.FatherComponent = args['FatherComponent'];
         this.ShipmentListItem = args['ShipmentListItem'];
         this.ShipmentPM = this.FatherComponent.EntityPM;
-        this.PackageTypeId = this.ShipmentListItem.EntityPM.LCLContainerTypeId;
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerNumber)) {
             this.isContainerNumberExists = true;
         }
@@ -53,7 +52,7 @@ export class GroupageContainerComponent extends BaseComponent {
     SetLabels() {
         this.TareLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Tare').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumeLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Volume').replace('%VolumeCode', this.DataContext.ShipmentPM.VolumeUnitCode);
-        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.O.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
+        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Weight').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
     }
@@ -199,34 +198,18 @@ export class GroupageContainerComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            if (this.ShipmentListItem.EntityPM.LCLContainerTypeId != this.PackageTypeId) {
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Show(" Please notice that the container type on the package level will be adjusted ");
-                confirmWindow.NoButtonText = "Cancel";
-                confirmWindow.YesButtonText = "Ok";
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.Yes) {
-                        this.ShipmentPM.IsGroupageHousesUpdated = true;
-                        this.AddGroupagePackage();
-                    }
-                });
-            }
-            else {
-                this.AddGroupagePackage();
-            }
-        }
-    }
 
-    private AddGroupagePackage() {
-        var indexOfItem = this.FatherComponent.ShipmentsPackages.indexOf(this.ShipmentListItem);
-        if (indexOfItem > -1) {
-            this.FatherComponent.ShipmentsPackages.splice(indexOfItem, 1);
+            var indexOfItem = this.FatherComponent.ShipmentsPackages.indexOf(this.ShipmentListItem);
+            if (indexOfItem > -1) {
+                this.FatherComponent.ShipmentsPackages.splice(indexOfItem, 1);
+            }
+
+            var newItem = new GroupageListItem(this.EntityPM, this.FatherComponent, true);
+            this.FatherComponent.MyGroupagePackages.push(newItem);
+            this.FatherComponent.BuildToggleItems();
+            newItem.UpdateItem();
+            newItem.ComputeFromInsidePackages();
+            this.CurrentSession.CloseCurrentWindow();
         }
-        var newItem = new GroupageListItem(this.EntityPM, this.FatherComponent, true);
-        this.FatherComponent.MyGroupagePackages.push(newItem);
-        this.FatherComponent.BuildToggleItems();
-        newItem.UpdateItem();
-        newItem.ComputeFromInsidePackages();
-        this.CurrentSession.CloseCurrentWindow();
     }
 }

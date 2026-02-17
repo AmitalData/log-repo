@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using System.Threading;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -80,45 +80,197 @@ namespace CommunicationWorkerRole
                                     }
                                     else
                                     {
-                                        try
+
+                                        if (commLog.Document != null)
                                         {
-                                            ProcessAgentSharedManifestUpdate(tenant, context, commLog);
+                                            string filename = commLog.DocumentId + "." + commLog.Document.Extension;
 
-                                            queueservice.Complete();
-                                            LogDoneItemInMemory();
+
+                                            Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+                                            {
+                                                FileName = commLog.Document.Id,
+                                                FolderName = commLog.Document.Folder,
+                                                Extension = commLog.Document.Extension,
+                                                Tenant = commLog.Document.Tenant,
+                                                FileSize = commLog.Document.FileSize,
+                                            };
+                                            Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                                            byte[] datainByte = storageservice.Read(fileInfo);
+
+                                            if (datainByte != null)
+                                            {
+                                            
+                                                if (commLog.Subject != "Status Update")
+                                                {
+                                                    ManifestSL manifestSL = LogitudeXmlSerializer.DeserializeObject<ManifestSL>(datainByte);
+                                                    string manifestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(manifestSL);
+
+                                                    ICommonDataContext agentContext = CommonDataContext.GetContext(manifestSL.DestinationAgentTenant);
+                                                    ContactRepository contactRepository = new ContactRepository(manifestSL.DestinationAgentTenant);
+                                                    PortRepository portRepository = new PortRepository(manifestSL.DestinationAgentTenant);
+                                                    AgentRepository agentRepository = new AgentRepository(manifestSL.DestinationAgentTenant);
+                                                    Agent destinationAgent = agentRepository.GetSingleAgentBySharedKey(manifestSL.AgentSharedKey, manifestSL.DestinationAgentTenant);
+                                                    Contact systemContact = contactRepository.GetSingleContactByEmail("system@tenant" + manifestSL.DestinationAgentTenant + ".com", manifestSL.DestinationAgentTenant, false);
+
+                                                    #region Trans Port
+                                                    Port fromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.MainCarriageFromPort.CountryCode + manifestSL.MainCarriageFromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                    Port toPort = null;
+                                                    if (manifestSL.FinalDistenationPort != null)
+                                                    {
+                                                        toPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.FinalDistenationPort.CountryCode + manifestSL.FinalDistenationPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                    }
+                                                    else
+                                                    {
+                                                        toPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.MainCarriageToPort.CountryCode + manifestSL.MainCarriageToPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                    }
+
+                                                    if (manifestSL.ShipmentPickUp != null)
+                                                    {
+                                                        if (manifestSL.ShipmentPickUp.FromPort != null)
+                                                        {
+                                                            Port pickUpFromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentPickUp.FromPort.CountryCode + manifestSL.ShipmentPickUp.FromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                            manifestSL.ShipmentPickUp.FromPortId = pickUpFromPort!=null ? pickUpFromPort.Id:null;
+                                                        }
+                                                        if (manifestSL.ShipmentPickUp.ToPort != null)
+                                                        {
+                                                            Port pickUpToPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentPickUp.ToPort.CountryCode + manifestSL.ShipmentPickUp.ToPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                            manifestSL.ShipmentPickUp.ToPortId = pickUpToPort != null ? pickUpToPort.Id : null;
+                                                        }
+                                                    }
+                                                    if (manifestSL.ShipmentDelivery != null)
+                                                    {
+                                                        if (manifestSL.ShipmentDelivery.FromPort != null)
+                                                        {
+                                                            Port pickUpFromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentDelivery.FromPort.CountryCode + manifestSL.ShipmentDelivery.FromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                            manifestSL.ShipmentDelivery.FromPortId = pickUpFromPort != null ? pickUpFromPort.Id : null;
+                                                        }
+                                                        if (manifestSL.ShipmentDelivery.ToPort != null)
+                                                        {
+                                                            Port pickUpToPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentDelivery.ToPort.CountryCode + manifestSL.ShipmentDelivery.ToPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                            manifestSL.ShipmentDelivery.ToPortId = pickUpToPort != null ? pickUpToPort.Id : null;
+                                                        }
+                                                    }
+                                                    #endregion
+
+                                                    #region Cancel Old Mainfest
+                                                    if (commLog.Subject == "Update Shared Agent")
+                                                    {
+
+                                                        AgentSharedManifestHelper agentSharedManifestHelper = new AgentSharedManifestHelper();
+                                                        List<ManifestSL> oldManifestSLLists = agentSharedManifestHelper.GetAgentShareManifestSLByEntityId(commLog.EntityId, tenant);
+                                                        foreach (ManifestSL oldManifestSL in oldManifestSLLists)
+                                                        {
+                                                            if (oldManifestSL.AgentSharedManifestId != manifestSL.AgentSharedManifestId)
+                                                            {
+                                                                AgentSharedManifestRepository agentSharedManifestRepository = new AgentSharedManifestRepository(tenant);
+                                                                AgentSharedManifest agentSharedManifest = agentSharedManifestRepository.GetSingleAgentSharedManifest(oldManifestSL.AgentSharedManifestId, oldManifestSL.DestinationAgentTenant);
+                                                                if (agentSharedManifest != null && !agentSharedManifest.CancelledBySenderAgent)
+                                                                {
+                                                                    ShipmentQuery shipmentQuery = new ShipmentQuery(agentSharedManifest.Tenant);
+                                                                    bool isCreate = shipmentQuery.CheckIfShipmentCreateFromManinfest(agentSharedManifest.Id, agentSharedManifest.Tenant);
+                                                                    if (isCreate)
+                                                                    {
+                                                                       agentSharedManifestHelper.SendEmail(manifestSL.AgentSharedKey, manifestSL.ShipmentNumber, tenant);
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        agentSharedManifest.StatusCode = "CANC";
+                                                                        agentSharedManifest.CancelledBySenderAgent = true;
+                                                                        agentSharedManifestRepository.Update(agentSharedManifest);
+                                                                        agentSharedManifestRepository.SubmitChanges();
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+
+                                                    }
+                                                    #endregion
+
+
+                                                    AgentSharedManifestService service = new AgentSharedManifestService(agentContext, manifestSL.DestinationAgentTenant);
+                                                    AgentSharedManifestPM agentSharedPM = new AgentSharedManifestPM()
+                                                    {
+
+                                                        CreateDate = TenantServerConfigration.GetCurrentDateTime(manifestSL.DestinationAgentTenant),
+                                                        Tenant = manifestSL.DestinationAgentTenant,
+                                                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(manifestSL.DestinationAgentTenant),
+                                                        UpdatedByUserId = systemContact!=null ? systemContact.Id:null,
+                                                        AgentReference = manifestSL.ShipmentNumber,
+                                                        Master = manifestSL.TransportModeId == "A" ? manifestSL.LongMaster : manifestSL.MasterNumber,
+                                                        ManifestXML = manifestXML,
+                                                        ShipmentTypeId = manifestSL.ShipmentTypeId,
+                                                        StatusCode = "WAIT",
+                                                        TransportModeId = manifestSL.TransportModeId,
+                                                        DirectionId = manifestSL.DirectionId,
+                                                        FromPortId = fromPort!=null ? fromPort.Id :null,
+                                                        ToPortId = toPort!=null ? toPort.Id:null,
+                                                        GrossWeight = manifestSL.GrossWeight,
+                                                        ChargeableWeight = manifestSL.ChargeableWeight,
+                                                        TEU = manifestSL.TEU,
+                                                        PackagesQuantity = manifestSL.PackagesQuantity,
+                                                        AgentId = destinationAgent != null ? destinationAgent.Id : null,
+                                                        ShipmentLevelCode = manifestSL.ShipmentLevelCode,
+                                                    };
+
+                                                    if (!string.IsNullOrEmpty(manifestSL.AgentSharedManifestId)) agentSharedPM.Id = manifestSL.AgentSharedManifestId;
+                                                    else agentSharedPM.Id = IdCounter.GetNumber("AgentSharedManifest", manifestSL.DestinationAgentTenant);
+
+
+                                                        service.Create(agentSharedPM);
+                                                }
+                                                else
+                                                {
+                                                    string url = LogitudeSettings.LogitudeURL + "/EntityExternalUpdate.aspx";
+                                                    WebRequest request = WebRequest.Create(url);       
+                                                    request.Method = "POST";
+                                                    byte[] byteArray = datainByte;
+                                                    // Set the ContentType property of the WebRequest.
+                                                    request.ContentType = "application/x-www-form-urlencoded";
+                                                    // Set the ContentLength property of the WebRequest.
+                                                    request.ContentLength = byteArray.Length;
+                                                    // Get the request stream.
+                                                    Stream dataStream = request.GetRequestStream();
+                                                    // Write the data to the request stream.
+                                                    dataStream.Write(byteArray, 0, byteArray.Length);
+                                                    // Close the Stream object.
+                                                    dataStream.Close();
+                                                    // Get the response.
+                                                    WebResponse webResponse = request.GetResponse();
+                                                    // Display the status.
+                                                    Console.WriteLine(((HttpWebResponse)webResponse).StatusDescription);
+                                                    // Get the stream containing content returned by the server.
+                                                    dataStream = webResponse.GetResponseStream();
+                                                    // Open the stream using a StreamReader for easy access.
+                                                    StreamReader reader = new StreamReader(dataStream);
+                                                    // Read the content.
+                                                    string responseFromServer = reader.ReadToEnd();
+                                                    // Display the content.
+                                                    Console.WriteLine(responseFromServer);
+                                                    // Clean up the streams.
+                                                    reader.Close();
+                                                    dataStream.Close();
+                                                    webResponse.Close();
+                                                }
+                                            }
+
+
+                                            CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+                                            //waitingCommLog.Logs = logs;
+                                            commLog.CommunicationStatusTypeCode = "D";
+                                            commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                                            commLog.DoneDateUTC = DateTime.UtcNow;
+                                            commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
+                                            commLog.LastStatusDateUTC = DateTime.UtcNow;
+                                            commLogrepository.Update(commLog);
+                                            commLogrepository.SubmitChanges();
+
+
+
                                         }
-                                        catch(Exception exc)
-                                        {
-                                            ExceptionHandler.HandleException(exc, DateTime.Now, 0, null, "AgentsSharedLogistics worker role start", null, null);
 
-                                            commLog.Retries++;
-                                            commLog.ExceptionMessage = GetExceptionMessage(exc);
-                                            if (response.RetryNumber <= 1)
-                                            {
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 5));
-                                            }
-
-                                            if (response.RetryNumber > 1 && response.RetryNumber <= 2)
-                                            {
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 10));
-                                            }
-                                            if (response.RetryNumber >= 3)
-                                            {
-                                                queueservice.CompleteAsFailed();
-
-                                                commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
-                                                commLog.DoneDateUTC = DateTime.UtcNow;
-                                                commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
-                                                commLog.LastStatusDateUTC = DateTime.UtcNow;
-                                                commLog.CommunicationStatusTypeCode = "F";
-
-                                            }
-                                            communicationLogRep.Update(commLog);
-                                            communicationLogRep.SubmitChanges();
-
-
-
-                                        }
+                                        queueservice.Complete();
+                                        LogDoneItemInMemory();
 
                                     }
                                 }
@@ -179,212 +331,6 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private static string GetExceptionMessage(Exception exc)
-        {
-           string exceptionMessage = exc.Message;
-            if (exc.InnerException != null)
-            {
-                exceptionMessage = exceptionMessage + Environment.NewLine + exc.InnerException;
-            }
-            if (exc.StackTrace != null)
-            {
-                exceptionMessage = exceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
-            }
-            exceptionMessage = StringHelper.TruncateLongString(exceptionMessage, 4000);
-
-            return exceptionMessage;
-        }
-
-        private static void ProcessAgentSharedManifestUpdate(int tenant, ICommonDataContext context, CommunicationLog commLog)
-        {
-            if (commLog.Document != null)
-            {
-                string filename = commLog.DocumentId + "." + commLog.Document.Extension;
-
-
-                Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
-                {
-                    FileName = commLog.Document.Id,
-                    FolderName = commLog.Document.Folder,
-                    Extension = commLog.Document.Extension,
-                    Tenant = commLog.Document.Tenant,
-                    FileSize = commLog.Document.FileSize,
-                };
-                Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-                byte[] datainByte = storageservice.Read(fileInfo);
-
-                if (datainByte != null)
-                {
-
-                    if (commLog.Subject != "Status Update")
-                    {
-                        ManifestSL manifestSL = LogitudeXmlSerializer.DeserializeObject<ManifestSL>(datainByte);
-                        string manifestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(manifestSL);
-
-                        ICommonDataContext agentContext = CommonDataContext.GetContext(manifestSL.DestinationAgentTenant);
-                        ContactRepository contactRepository = new ContactRepository(manifestSL.DestinationAgentTenant);
-                        PortRepository portRepository = new PortRepository(manifestSL.DestinationAgentTenant);
-                        AgentRepository agentRepository = new AgentRepository(manifestSL.DestinationAgentTenant);
-                        Agent destinationAgent = agentRepository.GetSingleAgentBySharedKey(manifestSL.AgentSharedKey, manifestSL.DestinationAgentTenant);
-                        Contact systemContact = contactRepository.GetSingleContactByEmail("system@tenant" + manifestSL.DestinationAgentTenant + ".com", manifestSL.DestinationAgentTenant, false);
-
-                        #region Trans Port
-                        Port fromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.MainCarriageFromPort.CountryCode + manifestSL.MainCarriageFromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
-                        Port toPort = null;
-                        if (manifestSL.FinalDistenationPort != null)
-                        {
-                            toPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.FinalDistenationPort.CountryCode + manifestSL.FinalDistenationPort.Code, manifestSL.DestinationAgentTenant, portRepository);
-                        }
-                        else
-                        {
-                            toPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.MainCarriageToPort.CountryCode + manifestSL.MainCarriageToPort.Code, manifestSL.DestinationAgentTenant, portRepository);
-                        }
-
-                        if (manifestSL.ShipmentPickUp != null)
-                        {
-                            if (manifestSL.ShipmentPickUp.FromPort != null)
-                            {
-                                Port pickUpFromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentPickUp.FromPort.CountryCode + manifestSL.ShipmentPickUp.FromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
-                                manifestSL.ShipmentPickUp.FromPortId = pickUpFromPort != null ? pickUpFromPort.Id : null;
-                            }
-                            if (manifestSL.ShipmentPickUp.ToPort != null)
-                            {
-                                Port pickUpToPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentPickUp.ToPort.CountryCode + manifestSL.ShipmentPickUp.ToPort.Code, manifestSL.DestinationAgentTenant, portRepository);
-                                manifestSL.ShipmentPickUp.ToPortId = pickUpToPort != null ? pickUpToPort.Id : null;
-                            }
-                        }
-                        if (manifestSL.ShipmentDelivery != null)
-                        {
-                            if (manifestSL.ShipmentDelivery.FromPort != null)
-                            {
-                                Port pickUpFromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentDelivery.FromPort.CountryCode + manifestSL.ShipmentDelivery.FromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
-                                manifestSL.ShipmentDelivery.FromPortId = pickUpFromPort != null ? pickUpFromPort.Id : null;
-                            }
-                            if (manifestSL.ShipmentDelivery.ToPort != null)
-                            {
-                                Port pickUpToPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentDelivery.ToPort.CountryCode + manifestSL.ShipmentDelivery.ToPort.Code, manifestSL.DestinationAgentTenant, portRepository);
-                                manifestSL.ShipmentDelivery.ToPortId = pickUpToPort != null ? pickUpToPort.Id : null;
-                            }
-                        }
-                        #endregion
-
-                        #region Cancel Old Mainfest
-                        if (commLog.Subject == "Update Shared Agent")
-                        {
-
-                            AgentSharedManifestHelper agentSharedManifestHelper = new AgentSharedManifestHelper();
-                            List<ManifestSL> oldManifestSLLists = agentSharedManifestHelper.GetAgentShareManifestSLByEntityId(commLog.EntityId, tenant);
-                            foreach (ManifestSL oldManifestSL in oldManifestSLLists)
-                            {
-                                if (oldManifestSL.AgentSharedManifestId != manifestSL.AgentSharedManifestId)
-                                {
-                                    AgentSharedManifestRepository agentSharedManifestRepository = new AgentSharedManifestRepository(tenant);
-                                    AgentSharedManifest agentSharedManifest = agentSharedManifestRepository.GetSingleAgentSharedManifest(oldManifestSL.AgentSharedManifestId, oldManifestSL.DestinationAgentTenant);
-                                    if (agentSharedManifest != null && !agentSharedManifest.CancelledBySenderAgent)
-                                    {
-                                        ShipmentQuery shipmentQuery = new ShipmentQuery(agentSharedManifest.Tenant);
-                                        bool isCreate = shipmentQuery.CheckIfShipmentCreateFromManinfest(agentSharedManifest.Id, agentSharedManifest.Tenant);
-                                        if (isCreate)
-                                        {
-                                            agentSharedManifestHelper.SendEmail(manifestSL.AgentSharedKey, manifestSL.ShipmentNumber, tenant);
-                                        }
-                                        else
-                                        {
-                                            agentSharedManifest.StatusCode = "CANC";
-                                            agentSharedManifest.CancelledBySenderAgent = true;
-                                            agentSharedManifestRepository.Update(agentSharedManifest);
-                                            agentSharedManifestRepository.SubmitChanges();
-                                        }
-                                    }
-                                }
-                            }
-
-
-                        }
-                        #endregion
-
-
-                        AgentSharedManifestService service = new AgentSharedManifestService(agentContext, manifestSL.DestinationAgentTenant);
-                        AgentSharedManifestPM agentSharedPM = new AgentSharedManifestPM()
-                        {
-
-                            CreateDate = TenantServerConfigration.GetCurrentDateTime(manifestSL.DestinationAgentTenant),
-                            Tenant = manifestSL.DestinationAgentTenant,
-                            UpdateDate = TenantServerConfigration.GetCurrentDateTime(manifestSL.DestinationAgentTenant),
-                            UpdatedByUserId = systemContact != null ? systemContact.Id : null,
-                            AgentReference = manifestSL.ShipmentNumber,
-                            Master = manifestSL.TransportModeId == "A" ? manifestSL.LongMaster : manifestSL.MasterNumber,
-                            ManifestXML = manifestXML,
-                            ShipmentTypeId = manifestSL.ShipmentTypeId,
-                            StatusCode = "WAIT",
-                            TransportModeId = manifestSL.TransportModeId,
-                            DirectionId = manifestSL.DirectionId,
-                            FromPortId = fromPort != null ? fromPort.Id : null,
-                            ToPortId = toPort != null ? toPort.Id : null,
-                            GrossWeight = manifestSL.GrossWeight,
-                            ChargeableWeight = manifestSL.ChargeableWeight,
-                            TEU = manifestSL.TEU,
-                            PackagesQuantity = manifestSL.PackagesQuantity,
-                            AgentId = destinationAgent != null ? destinationAgent.Id : null,
-                            ShipmentLevelCode = manifestSL.ShipmentLevelCode,
-                        };
-
-                        if (!string.IsNullOrEmpty(manifestSL.AgentSharedManifestId)) agentSharedPM.Id = manifestSL.AgentSharedManifestId;
-                        else agentSharedPM.Id = IdCounter.GetNumber("AgentSharedManifest", manifestSL.DestinationAgentTenant);
-
-
-                        service.Create(agentSharedPM);
-                    }
-                    else
-                    {
-                        string url = LogitudeSettings.LogitudeURL + "/EntityExternalUpdate.aspx";
-                        WebRequest request = WebRequest.Create(url);
-                        request.Method = "POST";
-                        byte[] byteArray = datainByte;
-                        // Set the ContentType property of the WebRequest.
-                        request.ContentType = "application/x-www-form-urlencoded";
-                        // Set the ContentLength property of the WebRequest.
-                        request.ContentLength = byteArray.Length;
-                        // Get the request stream.
-                        Stream dataStream = request.GetRequestStream();
-                        // Write the data to the request stream.
-                        dataStream.Write(byteArray, 0, byteArray.Length);
-                        // Close the Stream object.
-                        dataStream.Close();
-                        // Get the response.
-                        WebResponse webResponse = request.GetResponse();
-                        // Display the status.
-                        Console.WriteLine(((HttpWebResponse)webResponse).StatusDescription);
-                        // Get the stream containing content returned by the server.
-                        dataStream = webResponse.GetResponseStream();
-                        // Open the stream using a StreamReader for easy access.
-                        StreamReader reader = new StreamReader(dataStream);
-                        // Read the content.
-                        string responseFromServer = reader.ReadToEnd();
-                        // Display the content.
-                        Console.WriteLine(responseFromServer);
-                        // Clean up the streams.
-                        reader.Close();
-                        dataStream.Close();
-                        webResponse.Close();
-                    }
-                }
-
-
-                CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
-                //waitingCommLog.Logs = logs;
-                commLog.CommunicationStatusTypeCode = "D";
-                commLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
-                commLog.DoneDateUTC = DateTime.UtcNow;
-                commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(commLog.Tenant);
-                commLog.LastStatusDateUTC = DateTime.UtcNow;
-                commLogrepository.Update(commLog);
-                commLogrepository.SubmitChanges();
-
-
-
-            }
-        }
 
         public override bool OnStart()
         {

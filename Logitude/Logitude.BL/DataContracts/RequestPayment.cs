@@ -18,11 +18,12 @@ namespace Logitude.BL.DataContracts
         public string Quantity { get; set; }
         public string Weight { get; set; }
         public string TotalChargesInNIS { get; set; }
-        public string TermsOfUseDocumentId { get; set; }
-        public string ForeignCurrencyValue { get; set; }
-        public string ForeignCurrency { get; set; }
-        public string ProformaInvoiceNumber { get; set; }
+       
+
+
         public List<ServiceType> ServiceTypes { get; set; }
+     
+       
     }
 
     public class ServiceType

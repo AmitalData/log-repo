@@ -21,11 +21,9 @@ export class PaymentTermList {
 		SearchFields: string;
 		IsManuallySet: boolean;
 		ExternalId: string;
-		EndOfMonth: boolean;
-		NumberOfMonths: number;
+		CurrentMonth: boolean;
 		FromDateTypeCode: string;
 		CalculatedLocalName: string;
 		CalculatedEnglishName: string;
-		Code: string;
 	
 }

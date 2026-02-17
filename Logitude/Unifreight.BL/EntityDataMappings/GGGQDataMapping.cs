@@ -25,37 +25,31 @@ namespace Unifreight.BL.EntityDataMappings
 
         public void PMToPOCO(GGGQPM entityPM, GGGQ entityPOCO)
         {
+            
 
+                entityPOCO.QUEID = entityPM.QUEID;
 
-            entityPOCO.QUEID = entityPM.QUEID;
-
-            entityPOCO.CREATEDATE = entityPM.CREATEDATE;
-            entityPOCO.ORIGINQUE = entityPM.ORIGINQUE;
-            //entityPOCO.USERID = entityPM.USERID;
-            entityPOCO.DONEOPERATION = entityPM.DONEOPERATION;
-            entityPOCO.STATUS = entityPM.STATUS;
-            entityPOCO.EXPTASKTIME = entityPM.EXPTASKTIME;
-            entityPOCO.TRY = entityPM.TRY;
-            entityPOCO.PRIORITY = entityPM.PRIORITY;
-            entityPOCO.ENTNAME = entityPM.ENTNAME;
-            entityPOCO.PRIMARYNUM = entityPM.PRIMARYNUM;
-            //entityPOCO.PROCESSID = entityPM.PROCESSID;
-            entityPOCO.FORMID = entityPM.FORMID;
-            //entityPOCO.COMPUTERID = entityPM.COMPUTERID;
-            ///entityPOCO.QUEUEMANAGEMENT = entityPM.QUEUEMANAGEMENT;
-            //entityPOCO.OTHERASNFILE = entityPM.OTHERASNFILE;
-            //entityPOCO.STOPPEDBYSM = entityPM.STOPPEDBYSM;
-            entityPOCO.DEBUG = entityPM.DEBUG;
-            //entityPOCO.WEAKREF = entityPM.WEAKREF;
-            //entityPOCO.HUGERECORD = entityPM.HUGERECORD;
-            entityPOCO.EXECDATE = entityPM.EXECDATE;
-            entityPOCO.GSTRING1 = entityPM.GSTRING1;
-            entityPOCO.GSTRING2 = entityPM.GSTRING2;
-            entityPOCO.GSTRING3 = entityPM.GSTRING3;
-            entityPOCO.QUEUEMANAGEMENT = entityPM.QUEUEMANAGEMENT;
-            entityPOCO.TENANT = entityPM.Tenant;
-            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
-            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
+                entityPOCO.CREATEDATE = entityPM.CREATEDATE;
+                entityPOCO.ORIGINQUE = entityPM.ORIGINQUE;
+                //entityPOCO.USERID = entityPM.USERID;
+                entityPOCO.DONEOPERATION = entityPM.DONEOPERATION;
+                entityPOCO.STATUS = entityPM.STATUS;
+                entityPOCO.EXPTASKTIME = entityPM.EXPTASKTIME;
+                entityPOCO.TRY = entityPM.TRY;
+                entityPOCO.PRIORITY = entityPM.PRIORITY;
+                entityPOCO.ENTNAME = entityPM.ENTNAME;
+                entityPOCO.PRIMARYNUM = entityPM.PRIMARYNUM;
+                //entityPOCO.PROCESSID = entityPM.PROCESSID;
+                entityPOCO.FORMID = entityPM.FORMID;
+                //entityPOCO.COMPUTERID = entityPM.COMPUTERID;
+                ///entityPOCO.QUEUEMANAGEMENT = entityPM.QUEUEMANAGEMENT;
+                //entityPOCO.OTHERASNFILE = entityPM.OTHERASNFILE;
+                //entityPOCO.STOPPEDBYSM = entityPM.STOPPEDBYSM;
+                entityPOCO.DEBUG = entityPM.DEBUG;
+                //entityPOCO.WEAKREF = entityPM.WEAKREF;
+                //entityPOCO.HUGERECORD = entityPM.HUGERECORD;
+                entityPOCO.EXECDATE = entityPM.EXECDATE;
+                entityPOCO.GSTRING1 = entityPM.GSTRING1;
         }
 
         public void POCOToPM(GGGQPM entityPM, GGGQ entityPOCO)
@@ -83,13 +77,6 @@ namespace Unifreight.BL.EntityDataMappings
             //entityPM.HUGERECORD = entityPOCO.HUGERECORD;
             entityPM.EXECDATE = entityPOCO.EXECDATE;
             entityPM.GSTRING1 = entityPOCO.GSTRING1;
-            entityPM.GSTRING2 = entityPOCO.GSTRING2;
-            entityPM.GSTRING3 = entityPOCO.GSTRING3;
-            entityPM.QUEUEMANAGEMENT = entityPOCO.QUEUEMANAGEMENT;
-            entityPM.Tenant = entityPOCO.TENANT != null ? (int)entityPOCO.TENANT : 0;
-            entityPM.IS_SYNCH = entityPOCO.IS_SYNCH != null ? (bool)entityPOCO.IS_SYNCH : false;
-            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT != null ? entityPOCO.LAST_UPDATE_DT : DateTime.Now;
-
         }
 
         public void CustomPMToPOCO(GGGQPM entityPM, GGGQ entityPOCO)
@@ -113,7 +100,7 @@ namespace Unifreight.BL.EntityDataMappings
 
         public void CustomPOCOToPM(GGGQPM entityPM, GGGQ entityPOCO)
         {
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
 

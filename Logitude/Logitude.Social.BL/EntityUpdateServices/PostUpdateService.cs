@@ -77,19 +77,10 @@ namespace Logitude.Social.BL.EntityUpdateServices
             FollowEntityQueryService followEntityQueryService = new FollowEntityQueryService(socialContext);
             PostRepository postRepository = new PostRepository(socialContext);
             ContactRepository contactrep = new ContactRepository(entityPM.Tenant);
-            UserRepository userrep = new UserRepository(entityPM.Tenant);
 
             string email = HttpContext.Current.User.Identity.Name;
             Contact currentUserContact = contactrep.GetSingleContactByEmail(email, entityPM.Tenant);
-            User currentUser = userrep.GetSingleUserByEmail(email, entityPM.Tenant);
-            if (currentUser == null)
-            {
-                currentUser = userrep.GetSingleUserByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant);
-            }
-            if (currentUserContact == null)
-            {
-                currentUserContact = contactrep.GetSingleContactByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant);
-            }
+
             string postId = entityPM.ParentPostId != null ? entityPM.ParentPostId : entityPM.Id;
 
             System.Collections.Generic.List<FeedPM> addedFeeds = new List<FeedPM>();
@@ -104,12 +95,12 @@ namespace Logitude.Social.BL.EntityUpdateServices
                     postRepository.Update(parentPost);
                 }
 
-                CreateFeed(entityPM, postId, currentUser.Id, addedFeeds);
+                CreateFeed(entityPM, postId, currentUserContact.Id, addedFeeds);
             }
 
             if (!entityPM.IsAutomatic) // if automatic don't build feeds for user followers
             {
-                List<FollowerPM> followers = followerQueryService.GetUserFollowers(currentUser.Id, entityPM.Tenant);
+                List<FollowerPM> followers = followerQueryService.GetUserFollowers(currentUserContact.Id, entityPM.Tenant);
                 foreach (FollowerPM fol in followers)
                 {
                     CreateFeed(entityPM, postId, fol.FollowerUserId, addedFeeds);

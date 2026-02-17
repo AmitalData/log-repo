@@ -43,14 +43,11 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 
 @Component({
     selector: 'OpportunityOverviewTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './OpportunityOverviewTabComponent.html',
 })
 
 export class OpportunityOverviewTabComponent extends BaseComponent implements OnInit {
-  public setToggleButtonMenu() { }
-  public setToggleButtonMenuTemp() { }
-
     public ObjectTableName: string = "Opportunity";
     public DataContext: OpportunityOverviewTabComponent = this;
     public EntityPM: OpportunityPM;
@@ -144,12 +141,9 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
 
     BuildCompetitorToggleButtonList() {
         this.CompetitorToggleButtonList = [];
-        var ActiveCompetitors: Array<CompetitorList>=[];
-        ActiveCompetitors = this.AllCompetitors.filter(compatitor => compatitor.InActive == false);
-        var data: Array<any> = ActiveCompetitors;
-
+        var data: Array<any> = this.AllCompetitors;
         if (!AppTool.IsNullOrEmpty(this.SearchTextCompetitor))
-            data = ActiveCompetitors.filter(f => f.Name.toLowerCase().indexOf(this.SearchTextCompetitor.toLowerCase()) > -1);
+            data = this.AllCompetitors.filter(f => f.Name.toLowerCase().indexOf(this.SearchTextCompetitor.toLowerCase()) > -1);
         data.forEach(item => {
             this.CompetitorToggleButtonList.push(new CompetitorItemClass(item, this.EntityPM, this));
 
@@ -210,7 +204,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
 
         });
         this.Clone(item);
-        editWindow.WindowClosed.subscribe((result:any) => {
+        editWindow.WindowClosed.subscribe(result => {
             if (result == "Cancel") {
                 this.RejectChanges();
             }
@@ -275,7 +269,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     LoadQuotesList() {
         this.QuotesObslist = [];
         var quoteDomainService: QuoteDomainService = new QuoteDomainService();
-        quoteDomainService.GetQuotesByOpportunityId(this.EntityPM.Id).subscribe((result:any) => {
+        quoteDomainService.GetQuotesByOpportunityId(this.EntityPM.Id).subscribe(result => {
             var quoteList: Array<QuoteList> = result.Result;
             quoteList.sort((a, b) => {
                 return (DateTool.GetDateParts(a.OpenDate).DateObject === DateTool.GetDateParts(b.OpenDate).DateObject) ? 0 : (DateTool.GetDateParts(a.OpenDate).DateObject < DateTool.GetDateParts(b.OpenDate).DateObject) ? -1 : 1
@@ -297,8 +291,8 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
                 if (isSaveSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     // Your work after you get PM
-                    if (this.SavingMethodCode == "NewQuote") this.OpenNewQuote();
-                    if (this.SavingMethodCode == "ConnectQuotes") this.ConnectQuotes();
+                    if (this.SavingMethodCode == "NewQuote")
+                        this.OpenNewQuote();
                     this.SetUIProperties();
                     this.SavingMethodCode = "";
                     this.CurrentSession.FireEvent("SocialPostsRefresh");
@@ -320,29 +314,11 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
             });
         }
     }
-
-    ConnectQuotes() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 570;
-        logWindow.WindowArgs = this.EntityPM;
-        logWindow.Title = "Choose Quotes";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
-            logWindow.Show('./CRMModules/CRMOpportunity/Components/EditTabs/QuotesWindowComponent');
-            logWindow.WindowClosed.subscribe(s => {
-                if (s == "ok") {
-                    this.LoadQuotesList();
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                }
-            });
-        });
-    }
-    
     public ToggleButtonListService: any = [];
 
     getAdditionalSerivceList() {
         var AddtionalService: AdditionalServiceListService = new AdditionalServiceListService();
-        AddtionalService.getAllFromCache().subscribe((result:any) => {
+        AddtionalService.getAllFromCache().subscribe(result => {
             this.ToggleButtonListService = [];
             this.ToggleButtonListService = result.Result.filter(s => !s.InActive);
             this.ToggleButtonListService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
@@ -378,7 +354,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
             this.EntityPM.RatingCode = value;
 
             var ratingListService: RatingListService = new RatingListService();
-            ratingListService.getAllFromCache().subscribe((result:any) => {
+            ratingListService.getAllFromCache().subscribe(result => {
                 var ratingList: RatingList = result.Result.filter(p => p.Code == value)[0];
                 if (ratingList != null)
                     this.EntityPM.RatingName = ratingList.Name;
@@ -442,7 +418,6 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         var ToggleBTN = document.getElementById(this.SearchTextAdditionalServiceModeDropButtonId) as HTMLDivElement;
         ToggleBTN.className = "ToggleButtonMenu";
     }
-
     OpenNewQuote() {
         var args = new NewQuoteComponentArgs();
         args.DefaultCustomerId = this.EntityPM.CustomerId;
@@ -452,7 +427,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         logWindow.Height = 570;
         logWindow.WindowArgs = args;
         logWindow.Title = "Create New Quote";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
             logWindow.Show('./Quote/Components/NewEntity/NewQuoteComponent');
 
             logWindow.WindowClosed.subscribe(s => {
@@ -461,6 +436,9 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
                 }
             });
         });
+
+
+
     }
 
     public get Notes() { return this.EntityPM.Notes; }
@@ -495,10 +473,24 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     public get IsClosed() { return this.EntityPM.IsClosed; }
 
     ConnectQuotesMethod() {
-        this.SavingMethodCode = "ConnectQuotes";
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
-    }
 
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = this.EntityPM;
+        logWindow.Title = "Choose Quotes";
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+            logWindow.Show('./CRMModules/CRMOpportunity/Components/EditTabs/QuotesWindowComponent');
+            logWindow.WindowClosed.subscribe(s => {
+                if (s == "ok") {
+                    this.LoadQuotesList();
+                }
+            });
+        });
+
+
+
+    }
     public get ClosingBackground() {
         var myResult = "#FFFFFFFF";
         if (this.EntityPM.IsClosed) {
@@ -540,7 +532,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
 
 
         var stageService: StageListService = new StageListService();
-        stageService.getAllFromCache().subscribe((result:any) => {
+        stageService.getAllFromCache().subscribe(result => {
             var myStage: StageList = result.Result.filter(d => d.Id == this.StageId && d.Tenant == SessionLocator.Tenant)[0];
 
 
@@ -585,12 +577,14 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         this.getCompetitorList();
     }
     getCompetitorList() {
-        var competitorListService: CompetitorListService = new CompetitorListService();      
-        competitorListService.getAll().subscribe((result: any) => {
-            this.AllCompetitors = result.Result;//.filter(d => d.InActive == false);
+        var competitorListService: CompetitorListService = new CompetitorListService();
+        competitorListService.getAll().subscribe(result => {
+            this.AllCompetitors = result.Result;
             this.BuildCompetitorToggleButtonList();
             this.BuildCompetitorsObsList();
+
         });
+
     }
 
 
@@ -685,7 +679,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;
 
-        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
             logWindow.Show('./CRMModules/CRMActivity/Components/NewEntity/NewActivity/NewActivityComponent');
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -729,7 +723,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     }
     ViewEntity(entity) {
         if (!AppTool.IsNullOrEmpty(entity)) {
-            this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -764,7 +758,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;
 
-        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
             logWindow.Show('./CRMModules/CRMActivity/Components/NewEntity/NewActivity/NewActivityComponent');
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -785,7 +779,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         listArgs.ObjectTableName = objectTableName;
         listArgs.DisplayTitle = listArgs.QueryCode;
         listArgs.BackButtonTitle = "Back";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -852,10 +846,10 @@ export class QuoteObslistItemClass{
     public get DirectionId() {return this.entityList.DirectionId; }
     public get DirectionName() { return this.entityList.DirectionName; }
     public get TransportModeId() {return this.entityList.TransportModeId; }
-    public get TransportModeName() { return this.entityList.TransportModeName; }
-    public get StageName() { return this.entityList.StageName; }
-}
+    public get TransportModeName() {return this.entityList.TransportModeName; }
+        
 
+}
 export class ServiceItemClass {
     private entityPM: OpportunityPM;
     private entityList: AdditionalServiceList;
@@ -900,7 +894,7 @@ export class ServiceItemClass {
                 var type: string = null;
 
                 var addtionalService: AdditionalServiceListService = new AdditionalServiceListService();
-                addtionalService.getSingleFromCache(this.Id).subscribe((result:any) => {
+                addtionalService.getSingleFromCache(this.Id).subscribe(result => {
                     var typeList = result.Result;
                     if (typeList != null) {
                         type = typeList.Name;

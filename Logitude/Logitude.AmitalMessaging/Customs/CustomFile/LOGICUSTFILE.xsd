@@ -19,7 +19,6 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="TransportModeId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CreatedByUserId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ReferentUserId" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="Direction" />
         <xs:element minOccurs="0" maxOccurs="1" ref="DepartmentId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="MAWB" />
         <xs:element minOccurs="0" maxOccurs="1" ref="DealId" />
@@ -63,24 +62,6 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterEmail" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImportelTel" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterContact" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="CasualImporterCountry" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="IsDiamondsDeclaration" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="EstimatedTimeOfArrival" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="OrderNumber" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="WithPaper" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="FileStatus" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="NewFile" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="ImporterFile" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="Team" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="FileOpenDate" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="TruckerId" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="DistributionArea" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="FclLcl" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="ForwarderId" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="LastMileServiceType" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="Commodity" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="ReferentMAWB" />
-        <xs:element minOccurs="0" maxOccurs="1" ref="ReferentHAWB" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -136,23 +117,4 @@
   <xs:element name="CasualImporterEmail" type="xs:string" />
   <xs:element name="CasualImportelTel" type="xs:string" />
   <xs:element name="CasualImporterContact" type="xs:string" />
-  <xs:element name="CasualImporterCountry" type="xs:string" />
-  <xs:element name="IsDiamondsDeclaration" type="xs:string" />
-  <xs:element name="EstimatedTimeOfArrival" type="xs:string" />
-  <xs:element name="OrderNumber" type="xs:string" />
-  <xs:element name="WithPaper" type="xs:string" />
-  <xs:element name="FileStatus" type="xs:string" />
-  <xs:element name="NewFile" type="xs:string" />
-  <xs:element name="ImporterFile" type="xs:string" />
-  <xs:element name="Team" type="xs:string" />
-  <xs:element name="FileOpenDate" type="xs:string" />
-  <xs:element name="TruckerId" type="xs:string" />
-  <xs:element name="DistributionArea" type="xs:string" />
-  <xs:element name="FclLcl" type="xs:string" />
-  <xs:element name="ForwarderId" type="xs:string" />
-  <xs:element name="LastMileServiceType" type="xs:string" />
-  <xs:element name="Direction" type="xs:string" />
-  <xs:element name="Commodity" type="xs:string" />
-  <xs:element name="ReferentMAWB" type="xs:string" />
-  <xs:element name="ReferentHAWB" type="xs:string" />
 </xs:schema>

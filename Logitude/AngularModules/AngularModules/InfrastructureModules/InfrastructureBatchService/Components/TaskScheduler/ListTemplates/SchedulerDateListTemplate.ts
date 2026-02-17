@@ -1,17 +1,11 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import {Component,ChangeDetectorRef} from '@angular/core';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { SchedulerExtendedPMService } from '../../../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
-import { DownloadManager } from '../../../../../Infrastructure/Utilities/DownloadManager';
-import { AppTool } from '../../../../../Infrastructure/Tools';
-import { TasksSchedulerPMService } from '../../../../../Infrastructure/Services/StandardPMs/TasksSchedulerPMService';
-import { TaskSchedulerItemClass } from '../../../../../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerComponent';
-import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
-
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'SchedulerDateListTemplate',
     templateUrl: './SchedulerDateListTemplate.html',
@@ -23,39 +17,33 @@ export class SchedulerDateListTemplate {
     public fieldName: any;
     public dateValue: any;
     public Type: string;
-    SchedulerType: string = '';
     schedulerExtendedPMService: SchedulerExtendedPMService;
-    myTasksSchedulerPMService: TasksSchedulerPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
-        this.myTasksSchedulerPMService = new TasksSchedulerPMService();
     }
 
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
-        var MyFieldName = fieldName.split(';');
-        this.fieldName = MyFieldName[0];
-        if (MyFieldName.length > 1) {
-            this.SchedulerType = MyFieldName[1];
-        }
+        this.fieldName = fieldName;
+
         if (fieldName == "Duration") {
             var startDate = new Date(rowData["StartDateTime"]);
             var endDate = new Date(rowData["EndDateTime"]);
 
-            var seconds = Math.abs(((endDate.getTime() - startDate.getTime()) / 1000)).toFixed(2); /*;*/
+            var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
             if (startDate.getFullYear() > 1970 && endDate.getFullYear() > 1970) {
-                this.dateValue = seconds + " sec";
+                this.dateValue = seconds + " Seconds";
             }
         }
         else if (fieldName == "Log") {
             this.dateValue = rowData["LogFirstLine"];
-            this.Type = rowData["LogType"];
+            this.Type = rowData["LogType"]; 
         }
         else {
             var pmDate = new Date(rowData[fieldName]);
             if (pmDate.getFullYear() > 1970) {
-                this.dateValue = rowData[fieldName];
+                this.dateValue = pmDate;
             }
         }
         var isDestroyed: boolean = this.CD['destroyed'];
@@ -64,39 +52,40 @@ export class SchedulerDateListTemplate {
         }
     }
 
+    ShowFullLog() {
+        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.schedulerExtendedPMService.GetSchedulerHistoryLogs(this.rowData["Id"]).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResponse.HasError) {
 
+                var windowArgs: any = {};
+                if (myResponse.Result) {
+                    windowArgs.TextValue = myResponse.Result.Log;
+                }
+                else {
+                    windowArgs.TextValue = "";
+                }
+                windowArgs.DisplayMode = true;
 
-    ViewLogFile() {
-        let logDocumentId = this.rowData["LogDocumentId"];
-        if (!AppTool.IsNullOrEmpty(logDocumentId)) {
+                var wind = new LogitudeWindow();
 
-            DownloadManager.DownloadPage(logDocumentId);
-        } else {
-            
-            var logWindow = new MessageWindow();
-            logWindow.Show("No log is available");
-        }
-    }
+                wind.Width = 960;
+                wind.Height = 570;
+                wind.WindowArgs = windowArgs;
 
-    EditTaskClicked() {
-        this.myTasksSchedulerPMService.get(this.rowData["Id"]).subscribe((myResult:any) => {
-            if (myResult.Result) {
-                var MyTask = new TaskSchedulerItemClass(myResult.Result, null, false);
-                var logWindow = new LogitudeWindow();
-                logWindow.Title = this.SchedulerType + " Scheduler Details";
-                logWindow.DataContext = MyTask;
-                logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 820 : 750;
-                logWindow.Width = 900;
-                logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
-                logWindow.WindowClosed.subscribe(s => {
+                wind.Title = "";
 
-                    this.CurrentSession.FireEvent({ Name: 'ReloadTasks' });
-
-                });
+                wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
             }
+
+            //else {
+            //    this.ValidationErrorsList = myResponse.ErrorsArray;
+            //}
+           
+            this.CurrentSession.StopBusyIndicator();
         });
-
+      
+        
     }
-
 
 }

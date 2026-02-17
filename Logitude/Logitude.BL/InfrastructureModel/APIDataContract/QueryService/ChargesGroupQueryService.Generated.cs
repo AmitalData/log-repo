@@ -10,14 +10,11 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
@@ -42,21 +39,21 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public ChargesGroup GetChargesGroupById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public ChargesGroup GetChargesGroupById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ChargesGroup with Id " + Id + " doesn't exist");
 
-				return ChargesGroupDataMapping(temp,Tenant,ComputingPartnerName);
+				return ChargesGroupDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -79,7 +76,7 @@ using Simplog.Data.InfrastructureModel;
             }
         } 
 
-		public ChargesGroupPM ChargesGroupDataMappingAndValidatin(ChargesGroup MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public ChargesGroupPM ChargesGroupDataMappingAndValidatin(ChargesGroup MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -88,52 +85,21 @@ using Simplog.Data.InfrastructureModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
-					{   
+										   
+					if(temp == null)
+					{
 					    throw new ApplicationException("ChargesGroup with Id " + MyEntity.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-					   
-					    if(!string.IsNullOrEmpty(MyEntity.Id))
-					    {
-					        throw new ApplicationException("ChargesGroup with provided key doesn't exist");
-						
-						}
-						//else
-						//{
-						//    temp.Id = MyEntity.Id;
-
-						//} 
-
-						
+						temp.Id = MyEntity.Id;
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
-					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{								
-							temp.Code = MyEntity.Code;
-								
-						
-						}  
-
-						
+						temp.Code = MyEntity.Code;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Name = MyEntity.Name;
-
-										}  
-
-										   
-					return temp;
+					temp.Name = MyEntity.Name;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -141,8 +107,6 @@ using Simplog.Data.InfrastructureModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

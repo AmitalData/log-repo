@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -23,8 +23,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ActivateCustomsManagementInShipments = entityPM.ActivateCustomsManagementInShipments;
             poco.ArtemusInSettingsId = entityPM.ArtemusInSettingsId;
             poco.ArtemusOutSettingsId = entityPM.ArtemusOutSettingsId;
-            poco.AMCAirStartDate = entityPM.AMCAirStartDate;
-            poco.AMCOceanStartDate = entityPM.AMCOceanStartDate;
         }
     }
 }

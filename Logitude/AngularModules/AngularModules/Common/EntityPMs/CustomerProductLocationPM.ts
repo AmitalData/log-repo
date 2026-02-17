@@ -7,135 +7,105 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {CustomerPM} from './CustomerPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-
-
 export class CustomerProductLocationPM {
+    public UIProperties: UIProperties;
+    constructor(entityParentPM: any) {
+        this.EntityParentPM = entityParentPM;
+        this.UIProperties = new UIProperties;
+        this.IsDirty = false;
+    }
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-      public UIProperties: UIProperties;
-	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
-       }
+    private entityParentPM: any;
+    public get EntityParentPM() { return this.entityParentPM; }
+    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
 
-	 
-    
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }
+
+
+    public OldEntityPM: any;
+
+    public UniqueKey: string;
+
+    public IsDirty: boolean;
+    MarkAsDirty() {
+        this.IsDirty = true;
+        if (this.entityParentPM) {
+            this.entityParentPM.MarkAsDirty();
+        }
+    }
+
     private customerId: string;
     public get CustomerId() { return this.customerId; }
-    public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
+    public set CustomerId(newValue: string) { this.customerId = newValue; this.MarkAsDirty(); }
        
 	 
     private productTypeCode: string;
     public get ProductTypeCode() { return this.productTypeCode; }
-    public set ProductTypeCode(newValue: string) { if (this.productTypeCode != newValue) { this.productTypeCode = newValue; this.MarkAsDirty("ProductTypeCode"); } }
+    public set ProductTypeCode(newValue: string) { this.productTypeCode = newValue; this.MarkAsDirty(); }
        
 	 
     private countryId: string;
     public get CountryId() { return this.countryId; }
-    public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
+    public set CountryId(newValue: string) { this.countryId = newValue; this.MarkAsDirty(); }
        
 	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
-    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+    public set Tenant(newValue: number) { this.tenant = newValue; this.MarkAsDirty(); }
        
 	 
     private potentialTEU: number;
     public get PotentialTEU() { return this.potentialTEU; }
-    public set PotentialTEU(newValue: number) { if (this.potentialTEU != newValue) { this.potentialTEU = newValue; this.MarkAsDirty("PotentialTEU"); } }
+    public set PotentialTEU(newValue: number) { this.potentialTEU = newValue; this.MarkAsDirty(); }
        
 	 
     private potentialNumberOfShipments: number;
     public get PotentialNumberOfShipments() { return this.potentialNumberOfShipments; }
-    public set PotentialNumberOfShipments(newValue: number) { if (this.potentialNumberOfShipments != newValue) { this.potentialNumberOfShipments = newValue; this.MarkAsDirty("PotentialNumberOfShipments"); } }
+    public set PotentialNumberOfShipments(newValue: number) { this.potentialNumberOfShipments = newValue; this.MarkAsDirty(); }
        
 	 
     private potentialChargeableWeight: number;
     public get PotentialChargeableWeight() { return this.potentialChargeableWeight; }
-    public set PotentialChargeableWeight(newValue: number) { if (this.potentialChargeableWeight != newValue) { this.potentialChargeableWeight = newValue; this.MarkAsDirty("PotentialChargeableWeight"); } }
+    public set PotentialChargeableWeight(newValue: number) { this.potentialChargeableWeight = newValue; this.MarkAsDirty(); }
        
 	 
     private commitmentTEU: number;
     public get CommitmentTEU() { return this.commitmentTEU; }
-    public set CommitmentTEU(newValue: number) { if (this.commitmentTEU != newValue) { this.commitmentTEU = newValue; this.MarkAsDirty("CommitmentTEU"); } }
+    public set CommitmentTEU(newValue: number) { this.commitmentTEU = newValue; this.MarkAsDirty(); }
        
 	 
     private commitmentNumberOfShipments: number;
     public get CommitmentNumberOfShipments() { return this.commitmentNumberOfShipments; }
-    public set CommitmentNumberOfShipments(newValue: number) { if (this.commitmentNumberOfShipments != newValue) { this.commitmentNumberOfShipments = newValue; this.MarkAsDirty("CommitmentNumberOfShipments"); } }
+    public set CommitmentNumberOfShipments(newValue: number) { this.commitmentNumberOfShipments = newValue; this.MarkAsDirty(); }
        
 	 
     private commitmentChargeableWeight: number;
     public get CommitmentChargeableWeight() { return this.commitmentChargeableWeight; }
-    public set CommitmentChargeableWeight(newValue: number) { if (this.commitmentChargeableWeight != newValue) { this.commitmentChargeableWeight = newValue; this.MarkAsDirty("CommitmentChargeableWeight"); } }
+    public set CommitmentChargeableWeight(newValue: number) { this.commitmentChargeableWeight = newValue; this.MarkAsDirty(); }
        
 	 
     private potentialRevenue: number;
     public get PotentialRevenue() { return this.potentialRevenue; }
-    public set PotentialRevenue(newValue: number) { if (this.potentialRevenue != newValue) { this.potentialRevenue = newValue; this.MarkAsDirty("PotentialRevenue"); } }
+    public set PotentialRevenue(newValue: number) { this.potentialRevenue = newValue; this.MarkAsDirty(); }
        
 	 
     private commitmentRevenue: number;
     public get CommitmentRevenue() { return this.commitmentRevenue; }
-    public set CommitmentRevenue(newValue: number) { if (this.commitmentRevenue != newValue) { this.commitmentRevenue = newValue; this.MarkAsDirty("CommitmentRevenue"); } }
+    public set CommitmentRevenue(newValue: number) { this.commitmentRevenue = newValue; this.MarkAsDirty(); }
        
 	 
     private countryCode: string;
     public get CountryCode() { return this.countryCode; }
-    public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
+    public set CountryCode(newValue: string) { this.countryCode = newValue; this.MarkAsDirty(); }
        
 	 
     private countryName: string;
     public get CountryName() { return this.countryName; }
-    public set CountryName(newValue: string) { if (this.countryName != newValue) { this.countryName = newValue; this.MarkAsDirty("CountryName"); } }
+    public set CountryName(newValue: string) { this.countryName = newValue; this.MarkAsDirty(); }
        
 	 
-    private changeSetOp: string;
-    public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
-       
-	 
-
-    public OldEntityPM: CustomerProductLocationPM;
-	    
-	private entityParentPM: any;
-    public get EntityParentPM() { return this.entityParentPM; }
-    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
-
-    public UniqueKey: string;
-	 	
-    public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
-        this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomerProductLocation");
-           
-        }
-	 }
-    }
-    private MyClone: CustomerProductLocationPM;
-
-    public CloneMe() {
-        ServiceHelper.CloneEntityPM(this);
-    }
-
-    public RejectChanges() {
-        ServiceHelper.RejectEntityPMChanges(this);
-    }
-
+    
 }

@@ -16,6 +16,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
+    moduleId: module.id,
     templateUrl: './MainPageComponent.html',
 
 })
@@ -47,7 +48,7 @@ export class MainPageComponent implements AfterViewInit {
     public isScreenLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        // this.LoadAllScreenData();
+        this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => {
@@ -56,8 +57,6 @@ export class MainPageComponent implements AfterViewInit {
                     {
                         this.isScreenLoaded = true;
                         this.CurrentSession.StopBusyIndicator();
-                        this.InitComponent();
-
                     });
                 });
             });
@@ -66,7 +65,7 @@ export class MainPageComponent implements AfterViewInit {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
     ngAfterViewInit() {
-        // this.LoadAllScreenData();
+        this.LoadAllScreenData();
     }
     public IsQueryVisible_MyViewsGroup: boolean = false;
 
@@ -111,7 +110,7 @@ export class MainPageComponent implements AfterViewInit {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveGLAccountCount = myResult.ActiveGLAccountCount > 1000 ? "1000+" : myResult.ActiveGLAccountCount.toString();
                 this.glAccountSummary.InactiveGLAccountCount = myResult.InactiveGLAccountCount > 1000 ? "1000+" : myResult.InactiveGLAccountCount.toString();
@@ -122,7 +121,7 @@ export class MainPageComponent implements AfterViewInit {
                 this.glAccountSummary.AllJobsCount = myResult.AllJobsCount > 1000 ? "1000+" : myResult.AllJobsCount.toString();
             }
         });
-        this._JournalExtendedListService.GetJournalsSummary().subscribe((myResult:JournalSummary) => {
+        this._JournalExtendedListService.GetJournalsSummary().subscribe(myResult => {
             if (myResult != null) {
 
                 this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();

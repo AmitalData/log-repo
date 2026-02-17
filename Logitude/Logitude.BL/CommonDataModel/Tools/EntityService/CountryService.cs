@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
-using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -59,7 +56,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 this.Poco.Id = IdCounter.GetNumber("Country", entityPm.Tenant).ToString();
                 entityPm.Id = this.Poco.Id;
-                entityPm.AddedManually = true;
+
                 CountryValidating.Validate(entityPM);
                 if (!entityPM.IsHybrid)
                 {
@@ -70,9 +67,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.Add(Poco);
                 entityRepository.SubmitChanges();
             }
-
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Country");
-            AddCountryKafkaQueueMessage();
         }
 
         public void Update(CountryPM entityPM)
@@ -117,9 +111,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.Update(Poco);
                 entityRepository.SubmitChanges();
             }
-
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Country");
-            AddCountryKafkaQueueMessage();
         }
 
         private bool IsEntityExists()
@@ -141,26 +132,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             return myResult;
-        }
-
-        private void AddCountryKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPm.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Country" },
-                { "EntityId", entityPm.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
         }
     }
 }

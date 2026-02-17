@@ -6,7 +6,7 @@ import {EntityPMServiceResponse} from '../../../../Infrastructure/DataContracts/
 import {EntityPMService} from '../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ActionStepsTemplate.html',
 })
 
@@ -74,7 +74,7 @@ export class ActionStepsTemplate extends BaseComponent {
 
             this.CurrentSession.StartBusyIndicatorSaving();
             this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res:any)  => {
-                res.subscribe((response:any) => {
+                res.subscribe(response => {
 
                     this.CurrentSession.StopBusyIndicator();
 

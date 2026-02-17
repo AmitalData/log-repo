@@ -1,17 +1,13 @@
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-
-//using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel
 {
     public interface ICommonDataContext : IContext
     {
-        IDbSet<PortTimeZone> PortTimeZones { get; }
-        IDbSet<TariffCarrierTranslation> TariffCarrierTranslations { get; }
         IDbSet<AddressType> AddressTypes { get; }
         IDbSet<Country> Countries { get; }
         IDbSet<State> States { get; }
@@ -28,14 +24,10 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CardContact> CardContacts { get; }
         IDbSet<PartnerType> PartnerTypes { get; }
         IDbSet<Rank> Ranks { get; }
-        IDbSet<CustomerTeam> CustomerTeams { get; }
-        IDbSet<CustomerGroup> CustomerGroups { get; }
         IDbSet<User> Users { get; }
         IDbSet<Department> Departments { get; }
         IDbSet<Branch> Branches { get; }
         IDbSet<Airline> Airlines { get; }
-        IDbSet<CarrierArea> CarrierAreas { get; }
-        IDbSet<CarrierAreasPort> CarrierAreasPorts { get; }
         IDbSet<ShippingLine> ShippingLines { get; }
         IDbSet<Trucker> Truckers { get; }
         IDbSet<Tenant> Tenants { get; }
@@ -60,8 +52,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CommunicationLog> CommunicationLogs { get; }
         IDbSet<CommunicationAttachment> CommunicationAttachments { get; }
         IDbSet<DueType> DueTypes { get; }
-        IDbSet<QuoteGroupSection> QuoteGroupSections { get; }
-
         IDbSet<CommunicationStatusType> CommunicationStatusTypes { get; }
         IDbSet<CommunicationLogType> CommunicationLogTypes { get; }
         IDbSet<DocumentTypeTemplate> DocumentTypeTemplates { get; }
@@ -94,9 +84,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<TermsofUse> TermsofUses { get; }
         IDbSet<TermsofUseSignature> TermsofUseSignatures { get; }
         IDbSet<ChargeTypeAccounting> ChargeTypeAccountings { get; }
-
         IDbSet<ContactLastLogin> ContactLastLogins { get; }
-        IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; }
         IDbSet<ContactLoginLog> ContactLoginLogs { get; }
         IDbSet<Report> Reports { get; }
         IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
@@ -121,6 +109,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<VatMandatoryType> VatMandatoryTypes { get; set; }
         IDbSet<VatUniqueType> VatUniqueTypes { get; set; }
         IDbSet<CustomerSalesNote> CustomerSalesNotes { get; set; }
+        IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
         IDbSet<CustomerStatus> CustomerStatus { get; set; }
         IDbSet<ProductTypeModification> ProductTypeModifications { get; set; }
         IDbSet<CustomerSalesmanByProduct> CustomerSalesmanByProducts { get; set; }
@@ -202,8 +191,6 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<WarehouseType> WarehouseTypes { get; }
         IDbSet<NumberFormat> NumberFormats { get; }
         IDbSet<UsoCFDI> UsoCFDIs { get; }
-        IDbSet<RegimenFiscal> RegimenFiscals { get; }
-        IDbSet<PostalCode> PostalCodes { get; }
         IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
         IDbSet<FeatureChange> FeatureChanges { get; set; }
@@ -218,47 +205,11 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
         IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
         IDbSet<DWHSetting> DWHSettings { get; set; }
-        IDbSet<PaymentGatewayPartner> PaymentGatewayPartners { get; set; }
+        IDbSet<PaymentGatewayPartners> PaymentGatewayPartners { get; set; }
         IDbSet<TemperatureUnit> TemperatureUnits { get; set; }
         IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         IDbSet<CustomsShipper> CustomsShippers { get; }
         IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set;}
-        IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
-        IDbSet<CardContactProduct> CardContactProducts { get; set; }
-        IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
-        IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
-        IDbSet<AccountingPartner> AccountingPartners { get; set; }
-        IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs { get; set; }
-        IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
-        IDbSet<UserLastSettings> UserLastSettings { get; set; }
-        IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get; set; }
-        IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
-        IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
-        IDbSet<WarehouseWeightMeasurement> WarehouseWeightMeasurements { get; set; }
-        IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; set; }
-        IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; set; }
-        IDbSet<CardSearch> CardSearches { get; set; }
-        IDbSet<Horse> Horses { get; set; }
-
-        IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
-        IDbSet<ProductItem> ProductItems { get; set; }
-        IDbSet<HTSCode> HTSCodes { get; set; }
-        IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions { get; set; }
-        IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
-        IDbSet<Mention> Mentions { get; set; }
-        IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
-        IDbSet<HorseGender> HorseGenders { get; set; }
-        IDbSet<PortGroup> PortGroups { get; set; }
-
-        IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
-
-        IDbSet<FreelancerGroupType> FreelancerGroupTypes { get; set; }
-        IDbSet<UserFreelancerGroup> UserFreelancerGroups { get; set; }
-        IDbSet<TruckerSetting> TruckerSettings { get; set;}
-        IDbSet<Responsibility> Responsibilities { get; set; }
-        IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
-        IDbSet<ExternalLink> ExternalLinks { get; set; }
-        IDbSet<SearchIndexEditHistory> SearchIndexEditHistories { get; set; }
 
         void SetAsModified(object entity);
         void DetectChanges();

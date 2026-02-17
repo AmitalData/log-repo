@@ -3,15 +3,14 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BookingLib.BL.EntityPMs;
 using Logitude.BookingLib.BL.EntityQueryServices;
-using Logitude.BookingLib.BL.EntityUpdateServices.Behaviours.BookingBehaviours.Validators;
 using Logitude.BookingLib.Data;
 using Logitude.BookingLib.Data.EntityKeys;
 using Logitude.BookingLib.Data.EntityListQueryServices;
 using Logitude.BookingLib.Data.EntityLists;
 using Logitude.BookingLib.Data.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -123,43 +122,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            
                 int myTenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(myTenant);
 
-                try
+                if (myTenant != 343 && myTenant != 528)
                 {
-                    BookingMasterIsUsedValidator validator = new BookingMasterIsUsedValidator();
-
-                    validator.Validate(new BookingMasterIsUsedValidatorArgs()
+                    if (!string.IsNullOrEmpty(args.Master) && !string.IsNullOrEmpty(args.AirlinePrefix) && !args.IsCancelled)
                     {
-                        Tenant = myTenant,
-                        BookingId = args.BookingId,
-                        DirectionCode = args.DirectionId,
-                        TransportModeCode = args.TransportModeId,
-                        Master = args.Master,
-                        AirlinePrefix = args.AirlinePrefix,
-                        IsCancelled = args.IsCancelled,
-                    });
+                        BookingRepository myBookingRepository = new BookingRepository(myTenant);
+                        bool isFieldExists = myBookingRepository.IsMasterFieldUsed(args.Master, args.AirlinePrefix, args.BookingId, myTenant, args.DirectionId, args.TransportModeId);
+                        if (isFieldExists)
+                        {
+                            myResult = "Master field already used in another Booking";
+                        }
+                    }
                 }
-
-                catch (Exception ex)
-                {
-                    myResult = ex.Message;
-                }
-
-                //if (myTenant != 343 && myTenant != 528)
-                //{
-                //    if (!string.IsNullOrEmpty(args.Master) && !string.IsNullOrEmpty(args.AirlinePrefix) && !args.IsCancelled)
-                //    {
-                //        BookingRepository myBookingRepository = new BookingRepository(myTenant);
-                //        bool isFieldExists = myBookingRepository.IsMasterFieldUsed(args.Master, args.AirlinePrefix, args.BookingId, myTenant, args.DirectionId, args.TransportModeId);
-                //        if (isFieldExists)
-                //        {
-                //            myResult = "Master field already used in another Booking";
-                //        }
-                //    }
-                //}
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -177,7 +153,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(myTenant);
+
                 BookingsDomainService bookingService = new BookingsDomainService();
                 BookingValidatorResultClass myResult = bookingService.ValidateBookingForSending(bookingId, myTenant, isCancellationSent);
 
@@ -197,8 +173,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(myTenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 BookingsDomainService bookingService = new BookingsDomainService();
                 List<ChartingDataClass> myResult = bookingService.GetBookingsDashBoard(tenant);
 

@@ -1,12 +1,16 @@
 import {Component, OnInit, EventEmitter, Output}  from '@angular/core';
+import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import {Guid} from '../../Infrastructure/Utilities/Guid';
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 
-@Component({   
+
+@Component({
+    moduleId: module.id,
     selector: 'SharedLogisticsWizard',
     templateUrl: './SharedLogisticsWizardComponent.html',
-})
 
+})
 export class SharedLogisticsWizardComponent implements OnInit {
     @Output() OnCloseWindowEvent = new EventEmitter();
     SelectedTabCode: string;

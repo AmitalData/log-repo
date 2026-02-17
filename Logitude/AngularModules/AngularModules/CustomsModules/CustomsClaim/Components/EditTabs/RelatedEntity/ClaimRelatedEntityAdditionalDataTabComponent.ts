@@ -6,6 +6,7 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
+import { ClientAddressPM } from '../../../../../Customs/EntityPMs/ClientAddressPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
 import { ClaimsRelatedEntsExpDeclarPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntsExpDeclarPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -13,22 +14,22 @@ import { ObservableCollection } from '../../../../../Infrastructure/Utilities/Ob
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
+import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ClientMessagesService } from '../../../../../Customs/Services/WebServices/ClientMessagesService';
+import { ClientPMService } from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ClaimRelatedEntityAdditionalDataTabComponent.html',
 })
 
 export class ClaimRelatedEntityAdditionalDataTabComponent extends BaseComponent {
-  public IsDisplayOnly: boolean = false;
-
     public DataContext: ClaimRelatedEntityAdditionalDataTabComponent = this;
     public EntityPM: ClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(null);
     public ClaimPM: ClaimPM = new ClaimPM();
@@ -38,36 +39,36 @@ export class ClaimRelatedEntityAdditionalDataTabComponent extends BaseComponent 
     public ClaimsRelatedEntsExpDeclarsList: ObservableCollection;
 
     public CurrentEditComponentId: string;
-    private isControlEnabled: boolean = false;
-
+    private isControlEnabled: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.ClaimsRelatedEntsExpDeclarsList = new ObservableCollection([]);
-        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
     }
 
     private Listen() {
-        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
-            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildExportDeclarationlist();
                     }
                 })
             );
-            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         //if (tabCode == "CLMG") {
                         //    this.RefreshEntity();
                         //    this.BuildExportDeclarationlist();
@@ -84,9 +85,9 @@ export class ClaimRelatedEntityAdditionalDataTabComponent extends BaseComponent 
         this.ClaimPM = claimPM;
         this.isControlEnabled = isEnable;
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntsExpDeclar").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntsExpDeclar").subscribe(response => {
                     this.BuildExportDeclarationlist();
                     this.Listen();
                 });
@@ -95,7 +96,7 @@ export class ClaimRelatedEntityAdditionalDataTabComponent extends BaseComponent 
     }
 
     RefreshEntity() {
-        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     selectedTab: LogTab;

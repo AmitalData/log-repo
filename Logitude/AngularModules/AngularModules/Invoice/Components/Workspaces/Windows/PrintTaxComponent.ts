@@ -6,7 +6,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {InvoiceDomainService} from '../../../Services/InvoiceDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PrintTaxComponent.html',
 })
 

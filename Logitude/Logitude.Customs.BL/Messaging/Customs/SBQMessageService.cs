@@ -10,10 +10,10 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
@@ -31,7 +31,6 @@ using System.Xml.Serialization;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
-using System.Configuration;
 
 namespace Logitude.Customs.BL.Messaging.Customs
 {
@@ -54,7 +53,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 var tenant = customsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
                 var InterfaceTypeCode = customsRequestsSheetService.MyCustomsRequestsSheetPM.InterfaceTypeCode;
                 var MyCustomsRequestsSheetPMId = customsRequestsSheetService.MyCustomsRequestsSheetPM.Id;
-                LogMessagingUtilWR.Instance.AppendLine($"SetCustomsRequestsSheetId({MyCustomsRequestsSheetPMId})");
                 if (LogitudeSettings.QueueServiceMode != "db" && Transaction.Current != null)
                 {
                     Transaction.Current.TransactionCompleted += (sender, e) =>
@@ -63,7 +61,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                             CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
                             tenant,
                             InterfaceTypeCode,
-                            MyCustomsRequestsSheetPMId,null , customsRequestsSheetService?.InterfaceTenantDefinitionManagement?.InterfaceManagement?.QueueDefinitionGroup);
+                            MyCustomsRequestsSheetPMId);
                     };
                 }
                 else
@@ -72,13 +70,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
                         tenant,
                         InterfaceTypeCode,
-                        MyCustomsRequestsSheetPMId, execTime, customsRequestsSheetService?.InterfaceTenantDefinitionManagement?.InterfaceManagement?.QueueDefinitionGroup);
+                        MyCustomsRequestsSheetPMId, execTime);
                 }
                 customsRequestsSheetId = customsRequestsSheetService.MyCustomsRequestsSheetPM.Id;
-            }
-            catch (Exception ex)
-            {
-                throw;
             }
             finally
             {
@@ -87,9 +81,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     customsRequestsSheetService.Dispose();
                 }
                 RequestSheetContext.Current.Dispose();
-                LogMessagingUtil.Instance.Clear();
             }
-           
+
             return customsRequestsSheetId;
 
         }
@@ -98,7 +91,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
 
-        public static void CreateBasic<TEnum>(TEnum SBQueueName, int tenant, string interfaceTypeCode, string correlationId, DateTime? execTime = null, string queueDefinitionGroup = null)
+        public static void CreateBasic<TEnum>(TEnum SBQueueName, int tenant, string interfaceTypeCode, string correlationId,DateTime? execTime =null)
             where TEnum : struct, IConvertible
         {
 
@@ -106,10 +99,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
             
             if (execTime.HasValue )
             {
-                var srverTime = DateTime.Now;
-                if (execTime.GetValueOrDefault()> srverTime)
+                var srverTime = (new DualQueryService(AmitalContext.GetContext(tenant))).GetServerDateTime();
+                if (execTime.GetValueOrDefault()> srverTime.GetValueOrDefault())
                 {
-                    Delay = execTime.GetValueOrDefault().Subtract(srverTime);
+                    Delay = execTime.GetValueOrDefault().Subtract(srverTime.GetValueOrDefault());
                 }
             }
 
@@ -121,12 +114,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 Delay = Delay
 
             };
-            CreateBasic<TEnum>(SBQueueName, correlationId, queueSendModel, queueDefinitionGroup);
+            CreateBasic<TEnum>(SBQueueName, correlationId, queueSendModel);
 
         }
 
 
-        public static void CreateBasic<TEnum>(TEnum SBQueueName, string correlationId, QueueSendModel queueSendModel, string queueDefinitionGroup = null)
+        public static void CreateBasic<TEnum>(TEnum SBQueueName, string correlationId, QueueSendModel queueSendModel)
             where TEnum : struct, IConvertible
         {
             if (!typeof(TEnum).IsEnum)
@@ -163,56 +156,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 return;
             }
 
-            var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(queueSendModel.Tenant);
-            var currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(correlationId, queueSendModel.Tenant);
-
-            var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
-            var currInterfaceTenantDefinition = interfaceTenantDefinitionQueryService.GetInterfaceDefWithPriorityFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
-            int tenantConfig = SettingUtil.GetTenantDBFromConfig();
-            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
-            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
-            queueSendModel.UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;//currInterfaceTenantDefinition.UseRabbitMQ;
-            queueSendModel.EntityCode = "CustomsRequestsSheet".ToLower();//"CustomsRequestsSheet";
-            queueSendModel.EntityId = correlationId;
-
-            queueSendModel.QueueGroupCodeRabbit = currInterfaceTenantDefinition.QueueGroupCode;
-             if (currCustomsRequestsSheet?.TenantPriority>0)
-            {
-                queueSendModel.TenantPriority = currCustomsRequestsSheet.TenantPriority;
-            }
-            else if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)
-            {
-                //var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
-                //int? tenantPriority = interfaceTenantDefinitionQueryService.GetTenantPriorityFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
-                //queueSendModel.TenantPriority = tenantPriority;
-                queueSendModel.TenantPriority = currInterfaceTenantDefinition.TenantPriority;
-            }
-
-            string overrideSBQueueName = SBQueueName.ToString();
-            var UseCustomsMessagingSheetWR = ConfigurationManager.AppSettings["Override:CustomsMessagingSheetWR"];
-            if (!String.IsNullOrWhiteSpace(UseCustomsMessagingSheetWR) && UseCustomsMessagingSheetWR.Contains( $"-{queueSendModel.InterfaceTypeCode}-" ))
-            {
-                overrideSBQueueName = SBQueueNames.CustomsMessagingSheetBQ.ToString();
-            }
-            
-
             using (TransactionScope scope =
                 //(LogitudeSettings.QueueServiceMode != "db") ? TransactionFactory.GetNewSerializableTransaction() :TransactionFactory.GetTransaction())
                 TransactionFactory.GetTransaction())
             {
-                if (!string.IsNullOrWhiteSpace(queueDefinitionGroup))
-                {
-                    overrideSBQueueName = overrideSBQueueName + "_" + queueDefinitionGroup;
-                }
 
-                var queueSendService = new Logitude.Server.Tools.QueueService.QueueSendService(/*SBQueueName.ToString()*/overrideSBQueueName, correlationId, queueSendModel);
+                var queueSendService = new Logitude.Server.Tools.QueueService.QueueSendService(SBQueueName.ToString(), correlationId, queueSendModel);
                 //queueSendService.InterfaceTypeCode = interfaceTypeCode;//this.GetType().FullName;
                 //queueSendService.DebugMode = true;
                 //queueSendService.Tenant = tenant;
 
                 ///queueSendService.ProcessState = (int)CustomsRequestStepEnum.StartRequestParams;
-                
-                //_CustomsRequestsSheetService.InterfaceTenantDefinitionManagement?.InterfaceManagement?.QueueDefinitionGroup;
                 queueSendService.Send();
                 scope.Complete();
             }

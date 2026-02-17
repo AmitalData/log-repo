@@ -16,7 +16,7 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using System.Reflection;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.CustomFilters;
@@ -225,6 +225,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(0);
             //SecurityUtility.CheckContactFeature("AWBSpecialHandlingCode", "NEW", 0);
+
             if (objectContext == null)
             {
                 objectContext = ShipmentsContext.GetContext(0);

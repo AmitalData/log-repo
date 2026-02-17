@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
-    // Uses TestClass on main partial; keep this partial attribute-less to avoid duplicates.
+    [TestClass]
     public partial class JournalUpdateOnUpdatingUnderTest
     {
         [TestMethod]
@@ -40,7 +40,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
 
             };
 
@@ -73,7 +73,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 UpdateDate = DateTimeNow,
                 CreateDate = DateTimeNow,
                 JournalLines = new List<JournalLinePM>() { JournalLinePM },
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                 QueueId = "QueueId",//Streaamed !!!
             };
 
@@ -276,7 +276,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                 QueueId = "QueueId "
 
             };
@@ -310,7 +310,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 UpdateDate = DateTimeNow,
                 CreateDate = DateTimeNow,
                 JournalLines = new List<JournalLinePM>() { JournalLinePM },
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
             };
 
 

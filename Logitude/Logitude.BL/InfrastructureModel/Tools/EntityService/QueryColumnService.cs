@@ -8,13 +8,12 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
-using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -74,17 +73,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             }
 
           
-        }
-
-        public List<QueryColumnPM> GetSystemMetaDataQueryColumns(string objecttableid, int tenant, string queryCode)
-        {
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
-            ObjectTable objectTable = objectTableRepository.GetObjectTableById(objecttableid, tenant);
-            int objectTableTenant = objectTable != null && objectTable.IsCustom ? tenant : 0;
-            QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
-            QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
-            var querycolumns2 = queryColumnQuery.GetQueryColumnsByQueryCodeAndUserAngular(objectTableTenant, null, queryCode);
-            return querycolumns2.OrderBy(a => a.IndexOrder).ToList();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Logitude.Social.BL.EntityPMs;
 using Logitude.Social.BL.EntityQueryServices;
 using Logitude.Social.Data;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -70,7 +70,6 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 string color = "";
                 ContactRepository contactRepository = new ContactRepository(authToken.Tenant);
                 Contact contact = contactRepository.GetSingleContact(userId, tenant);

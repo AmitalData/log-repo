@@ -18,13 +18,13 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomsDocumentsDefinitionComponent.html',
 })
 
-export class CustomsDocumentsDefinitionComponent extends BaseComponent implements OnInit {
-  public IsDisplayOnly: boolean = false;
-
+export class CustomsDocumentsDefinitionComponent
+    extends BaseComponent
+    implements OnInit {
     Search: any;
     public DataContext: CustomsDocumentsDefinitionComponent = this;
     public EntityPM: CustomsDocumentsDefinitionPM = new CustomsDocumentsDefinitionPM();
@@ -42,10 +42,8 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
     public DeleteDocumentsDefinitionList: ObservableCollection; 
     public DocumentTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
-
     constructor() {
         super();
-
         this.AllDocumentsDefinitionResultList = new ObservableCollection([]);
         this.DocumentsDefinitionResultList = new ObservableCollection([]);
         this.DeleteDocumentsDefinitionList = new ObservableCollection([]);
@@ -62,7 +60,7 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
         this.DocumentTypeFilterItems.addAdditionalFilter("SearchFields", "864", null, null, "NotContains", false, false, false, "string", false, true);
 
         this.CurrentSession.StartBusyIndicator("");
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.CurrentSession.StopBusyIndicator();
             this.BuildDocumentsDefinitionList();
             this.IsLoaded = true;
@@ -79,13 +77,13 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
 
     BuildDocumentsDefinitionList() {
 
-        this._EntityListService.getAll().subscribe((myResult:any) => {
+        this._EntityListService.getAll().subscribe(myResult => {
             console.log("Get All Customs Documents Definition: ", myResult);
             if (myResult != null && myResult.Result != null){
                 this.AllDocumentsDefinitionResultList = new ObservableCollection([]);
                 this.DocumentsDefinitionResultList = new ObservableCollection([]);
                 for (let item of myResult.Result) {
-                    this.AllDocumentsDefinitionResultList.Insert(new DocumentsDefinitionPMComponent(item.DocumentTypeCode, item.ProcessTypeCode, item.TransportationTypeCode, item.CargoTypeCode, item.DeclarationTypeCode));
+                    this.AllDocumentsDefinitionResultList.Insert(new DocumentsDefinitionPMComponent(item.DocumentTypeCode, item.ProcessTypeCode, item.TransportationTypeCode, item.CargoTypeCode));
                     this.DocumentsDefinitionResultList.Insert(new DocumentsDefinitionComponent(item, false));
                 }
                 return;
@@ -107,9 +105,6 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
 
     public get CargoTypeCode() { return this.EntityPM.CargoTypeCode; }
     public set CargoTypeCode(newValue: string) { this.EntityPM.CargoTypeCode = newValue; }
-
-    public get DeclarationTypeCode() { return this.EntityPM.DeclarationTypeCode; }
-    public set DeclarationTypeCode(newValue: string) { this.EntityPM.DeclarationTypeCode = newValue; }
 
     public SetLocalName(entity, fieldName) {
         if (!AppTool.IsNullOrEmpty(entity)) {
@@ -144,8 +139,7 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
                         (vm => vm.DocumentTypeCode == item.DocumentTypeCode &&
                             vm.TransportationTypeCode == item.TransportationTypeCode &&
                             vm.CargoTypeCode == item.CargoTypeCode &&
-                            vm.ProcessTypeCode == item.ProcessTypeCode &&
-                            vm.DeclarationTypeCode == item.DeclarationTypeCode);
+                            vm.ProcessTypeCode == item.ProcessTypeCode);
                     if (nullVM.length > 1) {
                         var messageWindow = new MessageWindow();
                         messageWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
@@ -161,8 +155,7 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
                         (vm => vm.DocumentTypeCode == item.DocumentTypeCode &&
                             vm.TransportationTypeCode == item.TransportationTypeCode &&
                             vm.CargoTypeCode == item.CargoTypeCode &&
-                            vm.ProcessTypeCode == item.ProcessTypeCode &&
-                            vm.DeclarationTypeCode == item.DeclarationTypeCode);
+                            vm.ProcessTypeCode == item.ProcessTypeCode);
                     if (nullAllVM.length > 1 || (item.IsNew == true && nullAllVM.length >= 1) || nullVM.length > 1) {
                         var messageWindow = new MessageWindow();
                         messageWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
@@ -192,8 +185,8 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
                 this.DocumentsDefinitionResultList.Collection.forEach((item: DocumentsDefinitionComponent) => {
 
                     if (item.IsNew == true) {
-                        item.entityPM.Tenant = SessionLocator.Tenant; // ????
-                        this._EntityPMService.insert(item.entityPM).subscribe((response:any) => {
+                        item.entityPM.Tenant = 1; // ????
+                        this._EntityPMService.insert(item.entityPM).subscribe(response => {
                             var res: ServiceResponse = response;
                             if (res.HasError) {
                                 //this.ValidationErrorsList = res.ErrorsArray;
@@ -203,7 +196,7 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
                         });
                     }
                     else {
-                        this._EntityPMService.update(item.entityPM).subscribe((response:any) => {
+                        this._EntityPMService.update(item.entityPM).subscribe(response => {
                             var res: ServiceResponse = response;
                             if (res.HasError) {
                                 //this.ValidationErrorsList = res.ErrorsArray;
@@ -220,7 +213,7 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
             this.DeleteDocumentsDefinitionList.Collection.forEach((item: DocumentsDefinitionComponent) => {
                 if (!AppTool.IsNullOrEmpty(item.entityPM.Id)) {
                     this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-                    this._EntityPMExtendedService.delete(item.entityPM.Id).subscribe((response:any) => {
+                    this._EntityPMExtendedService.delete(item.entityPM.Id).subscribe(response => {
                         var res: ServiceResponse = response;
                         if (res.HasError) {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -258,11 +251,11 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
         });
     }
 
-    AddDocumentsDefinitionCommand() {
+    private AddDocumentsDefinitionCommand() {
         this.DocumentsDefinitionResultList.Insert(new DocumentsDefinitionComponent(new CustomsDocumentsDefinitionPM(), true));
     }
 
-    DeleteDocumentsDefinitionCommand(item: DocumentsDefinitionComponent) {
+    private DeleteDocumentsDefinitionCommand(item: DocumentsDefinitionComponent) {
         this.DocumentsDefinitionResultList.Remove(item);
         if (item.IsNew == false) {
             this.DeleteDocumentsDefinitionList.Insert(item);
@@ -276,9 +269,8 @@ export class CustomsDocumentsDefinitionComponent extends BaseComponent implement
         filters.addAdditionalFilter("ProcessTypeCode", this.ProcessTypeCode, null, null, "Equals", false, false, false, "Text");
         filters.addAdditionalFilter("TransportationTypeCode", this.TransportationTypeCode, null, null, "Equals", false, false, false, "Text");
         filters.addAdditionalFilter("CargoTypeCode", this.CargoTypeCode, null, null, "Equals", false, false, false, "Text");
-        filters.addAdditionalFilter("DeclarationTypeCode", this.DeclarationTypeCode, null, null, "Equals", false, false, false, "Text");
 
-        this._EntityListService.getByFilters(filters).subscribe((myResult:any) => {
+        this._EntityListService.getByFilters(filters).subscribe(myResult => {
             console.log("Customs Documents Definition: ", myResult);
             if (myResult == null ||
                 (myResult != null && myResult.Result == null) ||
@@ -342,13 +334,6 @@ export class DocumentsDefinitionComponent extends BaseComponent {
     public get CargoTypeName() { return this.entityPM.CargoTypeName; }
     public set CargoTypeName(newValue: string) { this.entityPM.CargoTypeName = newValue; }
 
-    public get DeclarationTypeCode() { return this.entityPM.DeclarationTypeCode; }
-    public set DeclarationTypeCode(newValue: string) { this.entityPM.DeclarationTypeCode = newValue; }
-
-    public get DeclarationTypeName() { return this.entityPM.DeclarationTypeName; }
-    public set DeclarationTypeName(newValue: string) { this.entityPM.DeclarationTypeName = newValue; }
-
-
     public get Mandatory() { return this.entityPM.Mandatory; }
     public set Mandatory(newValue: boolean) { this.entityPM.Mandatory = newValue; }
 
@@ -401,17 +386,15 @@ export class DocumentsDefinitionPMComponent extends BaseComponent {
     private _ProcessTypeCode: string;
     private _TransportationTypeCode: string;
     private _CargoTypeCode: string;
-    private _DeclarationTypeCode: string;
 
 
-    constructor(documentTypeCode: string, processTypeCode: string, transportationTypeCode: string, cargoTypeCode: string, declarationTypeCode: string) {
+    constructor(documentTypeCode: string, processTypeCode: string, transportationTypeCode: string, cargoTypeCode: string) {
         super();
 
         this.DocumentTypeCode = documentTypeCode;
         this.ProcessTypeCode = processTypeCode;
         this.TransportationTypeCode = transportationTypeCode;
         this.CargoTypeCode = cargoTypeCode;
-        this.DeclarationTypeCode = declarationTypeCode;
     }
 
     public get DocumentTypeCode() { return this._DocumentTypeCode; }
@@ -425,9 +408,5 @@ export class DocumentsDefinitionPMComponent extends BaseComponent {
 
     public get CargoTypeCode() { return this._CargoTypeCode; }
     public set CargoTypeCode(newValue: string) { this._CargoTypeCode = newValue; }
-
-    public get DeclarationTypeCode() { return this._DeclarationTypeCode; }
-    public set DeclarationTypeCode(newValue: string) { this._DeclarationTypeCode = newValue; }
-    
 
 }

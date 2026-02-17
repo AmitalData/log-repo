@@ -11,9 +11,7 @@ import {APILogsResponceBodyComponent} from './Components/APILogs/APILogsResponce
 import {APILogsRequestBodyComponent} from './Components/APILogs/APILogsRequestBodyComponent';
 import {CommunicationsTabComponent} from './Components/Communications/CommunicationsTabComponent';
 import {MessageBodyTabComponent} from './Components/AnalyzeQueue/MessageBodyTabComponent';
-import {AnalyzeQueueErrorsTabComponent} from './Components/AnalyzeQueue/AnalyzeQueueErrorsTabComponent';  
-import { ReportExecutionLogMessageBodyComponent } from './Components/ReportExecutionLog/ReportExecutionLogMessageBodyComponent';
-import { ReportExecutionLogErrorComponent } from './Components/ReportExecutionLog/ReportExecutionLogErrorComponent';
+import {AnalyzeQueueErrorsTabComponent} from './Components/AnalyzeQueue/AnalyzeQueueErrorsTabComponent';
 
 export const Components =
     [
@@ -30,8 +28,6 @@ export const Components =
         CommunicationsTabComponent,
         MessageBodyTabComponent,
         AnalyzeQueueErrorsTabComponent,
-        ReportExecutionLogMessageBodyComponent,
-        ReportExecutionLogErrorComponent
     ];
 
 export class ModuleDeclarations {
@@ -53,9 +49,6 @@ export class ModuleDeclarations {
             case "CommunicationsTabComponent": { myResult = CommunicationsTabComponent; break; }
             case "AnalyzeQueueErrorsTabComponent": { myResult = AnalyzeQueueErrorsTabComponent; break; }
             case "MessageBodyTabComponent": { myResult = MessageBodyTabComponent; break; }
-            case "ReportExecutionLogMessageBodyComponent": { myResult = ReportExecutionLogMessageBodyComponent; break; }
-            case "ReportExecutionLogErrorComponent": { myResult = ReportExecutionLogErrorComponent; break; }
-                 
         }
 
         return myResult;

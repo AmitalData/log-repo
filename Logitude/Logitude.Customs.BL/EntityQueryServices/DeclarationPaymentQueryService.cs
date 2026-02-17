@@ -1,13 +1,11 @@
 ﻿using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Def.EntityPMs;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -36,39 +34,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
 
             base.GetComposition(entityKeys, entityPM);
-        }
-
-        public int  GetAutomaticPayment(string declarationid,string direction)
-        {
-            int AutomaticPayment;
-            if (direction == "E")
-            {
-                string entityName = "GetAutomaticPayment" + declarationid;
-
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                {
-                    AutomaticPayment = this.repository.GetAutomaticPayment(declarationid);
-
-                    if (CacheManager.CacheWrapper.Get(AutomaticPayment.ToString()) == null)
-                    {
-                        if (AutomaticPayment.ToString() != null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityName, AutomaticPayment.ToString(), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
-                    }
-                }
-
-                else
-                {
-                    AutomaticPayment = int.Parse((string)CacheManager.CacheWrapper.Get(entityName));
-
-                }
-            }
-            else
-            {
-                AutomaticPayment= this.repository.GetAutomaticPayment(declarationid);
-            }
-            return AutomaticPayment;
         }
     }
 }

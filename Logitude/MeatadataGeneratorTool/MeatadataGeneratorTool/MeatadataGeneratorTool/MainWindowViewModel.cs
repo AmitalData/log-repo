@@ -323,7 +323,6 @@ namespace MeatadataGeneratorTool
                     SearchFieldsStringVisibility = Visibility.Visible;
                     CodeVisibility = Visibility.Collapsed;
                     NameVisibility = Visibility.Collapsed;
-                    
                     break;
                 case "CLose Table":
                     IsIdChecked = false;
@@ -407,8 +406,6 @@ namespace MeatadataGeneratorTool
                         propObjectField.ListLableDefaultText = "Id";
                         propObjectField.ValidForQuerySection1 = NewObjectTable.ObjectTableName;
                         propObjectField.DefaultText = "Id";
-                        propObjectField.NoObjectField = true;
-                       
                         NewObjectTable.UpdateObsList(propObjectField);
                     }
                     if (IsTenantChecked)
@@ -427,7 +424,6 @@ namespace MeatadataGeneratorTool
                         propObjectField.ValidForQuerySection1 = NewObjectTable.ObjectTableName;
                         propObjectField.DefaultText = "Tenant";
                         propObjectField.EnableAutoFill = true;
-                        propObjectField.NoObjectField = true;
                         NewObjectTable.UpdateObsList(propObjectField);
                     }
                     if (IsCreateDateChecked)
@@ -616,7 +612,6 @@ namespace MeatadataGeneratorTool
                         propObjectField.ValidForQuerySection1 = NewObjectTable.ObjectTableName;
                         propObjectField.DefaultText = "Id";
                         propObjectField.EnableAutoFill = true;
-                        propObjectField.NoObjectField = true;
                         NewObjectTable.UpdateObsList(propObjectField);
                     }
                     if (IsTenantChecked)
@@ -635,7 +630,6 @@ namespace MeatadataGeneratorTool
                         propObjectField.ValidForQuerySection1 = NewObjectTable.ObjectTableName;
                         propObjectField.DefaultText = "Tenant";
                         propObjectField.EnableAutoFill = true;
-                        propObjectField.NoObjectField = true;
                         NewObjectTable.UpdateObsList(propObjectField);
                     }
                 }

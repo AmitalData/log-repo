@@ -21,7 +21,7 @@ namespace Logitude.Accounting.BL.CoreBL
     public interface IJournalApproveParser
     {
         void OnApproveUpdatingFillArrangeJournalPMResetControlAccount();
-        bool ParseIt(string selectedQueue = null);
+        bool ParseIt();
     }
     public class JournalApproveParser : IJournalApproveParser
     {
@@ -40,19 +40,15 @@ namespace Logitude.Accounting.BL.CoreBL
             _includeIdCounter = includeIdCounter;
             this._JournalValidatorContext = journalValidatorContext;
             LedgerTransactions = new List<LedgerTransactionPM>();
-            if (_JournalPM.StatusCode == "4") {
-                _JournalPM.StatusCode = "6";
-            }
             //_PRIVATEOLD_GLAccountTotalByMonths = new List<GLAccountTotalByMonthPM>();
 
         }
 
         public virtual void OnApproveUpdatingFillArrangeJournalPMResetControlAccount()
         {
-
-            if (_JournalPM.StatusCode != "6" )
+            if (_JournalPM.StatusCode != "2")
             {
-                throw new ApplicationException("occure only OnApproveUpdating");
+                throw new Exception("occure only OnApproveUpdating");
             }
             if (!String.IsNullOrWhiteSpace(_JournalPM.QueueId))
             {
@@ -71,7 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (var journalLine in _JournalPM.JournalLines)
             {
 
-                if (journalLine.EnsureSettingActionTypeCodeEnum() == JournalActionTypeEnum.DebitCreditAndVatdeduction)
+                if (journalLine.EnsureSettingActionTypeCodeEnum() == MyJournalActionTypeEnum.DebitCreditAndVatdeduction)
                 {
                     if (!GLAccountTaxChecked.HasValue)
                     {
@@ -137,39 +133,32 @@ namespace Logitude.Accounting.BL.CoreBL
             pm = qs.GetSingle(accountId, false, true);
             if (pm == null)
             {
-                throw new ApplicationException("accountId not found" + accountId);
+                throw new Exception("accountId not found" + accountId);
             }
             if (pm.Tenant != _JournalPM.Tenant)
             {
-                throw new ApplicationException("accountId not found in tenant " + accountId);
+                throw new Exception("accountId not found in tenant " + accountId);
             }
-            
-            ValidationResult res = GLAccountValidator./*IsGLAccountValid*/IsGLAccountValidCacheDueFromJournal(pm);
+            var res = GLAccountValidator.IsGLAccountValid(pm);
             if (res != null)
             {
-                throw new ApplicationException("GLAccountValidator.IsGLAccountValid :" + res.ErrorMessage);
+                throw new Exception("GLAccountValidator.IsGLAccountValid :" + res.ErrorMessage);
             }
             if (pm.AccountTypeCode != "1" && String.IsNullOrWhiteSpace(pm.ControlAccountId))
             {
-                throw new ApplicationException("GLAccount is not a card (AccountTypeCode != 1 ) and there is no ControlAccountId " + pm.SearchFields);
+                throw new Exception("GLAccount is not card (AccountTypeCode != 1 ) and there isn't any ControlAccountId(Alex not check in ?!?!) " + pm.SearchFields);
             }
 
             return pm;
         }
         public bool StreamingJournalAlreadChecked = false;
-        public virtual bool ParseIt(string selectedQueue = null)
+        public virtual bool ParseIt()
         {
             try
             {
-                string logtext = "";
 
-                if (_JournalPM.StatusCode == "6")
+                if (_JournalPM.StatusCode == "2")
                 {
-                    logtext = "JournalApproveParser.ParseIt(), Point 1, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                        + ", Status=" + _JournalPM.StatusCode
-                        + ", QueueId=" + _JournalPM.QueueId;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-
                     OnApproveUpdatingFillArrangeJournalPMResetControlAccount();
                 }
 
@@ -189,47 +178,47 @@ namespace Logitude.Accounting.BL.CoreBL
                 _LocalAccountingCurrencyId = tPM.CurrencyId;
                 if (_JournalPM.JournalLines.Count < 1)
                 {
-                    throw new ApplicationException("JournalApproveParser(" + this._JournalPM.Id + "): No Journal line ");
+                    throw new Exception("JournalApproveParser(" + this._JournalPM.Id + "): No Journal line ");
                 }
 
-                logtext = "JournalApproveParser.ParseIt(), Point 2, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                    + ", Status=" + _JournalPM.StatusCode
-                    + ", QueueId=" + _JournalPM.QueueId;
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-
-                CreateLedger_MapByJournalActionType();
-
-                CheckLedgerTransactions();
-
-                if (selectedQueue != JournalApproveService.K_AccountingConversionJournalApproveWR || !FeatureToggleHelper.HasFeatureToggle("SSH", _JournalPM.Tenant))
+                foreach (JournalLinePM item in _JournalPM.JournalLines)
                 {
-                    logtext = "JournalApproveParser.ParseIt(), Point 5, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                        + ", Status=" + _JournalPM.StatusCode
-                        + ", QueueId=" + _JournalPM.QueueId;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-
-                    CreateGLAccountTotalByMonthFromLedger();
-                    CheckGLAccountTotalByMonth();
-
-                    if (_JournalPM.StatusCode == "6")
+                    switch (item.EnsureSettingActionTypeCodeEnum())
                     {
-                        CreateControlGLAccountTotalByMonthFromLedger();
-                        CheckControlGLAccountTotalByMonths();
+                        case MyJournalActionTypeEnum.Credit:
+                            AddCredit(item);
+                            break;
+                        case MyJournalActionTypeEnum.Debit:
+                            AddDebit(item, false);
+                            break;
+                        case MyJournalActionTypeEnum.DebitAndCredit:
+                            AddCredit(item);
+                            AddDebit(item, false);
+                            break;
+                        case MyJournalActionTypeEnum.DebitCreditAndVatdeduction:
+                            AddCredit(item);
+                            AddDebit(item, true);
+                            AddTaxDebit(item);
+                            break;
+                        case MyJournalActionTypeEnum.NotValid:
+                        default:
+                            throw new Exception("JournalApproveParser():JournalActionType is must ");
+                            break;
                     }
 
-                    logtext = "JournalApproveParser.ParseIt(), Point 8, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                        + ", Status=" + _JournalPM.StatusCode
-                        + ", QueueId=" + _JournalPM.QueueId;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
 
-                    CheckTotalByMonthDateType();
-
-
-                    logtext = "JournalApproveParser.ParseIt(), Point 9, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                        + ", Status=" + _JournalPM.StatusCode
-                        + ", QueueId=" + _JournalPM.QueueId;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
                 }
+                CheckLedgerTransactions();
+
+                CreateGLAccountTotalByMonthFromLedger();
+                CheckGLAccountTotalByMonth();
+                if (_JournalPM.StatusCode == "2")
+                {
+                    CreateControlGLAccountTotalByMonthFromLedger();
+                    CheckControlGLAccountTotalByMonths();
+                }
+
+                CheckTotalByMonthDateType();
             }
             catch (Exception)
             {
@@ -251,42 +240,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     errorString = errorString.Remove(errorString.Length - 1);
                     var errorText = errorString + ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id;
                     //ThrowException(errorText);
-                    throw new ApplicationException(errorText);
-                    //throw new ApplicationException(errorString);
+                    throw new Exception(errorText);
+                    //throw new Exception(errorString);
                 }
             }
             return true;
-        }
-
-        public void CreateLedger_MapByJournalActionType()
-        {
-            foreach (JournalLinePM item in _JournalPM.JournalLines?.Where(a=>a.ChangeSetOp != ChangeSetOperation.Delete))
-            {
-                switch (item.EnsureSettingActionTypeCodeEnum())
-                {
-                    case JournalActionTypeEnum.Credit:
-                        AddCredit(item);
-                        break;
-                    case JournalActionTypeEnum.Debit:
-                        AddDebit(item, false);
-                        break;
-                    case JournalActionTypeEnum.DebitAndCredit:
-                        AddCredit(item);
-                        AddDebit(item, false);
-                        break;
-                    case JournalActionTypeEnum.DebitCreditAndVatdeduction:
-                        AddCredit(item);
-                        AddDebit(item, true);
-                        AddTaxDebit(item);
-                        break;
-                    case JournalActionTypeEnum.NotValid:
-                    default:
-                        throw new ApplicationException("JournalApproveParser():JournalActionType is must ");
-                        break;
-                }
-
-
-            }
         }
 
         private void CheckTotalByMonthDateType()
@@ -365,7 +323,7 @@ namespace Logitude.Accounting.BL.CoreBL
              {
                  Tenant = groupByAccountCurrency.Key.Tenant,
                  AccountId = groupByAccountCurrency.Key.AccountId,
-                 DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
+                 DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
                  CurrencyId = groupByAccountCurrency.Key.CurrencyId,
 
                  Year = groupByAccountCurrency.Key.Year,
@@ -432,7 +390,6 @@ namespace Logitude.Accounting.BL.CoreBL
                  ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.ForeignAmountDebit),
 
              });
-
             bool UnionreturnsDistinctvalues = true;
             if (UnionreturnsDistinctvalues)
             {
@@ -442,30 +399,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 GLAccountTotalByMonths = GLAccountTotalAccountingdate.Union(GLAccountTotalDueDate).Union(GLAccountTotalDocumentDate).ToList();
             }
-
-            foreach (var item in GLAccountTotalAccountingdate)
-            {
-                if (!GLAccountTotalDueDate.Any(x => x.Tenant == item.Tenant  && x.AccountId == item.AccountId && x.Month == item.Month && x.CurrencyId == item.CurrencyId))
-                {
-                    GLAccountTotalByMonths.Add(new GLAccountTotalByMonthPM()
-                    {
-                        Tenant = item.Tenant,
-                        AccountId = item.AccountId,
-                        DateTypeCode = GLAccountTotalDateTypeValues.DueDate,
-                        CurrencyId = item.CurrencyId,
-
-                        Year = item.Year,
-                        Month = item.Month,
-
-                        LocalAmountCredit = 0,
-                        LocalAmountDebit = 0,
-                        ForeignAmountCredit = 0,
-                        ForeignAmountDebit = 0,
-
-                    });
-                }
-            }
-
+                
         }
 
 
@@ -487,7 +421,7 @@ namespace Logitude.Accounting.BL.CoreBL
              {
                  Tenant = groupByAccountCurrency.Key.Tenant,
                  AccountId = groupByAccountCurrency.Key.AccountId,
-                 DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
+                 DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
                  CurrencyId = groupByAccountCurrency.Key.CurrencyId,
 
                  Year = groupByAccountCurrency.Key.Year,
@@ -563,28 +497,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 ControlGLAccountTotalByMonths = GLAccountTotalAccountingdate.Union(GLAccountTotalDueDate).Union(GLAccountTotalDocumentDate).ToList();
             }
-            foreach (var item in GLAccountTotalAccountingdate)
-            {
-                if (!GLAccountTotalDueDate.Any(x => x.Tenant == item.Tenant && x.AccountId == item.AccountId && x.Month == item.Month && x.CurrencyId == item.CurrencyId))
-                {
-                    ControlGLAccountTotalByMonths.Add(new GLAccountTotalByMonthPM()
-                    {
-                        Tenant = item.Tenant,
-                        AccountId = item.AccountId,
-                        DateTypeCode = GLAccountTotalDateTypeValues.DueDate,
-                        CurrencyId = item.CurrencyId,
-
-                        Year = item.Year,
-                        Month = item.Month,
-
-                        LocalAmountCredit = 0,
-                        LocalAmountDebit = 0,
-                        ForeignAmountCredit = 0,
-                        ForeignAmountDebit = 0,
-
-                    });
-                }
-            }
+                
         }
 
         void CheckControlGLAccountTotalByMonths()
@@ -593,7 +506,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             //eyal : While Insert GLAccount there is connect to Control account;
-            var myConnectedControlGLAccountTotalByMonthsAccountingdate = ControlGLAccountTotalByMonths.Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate);
+            var myConnectedControlGLAccountTotalByMonthsAccountingdate = ControlGLAccountTotalByMonths.Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate);
 
 
             CheckNoSameAccIdJoinTotalAndControlTotal();
@@ -741,16 +654,16 @@ namespace Logitude.Accounting.BL.CoreBL
             _ErrorsList = _ErrorsList ?? new List<string>();
             _ErrorsList.Add(message);
             return;
-            throw new ApplicationException(message);
+            throw new Exception(message);
         }
         private void CheckLedgerTransactions()
         {
             var TotalLocalAmountInJornal = _JournalPM.JournalLines
-                .Where(jl => jl.EnsureSettingActionTypeCodeEnum() != JournalActionTypeEnum.Debit && jl.ChangeSetOp != ChangeSetOperation.Delete) // Why credit ? credit is not vat splitded (like debit)
+                .Where(jl => jl.EnsureSettingActionTypeCodeEnum() != MyJournalActionTypeEnum.Debit) // Why credit ? credit is not vat splitded (like debit)
                  .Sum(jl => jl.LocalAmount);
 
             var totalLocalAmountCredit = LedgerTransactions.Sum(rec => rec.LocalAmountCredit);
-            var totalLocalAmountDebit =  LedgerTransactions.Sum(rec => rec.LocalAmountDebit) ;
+            var totalLocalAmountDebit = LedgerTransactions.Sum(rec => rec.LocalAmountDebit);
             if (!totalLocalAmountCredit.Equals(totalLocalAmountDebit))
             {
                 ThrowExceptionAxiom("totalLocalAmountDebit != totalLocalAmountCredit");
@@ -780,43 +693,52 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void CheckJournal()
         {
+
             var validationResult = JournalValidator.IsJournalValid(_JournalPM, _JournalValidatorContext);
             if (validationResult != null)
             {
-                string errorString = string.Join("; ", validationResult.MemberNames) + ".";
-                throw new ApplicationException(errorString);
-            }
-        }
 
+                string errorString = String.Empty;
+                foreach (string error in validationResult.MemberNames)
+                {
+                    errorString = errorString + error + ",";
+                }
+
+                errorString = errorString.Remove(errorString.Length - 1);
+                throw new Exception(errorString);
+
+
+                //                string errorText = validationResult.ErrorMessage + ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id + ", " + validationResult.MemberNames.FirstOrDefault();
+                //                    //+validationResult.MemberNames.Aggregate((a, b) => string.Concat(a, ",", b));
+
+
+                ////ThrowException(errorText);
+                //                throw new Exception(errorText);
+            }
+            //_JournalPM.JournalLines.ToLookup(rec => rec.ActionTypeCodeEnum);
+
+        }
         private void AddTaxDebit(JournalLinePM item)
         {
-            var journalLineDebitMapping = new JournalLineDebitTaxMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider(), GetIIAccountingSettingResolver());
+            var journalLineDebitMapping = new JournalLineDebitTaxMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider());
             journalLineDebitMapping.DoIt();
             LedgerTransactions.Add(journalLineDebitMapping.MyLedgerTransaction);
             //AddMyGLAccountTotalByMonth(journalLineDebitMapping.MyGLAccountTotalByMonth);
         }
-
-        
         private void AddDebit(JournalLinePM item, bool vatExtract)
         {
-            var journalLineDebitMapping = new JournalLineDebitMapping(item, _JournalPM, vatExtract, GetIJournalValidatorContextDataProvider(), GetIIAccountingSettingResolver());
+            var journalLineDebitMapping = new JournalLineDebitMapping(item, _JournalPM, vatExtract, GetIJournalValidatorContextDataProvider());
             journalLineDebitMapping.DoIt();
             LedgerTransactions.Add(journalLineDebitMapping.MyLedgerTransaction);
             //AddMyGLAccountTotalByMonth(journalLineDebitMapping.MyGLAccountTotalByMonth);
         }
-
-        private IAccountingSettingResolver GetIIAccountingSettingResolver()
-        {
-            return _JournalValidatorContext.GetService(typeof(IAccountingSettingResolver)) as IAccountingSettingResolver;
-        }
-
         IJournalValidatorContextDataProvider GetIJournalValidatorContextDataProvider()
         {
             return _JournalValidatorContext.GetService(typeof(IJournalValidatorContextDataProvider)) as IJournalValidatorContextDataProvider;
         }
         private void AddCredit(JournalLinePM item)
         {
-            var journalLineCreditMapping = new JournalLineCreditMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider(),GetIIAccountingSettingResolver());
+            var journalLineCreditMapping = new JournalLineCreditMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider());
             journalLineCreditMapping.DoIt();
             LedgerTransactions.Add(journalLineCreditMapping.MyLedgerTransaction);
             //AddMyGLAccountTotalByMonth(journalLineCreditMapping.MyGLAccountTotalByMonth);

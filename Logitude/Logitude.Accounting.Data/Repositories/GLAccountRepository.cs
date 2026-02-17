@@ -1,20 +1,17 @@
  
-using Logitude.Accounting.Data.DataContract;
-using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Server.Tools;
-using System.Data.Entity.Infrastructure;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using System.Runtime.Remoting.Contexts;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+using System.Diagnostics;
+using Simplog.Data.CommonDataModel;
+using Logitude.Server.Tools;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -34,21 +31,6 @@ namespace Logitude.Accounting.Data.Repositories
              select a).ToList();
         }
 
-        public List<KeyValuePair<string,string>> GetDisplayNumberList(HashSet<string> GLAccountIdSet, int tenant)
-        {
-            if (GLAccountIdSet?.Count<1)
-            {
-                return new List<KeyValuePair<string, string>>();
-            }
-            var l = (from a in context.GLAccounts
-                     where GLAccountIdSet.Contains(a.Id) && a.Tenant == tenant
-                     select new { a.Id, a.DisplayNumber })
-                     .ToList();
-            return l.Select(r => new KeyValuePair<string, string>(r.Id, r.DisplayNumber))
-                .ToList();
-                    
-        }
-
         public List<GLAccount> GetChildAccountsList(List<String> gLAccountIdList, int tenant)
         {
             return (from a in context.GLAccounts
@@ -56,37 +38,11 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).ToList();
         }
 
-        public List<GLAccount> GetChildAccountsQ(IQueryable<String> gLAccountIdQ, int tenant, int? userSecurityLevel)
-        {
-            if(userSecurityLevel != null)
-            {
-                return (from a in context.GLAccounts
-                        join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
-                        where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b) 
-                        && (chartOfAccount.ChartOfAccountSecurityLevel ?? 0) >= (userSecurityLevel ?? 0)
-                        select a).ToList();
-            }
-            else
-            {
-                return (from a in context.GLAccounts                    
-                        where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b) 
-                        select a).ToList();
-            }
-          
-        }
-
         public GLAccount GetGLAccountByIdTenant(string GLAccountId, int tenant)
         {
             return (from a in context.GLAccounts
                     where a.Id == GLAccountId && a.Tenant == tenant
                     select a).FirstOrDefault();
-        }
-
-        public string GetDisplayNumberByGLAccountId(string GLAccountId, int tenant)
-        {
-            return (from a in context.GLAccounts
-                    where a.Id == GLAccountId && a.Tenant == tenant
-                    select a.DisplayNumber).FirstOrDefault();
         }
 
         public GLAccount GetGLAccountByDisplayNoAndTenant(string displayNo, int tenant)
@@ -105,38 +61,18 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public GLAccount GetControlGLAccountByChart(string chartOfAccountsId, int tenant)
-        {
-            return (from a in context.GLAccounts
-                    where a.ChartOfAccountsId == chartOfAccountsId && a.Tenant == tenant
-                            && a.IsControlAccount.HasValue && a.IsControlAccount.Value == true
-                            && (!a.Inactive.HasValue || a.Inactive.Value == false)
-                    select a).FirstOrDefault();
-        }
-
-
         public IQueryable<GLAccount> GetQuaryAllControlAccount(int tenant)
        {
            return (from a in context.GLAccounts
                    where a.IsControlAccount == true && a.Tenant == tenant
                    select a);
         }
-
-        public IQueryable<GLAccount> GetQueryAllSmallCashbookAccount(int tenant)
-        {
-            return (from a in context.GLAccounts
-                    where a.Smallcashbook == true && a.Tenant == tenant
-                    select a);
-        }
-
-
-        public List<GLAccount> GetByGLAccountsIdList(List<string> GLAccountsIdList, int tenant)
+        public List<GLAccount> GetByGLAccountsIdList(List<String> GLAccountsIdList, int tenant)
         {
             return (from a in context.GLAccounts
                     where GLAccountsIdList.Contains(a.Id) && a.Tenant == tenant
                     select a).ToList();
         }
-
         public IQueryable<GLAccount> GetQAllControlAccount(int tenant)
         {
             return (from a in context.GLAccounts
@@ -144,36 +80,6 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.IsControlAccount == true
                     select a);
         }
-
-        public IQueryable<GLAccount> GetbychartOfAccountsTypeCode(int tenant, string chartOfAccountsTypeCode)
-        {
-            return (from a in context.GLAccounts
-                    where a.Tenant == tenant
-                    where a.ChartOfAccountsTypeCode == chartOfAccountsTypeCode
-                    select a);
-
-        }
-
-        public IQueryable<GLAccount> GetbyChartOfAccountsId(int tenant, string chartOfAccountsId)
-        {
-            return (from a in context.GLAccounts
-                    where a.Tenant == tenant
-                    where a.ChartOfAccountsId == chartOfAccountsId
-                    select a);
-
-        }
-
-        public IQueryable<GLAccount> GetGlaAccountByJouranlIdAndJournalLineNumber(int tenant, string JournalId, int JournalLineNumber)
-        {
-            var query = from g in context.GLAccounts
-                        join l in context.LedgerTransactions on g.Id equals l.AccountId
-                        join j in context.JournalLines on new { JournalId = l.JournalId, LineNumber = l.JournalLineNumber } equals new { JournalId = j.JournalId, LineNumber = j.Line }
-                        where l.Tenant == tenant && l.JournalId == JournalId && l.JournalLineNumber == JournalLineNumber
-                        select g;
-
-            return query.Distinct();
-        }
-
         public List<GLAccount> GetChildAccountsByChartOfAccountIdList(List<String> chartOfAccountIdList, int tenant)
         {
             return GetQChildAccountsByChartOfAccountIdList(chartOfAccountIdList, tenant).ToList();
@@ -208,8 +114,7 @@ namespace Logitude.Accounting.Data.Repositories
                     Inactive = a.Inactive,
                     ReconcileMethodCode = a.ReconcileMethodCode,
                     ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
-                    CardsDataId = a.CardsDataId,
-                    CardsData = a.GLAccountCardsData,
+
                     ControlAccountId = a.ControlAccountId,
 
                     AutomaticReconcileId = a.AutomaticReconcileId,
@@ -230,7 +135,6 @@ namespace Logitude.Accounting.Data.Repositories
                     ParentAccountId = a.ParentAccountId,
                     IsVATExempt = a.IsVATExempt,
                     LocalBalanceInDue = md.LocalBalanceInDue,
-                    ForeignBalanceInDue = md.ForeignBalanceInDue,
                     NextDueDate = md.NextDueDate,
                     AutomaticReconcile = a.AutomaticReconcile,
 
@@ -303,13 +207,12 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
-             string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
-             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, string collectorId, int? securityLevel, List<string> listGLAccounts,string fromGLAccountDisplayNumber, string toGLAccountDisplayNumber)
+             string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType)
         {
             return
             this
-                .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel, collectorId, listGLAccounts, fromGLAccountDisplayNumber, toGLAccountDisplayNumber)
+                .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType,
+            Category1, Category2, Category3, Category4, Category5)
             .Select(a => a.Id);
 
         }
@@ -379,18 +282,6 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
        }
 
-
-        public string GetCollectorByGLAccountId(int tenant , string glaccountId)
-        {
-          
-            return (from a in context.GLAccounts
-                    join c in (this.context as AccountingContext).GLAccountCardsDatas on a.CardsDataId equals c.Id
-                    where a.Id == glaccountId   
-                    select c.CollectorUserId).FirstOrDefault();
-
-         
-
-        }
         public IQueryable<GLAccount> GetByAcountIdCategories(int tenant, string AccountId,
             string Category1, string Category2, string Category3, string Category4, string Category5)
         {
@@ -432,67 +323,26 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
-            string Category1, string Category2, string Category3, string Category4, string Category5,
-            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel,string collectorId,List<string> listGLAccounts,string fromGLAccountDisplayNumber, string toGLAccountDisplayNumber)
+        public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType,
+            string Category1, string Category2, string Category3, string Category4, string Category5)
         {
             IQueryable<GLAccount> q;
-            HashSet<string> idSet = new HashSet<string>();
-
-            q = (from a in context.GLAccounts
-                 where a.Tenant == tenant
-                 select a);
-
             if (!string.IsNullOrWhiteSpace(AccountId))
-            {
-                idSet.Add(AccountId);
-            }
-            if (listGLAccounts != null && listGLAccounts.Count > 0)
-            {
-                foreach (var id in listGLAccounts)
-                {
-                    idSet.Add(id);
-                }
-            }
-
-            if (idSet.Count > 0)
             {
                 q = (from a in context.GLAccounts
                      where a.Tenant == tenant
-                     where idSet.Contains(a.Id)
+                     where a.Id == AccountId
                      select a);
             }
-            if (!string.IsNullOrWhiteSpace(toGLAccountDisplayNumber) && !string.IsNullOrWhiteSpace(fromGLAccountDisplayNumber))
+            else
             {
-                if (int.TryParse(fromGLAccountDisplayNumber, out int fromNum) && int.TryParse(toGLAccountDisplayNumber, out int toNum))
-                {
-                    q = q.AsEnumerable()
-                             .Where(g =>
-                             {
-                               
-                                 var numericPart = g.DisplayNumber?
-                                     .Split(new[] { '\\', '/' })[0];
-                                 if (int.TryParse(numericPart, out int num))
-                                 {
-                                     return num >= fromNum && num <= toNum;
-                                 }
-                                 return false;
-                             })
-                             .OrderBy(r => r.DisplayNumber)
-                             .AsQueryable();
-                }
-            }
-            if (!includeControlAccount)
-            {
-                q = q.Where(a => a.IsControlAccount == false);
+                q = (from a in context.GLAccounts
+                     where a.Tenant == tenant
+                     select a);
             }
             if (!string.IsNullOrWhiteSpace(gLAccountType))
             {
                 q = q.Where(a => a.AccountTypeCode == gLAccountType);
-            }
-            if (!string.IsNullOrWhiteSpace(chartOfAccountsId))
-            {
-                q = q.Where(a => a.ChartOfAccountsId == chartOfAccountsId);
             }
             if (!string.IsNullOrWhiteSpace(Category1))
             {
@@ -514,33 +364,6 @@ namespace Logitude.Accounting.Data.Repositories
             {
                 q = q.Where(a => a.Category5Id == Category5);
             }
-            if (!string.IsNullOrWhiteSpace(ChartOfAccountsTypeCode))
-            {
-                var codes = ChartOfAccountsTypeCode.Split(',').ToList();
-                q = q.Where(r => codes.Contains(r.ChartOfAccountsTypeCode));
-            }           
-
-            if (!string.IsNullOrWhiteSpace(collectorId))
-            {
-                q = q.Where(r => r.CollectorId == collectorId);
-            }
-            if (!string.IsNullOrWhiteSpace(salesmanId))
-            {
-                q = q.Where(r => r.SalesmanUserId == salesmanId);
-            }
-
-            if (securityLevel != null)
-            {
-                q = (
-                    from glaccount in q
-
-                    join chartOfAccount in (this.context as AccountingContext).ChartOfAccounts.Where(r => r.Tenant == tenant && (r.ChartOfAccountSecurityLevel <= securityLevel || r.ChartOfAccountSecurityLevel==null))
-                    on glaccount.ChartOfAccountsId equals chartOfAccount.Id
-
-                    select glaccount
-                     );
-
-            }
             return q;
         }
 
@@ -549,19 +372,6 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<GLAccountAndMoreDTO> GetQAllByAccountTypeCode(int tenant, string AccountTypeCode)
         {
-            var q=(from a in
-                    //context.GLAccounts
-                    //join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
-                    //where a.Tenant == tenant
-                    this.GetAllAsGLAccountAndMore(tenant)
-             
-             select a);
-            if (!string.IsNullOrWhiteSpace(AccountTypeCode))
-            {
-                q = q.Where(r => r.AccountTypeCode == AccountTypeCode);
-            }
-            return q;
-
             return (from a in
                     //context.GLAccounts
                     //join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
@@ -593,11 +403,11 @@ namespace Logitude.Accounting.Data.Repositories
             ICardGLAccountDataViewContext cardGLAccountDataViewContext = CardGLAccountDataViewContext.GetContext(tenant);
 
             var query = from a in cardGLAccountDataViewContext.CardGLAccountDataViews
-                        where a.Tenant == tenant && a.AccountTypeCode == accountTypeCode && a.CountryCode == "IL"
+                        where a.Tenant == tenant && a.AccountTypeCode == accountTypeCode
                         select a;
             return query.Where(r => !String.IsNullOrEmpty(r.VatNumber)
-            && !(r.Inactive.HasValue && r.Inactive.Value)
-            && !r.ExcludeFromDeductionReport);
+            && !String.IsNullOrEmpty(r.DeductionFileNumber)
+            && !(r.Inactive.HasValue && r.Inactive.Value));
         }
 
 
@@ -756,91 +566,9 @@ namespace Logitude.Accounting.Data.Repositories
             return q.Take(top).Select(record => record.Id).ToList();
         }
 
-
-        //public List<string> GetGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount)
-        //{
-        //    var q = context.GLAccounts.Where(record => record.Tenant == tenant && 
-        //        (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)));
-        //    if (!String.IsNullOrWhiteSpace(accountTypeCode))
-        //    {
-        //        q.Where(record => record.AccountTypeCode == accountTypeCode);
-        //    }
-
-        //    return q.Select(record => record.Id).ToList();
-        //}
-
-
-        public List<string> GetNextGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
-        {
-            var q = context.GLAccounts.OrderBy(rec => rec.Id).Where(record => record.Tenant == tenant &&
-                (lastMadeGLAccountId == null || lastMadeGLAccountId == "" || String.Compare(record.Id, lastMadeGLAccountId) > 0) &&
-                (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)) &&
-                (accountTypeCode == null || accountTypeCode == "" || record.AccountTypeCode == accountTypeCode) &&
-                record.ActiveForInterest).Take(maxGLAccountsPerQuery);
-
-            return q.Select(record => record.Id).ToList();
-        }
-
-
-        public List<string> GetNextGLAccountIdByTypeControlNoParent(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
-        {
-            var q = context.GLAccounts.OrderBy(rec => rec.Id).Where(record => record.Tenant == tenant &&
-                (lastMadeGLAccountId == null || lastMadeGLAccountId == "" || String.Compare(record.Id, lastMadeGLAccountId) > 0) &&
-                (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)) &&
-                (accountTypeCode == null || accountTypeCode == "" || record.AccountTypeCode == accountTypeCode) &&
-                (record.ParentAccountId == null || record.ParentAccountId == "") &&
-                record.ActiveForInterest).Take(maxGLAccountsPerQuery);
-
-            return q.Select(record => record.Id).ToList();
-        }
-
-        public List<string> GetNextGLAccountIdByTypeControlDescendant(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
-        {
-            var q = context.GLAccounts.OrderBy(rec => rec.Id).Where(record => record.Tenant == tenant &&
-                (lastMadeGLAccountId == null || lastMadeGLAccountId == "" || String.Compare(record.Id, lastMadeGLAccountId) > 0) &&
-                (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)) &&
-                (accountTypeCode == null || accountTypeCode == "" || record.AccountTypeCode == accountTypeCode) &&
-                (record.ParentAccountId != null && record.ParentAccountId != null) &&
-                record.ActiveForInterest).Take(maxGLAccountsPerQuery);
-
-            return q.Select(record => record.Id).ToList();
-        }
-
-
-
-        //public List<string> GetNextGLAccountIdByTypeControlInterest(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
-        //{
-        //    var q = (from acc in context.GLAccounts.OrderBy(rec => rec.Id)
-        //             join interestReport in context.InterestReports on acc.Id equals interestReport.GLAccountId
-        //             where acc.Tenant == tenant &&
-        //             (lastMadeGLAccountId == null || lastMadeGLAccountId == "" || String.Compare(acc.Id, lastMadeGLAccountId) > 0) &&
-        //             (!isControlAccount.HasValue || (acc.IsControlAccount.HasValue && acc.IsControlAccount.Value == isControlAccount.Value)) &&
-        //             acc.ParentAccountId == null &&
-        //             (accountTypeCode == null || accountTypeCode == "" || acc.AccountTypeCode == accountTypeCode) &&
-        //              acc.ActiveForInterest
-        //             select acc).Take(maxGLAccountsPerQuery);
-
-        //    return q.Select(acc => acc.Id).ToList();
-        //}
-
-        //public List<string> GetNextGLAccountIdByIdControlInterest(int tenant, string id, bool? isControlAccount)
-        //{
-        //    var q = (from acc in context.GLAccounts.Where(rec => rec.Id == id)
-        //             join interestReport in context.InterestReports on acc.Id equals interestReport.GLAccountId
-        //             where acc.Tenant == tenant &&
-        //             (!isControlAccount.HasValue || (acc.IsControlAccount.HasValue && acc.IsControlAccount.Value == isControlAccount.Value)) &&
-        //             acc.ParentAccountId == null &&
-        //             acc.ActiveForInterest
-        //             select acc);
-
-        //    return q.Select(acc => acc.Id).ToList();
-        //}
-
-
-
         public List<GLAccount> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)
         {
-            if (revaluationEnabled == true && String.IsNullOrEmpty(chartOfAccountsId))
+            if (revaluationEnabled.HasValue && revaluationEnabled.Value)
             {
                 List<GLAccount> rv1;
                 IQueryable<GLAccount> rec1 =
@@ -870,7 +598,6 @@ namespace Logitude.Accounting.Data.Repositories
                                     && (record.Id == gLAccountId || String.IsNullOrEmpty(gLAccountId)
                                     && (record.CurrencyId != accountingCurrencyId || (record.IsMultiCurrency.HasValue && record.IsMultiCurrency.Value) || String.IsNullOrEmpty(accountingCurrencyId))
                                     && (!record.IsControlAccount.HasValue || record.IsControlAccount == false)
-                                    && (revaluationEnabled != true || record.RevaluationEnabled == true) 
                )
                  select record;
                 if (rec2 != null)
@@ -889,15 +616,8 @@ namespace Logitude.Accounting.Data.Repositories
             }
 
         }
-        public List<string> GetIdsByInternalNumber(String internalNumber, int tenant)
-        {
-            IQueryable<GLAccount> query = from a in context.GLAccounts
-                                          where a.InternalNumber == internalNumber && a.Tenant == tenant
-                                          select a;
-            return query.Select(r => r.Id).ToList();
-
-        }
-        public List<GLAccount> GetByInternalNumber(String internalNumber, int tenant)
+       
+       public List<GLAccount> GetByInternalNumber(String internalNumber, int tenant)
         {
             if (String.IsNullOrEmpty(internalNumber))
             {
@@ -924,7 +644,7 @@ namespace Logitude.Accounting.Data.Repositories
        public IQueryable<GLAccount> GetQAllCardsAndDetailsAccType(int Tenant
            , string clientControlAccountId
            , string vendorControlAccountId
-           , List<string> jobControlAccountId_list
+           , string jobControlAccountId
            , string fileControlAccountId
            )
        {
@@ -939,7 +659,7 @@ namespace Logitude.Accounting.Data.Repositories
 
            var qCardTenant =
            qAllInTenant 
-               .Where(a => a.AccountTypeCode == "1")// card    1	ï¿½ï¿½ï¿½ï¿½ï¿½	Card
+               .Where(a => a.AccountTypeCode == "1")// card    1	ëøèéñ	Card
                ;
            var excludelist = new List<string>();
 
@@ -951,8 +671,7 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  client
                qClientTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "2")
-                   ;//2	ï¿½ï¿½ï¿½ï¿½	Client
+                   .Where(a => a.AccountTypeCode == "2");//2	ì÷åç	Client
             
            }
 
@@ -968,25 +687,22 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  vendors
                qVendorTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "3")
-                   ;// 3	ï¿½ï¿½ï¿½	Vendor
+                   .Where(a => a.AccountTypeCode == "3");// 3	ñô÷	Vendor
             
            }
 
+           
 
-
-            //if (!string.IsNullOrWhiteSpace(jobControlAccountId_list))
-            if (jobControlAccountId_list!=null && jobControlAccountId_list.Count>0)
-            {
+           if (!string.IsNullOrWhiteSpace(jobControlAccountId))
+           {
                //exclude jobControlAccountId
                //qCardTenant=qCardTenant.Where(a => a.Id != jobControlAccountId);
-               excludelist.AddRange(jobControlAccountId_list);
+               excludelist.Add(jobControlAccountId);
 
                //include All AccountTypeCode  Job
                qJobTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "4")
-                   ;//4	ï¿½'ï¿½ï¿½	Job
+                   .Where(a => a.AccountTypeCode == "4");//4	â'åá	Job
 
            }
 
@@ -1000,8 +716,7 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  file
                qFileTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "5")
-                   ;////5	ï¿½ï¿½ï¿½	File
+                   .Where(a => a.AccountTypeCode == "5");////5	úé÷	File
 
            }
 
@@ -1034,252 +749,7 @@ namespace Logitude.Accounting.Data.Repositories
            return qQTrail;
        }
 
-
-        // Upper Levels, i.e. ChartOfAcc Type, ChartOfAcc
-        public IQueryable<GLAccount> GetQAllCardsAndDetailsAccType_Upper(int Tenant
-    , string clientControlAccountId
-    , string vendorControlAccountId
-    , List<string> jobControlAccountId_list
-    , string fileControlAccountId
-    )
-        {
-            var qAllInTenant = this.GetAll(Tenant);
-            IQueryable<GLAccount> qQTrail = null;
-            IQueryable<GLAccount> qClientTenant = null;
-            IQueryable<GLAccount> qVendorTenant = null;
-            IQueryable<GLAccount> qJobTenant = null;
-            IQueryable<GLAccount> qFileTenant = null;
-
-
-
-            var qCardTenant =
-            qAllInTenant
-              ////   .Where(a => a.AccountTypeCode == "1")// card    1	ï¿½ï¿½ï¿½ï¿½ï¿½	Card
-                ;
-            var excludelist = new List<string>();
-
-            if (!string.IsNullOrWhiteSpace(clientControlAccountId))
-            {
-                //exclude clientControlAccountId
-                //qCardTenant=qCardTenant.Where(a => a.Id != clientControlAccountId);
-                excludelist.Add(clientControlAccountId);
-                //include All AccountTypeCode  client
-                qClientTenant =
-                    qAllInTenant
-                  ////   .Where(a => a.AccountTypeCode == "2")
-                    ;//2	ï¿½ï¿½ï¿½ï¿½	Client
-
-            }
-
-
-
-
-            if (!string.IsNullOrWhiteSpace(vendorControlAccountId))
-            {
-                //exclude vendorControlAccountId
-                //qCardTenant=qCardTenant.Where(a => a.Id != vendorControlAccountId);
-                excludelist.Add(vendorControlAccountId);
-
-                //include All AccountTypeCode  vendors
-                qVendorTenant =
-                    qAllInTenant
-                   ////   .Where(a => a.AccountTypeCode == "3")
-                    ;// 3	ï¿½ï¿½ï¿½	Vendor
-
-            }
-
-
-
-            //if (!string.IsNullOrWhiteSpace(jobControlAccountId_list))
-            if (jobControlAccountId_list != null && jobControlAccountId_list.Count > 0)
-            {
-                //exclude jobControlAccountId
-                //qCardTenant=qCardTenant.Where(a => a.Id != jobControlAccountId);
-                excludelist.AddRange(jobControlAccountId_list);
-
-                //include All AccountTypeCode  Job
-                qJobTenant =
-                    qAllInTenant
-                  ////    .Where(a => a.AccountTypeCode == "4")
-                    ;//4	ï¿½'ï¿½ï¿½	Job
-
-            }
-
-
-            if (!string.IsNullOrWhiteSpace(fileControlAccountId))
-            {
-                //exclude fileControlAccountId
-                //qCardTenant=qCardTenant.Where(a => a.Id != fileControlAccountId);
-                excludelist.Add(fileControlAccountId);
-
-                //include All AccountTypeCode  file
-                qFileTenant =
-                    qAllInTenant
-                  ////    .Where(a => a.AccountTypeCode == "5")
-                    ;////5	ï¿½ï¿½ï¿½	File
-
-            }
-
-            if (excludelist.Count() > 0)
-            {
-                qCardTenant = qCardTenant.Where(a => excludelist.Contains(a.Id) == false);
-            }
-
-            qCardTenant = qCardTenant.Where(a => a.IsControlAccount == false);
-            if (qClientTenant != null) qClientTenant = qClientTenant.Where(a => a.IsControlAccount == false);
-            if (qVendorTenant != null) qVendorTenant = qVendorTenant.Where(a => a.IsControlAccount == false);
-            if (qJobTenant != null) qJobTenant = qJobTenant.Where(a => a.IsControlAccount == false);
-            if (qFileTenant != null) qFileTenant = qFileTenant.Where(a => a.IsControlAccount == false);
-
-            qQTrail = qCardTenant;
-
-
-            if (qClientTenant != null)
-            {
-                qQTrail = qQTrail.Union(qClientTenant);
-            }
-            if (qVendorTenant != null)
-            {
-                qQTrail = qQTrail.Union(qVendorTenant);
-            }
-
-            if (qJobTenant != null)
-            {
-                qQTrail = qQTrail.Union(qJobTenant);
-            }
-            if (qFileTenant != null)
-            {
-                qQTrail = qQTrail.Union(qFileTenant);
-            }
-
-
-            return qQTrail;
-        }
-
-
-        // Lower Level, i.e. GLAccount
-        public IQueryable<GLAccount> GetQAllCardsAndDetailsAccType_Lower(int Tenant
-    , string clientControlAccountId
-    , string vendorControlAccountId
-    , List<string> jobControlAccountId_list
-    , string fileControlAccountId
-    ) 
-        {
-            var qAllInTenant = this.GetAll(Tenant);
-            IQueryable<GLAccount> qQTrail = null;
-            IQueryable<GLAccount> qClientTenant = null;
-            IQueryable<GLAccount> qVendorTenant = null;
-            IQueryable<GLAccount> qJobTenant = null;
-            IQueryable<GLAccount> qFileTenant = null;
-
-
-
-            var qCardTenant =
-            qAllInTenant
-                 .Where(a => a.AccountTypeCode == "1")// card    1	ï¿½ï¿½ï¿½ï¿½ï¿½	Card
-                ;
-            var excludelist = new List<string>();
-
-            if (!string.IsNullOrWhiteSpace(clientControlAccountId))
-            {
-                //exclude clientControlAccountId
-                //qCardTenant=qCardTenant.Where(a => a.Id != clientControlAccountId);
-                excludelist.Add(clientControlAccountId);
-                //include All AccountTypeCode  client
-                qClientTenant =
-                    qAllInTenant
-                     .Where(a => a.AccountTypeCode == "2")
-                    ;//2	ï¿½ï¿½ï¿½ï¿½	Client
-
-            }
-
-
-
-
-            if (!string.IsNullOrWhiteSpace(vendorControlAccountId))
-            {
-                //exclude vendorControlAccountId
-                //qCardTenant=qCardTenant.Where(a => a.Id != vendorControlAccountId);
-                excludelist.Add(vendorControlAccountId);
-
-                //include All AccountTypeCode  vendors
-                qVendorTenant =
-                    qAllInTenant
-                      .Where(a => a.AccountTypeCode == "3")
-                    ;// 3	ï¿½ï¿½ï¿½	Vendor
-
-            }
-
-
-
-            //if (!string.IsNullOrWhiteSpace(jobControlAccountId_list))
-            if (jobControlAccountId_list != null && jobControlAccountId_list.Count > 0)
-            {
-                //exclude jobControlAccountId
-                //qCardTenant=qCardTenant.Where(a => a.Id != jobControlAccountId);
-                excludelist.AddRange(jobControlAccountId_list);
-
-                //include All AccountTypeCode  Job
-                qJobTenant =
-                    qAllInTenant
-                      .Where(a => a.AccountTypeCode == "4")
-                    ;//4	ï¿½'ï¿½ï¿½	Job
-
-            }
-
-
-            if (!string.IsNullOrWhiteSpace(fileControlAccountId))
-            {
-                //exclude fileControlAccountId
-                //qCardTenant=qCardTenant.Where(a => a.Id != fileControlAccountId);
-                excludelist.Add(fileControlAccountId);
-
-                //include All AccountTypeCode  file
-                qFileTenant =
-                    qAllInTenant
-                      .Where(a => a.AccountTypeCode == "5")
-                    ;////5	ï¿½ï¿½ï¿½	File
-
-            }
-
-            if (excludelist.Count() > 0)
-            {
-                qCardTenant = qCardTenant.Where(a => excludelist.Contains(a.Id) == false);
-            }
-
-            qCardTenant = qCardTenant.Where(a => a.IsControlAccount == false);
-            if (qClientTenant != null) qClientTenant = qClientTenant.Where(a => a.IsControlAccount == false);
-            if (qVendorTenant != null) qVendorTenant = qVendorTenant.Where(a => a.IsControlAccount == false);
-            if (qJobTenant != null) qJobTenant = qJobTenant.Where(a => a.IsControlAccount == false);
-            if (qFileTenant != null) qFileTenant = qFileTenant.Where(a => a.IsControlAccount == false);
-
-            qQTrail = qCardTenant;
-
-
-            if (qClientTenant != null)
-            {
-                qQTrail = qQTrail.Union(qClientTenant);
-            }
-            if (qVendorTenant != null)
-            {
-                qQTrail = qQTrail.Union(qVendorTenant);
-            }
-
-            if (qJobTenant != null)
-            {
-                qQTrail = qQTrail.Union(qJobTenant);
-            }
-            if (qFileTenant != null)
-            {
-                qQTrail = qQTrail.Union(qFileTenant);
-            }
-
-
-            return qQTrail;
-        }
-
-
-        partial void onUpdate()//Partial Methods Definition in Generated
+       partial void onUpdate()//Partial Methods Definition in Generated
        {
            InsureUsingOnlyByUpdateService();
        }
@@ -1329,281 +799,29 @@ namespace Logitude.Accounting.Data.Repositories
 
        }
 
-        public List<GLAccount> GetByDisplayNumber(String displayNumber, int tenant)
-        {
-            if (String.IsNullOrEmpty(displayNumber))
-            {
-                List<GLAccount> rv = new List<GLAccount>();
-                return rv;
-            }
-            else
-            {
-                IQueryable<GLAccount> query = from a in context.GLAccounts
-                                              where a.DisplayNumber == displayNumber && a.Tenant == tenant
-                                              select a;
-                if (query.Any())
-                {
-                    return (query).ToList();
-                }
-                else
-                {
-                    List<GLAccount> rv = new List<GLAccount>();
-                    return rv;
-                }
-            }
-        }
-
-        public decimal GetTotalOpenChequesInLocalCurById(String glaccountId, int tenant)
-        {                           
-           var now = DateTime.UtcNow;
-           
-           return context.AllARPaymentChequesViews
-               .Where(a => a.AccountId == glaccountId
-                        && a.Tenant == tenant
-                        && a.Notes != "×”×—×–×¨×ª ×©×™×§ ×œ×œ×§×•×—"
-                        && a.ValueDate <= now)
-               .Sum(a => (decimal?)a.LocalAmountCredit) ?? 0m;        
-            
-        }
-
-        public List<GLAccount> GetByDisplayNumberEnding(String displayNumberEnding, int tenant)
-        {
-            if (String.IsNullOrEmpty(displayNumberEnding))
-            {
-                List<GLAccount> rv = new List<GLAccount>();
-                return rv;
-            }
-            else
-            {
-                IQueryable<GLAccount> query = from a in context.GLAccounts
-                                              where a.DisplayNumber.Replace(" ", "").EndsWith(displayNumberEnding) && a.Tenant == tenant
-                                              select a;
-                if (query.Any())
-                {
-                    return (query).ToList();
-                }
-                else
-                {
-                    List<GLAccount> rv = new List<GLAccount>();
-                    return rv;
-                }
-            }
-        }
-        public string GetExchangeRateIdById(string glaccountId, int tenant)
-        {
-            if (string.IsNullOrEmpty(glaccountId))
-                return null;
-          
-                return context.GLAccounts
-                    .Where(a => a.Id == glaccountId && a.Tenant == tenant)
-                    .Select(a => a.ExchangeRateId)
-                    .FirstOrDefault();
-
-        }
-
-        public List<CardDTO> GetVendorCardsWithoutGLAccountMatchDisplayNumber(int tenant)
-        {
-            var cards = from crm in context.Cards
-                                         where 
-                                         crm.Tenant == tenant &&
-                                        ( crm.PayablesAccountingCard !=null || !crm.PayablesAccountingCard.Equals("")) &&
-                                        (crm.GLAccountId == null || crm.GLAccountId == "")
-                                            && (crm.PartnerTypeId == "VD" || crm.PartnerTypeId == "DR" || crm.PartnerTypeId == "LL" || crm.PartnerTypeId == "WA" || crm.PartnerTypeId == "AG")
- 
-
-                        join a in context.GLAccounts
-                                              .Where(r => (r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
-                                              on crm.PayablesAccountingCard equals a.DisplayNumber
-
-                        select new CardDTO()
-                        {
-                            Id = crm.Id,
-                            PayablesAccountingCard = crm.PayablesAccountingCard,
-                            GLAccountId = a.Id,
-                            AccountNumber = a.DisplayNumber
-                        };
-
-            return cards.ToList();
-        }
-        public List<CardDTO> GetAllOtherCardsWithoutGLAccountMatchDisplayNumberPayable(int tenant)
-        {
-
-            var cards = from crm in context.Cards
-                        where crm.Tenant == tenant &&
-                        (crm.PayablesAccountingCard!= null || !crm.PayablesAccountingCard.Equals("")) &&
-                        (crm.GLAccountId == null || crm.GLAccountId == "")
-
-                                            && (crm.PartnerTypeId != "CS" && crm.PartnerTypeId != "PO" && crm.PartnerTypeId != "AG")
-                                            && (crm.PartnerTypeId != "VD" && crm.PartnerTypeId != "DR" && crm.PartnerTypeId != "LL" && crm.PartnerTypeId != "WA")
-
-
-                        join a in context.GLAccounts
-       .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
-       on crm.PayablesAccountingCard equals a.DisplayNumber
-
-                        select new CardDTO()
-                        {
-                            Id = crm.Id,
-                            PayablesAccountingCard = crm.PayablesAccountingCard,
-                            GLAccountId = a.Id,
-                            AccountNumber = a.DisplayNumber
-                        };
-            return cards.ToList();
-        }
-        public List<CardDTO> GetAllOtherCardsWithoutGLAccountMatchDisplayNumberReceivable(int tenant)
-        {
-                       
-            var cards = from crm in context.Cards
-                        where crm.Tenant == tenant &&
-                        (crm.ReceivablesAccountingCard != null || !crm.ReceivablesAccountingCard.Equals("")) &&
-                        (crm.GLAccountId == null || crm.GLAccountId == "")
-
-                                            && (crm.PartnerTypeId != "CS" && crm.PartnerTypeId != "PO" && crm.PartnerTypeId != "AG")
-                                            && (crm.PartnerTypeId != "VD" && crm.PartnerTypeId != "DR" && crm.PartnerTypeId != "LL" && crm.PartnerTypeId != "WA")
-
-                                                            
-                                                            join a in context.GLAccounts
-                                           .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
-                                           on crm.ReceivablesAccountingCard equals a.DisplayNumber
-
-                                                            select new CardDTO()
-                                                            {
-                                                                Id = crm.Id,
-                                                                ReceivablesAccountingCard = crm.ReceivablesAccountingCard,
-                                                                GLAccountId = a.Id,
-                                                                AccountNumber = a.DisplayNumber
-                                                            };
-            return cards.ToList();
-        }
-        public List<CardDTO> GetCustomerCardsWithoutGLAccountMatchDisplayNumber(int tenant)
-        {
-            var cards = from crm in context.Cards
-                        where crm.Tenant == tenant &&
-                        (crm.ReceivablesAccountingCard != null || !crm.ReceivablesAccountingCard.Equals("")) &&
-                        (crm.GLAccountId == null || crm.GLAccountId == "")
-                        
-                           && (crm.PartnerTypeId == "CS" || crm.PartnerTypeId == "PO")
-                        join a in context.GLAccounts
-                        .Where(r => (r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
-                        on crm.ReceivablesAccountingCard equals a.DisplayNumber
-
-                        select new CardDTO()
-                        {
-                            Id = crm.Id,
-                            ReceivablesAccountingCard = crm.ReceivablesAccountingCard,
-                            GLAccountId = a.Id,
-                            AccountNumber = a.DisplayNumber
-                        };
-
-            return cards.ToList();
-        }
-		public Card GetSingleCardWithoutGLAccountById(int tenant, string cardId)
-        {
-			return (from crm in context.Cards
-						where crm.Tenant == tenant && crm.Id == cardId &&
-					   string.IsNullOrEmpty(crm.GLAccountId) &&
-					   (!string.IsNullOrEmpty(crm.ReceivablesAccountingCard) ||
-					   !string.IsNullOrEmpty(crm.PayablesAccountingCard))
-						select crm).FirstOrDefault();
-		}
-
-		public CardDTO GetSingleCardsReceivablesMatchDisplayNumber(int tenant, string cardId)
-		{
-			var cardDTO = from crm in context.Cards
-					  where crm.Tenant == tenant && crm.Id == cardId
-
-					  join a in context.GLAccounts
-					  .Where(r => (r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
-					  on crm.ReceivablesAccountingCard equals a.DisplayNumber
-
-					  select new CardDTO()
-					  {
-						  Id = crm.Id,
-						  ReceivablesAccountingCard = crm.ReceivablesAccountingCard,
-						  GLAccountId = a.Id,
-						  AccountNumber = a.DisplayNumber
-					  };
-            return cardDTO.FirstOrDefault();
-		}
-		public CardDTO GetSingleCardsPayablesMatchDisplayNumber(int tenant, string cardId)
-		{
-			var cardDTO = from crm in context.Cards
-					  where
-					  crm.Tenant == tenant && crm.Id == cardId
-
-					  join a in context.GLAccounts
-					  .Where(r => (r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
-					  on crm.PayablesAccountingCard equals a.DisplayNumber
-
-					  select new CardDTO()
-					  {
-						  Id = crm.Id,
-						  PayablesAccountingCard = crm.PayablesAccountingCard,
-						  GLAccountId = a.Id,
-						  AccountNumber = a.DisplayNumber
-					  };
-			return cardDTO.FirstOrDefault();
-		}
-		public CardDTO GetSingleCardsPayablesAllMatchDisplayNumber(int tenant, string cardId)
-		{
-			var cardDTO = from crm in context.Cards
-						  where crm.Tenant == tenant && crm.Id == cardId
-						  join a in context.GLAccounts
-						 .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
-						 on crm.PayablesAccountingCard equals a.DisplayNumber
-
-						  select new CardDTO()
-						  {
-							  Id = crm.Id,
-							  PayablesAccountingCard = crm.PayablesAccountingCard,
-							  GLAccountId = a.Id,
-							  AccountNumber = a.DisplayNumber
-						  };
-			return cardDTO.FirstOrDefault();
-		}
-		public CardDTO GetSingleCardsReceivablesAllMatchDisplayNumber(int tenant, string cardId)
-		{
-			var cardDTO = from crm in context.Cards
-						  where crm.Tenant == tenant && crm.Id == cardId
-						  join a in context.GLAccounts
-							 .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
-							 on crm.ReceivablesAccountingCard equals a.DisplayNumber
-
-						  select new CardDTO()
-						  {
-							  Id = crm.Id,
-							  ReceivablesAccountingCard = crm.ReceivablesAccountingCard,
-							  GLAccountId = a.Id,
-							  AccountNumber = a.DisplayNumber
-						  };
-			return cardDTO.FirstOrDefault();
-		}
-		
-		public List<GLAccount> GetByDisplayNumberAndAccType(String displayNumber, String accTypeCode, int tenant)
-        {
-            if (String.IsNullOrEmpty(displayNumber) || String.IsNullOrEmpty(accTypeCode))
-            {
-                List<GLAccount> rv = new List<GLAccount>();
-                return rv;
-            }
-            else
-            {
-                IQueryable<GLAccount> query = from a in context.GLAccounts
-                                              where a.DisplayNumber == displayNumber && a.AccountTypeCode == accTypeCode && a.Tenant == tenant
-                                              select a;
-                if (query.Any())
-                {
-                    return (query).ToList();
-                }
-                else
-                {
-                    List<GLAccount> rv = new List<GLAccount>();
-                    return rv;
-                }
-            }
-        }
-
-
+       public List<GLAccount> GetByDisplayNumber(String displayNumber, int tenant)
+       {
+           if (String.IsNullOrEmpty(displayNumber))
+           {
+               List<GLAccount> rv = new List<GLAccount>();
+               return rv;
+           }
+           else
+           {
+               IQueryable<GLAccount> query = from a in context.GLAccounts
+                                             where a.DisplayNumber == displayNumber && a.Tenant == tenant
+                                             select a;
+               if (query.Any())
+               {
+                   return (query).ToList();
+               }
+               else
+               {
+                   List<GLAccount> rv = new List<GLAccount>();
+                   return rv;
+               }
+           }
+       }
         public IQueryable<string> GetQId(List<string> AllIdAccounts,int tenant)
         {
             return
@@ -1661,72 +879,11 @@ namespace Logitude.Accounting.Data.Repositories
                    }; 
         }
 
-        public DateTime? GetInterestCalculationStartDate(string glaccountId, int tenant)
-        {
-            return (from a in context.GLAccounts
-                    where a.Tenant == tenant && a.Id == glaccountId
-                    select a.InterestCalculationStartDate).FirstOrDefault();
-        }
 
-        public IQueryable<InterestReportCustomerData> GetEligibleCustomersForInterestReports(int tenant)
-        {
-
-            IQueryable<InterestReportCustomerData> gLAccounts = (from GLAccount in context.GLAccounts
-                                                                 where GLAccount.Tenant == tenant && GLAccount.ActiveForInterest == true
-                                                                 && (GLAccount.Inactive != null && !GLAccount.Inactive.Value)
-                                                                 join Card in context.Cards on GLAccount.Id equals Card.GLAccountId
-                                                                 where Card.PartnerTypeId == "CS" && !Card.InActive
-                                                                 select new { GLAccount = GLAccount, Card = Card }).GroupBy(x => x.GLAccount.Id)
-                                                                           .Select(x => new InterestReportCustomerData()
-                                                                           {
-                                                                               GLAccountId = x.FirstOrDefault().GLAccount.Id,
-                                                                               ActiveForInterest = x.FirstOrDefault().GLAccount.ActiveForInterest,
-                                                                               EnglishName = x.FirstOrDefault().GLAccount.EnglishName,
-                                                                               InterestCalculationStartDate = x.FirstOrDefault().GLAccount.InterestCalculationStartDate,
-                                                                               InterestCreditLimit = x.FirstOrDefault().GLAccount.InterestCreditLimit,
-                                                                               LocalName = x.FirstOrDefault().GLAccount.LocalName,
-                                                                               MinimumInterestInvoiceBilling = x.FirstOrDefault().GLAccount.MinimumInterestInvoiceBilling,
-                                                                               Tenant = x.FirstOrDefault().GLAccount.Tenant,
-                                                                               CustomerId = x.FirstOrDefault().Card.Id,
-
-                                                                           });
-            return gLAccounts;
-
-
-        }
-
-        public List<GLAccount> GetAllActivityAccountsByTenant(int tenant)
-        {
-            List<GLAccount> accounts = ((from a in context.GLAccounts
-                                 where a.ChartOfAccountsTypeCode == "3" && a.Inactive == false && (tenant == 0 || a.Tenant == tenant)
-                                 select a).ToList());
-
-            return accounts;
-        }
-
-        public List<GLAccount> GetAllInActivityAccountsByTenant(int tenant)
-        {
-            List<GLAccount> accounts = ((from a in context.GLAccounts
-                                         where a.Inactive == true && a.Tenant == tenant
-                                         select a).ToList());
-
-            return accounts;
-        }
-
-		public List<GLAccount> GetGLAccountByTenantAndCustomerDebtNotification(int tenant)
-		{
-			List<GLAccount> accounts = ((from account in context.GLAccounts
-										 join notification in context.CustomerDebtNotifications 
-                                         on new { account.Tenant, Id = account.Id} equals new { notification.Tenant, Id = notification.AccountId } into moreDataJoin
-										 from joinedNotification in moreDataJoin.DefaultIfEmpty()
-										 where account.Tenant == tenant && account.Inactive == false  && account.AccountTypeCode == "2" && joinedNotification == null
-										 select account).ToList());
-
-			return accounts;
-		}
+ 
     }
 
-		public class GLAccountAndMoreDTO//: GLAccount
+    public class GLAccountAndMoreDTO//: GLAccount
     {
         
         public string Id { get; set; }
@@ -1737,16 +894,11 @@ namespace Logitude.Accounting.Data.Repositories
         public string AccountTypeName { get; set; }
         public decimal? BalanceInLocalCurrency { get; set; }
         public decimal? LocalBalanceInDue { get;  set;  }
-        public decimal? ForeignBalanceInDue  { get; set; } 
-        
         public DateTime? NextDueDate { get;  set;  }
         public int Tenant { get;  set;  }
         public string InternalNumber { get;  set;  }
         public string AccountTypeCode { get;  set;  }
         public string DisplayNumber { get;  set;  }
-        public string CardsDataId { get; set; }
-        public GLAccountCardsData CardsData { get; set; }
-
         public string EnglishName { get;  set;  }
         public string LocalName { get;  set;  }
         public string SearchFields { get;  set;  }
@@ -1834,15 +986,6 @@ namespace Logitude.Accounting.Data.Repositories
         }
         
 #endif
-    }
-
-    public class CardDTO
-    {
-        public string Id { get;  set; }
-        public string ReceivablesAccountingCard { get;  set; }
-        public string GLAccountId { get;  set; }
-        public string AccountNumber { get;  set; }
-        public string PayablesAccountingCard { get;  set; }
     }
 }
    

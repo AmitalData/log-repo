@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -12,11 +12,8 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.Server.Tools;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -122,42 +119,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             AddressMapping.MapEntity(entityPM, Poco, isNewEntity);
-            if(entityPM.AddressTypeId == "P")
-            {
-                var truckerSettingRepo= new TruckerSettingRepository(objectContext);
-                TruckerSettingQuery truckerSettingQuery = new TruckerSettingQuery(tenant);
-                TruckerSettingService truckeSettingservice = new TruckerSettingService(objectContext, entityPM.Tenant);
 
-                bool hasDb = truckerSettingQuery.AnyByAddressId(entityPM.Id, tenant);
-                bool hasPm = (entityPM.TruckerSettings != null && entityPM.TruckerSettings.Count > 0);
-                if (hasDb || hasPm) 
-                {
-                    List<TruckerSettingList> truckerSettingChangeset = truckerSettingQuery.GetIQueryableEntityListByAddressId(entityPM.Id, tenant).ToList();
-                    foreach(var item in truckerSettingChangeset)
-                    {
-                        var itemPM = entityPM.TruckerSettings.FirstOrDefault(x => x.Id == item.Id);
-                        if(itemPM == null)
-                        {
-                            var truckerPM= truckerSettingQuery.GetSinglePM(item.Id, tenant);
-                            truckeSettingservice.Remove(truckerPM);
-                        }
-                    }
-
-                    foreach (var item in entityPM.TruckerSettings)
-                    {
-                        var itemPM= truckerSettingRepo.GetSingle(item.Id, item.Tenant);
-                        if(itemPM != null)
-                        {
-                            truckeSettingservice.Update(item);
-                        }
-                        else
-                        {
-                            truckeSettingservice.Create(item);
-                        }
-
-                    }
-                }            
-            } 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
@@ -282,7 +244,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
 
                     List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Customer", entityCard.Tenant).Where(o => o.DataTypeCode == "Text" || o.DataTypeCode == "nText").ToList();
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityCard.Tenant);
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     foreach (ObjectField field in customFields)
                     {
                         object value = customFieldResolver.GetFieldValue(entityCard, field, entityCard.Tenant);

@@ -5,39 +5,50 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Logitude.BL.Helpers;
-using Logitude.BL.InvoiceModel.CustomFilters;
-using Logitude.BL.InvoiceModel.EntityLists;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.TreeFilterQuery;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using WebFreight.Web.Security;
+using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
-using System.Web;
 using System.Web.Http;
+using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
-using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using WebFreight.Web.DataContracts;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
-
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Data.InvoiceModel;
+using Logitude.BL.InvoiceModel;
+using Logitude.BL.InvoiceModel.EntityLists;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.CustomFilters;
+		  
+using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
+		  
 namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
-{
+{ 
 
-
+    
     public partial class ARInvoiceViewsController : ApiController
     {
 	  
@@ -70,8 +81,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 			    }
 				if (entityList != null)
 				{
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                	customFieldResolver.SetCustomFieldsValues("ARInvoice",  authToken.Tenant, new List<ARInvoiceList> { entityList }.Cast<object>().ToList());
  	
 					entityList = ARInvoiceAPiHelper.ApplyFilters(entityList, authToken.Tenant);
 				}
@@ -107,8 +116,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 				entityLists = entityLists.OrderByDescending(d => d.CreateDate);
 				List<ARInvoiceList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                customFieldResolver.SetCustomFieldsValues("ARInvoice", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -143,7 +150,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 };
 
 				List<ObjectField> ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice",tenant);
-               List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
                     object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
@@ -174,13 +181,12 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-					
+
 
 
                 }
@@ -203,8 +209,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
-                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
                         }
                         else
                         {
@@ -217,34 +222,17 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 ARInvoiceAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                 { 
-                     AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "ARInvoice",
-                     ParentEntityId = filters.ParentEntityId,
-                     ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = tenant ,
-                     ParentEntity = filters.ParentEntity
-                 };
 
-								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
-              
-
-                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
-                {
-                  MyContext = InvoiceContext.GetSecContext(tenant);
-                }
                 ARInvoiceRepository  aRInvoiceRepository = new ARInvoiceRepository(MyContext);
                 IQueryable<ARInvoice> entityPocos = aRInvoiceRepository.GetARInvoices(tenant);
 
                 ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				                
 				ARInvoiceCustomFilter customfilters = new ARInvoiceCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
@@ -255,10 +243,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 IQueryable<ARInvoiceList> entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<ARInvoiceList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<ARInvoiceList>(entityLists , treeFilterQueryArgs);
 
-		      
-			  								
+		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(ARInvoiceList).GetProperty(queryOperations.SortByColumnName);
@@ -322,18 +308,18 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                     }
 				 }
                 }
-            }					  						
-	       else
+            }
+		    else
             {
                 entityLists = entityLists.OrderByDescending(d => d.CreateDate);
-            } 
+            }
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-    		  }
+			  }
 			  	if(!queryOperations.GetAll)
 				 {
 
@@ -342,8 +328,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 				}
 			   List<ARInvoiceList> listResult = entityLists.ToList();
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-               customFieldResolver.SetCustomFieldsValues("ARInvoice", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

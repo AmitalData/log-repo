@@ -33,8 +33,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? ContainerType3MarkUpValue { get; set; }
         public double? ContainerType4MarkUpValue { get; set; }
         public double? ContainerType5MarkUpValue { get; set; }
-        public string MarkUpCurrencyId { get; set; }
-
         public string CostMeasurementId { get; set; }
         public string CostMeasurementCode { get; set; }
         public string CostMeasurementShortName { get; set; }
@@ -55,13 +53,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? CostMinAmount { get; set; }
         public double? SaleMinAmount { get; set; }
         public double? SaleMaxAmount { get; set; }
-
-        public string MarkUpText { get; set; }
-        public string ContainerType1MarkUpText { get; set; }
-        public string ContainerType2MarkUpText { get; set; }
-        public string ContainerType3MarkUpText { get; set; }
-        public string ContainerType4MarkUpText { get; set; }
-        public string ContainerType5MarkUpText { get; set; }
-        public bool IsRegionalTax { get; set; }
     }
 }

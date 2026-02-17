@@ -7,7 +7,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuoteDocsInTabComponent.html',
 })
 

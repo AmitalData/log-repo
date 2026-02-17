@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .ListCellImage {
         vertical-align: middle;
@@ -30,25 +30,21 @@
         <td style="height: 100%;">
 
             <div *ngIf="FieldName == 'TransportModeId'" class="MediaFillRelative">
-                <img *ngIf="FieldValue" class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
+                <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
             </div>
 
             <div *ngIf="FieldName == 'DirectionId'" class="MediaFillRelative">
-                <img *ngIf="FieldValue" class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
+                <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
             </div>
-
-            <div *ngIf="ObjectTableName == 'WarehouseEntry' && IsHeaderScreenTemplate && FieldName == 'EntryReferencesAndDate'">
-                <span> {{Entity['EntryReference']}}</span>
-                <span style="font-weight: bold;margin-left:5px" [ngStyle]="{color: BackgroudColor}"> {{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>
-            </div>
-
 
             <div *ngIf="ObjectTableName == 'WarehouseEntry' && FieldName == 'ActualEntryDate'">
                 <span style="font-weight: bold;" [ngStyle]="{color: BackgroudColor}"> {{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>
             </div>
 
-            <div *ngIf="ObjectTableName == 'WarehouseEntry' && FieldName == 'StatusName'" [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</div>
 
+            <!--<div *ngIf="ObjectTableName == 'WarehouseRelease' && FieldName == 'ActualReleaseDate'">
+                <span style="font-weight: bold;" [ngStyle]="{color: BackgroudColor}">{{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>
+            </div>-->
 
             <div *ngIf="ObjectTableName == 'WarehouseRelease' && FieldName == 'ReleaseDate'">
                 <span style="font-weight: bold;" [ngStyle]="{color: BackgroudColor}">{{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>

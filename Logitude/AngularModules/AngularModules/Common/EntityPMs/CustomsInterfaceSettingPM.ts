@@ -20,7 +20,7 @@ export class CustomsInterfaceSettingPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -85,29 +85,11 @@ export class CustomsInterfaceSettingPM {
     public set ArtemusInSettingsHost(newValue: string) { if (this.artemusInSettingsHost != newValue) { this.artemusInSettingsHost = newValue; this.MarkAsDirty("ArtemusInSettingsHost"); } }
        
 	 
-    private aMCAirStartDate: Date;
-    public get AMCAirStartDate() { return this.aMCAirStartDate; }
-    public set AMCAirStartDate(newValue: Date) { if (this.aMCAirStartDate != newValue) { this.aMCAirStartDate = newValue; this.MarkAsDirty("AMCAirStartDate"); } }
-       
-	 
-    private aMCOceanStartDate: Date;
-    public get AMCOceanStartDate() { return this.aMCOceanStartDate; }
-    public set AMCOceanStartDate(newValue: Date) { if (this.aMCOceanStartDate != newValue) { this.aMCOceanStartDate = newValue; this.MarkAsDirty("AMCOceanStartDate"); } }
-       
-	 
-    private localCustomsInterfaceName: string;
-    public get LocalCustomsInterfaceName() { return this.localCustomsInterfaceName; }
-    public set LocalCustomsInterfaceName(newValue: string) { if (this.localCustomsInterfaceName != newValue) { this.localCustomsInterfaceName = newValue; this.MarkAsDirty("LocalCustomsInterfaceName"); } }
-       
-	 
 
     public OldEntityPM: CustomsInterfaceSettingPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -115,7 +97,6 @@ export class CustomsInterfaceSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomsInterfaceSetting");
            
         }
-	 }
     }
     private MyClone: CustomsInterfaceSettingPM;
 

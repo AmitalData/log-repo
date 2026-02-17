@@ -1,4 +1,4 @@
-import {Component,ChangeDetectorRef} from '@angular/core';
+﻿import {Component,ChangeDetectorRef} from '@angular/core'; 
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
@@ -6,11 +6,11 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 //import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../Infrastructure/Tools';
-import {ReconcileEventManager, EventParams} from '../../Utilities/ReconcileEventManager';
+import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './ReconcileExternalPageLineListTemplate.html',
 })
 
@@ -49,27 +49,13 @@ export class ReconcileExternalPageLineListTemplate {
     CheckBoxClicked(checked: boolean) {
         console.log("clicked: ", checked);
         this.rowData['IsChecked'] = checked;
+        ReconcileEventManager.CheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
 
-        if(!ReconcileEventManager.CheckBoxChecked)
-            ReconcileEventManager.CheckBoxChecked = new EventEmitter();
-            var reconcileEventParams=new EventParams();
-            reconcileEventParams.Params={
-                line: this.rowData,
-                isChecked: checked,
-                RowIndex: this.AdditionalData.rowIndex
-            };
-            ReconcileEventManager.CheckBoxChecked.emit(reconcileEventParams);
     }
-    ExtPageCheckBoxClicked(checked: boolean) {
+    BankCheckBoxClicked(checked: boolean) {
         console.log("clicked: ", checked);
-        // this.rowData['IsChecked'] = checked;
-        var eventParams=new EventParams();
-        eventParams.Params={
-            line: this.rowData,
-            isChecked: checked,
-            RowIndex: this.AdditionalData.rowIndex
-        };
-        ReconcileEventManager.ExtPageCheckBoxChecked.emit(eventParams);
+        this.rowData['IsChecked'] = checked;
+        ReconcileEventManager.BankCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
 
     }
 

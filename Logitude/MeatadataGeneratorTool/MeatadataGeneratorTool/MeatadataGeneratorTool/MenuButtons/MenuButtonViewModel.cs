@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -47,37 +46,8 @@ namespace MeatadataGeneratorTool.MenuButtons
                 }
                
             }
-        }
-
-        private int width;
-        public int Width
-        {
-            get
-            {
-                return width;
-            }
-            set
-            {
-                width = value;
-                FirePropertyChanged("Width");
-            }
-        }
-
-
-        private string htmlComponentPath;
-        public string HtmlComponentPath
-        {
-            get
-            {
-                return htmlComponentPath;
-            }
-            set
-            {
-                htmlComponentPath = value;
-                FirePropertyChanged("HtmlComponentPath");
-            }
-        }
-
+        } 
+        
         private string eventCode;
         public string EventCode
         {
@@ -251,9 +221,6 @@ namespace MeatadataGeneratorTool.MenuButtons
                     {
                         viewModel.SelectedMenuButton.MenuButtonItems = new ObservableCollection<MenuButtonViewModel>();
                     }
-
-                    if (viewModel.SelectedMenuButton.MenuButtonItems.Count > 0)
-                        this.IndexOrder = viewModel.SelectedMenuButton.MenuButtonItems.OrderByDescending(f => f.IndexOrder).FirstOrDefault().IndexOrder + 1;
                     viewModel.SelectedMenuButton.MenuButtonItems.Add(this); 
                 }
                 else
@@ -278,10 +245,6 @@ namespace MeatadataGeneratorTool.MenuButtons
             {
                 str.AppendLine("Default Text is Required");
             }
-            else if (ContainsHebrewCharacters(this.DefaultText))
-            {
-                str.AppendLine("Default Text cannot contain Hebrew characters");
-            }
 
             if (string.IsNullOrEmpty(this.SelectedMenuButtonType))
             {
@@ -294,12 +257,8 @@ namespace MeatadataGeneratorTool.MenuButtons
             {
                 ErrorsVisibility = Visibility.Visible;
             }
-            else
-            {
-                ErrorsVisibility = Visibility.Collapsed;
-            }
 
-                FirePropertyChanged("ErrorMessages");
+            FirePropertyChanged("ErrorMessages");
         }
 
         Visibility errorsVisibility = Visibility.Collapsed;
@@ -314,12 +273,6 @@ namespace MeatadataGeneratorTool.MenuButtons
         {
             get { return menuButtonsDetailsVisibility; }
             set { menuButtonsDetailsVisibility = value; FirePropertyChanged("MenuButtonsDetailsVisibility"); }
-        }
-
-
-        private bool ContainsHebrewCharacters(string text)
-        {
-            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
         }
 
         public string TextCodeCode { get; internal set; }

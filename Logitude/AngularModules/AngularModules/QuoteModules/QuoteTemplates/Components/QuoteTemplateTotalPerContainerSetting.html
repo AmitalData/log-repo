@@ -1,4 +1,4 @@
-
+﻿
 <table *ngIf="IsLoadPage">
 
     <tr>
@@ -91,22 +91,7 @@
                                                                                                         </td>
 
                                                                                                     </tr>
-
-                                                                                                    <tr style="height:5px;"><td style="height:5px" colspan="2"><div></div></td></tr>
-
-                                                                                                    <tr style="height:20px">
-                                                                                                        <td style="width:8px"></td>
-                                                                                                        <td>
-
-                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'MULTIPLE'" (Checked)="TotalPerContainersCurrencyType = 'MULTIPLE'" [Text]="'QuoteTemplate.S.ShowTotalSplitToMultipleCurrencies' | TextCodeTranslationPipe"></RadioButton>
-
-                                                                                                        </td>
-
-                                                                                                    </tr>
                                                                                                     <tr style="height:10px;"><td style="height:10px" colspan="2"><div></div></td></tr>
-
-
-
                                                                                                 </table>
                                                                                             </td>
                                                                                         </tr>
@@ -123,7 +108,7 @@
                                                                         </tr>
 
                                                                         <tr style="height:10px"><td colspan="3"></td></tr>
-                                                                        <tr style="height:30px">
+                                                                        <tr style="height:20px">
                                                                             <td style="width:18px"><div style="width:18px"></div></td>
                                                                             <td>
 
@@ -147,18 +132,8 @@
                                                                                         </td>
                                                                                     </tr>
 
-                                                                                    <tr style="height:8px;"><td style="height:8px" colspan="2"><div></div></td></tr>
 
-                                                                                    <tr>
-
-                                                                                        <td>
-                                                                                            <div>
-                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowIncludedCharges' | TextCodeTranslationPipe" [IsChecked]="ShowIncludedChargesPerContainers" (Checked)="ShowIncludedChargesPerContainers = $event"></CheckBox>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                    </tr>
-
-
+                                                                                    <!--<tr style="height:10px;"><td style="height:10px"><div></div></td></tr>-->
                                                                                 </table>
                                                                             </td>
                                                                             <td style="width:10px"><div style="width:10px"></div></td>
@@ -198,94 +173,87 @@
                                                                                         <tr class="SectionBody">
                                                                                             <td style="vertical-align:top">
                                                                                                 <div style="overflow-x:hidden" class="MediaFill">
-                                                                                                    <logitude-edit-grid [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemsSource" [UseVirtuallization]="IsUsingVirtuallization">
+                                                                                                    <logitude-edit-grid [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemsSource">
 
 
 
-                                                                                                        <log-column [width]="'195'" [header]="'QuoteTemplate.S.EnglishLabel' | TextCodeTranslationPipe">
+                                                                                                        <log-column [width]="'195'"  [header]="'QuoteTemplate.S.EnglishLabel' | TextCodeTranslationPipe" >
+                                                                                                            <log-cell-template template="let item" #logcelltemplate>
 
+                                                                                                                <table>
+                                                                                                                    <tr>
 
-                                                                                                            <ng-template let-item>
-                                                                                                                <log-cell-template #logcelltemplate>
+                                                                                                                        <td>
+                                                                                                                            <div [style.width]="item.IsShowRestoreOriginalEnglishName ? '165':'195'" *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming">
+                                                                                                                                {{item.EnglishName}}
+                                                                                                                            </div>
+                                                                                                                            <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                                                                                    <table>
-                                                                                                                        <tr>
-
-                                                                                                                            <td>
-                                                                                                                                <div [style.width]="item.IsShowRestoreOriginalEnglishName ? '165':'195'" *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming">
-                                                                                                                                    {{item.EnglishName}}
-                                                                                                                                </div>
-                                                                                                                                <div *ngIf="logcelltemplate.IsEditMode">
-
-                                                                                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'EnglishName'" [Text]="item.EnglishName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
-                                                                                                                                </div>
-                                                                                                                            </td>
+                                                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'EnglishName'" [Text]="item.EnglishName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
+                                                                                                                            </div>
+                                                                                                                        </td>
 
 
 
 
-                                                                                                                            <td *ngIf="item.IsShowRestoreOriginalEnglishName" (click)="item.RestoreEnglishName(item)" style="width:20px;height:20px;vertical-align:central">
-                                                                                                                                <div style="vertical-align:central;width:20px;height:20px">
-                                                                                                                                    <img class="CenterCenter" [attr.title]="logcelltemplate.IsDisplayMode ?  item.ToolTipEnglishNameMessage:''" style="width:14px;height:15px" [attr.src]="logcelltemplate.IsEditMode ? './Images/WhiteImage.png':'./Images/Buttons/Edit.over.png'" (click)="item.RestoreEnglishName(item)" *ngIf="item.IsShowRestoreOriginalEnglishName" />
+                                                                                                                        <td *ngIf="item.IsShowRestoreOriginalEnglishName" (click)="item.RestoreEnglishName(item)" style="width:20px;height:20px;vertical-align:central">
+                                                                                                                            <div style="vertical-align:central;width:20px;height:20px">
+                                                                                                                                <img class="CenterCenter" [attr.title]="logcelltemplate.IsDisplayMode ?  item.ToolTipEnglishNameMessage:''" style="width:14px;height:15px" [attr.src]="logcelltemplate.IsEditMode ? './Images/WhiteImage.png':'./Images/Buttons/Edit.over.png'" (click)="item.RestoreEnglishName(item)" *ngIf="item.IsShowRestoreOriginalEnglishName" />
 
-                                                                                                                                </div>
+                                                                                                                            </div>
 
 
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                    </table>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </table>
 
 
 
 
 
 
-                                                                                                                </log-cell-template>
-                                                                                                            </ng-template>
+                                                                                                            </log-cell-template>
                                                                                                         </log-column>
-                                                                                                        
+
 
 
                                                                                                         <log-column [width]="'195'" [header]="'QuoteTemplate.S.LocalLabel' | TextCodeTranslationPipe">
-
-                                                                                                            <ng-template let-item>
-                                                                                                                <log-cell-template #logcelltemplate>
+                                                                                                            <log-cell-template template="let item" #logcelltemplate>
 
 
-                                                                                                                    <table>
-                                                                                                                        <tr>
+                                                                                                                <table>
+                                                                                                                    <tr>
 
-                                                                                                                            <td>
-                                                                                                                                <div [style.width]="item.IsShowRestoreOriginalLocalName ?  '165':'195'" *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming">
-                                                                                                                                    {{item.LocalName}}
-                                                                                                                                </div>
-                                                                                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                                                                        <td>
+                                                                                                                            <div [style.width]="item.IsShowRestoreOriginalLocalName ?  '165':'195'" *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming">
+                                                                                                                                {{item.LocalName}}
+                                                                                                                            </div>
+                                                                                                                            <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                                                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalName'" [Text]="item.LocalName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
-                                                                                                                                </div>
-                                                                                                                            </td>
+                                                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalName'" [Text]="item.LocalName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
+                                                                                                                            </div>
+                                                                                                                        </td>
 
 
 
 
-                                                                                                                            <td *ngIf="item.IsShowRestoreOriginalLocalName" (click)="item.RestoreLocalName(item)" style="width:20px;height:20px;vertical-align:central">
-                                                                                                                                <div style="vertical-align:central;width:20px;height:20px">
-                                                                                                                                    <img class="CenterCenter" [attr.title]="logcelltemplate.IsDisplayMode ?  item.ToolTipLocalNameMessage:''" style="width:14px;height:15px" [attr.src]="logcelltemplate.IsEditMode ? './Images/WhiteImage.png':'./Images/Buttons/Edit.over.png'" (click)="item.RestoreLocalName(item)" *ngIf="item.IsShowRestoreOriginalLocalName" />
+                                                                                                                        <td *ngIf="item.IsShowRestoreOriginalLocalName" (click)="item.RestoreLocalName(item)" style="width:20px;height:20px;vertical-align:central">
+                                                                                                                            <div style="vertical-align:central;width:20px;height:20px">
+                                                                                                                                <img class="CenterCenter" [attr.title]="logcelltemplate.IsDisplayMode ?  item.ToolTipLocalNameMessage:''" style="width:14px;height:15px" [attr.src]="logcelltemplate.IsEditMode ? './Images/WhiteImage.png':'./Images/Buttons/Edit.over.png'" (click)="item.RestoreLocalName(item)" *ngIf="item.IsShowRestoreOriginalLocalName" />
 
-                                                                                                                                </div>
-
-
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                    </table>
+                                                                                                                            </div>
 
 
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </table>
 
 
-                                                                                                                </log-cell-template>
-                                                                                                            </ng-template>
 
+
+                                                                                                            </log-cell-template>
                                                                                                         </log-column>
+
                                                                                                     </logitude-edit-grid>
                                                                                                 </div>
                                                                                             </td>
@@ -374,7 +342,7 @@
                                                 <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TitleTextDesignPM" [QuoteTemplateTextDesignPM]="TitleTextDesignPM"></TextDesignComponent></td> <td style="width:10px"></td></tr>
 
                                                 <tr style="height:15px"><td colspan="3"></td></tr>
-                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TableDesignPM" [QuoteTemplateTableDesignPM]="TableDesignPM" [QuoteTemplateSettingPM]="QuoteTemplateSettingPM"  [SectionType]="'Per'"></TextDesignComponent></td> <td style="width:10px"></td></tr>
+                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TableDesignPM" [QuoteTemplateTableDesignPM]="TableDesignPM"></TextDesignComponent></td> <td style="width:10px"></td></tr>
                                                 <!--<tr>
                                                     <td style="width:10px"></td>
                                                     <td style="width:10px">

@@ -14,11 +14,10 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {QuoteTemplateExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateExtendedPMService';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
     selector: 'NewQuoteTemplateComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewQuoteTemplateComponent.html',
 })
 
@@ -27,8 +26,6 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     public DataContext: NewQuoteTemplateComponent = this;
     EntityPM: QuoteTemplatePM;
     QuoteTemplateLists: QuoteTemplateList[] = [];
-    AllQuoteTemplateLists: QuoteTemplateList[] = [];
-
     SelectedQuoteTemplate: QuoteTemplateList;
     VisibilityRadioFromTenant: boolean = false;
     IsNewEntityCall: boolean = true;
@@ -41,14 +38,14 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     IsReady: boolean = false;
 
 
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
 
         var _entityResourceService: EntityResourceService = new EntityResourceService();
-        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe((response:any) => {
+        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
             this.IsReady = true;
             this.EntityPM = this.GetNewInstance();
             this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
@@ -62,7 +59,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
   
         });
 
-        ServiceLocator.SendTotangoUserActivity("Quotation", "Create Quote Template");
+
         
     }
 
@@ -78,33 +75,9 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
         newEntity.CreatedByUserId = SessionLocator.LoggedUserId;
         newEntity.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         newEntity.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-        newEntity.TemplateTypeCode = "A";
         newEntity.IsTemplate = true;
         return newEntity;
     }
-
-
-
-    private templateTypeCode: string;
-    public get TemplateTypeCode() {
-        if (this.EntityPM) {
-             this.templateTypeCode = this.EntityPM.TemplateTypeCode;;
-        }
-        return this.templateTypeCode;
-    }
-    public set TemplateTypeCode(newValue: string) {
-        if (this.templateTypeCode != newValue) {
-            if (this.EntityPM) {
-                this.EntityPM.TemplateTypeCode = newValue;
-                if (this.AllQuoteTemplateLists) {
-                    this.QuoteTemplateLists = this.AllQuoteTemplateLists.filter(d => d.TemplateTypeCode == this.EntityPM.TemplateTypeCode);
-                }
-            }
-        }
-    }
-
-
-
 
     SetWindowArgs(args: any) {
 
@@ -148,12 +121,12 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     LoadQuoteTemplateList() {
         this.QuoteTemplateLists = [];
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType).subscribe((res:any) => {
+        this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType).subscribe(res => {
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
-                this.AllQuoteTemplateLists = pmResponse.Result;
-                this.QuoteTemplateLists = this.AllQuoteTemplateLists.filter(d => d.TemplateTypeCode == this.EntityPM.TemplateTypeCode);
+       
+                this.QuoteTemplateLists = pmResponse.Result;
             }
          
         });
@@ -169,7 +142,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList.push("Name field is required");
         }
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.TemplateTypeCode)) {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.TemplateTypeCode) && this.AddType == "New") {
             this.ValidationErrorsList.push("Please Select QuoteTemplate");
         }
 
@@ -190,7 +163,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
     CreateNewQuoteTemplate() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-        this.quoteTemplateExtendedPMService.insert(this.EntityPM).subscribe((res:any) => {
+        this.quoteTemplateExtendedPMService.insert(this.EntityPM).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.EntityPM = pmResponse.Result;
@@ -215,7 +188,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     CopyQuoteTemplatePM() {
      
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-        this.quoteTemplateExtendedPMService.GetCopyQuoteTemplate(this.SelectedQuoteTemplate.Id, this.EntityPM.Name, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe((res:any) => {
+        this.quoteTemplateExtendedPMService.GetCopyQuoteTemplate(this.SelectedQuoteTemplate.Id, this.EntityPM.Name, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe(res => {
            
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -260,7 +233,6 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        this.CurrentSession.CurrentWindow.Close(this.EntityPM.Id);
-
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

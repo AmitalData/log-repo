@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data;
@@ -199,9 +199,9 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.AWBCarrierTarrifReference).HasColumnName("AWBCarrierTarrifReference").HasMaxLength(25).IsUnicode(false);
 
-            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(1024).IsUnicode(true);
+            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(512).IsUnicode(false);
 
-            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.SpecialServicesRequest).HasColumnName("SpecialServicesRequest").HasMaxLength(250).IsUnicode(false);
 
@@ -268,7 +268,7 @@ namespace Logitude.BookingLib.Data.EntityMapping
 
             this.Property(t => t.DangerousFlashPoint).HasColumnName("DangerousFlashPoint").HasMaxLength(8).IsUnicode(false);
 
-            this.Property(t => t.DangerousMaterialDescription).HasColumnName("DangerousMaterialDescription").HasMaxLength(200).IsUnicode(true);
+            this.Property(t => t.DangerousMaterialDescription).HasColumnName("DangerousMaterialDescription").HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.MainHarmonize).HasColumnName("MainHarmonize").HasMaxLength(9).IsUnicode(false);
 

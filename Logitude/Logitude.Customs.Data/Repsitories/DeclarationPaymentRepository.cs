@@ -17,23 +17,11 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<DeclarationPayment> GetMulti(EntityKeyFields entityKeys)
         {
-
-            DeclarationKeys declarationKeys = entityKeys as DeclarationKeys;
-
-            return (from a in context.DeclarationPayments
-                    where a.DeclarationId == declarationKeys.Id
-                    select a).ToList();
+            
+			throw new NotImplementedException();
         }
 
-        public int GetAutomaticPayment(string declarationid)
-        {
-            var q = this.context.DeclarationPayments
-                .Where(r => r.DeclarationId == declarationid)
-                .Select(r => r.AutomaticPayment);
-
-            return q.FirstOrDefault();
-        }
-    }
+   }
 
 }
    

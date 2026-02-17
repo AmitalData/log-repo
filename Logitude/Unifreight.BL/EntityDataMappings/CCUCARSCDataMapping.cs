@@ -27,9 +27,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.BUYTAX = entityPM.BUYTAX;
             entityPOCO.VATRESHIMON = entityPM.VATRESHIMON;
             entityPOCO.EXEMPTTYPE = entityPM.EXEMPTTYPE;
-            entityPOCO.TENANT = entityPM.Tenant;
-            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
-            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
         public void POCOToPM(CCUCARSCPM entityPM, CCUCARSC entityPOCO)
@@ -47,10 +44,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.BUYTAX = entityPOCO.BUYTAX;
             entityPM.VATRESHIMON = entityPOCO.VATRESHIMON;
             entityPM.EXEMPTTYPE = entityPOCO.EXEMPTTYPE;
-            entityPM.Tenant = entityPOCO.TENANT != null ? (int)entityPOCO.TENANT : 0;
-            entityPM.IS_SYNCH = entityPOCO.IS_SYNCH != null ? (bool)entityPOCO.IS_SYNCH : false;
-            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT != null ? entityPOCO.LAST_UPDATE_DT : DateTime.Now;
-
         }
 
         public void CustomPMToPOCO(CCUCARSCPM entityPM, CCUCARSC entityPOCO)

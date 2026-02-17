@@ -13,7 +13,7 @@ import {GetStackWindowArgs} from '../../../../Common/Args';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FBLStackSelectionComponent.html',
 })
 

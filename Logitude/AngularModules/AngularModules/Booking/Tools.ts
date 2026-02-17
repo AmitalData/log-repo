@@ -1,4 +1,4 @@
-import {BookingPM} from './EntityPMs/BookingPM';
+﻿import {BookingPM} from './EntityPMs/BookingPM';
 import {BookingPackagePM} from './EntityPMs/BookingPackagePM';
 import {ShipmentPM} from '../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPackagePM} from '../Shipment/EntityPMs/ShipmentPackagePM';
@@ -299,7 +299,8 @@ export class BookingTool {
             newItem.Tare = item.Tare;
             newItem.VolumetricWeight = item.VolumetricWeight;
             newItem.UnNumber = item.UnNumber;
-            newItem.ClassNumber = item.ClassNumber;            
+            newItem.ClassNumber = item.ClassNumber;
+            newItem.Temperature = item.Temperature;
             newItem.Ventilation = item.Ventilation;
             newItem.SOC = item.SOC;
             newItem.MarksAndNumbers = item.MarksAndNumbers;
@@ -314,10 +315,6 @@ export class BookingTool {
             //    PackageTypeList list = PackageTypeDataProvider.GetCachedList<PackageTypeList>().Where(r => r.Id == item.PackageTypeId).FirstOrDefault();
             //if (list != null) {
             //    newPackagePM.PackageTypeName = list.EnglishName;
-
-            if (item.Temperature) {
-                newItem.Temperature = "" + item.Temperature;
-            }
 
             shipmentPM.ShipmentPackages.push(newItem);
         });

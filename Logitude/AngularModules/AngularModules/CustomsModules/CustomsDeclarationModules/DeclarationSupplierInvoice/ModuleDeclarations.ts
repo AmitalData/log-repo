@@ -6,7 +6,6 @@ import { SupplierInvoiceItemCertificatesComponent } from './Components/SupplierI
 import { DeclarationSupplierInvoiceTabComponent } from './Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent';
 import { VendorExtendedSearchComponent } from './Components/SupplierInvoices/VendorExtendedSearchComponent';
 import { UpdateProcessCodeComponent } from './Components/SupplierInvoices/UpdateProcessCodeComponent';
-import { UpdateSupplierInvoiceGeneralFieldComponent } from './Components/SupplierInvoices/UpdateSupplierInvoiceGeneralFieldComponent';
 import { AddEditSupplierInvoiceComponent } from './Components/SupplierInvoices/AddEditSupplierInvoiceComponent';
 import { SupplierInvoiceGeneralTabComponent } from './Components/SupplierInvoices/SupplierInvoiceGeneralTabComponent';
 import { SupplierInvoiceMoreTabComponent } from './Components/SupplierInvoices/SupplierInvoiceMoreTabComponent';
@@ -15,70 +14,56 @@ import { MultiCertificateUpdateComponent } from './Components/SupplierInvoices/M
 import { SupplierInvoiceItemVehicleComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemVehicleComponent';
 import { VehiclesSearchComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/VehiclesSearchComponent';
 import { AddEditActualLinesComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/AddEditActualLinesComponent';
-import { ExporterInvoiceComponent } from './Components/SupplierInvoices/ExporterInvoiceComponent';
-import { ExporterInvoiceItemComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/ExporterInvoiceItemComponent';
-import { MultiUpdateComponent } from './Components/SupplierInvoices/MultiUpdateComponent';
-import { PartnersItemsDescreptionSelectionComponent } from './Components/SupplierInvoices/PartnersItemsDescreptionSelectionComponent';
 
 
 
 
 
 export const Components =
-    [
+  [
+    
+    EditSupplierInvoiceItem,
+    DeclarationSupplierInvoiceTabComponent,
+    SupplierInvoiceItemCertificatesComponent,
+    VendorExtendedSearchComponent,
+    UpdateProcessCodeComponent,
+    AddEditSupplierInvoiceComponent,
+    SupplierInvoiceGeneralTabComponent,
+    SupplierInvoiceMoreTabComponent,
+    PartnersItemsSelectionComponent,
+    MultiCertificateUpdateComponent,
+    SupplierInvoiceItemVehicleComponent,
+    VehiclesSearchComponent,
+    AddEditActualLinesComponent,
 
-        EditSupplierInvoiceItem,
-        DeclarationSupplierInvoiceTabComponent,
-        SupplierInvoiceItemCertificatesComponent,
-        VendorExtendedSearchComponent,
-        UpdateProcessCodeComponent,
-        UpdateSupplierInvoiceGeneralFieldComponent,
-        AddEditSupplierInvoiceComponent,
-        SupplierInvoiceGeneralTabComponent,
-        SupplierInvoiceMoreTabComponent,
-        PartnersItemsSelectionComponent,
-        MultiCertificateUpdateComponent,
-        SupplierInvoiceItemVehicleComponent,
-        VehiclesSearchComponent,
-        AddEditActualLinesComponent,
-        ExporterInvoiceComponent,
-        ExporterInvoiceItemComponent,
-        MultiUpdateComponent,
-        PartnersItemsDescreptionSelectionComponent
-    ];
+  ];
 
 export class ModuleDeclarations {
-    public static Get(name: string) {
+  public static Get(name: string) {
 
-        var myResult: any = null;
+    var myResult: any = null;
 
-        switch (name) {
-            case "DeclarationSupplierInvoiceTabComponent": { myResult = DeclarationSupplierInvoiceTabComponent; break; }
-            case "EditSupplierInvoiceItem": { myResult = EditSupplierInvoiceItem; break; }
-            case "SupplierInvoiceItemCertificatesComponent": { myResult = SupplierInvoiceItemCertificatesComponent; break; }
-            case "VendorExtendedSearchComponent": { myResult = VendorExtendedSearchComponent; break; }
-            case "UpdateProcessCodeComponent": { myResult = UpdateProcessCodeComponent; break; }
-            case "UpdateSupplierInvoiceGeneralFieldComponent": { myResult = UpdateSupplierInvoiceGeneralFieldComponent; break; }
-            case "AddEditSupplierInvoiceComponent": { myResult = AddEditSupplierInvoiceComponent; break; }
-            case "SupplierInvoiceGeneralTabComponent": { myResult = SupplierInvoiceGeneralTabComponent; break; }
-            case "SupplierInvoiceMoreTabComponent": { myResult = SupplierInvoiceMoreTabComponent; break; }
-            case "PartnersItemsSelectionComponent": { myResult = PartnersItemsSelectionComponent; break; }
-            case "SupplierInvoiceItemVehicleComponent": {
-                myResult = SupplierInvoiceItemVehicleComponent; break;
-            }
-            case "VehiclesSearchComponent": {
-                myResult = VehiclesSearchComponent; break;
-            }
+    switch (name) {
+      case "DeclarationSupplierInvoiceTabComponent": { myResult = DeclarationSupplierInvoiceTabComponent; break; }
+      case "EditSupplierInvoiceItem": { myResult = EditSupplierInvoiceItem; break; }
+      case "SupplierInvoiceItemCertificatesComponent": { myResult = SupplierInvoiceItemCertificatesComponent; break; }
+      case "VendorExtendedSearchComponent": { myResult = VendorExtendedSearchComponent; break; }
+      case "UpdateProcessCodeComponent": { myResult = UpdateProcessCodeComponent; break; }
+      case "AddEditSupplierInvoiceComponent": { myResult = AddEditSupplierInvoiceComponent; break; }
+      case "SupplierInvoiceGeneralTabComponent": { myResult = SupplierInvoiceGeneralTabComponent; break; }
+      case "SupplierInvoiceMoreTabComponent": { myResult = SupplierInvoiceMoreTabComponent; break; }
+      case "PartnersItemsSelectionComponent": { myResult = PartnersItemsSelectionComponent; break; }
+      case "SupplierInvoiceItemVehicleComponent": {
+        myResult = SupplierInvoiceItemVehicleComponent; break;
+      }
+      case "VehiclesSearchComponent": {
+        myResult = VehiclesSearchComponent; break;
+      }
 
-            case "AddEditActualLinesComponent": { myResult = AddEditActualLinesComponent; break; }
-            case "MultiCertificateUpdateComponent": { myResult = MultiCertificateUpdateComponent; break; }
-            case "ExporterInvoiceComponent": { myResult = ExporterInvoiceComponent; break; }
-            case "ExporterInvoiceItemComponent": { myResult = ExporterInvoiceItemComponent; break; }
-            case "MultiUpdateComponent": { myResult = MultiUpdateComponent; break; }
-            case "PartnersItemsDescreptionSelectionComponent": { myResult = PartnersItemsDescreptionSelectionComponent; break; }
-
-        }
-
-        return myResult;
+      case "AddEditActualLinesComponent": { myResult = AddEditActualLinesComponent; break; }
+      case "MultiCertificateUpdateComponent": { myResult = MultiCertificateUpdateComponent; break; }
     }
+
+    return myResult;
+  }
 }

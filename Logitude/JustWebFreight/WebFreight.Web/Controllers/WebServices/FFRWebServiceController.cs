@@ -1,5 +1,5 @@
 ﻿using Logitude.XSD;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -32,10 +32,9 @@ namespace WebFreight.Web.Controllers.WebServices
                     string loggedUserEmail = authToken.Email;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.AuthenticationOnTenant(myTenant);
 
                     FFRWebService myService = new FFRWebService();
-                    FFRResult myResult = myService.SendFFR(myBookingId, tenant, myRecipient, isCancellationSent);
+                    FFRResult myResult = myService.SendFFR(myBookingId, myTenant, myRecipient, isCancellationSent);
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);

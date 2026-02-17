@@ -5,7 +5,7 @@ import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ConsoleShipmentPM} from '../../../../Shipment/EntityPMs/ConsoleShipmentPM';
 import {ShipmentList} from '../../../../Shipment/EntityLists/ShipmentList';
 import {ShipmentListService} from '../../../../Shipment/Services/StandardLists/ShipmentListService';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../Shipment/Tools';
@@ -14,12 +14,9 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
-import { ShipmentSubTypeListService } from '../../../../Shipment/services/standardlists/shipmentsubtypelistservice';
-import { ShipmentSubTypeList } from '../../../../Shipment/EntityLists/ShipmentSubTypeList';
-
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ShipmentsTabComponent.html',
 })
   // islam: merge test
@@ -48,18 +45,12 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         this.InitializeComponent();
         this.SetUIProperties();
         this.LoadAllHouses();
-        this.LoadShipmentSubTypes();
         this.Listen();
     }
-    
+
+
     Listen() {
         if (this.entityArgs.EditComponent) {
-            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-                if (s == "RefreshShipmentsTabFromAWBWizard") {
-                    this.LoadAllHouses();
-                }
-            });
-
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
@@ -93,24 +84,17 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                 
 
                     this.UpdateFiltersFields();
                     this.SetUIProperties();
 
                     if (this.isLoadHousesRequested) {
                         this.LoadAllHouses();
-                        this.CurrentSession.SessionEvent.emit("RefreshConnections");
                     }
                 }
 
                 this.isLoadHousesRequested = false;
-            });
-
-            this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
-                if (tabCode == "SHCO") {
-                    this.BuildSummary();
-                }
             });
         }
 
@@ -119,39 +103,19 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
                 this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
                 this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
 
-                if (this.isLoadHousesRequested) {
-                    this.isLoadHousesRequested = false;
-                    this.CurrentSession.SessionEvent.emit("RefreshConnections");
-                }
-
                 this.UpdateFiltersFields();
                 this.LoadAllHouses();
             }
         });
     }
-    
+
     private SessionEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
-    private TabSelectedEvent: any = null;
+    private LoadCompletedEvent: any = null; 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
-        AppTool.KillEventEmitter(this.TabSelectedEvent);
-    }
-
-    private allShipmentSubTypes: ShipmentSubTypeList[] = [];
-    LoadShipmentSubTypes() {
-        this.allShipmentSubTypes = [];
-
-        var myShipmentSubTypeListService: ShipmentSubTypeListService = new ShipmentSubTypeListService();
-        myShipmentSubTypeListService.getAll().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.allShipmentSubTypes = myResponse.Result;
-                this.allShipmentSubTypes = this.allShipmentSubTypes.filter(d => !d.Inactive);
-            }
-        });
     }
 
     public FromLabel: string = null;
@@ -436,45 +400,11 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     public SummaryGrossWeight: number = 0;
     public SummaryVolumetricWeight: number = 0;
     public SummaryChargeableWeight: number = 0;
-
-    public SummaryGrossWeightUnitCode: string = "KG";
-    public SummaryVolumetricWeightUnitCode: string = "KG";
-    public SummaryChargeableWeightUnitCode: string = "KG";
     private BuildSummary() {
         this.SummaryQuantity = ArrayTool.Sum(this.ItemsSource1, "Quantity");
-        this.ComputeSummaryGrossWeight();
-        this.ComputeSummaryChargeableWeight();
-        this.ComputeSummaryVolumetricWeight();
-    }
-
-    ComputeSummaryGrossWeight() {
-        this.SummaryGrossWeightUnitCode = this.EntityPM.GrossWeightUnitCode;
-        this.SummaryGrossWeight = 0;
-        this.ItemsSource1.forEach(item => {
-            var grossWeight = item.GrossWeight;
-            var grossWeightUnit = item.GrossWeightUnitCode;
-            this.SummaryGrossWeight = this.SummaryGrossWeight + AppTool.GetWeightFromWeight(grossWeightUnit, this.EntityPM.GrossWeightUnitCode, grossWeight);
-        });
-    }
-
-    ComputeSummaryChargeableWeight() {
-        this.SummaryVolumetricWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
-        this.SummaryChargeableWeight = 0;
-        this.ItemsSource1.forEach(item => {
-            var chargeableWeight = item.ChargeableWeight;
-            var chargeableWeightUnit = item.ChargeableWeightUnitCode;
-            this.SummaryChargeableWeight = this.SummaryChargeableWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.ChargeableWeightUnitCode, chargeableWeight);
-        });
-    }
-
-    ComputeSummaryVolumetricWeight() {
-        this.SummaryChargeableWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
-        this.SummaryVolumetricWeight = 0;
-        this.ItemsSource1.forEach(item => {
-            var volumetricWeight = item.VolumetricWeight;
-            var chargeableWeightUnit = item.ChargeableWeightUnitCode;
-            this.SummaryVolumetricWeight = this.SummaryVolumetricWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.ChargeableWeightUnitCode, volumetricWeight);
-        });
+        this.SummaryGrossWeight = ArrayTool.Sum(this.ItemsSource1, "GrossWeight");
+        this.SummaryChargeableWeight = ArrayTool.Sum(this.ItemsSource1, "ChargeableWeight");
+        this.SummaryVolumetricWeight = ArrayTool.Sum(this.ItemsSource1, "VolumetricWeight");
     }
 
     Save() {
@@ -510,31 +440,14 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         logWindow.ComponentLoaded.subscribe(cmp => {
 
             var myShipmentTypeId = this.EntityPM.ShipmentTypeId;
-            var myShipmentSubTypeId = this.EntityPM.ShipmentSubTypeId;
-            var subTypeCode: string = null;
-
             if (this.EntityPM.ShipmentTypeName) {
                 if (this.EntityPM.ShipmentTypeName.toLowerCase().indexOf("my groupage") > -1) {
                     if (this.EntityPM.TransportModeId == "O") {
                         myShipmentTypeId = "LCLD"
-                        subTypeCode = "LCL"; 
                     }
 
                     else {
-                        myShipmentTypeId = "LTL";
-                        subTypeCode = "LTL"; 
-                    }
-
-                    var subType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.Code == subTypeCode)[0];
-                    if (subType) {
-                        myShipmentSubTypeId = subType.Id;
-                    }
-
-                    else {
-                        var defaultSubType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == myShipmentTypeId)[0];
-                        if (defaultSubType) {
-                            myShipmentSubTypeId = defaultSubType.Id;
-                        }
+                        myShipmentTypeId = "LTL"
                     }
                 }
             }
@@ -548,9 +461,6 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             cmp.EntityPM.BranchId = this.EntityPM.BranchId;
             cmp.EntityPM.DepartmentId = this.EntityPM.DepartmentId;
             cmp.EntityPM.MasterShipmentDataId = this.EntityPM.MasterShipmentDataId;
-            cmp.EntityPM.CutoffDate = this.EntityPM.CutoffDate;
-            cmp.EntityPM.SCI = this.EntityPM.SCI;
-            cmp.EntityPM.ShipmentSubTypeId = myShipmentSubTypeId;
 
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -666,7 +576,7 @@ class HAWBItem {
             this.SetIsMatched();
             this.SetCellNotes();
 
-            if (AppTool.IsFCLEntity(item.TransportModeId, item.ShipmentTypeId)) {
+            if (fatherComponent.IsFCLEntity) {
                 this.Quantity = item.NumberOfContainers;                
             }
 
@@ -681,7 +591,6 @@ class HAWBItem {
     get ShipmentType() { return this.item.ShipmentType; }
     get CreateDateTime() { return this.item.CreateDateTime; }
     get StatusName() { return this.item.StatusName; }
-    get ExactStatusName() { return this.item.ExactStatusName; }
     get BranchName() { return this.item.BranchName; }
     get House() { return this.item.House; }
     get CustomerName() { return this.item.CustomerName; }
@@ -690,14 +599,12 @@ class HAWBItem {
     get GrossWeight() { return this.item.GrossWeight; }
     get VolumetricWeight() { return this.item.VolumetricWeight; }
     get ChargeableWeight() { return this.item.ChargeableWeight; }    
-    get GrossWeightUnitCode() { return this.item.GrossWeightUnitCode; }
-    get ChargeableWeightUnitCode() { return this.item.ChargeableWeightUnitCode; }
 
     get JobNumber() { return (this.item.ShipmentNumber == this.item.MasterShipmentNumber) ? "" : this.item.MasterShipmentNumber;; }
     public CellNotes: string = null;
 
     private SetIsMatched() {
-        if (AppTool.IsNullOrEmpty(this.item.MasterShipmentDataId) && this.item.FromPortId == this.fatherComponent.EntityPM.MainCarriageFromPortId && this.item.ToPortId == this.fatherComponent.EntityPM.MainCarriageFinalDestinationPortId ) {
+        if (AppTool.IsNullOrEmpty(this.item.MasterShipmentDataId) && this.item.FromPortId == this.fatherComponent.EntityPM.MainCarriageFromPortId && this.item.ToPortId == this.fatherComponent.EntityPM.MainCarriageFinalDestinationPortId && this.item.BranchId == this.fatherComponent.EntityPM.BranchId) {
             this.IsMatched = true;
         }
     }    
@@ -737,46 +644,25 @@ class HAWBItem {
     }
 
     private AddRemove() {
+
         if (this.IsChecked) {
-            this.AddConsoleShipment();            
+            var itemPM = this.fatherComponent.EntityPM.ShipmentConsoleShipments.filter(f => f.Id == this.Id)[0];
+            if (itemPM == null) {
+                itemPM = new ConsoleShipmentPM(this.fatherComponent.EntityPM);
+                itemPM.Id = this.Id;
+                itemPM.ShipmentNumber = this.fatherComponent.EntityPM.ShipmentNumber;
+                itemPM.MasterShipmentDataId = this.fatherComponent.EntityPM.Id;
+                this.fatherComponent.EntityPM.AddConsoleShipment(itemPM);
+                this.fatherComponent.Save();
+            }
         }
 
         else {
-            this.RemoveConsoleShipment();           
-        }
-    }
-    private AddConsoleShipment() {
-        var itemPM = this.fatherComponent.EntityPM.ShipmentConsoleShipments.filter(f => f.Id == this.Id)[0];
-        if (itemPM == null) {
-            itemPM = new ConsoleShipmentPM(this.fatherComponent.EntityPM);
-            itemPM.Id = this.Id;
-            itemPM.ShipmentNumber = this.fatherComponent.EntityPM.ShipmentNumber;
-            itemPM.MasterShipmentDataId = this.fatherComponent.EntityPM.Id;
-            this.fatherComponent.EntityPM.AddConsoleShipment(itemPM);
-            this.fatherComponent.Save();
-        }
-    }
-    private RemoveConsoleShipment() {
-        var itemPM = this.fatherComponent.EntityPM.ShipmentConsoleShipments.filter(f => f.Id == this.Id)[0];
-        if (itemPM != null) {
-            if (!AppTool.IsNullOrEmpty(itemPM.PreForwardingFromPortId) || !AppTool.IsNullOrEmpty(itemPM.OnForwardingFromPortId)) {
-                this.ConfirmRemovingConsoleShipment(itemPM);
-            }
-
-            else {
-                this.fatherComponent.EntityPM.RemoveConsoleShipment(itemPM);
-                this.fatherComponent.Save();
-            }            
-        }
-    }
-    private ConfirmRemovingConsoleShipment(itemPM: ConsoleShipmentPM) {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Disconnecting this house will change Pre/ On Forwarding Ports, proceed ?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
+            var itemPM = this.fatherComponent.EntityPM.ShipmentConsoleShipments.filter(f => f.Id == this.Id)[0];
+            if (itemPM != null) {
                 this.fatherComponent.EntityPM.RemoveConsoleShipment(itemPM);
                 this.fatherComponent.Save();
             }
-        });
+        }
     }
 }

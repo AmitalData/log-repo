@@ -1,4 +1,4 @@
-<style>
+﻿<style>
         .InputDiv {
         width: 100%;
         vertical-align: top;
@@ -57,7 +57,7 @@
                 <td style="width:22px"></td>
                 <td>
               
-                    <div class="InputDiv" [attr.data-cy]="'MessageTxt'" style="max-height:unset;height:100%">
+                    <div class="InputDiv" style="max-height:unset;height:100%">
                         <textarea wrap="hard"
                                   (focus)="MessageInputFocus()"
                                   [(ngModel)]="MessageBody"
@@ -110,7 +110,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" [attr.data-cy]="'SendButton'" (click)="SaveButtonClick()">Send</button>
+                        <button class="RedButton" (click)="SaveButtonClick()">Send</button>
                     </td>
                 </tr>
             </table>

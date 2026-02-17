@@ -35,7 +35,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPOCOToPM(GLAccountWithholdingTaxPM entityPM, GLAccountWithholdingTax entityPOCO)
         {
-       
+            //throw new NotImplementedException();
         }
    }
 

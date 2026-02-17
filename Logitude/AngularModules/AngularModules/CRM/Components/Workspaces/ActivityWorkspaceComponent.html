@@ -74,7 +74,7 @@
 
                         <td style="width: 1px;">
 
-                            <!-- Salesman -->
+                            <!-- Salesmen -->
                             <table *ngIf="RecordsTypeFilterCode == 'S'">
                                 <tr>
                                     <td style="width:150px; min-width: 150px;">
@@ -151,19 +151,19 @@
                                         <div class="QueriesSection" *ngIf="IsQueryVisible_OpenGroup">
                                             <div>Open Activities</div>
                                             <div style="height:22px; width: 57px; position: absolute; top:0px; right:0px;">
-                                                <div id="{{'NEWACTIVITY' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                                <div id="{{'NEWACTIVITY' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                     <label>New</label>
                                                     <img src="./Images/ToggleIcon.png" />
                                                     <div class="ToggleButtonMenu" style="width: 80px;">
-                                                        <button id="{{'NEWTASK' | IdGeneratorAsyncPipe | async}}" (click)="NewActivityClicked('TS')">Task</button>
-                                                        <button id="{{'NEWPHONECALL' | IdGeneratorAsyncPipe | async}}" (click)="NewActivityClicked('CL')">Phone Call</button>
-                                                        <button id="{{'NEWAPPOINTMENT' | IdGeneratorAsyncPipe | async}}" (click)="NewActivityClicked('AP')">Appointment</button>
+                                                        <button id="{{'NEWTASK' | IdGeneratorPipe}}" (click)="NewActivityClicked('TS')">Task</button>
+                                                        <button id="{{'NEWPHONECALL' | IdGeneratorPipe}}" (click)="NewActivityClicked('CL')">Phone Call</button>
+                                                        <button id="{{'NEWAPPOINTMENT' | IdGeneratorPipe}}" (click)="NewActivityClicked('AP')">Appointment</button>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div>
-                                                <p *ngIf="IsQueryVisible_MyOpen" [attr.data-cy]="'MyOpenActivities'" class="QueryLink" (click)="ViewActivityQuery('Open:My')">My Open Activities ({{MyOpenCount}})</p>
+                                                <p *ngIf="IsQueryVisible_MyOpen" class="QueryLink" (click)="ViewActivityQuery('Open:My')">My Open Activities ({{MyOpenCount}})</p>
                                                 <p *ngIf="IsQueryVisible_AllOpen" class="QueryLink" (click)="ViewActivityQuery('Open:All')">All Open Activities ({{AllOpenCount}})</p>
                                             </div>
                                         </div>
@@ -172,7 +172,7 @@
                                         <div class="QueriesSection" *ngIf="IsQueryVisible_ClosedGroup">
                                             <div>Closed Activities</div>
                                             <div>
-                                                <p *ngIf="IsQueryVisible_MyClosed" [attr.data-cy]="'MyClosedActivities'" class="QueryLink" (click)="ViewActivityQuery('Closed:My')">My Closed Activities</p>
+                                                <p *ngIf="IsQueryVisible_MyClosed" class="QueryLink" (click)="ViewActivityQuery('Closed:My')">My Closed Activities</p>
                                                 <p *ngIf="IsQueryVisible_AllClosed" class="QueryLink" (click)="ViewActivityQuery('Closed:All')">All Closed Activities</p>
                                                 <p *ngIf="IsQueryVisible_Meetings" class="QueryLink" (click)="ViewActivityQuery('Meetings')">Meetings Summary</p>
                                             </div>
@@ -183,7 +183,7 @@
                                             <div>Others</div>
                                             <div>
                                                 <p *ngIf="IsQueryVisible_All" class="QueryLink" (click)="ViewActivityQuery('All')">All Activities</p>
-                                                <p *ngIf="IsQueryVisible_Cancelled" [attr.data-cy]="'CancelledActivities'" class="QueryLink" (click)="ViewActivityQuery('Cancelled')">Cancelled Activities</p>
+                                                <p *ngIf="IsQueryVisible_Cancelled" class="QueryLink" (click)="ViewActivityQuery('Cancelled')">Cancelled Activities</p>
                                             </div>
                                         </div>
 
@@ -214,7 +214,7 @@
                                                 <SectionHead>{{UpcomingActivitiesCount}} Upcoming Activities</SectionHead>
                                                 <SectionBody>
                                                     <ul>
-                                                        <li class="RecentEntityItem" [attr.data-cy]="'ActivitiesRecentEntityItem'" style="position: relative;" *ngFor="let item of UpcomingActivitiesList">
+                                                        <li class="RecentEntityItem" style="position: relative;" *ngFor="let item of UpcomingActivitiesList">
                                                             <table (mousedown)="EditActivity(item.entityList)">
                                                                 <tr>
                                                                     <td style="width:5px; overflow: hidden;" rowspan="2" [title]="item.PriorityName" [ngStyle]="{background: item.PriorityCode | StringToColorPipe:'ActivityPriorityCode'}">
@@ -243,20 +243,20 @@
                                                                         <div></div>
                                                                     </td>
                                                                     <!--<td style="width:30px;" rowspan="2">
-                                            <span class="hyperlink" (click)="item.ViewConnectedEntity('OPP')" *ngIf="item.OpportunityId">
-                                                <img title="View Opportunity" class="RightCenter" style="width: 28px; height: 28px; cursor: pointer;" src="./Images/Opportunity.png" />
-                                            </span>
-                                        </td>-->
+                                                                        <span class="hyperlink" (click)="item.ViewConnectedEntity('OPP')" *ngIf="item.OpportunityId">
+                                                                            <img title="View Opportunity" class="RightCenter" style="width: 28px; height: 28px; cursor: pointer;" src="./Images/Opportunity.png" />
+                                                                        </span>
+                                                                    </td>-->
                                                                     <!--<td style="width:30px;" rowspan="2">
-                                            <span class="hyperlink" (click)="item.ViewConnectedEntity('CUS')" *ngIf="item.CustomerId">
-                                                <img title="View Customer" class="RightCenter" style="width: 25px; height: 25px; cursor: pointer;" src="./Images/Menu/Person.png" />
-                                            </span>
-                                        </td>-->
+                                                                        <span class="hyperlink" (click)="item.ViewConnectedEntity('CUS')" *ngIf="item.CustomerId">
+                                                                            <img title="View Customer" class="RightCenter" style="width: 25px; height: 25px; cursor: pointer;" src="./Images/Menu/Person.png" />
+                                                                        </span>
+                                                                    </td>-->
                                                                     <!--<td style="width:30px;" rowspan="2">
-                                            <span class="hyperlink" (click)="item.ViewConnectedEntity('QUT')" *ngIf="item.QuoteId">
-                                                <img title="View Quote" class="RightCenter" style="width: 25px; height: 25px; cursor: pointer;" src="./Images/Menu/Pen.png" />
-                                            </span>
-                                        </td>-->
+                                                                        <span class="hyperlink" (click)="item.ViewConnectedEntity('QUT')" *ngIf="item.QuoteId">
+                                                                            <img title="View Quote" class="RightCenter" style="width: 25px; height: 25px; cursor: pointer;" src="./Images/Menu/Pen.png" />
+                                                                        </span>
+                                                                    </td>-->
 
                                                                     <td rowspan="2">
                                                                         <div></div>

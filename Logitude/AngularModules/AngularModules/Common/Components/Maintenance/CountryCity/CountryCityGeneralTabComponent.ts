@@ -8,7 +8,7 @@ import {StateList} from '../../../EntityLists/StateList';
 import {CountryList} from '../../../EntityLists/CountryList';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CountryCityGeneralTabComponent.html',
 })
 

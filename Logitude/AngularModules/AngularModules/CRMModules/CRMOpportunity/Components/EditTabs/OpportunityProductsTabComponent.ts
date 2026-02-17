@@ -26,7 +26,7 @@ import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
 
 @Component({
     selector: 'OpportunityProductsTabComponent', 
-    
+    moduleId: module.id,
     templateUrl: './OpportunityProductsTabComponent.html',
 })
 
@@ -55,7 +55,7 @@ export class OpportunityProductsTabComponent extends BaseComponent {
         this.IsShowActual = true;
 
         var currencyListService = new CurrencyListService();
-        currencyListService.getAllFromCache().subscribe((result:any) => {
+        currencyListService.getAllFromCache().subscribe(result => {
             var myCurrencyCode: string = "";
             var list: CurrencyList = result.Result.filter(d => d.Id == (SessionLocator.TenantPM.ProfitCurrencyId))[0];
             if (list != null) {
@@ -295,7 +295,7 @@ export class OpportunityProductsTabComponent extends BaseComponent {
         var list = [];
         if (!AppTool.IsNullOrEmpty(this.SelectedProductTypeCode)) {
             var partnersdomainService: PartnersDomainService = new PartnersDomainService();
-            partnersdomainService.GetCustomerProductHistoryActualData(this.EntityPM.CustomerId, this.SelectedProductTypeCode).subscribe((result:any) => {
+            partnersdomainService.GetCustomerProductHistoryActualData(this.EntityPM.CustomerId, this.SelectedProductTypeCode).subscribe(result => {
                 result.Result.sort((a, b) => { return ((a.Year === b.Year) ? ((a.Month === b.Month) ? 0 : (a.Month < b.Month) ? -1 : 1) : (a.Year < b.Year ? -1 : 1)) }).reverse().forEach(item => {
                     list.push(new ProductHistoryArgs(item));
                 });
@@ -351,7 +351,7 @@ export class ProductData extends BaseComponent {
             this.isActual = true;
         }
 
-        this.isChecked = trigger.EntityPM.OpportunityProducts.indexOf(this.entityPM) != -1 ? true : false;
+        this.IsChecked = trigger.EntityPM.OpportunityProducts.indexOf(this.entityPM) != -1 ? true : false;
         this.InitializeComponent();
         this.GetEstimatedVisibility();
         this.InitializeRightToLeft();
@@ -940,13 +940,32 @@ export class ProductData extends BaseComponent {
         this.NotesFlowDirection = myResult;
     }
 
+    public NotesBackgroundAlignRight = "transparent";
+    private NotesBackgroundAlignLeft = "transparent";
+    private GetNotesBackgroundAlignRight() {
+        if (!AppTool.IsNullOrEmpty(this.NotesFlowDirection)) {
+            this.NotesBackgroundAlignRight = this.NotesFlowDirection == "rtl" ? "#FDD59D" : "transparent";
+        }
+    }
+    private GetNotesBackgroundAlignLeft() {
+        if (!AppTool.IsNullOrEmpty(this.NotesFlowDirection)) {
+            this.NotesBackgroundAlignLeft = this.NotesFlowDirection == "ltr" ? "#FDD59D" : "transparent";
+        }
+    }
+
     public AlignNotesLeftClicked() {
         this.entityPM.NotesRightToLeft = false;
         this.GetNotesFlowDirection();
+        this.RefreshNotesTextAlgimentVariables();
     }
     public AlignNotesRightClicked() {
         this.entityPM.NotesRightToLeft = true;
         this.GetNotesFlowDirection();
+        this.RefreshNotesTextAlgimentVariables();
+    }
+    public RefreshNotesTextAlgimentVariables() {
+        this.GetNotesBackgroundAlignLeft();
+        this.GetNotesBackgroundAlignRight();
     }
 
     public SetEnabledFields() {
@@ -966,7 +985,7 @@ export class ProductData extends BaseComponent {
         var windowTitle = "Edit Product";
         var proeductTypeListService: ProductTypeListService = new ProductTypeListService();
         this._entityResourceService.getEntityResourceByTableName("OpportunityProductLocation", 0).subscribe(p => {
-            proeductTypeListService.getAllFromCache().subscribe((result:any) => {
+            proeductTypeListService.getAllFromCache().subscribe(result => {
                 var list = result.Result.filter(d => d.Code == this.entityPM.OpportunityProductTypeCode)[0];
                 if (list != null)
                     windowTitle += ": " + list.Name;

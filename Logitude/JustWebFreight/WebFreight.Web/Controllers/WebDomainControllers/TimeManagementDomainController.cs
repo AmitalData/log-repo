@@ -14,10 +14,10 @@ using Logitude.TimeManagement.Data.EntityListQueryServices;
 using Logitude.TimeManagement.Data.EntityLists;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -35,11 +35,6 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Security;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.StorageService;
-using Microsoft.Practices.Unity;
-using Syncfusion.XlsIO;
-using System.Data;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -122,7 +117,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         foreach (TMEmployeeTimePM itemChanged in args.ItemsPM)
                         {
                             TMEmployeeTimePM itemPOCO = queryService.GetSingle(itemChanged.Id, true, false);
-                            if (itemPOCO != null && !(itemPOCO.LocationCode == itemChanged.LocationCode && itemPOCO.SprintId == itemChanged.SprintId && itemPOCO.ProjectId == itemChanged.ProjectId && itemPOCO.Description == itemChanged.Description && itemPOCO.WINumber == itemChanged.WINumber))
+                            if (itemPOCO != null && !(itemPOCO.SprintId == itemChanged.SprintId && itemPOCO.ProjectId == itemChanged.ProjectId && itemPOCO.Description == itemChanged.Description && itemPOCO.WINumber == itemChanged.WINumber))
                             {
                                 itemPOCO.ProjectId = itemChanged.ProjectId;
                                 itemPOCO.SprintId = itemChanged.SprintId;
@@ -779,7 +774,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                }, tenant);
+                });
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
@@ -789,73 +784,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-        //////////////////////////////////////////////////////////////////
-        /// //////////////////////////////////////////////////////////////////////
-        ///  //////////////////////////////////////////////////////////////////////
-        ///   //////////////////////////////////////////////////////////////////////
-
-        public HttpResponseMessage GetTMProjectsByBatchProject(string employeeUserId,string fromProject, string toProject, string fromDate, string toDate)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
-                employeeUserId = FixFilter(employeeUserId);
-                fromProject = FixFilter(fromProject);
-                toProject = FixFilter(toProject);
-                DateTime? fromDate_ = fromDate == "null" ? null : DateHelper.GetDate(fromDate);
-                DateTime? toDate_ = toDate == "null" ? null : DateHelper.GetDate(toDate);
-
-                
-
-                TMMBProjectDataArgs args = new TMMBProjectDataArgs() { EmployeeUserId = employeeUserId,FromProject = fromProject, ToProject =toProject, FromDate = fromDate_, ToDate = toDate_, Tenant = tenant };
-                var stringwriter = new System.IO.StringWriter();
-                var serializer = new XmlSerializer(typeof(TMMBProjectDataArgs));
-                serializer.Serialize(stringwriter, args);
-                string xmlParameters = stringwriter.ToString();
-
-                BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
-                {
-                    Subject = "Move Hours Between Projects",
-                    Tenant = tenant,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    ClassName = "WebFreight.Web.Helpers.APIHelpers.TMMBProjectsHelper,WebFreight.Web",
-                    CreateDate = DateTime.Now,
-                    PrametersXml = xmlParameters,
-                    StatusCode = "C",
-                };
-
-                IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
-                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                bteUpdateService.Update(taskExe, true);
-
-                // 2- Send to queue
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-                queueservice.Send(new Dictionary<string, string>()
-                {
-                    { "BatchTaskExecutionId", taskExe.Id },
-                    { "Tenant", tenant.ToString() }
-                }, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, taskExe);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
-        /// //////////////////////////////////////////////////////////////////////
-        ///  //////////////////////////////////////////////////////////////////////
         private string GetTimeFormatFromMinutes(double minutes)
         {
             string iResult = "";
@@ -1015,7 +943,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ProjectsNumbers.Add("1014-1");
                 ProjectsNumbers.Add("1014-2");
                 ProjectsNumbers.Add("1014-3");
-                //ProjectsNumbers.Add("1125");
+                ProjectsNumbers.Add("1125");
                 ProjectsNumbers.Add("1015");
                 ProjectsNumbers.Add("1015-1");
                 ProjectsNumbers.Add("1015-2");
@@ -1026,8 +954,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                   where
                                   tMEmployeeTime.EmployeeUserId == loggedUserId
                                   && tMEmployeeTime.DateOfWork.Year == Year
-                                  &&
-                                  (ProjectsNumbers.Contains(tMProject.ProjectNumber) || (tMProject.ProjectNumber == "1125" && tMEmployeeTime.TimeInMinutes == 540))
+                                  && ProjectsNumbers.Contains(tMProject.ProjectNumber)
                                   group tMEmployeeTime by new { tMProject.ProjectNumber, tMEmployeeTime.ProjectId } into g
                                   select new
                                   {
@@ -1110,14 +1037,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         TimeInMinutes = tMEmployeeTime.TimeInMinutes
                                     }).OrderByDescending(o => o.DateOfWork).ToList();
 
-                        if(Type == "Holidays")
+                        if(Type == "Sick Leaves")
                         {
-                            myResult = myResult.Where(d => d.TimeInMinutes == 540).ToList();
-                        }
-
-                        if (Type == "Sick Leaves")
-                        {
-                            foreach (TMVacationsDetails item in myResult)
+                            foreach(TMVacationsDetails item in myResult)
                             {
                                 item.SickLeaves = GetTimeFormatFromMinutes(item.TimeInMinutes);
 
@@ -1137,104 +1059,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-        public HttpResponseMessage GetDownloadEmployeesTimesToExcel(string employeeUserId, string locationCode, string startDate, string endDate)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
-
-                DateTime? myStartDate = startDate == "null" ? null : DateHelper.GetDate(startDate);
-                DateTime? myEndDate = endDate == "null" ? null : DateHelper.GetDate(endDate);
-
-                TimeManagementAPIHelper myResult = this.FillDataEntryTimeSheetList(employeeUserId, locationCode, myStartDate, myEndDate, tenant);
-                List<TMEmployeeTimePM> ItemsPM = myResult.ItemsPM;
-
-
-                byte[] data = this.ExportToExcel(ItemsPM, tenant);
-
-                string fileName = "EmployeesTime" + DateTime.Now.ToShortDateString();
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = fileName,
-                    FolderName = "others",
-                    Extension = "xls",
-                    Tenant = tenant,
-                    FileSize = data.Length,
-                };
-
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                storageservice.Write(data, fileInfo);
-
-                return Request.CreateResponse(HttpStatusCode.OK, fileName);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        private byte[] ExportToExcel(List<TMEmployeeTimePM> employeeTimeLines, int tenant)
-        {
-            System.IO.MemoryStream memory = new System.IO.MemoryStream();
-            ExcelEngine excelEngine = new ExcelEngine();
-            IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
-            IWorksheet sheet1 = workbook.Worksheets[0];
-
-            // Build excel headers 
-            DataTable table = new DataTable();
-            table.Columns.Add("Project Name");
-            table.Columns.Add("Location Name");
-            table.Columns.Add("Hours");
-            table.Columns.Add("WI Number");
-            table.Columns.Add("Sprint");
-            table.Columns.Add("Description");
-
-            if (employeeTimeLines != null && employeeTimeLines.Count > 0)
-            {
-                foreach (var item in employeeTimeLines)
-                {
-                    DataRow row = table.NewRow();
-                    row[0] = item.ProjectName ?? null;
-                    row[1] = item.LocationName ?? null;
-                   
-                    if (item.TimeInMinutes != 0)
-                    {
-                        TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(item.TimeInMinutes));
-
-                        string iResult = (int)iTimeSpan.TotalHours + "." + iTimeSpan.Minutes.ToString("00");
-
-                        if (item.TimeInMinutes < 0)
-                        {
-                            iResult = "- " + iResult;
-                        }
-                        row[2] = iResult;
-                    }
-                    else
-                    {
-                        row[2] = 0;
-                    }
-
-                    row[3] = item.WINumber ?? null;
-                    row[4] = item.SprintName ?? null;
-                    row[5] = item.Description ?? null;
-                    table.Rows.Add(row);
-                }
-            }
-
-            sheet1.ImportDataTable(table, true, 1, 1);
-            workbook.Version = ExcelVersion.Excel2007;
-            workbook.SaveAs(memory);
-            return memory.ToArray();
         }
     }
 
@@ -1299,19 +1123,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
     }
-
-    /// /////////////////////////////////////////////////////////////////////////
-    public class TMMBProjectDataArgs
-    {
-        public string EmployeeUserId { get; set; }
-        public string FromProject { get; set; }
-        public string ToProject { get; set; }
-        public int Tenant { get; set; }
-        public DateTime? FromDate { get; set; }
-        public DateTime? ToDate { get; set; }
-    }
-    /// /////////////////////////////////////////////////////////////////////////
-
     public class TMVacationsSummary
     {
         public double Holidays { get; set; }

@@ -16,9 +16,6 @@ namespace WebFreight.Web.DataContracts
         public int ARInvoicesSATFailedCount { get; set; }
         public int ARInvoicesFailedCount { get; set; }
         public int ARPaymentFailedCount { get; set; }
-        public int ARInvoicesSATVoidedNotTransferredCount { get; set; }
-        public int ARInvoiceSATWaitingCancellationCount { get; set; }
-        public int ARPaymentSATWaitingCancellationCount { get; set; }
 
     }
 
@@ -63,7 +60,6 @@ namespace WebFreight.Web.DataContracts
         public int InactiveGLAccountCount { get; set; }
         public int AllGLAccountCount { get; set; }
         public int OpenFilesCount { get; set; }
-        public int OpenMastersCount { get; set; }
         public int ClosedFilesGLAccountCount { get; set; }
         public int AllFilesCount { get; set; }
         public int AllJobsCount { get; set; }
@@ -107,22 +103,4 @@ namespace WebFreight.Web.DataContracts
         public int Id { get; set; }
         public int AllPaymentChequesCount { get; set; }
     }
-
-    public class BankDepositSummary
-    {
-        [Key]
-        public int Id { get; set; }
-        public int TodaysDepositCount { get; set; }
-    }
-
-    public class CashBookSummary
-    {
-        [Key]
-        public int Id { get; set; }
-        public int CashCashbookCount { get; set; }
-        public int ChequeCashbookCount { get; set; }
-        public int AllCashbookCount { get; set; }
-      
-    }
-
 }

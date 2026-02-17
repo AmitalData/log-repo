@@ -1,3 +1,6 @@
+/// <reference path="sharedmanifeststarted.ts" />
+
+
 import {Component, OnInit} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {PartnerItem} from './SharedManifestStarted';
@@ -9,7 +12,7 @@ import { SharedManifestStarted } from './SharedManifestStarted';
 import { SharedAgentManifestService } from '../../../Shipment/Services/Others/SharedAgentManifestService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SharedManifestEditAgentComponent',
     templateUrl: './SharedManifestEditAgentComponent.html',
     providers: [SharedAgentManifestService],

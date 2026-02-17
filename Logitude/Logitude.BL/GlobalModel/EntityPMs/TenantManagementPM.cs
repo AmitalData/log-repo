@@ -191,7 +191,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public int TrailDaysLeft { get; set; }
         public int PaidDaysLeft { get; set; }
         public bool IsTrial { get; set; }
-        public int? NumberOfUsers { get; set; }
+        public int NumberOfUsers { get; set; }
         public bool IsCargonautEnabled { get; set; }
         public int BluesnapContractQTY { get; set; }
         public int BluesnapCRMContractQTY { get; set; }
@@ -226,13 +226,6 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string PendingAirlines { get; set; }
 
         public bool EnableBranding { get; set; }
-        public bool TranzilaPaymentWithBit { get; set; }
-        public bool EnableExportToExcel { get; set; }
-        public bool ActivatedforDeclarationApprove { get; set; }
-        public bool ShowMoneyOrder { get; set; }
-        public bool CargoTrackingPublicShowEvents { get; set; }
-        public bool CargoTrackingPrivateShowEvents { get; set; }
-        public string DeclarationMessage { get; set; }
         public string CustomerURL { get; set; }
         public bool HideSharedlogistics { get; set; }
         public string ContactEmail { get; set; }
@@ -247,23 +240,13 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public int AgentSharedLogisticsStatisticsLastWeek { get; set; }
         public int AgentSharedLogisticsStatisticsLastMonth { get; set; }
         public bool ChangeHeaderColor { get; set; }
-        public string HeaderColor { get; set; }
         public bool DocumentShareAsDefault { get; set; }
         public string StockTypeCode { get; set; }
         public bool IsINTTRAStockPrepaid { get; set; }
         public bool IsINTTRAOnlyDemo { get; set; }
         public bool AutoArchiveOnInvoice { get; set; }
-        public bool AutoArchiveOnPODExport { get; set; }
+
         public string PackageCodeSearchField { get; set; }
-        public string MainColor { get; set; }
-        public string SecondaryColor { get; set; }
-        public string TertiaryColor { get; set; }
-        public string BackgroundId { get; set; }
-        public string MobileBackgroundId { get; set; }
-        public string ComapnylogoId { get; set; }
-        public string InvertedLogoId { get; set; }
-        public string BrowserIconId { get; set; }
-        public string ShipmentHeaderImageId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
@@ -354,72 +337,5 @@ namespace Logitude.BL.GlobalModel.EntityPMs
                 addOns = value;
             }
         }
-
-        public bool IsTestTenant { get; set; }
-
-        public bool MainAdditionalPackageApplied { get; set; }
-        public double? TotalPrice { get; set; }
-        public string MainColorOpacity { get; set; }
-        public string SupportDomain { get; set; }
-        public string SecondaryColorOpacity { get; set; }
-        public string TertiaryColorOpacity { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public int? TotalNumberOfUsers { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public int? TotalFreeUsers { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? AveragePrice { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? TotalPaymentamount { get; set; }
-        public bool NoPaymentForChildTenants { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? LastEbookingSentDate { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? LastSISentDate { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public int NumberOfBookingSentLastWeek { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public int NumberOfSISentLastWeek { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? LastContainerStatusReceived { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? LastTariffUpdateDate { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? LastTariffUsageDate { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public int LastWeekCreatedTariffs { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public int LastMonthCreatedTariffs { get; set; }
-        public double? PermissionBuildMonths { get; set; }
-
-        public int ScheduledTasksLimitPerReport { get; set; }
-        public bool IsHybrid { get; set; }
-         public string AmitalApiToken { get; set; }
-         public string WhatsAppMessagingPhoneNumber { get; set; }
-        public double? CargoTokenTimeout { get; set; }
-        public bool ActivatePrivateSite { get; set; }
-        public bool IsContainerTrackingPrepaid { get; set; }
-
-        public DateTime? DigitalPortalLastDate { get; set; }
-        public int? DigitalPortalTotalLastWeek { get; set; }
-        public int? DigitalPortalTotalLastMonth { get; set; }
-        public DateTime? DigitalPortalMobileLastDate { get; set; }
-        public int? DigitalPortalMobTotalLastWeek { get; set; }
-        public int? DigitalPortalMobTotalLastMonth { get; set; }
-
-        public int? DPArchiveShipmentCreateFilter { get; set; }
-        public int? DPArchiveShipmentArrivalFilter { get; set; }
-        public int? DPArchiveShipmentDepartFilter { get; set; }
-        public string LogoURL { get; set; }
-        public string ServiceAgreementURL { get; set; }
-        public string EcommerceSupportEmail { get; set; }
-
-        public bool EcommerceTenant { get; set; }
-        public string ExportLoginCredintial { get; set; }
-        public int? ExportTenant { get; set; }
-		public bool SearchAbsoluteValuePublic { get; set; }
-		public int? MinutsTimeOutSession { get; set; }
-
-	}
+    }
 }

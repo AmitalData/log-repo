@@ -49,7 +49,7 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.QuestionnaireAnswerId == keys.QuestionnaireAnswerId && a.QuestionNumber == keys.QuestionNumber
                     select a).FirstOrDefault();
         }
-		 		                 
+		         
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(QuestionnaireAnswerLine entity)
         {

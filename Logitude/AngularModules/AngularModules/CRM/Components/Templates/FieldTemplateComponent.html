@@ -1,4 +1,4 @@
-
+﻿
 <table *ngIf="Entity">
     <tr>
         <td>
@@ -501,94 +501,6 @@
                         </td>
                     </tr>
                 </table>
-
-                <!-- Occasion -->
-                <table *ngIf="ObjectTableName == 'Occasion'">
-                    <tr>
-                        <td>
-                            <!--UpdateDate -->
-                            <div *ngIf="FieldName == 'UpdateDate'">
-                                <div>
-                                    <table>
-                                        <tr>
-                                            <td style="width:80px;">
-                                                {{Entity[FieldName] | DateTimePipe:'D'}}
-                                            </td>
-                                            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-
-                            <!--CreateDate -->
-                            <div *ngIf="FieldName == 'CreateDate'">
-                                <div>
-                                    <table>
-                                        <tr>
-                                            <td style="width:80px;">
-                                                {{Entity[FieldName] | DateTimePipe:'D'}}
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- StartDateTime -->
-                            <div *ngIf="FieldName == 'StartDateTime'">
-                                <div>
-                                    <table>
-                                        <tr>
-                                            <td style="width:80px;">
-                                                {{Entity[FieldName] | DateTimePipe:'D'}}
-                                            </td>
-                                            <td style="width:5px;">
-                                                <div></div>
-                                            </td>
-                                            <td>
-                                                {{Entity[FieldName] | DateTimePipe:'T'}}
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- EndDateTime -->
-                            <div *ngIf="FieldName == 'EndDateTime'">
-                                <div>
-                                    <table>
-                                        <tr>
-                                            <td style="width:80px;">
-                                                {{Entity[FieldName] | DateTimePipe:'D'}}
-                                            </td>
-                                            <td style="width:5px;">
-                                                <div></div>
-                                            </td>
-                                            <td>
-                                                {{Entity[FieldName] | DateTimePipe:'T'}}
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-
-                        </td>
-                    </tr>
-                </table>
-
 
                 <div *ngIf="ObjectTableName == 'Questionnaire' && FieldName == 'CreateDate'">
                     <span>{{FieldValue | DateTimeToDatePipe}} {{FieldValue | DateTimeToTimePipe}} </span>

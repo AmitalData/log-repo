@@ -6,9 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -24,10 +23,10 @@ import {TPGFileTypePM} from '../../EntityPMs/TPGFileTypePM';
 @Injectable()
 
 export class TPGFileTypePMService {
- private _http: HttpClient;
+ private _http: Http;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tpgfiletypes';      
     }
 
@@ -37,11 +36,11 @@ export class TPGFileTypePMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
-		 return defer(() => {
+		 return Observable.defer(() => {
                 return this._http.get(this._apiUrl+'/getsingle?'+'code=' + code, {
                     headers: authHeader
                 }).map(response => {
-                    var pm = response;
+                    var pm = response.json();
 
                    
 					
@@ -60,14 +59,14 @@ export class TPGFileTypePMService {
 				 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
             });                    
     }
 
 	 insert(entityPM: TPGFileTypePM) {
  
         var callTime = new Date();        
-        return defer(() => {
+        return Observable.defer(() => {
 
                 var authHeader = new Headers();
                 authHeader.append('Token', SessionInfo.Token);
@@ -89,7 +88,7 @@ export class TPGFileTypePMService {
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
                         { headers: authHeader }).map((response) => {
 
-                            var pm = response;
+                            var pm = response.json();
 							if(pm)
 							{
                                var mappedResult:  TPGFileTypePM;
@@ -104,14 +103,14 @@ export class TPGFileTypePMService {
                             
                             return serviceResponse;
 
-                        }),catchError(ServiceHelper.HandleServiceError));
+                        }).catch(ServiceHelper.HandleServiceError);
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return of(serviceResponse);
+                    return Observable.of(serviceResponse);
                    
                 }
             }
@@ -122,7 +121,7 @@ export class TPGFileTypePMService {
     update(entityPM: TPGFileTypePM) {
 
             var callTime = new Date();         
-            return defer(() => {
+            return Observable.defer(() => {
 
                 var authHeader = new Headers();
                 authHeader.append('Token', SessionInfo.Token);
@@ -145,7 +144,7 @@ export class TPGFileTypePMService {
                         { headers: authHeader }).map((response) => {
                  
 
-                            var pm = response;
+                            var pm = response.json();
 							if(pm)
 							{
                                var mappedResult:  TPGFileTypePM;
@@ -158,14 +157,14 @@ export class TPGFileTypePMService {
 					                           
                             return serviceResponse;
 
-                        }),catchError(ServiceHelper.HandleServiceError));
+                        }).catch(ServiceHelper.HandleServiceError);
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return of(serviceResponse);
+                    return Observable.of(serviceResponse);
                    
                 }
             }

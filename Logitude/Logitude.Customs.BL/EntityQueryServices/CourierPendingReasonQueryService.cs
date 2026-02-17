@@ -25,12 +25,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return courierPendingReasonPMList;
         }
-
-        public CourierPendingReasonPM GetSingleCourierPendingReasonByCode(string code, int tenant)
-        {
-            CourierPendingReason  courierPendingReason = repository.GetByCode(code, tenant);
-            return GetEntityPM(courierPendingReason);
-        }
-        
     }
 }

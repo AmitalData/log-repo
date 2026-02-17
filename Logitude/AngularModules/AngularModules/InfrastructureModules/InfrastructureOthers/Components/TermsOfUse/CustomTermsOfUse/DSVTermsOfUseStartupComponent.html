@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     label {
         font-size: 13px;
@@ -22,7 +22,7 @@
         text-decoration: none;
         display: inline-block;
         font-size: 15px;
-        font-weight: bold;
+       font-weight:bold;
         cursor: pointer;
     }
 
@@ -38,7 +38,7 @@
         background-color: #F1315A;
         border: 1px solid #83A5D2;
         color: #ffffff;
-        font-weight: bold;
+        font-weight:bold;
         padding: 3px;
         border-radius: 5px;
         text-align: center;
@@ -47,45 +47,9 @@
         font-size: 15px;
         cursor: pointer;
     }
-
-    .backgroundImage {
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: center center;
-        position: absolute;
-    }
-
-    .loginImage {
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: center center;
-    }
-
-    .image-container {
-        display: flex;
-        height: 100vh;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .error {
-        margin: 10px 0px;
-        padding: 15px 10px 15px 20px;
-        font-size: 18px;
-        color: #D8000C;
-        width: 290px;
-        white-space: normal;
-        text-align: left;
-        /* border: 1px solid;
-        background-color: #FFBABA;*/
-    }
 </style>
 
-<div *ngIf="showSpinner" class="image-container">
-    <img src="./Images/LoginScreen/indicator.gif" width="100">
-</div>
-
-<table *ngIf="!showSpinner" class="PreventSelect backgroundImage" [style.background-image]="this.BackgroundImage">
+<table class="PreventSelect" style="background: url(Images/LoginScreen/screen_bg.jpg) center center;background-size: 100% 100%;position: absolute;">
     <tr>
         <td style="width:30%;">
             <div></div>
@@ -102,7 +66,7 @@
                 <tr style="height: 114px;">
                     <td style="text-align: center;">
                         <a>
-                            <img [src]="MainLogo" id="loginlogo" style="width:290px; height:114px;float:left;" />
+                            <img src="./Images/LoginScreen/HeaderLogo.jpg" id="loginlogo" style="width:290px; height:114px;float:left;" />
                         </a>
                     </td>
                 </tr>
@@ -141,7 +105,7 @@
                                                     <tr>
                                                         <td style="width: 25%;">
 
-                                                            <table *ngIf="!HasErrorMessage" style="margin-left:20px;">
+                                                            <table style="margin-left:20px;">
                                                                 <tr style="height:10px"><td></td></tr>
                                                                 <tr style="height:20px"><td style="vertical-align:central"><p style="font-size:16px;color:steelblue;">{{Name}} Terms of Use</p></td></tr>
 
@@ -149,7 +113,7 @@
                                                                 <tr style="height:15px"><td><span style="word-wrap: break-word;color:#4B4A4A;font-size:12px">Please read the terms of use then click 'Accept'  in </span></td></tr>
                                                                 <tr style="height:15px"><td><span style="word-wrap: break-word;color:#4B4A4A;font-size:12px">order to complete your login.</span></td></tr>
                                                                 <tr style="height:20px"><td></td></tr>
-                                                                <tr style="height:20px"><td style="text-align:center"><a style="margin-left:10px;color:#0094ff;font-size:13px;" (click)="GetTermsofUseDocument()">Terms of Use</a></td></tr>
+                                                                <tr style="height:20px"><td style="text-align:center"><a style="margin-left:10px;color:#0094ff;font-size:13px;" (click)="TermsofUse()">Terms of Use</a></td></tr>
                                                                 <tr style="height:10px"><td></td></tr>
                                                                 <tr style="height:50px">
                                                                     <td style="text-align:center">
@@ -164,28 +128,10 @@
 
                                                             </table>
 
-                                                            <table *ngIf="HasErrorMessage">
-                                                                <tr style="height:10px"><td></td></tr>
-                                                                <tr style="height:20px"><td style="vertical-align:central"><p style="font-size:16px;color:steelblue;">{{Name}} Terms of Use</p></td></tr>
-
-                                                                <tr style="height:15px"><td></td></tr>
-                                                                <tr style="height:15px"><td><span style="word-wrap: break-word;color:#4B4A4A;font-size:12px"></span></td></tr>
-                                                                <tr style="height:20px"><td style="text-align:center"><div class="error">{{ErrorMessage}} </div></td></tr>
-                                                                <tr style="height:10px"><td></td></tr>
-                                                                <tr style="height:50px">
-                                                                    <td style="text-align:center">
-                                                                        <button (click)="DeclineButtonClicked()" class="DeclineButton" style="height:35px;margin-left:15px;width:120px;position: relative; left: 70px">Back to Login</button>
-                                                                    </td>
-
-                                                                </tr>
-
-                                                                <tr><td></td></tr>
-
-                                                            </table>
 
                                                         </td>
 
-                                                        <td class="loginImage" [style.background-image]="this.LoginImage">
+                                                        <td style="background:url(./Images/LoginScreen/screen_boy.jpg) center center no-repeat; background-size: 100% 100%;">
                                                             <div></div>
                                                         </td>
                                                     </tr>

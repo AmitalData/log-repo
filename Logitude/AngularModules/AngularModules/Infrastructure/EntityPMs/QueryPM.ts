@@ -26,11 +26,7 @@ export class QueryPM {
     private code: string;
     public get Code() { return this.code; }
     public set Code(newValue: string) { this.code = newValue; }
-
-    private uniqueCode: string;
-    public get UniqueCode() { return this.uniqueCode; }
-    public set UniqueCode(newValue: string) { this.uniqueCode = newValue; }
-
+       	 
     private objectTableId: string;
     public get ObjectTableId() { return this.objectTableId; }
     public set ObjectTableId(newValue: string) { this.objectTableId = newValue; }
@@ -46,11 +42,7 @@ export class QueryPM {
     private originalQueryId: string;
     public get OriginalQueryId() { return this.originalQueryId; }
     public set OriginalQueryId(newValue: string) { this.originalQueryId = newValue; }
-
-    private originalQueryCode: string;
-    public get OriginalQueryCode() { return this.originalQueryCode; }
-    public set OriginalQueryCode(newValue: string) { this.originalQueryCode = newValue; }
-
+       	 
     private querySection: string;
     public get QuerySection() { return this.querySection; }
     public set QuerySection(newValue: string) { this.querySection = newValue; }
@@ -182,23 +174,7 @@ export class QueryPM {
     private spotlightModeActivated: boolean;
     public get SpotlightModeActivated() { return this.spotlightModeActivated; }
     public set SpotlightModeActivated(newValue: boolean) { this.spotlightModeActivated = newValue; }
-
-    private featureUniqeCode: string;
-    public get FeatureUniqeCode() { return this.featureUniqeCode; }
-    public set FeatureUniqeCode(newValue: string) { this.featureUniqeCode = newValue; }
-
-    private isViewOnly: boolean;
-    public get IsViewOnly() { return this.isViewOnly; }
-    public set IsViewOnly(newValue: boolean) { this.isViewOnly = newValue; }
-
-    private isDefault: boolean;
-    public get IsDefault() { return this.isDefault; }
-    public set IsDefault(newValue: boolean) { this.isDefault = newValue; }
-
-    private isFromCustomObjectTable: boolean;
-    public get IsFromCustomObjectTable() { return this.isFromCustomObjectTable; }
-    public set IsFromCustomObjectTable(newValue: boolean) { this.isFromCustomObjectTable = newValue; }
-
+       
     private sharedUserQueries: SharedUserQueryPM[];
     get SharedUserQueries() {
         if (this.sharedUserQueries == null) {

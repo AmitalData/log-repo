@@ -7,17 +7,16 @@ import {TasksSchedulerPM} from '../../../../Infrastructure/EntityPMs/TasksSchedu
 import {TaskSchedulerItemClass} from './TaskSchedulerComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SchedulerDetails, FTPSchedulerDetails} from '../../../../Infrastructure/DataContracts/SchedulerDetails';
 import {SchedulerExtendedPMService} from '../../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChild, ViewContainerRef}  from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
-import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditTaskSchedulerComponent.html',
 })
 
@@ -30,9 +29,8 @@ export class AddEditTaskSchedulerComponent  {
     public GeneralAreaHeight: string = "200px";
     schedulerExtendedPMService: SchedulerExtendedPMService;
     IsEnableSaveButton: boolean = false;
-    ShowDateFields: boolean = false;
-    ShowRunTaskNowButton: boolean = true;
-    @ViewChild('GeneralSectionLocation', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+
+    @ViewChild('GeneralSectionLocation', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     private CurrentSession = SessionLocator.SelectedSession;
     private GeneralTemplateComponent: any = null;
@@ -44,13 +42,7 @@ export class AddEditTaskSchedulerComponent  {
     SetDataContext(dataContext: TaskSchedulerItemClass) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
-        this.ShowDateFields = this.EntityPM?.ProcedureCode === "InvoiceApiQueryTask";
-        this.ShowRunTaskNowButton = SessionLocator.TenantPM.AccountingActivated && !(this.DataContext.Type === "FTP" || this.DataContext.Type === "SFTP");
-        if (this.ShowDateFields) {
-            this.RunNowFromDate = DateTool.GetCurrentDateAsUtc();
-            this.RunNowFromDate.setDate(this.RunNowFromDate.getDate() - 1);
-            this.RunNowToDate = DateTool.GetCurrentDateAsUtc();
-        }    
+
         this.BuildSchedulerDetailsData();
 
         this.Clone();
@@ -66,7 +58,7 @@ export class AddEditTaskSchedulerComponent  {
 
     private RunComponent() {
         if (this.viewContainerRef) {
-            var componentName: string = (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") ? "FTBSchedulerTemplateComponent" :"TaskSchedulerTemplateComponent";
+            var componentName: string = this.DataContext.Type == "FTP" ? "FTBSchedulerTemplateComponent" :"TaskSchedulerTemplateComponent";
             SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerTemplates/" + componentName, this.viewContainerRef)
                     .then(cmpRef => {
                         this.GeneralTemplateComponent = cmpRef.instance;
@@ -92,7 +84,7 @@ export class AddEditTaskSchedulerComponent  {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -101,18 +93,17 @@ export class AddEditTaskSchedulerComponent  {
 
 
     BuildSchedulerDetailsData() {
-        if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
+        if (this.DataContext.Type == "FTP") {
             this.GeneralAreaHeight = "310px";
             if (this.EntityPM.SchedulerDetailsData) {
                 this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
             }
-            else if (this.EntityPM.Id) {
+           else if (this.EntityPM.Id) {
                 this.LoadSchedulerDetailsData();
-            } else {
-                var schedulerDetailsData = new SchedulerDetails();
-                schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
-                schedulerDetailsData.FTPDetails.IsSFTP = (this.EntityPM.Type == "SFTP" ? true : false);
-                this.SetSchedulerDetailsData(schedulerDetailsData);
+            } else  {
+               var schedulerDetailsData = new SchedulerDetails();
+               schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
+               this.SetSchedulerDetailsData(schedulerDetailsData);
             }
         }
     }
@@ -122,15 +113,15 @@ export class AddEditTaskSchedulerComponent  {
 
         this.CurrentSession.StartBusyIndicator("Loading...");
 
-        this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+        this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
+
                 this.SetSchedulerDetailsData(myResponse.Result);
             }
 
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
-                this.Clone();
             }
 
             this.CurrentSession.StopBusyIndicator();
@@ -141,15 +132,18 @@ export class AddEditTaskSchedulerComponent  {
 
     SetSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
         this.DataContext.SetSchedulerDetailsData(schedulerDetailsData);
-        this.Clone();
-
-
     }
 
     StartTimeTabTitle: string = "One Time";
    
 
-  
+    private isOneTime: boolean; 
+    get IsOneTime() { return this.isOneTime; }
+    set IsOneTime(newValue: boolean) {
+        if (this.isOneTime != newValue) {
+            this.isOneTime = newValue;
+        }
+    }
 
     private isDaily: boolean;
     get IsDaily() { return this.isDaily; }
@@ -174,35 +168,23 @@ export class AddEditTaskSchedulerComponent  {
             this.isMonthly = newValue;
         }
     }
-    private runNowFromDate: Date;
-
-    public get RunNowFromDate() { return this.runNowFromDate; }
-    public set RunNowFromDate(value: Date) { if (this.runNowFromDate != value) this.runNowFromDate = value; }
-
- 
-    private runNowToDate: Date;
-    get RunNowToDate() { return this.runNowToDate; }
-    set RunNowToDate(newValue: Date) {
-        if (this.runNowToDate != newValue) {
-            this.runNowToDate = newValue;
-        }
-    }
+    
     SetTigger(triggerType: string) {
         switch (triggerType) {
-            //case "O":
-            //    {
-            //        this.IsOneTime = true;
-            //        this.IsDaily = false; 
-            //        this.IsWeekly = false;
-            //        this.IsMonthly = false;
-            //        this.DataContext.TriggerType = "O";             
-            //        this.StartTimeTabTitle = "One Time";
-            //        break;
-            //    }
+            case "O":
+                {
+                    this.IsOneTime = true;
+                    this.IsDaily = false; 
+                    this.IsWeekly = false;
+                    this.IsMonthly = false;
+                    this.DataContext.TriggerType = "O";             
+                    this.StartTimeTabTitle = "One Time";
+                    break;
+                }
 
             case "D":
                 {
-                    //this.IsOneTime = false;
+                    this.IsOneTime = false;
                     this.IsDaily = true;
                     this.IsWeekly = false;
                     this.IsMonthly = false;
@@ -213,7 +195,7 @@ export class AddEditTaskSchedulerComponent  {
 
             case "W":
                 {
-                    //this.IsOneTime = false;
+                    this.IsOneTime = false;
                     this.IsDaily = false;
                     this.IsWeekly = true;
                     this.IsMonthly = false;
@@ -224,7 +206,7 @@ export class AddEditTaskSchedulerComponent  {
 
             case "M":
                 {
-                    //this.IsOneTime = false;
+                    this.IsOneTime = false;
                     this.IsDaily = false;
                     this.IsWeekly = false;
                     this.IsMonthly = true;
@@ -234,14 +216,12 @@ export class AddEditTaskSchedulerComponent  {
                 }
 
             default: {
-                //this.IsOneTime = true;
-                this.IsDaily = true;
+                this.IsOneTime = true;
+                this.IsDaily = false;
                 this.IsWeekly = false;
                 this.IsMonthly = false;
-                //this.DataContext.TriggerType = "O";
-                //this.StartTimeTabTitle = "One Time";
-                this.DataContext.TriggerType = "D";
-                this.StartTimeTabTitle = "Daily";
+                this.DataContext.TriggerType = "O";
+                this.StartTimeTabTitle = "One Time";
                 break;
             }
         }
@@ -269,8 +249,8 @@ export class AddEditTaskSchedulerComponent  {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
 
-        if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
-            this.DataContext.ProcedureCode = (this.DataContext.Type == "FTP" ? "FTPSchedulerTask" : "SFTPSchedulerTask");
+        if (this.DataContext.Type == "FTP") {
+            this.DataContext.ServiceClassName = "FTPSchedulerTask";
 
 
             if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
@@ -279,10 +259,10 @@ export class AddEditTaskSchedulerComponent  {
             if (AppTool.IsNullOrEmpty(this.DataContext.From)) errors.push(msg.replace("%FieldName", "From"));
 
             if (AppTool.IsNullOrEmpty(this.DataContext.Host)) errors.push(msg.replace("%FieldName", "Host"));
-           // else {
-               // var isValid = this.ValidateHost();
-               // if (!isValid) errors.push("Invalid Host");
-            //}
+            else {
+                var isValid = this.ValidateHost();
+                if (!isValid) errors.push("Invalid Host");
+            }
 
         }
 
@@ -292,23 +272,17 @@ export class AddEditTaskSchedulerComponent  {
         if (AppTool.IsNullOrEmpty(this.DataContext.Name)) {
             errors.push(msg.replace("%FieldName", "Name"));
         }
-        if (this.DataContext.RepeatInMinutes  != null) {
-            if (this.DataContext.RepeatInMinutes < 5) {
 
-                errors.push("The lowest value you can add in Repeat in Minutes field is 5");
-            }
-        }
         //if (AppTool.IsNullOrEmpty(this.DataContext.Description)) {
         //    errors.push(msg.replace("%FieldName", "Description"));
         //}
         
         if (this.DataContext.StartDateTime == null) {
             errors.push(msg.replace("%FieldName", "Start Date Time"));
-            console.log("error");
         }
 
-        if (AppTool.IsNullOrEmpty(this.DataContext.ProcedureCode)) {
-            errors.push(msg.replace("%FieldName", "Procedure Code"));
+        if (AppTool.IsNullOrEmpty(this.DataContext.ServiceClassName)) {
+            errors.push(msg.replace("%FieldName", "Service Class Name"));
         }
 
         if (AppTool.IsNullOrEmpty(this.DataContext.TriggerType)) {
@@ -331,39 +305,32 @@ export class AddEditTaskSchedulerComponent  {
                     }
                 case "M":
                     {
-                        //if (this.DataContext.MonthlyDay == 0) {
-                        //    errors.push(msg.replace("%FieldName", "Day of a month"));
-                        //}
+                        if (this.DataContext.MonthlyDay == 0) {
+                            errors.push(msg.replace("%FieldName", "Day of a month"));
+                        }
                         break;
                     }
             }
         }
 
 
-        if (this.EntityPM.Status == "In progress") {
-            errors.push("The task is in progress. You are not allowed to edit it");// the start time field
-        }
-  
+        
+        if (this.EntityPM.Type == "FTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
     
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-
-            //if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
-
             this.CurrentSession.StartBusyIndicatorSaving();
           
 
             if (this.DataContext.IsNew) {
 
-                this.schedulerExtendedPMService.insert(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+                this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         this.CurrentSession.CloseCurrentWindow();
                         this.EntityPM = myResponse.Result;
                         this.EntityPM.IsDirty = false;
-                        if (this.DataContext.fatherComponent) {
-                            this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
-                        }
+                        this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
                     }
 
                     else {
@@ -376,17 +343,15 @@ export class AddEditTaskSchedulerComponent  {
 
             else {
                 if (this.EntityPM.IsDirty) {
-                    this.EntityPM.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
+                    this.EntityPM.UpdatedBy = SessionLocator.LoggedUserId;
 
-                    this.schedulerExtendedPMService.update(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+                    this.schedulerExtendedPMService.update(this.EntityPM).subscribe(myResult => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
                             this.EntityPM = myResponse.Result;
                             this.EntityPM.IsDirty = false;
                             this.CurrentSession.CloseCurrentWindow();
-                            if (this.DataContext.fatherComponent) {
-                                this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
-                            }
+                            this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
                         }
 
                         else {
@@ -409,42 +374,12 @@ export class AddEditTaskSchedulerComponent  {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
-    DatePickerFromValueChange(value: Date) {
-        if (value != null) {
-            this.RunNowFromDate = value;
-        }
-    }
-    DatePickerToValueChange(value: Date) {
-        if (value != null) {
-            this.RunNowToDate = value;
-        }
-    }
-    RunNowButtonClicked() {
-        
-        this.CurrentSession.StartBusyIndicatorLoading();
-
-        this.schedulerExtendedPMService.RunNowButtonClicked(this.EntityPM.Id ,this.RunNowFromDate,this.RunNowToDate).subscribe((myResult: ServiceResponse) => {
-            var myResponse: ServiceResponse = myResult;
-            var messageWindow: MessageWindow = new MessageWindow();
-            if (!myResponse.HasError) {
-                messageWindow.ShowSuccessIcon = true;
-                messageWindow.Show("The task has been started successfully")
-        
-            } else {
-                messageWindow.ShowErrorIcon = true;
-                messageWindow.Show("The task could not be started. " + myResponse.ErrorsArray.join(", "));  
-                this.ValidationErrorsList = myResponse.ErrorsArray;
-            }
-            this.CurrentSession.StopBusyIndicator();
-
-        });
-    }
 
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('Name');
-        this.myCloner.AddField('ProcedureCode');
+        this.myCloner.AddField('ServiceClassName');
         this.myCloner.AddField('Description');
         this.myCloner.AddField('InActive');
         this.myCloner.AddField('StartDateTime');

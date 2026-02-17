@@ -2,7 +2,6 @@
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+                if (!General.IsUpdating())
                 {
                     try
                     {
@@ -32,10 +31,6 @@ namespace CommunicationWorkerRole
 
                         if (analyzeQueue != null)
                         {
-                            analyzeQueue.Status = "P";
-                            analyzeQueue.ErrorMessage = null;
-                            analyzeQueueRepository.Update(analyzeQueue);
-                            analyzeQueueRepository.SubmitChanges();
                             LogBoxMailgunAnalyzer analyzer = new LogBoxMailgunAnalyzer(analyzeQueue, analyzeQueueRepository);
 
                             analyzer.Run();
@@ -43,7 +38,7 @@ namespace CommunicationWorkerRole
                         }
                         else
                         {
-                            Thread.Sleep(3000);
+                            Thread.Sleep(500);
                         }
                     }
 

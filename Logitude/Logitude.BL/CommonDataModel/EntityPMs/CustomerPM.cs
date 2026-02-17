@@ -5,13 +5,12 @@ using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-    public class CustomerPM : ObjectCustomFieldDataContractPM
+    public class CustomerPM
     {
         [Key]
         [DataMember]
@@ -111,10 +110,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string EORInumber { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PayablesAccountingCard { get; set; }//card
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -131,10 +126,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
-        public string TeamId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember] 
         public string VatTypeId { get; set; }
 
         [DataMember]
@@ -212,10 +203,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string TeamName { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string RankCode { get; set; }
 
         [DataMember]
@@ -236,14 +223,50 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field1 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field2 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field3 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field4 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field5 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field6 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field7 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field8 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field9 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field10 { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SharedLogisticsInvitationStatusName { get; set; }
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string CargoTrackingInvitationStatusName { get; set; }
-        
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")] 
         public bool IsActiveForMobile { get; set; }
 
         [DataMember]
@@ -256,10 +279,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? CargoTrackingInvitationDate { get; set; }
-        
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")] 
         public bool IsHybrid { get; set; }
 
         [DataMember]
@@ -409,13 +428,12 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string PrimaryContactName { get; set; }
 
         [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")] 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PrimaryContactEmail { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string PrimaryContactPhone { get; set; }
-
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
@@ -424,10 +442,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PrimaryContactId { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string Phone { get; set; }
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -590,15 +604,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? LastOpportunityDate { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string LastOpportunitySubject { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string LastOpportunityStatus { get; set; }
-
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -904,29 +909,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             }
         }
 
-        private List<ProductItemPM> customerProductItems;
-        [Include]
-        [Association("CustomerProductItemCustomer", "Id", "CustomerId")]
-        [Composition]
-        [DataMember]
-        public virtual List<ProductItemPM> CustomerProductItems
-        {
-            get
-            {
-                if (customerProductItems == null)
-                {
-                    customerProductItems = new List<ProductItemPM>();
-                }
-
-                return customerProductItems;
-            }
-
-            set
-            {
-                customerProductItems = value;
-            }
-        }
-
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsLogBox { get; set; }
@@ -940,9 +922,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public double? CreditLimitAmount { get; set; }
-
-        [DataMember]
-        public double? InsuredcreditLimit { get; set; }
 
         [DataMember]
         public double? CreditLimitOpenBalance { get; set; }
@@ -978,60 +957,12 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string UsoCFDICode { get; set; }
-        [DataMember]
-        public string RegimenFiscalCode { get; set; }
 
         [DataMember]
         public int CustomerTenant { get; set; }
 
         public string MainAddressId { get; set; }
         public string BillingAddressId { get; set; }
-        public string PickupDeliveryAddressId { get; set; }
         public string GLAccountId { get; set; }
-        public string CreatedByPartner { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public int? StorageFreeDays { get; set; }
-
-      
-        [DataMember]
-        public bool AccountingVATSplit { get; set; }
-
-        [DataMember]
-        public string UploadingUniqueKey { get; set; }
-
-        [DataMember]
-        public string GLAccountNumber { get; set; }
-
-        [DataMember]
-        public bool IsAutonomy { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool AddLogboxCustomerQueue { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ImportLocalCustomerGroupId { get; set; }
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ExportLocalCustomerGroupId { get; set; }
-
-        [DataMember]
-        public string SATCustomerName { get; set; }
-        [DataMember]
-        public DateTime? LastLoginDateViaPC { get; set; }
-        [DataMember]
-        public DateTime? LastLoginDateViaMobile { get; set; }
-        public bool IsPotential { get; set; }
-        [DataMember]
-        public string ContactForAccounting { get; set; }
-
-        [DataMember]
-        public string BankBranch { get; set; }
-        [DataMember]
-        public string BankCodeId { get; set; }
-
-        }
+    }
 }

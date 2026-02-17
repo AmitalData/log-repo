@@ -1,24 +1,22 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
-import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
-import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool } from '../../../Infrastructure/Tools';
-import { NewGLAccountArgs } from '../../../Common/Args';
-import { FullAccountingSettingPM } from '../../EntityPMs/FullAccountingSettingPM';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { ChartOfAccountTypes } from 'Accounting/DataContracts/ChartOfAccountTypes';
-import { AccountingPartners } from 'Accounting/DataContracts/AccountingPartners';
+import {Component, ChangeDetectorRef} from '@angular/core';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {Validator} from '../../../Infrastructure/Validators/Validator';
+import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
+import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService';
+import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {NewGLAccountArgs} from '../../../Common/Args';
+import {FullAccountingSettingPM} from '../../EntityPMs/FullAccountingSettingPM';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'NewGLAccountComponent',
-
+    moduleId: module.id,
     providers: [EntityListService],
     templateUrl: './NewGLAccountComponent.html',
 })
@@ -32,11 +30,9 @@ export class NewGLAccountComponent extends BaseComponent {
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public ParentsFilterItems: ApiQueryFilters;
     myService: GLAccountPMService;
-    WindowArgsPassed: boolean = false;
+    IsFromArgs: boolean = false;
 
     public AccountTypeCode = "1";
-    public OtherType = "3";
-    isEnableMultiCurrencyWithReconcileMethodCodeEqualOne = false;
 
 
     public isRTL: boolean = false;
@@ -52,83 +48,61 @@ export class NewGLAccountComponent extends BaseComponent {
 
         this.myService = new GLAccountPMService();
 
-        this.BuildAPIFilters();
+        this.InitLOVFilters();
 
         this.SetUIProperties();
         this.SelectDefaultValues();
-        this.isEnableMultiCurrencyWithReconcileMethodCodeEqualOne = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MC1")[0] ? true : false;
-
     }
 
-    BuildAPIFilters() {
-        this.BuildChartOfAccountTypeApiFilters();
-        this.BuildParentsGLAccountApiFilters();
-    }
+    InitLOVFilters() {
 
-
-    partnerType: string;
-    private BuildChartOfAccountTypeApiFilters() {
+        //#region initialize query filters for ChartOfAccountType
         this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
-        const isAccountingPartner = this.partnerType == AccountingPartners.AccountingPartner;
-        const isAgent = this.partnerType == AccountingPartners.Agent;
-        const isCustomer = this.partnerType == AccountingPartners.Customer;
-        const isVendor = this.partnerType == AccountingPartners.Vendor;
-
-        if (isAccountingPartner || isAgent) {
-            var excludedTypes = [ChartOfAccountTypes.Works, ChartOfAccountTypes.Banks].join(',');
-            this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", excludedTypes, null, null, "Exclude", false, false, false, "string", false, true);
+        if (!this.IsFromArgs) {
+            this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
+            //this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
+        } else {
+            this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
+            // customer
+            this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
         }
-        else if (!isCustomer && !isVendor) {
-            var excludedTypes = [ChartOfAccountTypes.Customer, ChartOfAccountTypes.Vendor, ChartOfAccountTypes.Works].join(',');
-            this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", excludedTypes, null, null, "Exclude", false, false, false, "string", false, true);
-        }
-    }
+        //#endregion
 
-    private BuildParentsGLAccountApiFilters() {
+        //#region initialize query filters for Parent Account
         this.ParentsFilterItems = new ApiQueryFilters();
         this.ParentsFilterItems.addAdditionalFilter("ChartOfAccountsId", this.ChartOfAccountsId, null, null, "Equals", false, false, false, "string", false, true);
         this.ParentsFilterItems.addAdditionalFilter("ParentAccountId", "Please Don't Erase Me", null, null, "IsNull", false, false, false, "string", false, true);
+        //this.ParentsFilterItems.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string");
+        //#endregion
     }
 
     SetWindowArgs(args: NewGLAccountArgs) {
         if (args != null) {
-            this.WindowArgsPassed = true;
-            this.partnerType = args.PartnerType;
-            this.AccountTypeCode = args.AccountType;
-            this.DisplayNumber = args.DisplayNo;
-            this.LocalName = args.LocalName;
-            this.EnglishName = args.EnglishName;
-            this.EntityPM.NewGLAccountCardId = args.CardId;
-            this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
-            this.SetChartOfAccountType(args.ChartOfAccountType);
+            this.IsFromArgs = true;
+            if (args.AccountType == "2") { // customer
+                this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
+                this.DisplayNumber = args.DisplayNo;
+                this.LocalName = args.LocalName;
+                this.EnglishName = args.EnglishName;
+                this.AccountTypeCode = args.AccountType;
+                this.EntityPM.NewGLAccountCardId = args.CardId;
+                this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
+                this.InitLOVFilters();
+            }
+            else if (args.AccountType == "3") { // vendor
+                this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
+                this.DisplayNumber = args.DisplayNo;
+                this.LocalName = args.LocalName;
+                this.EnglishName = args.EnglishName;
+                this.AccountTypeCode = args.AccountType;
+                this.EntityPM.NewGLAccountCardId = args.CardId;
+                this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
+                this.InitLOVFilters();
+            }
         }
-        this.AfterWindowArgsPassed();
+        this.UIProperties.SetEnabled("EnglishName",this.ObjectTableName,false);
     }
 
-    private AfterWindowArgsPassed() {
-        this.BuildAPIFilters();
-    }
-
-    private SetChartOfAccountType(chartOfAccountType: string) {
-        const customer = "2";
-        const vendor = "3";
-        if (this.AccountTypeCode == customer) {
-            this.ChartOfAccountsTypeCode = chartOfAccountType;
-            this.DisableChartOfAccountType();
-
-        }
-        else if (this.AccountTypeCode == vendor) {
-            this.ChartOfAccountsTypeCode = chartOfAccountType;
-            this.DisableChartOfAccountType();
-        }
-    }
-
-    private EnableChartOfAccountType() {
-        this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, true);
-    }
-    private DisableChartOfAccountType() {
-        this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
-    }
     //#region Properties
     get IsMultiCurrency() { return this.EntityPM.IsMultiCurrency == null ? false : this.EntityPM.IsMultiCurrency; }
     set IsMultiCurrency(value: boolean) {
@@ -136,31 +110,24 @@ export class NewGLAccountComponent extends BaseComponent {
             this.EntityPM.IsMultiCurrency = value;
             this.ReconcileMethodCode = '0';
             this.CurrencyId = null;
+
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetValidity("CurrencyId", this.ObjectTableName, true, "");
             this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, false);
-            if(!this.isEnableMultiCurrencyWithReconcileMethodCodeEqualOne){
-                this.ReconcileMethodCode = '0';
-                //this.UIProperties.SetEnabled("ReconcileMethodCode", this.ObjectTableName, false);
-            }
+            //this.UIProperties.SetEnabled("ReconcileMethodCode", this.ObjectTableName, false);
+
             this.CD.detectChanges();
 
         } else if (value == false) {
             this.EntityPM.IsMultiCurrency = value;
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
-            if(!this.isEnableMultiCurrencyWithReconcileMethodCodeEqualOne){
-                this.ReconcileMethodCode = null;
-            }
+            this.ReconcileMethodCode = null;
+
             this.CD.detectChanges();
         }
     }
-    get NameForPrintingCheques() { return this.EntityPM.NameForPrintingCheques; }
-    set NameForPrintingCheques(value: string) {
-        if (this.EntityPM.NameForPrintingCheques != value) {
-            this.EntityPM.NameForPrintingCheques = value;
-        }
-    }
+
 
     get IsVATExempt() { return this.EntityPM.IsVATExempt }
     set IsVATExempt(value: boolean) {
@@ -177,25 +144,10 @@ export class NewGLAccountComponent extends BaseComponent {
         if (this.EntityPM.RevaluationEnabled != value) {
             this.EntityPM.RevaluationEnabled = value;
 
-        }
-    }
+        }}
 
-    get Smallcashbook() { return this.EntityPM.Smallcashbook }
-    set Smallcashbook(value: boolean) {
-        if (this.EntityPM.Smallcashbook != value) {
-            this.EntityPM.Smallcashbook = value;
 
-        }
-    }
-    get ReportingAsAnotherDocument() { return this.EntityPM.ReportingAsAnotherDocument }
-    set ReportingAsAnotherDocument(value: boolean) {
-        if (this.EntityPM.ReportingAsAnotherDocument != value) {
-            this.EntityPM.ReportingAsAnotherDocument = value;
-
-        }
-    }
-    IsVendor: boolean = false;
-    IsMultiCurrencyCheckboxEnabled: boolean = true;
+        IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {
         if (this.EntityPM.ChartOfAccountsTypeCode != value) {
@@ -217,8 +169,8 @@ export class NewGLAccountComponent extends BaseComponent {
             // }
 
             //
-            if (value == "4") { this.IsVendor = true; }
-            else if (value == "1" || value == "2") { // 1-Revenues, 2-Expenses
+
+            if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
 
                 // disable fields
                 this.IsMultiCurrency = true;
@@ -238,7 +190,6 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.IsMultiCurrencyCheckboxEnabled = true;
                 this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
-                this.RevenueExpenseType = this.OtherType;
             }
 
 
@@ -254,7 +205,7 @@ export class NewGLAccountComponent extends BaseComponent {
             if (value != null) {
                 this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
             } else {
-                this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, false, "111");
+                this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, false, "");
             }
             var filter = this.ParentsFilterItems.AdditionalFilters.find(d => d.FieldName == "ChartOfAccountsId");
             filter.FieldValue = value;
@@ -287,7 +238,7 @@ export class NewGLAccountComponent extends BaseComponent {
     set CurrencyId(value: string) {
         if (this.EntityPM.CurrencyId != value) {
             this.EntityPM.CurrencyId = value;
-            if (value != null)
+            if(value != null)
                 this.UIProperties.SetValidity("CurrencyId", this.ObjectTableName, true, "");
             else
                 this.UIProperties.SetValidity("CurrencyId", this.ObjectTableName, false, "");
@@ -354,56 +305,6 @@ export class NewGLAccountComponent extends BaseComponent {
         }
     }
 
-    get FollowupDate() { return this.EntityPM.FollowupDate; }
-    set FollowupDate(value: Date) {
-        if (this.EntityPM.FollowupDate != value) {
-            this.EntityPM.FollowupDate = value;
-        }
-    }
-
-    get FollowupNotes() { return this.EntityPM.FollowupNotes; }
-    set FollowupNotes(value: string) {
-        if (this.EntityPM.FollowupNotes != value) {
-            this.EntityPM.FollowupNotes = value;
-        }
-    }
-
-    get PaymentTerms() { return this.EntityPM.PaymentTerms; }
-    set PaymentTerms(value: string) {
-        if (this.EntityPM.PaymentTerms != value) {
-            this.EntityPM.PaymentTerms = value;
-        }
-    }
-
-    get IsEquipmentVendor() { return this.EntityPM.IsEquipmentVendor }
-    set IsEquipmentVendor(value: boolean) {
-        if (this.EntityPM.IsEquipmentVendor != value) {
-            this.EntityPM.IsEquipmentVendor = value;
-        }
-    }
-
-    get ExcludeFromDeductionReport() { return this.EntityPM.ExcludeFromDeductionReport }
-    set ExcludeFromDeductionReport(value: boolean) {
-        if (this.EntityPM.ExcludeFromDeductionReport != value) {
-            this.EntityPM.ExcludeFromDeductionReport = value;
-
-        }
-    }
-
-    get ExchangeRateId() { return this.EntityPM.ExchangeRateId; }
-    set ExchangeRateId(value: string) {
-        if (this.EntityPM.ExchangeRateId != value) {
-            this.EntityPM.ExchangeRateId = value;
-        }
-    }
-
-    get AllowEditChequePayToName() { return this.EntityPM.AllowEditChequePayToName; }
-    set AllowEditChequePayToName(value: boolean) {
-        if (this.EntityPM.AllowEditChequePayToName != value) {
-            this.EntityPM.AllowEditChequePayToName = value;
-        }
-    }
-
     get RevenueExpenseType() { return this.EntityPM.RevenueExpenseType; }
     set RevenueExpenseType(value: string) {
         if (this.EntityPM.RevenueExpenseType != value) {
@@ -424,17 +325,12 @@ export class NewGLAccountComponent extends BaseComponent {
     OkButtonClicked() {
         var errors: string[] = [];
 
-
-        if (!this.isEnableMultiCurrencyWithReconcileMethodCodeEqualOne) {
-            if (this.IsMultiCurrency) {
-                if (this.ReconcileMethodCode != '0') {
-                    errors.push(TextCodeTranslator.Translate("GLAccounts.O.LocalCurrencyErr"));
-                    //errors.push("The reconcile method for multi currency GLAaccount must be local currency"); // need a textcode to enable translations to hebrew
-                }
+        if (this.IsMultiCurrency) {
+            if (this.ReconcileMethodCode != '0') {
+                errors.push(TextCodeTranslator.Translate("GLAccounts.O.LocalCurrencyErr"));
+                //errors.push("The reconcile method for multi currency GLAaccount must be local currency"); // need a textcode to enable translations to hebrew
             }
         }
-
-
 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
@@ -454,30 +350,10 @@ export class NewGLAccountComponent extends BaseComponent {
             this.EntityPM.ControlAccountId = this.FullAccountingSetting.VendorControlAccountId;
         }
 
-        this.CurrentSession.StartBusyIndicatorSaving();
         this.EntityPM.AccountTypeCode = AppTool.IsNullOrEmpty(this.AccountTypeCode) ? "1" : this.AccountTypeCode;
-        if (this.EntityPM.AccountTypeCode == '1') {
-            switch (this.EntityPM.ChartOfAccountsTypeCode) {
-                case "3": {
-                    this.EntityPM.AccountTypeCode = "2";
-                    break;
-                }
-                case "4": {
-                    this.EntityPM.AccountTypeCode = "3";
-                    break;
-                }
-                default: {
-                    this.EntityPM.AccountTypeCode = "1";
-                }
-            }
-        }
-        if (AppTool.IsNullOrEmpty(this.EntityPM.AccountTypeCode)) {
-            this.EntityPM.AccountTypeCode = "1"
-        }
         this.EntityPM.Inactive = false;
         this.EntityPM.IsControlAccount = false;
-        this.myService.insert(this.EntityPM).subscribe((myResult: any) => {
-            this.CurrentSession.StopBusyIndicator();
+        this.myService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -486,6 +362,7 @@ export class NewGLAccountComponent extends BaseComponent {
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -499,16 +376,16 @@ export class NewGLAccountComponent extends BaseComponent {
 
     }
 
-    OnLovItemChanged(item: any) {
+    OnLovItemChanged(item: any){
         if (item == null) {
             this.ChartOfAccountsId = null;
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, false);
-            //// this.UIProperties.SetRequired("ChartOfAccountsId", this.ObjectTableName, false);
-            // this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "Chart Of Accounts is requierd");
+            this.UIProperties.SetRequired("ChartOfAccountsId", this.ObjectTableName, false);
+            this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "Chart Of Accounts is requierd");
         } else {
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, true);
-            //this.UIProperties.SetRequired("ChartOfAccountsId", this.ObjectTableName, true);
-            //this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, false, "");
+            this.UIProperties.SetRequired("ChartOfAccountsId", this.ObjectTableName, true);
+            this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, false, "");
         }
     }
 
@@ -528,11 +405,6 @@ export class NewGLAccountComponent extends BaseComponent {
             })
         });
 
-    }
-
-    GetDisplayMemberPath() {
-        var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-        return showLocal ? "LocalName" : "EnglishName";
     }
 
 }

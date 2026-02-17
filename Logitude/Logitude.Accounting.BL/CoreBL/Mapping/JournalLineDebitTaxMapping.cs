@@ -10,12 +10,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 {
     public class JournalLineDebitTaxMapping : JournalLineMappingBase
     {
-        private IAccountingSettingResolver _myIAccountingSettingResolver;
 
-        public JournalLineDebitTaxMapping(JournalLinePM journalLine, JournalPM journalPM, IGLAccountDataProvider myGLAccountPMProvider, IAccountingSettingResolver myIAccountingSettingResolver)
-            : base(journalLine, journalPM, myGLAccountPMProvider, myIAccountingSettingResolver)
+        public JournalLineDebitTaxMapping(JournalLinePM journalLine, JournalPM journalPM, IGLAccountDataProvider myGLAccountPMProvider)
+            : base(journalLine, journalPM, myGLAccountPMProvider)
         {
-            _myIAccountingSettingResolver = myIAccountingSettingResolver;
+
         }
         protected override void MapIt()
         {
@@ -68,22 +67,19 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
         private string ResolveAccountingCurrencyId(int Tenant)
         {
-           //return (new AccountingSettingResolver()).
-           return _myIAccountingSettingResolver.
+           return (new AccountingSettingResolver()).
             ResolveAccountingCurrencyId(Tenant);// localAccountingCurrencyId;
         }
 
         public virtual decimal ResolveVat(int Tenant, DateTime DocumentDate)
         {
-            //return(new AccountingSettingResolver()).
-            return _myIAccountingSettingResolver.
+            return(new AccountingSettingResolver()).
             ResolveVat(Tenant, DocumentDate); //Convert.ToDecimal(1.18);
         }
 
         public virtual string ResolveVATOutputGLAccountId(int Tenant)
         {
-            //return (new AccountingSettingResolver())
-            return _myIAccountingSettingResolver.
+            return (new AccountingSettingResolver()).
             ResolveVATOutputGLAccountId(Tenant); //Tax Account
 
         }

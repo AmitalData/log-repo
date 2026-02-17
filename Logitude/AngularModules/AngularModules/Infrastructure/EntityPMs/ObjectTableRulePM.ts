@@ -1,4 +1,4 @@
-import {RuleConditionFieldPM} from './RuleConditionFieldPM';
+﻿import {RuleConditionFieldPM} from './RuleConditionFieldPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 export class ObjectTableRulePM {
@@ -23,12 +23,11 @@ export class ObjectTableRulePM {
     public RuleNotificationTypeCode: string;
     public TriggerTypeCode: string;
     public TriggerFieldId: string;
-    public TriggerFieldCode: string;
     public ActiveForNew: boolean;
     public ActiveForUpdate: boolean;
     public Internal: boolean;
     public AdvancedCondition: boolean;
-    public IsCreatedFromSystemRule: boolean;
+
 
     private ruleConditionFields: RuleConditionFieldPM[];
     get RuleConditionFields() {

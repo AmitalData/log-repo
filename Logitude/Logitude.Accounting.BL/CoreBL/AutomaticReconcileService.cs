@@ -1,68 +1,61 @@
 ﻿
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Helpers;
-using Logitude.BL.Interfaces;
-using Logitude.BL.Resolvers;
-using Logitude.BL.Security;
-using Logitude.Customs.BL.StimulReport;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Microsoft.Practices.Unity;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Diagnostics;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+using System.Data.Entity.Core.Objects;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Reflection.Emit;
+using System.Data.Entity;
+using Logitude.Accounting.Def.EntityPMs;
+using System.Diagnostics;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Security;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
-    public class AutomaticReconcileService
+    public class AutomaticReconcileService 
     ///PILOT 
     ///http://stackoverflow.com/questions/23280535/maybe-a-really-simple-dynamic-linq-to-entities-select-statement
     {
-        public static string fifoAccountingDate = "FIFOAccountingDate";
-         public static string fifoDueDate = "FIFODueDate";
-         public static string accountingDate = "AccountingDate";
-        public static string dueDate = "DueDate";
-
         public void AutomaticReconcile(string gLAccountId, int tenant, FilteredReconciliation myFilteredReconciliation)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             var repo = new LedgerTransactionRepository(tenant);
-            LedgerTransactionListQueryService listService = new LedgerTransactionListQueryService(accountingContext);
 
-
+            
 
             var repoGLAccountRepository = new GLAccountRepository(tenant);
             var acc = repoGLAccountRepository.GetGLAccountByIdTenant(gLAccountId, tenant);
-
+            
             //acc.ReconcileMethod.
             //var repoAutomaticReconcile = new AutomaticReconcileRepository(tenant);
 
             AutomaticReconcileMethod pocoAutomaticReconcileMethod = new AutomaticReconcileMethod();
-
+            
             if (String.IsNullOrWhiteSpace(acc.AutomaticReconcileId))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("No valid Method");
+                Debug.WriteLine("No valid Method");
                 //return;
             }
             else
@@ -73,18 +66,18 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (pocoAutomaticReconcileMethod == null)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("No valid Method");
+                    Debug.WriteLine("No valid Method");
                 }
             }
-
-
+            
+            
             AutomaticReconcilePM.AutomaticReconcileEnum method1 = AutomaticReconcilePM.AutomaticReconcileEnum.AccountingDate;
             AutomaticReconcilePM.AutomaticReconcileEnum method2 = AutomaticReconcilePM.AutomaticReconcileEnum.none;
             AutomaticReconcilePM.AutomaticReconcileEnum method3 = AutomaticReconcilePM.AutomaticReconcileEnum.none;
             Enum.TryParse<AutomaticReconcilePM.AutomaticReconcileEnum>(pocoAutomaticReconcileMethod.AutomaticReconcile1, out method1);
             Enum.TryParse<AutomaticReconcilePM.AutomaticReconcileEnum>(pocoAutomaticReconcileMethod.AutomaticReconcile2, out method2);
             Enum.TryParse<AutomaticReconcilePM.AutomaticReconcileEnum>(pocoAutomaticReconcileMethod.AutomaticReconcile3, out method3);
-
+            
             var fields = new List<string>();
 
 
@@ -112,7 +105,7 @@ namespace Logitude.Accounting.BL.CoreBL
             fields = fields.Distinct().ToList();
             if (fields.Count == 0)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("No valid Method");
+                Debug.WriteLine("No valid Method");
 
 
 
@@ -130,11 +123,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     string msg = TranslateTextsClass.Translate("Accounting.General.O.NoAutoRecoMethodDefined4GLAccount", 0, useLocal);
 
-                    throw new ApplicationException(msg);
+                    throw new Exception(msg);
                     //No GlAccount AutomaticReconcile and no Screen AutomaticReconcile defintion // WI26460
-
+                    
                 }
-
+                
             }
             var qNotReconciledGroupByHaveValues = qNotReconciled;
 
@@ -160,33 +153,24 @@ namespace Logitude.Accounting.BL.CoreBL
 
             });
 
-            var takeFirst250000 = true;
-            if (takeFirst250000)
+            var takeFirst50000 = true;
+            if (takeFirst50000)
             {
                 qNotReconciledGroupByHaveValuesMapDTO = qNotReconciledGroupByHaveValuesMapDTO
                     .OrderBy(rec => rec.AccountingDate)
-                    .Take(250000);
+                    .Take(50000);
             }
             //expresion tree
             var fieldList = fields.ToArray();
-            
-            if (fields.FirstOrDefault() == fifoAccountingDate || fields.FirstOrDefault() == fifoDueDate)
-            {
-                string propertyName = fields[0] == fifoAccountingDate ? accountingDate : dueDate;
-                var fifoResult = DoFifoReconcile(qNotReconciledGroupByHaveValuesMapDTO, propertyName);
-
-                AllLedgerTransactionList = listService.GetDtoAsList(fifoResult);
-                return;
-            }
             var lambada = GroupByExpression<LedgerTransactionDto>(fieldList);
             var qNotReconciledGroupByHaveValuesMapDTOHavingZeroSum = qNotReconciledGroupByHaveValuesMapDTO.GroupBy(lambada.Compile()).Where(g => g.Sum(r => r.OpenAmount) == 0);
-            var only10000Match = true;
-            if (only10000Match)// 10000 Match with most rows 
+            var only100Match = true;
+            if (only100Match)// 100 Match with most rows 
             {
                 qNotReconciledGroupByHaveValuesMapDTOHavingZeroSum =
                     qNotReconciledGroupByHaveValuesMapDTOHavingZeroSum
                     .OrderByDescending(g => g.Count())
-                    .Take(10000); ;
+                    .Take(100); ;
             }
 
             var resGroupBy = qNotReconciledGroupByHaveValuesMapDTOHavingZeroSum.ToList();
@@ -207,7 +191,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 GroupMatch++;
 
             }
-
+            LedgerTransactionListQueryService listService = new LedgerTransactionListQueryService(accountingContext);
             var listLedger = listService.GetDtoAsList(allDto);
 
             AllLedgerTransactionList = listLedger;
@@ -224,7 +208,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 case AutomaticReconcilePM.AutomaticReconcileEnum.OpenAmountABS:
                     fields.Add("OpenAmountABS");
                     fields.Add("OpenAmountCurrencyId");
-
+                    
                     break;
                 case AutomaticReconcilePM.AutomaticReconcileEnum.ReferenceDate:
                     //qNotReconciled = qNotReconciled.Where( rec=> rec.DocumentDate
@@ -254,14 +238,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     qNotReconciled = qNotReconciled
                         //.Where(rec => !string.IsNullOrWhiteSpace(rec.Reference3));
                         .Where(rec => !(rec.Reference3 == null || rec.Reference3.Trim() == string.Empty));
-
+                        
                     fields.Add("Reference3");
-                    break;
-                case AutomaticReconcilePM.AutomaticReconcileEnum.FIFOAccountingDate:
-                    fields.Add(fifoAccountingDate);
-                    break;
-                case AutomaticReconcilePM.AutomaticReconcileEnum.FIFODueDate:
-                    fields.Add(fifoDueDate);
                     break;
                 default:
                     break;
@@ -291,103 +269,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 selector, itemParam);
         }
 
-        private List<LedgerTransactionDto> DoFifoReconcile(IEnumerable<LedgerTransactionDto> transactions, string dateField)
-        {
-            if (transactions == null || !transactions.Any())
-                return new List<LedgerTransactionDto>();
-
-            if (string.IsNullOrWhiteSpace(dateField))
-                throw new ArgumentException("Date field name is required.", nameof(dateField));
-
-            var propInfo = typeof(LedgerTransactionDto).GetProperty(dateField);
-            if (propInfo == null)
-                throw new ArgumentException($"Property '{dateField}' not found on LedgerTransactionDto.");
-
-            var ordered = transactions
-                .Where(t => propInfo.GetValue(t) != null)
-                .OrderBy(t => (DateTime)propInfo.GetValue(t))
-                .ThenBy(t => t.Id)
-                .ToList();
-
-            if (!ordered.Any())
-                return new List<LedgerTransactionDto>();
-
-            var plusList = ordered.Where(t => t.OpenAmount > 0).ToList();
-            var minusList = ordered.Where(t => t.OpenAmount < 0).ToList();
-
-            if (!plusList.Any() || !minusList.Any())
-                return new List<LedgerTransactionDto>();
-
-            decimal plusSum = plusList.Sum(x => x.OpenAmount);
-            decimal minusSum = minusList.Sum(x => x.OpenAmount); 
-
-            var reconciled = new List<LedgerTransactionDto>();
-            decimal balance;
-
-            if (plusSum >= Math.Abs(minusSum))
-            {
-                balance = -minusSum; 
-                foreach (var payment in minusList)
-                {
-                    payment.GroupHash = 1;
-                    reconciled.Add(payment);
-                }
-
-                foreach (var invoice in plusList)
-                {
-                    if (balance <= 0)
-                        break;
-
-                    if (invoice.OpenAmount <= balance)
-                    {
-                        invoice.AmountToReconcile = invoice.OpenAmount;
-                        balance -= invoice.OpenAmount;
-                    }
-                    else
-                    {
-                        invoice.AmountToReconcile = balance;
-                        balance = 0;
-                    }
-
-                    invoice.GroupHash = 1;
-                    reconciled.Add(invoice);
-                }
-            }
-            else
-            {
-                balance = plusSum;
-                foreach (var invoice in plusList)
-                {
-                    invoice.GroupHash = 1;
-                    reconciled.Add(invoice);
-                }
-
-                foreach (var payment in minusList)
-                {
-                    if (balance <= 0)
-                        break;
-
-                    decimal paymentAbs = Math.Abs(payment.OpenAmount);
-                    if (paymentAbs <= balance)
-                    {
-                        balance -= paymentAbs;
-                    }
-                    else
-                    {
-                        payment.AmountToReconcile =-balance;
-                        balance = 0;
-                    }
-
-                    payment.GroupHash = 1;
-                    reconciled.Add(payment);
-                }
-            }
-
-            return reconciled;
-        }
-
-
-
 
 
         public Expression<Func<TItem, object>> GroupByExpression<TItem>(string[] propertyNames)
@@ -401,7 +282,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var body = Expression.New(constructor, properties.Select(p => Expression.Property(param, p)));
             var expr = Expression.Lambda<Func<TItem, object>>(body, param);
             return expr;
-        }
+        }  
 
 
         private static Expression<Func<LedgerTransactionDTO, string>> testGetColumnName(string property)
@@ -537,7 +418,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return loggedcontact;
         }
 
-
+        
 
     }
     public class LedgerTransactionsEqualityComparer : IEqualityComparer<LedgerTransactionDTO>
@@ -653,7 +534,7 @@ namespace Logitude.Accounting.BL.CoreBL
     }
     public class LedgerTransactionDTO
     {
-
+        
 
 
         public string Id { get; set; }
@@ -703,6 +584,6 @@ namespace Logitude.Accounting.BL.CoreBL
         public GenericCallBack CallBack { get; set; }
         public bool ClientChooseAutoMethod { get; set; }
     }
-
+   
 }
 

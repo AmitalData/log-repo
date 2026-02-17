@@ -27,8 +27,5 @@ export class CustomerTenantAccessList {
 		IsPrivateLabelCustomer: boolean;
 		CustomCompanyName: string;
 		StockTypeCode: string;
-		IsCustom: boolean;
-		IsExport: boolean;
-		CustomersCodes: string;
 	
 }

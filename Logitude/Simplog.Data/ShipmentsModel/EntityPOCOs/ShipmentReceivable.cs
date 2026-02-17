@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System.Collections.Generic;
 
@@ -49,10 +49,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string VatTypeId { get; set; }
         public bool IsBackToBack { get; set; }
         public string ShipmentReceivableParentId { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
-        public double? VatAmountLocal { get; set; }
-        public double? VatAmountProfit { get; set; }        
-        public string PayableVendorId { get; set; }
 
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
@@ -96,7 +92,5 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public ShipmentReceivable ShipmentReceivableParent { get; set; }
         public List<ShipmentReceivable> ChildShipmentReceivables { get; set; }
 
-        [ForeignKey("PayableVendorId")]
-        public virtual Card PayableVendor { get; set; }
     }
 }

@@ -74,24 +74,5 @@ export class ObjectFieldList {
 		CopyToDW: boolean;
 		DisplayOnLookUpLocal: boolean;
 		EnableFullscreenTextBox: boolean;
-		DisplayInAutomationAsEnitity: boolean;
-		RecordType: string;
-		ObjectTable_LookUpTableName: string;
-		FieldCode: string;
-		FullNameTextCodeCode: string;
-		ShortNameTextCodeCode: string;
-		HelpTextCodeCode: string;
-		AdditionalQuerySections: string;
-		LeftKey: string;
-		RightKey: string;
-		IsForeignKey: boolean;
-		ForeignEntity: string;
-		NavigationPropertyName: string;
-		ForMetaDataOnly: boolean;
-		IsListFilter: boolean;
-		NumberOfDigits: number;
-		DigitsAfterPoint: number;
-		CustomPickListCode: string;
-		DisplayInRequiredFields: boolean;
 	
-}
+}

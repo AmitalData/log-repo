@@ -10,14 +10,11 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -42,21 +39,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Address GetAddressById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public Address GetAddressById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Address with Id " + Id + " doesn't exist");
 
-				return AddressDataMapping(temp,Tenant,ComputingPartnerName);
+				return AddressDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -70,39 +67,32 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Name = MyEntityPM.Name;
 				   temp.Address1 = MyEntityPM.Address1;
-				   temp.Address2 = MyEntityPM.Address2; 
-
-			  
+				   temp.Address2 = MyEntityPM.Address2;			  
 				   if(MyEntityPM.CountryId != null)
 				   {
 					   CountryQueryService CountryService0 = new CountryQueryService(Tenant);
-					   					   temp.Country = CountryService0.GetCountryById(MyEntityPM.CountryId,Tenant,ComputingPartnerName); 
+					   					   temp.Country = CountryService0.GetCountryById(MyEntityPM.CountryId,Tenant); 
+			       
+					   				   }
+				   			  
+				   if(MyEntityPM.City != null)
+				   {
+					   CityQueryService CityService1 = new CityQueryService(Tenant);
+					   					   temp.City = CityService1.GetCityById(MyEntityPM.City,Tenant); 
 			       
 					   				   }
 				   
-				   temp.City = MyEntityPM.City;
 				   temp.ZipCode = MyEntityPM.ZipCode;
 				   temp.PhoneNumber = MyEntityPM.PhoneNumber;
-				   temp.FaxNumber = MyEntityPM.FaxNumber; 
-
-			  
+				   temp.FaxNumber = MyEntityPM.FaxNumber;			  
 				   if(MyEntityPM.StateId != null)
 				   {
-					   StateQueryService StateService1 = new StateQueryService(Tenant);
-					   					   temp.State = StateService1.GetStateById(MyEntityPM.StateId,Tenant,ComputingPartnerName); 
+					   StateQueryService StateService2 = new StateQueryService(Tenant);
+					   					   temp.State = StateService2.GetStateById(MyEntityPM.StateId,Tenant); 
 			       
 					   				   }
 				   
-				   temp.ExternalId = MyEntityPM.ExternalId; 
-
-			  
-				   if(MyEntityPM.AddressTypeId != null)
-				   {
-					   AddressTypeQueryService AddressTypeService2 = new AddressTypeQueryService(Tenant);
-					   					   temp.AddressType = AddressTypeService2.GetAddressTypeById(MyEntityPM.AddressTypeId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   					
+				   temp.ExternalId = MyEntityPM.ExternalId;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -112,7 +102,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public AddressPM AddressDataMappingAndValidatin(Address MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public AddressPM AddressDataMappingAndValidatin(Address MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -121,158 +111,56 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
-					{   
+										   
+					if(temp == null)
+					{
 					    throw new ApplicationException("Address with Id " + MyEntity.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-					   
-					    if(!string.IsNullOrEmpty(MyEntity.Id))
-					    {
-					        throw new ApplicationException("Address with provided key doesn't exist");
-						
-						}
-						//else
-						//{
-						//    temp.Id = MyEntity.Id;
-
-						//} 
-
-						
+						temp.Id = MyEntity.Id;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Name = MyEntity.Name;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Address1 = MyEntity.Address1;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Address2 = MyEntity.Address2;
-
-										}  
-
-					
-					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
+					temp.Name = MyEntity.Name;
+					temp.Address1 = MyEntity.Address1;
+					temp.Address2 = MyEntity.Address2;					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
 					if(MyEntity.Country != null)
 					{
-						var myCountryPM = CountryCountryService.CountryDataMappingAndValidatin(MyEntity.Country,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myCountryPM != null)
-						{ 
-
+						var myCountryPM = CountryCountryService.CountryDataMappingAndValidatin(MyEntity.Country,Tenant,ComputingPartnerName);
+												if(myCountryPM != null)
+						{
+							temp.CountryId = myCountryPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.CountryId = myCountryPM.Id;
-						  
-							}  
-
-							
-						} 
-
+					}
+			
+										CityQueryService CityCityService = new CityQueryService(Tenant);
+					if(MyEntity.City != null)
+					{
+						var myCityPM = CityCityService.CityDataMappingAndValidatin(MyEntity.City,Tenant,ComputingPartnerName);
+												if(myCityPM != null)
+						{
+							temp.City = myCityPM.Id;
+						}
+						 
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.City = MyEntity.City;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ZipCode = MyEntity.ZipCode;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.PhoneNumber = MyEntity.PhoneNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.FaxNumber = MyEntity.FaxNumber;
-
-										}  
-
-					
-					StateQueryService StateStateService = new StateQueryService(Tenant);
+					temp.ZipCode = MyEntity.ZipCode;
+					temp.PhoneNumber = MyEntity.PhoneNumber;
+					temp.FaxNumber = MyEntity.FaxNumber;					StateQueryService StateStateService = new StateQueryService(Tenant);
 					if(MyEntity.State != null)
 					{
-						var myStatePM = StateStateService.StateDataMappingAndValidatin(MyEntity.State,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myStatePM != null)
-						{ 
-
+						var myStatePM = StateStateService.StateDataMappingAndValidatin(MyEntity.State,Tenant,ComputingPartnerName);
+												if(myStatePM != null)
+						{
+							temp.StateId = myStatePM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.StateId = myStatePM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ExternalId = MyEntity.ExternalId;
-
-										}  
-
-					
-					AddressTypeQueryService AddressTypeAddressTypeService = new AddressTypeQueryService(Tenant);
-					if(MyEntity.AddressType != null)
-					{
-						var myAddressTypePM = AddressTypeAddressTypeService.AddressTypeDataMappingAndValidatin(MyEntity.AddressType,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myAddressTypePM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.AddressTypeId = myAddressTypePM.Id;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
-										   
-					return temp;
+					temp.ExternalId = MyEntity.ExternalId;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -280,8 +168,6 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

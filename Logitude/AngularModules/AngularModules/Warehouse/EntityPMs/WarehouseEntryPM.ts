@@ -14,15 +14,12 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
-import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
-export class WarehouseEntryPM extends ObjectCustomFieldPM {
-      
+export class WarehouseEntryPM {
+
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          super("WarehouseEntry");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -372,93 +369,11 @@ export class WarehouseEntryPM extends ObjectCustomFieldPM {
     public set TotalVolumetricWeight(newValue: number) { if (this.totalVolumetricWeight != newValue) { this.totalVolumetricWeight = newValue; this.MarkAsDirty("TotalVolumetricWeight"); } }
        
 	 
-    private lastStatusUpdateDate: Date;
-    public get LastStatusUpdateDate() { return this.lastStatusUpdateDate; }
-    public set LastStatusUpdateDate(newValue: Date) { if (this.lastStatusUpdateDate != newValue) { this.lastStatusUpdateDate = newValue; this.MarkAsDirty("LastStatusUpdateDate"); } }
-       
-	 
-    private masterHouse: string;
-    public get MasterHouse() { return this.masterHouse; }
-    public set MasterHouse(newValue: string) { if (this.masterHouse != newValue) { this.masterHouse = newValue; this.MarkAsDirty("MasterHouse"); } }
-       
-	 
-    private entryReferencesAndDate: string;
-    public get EntryReferencesAndDate() { return this.entryReferencesAndDate; }
-    public set EntryReferencesAndDate(newValue: string) { if (this.entryReferencesAndDate != newValue) { this.entryReferencesAndDate = newValue; this.MarkAsDirty("EntryReferencesAndDate"); } }
-       
-	 
-    private connectedTo: string;
-    public get ConnectedTo() { return this.connectedTo; }
-    public set ConnectedTo(newValue: string) { if (this.connectedTo != newValue) { this.connectedTo = newValue; this.MarkAsDirty("ConnectedTo"); } }
-       
-	 
-    private ratio: number;
-    public get Ratio() { return this.ratio; }
-    public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
-       
-	 
-    private toTypeCode: string;
-    public get ToTypeCode() { return this.toTypeCode; }
-    public set ToTypeCode(newValue: string) { if (this.toTypeCode != newValue) { this.toTypeCode = newValue; this.MarkAsDirty("ToTypeCode"); } }
-       
-	 
-    private fromTypeCode: string;
-    public get FromTypeCode() { return this.fromTypeCode; }
-    public set FromTypeCode(newValue: string) { if (this.fromTypeCode != newValue) { this.fromTypeCode = newValue; this.MarkAsDirty("FromTypeCode"); } }
-       
-	 
-    private fromCountryId: string;
-    public get FromCountryId() { return this.fromCountryId; }
-    public set FromCountryId(newValue: string) { if (this.fromCountryId != newValue) { this.fromCountryId = newValue; this.MarkAsDirty("FromCountryId"); } }
-       
-	 
-    private toCountryId: string;
-    public get ToCountryId() { return this.toCountryId; }
-    public set ToCountryId(newValue: string) { if (this.toCountryId != newValue) { this.toCountryId = newValue; this.MarkAsDirty("ToCountryId"); } }
-       
-	 
-    private masterShipmentNumber: string;
-    public get MasterShipmentNumber() { return this.masterShipmentNumber; }
-    public set MasterShipmentNumber(newValue: string) { if (this.masterShipmentNumber != newValue) { this.masterShipmentNumber = newValue; this.MarkAsDirty("MasterShipmentNumber"); } }
-       
-	 
-    private connectedToReferenceNumber: string;
-    public get ConnectedToReferenceNumber() { return this.connectedToReferenceNumber; }
-    public set ConnectedToReferenceNumber(newValue: string) { if (this.connectedToReferenceNumber != newValue) { this.connectedToReferenceNumber = newValue; this.MarkAsDirty("ConnectedToReferenceNumber"); } }
-       
-	 
-    private isUpdateByAutomation: boolean;
-    public get IsUpdateByAutomation() { return this.isUpdateByAutomation; }
-    public set IsUpdateByAutomation(newValue: boolean) { if (this.isUpdateByAutomation != newValue) { this.isUpdateByAutomation = newValue; this.MarkAsDirty("IsUpdateByAutomation"); } }
-       
-	 
-    private customerPrimaryContactId: string;
-    public get CustomerPrimaryContactId() { return this.customerPrimaryContactId; }
-    public set CustomerPrimaryContactId(newValue: string) { if (this.customerPrimaryContactId != newValue) { this.customerPrimaryContactId = newValue; this.MarkAsDirty("CustomerPrimaryContactId"); } }
-       
-	 
-    private shipperPrimaryContactId: string;
-    public get ShipperPrimaryContactId() { return this.shipperPrimaryContactId; }
-    public set ShipperPrimaryContactId(newValue: string) { if (this.shipperPrimaryContactId != newValue) { this.shipperPrimaryContactId = newValue; this.MarkAsDirty("ShipperPrimaryContactId"); } }
-       
-	 
-    private consigneePrimaryContactId: string;
-    public get ConsigneePrimaryContactId() { return this.consigneePrimaryContactId; }
-    public set ConsigneePrimaryContactId(newValue: string) { if (this.consigneePrimaryContactId != newValue) { this.consigneePrimaryContactId = newValue; this.MarkAsDirty("ConsigneePrimaryContactId"); } }
-       
-	 
-    private customChildEntities: CustomChildEntity[];
-    public get CustomChildEntities() { return this.customChildEntities; }
-    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
-
 
     public OldEntityPM: WarehouseEntryPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -466,7 +381,6 @@ export class WarehouseEntryPM extends ObjectCustomFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WarehouseEntry");
            
         }
-       }
     }
 
     private MyClone: WarehouseEntryPM;

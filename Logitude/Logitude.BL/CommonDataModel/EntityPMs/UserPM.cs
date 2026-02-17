@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Logitude.BL.Validators;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
@@ -100,9 +99,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string Notes { get; set; }
-
-        [DataMember]
-        public bool DontShowLocalLabels { get; set; }
 
         [DataMember]
         public bool SetAngularAsDefault { get; set; }
@@ -265,40 +261,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string UserRoles { get; set; }
-
-        [DataMember]
-        public bool AdditionalPackagesOnly { get; set; }
-
-        [DataMember]
-        public int? SecurityLevel { get; set; }
-        [DataMember]
-        public string LayoutDirection { get; set; }
-        [DataMember]
-        public string SignatureImageId { get; set; }
-
-        [DataMember]
-        public bool IsHRUser { get; set; }
-
-        [DataMember]
-        public bool DisableCachedData { get; set; }
-
-        List<UserFreelancerGroupPM> freelancerGroups;
-        [Include]
-        [Association("UserFreelancerGroupsPMUserPM", "Id", "UserId")]
-        [Composition]
-        [DataMember]
-        public virtual List<UserFreelancerGroupPM> FreelancerGroups
-        {
-            get
-            {
-                if (freelancerGroups == null)
-                {
-                    freelancerGroups = new List<UserFreelancerGroupPM>();
-                }
-                return freelancerGroups;
-            }
-            set { freelancerGroups = value; }
-        }
-
     }
 }

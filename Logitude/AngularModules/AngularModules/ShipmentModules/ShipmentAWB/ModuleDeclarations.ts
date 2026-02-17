@@ -1,4 +1,4 @@
-import {AWBWizardComponent} from './Components/AWBWizard/AWBWizardComponent';
+﻿import {AWBWizardComponent} from './Components/AWBWizard/AWBWizardComponent';
 import {AWBWizardLoadComponent} from './Components/AWBWizard/AWBWizardLoadComponent';
 import {AWBOverviewTabComponent} from './Components/AWBWizard/Overview/AWBOverviewTabComponent';
 import {AWBPartnersTabComponent} from './Components/AWBWizard/Partners/AWBPartnersTabComponent';
@@ -6,9 +6,7 @@ import {AWBAddEditPartnerComponent} from './Components/AWBWizard/Partners/AWBAdd
 import {AWBRoutingsTabComponent} from './Components/AWBWizard/Routings/AWBRoutingsTabComponent';
 import {AWBHouseRoutingsTabComponent} from './Components/AWBWizard/Routings/AWBHouseRoutingsTabComponent';
 import {AWBPackagesTabComponent} from './Components/AWBWizard/Packages/AWBPackagesTabComponent';
-import { AWBAddEditPackageComponent } from './Components/AWBWizard/Packages/AWBAddEditPackageComponent';
-import { AWBAddEditCommodityComponent } from './Components/AWBWizard/Packages/AWBAddEditCommodityComponent';
-import { AWBAddEditCommodityPackageComponent } from './Components/AWBWizard/Packages/AWBAddEditCommodityPackageComponent';
+import {AWBAddEditPackageComponent} from './Components/AWBWizard/Packages/AWBAddEditPackageComponent';
 import {AWBChooseCommodityComponent} from './Components/AWBWizard/Packages/AWBChooseCommodityComponent';
 import {AWBDangerousPackageComponent} from './Components/AWBWizard/Packages/AWBDangerousPackageComponent';
 import {FreightChargesTabComponent} from './Components/AWBWizard/FreightCharges/FreightChargesTabComponent';
@@ -28,7 +26,6 @@ import {PurchaseStockComponent} from './Components/AWBWizard/Others/PurchaseStoc
 import {SendFSRComponent} from './Components/FSRWizard/SendFSRComponent';
 import {FSRWizardComponent} from './Components/FSRWizard/FSRWizardComponent';
 import {SendShipmentFSRComponent} from './Components/FSRWizard/SendShipmentFSRComponent';
-import { TestMultiHarmonizeComponent } from './Components/AWBWizard/TestMultiHarmonizeComponent';
 
 export const Components = 
     [
@@ -41,8 +38,6 @@ export const Components =
         AWBHouseRoutingsTabComponent,
         AWBPackagesTabComponent,
         AWBAddEditPackageComponent,
-        AWBAddEditCommodityComponent,
-        AWBAddEditCommodityPackageComponent,
         AWBChooseCommodityComponent,
         AWBDangerousPackageComponent,
         FreightChargesTabComponent,
@@ -62,7 +57,6 @@ export const Components =
         SendFSRComponent,
         FSRWizardComponent,
         SendShipmentFSRComponent,
-        TestMultiHarmonizeComponent,
     ];
 
 export class ModuleDeclarations {
@@ -80,8 +74,6 @@ export class ModuleDeclarations {
             case "AWBHouseRoutingsTabComponent": { myResult = AWBHouseRoutingsTabComponent; break; }
             case "AWBPackagesTabComponent": { myResult = AWBPackagesTabComponent; break; }
             case "AWBAddEditPackageComponent": { myResult = AWBAddEditPackageComponent; break; }
-            case "AWBAddEditCommodityComponent": { myResult = AWBAddEditCommodityComponent; break; }
-            case "AWBAddEditCommodityPackageComponent": { myResult = AWBAddEditCommodityPackageComponent; break; }                
             case "AWBChooseCommodityComponent": { myResult = AWBChooseCommodityComponent; break; }
             case "AWBDangerousPackageComponent": { myResult = AWBDangerousPackageComponent; break; }
             case "FreightChargesTabComponent": { myResult = FreightChargesTabComponent; break; }
@@ -101,7 +93,6 @@ export class ModuleDeclarations {
             case "SendFSRComponent": { myResult = SendFSRComponent; break; }
             case "FSRWizardComponent": { myResult = FSRWizardComponent; break; }
             case "SendShipmentFSRComponent": { myResult = SendShipmentFSRComponent; break; }
-            case "TestMultiHarmonizeComponent": { myResult = TestMultiHarmonizeComponent; break; }
         }
 
         return myResult;

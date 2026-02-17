@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Data.Entity;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -23,21 +22,21 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public TraceEvent GetSingleTraceEvent(string id)
         {
-            return (from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
+            return (from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
                     where a.Id == id
                     select a).FirstOrDefault();
         }
 
         public TraceEvent GetSingleTraceEventByExternalId(string externalId, int tenant)
         {
-            return (from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
+            return (from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
                     where a.ExternalId == externalId && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
         public TraceEvent GetSingleTraceEventByEntityId(string entityId, string eventTypeId, int tenant)
         {
-            TraceEvent traceevent = (from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
+            TraceEvent traceevent = (from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
                                      where a.EntityId == entityId && a.Tenant == tenant && a.EventTypeId == eventTypeId && !a.Deleted
                                      select a).FirstOrDefault();
             return traceevent;
@@ -45,42 +44,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public TraceEvent GetSingleTraceEventByExternalIdandEventTypeCode(string externalId, string eventTypeCode, int tenant)
         {
-            return (from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
+            return (from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
                     where a.ExternalId == externalId && a.EventType.Code.ToLower() == eventTypeCode.ToLower() && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
         public IQueryable<TraceEvent> GetTraceEvents(int tenant, string entityId, string objectTableId)
         {
-            IQueryable<TraceEvent> iQueryable = from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
+            IQueryable<TraceEvent> iQueryable = from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
                                                  where a.Tenant == tenant 
                                                  && a.EntityId == entityId
                                                  && a.ObjectTableId == objectTableId
                                                  select a;
 
             return iQueryable;
-        }
-
-        public IQueryable<TraceEvent> GetEntityStatusTraceEvents(int tenant, string entityId, string objectTableId)
-        {
-            return (from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
-                                                 where a.Tenant == tenant
-                                                 && a.EntityId == entityId
-                                                 && a.ObjectTableId == objectTableId
-                                                 && a.EventType.EntityStatusId != null
-                                                 && a.Deleted == false
-                                                 select a).OrderBy(a => a.EventDateTime);
-        }
-
-        public TraceEvent GetLatestEntityStatusTraceEvent(int tenant, string entityId, string objectTableId)
-        {
-            return (from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
-                    where a.Tenant == tenant
-                    && a.EntityId == entityId
-                    && a.ObjectTableId == objectTableId
-                    && a.EventType.EntityStatusId != null
-                    && a.Deleted == false
-                    select a).OrderByDescending(a => a.EventDateTime).FirstOrDefault();
         }
 
         public IQueryable<TraceEvent> GetAllTraceEventsByEventType(string entityId, string eventTypeId, int tenant)
@@ -138,40 +115,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public TraceEvent GetLastExceptionTraceEventByShipmentId(string entityId , int tenant)
         {
-            TraceEvent traceevent = (from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
+            TraceEvent traceevent = (from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
                                      where a.EntityId == entityId && a.Tenant == tenant && a.EventType.Code == "EXCE" 
                                      select a).OrderByDescending(d=>d.LogDateTime).FirstOrDefault();
             return traceevent;
         }
-
-        public TraceEvent GetLastExceptionTraceEventByContainerId(string entityId, string eventCode, int tenant)
-        {
-            TraceEvent traceevent = (from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
-                                     where a.EntityId == entityId && a.Tenant == tenant && a.EventType.Code == eventCode
-                                     select a).OrderByDescending(d => d.LogDateTime).FirstOrDefault();
-            return traceevent;
-        }
-
-        public bool IsTraceEventExistByEntityIdAndEventCode(string entityId, string eventCode, int tenant)
-        {
-            var isTraceEventExist = (from a in context.TraceEvent.Include(e => e.EventType).Include(e => e.EventType.EntityStatus)
-                                     where a.EntityId == entityId && a.Tenant == tenant && a.EventType.Code == eventCode
-                                     select a).Any();
-            return isTraceEventExist;
-        }
-
-
-        public TraceEvent GetLatestTraceEventByEventCode(string entityId, string eventCode, int tenant)
-        {
-            return context.TraceEvent
-                .Include(e => e.EventType)
-                .Where(te => te.EntityId == entityId
-                             && te.Tenant == tenant
-                             && te.EventType.Tenant == tenant
-                             && te.EventType.Code == eventCode)
-                .OrderByDescending(te => te.LogDateTime)
-                .FirstOrDefault();
-        }
-
     }
 }

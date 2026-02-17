@@ -7,9 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {TariffPM} from './TariffPM';
-import {TariffLinePM} from './TariffLinePM';
-import {TariffVersionAllInChargePM} from './TariffVersionAllInChargePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -21,13 +18,11 @@ export class TariffVersionPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	        constructor(_entityParentPM: any) {
-	                  this.EntityParentPM = _entityParentPM;
-                this.UIProperties = new UIProperties(this);
-                this.IsDirty = false;
+	  constructor() {
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
       }
-
-	 
+ 	 
     
     private tariffId: string;
     public get TariffId() { return this.tariffId; }
@@ -69,127 +64,18 @@ export class TariffVersionPM {
     public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
        
 	 
-    private isDraft: boolean;
-    public get IsDraft() { return this.isDraft; }
-    public set IsDraft(newValue: boolean) { if (this.isDraft != newValue) { this.isDraft = newValue; this.MarkAsDirty("IsDraft"); } }
-       
-	 
-    private approveDate: Date;
-    public get ApproveDate() { return this.approveDate; }
-    public set ApproveDate(newValue: Date) { if (this.approveDate != newValue) { this.approveDate = newValue; this.MarkAsDirty("ApproveDate"); } }
-       
-	 
-    private approvedByUserId: string;
-    public get ApprovedByUserId() { return this.approvedByUserId; }
-    public set ApprovedByUserId(newValue: string) { if (this.approvedByUserId != newValue) { this.approvedByUserId = newValue; this.MarkAsDirty("ApprovedByUserId"); } }
-       
-	 
-     
-	private tariffLines: TariffLinePM[];
-    get  TariffLines() {
-        if (this.tariffLines == null) {
-            this.tariffLines = [];
-        }
-
-        return this.tariffLines;
-    }
-    set  TariffLines(newValue: TariffLinePM[]) {
-        if (this.tariffLines != newValue) {
-            this.tariffLines = newValue;
-        }
-    }
-    public AddTariffLine(item: TariffLinePM) {
-        if (item != null) {
-            var index = this. TariffLines.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. TariffLines.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveTariffLine(item: TariffLinePM) {
-        if (item != null) {
-            var index = this. TariffLines.indexOf(item);
-            if (index > -1) {
-                this. TariffLines.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public TariffLines: Array<TariffLinePM>= [];
-     private parentVersionNumber: number;
-    public get ParentVersionNumber() { return this.parentVersionNumber; }
-    public set ParentVersionNumber(newValue: number) { if (this.parentVersionNumber != newValue) { this.parentVersionNumber = newValue; this.MarkAsDirty("ParentVersionNumber"); } }
-       
-	 
-     
-	private tariffAllInCharges: TariffVersionAllInChargePM[];
-    get  TariffAllInCharges() {
-        if (this.tariffAllInCharges == null) {
-            this.tariffAllInCharges = [];
-        }
-
-        return this.tariffAllInCharges;
-    }
-    set  TariffAllInCharges(newValue: TariffVersionAllInChargePM[]) {
-        if (this.tariffAllInCharges != newValue) {
-            this.tariffAllInCharges = newValue;
-        }
-    }
-    public AddTariffVersionAllInCharge(item: TariffVersionAllInChargePM) {
-        if (item != null) {
-            var index = this. TariffAllInCharges.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. TariffAllInCharges.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveTariffVersionAllInCharge(item: TariffVersionAllInChargePM) {
-        if (item != null) {
-            var index = this. TariffAllInCharges.indexOf(item);
-            if (index > -1) {
-                this. TariffAllInCharges.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public TariffAllInCharges: Array<TariffVersionAllInChargePM>= [];
-     private initialEnddate: Date;
-    public get InitialEnddate() { return this.initialEnddate; }
-    public set InitialEnddate(newValue: Date) { if (this.initialEnddate != newValue) { this.initialEnddate = newValue; this.MarkAsDirty("InitialEnddate"); } }
-       
-	 
 
     public OldEntityPM: TariffVersionPM;
-	
-    private entityParentPM: any;
-    public get EntityParentPM() { return this.entityParentPM; }
-    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
-
-    private changeSetOp: string;
-    public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
-
-    public UniqueKey: string;
-	 	
+		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
+		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffVersion");
            
         }
-       }
     }
 
     private MyClone: TariffVersionPM;

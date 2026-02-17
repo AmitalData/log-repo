@@ -12,8 +12,6 @@ namespace DW_Editor_Tool.Helpers
 {
     public class XmlGenerator
     {
-
-        public static XmlNode indexesXmlNode = null;
         public static bool GenerateXmlToFile(DWObjectTableViewModel tableViewModel)
         {
             try
@@ -22,7 +20,7 @@ namespace DW_Editor_Tool.Helpers
                 XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
                 doc.AppendChild(xmlDeclaration);
                 XmlElement entityElement = (XmlElement)doc.AppendChild(doc.CreateElement("entity"));
-
+                
                 if (string.IsNullOrEmpty(tableViewModel.Id))
                 {
                     SetAttribute("Id", GetStringValue(Guid.NewGuid()), entityElement);
@@ -37,47 +35,14 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("TypeCode", GetStringValue(tableViewModel.TypeCode), entityElement);
                 SetAttribute("IsClosed", tableViewModel.IsClosed.ToString().ToLower(), entityElement);
                 SetAttribute("DefaultFilterBy", GetStringValue(tableViewModel.DefaultFilterBy), entityElement);
-                SetAttribute("DataViewName", GetStringValue(tableViewModel.DataViewName), entityElement);
-                SetAttribute("HasPivotColumn", tableViewModel.HasPivotColumn.ToString().ToLower(), entityElement);
-                SetAttribute("PivotFieldCode", GetStringValue(tableViewModel.PivotFieldCode), entityElement);
-
-                SetAttribute("AdditionalFactCode", GetStringValue(tableViewModel.AdditionalFactCode), entityElement);
-                SetAttribute("AdditionalFactForeignKey", GetStringValue(tableViewModel.AdditionalFactForeignKey), entityElement);
-
-                SetAttribute("ParentFactCode", GetStringValue(tableViewModel.ParentFactCode), entityElement);
-                SetAttribute("RecordType", GetStringValue(tableViewModel.RecordType), entityElement);
-                SetAttribute("DisplayName", GetStringValue(tableViewModel.DisplayName), entityElement);
-
-                SetAttribute("ObjectTableName", GetStringValue(tableViewModel.ObjectTableName), entityElement);
-                SetAttribute("HasCustomFields", tableViewModel.HasCustomFields.ToString().ToLower(), entityElement);
-                SetAttribute("MaxNumberOfCustomFields", tableViewModel.MaxNumberOfCustomFields.ToString(), entityElement);
-                SetAttribute("AdditionalFactRelationType", GetStringValue(tableViewModel.AdditionalFactRelationType), entityElement);
-                SetAttribute("AdditionalConditions", GetStringValue(tableViewModel.AdditionalConditions), entityElement);
-                SetAttribute("Description", GetStringValue(tableViewModel.Description), entityElement);
-
-
                 XmlElement fieldsTagElement = doc.CreateElement("fields");
                 entityElement.AppendChild(fieldsTagElement);
                 BuildFieldTags(tableViewModel, doc, fieldsTagElement);
 
-                entityElement.AppendChild(fieldsTagElement);
-
-                if (indexesXmlNode != null)
-                {
-                    XmlNode newBook = doc.ImportNode(indexesXmlNode, true);
-                    entityElement.AppendChild(newBook);
-                }
-
-
-
-                ////entityElement.AppendChild();
-
-
-
                 if (!string.IsNullOrEmpty(App.CurrentFilePath))
                 {
                     doc.Save(App.CurrentFilePath);
-
+                   
                     return true;
                 }
                 else
@@ -89,7 +54,7 @@ namespace DW_Editor_Tool.Helpers
                     //MessageBox.Show("file path in not valid!");
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 tableViewModel.ErrorMessages = ex.Message;
                 tableViewModel.ErrorsVisibility = Visibility.Visible;
@@ -127,17 +92,12 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("Category1", GetStringValue(fieldViewModel.Category1), fieldElement);
                 SetAttribute("Category2", GetStringValue(fieldViewModel.Category2), fieldElement);
                 SetAttribute("LOVAdditionalColumns", GetStringValue(fieldViewModel.LOVAdditionalColumns), fieldElement);
-                SetAttribute("HideTree", fieldViewModel.HideTree.ToString().ToLower(), fieldElement);
+				SetAttribute("HideTree", fieldViewModel.HideTree.ToString().ToLower(), fieldElement);
                 SetAttribute("CannotFilter", fieldViewModel.CannotFilter.ToString().ToLower(), fieldElement);
                 SetAttribute("HelpText", GetStringValue(fieldViewModel.HelpText), fieldElement);
-                SetAttribute("IsCustom", fieldViewModel.IsCustom.ToString().ToLower(), fieldElement);
-                SetAttribute("OriginalObjectFieldCode", GetStringValue(fieldViewModel.OriginalObjectFieldCode), fieldElement);
-                SetAttribute("ViewFieldDisplayName", GetStringValue(fieldViewModel.ViewFieldDisplayName), fieldElement);
-                SetAttribute("DontDisplayInView", fieldViewModel.DontDisplayInView.ToString().ToLower(), fieldElement);
-                SetAttribute("IsMultipleSelection", fieldViewModel.IsMultipleSelection.ToString().ToLower(), fieldElement);
-                SetAttribute("UseUnitSelection", fieldViewModel.UseUnitSelection.ToString().ToLower(), fieldElement);
-                SetAttribute("DimensionDataViewName", GetStringValue(fieldViewModel.DimensionDataViewName), fieldElement);
-                SetAttribute("RecordType", GetStringValue(fieldViewModel.RecordType), fieldElement);
+
+
+
 
 
 
@@ -168,23 +128,6 @@ namespace DW_Editor_Tool.Helpers
                         tableViewModel.TypeCode = GetAttributeStringValue(entity.Attributes["TypeCode"]);
                         tableViewModel.IsClosed = GetAttributeBoolValue(entity.Attributes["IsClosed"]);
                         tableViewModel.DefaultFilterBy = GetAttributeStringValue(entity.Attributes["DefaultFilterBy"]);
-                        tableViewModel.DataViewName = GetAttributeStringValue(entity.Attributes["DataViewName"]);
-                        tableViewModel.HasPivotColumn = GetAttributeBoolValue(entity.Attributes["HasPivotColumn"]);
-                        tableViewModel.PivotFieldCode = GetAttributeStringValue(entity.Attributes["PivotFieldCode"]);
-
-                        tableViewModel.AdditionalFactCode = GetAttributeStringValue(entity.Attributes["AdditionalFactCode"]);
-                        tableViewModel.AdditionalFactForeignKey = GetAttributeStringValue(entity.Attributes["AdditionalFactForeignKey"]);
-
-                        tableViewModel.ParentFactCode = GetAttributeStringValue(entity.Attributes["ParentFactCode"]);
-                        tableViewModel.RecordType = GetAttributeStringValue(entity.Attributes["RecordType"]);
-                        tableViewModel.DisplayName = GetAttributeStringValue(entity.Attributes["DisplayName"]);
-
-                        tableViewModel.ObjectTableName = GetAttributeStringValue(entity.Attributes["ObjectTableName"]);
-                        tableViewModel.HasCustomFields = GetAttributeBoolValue(entity.Attributes["HasCustomFields"]);
-                        tableViewModel.MaxNumberOfCustomFields = GetAttributeIntegerValue(entity.Attributes["MaxNumberOfCustomFields"]);
-                        tableViewModel.AdditionalFactRelationType = GetAttributeStringValue(entity.Attributes["AdditionalFactRelationType"]);
-                        tableViewModel.AdditionalConditions = GetAttributeStringValue(entity.Attributes["AdditionalConditions"]);
-                        tableViewModel.Description = GetAttributeStringValue(entity.Attributes["Description"]);
 
                         List<DWObjectFieldViewModel> fieldsList = new List<DWObjectFieldViewModel>();
                         foreach (XmlNode childNode in entity.ChildNodes)
@@ -199,11 +142,6 @@ namespace DW_Editor_Tool.Helpers
                                     }
                                 }
                             }
-
-                            if (childNode.Name == "Indexes") indexesXmlNode = childNode;
-
-
-
                         }
 
                         tableViewModel.BuildObsList(fieldsList);
@@ -225,11 +163,10 @@ namespace DW_Editor_Tool.Helpers
             {
                 var FileName = Path.GetFileName(App.CurrentFilePath).Replace(".dwml", "");
                 tableViewModel.Code = FileName;
-
+                
                 return tableViewModel;
             }
         }
-
 
         private static DWObjectFieldViewModel BuildObjectFieldViewModel(XmlNode fieldNode, DWObjectTableViewModel tableViewModel)
         {
@@ -250,18 +187,9 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.Category1 = GetAttributeStringValue(fieldNode.Attributes["Category1"]);
             fieldViewModel.Category2 = GetAttributeStringValue(fieldNode.Attributes["Category2"]);
             fieldViewModel.LOVAdditionalColumns = GetAttributeStringValue(fieldNode.Attributes["LOVAdditionalColumns"]);
-            fieldViewModel.HideTree = GetAttributeBoolValue(fieldNode.Attributes["HideTree"]);
+			fieldViewModel.HideTree = GetAttributeBoolValue(fieldNode.Attributes["HideTree"]);
             fieldViewModel.CannotFilter = GetAttributeBoolValue(fieldNode.Attributes["CannotFilter"]);
             fieldViewModel.HelpText = GetAttributeStringValue(fieldNode.Attributes["HelpText"]);
-            fieldViewModel.IsCustom = GetAttributeBoolValue(fieldNode.Attributes["IsCustom"]);
-            fieldViewModel.OriginalObjectFieldCode = GetAttributeStringValue(fieldNode.Attributes["OriginalObjectFieldCode"]);
-            fieldViewModel.ViewFieldDisplayName = GetAttributeStringValue(fieldNode.Attributes["ViewFieldDisplayName"]);
-            fieldViewModel.DontDisplayInView = GetAttributeBoolValue(fieldNode.Attributes["DontDisplayInView"]);
-            fieldViewModel.IsMultipleSelection = GetAttributeBoolValue(fieldNode.Attributes["IsMultipleSelection"]);
-            fieldViewModel.UseUnitSelection = GetAttributeBoolValue(fieldNode.Attributes["UseUnitSelection"]);
-            fieldViewModel.DimensionDataViewName = GetAttributeStringValue(fieldNode.Attributes["DimensionDataViewName"]);
-            fieldViewModel.RecordType = GetAttributeStringValue(fieldNode.Attributes["RecordType"]);
-
 
 
 
@@ -269,7 +197,7 @@ namespace DW_Editor_Tool.Helpers
             return fieldViewModel;
         }
 
-
+    
 
 
 
@@ -290,7 +218,6 @@ namespace DW_Editor_Tool.Helpers
 
         private static string GetStringValue(object value)
         {
-
             if (value != null)
             {
                 if (string.IsNullOrEmpty(value.ToString())) value = null;
@@ -299,7 +226,7 @@ namespace DW_Editor_Tool.Helpers
 
             if (value != null)
             {
-                return "\"" + value.ToString().Replace("\"", "\u0022") + "\"";
+                return "\"" + value.ToString().Replace("\"", "\u0022") + "\""; 
             }
             else
             {

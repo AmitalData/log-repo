@@ -21,10 +21,10 @@ export class BusinessHoursHolidayPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -98,9 +98,9 @@ export class BusinessHoursHolidayPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
-    private businessHour: any;
+    private businessHour: string;
     public get BusinessHour() { return this.businessHour; }
-    public set BusinessHour(newValue: any) { if (this.businessHour != newValue) { this.businessHour = newValue; this.MarkAsDirty("BusinessHour"); } }
+    public set BusinessHour(newValue: string) { if (this.businessHour != newValue) { this.businessHour = newValue; this.MarkAsDirty("BusinessHour"); } }
        
 	 
 
@@ -113,10 +113,7 @@ export class BusinessHoursHolidayPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -126,7 +123,6 @@ export class BusinessHoursHolidayPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BusinessHoursHoliday");
            
         }
-	 }
     }
     private MyClone: BusinessHoursHolidayPM;
 

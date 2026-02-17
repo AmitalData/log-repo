@@ -4,7 +4,7 @@ import { ShippingAgentPM } from '../../../../../Common/EntityPMs/ShippingAgentPM
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ShippingAgentDocsInTabComponent.html',
 })
 

@@ -48,13 +48,6 @@ namespace Logitude.BL.ShipmentsModel
                 SearchFields = "SENT,Sent", 
                 Name = "Sent", 
 			});
-			 
-            all.Add(new CustomsTransmissionsStatusDetails()
-            {    
-                Code = "BLOK", 
-                Name = "Blocked For Sending", 
-                SearchFields = "BLOK,Blocked For Sending", 
-			});
 			
             return all;
        }

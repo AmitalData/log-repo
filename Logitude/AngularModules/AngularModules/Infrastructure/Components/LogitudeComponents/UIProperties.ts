@@ -206,7 +206,7 @@ export class UIProperties {
         uiProperty.UIPropertyChanged.emit(new UIPropertyArgs(uiProperty, "IsEnabled", value));
     }
 
-    public SetRequired(fieldName: string, objectTableName: string, value: boolean = false, fieldLabel: string | null = null) {
+    public SetRequired(fieldName: string, objectTableName: string, value: boolean = false) {
         var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         var translatedFieldName = null;
@@ -220,7 +220,7 @@ export class UIProperties {
             translatedFieldName = fieldName;
         }
 
-        var fieldError: string = translatedRequiredError.replace("%FieldName", fieldLabel ? fieldLabel : translatedFieldName);
+        var fieldError: string = translatedRequiredError.replace("%FieldName", translatedFieldName);
 
         var uiProperty: UIProperty = this.GetUIProperty(fieldName, objectTableName, null, false);
 

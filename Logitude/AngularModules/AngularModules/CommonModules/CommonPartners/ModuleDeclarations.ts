@@ -10,8 +10,7 @@ import {AddEditAddressComponent} from './Components/AddEdit/AddEditAddressCompon
 import {ContactGeneralTabComponent} from './Components/EditTabs/Contact/ContactGeneralTabComponent';
 import {PartnersTabComponent} from './Components/EditTabs/Contact/PartnersTabComponent';
 import {WarehouseGeneralTabComponent} from './Components/EditTabs/Warehouse/WarehouseGeneralTabComponent';
-import { ShippingLineInttraTabComponent } from './Components/EditTabs/ShippingLine/ShippingLineInttraTabComponent';
-import { ShippinglineGeneralTabComponent } from './Components/EditTabs/ShippingLine/ShippinglineGeneralTabComponent';
+import {ShippingLineInttraTabComponent} from './Components/EditTabs/ShippingLine/ShippingLineInttraTabComponent';
 import {NewCustomAgentComponent} from './Components/NewEntity/NewCustomAgentComponent';
 import {NewShippingLineComponent} from './Components/NewEntity/NewShippingLineComponent';
 import {NewTruckerComponent} from './Components/NewEntity/NewTruckerComponent';
@@ -27,25 +26,8 @@ import { CustomAgentDocsInTabComponent } from './Components/EditTabs/CustomAgent
 import { ShippingAgentDocsInTabComponent } from './Components/EditTabs/ShippingAgent/ShippingAgentDocsInTabComponent';
 import { ShippingLineDocsInTabComponent } from './Components/EditTabs/ShippingLine/ShippingLineDocsInTabComponent';
 import { TruckerDocsInTabComponent } from './Components/EditTabs/Trucker/TruckerDocsInTabComponent';
-import { ExportGeneraInTabComponent } from './Components/EditTabs/Trucker/ExportGeneraInTabComponent';
 import { VendorDocsInTabComponent } from './Components/EditTabs/Vendor/VendorDocsInTabComponent';
-import { AccountingPartnerDocsInTabComponent } from './Components/EditTabs/AccountingPartner/AccountingPartnerDocsInTabComponent';
 import { WarehouseDocsInTabComponent } from './Components/EditTabs/Warehouse/WarehouseDocsInTabComponent';
-import { NewAccountingPartnerComponent } from './Components/NewEntity/NewAccountingPartnerComponent';
-import { ContactOccasionsTabComponent} from './Components/EditTabs/Contact/ContactOccasionsTabComponent';
-import { AreasTabComponent } from './Components/EditTabs/AreasTabComponent';
-import { AddEditAreaComponent } from './Components/AddEdit/AddEditAreaComponent';
-import { ChoosePortComponent } from './Components/AddEdit/ChoosePortComponent';
-import { ChooseCountryPortComponent } from './Components/AddEdit/ChooseCountryPortComponent';
-import { TariffTranslationsTabComponent } from './Components/EditTabs/TariffTranslations/TariffTranslationsTabComponent';
-import { AddEditTariffTranslationComponent } from './Components/EditTabs/TariffTranslations/AddEditTariffTranslationComponent';
-import { AddEditPartnerAddressComponent } from './Components/AddEdit/AddEditPartnerAddressComponent';
-import { UploadPartnersComponent } from './Components/Maintenance/UploadPartnersComponent';
-import { StorageDefaultsComponents } from './Components/EditTabs/Warehouse/StorageDefaultsComponents';
-import { ShippingAgentGeneralTabComponent } from './Components/EditTabs/ShippingAgent/ShippingAgentGeneralTabComponent';
-import { ServiceLinesTabComponent } from './Components/EditTabs/ServiceLinesTabComponent';
-import { AddEditServiceLineComponent } from './Components/AddEdit/AddEditServiceLineComponent';
-import { PartnerARInvoiceDocumentTypeTemplateComponent } from './Components/Templates/PartnerARInvoiceDocumentTypeTemplateComponent';
 
 export const Components =
     [
@@ -62,7 +44,6 @@ export const Components =
         PartnersTabComponent, 
         WarehouseGeneralTabComponent,
         ShippingLineInttraTabComponent,
-        ShippinglineGeneralTabComponent,
         NewCustomAgentComponent,
         NewShippingLineComponent,
         NewTruckerComponent,
@@ -78,25 +59,8 @@ export const Components =
         ShippingAgentDocsInTabComponent,
         ShippingLineDocsInTabComponent,
         TruckerDocsInTabComponent,
-        ExportGeneraInTabComponent,
         VendorDocsInTabComponent,
-        AccountingPartnerDocsInTabComponent,
         WarehouseDocsInTabComponent,
-        NewAccountingPartnerComponent,
-        ContactOccasionsTabComponent,
-        AreasTabComponent,
-        AddEditAreaComponent,
-        ChoosePortComponent,
-        ChooseCountryPortComponent,
-        TariffTranslationsTabComponent,
-        AddEditTariffTranslationComponent,
-        AddEditPartnerAddressComponent,
-        UploadPartnersComponent,
-        StorageDefaultsComponents,
-        ShippingAgentGeneralTabComponent,
-        ServiceLinesTabComponent,
-        AddEditServiceLineComponent,
-        PartnerARInvoiceDocumentTypeTemplateComponent,
     ];
 
 export class ModuleDeclarations {
@@ -117,8 +81,7 @@ export class ModuleDeclarations {
             case "ContactGeneralTabComponent": { myResult = ContactGeneralTabComponent; break; }
             case "PartnersTabComponent": { myResult = PartnersTabComponent; break; }  
             case "WarehouseGeneralTabComponent": { myResult = WarehouseGeneralTabComponent; break; }
-            case "ShippingLineInttraTabComponent": { myResult = ShippingLineInttraTabComponent; break; }
-            case "ShippinglineGeneralTabComponent": { myResult = ShippinglineGeneralTabComponent; break; }   
+            case "ShippingLineInttraTabComponent": { myResult = ShippingLineInttraTabComponent; break; }   
             case "NewCustomAgentComponent": { myResult = NewCustomAgentComponent; break; }
             case "NewShippingLineComponent": { myResult = NewShippingLineComponent; break; }
             case "NewTruckerComponent": { myResult = NewTruckerComponent; break; }
@@ -134,25 +97,8 @@ export class ModuleDeclarations {
             case "ShippingAgentDocsInTabComponent": { myResult = ShippingAgentDocsInTabComponent; break; }
             case "ShippingLineDocsInTabComponent": { myResult = ShippingLineDocsInTabComponent; break; }
             case "TruckerDocsInTabComponent": { myResult = TruckerDocsInTabComponent; break; }
-            case "ExportGeneraInTabComponent": { myResult = ExportGeneraInTabComponent; break; }
             case "VendorDocsInTabComponent": { myResult = VendorDocsInTabComponent; break; }
-            case "AccountingPartnerDocsInTabComponent": { myResult = AccountingPartnerDocsInTabComponent; break; }
             case "WarehouseDocsInTabComponent": { myResult = WarehouseDocsInTabComponent; break; }
-            case "NewAccountingPartnerComponent": { myResult = NewAccountingPartnerComponent; break; }
-            case "ContactOccasionsTabComponent": { myResult = ContactOccasionsTabComponent; break; }
-            case "AreasTabComponent": { myResult = AreasTabComponent; break; }
-            case "AddEditAreaComponent": { myResult = AddEditAreaComponent; break; }
-            case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
-            case "ChooseCountryPortComponent": { myResult = ChooseCountryPortComponent; break; }
-            case "TariffTranslationsTabComponent": { myResult = TariffTranslationsTabComponent; break; }
-            case "AddEditTariffTranslationComponent": { myResult = AddEditTariffTranslationComponent; break; }
-            case "AddEditPartnerAddressComponent": { myResult = AddEditPartnerAddressComponent; break; }
-            case "UploadPartnersComponent": { myResult = UploadPartnersComponent; break; }
-            case "StorageDefaultsComponents": { myResult = StorageDefaultsComponents; break; }
-            case "ShippingAgentGeneralTabComponent": { myResult = ShippingAgentGeneralTabComponent; break; }
-            case "ServiceLinesTabComponent": { myResult = ServiceLinesTabComponent; break; }
-            case "AddEditServiceLineComponent": { myResult = AddEditServiceLineComponent; break; }
-            case "PartnerARInvoiceDocumentTypeTemplateComponent": { myResult = PartnerARInvoiceDocumentTypeTemplateComponent; break; }
         }
 
         return myResult;

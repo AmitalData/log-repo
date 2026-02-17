@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
@@ -43,9 +43,9 @@ namespace WebFreight.Web.CustomModel.DomainServices
                 {
                     customContext = CustomContext.GetContext(tenant);
                 }
-                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
 
-                bank = defaultValueQueryService.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", CustomerCode, tenant);
+                var declarationQS = new DeclarationQueryService(customContext);
+                bank = declarationQS.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", CustomerCode, tenant);
             }
             return bank;
         }
@@ -57,10 +57,9 @@ namespace WebFreight.Web.CustomModel.DomainServices
             {
                 if (declarationPaymentPM == null || declarationPaymentPM.DeclarationPaymentProtests == null || declarationPaymentPM.DeclarationPaymentProtests.Count == 0 || string.IsNullOrWhiteSpace(declarationPaymentPM.DeclarationPaymentProtests.FirstOrDefault().CustomsAgentExplanation))
                 {
+                    var declarationQS = new DeclarationQueryService(customContext);
 
-                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
-
-                    string customsAgentExplanationDefault = defaultValueQueryService.GetDefault("ISRAEL", "CIM_PROTEST_PAY", "NON", CustomerCode, tenant);
+                    string customsAgentExplanationDefault = declarationQS.GetDefault("ISRAEL", "CIM_PROTEST_PAY", "NON", CustomerCode, tenant);
 
                     if (!string.IsNullOrWhiteSpace(customsAgentExplanationDefault))
                     {

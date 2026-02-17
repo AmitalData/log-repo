@@ -3,10 +3,10 @@ using Logitude.Server.Tools.Counters;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -242,8 +242,8 @@ namespace WebFreight.Web.Helpers.TimeClock
                         TMOfficeHour DBRecord2 = TMContext.TMOfficeHours.Where(d => d.UserId == item.UserId && d.Tenant == tenant && d.RecordedEntryTime == item.RecordedEntryTime && d.WorkDate == item.WorkDate).FirstOrDefault();
                         if (DBRecord2 != null)
                         {
-                           DBRecord2.RecordedExitTime= DBRecord2.RecordedExitTime!=null? DBRecord2.RecordedExitTime:item.RecordedExitTime;
-                            DBRecord2.ExitTime = DBRecord2.ExitTime!=null? DBRecord2.ExitTime: item.ExitTime;
+                           DBRecord2.RecordedExitTime=item.RecordedExitTime;
+                            DBRecord2.ExitTime = item.ExitTime;
                             TMContext.TMOfficeHours.Attach(DBRecord2);
                             TMContext.SetAsModified(DBRecord2);
                             TMContext.SaveChanges();

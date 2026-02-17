@@ -34,7 +34,6 @@
                                                             [LookUpTableName]="'ChartOfAccountsType'"
                                                             (SelectedItemChanged)="OnLovItemChanged($event)"
                                                             [QueryFilterItems]="ChartOfAccountTypeFilterItems"
-                                                            [DisplayMemberPath]="GetDisplayMemberPath()"
                                                             [HideColumns]="true">
                                                     </LogLov>
                                                 </td>
@@ -89,19 +88,6 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
-                                            <!-- NameForPrintingCheques -->
-                                            <tr class="FormFieldRow" *ngIf="IsVendorChartOfAccount">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'NameForPrintingCheques'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogTextBox [ObjectFieldName]="'NameForPrintingCheques'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </td>
-                                                <td><div></div></td>
-                                            </tr>
 
                                             <!-- EnglishName -->
                                             <tr class="FormFieldRow">
@@ -125,7 +111,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <CheckBox *ngIf="showIsMultiCurrencyCheckbox" [IsChecked]="IsMultiCurrency" (Checked)="IsMultiCurrency = $event" [IsEnabled]="IsMultiCurrencyCheckboxEnabled"></CheckBox>
+                                                    <CheckBox [IsChecked]="IsMultiCurrency" (Checked)="IsMultiCurrency = $event" [IsEnabled]="!DisableGLAccount"></CheckBox>
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
@@ -208,7 +194,6 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
-
                                             <!-- IsVATExempt -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -222,43 +207,6 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
-                                            <!-- ExchangeRate -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'ExchangeRateId'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'ExchangeRateId'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                        [LookUpTableName]="'AdditionalCurrencyRate'"
-                                                        [SelectedValue]="ExchangeRateId"
-                                                        [DisplayMemberPath]="'Name'" [HideColumns]="true">
-                                                    </LogLov>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                            <!-- AllowEditChequePayToName -->
-                                            <tr *ngIf="IsVendor" class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'AllowEditChequePayToName'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogCheckBox [ObjectFieldName]="'AllowEditChequePayToName'" [Checked]="AllowEditChequePayToName"
-                                                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
                                             <tr><td><div></div></td></tr>
                                         </table>
 
@@ -291,9 +239,7 @@
                                                             [DependencyFilter1Value]="false"
                                                             [QueryFilterItems]="ParentsFilterItems"
                                                             [LookUpTableName]="'GLAccount'"
-                                                            [HideColumns]="false"
-                                                            [StartSearchFromChar]="3"
-                                                            [StartSearchFromNumber]="5">
+                                                            [HideColumns]="false">
                                                     </LogLov>
                                                 </td>
                                                 <td><div></div></td>
@@ -428,77 +374,6 @@
                                                     <CheckBox [IsChecked]="ExcludeFromDeductionReport" (Checked)="ExcludeFromDeductionReport = $event"></CheckBox>
                                                 </td>
                                                 <td><div></div></td>
-                                            </tr>
-
-                                            <!-- Smallcashbook -->
-                                            <tr class="FormFieldRow" *ngIf="IsVendorChartOfAccount">
-                                                <td style="width: 150px;">
-                                                    <LogLabel [ObjectFieldName]="'Smallcashbook'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <CheckBox [IsChecked]="Smallcashbook" (Checked)="Smallcashbook = $event"></CheckBox>
-                                                </td>
-                                                <td><div></div></td>
-                                            </tr>
-
-                                            <!-- ReportingAsAnotherDocument -->
-                                            <tr class="FormFieldRow" *ngIf="IsVendor">
-                                                <td style="width: 150px;">
-                                                    <LogLabel [ObjectFieldName]="'ReportingAsAnotherDocument'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <CheckBox [IsChecked]="ReportingAsAnotherDocument" (Checked)="ReportingAsAnotherDocument = $event"></CheckBox>
-                                                </td>
-                                                <td><div></div></td>
-                                            </tr>
-                                            <tr *ngIf="EnableFollowUpData || IsVendor">
-                                                <td style="width: 150px;">
-                                                    <LogLabel [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td style="width:150px">
-                                                    <LogDatePicker [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
-                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr style="height:5px"></tr>
-                                            <tr *ngIf="EnableFollowUpData || IsVendor">
-                                                <td style="width: 150px;">
-                                                    <LogLabel [ObjectFieldName]="'FollowupNotes'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'FollowupNotes'"
-                                                         [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
-                                                          [DataContext]="DataContext"></LogTextBox>
-
-                                                </td>
-                                                <td></td>
-                                            </tr>
-
-                                            <tr style="height:18px"></tr>
-
-
-                                              <!-- PaymentTerms -->
-                                            <tr *ngIf="ChartOfAccountsTypeCode == '4'" class="FormFieldRow" style="height:5px">
-                                                <td style="width: 150px;">
-                                                    <LogLabel [ObjectFieldName]="'PaymentTerms'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                    
-                                                <td style="width:240px;">
-                                                    <LogLov [ObjectFieldName]="'PaymentTerms'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                        [LookUpTableName]="'PaymentTerm'"
-                                                        [AutoCompleteSearchWindow]="false"
-                                                        [DisplayMemberPath]="GetDisplayMemberPath()"
-                                                        [HideColumns]="true">
-                                                    </LogLov>
-                                                </td>
                                             </tr>
                                             <tr><td><div></div></td></tr>
                                         </table>

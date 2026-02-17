@@ -94,16 +94,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.LOANAMOUNT = entityPM.LOANAMOUNT;
             entityPOCO.CURRENCYRATENEW = entityPM.CURRENCYRATENEW;
             entityPOCO.DRAWNON = entityPM.DRAWNON;
-            entityPOCO.PRATMEHESLIST = entityPM.PRATMEHESLIST;
-            entityPOCO.ALLPRATMEHESLIST = entityPM.ALLPRATMEHESLIST;
-            entityPOCO.NOOFINVOICES = entityPM.NOOFINVOICES;
-            entityPOCO.TOTALINVOICELINESNO = entityPM.TOTALINVOICELINESNO;
-            entityPOCO.TENANT = entityPM.Tenant;
-            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
-            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
-            entityPOCO.RIGHTOWNIDN = entityPM.RIGHTOWNIDN;
-            entityPOCO.SELLCONDITIONIDN = entityPM.SELLCONDITIONIDN;
-
         }
 
         public void POCOToPM(CCUFILEMPM entityPM, CCUFILEM entityPOCO)
@@ -188,15 +178,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.LOANAMOUNT = entityPOCO.LOANAMOUNT;
             entityPM.CURRENCYRATENEW = entityPOCO.CURRENCYRATENEW;
             entityPM.DRAWNON = entityPOCO.DRAWNON;
-            entityPM.PRATMEHESLIST = entityPOCO.PRATMEHESLIST;
-            entityPM.ALLPRATMEHESLIST = entityPOCO.ALLPRATMEHESLIST;
-            entityPM.NOOFINVOICES = entityPOCO.NOOFINVOICES;
-            entityPM.TOTALINVOICELINESNO = entityPOCO.TOTALINVOICELINESNO;
-            entityPM.Tenant = entityPOCO.TENANT != null ? (int)entityPOCO.TENANT : 0;
-            entityPM.IS_SYNCH = entityPOCO.IS_SYNCH != null ? (bool)entityPOCO.IS_SYNCH : false;
-            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT !=null ? entityPOCO.LAST_UPDATE_DT : DateTime.Now;
-            entityPM.RIGHTOWNIDN = entityPOCO.RIGHTOWNIDN;
-            entityPM.SELLCONDITIONIDN = entityPOCO.SELLCONDITIONIDN;
         }
 
         public void CustomPMToPOCO(CCUFILEMPM entityPM, CCUFILEM entityPOCO)

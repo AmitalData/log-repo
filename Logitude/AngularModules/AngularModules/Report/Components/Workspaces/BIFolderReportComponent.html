@@ -23,7 +23,7 @@
             <table>
                 <tr>
                     <td style="width: 300px;">
-                        <SearchBox id="{{'SearchBoxBIReport' | IdGeneratorAsyncPipe | async}}" (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                        <SearchBox (TextChanged)="SearchTextChanged($event)"></SearchBox>
                     </td>
 
                     <td style="width: 10px;">
@@ -31,7 +31,7 @@
                     </td>
 
                     <td style="width:100px;">
-                        <button id="{{'NewBIReportFolder' | IdGeneratorAsyncPipe | async}}" style="width:100px;float:left;" class="Button" [disabled]="IsNewBIReportFolderButtonDisabled" (click)="NewFolderButtonClicked()">New Folder</button>
+                        <button style="width:100px;float:left;" class="Button" (click)="NewFolderButtonClicked()">New Folder</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -39,15 +39,7 @@
                     </td>
 
                     <td style="width:100px;">
-                        <button id="{{'NewBIReport' | IdGeneratorAsyncPipe | async}}" style="width:100px;float:left;" class="Button" [disabled]="IsNewBIReportButtonDisabled" (click)="NewReportButtonClicked()">New BI Report</button>
-                    </td>
-
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width:100px;">
-                        <button *ngIf="IsShowAddReportFromLibraryLink" style="width:160px;float:left;" class="Button" (click)="LinkAddReportFromLibraryClick()">Upload a Standard BI Report</button>
+                        <button style="width:100px;float:left;" class="Button" (click)="NewReportButtonClicked()">New BI Report</button>
                     </td>
 
                     <td>
@@ -62,36 +54,13 @@
         <td>
             <div></div>
         </td>
-    </tr> 
-    <tr *ngIf="IsTipsOpened && IsShowAddReportFromLibraryLink" style="height:80px">
-        <td>
-            <table>
-
-                <tr>
-                    <td>
-                        <table>
-
-
-                            <tr style="height:80px;margin-top:5px;">
-                                <td>
-                                    <div style="width:770px;">
-                                        <TipsComponent [ObjectTableName]="ObjectTableName" [Code]="'BIRE'" [IsInternalTips]="'true'" [IsFirstTipLoad]="IsFirstTipLoad" (TipVisibilityChangedEvent)="TipVisibilityChanged($event)"></TipsComponent>
-                                    </div>
-                                    <div style="height:5px; width:100%;"></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-
-        </td>
     </tr>
+
     <tr>
         <td>
             <div class="MediaFill">
                 <ScrollViewer>
-                    <div *ngFor="let item of ItemsSource">
+                    <div *ngFor="let item of ItemsSource">                       
                         <table>
                             <tr class="ItemBox" style="height:25px;" (mouseover)="item.FolderIconMouseOver()" (mouseleave)="item.FolderIconMouseLeave()">
 
@@ -106,7 +75,7 @@
                                 </td>
 
                                 <td style="width:230px; top:2px;">
-                                    <p id="{{'BIReportFolder' | IdGeneratorAsyncPipe | async}}" class="QueryLink" style="font-size:14px;" [ngStyle]="{color: item.LinkColor}" (click)="ViewFolderClicked(item)">{{item.Title}}</p>
+                                    <p class="QueryLink" style="font-size:14px;" [ngStyle]="{color: item.LinkColor}" (click)="ViewFolderClicked(item)">{{item.Title}}</p>
                                 </td>
 
                                 <td>

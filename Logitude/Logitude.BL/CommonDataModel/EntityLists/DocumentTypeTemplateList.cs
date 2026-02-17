@@ -51,13 +51,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CC { get; set; }
 
         public string CountryName { get; set; }
-
-        public string BCC { get; set; }
-        public string To { get; set; }
-        public string AutomationId { get; set; }
-        public string AttachedExternalDocumentsIds { get; set; }
-        public bool IsSystem { get; set; }
-        public string EntityId { get; set; }
-
+        
     }
 }

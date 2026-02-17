@@ -3,31 +3,37 @@ import { Component, AfterViewInit, ChangeDetectorRef, Output, EventEmitter } fro
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { LogTab } from '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
+
 import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
 import { VehicleSafetyAccessoryPM } from '../../../../Customs/EntityPMs/VehicleSafetyAccessoryPM';
 import { VehicleOwnerPM } from '../../../../Customs/EntityPMs/VehicleOwnerPM';
 import { ClientList } from '../../../../Customs/EntityLists/ClientList';
+
+
+
+// Send Request
 import { INF_MSG_GenericResponseData } from '../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+
+
+import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+//import { VehicleMessagesService } from '../../../Services/WebServices/VehicleMessagesService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './VehiclesOwnersAndSafetyTabComponent.html',
 })
 
 export class VehiclesOwnersAndSafetyTabComponent extends BaseComponent {
-  public IsDisplayOnly: boolean = false;
-  public PassCountryCode: any;
-  public ImporterPassportTypeCode: any;
-
-  public VehicleSafetyAccessoryCode: any;
-  public VehicleSafAccessoryInstlTypCod: any;
-
     @Output() FillValidationErrorList: EventEmitter<any> = new EventEmitter();
     public EntityPM: VehiclePM;
     public ObjectTableName: string = "Customs.Vehicle";
@@ -49,8 +55,8 @@ export class VehiclesOwnersAndSafetyTabComponent extends BaseComponent {
         super();
         this.SafetiesList = new ObservableCollection([]);
         this.OwnersList = new ObservableCollection([]);
-        this.EntityResourceService.getEntityResourceByTableName("Customs.VehicleOwner").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.VehicleSafetyAccessory").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.VehicleOwner").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.VehicleSafetyAccessory").subscribe(response => {
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.EntityPM = this.entityArgs.EntityPM;
 

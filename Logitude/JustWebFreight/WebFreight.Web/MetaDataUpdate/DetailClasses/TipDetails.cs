@@ -10,6 +10,5 @@
         public string ShortTextCodeDefaultText { get; set; }
         public string ShortTextCode { get; set; }
         public string ObjectTableId { get; set; }
-        public string ShortTextCodeCode { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-
+﻿
 <table  *ngIf="IsResourcesReady">
     <tr>
         <td>
@@ -8,7 +8,7 @@
                         <table>
                             <tr>
                                 <td style="width: 250px;">
-                                    <SearchBox  [attr.data-cy]="'SearchRulesMainComponent'" (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                                    <SearchBox (TextChanged)="SearchTextChanged($event)"></SearchBox>
                                 </td>
                                 <td>
                                     <div></div>
@@ -40,14 +40,12 @@
                                             <td style="width: 250px; min-width:250px; max-width:250px;">Code</td>
                                             <td style="width: 215px; min-width:215px; max-width:215px;">Type</td>
                                             <td style="width: 70px; min-width:70px; max-width:70px;">In Active</td>
-                                            <td style="width: 30px; min-width:30px; max-width:30px;"></td>
-                                            <td style="width: 90px; min-width:90px; max-width:90px;"></td>
-                                            <td style="width: 80px; min-width:80px; max-width:80px;"></td>
+                                            <td style="width: 70px; min-width:70px; max-width:30px;"></td>
                                             <td style="width: 100%; min-width: 100%"></td>
 
                                             <!--<td class="LastChild">
-        <div></div>
-    </td>-->
+                                                <div></div>
+                                            </td>-->
                                         </tr>
                                     </table>
                                 </div>
@@ -71,33 +69,16 @@
                                                 <img *ngIf="item.InActive" width="18" height="18" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
                                             </td>
 
-
-                                            <td class="GridViewCell" style="width:30px; min-width:30px; max-width:30px;">
-                                                <div  class="EditButton" (click)="OnEditRule(item)" style="display:inline;width:18px;">
-                                                    <IconButton [DataCy]="'EditRule'"  [Name]="'Edit'" [IsSmall]="true" style="        display: block;
-        margin-left: 7px
-    "></IconButton>
+                                         
+                                            <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;">
+                                                <div class="EditButton" (click)="OnEditRule(item)" style="display:inline;width:18px;">
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
                                                 </div>
 
                                             </td>
-
-                                            <td class="GridViewCell" style=" width: 90px; min-width: 90px; max-width: 90px;">
-                                                <div>
-                                                    <button style="display: inline-block;width:80px;" class="Button" (click)="OnViewRuleHistory(item)">View History</button>
-                                                </div>
-                                            </td>
-
-                                            <td class="GridViewCell" style="        width: 80px;
-                                                  min-width: 80px;
-                                                    max-width: 80px;">
-                                                <div *ngIf="item.IsCreatedFromSystemRule">
-                                                    <button style="display: inline-block;width:70px;" class="Button" (click)="OnRestoreRule(item)">Restore</button>
-                                                </div>
-                                            </td>
-
-
 
                                             <td class="CellStretched" style="width:100%;min-width:100%;max-width:100%;position:relative">
+                                                
                                             </td>
                                         </tr>
 
@@ -117,4 +98,19 @@
         </td>
     </tr>
 
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td><div></div></td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseClicked()">Close</button>
+                    </td>
+
+                    
+                </tr>
+            </table>
+        </td>
+    </tr>
 </table>

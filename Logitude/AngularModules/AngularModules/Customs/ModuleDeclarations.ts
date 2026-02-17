@@ -10,9 +10,7 @@ import {EndDateComponent} from './Components/ListTemplates/EndDateComponent';
 
 
 //Short Titles
-import {ContainerizationShortTitleComponent} from './Components/ShortTitles/ContainerizationShortTitleComponent';
 import {DeclarationShortTitleComponent} from './Components/ShortTitles/DeclarationShortTitleComponent';
-import { ExportStorgeShortTitleComponent } from './Components/ShortTitles/ExportStorgeShortTitleComponent';
 
 
 
@@ -26,11 +24,7 @@ import { ExportStorgeShortTitleComponent } from './Components/ShortTitles/Export
 //PhysicalCheck
 
 import {CustomsSpotlightComponent} from './Components/Spotlight/CustomsSpotlightComponent';
-import { ReferantSpotlightDataTemplate } from './Components/Spotlight/ReferantSpotlightDataTemplate';
-import { DeclarationReferantDataListActionBarComponent } from './Components/ListActionBar/DeclarationReferantDataListActionBarComponent';
-import { PhysicalCheckListActionBarComponent } from './Components/ListActionBar/PhysicalCheckListActionBarComponent';
-import { ExportStorageShortTitleComponent } from './Components/ShortTitles/ExportStorageShortTitleComponent';
-import { LogisticActionRequestListActionBarComponent } from './Components/ListActionBar/LogisticActionRequestListActionBarComponent';
+
 
 export const CustomsControlsComponents =
     [
@@ -53,10 +47,9 @@ export const Components =
        
 
         //short titles
-        ContainerizationShortTitleComponent,        
         DeclarationShortTitleComponent,
-        ExportStorgeShortTitleComponent,
-        ExportStorageShortTitleComponent,
+     
+       
      
   
       
@@ -70,12 +63,15 @@ export const Components =
       
 
         CustomsSpotlightComponent,
-        ReferantSpotlightDataTemplate,
 
-        ReferantSpotlightDataTemplate,
-        DeclarationReferantDataListActionBarComponent,
-        PhysicalCheckListActionBarComponent,
-        LogisticActionRequestListActionBarComponent,
+       
+     
+       
+
+        
+
+     
+       
     ];
 
 export class ModuleDeclarations {
@@ -95,20 +91,14 @@ export class ModuleDeclarations {
             case "DocumentsFilingTemplateComponent": { myResult = DocumentsFilingTemplateComponent; break; }
             case "EndDateComponent": { myResult = EndDateComponent; break; }
                         //short titles
-            case "ContainerizationShortTitleComponent": {myResult = ContainerizationShortTitleComponent; break;}            
             case "DeclarationShortTitleComponent": {myResult = DeclarationShortTitleComponent; break;}
-            case "ExportStorgeShortTitleComponent": { myResult = ExportStorgeShortTitleComponent; break; }
-            case "ExportStorageShortTitleComponent": { myResult = ExportStorageShortTitleComponent; break; }
-
+         
            
 
           
             case "CustomsSpotlightComponent": { myResult = CustomsSpotlightComponent; break; }
-            case "ReferantSpotlightDataTemplate": { myResult = ReferantSpotlightDataTemplate; break; }
 
-            case "DeclarationReferantDataListActionBarComponent": { myResult = DeclarationReferantDataListActionBarComponent; break; }
-            case "PhysicalCheckListActionBarComponent": { myResult = PhysicalCheckListActionBarComponent; break; }
-            case "LogisticActionRequestListActionBarComponent": { myResult = LogisticActionRequestListActionBarComponent; break; }
+                
         }
 
         return myResult;

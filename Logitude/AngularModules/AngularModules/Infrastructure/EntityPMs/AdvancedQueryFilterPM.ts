@@ -14,7 +14,7 @@ export class AdvancedQueryFilterPM {
     private queryId: string;
     public get QueryId() { return this.queryId; }
     public set QueryId(newValue: string) { this.queryId = newValue; }
- 
+       
 	 
     private objectFieldId: string;
     public get ObjectFieldId() { return this.objectFieldId; }
@@ -45,9 +45,6 @@ export class AdvancedQueryFilterPM {
     public get IndexOrder() { return this.indexOrder; }
     public set IndexOrder(newValue: string) { this.indexOrder = newValue; }
        
-    private customPredefined: boolean;
-    public get CustomPredefined() { return this.customPredefined; }
-    public set CustomPredefined(newValue: boolean) { this.customPredefined = newValue; }
 	 
     private objectFieldName: string;
     public get ObjectFieldName() { return this.objectFieldName; }
@@ -92,9 +89,5 @@ export class AdvancedQueryFilterPM {
     private userId: string;
     public get UserId() { return this.userId; }
     public set UserId(newValue: string) { this.userId = newValue; }
-
-
-    private objectFieldCode: string;
-    public get ObjectFieldCode() { return this.objectFieldCode; }
-    public set ObjectFieldCode(newValue: string) { this.objectFieldCode = newValue; }
-}
+      
+}

@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -25,7 +25,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            select new FullAccountingSettingList()
                                                            {
                                                                Id = a.Id,
-                                                               NumberOfAgingMonths = a.NumberOfAgingMonths,
                                                                AutomaticReconcileMethodId = a.AutomaticReconcileMethodId,
                                                                ConsolidationVAT = a.ConsolidationVAT,
                                                                DeductionFileNumber = a.DeductionFileNumber,
@@ -33,7 +32,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                ExchangeRateDiffGLAccountId = a.ExchangeRateDiffGLAccountId,
                                                                VATInputsGLAccountId = a.VATInputsGLAccountId,
                                                                Tenant = a.Tenant,
-                                                               AllowEditingExchangeRate= a.AllowEditingExchangeRate,
+
                                                                CustomerControlAccountId = a.CustomerControlAccountId,
                                                                CustomerControlAccountNumber = a.CustomerControlAccount != null ? a.CustomerControlAccount.DisplayNumber : null,
                                                                CustomerControlAccountName = a.CustomerControlAccount != null ? a.CustomerControlAccount.EnglishName : null,
@@ -64,14 +63,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                                ExternalReconciliationDefault = a.ExternalReconciliationDefault,
                                                                DefaultDifferencesGLAccountId = a.DefaultDifferencesGLAccountId,
-                                                               DefaultExternalDiffGLAccountId = a.DefaultExternalDiffGLAccountId,
+                                                               DefaultExternalDiffGLAccountId= a.DefaultExternalDiffGLAccountId,
                                                                DefaultTaxWithholdPercentage = a.DefaultTaxWithholdPercentage,
-                                                               GLAccounterCounterLength = a.GLAccounterCounterLength,
-                                                               IsSecurityLevelActivated = a.IsSecurityLevelActivated,
-                                                               VATOutputGLAccountId = a.VATOutputGLAccountId,
-                                                               TaxInstitutionGLAccountId = a.TaxInstitutionGLAccountId,
-                                                               OppositeAccountNumber = a.OppositeAccountNumber,
-                                                               PrepaidExpensesGLAccountId = a.PrepaidExpensesGLAccountId
                                                            });
             return query;
         }

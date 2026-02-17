@@ -27,8 +27,6 @@ namespace Logitude.SystemLogs
                     DoneItemsInFiveMinutes = parameters.DoneItemsInFiveMinutes,
                     DoneItemsInOneHour = parameters.DoneItemsInOneHour,
                     DoneItemsInOneMinute = parameters.DoneItemsInOneMinute,
-                    WaitingItems = parameters.WaitingItems,
-                    FailedItems = parameters.FailedItems,
                 };
 
 
@@ -50,8 +48,6 @@ namespace Logitude.SystemLogs
                 log.DoneItemsInFiveMinutes = parameters.DoneItemsInFiveMinutes;
                 log.DoneItemsInOneHour = parameters.DoneItemsInOneHour;
                 log.DoneItemsInOneMinute = parameters.DoneItemsInOneMinute;
-                log.WaitingItems = parameters.WaitingItems;
-                log.FailedItems = parameters.FailedItems;
                 repository.Update(log);
                 repository.SubmitChanges();
             }
@@ -77,9 +73,5 @@ namespace Logitude.SystemLogs
         public int DoneItemsInOneHour { get; set; }
 
         public int DoneItemsInOneMinute { get; set; }
-        public int WaitingItems { get; set; }
-        public int FailedItems { get;set; }
-
-        public string RelatedQueueMessage { get; set; }
     }
 }

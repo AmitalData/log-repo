@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -55,12 +55,6 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
             {
                 try
                 {
-
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-
                     string URL = WebHookData.URL;
                     if (WebHookData.Operation == "In URL")
                     {
@@ -165,7 +159,6 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WebhookKeys", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("WebhookKeys", entityPM.Tenant, authToken.Tenant);
 
                         IGlobalContext MyContext = GlobalContext.GetContext();
                         WebhookKeysService service = new WebhookKeysService(MyContext, entityPM.Tenant);
@@ -213,7 +206,6 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WebhookKeys", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("WebhookKeys", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "WebhookKeys" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "WebhookKeysPM" + entityPM.Id + entityPM.Tenant;

@@ -5,7 +5,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-
+import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -25,7 +25,7 @@ import {PortExtendedPMService} from '../../../../Common/Services/ExtendedPMs/Por
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditLogBoxShipmentComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })
@@ -38,7 +38,6 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
     public _ShipmentPMService: ShipmentPMService;
     IsPrivate: boolean = false;
     public PLShortName: string = "";
-    public IsShownCustomerReference3: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
@@ -60,38 +59,16 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
     SetWindowArgs(args: any) {
     
         if (args.EntityPm) {
-            this.EntityPm = args.EntityPm;
+            this.EntityPm = args.EntityPm; 
         }
-
-        //if (this.EntityPm && this.EntityPM.DirectionId != 'C') {
-        //    this.IsShownCustomerReference3 = !AppTool.IsNullOrEmpty(this.EntityPm.CustomerReference3);
-        //}
     }
 
     CustomerReferenceChanged: boolean = false;
-
-    public get DirectionId() { return this.EntityPm.DirectionId }
-    public set DirectionId(newValue: string) {
-        if (this.EntityPm.DirectionId != newValue) {
-            this.EntityPm.DirectionId = newValue;
-        }
-    }
-
+    
     public get CustomerReference2() { return this.EntityPm.CustomerReference2 }
     public set CustomerReference2(newValue: string) {
         if (this.EntityPm.CustomerReference2 != newValue) {
             this.EntityPm.CustomerReference2 = newValue;
-            this.CustomerReferenceChanged = true;
-        }
-        else {
-            this.CustomerReferenceChanged = false;
-        }
-    }
-
-    public get CustomerReference3() { return this.EntityPm.CustomerReference3 }
-    public set CustomerReference3(newValue: string) {
-        if (this.EntityPm.CustomerReference3 != newValue) {
-            this.EntityPm.CustomerReference3 = newValue;
             this.CustomerReferenceChanged = true;
         }
         else {
@@ -140,16 +117,13 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
             this.EntityPm.MainCarriageToPortId = this.EntityPm.ToPortId;
             this.EntityPm.ShipperReference2 = this.EntityPm.CustomerReference2;
             this.EntityPm.ConsigneeReference2 = this.EntityPm.CustomerReference2;
-            if (this.IsShownCustomerReference3) {
-                this.SetCustomerReference3Fields();
-            }
             this.EntityPm.UpdateSendUpdatesToAgentEnabledField = true; 
             this.EntityPm.GrossWeightUnitCode = "KG";
             this.EntityPm.DimensionsUnitCode = "Cm";
             this.EntityPm.ChargeableWeightUnitCode = "KG";
             this.EntityPm.VolumeUnitCode = "CBF";
                  
-                this._ShipmentPMService.update(this.EntityPm).subscribe((myResult:any) => {
+                this._ShipmentPMService.update(this.EntityPm).subscribe(myResult => {
                     if (!myResult.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         //this.CurrentSession.CloseCurrentWindow();
@@ -173,11 +147,6 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
     }
 
     
-
-    private SetCustomerReference3Fields() {
-        this.EntityPm.ShipperReference3 = this.EntityPm.CustomerReference3;
-        this.EntityPm.ConsigneeReference3 = this.EntityPm.CustomerReference3;
-    }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();

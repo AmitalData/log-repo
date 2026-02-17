@@ -104,9 +104,11 @@
         height: 18px;
         min-height: 18px;
         line-height: 18px;
+        margin-left: 2px;
         margin-top: 1px;
         border: 1px solid #83A5D2;
         display: inline-block;
+        float: left;
         padding-left: 2px;
         padding-right: 2px;
         box-sizing: border-box;
@@ -122,7 +124,6 @@
         outline: none;
         font-size: 11px;
         color: #45494A;
-
         background: transparent;
         text-indent: 2px;
         border-radius: 0px;
@@ -131,7 +132,6 @@
         -moz-box-shadow: none;
         -webkit-box-shadow: none;
         box-shadow: none;
-        width:100%;
     }
 
     .LogitudeEmailSearchTextBox:hover {
@@ -146,8 +146,6 @@
         font-size: 11px;
         color: #45494A;
         background: white;
-        display: flex;
-        flex-wrap: wrap;
         border-radius: 3px;
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
@@ -178,16 +176,14 @@
 <table>
     <tr>
         <td style="vertical-align: top;">
-            <div [attr.id]="ComponentId" class="LogitudeEmailSearchTextBox"  [class.EmailBoxDisabled]="IsDisabled">
+            <div [attr.id]="ComponentId" class="LogitudeEmailSearchTextBox" [class.EmailBoxDisabled]="IsDisabled">
 
                 <!-- Selected Items -->
-                <div [attr.id]="ContainerId"  [style.marginRight.px]="isRTL ? 2 : null"
-                [style.marginLeft.px]="isRTL ? null : 2" class="LogitudeEmailSearchTextBoxItem" *ngFor="let item of SelectedItems">
+                <div [attr.id]="ContainerId" class="LogitudeEmailSearchTextBoxItem" *ngFor="let item of SelectedItems">
 
-                    <div [style.color]="item.InActive && DontInCludeInactive ?'red':'black'"  [style.float]="isRTL ? 'right' : 'left'" style="line-height: 16px;">{{item.EnglishName}}</div>
+                    <div [style.color]="item.InActive && DontInCludeInactive ?'red':'black'" style="float: left; line-height: 16px;">{{item.EnglishName}}</div>
 
-                    <div [style.float]="isRTL ? 'right' : 'left'" [style.marginRight.px]="isRTL ? 5 : null"
-                    [style.marginLeft.px]="isRTL ? null : 5" style="line-height: 16px;margin-top: 1px;" class="LogitudeEmailSearchXButton" (mousedown)="RemoveItem(item)">
+                    <div style="float: left; line-height: 16px; margin-left: 5px; margin-top: 1px;" class="LogitudeEmailSearchXButton" (mousedown)="RemoveItem(item)">
                         <div class="InnerControl CenterCenter">
                             <img src="./Images/Tab.X.Gray.png" class="CenterCenter" />
                         </div>
@@ -195,12 +191,12 @@
                 </div>
 
                 <!-- Separator -->
-                <div [attr.id]="SeparatorId"  style="width: 1px; height: 20px; display: inline-block;"></div>
+                <div [attr.id]="SeparatorId" style="width: 1px; height: 20px; float: left; display: inline-block;"></div>
 
                 <!-- TextArea -->
                 <!-- [class.LogitudeEmailSearchInputFocus]="IsFocused || SelectedItems.length > 0" -->
-                <div [attr.id]="InputId"  style="height: 20px; left:0; right:0; top:0; bottom:0;flex-grow: 1;">
-                    <input class="LogitudeEmailSearchInput" [style.text-align]="isRTL ? 'right' : 'left'"
+                <div [attr.id]="InputId" style="height: 20px; position:absolute; left:0; right:0; top:0; bottom:0;">
+                    <input class="LogitudeEmailSearchInput"
                            [class.LogitudeEmailSearchInputFocus]="IsFocused"
                            [attr.id]="TextAreaId"
                            style="background: transparent !important; height: 20px !important;"
@@ -226,9 +222,6 @@
                     </div>
                 </div>
             </div>
-
-            <div style="color:gray;font-size:13px;margin-left:-44px;margin-top:3px;font-style:italic" *ngIf="IsShowRedUserInActiveNote && DontInCludeInactive"> Note: Users in red are inactive </div>
-
         </td>
     </tr>
 </table>

@@ -163,7 +163,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogDatePicker [ObjectFieldName]="'EstimatedClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [DisableRules]="true"></LogDatePicker>
+                                                    <LogDatePicker [ObjectFieldName]="'EstimatedClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
 
                                                 <td>
@@ -184,10 +184,7 @@
                                                             [LookUpTableName]="'Card'"
                                                             [SelectedValue]="CustomerId"
                                                             [HideAdd]="true"
-                                                            [HideAddLink]="true"
-                                                            [DependencyFilter1Value]="CustomerDependencyProperty1"
-                                                            [DependencyFilter1IsList]="CustomerDependencyProperty1IsList"
-                                                            [DependencyFilter2Value]="CustomerDependencyProperty2">
+                                                            [HideAddLink]="true">
                                                     </LogLov>
                                                 </td>
 
@@ -453,7 +450,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Cancel-DontAddOpportunity' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button id="{{'Cancel-DontAddOpportunity' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -461,7 +458,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Ok-AddOpportunity' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button id="{{'Ok-AddOpportunity' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

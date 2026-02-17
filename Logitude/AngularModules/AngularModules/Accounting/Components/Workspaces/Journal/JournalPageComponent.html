@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .SquareIcon {
         width: 10px;
@@ -24,14 +24,12 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
+                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
 
-                    <td style="width: 300px;" *ngIf="enableFastSearch">
-                        <SearchTextBox  [AutoComplete]="'off'" (optionSelected)="searchDropdownSelected($event)" (click)="showRecentSearches()" (ItemClicked)="EditJournal($event)"  [appSearchListDDL]="searchDropdownOptions" [DDLsettings]="fastSearchSettings" [SearchText]="searchFields" [ObjectTableName]="'Journal'"  (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
-                    </td>
-                    <td style="width: 300px;" *ngIf="!enableFastSearch">
+                    <td style="width: 300px;">
                         <SearchBox [ObjectTableName]="'Journal'" [IsQuickSearch]="true" (ItemClicked)="EditJournal($event)"></SearchBox>
                     </td>
+
                     <td>
                         <div></div>
                     </td>
@@ -55,8 +53,7 @@
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <label  float-start style="margin-right: 10px;" >{{'Journal.O.Queries' | TextCodeTranslationPipe}}</label>
-
+                                    <label>Main Queries</label>
                                 </td>
                             </tr>
 
@@ -68,13 +65,12 @@
                                 <td>
                                     <div class="ScrollViewer">
                                         <div class="ScrollContent">
-                                            
-                                            
+
                                             <!-- Manual Journals -->
-                                            <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Accounting.General.O.Journals' | TextCodeTranslationPipe}}</div>
-                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button id="{{'NewJournal' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="RunNewJournalWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>Manual Journals</div>
+                                                <div style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
+                                                    <button class="Button" (click)="RunNewJournalWizard()">New</button>
                                                 </div>
                                                 <div>
                                                     <table>
@@ -83,35 +79,29 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="Draft_JournalsVisibility" (click)="ViewJournalQuery('Draft_Journals')"> {{'Journal.Q.DraftJournal' | TextCodeTranslationPipe}} ({{journalSummary.DraftJournalsCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('Draft_Journals')"> Draft Journals  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="Non_Approved_JournalsVisibility" (click)="ViewJournalQuery('Non_Approved_Journals')"> {{'Journal.Q.SavedJournal' | TextCodeTranslationPipe}} ({{journalSummary.WaitingJournalsCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('Non_Approved_Journals')"> Waiting for approval Journals  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="Approved_JournalsVisibility" (click)="ViewJournalQuery('Approved_Journals')"> {{'Journal.Q.ApprovedJournal' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('Approved_Journals')"> Approved Journals </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="All_journalsVisibility" (click)="ViewJournalQuery('All_journals')"> {{'Journal.Q.Journal' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('All_journals')"> All Journals </p>
                                                                         </td>
                                                                     </tr>
-                                                                    <!-- <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="Auto_Created_JournalsVisibility" (click)="ViewJournalQuery('Auto_Created_Journals')"> {{'Journal.Q.AutoCreatedJournals' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="ExternalJournalsVisibility" (click)="ViewJournalQuery('External Journals')"> {{'Journal.Q.ExternalJournals' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('Auto_Created_Journals')"> Auto Created Journals  </p>
                                                                         </td>
-                                                                    </tr> -->
+                                                                    </tr>
 
                                                                     <tr>
                                                                         <td><div></div></td>
@@ -126,49 +116,36 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Ledger Transactions -->
-                                            <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;margin-top: 30px;">
-                                                <div>{{'Accounting.General.O.LedgerTransactions' | TextCodeTranslationPipe}}</div>
+                                            <!-- Auto Created Journals -->
+                                            <!--<div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>Auto Created Journals</div>
                                                 <div>
                                                     <table>
                                                         <tr>
-                                                            <td style="width:190px;">
-                                                                <p class="QueryLink" (click)="ViewLedgerTransactionsQuery()">{{'Accounting.General.O.LedgerTransactions' | TextCodeTranslationPipe}}</p>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>
+                                                                        <td><div></div></td>
+                                                                    </tr>
+                                                                </table>
+
+
                                                             </td>
                                                         </tr>
+
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div>-->
 
-                                            <!-- Manual Journals -->
-                                            <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;margin-top: 30px;">
-                                                <div>{{'Journal.O.Revelations' | TextCodeTranslationPipe}}</div>
-                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="NewRevaluation()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
-                                                </div>
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:190px;">
-                                                                <p class="QueryLink" (click)="ViewRevaluationQuery()">{{'Revaluation.Q.AllRevaluations' | TextCodeTranslationPipe}}</p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr *ngIf="LoadCVS_JournalsVisibility">
-                                                            <td style="width:190px;" (click)="LoadJournalFromFile()">
-                                                                <span class="QueryLink" >{{'Journal.Features.LOADJOURNALCSV' | TextCodeTranslationPipe}}</span><span><img src="./Images/Buttons/excelicon.png" /></span>
-                                                                
-                                                            </td>
-                                                        </tr>
-                                                        <tr *ngIf="LoadMichpal_JournalsVisibility">
-                                                            <td style="width:190px;" (click)="LoadJournalFromMichpalFile()">
-                                                                <span class="QueryLink" >{{'Journal.Features.LOADJOURNALMICHPAL' | TextCodeTranslationPipe}}</span><span><img src="./Images/Buttons/Notepad.png" /></span>
-                                                                
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                            <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
+                                                <div>My Views</div>
+                                                <div style="height:80px;">
+                                                    <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Journal'" [BackButtonTitle]="'Full Accounting'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
                                                 </div>
                                             </div>
-
 
                                         </div>
                                     </div>
@@ -189,7 +166,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label style="padding: 0px 5px;" float-start>{{RecentJournalsCount}} {{'Journal.O.Recent' | TextCodeTranslationPipe}}</label>
+                                                <label>{{RecentJournalsCount}} Recent Journals</label>
                                             </td>
                                         </tr>
 
@@ -212,13 +189,13 @@
                                                                         </td>
 
                                                                         <td style="width:110px; position: relative;" rowspan="2">
-                                                                            <div float-start style="position: absolute; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
+                                                                            <div style="position: absolute; left: 3px; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
                                                                                 <div *ngIf="item.LastActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
                                                                                 <div *ngIf="item.LastActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
                                                                                 <div *ngIf="item.LastActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
                                                                             </div>
 
-                                                                            <div float-start style="position: absolute; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
+                                                                            <div style="position: absolute; left: 3px; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
                                                                         </td>
 
                                                                         <td rowspan="2" style="width:300px; font-size: 16px;color: #1B90CB;">No. {{item.JournalNumber}}</td>
@@ -228,11 +205,11 @@
                                                                         </td>-->
 
                                                                         <td style="width: 50px;">
-                                                                            <div style="color: #262626;">{{'Journal.F.TypeName' | TextCodeTranslationPipe}}: </div>
+                                                                            <div style="color: #262626;">Type: </div>
                                                                         </td>
 
                                                                         <td>
-                                                                            <div>{{showLocal ? item.TypeLocalName : item.TypeName}}</div>
+                                                                            <div>{{item.TypeName}}</div>
                                                                         </td>
                                                                         <td>
                                                                             <div></div>
@@ -245,11 +222,11 @@
                                                                         </td>
 
                                                                         <td style="width: 50px;">
-                                                                            <div style="color: #262626;">{{'Journal.F.StatusName' | TextCodeTranslationPipe}}: </div>
+                                                                            <div style="color: #262626;">Status: </div>
                                                                         </td>
 
                                                                         <td>
-                                                                            <div>{{showLocal ? item.StatusLocalName : item.StatusName}}</div>
+                                                                            <div>{{item.StatusName}}</div>
                                                                         </td>
                                                                         <td>
                                                                             <div></div>

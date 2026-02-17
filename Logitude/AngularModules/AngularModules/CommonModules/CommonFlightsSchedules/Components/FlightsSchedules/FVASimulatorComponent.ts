@@ -13,7 +13,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FVASimulatorComponent.html',
 })
 

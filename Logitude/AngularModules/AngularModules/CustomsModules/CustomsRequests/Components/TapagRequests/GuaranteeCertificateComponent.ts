@@ -18,7 +18,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 @Component({
     selector: 'GuaranteeCertificateComponent',
-    
+    moduleId: module.id,
     templateUrl: './GuaranteeCertificateComponent.html',
 })
 
@@ -231,7 +231,7 @@ export class GuaranteeCertificateComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לנתוני כתב ערבות", true)
             .then((res) => {
                 this.ResponseData = res;

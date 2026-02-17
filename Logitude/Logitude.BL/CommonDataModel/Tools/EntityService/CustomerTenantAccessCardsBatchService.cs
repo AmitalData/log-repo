@@ -3,7 +3,7 @@ using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -53,7 +53,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 this.entityPM = EntityPM;
-                
                 this.isNewEntity = true;
 
                 this.entityPM.BatchNumber = CodeCounter.GetNumber("CustomerTenantAccessCardsBatch", tenant).ToString();
@@ -65,7 +64,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImporterShipmentsQueueBuilderQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CustomerId", Poco.CustomerId.ToString() }, { "CustomerTenantAccessId", Poco.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", Poco.BatchNumber } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CustomerId", Poco.CustomerId.ToString() }, { "CustomerTenantAccessId", Poco.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", Poco.BatchNumber }, { "CorrelationId", Guid.NewGuid().ToString() } });
 
                 scope.Complete();
             }
@@ -87,7 +86,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImporterShipmentsQueueBuilderQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CustomerId", Poco.CustomerId.ToString() }, { "CustomerTenantAccessId", Poco.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", Poco.BatchNumber } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CustomerId", Poco.CustomerId.ToString() }, { "CustomerTenantAccessId", Poco.CustomerTenantAccessId.ToString() }, { "tenant", tenant.ToString() }, { "BatchNumber", Poco.BatchNumber }, { "CorrelationId", Guid.NewGuid().ToString() } });
 
                 scope.Complete();
             }

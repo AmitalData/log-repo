@@ -13,7 +13,8 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.Accounting.Data.Repositories;
+
+
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -75,14 +76,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPMProperties.Add(PMPropertyNames.OppositeAccountDisplayNumber);
             if (entityPOCO.OppositeAccountId != null)
             {
-                GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
-                GLAccount gla = gLAccountRepository.GetSingle(entityPOCO.OppositeAccountId, entityPOCO.Tenant);
+                GLAccountQueryService glaQuery = new GLAccountQueryService(entityPOCO.Tenant);
+                GLAccountPM gla = glaQuery.GetSinglePM(entityPOCO.OppositeAccountId, entityPOCO.Tenant);
                 entityPM.OppositeAccountEnglishName = gla.EnglishName;
                 entityPM.OppositeAccountLocalName = gla.LocalName;
                 entityPM.OppositeAccountDisplayNumber = gla.DisplayNumber;
             }
 
             // GET reconciliation no. of reconciled LT
+            ReconciliationQueryService recoQuery = new ReconciliationQueryService(entityPM.Tenant);
             ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(entityPM.Tenant);
             if (entityPM.IsReconciled)
             {
@@ -93,9 +95,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 // get reconciliaiton
                 if (recoLine != null)
                 {
-                    ReconciliationRepository reconciliationRepository = new ReconciliationRepository(entityPM.Tenant);
-                    Reconciliation reco = reconciliationRepository.GetSingle(recoLine.ReconciliationId, entityPM.Tenant);
-
+                    var reco = recoQuery.GetSingle(recoLine.ReconciliationId, false, false);
                     entityPM.RecoNumber = reco.Number;
                     entityPM.ReconciliationId = reco.Id;
                 }
@@ -105,30 +105,24 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         private static void RetrieveJournalFields(LedgerTransactionPM entityPM, LedgerTransaction entityPOCO)
         {
-            var journalId="";
-            int tenant;
-            if (entityPOCO != null && !String.IsNullOrWhiteSpace(entityPOCO.JournalId))
+            var JournalId="";
+            int Tenant;
+            if (entityPOCO != null && 
+                !String.IsNullOrWhiteSpace(entityPOCO.JournalId)
+                )
             {
-                journalId = entityPOCO.JournalId;
-                tenant = entityPOCO.Tenant;
+                JournalId=entityPOCO.JournalId;
+                Tenant = entityPOCO.Tenant;
             }
             else
             {
-                journalId = entityPM.JournalId;
-                tenant = entityPM.Tenant;
+                JournalId = entityPM.JournalId;
+                Tenant = entityPM.Tenant;
             }
-
-            JournalRepository journalRepository = new JournalRepository(tenant);
-            Journal parent = journalRepository.GetSingle(journalId, tenant);
-            //JournalQueryService journalQueryService = new JournalQueryService(tenant);
-            //JournalPM parent = journalQueryService.GetSingle(journalId, false, false);
-            AccountingEntityQueryService accountingEntityQueryService = new AccountingEntityQueryService(tenant);
-            var accountingEntity = accountingEntityQueryService.GetSingle(parent.AccountingEntityCode, false, true);
-            //AccountingEntityRepository accountingEntityRepository = new AccountingEntityRepository(tenant);
-            //var accountingEntity = accountingEntityRepository.GetSingle(parent.AccountingEntityCode);
-
+            JournalQueryService journalQueryService = new JournalQueryService(Tenant);
+            JournalPM parent = journalQueryService.GetSingle(JournalId, false, false);
             entityPM.Source = parent.AccountingEntityId;
-            entityPM.SourceType = accountingEntity.EnglishName;
+            entityPM.SourceType = parent.AccountingEntityName;
             entityPM.JournalNumber = parent.JournalNumber;
 
             
@@ -197,34 +191,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
-            if (!string.IsNullOrEmpty(entityPM.Notes))
-            {
-                if (!(result.Split(',').Contains(entityPM.Notes)))
-                {
-                    result = string.IsNullOrEmpty(result) ? entityPM.Notes : result + "," + entityPM.Notes;
-                }
-            }
-
-            if (!(result.Split(',').Contains(entityPM.ForeignAmountCredit.ToString())))
-              {
-                    result = string.IsNullOrEmpty(result) ? entityPM.ForeignAmountCredit.ToString() : result + "," + entityPM.ForeignAmountCredit.ToString();
-              }
-          
-            if (!(result.Split(',').Contains(entityPM.ForeignAmountDebit.ToString())))
-                {
-                    result = string.IsNullOrEmpty(result) ? entityPM.ForeignAmountDebit.ToString() : result + "," + entityPM.ForeignAmountDebit.ToString();
-                }
-          
-                if (!(result.Split(',').Contains(entityPM.LocalAmountCredit.ToString())))
-                {
-                    result = string.IsNullOrEmpty(result) ? entityPM.LocalAmountCredit.ToString() : result + "," + entityPM.LocalAmountCredit.ToString();
-                }
-            
-                if (!(result.Split(',').Contains(entityPM.LocalAmountDebit.ToString())))
-                {
-                    result = string.IsNullOrEmpty(result) ? entityPM.LocalAmountDebit.ToString() : result + "," + entityPM.LocalAmountDebit.ToString();
-                }
-        
 
 
 

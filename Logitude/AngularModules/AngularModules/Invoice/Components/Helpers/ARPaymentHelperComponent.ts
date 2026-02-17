@@ -5,7 +5,7 @@ import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "./ARPaymentHelperComponent.html",
 })
 

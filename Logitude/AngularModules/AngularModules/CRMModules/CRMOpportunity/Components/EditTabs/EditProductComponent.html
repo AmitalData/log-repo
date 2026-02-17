@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -9,7 +9,7 @@
     <tr>
         <td>
             <table>
-                <tr>
+                <tr>                    
                     <td style="width:365px;">
                         <table>
                             <tr style="height:20px">
@@ -112,7 +112,7 @@
                                         <tr>
                                             <td style="height:110px">
                                                 <div style="width:100%;height:100%">
-                                                    <LogTextBox [ForceDirection]="EntityPM.NotesFlowDirection" [ObjectFieldName]="'Notes'" [HideColumns]="EntityPM.IsNotesRightToLeftEnabled" [IsMultiline]="true" [InputType]="'ntext'" [Text]="EntityPM.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogTextBox>
+                                                    <LogTextBox [ngStyle]="{direction: EntityPM.NotesFlowDirection}" [ObjectFieldName]="'Notes'" [HideColumns]="EntityPM.IsNotesRightToLeftEnabled" [IsMultiline]="true" [InputType]="'ntext'" [Text]="EntityPM.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogTextBox>
                                                 </div>
                                             </td>
                                             <td *ngIf="EntityPM.IsNotesRightToLeftEnabled" style="width: 50px;height:20px; vertical-align:top;">
@@ -121,25 +121,21 @@
                                                         <td width="5px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width: 16px;height: 14px;">
-                                                            <div [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="EntityPM.AlignNotesLeftClicked()">
-                                                                <img src="./Images/LTR.png" style="width: 16px;height: 14px;" (click)="EntityPM.AlignNotesRightClicked()" />
-
-                                                            </div>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background:EntityPM.NotesBackgroundAlignLeft}">
+                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="EntityPM.AlignNotesLeftClicked()" />
                                                         </td>
-                                                        <td width="10px;">
+                                                        <td width="5px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width: 16px;height: 14px;">
-                                                            <div [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="EntityPM.AlignNotesRightClicked()">
-                                                                <img src="./Images/RTL.png" style="width: 16px;height: 14px;" (click)="EntityPM.AlignNotesLeftClicked()" />
-                                                            </div>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background: EntityPM.NotesBackgroundAlignRight}">
+                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="EntityPM.AlignNotesRightClicked()" />
                                                         </td>
                                                     </tr>
                                                 </table>
                                             </td>
                                         </tr>
                                     </table>
+
                                 </td>
                                 <td>
                                     <div></div>
@@ -275,91 +271,83 @@
                                         <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="EntityPM.ItemsSource">
 
                                             <log-column [width]="'100'" [header]="'Per'">
-                                                <ng-template let-item>
-                                                    <log-cell-template  #logcelltemplate [IsEnabled]="true">
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width:18px;">
-                                                                    <!--<img [attr.title]="item.Name" style="height:16px;width:16px;float:left;" src="{{item.CountryCode | CountryFlagPipe}}" *ngIf="item.ButtonsVisibility" />-->
-                                                                    <Image *ngIf="item.ButtonsVisibility" [Title]="item.Name" [Src]="item.src"></Image>
-                                                                </td>
+                                                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:18px;">
+                                                                <!--<img [attr.title]="item.Name" style="height:16px;width:16px;float:left;" src="{{item.CountryCode | CountryFlagPipe}}" *ngIf="item.ButtonsVisibility" />-->
+                                                                <Image *ngIf="item.ButtonsVisibility" [Title]="item.Name" [Src]="item.src"></Image>                                                                
+                                                            </td>
 
-                                                                <td style="float:left;padding-left:3px;">
-                                                                    {{item.CountryName}}
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </log-cell-template>
-                                                </ng-template>
+                                                            <td style="float:left;padding-left:3px;">
+                                                                {{item.CountryName}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </log-cell-template>
                                             </log-column>
 
                                             <log-column [width]="'90'" [header]="'OpportunityProductLocation.F.NumberOfShipments' | TextCodeTranslationPipe ">
-                                                <ng-template let-item>
-                                                    <log-cell-template  #logcelltemplate>
-                                                        <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.NumberOfShipmentsForeground}">
-                                                            {{item.NumberOfShipments}}
-                                                        </div>
-                                                        <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                                            <LogTextBox [FocusOnMe]="'true'" [InputType]="'integer'" [ObjectFieldName]="'NumberOfShipments'" [NoObjectField]="true" [Text]="item.NumberOfShipments" [DataContext]="item" [ObjectTableName]="'OpportunityProductLocation'" [HideColumns]="true"></LogTextBox>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </ng-template>
+
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.NumberOfShipmentsForeground}">
+                                                        {{item.NumberOfShipments}}
+                                                    </div>
+                                                    <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'integer'" [ObjectFieldName]="'NumberOfShipments'" [NoObjectField]="true" [Text]="item.NumberOfShipments" [DataContext]="item" [ObjectTableName]="'OpportunityProductLocation'" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </log-cell-template>
                                             </log-column>
 
                                             <log-column [width]="'120'" [header]="'OpportunityProductLocation.F.ChargeableWeight' | TextCodeTranslationPipe " [Alignment]="'left'">
-                                                <ng-template let-item>
-                                                    <log-cell-template  #logcelltemplate>
-                                                        <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.ChargeableWeightForeground}">
-                                                            {{item.ChargeableWeight | NumbersPipe:'N2'}}
-                                                        </div>
 
-                                                        <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                                            <LogTextBox [FocusOnMe]="'true'" [InputType]="'integer'" [ObjectFieldName]="'ChargeableWeight'" [NoObjectField]="true" [Text]="item.ChargeableWeight" [DataContext]="item" [ObjectTableName]="'OpportunityProductLocation'" [HideColumns]="true"></LogTextBox>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </ng-template>
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.ChargeableWeightForeground}">
+                                                        {{item.ChargeableWeight | NumbersPipe:'N2'}}
+                                                    </div>
+
+                                                    <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'integer'" [ObjectFieldName]="'ChargeableWeight'" [NoObjectField]="true" [Text]="item.ChargeableWeight" [DataContext]="item" [ObjectTableName]="'OpportunityProductLocation'" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </log-cell-template>
                                             </log-column>
 
                                             <log-column [width]="'90'" [header]="CustomerProductionRevenueHeader" [Alignment]="'left'">
-                                                <ng-template let-item>
-                                                    <log-cell-template  #logcelltemplate>
-                                                        <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.RevenueForeground}">
-                                                            {{item.Revenue | NumbersPipe:'N2' }}
-                                                        </div>
 
-                                                        <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                                            <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'Revenue'" [NoObjectField]="true" [Text]="item.Revenue" [DataContext]="item" [ObjectTableName]="'CustomerProductLocation'" [HideColumns]="true"></LogTextBox>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </ng-template>
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.RevenueForeground}">
+                                                        {{item.Revenue | NumbersPipe:'N2' }}
+                                                    </div>
+
+                                                    <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'Revenue'" [NoObjectField]="true" [Text]="item.Revenue" [DataContext]="item" [ObjectTableName]="'CustomerProductLocation'" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </log-cell-template>
                                             </log-column>
 
 
                                             <log-column [width]="'90'" [header]="'OpportunityProductLocation.F.TEU' | TextCodeTranslationPipe " [Alignment]="'left'" *ngIf="TEUVisibility">
-                                                <ng-template let-item>
-                                                    <log-cell-template  #logcelltemplate>
-                                                        <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.TEUForeground}">
-                                                            {{item.TEU | NumbersPipe:'N2'}}
-                                                        </div>
 
-                                                        <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
-                                                            <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'TEU'" [NoObjectField]="true" [Text]="item.TEU" [DataContext]="item" [ObjectTableName]="'CustomerProductLocation'" [HideColumns]="true"></LogTextBox>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </ng-template>
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.TEUForeground}">
+                                                        {{item.TEU | NumbersPipe:'N2'}}
+                                                    </div>
+
+                                                    <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'TEU'" [NoObjectField]="true" [Text]="item.TEU" [DataContext]="item" [ObjectTableName]="'CustomerProductLocation'" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </log-cell-template>
                                             </log-column>
 
                                             <log-column [width]="'30'">
-                                                <ng-template let-item>
-                                                    <log-cell-template  #logcelltemplate [IsEnabled]="true">
-                                                        <div style="width: 100%; height: 100%; position: relative;">
-                                                            <div class="CenterCenter" style="height: 20px;">
-                                                                <span class="CellSeparator"></span>
-                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" [Top]="3" *ngIf="item.ButtonsVisibility" (click)="item.DeleteCountry()"></IconButton>
-                                                            </div>
+                                                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                                                    <div style="width: 100%; height: 100%; position: relative;">
+                                                        <div class="CenterCenter" style="height: 20px;">
+                                                            <span class="CellSeparator"></span>
+                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" [Top]="3" *ngIf="item.ButtonsVisibility" (click)="item.DeleteCountry()"></IconButton>
                                                         </div>
-                                                    </log-cell-template>
-                                                </ng-template>
+                                                    </div>
+                                                </log-cell-template>
                                             </log-column>
 
                                         </logitude-edit-grid>

@@ -15,12 +15,10 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
-import { SystemEnvironmentService } from '../../../Infrastructure/Utilities/SystemEnvironmentService';
-import { CustomerTenantAccessRequestExtendedPMService } from '../../Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
 
 @Component({
     selector: 'LogBoxSettings',
-    
+    moduleId: module.id,
     templateUrl: './LogBoxSettings.html',
 })
 
@@ -30,14 +28,9 @@ export class LogBoxSettings extends BaseComponent implements OnInit, AfterViewIn
     public ObjectTableName: string = "Tenant";
     public TenantPm: TenantPM = new TenantPM();
     public IsVisibile: boolean = false;
-    public ShowAutoArchiveOnPODExport: boolean = false;
-    public ShowAutoArchiveOnInvoice: boolean = false;
-    public IsLogbox: boolean = SystemEnvironmentService.IsLogBox();
     private CurrentSession = SessionLocator.SelectedSession;
-    private customerTenantAccessRequestExtendedPMService: CustomerTenantAccessRequestExtendedPMService;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-        this.customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
         this.LoadTenantPMMethod();
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response=> {
         });
@@ -54,50 +47,16 @@ export class LogBoxSettings extends BaseComponent implements OnInit, AfterViewIn
     // Load Tenant 
     public IsTenantUS: boolean = false;
     private LoadTenantPMMethod() {
-        this.CurrentSession.StartBusyIndicator("Loading...");
         var myService: TenantPMService = new TenantPMService();
         myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
             this.TenantPm = response.Result;
-            this.SetAutoArchiveDetails();
+            this.IsVisibile = true;
 
             if (this.TenantPm.CountryCode.toUpperCase() == "US") {
                 this.IsTenantUS = true;
             }
         });
     }
-
-    private SetAutoArchiveDetails() {
-        if (this.IsLogbox) {
-            this.SetAutoArchiveLogboxDetails();
-            return;
-        }
-        if (SessionLocator.PrivateLableSettings) {
-            this.SetAutoArchivePrivateLabelDetails();
-        }
-    }
-
-    private SetAutoArchiveLogboxDetails() {
-        this.ShowAutoArchiveOnInvoice = true;
-        this.ShowAutoArchiveOnPODExport = false;
-        this.IsVisibile = true;
-        this.CurrentSession.StopBusyIndicator();
-    }
-
-    private SetAutoArchivePrivateLabelDetails() {
-        this.customerTenantAccessRequestExtendedPMService.getByForwarderId(SessionLocator.Tenant, SessionLocator.PrivateLableSettings.HybridPartnerId).subscribe((result: any) => {
-            if (!result.HasError) {
-                this.SetAutoArchivePrivateLabelFieldsDetails(result.Result);
-            }
-            this.IsVisibile = true;
-            this.CurrentSession.StopBusyIndicator();
-        });
-    }
-
-    private SetAutoArchivePrivateLabelFieldsDetails(customerTenantAccessInfo) {
-        this.ShowAutoArchiveOnInvoice = customerTenantAccessInfo.IsCustoms && SessionLocator.PrivateLableSettings.IsCustomsActivated;
-        this.ShowAutoArchiveOnPODExport = customerTenantAccessInfo.IsExport && SessionLocator.PrivateLableSettings.IsExportActivated;
-    }
-
      Agent: StockTypesDetails = new StockTypesDetails("A", "Agent"); 
      Customer: StockTypesDetails = new StockTypesDetails("C", "Customer");
    
@@ -164,17 +123,12 @@ export class LogBoxSettings extends BaseComponent implements OnInit, AfterViewIn
         }
     }
     
-    get AutoArchiveOnPODExport() { return this.TenantPm.AutoArchiveOnPODExport; }
-    set AutoArchiveOnPODExport(newValue: boolean) {
-        if (this.TenantPm.AutoArchiveOnPODExport != newValue) {
-            this.TenantPm.AutoArchiveOnPODExport = newValue;
-        }
-    }
 
-    get CustomerTenantShareCustomsFile() { return this.TenantPm.CustomerTenantShareCustomsFile; }
-    set CustomerTenantShareCustomsFile(value: boolean) {
-        if (this.TenantPm.CustomerTenantShareCustomsFile != value) {
-            this.TenantPm.CustomerTenantShareCustomsFile = value;
+
+    get IsCustomerTenantShare() { return this.TenantPm.IsCustomerTenantShare; }
+    set IsCustomerTenantShare(value: boolean) {
+        if (this.TenantPm.IsCustomerTenantShare != value) {
+            this.TenantPm.IsCustomerTenantShare = value;
         }
     }
 

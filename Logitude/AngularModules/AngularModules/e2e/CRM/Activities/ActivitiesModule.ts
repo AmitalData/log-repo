@@ -40,21 +40,25 @@ export class ActivitiesModule {
 
     public CreateActivity() {
         var activityNo = this.GeneralFun.RandomNum();
-        if (browser.params.CRM.ActivityType == "task") {
-            this.addTask.CreateNewTask('Task # ' + activityNo);
-            this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Task # ' + activityNo);
-            this.editTask.EditTask('Task # ' + activityNo);
-        }
-        else if (browser.params.CRM.ActivityType == "call") {
-            this.addPhoneCall.CreateNewPhoneCall('Phone Call # ' + activityNo);
-            this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Phone Call # ' + activityNo);
-            this.editPhoneCall.EditPhoneCall('Phone Call # ' + activityNo);
 
-        }
-        else if (browser.params.CRM.ActivityType == "appoint") {
-            this.addAppointment.CreateNewAppointment('Appointment # ' + activityNo);
-            this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Appointment # ' + activityNo);
-            this.editAppointment.EditAppointment('Appointment # ' + activityNo);
-        }
+        this.addTask.CreateNewTask('Task # ' + activityNo);
+        this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Task # ' + activityNo);
+        this.editTask.EditTask('Task # ' + activityNo);
+
+        this.addPhoneCall.CreateNewPhoneCall('Phone Call # ' + activityNo);
+        this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Phone Call # ' + activityNo);
+        this.editPhoneCall.EditPhoneCall('Phone Call # ' + activityNo);
+
+        this.addAppointment.CreateNewAppointment('Appointment # ' + activityNo);
+        this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Appointment # ' + activityNo);
+        this.editAppointment.EditAppointment('Appointment # ' + activityNo);
+        // browser.driver.sleep(6000);
+
     }
+    
+
+
 }
+
+
+

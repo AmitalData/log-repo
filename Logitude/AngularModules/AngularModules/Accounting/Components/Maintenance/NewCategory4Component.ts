@@ -9,7 +9,7 @@ import {Category4PMService} from '../../Services/StandardPMs/Category4PMService'
 
 @Component({
     selector: 'NewCategory4Component',
-    
+    moduleId: module.id,
     templateUrl: './NewCategory4Component.html',
 })
 
@@ -68,7 +68,7 @@ export class NewCategory4Component extends BaseComponent{
     }
     SubmitChanges() {
         
-        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this.myService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

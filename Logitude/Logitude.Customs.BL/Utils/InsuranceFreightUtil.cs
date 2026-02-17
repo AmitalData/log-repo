@@ -166,11 +166,9 @@ namespace Logitude.Customs.BL.Utils
                             }
 
                             // calculate Frieght Sum For All Invoices In First Invoice Currency
-                            if (firstInvoiceRateValue != 0)
-                                FrieghtSumForAllInvoicesInFirstInvoiceCurrency = FrieghtSumForAllInvoicesInNIS / firstInvoiceRateValue;
+                            FrieghtSumForAllInvoicesInFirstInvoiceCurrency = FrieghtSumForAllInvoicesInNIS / firstInvoiceRateValue;
 
-                            else
-                                FrieghtSumForAllInvoicesInFirstInvoiceCurrency = FrieghtSumForAllInvoicesInNIS;
+
 
 
                             //[3] calculate InvoiceAmountsInFirstInvoiceCurrency
@@ -187,12 +185,7 @@ namespace Logitude.Customs.BL.Utils
                                         if (invoiceRateValue > 0)
                                         {
                                             decimal invoiceAmount = invoice.InvoiceAmount ?? 0;
-                                            if(firstInvoiceRateValue!=0)
                                             InvoiceAmountsInFirstInvoiceCurrency += invoiceAmount * invoiceRateValue / firstInvoiceRateValue;
-                                            else
-                                            {
-                                                InvoiceAmountsInFirstInvoiceCurrency += invoiceAmount * invoiceRateValue;
-                                            }
                                         }
                                     }
                                     else
@@ -246,7 +239,7 @@ namespace Logitude.Customs.BL.Utils
 
             var rateUSDCurrency = rateQuery.GetCustomsExchangeRateForDateAndCurrencyTypeCode("USD", taxationDateTime, tenant);
             rateUSDCurrency = rateUSDCurrency ?? new CustomsExchangeRatePM();
-            if (rateUSDCurrency.ExchangeRate == 0 || rateUSDCurrency.ExchangeRate == null)
+            if (rateUSDCurrency.ExchangeRate == 0)
             {
                 return null;
             }

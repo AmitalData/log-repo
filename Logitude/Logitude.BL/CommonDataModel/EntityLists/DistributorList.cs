@@ -6,7 +6,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
     public class DistributorList
     {
         [Key]
-        public string Id { get; set; }
         public string Code { get; set; }
         public string EnglishName { get; set; }
         public string LocalName { get; set; }

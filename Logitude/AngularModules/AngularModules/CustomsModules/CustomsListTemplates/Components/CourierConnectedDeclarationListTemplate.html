@@ -1,4 +1,4 @@
-<div *ngIf="fieldName == 'CustomFileNo'" style="text-align:right">
+﻿<div *ngIf="fieldName == 'CustomFileNo'" style="text-align:right">
 
     <span  class="hyperlink" (click)="ShowDeclarationScreen()" >  {{ rowData[fieldName]   }}</span>
 
@@ -6,9 +6,9 @@
 
 
 <div *ngIf="fieldName == 'MyConnectedCheckBox'" style="text-align:right">
-    <CheckBox [IsChecked]="IsConnectedDeclarationChecked" (Checked)="OnConnectedCheckBoxChecked($event)" [IsEnabled]="!IsDisplayOnly"></CheckBox>
+    <CheckBox [IsChecked]="IsConnectedDeclarationChecked" (Checked)="OnConnectedCheckBoxChecked($event)"></CheckBox>
 </div>
 
 <div *ngIf="fieldName == 'MyNotConnectedCheckBox'" style="text-align:right">
-    <CheckBox [IsChecked]="IsNotConnectedDeclarationChecked" (Checked)="OnNotConnectedCheckBoxChecked($event)" [IsEnabled]="!IsDisplayOnly"></CheckBox>
+    <CheckBox [IsChecked]="IsNotConnectedDeclarationChecked" (Checked)="OnNotConnectedCheckBoxChecked($event)"></CheckBox>
 </div>

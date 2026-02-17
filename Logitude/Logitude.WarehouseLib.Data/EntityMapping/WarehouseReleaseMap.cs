@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data;
@@ -79,51 +79,17 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
 
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId").HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsFixedLength();
+            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.DirectionId).HasColumnName("DirectionId").HasMaxLength(1).IsFixedLength();
+            this.Property(t => t.DirectionId).HasColumnName("DirectionId").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.TotalQuantity).HasColumnName("TotalQuantity");
 
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode").HasMaxLength(3).IsUnicode(false);
-
-            this.Property(t => t.ConnectedTo).HasColumnName("ConnectedTo").HasMaxLength(100).IsUnicode(false);
-
-            this.Property(t => t.FromPortId).HasColumnName("FromPortId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ToPortId).HasColumnName("ToPortId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.CustomerAddressId).HasColumnName("CustomerAddressId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.TotalVolumetricWeight).HasColumnName("TotalVolumetricWeight").HasPrecision(18, 3);
-
-            this.Property(t => t.Ratio).HasColumnName("Ratio");
-
-            this.Property(t => t.ToTypeCode).HasColumnName("ToTypeCode").HasMaxLength(4).IsUnicode(false);
-
-            this.Property(t => t.ToPartnerCardId).HasColumnName("ToPartnerCardId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ToAddressId).HasColumnName("ToAddressId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ToAddressZipCode).HasColumnName("ToAddressZipCode").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ToAddressCity).HasColumnName("ToAddressCity").HasMaxLength(25).IsUnicode(true);
-
-            this.Property(t => t.ToAddressCountryId).HasColumnName("ToAddressCountryId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.IsUsed).HasColumnName("IsUsed");
-
-            this.Property(t => t.TruckerId).HasColumnName("TruckerId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.TruckerReference).HasColumnName("TruckerReference").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ChildEntityReference).HasColumnName("ChildEntityReference").HasMaxLength(25).IsUnicode(false);
-
-            this.Property(t => t.MasterShipmentNumber).HasColumnName("MasterShipmentNumber").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

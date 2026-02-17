@@ -11,7 +11,6 @@ using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Diagnostics;
 using Logitude.Server.Tools;
-using System.Runtime.InteropServices;
 namespace Logitude.Accounting.Data.Repositories
 {
    public partial class JournalLineRepository:IRepository<JournalLine>
@@ -37,18 +36,6 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.JournalId == journalId && a.Line == line && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-        public List<JournalLine> GetJournalLineByLedgerTransactionIdList(List<String> idList, int tenant)
-        {
-
-            var q = from j in context.JournalLines
-                    join l in context.LedgerTransactions
-                        on new { j.JournalId, Line = j.Line }
-                        equals new { l.JournalId, Line = l.JournalLineNumber }
-                    where idList.Contains(l.Id) && l.Tenant == tenant && j.Tenant == tenant
-                    select j;
-
-            return q.ToList();
-        }
 
 
         public IQueryable<JournalLine> GetQueryContainsAccId(IQueryable<string> GLAccountIDList, int tenant
@@ -56,21 +43,9 @@ namespace Logitude.Accounting.Data.Repositories
         {
             return (from a in context.JournalLines
                     where a.Tenant == tenant
-                    where (GLAccountIDList.Contains(a.CreditAccountId) || GLAccountIDList.Contains(a./*DebitControlAccountId*/ DebitAccountId))
+                    where (GLAccountIDList.Contains(a.CreditAccountId) || GLAccountIDList.Contains(a.DebitControlAccountId))
                     select a);
         }
-
-
-        public bool ExistsJournalLineByReferenceCreditAccountId(string reference1, string gLAccountId, int tenant)
-        {
-            return context.JournalLines
-                .Where(a => a.Reference1 == reference1 && a.CreditAccountId == gLAccountId && a.Tenant == tenant
-                 && a.Journal.StatusCode != JournalStatuses.Voided.ToString()
-                 && a.Journal.StatusCode != JournalStatuses.Cancelled.ToString()
-                 && a.Journal.OriginalJournalId == null)
-                .Any();
-        }
-
 
 
         partial void onUpdate()//Partial Methods

@@ -3,7 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -58,7 +58,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm.Id = IdCounter.GetNumber("FTPDetail", tenant).ToString();
             this.Poco = new FTPDetail();
             this.Poco.Id = this.entityPm.Id;
-
+            
             FTPDetailMapping.MapEntity(entityPM, Poco, isNewEntity, loggedContact.Id);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();

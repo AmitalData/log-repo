@@ -1,0 +1,386 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using WebFreight.Web.Security;
+using WebFreight.Web.WebServices;
+
+namespace WebFreight.Web.App_Code
+{
+    public class DocumentsDataController : ApiController
+    {
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
+
+        public List<SharedLogisticDocumentPM> GetEntityDocuments_Old(string oldParam1, string oldParam2, string entityId, string partnerType, int tenant)
+        {
+
+            ShipmentRepository rep = new ShipmentRepository(tenant);
+            Shipment shipment = rep.GetSingleShipment(entityId, tenant);
+
+            CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+
+
+            List<SharedLogisticDocumentPM> list = new List<SharedLogisticDocumentPM>();
+
+            DocumentsFilingQuery documentInQuery = new DocumentsFilingQuery(tenant);
+            DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
+
+            List<DocumentsFilingPM> docsInsData = documentInQuery.GetDocumentsFilingPMsByEntityId(entityId,"I", tenant);
+            List<DocumentOutPM> docsOutsData = documentOutQuery.GetDocumentOutPMsByEntityId(entityId, tenant);
+
+            List<DocumentsFilingPM> docsIns = new List<DocumentsFilingPM>();
+            List<DocumentOutPM> docsOuts = new List<DocumentOutPM>();
+
+            if (partnerType == "AG")
+            {
+                docsIns = docsInsData.Where(d => d.IsAgentView).ToList();
+                docsOuts = docsOutsData.Where(d => d.IsAgentView).ToList();
+            }
+
+            else if (partnerType == "CS")
+            {
+                docsIns = docsInsData.Where(d => d.IsCustomerView).ToList();
+                docsOuts = docsOutsData.Where(d => d.IsCustomerView).ToList();
+            }
+
+            foreach (DocumentsFilingPM item in docsIns)
+            {
+                //string documentName = tenant + "_" + item.DocumentId;
+                //string url = "../WebPages/Downloadpage.aspx?id=" + documentName;
+                string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + item.DocumentId + ":ship:" + shipment.Id;//"../WebPages/SharedDownloadPage.aspx?id=" + documentName;
+                 
+                list.Add(new SharedLogisticDocumentPM()
+                {
+                    Id = "DocIn:" + item.Id,
+                    DocumentId = item.DocumentId,
+                    Name = item.DocumentTypeName,
+                    Url = url,
+                    FileExtension = item.FileExtension,
+                    FileName = item.FileName,
+                    IsDigitallySigned = item.IsDigitallySigned,
+                    Reference = item.ChildEntityReference,
+                });
+            }
+
+            foreach (DocumentOutPM item in docsOuts)
+            {
+                if (item.TemplateType == "P")
+                {
+                    string docId = item.Id;
+                    if (item.DocumentOutCopies.Count() > 0)
+                    {
+                        docId = item.DocumentOutCopies.FirstOrDefault().DocumentId;
+                    }
+
+                    //string documentName = tenant + "_" + docId;
+                    string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + docId + ":ship:" + shipment.Id;//"../WebPages/SharedDownloadPage.aspx?id=" + documentName;
+                    //string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + item.DocumentId+":" +documenttype+":"+ entityId;
+
+                    list.Add(new SharedLogisticDocumentPM()
+                    {
+                        Id = "DocOut:" + item.Id,
+                        //DocumentId = item.DocumentId,
+                        Name = item.DocumentTypeName,
+                        Url = url,
+                        FileExtension = "",
+                        FileName = item.FileName,
+                        IsDigitallySigned = false,
+                        Reference = item.ChildEntityReference,
+                    });
+                }
+            }
+
+            return list.OrderBy(o => o.Name).ToList();
+        }
+
+        public List<SharedLogisticDocumentPM> GetEntityDocuments(string entityId, string partnerType, int tenant)
+        {
+            List<SharedLogisticDocumentPM> myResult = new List<SharedLogisticDocumentPM>();
+
+            ShipmentRepository rep = new ShipmentRepository(tenant);
+            Shipment shipment = rep.GetSingleShipment(entityId, tenant);
+
+            if (shipment != null)
+            {
+                CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+
+                ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+                DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
+                DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+                List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
+
+                if (partnerType == "AG")
+                {
+                    myDocumentFilings = myDocumentFilings.Where(d => d.IsAgentView).ToList();
+                }
+
+                else if (partnerType == "CS")
+                {
+                    myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
+                }
+
+                List<DocumentOutCopy> allcopies = new List<DocumentOutCopy>();
+                List<DocumentsFilingPM> missedDocuments = myDocumentFilings.Where(d => d.DirectionCode == "O" && d.DoucmentTypeTemplateFormatCode != "M" && d.DocumentId == null).ToList();
+                if (missedDocuments.Count > 0)
+                {
+                    List<string> allIds = missedDocuments.Select(s=>s.Id).ToList();
+
+                    allcopies = (from d in myContext.DocumentOutCopies
+                                 where allIds.Contains(d.DocumentOutId)
+                                 select d).ToList();
+                }
+
+                foreach (DocumentsFilingPM item in myDocumentFilings)
+                {
+                    if (item.DirectionCode == "O" && item.DoucmentTypeTemplateFormatCode == "M")
+                    {
+                        continue;
+                    }
+
+                    else
+                    {
+                        string myDocumentId = item.DocumentId;
+                        string myFileName = item.CalculatedFileName;
+                        string myFileExtension = item.FileExtension;
+                        string myPrefix = (item.DirectionCode == "I") ? "DocIn:" : "DocOut:";
+
+                        if (item.DirectionCode == "O" && item.DocumentId == null)
+                        {
+                            List<DocumentOutCopy> myCopies = allcopies.Where(d => d.DocumentOutId == item.Id).ToList();
+                            if (myCopies.Count > 0)
+                            {
+                                myDocumentId = myCopies.FirstOrDefault().DocumentId;
+                                if (myDocumentId != null)
+                                {
+                                    Document myDocument = (from d in myContext.Documents
+                                                           where d.Id == myDocumentId
+                                                           select d).FirstOrDefault();
+                                    if (myDocument != null)
+                                    {
+                                        myFileName = !string.IsNullOrEmpty(myDocument.CalculatedFileName) ? myDocument.CalculatedFileName:  myDocument.FileName;
+                                        myFileExtension = myDocument.Extension;
+                                    }
+                                }
+                            }
+                        }
+
+                        string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + myDocumentId + ":ship:" + shipment.Id;
+
+                        myResult.Add(new SharedLogisticDocumentPM()
+                        {
+                            Id = myPrefix + item.Id,
+                            Url = url,                            
+                            Name = item.DocumentTypeName,
+                            DocumentId = myDocumentId,
+                            FileName = myFileName,
+                            FileExtension = myFileExtension,
+                            IsDigitallySigned = item.IsDigitallySigned,
+                            Reference = item.ChildEntityReference,
+                        });                                           
+                    }
+                }
+            }
+
+            return myResult.OrderBy(o => o.Name).ToList();
+        }
+
+        public List<SharedLogisticDocumentPM> GetShipmentDocuments(string securitykey, string entityId, string partnerType, int tenant)
+        {
+            List<SharedLogisticDocumentPM> myResult = new List<SharedLogisticDocumentPM>();
+
+            ShipmentRepository rep = new ShipmentRepository(tenant);
+            Shipment shipment = rep.GetSingleShipment(entityId, tenant);
+
+            if (shipment != null)
+            {
+                if (shipment.SecurityKey != null && securitykey != null)
+                {
+                    if (shipment.SecurityKey.ToLower() == securitykey.ToLower())
+                    {
+                        partnerType = "CS";
+
+                        ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+                        DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
+                        DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+                        List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
+
+                        if (partnerType == "AG")
+                        {
+                            myDocumentFilings = myDocumentFilings.Where(d => d.IsAgentView).ToList();
+                        }
+
+                        else if (partnerType == "CS")
+                        {
+                            myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
+                        }
+
+
+                        List<DocumentOutCopy> allcopies = new List<DocumentOutCopy>();
+                        List<DocumentsFilingPM> missedDocuments = myDocumentFilings.Where(d => d.DirectionCode == "O" && d.DoucmentTypeTemplateFormatCode != "M" && d.DocumentId == null).ToList();
+                        if (missedDocuments.Count > 0)
+                        {
+                            List<string> allIds = missedDocuments.Select(s => s.Id).ToList();
+
+                            allcopies = (from d in myContext.DocumentOutCopies
+                                         where allIds.Contains(d.DocumentOutId)
+                                         select d).ToList();
+                        }
+
+                        foreach (DocumentsFilingPM item in myDocumentFilings)
+                        {
+                            if (item.DirectionCode == "O" && item.DoucmentTypeTemplateFormatCode == "M")
+                            {
+                                continue;
+                            }
+
+                            else
+                            {
+                                string myDocumentId = item.DocumentId;
+                                string myFileName = item.FileName;
+                                string myFileExtension = item.FileExtension;
+
+                                if (item.DirectionCode == "O" && item.DocumentId == null)
+                                {
+                                    List<DocumentOutCopy> myCopies = allcopies.Where(d => d.DocumentOutId == item.Id).ToList();
+                                    if (myCopies.Count > 0)
+                                    {
+                                        myDocumentId = myCopies.FirstOrDefault().DocumentId;
+                                        if (myDocumentId != null)
+                                        {
+                                            Document myDocument = (from d in myContext.Documents
+                                                                   where d.Id == myDocumentId
+                                                                   select d).FirstOrDefault();
+                                            if (myDocument != null)
+                                            {
+                                                myFileName = myDocument.FileName;
+                                                myFileExtension = myDocument.Extension;
+                                            }
+                                        }
+                                    }
+                                }
+                                string encodedUrl = item.SecurityId + "~" + tenant;
+                                encodedUrl = HttpUtility.UrlEncode(encodedUrl);
+                                string url = "../WebPages/CorrespondenceDownloadpage.aspx?id=" + encodedUrl;
+
+                                myResult.Add(new SharedLogisticDocumentPM()
+                                {
+                                    Id = item.Id,
+                                    Url = url,
+                                    DocumentId = myDocumentId,
+                                    Name = item.DocumentTypeName,
+                                    FileName = myFileName,
+                                    FileExtension = myFileExtension,
+                                    IsDigitallySigned = item.IsDigitallySigned,
+                                    Reference = item.ChildEntityReference,
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return myResult.OrderBy(o => o.Name).ToList();
+        }
+
+        public bool CheckSharedContactAuthenticationForShipment(string agentId, string customerId, int tenant)
+        {
+            if (tenant != 0)
+            {
+
+                bool exists = false;
+                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                {//using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    //{
+                    //}
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                    string email = HttpContext.Current.User.Identity.Name;
+
+                    ContactRepository contactrep = new ContactRepository(commonDataContext);
+                    Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+
+                    if (contact != null)
+                    {
+                        CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && (d.CardId == customerId || d.CardId == agentId)).FirstOrDefault();
+                        if (cardContact != null)
+                        {
+                            exists = true;
+
+                        }
+                    }
+
+
+                }
+                if (!exists)
+                {
+                    throw new AutenticationException("Sorry! you are not authorized to read data!");
+                }
+                return exists;
+            }
+            return true;
+
+
+        }
+
+        //public string GetDownloadDocument(string documentId, string entityId, int tenant)
+        //{
+        //    DocumentInQuery documentInQuery = new DocumentInQuery(tenant);
+        //    DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
+            
+        //    string theUri = "";
+        //    string[] arr = documentId.Split(':');
+        //    string docId = arr[1];
+        //    if (arr[0] == "DocOut")
+        //    {
+        //        DocumentOutPM pm = documentOutQuery.GetSinglePM(docId, tenant);
+        //        if (pm.TemplateType == "P")
+        //        {
+                    
+        //            if (pm.DocumentOutCopies.Count() > 0)
+        //            {
+        //                docId = pm.DocumentOutCopies.FirstOrDefault().DocumentId;
+        //            }
+                    
+        //            string documentName = tenant + "_" + docId;
+        //            theUri = "../WebPages/Downloadpage.aspx?id=" + documentName;
+        //        }
+        //        else
+        //        {
+        //           // CommunicationLogPM commLog = communicationLogQuery.GetCommunicationLogPMsByEntityId(entityId, tenant).Where(l => l.DocumentOutId == docId).FirstOrDefault();
+
+        //           // HtmlEditorWebService service = new HtmlEditorWebService();
+
+        //           // byte[] resultFile = service.GetSentMessageHtmlBody(commLog.DocumentId, tenant);
+        //           //System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+        //           //string htmlString = enc.GetString(resultFile);
+        //            string filedata = docId + ":" + entityId + ":" + tenant;
+        //           theUri = "../WebPages/Downloadpage.aspx?messagefiledata=" + filedata;//+ htmlString;
+
+        //        }
+        //        //MyHyperlinkButton myhyperButton = new MyHyperlinkButton(theUri);
+        //        // myhyperButton.ClickMe();
+
+        //    }
+        //    else
+        //    {
+        //        DocumentInPM pm = documentInQuery.GetSinglePM(arr[1], tenant);
+        //        string documentName = tenant + "_" + pm.DocumentId; 
+        //        theUri = "../WebPages/Downloadpage.aspx?id=" + documentName;
+        //    }
+
+        //    return theUri;
+        //}
+    }
+}

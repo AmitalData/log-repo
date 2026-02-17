@@ -70,24 +70,11 @@ export class BatchServicesLogPM {
     public set DoneItemsInOneMinute(newValue: number) { if (this.doneItemsInOneMinute != newValue) { this.doneItemsInOneMinute = newValue; this.MarkAsDirty("DoneItemsInOneMinute"); } }
        
 	 
-    private waitingItems: number;
-    public get WaitingItems() { return this.waitingItems; }
-    public set WaitingItems(newValue: number) { if (this.waitingItems != newValue) { this.waitingItems = newValue; this.MarkAsDirty("WaitingItems"); } }
-       
-	 
-    private failedItems: number;
-    public get FailedItems() { return this.failedItems; }
-    public set FailedItems(newValue: number) { if (this.failedItems != newValue) { this.failedItems = newValue; this.MarkAsDirty("FailedItems"); } }
-       
-	 
 
     public OldEntityPM: BatchServicesLogPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -95,7 +82,6 @@ export class BatchServicesLogPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BatchServicesLog");
            
         }
-	 }
     }
     private MyClone: BatchServicesLogPM;
 

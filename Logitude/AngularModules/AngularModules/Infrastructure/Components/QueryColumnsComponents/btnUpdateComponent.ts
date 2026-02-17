@@ -12,7 +12,7 @@ import { CardList } from '../../../Common/EntityLists/CardList';
 import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'btnUpdateComponent',
     templateUrl: './btnUpdateComponent.html',
@@ -115,7 +115,7 @@ export class btnUpdateComponent implements OnInit {
     private IsCompleted: boolean = false;
     GetCarrierUpdate() {
         var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetCarrierUpdate(this.entityId).subscribe((myResult:any) => {
+        myService.GetCarrierUpdate(this.entityId).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             this.StopBusyIndicator();
             if (!mm.HasError) {
@@ -130,7 +130,7 @@ export class btnUpdateComponent implements OnInit {
 
     GetInUseCarrier(type: string, code: string) {
         var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetInUseCarrier(type, code).subscribe((myResult:any) => {
+        myService.GetInUseCarrier(type, code).subscribe(myResult => {
             this.InUseVisibile = myResult.Result;
 
         });

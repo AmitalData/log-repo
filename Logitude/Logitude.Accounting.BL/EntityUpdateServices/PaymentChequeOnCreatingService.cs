@@ -7,7 +7,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -29,7 +29,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public  void OnCreating(PaymentChequePM entityPM)
         {
-            
             if (entityPM.Id == null || entityPM.Id == "") entityPM.Id = IdCounterWrapperGetNumber(entityPM.Tenant); //IdCounter.GetNumber("CashBook", entityPM.Tenant);
 
           //  entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AccountNumber + "," + entityPM.AccountName + "," + entityPM.CashBookTypeName;
@@ -50,7 +49,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             
             entityPM.InternalNumber = CodeCounterWrapperGetNumber(entityPM.Tenant).ToString();
-            if(entityPM.PaymentChequeStatusCode == null)
             entityPM.PaymentChequeStatusCode = "1";
             entityPM.UniqueField = entityPM.Id;
             //ValidateEntity(entityPM);
@@ -115,10 +113,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             return myLoggedUserId;
-
-
-            
         }
+
         public virtual DateTime GetCurrentDateTime(int tenant)
         {
             return TenantServerConfigration.GetCurrentDateTime(tenant);

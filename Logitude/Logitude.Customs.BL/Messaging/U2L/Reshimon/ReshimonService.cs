@@ -19,11 +19,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
 {
@@ -33,7 +28,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
         private LogitudeTsrufa _LogitudeTsrufa;
         private SupplierInvoicePM _MySupplierInvoicePM;
         private ICustomContext _context;
-        private string partner;
+
         public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.Reshimon.ReshimonService.Upsert()";
         private DeclarationPM _MyDeclarationPM;
         private Stopwatch _Stopwatch;
@@ -67,57 +62,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
             var myQueryService = new DeclarationQueryService(_context);
 
             MyGenericResponseObj.Stage = "GetSingle";
-            this._MyDeclarationPM = myQueryService.GetAcceptDeclarationAmendment(this._LogitudeTsrufa.Id, ResolvedTenant());
+            this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeTsrufa.Id, true, false);
             if (this._MyDeclarationPM == null)
             {
-                this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeTsrufa.Id, true, false);
-                if (this._MyDeclarationPM == null)
-                {
-                    throw new BusinessErrorException("Id is " + this._LogitudeTsrufa.Id + " but not found");
-                }
+                throw new BusinessErrorException("Id is " + this._LogitudeTsrufa.Id + " but not found");
             }
-            else
-            {
-                this._MyDeclarationPM = myQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
-            }
-            if(this._MyDeclarationPM != null && this._MyDeclarationPM.IsAmendment == true)
-            {
-               var orgDeclarations = myQueryService.GetSingle(this._MyDeclarationPM.AmendmentOriginalDeclartation, true, false);
-                if(orgDeclarations != null)
-                {
-                    this._MyDeclarationPM.DeclarationPayments = orgDeclarations.DeclarationPayments;
-                }
-             
-            }
-
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
             MyGenericResponseObj.Stage = "GetXml for file " + this._MyDeclarationPM.CustomFileNo;
             string xml=null;
-            if (!String.IsNullOrWhiteSpace(MoreParams))
-            {
-                AppendLogLine("MoreParams: " + MoreParams);
-                var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
-                AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
-                partner = UnifreightListsUtil.GetValue(ref unifreightListsParams, "PARTNER");
-                AppendLogLine("partner: " + partner);
-            }
-
-            if (!String.IsNullOrWhiteSpace(partner))
-            {
-                foreach (var supplierInvoice in _MyDeclarationPM.SupplierInvoices)
-                {
-                    if (!String.IsNullOrWhiteSpace(supplierInvoice.InvoiceCurrencyTypeCode))
-                    {
-                        supplierInvoice.InvoiceCurrencyTypeCodePartnerId = GetComputingPartnerCodeTranslation(supplierInvoice.InvoiceCurrencyTypeCode, partner, "Customs.CurrencyType", _MyDeclarationPM.Tenant);
-                        if (!String.IsNullOrWhiteSpace(supplierInvoice.InvoiceCurrencyTypeCodePartnerId))
-                        {
-                            LogMessagingUtil.Instance.AppendLine("Invoice Currency Type Code = " + supplierInvoice.InvoiceCurrencyTypeCode + " Translated to (Computing Partner Translate) " + supplierInvoice.InvoiceCurrencyTypeCodePartnerId);
-                        }
-                    }
-                }
-            }
-            
             try
             {
                 Logitude.Server.Tools.EntityPM.SuppressCreateNotifyPropertyChangeValues = true;
@@ -134,9 +87,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
                 MyGenericResponseObj.Message = "GetXml returned null";
                 return;
             }
-
-            
-                
             MyGenericResponseObj.Stage = "Get Reshimon Xml Done ";
             AppendLogLine("GetXml:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
@@ -144,36 +94,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
         }
-
-
-        public string GetComputingPartnerCodeTranslation(string logitudeCode, string computingPartner, string objectTableName, int tenant)
-        {
-            ICommonDataContext context;
-            ObjectTableRepository myObjectTabelRepository;
-            ComputingPartnerQuery computingPartnerQuery;
-            ComputingPartnerTranslationQuery computingPartnerTranslationQuery;
-            context = CommonDataContext.GetContext(tenant);
-            myObjectTabelRepository = new ObjectTableRepository(tenant);
-            computingPartnerQuery = new ComputingPartnerQuery(new ComputingPartnerRepository(context));
-            computingPartnerTranslationQuery = new ComputingPartnerTranslationQuery(new ComputingPartnerTranslationRepository(context));
-
-            ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
-            ComputingPartnerPM partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, tenant);
-            if (partner == null)
-            {
-                partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, 0);
-            }
-
-            string partnerCode = null;
-            if (partner != null && objectTable != null)
-            {
-                partnerCode = computingPartnerTranslationQuery.GetPartnerCodeTranslation(logitudeCode, partner.Id, objectTable.Id, tenant);
-            }
-
-            return partnerCode;
-        }
-
-
 
         private void DeserilazeObject(string xmlLOGITSRUFA)
         {

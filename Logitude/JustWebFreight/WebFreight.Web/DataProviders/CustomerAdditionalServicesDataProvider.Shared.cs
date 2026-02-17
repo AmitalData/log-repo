@@ -24,7 +24,5 @@ namespace WebFreight.Web.DataProviders
 
         public int? NumberOfShipments { get; set; }
         public string NumberOfShipmentsLabel { get; set; }
-
-        public string CustomerStatus { get; set; }
     }
 }

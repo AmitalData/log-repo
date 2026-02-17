@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
-  <Sql Version="1">
-	  <![CDATA[
-			update AnalyticsFactsMetaDatas set Name ='Shipment Analytics' where name = 'ShipmentAnalytics'
-       ]]>
-  </Sql>
-</Script>

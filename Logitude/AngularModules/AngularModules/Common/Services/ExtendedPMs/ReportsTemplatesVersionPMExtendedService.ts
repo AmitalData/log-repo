@@ -1,8 +1,7 @@
 ﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -17,10 +16,10 @@ import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFiel
 @Injectable()
 export class ReportsTemplatesVersionPMExtendedService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportsTemplatesVersionExtended';
     }
 
@@ -28,9 +27,9 @@ export class ReportsTemplatesVersionPMExtendedService {
     GetRestoreReportsTemplatesVersion(reportsTemplatesVersionId: string, userId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetRestoreReportsTemplatesVersion" + '?reportsTemplatesVersionId=' + reportsTemplatesVersionId + "&userId=" + userId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetRestoreReportsTemplatesVersion" + '?reportsTemplatesVersionId=' + reportsTemplatesVersionId + "&userId=" + userId, { headers: authHeader }).map(response => {
 
-            var result :any = response;
+            var result = response.json();
            
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -41,7 +40,7 @@ export class ReportsTemplatesVersionPMExtendedService {
 
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 

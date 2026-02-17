@@ -9,7 +9,7 @@ import { SchedulerDateListTemplate } from './Components/TaskScheduler/ListTempla
 import { SchedulerDurationListTemplate } from './Components/TaskScheduler/ListTemplates/SchedulerDurationListTemplate';
 import { FTBSchedulerTemplateComponent } from './Components/TaskScheduler/SchedulerTemplates/FTBSchedulerTemplateComponent';
 import { TaskSchedulerTemplateComponent } from './Components/TaskScheduler/SchedulerTemplates/TaskSchedulerTemplateComponent';
-import { ChooseProcedureCodeComponent } from './Components/TaskScheduler/SchedulerTemplates/ChooseProcedureCodeComponent';
+
 export const Components =
     [
         BatchServicesComponent,
@@ -19,9 +19,8 @@ export const Components =
         MainSchedulerComponent,
         SchedulerDateListTemplate,
         SchedulerDurationListTemplate,
-        //FTBSchedulerTemplateComponent,
+        FTBSchedulerTemplateComponent,
         TaskSchedulerTemplateComponent,
-        ChooseProcedureCodeComponent,
     ];
 
 export class ModuleDeclarations {
@@ -38,8 +37,7 @@ export class ModuleDeclarations {
             case "SchedulerDateListTemplate": { myResult = SchedulerDateListTemplate; break; }
             case "SchedulerDurationListTemplate": { myResult = SchedulerDurationListTemplate; break; }
             case "FTBSchedulerTemplateComponent": { myResult = FTBSchedulerTemplateComponent; break; }
-            case "TaskSchedulerTemplateComponent": { myResult = TaskSchedulerTemplateComponent; break; }
-            case "ChooseProcedureCodeComponent": { myResult = ChooseProcedureCodeComponent; break; } 
+            case "TaskSchedulerTemplateComponent": { myResult = TaskSchedulerTemplateComponent; break; }    
         }
 
         return myResult;

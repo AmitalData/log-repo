@@ -9,7 +9,7 @@ import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "./AddEditCustomerSalesNoteComponent.html",
 })
 

@@ -26,7 +26,7 @@ import { PaymentOrderPMService } from '../../../../Customs/Services/StandardPMs/
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SendPaymentOrderComponent',
     templateUrl: "SendPaymentOrderComponent.html",
 })
@@ -139,12 +139,6 @@ export class SendPaymentOrderComponent {
             this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.PaymentOrder.O.AccountingCustomFileMissing"));
             return false;
         }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.AccountingCustomFile) && this.EntityPM.AccountingCustomFile.startsWith("R")) {
-            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.PaymentOrder.O.NoPayWithRAccountingCard"));
-            return false;
-        }
-
         var sumOfPaymentMethods = 0;
         if (this.EntityPM.PaymentOrderMethods) {
             this.EntityPM.PaymentOrderMethods.forEach((itemLine) => {
@@ -174,7 +168,7 @@ export class SendPaymentOrderComponent {
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
-        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
     }
 
     OnAddEditWindowClosed(event) {
@@ -192,7 +186,7 @@ export class SendPaymentOrderComponent {
         currRequestParams.ForcePersonalSign = this.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת בקשת תשלום הוראה", false)
             .then((res) => {
                 console.log(res);

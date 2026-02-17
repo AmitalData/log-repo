@@ -1,13 +1,23 @@
 ﻿using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
-using System.Globalization;
+using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure;
+using System.Globalization;
 
 namespace Logitude.Server.Tools
 {
@@ -90,7 +100,7 @@ namespace Logitude.Server.Tools
         /// </summary>
         public void ProtectedRun()
         {
-            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
+            if (LogitudeSettings.DeploymentStage != "Dev")
             {
                 try
                 {
@@ -130,10 +140,10 @@ namespace Logitude.Server.Tools
 
 
 
-
+   
     public abstract class WorkerEntryPointDoneLog : Logitude.Server.Tools.WorkerEntryPoint
     {
-
+        
 
         public int NumberOfDoneItems { get; set; }
         public DateTime? LastActivity { get; set; }
@@ -141,11 +151,9 @@ namespace Logitude.Server.Tools
         public Dictionary<DateTime, int> DoneItemsInRange { get; set; }
         public string BatchServiceCode { get; set; }
         public decimal CPU { get; set; }
-        public string QueueGroupCodeRabbit { get; set; }
-        public WorkerQueueType WorkerQueueType { get; set; }
 
-        public string OverrideRMQ { get; set; }
-        
+
+
         public virtual bool OnStart()
         {
             //StartMe();
@@ -174,16 +182,12 @@ namespace Logitude.Server.Tools
         private int threadID;
         public void LogDoneItemInMemory()
         {
-            LogDoneItemInMemory(500);
-        }
-        public void LogDoneItemInMemory(int sleepInMS)
-        {
             try
             {
                 threadID = AppDomain.GetCurrentThreadId();
                 NumberOfDoneItems++;
                 DateTime doneDate = //new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
-                                    // WHY NOT utc AS writing to db ????
+                    // WHY NOT utc AS writing to db ????
                 new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, DateTime.UtcNow.Minute, 0);
                 DoneItemsInRange = DoneItemsInRange ?? new Dictionary<DateTime, int>();
                 if (DoneItemsInRange.Keys.Contains(doneDate))
@@ -193,11 +197,6 @@ namespace Logitude.Server.Tools
                 else
                 {
                     DoneItemsInRange.Add(doneDate, 1);
-                }
-                var donotwait500ms = LogitudeSettings.IsCostomsDeploy;//yaron !!
-                if (donotwait500ms)///Thread.Sleep(500);
-                {
-                    return;
                 }
                 System.Diagnostics.ProcessThreadCollection tx = default(System.Diagnostics.ProcessThreadCollection);
                 Int16 t = default(Int16);
@@ -219,8 +218,7 @@ namespace Logitude.Server.Tools
                 if (tId != -1)
                 {
                     CPUtimeStart = tx[tId].TotalProcessorTime.Milliseconds;
-                    //Thread.Sleep(500);
-                    Thread.Sleep(sleepInMS);
+                    Thread.Sleep(500);
                     CPUtimeEnd = tx[tId].TotalProcessorTime.Milliseconds;
 
                     if ((CPUtimeEnd > CPUtimeStart) | (CPUtimeEnd == CPUtimeStart))
@@ -272,16 +270,4 @@ namespace Logitude.Server.Tools
             }
         }
     }
-
-    public static class WorkerRoleServiceLocator
-    {
-        public static bool PleaseShutDown { get; set; }
-        public static bool HaveCourierTenant { get; set; }
-    }
-    public enum WorkerQueueType
-    {
-        DB = 0,
-        RabbitMQ = 1
-    }
-
 }

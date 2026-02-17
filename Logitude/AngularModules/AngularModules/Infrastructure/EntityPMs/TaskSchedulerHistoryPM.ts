@@ -20,7 +20,7 @@ export class TaskSchedulerHistoryPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -80,29 +80,11 @@ export class TaskSchedulerHistoryPM {
     public set LogFirstLine(newValue: string) { if (this.logFirstLine != newValue) { this.logFirstLine = newValue; this.MarkAsDirty("LogFirstLine"); } }
        
 	 
-    private duration: number;
-    public get Duration() { return this.duration; }
-    public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
-       
-	 
-    private durationTS: string;
-    public get DurationTS() { return this.durationTS; }
-    public set DurationTS(newValue: string) { if (this.durationTS != newValue) { this.durationTS = newValue; this.MarkAsDirty("DurationTS"); } }
-       
-	 
-    private logDocumentId: string;
-    public get LogDocumentId() { return this.logDocumentId; }
-    public set LogDocumentId(newValue: string) { if (this.logDocumentId != newValue) { this.logDocumentId = newValue; this.MarkAsDirty("LogDocumentId"); } }
-       
-	 
 
     public OldEntityPM: TaskSchedulerHistoryPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -110,7 +92,6 @@ export class TaskSchedulerHistoryPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TaskSchedulerHistory");
            
         }
-	 }
     }
     private MyClone: TaskSchedulerHistoryPM;
 

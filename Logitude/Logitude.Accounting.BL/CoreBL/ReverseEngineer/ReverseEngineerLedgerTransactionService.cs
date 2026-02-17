@@ -13,8 +13,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -51,7 +49,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 seedDate=seedDate.AddMonths(1);
             }
         }
-        
+
         public void CheckDbIntegrity()
         {
             var sw = Stopwatch.StartNew();
@@ -69,129 +67,33 @@ namespace Logitude.Accounting.BL.CoreBL
                 var start = new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, 1);
                 var end = start.AddMonths(1).AddMinutes(-1);
                 
-                using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(25)))
+                using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
                 {
                     _AccountingContext = AccountingContext.GetContext(_Tenant);
-                    (_AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 1200;
-
+                    
                     var qs = new LedgerTransactionQueryService(_AccountingContext);
-                    var rowsReverseEngineerLedgerTransactionService = qs.GetReportCompareToJournalLine(start, end, _Tenant);
-
-                    var journal_failed_notStreamedSlowQueue = GetJournal_failed_notStreamedSlowQueue(start, end);
-
-                    var badrows = rowsReverseEngineerLedgerTransactionService.Concat(journal_failed_notStreamedSlowQueue).ToList();
+                    var res = qs.GetReportCompareToJournalLine(start, end, _Tenant);
                     //calcGLATotalByMonthFromLTrans = qs.GetLedgerTransactionSumFromTo(start, end, _Tenant);
-                    CompareReport = new CompareReportM()
-                    {
-                        CompareReportName = "ReverseEngineerLedgerTransactionService",
-                        Year = _SeedDate.Date.Year,
-                        Month = _SeedDate.Date.Month,
-                        rows = badrows,
-                        Took = sw.Elapsed
-                    };
-                    //  xml = System.Text.Encoding.UTF8.GetString(LogitudeXmlSerializer.SerializeObject<CompareReportM>(r));
+                   CompareReport = new CompareReportM()
+                   {
+                       CompareReportName = "ReverseEngineerLedgerTransactionService",
+                       Year = _SeedDate.Date.Year,
+                       Month = _SeedDate.Date.Month,
+                       rows = res,
+                       Took = sw.Elapsed
+                   };
+                 //  xml = System.Text.Encoding.UTF8.GetString(LogitudeXmlSerializer.SerializeObject<CompareReportM>(r));
                     debugIt = xml;
                 }
-
                 
-                Convert2DisplayNumber(CompareReport.rows, _Tenant);
-
             }
             finally
             {
-               //NetCommonHelper.Logger.DevLog.Instance.WriteDebug(debugIt);
+               // Debug.WriteLine(debugIt);
             }
             //return xml;
 
         }
-
-        private void Convert2DisplayNumber(List<JournalLineLedgerDTO> rows, int tenant)
-        {
-            if (rows==null)
-            {
-                return;
-            }
-            try
-            {
-                var AccountIdList= rows.Where(r => !string.IsNullOrWhiteSpace(r.AccountId)).Select(x => x.AccountId).Distinct().ToList();
-                var repo = new GLAccountRepository(tenant);
-                var res=repo.GetDisplayNumberList(AccountIdList.ToHashSet(), tenant);
-                foreach (var item in rows)
-                {
-                    var display = res.FirstOrDefault(r => r.Key == item.AccountId); 
-                    if (string.IsNullOrEmpty(display.Value)){
-                        continue;
-                    }
-                    item.AccountDisplayNumber = display.Value;
-                }
-            }
-            catch (Exception)
-            {
-
-                
-            }
-        }
-
-        private List<JournalLineLedgerDTO> GetJournal_failed_notStreamedSlowQueue(DateTime start, DateTime end)
-        {
-            var JornalRepo = new JournalRepository(_AccountingContext);
-            var qApprovedBetweenJournal = JornalRepo.GetQueryableBetween(_Tenant, start, end);
-
-            ;
-
-            var failedJournal = qApprovedBetweenJournal.Where(r => r.StatusCode == "4")
-                .Select(g => new JournalLineLedgerDTO()
-                {
-                    CHANGE_TYPE = "העברה להנהח נכשלה",
-                    JournalId = g.Id,
-                    JournalLineNumber = 0,
-
-                    AccountId = "",
-                    CurrencyId = "",
-
-                    LocalAmountCredit = 0,
-                    LocalAmountDebit = 0,
-
-                    ForeignAmountCredit = 0,
-                    ForeignAmountDebit = 0,
-
-                    AccountingDate = g.AccountingDate,
-                    DueDate = g.AccountingDate,
-                    DocumentDate = g.AccountingDate,
-
-                            //DocumentDate =
-                        });
-            var notStreamedJournalSlowQueue = qApprovedBetweenJournal
-
-                .Where(r => r.StatusCode == "6" || r.StatusCode == "2" || r.StatusCode == "3")//approved or Voided
-                .Where(r => r.IsLedgerCreated == false)
-                .Select(g => new JournalLineLedgerDTO()
-                {
-                    CHANGE_TYPE = "לפקודה אין תנעות",
-                    JournalId = g.Id,
-                    JournalLineNumber = 0,
-
-                    AccountId = "",
-                    CurrencyId = "",
-
-                    LocalAmountCredit = 0,
-                    LocalAmountDebit = 0,
-
-                    ForeignAmountCredit = 0,
-                    ForeignAmountDebit = 0,
-
-                    AccountingDate = g.AccountingDate,
-                    DueDate = g.AccountingDate,
-                    DocumentDate = g.AccountingDate,
-
-                            //DocumentDate =
-                        })
-                ;
-
-            var failedJourna_notStreamedJournalSlowQueue = failedJournal.Concat(notStreamedJournalSlowQueue).ToList();
-            return failedJourna_notStreamedJournalSlowQueue;
-        }
-
         string GetSql()
         {
 
@@ -324,8 +226,6 @@ and JournalActionTypes.Code =4
         public List<Data.Repositories.GLAccountTotalByMonthsDTO> GLAccountTotalByMonthsList { get; set; }
 
         public List<GLAccountBalanceDTO> GLAccountBalanceList { get; set; }
-        public List<GLAccountBalanceDTO> TotalOpenReconciliation { get; set; }
-        public List<InterestReportDiff> InterestReportDiffList { get; set; }
     }
     
 }

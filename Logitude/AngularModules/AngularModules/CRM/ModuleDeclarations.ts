@@ -1,4 +1,4 @@
-import {CRMWorkspaceComponent} from './Components/Workspaces/CRMWorkspaceComponent';
+﻿import {CRMWorkspaceComponent} from './Components/Workspaces/CRMWorkspaceComponent';
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {TicketsComponent} from './Components/Workspaces/TicketsComponent';
 import {OverviewWorkspaceComponent} from './Components/Workspaces/OverviewWorkspaceComponent';
@@ -19,13 +19,6 @@ import {ByOpenedTicketComponent} from './Components/Workspaces/TicketDashboardTa
 import {TicketClassificationMaintenanceComponent} from './Components/Workspaces/TicketClassificationMaintenanceComponent';
 import {AddEditClassificationComponent} from './Components/Workspaces/AddEditClassificationComponent'; 
 import {ByFirstResolveTicketComponent} from './Components/Workspaces/TicketDashboardTabComponents/ByFirstResolveTicketComponent';
-import { OccasionWorkspaceComponent } from './Components/Workspaces/OccasionWorkspaceComponent';
-import { QuoteDashboardComponent } from './Components/Workspaces/QuoteDashboardTabComponent/QuoteDashboardComponent';
-import { OpenQuotesByStageComponent } from './Components/Workspaces/QuoteDashboardTabComponent/OpenQuotesByStageComponent';
-import { QuotesByCountryComponent } from './Components/Workspaces/QuoteDashboardTabComponent/QuotesByCountryComponent';
-import { QuotesConversionComponent } from './Components/Workspaces/QuoteDashboardTabComponent/QuotesConversionComponent';
-import { SentQuotesKPIComponent } from './Components/Workspaces/QuoteDashboardTabComponent/SentQuotesKPIComponent';
-import { TopFiveSalesmanProfitComponent } from './Components/Workspaces/QuoteDashboardTabComponent/TopFiveSalesmanProfitComponent';
 
 // Helpers
 import {TicketHelperComponent} from './Components/Helpers/TicketHelperComponent';
@@ -67,13 +60,6 @@ export const Components =
         TicketClassificationMaintenanceComponent,
         AddEditClassificationComponent,
         ByFirstResolveTicketComponent,
-        OccasionWorkspaceComponent,
-        QuoteDashboardComponent,
-        OpenQuotesByStageComponent,
-        QuotesByCountryComponent,
-        QuotesConversionComponent,
-        SentQuotesKPIComponent,
-        TopFiveSalesmanProfitComponent,
     ];
 export const ControlsComponents =
     [
@@ -106,14 +92,8 @@ export class ModuleDeclarations {
             case "AddEditClassificationComponent": { myResult = AddEditClassificationComponent; break; }
             case "ByFirstResolveTicketComponent": { myResult = ByFirstResolveTicketComponent; break; }    
             case "ByInProgressComponent": { myResult = ByInProgressComponent; break; } 
-            case "CompanyPerformanceComponent": { myResult = CompanyPerformanceComponent; break; }
-            case "QuoteDashboardComponent": { myResult = QuoteDashboardComponent; break; }
-            case "OpenQuotesByStageComponent": { myResult = OpenQuotesByStageComponent; break; } 
-            case "QuotesByCountryComponent": { myResult = QuotesByCountryComponent; break; }
-            case "QuotesConversionComponent": { myResult = QuotesConversionComponent; break; } 
-            case "SentQuotesKPIComponent": { myResult = SentQuotesKPIComponent; break; } 
-            case "TopFiveSalesmanProfitComponent": { myResult = TopFiveSalesmanProfitComponent; break; } 
-                
+            case "CompanyPerformanceComponent": { myResult = CompanyPerformanceComponent; break; } 
+
             // Helpers
             case "TicketHelperComponent": { myResult = TicketHelperComponent; break; }      
             case "OpportunityHelperComponent": { myResult = OpportunityHelperComponent; break; }      
@@ -122,9 +102,7 @@ export class ModuleDeclarations {
             // Short Titles 
             case "TicketShortTitleComponent": { myResult = TicketShortTitleComponent; break; }      
             case "ActivityShortTitleComponent": { myResult = ActivityShortTitleComponent; break; }   
-            case "OpportunityShortTitleComponent": { myResult = OpportunityShortTitleComponent; break; }
-            case "OccasionWorkspaceComponent": { myResult = OccasionWorkspaceComponent; break; }
-                
+            case "OpportunityShortTitleComponent": { myResult = OpportunityShortTitleComponent; break; }      
         }
 
         return myResult;

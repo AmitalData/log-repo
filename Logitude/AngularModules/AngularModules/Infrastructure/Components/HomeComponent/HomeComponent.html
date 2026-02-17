@@ -153,12 +153,19 @@
     }
 
     .circle {
-        background-color:#d9d9d9;
+        background-color: #A11E21;
         height: 15px;
         width: 15px;
         border-radius: 15px;
         text-align: center;
-        color:#8e98a1
+    }
+
+    .AppHeaderBackgroundOrange {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(235, 235, 235, 0.5) 0%,Orange 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(235, 235, 235, 0.5) 0%, Orange 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(235, 235, 235, 0.5) ),color-stop(1,Orange ));
+        background: -o-linear-gradient(-90deg, rgba(235, 235, 235, 0.5) 0%, Orange 100%);
+        background: linear-gradient(180deg, rgba(235, 235, 235, 0.5) 0%, Orange 100%);
     }
 
     hr {
@@ -168,34 +175,6 @@
         border-top: 1px solid #ccc;
         padding: 0;
     }
-    
-    .DocsListButton {
-        transition: .5s all;
-        width: 215px;
-        font-size: 16px;
-        cursor: pointer;
-        user-select: none;
-        border-right: 1px solid #e7ebee;
-    }
-
-    .DocsListButton:hover {
-        background: #f4f4f4;
-    }
-
-    .DocsListButton:active {
-        background: #f0f0f0;
-    }
-  
-    .blink-div {
-        animation: blink-animation 1s steps(2, start) infinite;
-    }
-    @keyframes blink-animation {
-    to {
-        visibility: hidden;
-    }
-    }
-
-
 </style>
 
 <table style="background: white; min-width: 1024px; min-height: 600px;" *ngIf="!IsNewSignupTenant" [style.direction]="LayoutDirection" [style.font-family]="SystemFontFamily">
@@ -205,7 +184,7 @@
                 <div class="MediaFillRelative">
 
                     <!-- Header -->
-                    <div class="AppHeaderBackground" [ngStyle]="{background: HeaderColor}" style="position: absolute; left:0; right:0; top: 0px; height: 51px;">
+                    <div class="AppHeaderBackground" [class.AppHeaderBackgroundOrange]="ChangeHeaderColor === true" style="position: absolute; left:0; right:0; top: 0px; height: 51px;">
                         <table>
                             <tr style="height: 5px;">
                                 <td>
@@ -229,7 +208,7 @@
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;" class="Value" id="{{'LoggedUser' | IdGeneratorAsyncPipe | async}}">
+                                            <td style="width: 1px;" class="Value">
                                                 {{LoggedUser}}
                                             </td>
 
@@ -260,49 +239,25 @@
                                             <td style="width: 20px;" *ngIf="IfBlueSnapContracts">
                                                 <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
                                                     <IconButton [Name]="'payments'" [IsIconOnly]="true"></IconButton>
-                                                    <div class="ToggleButtonMenu" style="right:-50px" *ngIf="PaymentChanelCode">
-                                                        <button *ngIf="IsLogBox == false && IsChargifyAccount" [disabled]="IsTenant65" (click)="ManageChargifyAccountClicked()"> Manage your Chargify account</button>
-                                                        <hr *ngIf="IsLogBox == false && IsChargifyAccount" />
-                                                        <button *ngIf="IsLogBox == false && IsBluesnapAccount && !IsChargifyAccount" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
-                                                        <hr *ngIf="IsLogBox == false && IsBluesnapAccount && !IsChargifyAccount" />
-                                                        <button *ngIf="IsLogBox == false && !IsChargifyAccount" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG')">Subscribe to Logitude</button>
-                                                        <hr *ngIf="IsLogBox == false && !IsChargifyAccount" />
-                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael && !IsChargifyAccount" [disabled]="IsTenant65" (click)="SubscribeClicked('AWB')">Subscribe to e-AWB</button>
-                                                        <hr *ngIf="IsLogBox == false && !IsCountryIsrael && !IsChargifyAccount" />
-                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('BUY')">{{EAWBStockBuyingLable}}</button>
-                                                        <hr *ngIf="IsLogBox == false && !IsCountryIsrael" />
-                                                        <button *ngIf="IsLogBox == false && !IsChargifyAccount" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
-                                                        <hr *ngIf="IsLogBox == false && !IsChargifyAccount" />
-                                                        <button *ngIf="IsLogBox == false && IsBlusnapOneTimeActivated && !IsChargifyAccount" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
-                                                        <hr *ngIf="IsLogBox == false && !IsChargifyAccount" />
-                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael && !IsChargifyAccount" [disabled]="IsTenant65" (click)="SubscribeClicked('INT')">Buy INTTRA Stock</button>
-                                                    </div>
-
-                                                    <div class="ToggleButtonMenu" style="right:-50px" *ngIf="!PaymentChanelCode">
-                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG_M')">Subscribe to Logitude (Monthly)</button>
+                                                    <div class="ToggleButtonMenu" style="right:-50px">
+                                                        <button *ngIf="IsLogBox == false && IsBluesnapAccount" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
+                                                        <hr *ngIf="IsLogBox == false && IsBluesnapAccount" />
+                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG')">Subscribe to Logitude</button>
                                                         <hr *ngIf="IsLogBox == false" />
-
-                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG_A')">Subscribe to Logitude (Annual)</button>
-                                                        <hr *ngIf="IsLogBox == false" />
-
-                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('EAWB')">Subscribe to e-AWB</button>
+                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('AWB')">Subscribe to e-AWB</button>
                                                         <hr *ngIf="IsLogBox == false && !IsCountryIsrael" />
+                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('BUY')">Buy e-AWB Stock</button>
+                                                        <hr *ngIf="IsLogBox == false && !IsCountryIsrael" />
+                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
+                                                        <hr *ngIf="IsLogBox == false"  />
+                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
+                                                        <hr *ngIf="IsLogBox == false"  />
+                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('INT')">Buy INTTRA Stock</button>
 
-                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('ECRM')">Subscribe to CRM</button>
                                                     </div>
                                                 </div>
                                             </td>
 
-                                            <td style="width: 5px;">
-                                                <div></div>
-                                            </td>
-                                            <td *ngIf="HasFeatureProcessMenu" [title]="'General.MH.Reports' | TextCodeTranslationPipe" style="width: 20px; position: relative;" class="DocsListButton" [class.blink-div]="setCountBlink" (click)="IsProcessMenuVisibleChanged()"
-                                                [class.BrdrRt]="IsProcessMenuVisible">
-                                                <img src="./Images/Split/report.png" style="padding-left: 5px; margin-top: -4px; height: 19px;" />
-                                                <div  class="circle" style="position: absolute; top: -3px; right: -6px;" [style.color]="NotViewedItems.size > 0 ? 'dodgerblue' : ''">
-                                                    {{countCompletedProcesses}}
-                                                </div>
-                                            </td>
                                             <td style="width: 5px;">
                                                 <div></div>
                                             </td>
@@ -310,22 +265,21 @@
                                             <td style="width: 20px;">
                                                 <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
                                                     <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
-                                                    <div class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl'? {'right': '-80px'} : {'left': '-80px'}" attr.data-cy="{{'SettingsMenuButton'}}">
+                                                    <div class="ToggleButtonMenu" style="right:-50px">
                                                         <!-- Please If you want to add a new button but this condition in that button *ngIf="IsLogBox == false"-->
                                                         <button *ngIf="IsCustomizationVisible" (click)="LanguageSettingsClicked()">Language Settings</button>
                                                         <button *ngIf="IsSignatureVisible" (click)="SignatureClicked()">Signature</button>
                                                         <button *ngIf="IsLogBox == true" (click)="ShowDocTypesDefScreen()">Document Types Definition</button>
                                                         <button *ngIf="IsChangePasswordVisible" (click)="ChangePasswordClicked()">Change Password</button>
-                                                        <button *ngIf="IsCustomizationSettingVisible" (click)="CustomizationClicked()" [attr.data-cy]="'CustomizationId'">Customization</button>
+                                                        <button *ngIf="IsCustomizationVisible" (click)="CustomizationClicked()">Customization</button>
                                                         <button *ngIf="IsCustomizationVisible" (click)="TranslateLabelsClicked()">Translate Labels</button>
                                                         <button *ngIf="IsCustomizationVisible" (click)="TranslationClicked()">Translation</button>
                                                         <button *ngIf="IsCustomizationVisible" (click)="DefaultTranslationClicked()">Default Translation</button>
-                                                        <button *ngIf="IsCurrenciesRatesVisible" (click)="CurrenciesRatesClicked()" attr.data-cy="{{'Setting_CurrenciesRates'}}">Currencies Rates</button>
+                                                        <button *ngIf="IsCurrenciesRatesVisible" (click)="CurrenciesRatesClicked()">Currencies Rates</button>
                                                         <button *ngIf="IsDataBackupVisible" (click)="DataBackupClicked()">Data Backup</button>
                                                         <button *ngIf="IsDocumentsBackupVisible" (click)="DocumentsBackupClicked()">Documents Backup</button>
                                                         <button *ngIf="Tenant == 0" (click)="LoadSampleDataClicked()">Load Sample Data</button>
                                                         <button *ngIf="IsFillLocalStorageVisible" (click)="FillStorageClicked()">Fill Local Storage</button>
-                                                        <button *ngIf="IsSetWorkerRoleNameVisible" (click)="SetWorkerRoleNameClicked()">Set Worker Role Name</button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -333,7 +287,7 @@
                                             <td style="width: 5px;">
                                                 <div></div>
                                             </td>
-                                           
+
                                             <td style="width: 20px;">
                                                 <IconButton [Name]="'Help'" [IsIconOnly]="true" (click)="HelpButtonClicked()" title="Help Center"></IconButton>
                                             </td>
@@ -397,34 +351,26 @@
                                         </div>
                                     </td>
 
-                                    <td style="width:5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 18px; padding-left:4px; cursor:pointer; z-index:3;" (mousedown)="HideReleaseMessageClicked()">
-                                        <div class="MediaFill">
-                                            <div style="width: 12px; height: 12px;">
-                                                <img class="CenterCenter" style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
-                                            </div>
-                                        </div>
+                                    <td style="width: 18px; padding-left:4px;">
+                                        <span class="hyperlink" (click)="HideReleaseMessageClicked()">
+                                            <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
+                                        </span>
                                     </td>
                                 </tr>
                             </table>
                         </div>
 
-                        <div *ngIf="LayoutDirection == 'rtl'" class="GreenInfo" style="margin: 5px;">
+                        <div *ngIf="LayoutDirection == 'rtl'"  class="GreenInfo" style="margin: 5px;">
                             <table>
                                 <tr>
-                                    <td style="width: 18px; padding-left:4px; cursor:pointer; z-index:3;" (mousedown)="HideReleaseMessageClicked()">
-                                        <div class="MediaFill">
-                                            <div style="width: 12px; height: 12px;">
-                                                <img class="CenterCenter" style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
-                                            </div>
-                                        </div>
+                                    <td style="width: 18px; padding-left:4px;">
+                                        <span class="hyperlink" (click)="HideReleaseMessageClicked()">
+                                            <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
+                                        </span>
                                     </td>
 
-                                    <td style="width:5px;">
-                                        <div></div>
+                                    <td style="width:10px;">
+                                       <div></div>
                                     </td>
 
                                     <td style="font-size:12px;">
@@ -450,7 +396,7 @@
                             <div class="TabControlHead">
                                 <ul>
                                     <li *ngFor="let tab of Tabs" [class.Selected]="tab.IsSelected" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" (click)="SelectionChanged(tab)"
-                                        [style.width]="(_AmitalBrowserInUse && !allowMutltiTabs && !tab.IsSelected) ? '0px' : '160px'">
+                                        [style.width]="(_AmitalBrowserInUse  && !tab.IsSelected ) ? '0px' : '160px'">
 
                                         <div class="InnerChild" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
                                             <table>
@@ -500,6 +446,8 @@
                                                         </div>
                                                     </td>
 
+
+
                                                     <td style="width: 2px; min-width: 2px;">
                                                         <div></div>
                                                     </td>
@@ -510,11 +458,11 @@
 
                                                     <td style="width: 8px; vertical-align: top;" *ngIf="Tabs.length > 1">
                                                         <div (click)="CloseTab(tab)" style="width: 8px; height: 9px; margin-top: 3px; cursor: pointer; background: url('./Images/Tab.X.Blue.png') no-repeat;" *ngIf="tab.IsSelected"
-                                                             [hidden]="_AmitalBrowserInUse && !allowMutltiTabs">
+                                                             [hidden]="_AmitalBrowserInUse">
                                                         </div>
 
                                                         <div (click)="CloseTab(tab)" style="width: 8px; height: 9px; margin-top: 3px; cursor: pointer;" *ngIf="!tab.IsSelected" class="TabCloseIcon"
-                                                             [hidden]="_AmitalBrowserInUse && !allowMutltiTabs">
+                                                             [hidden]="_AmitalBrowserInUse">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -522,64 +470,23 @@
                                         </div>
                                     </li>
 
-                                    <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="(!_AmitalBrowserInUse || allowMutltiTabs) && !IsApplicationBlocked">+</li>
+                                    <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse && !IsApplicationBlocked">+</li>
                                 </ul>
-
-
-
-
-                                <div *ngIf="IsShowUserDetailsArea" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'" style="height:20px;margin-top:-23px;display:inline">
-
-                                    <table>
-                                        <tr>
-                                            <td style="width:70px;right: 10px;">
-                                                <div *ngIf="LayoutDirection != 'rtl'">
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && !this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">Daily Currencies Rates</span>
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">טבלת שערי מטבע</span>
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">{{'General.O.DollarRateUpdated' | TextCodeTranslationPipe}}{{USDLastUpdate}}</span>
-                                                </div>
-                                                <div *ngIf="LayoutDirection == 'rtl'">
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">{{'General.O.DollarRateUpdated' | TextCodeTranslationPipe}}{{USDLastUpdate}}</span>
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && !this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">Daily Currencies Rates</span>
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">טבלת שערי מטבע</span>
-                                                </div>
-                                            </td>
-                                            <td style="width:5px"></td>
-                                            <td>
-                                                <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>
-
-                                            </td>
-                                        </tr>
-                                    </table>
-
+                                <div *ngIf="IsShowLastSuccessfulLoginComponent" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'" style="height:20px;margin-top:-23px">
+                                    <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>
 
                                 </div>
-
-
 
 
                             </div>
 
                             <div class="TabControlBody" (mouseup)="OnSessionMouseUp($event)" style="background: white;" id="ApplicationSession">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <div class="MediaFillAbsolute" *ngFor="let tab of Tabs;" [hidden]="!tab.IsSelected">
-                                                <div style="width: 120px;padding-right:10px;">                                                                                
-
-                                                    <BackButton [IsEnabled]="!IsAmitalBackButtonDisable" *ngIf="_AmitalBrowserInUse && (allowMutltiTabs || (this.Tabs[1]==tab && tab.SessionComponent && tab.SessionComponent.CurrentEditComponent==null))" [Text]="'   Back   '" (click)="AmitalBackButtonClicked()"></BackButton>
-                                                </div>
-                                                <div LocationDirective Code="SessionLocation" Index="{{tab.Index}}"></div>
-                                                
-                                            </div>
-                                        </td>
-                                        <td style="width: 250px" *ngIf="IsProcessMenuVisible" #processMenu>
-                                            <div>
-                                                <ProcessMenuComponent (PinnedChanged)="TogglePinMenu($event)" (ViewedItem)="ViewedItem($event)" (mouseenter)="KeepMenuOpen()" [IsProcessMenuVisible]="IsProcessMenuVisible" [IsPinned]="isPinned" [CurrentProcessId]="CurrentProcessId" [CurrentSelectedTab]="SelectedTab" (CloseMenu)="CloseMenu()"></ProcessMenuComponent>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                                <div class="MediaFillAbsolute" *ngFor="let tab of Tabs;" [hidden]="!tab.IsSelected">
+                                    <div style="width: 120px;padding-right:10px;">
+                                        <BackButton [IsEnabled]="!IsAmitalBackButtonDisable" *ngIf="_AmitalBrowserInUse && this.Tabs[1]==tab && tab.SessionComponent && tab.SessionComponent.CurrentEditComponent==null " [Text]="'   Back   '" (click)="AmitalBackButtonClicked()"></BackButton>
+                                    </div>
+                                    <div LocationDirective Code="SessionLocation" Index="{{tab.Index}}"></div>
+                                </div>
                             </div>
                         </div>
                     </div>

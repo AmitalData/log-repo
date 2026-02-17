@@ -3,7 +3,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -17,17 +17,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
     public partial class QuoteService
     {
         List<PackageType> AllPackageTypes = new List<PackageType>();
-        public void GenerateDefaultCharges()
+        private void GenerateDefaultCharges()
         {
-            if (isNewEntity || IsConvertingQuoteTypeOrTransportMode())
+            if (isNewEntity || entityPM.ConvertToFCL || entityPM.ConvertToLCL)
             {
                 if ((entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid))
                 {
-                    IQueryable<ChargesType> iQueryable_ChargeTypes = (from d in myCommonContext.ChargesTypes
-                                                                      where d.Tenant == tenant
-                                                                      && d.InActive == false
-                                                                      && d.IsAutoDisplayInQuote == true
-                                                                      select d);
+                    ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(myCommonContext);
+                    IQueryable<ChargesType> iQueryable_ChargeTypes = chargesTypeRepository.GetQuoteDefaultChargesTypes(tenant).Where(d => d.InActive == false);
 
                     switch (entityPM.TransportModeId.ToUpper())
                     {
@@ -85,17 +82,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                     else
                     {
-                        var byContainerTypeId = (from d in myCommonContext.Measurements where d.Tenant == tenant && d.Code == "BCNT" select d.Id).FirstOrDefault();
-                        list_ChargeTypes = iQueryable_ChargeTypes.Where(d => d.ContainerMeasurementId == byContainerTypeId || d.ContainerMeasurementId == null).OrderBy(d => d.ViewOrder).ToList();
+                        list_ChargeTypes = iQueryable_ChargeTypes.Where(d => d.ContainerMeasurement.Code == "BCNT").OrderBy(d => d.ViewOrder).ToList();
                     }
 
                     if (list_ChargeTypes.Count > 0)
                     {
                         RatesTableQuery myQuery = new RatesTableQuery(tenant);
-                        List<CurrencyRate> AllRates = new List<CurrencyRate>();
-
-                        AllRates.Add(this.GetCurrencyRate(loggedTenant, loggedTenant.FreightCurrencyId, myQuery));
-                        AllRates.Add(this.GetCurrencyRate(loggedTenant, loggedTenant.OtherChargesCurrencyId, myQuery));
+                        LastRate freightChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.FreightCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                        LastRate othersChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.OtherChargesCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
 
                         if (this.isLCLQuote)
                         {
@@ -110,116 +104,66 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     ChargesTypeCode = chargesType.Code,
                                     ChargesTypeName = chargesType.EnglishName,
                                     ChargesGroupCode = chargesType.ChargesGroupCode,
-                                    UpdatedByUserId = initializer.LoggedContactId,
+                                    UpdatedByUserId = loggedContact.Id,
                                     CostMeasurementId = chargesType.MeasurementId,
                                     SaleMeasurementId = chargesType.MeasurementId,
                                     MarkUpTypeCode = "F",
                                     MarkUpValue = 0,
                                     QuoteTypeCode = entityPM.QuoteTypeCode,
+                                    SaleCurrencyId = entityPM.SaleCurrencyId,
+                                    SaleExchangeRate = entityPM.ExchangeRate,
                                     ChangeSetOp = ChangeSetOperation.Insert,
                                     IsBackToBack = chargesType.IsBackToBack,
                                 };
 
-                                if (chargesType.MeasurementId != null)
+                                if (chargesType.Measurement != null)
                                 {
-                                    quoteChargePM.CostMeasurementId = chargesType.MeasurementId;
-                                    quoteChargePM.SaleMeasurementId = chargesType.MeasurementId;
-                                    Measurement iMeasurement = (from d in myCommonContext.Measurements where d.Id == chargesType.MeasurementId select d).FirstOrDefault();
-
-                                    if (iMeasurement != null)
-                                    {
-                                        quoteChargePM.CostMeasurementCode = iMeasurement.Code;
-                                        quoteChargePM.SaleMeasurementCode = iMeasurement.Code;
-                                        quoteChargePM.CostMeasurementShortName = iMeasurement.ShortName;
-                                        quoteChargePM.SaleMeasurementShortName = iMeasurement.ShortName;
-                                    }
+                                    quoteChargePM.CostMeasurementCode = chargesType.Measurement.Code;
+                                    quoteChargePM.SaleMeasurementCode = chargesType.Measurement.Code;
+                                    quoteChargePM.CostMeasurementShortName = chargesType.Measurement.ShortName;
+                                    quoteChargePM.SaleMeasurementShortName = chargesType.Measurement.ShortName;
                                 }
 
-
-                                if (!string.IsNullOrEmpty(chargesType.PayablesDefaultCurrencyId))
+                                if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
                                 {
-                                    quoteChargePM.CostCurrencyId = chargesType.PayablesDefaultCurrencyId;
-                                }
+                                    quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
 
-                                else
-                                {
-                                    if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
+                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
                                     {
-                                        quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
+                                        quoteChargePM.CostExchangeRate = null;
                                     }
 
-                                    else
+                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
                                     {
-                                        quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
-                                    }
-                                }
-
-                                if (quoteChargePM.CostCurrencyId != null)
-                                {
-                                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == quoteChargePM.CostCurrencyId).FirstOrDefault();
-                                    if (iCurrencyRate == null)
-                                    {
-                                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, quoteChargePM.CostCurrencyId, myQuery);
-                                        AllRates.Add(iCurrencyRate);
+                                        quoteChargePM.CostExchangeRate = 1;
                                     }
 
-                                    if (iCurrencyRate != null)
+                                    else if (freightChargeRate != null)
                                     {
-                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
-                                    }
-                                }
-
-                                if (entityPM.IsSaleCurrencySameAsCost)
-                                {
-                                    quoteChargePM.SaleCurrencyId = quoteChargePM.CostCurrencyId;
-                                    quoteChargePM.SaleExchangeRate = quoteChargePM.CostExchangeRate;
-                                }
-
-                                else if (entityPM.IsMultiCurrency)
-                                {
-                                    if (!string.IsNullOrEmpty(chargesType.ReceivablesDefaultCurrencyId))
-                                    {
-                                        quoteChargePM.SaleCurrencyId = chargesType.ReceivablesDefaultCurrencyId;
-                                    }
-
-                                    else
-                                    {
-                                        if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
-                                        {
-                                            quoteChargePM.SaleCurrencyId = loggedTenant.FreightCurrencyId;
-                                        }
-
-                                        else
-                                        {
-                                            quoteChargePM.SaleCurrencyId = loggedTenant.OtherChargesCurrencyId;
-                                        }
-                                    }
-
-                                    // Get Rate
-                                    if (quoteChargePM.SaleCurrencyId != null)
-                                    {
-                                        CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == quoteChargePM.SaleCurrencyId).FirstOrDefault();
-                                        if (iCurrencyRate == null)
-                                        {
-                                            iCurrencyRate = this.GetCurrencyRate(loggedTenant, quoteChargePM.SaleCurrencyId, myQuery);
-                                            AllRates.Add(iCurrencyRate);
-                                        }
-
-                                        if (iCurrencyRate != null)
-                                        {
-                                            quoteChargePM.SaleExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
-                                        }
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
                                     }
                                 }
 
                                 else
                                 {
-                                    quoteChargePM.SaleCurrencyId = entityPM.SaleCurrencyId;
-                                    quoteChargePM.SaleExchangeRate = entityPM.ExchangeRate;
+                                    quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
+
+                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                    {
+                                        quoteChargePM.CostExchangeRate = null;
+                                    }
+
+                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    {
+                                        quoteChargePM.CostExchangeRate = 1;
+                                    }
+
+                                    else if (othersChargeRate != null)
+                                    {
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
+                                    }
                                 }
 
-                                quoteChargePM.MarkUpCurrencyId = quoteChargePM.SaleCurrencyId;
-                                
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
                                     switch (quoteChargePM.CostMeasurementCode)
@@ -230,11 +174,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { quoteChargePM.CostQuantity = 1; break; }
                                         case "BCNT": { quoteChargePM.CostQuantity = null; break; }
                                         case "BTEU": { quoteChargePM.CostQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { quoteChargePM.CostQuantity = quoteChargePM.CostQuantity == null ? entityPM.ValueOfGoods : quoteChargePM.CostQuantity; break; }
+                                        case "PRVL": { quoteChargePM.CostQuantity = entityPM.ValueOfGoods; break; }
                                         case "QTY": { quoteChargePM.CostQuantity = entityPM.NumberOfPackages; break; }
-                                        case "CWKG": { quoteChargePM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
-                                        case "GWKG": { quoteChargePM.CostQuantity = entityPM.GrossWeightInKG; break; }
-                                        case "PDCW": { quoteChargePM.CostQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
                                         default: { break; }
                                     }
 
@@ -246,11 +187,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { quoteChargePM.SaleQuantity = 1; break; }
                                         case "BCNT": { quoteChargePM.SaleQuantity = null; break; }
                                         case "BTEU": { quoteChargePM.SaleQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { quoteChargePM.SaleQuantity = quoteChargePM.SaleQuantity == null ? entityPM.ValueOfGoods : quoteChargePM.SaleQuantity; break; }
+                                        case "PRVL": { quoteChargePM.SaleQuantity = entityPM.ValueOfGoods; break; }
                                         case "QTY": { quoteChargePM.SaleQuantity = entityPM.NumberOfPackages; break; }
-                                        case "CWKG": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
-                                        case "GWKG": { quoteChargePM.SaleQuantity = entityPM.GrossWeightInKG; break; }
-                                        case "PDCW": { quoteChargePM.SaleQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
                                         default: { break; }
                                     }
 
@@ -292,17 +230,19 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                         else
                         {
                             #region
-                            foreach (ChargesType item in list_ChargeTypes)
+                            foreach (ChargesType chargesType in list_ChargeTypes)
                             {
-                                QuoteChargePM itemPM = new QuoteChargePM()
+                                QuoteChargePM quoteChargePM = new QuoteChargePM()
                                 {
                                     Tenant = tenant,
                                     QuoteId = entityPM.Id,
-                                    ChargesTypeId = item.Id,
-                                    ChargesTypeCode = item.Code,
-                                    ChargesTypeName = item.EnglishName,
-                                    UpdatedByUserId = initializer.LoggedContactId,
-                                    ChargesGroupCode = item.ChargesGroupCode,
+                                    ChargesTypeId = chargesType.Id,
+                                    ChargesTypeCode = chargesType.Code,
+                                    ChargesTypeName = chargesType.EnglishName,
+                                    ChargesGroupCode = chargesType.ChargesGroupCode,
+                                    UpdatedByUserId = loggedContact.Id,
+                                    CostMeasurementId = chargesType.ContainerMeasurementId,
+                                    SaleMeasurementId = chargesType.ContainerMeasurementId,
                                     MarkUpTypeCode = "F",
                                     ContainerType1MarkUpTypeCode = "F",
                                     ContainerType2MarkUpTypeCode = "F",
@@ -316,163 +256,73 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     ContainerType4MarkUpValue = 0,
                                     ContainerType5MarkUpValue = 0,
                                     QuoteTypeCode = entityPM.QuoteTypeCode,
+                                    SaleCurrencyId = entityPM.SaleCurrencyId,
+                                    SaleExchangeRate = entityPM.ExchangeRate,
                                     ChangeSetOp = ChangeSetOperation.Insert,
-                                    IsBackToBack = item.IsBackToBack,
+                                    IsBackToBack = chargesType.IsBackToBack,
                                 };
 
-                                Measurement iMeasurement = null;
-                                if (item.ContainerMeasurementId != null)
+                                if (chargesType.Measurement != null)
                                 {
-                                    itemPM.CostMeasurementId = item.ContainerMeasurementId;
-                                    itemPM.SaleMeasurementId = item.ContainerMeasurementId;
-                                    iMeasurement = (from d in myCommonContext.Measurements where d.Id == item.ContainerMeasurementId select d).FirstOrDefault();
+                                    quoteChargePM.CostMeasurementCode = chargesType.Measurement.Code;
+                                    quoteChargePM.SaleMeasurementCode = chargesType.Measurement.Code;
+                                    quoteChargePM.CostMeasurementShortName = chargesType.Measurement.ShortName;
+                                    quoteChargePM.SaleMeasurementShortName = chargesType.Measurement.ShortName;
                                 }
 
-                                else if (item.MeasurementId != null)
+                                if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
                                 {
-                                    itemPM.CostMeasurementId = item.MeasurementId;
-                                    itemPM.SaleMeasurementId = item.MeasurementId;
-                                    iMeasurement = (from d in myCommonContext.Measurements where d.Id == item.MeasurementId select d).FirstOrDefault();
-                                }
+                                    quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
 
-                                if (iMeasurement != null)
-                                {
-                                    itemPM.CostMeasurementCode = iMeasurement.Code;
-                                    itemPM.SaleMeasurementCode = iMeasurement.Code;
-                                    itemPM.CostMeasurementShortName = iMeasurement.ShortName;
-                                    itemPM.SaleMeasurementShortName = iMeasurement.ShortName;
-                                }
-
-                                if (!string.IsNullOrEmpty(item.PayablesDefaultCurrencyId))
-                                {
-                                    itemPM.CostCurrencyId = item.PayablesDefaultCurrencyId;
-                                }
-
-                                else
-                                {
-                                    if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
+                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
                                     {
-                                        itemPM.CostCurrencyId = loggedTenant.FreightCurrencyId;
+                                        quoteChargePM.CostExchangeRate = null;
                                     }
 
-                                    else
+                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
                                     {
-                                        itemPM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
-
-                                    }
-                                }
-
-                                if (itemPM.CostCurrencyId != null)
-                                {
-                                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == itemPM.CostCurrencyId).FirstOrDefault();
-                                    if (iCurrencyRate == null)
-                                    {
-                                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, itemPM.CostCurrencyId, myQuery);
-                                        AllRates.Add(iCurrencyRate);
+                                        quoteChargePM.CostExchangeRate = 1;
                                     }
 
-                                    if (iCurrencyRate != null)
+                                    else if (freightChargeRate != null)
                                     {
-                                        itemPM.CostExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
-                                    }
-                                }
-
-                                if (entityPM.IsSaleCurrencySameAsCost)
-                                {
-                                    itemPM.SaleCurrencyId = itemPM.CostCurrencyId;
-                                    itemPM.SaleExchangeRate = itemPM.CostExchangeRate;
-                                }
-
-                                else if (entityPM.IsMultiCurrency)
-                                {
-                                    if (!string.IsNullOrEmpty(item.ReceivablesDefaultCurrencyId))
-                                    {
-                                        itemPM.SaleCurrencyId = item.ReceivablesDefaultCurrencyId;
-                                    }
-
-                                    else
-                                    {
-                                        if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
-                                        {
-                                            itemPM.SaleCurrencyId = loggedTenant.FreightCurrencyId;
-                                        }
-
-                                        else
-                                        {
-                                            itemPM.SaleCurrencyId = loggedTenant.OtherChargesCurrencyId;
-                                        }
-                                    }
-
-                                    // Get Rate
-                                    if (itemPM.SaleCurrencyId != null)
-                                    {
-                                        CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == itemPM.SaleCurrencyId).FirstOrDefault();
-                                        if (iCurrencyRate == null)
-                                        {
-                                            iCurrencyRate = this.GetCurrencyRate(loggedTenant, itemPM.SaleCurrencyId, myQuery);
-                                            AllRates.Add(iCurrencyRate);
-                                        }
-
-                                        if (iCurrencyRate != null)
-                                        {
-                                            itemPM.SaleExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
-                                        }
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
                                     }
                                 }
 
                                 else
                                 {
-                                    itemPM.SaleCurrencyId = entityPM.SaleCurrencyId;
-                                    itemPM.SaleExchangeRate = entityPM.ExchangeRate;
-                                }
+                                    quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
 
-                                itemPM.MarkUpCurrencyId = itemPM.SaleCurrencyId;
+                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                    {
+                                        quoteChargePM.CostExchangeRate = null;
+                                    }
+
+                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    {
+                                        quoteChargePM.CostExchangeRate = 1;
+                                    }
+
+                                    else if (othersChargeRate != null)
+                                    {
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
+                                    }
+                                }
 
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
-                                    switch (itemPM.CostMeasurementCode)
-                                    {
-                                        case "GRWT": { itemPM.CostQuantity = entityPM.GrossWeight; break; }
-                                        case "CHWT": { itemPM.CostQuantity = entityPM.ChargeableWeight; break; }
-                                        case "VOLU": { itemPM.CostQuantity = entityPM.Volume; break; }
-                                        case "FIXD": { itemPM.CostQuantity = 1; break; }
-                                        case "BCNT": { itemPM.CostQuantity = null; break; }
-                                        case "BTEU": { itemPM.CostQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { itemPM.CostQuantity = itemPM.CostQuantity == null ? entityPM.ValueOfGoods : itemPM.CostQuantity; break; }
-                                        case "QTY": { itemPM.CostQuantity = entityPM.NumberOfContainers; break; }
-                                        case "CWKG": { itemPM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
-                                        case "GWKG": { itemPM.CostQuantity = entityPM.GrossWeightInKG; break; }
-                                        case "PDCW": { itemPM.CostQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
-                                        default: { break; }
-                                    }
-
-                                    switch (itemPM.SaleMeasurementCode)
-                                    {
-                                        case "GRWT": { itemPM.SaleQuantity = entityPM.GrossWeight; break; }
-                                        case "CHWT": { itemPM.SaleQuantity = entityPM.ChargeableWeight; break; }
-                                        case "VOLU": { itemPM.SaleQuantity = entityPM.Volume; break; }
-                                        case "FIXD": { itemPM.SaleQuantity = 1; break; }
-                                        case "BCNT": { itemPM.SaleQuantity = null; break; }
-                                        case "BTEU": { itemPM.SaleQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { itemPM.SaleQuantity = itemPM.SaleQuantity == null ? entityPM.ValueOfGoods : itemPM.SaleQuantity; break; }
-                                        case "QTY": { itemPM.SaleQuantity = entityPM.NumberOfContainers; break; }
-                                        case "CWKG": { itemPM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
-                                        case "GWKG": { itemPM.SaleQuantity = entityPM.GrossWeightInKG; break; }
-                                        case "PDCW": { itemPM.SaleQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
-                                        default: { break; }
-                                    }
-
                                     if (entityPM.IsChargesByVAT)
                                     {
-                                        itemPM.VatTypeId = item.VatTypeId;
+                                        quoteChargePM.VatTypeId = chargesType.VatTypeId;
 
-                                        if (itemPM.VatTypeId != null)
+                                        if (quoteChargePM.VatTypeId != null)
                                         {
-                                            VatType myVatType = this.allVatTypes.Where(d => d.Id == itemPM.VatTypeId).FirstOrDefault();
+                                            VatType myVatType = this.allVatTypes.Where(d => d.Id == quoteChargePM.VatTypeId).FirstOrDefault();
                                             if (myVatType != null)
                                             {
-                                                itemPM.VatTypeName = myVatType.EnglishName;
-                                                itemPM.VatIsMultiPercentage = myVatType.IsMultiPercentage;
+                                                quoteChargePM.VatTypeName = myVatType.EnglishName;
+                                                quoteChargePM.VatIsMultiPercentage = myVatType.IsMultiPercentage;
 
                                                 if (myVatType.IsMultiPercentage)
                                                 {
@@ -481,10 +331,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                                                 else
                                                 {
-                                                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemPM.VatTypeId).FirstOrDefault();
+                                                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == quoteChargePM.VatTypeId).FirstOrDefault();
                                                     if (myPercentagePM != null)
                                                     {
-                                                        itemPM.VatPercentage = myPercentagePM.Percentage;
+                                                        quoteChargePM.VatPercentage = myPercentagePM.Percentage;
                                                     }
                                                 }
                                             }
@@ -492,33 +342,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     }
                                 }
 
-                                entityPM.QuoteCharges.Add(itemPM);
+                                entityPM.QuoteCharges.Add(quoteChargePM);
                             }
                             #endregion
                         }
-                  
-                    
-                    
                     }
                 }
             }
         }
-
-        private bool IsConvertingQuoteTypeOrTransportMode()
-        {
-            if (entityPM.ConvertToLCL)
-                return true;
-
-            if (entityPM.ConvertToFCL)
-                return true;
-
-            if (entityPM.ConvertTransportMode)
-                return true;
-
-            return false;
-        }
-
-        public void ComputeChargesAmounts()
+        private void ComputeChargesAmounts()
         {
             if (isNewEntity)
             {
@@ -528,17 +360,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                             where d.Tenant == this.tenant
                                             select d).ToList();
 
-                    if (!this.entityPM.IsCopyExchangeRates)
-                    {
-                        this.GetAllItemsExchangeRate();
-                    }
-
                     foreach (QuoteChargePM item in entityPM.QuoteCharges.Where(d => d.CostMeasurementCode != "PRFR" && d.SaleMeasurementCode != "PRFR"))
                     {
                         this.ComputeLineCostQuantity(item);
                         this.ComputeLineSaleQuantity(item);
-                        this.ComputeLineCostUnitPrice(item);
-                        this.ComputeLineSaleUnitPrice(item);
                         this.ComputeLineCostTotalAmounts(item);
                         this.ComputeLineSaleTotalAmounts(item);
                     }
@@ -546,67 +371,16 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     foreach (QuoteChargePM item in entityPM.QuoteCharges.Where(d => d.CostMeasurementCode == "PRFR"))
                     {
                         this.ComputeLineCostQuantity(item);
-                        this.ComputeLineCostUnitPrice(item);
                         this.ComputeLineCostTotalAmounts(item);
                     }
 
                     foreach (QuoteChargePM item in entityPM.QuoteCharges.Where(d => d.SaleMeasurementCode == "PRFR"))
                     {
                         this.ComputeLineSaleQuantity(item);
-                        this.ComputeLineSaleUnitPrice(item);
                         this.ComputeLineSaleTotalAmounts(item);
                     }
 
-                    QuoteChargePM itemFreight = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").FirstOrDefault();
-                    if (itemFreight != null)
-                    {
-                        foreach (QuoteChargePM item in entityPM.QuoteCharges.Where(d => d.ChargesGroupCode != "FRT" && d.IsAllIN))
-                        {
-                            this.ComputeLineAllInAmount(item, itemFreight);
-                        }
-                    }
-
                     this.ComputeQuoteEstimateProfit();
-                }
-            }
-        }
-
-
-
-        private void GetAllItemsExchangeRate()
-        {
-            RatesTableQuery myQuery = new RatesTableQuery(tenant);
-            List<CurrencyRate> AllRates = new List<CurrencyRate>();
-            foreach (QuoteChargePM item in entityPM.QuoteCharges)
-            {
-                if (item.CostCurrencyId != null)
-                {
-                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == item.CostCurrencyId).FirstOrDefault();
-                    if (iCurrencyRate == null)
-                    {
-                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, item.CostCurrencyId, myQuery);
-                        AllRates.Add(iCurrencyRate);
-                    }
-
-                    if (iCurrencyRate != null)
-                    {
-                        item.CostExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
-                    }
-                }
-
-                if (item.SaleCurrencyId != null)
-                {
-                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == item.SaleCurrencyId).FirstOrDefault();
-                    if (iCurrencyRate == null)
-                    {
-                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, item.SaleCurrencyId, myQuery);
-                        AllRates.Add(iCurrencyRate);
-                    }
-
-                    if (iCurrencyRate != null)
-                    {
-                        item.SaleExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
-                    }
                 }
             }
         }
@@ -624,13 +398,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "VOLU": { myResult = entityPM.Volume; break; }
                     case "BTEU": { myResult = entityPM.TEU; break; }
                     case "FIXD": { myResult = 1; break; }
-                    case "PRVL": { myResult = item.CostQuantity == null ? entityPM.ValueOfGoods : item.CostQuantity; break; }
+                    case "PRVL": { myResult = entityPM.ValueOfGoods; break; }
                     case "PRFR": { myResult = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").Sum(s => s.CostTotalAmount); break; }
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
-                    case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
-                    case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
-                    case "PDCW": { myResult = entityPM.PickupDeliveryChargeableWeight; break; }
-                    case "PFCL": { myResult = entityPM.QuoteCharges.Where(d => d.CostCurrencyId != loggedTenant.CurrencyId && d.CostMeasurementCode != "PFCL" && d.CostMeasurementCode != "PFCL").Sum(s => s.CostTotalAmountLocal); break; }
+
                     default:
                         {
                             if (this.isFCLQuote)
@@ -658,7 +429,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
 
-            item.CostQuantity = MethodHelper.Round(myResult, 3);
+            item.CostQuantity = MethodHelper.Round(myResult, 2);
         }
         private void ComputeLineSaleQuantity(QuoteChargePM item)
         {
@@ -673,13 +444,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "VOLU": { myResult = entityPM.Volume; break; }
                     case "BTEU": { myResult = entityPM.TEU; break; }
                     case "FIXD": { myResult = 1; break; }
-                    case "PRVL": { myResult = item.SaleQuantity == null ? entityPM.ValueOfGoods: item.SaleQuantity; break; }
+                    case "PRVL": { myResult = entityPM.ValueOfGoods; break; }
                     case "PRFR": { myResult = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").Sum(s => s.SaleTotalAmount); break; }
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
-                    case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
-                    case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
-                    case "PDCW": { myResult = entityPM.PickupDeliveryChargeableWeight; break; }
-                    case "PFCL": { myResult = entityPM.QuoteCharges.Where(d => d.SaleCurrencyId != loggedTenant.CurrencyId && d.SaleMeasurementCode != "PFCL" && d.SaleMeasurementCode != "PFCL").Sum(s => s.SaleTotalAmountLocal); break; }
+
                     default:
                         {
                             if (this.isFCLQuote)
@@ -707,125 +475,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
 
-            item.SaleQuantity = MethodHelper.Round(myResult, 3);
+            item.SaleQuantity = MethodHelper.Round(myResult, 2);
         }
-
-        private void ComputeLineCostUnitPrice(QuoteChargePM item)
-        {
-            if (this.entityPM.IsSaleCurrencySameAsCost)
-            {
-                item.CostUnitPriceInSaleCurrency = item.CostUnitPrice;
-                item.CostUnitPrice1InSaleCurrency = item.CostContainerType1UnitPrice;
-                item.CostUnitPrice2InSaleCurrency = item.CostContainerType2UnitPrice;
-                item.CostUnitPrice3InSaleCurrency = item.CostContainerType3UnitPrice;
-                item.CostUnitPrice4InSaleCurrency = item.CostContainerType4UnitPrice;
-                item.CostUnitPrice5InSaleCurrency = item.CostContainerType5UnitPrice;
-            }
-
-            else
-            {
-                double? saleExchangeRate = null;
-
-                if (this.entityPM.IsMultiCurrency)
-                {
-                    saleExchangeRate = item.SaleExchangeRate;
-                }
-
-                else
-                {
-                    saleExchangeRate = this.entityPM.ExchangeRate;
-                }
-
-                item.CostUnitPriceInSaleCurrency = MethodHelper.Round(item.CostUnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
-                item.CostUnitPrice1InSaleCurrency = MethodHelper.Round(item.CostContainerType1UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
-                item.CostUnitPrice2InSaleCurrency = MethodHelper.Round(item.CostContainerType2UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
-                item.CostUnitPrice3InSaleCurrency = MethodHelper.Round(item.CostContainerType3UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
-                item.CostUnitPrice4InSaleCurrency = MethodHelper.Round(item.CostContainerType4UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
-                item.CostUnitPrice5InSaleCurrency = MethodHelper.Round(item.CostContainerType5UnitPrice * item.CostExchangeRate / saleExchangeRate, 3);
-            }
-        }
-        private void ComputeLineSaleUnitPrice(QuoteChargePM item)
-        {
-            if (item.CostUnitPriceInSaleCurrency != null)
-            {
-                item.SaleUnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPriceInSaleCurrency, item.MarkUpValue, item.MarkUpTypeCode, item);
-            }
-
-            if (item.CostUnitPrice1InSaleCurrency != null)
-            {
-                item.SaleContainerType1UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice1InSaleCurrency, item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode, item);
-            }
-
-            if (item.CostUnitPrice2InSaleCurrency != null)
-            {
-                item.SaleContainerType2UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice2InSaleCurrency, item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode, item);
-            }
-
-            if (item.CostUnitPrice3InSaleCurrency != null)
-            {
-                item.SaleContainerType3UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice3InSaleCurrency, item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode, item);
-            }
-
-            if (item.CostUnitPrice4InSaleCurrency != null)
-            {
-                item.SaleContainerType4UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice4InSaleCurrency, item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode, item);
-            }
-
-            if (item.CostUnitPrice5InSaleCurrency != null)
-            {
-                item.SaleContainerType5UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice5InSaleCurrency, item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode, item);
-            }
-        }
-
-        private double? ComputeLineSaleUnitPrice(double? costUnitPriceInSaleCurrency, double? markUpValue, string markUpTypeCode, QuoteChargePM quoteCharge = null)
-        {
-            double? myResult = costUnitPriceInSaleCurrency;
-
-
-            if (costUnitPriceInSaleCurrency != null)
-            {
-                double markup = this.GetMarkUpValueByCurrency(markUpValue, quoteCharge); 
-
-                if (markUpTypeCode == "P")
-                {
-                    myResult = costUnitPriceInSaleCurrency + (costUnitPriceInSaleCurrency * (markup / 100));
-                }
-
-                else
-                {
-                    myResult = costUnitPriceInSaleCurrency + markup;
-                }
-            }
-
-            if (myResult == 0)
-            {
-                myResult = null;
-            }
-
-            return myResult;
-        }
-
-        private double GetMarkUpValueByCurrency(double? markUp, QuoteChargePM quoteCharge = null)
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("QMU", tenant))
-            {
-                return (markUp == null ? 0 : markUp.Value);
-            }
-            else
-            {
-                double? markUpValue = (markUp == null ? 0 : markUp.Value);
-                if (quoteCharge.SaleCurrencyId == quoteCharge.MarkUpCurrencyId)
-                {
-                    return (markUpValue == null ? 0 : markUpValue.Value);
-                }
-
-                var markUpLocalValue = markUpValue * quoteCharge.CostExchangeRate;
-                markUpValue = markUpLocalValue / quoteCharge.SaleExchangeRate;
-
-                return (markUpValue == null ? 0 : markUpValue.Value);
-            }
-        }
-
         private void ComputeLineCostTotalAmounts(QuoteChargePM item)
         {
             double? myTotalAmount = null;
@@ -870,7 +521,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (item.CostQuantity != null && item.CostUnitPrice != null)
                 {
-                    if (item.CostMeasurementCode == "PRVL" || item.CostMeasurementCode == "PRFR" || item.CostMeasurementCode == "PFCL")
+                    if (item.CostMeasurementCode == "PRVL" || item.CostMeasurementCode == "PRFR")
                     {
                         myTotalAmount = item.CostQuantity * item.CostUnitPrice / 100;
                     }
@@ -971,7 +622,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (item.SaleUnitPrice != null && item.SaleQuantity != null)
                 {
-                    if (item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" || item.CostMeasurementCode == "PFCL")
+                    if (item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR")
                     {
                         myTotalAmount = item.SaleQuantity * item.SaleUnitPrice / 100;
                     }
@@ -1037,14 +688,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
 
-            else if (entityPM.IsMultiCurrency)
-            {
-                if (item.CostTotalAmountLocal != null && item.SaleExchangeRate != null)
-                {
-                    myResult = item.CostTotalAmountLocal / item.SaleExchangeRate;
-                }
-            }
-
             else
             {
                 if (item.CostTotalAmountLocal != null && this.entityPM.ExchangeRate != null)
@@ -1055,151 +698,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             item.CostAmountInSaleCurrency = MethodHelper.Round(myResult, 2);
         }
-
-        private void ComputeLineAllInAmount(QuoteChargePM item, QuoteChargePM itemFreight)
-        {
-            if (item.IsAllIN && itemFreight != null)
-            {
-                if (this.isLCLQuote)
-                {
-                    this.ComputeLineAllInAmount_LCL(item, itemFreight);
-                }
-
-                else
-                {
-                    this.ComputeLineAllInAmount_FCL(item, itemFreight);
-                }
-            }
-        }
-        private void ComputeLineAllInAmount_LCL(QuoteChargePM item, QuoteChargePM itemFreight)
-        {
-            if (item.SaleTotalAmountLocal != null || itemFreight.SaleTotalAmountLocal != null)
-            {
-                double? itemSaleTotalAmountLocal = item.SaleTotalAmountLocal == null ? 0 : item.SaleTotalAmountLocal;
-                double? itemFreightSaleTotalAmountLocal = itemFreight.SaleTotalAmountLocal == null ? 0 : itemFreight.SaleTotalAmountLocal;
-                itemFreight.SaleTotalAmountLocal = MethodHelper.Round(itemFreightSaleTotalAmountLocal + itemSaleTotalAmountLocal, 2);
-
-                double? itemTotalAmount = null;
-                if (itemFreight.SaleExchangeRate != null && itemFreight.SaleExchangeRate != 0)
-                {
-                    itemTotalAmount = itemFreight.SaleTotalAmountLocal / itemFreight.SaleExchangeRate;
-                }
-
-                if (itemFreight.SaleMinAmount != null)
-                {
-                    if (itemTotalAmount == null || itemTotalAmount < itemFreight.SaleMinAmount)
-                    {
-                        itemTotalAmount = itemFreight.SaleMinAmount;
-                    }
-                }
-
-                if (itemFreight.SaleMaxAmount != null)
-                {
-                    if (itemTotalAmount == null || itemTotalAmount > itemFreight.SaleMaxAmount)
-                    {
-                        itemTotalAmount = itemFreight.SaleMaxAmount;
-                    }
-                }
-
-                double? itemUnitPrice = itemFreight.SaleUnitPrice;
-                if (itemTotalAmount != null && itemFreight.SaleQuantity != null)
-                {
-                    itemUnitPrice = itemTotalAmount / itemFreight.SaleQuantity;
-                }
-
-                itemFreight.SaleTotalAmount = MethodHelper.Round(itemTotalAmount, 2);
-                itemFreight.SaleUnitPrice = MethodHelper.Round(itemUnitPrice, 3);
-            }
-        }
-        private void ComputeLineAllInAmount_FCL(QuoteChargePM item, QuoteChargePM itemFreight)
-        {
-            if (item.CostMeasurementCode == "BCNT")
-            {
-                double? itemTotalAmount = null;
-
-                if (entityPM.PackageType1Id != null)
-                {
-                    double? itemSaleUnitPrice = item.SaleContainerType1UnitPrice == null ? 0 : item.SaleContainerType1UnitPrice;
-                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType1UnitPrice == null ? 0 : itemFreight.SaleContainerType1UnitPrice;
-                    itemFreight.SaleContainerType1UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
-
-                    if (entityPM.PackageType1Quantity != null && itemFreight.SaleContainerType1UnitPrice != null)
-                    {
-                        double? itemAmount = entityPM.PackageType1Quantity * itemFreight.SaleContainerType1UnitPrice;
-                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
-                    }
-                }
-
-                if (entityPM.PackageType2Id != null)
-                {
-                    double? itemSaleUnitPrice = item.SaleContainerType2UnitPrice == null ? 0 : item.SaleContainerType2UnitPrice;
-                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType2UnitPrice == null ? 0 : itemFreight.SaleContainerType2UnitPrice;
-                    itemFreight.SaleContainerType2UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
-
-                    if (entityPM.PackageType2Quantity != null && itemFreight.SaleContainerType2UnitPrice != null)
-                    {
-                        double? itemAmount = entityPM.PackageType2Quantity * itemFreight.SaleContainerType2UnitPrice;
-                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
-                    }
-                }
-
-                if (entityPM.PackageType3Id != null)
-                {
-                    double? itemSaleUnitPrice = item.SaleContainerType3UnitPrice == null ? 0 : item.SaleContainerType3UnitPrice;
-                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType3UnitPrice == null ? 0 : itemFreight.SaleContainerType3UnitPrice;
-                    itemFreight.SaleContainerType3UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
-
-                    if (entityPM.PackageType3Quantity != null && itemFreight.SaleContainerType3UnitPrice != null)
-                    {
-                        double? itemAmount = entityPM.PackageType3Quantity * itemFreight.SaleContainerType3UnitPrice;
-                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
-                    }
-                }
-
-                if (entityPM.PackageType4Id != null)
-                {
-                    double? itemSaleUnitPrice = item.SaleContainerType4UnitPrice == null ? 0 : item.SaleContainerType4UnitPrice;
-                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType4UnitPrice == null ? 0 : itemFreight.SaleContainerType4UnitPrice;
-                    itemFreight.SaleContainerType4UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
-
-                    if (entityPM.PackageType4Quantity != null && itemFreight.SaleContainerType4UnitPrice != null)
-                    {
-                        double? itemAmount = entityPM.PackageType4Quantity * itemFreight.SaleContainerType4UnitPrice;
-                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
-                    }
-                }
-
-                if (entityPM.PackageType5Id != null)
-                {
-                    double? itemSaleUnitPrice = item.SaleContainerType5UnitPrice == null ? 0 : item.SaleContainerType5UnitPrice;
-                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType5UnitPrice == null ? 0 : itemFreight.SaleContainerType5UnitPrice;
-                    itemFreight.SaleContainerType5UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
-
-                    if (entityPM.PackageType5Quantity != null && itemFreight.SaleContainerType5UnitPrice != null)
-                    {
-                        double? itemAmount = entityPM.PackageType5Quantity * itemFreight.SaleContainerType5UnitPrice;
-                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
-                    }
-                }
-
-                if (itemTotalAmount != null)
-                {
-                    if (itemFreight.SaleMinAmount != null && itemTotalAmount < itemFreight.SaleMinAmount)
-                    {
-                        itemTotalAmount = itemFreight.SaleMinAmount;
-                    }
-
-                    if (itemFreight.SaleMaxAmount != null && itemTotalAmount < itemFreight.SaleMaxAmount)
-                    {
-                        itemTotalAmount = itemFreight.SaleMaxAmount;
-                    }
-                }
-
-                itemFreight.SaleTotalAmount = itemTotalAmount == null ? null : MethodHelper.Round(itemTotalAmount, 2);
-                itemFreight.SaleTotalAmountLocal = itemTotalAmount == null ? null : MethodHelper.Round(itemTotalAmount * itemFreight.SaleExchangeRate, 2);
-            }
-        }
-
         private void ComputeQuoteEstimateProfit()
         {
             double? myResult = null;
@@ -1208,7 +706,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             double? mySaleAmountLocal = MethodHelper.Round(this.entityPM.QuoteCharges.Where(d => d.IsAllIN == false).Sum(s => s.SaleTotalAmountLocal), 2);
             double? mySaleProfitLocal = MethodHelper.Round(mySaleAmountLocal - myCostAmountLocal, 2);
 
-            if (this.entityPM.ExchangeRate == null)
+            if(this.entityPM.ExchangeRate == null)
             {
                 myResult = null;
             }
@@ -1236,41 +734,38 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             foreach (QuoteChargePM item in allCharges)
             {
-                item.SaleUnitPriceInSaleCurrency = MethodHelper.Round(item.SaleUnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.SaleUnitPrice1InSaleCurrency = MethodHelper.Round(item.SaleContainerType1UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.SaleUnitPrice2InSaleCurrency = MethodHelper.Round(item.SaleContainerType2UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.SaleUnitPrice3InSaleCurrency = MethodHelper.Round(item.SaleContainerType3UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.SaleUnitPrice4InSaleCurrency = MethodHelper.Round(item.SaleContainerType4UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.SaleUnitPrice5InSaleCurrency = MethodHelper.Round(item.SaleContainerType5UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
-                item.SaleAmountInSaleCurrency = MethodHelper.Round(item.SaleTotalAmount * item.SaleExchangeRate / this.entityPM.ExchangeRate, 2);
-            }
-        }
-        private CurrencyRate GetCurrencyRate(Tenant loggedTenant, string iCurrencyId, RatesTableQuery myQuery)
-        {
-            CurrencyRate iResult = new CurrencyRate() { Id = iCurrencyId };
+                bool isSameAmounts = true;
 
-            if (iCurrencyId == loggedTenant.CurrencyId)
-            {
-                iResult.Rate = 1;
-            }
-
-            else
-            {
-                LastRate iRate = myQuery.GetLastRecordByValueDate(tenant, iCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
-                if (iRate != null)
+                if (this.entityPM.IsSaleCurrencySameAsCost)
                 {
-                    iResult.Rate = iRate.Rate;
+                    if (item.SaleCurrencyId != this.entityPM.SaleCurrencyId)
+                    {
+                        isSameAmounts = false;
+                    }
+                }
+
+                if (isSameAmounts)
+                {
+                    item.SaleUnitPriceInSaleCurrency = item.SaleUnitPrice;
+                    item.SaleUnitPrice1InSaleCurrency = item.SaleContainerType1UnitPrice;
+                    item.SaleUnitPrice2InSaleCurrency = item.SaleContainerType2UnitPrice;
+                    item.SaleUnitPrice3InSaleCurrency = item.SaleContainerType3UnitPrice;
+                    item.SaleUnitPrice4InSaleCurrency = item.SaleContainerType4UnitPrice;
+                    item.SaleUnitPrice5InSaleCurrency = item.SaleContainerType5UnitPrice;
+                    item.SaleAmountInSaleCurrency = item.SaleTotalAmount;
+                }
+
+                else
+                {
+                    item.SaleUnitPriceInSaleCurrency = MethodHelper.Round(item.SaleUnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                    item.SaleUnitPrice1InSaleCurrency = MethodHelper.Round(item.SaleContainerType1UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                    item.SaleUnitPrice2InSaleCurrency = MethodHelper.Round(item.SaleContainerType2UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                    item.SaleUnitPrice3InSaleCurrency = MethodHelper.Round(item.SaleContainerType3UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                    item.SaleUnitPrice4InSaleCurrency = MethodHelper.Round(item.SaleContainerType4UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                    item.SaleUnitPrice5InSaleCurrency = MethodHelper.Round(item.SaleContainerType5UnitPrice * item.SaleExchangeRate / this.entityPM.ExchangeRate, 3);
+                    item.SaleAmountInSaleCurrency = MethodHelper.Round(item.SaleTotalAmount * item.SaleExchangeRate / this.entityPM.ExchangeRate, 2);
                 }
             }
-
-            return iResult;
         }
-    }
-
-
-    public class CurrencyRate
-    {
-        public string Id { get; set; }
-        public double? Rate { get; set; }
     }
 }

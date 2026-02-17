@@ -12,9 +12,11 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {PortList} from '../../../../Common/EntityLists/PortList';
 import {CardList} from '../../../../Common/EntityLists/CardList';
 import {AirlineList} from '../../../../Common/EntityLists/AirlineList';
+import {VesselList} from '../../../../Common/EntityLists/VesselList';
 import {PortListService} from '../../../../Common/Services/StandardLists/PortListService';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
 import {AirlineListService} from '../../../../Common/Services/StandardLists/AirlineListService';
+import {VesselListService} from '../../../../Common/Services/StandardLists/VesselListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -25,10 +27,9 @@ import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainS
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
 import {AWBStackDomainService} from '../../../../Common/Services/AWBStackDomainService';
 import {MAWBStackPM} from '../../../../Common/EntityPMs/MAWBStackPM';
-import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
-import { VesselList } from '../../../../Common/EntityLists/VesselList';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './AddEditMainCarriageComponent.html',
 })
 
@@ -40,9 +41,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     public FatherComponent: RoutingsTabComponent;
     public LabelWidth: number = 100;
     private CurrentSession = SessionLocator.SelectedSession;
-    private oldFromCountryId: string = null;
-    private oldToCountryId: string = null;
-    public IsVesselFreeTextVisible: boolean = false;
     constructor() {
         super();
         this.InitServices();
@@ -51,12 +49,14 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     private myPortListService: PortListService;
     private myCardListService: CardListService;
     private myAirlineListService: AirlineListService;
+    private myVesselListService: VesselListService;
     private StackDomainService: AWBStackDomainService;
     private myPartnersDomainService: PartnersDomainService;
     InitServices() {
         this.myPortListService = new PortListService();
         this.myCardListService = new CardListService();
         this.myAirlineListService = new AirlineListService();
+        this.myVesselListService = new VesselListService();
         this.StackDomainService = new AWBStackDomainService();
         this.myPartnersDomainService = new PartnersDomainService();
     }
@@ -66,8 +66,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
         this.LabelWidth = this.EntityPM.TransportModeId == "I" ? 115 : 100;
-        this.oldFromCountryId = this.EntityPM.FromCountryId;
-        this.oldToCountryId = this.EntityPM.ToCountryId;
 
         if (this.EntityPM.TransportModeId == "A") {
             this.LabelWidth = 80;
@@ -75,11 +73,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
         else if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "E") {
             this.LabelWidth = 150;
-        }
-
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VSL")[0];
-        if (featureToggle) {
-            this.IsVesselFreeTextVisible = true;
         }
 
         this.InitializeComponent();
@@ -179,16 +172,23 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
         return myResult;
     }
+    //get IsCloseMasterInfoVisible() {
+    //    var myResult = false;
 
+    //    if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+    //        myResult = true;
+    //    }
+
+    //    return myResult;
+    //}
     public IsEditingEnabled: boolean = true;
     public IsEditingEntityEnabled: boolean = true;
     public IsPortsEditingEnabled: boolean = true;
     public IsCloseMasterInfoVisible: boolean = false;
-    public IsChooseVesselVisible: boolean = false;
+
     SetUIProperties() {
         var isEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         this.IsEditingEntityEnabled = isEditingEnabled;
-        this.IsChooseVesselVisible = this.TransportModeId == "O" ? true : false;
 
         if (isEditingEnabled) {
             if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
@@ -248,6 +248,8 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             isPortVia1Enabled = true;
 
             if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+                //isMainPortsEnabled = false;
+
                 if (this.EntityPM.StatusWeight >= 60) {
                     isMainPortsEnabled = false;
                     this.IsCloseMasterInfoVisible = true;
@@ -271,6 +273,11 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Transshipment3FromPortId", this.ObjectTableName, isPortVia3Enabled);
         this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPortId) ? true : false);
         this.UIProperties.SetRequired("MainCarriageFinalDestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFinalDestinationPortId) ? true : false);
+
+        //var isPortVia1Required = AppTool.IsNullOrEmpty(this.Transshipment1FromPortId) && !AppTool.IsNullOrEmpty(this.Transshipment2FromPortId) ? true : false;
+        //var isPortVia2Required = AppTool.IsNullOrEmpty(this.Transshipment2FromPortId) && !AppTool.IsNullOrEmpty(this.Transshipment3FromPortId) ? true : false;
+        //this.UIProperties.SetRequired("Transshipment1FromPortId", this.ObjectTableName, isPortVia1Required);
+        //this.UIProperties.SetRequired("Transshipment2FromPortId", this.ObjectTableName, isPortVia2Required);
     }
     SetUIProperties_MainCarriage() {
         var isCarrierEnabled = this.IsEditingEnabled;
@@ -312,6 +319,10 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageCarrierId)) {
                     isLegFieldsEnabled = true;
                 }
+
+                //else {
+                //    isMasterEnabled = false;
+                //}
             }
         }
 
@@ -324,7 +335,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("AirlinePrefix", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("MAWBOBLDate", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CutoffDate", this.ObjectTableName, this.IsEditingEnabled);        
-        this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("MainCarriageETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("MainCarriageATD", this.ObjectTableName, this.IsEditingEnabled);
@@ -348,7 +358,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Transshipment1CarrierPrefix", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment1CarrierNumber", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment1AdditionalMAWBOBLBL", this.ObjectTableName, isLegFieldsEnabled);
-        this.UIProperties.SetEnabled("Transshipment1VesselName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment1VesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment1ETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment1ETA", this.ObjectTableName, this.IsEditingEnabled);
@@ -368,7 +377,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Transshipment2CarrierPrefix", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment2CarrierNumber", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment2AdditionalMAWBOBLBL", this.ObjectTableName, isLegFieldsEnabled);
-        this.UIProperties.SetEnabled("Transshipment2VesselName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment2VesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment2ETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment2ETA", this.ObjectTableName, this.IsEditingEnabled);
@@ -388,7 +396,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Transshipment3CarrierPrefix", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment3CarrierNumber", this.ObjectTableName, isLegFieldsEnabled);
         this.UIProperties.SetEnabled("Transshipment3AdditionalMAWBOBLBL", this.ObjectTableName, isLegFieldsEnabled);
-        this.UIProperties.SetEnabled("Transshipment3VesselName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment3VesselId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment3ETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Transshipment3ETA", this.ObjectTableName, this.IsEditingEnabled);
@@ -992,28 +999,9 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     set TrailerNumber(value: string) {
         if (this.EntityPM.TrailerNumber != value) {
             this.EntityPM.TrailerNumber = value;
-        }
-    }
 
-    get Transshipment1TrailerNumber() { return this.EntityPM.Transshipment1TrailerNumber; }
-    set Transshipment1TrailerNumber(value: string) {
-        if (this.EntityPM.Transshipment1TrailerNumber != value) {
-            this.EntityPM.Transshipment1TrailerNumber = value;
         }
-    }
 
-    get Transshipment2TrailerNumber() { return this.EntityPM.Transshipment2TrailerNumber; }
-    set Transshipment2TrailerNumber(value: string) {
-        if (this.EntityPM.Transshipment2TrailerNumber != value) {
-            this.EntityPM.Transshipment2TrailerNumber = value;
-        }
-    }
-
-    get Transshipment3TrailerNumber() { return this.EntityPM.Transshipment3TrailerNumber; }
-    set Transshipment3TrailerNumber(value: string) {
-        if (this.EntityPM.Transshipment3TrailerNumber != value) {
-            this.EntityPM.Transshipment3TrailerNumber = value;
-        }
     }
 
     get LongMaster() { return this.EntityPM.LongMaster; }
@@ -1074,34 +1062,25 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         }
     }
 
-    // Vessels
+    // Vessels    
     get MainCarriageVesselId() { return this.EntityPM.MainCarriageVesselId; }
     set MainCarriageVesselId(value: string) {
         if (this.EntityPM.MainCarriageVesselId != value) {
-            this.EntityPM.MainCarriageVesselId = value;            
-        }
-    }
+            this.EntityPM.MainCarriageVesselId = value;
 
-    private mainCarriageVessel: VesselList;
-    get MainCarriageVessel() { return this.mainCarriageVessel; }
-    set MainCarriageVessel(value: VesselList) {
-        if (this.mainCarriageVessel != value) {
-            this.mainCarriageVessel = value;
-        }
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.EntityPM.MainCarriageVesselName = null;
+            }
 
-        this.MainCarriageVesselName = null;
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.MainCarriageVesselName = value.EnglishName;
-        }
-    }
-
-    get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
-    set MainCarriageVesselName(newValue: string) {
-        if (this.EntityPM.MainCarriageVesselName != newValue) {
-            this.EntityPM.MainCarriageVesselName = newValue;
-
-            if (this.IsVesselFreeTextVisible) {
-                this.MainCarriageVesselId = null;
+            else {
+                this.myVesselListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: VesselList = myResponse.Result;
+                        if (list) {
+                            this.EntityPM.MainCarriageVesselName = list.EnglishName;
+                        }
+                    }
+                });
             }
         }
     }
@@ -1109,30 +1088,21 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     get Transshipment1VesselId() { return this.EntityPM.Transshipment1VesselId; }
     set Transshipment1VesselId(value: string) {
         if (this.EntityPM.Transshipment1VesselId != value) {
-            this.EntityPM.Transshipment1VesselId = value;            
-        }
-    }
+            this.EntityPM.Transshipment1VesselId = value;
 
-    private transshipment1Vessel: VesselList;
-    get Transshipment1Vessel() { return this.transshipment1Vessel; }
-    set Transshipment1Vessel(value: VesselList) {
-        if (this.transshipment1Vessel != value) {
-            this.transshipment1Vessel = value;
-        }
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.EntityPM.Transshipment1VesselName = null;
+            }
 
-        this.Transshipment1VesselName = null;
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.Transshipment1VesselName = value.EnglishName;
-        }
-    }
-
-    get Transshipment1VesselName() { return this.EntityPM.Transshipment1VesselName; }
-    set Transshipment1VesselName(value: string) {
-        if (this.EntityPM.Transshipment1VesselName != value) {
-            this.EntityPM.Transshipment1VesselName = value;
-
-            if (this.IsVesselFreeTextVisible) {
-                this.Transshipment1VesselId = null;
+            else {
+                this.myVesselListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: VesselList = myResponse.Result;
+                        if (list) {
+                            this.EntityPM.Transshipment1VesselName = list.EnglishName;
+                        }
+                    }
+                });
             }
         }
     }
@@ -1140,30 +1110,21 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     get Transshipment2VesselId() { return this.EntityPM.Transshipment2VesselId; }
     set Transshipment2VesselId(value: string) {
         if (this.EntityPM.Transshipment2VesselId != value) {
-            this.EntityPM.Transshipment2VesselId = value;            
-        }
-    }
+            this.EntityPM.Transshipment2VesselId = value;
 
-    private transshipment2Vessel: VesselList;
-    get Transshipment2Vessel() { return this.transshipment2Vessel; }
-    set Transshipment2Vessel(value: VesselList) {
-        if (this.transshipment2Vessel != value) {
-            this.transshipment2Vessel = value;
-        }
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.EntityPM.Transshipment2VesselName = null;
+            }
 
-        this.Transshipment2VesselName = null;
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.Transshipment2VesselName = value.EnglishName;
-        }
-    }
-
-    get Transshipment2VesselName() { return this.EntityPM.Transshipment2VesselName; }
-    set Transshipment2VesselName(value: string) {
-        if (this.EntityPM.Transshipment2VesselName != value) {
-            this.EntityPM.Transshipment2VesselName = value;
-
-            if (this.IsVesselFreeTextVisible) {
-                this.Transshipment2VesselId = null;
+            else {
+                this.myVesselListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: VesselList = myResponse.Result;
+                        if (list) {
+                            this.EntityPM.Transshipment2VesselName = list.EnglishName;
+                        }
+                    }
+                });
             }
         }
     }
@@ -1171,30 +1132,21 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     get Transshipment3VesselId() { return this.EntityPM.Transshipment3VesselId; }
     set Transshipment3VesselId(value: string) {
         if (this.EntityPM.Transshipment3VesselId != value) {
-            this.EntityPM.Transshipment3VesselId = value;            
-        }
-    }
+            this.EntityPM.Transshipment3VesselId = value;
 
-    private transshipment3Vessel: VesselList;
-    get Transshipment3Vessel() { return this.transshipment3Vessel; }
-    set Transshipment3Vessel(value: VesselList) {
-        if (this.transshipment3Vessel != value) {
-            this.transshipment3Vessel = value;
-        }
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.EntityPM.Transshipment3VesselName = null;
+            }
 
-        this.Transshipment3VesselName = null;
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.Transshipment3VesselName = value.EnglishName;
-        }
-    }
-
-    get Transshipment3VesselName() { return this.EntityPM.Transshipment3VesselName; }
-    set Transshipment3VesselName(value: string) {
-        if (this.EntityPM.Transshipment3VesselName != value) {
-            this.EntityPM.Transshipment3VesselName = value;
-
-            if (this.IsVesselFreeTextVisible) {
-                this.Transshipment3VesselId = null;
+            else {
+                this.myVesselListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: VesselList = myResponse.Result;
+                        if (list) {
+                            this.EntityPM.Transshipment3VesselName = list.EnglishName;
+                        }
+                    }
+                });
             }
         }
     }
@@ -1627,7 +1579,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             }
 
             if (!AppTool.IsNullOrEmpty(this.Master)) {
-                this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM)
+                this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM.Id, this.EntityPM.BookingId, this.EntityPM.Master, this.EntityPM.AirlinePrefix, this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentLevelCode, this.EntityPM.IsCancelled)
                     .subscribe((myResult: any) => {
 
                         if (AppTool.IsNullOrEmpty(myResult)) {
@@ -1723,46 +1675,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     MasterLostFocus(input: any) {
         if (this.TransportModeId == "A") {
             this.ValidateMasterStack();
-        }
-    }
-
-    ChooseVesselClicked(type: string) {
-        var idProperty = null;
-        var nameProperty = null;
-
-        switch (type) {
-            case "M": {
-                idProperty = "MainCarriageVesselId";
-                nameProperty = "MainCarriageVesselName";
-                break;
-            }
-
-            case "T1": {
-                idProperty = "Transshipment1VesselId";
-                nameProperty = "Transshipment1VesselName";
-                break;
-            }
-
-            case "T2": {
-                idProperty = "Transshipment2VesselId";
-                nameProperty = "Transshipment2VesselName";
-                break;
-            }
-
-            case "T3": {
-                idProperty = "Transshipment3VesselId";
-                nameProperty = "Transshipment3VesselName";
-                break;
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(idProperty) && !AppTool.IsNullOrEmpty(nameProperty)) {
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Width = 775;
-            logitudeWindow.Height = 570;
-            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, IdProperty: idProperty, NameProperty: nameProperty };
-            logitudeWindow.Title = "Vessel Search";
-            logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/ChooseVesselComponent");
         }
     }
 
@@ -1864,7 +1776,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             }
 
             var isConfirmingPorts: boolean = false;
-            var confirmationMessage: string = null
             if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
                 if (this.EntityPM.OriginMainCarriageFromPortId != this.EntityPM.MainCarriageFromPortId) {
                     isConfirmingPorts = true;
@@ -1872,47 +1783,16 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
                 else if (this.EntityPM.OriginFinalDestinationPortId != this.EntityPM.MainCarriageFinalDestinationPortId) {
                     isConfirmingPorts = true;
-                }
-
-                if (isConfirmingPorts) {
-                    confirmationMessage = "Updating the Master shipment ports will update the house shipment accordingly";
-                }
-            }
-
-            var updateProductItems: boolean = false
-            if (this.oldToCountryId != this.EntityPM.ToCountryId) {
-                if (this.EntityPM.ShipmentProductItems.length > 0) {
-                    if (!ShipmentTool.IsShipmentProductItemsEmpty(this.EntityPM.ShipmentProductItems)) {
-                        updateProductItems = true;
-                        isConfirmingPorts = true;
-
-                        if (AppTool.IsNullOrEmpty(confirmationMessage)) {
-                            confirmationMessage = "All product items in this shipment will be updated";
-                        }
-
-                        else {
-                            confirmationMessage = confirmationMessage + ", " + "All product items in this shipment will be updated";
-                        }
-                    }
-                }
-            }
-
-            if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
-                if (this.oldToCountryId != this.EntityPM.ToCountryId || this.oldFromCountryId != this.EntityPM.FromCountryId) {
-                    this.CurrentSession.FireEvent("UpdateCustomsCharges");
-                }
+                }                
             }
 
             if (isConfirmingPorts) {
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Title = "Ports Changed";
-                confirmWindow.Show(confirmationMessage);
+                confirmWindow.Show("Updating the Master shipment ports will update the house shipment accordingly");
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        if (updateProductItems) {
-                            this.EntityPM.IsProductItemsUpdated = true;
-                        }
-
+                       
                         if (!this.SaveCompletedEvent) {
                             this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
 
@@ -1920,11 +1800,8 @@ export class AddEditMainCarriageComponent extends BaseComponent {
                                 this.SaveCompletedEvent = null;
 
                                 if (isSaveSuccess) {
-                                    this.CurrentSession.SessionEvent.emit("ReloadHouses");
 
-                                    if (updateProductItems) {
-                                        this.CurrentSession.FireEvent("ShipmentProductItemsUpdated");
-                                    }
+                                    this.CurrentSession.SessionEvent.emit("ReloadHouses");
 
                                     this.CloseOk();
                                 }
@@ -1973,7 +1850,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
             oldItem.JobId = item.JobId;
             oldItem.LegType = item.LegType;
             oldItem.ManualActivatedFollowUp = item.ManualActivatedFollowUp;
-            oldItem.Notes = item.Notes;
+            oldItem.Note = item.Note;
             oldItem.OwnerUserId = item.OwnerUserId;
             oldItem.OwnerUserName = item.OwnerUserName;
             oldItem.ShipmentId = item.ShipmentId;
@@ -2052,9 +1929,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
         if (this.TransportModeId == "I") {
             this.myCloner.AddField('TrailerNumber');
-            this.myCloner.AddField('Transshipment1TrailerNumber');
-            this.myCloner.AddField('Transshipment2TrailerNumber');
-            this.myCloner.AddField('Transshipment3TrailerNumber');
         }
 
         this.myCloner.AddEntity(this.EntityPM);
@@ -2119,6 +1993,4 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
         this.myCloner.RejectChanges();
     }
-
-   
 }

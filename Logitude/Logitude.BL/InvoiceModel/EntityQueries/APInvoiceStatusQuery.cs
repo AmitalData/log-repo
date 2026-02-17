@@ -44,21 +44,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }).FirstOrDefault();
         }
 
-
-        public APInvoiceStatusPM GetSinglePM(string code, int tenant=0)
-        {
-            return (from a in repository.context.APInvoiceStatus
-                    where a.Code == code
-                    select new APInvoiceStatusPM()
-                    {
-                        Code = a.Code,
-                        Name = a.Name,
-                        SearchFields = a.SearchFields,
-
-
-                    }).FirstOrDefault();
-        }
-
         public IQueryable<APInvoiceStatusPM> GetAPInvoiceStatusPMs()
         {
             return (from a in repository.context.APInvoiceStatus

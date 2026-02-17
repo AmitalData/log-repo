@@ -41,14 +41,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     Column = a.Column,
                                                     Id = a.Id,
                                                     ObjectFieldId = a.ObjectFieldId,
-                                                    ObjectFieldName = a.ObjectField!=null ?  a.ObjectField.FieldName:null,
+                                                    ObjectFieldName = a.ObjectField.FieldName,
                                                     Row = a.Row,
                                                     ScreenId = a.ScreenId,
                                                     Tenant = a.Tenant,
-                                                    ScreenCode = a.ScreenCode,
-                                                    ObjectFieldObjectTableName = a.ObjectField != null ? a.ObjectField.ObjectTable!=null ? a.ObjectField.ObjectTable.Name :"" :"",
-                                                    ObjectFieldCode = a.ObjectFieldCode,
-                                                    SectionNumber = a.SectionNumber,
+                                                    ScreenCode = a.Screen.Code,
+                                                    ObjectFieldObjectTableName = a.ObjectField.ObjectTable.Name,
+                                                    
                                                 }).ToList();
 
 
@@ -56,7 +55,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             foreach (ScreenFieldPM field in screenfields)
             {
                 ScreenFieldPM existedField = (from a in selectedScreenFields
-                                              where a.ScreenId == field.ScreenId && a.ObjectFieldCode == field.ObjectFieldCode
+                                              where a.ScreenId == field.ScreenId && a.ObjectFieldId == field.ObjectFieldId
                                               select a).FirstOrDefault();
 
                 if (existedField != null)
@@ -89,11 +88,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          Row = a.Row,
                                                          ScreenId = a.ScreenId,
                                                          Tenant = a.Tenant,
-                                                         ScreenCode = a.ScreenCode,
+                                                         ScreenCode = a.Screen.Code,
                                                          ObjectFieldObjectTableName = a.ObjectField.ObjectTable.Name,
-                                                         ObjectFieldCode = a.ObjectFieldCode,
-                                                         SectionNumber = a.SectionNumber,
-
+                                                          
                                                      };
             return screenfields;
         }

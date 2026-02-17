@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class BIReportPM {
-      
+
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-                    this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -104,39 +104,11 @@ export class BIReportPM {
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
        
 	 
-    private lastRunDate: Date;
-    public get LastRunDate() { return this.lastRunDate; }
-    public set LastRunDate(newValue: Date) { if (this.lastRunDate != newValue) { this.lastRunDate = newValue; this.MarkAsDirty("LastRunDate"); } }
-       
-	 
-    private lastRunByUserName: string;
-    public get LastRunByUserName() { return this.lastRunByUserName; }
-    public set LastRunByUserName(newValue: string) { if (this.lastRunByUserName != newValue) { this.lastRunByUserName = newValue; this.MarkAsDirty("LastRunByUserName"); } }
-       
-	 
-    private factTableName: string;
-    public get FactTableName() { return this.factTableName; }
-    public set FactTableName(newValue: string) { if (this.factTableName != newValue) { this.factTableName = newValue; this.MarkAsDirty("FactTableName"); } }
-       
-	 
-    private lastRunId: string;
-    public get LastRunId() { return this.lastRunId; }
-    public set LastRunId(newValue: string) { if (this.lastRunId != newValue) { this.lastRunId = newValue; this.MarkAsDirty("LastRunId"); } }
-       
-	 
-    private availableForScheduling: boolean;
-    public get AvailableForScheduling() { return this.availableForScheduling; }
-    public set AvailableForScheduling(newValue: boolean) { if (this.availableForScheduling != newValue) { this.availableForScheduling = newValue; this.MarkAsDirty("AvailableForScheduling"); } }
-       
-	 
 
     public OldEntityPM: BIReportPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -144,7 +116,6 @@ export class BIReportPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "BIReport");
            
         }
-       }
     }
 
     private MyClone: BIReportPM;

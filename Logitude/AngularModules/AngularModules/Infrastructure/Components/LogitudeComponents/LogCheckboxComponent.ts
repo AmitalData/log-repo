@@ -1,5 +1,5 @@
 declare var window: any;
-import {Directive, ElementRef, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy, ChangeDetectorRef} from '@angular/core';
+import {Directive, ElementRef, Renderer, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
@@ -15,26 +15,26 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
     template:
     `
     <table *ngIf="uiProperty.IsVisible">
-    <tr>
-        <td style="width: 16px;">
-            <div [attr.data-cy]="DataCy" class="CheckBox">
-                <input [attr.data-cy]="DataCy+'_input'"  [checked]="BoolValue" (change)="OnChecked($event)" [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" />
-                <label [attr.for]="ControlId">{{Text}}</label>
-            </div>
-        </td>
+        <tr>
+            <td style="width: 16px;">
+                <div class="CheckBox">
+                    <input [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" />
+                    <label [attr.for]="ControlId">{{Text}}</label>
+                </div>
+            </td>
 
-        <td style="width: 18px;" *ngIf="!HideColumns">                
-            <HelpIcon *ngIf="ShowHelp" [HideHeader]="true" [Text]="ObjectFieldHelp" [IconSize]="15"></HelpIcon>
-        </td>
+            <td style="width: 18px;" *ngIf="!HideColumns">                
+                <HelpIcon *ngIf="ShowHelp" [HideHeader]="true" [Text]="ObjectFieldHelp" [IconSize]="15"></HelpIcon>
+            </td>
 
-        <td>
-            <div></div>
-        </td>
-    </tr>
-</table>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
     `,
 
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'HideColumns', 'IsDisabled', 'Text','DataCy'],
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'HideColumns', 'IsDisabled','Text'],
 })
 
 export class LogCheckboxComponent implements OnInit, OnDestroy {
@@ -51,11 +51,9 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
     public uiProperty: UIProperty;
     CopyValueSubs: any;
     private show: boolean;
-     @Output() Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-     public DataCy: string;
-     private isDisabled: boolean;
-    @Input()  public get IsDisabled() {
+    private isDisabled: boolean;
+    public get IsDisabled() {
         return this.isDisabled;
     }
 
@@ -102,9 +100,9 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
             }
         }
         if (this.boolValue != newValue) {
-        
+            if (typeof (newValue) == 'boolean') {
                 this.boolValue = newValue;
-              
+                if (typeof (this.boolValue) == 'boolean') {
                     if (dataContextValue != this.boolValue) {
 
                         if (this.ObjectField && this.ObjectField.IsCustom) {
@@ -124,9 +122,9 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
                         }
                         this.ValueChanged.emit(this.boolValue);
                     }
-              
+                }
             }
-      
+        }
     }
 
     checked: boolean;
@@ -143,7 +141,7 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
    
     @Input() LogitudeForm: FormGroup;
     @Output() ValueChanged = new EventEmitter();
-    constructor(private cd: ChangeDetectorRef) {
+    constructor() {
         this.show = false;
     }
 
@@ -177,25 +175,13 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
         else {
             baseIdCombination = this.ObjectFieldName;
         }
-        
         if (this.CheckIfExists(baseIdCombination)) {
             this.counterId = ControlsIdCounter.GetNextControlIdCounter(baseIdCombination);
-            if (this.counterId != null) {
-                baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
-            }
-
-            setTimeout(() => { 
-                if (!this.CheckIfExists(baseIdCombination.replace('_' + this.counterId.toString(),''))) {
-                    baseIdCombination = baseIdCombination.replace('_' + this.counterId.toString(),'');
-                    this.SetControlIds(baseIdCombination);
-                    this.cd.detectChanges();
-                }
-            }, 1000) 
         }
 
-        // if (this.counterId != null) {
-        //     baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
-        // }
+        if (this.counterId != null) {
+            baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
+        }
 
         this.SetControlIds(baseIdCombination);
         //if (this.FocusOnMe) {// it means it is inside a grid.
@@ -220,8 +206,8 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
                 objectFieldAvailable = false;
             }
 
-            else if (this.ObjectField.HelpTextCodeCode != null) {                
-                this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
+            else if (this.ObjectField.HelpTextCodeId != null) {                
+                this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
 
                 if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                     if (this.ObjectFieldHelp.length > 1) {
@@ -241,16 +227,19 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
             
 
             this.uiProperty.UIPropertyChanged.subscribe(value => {
-                this.HandleUIPropertyChanged(value);
-            });
+                if (value instanceof UIPropertyArgs) {
+                    var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+                    var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
 
-            if(this.DataContext.EntityPM){
-                const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
-                pmuiProperty?.UIPropertyChanged.subscribe((value) => {
-                    this.HandleUIPropertyChanged(value);
-                    //this.DetectChanges();
-                });
-            }
+                    if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
+                        if (uiPropertyArgs.property == "IsEnabled") {
+                            var isEnabled = uiPropertyArgs.newValue;
+                            this.IsDisabled = !isEnabled;
+                            this.uiProperty.IsEnabled = isEnabled;
+                        }
+                    }
+                }
+            });
         }
 
 
@@ -273,21 +262,6 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
     }
 
 
-    private HandleUIPropertyChanged(value: any) {
-        if (value instanceof UIPropertyArgs) {
-            var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
-            var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-
-            if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
-                if (uiPropertyArgs.property == "IsEnabled") {
-                    var isEnabled = uiPropertyArgs.newValue;
-                    this.IsDisabled = !isEnabled;
-                    this.uiProperty.IsEnabled = isEnabled;
-                }
-            }
-        }
-    }
-
     onFocus() {
 
     }
@@ -302,8 +276,5 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
             this.CopyValueSubs = null;
         }
     }
-    OnChecked(event) {
-        this.Changed.emit(event);
-  }
 
 }

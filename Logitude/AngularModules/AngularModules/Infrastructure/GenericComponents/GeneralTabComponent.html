@@ -1,14 +1,14 @@
-
+﻿
 <div class="TabHolder">
     <table>
-        <tr *ngIf="DisplayTabNameInScreen" class="TabTitleRow">
-            <td>{{title}}</td>
+        <tr class="TabTitleRow">
+            <td>{{'General.O.General' | TextCodeTranslationPipe}}</td>
         </tr>
 
         <tr>
             <td>
                 <div class="FillParent">
-                    <div class="LocationDirective" ChildDirective></div>
+                    <div class="LocationDirective" #Child></div>
                 </div>
             </td>
         </tr>

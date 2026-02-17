@@ -37,9 +37,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ChartOfAccountsId, 
 	         Inactive, 
 	         ChartOfAccountsTypeCode, 
-	         ReconcileMethodCode,
-            ExchangeRateId,
-             ControlAccountId, 
+	         ReconcileMethodCode, 
+	         ControlAccountId, 
 	         AutomaticReconcileId, 
 	         PreviousEnglishName, 
 	         PreviousEnglishNameChangeDate, 
@@ -58,8 +57,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Category4Id, 
 	         Category5Id, 
 	         IsVATExempt, 
-	         CollectorId, 
-	         SalesmanUserId, 
 	         DeductionFileTypeId, 
 	         DeductionFileNumber, 
 	         AssessingOfficeCode, 
@@ -67,30 +64,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DeductionTypeId, 
 	         ConsolidationVat, 
 	         IsEquipmentVendor, 
-	         ExcludeFromDeductionReport, 
-	         CreatedByUserId, 
-	         UpdatedByUserId, 
-	         CreateDate, 
-	         UpdateDate, 
-	         AllowEditChequePayToName, 
-	         ActiveForInterest, 
-	         InterestCalculationStartDate, 
-	         ActiveForInterestCreditInvoice, 
-	         InterestCreditLimit,
-			 InterestOpenBalance, 
-	         NameForPrintingCheques, 
-	         Smallcashbook, 
-	         MinimumInterestInvoiceBilling, 
-	         ReportingAsAnotherDocument, 
-	         CreditAllotmentPercentage, 
-	         CardsDataId, 
-	         PostponedChequesCommission,
-             DateFormat,
-			 PaymentTerms,
-             ContactId,
-            MarkDate,
-            ForeignCurrencyInterest
-        }
+	         ExcludeFromDeductionReport,
+	      }
 
 
 	      public enum PMPropertyNames
@@ -118,10 +93,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ChartOfAccountsTypeName, 
 	         CurrencyCode, 
 	         ReconcileMethodCode, 
-	         ReconcileMethodName,
-            ExchangeRateId,
-            ExchangeRateName,
-			ControlAccountId, 
+	         ReconcileMethodName, 
+	         ControlAccountId, 
 	         ControlAccountName, 
 	         ControlAccountNumber, 
 	         ActiveStatusName, 
@@ -188,76 +161,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DeductionTypeEnglishName, 
 	         TotalOpenChequesInLocalCur, 
 	         TotFutureOpenChequesInLocalCur, 
-	         CardId, 
-	         CreatedByUserId, 
-	         UpdatedByUserId, 
-	         CreateDate, 
-	         UpdateDate, 
-	         CreatedByUserName, 
-	         UpdatedByUserName, 
-	         UpdatedByLocalName, 
-	         CardCode, 
-	         PartnerTypeId, 
-	         AllowEditChequePayToName, 
-	         ActiveForInterest, 
-	         InterestCalculationStartDate, 
-	         ActiveForInterestCreditInvoice, 
-	         InterestCreditLimit,
-			 InterestOpenBalance,
-			 NameForPrintingCheques, 
-	         Smallcashbook, 
-	         MinimumInterestInvoiceBilling, 
-	         IsSplitted, 
-	         SalesmanName, 
-	         CollectorName, 
-	         SplitCurrencyAccount, 
-	         ParentName, 
-	         ParentCurrencyId, 
-	         ReportingAsAnotherDocument, 
-	         CreditAllotmentPercentage, 
-	         RelatedGLAccount, 
-	         CardsDataId, 
-	         PaymentTermName, 
-	         Period0, 
-	         Period1, 
-	         Period2, 
-	         Period3, 
-	         Period4, 
-	         Period5, 
-	         PeriodPast, 
-	         PeriodFuture, 
-	         TotalOpenTransactions, 
-	         LastReconciledBy, 
-	         LastReconcileDate, 
-	         CreditLimit, 
-	         PaymentTerm, 
-	         PaymentTerms, 
-	         TotalOpenShipments, 
-	         Phone, 
-	         Salesman, 
-	         Collector, 
-	         FollowupDate, 
-	         FollowupNotes, 
-	         GLAccountFollowUpDate, 
-	         GLAccountFollowUpRemarks, 
-	         CalculatedAgingPeriod1, 
-	         CalculatedAgingPeriod2, 
-	         CalculatedAgingPeriod3, 
-	         InsuredCreditLimit, 
-	         PostponedChequesCommission, 
-	         BalanceInForeignCurrency, 
-	         ForeignBalanceInDue, 
-	         ChartOfAccountSecurityLevel,
-			 Obligo,
-			 CreditUsed,
-			InsuredCreditPercentage,
-            DateFormat,
-            ContactId,
-	         ContactName,
-            MarkDate,
-            CardCountryCode,
-            ForeignCurrencyInterest
-        }
+	         CardId,
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -309,11 +214,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.CurrencyId = entityPM.CurrencyId;
 			}
-
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentTerms))
-            {
-				entityPOCO.PaymentTerms = entityPM.PaymentTerms;
-			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevenueExpenseType))
             {
@@ -344,13 +244,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.ReconcileMethodCode = entityPM.ReconcileMethodCode;
 			}
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExchangeRateId))
-            {
-                entityPOCO.ExchangeRateId = entityPM.ExchangeRateId;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
             {
 				entityPOCO.ControlAccountId = entityPM.ControlAccountId;
 			}
@@ -445,16 +340,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.IsVATExempt = entityPM.IsVATExempt;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CollectorId))
-            {
-				entityPOCO.CollectorId = entityPM.CollectorId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SalesmanUserId))
-            {
-				entityPOCO.SalesmanUserId = entityPM.SalesmanUserId;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeductionFileTypeId))
             {
 				entityPOCO.DeductionFileTypeId = entityPM.DeductionFileTypeId;
@@ -495,117 +380,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.ExcludeFromDeductionReport = entityPM.ExcludeFromDeductionReport;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
-            {
-				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
-            {
-				entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
-            {
-				entityPOCO.CreateDate = entityPM.CreateDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
-            {
-				entityPOCO.UpdateDate = entityPM.UpdateDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditChequePayToName))
-            {
-				entityPOCO.AllowEditChequePayToName = entityPM.AllowEditChequePayToName;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveForInterest))
-            {
-				entityPOCO.ActiveForInterest = entityPM.ActiveForInterest;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCalculationStartDate))
-            {
-				entityPOCO.InterestCalculationStartDate = entityPM.InterestCalculationStartDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveForInterestCreditInvoice))
-            {
-				entityPOCO.ActiveForInterestCreditInvoice = entityPM.ActiveForInterestCreditInvoice;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCreditLimit))
-            {
-				entityPOCO.InterestCreditLimit = entityPM.InterestCreditLimit;
-			}
-
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestOpenBalance))
-			{
-				entityPOCO.InterestOpenBalance = entityPM.InterestOpenBalance;
-			}
-
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
-            {
-				entityPOCO.NameForPrintingCheques = entityPM.NameForPrintingCheques;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Smallcashbook))
-            {
-				entityPOCO.Smallcashbook = entityPM.Smallcashbook;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
-            {
-				entityPOCO.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportingAsAnotherDocument))
-            {
-				entityPOCO.ReportingAsAnotherDocument = entityPM.ReportingAsAnotherDocument;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAllotmentPercentage))
-            {
-				entityPOCO.CreditAllotmentPercentage = entityPM.CreditAllotmentPercentage;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CardsDataId))
-            {
-				entityPOCO.CardsDataId = entityPM.CardsDataId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PostponedChequesCommission))
-            {
-				entityPOCO.PostponedChequesCommission = entityPM.PostponedChequesCommission;
-			}
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
-            {
-                entityPOCO.DateFormat = entityPM.DateFormat;
-            }
-			
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
-            {
-                entityPOCO.DateFormat = entityPM.DateFormat;
-            }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
-            {
-                entityPOCO.DateFormat = entityPM.DateFormat;
-            }
-			
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
-            {
-                entityPOCO.ContactId = entityPM.ContactId;
-            }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MarkDate))
-            {
-                entityPOCO.MarkDate = entityPM.MarkDate;
-            }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignCurrencyInterest))
-            {
-                entityPOCO.ForeignCurrencyInterest = entityPM.ForeignCurrencyInterest;
-            }
-            BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
 		public void POCOToPM(GLAccountPM entityPM, GLAccount entityPOCO)
@@ -690,12 +465,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.ReconcileMethodCode = entityPOCO.ReconcileMethodCode;
             }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExchangeRateId))
-            {
-                entityPM.ExchangeRateId = entityPOCO.ExchangeRateId;
-            }
 
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.ControlAccountId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ControlAccountId))
             {
 					entityPM.ControlAccountId = entityPOCO.ControlAccountId;
             }
@@ -729,7 +500,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.PreviousNumber = entityPOCO.PreviousNumber;
             }
-		
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PreviousNumberChangeDate))
             {
 					entityPM.PreviousNumberChangeDate = entityPOCO.PreviousNumberChangeDate;
@@ -790,16 +561,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.IsVATExempt = entityPOCO.IsVATExempt;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CollectorId))
-            {
-					entityPM.CollectorId = entityPOCO.CollectorId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SalesmanUserId))
-            {
-					entityPM.SalesmanUserId = entityPOCO.SalesmanUserId;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeductionFileTypeId))
             {
 					entityPM.DeductionFileTypeId = entityPOCO.DeductionFileTypeId;
@@ -840,113 +601,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ExcludeFromDeductionReport = entityPOCO.ExcludeFromDeductionReport;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserId))
-            {
-					entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdatedByUserId))
-            {
-					entityPM.UpdatedByUserId = entityPOCO.UpdatedByUserId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
-            {
-					entityPM.CreateDate = entityPOCO.CreateDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateDate))
-            {
-					entityPM.UpdateDate = entityPOCO.UpdateDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AllowEditChequePayToName))
-            {
-					entityPM.AllowEditChequePayToName = entityPOCO.AllowEditChequePayToName;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActiveForInterest))
-            {
-					entityPM.ActiveForInterest = entityPOCO.ActiveForInterest;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterestCalculationStartDate))
-            {
-					entityPM.InterestCalculationStartDate = entityPOCO.InterestCalculationStartDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActiveForInterestCreditInvoice))
-            {
-					entityPM.ActiveForInterestCreditInvoice = entityPOCO.ActiveForInterestCreditInvoice;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterestCreditLimit))
-            {
-					entityPM.InterestCreditLimit = entityPOCO.InterestCreditLimit;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterestOpenBalance))
-			{
-				entityPM.InterestOpenBalance = entityPOCO.InterestOpenBalance;
-			}
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NameForPrintingCheques))
-            {
-					entityPM.NameForPrintingCheques = entityPOCO.NameForPrintingCheques;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Smallcashbook))
-            {
-					entityPM.Smallcashbook = entityPOCO.Smallcashbook;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MinimumInterestInvoiceBilling))
-            {
-					entityPM.MinimumInterestInvoiceBilling = entityPOCO.MinimumInterestInvoiceBilling;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReportingAsAnotherDocument))
-            {
-					entityPM.ReportingAsAnotherDocument = entityPOCO.ReportingAsAnotherDocument;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreditAllotmentPercentage))
-            {
-					entityPM.CreditAllotmentPercentage = entityPOCO.CreditAllotmentPercentage;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CardsDataId))
-            {
-					entityPM.CardsDataId = entityPOCO.CardsDataId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PostponedChequesCommission))
-            {
-					entityPM.PostponedChequesCommission = entityPOCO.PostponedChequesCommission;
-            }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.DateFormat))
-            {
-                entityPM.DateFormat = entityPOCO.DateFormat;
-            }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentTerms))
-            {
-                entityPM.PaymentTerms = entityPOCO.PaymentTerms;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContactId))
-            {
-					entityPM.ContactId = entityPOCO.ContactId;
-            }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.MarkDate))
-            {
-                entityPM.MarkDate = entityPOCO.MarkDate;
-            }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForeignCurrencyInterest))
-            {
-                entityPM.ForeignCurrencyInterest = entityPOCO.ForeignCurrencyInterest;
-            }
-
-        }
+		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
         {
@@ -1026,12 +681,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.ReconcileMethodCode = entityPM.ReconcileMethodCode;
             }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExchangeRateId))
-            {
-                oldEntityPM.ExchangeRateId = entityPM.ExchangeRateId;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
             {
                 oldEntityPM.ControlAccountId = entityPM.ControlAccountId;
             }
@@ -1126,16 +777,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.IsVATExempt = entityPM.IsVATExempt;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CollectorId))
-            {
-                oldEntityPM.CollectorId = entityPM.CollectorId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SalesmanUserId))
-            {
-                oldEntityPM.SalesmanUserId = entityPM.SalesmanUserId;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeductionFileTypeId))
             {
                 oldEntityPM.DeductionFileTypeId = entityPM.DeductionFileTypeId;
@@ -1176,113 +817,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.ExcludeFromDeductionReport = entityPM.ExcludeFromDeductionReport;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
-            {
-                oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
-            {
-                oldEntityPM.UpdatedByUserId = entityPM.UpdatedByUserId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
-            {
-                oldEntityPM.CreateDate = entityPM.CreateDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
-            {
-                oldEntityPM.UpdateDate = entityPM.UpdateDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditChequePayToName))
-            {
-                oldEntityPM.AllowEditChequePayToName = entityPM.AllowEditChequePayToName;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveForInterest))
-            {
-                oldEntityPM.ActiveForInterest = entityPM.ActiveForInterest;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCalculationStartDate))
-            {
-                oldEntityPM.InterestCalculationStartDate = entityPM.InterestCalculationStartDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveForInterestCreditInvoice))
-            {
-                oldEntityPM.ActiveForInterestCreditInvoice = entityPM.ActiveForInterestCreditInvoice;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCreditLimit))
-            {
-                oldEntityPM.InterestCreditLimit = entityPM.InterestCreditLimit;
-            }
-
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestOpenBalance))
-			{
-				oldEntityPM.InterestOpenBalance = entityPM.InterestOpenBalance;
-			}
-
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NameForPrintingCheques))
-            {
-                oldEntityPM.NameForPrintingCheques = entityPM.NameForPrintingCheques;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Smallcashbook))
-            {
-                oldEntityPM.Smallcashbook = entityPM.Smallcashbook;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
-            {
-                oldEntityPM.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportingAsAnotherDocument))
-            {
-                oldEntityPM.ReportingAsAnotherDocument = entityPM.ReportingAsAnotherDocument;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAllotmentPercentage))
-            {
-                oldEntityPM.CreditAllotmentPercentage = entityPM.CreditAllotmentPercentage;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CardsDataId))
-            {
-                oldEntityPM.CardsDataId = entityPM.CardsDataId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PostponedChequesCommission))
-            {
-                oldEntityPM.PostponedChequesCommission = entityPM.PostponedChequesCommission;
-            }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
-            {
-                oldEntityPM.DateFormat = entityPM.DateFormat;
-            }
-
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentTerms))
-            {
-                oldEntityPM.PaymentTerms = entityPM.PaymentTerms;
-            }
-			
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
-            {
-                oldEntityPM.ContactId = entityPM.ContactId;
-            }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MarkDate))
-            {
-                oldEntityPM.MarkDate = entityPM.MarkDate;
-            }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignCurrencyInterest))
-            {
-                oldEntityPM.ForeignCurrencyInterest = entityPM.ForeignCurrencyInterest;
-            }
-        }
+		}
 
 	    public void EncodeBase64NVARCHARFields(GLAccountPM entityPM)
         {
@@ -1306,14 +841,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Occupation)) //T4 find type == nText 
             {
                 entityPM.Occupation = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Occupation));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.NameForPrintingCheques)) //T4 find type == nText 
-            {
-                entityPM.NameForPrintingCheques = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NameForPrintingCheques));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.DateFormat)) //T4 find type == nText 
-            {
-                entityPM.DateFormat = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DateFormat));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

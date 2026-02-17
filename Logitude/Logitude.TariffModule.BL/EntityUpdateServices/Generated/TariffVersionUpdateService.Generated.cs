@@ -11,7 +11,7 @@ using Logitude.Server.Tools;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Web;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.EntityPMs;
@@ -22,7 +22,7 @@ using Logitude.TariffModule.Data;
 
 namespace Logitude.TariffModule.BL.EntityUpdateServices
 { 
-   public partial class TariffVersionUpdateService:EntityUpdateService<TariffVersion,TariffVersionPM,TariffPM>
+   public partial class TariffVersionUpdateService:EntityUpdateService<TariffVersion,TariffVersionPM,EntityPM>
    {
    
         TariffVersionRepository entityRepository;

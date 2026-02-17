@@ -15,7 +15,7 @@ import {EventTypeListService} from '../../../Services/StandardLists/EventTypeLis
 import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FollowupButton.html',
     selector: "FollowupButton",
     inputs: ['QuotePM', 'ShipmentPM', 'PickUpPM', 'DeliveryPM', 'LegType', 'IsEnabled', 'IsAutomatic'],
@@ -33,9 +33,7 @@ export class FollowupButton implements OnInit, OnDestroy {
     public FollowupLegType: string = null;
     public HasFollowup: boolean = false;
     public IsFeatureExists: boolean = false;
-    public IsResourceReady: boolean = false;
     public IsComponentVisible: boolean = false;
-    public IsComponentInitited: boolean = false;
     public IsAutomatic: boolean = false;
     public ExpDate: Date = null;
     public ActDate: Date = null;
@@ -44,10 +42,7 @@ export class FollowupButton implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.entityResourceService.getEntityResourceByTableName("FollowUp").subscribe((res: any) => {
-            this.IsResourceReady = true;
-
             this.Listen();
-            this.InitComponent();
         });
     }
 
@@ -64,83 +59,75 @@ export class FollowupButton implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.IsComponentInitited = true;
-        this.InitComponent();
-    }
+        if (!AppTool.IsNullOrEmpty(this.LegType)) {
+            this.FollowupLegType = this.LegType.replace(" ", "");
+            this.SetDateFieldsName();
+        }
 
-    InitComponent() {
-        if (this.IsResourceReady && this.IsComponentInitited) {
-            if (!AppTool.IsNullOrEmpty(this.LegType)) {
-                this.FollowupLegType = this.LegType.replace(" ", "");
-                this.SetDateFieldsName();
+        if (this.QuotePM) {
+            this.ObjectTableName = "Quote";
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "Quote.Followups")) {
+                this.IsFeatureExists = true;
             }
+        }
 
-            if (this.QuotePM) {
-                this.ObjectTableName = "Quote";
-                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "Quote.Followups")) {
-                    this.IsFeatureExists = true;
-                }
-            }
+        else if (this.ShipmentPM) {
+            this.ObjectTableName = "Shipment";
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "Shipment.Followups")) {
+                this.IsFeatureExists = true;
 
-            else if (this.ShipmentPM) {
-                this.ObjectTableName = "Shipment";
-                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "Shipment.Followups")) {
-                    this.IsFeatureExists = true;
-
-                    if (!this.PropertyChangedEvent) {
-                        if (this.PickUpPM) {
-                            this.PropertyChangedEvent = this.PickUpPM.PropertyChanged.subscribe(s => {
-                                if (s) {
-                                    if (s.PropertyName == this.ActDateName) {
-                                        this.SetComponent();
-                                        this.ActDate = DateTool.GetDateParts(this.PickUpPM[this.ActDateName]).DateObject;
-                                        if (this.ActDate != null) {
-                                            this.DeleteCurrentFollowup();
-                                        }
+                if (!this.PropertyChangedEvent) {
+                    if (this.PickUpPM) {
+                        this.PropertyChangedEvent = this.PickUpPM.PropertyChanged.subscribe(s => {
+                            if (s) {
+                                if (s.PropertyName == this.ActDateName) {
+                                    this.SetComponent();
+                                    this.ActDate = DateTool.GetDateParts(this.PickUpPM[this.ActDateName]).DateObject;
+                                    if (this.ActDate != null) {
+                                        this.DeleteCurrentFollowup();
                                     }
                                 }
-                            });
-                        }
+                            }
+                        });
+                    }
 
-                        else if (this.DeliveryPM) {
-                            this.PropertyChangedEvent = this.DeliveryPM.PropertyChanged.subscribe(s => {
-                                if (s) {
-                                    if (s.PropertyName == this.ActDateName) {
-                                        this.SetComponent();
-                                        this.ActDate = DateTool.GetDateParts(this.DeliveryPM[this.ActDateName]).DateObject;
-                                        if (this.ActDate != null) {
-                                            this.DeleteCurrentFollowup();
-                                        }
+                    else if (this.DeliveryPM) {
+                        this.PropertyChangedEvent = this.DeliveryPM.PropertyChanged.subscribe(s => {
+                            if (s) {
+                                if (s.PropertyName == this.ActDateName) {
+                                    this.SetComponent();
+                                    this.ActDate = DateTool.GetDateParts(this.DeliveryPM[this.ActDateName]).DateObject;
+                                    if (this.ActDate != null) {
+                                        this.DeleteCurrentFollowup();
                                     }
                                 }
-                            });
-                        }
+                            }
+                        });
+                    }
 
-                        else {
-                            this.PropertyChangedEvent = this.ShipmentPM.PropertyChanged.subscribe(s => {
-                                if (s) {
-                                    if (s.PropertyName == this.ActDateName) {
+                    else {
+                        this.PropertyChangedEvent = this.ShipmentPM.PropertyChanged.subscribe(s => {
+                            if (s) {
+                                if (s.PropertyName == this.ActDateName) {
 
-                                        this.SetComponent();
+                                    this.SetComponent();
 
-                                        this.ActDate = DateTool.GetDateParts(this.ShipmentPM[this.ActDateName]).DateObject;
-                                        if (this.ActDate != null) {
-                                            this.DeleteCurrentFollowup();
-                                        }
-                                        this.SetSource();
-                                        this.SetTooltip();
+                                    this.ActDate = DateTool.GetDateParts(this.ShipmentPM[this.ActDateName]).DateObject;
+                                    if (this.ActDate != null) {
+                                        this.DeleteCurrentFollowup();
                                     }
+                                    this.SetSource();
+                                    this.SetTooltip();
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 }
             }
-
-            this.SetComponent();
         }
-    }
 
+        this.SetComponent();
+    }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.FollowupsChangedEvent);
         AppTool.KillEventEmitter(this.PropertyChangedEvent);
@@ -233,8 +220,7 @@ export class FollowupButton implements OnInit, OnDestroy {
 
             }
             else if (legType.indexOf("CustomsClearanceDate") > -1 || legType.indexOf("FreightRelease") > -1 || legType.indexOf("TerminalAvailable") > -1
-                || legType.indexOf("MAWBOBLDate") > -1 || legType.indexOf("CutoffDate") > -1
-                || legType.indexOf("WarehouseLegCutOffDate") > -1 || legType.indexOf("WarehouseLegVGMCutOffDate") > -1 || legType.indexOf("AMSClosingDate") > -1) {
+                || legType.indexOf("MAWBOBLDate") > -1 || legType.indexOf("CutoffDate") > -1 ) {
                 if (this.ShipmentPM) {
                     myExpDate = DateTool.GetDateParts(this.ShipmentPM[this.ExpDateName]).DateObject;
                     myActDate = DateTool.GetDateParts(this.ShipmentPM[this.ActDateName]).DateObject;
@@ -262,7 +248,7 @@ export class FollowupButton implements OnInit, OnDestroy {
         else if (this.ShipmentPM) {
             switch (this.FollowupLegType) {
 
-                // Pre Carriage
+                // Pre
                 case "PreCarriageDeparture": {
                     this.ExpDateName = "PreCarriageETD";
                     this.ActDateName = "PreCarriageATD";
@@ -271,18 +257,6 @@ export class FollowupButton implements OnInit, OnDestroy {
                 case "PreCarriageArrival": {
                     this.ExpDateName = "PreCarriageETA";
                     this.ActDateName = "PreCarriageATA";
-                    break;
-                }
-
-                // Pre Forwarding
-                case "PreForwardingDeparture": {
-                    this.ExpDateName = "PreForwardingETD";
-                    this.ActDateName = "PreForwardingATD";
-                    break;
-                }
-                case "PreForwardingArrival": {
-                    this.ExpDateName = "PreForwardingETA";
-                    this.ActDateName = "PreForwardingATA";
                     break;
                 }
 
@@ -334,7 +308,7 @@ export class FollowupButton implements OnInit, OnDestroy {
                     break;
                 }
 
-                // On Carriage
+                // On
                 case "OnCarriageDeparture": {
                     this.ExpDateName = "OnCarriageETD";
                     this.ActDateName = "OnCarriageATD";
@@ -343,18 +317,6 @@ export class FollowupButton implements OnInit, OnDestroy {
                 case "OnCarriageArrival": {
                     this.ExpDateName = "OnCarriageETA";
                     this.ActDateName = "OnCarriageATA";
-                    break;
-                }
-
-                // On Forwarding
-                case "OnForwardingDeparture": {
-                    this.ExpDateName = "OnForwardingETD";
-                    this.ActDateName = "OnForwardingATD";
-                    break;
-                }
-                case "OnForwardingArrival": {
-                    this.ExpDateName = "OnForwardingETA";
-                    this.ActDateName = "OnForwardingATA";
                     break;
                 }
 
@@ -399,24 +361,6 @@ export class FollowupButton implements OnInit, OnDestroy {
                 case "CutoffDate": {
                     this.ExpDateName = "CutoffDate";
                     this.ActDateName = "CutoffDate";
-                    break;
-                }
-
-                case "WarehouseLegCutOffDate": {
-                    this.ExpDateName = "WarehouseLegCutOffDate";
-                    this.ActDateName = "WarehouseLegCutOffDate";
-                    break;
-                }
-
-                case "WarehouseLegVGMCutOffDate": {
-                    this.ExpDateName = "WarehouseLegVGMCutOffDate";
-                    this.ActDateName = "WarehouseLegVGMCutOffDate";
-                    break;
-                }
-
-                case "AMSClosingDate": {
-                    this.ExpDateName = "AMSClosingDate";
-                    this.ActDateName = "AMSClosingDate";
                     break;
                 }
 
@@ -585,23 +529,6 @@ export class FollowupButton implements OnInit, OnDestroy {
                                     dateTime = this.ShipmentPM.CutoffDate;
                                     break;
                                 }
-                            case "WarehouseLegCutOffDate": {
-                                eventTypeCode = "WCDU";
-                                dateTime = this.ShipmentPM.WarehouseLegCutOffDate;
-                                break;
-                            }
-
-                            case "WarehouseLegVGMCutOffDate": {
-                                eventTypeCode = "VGMU";
-                                dateTime = this.ShipmentPM.WarehouseLegVGMCutOffDate;
-                                break;
-                            }
-
-                            case "AMSClosingDate": {
-                                eventTypeCode = "AMSU";
-                                dateTime = this.ShipmentPM.AMSClosingDate;
-                                break;
-                            }
                         }
 
                         var myService = new EventTypeListService();

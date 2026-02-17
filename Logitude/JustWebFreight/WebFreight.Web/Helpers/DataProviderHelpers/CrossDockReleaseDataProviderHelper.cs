@@ -1,67 +1,44 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-
 using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.BL.EntityQueryServices;
-using Logitude.WarehouseLib.Data;
-using Logitude.WarehouseLib.Data.EntityPOCOs;
-using Logitude.WarehouseLib.Data.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Xml.Serialization;
-
+using WebFreight.Web.DataContracts;
 using WebFreight.Web.DataProviders;
 
 namespace WebFreight.Web.Helpers.DataProviderHelpers
 {
     public class CrossDockReleaseDataProviderHelper
     {
-        public WarehouseReleasePM warehouseReleasePM;
         public byte[] LoadDataToCrossDockReleaseDataProvider(string entityId, int tenant)
         {
             CrossDockReleaseDataProvider dataprovider = LoadCrossDockReleaseDataProvider(entityId, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
-
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, dataprovider);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                byte[] bytearray = memstream.ToArray();
-                return bytearray;
-            }
-        }
-
-        public byte[] LoadCrossDockReleaseDataProvider_GroupByEntry(string entityId, int tenant)
-        {
-            CrossDockReleaseDataProvider dataprovider = this.BuildCrossDockReleaseDataProvider_GroupByEntry(entityId, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, dataprovider);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                byte[] bytearray = memstream.ToArray();
-                return bytearray;
-            }
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
         }
 
         private CrossDockReleaseDataProvider LoadCrossDockReleaseDataProvider(string entityId, int tenant)
         {
             CrossDockReleaseDataProvider dataProvider = new CrossDockReleaseDataProvider();
             WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
-            warehouseReleasePM = warehouseReleaseQueryService.GetSingle(entityId, true, false);
+            WarehouseReleasePM warehouseReleasePM = warehouseReleaseQueryService.GetSingle(entityId, true, false);
 
             if (warehouseReleasePM != null)
             {
@@ -75,16 +52,12 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 dataProvider.IntenalNotes = warehouseReleasePM.Notes;
                 dataProvider.SpecialInstruction = warehouseReleasePM.SpecialInstruction;
                 dataProvider.ReleaseBy = warehouseReleasePM.ReleaseBy;
-                dataProvider.ReleaseNumber = warehouseReleasePM.ReleaseNumber;
-                dataProvider.NumberofDaysInTheWarehouse = GetNumberofDaysInTheWarehouse(warehouseReleasePM.ActualReleaseDate, warehouseReleasePM.Tenant);
-                dataProvider.Trucker = GetTruckerNameById(warehouseReleasePM.TruckerId, warehouseReleasePM.Tenant);
-                dataProvider.TruckNumber = warehouseReleasePM.TruckerReference;
                 
                 if (!string.IsNullOrEmpty(warehouseReleasePM.UpdatedByUserId))
                 {
                     ContactQuery contactQuery = new ContactQuery(warehouseReleasePM.Tenant);
                     dataProvider.UpdatedBy = contactQuery.GetContactNameId(warehouseReleasePM.UpdatedByUserId, warehouseReleasePM.Tenant);
-                }              
+                }
 
                 if (!string.IsNullOrEmpty(warehouseReleasePM.WarehouseId))
                 {
@@ -94,7 +67,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     {
                         dataProvider.WarehouseCode = card.Code;
                         dataProvider.WarehouseName = card.EnglishName;
-                        dataProvider.TerminalCode = card.FirmCode;
                     }
 
                     AddressQuery addressQuery = new AddressQuery(tenant);
@@ -115,11 +87,10 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 if (warehouseReleasePM.WarehouseReleasePackages != null && warehouseReleasePM.WarehouseReleasePackages.Count > 0)
                 {
                     dataProvider.ReleasePackages = FullPackage(warehouseReleasePM);
-                    dataProvider = FillEntryDetails(warehouseReleasePM, dataProvider);
                 }
 
                 dataProvider.TenantLogo = DataProviders.General.GetLogo(tenant);
-                
+
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
 
@@ -136,95 +107,53 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
                 if (!string.IsNullOrEmpty(warehouseReleasePM.ShipmentId))
                 {
-                    CrossDockReleaseShipmentService crossDockReleaseShipmentService = new CrossDockReleaseShipmentService();
-                    dataProvider = crossDockReleaseShipmentService.FullCrossDockReleaseProviderFromShipment(warehouseReleasePM.ShipmentId, dataProvider, warehouseReleasePM.Tenant);
-                }
-            }
-
-            return dataProvider;
-        }
-
-        private  string GetTruckerNameById(string id , int tenant)
-        {
-            string result = string.Empty;
-            if (!string.IsNullOrEmpty(id))
-            {
-                CardQuery cardQuery = new CardQuery(tenant);
-                CardList card = cardQuery.GetCardListForWareHouseById(id, tenant);
-                if (card != null)
-                {
-                    result = card.EnglishName;
-
-                }
-            }
-            return result;
-        }
-
-        private int GetNumberofDaysInTheWarehouse(DateTime? actualReleaseDate , int tenant )
-        {
-            int numberofDaysInTheWarehouse = 0;
-            if (actualReleaseDate != null)
-            {
-                numberofDaysInTheWarehouse = GetDaysNmuberBetweenTwoDates(TenantServerConfigration.GetCurrentDateTime(tenant), (DateTime)actualReleaseDate);
-            }
-            return numberofDaysInTheWarehouse;
-
-        }
-
-        private CrossDockReleaseDataProvider FillEntryDetails(WarehouseReleasePM warehouseReleasePM, CrossDockReleaseDataProvider dataProvider)
-        {
-            WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseReleasePM.Tenant);
-            WarehouseEntryPackageRepository warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(warehouseReleasePM.Tenant);
-            WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository = new WarehouseEntryPackagesReleaseRepository(warehouseReleasePM.Tenant);
-
-            List<string> releasePackagesIds = new List<string>();
-            foreach (WarehouseReleasePackagePM package in warehouseReleasePM.WarehouseReleasePackages)
-            {
-                releasePackagesIds.Add(package.Id);
-            }
-
-            List<WarehouseEntryPackagesRelease> allWarehouseEntryList = warehouseEntryPackagesReleaseRepository.GetWarehouseEntryPackagesReleaseByReleasePackageIds(releasePackagesIds, warehouseReleasePM.Tenant);
-            List<string> warehouseEntryPackagesIds = allWarehouseEntryList.Select(e => e.EntryPackageId).ToList();
-            List<string> entryPackagesIds = warehouseEntryPackageRepository.GetWareHouseEntriesIdsByPackagesIds(warehouseEntryPackagesIds, warehouseReleasePM.Tenant);
-            List<WarehouseEntry> allWarehouseEntries = warehouseEntryRepository.GetWarehouseEntriesFromIdList(entryPackagesIds, warehouseReleasePM.Tenant);
-
-            foreach (WarehouseEntry warehouseEntry in allWarehouseEntries)
-            {
-                if (warehouseEntry.ActualEntryDate != null)
-                {
-                    dataProvider.ActualEntryDate += warehouseEntry.ActualEntryDate + ",";
-                }
-                if (!string.IsNullOrEmpty(warehouseEntry.TruckerReference))
-                {
-                    dataProvider.EntryTruckerReference += warehouseEntry.TruckerReference + ",";
-                }
-                if (!string.IsNullOrEmpty(warehouseEntry.TruckerId))
-                {
-                    Card truckerCard = CardRepository.GetSingleCard(warehouseEntry.TruckerId, warehouseEntry.Tenant, true);
-                    if (truckerCard != null)
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                    ShipmentDataView shipmentDataView = shipmentRepository.GetSingleShipmentDataView(warehouseReleasePM.ShipmentId, tenant);
+                    if (shipmentDataView != null)
                     {
-                        dataProvider.EntryTruckerName += truckerCard.EnglishName + ",";
+                        if (shipmentDataView.DirectionId == "D" && shipmentDataView.TransportModeId == "I")
+                        {
+                            dataProvider.Origin = shipmentDataView.MainCarriageFromCity;
+                            dataProvider.Destination = shipmentDataView.MainCarriageToCity;
+                        }
+
+                        else
+                        {
+                            dataProvider.Origin = shipmentDataView.FromPortName;
+                            dataProvider.Destination = shipmentDataView.MainCarriageFinalDestinationPortName;
+                        }
+
+                        dataProvider.MainCarriageCarrierName = shipmentDataView.MainCarriageCarrierName;
+                        dataProvider.ShipperName = shipmentDataView.ShipperName;
+                        dataProvider.ConsigneeName = shipmentDataView.ConsigneeName;
+                        dataProvider.ShipmentNumber = shipmentDataView.ShipmentNumber;
+                        if (!string.IsNullOrEmpty(shipmentDataView.ShipperId))
+                        {
+                            AddressRepository addressRepository = new AddressRepository(commonContext);
+                            Address address = addressRepository.GetMainAddressByCardId(shipmentDataView.ShipperId, tenant);
+                            if (address != null)
+                            {
+                                dataProvider.ShipperAddress = DataProviders.General.GetAddress(address);
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(shipmentDataView.ConsigneeId))
+                        {
+                            AddressRepository addressRepository = new AddressRepository(commonContext);
+                            Address address = addressRepository.GetMainAddressByCardId(shipmentDataView.ConsigneeId, tenant);
+                            if (address != null)
+                            {
+                                dataProvider.ConsigneeAddress = DataProviders.General.GetAddress(address);
+                            }
+                        }
                     }
                 }
             }
-            
-            if (!string.IsNullOrEmpty(dataProvider.EntryTruckerReference))
-            {
-                dataProvider.EntryTruckerReference = dataProvider.EntryTruckerReference.Substring(0, dataProvider.EntryTruckerReference.Length - 1);
-            }
-            if (!string.IsNullOrEmpty(dataProvider.EntryTruckerName))
-            {
-                dataProvider.EntryTruckerName = dataProvider.EntryTruckerName.Substring(0, dataProvider.EntryTruckerName.Length - 1);
-            }
-            if (!string.IsNullOrEmpty(dataProvider.ActualEntryDate))
-            {
-                dataProvider.ActualEntryDate = dataProvider.ActualEntryDate.Substring(0, dataProvider.ActualEntryDate.Length - 1);
-            }
-            
+
             return dataProvider;
         }
 
-            private List<ReleasePackage> FullPackage(WarehouseReleasePM warehouseReleasePM)
+        private List<ReleasePackage> FullPackage(WarehouseReleasePM warehouseReleasePM)
         {
             List<ReleasePackage> result = new List<ReleasePackage>();
             foreach (WarehouseReleasePackagePM package in warehouseReleasePM.WarehouseReleasePackages)
@@ -243,7 +172,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 item.Seal = package.Seal;
                 item.VolumetricWeight = package.VolumetricWeight;
                 item.VolumetricWeightUnit = warehouseReleasePM.ChargeableWeightUnitCode;
-                //item.InStock = package.st
 
                 #region Car Details
                 item.Make = package.Make;
@@ -268,241 +196,5 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
             return result;
         }
-
-        //New Document CRR
-        private Shipment shipment;
-        private ShipmentMasterData masterData;
-        private CrossDockReleaseDataProvider dataProvider;
-        private CrossDockReleaseDataProvider BuildCrossDockReleaseDataProvider_GroupByEntry(string entityId, int tenant)
-        {
-            dataProvider = new CrossDockReleaseDataProvider();
-            dataProvider.ReleasePackagesGroupList = new List<ReleasePackageGroup>();
-
-            IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-            WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(warehouseContext);
-            WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository = new WarehouseEntryPackagesReleaseRepository(warehouseContext);
-            WarehouseEntryPackageRepository warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(warehouseContext);
-            WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
-            PortRepository portRepository = new PortRepository(commonContext);
-            AddressRepository addressRepository = new AddressRepository(commonContext);
-
-            WarehouseReleasePM warehouseReleasePM = warehouseReleaseQueryService.GetSingle(entityId, true, false);
-            if (warehouseReleasePM != null)
-            {
-                dataProvider.IntenalNotes = warehouseReleasePM.Notes;
-                dataProvider.ReleaseNumber = warehouseReleasePM.ReleaseNumber;
-                dataProvider.DimensionsHeader = "(L - W - H) (" + warehouseReleasePM.DimensionsUnitCode + ")";
-                dataProvider.VolumetricWeightUnit = warehouseReleasePM.ChargeableWeightUnitCode;
-                dataProvider.VolumeUnit = warehouseReleasePM.VolumeUnitCode;
-                dataProvider.WeightUnit = warehouseReleasePM.GrossWeightUnitCode;
-
-                //ReleaseReference
-                string refrence = warehouseReleasePM.CustomerRef1;
-                if (!string.IsNullOrEmpty(warehouseReleasePM.CustomerRef2))
-                {
-                    if (string.IsNullOrEmpty(refrence))
-                    {
-                        refrence = warehouseReleasePM.CustomerRef2;
-                    }
-
-                    else
-                    {
-                        refrence = refrence + ", " + warehouseReleasePM.CustomerRef2;
-                    }
-                }
-
-                dataProvider.ReleaseReference = refrence;
-
-                //ReleaseDate
-                if (warehouseReleasePM.ActualReleaseDate != null)
-                {
-                    dataProvider.ReleaseDate = warehouseReleasePM.ActualReleaseDate;
-                    dataProvider.ReleaseDateIndicator = "(Actual)";
-                }
-
-                else if (warehouseReleasePM.ExpectedReleaseDate != null)
-                {
-                    dataProvider.ReleaseDate = warehouseReleasePM.ExpectedReleaseDate;
-                    dataProvider.ReleaseDateIndicator = "(Expected)";
-                }
-
-                //Destination
-                string destinationCountryName = "";
-                switch (warehouseReleasePM.ToTypeCode)
-                {
-                    case "PORT":
-                        {
-                            Port toPort = portRepository.GetSinglePort(tenant, warehouseReleasePM.ToPortId);
-                            if (toPort != null)
-                            {
-                                Country country = CountryRepository.GetSingleCountry(toPort.CountryId, tenant, true);
-                                if (country != null)
-                                {
-                                    destinationCountryName = country.EnglishName;
-                                }
-                            }
-
-                            break;
-                        }
-
-                    case "PART":
-                        {
-                            Address toAddress = addressRepository.GetSingleAddress(warehouseReleasePM.ToAddressId, tenant);
-                            if (toAddress != null)
-                            {
-                                Country country = CountryRepository.GetSingleCountry(toAddress.CountryId, tenant, true);
-                                if (country != null)
-                                {
-                                    destinationCountryName = country.EnglishName;
-                                }
-                            }
-
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            Country country = CountryRepository.GetSingleCountry(warehouseReleasePM.ToAddressCountryId, tenant, true);
-                            if (country != null)
-                            {
-                                destinationCountryName = country.EnglishName;
-                            }
-
-                            break;
-                        }
-                }
-
-                dataProvider.DestinationCountryName = destinationCountryName;
-
-                //Partners
-                if (!string.IsNullOrEmpty(warehouseReleasePM.ShipmentId))
-                {
-                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                    shipment = shipmentRepository.GetSingleShipment(warehouseReleasePM.ShipmentId, tenant);
-                    if (shipment != null)
-                    {
-                        dataProvider.ShipperName = shipment.ShipperName;
-                        dataProvider.ConsigneeName = shipment.ConsigneeName;
-
-                        if (!string.IsNullOrEmpty(shipment.MasterShipmentDataId))
-                        {
-                            masterData = (from a in shipmentRepository.context.ShipmentMasterDatas
-                                          where a.Id == shipment.MasterShipmentDataId
-                                          select a).FirstOrDefault();
-
-                            if (masterData != null)
-                            {
-                                dataProvider.ImportManifest = masterData.ImportManifest;
-                                dataProvider.MasterImportManifest = masterData.ImportManifest;
-                            }
-                        }
-
-                        SetMasterShipmentNumberField();
-                    }
-                }
-
-                //Packages
-                List<string> releasePackagesIds = warehouseReleasePM.WarehouseReleasePackages.Select(s => s.Id).ToList();
-                List<WarehouseEntryPackagesRelease> entryPackagesReleases = warehouseEntryPackagesReleaseRepository.GetWarehouseEntryPackagesReleaseByReleasePackageIds(releasePackagesIds, tenant);
-
-                List<ReleasePackage> tempList = new List<ReleasePackage>();
-                foreach (WarehouseReleasePackagePM releasePackage in warehouseReleasePM.WarehouseReleasePackages)
-                {
-                    ReleasePackage item = new ReleasePackage();
-                    item.ContainerNumber = releasePackage.ContainerNumber;
-                    item.DescriptionOfGoods = releasePackage.Description;
-                    item.Dimensions = releasePackage.Dimensions;
-                    item.Harmonize = releasePackage.Harmonize;
-                    item.PackageType = releasePackage.PackageTypeName;
-                    item.Quantity = releasePackage.Quantity;
-                    item.Volume = releasePackage.Volume;
-                    item.VolumeUnit = warehouseReleasePM.VolumeUnitCode;
-                    item.Weight = releasePackage.Weight;
-                    item.WeightUnit = warehouseReleasePM.GrossWeightUnitCode;
-                    item.Seal = releasePackage.Seal;
-                    item.VolumetricWeight = releasePackage.VolumetricWeight;
-                    item.VolumetricWeightUnit = warehouseReleasePM.ChargeableWeightUnitCode;
-                    WarehouseEntryPackagesRelease entryPackageRelease = entryPackagesReleases.Where(d => d.ReleasePackageId == releasePackage.Id).FirstOrDefault();
-                    if (entryPackageRelease != null)
-                    {
-                        WarehouseEntryPackage entryPackage = warehouseEntryPackageRepository.GetSingle(entryPackageRelease.EntryPackageId, tenant);
-
-                        if (entryPackage != null)
-                        {
-                            item.InStock = entryPackage.Instock;
-
-                            WarehouseEntry warehouseEntry = warehouseEntryRepository.GetSingle(entryPackage.WarehouseEntryId, tenant);
-                            if (warehouseEntry != null)
-                            {
-                                item.EntryId = warehouseEntry.Id;
-                                item.EntryNumber = warehouseEntry.EntryNumber;
-                            }
-                        }
-                    }
-
-                    #region Car Details
-                    item.Make = releasePackage.Make;
-                    item.Model = releasePackage.Model;
-                    item.Year = releasePackage.Year;
-                    item.Color = releasePackage.Color;
-                    item.ChassisNumber = releasePackage.ChassisNumber;
-                    item.RegistrationNumber = releasePackage.RegistrationNumber;
-
-                    if (!string.IsNullOrEmpty(releasePackage.CountryId))
-                    {
-                        Country country = CountryRepository.GetSingleCountry(releasePackage.CountryId, warehouseReleasePM.Tenant, true);
-                        if (country != null)
-                        {
-                            item.CountryName = country.EnglishName;
-                        }
-                    }
-                    #endregion
-
-                    tempList.Add(item);
-                }
-
-                tempList = tempList.OrderBy(or => or.EntryNumber).ToList();
-
-                List<ReleasePackageGroup> finalResults = (from p in tempList
-                                                          group p by new { p.EntryId, p.EntryNumber } into g
-                                                          select new ReleasePackageGroup()
-                                                          {
-                                                              EntryId = g.Key.EntryId,
-                                                              EntryNumber = g.Key.EntryNumber,
-                                                              ReleasePackagesList = g.ToList(),
-                                                          }).ToList();
-
-                dataProvider.ReleasePackagesGroupList = finalResults.OrderBy(d => d.EntryNumber).ToList();
-            }
-
-            return dataProvider;
-        }
-
-        public int GetDaysNmuberBetweenTwoDates(DateTime createdate, DateTime actualEntryDate)
-        {
-            TimeSpan span = createdate.Subtract(actualEntryDate);
-            return (int)span.TotalDays;
-
-        }
-        private void SetMasterShipmentNumberField()
-        {
-            if (shipment.ShipmentLevelCode == "C")
-            {
-                dataProvider.MasterShipmentNumber = shipment.ShipmentNumber;
-            }
-
-            else if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
-            {
-                SetMasterShipmentNumberForConnectedHouse();
-            }
-        }
-        private void SetMasterShipmentNumberForConnectedHouse()
-        {
-            if (masterData != null)
-            {
-                dataProvider.MasterShipmentNumber = masterData.MasterShipmentNumber;
-            }
-        }
-    } 
+    }
 }

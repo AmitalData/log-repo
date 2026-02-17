@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .AdvancedSearchHeadNormal {
         background: white;
@@ -41,7 +41,7 @@
         <td>
             <div class="TabHolder">
                 <table>
-                    <tr [attr.data-cy]="'TabTitleRow'" class="TabTitleRow">
+                    <tr class="TabTitleRow">
                         <td>
                             <table>
                                 <tr>
@@ -56,7 +56,7 @@
                                     </td>
 
                                     <td style="width: 1px;">
-                                        <button class="Button" id="{{ 'NewHouseBtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" (click)="NewShipmentClicked()">New house</button>
+                                        <button class="Button" id="{{ 'NewHouseBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" (click)="NewShipmentClicked()">New house</button>
                                     </td>
 
                                     <td style="width: 5px;">
@@ -246,6 +246,7 @@
                                                         <td>
                                                             <LogLov [ObjectFieldName]="'BranchId'"
                                                                     [SelectedValue]="BranchId"
+                                                                    [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext"
                                                                     [LookUpTableName]="'Branch'"
                                                                     [NoObjectField]="true">
@@ -307,14 +308,14 @@
                                                 <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'Shipment.CH.ShipmentNumberListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'Shipment.CH.ShipmentTypeListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'Shipment.CH.CreateDateTimeListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'Shipment.CH.StatusNameListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'Shipment.CH.BranchNameListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.HouseListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.CustomerNameListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 50px; min-width: 50px; max-width: 50px;">{{'Shipment.CH.FromListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 50px; min-width: 50px; max-width: 50px;">{{'Shipment.CH.ToListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'Shipment.CH.GrossWeightListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 115px; min-width: 115px; max-width: 115px;">{{'Shipment.F.VolumetricWeight' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'Shipment.CH.StatusNameLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'Shipment.CH.BranchName' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.HAWBFBLBLListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.CustomerName' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 50px; min-width: 50px; max-width: 50px;">{{'Shipment.CH.FromPortListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 50px; min-width: 50px; max-width: 50px;">{{'Shipment.CH.ToPortListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'Shipment.CH.GrossWeightLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 115px; min-width: 115px; max-width: 115px;">{{'Shipment.CH.VolumeInKGLable' | TextCodeTranslationPipe}}</td>
                                                 <!--<td style="width: 120px; min-width: 120px; max-width: 120px;">{{'Shipment.CH.MasterShipmentNumberListLable' | TextCodeTranslationPipe}}</td>-->
                                                 <td style="width: 120px; min-width: 120px; max-width: 120px;">QTY</td>
                                                 <td class="LastChild" [style.min-width.px]="CellNotesWidth">
@@ -354,7 +355,7 @@
                                                                         <td style="width: 120px;">Connected</td>
 
                                                                         <td style="width: 100px;">
-                                                                            <button class="Button" id="DisconnectALL" [disabled]="!IsEditingEnabled" (click)="DisconnectAllClicked()">Disconnect All</button>
+                                                                            <button class="Button" [disabled]="!IsEditingEnabled" (click)="DisconnectAllClicked()">Disconnect All</button>
                                                                         </td>
 
                                                                         <td>
@@ -404,7 +405,7 @@
                                                             <!-- Buttons -->
                                                             <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
                                                                 <div>
-                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" [IsEnabled]="IsEditingEnabled" attr.data-cy="{{'CheckBox_' + item.House}}"></CheckBox>
+                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
                                                                 </div>
                                                             </td>
 
@@ -414,7 +415,7 @@
 
                                                             <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">{{item.ShipmentType}}</td>
                                                             <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">{{item.CreateDateTime | DateTimeToDatePipe}}</td>
-                                                            <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;" [ngStyle]="{color: item.ExactStatusName | StringToColorPipe}">{{item.StatusName}}</td>
+                                                            <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;" [ngStyle]="{color: item.StatusName | StringToColorPipe}">{{item.StatusName}}</td>
                                                             <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">{{item.BranchName}}</td>
                                                             <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.House}}</td>
                                                             <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.CustomerName}}</td>
@@ -456,7 +457,7 @@
                                                                         <td style="width: 120px;">Not Connected</td>
 
                                                                         <td style="width: 100px;">
-                                                                            <button class="Button" id="ConnectAll" [disabled]="!IsEditingEnabled" (click)="ConnectAllClicked()">Connect All</button>
+                                                                            <button class="Button" [disabled]="!IsEditingEnabled" (click)="ConnectAllClicked()">Connect All</button>
                                                                         </td>
 
                                                                         <td>
@@ -506,7 +507,7 @@
                                                             <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
                                                                 <img src="./Images/Info.png" class="CenterCenter" title="Not Matched" *ngIf="!item.IsMatched" />
                                                                 <div>
-                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" *ngIf="item.IsMatched" [IsEnabled]="IsEditingEnabled" attr.data-cy="{{'CheckBox_' + item.House}}"></CheckBox>
+                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" *ngIf="item.IsMatched" [IsEnabled]="IsEditingEnabled"></CheckBox>
                                                                 </div>
                                                             </td>
 
@@ -516,7 +517,7 @@
 
                                                             <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">{{item.ShipmentType}}</td>
                                                             <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">{{item.CreateDateTime | DateTimeToDatePipe}}</td>
-                                                            <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;" [ngStyle]="{color: item.ExactStatusName | StringToColorPipe}">{{item.StatusName}}</td>
+                                                            <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;" [ngStyle]="{color: item.StatusName | StringToColorPipe}">{{item.StatusName}}</td>
                                                             <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">{{item.BranchName}}</td>
                                                             <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.House}}</td>
                                                             <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.CustomerName}}</td>
@@ -524,6 +525,7 @@
                                                             <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">{{item.ToPort}}</td>
                                                             <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; text-align: right;">{{item.GrossWeight | NumbersPipe:'N2'}}</td>
                                                             <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px; text-align: right;">{{item.VolumetricWeight | NumbersPipe:'N2'}}</td>
+                                                            <!--<td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">{{item.JobNumber}}</td>-->
                                                             <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">{{item.Quantity}}</td>
                                                             <td class="LastChild" [style.min-width.px]="CellNotesWidth">
                                                                 <div style="font-size: 11px;">{{item.CellNotes}}</div>
@@ -569,7 +571,7 @@
                                 <tr>
                                     <td class="TabSummaryNumber" style="text-align: center;">
                                         {{SummaryGrossWeight | NumbersPipe:'N2'}}
-                                        <b class="Label">{{SummaryGrossWeightUnitCode}}</b>
+                                        <b class="Label">KG</b>
                                     </td>
                                 </tr>
                             </table>
@@ -588,7 +590,7 @@
                                 <tr>
                                     <td class="TabSummaryNumber" style="text-align: center;">
                                         {{SummaryVolumetricWeight | NumbersPipe:'N2'}}
-                                        <b class="Label">{{SummaryVolumetricWeightUnitCode}}</b>
+                                        <b class="Label">KG</b>
                                     </td>
                                 </tr>
                             </table>
@@ -607,7 +609,7 @@
                                 <tr>
                                     <td class="TabSummaryNumber" style="text-align: center;">
                                         {{SummaryChargeableWeight | NumbersPipe:'N2'}}
-                                        <b class="Label">{{SummaryChargeableWeightUnitCode}}</b>
+                                        <b class="Label">KG</b>
                                     </td>
                                 </tr>
                             </table>

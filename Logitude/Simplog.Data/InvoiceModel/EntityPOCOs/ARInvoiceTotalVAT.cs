@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
 {
@@ -20,12 +20,11 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public double? ProfitVatableAmount { get; set; }
         public string ExternalVATCard { get; set; }
         public string ExternalTAXItemId {get; set;}
+
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
 
         [ForeignKey("ARInvoiceId")]
         public virtual ARInvoice ARInvoice { get; set; }
-
-        public bool IsRegionalTax { get; set; }
     }
 }

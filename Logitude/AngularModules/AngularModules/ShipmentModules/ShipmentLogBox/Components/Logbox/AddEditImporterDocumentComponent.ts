@@ -1,9 +1,10 @@
 declare var window: any;
-import {Component, OnInit} from '@angular/core';
+import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 import {DocumentsFilingPM} from '../../../../Common/EntityPMs/DocumentsFilingPM';
 import {DocumentTypeList} from '../../../../Common/EntityLists/DocumentTypeList';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-import {UIProperties} from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties, UIProperty} from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {Http} from '@angular/http';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {FormGroup, FormBuilder} from '@angular/forms';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -14,6 +15,7 @@ import {DocumentsFilingPMService} from '../../../../Common/Services/StandardPMs/
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
+import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 import {GeneralEmailSender} from '../../../../Infrastructure/Helpers/GeneralEmailSender';
 import {AttachmentsList} from '../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
 import {DocumentTypeMetaDataExtendedService} from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
@@ -27,17 +29,16 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {LogBoxSignatureClientService} from '../../../../Shipment/Services/Others/LogBoxSignatureClientService';
-declare var attachmentUploader;
+declare var attachmentUploader, OpenFileUploader, ResultAsArray: any;
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {CommonDomainService} from'../../../../Common/Services/CommonDomainService'; 
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     selector: 'AddEditImporterDocument',
-    
+    moduleId: module.id,
     templateUrl: './AddEditImporterDocumentComponent.html',
-    providers: [ServiceArgs, DocumentsFilingExtendedPMService],
+    providers: [Http, ServiceArgs, DocumentsFilingExtendedPMService],
 })
 
 export class AddEditImporterDocumentComponent implements OnInit {
@@ -64,11 +65,6 @@ export class AddEditImporterDocumentComponent implements OnInit {
     TopTypes: any[];
     public IFrameURI: string = "";
     private CurrentSession = SessionLocator.SelectedSession;
-    public AgentLabelClass = {
-        "ShortName": true,
-        "LongName": false 
-    }
-
     constructor(Fb: FormBuilder) {
         this._documentExtendedService = new DocumentsFilingExtendedPMService();
         this._documentsFilingPMService = new DocumentsFilingPMService();
@@ -86,23 +82,16 @@ export class AddEditImporterDocumentComponent implements OnInit {
     IsPrivateLabel: boolean = false;
     ngOnInit() {
         if (SessionLocator.PrivateLableSettings) {
-            this.AgentLable = SessionLocator.PrivateLableSettings.PrivateLabelShortName; 
+            this.AgentLable = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
             this.IsPrivateLabel = true;
-            this.setAgentLabelClass(this.AgentLable);
         }
-
-
-
-        if (!this.ShareAsDefault) {
-            this.ShareAsDefault = SessionLocator.TenantPM.DocumentShareAsDefault;
-        }
-
+        this.ShareAsDefault = SessionLocator.TenantPM.DocumentShareAsDefault;
         this.OrigionalShareAsDefault = SessionLocator.TenantPM.DocumentShareAsDefault;
         this.UIProperties.SetEnabled("DocumentTypeId", "DocumentsFiling", true);
         if (AppTool.IsNullOrEmpty(this.EntityPm.Description)) {
             this.UIProperties.SetRequired("Description", "DocumentsFiling", true);
         }
-        this.CurrentSession.SessionEvent.subscribe((res:any) => {
+        this.CurrentSession.SessionEvent.subscribe(res => {
             if (res.Name == "LogBoxUploader") {
                 this.IsUploadCanceled = res.IsUploadCanceled;
                 this.IsUploadDone = res.IsUploadDone;
@@ -128,7 +117,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
         this.TopTypes = [];
         var objectTablePm = window.ObjectTables.filter(d => d.Name == "Shipment")[0];
-        this._DocumentTypeListService.getTop5DocumentTypesPMsByObjectTableAndTenant(SessionLocator.Tenant, objectTablePm.Id).subscribe((res:any) => {
+        this._DocumentTypeListService.getTop5DocumentTypesPMsByObjectTableAndTenant(SessionLocator.Tenant, objectTablePm.Id).subscribe(res => {
             var MyType = "";
             res.Result.forEach((item) => {
                 MyType = item.Name.trim();
@@ -172,20 +161,11 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
         });
     }
-    private setAgentLabelClass(agentName: string) {
-        if (agentName.length > 10) {
-            this.AgentLabelClass.ShortName = false;
-            this.AgentLabelClass.LongName = true;
-        }
-    }
-
-
     ShowTypes: boolean = false;
     SetWindowArgs(args: any) {
         this.ShipmentList = args.SelectedShipment;
         this.IsNewDocument = args.IsNewDocument;
-        this.ShareAsDefault = args.ShareAsDefault;
-
+      
         if (args.EntityPm) {
             this.EntityPm = args.EntityPm;
             if (this.IsNewDocument == false && this.EntityPm.HasFile == true && this.EntityPm.FileExtension.toLowerCase() == "pdf") {
@@ -236,23 +216,17 @@ export class AddEditImporterDocumentComponent implements OnInit {
         return this.description;
     }
     public set Description(newValue: string) {
-        this.ValidationErrorsList = [];
-        if (!AppTool.IsNullOrEmpty(newValue) && newValue.length > 52) {
-            this.ValidationErrorsList.push("Description shouldn't be more than 70 Character");
-        }
-        else {
-            this.EntityPm.Description = newValue;
-        } 
+        this.EntityPm.Description = newValue;
         if (AppTool.IsNullOrEmpty(newValue)) {
             this.UIProperties.SetRequired("Description", "DocumentsFiling", true);
         }
         else {
-            this.UIProperties.SetRequired("Description", "DocumentsFiling", false); 
+            this.UIProperties.SetRequired("Description", "DocumentsFiling", false);
         }
     }
 
     public get Notes() { return this.EntityPm.Notes }
-    public set Notes(newValue: string) { 
+    public set Notes(newValue: string) {
         this.EntityPm.Notes = newValue;
     }
 
@@ -299,12 +273,12 @@ export class AddEditImporterDocumentComponent implements OnInit {
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPm.DocumentTypeId)) {
             this.DocumentTypeMetaDataList = [];
-            this._DocumentTypeMetaDataExtendedService.GetDocumentTypeMetaDataByDocumentTypeId(this.EntityPm.DocumentTypeId, SessionLocator.Tenant).subscribe((myResult:any) => {
+            this._DocumentTypeMetaDataExtendedService.GetDocumentTypeMetaDataByDocumentTypeId(this.EntityPm.DocumentTypeId, SessionLocator.Tenant).subscribe(myResult => {
                 this.DocumentTypeMetaDataList = myResult.Result;
                 this.DocumentTypeMetaData = myResult.Result;
                 if (this.DocumentTypeMetaDataList.length > 0) {
                     this.MetaDataVisibility = true;
-                    this._DocumentTypeMetaDataExtendedService.GetDocumentMetaDataValuesByDocument(SessionLocator.Tenant, this.EntityPm.Id).subscribe((myResult:any) => {
+                    this._DocumentTypeMetaDataExtendedService.GetDocumentMetaDataValuesByDocument(SessionLocator.Tenant, this.EntityPm.Id).subscribe(myResult => {
                         if (!myResult.Result || myResult.Result.length == 0) {
                             for (var i = 0; i < this.DocumentTypeMetaDataList.length; i++) {
                                 var value = new DocumentsFilingMetaDataValuePM(this.EntityPm);
@@ -401,11 +375,11 @@ export class AddEditImporterDocumentComponent implements OnInit {
     }
 
     DeleteDocumentWithFile() {
-        this._documentExtendedService.GetDocumentById(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe((myResult:any) => {
+        this._documentExtendedService.GetDocumentById(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe(myResult => {
             var RemovedDoc = myResult.Result;
             if (RemovedDoc) {
-                this._ImageLibraryService.RemoveFile(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe((res:any) => {
-                    //this._documentExtendedService.Delete(item.DocumentId, SessionLocator.Tenant).subscribe((myResult:any) => { 
+                this._ImageLibraryService.RemoveFile(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe(res => {
+                    //this._documentExtendedService.Delete(item.DocumentId, SessionLocator.Tenant).subscribe(myResult => { 
                     //    this.ReloadDocuments(); 
                     //}); 
                     this.EntityPm.HasFile = false;
@@ -414,14 +388,14 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     this.EntityPm.FileName = null;
                     this.EntityPm.DocumentId = null;
                     this.EntityPm.IsDeleted = true;
-                    this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult:any) => {
+                    this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
                         this.CurrentSession.CloseCurrentWindow();
                     });
                 });
             }
             else {
                 this.EntityPm.IsDeleted = true;
-                this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult:any) => {
+                this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
                     this.CurrentSession.CloseCurrentWindow();
                 });
             }
@@ -439,7 +413,6 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
     ValidationErrorsList: any[];
     IsEmptyDocumentCreated: boolean = false;
-    FileDeletedAfterUpload: boolean = false;
 
     public get ObjectTableId() { return this.EntityPm.ObjectTableId }
     public set ObjectTableId(newValue: string) {
@@ -500,13 +473,19 @@ export class AddEditImporterDocumentComponent implements OnInit {
         this.EntityPm.DocumentsFilingMetaDataValues = [];
         if (this.DocumentTypeMetaDataList) {
             this.DocumentTypeMetaDataList.forEach((item) => {
-                this.EntityPm.DocumentsFilingMetaDataValues.push((<any>item).DocumentsFilingMetaDataValuePM);
+                //if (item.DocumentsFilingMetaDataValuePM && !AppTool.IsNullOrEmpty(item.DocumentsFilingMetaDataValuePM.MetaDataValue)) {
+                this.EntityPm.DocumentsFilingMetaDataValues.push(item.DocumentsFilingMetaDataValuePM);
+                //}
             });
         }
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        //if (errors == null)
+        //{
         this.ValidationErrorsList = [];
+        //}
 
+        //Validator.TryValidateObject(importerDocumentDataViewModel.EntityPM, new ValidationContext(importerDocumentDataViewModel.EntityPM, null, null), errors);
 
         if (AppTool.IsNullOrEmpty(this.EntityPm.Description)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Description"));
@@ -519,11 +498,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
             if (this.CurrentSession.CurrentWindow != null) {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             }
-            if (this.IsNewDocument || this.FileDeletedAfterUpload) {
-                if (!this.IsEmptyDocumentCreated && this.EntityPm.IsDeleted) {
-                    this.StopAndCloseCurrentWindow();
-                    return;
-                }
+            if (this.IsNewDocument) {
                 if (!this.IsEmptyDocumentCreated) {
                     this.CreateDocumentMethod(null);
                 }
@@ -550,10 +525,9 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         //    this.EntityPm.IsSharedWithForwarder = false;
                         //    this.EntityPm.DontAddToQueue = true;
                         //}
-
-                        this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
+                        this._documentExtendedService.update(this.EntityPm, true).subscribe(myResult => {
                             this.CurrentSession.StopBusyIndicator();
-                            this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
+                            this.CurrentSession.CloseCurrentWindow();
                         });
                         //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                     }
@@ -581,9 +555,9 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //    this.EntityPm.IsSharedWithForwarder = false;
                     //    this.EntityPm.DontAddToQueue = true;
                     //}
-                    this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
+                    this._documentExtendedService.update(this.EntityPm, true).subscribe(myResult => {
                         this.CurrentSession.StopBusyIndicator();
-                        this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
+                        this.CurrentSession.CloseCurrentWindow();
                     });
                     //Context.SubmitChanges().Completed += new EventHandler(SaveOp_Completed);
                 }
@@ -591,20 +565,14 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //if (!this.EntityPm.IsSharedWithForwarder) {
                     this.EntityPm.DontAddToQueue = true;
                     //}
-                    this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
+                    this._documentExtendedService.update(this.EntityPm, true).subscribe(myResult => {
                         this.CurrentSession.StopBusyIndicator();
-                        this.CurrentSession.CurrentWindow.Close(this.EntityPm.Id); 
+                        this.CurrentSession.CloseCurrentWindow();
                     });
                 }
             }
 
         }
-    }
-    StopAndCloseCurrentWindow() {
-        if (this.CurrentSession.CurrentWindow != null) {
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-        }
-        this.CurrentSession.CloseCurrentWindow();
     }
     FirstTimeUpload: boolean = true;
     public CreateDocumentMethod(file: any) {
@@ -617,7 +585,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
         //this.DocumentTypeId = this.DocumentTypeId;
         //this.Description = this.Description;
         if (!AppTool.IsNullOrEmpty(this.EntityPm.DocumentTypeId)) {
-            this._documentExtendedService.GetDocumentsFilingByDocumentType(this.EntityPm.DocumentTypeId, this.EntityPm.ObjectTableId, this.EntityPm.EntityId, SessionLocator.Tenant).subscribe((res:any) => {
+            this._documentExtendedService.GetDocumentsFilingByDocumentType(this.EntityPm.DocumentTypeId, this.EntityPm.ObjectTableId, this.EntityPm.EntityId, SessionLocator.Tenant).subscribe(res => {
 
                 var pmResponse: any = res;
                 if (!pmResponse.HasError) {
@@ -625,7 +593,10 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     var temp = pmResponse.Result;
 
                     if (temp != null && !temp.HasFile) {
-                        this.CheckFileDeletedAfterUpload();
+                        this.CurrentSession.StopBusyIndicator();
+                        this.ValidationErrorsList.push("There already an empty document with this document type !");
+
+
                     }
                     else {
                         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -643,11 +614,11 @@ export class AddEditImporterDocumentComponent implements OnInit {
                             }
                             this.EntityPm.IsRequested = true;
                             this.EntityPm.Tenant = SessionLocator.Tenant;
-                                                        this.EntityPm.Code = "xxx";
+                            this.EntityPm.Code = "xxx";
                             this.EntityPm.CreatedByUserId = "xxx";
                             this.EntityPm.OwnerId = "xxx";
 
-                            this._documentExtendedService.insert(this.EntityPm, true).subscribe((myResult:any) => {
+                            this._documentExtendedService.insert(this.EntityPm, true).subscribe(myResult => {
                                 this.CurrentSession.StopBusyIndicator();
                                 if (!myResult.HasError) {
                                     if (this.IsOkButtonClicked) {
@@ -683,16 +654,6 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
     }
 
-    private CheckFileDeletedAfterUpload() {
-        this.CurrentSession.StopBusyIndicator();
-        if (this.FileDeletedAfterUpload) {
-            this.CurrentSession.CloseCurrentWindow();
-            return;
-        }
-
-        this.ValidationErrorsList.push("There already an empty document with this document type !");
-    }
-
     //Uploader
     IsShareWithAgent: boolean = false;
     IsOpenWidnow: boolean = false;
@@ -707,7 +668,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
         var file: any = attachmentUploader(this.UploadFileId);
         if (file) {
-            this.EntityPm?.IsRequested == true ? MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Upload document to a requested document" }) : MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Upload New Document" });
+
             this.IsOkButtonClicked = false;
             if (this.EntityPm.IsSharedWithCustomer == true && this.EntityPm.IsRequested == true) {
 
@@ -744,7 +705,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
     OpenUploadProgressWindow(file: any, isShareWithAgent: boolean = false) {
 
         if (file && file.size>0) {
-            this._documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((res:any) => {
+            this._documentExtendedService.GetFileSizeAndUnit(file.size).subscribe(res => {
                 var temp = file.name.split('.');
                 var fileExtension: string = temp[temp.length - 1];
                 var pmResponse: ServiceResponse = res;
@@ -773,7 +734,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Title = "File Uploading";
                     logitudeWindow.DataContext = this;
-                  logitudeWindow.Show("./ShipmentModules/ShipmentLogBox/Components/Logbox/LogboxUploaderComponent");
+                    logitudeWindow.Show("./ShipmentModules/ShipmentLogBox/Components/Logbox/LogboxUploaderComponent");
                 }
 
 
@@ -800,12 +761,16 @@ export class AddEditImporterDocumentComponent implements OnInit {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 //this.StartBusyIndicator("Loading ..");
-                this._ImageLibraryService.RemoveFile(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe((res:any) => {
-                    //this._documentExtendedService.Delete(item.DocumentId, SessionLocator.Tenant).subscribe((myResult:any) => { 
+                this._ImageLibraryService.RemoveFile(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe(res => {
+                    //this._documentExtendedService.Delete(item.DocumentId, SessionLocator.Tenant).subscribe(myResult => { 
                     //    this.ReloadDocuments(); 
                     //}); 
-                    this.SetAsFileDeleted();
-                    this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult:any) => {
+                    this.EntityPm.HasFile = false;
+                    this.EntityPm.FileSize = null;
+                    this.EntityPm.FileExtension = null;
+                    this.EntityPm.FileName = null;
+                    this.EntityPm.DocumentId = null;
+                    this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
                         //this.ReloadDocuments();
                     });
                 });
@@ -817,16 +782,6 @@ export class AddEditImporterDocumentComponent implements OnInit {
         });
     }
 
-    private SetAsFileDeleted() {
-        this.EntityPm.HasFile = false;
-        this.EntityPm.FileSize = null;
-        this.EntityPm.FileExtension = null;
-        this.EntityPm.FileName = null;
-        this.IsEmptyDocumentCreated = false;
-        this.EntityPm.IsRequested = true;
-        this.IsPDF = false;
-        this.FileDeletedAfterUpload = true;
-    }
 
     EmailSender: GeneralEmailSender;
     SendDocumentFile() {
@@ -850,7 +805,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
     DownloadDocumentFile() {
         ServiceLocator.SendTotangoUserActivity("LogBox", "View Document");
-        this._ImageLibraryService.DownloadFile(this.EntityPm.DocumentId, this.EntityPm.FileExtension, this.EntityPm.Folder, SessionLocator.Tenant).subscribe((res:any) => {
+        this._ImageLibraryService.DownloadFile(this.EntityPm.DocumentId, this.EntityPm.FileExtension, this.EntityPm.Folder, SessionLocator.Tenant).subscribe(res => {
             var EntityNumber = "";
             if (this.ShipmentList != null) {
                 if (this.ShipmentList.ForwarderShipmentNumber == null) {
@@ -873,38 +828,77 @@ export class AddEditImporterDocumentComponent implements OnInit {
     ShareWithAgent() {
         this.ValidationErrorsList = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        //List < ValidationResult > errors = new List<ValidationResult>();
+        //Validator.TryValidateObject(importerDocumentDataViewModel.EntityPM, new ValidationContext(importerDocumentDataViewModel.EntityPM, null, null), errors);
+
         if (AppTool.IsNullOrEmpty(this.EntityPm.Description)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Discription"));
         }
-        if (this.ValidationErrorsList.length != 0) {
-            return;
-        }
-        ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
-        if (this.EntityPm.IsSharedWithForwarder == true) {
-            this.EntityPm.DontAddToQueue = true;
-        }
-        else {
-            this.EntityPm.DontAddToQueue = AppTool.IsNullOrEmpty(this.ShipmentList.ForwarderShipmentNumber) ? true : false;
-        }
+        //if (!SessionLocator.PrivateLableSettings && AppTool.IsNullOrEmpty(this.ShipmentList.ForwarderShipmentNumber)) {
+        //    this.ValidationErrorsList.push("This Shipment is not connected to agent .");
+        //}
+        //bool validateEntry = ValidateEntry();
+        //bool hasValidationErrors = CheckValidationErrors();
 
-        this.EntityPm.IsSharedWithForwarder = !this.EntityPm.IsSharedWithForwarder;
+        //FillErrors(errors);
 
-        this.UpdateDocumentPM();
+        if (this.ValidationErrorsList.length == 0) {
+
+            //var window = new ConfirmWindow();
+
+            //window.Title = "Confirm sharing";
+            //window.Width = 450;
+            //window.Height = 190;
+            //window.YesButtonText = "Ok";
+            //window.NoButtonText = "Cancel";
+            //window.Show("Are you sure you want to share this document with agent?");
+            //window.WindowClosed.subscribe((event: any) => {
+            //    if (window.Yes) {
+                   
+            //    }
+
+            //    else {
+
+            //    }
+            //});
+            ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+            if (this.EntityPm.IsSharedWithForwarder == true) {
+                this.EntityPm.IsSharedWithForwarder = false;
+                this.EntityPm.DontAddToQueue = true;
+                //BlueSharedWithAgentVisibility = Visibility.Visible;
+                //GraySharedWithAgentVisibility = Visibility.Collapsed;
+            }
+
+            else {
+                this.EntityPm.IsSharedWithForwarder = true;
+                if (AppTool.IsNullOrEmpty(this.ShipmentList.ForwarderShipmentNumber)) {
+                    this.EntityPm.DontAddToQueue = true;
+                }
+                else {
+                    this.EntityPm.DontAddToQueue = false;
+                }
+                //BlueSharedWithAgentVisibility = Visibility.Collapsed;
+                //GraySharedWithAgentVisibility = Visibility.Visible;
+
+            }
+            this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.IssharedWithAgentButtonEnabled = false;
+                //this.ReloadDocuments();
+                //this.StopBusyIndicator();
+            });
+
+                    //if (!importerDocumentDataViewModel.EntityPM.IsSharedWithForwarder) {
+                    //    importerDocumentDataViewModel.EntityPM.DontAddToQueue = true;
+                    //}
+
+        }
 
     }
-
-    UpdateDocumentPM() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-        this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult: any) => {
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.IssharedWithAgentButtonEnabled = false;
-        });
-    }
-
     SelectedValue: string = "";
     SelectedName: string = "";
     TypeSelected: boolean = false;
-
     itemClicked(itemValue: string, Name: string) {
         if (this.DocumentTypeId != itemValue) {
             if (itemValue == "O") {
@@ -951,7 +945,6 @@ export class AddEditImporterDocumentComponent implements OnInit {
         this.SelectedName = "";
         this.TypeSelected = false;
         this.DocumentTypeId = "";
-        this.SetAsFileDeleted();
         if (this.SelectedValue == "O") {
             this.ShowTypes = true;
         }
@@ -1067,9 +1060,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
                                 var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
                                 EntityPm.SignDueDate.setMinutes(CurrMin);
                                 EntityPm.CancellSignRequest = false;
-                                this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
+                                this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe(Result => {
                                     ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
-                                    MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                                     if (Result.Result != null && Result.Result.HasError) {
                                         //this.RunSignBusyIndicator(false, EntityPm.Id);
                                         this.EntityPm.SignRequestByUserEmail = null;
@@ -1102,9 +1094,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
                         EntityPm.SignDueDate.setMinutes(CurrMin);
                         EntityPm.CancellSignRequest = false;
-                        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
+                        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe(Result => {
                             ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
-                            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                             if (Result.Result != null && Result.Result.HasError) {
                                 //this.RunSignBusyIndicator(false, EntityPm.Id);
                                 this.EntityPm.SignRequestByUserEmail = null;
@@ -1142,7 +1133,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
     }
 
     CheckIfSignDone(DocId: string) {
-        this._documentsFilingPMService.get(DocId).subscribe((res:any) => {
+        this._documentsFilingPMService.get(DocId).subscribe(res => {
             var pmResponse: any = res;
             if (pmResponse != null && !pmResponse.HasError) {
                 var currentdocument = pmResponse.Result;
@@ -1165,7 +1156,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
             Document.DontAddToQueue = false;
             Document.ForwarderDocumentId = null;
-            this._documentsFilingPMService.update(Document).subscribe((myResult:any) => {
+            this._documentsFilingPMService.update(Document).subscribe(myResult => {
 
             });
         }
@@ -1174,7 +1165,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
         EntityPM.DontAddToQueue = true;
         EntityPM.SignRequestByUserEmail = null;
         EntityPM.CancellSignRequest = true; 
-        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPM).subscribe((Result:any) => {
+        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPM).subscribe(Result => {
             this.RunSignBusyIndicator(false, EntityPM.Id);
         });
     }

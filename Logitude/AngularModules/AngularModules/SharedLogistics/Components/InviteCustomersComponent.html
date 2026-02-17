@@ -1,4 +1,4 @@
-<table style="height:100%;vertical-align:top">
+﻿<table style="height:100%;vertical-align:top">
     <tr style="height:100%;vertical-align:top">
 
         <td>
@@ -14,29 +14,12 @@
 
                 <tr style="height:20px;">
                     <td colspan="5">
-                        <table>
-                            <tr>
-                                <td style="float: left;font-size:11px;color:gray">
-                                    <span style="float: left;font-size:11px;color:gray">
-                                        This Contact Invitations screen enables you to select and invite your contacts. Once invited, they will be able to view their own shipments.
-                                    </span>
-                                </td>
-
-                                <td *ngIf="IsDigitalPortal" style="width: 140px;float: right">
-                                    <span style="float: right;margin-right:3px;">
-                                        <button [attr.data-cy]="'Login To Online Visibility'" [disabled]="IsLoginToOnlineVisibility" style="width:140px" class="Button" (click)="LoginToOnlineVisibility()">Login to Customer Portal</button>
-                                    </span>
-                                </td>
-                                <td colspan="3">
-                                    <div></div>
-                                </td>
-                                <td style="width: 80px;float: right">
-                                    <span>
-                                        <button [attr.data-cy]="'New Contact'" style="width:80px" class="Button" (click)="NewContactButtonClick()">New Contact</button>
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
+                        <span style="float: left;font-size:11px;color:gray">
+                            This Customer Invitations screen enables you to select and invite your customers. Once invited, they will be able to view their own shipments.
+                        </span>
+                        <span style="float: right;">
+                            <button  style="width:80px" class="Button" (click)="NewContactButtonClick()">New Contact</button>
+                        </span>
                     </td>
                 </tr>
 
@@ -61,7 +44,7 @@
 
 
                                                     <td style="font-size:13px;width:100px;color:gray;vertical-align:central;"><span style="width:70px"></span>Customer Code: </td>
-                                                    <td [attr.data-cy]="'CustomerCode'" style="font-size:12px;color:black;width:200px;text-align:left;vertical-align:central;">{{CustomerCode}}</td>
+                                                    <td style="font-size:12px;color:black;width:200px;text-align:left;vertical-align:central;">{{CustomerCode}}</td>
 
                                                     <td style="font-size:13px;width:100px;text-align:left;color:gray;vertical-align:central">Customer Name: </td>
                                                     <td style="font-size:12px;color:black;width:200px;text-align:left;vertical-align:central">{{CustomerName}}</td>
@@ -83,8 +66,8 @@
                                     <td>
                                  
                                             <div class="ScrollViewer" style="height:100%;width:100%;vertical-align:top">
-                                                <div [attr.data-cy]="'Contacts Area'" class="ScrollContent" style="margin-left:6px;">
-                                                    <div [attr.data-cy]="item.Email+'_Contact'"  *ngFor="let item of SharedLogisticCustomerLineList" style="height:177px;width:32.2%;background-color:white;border:1px solid LightGray;border-radius:5px;float:left;margin-left:5px;margin-bottom:4px">
+                                                <div class="ScrollContent" style="margin-left:6px;">
+                                                    <div  *ngFor="let item of SharedLogisticCustomerLineList" style="height:177px;width:32.2%;background-color:white;border:1px solid LightGray;border-radius:5px;float:left;margin-left:5px;margin-bottom:4px">
                                                        
 
                                                      <table>
@@ -103,7 +86,7 @@
                                                              <td style="width:6px"></td>
                                                          </tr>
 
-                                                         <tr [attr.data-cy]="item.Email" style="height:17px">
+                                                         <tr style="height:17px">
                                                              <td style="width:6px"></td>
                                                              <td style="width:100px;color:#0B3861;font-size:10px">Email:</td>
                                                              <td style="color:#0B3861;font-size:10px">{{item.Email}}</td>
@@ -180,7 +163,7 @@
                                                              <td colspan="4">
                                                                  
                                                             <div>
-                                                              <button [attr.data-cy]="'Invite'"  style="width:80px;display:inline;font-size:10px;float:right" class="GreenButton" (click)="item.InviteButtonButtonclick()"> {{item.InviteButtonContent}}</button>
+                                                              <button style="width:80px;display:inline;font-size:10px;float:right" class="GreenButton" (click)="item.InviteButtonButtonclick()"> {{item.InviteButtonContent}}</button>
 
                                                             </div>
                                                               </td>

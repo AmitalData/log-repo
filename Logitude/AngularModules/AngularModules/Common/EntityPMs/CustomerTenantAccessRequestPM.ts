@@ -8,93 +8,56 @@
 //------------------------------------------------------------------------------
 
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-
-
 export class CustomerTenantAccessRequestPM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties; 
           this.IsDirty = false;
       }
  	 
     
     private id: string;
     public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+    public set Id(newValue: string) { this.id = newValue; this.MarkAsDirty(); }
        
 	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
-    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+    public set Tenant(newValue: number) { this.tenant = newValue; this.MarkAsDirty(); }
        
 	 
     private forwarderId: string;
     public get ForwarderId() { return this.forwarderId; }
-    public set ForwarderId(newValue: string) { if (this.forwarderId != newValue) { this.forwarderId = newValue; this.MarkAsDirty("ForwarderId"); } }
+    public set ForwarderId(newValue: string) { this.forwarderId = newValue; this.MarkAsDirty(); }
        
 	 
     private requestDateTime: Date;
     public get RequestDateTime() { return this.requestDateTime; }
-    public set RequestDateTime(newValue: Date) { if (this.requestDateTime != newValue) { this.requestDateTime = newValue; this.MarkAsDirty("RequestDateTime"); } }
+    public set RequestDateTime(newValue: Date) { this.requestDateTime = newValue; this.MarkAsDirty(); }
        
 	 
     private requestStatus: string;
     public get RequestStatus() { return this.requestStatus; }
-    public set RequestStatus(newValue: string) { if (this.requestStatus != newValue) { this.requestStatus = newValue; this.MarkAsDirty("RequestStatus"); } }
+    public set RequestStatus(newValue: string) { this.requestStatus = newValue; this.MarkAsDirty(); }
        
 	 
     private statusName: string;
     public get StatusName() { return this.statusName; }
-    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+    public set StatusName(newValue: string) { this.statusName = newValue; this.MarkAsDirty(); }
        
 	 
     private forwarderName: string;
     public get ForwarderName() { return this.forwarderName; }
-    public set ForwarderName(newValue: string) { if (this.forwarderName != newValue) { this.forwarderName = newValue; this.MarkAsDirty("ForwarderName"); } }
-       
-	 
-    private isCustoms: boolean;
-    public get IsCustoms() { return this.isCustoms; }
-    public set IsCustoms(newValue: boolean) { if (this.isCustoms != newValue) { this.isCustoms = newValue; this.MarkAsDirty("IsCustoms"); } }
-       
-	 
-    private isExport: boolean;
-    public get IsExport() { return this.isExport; }
-    public set IsExport(newValue: boolean) { if (this.isExport != newValue) { this.isExport = newValue; this.MarkAsDirty("IsExport"); } }
+    public set ForwarderName(newValue: string) { this.forwarderName = newValue; this.MarkAsDirty(); }
        
 	 
 
     public OldEntityPM: CustomerTenantAccessRequestPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
+    MarkAsDirty() {
         this.IsDirty = true;
 		  	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomerTenantAccessRequest");
-           
-        }
-	 }
     }
-    private MyClone: CustomerTenantAccessRequestPM;
-
-    public CloneMe() {
-        ServiceHelper.CloneEntityPM(this);
-    }
-
-    public RejectChanges() {
-        ServiceHelper.RejectEntityPMChanges(this);
-    }
-
 }

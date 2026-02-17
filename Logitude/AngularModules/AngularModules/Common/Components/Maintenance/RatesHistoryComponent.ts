@@ -9,31 +9,25 @@ import {CurrencyRatesService, LastRate} from '../../../Common/Services/CurrencyR
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {RatesTableListService} from '../../../Infrastructure/Services/StandardLists/RatesTableListService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
-import { AdditionalCurrencyRateList } from 'Infrastructure/EntityLists/AdditionalCurrencyRateList';
-import { RatesItem } from './RatesMainTabComponent';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './RatesHistoryComponent.html',
 })
 
 export class RatesHistoryComponent extends BaseComponent {
 
-    public ItemsSource: RatesItem[] = [];
+    public ItemsSource: RatesTableList[] = [];
     public LastRate: LastRate = new LastRate();
-    public CurrencyRateTypes: AdditionalCurrencyRateList[];
     private RatesTableListService: RatesTableListService;
     public count: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
-    currencyRatesService: CurrencyRatesService = new CurrencyRatesService();
-
     constructor() {
         super();
     }
 
-    SetWindowArgs(args: any) {
-        this.LastRate = args.LastRate;
-        this.CurrencyRateTypes = args.CurrencyRateTypes;
+    SetWindowArgs(args: LastRate) {
+        this.LastRate = args;
         this.BuildData();
     }
 
@@ -44,7 +38,7 @@ export class RatesHistoryComponent extends BaseComponent {
         }
 
         this.filters = new ApiQueryFilters();
-        this.filters.SortBy = "LogDateTime";
+        this.filters.SortBy = "ValueDate";
         this.filters.SortDirection = "Descending";
         this.filters.GetCount = true;
         var value = this.LastRate.ForeignCurrencyId;
@@ -54,9 +48,14 @@ export class RatesHistoryComponent extends BaseComponent {
         this.QueryPageIndex = 0;
 
         this.LoadData();
+       // this.LoadDateCount();
     }
+
     LoadData() {
-        this.currencyRatesService.GetCurrenciesExchangeRateByCurrencyId(this.LastRate.ForeignCurrencyId,this.PageSize,this.QueryPageIndex).subscribe((myResult:any) => {
+        //this.ItemsSource = [];
+        this.filters.PageIndex = this.QueryPageIndex;
+        this.filters.PageSize = this.PageSize;
+        this.RatesTableListService.getByFilters(this.filters).subscribe(myResult => {
             if (myResult == null) {
                 this.ItemsSource = [];
             }
@@ -86,9 +85,7 @@ export class RatesHistoryComponent extends BaseComponent {
 
         this.SetPagerButtonsStates();
     }
-    GetFoundRate(currencyRates: any[], AdditionalCurrencyRateId: number): any {
-        return Array.isArray(currencyRates) ? currencyRates.find(rate => rate.AdditionalCurrencyRateId === AdditionalCurrencyRateId) : undefined;
-    }
+
     /*Pager & Provider*/
     private queryPageIndex = 0;
     get QueryPageIndex() {
@@ -266,8 +263,20 @@ export class RatesHistoryComponent extends BaseComponent {
         this.LoadData();
     }
 
-    
+    // Props
+    get ForeignCurrencyCode() {
+        return this.LastRate.ForeignCurrencyCode;
+    }
 
+    get ValueDate() {
+        return this.LastRate.ValueDate;
+    }
+
+    get Rate() {
+        return this.LastRate.Rate;
+    }
+
+    // Commands
     public CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

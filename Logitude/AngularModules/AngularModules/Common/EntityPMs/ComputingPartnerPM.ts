@@ -22,7 +22,7 @@ export class ComputingPartnerPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -142,10 +142,7 @@ export class ComputingPartnerPM {
     public OldEntityPM: ComputingPartnerPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -153,7 +150,6 @@ export class ComputingPartnerPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ComputingPartner");
            
         }
-	 }
     }
     private MyClone: ComputingPartnerPM;
 

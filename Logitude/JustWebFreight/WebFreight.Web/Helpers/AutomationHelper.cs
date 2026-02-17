@@ -2,8 +2,6 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.GlobalModel.EntityPMs;
-using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -12,274 +10,178 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.QuoteModel.Repositories;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Transactions;
 using System.Web;
-using WebFreight.Web.Helpers.AutomationModel;
-using WebFreight.Web.Helpers.CallBack;
-using WebFreight.Web.Helpers.CallBack.Handler;
 
 namespace WebFreight.Web.Helpers
 {
     public class AutomationHelper
     {
-        private int tenant;
-        private string entityReference;
-        public string ExecuteEmailAutomation(AutomationSendEmailArgs automationSendEmailArgs)
+        public void ExecuteEmailAutomation(EntityChange entityChange, List<Field> AutomationConditionFieldLists, Automation automation, EntityChangeAutomation entityChangesAutomation, List<EntityChangeAutomation> entityChangesAutomationsSsucceedList, string objectTableName = null)
         {
-            string comunicationLogId = string.Empty;
-            List<Field> AutomationConditionFieldLists = automationSendEmailArgs.AutomationConditionFieldLists;
-            Automation automation = automationSendEmailArgs.Automation;
-            tenant = automationSendEmailArgs.Tenant;
-            entityReference = automationSendEmailArgs.EntityReference;
-
-            string objectTableName = automationSendEmailArgs.ObjectTableName;
-
 
             AutomationResultEmailRecipientQuery automationResultEmailRecipientQuery = new AutomationResultEmailRecipientQuery(automation.Tenant);
             List<AutomationResultEmailRecipientList> automationResultEmailRecipientLists = automationResultEmailRecipientQuery.GetAutomationResultEmailRecipientListsByAutomationId(automation.Id, automation.Tenant).Where(d=>!string.IsNullOrEmpty(d.RecipientValue)).ToList();
           
             var automatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
             bool allActiveUsers = automatedBackup.IsAutomationResultEmailAllActiveUsers;
-            
+
             //  #region Send Email Prosess
 
             if (automationResultEmailRecipientLists.Count > 0 || allActiveUsers)
             {
-                #region  Automation Email Recipient
-                List<string> contactIds = new List<string>();
-                List<string> notifyBackContactIds = new List<string>();
-                List<string> notifyBackPartners = new List<string>();
-                string Emails = "";
-                string NotifyBackEmails = "";
-                List <DocumentDefultAttachment> emptyDefaultDocuments = new List<DocumentDefultAttachment>();
-                if (allActiveUsers)
+                if (!string.IsNullOrEmpty(automation.TemplateId))
                 {
-                    UserQuery userQuery = new UserQuery(automationSendEmailArgs.Tenant);
-                    contactIds = userQuery.GetUserIdsByTenant(automationSendEmailArgs.Tenant);
-                }
+                    HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                    DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(entityChange.Tenant);
+                    DocumentTypeTemplate template = documentTypeTemplateRepository.GetSingleDocumentTypeTemplateWithOutInClude(automation.TemplateId, automation.Tenant);
 
-                foreach (AutomationResultEmailRecipientList automationResultEmail in automationResultEmailRecipientLists)
-                {
-                    if (automationResultEmail.IsNotifyBack)
+
+                    if (template != null)
                     {
-                        if (automationResultEmail.RecipientType == "Fixed")
+                        #region Get TemplateHtml
+
+                        string subject = template.Subject;
+                        string from = template.From;
+                        string replyTo = template.ReplyTo;
+                        string cc = template.CC;
+                        string userId = template.LastUpdatedByUserId;
+                        if (!string.IsNullOrEmpty(entityChange.CreateByUserId)) userId = entityChange.CreateByUserId;
+                        byte[] htmldata = null;
+                        try
                         {
-                            if (!notifyBackContactIds.Contains(automationResultEmail.RecipientValue)) notifyBackContactIds.Add(automationResultEmail.RecipientValue);
-                        }
-                        else
-                        {
-                            Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.FieldCode == automationResultEmail.RecipientValue).FirstOrDefault();
-                            if (!notifyBackContactIds.Contains(entityContactVariable.Value)) notifyBackContactIds.Add(entityContactVariable.Value);
-                        }
-                    }
-                    else if (automationResultEmail.RecipientType == "Fixed")
-                    {
-                        if (!contactIds.Contains(automationResultEmail.RecipientValue)) contactIds.Add(automationResultEmail.RecipientValue);
-                    }
-                    else
-                    {
-                        if (AutomationConditionFieldLists != null)
-                        {
-                            Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.FieldCode == automationResultEmail.RecipientValue).FirstOrDefault();
-                            if (entityContactVariable != null)
+
+                            string html = htmlEditorHelper.GetEditorHtmlData("", entityChange.EntityId, entityChange.ObjectTableId, "", "", entityChange.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, "", template);
+
+                            if (!string.IsNullOrEmpty(html))
                             {
-                                if (automationResultEmail.RecipientType == "Emails")
+                                var start = "<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body>";
+                                var end = "</body></html>";
+                                html = start + html + end;
+                                html = htmlEditorHelper.GetLogoHtmlString(html);
+
+                            }
+                            else html = "";
+
+                            htmldata = Encoding.UTF8.GetBytes(html);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionHandler.HandleException(ex, DateTime.Now, automation.Tenant, "", "EntityChangeWorkerRole", "", null);
+                        }
+
+                        #endregion
+
+                        #region  Automation Email Recipient
+
+                        List<string> contactIds = new List<string>();
+                        string Emails = "";
+
+                        if (allActiveUsers)
+                        {
+                            UserQuery userQuery = new UserQuery(entityChange.Tenant);
+                            contactIds = userQuery.GetUserIdsByTenant(entityChange.Tenant);
+                        }
+
+
+                        foreach (AutomationResultEmailRecipientList automationResultEmail in automationResultEmailRecipientLists)
+                        {
+                            if (automationResultEmail.RecipientType == "Fixed")
+                            {
+                                if (!contactIds.Contains(automationResultEmail.RecipientValue)) contactIds.Add(automationResultEmail.RecipientValue);
+                            }
+                            else
+                            {
+                                if (AutomationConditionFieldLists != null)
                                 {
-                                    if (!Emails.Split(';').Contains(entityContactVariable.Value)) Emails += entityContactVariable.Value + ";";
-                                }
-                                else if (automationResultEmail.RecipientType == "AllCardContacts")
-                                {
-                                    contactIds = contactIds.Concat(new CardContactQuery(automationSendEmailArgs.Tenant).GetContactsIdsByCardId(entityContactVariable.Value, automationSendEmailArgs.Tenant)).ToList();
-                                }
-                                else
-                                {
-                                    if (!contactIds.Contains(entityContactVariable.Value)) contactIds.Add(entityContactVariable.Value);
-                                    if (string.IsNullOrEmpty(entityContactVariable.Value))
+                                    Field entityContactVariable = AutomationConditionFieldLists.Where(d => d.Id == automationResultEmail.RecipientValue).FirstOrDefault();
+                                    if (entityContactVariable != null)
                                     {
-                                        if (!notifyBackPartners.Contains(entityContactVariable.PropertyName))
-                                            notifyBackPartners.Add(entityContactVariable.PropertyName);
+                                        if (automationResultEmail.RecipientType == "Emails")
+                                        {
+                                            if (!Emails.Split(';').Contains(entityContactVariable.Value)) Emails += entityContactVariable.Value + ";";
+                                        }
+                                        else
+                                        {
+                                            if (!contactIds.Contains(entityContactVariable.Value)) contactIds.Add(entityContactVariable.Value);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                }
 
 
-                if (contactIds.Count > 0)
-                {
-                    ContactQuery contactQuery = new ContactQuery(automation.Tenant);
-                    List<string> contactEmailLists = contactQuery.GetContactEmailsListsByIds(contactIds, automation.Tenant);
-                    foreach (string contactEmail in contactEmailLists)
-                    {
-                        if (!string.IsNullOrEmpty(contactEmail))
+                        if (contactIds.Count > 0)
                         {
-                            if (!Emails.Split(';').Contains(contactEmail)) Emails += contactEmail + ";";
+                            ContactQuery contactQuery = new ContactQuery(automation.Tenant);
+                            List<string> contactEmailLists = contactQuery.GetContactEmailsListsByIds(contactIds, automation.Tenant);
+                            foreach (string contactEmail in contactEmailLists)
+                            {
+                                if (!string.IsNullOrEmpty(contactEmail))
+                                {
+                                    if (!Emails.Split(';').Contains(contactEmail)) Emails += contactEmail + ";";
+                                }
+                             
+                            }
+
                         }
 
-                    }
+                        #endregion
 
-                }
-
-                if (notifyBackContactIds.Count > 0)
-                {
-                    ContactQuery contactQuery = new ContactQuery(automation.Tenant);
-                    List<string> notifyBackContactEmailLists = contactQuery.GetContactEmailsListsByIds(notifyBackContactIds, automation.Tenant);
-                    foreach (string contactEmail in notifyBackContactEmailLists)
-                    {
-                        if (!string.IsNullOrEmpty(contactEmail))
+                        if (!string.IsNullOrEmpty(Emails) && htmldata != null)
                         {
-                            if (!NotifyBackEmails.Split(';').Contains(contactEmail)) NotifyBackEmails += contactEmail + ";";
+                            string communicationLog = AddAutomationToQueue(automation, entityChange, htmldata, Emails, from, replyTo, cc, subject);
+                            entityChangesAutomation.ComunicationLogId = communicationLog;
                         }
-
                     }
 
+
+                    entityChange.HasExecutedRecord = true;
+                    entityChangesAutomation.IsConditionTrue = true;
+                    entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(automation.Tenant);
+                    entityChangesAutomationsSsucceedList.Add(entityChangesAutomation);
+
+
                 }
-
-                #endregion
-
-                if (!string.IsNullOrEmpty(Emails))
-                {
-                    AutomationDocumentHelper automationDocumentHelper = new AutomationDocumentHelper(automationSendEmailArgs);
-                    AutomationDocumentResult automationDocumentResult = automationDocumentHelper.GetAutomationDocumentResult();
-                    automationDocumentResult.ToEmail = Emails;
-                    automationDocumentResult.ObjectTableName = objectTableName;
-
-                    string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, automationDocumentResult);
-                    comunicationLogId = communicationLog;
-                    emptyDefaultDocuments = automationDocumentResult.EmptyDefaultDocuments;
-                 
-                }
-
-                if (!string.IsNullOrEmpty(NotifyBackEmails) && notifyBackPartners!=null && notifyBackPartners.Count() > 0)
-                {
-                    EmailCommunicationParams emailParams = BuildNotifyBackEmailCommunications(automation, notifyBackPartners, NotifyBackEmails);
-                    Communications.AddEmailCommunicationLogQueue(emailParams, automation.Tenant);
-                }
-
-                if (!string.IsNullOrEmpty(NotifyBackEmails) && emptyDefaultDocuments != null && emptyDefaultDocuments.Count() > 0)
-                {
-                    new AttachmentDocumentNotifyService(emptyDefaultDocuments, automation.Tenant, automation.Name).Execute(NotifyBackEmails, automationSendEmailArgs);
-                }
-
             }
 
-            return comunicationLogId;
             //  #endregion
         }
 
-        private EmailCommunicationParams BuildNotifyBackEmailCommunications(Automation automation, List<string> notifyBackPartners, string NotifyBackEmails)
+        public string AddAutomationToQueue(Automation automation , EntityChange  entityChange ,  byte[] htmlData, string toEmail,  string from, string replyTo, string cc,  string subject, string objectTableName = null)
         {
-            string objectTableeName = GetObjectTableName(automation);
-            string emailBody = GetAutomationNotifyBackEmailBody(automation.Name, objectTableeName, notifyBackPartners);
-            StringBuilder HtmlTemplate = BuildHtmlTemplateWithBody(emailBody);
-
-            string fromEmail = SettingUtil.Emails.FromNoReply;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(automation.Tenant);
-                fromEmail = tenantManagementQuery.GetSystemDomain(automation.Tenant);
-                scope.Complete();
-            }
-
-            string emailbody = HtmlTemplate.ToString();
-            EmailCommunicationParams emailParams = new EmailCommunicationParams()
-            {
-                From = fromEmail,
-                To = NotifyBackEmails, 
-                Subject = "Automation " + automation.Name + " Failed",
-                EmailBody = emailbody,
-                Tenant = automation.Tenant,
-            };
-            return emailParams;
-        }
-        private StringBuilder BuildHtmlTemplateWithBody(string emailBody)
-        {
-            StringBuilder HtmlTemplate = new StringBuilder();
-
-            HtmlTemplate.Append("<div style='text-align:left;'>");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append(emailBody);
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("<br /><br />");
-            return HtmlTemplate;
-        }
-        private string GetObjectTableName(Automation automation)
-        {
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(automation.Tenant);
-            ObjectTable objectTable = objectTableRepository.GetObjectTableById(automation.ObjectTableId, automation.Tenant);
-            string objectTableeName = objectTable == null ? "" : objectTable.Name;
-            return objectTableeName;
-        }
-
-        private string GetAutomationNotifyBackEmailBody(string automationName, string objectTableName, List<string> notifyBackPartners)
-        {
-            bool isMoreThanOnePartner = notifyBackPartners.Count > 1;
-            var currentTenant = new TenantManagementRepository().GetSingleTenantManagement(tenant);
-            const string boldFontWeight = "bold";
-            const string redColor = "red";
-            const string blueColor = "#6082B6";
-            const string blackColor = "black";
-
-            string emailString = "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + automationName + "</span> Automation in ";
-            emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + currentTenant?.Name + "</span>";
-            emailString += " company failed to be sent to the following ";
-            emailString += "recipient" + (isMoreThanOnePartner ? "s for" : " for "); 
-            emailString += "<span " + GetTextColorAndWeightStyle(blackColor, boldFontWeight) + ">" + objectTableName + " number </span>";
-            emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + entityReference + ":</span>";
-
-            emailString += "<div>";
-            foreach (string partner in notifyBackPartners)
-            {
-                emailString += "- " + partner + ": <span " + GetTextColorAndWeightStyle(redColor, boldFontWeight) + ">Since it is not defined in " + objectTableName + " level </span> <br />";
-            }
-            emailString += "</div>";
-
-            return emailString;
-        }
-        private string GetTextColorAndWeightStyle(string color, string fontWeight)
-        {
-            return "style=\"color:" + color + "; font-weight: " + fontWeight + ";\"";
-        }
-
-        public string AddAutomationToQueue(Automation automation, AutomationSendEmailArgs automationSendEmailArgs, AutomationDocumentResult automationDocumentResult)
-        {
-            string entityId = automationSendEmailArgs.EntityId;
-            string objectTableId = automationSendEmailArgs.ObjectTableId;
-            string userId = automationSendEmailArgs.CreateByUserId;
-            int tenant = automationSendEmailArgs.Tenant;
+            string entityId = entityChange.EntityId;
+            string objectTableId = entityChange.ObjectTableId;
+            string userId = entityChange.CreateByUserId;
+            int tenant = entityChange.Tenant;
             string automationId = automation.Id;
             string documentOutId = null;
 
-            if (string.IsNullOrEmpty(automationDocumentResult.ObjectTableName))
+            if (string.IsNullOrEmpty(objectTableName))
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableById(objectTableId, tenant);
-                if (objectTable != null) automationDocumentResult.ObjectTableName = objectTable.Name;
+                if (objectTable != null) objectTableName = objectTable.Name;
             }
-
-            if (automationDocumentResult.ObjectTableName == "Shipment")
+  
+            if(objectTableName == "Shipment")
             {
                 #region Document Out
                 DocumentOutRepository documentOutRepository = new DocumentOutRepository(automation.Tenant);
                 documentOutId = documentOutRepository.GetDocumentOutIdByDocumentTypeIdAndEntityId(entityId, automation.DocumentTypeId, objectTableId, automation.Tenant);
                 if (string.IsNullOrEmpty(documentOutId))
                 {
-                    DocumentHelper documentHelper = new DocumentHelper(true);
+                    DocumentHelper documentHelper = new DocumentHelper();
                     DocumentOutPM documentOutPM = documentHelper.CreateDocumentOut(automation.DocumentTypeId, entityId, "", "", objectTableId, tenant, userId);
                     if (documentOutPM != null) documentOutId = documentOutPM.Id;
                 }
@@ -289,162 +191,75 @@ namespace WebFreight.Web.Helpers
                 #endregion
             }
 
-            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            Document document = new Document()
+            {
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                Extension = "html",
+                FileSize = Convert.ToInt32(htmlData.Length),
+                Tenant = Convert.ToInt32(tenant),
+                Id = IdCounter.GetNumber("Document", tenant).ToString(),
+                Folder = "others",
+            };
+
+            DocumentRepository documentRep = new DocumentRepository(tenant);
+            documentRep.Add(document);
+            documentRep.SubmitChanges();
+            string filename = document.Id + ".html";
+            string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = tenant,
+                FileSize = htmlData.Length,
+
+            };
+            storageservice.Write(htmlData, fileInfo);
 
             CommunicationLog log = new CommunicationLog()
             {
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
                 InOut = "O",
-                To = automationDocumentResult.ToEmail,
-                CC = automationDocumentResult.HtmlEditorResolveResult.Cc,
-                BCC = automationDocumentResult.HtmlEditorResolveResult.Bcc,
+                To = toEmail,
+                CC = cc,
+                BCC = "",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                DocumentId = automationDocumentResult.DocumentId,
+                DocumentId = document.Id,
                 CreatedByUserId = userId,
                 EntityId = entityId,
                 ObjectTableId = objectTableId,
                 DocumentOutId = documentOutId,
                 DocumentsFilingId = null,
-                Subject = automationDocumentResult.HtmlEditorResolveResult.Subject,
+                Subject = subject,
                 Tenant = tenant,
                 LastStatusDateUTC = DateTime.UtcNow,
                 CreateDateUTC = DateTime.UtcNow,
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 CommunicationLogTypeCode = "E",
                 CommunicationStatusTypeCode = "W",
-                EntityReference = automationSendEmailArgs.EntityReference
-
             };
 
 
-            if (!string.IsNullOrEmpty(automationDocumentResult.HtmlEditorResolveResult.From) && !string.IsNullOrWhiteSpace(automationDocumentResult.HtmlEditorResolveResult.From))
+            if (!string.IsNullOrEmpty(from) && !string.IsNullOrWhiteSpace(from))
             {
-                log.From = automationDocumentResult.HtmlEditorResolveResult.From;
+                log.From = from;
             }
-            if (!string.IsNullOrEmpty(automationDocumentResult.HtmlEditorResolveResult.ReplyTo) && !string.IsNullOrWhiteSpace(automationDocumentResult.HtmlEditorResolveResult.ReplyTo))
+            if (!string.IsNullOrEmpty(replyTo) && !string.IsNullOrWhiteSpace(replyTo))
             {
-                log.ReplyToList = automationDocumentResult.HtmlEditorResolveResult.ReplyTo;
-            }
-
-            context.CommunicationLogs.Add(log);
-
-            DocumentTypeTemplateDefultAttachmentService documentTypeTemplateDefultAttachmentService = new DocumentTypeTemplateDefultAttachmentService();
-            var attachments = documentTypeTemplateDefultAttachmentService.GetDefultAttachmentList(new DocumentTypeTemplateDefultAttachmentArgs() { DocumentTypeTemplateId = automation.TemplateId, EntityId = entityId, ObjectTableId = objectTableId, Tenant = tenant, IsAutomation  = true, ObjectTableName = automationDocumentResult.ObjectTableName });
-            if (attachments.Count() > 0)
-            {
-                foreach (var item in attachments)
-                {
-                    CommunicationAttachment attachment = GetNewCommunicationAttachment(tenant, log, item.Id);
-                    context.CommunicationAttachments.Add(attachment);
-
-                }
-            }
-            automationDocumentResult.EmptyDefaultDocuments = documentTypeTemplateDefultAttachmentService.EmptyDefaultDocuments!=null ? documentTypeTemplateDefultAttachmentService.EmptyDefaultDocuments : new List<DocumentDefultAttachment>() ;
-
-            DocumentDefultAttachment documentDefultAttachment = AddReportTemplateDocOutAttachment(automationSendEmailArgs, context, log);
-
-            if(documentDefultAttachment!=null && string.IsNullOrEmpty(documentDefultAttachment.DocumentId))
-            {
-                automationDocumentResult.EmptyDefaultDocuments.Add(documentDefultAttachment);
+                log.ReplyToList = replyTo;
             }
 
+            CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(tenant);
+            communicationLogRepository.Add(log);
+            communicationLogRepository.SubmitChanges();
 
-            if (!string.IsNullOrEmpty(automationSendEmailArgs.ExternalAttachmentDocumentId))
-            {
-                context.CommunicationAttachments.Add(GetNewCommunicationAttachment(tenant, log, automationSendEmailArgs.ExternalAttachmentDocumentId));
-            }
+			//IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
 
-            context.SaveChanges();
-            if (IsAllowedToSendEmail(automationSendEmailArgs, context) || automation.ResultCode == "SENDDOCUMENT")
-            {
-                DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-                Dictionary<string, string> emailQueueMessage = new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } };
-
-                string callBackDetailsXml = EmailDocumentHandlerService.GetCallBackDetailsXml(new EmailDocumentHandlerArgs() {EntityId = entityId,ObjectTableId = objectTableId,Tenant = tenant, DocumentId = automation.DocumentTypeId} );
-                if (!string.IsNullOrEmpty(callBackDetailsXml))
-                {
-                    emailQueueMessage.Add("CallBackDetails", callBackDetailsXml);
-                }        
-                queueservice.Send(emailQueueMessage, tenant);
-            }
             return log.Id;
-        }
-
-        private bool IsAllowedToSendEmail(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context)
-        {
-            bool haveCopyDocument = !string.IsNullOrEmpty(automationSendEmailArgs.DocumentCopyId);
-            bool haveAttachment = context.CommunicationAttachments != null && context.CommunicationAttachments.Local != null && context.CommunicationAttachments.Local.Count() > 0;
-            bool isAllowedToSend = !haveCopyDocument || (haveCopyDocument && haveAttachment);
-            return isAllowedToSend;
-        }
-
-        private DocumentDefultAttachment AddReportTemplateDocOutAttachment(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context, CommunicationLog log)
-        {
-            if (!string.IsNullOrEmpty(automationSendEmailArgs.ReportTemplateId))
-            {
-                ReportTemplateDocOutArgs reportTemplateDocOutArgs = new ReportTemplateDocOutArgs()
-                {
-                    Tenant = automationSendEmailArgs.Tenant,
-                    ReportTemplateId = automationSendEmailArgs.ReportTemplateId,
-                    DocumentCopyId = automationSendEmailArgs.DocumentCopyId,
-                    DocumentTypeId = automationSendEmailArgs.Automation.DocumentTypeId,
-                    EntityId = automationSendEmailArgs.EntityId,
-                    ObjectTableId = automationSendEmailArgs.ObjectTableId,
-                };
-
-                string documentId = GetReportTemplateDocumentId(automationSendEmailArgs, reportTemplateDocOutArgs);
-
-                if (!string.IsNullOrEmpty(documentId))
-                {
-                    CommunicationAttachment attachment = GetNewCommunicationAttachment(automationSendEmailArgs.Tenant, log, documentId);
-                    context.CommunicationAttachments.Add(attachment);
-                }
-
-                return !string.IsNullOrEmpty(documentId) ? new DocumentDefultAttachment() { DocumentId = documentId } :GetReportTemplateDocumentAttachment(automationSendEmailArgs, reportTemplateDocOutArgs);
-            }
-            return null;
-        }
-        private DocumentDefultAttachment GetReportTemplateDocumentAttachment(AutomationSendEmailArgs automationSendEmailArgs, ReportTemplateDocOutArgs reportTemplateDocOutArgs)
-        {
-            string documentTypeName = string.Empty;
-           
-            if (new DocumentTypeRepository(automationSendEmailArgs.Tenant).IsQuotationDocumentType(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs.Tenant))
-            {
-                documentTypeName = new QuoteTemplateRepository(automationSendEmailArgs.Tenant).GetSingleQuoteTemplate(automationSendEmailArgs.ReportTemplateId, automationSendEmailArgs.Tenant)?.Name;
-            }
-            else if (!string.IsNullOrEmpty(reportTemplateDocOutArgs.DocumentCopyId))
-            {
-                documentTypeName = new DocumentTypeCopyRepository(automationSendEmailArgs.Tenant).GetSingleDocumentTypeCopy(automationSendEmailArgs.DocumentCopyId)?.Name;
-            }
-            else
-            {
-                documentTypeName = new DocumentTypeRepository(automationSendEmailArgs.Tenant).GetSingleDocumentType(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs.Tenant)?.Name;
-            }
-
-            return new DocumentDefultAttachment() {DocumentTypeName = documentTypeName }; 
-        }
-
-
-        private  string GetReportTemplateDocumentId(AutomationSendEmailArgs automationSendEmailArgs, ReportTemplateDocOutArgs reportTemplateDocOutArgs)
-        {
-            if (new DocumentTypeRepository(automationSendEmailArgs.Tenant).IsQuotationDocumentType(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs.Tenant))
-            {
-                QuoteDocumentVersionRepository quoteDocumentVersionRepository = new QuoteDocumentVersionRepository(automationSendEmailArgs.Tenant);
-                return quoteDocumentVersionRepository.GetLastQuoteQuotationDocumentIdByQuoteIdAndQuoteTemplateId(automationSendEmailArgs.EntityId, automationSendEmailArgs.ReportTemplateId, automationSendEmailArgs.Tenant);
-            }
-
-            return new ReportTemplateDocOutService(reportTemplateDocOutArgs).GetDocOutDocumentId();
-        }
-
-        private static CommunicationAttachment GetNewCommunicationAttachment(int tenant, CommunicationLog log, string documentId)
-        {
-            return new CommunicationAttachment()
-            {
-                Id = IdCounter.GetNumber("CommunicationAttachment", tenant).ToString(),
-                CommunicationLogId = log.Id,
-                DocumentId = documentId,
-                Tenant = tenant,
-            };
         }
 
         public void CopyAutomationFromTenantZeroToMyTenant(int tenant, List<DocumentTypePM> tenantZeroDocumentTypePms)
@@ -483,9 +298,7 @@ namespace WebFreight.Web.Helpers
                         OnUpdateAutomationOrder += 1;
                         automation.Order = OnUpdateAutomationOrder;
                     }
-                    if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox)) {
-                        newAutomationPM.Inactive = true;
-                    }
+
                     service.Create(newAutomationPM);
 
                 }
@@ -559,46 +372,35 @@ namespace WebFreight.Web.Helpers
                     DocumentTypePM myDocType = myDocumentTypeListsUsedInAutomation.Where(d => d.Code == automationDocumentTypeClass.DocumentTypeCode).FirstOrDefault();
                     if (myDocType == null)
                     {
-                        var docType = tenantZeroDocumentTypePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeId).FirstOrDefault();
-                        if (docType != null)
-                        {
-                            newDocType = CreateNewDocumentType(docType, documentTypeRepository, tenant);
+                        var docType = tenantZeroDocumentTypePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
+                        newDocType = CreateNewDocumentType(docType, documentTypeRepository, tenant);
 
-                            myDocType = new DocumentTypePM() { Code = newDocType.Code, Id = newDocType.Id, Tenant = newDocType.Tenant };
-                            myDocumentTypeListsUsedInAutomation.Add(myDocType);
-                        }
+                        myDocType = new DocumentTypePM() { Code = newDocType.Code, Id = newDocType.Id, Tenant = newDocType.Tenant };
+                        myDocumentTypeListsUsedInAutomation.Add(myDocType);
                         isChange = true;
                     }
                     #endregion
 
                     #region DocumentTypeTemplate
                     DocumentTypeTemplatePM myDocumentTypeTemplatePM = myDocumentTypeTempaltesUsedInAutomation.Where(d => d.OriginalTemplateId == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
-                    if (myDocumentTypeTemplatePM == null && myDocType != null)
+                    if (myDocumentTypeTemplatePM == null)
                     {
                         isChange = true;
                         var tenantZeroDocumentTypeTemplate = tenantZeroDocumentTypeTemplatePmsUsedInAutomation.Where(d => d.Id == automationDocumentTypeClass.DocumentTypeTemplateId).FirstOrDefault();
                         DocumentTypeTemplate newtemplate = CreateNewDocumentTypeTemplate(documentTypeTemplateRepository, myDocType, tenantZeroDocumentTypeTemplate);
                         documentTypeTemplateRepository.Add(newtemplate);
-                        myDocumentTypeTemplatePM = new DocumentTypeTemplatePM() { Id = newtemplate.Id, DocumentTypeId = newtemplate.DocumentTypeId, OriginalTemplateId = newtemplate.OriginalTemplateId, Tenant = newtemplate.Tenant };
+                        myDocumentTypeTemplatePM = new DocumentTypeTemplatePM() { Id = newtemplate.Id, DocumentTypeId = newtemplate.DocumentTypeId, OriginalTemplateId = newtemplate.OriginalTemplateId,Tenant = newtemplate.Tenant };
                         myDocumentTypeTempaltesUsedInAutomation.Add(myDocumentTypeTemplatePM);
 
-                        if (newDocType != null && string.IsNullOrEmpty(newDocType.DocumentTypeDefaultEditorTool))
+                        if (newDocType!=null && string.IsNullOrEmpty(newDocType.DocumentTypeDefaultEditorTool) )
                         {
-                            newDocType.DocumentTypeDefaultEditorTool = newtemplate.EditorTool;
-                        }
-               
-
-                        if (newDocType != null && string.IsNullOrEmpty(newDocType.DocumentTypeDefaultHTMLTemplateId))
-                        {
-                            newDocType.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
+                            newDocType.DocumentTypeDefaultEditorTool = newtemplate.Id;
                         }
                     }
                     #endregion
-                    if (myDocType != null)
-                    {
-                        AutomationDocumentTypeClass automationDocumentType = CreateNewAutomationDocumentTypeClass(automationDocumentTypeClass, myDocType, myDocumentTypeTemplatePM);
-                        myAutomationDocumentTypeClassLists.Add(automationDocumentType);
-                    }
+
+                    AutomationDocumentTypeClass automationDocumentType = CreateNewAutomationDocumentTypeClass(automationDocumentTypeClass, myDocType, myDocumentTypeTemplatePM);
+                    myAutomationDocumentTypeClassLists.Add(automationDocumentType);
 
                 }
 
@@ -616,7 +418,6 @@ namespace WebFreight.Web.Helpers
 
             return myAutomationDocumentTypeClassLists;
         }
-
 
         private static AutomationDocumentTypeClass CreateNewAutomationDocumentTypeClass( AutomationDocumentTypeClass automationDocumentTypeClass, DocumentTypePM myDocType, DocumentTypeTemplatePM myDocumentTypeTemplatePM)
         {
@@ -645,7 +446,7 @@ namespace WebFreight.Web.Helpers
                 DocumentTypeId = newDocType.Id,
                 EditorTool = tenantZeroDocumentTypeTemplate.EditorTool,
                 CountryCode = tenantZeroDocumentTypeTemplate.CountryCode,
-                Subject = tenantZeroDocumentTypeTemplate.Subject,
+                Subject = tenantZeroDocumentTypeTemplate.CountryCode,
                 Language = tenantZeroDocumentTypeTemplate.Language,
                 OriginalTemplateId = tenantZeroDocumentTypeTemplate.Id,
                 VerticalShift = tenantZeroDocumentTypeTemplate.VerticalShift,
@@ -693,11 +494,10 @@ namespace WebFreight.Web.Helpers
                 Subject = docType.Subject,
                 IsEnabledForCustomers = true,
                 Notes = docType.Notes,
+                DocumentTypeDefaultHTMLTemplateId = docType.DocumentTypeDefaultHTMLTemplateId,
+                DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
                 IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
                 PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
-                OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName,
-                OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName,
-                OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName,
             };
 
             documentTypeRepository.Add(newDocType);
@@ -731,7 +531,7 @@ namespace WebFreight.Web.Helpers
             AutomationRepository automationRepository = new AutomationRepository(tenant);
             AutomationQuery automationQuery = new AutomationQuery(tenant);
             List<string> myAutomationListsCodes = automationQuery.GetAutomationCodeLists(tenant);
-            List<Automation> automations = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !d.Inactive && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).ToList();
+            List<Automation> automations = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).ToList();
             return automations;
         }
 
@@ -745,16 +545,6 @@ namespace WebFreight.Web.Helpers
             return automationdocumentTypeIds;
         }
 
-        public List<string> GetAutomationDocumentTypeTemplateIds(int tenant)
-        {
-            AutomationRepository automationRepository = new AutomationRepository(tenant);
-            AutomationQuery automationQuery = new AutomationQuery(tenant);
-            List<string> myAutomationListsCodes = automationQuery.GetAutomationCodeLists(tenant);
-            List<string> automationDocumentTypeTemplateIds = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).Select(d => d.TemplateId).ToList();
-            return automationDocumentTypeTemplateIds;
-
-
-        }
 
 
     }
@@ -767,27 +557,4 @@ namespace WebFreight.Web.Helpers
         public string AutomationCode { get; set; }
         public int Tenant { get; set; }
     }
-
-
-
-    public class AutomationSendEmailArgs
-    {
-        public List<Field> AutomationConditionFieldLists { get; set; }
-        public Automation Automation { get; set; }
-
-        public  string ObjectTableName { get; set; }
-        public string ExternalAttachmentDocumentId { get; set; }
-
-        public string EntityId { get; set; }
-        public string ObjectTableId { get; set; }
-        public string EntityChangeId { get; set; }
-
-        public string CreateByUserId { get; set; }
-        public int Tenant { get; set; }
-        public string ReportTemplateId { get; set; }
-        public string DocumentCopyId { get; set; }
-        public string EntityReference { get; set; }
-    }
-
-
 }

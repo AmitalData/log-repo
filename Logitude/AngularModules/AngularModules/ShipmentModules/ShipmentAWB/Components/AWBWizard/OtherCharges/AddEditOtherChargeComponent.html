@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0">
         <td>
@@ -136,8 +136,7 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Measurement'"
                                             [DependencyFilter1Value]="false"
-                                            [DependencyFilter2Value]="false"
-                                            [QueryFilterItems]="MeasurementsQueryFilters">
+                                            [DependencyFilter2Value]="false">
                                     </LogLov>
                                 </td>
                             </tr>
@@ -163,7 +162,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CancelAddCharge' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -171,7 +170,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button  id="{{'OkAddCharge' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingItemEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingItemEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

@@ -2,21 +2,20 @@
     <tr>
         <td>
             <table>
-
                 <tr class="FormFieldRow">
                     <td style="width:150px;vertical-align:top;">
                         <LogLabel Text="Object Field" [DataContext]="DataContext" style="vertical-align:top"></LogLabel>
                     </td>
                     <td>
                         <!--<ComboBox [ItemsSource]="ObjectFields" [Binding]="'FullNameTextCodeDefaultText'" [SelectedValue]="SelectedObjectFieldId" [SelectedValuePath]="'Id'" (SelectedItemChanged)="onSelectedItemChanged($event)"></ComboBox>-->
-                        <LogLov [ObjectFieldName]="'SelectedObjectFieldCode'"
+                        <LogLov [ObjectFieldName]="'SelectedObjectFieldId'"
                                 [QueryFilterItems]="FieldsLovQueryFilters"
                                 [ObjectTableName]="'ObjectField'"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'ObjectField'"
                                 [NoValidation]="true"
                                 [IsFreeText]="true"
-                                [SelectedValue]="DataContext.SelectedObjectFieldCode"
+                                [SelectedValue]="DataContext.SelectedObjectFieldId"
                                 [HideColumns]="true"
                                 [HideLastColumn]="true"
                                 [DisplayMemberPath]="'FieldName'"
@@ -27,19 +26,20 @@
                     <td style="width:90px;vertical-align:top;">
                         <!--<button class="Button" style="width:70px;margin-left:5px;" (click)="onSelectFieldTagClicked()">Select Field</button>-->
                     </td>
-
+                  
                 </tr>
                 <tr class="FormFieldRow" *ngIf="SelectedObjectField && HideLov=== false && (SelectedObjectField.DataTypeCode == 'LookUp' || SelectedObjectField.DataTypeCode == 'PickList')">
                     <td style="width:150px;vertical-align:top;">
                         <LogLabel [Text]="SelectedObjectField.ObjectTable_LookUpTableName" [DataContext]="DataContext" style="vertical-align:top"></LogLabel>
                     </td>
                     <td>
-                        <LogLov *ngIf="SelectedObjectField.DataTypeCode == 'LookUp'"
+                        <LogLov  *ngIf="SelectedObjectField.DataTypeCode == 'LookUp'"
+                                
                                 [SelectedValue]="DataContext[Expression]"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="SelectedObjectField.ObjectTable_LookUpTableName"
                                 (ValueChanged)="SelectedLOVTextChange($event)"
-                                [HideLastColumn]="true">
+                                [HideLastColumn] ="true">
                         </LogLov>
 
 
@@ -49,14 +49,14 @@
                                       [DataContext]="DataContext"
                                       [NoValidation]="true"
                                       (ValueChanged)="SelectedLOVTextChange($event)"
-                                      [HideLastColumn]="true"
-                                      [PickListCode]="SelectedObjectField.CustomPickListCode">
+                                      [HideLastColumn] ="true"
+                                      [PickListCode] ="SelectedObjectField.CustomPickListCode">
                             </PickList>
                         </div>
                     </td>
 
                     <td style="width:90px;vertical-align:top;"></td>
-
+ 
                 </tr>
                 <tr class="FormFieldRow">
                     <td style="width:150px;vertical-align:top;">

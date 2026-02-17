@@ -51,7 +51,7 @@ GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/GlobalModel","../../Logi
 
 
 
-GenerateAllControllers("../EntityFiles/GlobalModel","../../JustWebFreight/WebFreight.Web/Controllers","GlobalContext","GlobalModel");
+GenerateAllControllers("../EntityFiles/GlobalModel","../.../JustWebFreight/WebFreight.Web/Controllers","GlobalContext","GlobalModel");
 
 
 //Generate Global TS files-----------------------------------------------------------------------------------------------------------

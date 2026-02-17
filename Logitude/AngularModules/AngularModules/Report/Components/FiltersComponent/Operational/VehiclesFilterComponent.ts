@@ -7,10 +7,9 @@ import { Component } from '@angular/core';
 import { DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DashBoardFilters } from '../../../../Infrastructure/DataContracts/Dashboard/DashboardFilters';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'VehiclesFilterComponent',
     templateUrl: './VehiclesFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -105,64 +104,12 @@ export class VehiclesFilterComponent extends BaseComponent {
         this.FromDate = DateTool.GetCurrentDateAsUtc();
         this.FromDate.setMonth(this.FromDate.getMonth() - 1);
         this.ToDate = DateTool.GetCurrentDateAsUtc();
-        //this.RunReport(false);
+        this.RunReport(false);
     }
 
-    public IsSchedulerReport : boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ToDate":
-                    this.ToDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "Packagetype":
-                    this.PackageTypeId = queryFilterItem.FieldValue;
-                    break;   
-                case "BillToId":
-                    this.CustomerId = queryFilterItem.FieldValue;
-                    break; 
-                case "TransportMode":
-                    this.SelectedTransportFilterCountries = queryFilterItem.FieldValue;
-                    break;
-                case "Direction":
-                    this.SelectedDirectionFilterCountries = queryFilterItem.FieldValue;
-                    break;   
-                case "IsByCreateDate":
-                    {   
-                        if(queryFilterItem.FieldValue){
-                        this.DateTypeFilterList = [];
 
-                        this.DateTypeFilterList.push(new DashBoardFilters("Create Date", "CreateDate"));
-                        this.DateTypeFilterList.push(new DashBoardFilters("Operational Date", "OperationalDate"));
-                        this.selectedDateTypeItem = this.DateTypeFilterList.filter(d => d.Index == "CreateDate")[0];
-                        }
-                    }
-                     break;      
-               }
-            }
-    }
-    ValidateSelectedFilters() {
+    RunReport(isloading: boolean) {
+        if (isloading) {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
@@ -172,15 +119,41 @@ export class VehiclesFilterComponent extends BaseComponent {
                     this.ValidationErrorsList.push("From Date cannot be greater than To Date");
                 }
             }
-        return this.ValidationErrorsList.length == 0;
-    }
-    RunReport(isloading: boolean) {
-        if (isloading) {
-             if (this.ValidateSelectedFilters()) {
-               
+
+       
+
+            if (this.ValidationErrorsList.length == 0) {
+                this.queryFilterItems = new Array<QueryFilterItem>();
+
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "FromDate";
+                this.queryFilterItem.FieldValue = this.FromDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
+
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ToDate";
+                this.queryFilterItem.FieldValue = this.ToDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
+
+                this.queryFilterItems.push(new QueryFilterItem("Packagetype", this.PackageTypeId, "String"));
+                this.queryFilterItems.push(new QueryFilterItem("BillToId", this.CustomerId, "String"));
+                this.queryFilterItems.push(new QueryFilterItem("TransportMode", this.SelectedTransportFilterCountries, "String"));
+                this.queryFilterItems.push(new QueryFilterItem("Direction", this.SelectedDirectionFilterCountries, "String"));
+
+                if (this.SelectedDateTypeItem.Index == "CreateDate") {
+                    this.queryFilterItems.push(new QueryFilterItem("IsByCreateDate", true, "boolean"));
+                }
+                else {
+                    this.queryFilterItems.push(new QueryFilterItem("IsByCreateDate", false, "boolean"));
+                }
+
                 this.reportFliter = new ReportFliter();
                 this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-                this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+                this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
                 this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
                 this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
                 this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -191,37 +164,5 @@ export class VehiclesFilterComponent extends BaseComponent {
                 this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
             }
         }
-    }
-
-    GetQueryFilterItems() {
-        this.queryFilterItems = new Array<QueryFilterItem>();
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItems.push(new QueryFilterItem("Packagetype", this.PackageTypeId, "String"));
-        this.queryFilterItems.push(new QueryFilterItem("BillToId", this.CustomerId, "String"));
-        this.queryFilterItems.push(new QueryFilterItem("TransportMode", this.SelectedTransportFilterCountries, "String"));
-        this.queryFilterItems.push(new QueryFilterItem("Direction", this.SelectedDirectionFilterCountries, "String"));
-
-        if (this.SelectedDateTypeItem?.Index == "CreateDate") {
-            this.queryFilterItems.push(new QueryFilterItem("IsByCreateDate", true, "boolean"));
-        }
-        else {
-            this.queryFilterItems.push(new QueryFilterItem("IsByCreateDate", false, "boolean"));
-        }
-        return this.queryFilterItems;
-
     }
 }

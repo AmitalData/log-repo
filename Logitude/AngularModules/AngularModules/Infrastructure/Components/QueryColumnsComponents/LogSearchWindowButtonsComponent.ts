@@ -18,7 +18,7 @@ import {FeatureLocator} from '../../Utilities/FeatureLocator';
 import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'LogSearchWindowButtonsComponent',
     templateUrl: './LogSearchWindowButtonsComponent.html',

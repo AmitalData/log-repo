@@ -14,7 +14,7 @@ import {ParticipantList} from '../../EntityLists/ParticipantList';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'ApprovedOpportunitiesFilterComponent',
     templateUrl: './ApprovedOpportunitiesFilterComponent.html',
     inputs: ['ReportsPreview']

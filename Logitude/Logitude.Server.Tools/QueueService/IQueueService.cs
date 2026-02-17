@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.QueueService
 {
     public interface IQueueService
     {
-        void InitializeQueue(string queueCode, int tenant,string queueDefinitionGroup = null);
-        void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null);
+        void InitializeQueue(string queueCode, int tenant);
+        void Send(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null);
+        //QueueResponse Receive();
         QueueResponse Receive(TimeSpan? serverWaitTime = null);
-
-        QueueResponse ReceiveDetailsByTenant(string objectTable, TimeSpan? serverWaitTime = null);
         void Complete();
         void Delay(TimeSpan delayTime);
         void Return();
@@ -19,20 +22,22 @@ namespace Logitude.Server.Tools.QueueService
 
     public partial class QueueResponse
     {
+        
+        //public bool HasError { get; set; }
+        //public string ErrorMessage { get; set; }
         public string MessageId { get; set; }
         public int RetryNumber { get; set; }
-        public int Tenant { get; set; }
         public IDictionary<string, string> MessageValues { get; set; }
     }
-
     public partial class QueueResponse
     {
         public DateTime? MessageCreatedServerTime { get; set; }
     }
 
-    public partial class CustomDBQueueMessage
+
+    public partial class CustomDBQueueMessage //: QueueResponse//Oracle Extention
     {
-        //private QueueResponse q;
+        private QueueResponse q;
         private CustomDbQueueModel CustomDbQueueParams;
 
         public CustomDBQueueMessage(QueueResponse baseQueueResponse)
@@ -41,8 +46,6 @@ namespace Logitude.Server.Tools.QueueService
             {
                 return;
             }
-
-            MyQueueResponse= baseQueueResponse;
 
             this.MessageId = baseQueueResponse.MessageId;
             this.Retries = baseQueueResponse.RetryNumber;
@@ -53,12 +56,11 @@ namespace Logitude.Server.Tools.QueueService
         public CustomDBQueueMessage(QueueResponse q, CustomDbQueueModel CustomDbQueueParams)
             :this(q)
         {
+            // TODO: Complete member initialization
             
             this.CustomDbQueueParams = CustomDbQueueParams;
         }
-         public QueueResponse MyQueueResponse { get; private set; }
- 
-         public DateTime? MessageCreatedServerTime { get; set; }
+        public DateTime? MessageCreatedServerTime { get; set; }
         public QueueStatusEnum QueueStatus { get; set; }
 
         public IDictionary<string, string> Properties { get; set; }
@@ -67,11 +69,11 @@ namespace Logitude.Server.Tools.QueueService
 
         public string MessageId { get; set; }
 
-        public bool SafeAbandon()
+        public void SafeAbandon()
         {
 
             var myCustomDbQueueService = new CustomDbQueueService(CustomDbQueueParams,this);
-            return myCustomDbQueueService.SafeAbandon();
+            myCustomDbQueueService.SafeAbandon();
         }
         public void SafeComplete()
         {

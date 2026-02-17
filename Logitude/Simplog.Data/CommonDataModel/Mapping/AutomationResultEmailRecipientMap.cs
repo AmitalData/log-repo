@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -30,17 +30,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(false);
           
            this.Property(t => t.RecipientType)
-               .HasMaxLength(20)
+               .HasMaxLength(8)
                .IsUnicode(false);
-
-
-            this.Property(t => t.PartnerObjectFieldCode)
-                .HasMaxLength(200)
-                .IsUnicode(false);
 
             this.Property(t => t.RecipientValue)
         
-            .HasMaxLength(200)
+            .HasMaxLength(15)
             .IsUnicode(false);
 
             // Table & Column Mappings
@@ -59,11 +54,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AutomationsId).HasColumnName("AutomationsId");
             this.Property(t => t.RecipientType).HasColumnName("RecipientType");
             this.Property(t => t.RecipientValue).HasColumnName("RecipientValue");
-            this.Property(t => t.PartnerObjectFieldCode).HasColumnName("PartnerObjectFieldCode");
-            this.Property(t => t.IsNotifyBack).HasColumnName("IsNotifyBack");
-
-
-
 
             this.HasRequired(t => t.Automation)
                 .WithMany()

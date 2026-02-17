@@ -8,7 +8,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
@@ -17,10 +17,6 @@ using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
-using Logitude.BL.Security;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -65,14 +61,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         public void Update(TraceEventPM theEntityPm)
         {
             this.isNewEntity = false;
-            this.entityPM = theEntityPm;
+            this.entityPM = theEntityPm; 
             this.Poco = entityRepository.GetSingleTraceEvent(theEntityPm.Id);
 
             //TraceEventValidating.Validate(theEntityPm);
             //TraceEventTracing.Trace(theEntityPm, Poco, isNewEntity);
             this.Poco.Deleted = true;
             entityRepository.Update(Poco);
-            entityRepository.SubmitChanges();
+            entityRepository.SubmitChanges();   
 
             this.Poco.Id = Guid.NewGuid().ToString();
             this.Poco.LogDateTime = TenantServerConfigration.GetCurrentDateTime(theEntityPm.Tenant);
@@ -81,95 +77,39 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
 
-            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            ShipmentPM shipmentPM = null;
-
             if (theEntityPm.EventTypeCode == "EXCE")
             {
-                shipmentPM = shipmentQuery.GetSinglePM(entityPM.EntityId, tenant);
-                if (shipmentPM != null)
+                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+                ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+                Shipment shipment = shipmentRepository.GetSingleShipment(entityPM.EntityId, entityPM.Tenant);
+                if (shipment != null)
                 {
-                    shipmentPM.LastExceptionDescription = Poco.Notes;
-                    shipmentPM.ExceptionDescription = Poco.Notes;
-                    shipmentPM.IsUpdateEntityException = true;
-
+                    shipment.LastExceptionDescription = Poco.Notes;
+                    shipment.ExceptionDescription = Poco.Notes;
+                    shipmentRepository.Update(shipment);
+                    shipmentRepository.SubmitChanges();
                 }
             }
-
-            this.UpdateContinerExceptionFields(theEntityPm);
-
 
             EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);
             EventType myEventType = eventTypeRepository.GetSingleEventType(theEntityPm.EventTypeId, tenant);
-            if (myEventType != null)
+            if(myEventType != null)
             {
-                if (myEventType.IsCustomerView)
+                if(myEventType.IsCustomerView)
                 {
-                    if (shipmentPM == null) shipmentPM = shipmentQuery.GetSinglePM(entityPM.EntityId, tenant);
-                    if (shipmentPM != null)
+                    IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+                    Shipment shipment = shipmentRepository.GetSingleShipment(entityPM.EntityId, entityPM.Tenant);
+                    if (shipment != null)
                     {
-                        shipmentPM.LastSharedEventId = myEventType.Id;
-                        shipmentPM.LastSharedEventLocation = theEntityPm.Location;
-                        shipmentPM.LastSharedEventNotes = theEntityPm.Notes;
-                        shipmentPM.LastSharedEventDate = theEntityPm.EventDateTime;
-
+                        shipment.LastSharedEventId = myEventType.Id;
+                        shipment.LastSharedEventLocation = theEntityPm.Location;
+                        shipment.LastSharedEventNotes = theEntityPm.Notes;
+                        shipment.LastSharedEventDate = theEntityPm.EventDateTime;
+                        shipmentRepository.Update(shipment);
+                        shipmentRepository.SubmitChanges();
                     }
                 }
-            }
-
-            UpdateEventCustomFieldValue(theEntityPm, shipmentPM);
-
-            if (shipmentPM != null)
-            {
-                ShipmentService shipmentService = new ShipmentService(ShipmentsContext.GetContext(tenant), shipmentPM, SecurityUtility.GetAuthenticatedUser());
-                shipmentService.Update();
-            }
-
-
-        }
-
-        private void UpdateContinerExceptionFields(TraceEventPM entityPm)
-        {
-            if (entityPm.EventTypeCode != "CEXC")
-                return;
-
-            ContainerPM containerPM = GetContainerPM(entityPm);
-            if (containerPM == null)
-                return;
-
-            this.UpdateContainer(containerPM);
-        }
-
-        private ContainerPM GetContainerPM(TraceEventPM entityPm)
-        {
-            if (entityPm == null)
-                return null;
-
-            if (string.IsNullOrEmpty(entityPm.EntityId))
-                return null;
-
-            ContainerQuery containerQuery = new ContainerQuery(tenant);
-
-            return containerQuery.GetSinglePM(entityPm.EntityId, tenant);
-        }
-
-        private void UpdateContainer(ContainerPM containerPM)
-        {
-            ContainerService containerService = new ContainerService(ShipmentsContext.GetContext(tenant), tenant);
-            containerPM.LastExceptionDescription = Poco.Notes;
-            containerPM.ExceptionDescription = Poco.Notes;
-            containerPM.IsUpdateEntityException = true;
-
-            containerService.Update(containerPM);
-        }
-
-        private void UpdateEventCustomFieldValue(TraceEventPM theEntityPm, ShipmentPM shipmentPM)
-        {
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
-            ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, true);
-            if (objectTable.AllowCustomFields)
-            {
-                EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { EventTypeId = theEntityPm.EventTypeId, Entity = shipmentPM, EventDateTime = theEntityPm.EventDateTime, EntityId = theEntityPm.EntityId, ObjectTableName = objectTable != null ? objectTable.Name : null, Tenant = tenant });
             }
         }
     }

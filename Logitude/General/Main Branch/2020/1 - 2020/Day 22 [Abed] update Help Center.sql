@@ -1,1 +1,0 @@
-update HelpResources set Name = 'Users and Contact Data Protection (GDPR)' where Code = '65'

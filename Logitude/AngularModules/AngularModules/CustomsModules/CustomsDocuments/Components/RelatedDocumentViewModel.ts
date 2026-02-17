@@ -26,25 +26,7 @@ export class RelatedDocumentViewModel {
             this.documentsFilingPM.Name = value;
         }
     }
-
-    get DocumentTypeCode() { return this.documentsFilingPM.DocumentTypeCode; }
-    set DocumentTypeCode(value: string) {
-
-        if (this.documentsFilingPM.DocumentTypeCode != value) {
-            this.documentsFilingPM.DocumentTypeCode = value;
-        }
-    }
-
-    get DocumentCategoryCode() { return this.documentsFilingPM.DocumentCategoryCode; }
-    set DocumentCategoryCode(value: string) {
-
-        if (this.documentsFilingPM.DocumentCategoryCode != value) {
-            this.documentsFilingPM.DocumentCategoryCode = value;
-        }
-    }
-
     public DocumentTypeName: string;
-    public Notes: string;
     //get DocumentTypeName() { return this.documentsFilingPM.CustomsDocumentTypeName; }
     //set DocumentTypeName(value: string) {
 
@@ -146,11 +128,10 @@ export class RelatedDocumentViewModel {
         var customDocumentTypeMetaDataListService: CustomDocumentTypeMetaDataListService = new CustomDocumentTypeMetaDataListService();
         customDocumentTypeMetaDataListService.getAllFromCache().subscribe((res: ServiceResponse) => {
             this.customDocumentTypeMetaDataLists = res.Result;
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomDocumentTypeMetaData").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomDocumentTypeMetaData").subscribe(response => {
 
                 this.customDocumentTypeMetaDataLists = this.customDocumentTypeMetaDataLists.filter(d => d.DocumentTypeCode === this.documentsFilingPM.CustomsDocumentTypeCode);
                 this.DocumentTypeName = this.documentsFilingPM.Description;
-                this.Notes = this.documentsFilingPM.Notes;
                 if (this.customsDocumentMetaDataValuePMs && this.customDocumentTypeMetaDataLists) {
                     var leading: CustomDocumentTypeMetaDataList = this.customDocumentTypeMetaDataLists.filter(d => d.IsLeading && d.DocumentTypeCode == this.documentsFilingPM.CustomsDocumentTypeCode)[0];
                     if (leading) {

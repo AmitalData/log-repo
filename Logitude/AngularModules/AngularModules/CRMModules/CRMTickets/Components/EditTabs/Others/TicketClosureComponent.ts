@@ -16,7 +16,7 @@ import {ServiceResponse}  from '../../../../../Infrastructure/DataContracts/Serv
 
 @Component({
     selector: 'TicketClosureComponent',
-    
+    moduleId: module.id,
     templateUrl: './TicketClosureComponent.html',
 })
 

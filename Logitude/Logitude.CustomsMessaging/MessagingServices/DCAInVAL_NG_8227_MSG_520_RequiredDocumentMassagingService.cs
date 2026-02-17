@@ -1,6 +1,5 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -30,16 +29,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingEntityId = customsResponse.RequiredDocumentDetails.documentID.ToString()
             };
             return myGenericRequestParams;
-
-        }
-
-
-        protected override VAL_NG_8227_MSG_520_RequiredDocumentMessage GetFakeCustomsResponse(GenericRequestParams requestParamsData)
-        {
-
-            var fake_VAL_NG_8227_MSG_520_RequiredDocumentMessage = new Fake_VAL_NG_8227_MSG_520_RequiredDocumentMessage(requestParamsData);
-            return fake_VAL_NG_8227_MSG_520_RequiredDocumentMessage.GetFakeCustomsResponse(requestParamsData);
-
 
         }
 

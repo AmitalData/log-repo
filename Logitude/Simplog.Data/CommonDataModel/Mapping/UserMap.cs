@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -67,11 +67,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
                .HasMaxLength(1000)
                .IsUnicode(false);
 
-            this.Property(t => t.SignatureImageId).HasMaxLength(15);
-
             this.Property(t => t.ShowLogBoxToolTip).IsRequired();
             this.Property(t => t.UserRoles).HasMaxLength(400).IsUnicode(false);
-            Property(t => t.LayoutDirection).HasMaxLength(3).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("Users");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -99,37 +97,21 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ShowLogBoxToolTip).HasColumnName("ShowLogBoxToolTip");
             this.Property(t => t.ShowLocalNameInLOV).HasColumnName("ShowLocalNameInLOV");
             this.Property(t => t.UserRoles).HasColumnName("UserRoles");
-            this.Property(t => t.AdditionalPackagesOnly).HasColumnName("AdditionalPackagesOnly");
-            this.Property(t => t.SecurityLevel).HasColumnName("SecurityLevel");
-
-
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
-
-
-            this.Property(t => t.LayoutDirection).HasColumnName("LayoutDirection");
-            this.Property(t => t.SignatureImageId).HasColumnName("SignatureImageId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.IsShowContactDetailsInTheMobileApp).HasColumnName("IsShowContactDetailsInMobile");
-            }
-            //#else
-            else
-            {
-                this.Property(t => t.IsShowContactDetailsInTheMobileApp).HasColumnName("IsShowContactDetailsInTheMobileApp");
-            }
-             if (dbms == "oracle")
-            {
                 this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticateEnabled");
             }
             //#else
             else
             {
+                this.Property(t => t.IsShowContactDetailsInTheMobileApp).HasColumnName("IsShowContactDetailsInTheMobileApp");
                 this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticationEnabled");
             }
-            //#endif
+//#endif
 
             this.Property(t => t.PersonalId).HasColumnName("PersonalId");
      // Relationships
@@ -138,7 +120,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasRequired(t => t.Department).WithMany().HasForeignKey(d => d.DepartmentId);
             this.HasOptional(t => t.Freelancer).WithMany().HasForeignKey(d => d.FreelancerId);
             this.HasRequired(t => t.BusinessUnit).WithMany().HasForeignKey(d => d.BusinessUnitId);
-            this.HasOptional(t => t.ProductType).WithMany().HasForeignKey(d => d.ProductTypeCode); 
+            this.HasOptional(t => t.ProductType).WithMany().HasForeignKey(d => d.ProductTypeCode);
         }
     }
 }

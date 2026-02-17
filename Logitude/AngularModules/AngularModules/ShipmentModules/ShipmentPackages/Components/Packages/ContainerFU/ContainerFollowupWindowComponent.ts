@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -12,11 +12,11 @@ import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ContainerFollowupWindowComponent.html',
 })
 
-export class ContainerFollowupWindowComponent implements AfterViewInit, OnDestroy {
+export class ContainerFollowupWindowComponent implements OnDestroy {
     public Code: string;
     public EntityPM: ShipmentPackagePM;
     public DataContext: ShipmentPackageItem;
@@ -25,7 +25,7 @@ export class ContainerFollowupWindowComponent implements AfterViewInit, OnDestro
     public ValidationErrorsList: string[];
     public IsNewFollowup: boolean;
     private IsNewFollowup_Totango: boolean;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) ChildViewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) ChildViewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
@@ -41,12 +41,7 @@ export class ContainerFollowupWindowComponent implements AfterViewInit, OnDestro
         this.CheckMultiConnected();
 
         this.Listen();
-    }
-
-    private isLoaderReady: boolean = false;
-    ngAfterViewInit() {
-        this.isLoaderReady = true;
-        this.LoadTemplate();
+        this.RunComponent();
     }
 
     public IsDeliveryConnectedWithMultiContainers: boolean = false;
@@ -66,6 +61,31 @@ export class ContainerFollowupWindowComponent implements AfterViewInit, OnDestro
         this.IsDeliveryConnectedWithMultiContainers = isDeliveryConnectedWithMultiContainers;
     }
 
+    private isLoaderReady: boolean = false;
+    RunComponent() {
+        if (this.ChildViewContainerRef) {
+            this.isLoaderReady = true;
+            this.LoadTemplate();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
     LoadTemplate() {
         if (this.ChildViewContainerRef) {
             this.ChildViewContainerRef.clear();

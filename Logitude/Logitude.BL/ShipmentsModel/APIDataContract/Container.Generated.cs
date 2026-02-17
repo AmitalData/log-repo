@@ -12,12 +12,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
    
-    public partial class Container
+    public class Container
     {
 
 	    
@@ -51,10 +50,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public int? Pieces { get; set; }
     
     public string Reference4 { get; set; }
-    
-    public List<InsidePackage> InsidePackages { get; set; }
-    
-    public string ChangeSetOp { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

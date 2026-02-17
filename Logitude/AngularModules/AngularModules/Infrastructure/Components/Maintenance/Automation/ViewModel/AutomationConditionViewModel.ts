@@ -1,6 +1,4 @@
 
-declare var System: any;
-declare var window: any;
 import {AutomationPM} from '../../../../../Common/EntityPMs/AutomationPMExtended';
 import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 
@@ -12,10 +10,6 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {FieldValueResolver} from '../../../../../Infrastructure/Utilities/FieldValueResolver';
 import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AutomationHelper} from '../../../../../Infrastructure/Helpers/AutomationHelper';
-import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
-import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { SessionLocator } from '../../../../Utilities/SessionLocator';
-
 
 export class AutomationConditionViewModel extends BaseComponent implements OnInit {
     public CurrentEntityPM: AutomationCondition;
@@ -23,7 +17,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     SelectedCustomField: ObjectFieldPM;
     AddEditAutomationsViewModel: any;
     OperatorList: Operator[];
-    BooleanList:boolean[] = [true, false];
     SelectedOperator: Operator;
     isChangeOperator: boolean;
     IsSetValue: boolean;
@@ -41,20 +34,12 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     IsCustomCombox: boolean = false;
     AutomationCondationFieldListFilterItems: ApiQueryFilters;
     CustomAutomationCondationFieldListFilterItems: ApiQueryFilters;
-    SystemVariableOperatorLists: Operator[];
-    SelectedSystemVariableOperator: Operator;
+   
 
-    AutomationEntityLists: AutomationEntityList[];
-    SelectedAutomationEntity: AutomationEntityList;
-    PartnerObjectFieldCode: string = null;
    CurrentEntityType: string;
-   ObjectFieldCode: string = "";
-    IsRefreshAutomationCondationField: boolean;
-    IsValid: boolean;
-    DependencyFilter1Value: string;
+    ObjectFieldId: string = "";
 
-   //IsSystemVariables: boolean = false;
-    CustomObjectFieldCode: string = "";
+    CustomObjectFieldId: string = "";
     AutomationHelper: AutomationHelper;
     constructor(entityPM: AutomationCondition, addEditAutomationsViewModel: any, delayAutomationconditionsViewModel = null) {
         super();
@@ -63,32 +48,25 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.DelayAutomationconditionsViewModel = delayAutomationconditionsViewModel;
 
         this.AutomationHelper = new AutomationHelper(this.CurrentEntityPM, this.AddEditAutomationsViewModel, this, "Condation");
-
+        this.InitLOVFilters();
         this.AllowedinAutomationConditionsFieldLists = addEditAutomationsViewModel.AllowedinAutomationConditionsFieldLists;
-        this.ObjectFieldPM = this.AllowedinAutomationConditionsFieldLists.filter(d => d.FieldCode == this.CurrentEntityPM.ObjectFieldCode)[0];
-        this.PartnerObjectFieldCode = this.CurrentEntityPM.PartnerObjectFieldCode ? this.CurrentEntityPM.PartnerObjectFieldCode:null;
-
+        this.ObjectFieldPM = this.AllowedinAutomationConditionsFieldLists.filter(d => d.Id == this.CurrentEntityPM.ObjectFieldId)[0];
         this.FieldValue = this.CurrentEntityPM.Value;
-        this.IsValid = this.CurrentEntityPM.IsValid;
         this.DateTypeList = [];
-
-        this.FillAutomationEntityObjectField();
-
-        this.FullListDate();
-
-
+        this.DateTypeList.push(new Operator("@Today-", "-"));
+        this.DateTypeList.push(new Operator("@Today+", "+"));
+        this.DateTypeList.push(new Operator("Date", "Date"));
         this.SelectedDateType = this.DateTypeList[0];
         this.CurrentEntityType = this.AddEditAutomationsViewModel.CurrentEntityPM.Type;
-        this.SystemVariableOperatorLists = [];
-        this.SystemVariableOperatorLists.push(new Operator("System User", "SystemUser"));
-
+      
 
         if (this.ObjectFieldPM) {
-            this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false, this.ObjectFieldPM);
-            this.ObjectFieldCode = this.ObjectFieldPM.FieldCode;
-         
+            this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false);
+            this.ObjectFieldId = this.ObjectFieldPM.Id;
+ 
+
             this.SelectedCustomField = this.ObjectFieldPM;
-            this.SetDependencyFilter1Value();
+
 
             this.UIProperties.SetEnabled(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, true);
             this.UIProperties.SetRequired(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, false);
@@ -151,6 +129,8 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         }
 
         if (this.SelectedOperator) {
+
+          
             this.BuildCustomFromFieldbjectFieldLists();
             if (this.HideGeneralControl(this.SelectedOperator.Code)) {
                 this.IsHideGeneralControl = true;
@@ -158,14 +138,10 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 this.CurrentEntityPM.Value = "";
             }
 
-            if (this.SelectedOperator.Code == "EqualSystemVariable") {
-                this.SelectedSystemVariableOperator = this.SystemVariableOperatorLists.filter(d => d.Code == this.FieldValue)[0];
-                if (!this.SelectedSystemVariableOperator) {
-                    this.SelectedSystemVariableOperator = this.SystemVariableOperatorLists[0];
-                    this.AutomationHelper.ConditionValueChange(this.SelectedSystemVariableOperator.Code);
-                }
-            }
+
+
         }
+
 
         this.IsLoadOperatorList = true;
 
@@ -178,112 +154,23 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
     }
 
-    SetDependencyFilter1Value() {
-        this.DependencyFilter1Value = null;
-        if (!this.SelectedCustomField || this.SelectedCustomField.ObjectTable_LookUpTableName != "EntityStatus") return;
-        this.DependencyFilter1Value = this.SelectedCustomField.ObjectTableId;
-    }
-
-    FullListDate() {
-        this.DateTypeList = [];
-        this.DateTypeList.push(new Operator("@Today-", "-"));
-        this.DateTypeList.push(new Operator("@Today+", "+"));
-        if (this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode)) {
-            this.DateTypeList.push(new Operator("@Old Value-", "-"));
-            this.DateTypeList.push(new Operator("@Old Value+", "+"));
-        }
-        this.DateTypeList.push(new Operator("Date", "Date"));
-    }
+   
 
 
-    FillAutomationEntityObjectField() {
-        var translation: TextCodeTranslationPipe = new TextCodeTranslationPipe();
-        var objectTableId = this.AddEditAutomationsViewModel.ObjectTableId;
-
-        var objectTableName = this.AddEditAutomationsViewModel.IsMasterShipment ? "Master" : this.AddEditAutomationsViewModel.ObjectTableName;
-
-        var displayName = this.AddEditAutomationsViewModel.AutomationItemClass ? this.AddEditAutomationsViewModel.AutomationItemClass.DisplayName : objectTableName;
-
-        this.AutomationEntityLists = [];
-        this.AutomationEntityLists.push(new AutomationEntityList(objectTableName, objectTableId, null, displayName));
-
-
-        window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == objectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == objectTableName)[0]))).forEach((objectField) => {
-            var objectFieldName = objectField.FullNameTextCodeDefaultText;
-            if (objectFieldName == "Company")//this is for now. we need a new field to get the name of the entity(objectField.FullNameAutomationEntity)
-                objectFieldName = "Customer";
-            if (objectFieldName == "Ticket") {
-                this.AddTicketAutomationToEntityLists(objectFieldName, objectField);
-            }
-            else {
-                this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
-            }
-        });
-
-        this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];
-        if (!this.SelectedAutomationEntity) {
-            this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId)[0];
-        }
-
-        if (this.SelectedAutomationEntity) {
-            this.InitLOVFilters(this.SelectedAutomationEntity.ObjectTableId);
-        }
-
-    }
-
-    
-    private AddTicketAutomationToEntityLists(objectFieldName: any, objectField: any) {
-        const TicketEntityAutomationFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAU")[0];
-        if (TicketEntityAutomationFeatureToggle != null) {
-            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
-        }
-    }
-
-    get IsSystemVariables() {
-        var result = false;
-        if (this.SelectedOperator) {
-            if (this.SelectedOperator.Code == "EqualSystemVariable") result = true;
-        }
-
-        return result;
-
-
-    }
-
-
-
-    GetRecordType() {
-        var recordType:string = "";
-        if (this.SelectedAutomationEntity) {
-            recordType = this.SelectedAutomationEntity.Name;
-            if (this.AddEditAutomationsViewModel.IsMasterShipment) {
-                //if (this.SelectedAutomationEntity.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId) {
-                //    recordType = "";
-                //}
-            }
-        } 
-        return recordType.replace(" ", "");
-    }
-
-    InitLOVFilters(objectTableId:string) {
+    InitLOVFilters() {
 
         this.AutomationCondationFieldListFilterItems = new ApiQueryFilters();
-        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", objectTableId, null, null, "Equals", false, false, false, "string");
+        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", this.AddEditAutomationsViewModel.ObjectTableId, null, null, "Equals", false, false, false, "string");
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("AllowedinAutomationConditions", true, null, null, "Equals", true, false, false, "boolean");
-        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("RecordType", this.GetRecordType(), null, null, "Equals", true, false, false, "string");
-
         this.AutomationCondationFieldListFilterItems.Tenant = 0;
 
     }
 
     InitCustomLOVFilters(objectFieldPM: ObjectFieldPM) {
-        var objectTableId: string = this.AddEditAutomationsViewModel.ObjectTableId;
 
         this.CustomAutomationCondationFieldListFilterItems = new ApiQueryFilters();
-        this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", objectTableId, null, null, "Equals", false, false, false, "string");
+        this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", this.AddEditAutomationsViewModel.ObjectTableId, null, null, "Equals", false, false, false, "string");
         this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("AllowedinAutomationConditions", true, null, null, "Equals", true, false, false, "boolean");
-        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("RecordType", this.GetRecordType(), null, null, "Equals", true, false, false, "string");
-
         if (this.SelectedCustomField) {
             if (this.SelectedCustomField.DataTypeCode == "LookUp") {
                 this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("LookUpTableId", this.SelectedCustomField.LookUpTableId, null, null, "Equals", false, false, false, "string");
@@ -302,23 +189,14 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
         return this.isChecked;
     }
-    BooleanListValueChanged(newValue: boolean) {
+    set IsChecked(newValue: boolean) {
         this.isChecked = newValue;
         this.CurrentEntityPM.Value = this.FieldValue = this.isChecked ? "true" : "false";
         this.AddEditAutomationsViewModel.IsChangeCondition = true;
     }
-
-
-    //set IsChecked(newValue: boolean) {
-    //    this.isChecked = newValue;
-    //    this.CurrentEntityPM.Value = this.FieldValue = this.isChecked ? "true" : "false";
-    //    this.AddEditAutomationsViewModel.IsChangeCondition = true;
-    //}
    
-    ChosenOperatorList(dataTypeCode: string, isChangeOperator: boolean, objectFieldPM: ObjectFieldPM = null) {
+    ChosenOperatorList(dataTypeCode: string, isChangeOperator: boolean) {
         this.OperatorList = [];
-
-
 
         if (dataTypeCode == "DateTime" || dataTypeCode == "Date" || dataTypeCode == "Integer" || dataTypeCode == "Decimal" || dataTypeCode == "Double") {
             this.OperatorList.push(new Operator("=", "="));
@@ -336,19 +214,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         }
 
         else if (dataTypeCode == "Boolean") this.OperatorList.push(new Operator("Equals", "="));
-        else if (dataTypeCode == "LookUp") {
-            this.OperatorList.push(new Operator("Equals", "="));
-            this.OperatorList.push(new Operator("Does Not Equal", "<>"));
-            this.OperatorList.push(new Operator("Equal [Field]", "=F"));
-            this.OperatorList.push(new Operator("Does Not Equal [Field]", "<>F"));
 
-            if (objectFieldPM != null) {
-                if (objectFieldPM.ObjectTable_LookUpTableName == "User" || objectFieldPM.ObjectTable_LookUpTableName == "Contact") {
-                    this.OperatorList.push(new Operator("Equal [System Variable]", "EqualSystemVariable"));
-                }
-            }
-
-        }
         else {
 
             this.OperatorList.push(new Operator("Equals", "="));
@@ -360,32 +226,30 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             this.OperatorList.push(new Operator("Does Not Equal [Field]", "<>F"));
             this.OperatorList.push(new Operator("Contains [Field]", "CONTAINSF"));
             this.OperatorList.push(new Operator("Does Not Contain [Field]", "!CONTAINSF"));
+
+
         }
 
+       if (this.CurrentEntityType != "OnCreate") {
+            this.OperatorList.push(new Operator("Changed to", "CHANGEDTO"));
+            this.OperatorList.push(new Operator("Changed", "CHANGED"));
+
+      }
 
 
+      if (dataTypeCode == "DateTime" || dataTypeCode == "Date") {
 
-
-        if (this.CurrentEntityType != "OnCreate") {
-            if (!this.IsDelayAutomationConditions() && this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode) ) {
-                this.OperatorList.push(new Operator("Changed to", "CHANGEDTO"));
-                this.OperatorList.push(new Operator("Changed", "CHANGED"));
-            }
+        if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
+          this.OperatorList.push(new Operator("Changed", "CHANGED"));
         }
 
-
-        if (dataTypeCode == "DateTime" || dataTypeCode == "Date" ) {
-
-            if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
-                if (!this.IsDelayAutomationConditions() && this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode)) {
-                    this.OperatorList.push(new Operator("Changed", "CHANGED"));
-                }
-            }
-
-        }
 
         this.OperatorList.push(new Operator("Is Empty", "ISEMPTY"));
         this.OperatorList.push(new Operator("Is not Empty", "ISNOTEMPTY"));
+
+
+      
+      }
 
 
         if (isChangeOperator) {
@@ -396,29 +260,22 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
 
-    IsDelayAutomationConditions() {
-        return this.DelayAutomationconditionsViewModel ? true : false;
-    }
-
-    
-
     CustomFieldValueChanged(item) {
         {
             if (item) {
         
-
-                var oldObjectFieldCode: string = this.SelectedCustomField ? this.SelectedCustomField.FieldCode : "";
-                if (item.FieldCode != oldObjectFieldCode) {
+             
+                var oldObjectFieldId: string = this.SelectedCustomField ? this.SelectedCustomField.Id : "";
+                if (item.Id != oldObjectFieldId) {
 
                     this.IsHideGeneralControl = false;
                     this.FieldValue = item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime" ? 0 : "";
-                    this.ObjectFieldCode = item.FieldCode;
+
+
                     if (item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime") {
                         var todayDate = DateTool.GetCurrentDateTimeAsUtc();
                         this.CurrentEntityPM.Value = this.SelectedDateType.Name + "*" + this.FieldValue + "*" + FieldValueResolver.ConvertUTCDateToString(todayDate, "Automation");
-                    }
-
-                    else this.CurrentEntityPM.Value = "";
+                    } else this.CurrentEntityPM.Value = "";
 
                    
                     this.AddEditAutomationsViewModel.IsChangeCondition = true;
@@ -428,8 +285,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                         ischange = true;
                     }
 
-                    this.SelectedCustomField = this.AllowedinAutomationConditionsFieldLists.filter(d => d.FieldCode == item.FieldCode)[0];
-                    this.SetDependencyFilter1Value();
+                    this.SelectedCustomField = this.AllowedinAutomationConditionsFieldLists.filter(d => d.Id == item.Id)[0];
                     this.IsCustomCombox = false;
                   
                     if (this.SelectedCustomField) {
@@ -437,19 +293,15 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                         this.UIProperties.SetEnabled(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, true);
                         this.UIProperties.SetRequired(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, false);
 
-                        this.CurrentEntityPM.ObjectFieldCode = this.SelectedCustomField.FieldCode;
-                        this.ChosenOperatorList(this.SelectedCustomField.DataTypeCode, true, this.SelectedCustomField);
+                        this.CurrentEntityPM.ObjectFieldId = this.SelectedCustomField.Id;
+                        this.ChosenOperatorList(this.SelectedCustomField.DataTypeCode, true);
                         this.SelectedOperator = this.OperatorList[0];
-
-
-
-                
                      
                     }
                     
                     this.IsSetValue = false;
                     this.CurrentEntityPM.ObjectFieldType = this.SelectedCustomField.DataTypeCode;
-             
+
                     if (ischange) {
                         this.IsRefrachCustomField = !this.IsRefrachCustomField;
                     }
@@ -457,11 +309,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
            
                     this.BuildCustomFromFieldbjectFieldLists();
 
-                }
-
-
-                if (item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime") {
-                    this.FullListDate();
                 }
             }
         }
@@ -511,31 +358,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
 
-    AutomationEntityListValueChanged(value) {
-        if (value) {
-            this.ObjectFieldCode = null;
-            this.PartnerObjectFieldCode = this.CurrentEntityPM.PartnerObjectFieldCode = value.ObjectFieldCode ? value.ObjectFieldCode:null;
-            this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];
 
-            if (!this.SelectedAutomationEntity) {
-                this.SelectedAutomationEntity =   this.AutomationEntityLists.filter(d => d.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId)[0];
-            }
-
-
-            this.FieldValue = "";
-            this.CurrentEntityPM.Value = "";
-
-            this.IsRefreshAutomationCondationField = !this.IsRefreshAutomationCondationField;
-            this.IsRefrachCustomField = !this.IsRefrachCustomField;
-            this.IsHideGeneralControl = true;
-
-            if (this.SelectedAutomationEntity) {
-                this.InitLOVFilters(this.SelectedAutomationEntity.ObjectTableId);
-            }
-
-
-        }
-    }
 
 
 
@@ -546,7 +369,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             if ((item.Code.indexOf("F") != -1 && this.SelectedOperator.Code.indexOf("F") == -1) || (item.Code.indexOf("F") == -1 && this.SelectedOperator.Code.indexOf("F") != -1)) {
                 this.FieldValue = "";
                 this.CurrentEntityPM.Value = "";
-                this.SelectedSystemVariableOperator = null;
             }
 
             this.SelectedOperator = item;
@@ -558,7 +380,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 this.IsHideGeneralControl = true;
                 this.FieldValue = "";
                 this.CurrentEntityPM.Value = "";
-                this.SelectedSystemVariableOperator = null;
 
             } else {
                 this.IsHideGeneralControl = false;
@@ -594,7 +415,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             if (this.SelectedOperator.Code.indexOf("F") != -1) {
                 this.IsCustomCombox = true;
                 if (this.SelectedCustomField) {
-                    this.CustomObjectFieldCode = this.FieldValue;
+                    this.CustomObjectFieldId = this.FieldValue;
                     this.InitCustomLOVFilters(this.SelectedCustomField);
                 }
           
@@ -625,11 +446,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
 
-    SystemVariableCondationValueChanged(value) {
-        this.AutomationHelper.SystemVariableCondationValueChanged(value);
-    }
-
-
     DateTypeListCondationValueChanged(value) {
 
         this.AutomationHelper.DateTypeListCondationValueChanged(value);
@@ -646,33 +462,13 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
 }
 
-export class Operator {
+class Operator {
     Code: string;
     Name: string;
 
     constructor(name: string, code: string) {
         this.Code = code;
         this.Name = name;
-
-    }
-
-
-}
-
-
-
-export class AutomationEntityList {
-
-    DisplayName: string;
-
-    Name: string;
-    ObjectTableId: string;
-    ObjectFieldCode: string;
-    constructor(name: string, objectTableId: string, objectFieldcode: string,displayName:string) {
-        this.Name = name;
-        this.ObjectTableId = objectTableId;
-        this.ObjectFieldCode = objectFieldcode;
-        this.DisplayName = displayName;
 
     }
 

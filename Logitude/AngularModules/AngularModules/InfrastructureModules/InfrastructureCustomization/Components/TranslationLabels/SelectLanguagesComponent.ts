@@ -6,7 +6,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {CommonDomainService, TranslationHeader} from '../../../../Common/Services/CommonDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SelectLanguagesComponent.html',
 })
 
@@ -59,9 +59,6 @@ export class SelectLanguagesComponent {
         logitudeWindow.IsFillScreen = true;
         logitudeWindow.Title = "Translate Labels";
         logitudeWindow.WindowArgs = this.selectedLanguageCode;
-        let windowArgs: any = {};
-        windowArgs.TranslationLanguageCode = this.selectedLanguageCode;
-        logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/TranslationLabels/TranslateLabelsComponent');
         this.CurrentSession.CloseCurrentWindow();
     }

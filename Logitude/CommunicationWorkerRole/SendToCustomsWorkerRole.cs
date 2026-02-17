@@ -4,7 +4,7 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -30,7 +30,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         int tenant = 0;
-                        queueservice = new DbQueueService(queueName, 0);
+                        queueservice = QueueServiceManager.GetQueueService(queueName, 0);
                         var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
                         LastActivity = DateTime.UtcNow;
 
@@ -50,86 +50,35 @@ namespace CommunicationWorkerRole
 
                                 if (document != null)
                                 {
+                                    byte[] fileXml = this.DownloadFile(document, tenant);
+                                    string fileBody = UTF8Encoding.UTF8.GetString(fileXml, 0, fileXml.Length);
+                                    
                                     try
                                     {
-                                        byte[] fileXml = this.DownloadFile(document, tenant);
-                                        string fileBody = UTF8Encoding.UTF8.GetString(fileXml, 0, fileXml.Length);
-
+                                        //string innerXml = fileBody;
+                                        //string myElement = "<RequestItem>";
+                                        //if (innerXml.Contains(myElement))
+                                        //{
+                                        //    int indexOfElement = innerXml.IndexOf(myElement);
+                                        //    int indexOfStart = indexOfElement + myElement.Length;
+                                        //    innerXml = innerXml.Insert(indexOfStart, "<ClientReference>ExecAPI</ClientReference>");
+                                        //}
+                                            
                                         using (APIWebClient client = new APIWebClient())
                                         {
-                                            if (tenant == 2264)
-                                            {
-                                                client.Url = "https://cargowise.customsforce.com/customsforcewebservice.asmx";
-                                            }
+                                            client.Url = "http://www.CustomsForce.com/customsforcewebservice.asmx";
 
-                                            else
-                                            {
-                                                client.Url = "https://customsforce.com/customsforcewebservice.asmx";
-                                            }
-
-                                            XmlDocument doc = new XmlDocument();
+                                            XmlDocument doc = new XmlDocument();                                            
                                             doc.LoadXml(fileBody);
-                                            System.Xml.XmlDocument xmlDocument = client.ExecAPI(doc);
+                                            XmlNode resp = client.ExecAPI(doc);
 
-                                            string StatusCode = null;
-                                            XmlNodeList xmlNodeList = xmlDocument.GetElementsByTagName("StatusCode");
-                                            foreach (XmlNode node in xmlNodeList)
-                                            {
-                                                if (node.Name == "StatusCode")
-                                                {
-                                                    StatusCode = node.InnerText;
-                                                    break;
-                                                }
-                                            }
-
-                                            if (StatusCode == "-1")
-                                            {
-                                                string errorText = null;
-                                                string errorIdentifier = null;
-                                                XmlNodeList errorItems = xmlDocument.GetElementsByTagName("ErrorItem");
-                                                foreach (XmlNode errorItem in errorItems)
-                                                {
-                                                    if (errorText == null && errorIdentifier == null)
-                                                    {
-                                                        foreach (XmlNode node in errorItem)
-                                                        {
-                                                            switch (node.Name)
-                                                            {
-                                                                case "ErrorText":
-                                                                    {
-                                                                        errorText = node.InnerText;
-                                                                        break;
-                                                                    }
-
-                                                                case "ErrorIdentifier":
-                                                                    {
-                                                                        errorIdentifier = node.InnerText;
-                                                                        break;
-                                                                    }                                                                                                                           
-                                                            }
-                                                        }
-                                                    }
-
-                                                    else
-                                                    {
-                                                        break;
-                                                    }
-                                                }
-
-                                                string error = errorText + " [ErrorIdentifier: " + errorIdentifier + "]";
-                                                this.UpdateShipment(log, error);
-                                                this.UpdateCommunicationLog(log, error);
-                                                communicationLogRep.Update(log);
-                                                context.SaveChanges();
-                                            }
-
-                                            else
-                                            {
-                                                this.UpdateShipment(log);
-                                                this.UpdateCommunicationLog(log);
-                                                communicationLogRep.Update(log);
-                                                context.SaveChanges();
-                                            }
+                                            log.CommunicationStatusTypeCode = "D";
+                                            log.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                            log.DoneDateUTC = DateTime.UtcNow;
+                                            log.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                            log.LastStatusDateUTC = DateTime.UtcNow;
+                                            communicationLogRep.Update(log);
+                                            context.SaveChanges();
 
                                             queueservice.Complete();
                                         }
@@ -137,14 +86,26 @@ namespace CommunicationWorkerRole
 
                                     catch (Exception ex)
                                     {
-                                        //queueservice.CompleteAsFailed();
+                                        log.CommunicationStatusTypeCode = "F";
+                                        log.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                        log.LastStatusDateUTC = DateTime.UtcNow;
+                                        log.ExceptionMessage = ex.Message + (ex.InnerException != null ? Environment.NewLine + "InnerException: " + ex.InnerException.Message : "");
 
-                                        string error = ex.Message + (ex.InnerException != null ? Environment.NewLine + "InnerException: " + ex.InnerException.Message : "");
-                                        this.UpdateShipment(log, error);
-                                        this.UpdateCommunicationLog(log, error);
+                                        ShipmentRepository rep = new ShipmentRepository(tenant);
+                                        Shipment myEntity = rep.GetSingleShipment(log.EntityId, tenant);
+                                        if(myEntity != null)
+                                        {
+                                            myEntity.LocalCustomsTransmissionsStatusError = log.ExceptionMessage;
+                                            myEntity.LocalCustomsTransmissionsStatusCode = "EROR";
+                                            myEntity.LocalCustomsTransmissionsStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                                            rep.Update(myEntity);
+                                            rep.SubmitChanges();
+                                        }
+
                                         communicationLogRep.Update(log);
-                                        context.SaveChanges();                                        
-                                                                              
+                                        context.SaveChanges();
+
                                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Send to Customs worker role", null, null);
                                         Thread.Sleep(10000);
                                     }
@@ -167,64 +128,72 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void UpdateCommunicationLog(CommunicationLog log, string exceptionMessage = null)
-        {
-            if (exceptionMessage == null)
-            {
-                log.CommunicationStatusTypeCode = "D";
-                log.DoneDate = TenantServerConfigration.GetCurrentDateTime(log.Tenant);
-                log.DoneDateUTC = DateTime.UtcNow;
-            }
-
-            else
-            {
-                log.CommunicationStatusTypeCode = "F";
-            }
-
-            log.ExceptionMessage = exceptionMessage;
-            log.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(log.Tenant);
-            log.LastStatusDateUTC = DateTime.UtcNow;
-        }
-
-        private void UpdateShipment(CommunicationLog log, string exceptionMessage = null)
-        {
-            ShipmentRepository rep = new ShipmentRepository(log.Tenant);
-            Shipment myEntity = rep.GetSingleShipment(log.EntityId, log.Tenant);
-            if (myEntity != null)
-            {
-                if (exceptionMessage == null)
-                {
-                    myEntity.LocalCustomsTransmissionsStatusCode = "SENT";
-                }
-
-                else
-                {
-                    myEntity.LocalCustomsTransmissionsStatusCode = "EROR";
-                }
-
-                myEntity.LocalCustomsTransmissionsStatusError = exceptionMessage;
-                myEntity.LocalCustomsTransmissionsStatusDate = TenantServerConfigration.GetCurrentDateTime(log.Tenant);
-                rep.Update(myEntity);
-                rep.SubmitChanges();
-            }
-        }
-
         private byte[] DownloadFile(Document document, int tenant)
         {
-            BlobFileInfo fileInfo = new BlobFileInfo()
+            try
             {
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Extension = document.Extension,
-                Tenant = tenant,
-            };
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                };
+                
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                byte[]  datainByte = storageservice.Read(fileInfo);
+                return datainByte;               
+            }
 
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            byte[] datainByte = storageservice.Read(fileInfo);
-            return datainByte;
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Download File", null, null);
+                Thread.Sleep(10000);
+                return null;
+            }
         }
 
+        private void SetDocNode(XmlDocument root, string nodePath, string value)
+        {
+            XmlNode current = root.DocumentElement;
+            XmlNode next;
 
+            foreach (string nodeName in nodePath.Split(new char[] { '/' }))
+            {
+                next = current.SelectSingleNode(nodeName);
+                if (next != null)
+                {
+                    current = next;
+                    continue;
+                }
+                current = current.AppendChild(root.CreateNode(XmlNodeType.Element, nodeName, root.NamespaceURI));
+            }
+
+            if (!string.IsNullOrEmpty(value) && current != null)
+            {
+                current.InnerXml = value;
+            }
+        }
+
+        //private string GetDocNode(XmlNode root, string xpath)
+        //{
+        //    XmlNode node = root.SelectSingleNode(xpath);
+        //    if (node == null)
+        //    {
+        //        return string.Empty;
+        //    }
+        //    return node.InnerXml;
+        //}
+
+        //private string Print(XmlNode node)
+        //{
+        //    using (StringWriter sw = new StringWriter())
+        //    {
+        //        node.WriteTo(new XmlTextWriter(sw) { Indentation = 1, Formatting = Formatting.Indented });
+        //        return sw.ToString();
+        //    }
+
+        //}
     }
 
     /// <summary>
@@ -250,10 +219,11 @@ namespace CommunicationWorkerRole
         /// <param name="request">XML request - see xsd details for ExecAPI</param>
         /// <returns>XML response from the API server</returns>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.customsware.com/service/CustomsForceWebService/ExecAPI", RequestNamespace = "http://www.customsware.com/service/CustomsForceWebService", ResponseNamespace = "http://www.customsware.com/service/CustomsForceWebService", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public System.Xml.XmlDocument ExecAPI(System.Xml.XmlNode request)
+        public System.Xml.XmlNode ExecAPI(System.Xml.XmlNode request)
         {
-            object[] results = this.Invoke("ExecAPI", new object[] { request });
-            return ((System.Xml.XmlDocument)(results[0]));
+            object[] results = this.Invoke("ExecAPI", new object[] {
+                        request});
+            return ((System.Xml.XmlNode)(results[0]));
         }
 
     }

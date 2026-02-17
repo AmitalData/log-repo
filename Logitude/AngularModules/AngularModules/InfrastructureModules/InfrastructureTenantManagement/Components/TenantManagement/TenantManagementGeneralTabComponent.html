@@ -2,9 +2,9 @@
 <style type="text/css">
     .FieldSet {
         display: block;
-        /*margin-left: 5px;
+        margin-left: 5px;
         margin-top: 5px;
-        margin-bottom: 5px;*/
+        margin-bottom: 5px;
         border-width: 1px;
         border-color: gray;
         border-style: Solid;
@@ -70,7 +70,6 @@
                             <tr>
                                 <td style="width:410px;">
                                     <table>
-
                                         <!--General Details-->
                                         <tr style="height:1px;">
                                             <td>
@@ -133,16 +132,6 @@
 
                                                                         <td>
                                                                             <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsINTTRAStockPrepaid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'IsContainerTrackingPrepaid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsContainerTrackingPrepaid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                         </td>
                                                                     </tr>
 
@@ -238,145 +227,45 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                    <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
 
-        <td>
-            <ComboBox [ItemsSource]="TechnologiesList" [Binding]="'Name'" [SelectedItem]="SelectedTechnology" (SelectedItemChanged)="SelectedTechnology = $event"></ComboBox>
-        </td>
-    </tr>-->
-                                                                    <!-- <tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
+                                                                        <td>
+                                                                            <ComboBox [ItemsSource]="TechnologiesList" [Binding]="'Name'" [SelectedItem]="SelectedTechnology" (SelectedItemChanged)="SelectedTechnology = $event"></ComboBox>
+                                                                        </td>
+                                                                    </tr>
 
-        <td>
-            <LogDatePicker [HideColumns]="true" style="height:100%;width:100%" [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-        </td>
-    </tr> -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [HideColumns]="true" style="height:100%;width:100%" [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr>
 
                                                                     <tr class="FormFieldRow">
                                                                         <td>
                                                                             <LogLabel [ObjectFieldName]="'ChangeHeaderColor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
-                                                                        <td>
-
-                                                                            <table>
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td style="width: 20px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'ChangeHeaderColor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                    </td>
-            
-                                                                                    <td>
-                                                                                        <input [disabled]="!ChangeHeaderColor" type="color" [(ngModel)]="HeaderColor" class="colorPicker" id="color" value="" >
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                            
-                                                                            
-                                                                        </td>
-                                                                       
-                                                                    </tr>
-
-
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'IsTestTenant'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
 
                                                                         <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsTestTenant'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr *ngIf="tenantLoginPolicyPM && IsLogBoxTenant" class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [Text]="'Keep User Logged In'" [ObjectFieldName]="'KeepUserLoggedIn'" [ObjectTableName]="'TenantLoginPolicy'" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'KeepUserLoggedIn'" [ObjectTableName]="'TenantLoginPolicy'" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-
-                                                                    <tr *ngIf="IsLogBoxTenant" class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'IsHybrid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsHybrid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <!-- ScheduledTasksLimitPerReport -->
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'ScheduledTasksLimitPerReport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogTextBox [ObjectFieldName]="'ScheduledTasksLimitPerReport'" [Text]="ScheduledTasksLimitPerReport" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <!-- WhatsApp Messaging Phone Number -->
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogTextBox [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [Text]="WhatsAppMessagingPhoneNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                     <!-- MinutsTimeOutSession -->
-                                                                     <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'MinutsTimeOutSession'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-                                                                    
-                                                                        <td>
-                                                                            <LogTextBox  [InputType]="'integer'" [ObjectFieldName]="'MinutsTimeOutSession'" [Text]="MinutsTimeOutSession" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-                                                                    
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    
-                                                                        <td>
-                                                                            <div></div>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'ChangeHeaderColor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                         </td>
                                                                     </tr>
 
                                                                     <!--<tr class="FormFieldRow">
-        <td>
-            <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
-        </td>
+                                            <td>
+                                                <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
+                                            </td>
 
-        <td>
-            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-        </td>
-    </tr>-->
+                                            <td>
+                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            </td>
+                                        </tr>-->
                                                                 </table>
                                                             </td>
 
@@ -389,7 +278,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr style="height:5px;">
+                                        <tr style="height:10px;">
                                             <td>
                                                 <div></div>
                                             </td>
@@ -446,7 +335,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr style="height:5px;">
+                                        <tr style="height:10px;">
                                             <td>
                                                 <div></div>
                                             </td>
@@ -505,12 +394,6 @@
                                             </td>
                                         </tr>
 
-                                        <tr style="height:5px;">
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
                                         <!--Parent Tenant-->
                                         <tr style="height:1px;">
                                             <td>
@@ -540,14 +423,494 @@
                                                                             <ComboBox [MaxHeight]="95" [ItemsSource]="ParentTenantsList" [Binding]="'DisplyText'" [SelectedItem]="SelectedParentTenant" (SelectedItemChanged)="SelectedParentTenant = $event" [IsDisabled]="!ParentComboEnabled"></ComboBox>
                                                                         </td>
                                                                     </tr>
+                                                                </table>
+                                                            </td>
 
+                                                            <td style="width:15px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </fieldset>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td style="width:15px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:410px;">
+                                    <table>
+                                        <!--Subscription Details-->
+                                        <tr>
+                                            <td>
+                                                <fieldset class="FieldSet">
+                                                    <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Subscription Details</legend>
+
+                                                    <table style="margin:5px;">
+                                                        <tr>
+                                                            <td>
+                                                                <table>
                                                                     <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'NoPaymentForChildTenants'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        <td style="width: 155px;">
+                                                                            <LogLabel [ObjectFieldName]="'IsMultiPackage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
 
                                                                         <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'NoPaymentForChildTenants'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                            <LogCheckBox [ObjectFieldName]="'IsMultiPackage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow" *ngIf="!IsMultiPackage">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'NumberOfUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'NumberOfUsers'" [Text]="NumberOfUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'FreeUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'FreeUsers'" [Text]="FreeUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow" *ngIf="!IsMultiPackage">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'PackageCode'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Package'"
+                                                                                    [DependencyFilter1Value]="'PK'">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow" *ngIf="IsMultiPackage">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="padding-right:36px;">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="MultiPackageText" style="border:1px solid #ccc9c9;border-radius:3px;">
+                                                                                            <div style="padding-left:1px;display:inline-block;vertical-align:middle;">
+                                                                                                <span style="padding-left:5px;vertical-align:middle;">Multi-package</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height:10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Packages-->
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="Box">
+                                                                                            <table>
+                                                                                                <tr class="BoxHeader">
+                                                                                                    <td>
+                                                                                                        <label>Packages</label>
+                                                                                                    </td>
+                                                                                                    <td style="width: 20px; padding: 3px;">
+                                                                                                        <IconButton [Name]="'Add'" [IsEnabled]="IsMultiPackage" [IsSmall]="true" (click)="AddPackageClicked('PK')"></IconButton>
+                                                                                                    </td>
+                                                                                                    <td style="width:5px;">
+                                                                                                        <div></div>
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                <tr style="height:150px;">
+                                                                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
+                                                                                                        <div class="MediaFill">
+                                                                                                            <div class="SimpleGridView">
+                                                                                                                <div class="SimpleGridViewHeader">
+                                                                                                                    <table>
+                                                                                                                        <tr>
+                                                                                                                            <td style="width: 210px; min-width: 210px; max-width: 210px;">Name</td>
+                                                                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Number Of Users</td>
+                                                                                                                            <td class="LastChild">
+                                                                                                                                <div></div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+                                                                                                                </div>
+
+                                                                                                                <div class="SimpleGridViewBody">
+                                                                                                                    <table>
+                                                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of PackagesList">
+                                                                                                                            <td class="CellStretched" style="width: 210px; min-width: 210px; max-width: 210px;">
+                                                                                                                                {{item.PackageName}}
+                                                                                                                            </td>
+
+                                                                                                                            <td class="CellStretched" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                                                                                                {{item.NumberOfUsers}}
+                                                                                                                            </td>
+
+                                                                                                                            <td class="CellTools">
+                                                                                                                                <span class="CellSeparator"></span>
+                                                                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)" [disabled]="!IsEditable"></IconButton>
+                                                                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)" [disabled]="!IsEditable"></IconButton>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+
+                                                                                                                        <tr>
+                                                                                                                            <td colspan="3">
+                                                                                                                                <div></div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height:10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!--Add-Ons-->
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="Box">
+                                                                                            <table>
+                                                                                                <tr class="BoxHeader">
+                                                                                                    <td>
+                                                                                                        <label>Add-Ons</label>
+                                                                                                    </td>
+                                                                                                    <td style="width: 20px; padding: 3px;">
+                                                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddPackageClicked('AD')"></IconButton>
+                                                                                                    </td>
+                                                                                                    <td style="width:5px;">
+                                                                                                        <div></div>
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                <tr style="height:150px;">
+                                                                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
+                                                                                                        <div class="MediaFill">
+                                                                                                            <div class="SimpleGridView">
+                                                                                                                <div class="SimpleGridViewHeader">
+                                                                                                                    <table>
+                                                                                                                        <tr>
+                                                                                                                            <td style="width: 330px; min-width: 330px; max-width: 330px;">Name</td>
+                                                                                                                            <td class="LastChild">
+                                                                                                                                <div></div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+                                                                                                                </div>
+
+                                                                                                                <div class="SimpleGridViewBody">
+                                                                                                                    <table>
+                                                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of AddOnsList">
+                                                                                                                            <td class="CellStretched" style="width: 330px; min-width: 330px; max-width: 330px;">
+                                                                                                                                {{item.PackageName}}
+                                                                                                                            </td>
+
+                                                                                                                            <td class="CellTools">
+                                                                                                                                <span class="CellSeparator"></span>
+                                                                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditAddOn(item)"></IconButton>
+                                                                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteAddOn(item)"></IconButton>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+
+                                                                                                                        <tr>
+                                                                                                                            <td colspan="2">
+                                                                                                                                <div></div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:15px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </fieldset>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:10px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!--Billing Details-->
+                                        <tr>
+                                            <td>
+                                                <fieldset class="FieldSet">
+                                                    <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Billing Details</legend>
+
+                                                    <table style="margin:5px;">
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 155px;">
+                                                                            <LogLabel [ObjectFieldName]="'IsRecurring'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [ObjectFieldName]="'IsRecurring'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'RecurringPeriodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'RecurringPeriodCode'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'RecurringPeriod'">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'FirstPaymentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'FirstPaymentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'PaidUntilDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'PaidUntilDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'PaymentCurrencyCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'PaymentCurrencyCode'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'PaymentCurrency'">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'PaymentChannelCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'PaymentChannelCode'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'PaymentChannel'">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'PaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'PaymentMethodCode'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'PaymentMethod'">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+                                                                   
+
+                                                                    <tr class="FormFieldRow" *ngIf="false">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'MainContract'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'MainContract'" [Text]="MainContract" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'LicensePrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'LicensePrice'" [Text]="LicensePrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                  
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BillingByLogitude'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="float:left; top:10px;">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <RadioButton [Name]="'BillingRadio'" [IsChecked]="BillingByLogitude" (Checked)="SetBillingByLogitude(true)" [Text]="'Yes'"></RadioButton>
+                                                                                    </td>
+
+                                                                                    <td style="width:5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <RadioButton [Name]="'BillingRadio'" [IsChecked]="!BillingByLogitude" (Checked)="SetBillingByLogitude(false)" [Text]="'No'"></RadioButton>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'ResellerCommission'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'ResellerCommission'" [Text]="ResellerCommission" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:15px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </fieldset>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:10px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!--Temporal Package Details-->
+                                        <tr>
+                                            <td>
+                                                <fieldset class="FieldSet">
+                                                    <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Temporal Package Details</legend>
+
+                                                    <table style="margin:5px;">
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 155px;">
+                                                                            <LogLabel [ObjectFieldName]="'TemporalPackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'TemporalPackageCode'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Package'"
+                                                                                    [DependencyFilter2Value]="false">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'TemporalStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'TemporalStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'TemporalEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'TemporalEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -573,853 +936,213 @@
                                 <td style="width:15px;">
                                     <div></div>
                                 </td>
-
-                                <td style="width:800px;">
+                                <td style="width:410px;">
                                     <table>
+                                        <!--Contract Fields-->
+                                        <tr>
+                                            <td style="vertical-align:top">
+                                                <fieldset class="FieldSet">
+                                                    <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Contracts</legend>
 
-                                        <!--Subscription Details-->
-                                        <tr style="height: 515px;">
-                                            <td>
-                                                <div class="MediaFill">
-                                                    <fieldset class="FieldSet">
-                                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Subscription Details</legend>
-
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
-
-                                                                <td>
-
-                                                                    <table>
-
-                                                                        <!-- RadioButton -->
-                                                                        <tr style="height: 20px;">
-                                                                            <td>
-                                                                                <table>
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <table>
-                                                                                                <tr>
-                                                                                                    <td style="width: 1px;">
-                                                                                                        <RadioButton [Name]="'PackageRadio'" [IsChecked]="IsSingleMultiPackage" (Checked)="SetMainAdditionalPackageApplied(false)" [Text]="'Single/Multi Package'" [IsEnabled]="!IsMainAdditionalPackageApplied"></RadioButton>
-                                                                                                    </td>
-
-                                                                                                    <td style="width: 15px;">
-                                                                                                        <div></div>
-                                                                                                    </td>
-
-                                                                                                    <td style="width: 1px;">
-                                                                                                        <RadioButton [Name]="'PackageRadio'" [IsChecked]="IsMainAdditionalPackage" (Checked)="SetMainAdditionalPackageApplied(true)" [Text]="'Main/Additional Package'" [IsEnabled]="!IsMainAdditionalPackageApplied"></RadioButton>
-                                                                                                    </td>
-
-                                                                                                    <td>
-                                                                                                        <div></div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr style="height: 5px;">
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr class="FormFieldRow">
-                                                                            <td>
-                                                                                <table>
-                                                                                    <tr>
-                                                                                        <td style="width:20px;">
-                                                                                            <LogCheckBox [ObjectFieldName]="'IsMultiPackage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <LogLabel [Replace]="':'" [ObjectFieldName]="'IsMultiPackage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <!-- Fields -->
-                                                                        <tr style="height: 35px;" *ngIf="IsSingleMultiPackage">
-                                                                            <td>
-                                                                                <table>
-                                                                                    <tr>
-                                                                                        <td style="width: 200px;">
-                                                                                            <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [Text]="'Main Package'"></LogLabel>
-                                                                                        </td>
-
-                                                                                        <td style="width: 10px;">
-                                                                                            <div></div>
-                                                                                        </td>
-
-                                                                                        <td style="width: 110px;">
-                                                                                            <LogLabel [ObjectFieldName]="'NumberOfUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
-                                                                                        </td>
-
-                                                                                        <td style="width: 10px;">
-                                                                                            <div></div>
-                                                                                        </td>
-
-                                                                                        <td style="width: 110px;">
-                                                                                            <LogLabel [ObjectFieldName]="'FreeUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
-                                                                                        </td>
-
-                                                                                        <td style="width: 10px;">
-                                                                                            <div></div>
-                                                                                        </td>
-
-                                                                                        <td style="width: 110px;">
-                                                                                            <LogLabel [ObjectFieldName]="'LicensePrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
-                                                                                        </td>
-
-                                                                                        <td style="width: 10px;">
-                                                                                            <div></div>
-                                                                                        </td>
-
-                                                                                        <td style="width: 110px;">
-                                                                                            <LogLabel [ObjectFieldName]="'TotalPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    <tr style="height: 22px;">
-                                                                                        <td *ngIf="MainAdditionalPackageApplied || !IsMultiPackage">
-                                                                                            <LogLov [ObjectFieldName]="'PackageCode'"
-                                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                                    [DataContext]="DataContext"
-                                                                                                    [LookUpTableName]="'Package'"
-                                                                                                    [DependencyFilter1Value]="'PK'"
-                                                                                                    [HideColumns]="true">
-                                                                                            </LogLov>
-                                                                                        </td>
-
-                                                                                        <td *ngIf="!MainAdditionalPackageApplied && IsMultiPackage">
-                                                                                            <div class="MultiPackageText" style="border:1px solid #ccc9c9;border-radius:3px;">
-                                                                                                <div style="padding-left:1px;display:inline-block;vertical-align:middle;">
-                                                                                                    <span style="padding-left:5px;vertical-align:middle;">Multi Package</span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <LogTextBox [ObjectFieldName]="'NumberOfUsers'" [Text]="NumberOfUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <LogTextBox [ObjectFieldName]="'FreeUsers'" [Text]="FreeUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <LogTextBox [ObjectFieldName]="'LicensePrice'" [Text]="LicensePrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <LogTextBox [ObjectFieldName]="'TotalPrice'" [Text]="TotalPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                        </td>
-
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr>
-                                                                            <td>
-                                                                                <table>
-
-                                                                                    <!-- Packages-->
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <table>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <div class="Box">
-                                                                                                            <table>
-                                                                                                                <tr class="BoxHeader">
-                                                                                                                    <td>
-                                                                                                                        <table>
-                                                                                                                            <tr>
-                                                                                                                                <td>
-                                                                                                                                    <label>Additional Packages</label>
-                                                                                                                                </td>
-
-                                                                                                                                <td style="width: 20px; padding: 3px;">
-                                                                                                                                    <IconButton [IsEnabled]="IsMultiPackage" [Name]="'Add'" [IsSmall]="true" (click)="AddPackageClicked('PK')"></IconButton>
-                                                                                                                                </td>
-
-                                                                                                                                <td style="width:5px;">
-                                                                                                                                    <div></div>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                        </table>
-                                                                                                                    </td>
-                                                                                                                </tr>
-
-                                                                                                                <tr style="height:150px;">
-                                                                                                                    <td style="padding-left: 5px; padding-right: 5px;">
-                                                                                                                        <div class="MediaFill">
-                                                                                                                            <div class="SimpleGridView">
-                                                                                                                                <div class="SimpleGridViewHeader">
-                                                                                                                                    <table>
-                                                                                                                                        <tr>
-                                                                                                                                            <td style="width: 210px; min-width: 210px; max-width: 210px;">Name</td>
-                                                                                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Number Of Users</td>
-                                                                                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Free Users</td>
-                                                                                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Price</td>
-                                                                                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Total Price</td>
-                                                                                                                                            <td class="LastChild">
-                                                                                                                                                <div></div>
-                                                                                                                                            </td>
-                                                                                                                                        </tr>
-                                                                                                                                    </table>
-                                                                                                                                </div>
-
-                                                                                                                                <div class="SimpleGridViewBody">
-                                                                                                                                    <table>
-                                                                                                                                        <tr [ngStyle]="{background: item.Background}" class="SimpleGridViewRow" *ngFor="let item of PackagesList">
-                                                                                                                                            <td class="GridViewCell" style="width: 210px; min-width: 210px; max-width: 210px;">
-                                                                                                                                                {{item.PackageNameDisplay}}
-                                                                                                                                            </td>
-
-                                                                                                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
-                                                                                                                                                {{item.NumberOfUsers}}
-                                                                                                                                            </td>
-
-                                                                                                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
-                                                                                                                                                {{item.FreeUsers}}
-                                                                                                                                            </td>
-
-                                                                                                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
-                                                                                                                                                {{item.Price}}
-                                                                                                                                            </td>
-
-                                                                                                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
-                                                                                                                                                {{item.TotalPrice}}
-                                                                                                                                            </td>
-
-                                                                                                                                            <!-- [disabled]="!IsEditable" -->
-                                                                                                                                            <td class="CellTools">
-                                                                                                                                                <span class="CellSeparator"></span>
-                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage || item.IsMainPackage" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
-                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage && !item.IsMainPackage" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
-                                                                                                                                            </td>
-                                                                                                                                        </tr>
-
-                                                                                                                                        <tr>
-                                                                                                                                            <td colspan="3">
-                                                                                                                                                <div></div>
-                                                                                                                                            </td>
-                                                                                                                                        </tr>
-                                                                                                                                    </table>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                    </td>
-                                                                                                                </tr>
-
-                                                                                                            </table>
-                                                                                                        </div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    <tr style="height:2px;">
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    <tr style="height: 25px;">
-                                                                                        <td>
-                                                                                            <div class="MediaFill" style="background: #E8F7FF; border: 1px solid #85CBED;">
-                                                                                                <table>
-                                                                                                    <tr>
-                                                                                                        <td style="width: 210px; padding-left: 4px;">Totals</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{TotalNumberOfUsers}}</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{TotalFreeUsers}}</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{AveragePrice}} (Average)</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{TotalPaymentamount}}</td>
-                                                                                                        <td>
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    <tr style="height:5px;">
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    <!--Add-Ons-->
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <table>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <div class="Box">
-                                                                                                            <table>
-                                                                                                                <tr class="BoxHeader">
-                                                                                                                    <td>
-                                                                                                                        <label>Add-Ons</label>
-                                                                                                                    </td>
-                                                                                                                    <td style="width: 20px; padding: 3px;">
-                                                                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddPackageClicked('AD')"></IconButton>
-                                                                                                                    </td>
-                                                                                                                    <td style="width:5px;">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                </tr>
-
-                                                                                                                <tr style="height:150px;">
-                                                                                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
-                                                                                                                        <div class="MediaFill">
-                                                                                                                            <div class="SimpleGridView">
-                                                                                                                                <div class="SimpleGridViewHeader">
-                                                                                                                                    <table>
-                                                                                                                                        <tr>
-                                                                                                                                            <td>Name</td>
-                                                                                                                                            <td style="width: 100px; min-width: 100px; max-width: 100px;" class="LastChild">
-                                                                                                                                                <div></div>
-                                                                                                                                            </td>
-                                                                                                                                        </tr>
-                                                                                                                                    </table>
-                                                                                                                                </div>
-
-                                                                                                                                <div class="SimpleGridViewBody">
-                                                                                                                                    <table>
-                                                                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of AddOnsList">
-                                                                                                                                            <td class="CellStretched">
-                                                                                                                                                {{item.PackageName}}
-                                                                                                                                            </td>
-
-                                                                                                                                            <td style="width: 100px; min-width: 100px; max-width: 100px;" class="CellTools">
-                                                                                                                                                <span class="CellSeparator"></span>
-                                                                                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditAddOn(item)"></IconButton>
-                                                                                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteAddOn(item)"></IconButton>
-                                                                                                                                            </td>
-                                                                                                                                        </tr>
-
-                                                                                                                                        <tr>
-                                                                                                                                            <td colspan="2">
-                                                                                                                                                <div></div>
-                                                                                                                                            </td>
-                                                                                                                                        </tr>
-                                                                                                                                    </table>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                            </table>
-                                                                                                        </div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    <tr style="height:5px;">
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-
-                                                                </td>
-
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </fieldset>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr style="height:5px;">
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                        <tr style="height: 1px;">
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="vertical-align: top;">
-
-                                                            <!-- Billing Details -->
-                                                            <fieldset class="FieldSet">
-                                                                <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Billing Details</legend>
-
-                                                                <table style="margin:5px;">
-                                                                    <tr>
+                                                    <table style="margin:5px;">
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
                                                                         <td>
-                                                                            <table>
-
-                                                                                <!-- IsRecurring -->
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td style="width: 155px;">
-                                                                                        <LogLabel [ObjectFieldName]="'IsRecurring'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogCheckBox [ObjectFieldName]="'IsRecurring'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- RecurringPeriodCode -->
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'RecurringPeriodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'RecurringPeriodCode'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [LookUpTableName]="'RecurringPeriod'">
-                                                                                        </LogLov>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- FirstPaymentDate -->
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'FirstPaymentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogDatePicker [ObjectFieldName]="'FirstPaymentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- PaidUntilDate -->
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'PaidUntilDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogDatePicker [ObjectFieldName]="'PaidUntilDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- PaymentCurrencyCode -->
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'PaymentCurrencyCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'PaymentCurrencyCode'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [LookUpTableName]="'PaymentCurrency'">
-                                                                                        </LogLov>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- PaymentChannelCode -->
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'PaymentChannelCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'PaymentChannelCode'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [LookUpTableName]="'PaymentChannel'">
-                                                                                        </LogLov>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- PaymentMethodCode -->
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'PaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'PaymentMethodCode'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [LookUpTableName]="'PaymentMethod'">
-                                                                                        </LogLov>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- MainContract -->
-                                                                                <tr class="FormFieldRow" *ngIf="false">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'MainContract'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogTextBox [ObjectFieldName]="'MainContract'" [Text]="MainContract" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- BillingByLogitude -->
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'BillingByLogitude'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td style="float:left; top:10px;">
-                                                                                        <table>
-                                                                                            <tr>
-                                                                                                <td>
-                                                                                                    <RadioButton [Name]="'BillingRadio'" [IsChecked]="BillingByLogitude" (Checked)="SetBillingByLogitude(true)" [Text]="'Yes'"></RadioButton>
-                                                                                                </td>
-
-                                                                                                <td style="width:5px;">
-                                                                                                    <div></div>
-                                                                                                </td>
-
-                                                                                                <td>
-                                                                                                    <RadioButton [Name]="'BillingRadio'" [IsChecked]="!BillingByLogitude" (Checked)="SetBillingByLogitude(false)" [Text]="'No'"></RadioButton>
-                                                                                                </td>
-
-                                                                                                <td>
-                                                                                                    <div></div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- ResellerCommission -->
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'ResellerCommission'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogTextBox [ObjectFieldName]="'ResellerCommission'" [Text]="ResellerCommission" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapAccount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
 
-                                                                        <td style="width:15px;">
-                                                                            <div></div>
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapAccount'" [Text]="BluesnapAccount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                         </td>
                                                                     </tr>
-                                                                </table>
-                                                            </fieldset>
-                                                        </td>
 
-                                                        <td style="width: 15px;">
-                                                            <div></div>
-                                                        </td>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
 
-                                                        <td style="vertical-align: top;">
-                                                            <!-- Contract -->
-                                                            <fieldset class="FieldSet">
-                                                                <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Contracts</legend>
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
 
-                                                                <table style="margin:5px;">
-                                                                    <tr>
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapContractQTYs'" [Text]="BluesnapContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapCRMContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapCRMContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapCRMContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapCRMContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
+
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapCRMContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapCRMContractQTYs'" [Text]="BluesnapCRMContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapEAWBContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapEAWBContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapEAWBContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapEAWBContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapEAWBContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapEAWBContractQTYs'" [Text]="BluesnapEAWBContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapEAWBSContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapEAWBSContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapEAWBSContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapEAWBSContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapEAWBSContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapEAWBSContractQTYs'" [Text]="BluesnapEAWBSContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapOneTimeContract'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
                                                                         <td>
                                                                             <table>
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapAccount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapAccount'" [Text]="BluesnapAccount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'BluesnapContractId'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [SelectedValue]="BluesnapContractId"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [QueryFilterItems]="BluesnapContractIdFilterItems"
-                                                                                                [LookUpTableName]="'BluesnapContract'">
-                                                                                        </LogLov>
-                                                                                    </td>
-
-                                                                                    <td style="width:50px">
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td style="width:70px">
-                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapContractQTYs'" [Text]="BluesnapContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                </tr>
-
-
-
-
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapCRMContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'BluesnapCRMContractId'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [SelectedValue]="BluesnapCRMContractId"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [QueryFilterItems]="BluesnapCRMContractIdFilterItems"
-                                                                                                [LookUpTableName]="'BluesnapContract'">
-                                                                                        </LogLov>
-                                                                                    </td>
-
-
-                                                                                    <td style="width:50px">
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapCRMContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td style="width:70px">
-                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapCRMContractQTYs'" [Text]="BluesnapCRMContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-
-                                                                                </tr>
-
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapEAWBContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'BluesnapEAWBContractId'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [SelectedValue]="BluesnapEAWBContractId"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [QueryFilterItems]="BluesnapEAWBContractIdFilterItems"
-                                                                                                [LookUpTableName]="'BluesnapContract'">
-                                                                                        </LogLov>
-                                                                                    </td>
-
-                                                                                    <td style="width:50px">
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapEAWBContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td style="width:70px">
-                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapEAWBContractQTYs'" [Text]="BluesnapEAWBContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                </tr>
-
-
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapEAWBSContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'BluesnapEAWBSContractId'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [SelectedValue]="BluesnapEAWBSContractId"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [QueryFilterItems]="BluesnapEAWBSContractIdFilterItems"
-                                                                                                [LookUpTableName]="'BluesnapContract'">
-                                                                                        </LogLov>
-                                                                                    </td>
-
-                                                                                    <td style="width:50px">
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapEAWBSContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td style="width:70px">
-                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapEAWBSContractQTYs'" [Text]="BluesnapEAWBSContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                </tr>
-
-
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapOneTimeContract'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <table>
-                                                                                            <tr>
-                                                                                                <td>
-                                                                                                    <LogTextBox [ObjectFieldName]="'BluesnapOneTimeContract'" [DataContext]="DataContext"
-                                                                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                                                                </td>
-
-                                                                                                <td style="width:36px"></td>
-                                                                                            </tr>
-                                                                                        </table>
-
-                                                                                    </td>
-
-                                                                                    <td style="width:50px">
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapOneTimeContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td style="width:70px">
-                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapOneTimeContractQTYs'" [Text]="BluesnapOneTimeContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                </tr>
-
-
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapInttraStockContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'BluesnapInttraStockContractId'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [SelectedValue]="BluesnapInttraStockContractId"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [QueryFilterItems]="BluesnapInttraStockContractIdFilterItems"
-                                                                                                [LookUpTableName]="'BluesnapContract'">
-                                                                                        </LogLov>
-                                                                                    </td>
-
-                                                                                    <td style="width:50px">
-                                                                                        <LogLabel [ObjectFieldName]="'BluesnapInttraStockContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td style="width:70px">
-                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapInttraStockContractQTYs'" [Text]="BluesnapInttraStockContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                </tr>
-
-
-
-                                                                                <tr style="height:10px;">
-                                                                                    <td>
-                                                                                        <div></div>
-                                                                                    </td>
-                                                                                </tr>
-
                                                                                 <tr>
                                                                                     <td>
-                                                                                        <div></div>
+                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapOneTimeContract'" [DataContext]="DataContext"
+                                                                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                                                     </td>
-                                                                                </tr>
 
+                                                                                    <td style="width:36px"></td>
+                                                                                </tr>
                                                                             </table>
+
                                                                         </td>
 
-                                                                        <td style="width:15px;">
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapOneTimeContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapOneTimeContractQTYs'" [Text]="BluesnapOneTimeContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapInttraStockContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapInttraStockContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapInttraStockContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapInttraStockContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapInttraStockContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapInttraStockContractQTYs'" [Text]="BluesnapInttraStockContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+
+                                                                    <tr style="height:10px;">
+                                                                        <td>
                                                                             <div></div>
                                                                         </td>
                                                                     </tr>
-                                                                </table>
-                                                            </fieldset>
-                                                        </td>
-                                                    </tr>
 
-                                                    <tr>
-                                                        <td style="vertical-align: top;">
-                                                            <!-- Temporal Package Details -->
-                                                            <fieldset class="FieldSet">
-                                                                <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Temporal Package Details</legend>
-
-                                                                <table style="margin:5px;">
                                                                     <tr>
                                                                         <td>
-                                                                            <table>
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td style="width: 155px;">
-                                                                                        <LogLabel [ObjectFieldName]="'TemporalPackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'TemporalPackageCode'"
-                                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [LookUpTableName]="'Package'"
-                                                                                                [DependencyFilter2Value]="false">
-                                                                                        </LogLov>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'TemporalStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogDatePicker [ObjectFieldName]="'TemporalStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'TemporalEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogDatePicker [ObjectFieldName]="'TemporalEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-
-                                                                        <td style="width:15px;">
                                                                             <div></div>
                                                                         </td>
                                                                     </tr>
+
                                                                 </table>
-                                                            </fieldset>
-                                                        </td>
+                                                            </td>
 
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
+                                                            <td style="width:15px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </fieldset>
+                                            </td>
+                                        </tr>
 
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                        <tr style="height:10px;">
+                                            <td>
+                                                <div></div>
                                             </td>
                                         </tr>
 

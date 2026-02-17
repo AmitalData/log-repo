@@ -125,16 +125,7 @@ export class DateTimePipe {
                     }
                     case "DTLL12": { //Scheduler
                         // Today:Yesterday:Tomorrow:ShortDate + hh:mm:ss (AM/PM)
-                        myResult = myFormats.DateString + " " + myFormats.ShortTimeString12;
-                        break;
-                    }
-                    case "SMD": { // time management pipe 'day/month'
-                        myResult = AppTool.PadLeft(myFormats.DateParts.Day + "", 2, "0") + "." + AppTool.PadLeft(myFormats.DateParts.Month + "", 2, "0") + "." + myFormats.DateParts.Year.toString().substr(-2);
-                        break;
-                    }
-
-                    case "MY": { // time management pipe 'day/month'
-                        myResult = myFormats.DateParts.Month + "/" + myFormats.DateParts.Year;
+                        myResult = myFormats.DateString + " " + myFormats.LocalTimeString;
                         break;
                     }
                     default: {

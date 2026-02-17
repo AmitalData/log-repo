@@ -8,7 +8,7 @@ import {FVRWebService, FVASimulatorResult} from '../../../../Infrastructure/Serv
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './XMLFlightsSimulatorComponent.html',
 })
 

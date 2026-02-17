@@ -9,7 +9,6 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
-using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.WcfApi
@@ -28,13 +27,11 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
-                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<CustomerAdditionalServiceDW>();
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("CustomerAdditionalService", "READ", tenant);
                 CustomerAdditionalServiceQuery customerAdditionalServiceQuery = new CustomerAdditionalServiceQuery(tenant);
-                return customerAdditionalServiceQuery.GetCustomerAdditionalServicesDW(tenant);
 
+                return customerAdditionalServiceQuery.GetCustomerAdditionalServicesDW(tenant);
             }
 
             catch (Exception ex)

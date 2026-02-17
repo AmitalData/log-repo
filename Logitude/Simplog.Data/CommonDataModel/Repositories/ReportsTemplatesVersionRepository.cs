@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-    
+        public ReportsTemplatesVersionRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public ReportsTemplatesVersionRepository(ICommonDataContext context)
         {
@@ -129,12 +132,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
                  select grp.OrderByDescending(d => d.Version).FirstOrDefault()).ToList();
         }
 
-        public List<ReportsTemplatesVersion> GetModifiedSystemStimuleReportsTemplatesVersions()
-        {
-            return (from record in context.ReportsTemplatesVersions.Include("ReportsTemplate").Include("CreatedByUser")
-                    where record.Tenant != 0 && record.ReportsTemplate.IsSystem == true && !record.ReportsTemplate.IsSystemReportFixed && record.ReportsTemplate.TemplateType == "R" && record.CreatedByUser.Contact.EnglishName != "System"
-                    group record by record.TemplateId into grp
-                    select grp.OrderByDescending(d => d.Version).FirstOrDefault()).ToList();
-        }
+
     }
 }

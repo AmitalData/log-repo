@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -29,22 +29,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public TransportMode GetSingleTransportMode(string id)
         {
-            string entityKeyString = $"GetSingleTransportMode({id})";
-            var res = CacheManager.GetOrInsertNewObject<TransportMode>(entityKeyString, () =>
-            {
-                return this.GetSingleTransportModeCore(id);
-            });
-            return res;
-        }
-        TransportMode GetSingleTransportModeCore(string id)
-        {
-
             return (from a in context.TransportModes where a.Id == id select a).FirstOrDefault();
-        }
-
-        public IQueryable<TransportMode> GetAll()
-        {
-            return context.TransportModes;
         }
 
         public IQueryable<TransportMode> GetTransportModes()

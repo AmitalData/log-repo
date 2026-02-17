@@ -125,7 +125,7 @@ export class ChangePasswordComponent {
             var changePasswordParameter: ChangePasswordParameter = new ChangePasswordParameter();
             changePasswordParameter.CurrentPassword = this.CurrentPassword;
             changePasswordParameter.Email = this.email;
-            this._loginService.CheckUserPassword(changePasswordParameter).subscribe((res:any) => {
+            this._loginService.CheckUserPassword(changePasswordParameter).subscribe(res => {
 
                 if (!res) {
                     this.ErrorMessage = "The current password is wrong!";
@@ -287,7 +287,7 @@ export class ChangePasswordComponent {
             IsResetRequest: this.IsResetPasswordViaEmail ? true : false,
         }
 
-        this._loginService.PostChangePassword(this.email, params).subscribe((res:any) => {
+        this._loginService.PostChangePassword(this.email, params).subscribe(res => {
             if (res) {
                 document.location.href = SessionInfo.GetLogitudeURL() + "Login.aspx";
             }

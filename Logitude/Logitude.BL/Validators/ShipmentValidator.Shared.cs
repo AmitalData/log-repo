@@ -34,9 +34,9 @@ namespace Logitude.BL.Validators
                                 str = TextCodesTranslator.TranslateText("Shipment.M.AllAWBPrintPayablesMustMatchShipmentAWBCurrency", shipmentPM.Tenant);
                             }
                         }
-                        if (shipmentPM.ShipmentAWBPrintOnlies.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.CurrencyId != shipmentPM.AWBCurrencyId).Any())
+                        if (shipmentPM.ShipmentAWBPrintOnlies.Where(d => d.CurrencyId != shipmentPM.AWBCurrencyId).Any())
                         {
-                            str = TextCodesTranslator.TranslateText("Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", shipmentPM.Tenant) + shipmentPM.AWBCurrencyCode;
+                            str = TextCodesTranslator.TranslateText("Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", shipmentPM.Tenant);
                         }
 
                     }

@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,9 +18,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ContentDocumentId { get; set; }
         public string CommunicationLogId { get; set; }
         public DateTime CreateDate { get; set; }
-		public string XML { get; set; }
 
-		[ForeignKey("CommunicationLogId")]
+        [ForeignKey("CommunicationLogId")]
         public virtual CommunicationLog CommunicationLog { get; set; }
 
         [ForeignKey("OceanInsightsRequestId")]

@@ -2,6 +2,8 @@ import {Component}  from '@angular/core';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ClientAddressPM} from '../../../../../Customs/EntityPMs/ClientAddressPM';
+import {ClientPM} from '../../../../../Customs/EntityPMs/ClientPM';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
@@ -12,11 +14,9 @@ import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/R
 import { ClaimGeneralTabComponent } from '../../../../CustomsClaim/Components/EditTabs/General/ClaimGeneralTabComponent';
 import {AddAddressContactForClientRequestParams, ClientAddress, ClientsAddressCommunicationResult, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/AddAddressContactForClientRequestParams';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
-import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ClientAddressesTabComponent.html',
 })
 
@@ -30,7 +30,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
     responseData: INF_MSG_GenericResponseData;
     requestParams: AddAddressContactForClientRequestParams;
 
-    Mode: string = "";
+    private Mode: string = "";
     private newAddressButtonVisibility: boolean = true;
     private editButtonVisibility: boolean = true;
     Parent: ClaimGeneralTabComponent;
@@ -63,8 +63,8 @@ export class ClientAddressesTabComponent extends BaseComponent{
     public set EditButtonVisibility(newValue: boolean) { this.editButtonVisibility = newValue; }
 
     NewAddressButtonClicked() {
-        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe((response:any) => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe(response => {
 
                // this.entityPM.ClientAddresses[0].IsHebrewAddress                
             var item = new ClientAddressPM(this.entityPM);
@@ -77,7 +77,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
             windowArgs.clientPM = this.entityPM;
             windowArgs.IsNew = true;
             windowArgs.isNewClient = this.isNewClient;
-            var windowTitle = "הוסף כתובת";//"New Address";
+            var windowTitle = TextCodeTranslator.Translate("General.O.AddAddress"); //"New Address";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 800;
             logWindow.Height = 700;
@@ -93,15 +93,15 @@ export class ClientAddressesTabComponent extends BaseComponent{
     }
 
     EditAddress(address: ClientAddressPM) {
-        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe((response:any) => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe((response:any) => {    
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe(response => {    
 
                 var windowArgs: any = {};
                 windowArgs.clientAddressPM = address;
                 windowArgs.clientPM = this.entityPM;
                 windowArgs.IsNew = false;
                 windowArgs.isNewClient = this.isNewClient;
-                var windowTitle ="הוסף כתובת";  //"New Address";
+                var windowTitle = TextCodeTranslator.Translate("General.O.AddAddress"); //"New Address";
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 800;
                 logWindow.Height = 700;
@@ -213,7 +213,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
                 }
 
                 CustomMessageProgressComponent
-                    .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+                    .ShowProgressBar(currRequestParams.PBId,
                     "שליחת מסר הוספה/עדכון/מחיקה כתובת לקוח", true)
                     .then((res) => {
                         this.responseData = res;

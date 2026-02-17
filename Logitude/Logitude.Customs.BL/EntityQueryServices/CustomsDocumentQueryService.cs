@@ -7,20 +7,13 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Server.Infrastructure;
-using Unifreight.Data.AmitalModel.Repsitories;
-using Logitude.Customs.BL.EntityDataMappings;
-using System.Data.Entity.Infrastructure;
-using Logitude.Customs.BL.Messaging.Customs;
-using Logitude.CustomsMessaging.Common.RequestParams;
-using Logitude.Server.Tools.Models;
-using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -100,7 +93,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 customsDocumentListPocos = customsDocumentListPocos.Where(r => string.IsNullOrWhiteSpace(r.CustomsDocId)).ToList();  // 1 min b4 deloy  - NO Custom REF!!!
 
 
-                var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
+               var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
                 return customsDocumentListPMs;
             }
 
@@ -163,8 +156,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var q = this.repository.GetAll(tenant)
                 .Where(rec =>
                     rec.Tenant == tenant &&
-                   //rec.CreateDateTime.Value > lst30 &&
-                   rec.CustomRecievedDate.Value > lst30  );
+                    //rec.CreateDateTime.Value > lst30 &&
+                   rec.CustomRecievedDate.Value > lst30 &&
+                    rec.DocumentRemarks == "LoadTest");
             if (keys != null)
             {
                 q = q.Where(rec => keys.Contains(rec.DocumentsFilingId));
@@ -175,7 +169,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                .ToList();
             return pmList;
 
-
+            
         }
         public List<CustomsDocumentPM> GetCustomsDocumentList(List<string> documentsFilingIdList, int tenant)
         {
@@ -184,107 +178,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return customsDocumentListPMs;
         }
 
-        public bool checkIfExistTicketsForAllSupplierInvoice(DeclarationPM declarationPM)
-        {
-            CustomsDocumentPointerQueryService customsDocumentPointerQuery = new CustomsDocumentPointerQueryService(context);
-            List<CustomsDocumentPointerPM> pointers = customsDocumentPointerQuery.GetCustomsDocumentPointersByParentIdAndSentCustoms(declarationPM.Id, declarationPM.Tenant);
-
-            SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(context);
-            var invoices = supplierInvoiceQueryService.GetSupplierInvoicesForDeclaration(declarationPM.Id, declarationPM.Tenant, false);
-      
-
-            foreach (var item in invoices)
-            {
-                if (pointers.Count(x => x.Child1EntityId == item.SequenceNumeric.ToString()) < 1) return false;
-            }
-
-
-            return true;
-        }
-
         public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDoc(GetTicketsParams parameters, int tenant)
         {
             ICustomContext context = MainContext as CustomContext;
             var customsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
             var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(context);
-            //var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant)
-            //         join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
-            //         select cdt
-            //            );
-            var cdp = customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant);
-            var customsDocumentsTicketIds = cdp.Select(r=>r.CustomsDocumentsTicketId).ToList();
-            var q = (from cdt in customsDocumentsTicketRepository.GetAll(tenant).Where(r=> customsDocumentsTicketIds.Contains(r.Id))
+            var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant)
+                     join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
                      select cdt
                         );
-
             var q2 = (from cdt in q where cdt.RequestedCustomsDocId == null
                       join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
                       select cd
                          );
 
-            q2 = q2.Distinct();
-            if( q2 != null)
-            {
-                var customsDocumentListPocos = q2.ToList();
-                var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
-                return customsDocumentListPMs;
-            }
-            return null;
-            
-        }
-
-        public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(GetTicketsParams parameters, int tenant)
-        {
-            ICustomContext context = MainContext as CustomContext;
-            var customsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
-            var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(context);
-            //var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant)
-            //         where  cdp.Child1EntityCode!= "DeclarationAmendment"
-            //         join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
-            //         select cdt
-            //            );
-
-            var cdp =customsDocumentPointerQueryService.GetCustomsDocumentPointerList(parameters, tenant).Where(r=>r.Child1EntityCode != "DeclarationAmendment");
-            var customsDocumentsTicketIds = cdp.Select(r => r.CustomsDocumentsTicketId);
-            var q = (from cdt in customsDocumentsTicketRepository.GetAll(tenant).Where(r => customsDocumentsTicketIds.Contains(r.Id))
-                     select cdt
-                        );
-            var q2 = (from cdt in q
-                       join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
-                      select cd
-                         );
- 
-
-            q2 = q2.Distinct();
+            q2 = q2.Distinct(); 
             var customsDocumentListPocos = q2.ToList();
             var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
-            return customsDocumentListPMs;
-        }
-        public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDocParentOnly(GetTicketsParams parameters, int tenant, bool getComposition = false)
-        {
-            ICustomContext context = MainContext as CustomContext;
-            var customsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
-            var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(context);
-            var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerListParentOnly(parameters, tenant)
-                     join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
-                     select cdt
-                        );
-            var q2 = (from cdt in q
-                      where cdt.RequestedCustomsDocId == null
-                      join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
-                      select cd
-                         );
-
-            q2 = q2.Distinct();
-            var customsDocumentListPocos = q2.ToList();
-            var customsDocumentListPMs = customsDocumentListPocos.Select(poko =>
-            GetEntityPM(poko,
-                        getComposition,
-                        new CustomsDocumentKeys()
-                        {
-                            DocumentsFilingId = poko.DocumentsFilingId
-                        })
-                ).ToList();
             return customsDocumentListPMs;
         }
 
@@ -303,22 +213,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 if (type.ObjectTableId == objectTable.Id)
                 {
                     string DocumentsFilingId = null;
-                    bool checkDeleted = true;
-                    if (!checkDeleted)
-                    {
-                        DocumentDeclarationId =
-         documentRepository.GetDocumentIdByDocumentType(type.Id, objectTable.Id, declarationId, tenant, out DocumentsFilingId);
+                    DocumentDeclarationId =
+     documentRepository.GetDocumentIdByDocumentType(type.Id, objectTable.Id, declarationId, tenant,out DocumentsFilingId);
 
-                    }
-                    else
-                    {
-                        var res = GetDocumentIdByDocumentTypeNotDeleted(declarationId, tenant, type, objectTable, documentRepository);
-                        if (res != null)
-                        {
-                            DocumentsFilingId = res.DocumentsFilingId;
-                            DocumentDeclarationId = res.DocumentId;
-                        }
-                    }
+
+
                     DocumentsMetaDataTypeRepository TypesRepo = new DocumentsMetaDataTypeRepository(tenant);
                     var pocoMDType = TypesRepo.GetSingleDocumentsMetaDataTypeByCode("VER", tenant);
                     if (pocoMDType != null)
@@ -336,252 +235,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 }
             }
             return DocumentDeclarationId;
-        }
-
-	
-
-		private static ResultByDocumentType GetDocumentIdByDocumentTypeNotDeleted(string declarationId, int tenant, DocumentType type, ObjectTable objectTable, DocumentsFilingRepository documentRepository)
-        {
-            string DocumentsFilingId;
-            string documentTypeId = type.Id;
-            var dtoList = documentRepository.GetByEntity(objectTable.Id, declarationId, tenant);
-
-            dtoList = dtoList.Where(a => a.DocumentTypeId == documentTypeId).ToList();
-            var list = dtoList.Select(r => r.Id).ToList();
-            if (!LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
-            {
-                var dtoDF = dtoList.FirstOrDefault();
-                if (dtoDF == null)
-                {
-                    return null;
-                }
-                
-                return new ResultByDocumentType()
-                {
-                    DocumentId = dtoDF.DocumentId,
-                    DocumentsFilingId = dtoDF.Id
-                };
-
-            }
-            var gDMFILINGRepository = new GDMFILINGRepository(tenant);
-            var filingNotDeletedList = gDMFILINGRepository.GetNotDeleted(list);
-            var filingNotDeleted=filingNotDeletedList.FirstOrDefault();
-            if (filingNotDeleted==null)
-            {
-                return null;
-            }
-            var rec4DocumentTypeId=dtoList.FirstOrDefault(r => r.Id == filingNotDeleted.COMID);
-            if (rec4DocumentTypeId == null) return null;
-            DocumentsFilingId = filingNotDeleted.COMID;
-            return new ResultByDocumentType()
-            {
-                DocumentId= rec4DocumentTypeId.DocumentId,
-                DocumentsFilingId = DocumentsFilingId
-            };
-        }
-
-        public CustomsDocumentPM GetSingleByDocFileId(string docFileId, int tenant)
-        {
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
-            var query =
-                  (from rec in context.CustomsDocuments
-                   join o in context.OcrDocuments on rec.DocumentsFilingId equals o.DocId into ocrDocs
-                   from o in ocrDocs.DefaultIfEmpty()
-                   where rec.DocumentsFilingId == docFileId && rec.Tenant == tenant
-                   select new CustomsDocumentPM()
-                   {
-                       DocumentsFilingId = rec.DocumentsFilingId,
-                       Tenant = rec.Tenant,
-                       CustomsDocId = rec.CustomsDocId,
-                       DocumentStatusCode = rec.DocumentStatusCode,
-                       DocumentRemarks = rec.DocumentRemarks,
-                       DocumentTypeCode = rec.DocumentTypeCode,
-                       IsMetaDataReady = rec.IsMetaDataReady,
-                       CustomRecievedDate = rec.CustomRecievedDate,
-                       DocumentVersion = rec.DocumentVersion,
-                       ExternalAttachmentId = rec.ExternalAttachmentId,
-                       IsPartOfDeclaration = rec.IsPartOfDeclaration,
-                       OcrStatusCode = o != null ? o.StatusCode : null,
-                       OcrScore = o != null && o.Score != null ? (decimal)o.Score : -1, 
-                       OcrReference = o != null && o.Reference != null ? o.Reference : null, 
-                       OcrNotConnect = o != null && o.NotConnect == true ? true : false, 
-
-                   }).FirstOrDefault();
-
-            if(query == null)
-            {
-                query = (from rec in context.OcrDocuments 
-                         where rec.DocId == docFileId && rec.Tenant == tenant
-                         select new CustomsDocumentPM()
-                         {
-                             OcrStatusCode = rec.StatusCode != null ? rec.StatusCode : null,
-                             OcrScore =  rec != null && rec.Score != null ? (decimal)rec.Score : -1,
-                             OcrReference = rec.Reference,
-
-                         }).FirstOrDefault();
-            }
-
-            return query;
-
-        }
-
-
-
-		public CustomsDocumentPM GetDocumentsByDocsFileIdAndTypeClosing(List<string> docsFileId, int tenant)
-		{			
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-			CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(tenant);
-
-			var customDocumentTypes = customDocumentTypeQueryService.GetCustomDocumentTypesByTenant(tenant).Where(c=>c.PointerLevel == "C").Select(x=>x.Code);
-
-			var customsDocumentPM =
-				  (from cd in context.CustomsDocuments
-				   join cdt in customDocumentTypes
-				   on cd.DocumentTypeCode equals cdt 
-				   where cd.Tenant == tenant && docsFileId.Contains(cd.DocumentsFilingId)
-				   select new CustomsDocumentPM
-                   {
-					   Tenant = cd.Tenant,
-					   DocumentsFilingId = cd.DocumentsFilingId,
-					   DocumentTypeCode = cd.DocumentTypeCode,
-					   CustomsDocId = cd.CustomsDocId,
-					   DocumentStatusCode = cd.DocumentStatusCode,
-					   DocumentRemarks = cd.DocumentRemarks,
-					   IsMetaDataReady = cd.IsMetaDataReady,
-					   CustomRecievedDate = cd.CustomRecievedDate,
-					   DocumentVersion = cd.DocumentVersion,
-					   ExternalAttachmentId = cd.ExternalAttachmentId,
-					   IsPartOfDeclaration = cd.IsPartOfDeclaration,
-
-				   }).FirstOrDefault();
-
-			
-
-			return customsDocumentPM;
-
-		}
-
-        public Attachment GetAttachment(string DocumentId, int Tenant, CustomsDocumentPM _CustomsDocumentPM = null)
-        {
-            byte[] byteArray = null;
-            var documentrepository = new DocumentRepository(Tenant);
-            var document = documentrepository.GetSingleDocument(Tenant,
-                //_CustomsDocumentPM.DocumentsFilingId
-                DocumentId
-                );
-            if (document == null)
-            {
-                throw new BusinessErrorException(" CustomsDocument.DocumentId is missing ");
-            }
-            if (!CustomsRequestsSheetDomainModelService<D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>.GetBlob(document.Tenant, document, out byteArray))
-            {
-
-                throw new BusinessErrorException("Unable to get Blob Of" + DocumentId);
-            }
-
-            if (_CustomsDocumentPM != null && !String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId))
-            {
-
-                var attachmentOnly = new Attachment();
-                attachmentOnly.externalAttachmentID = _CustomsDocumentPM.ExternalAttachmentId;
-                attachmentOnly.IsAttachment = "false";
-                return attachmentOnly;
-            }
-
-            var attachment = new Attachment();
-            attachment.attachmentID = "false";
-            attachment.content = byteArray;
-            if (_CustomsDocumentPM != null)
-            {
-                attachment.AdditionalData = GetAttachmentAdditionalData(_CustomsDocumentPM.CustomsDocumentMetaDataValues);
-                attachment.externalAttachmentID = _CustomsDocumentPM.ExternalAttachmentId;
-                attachment.Remark = _CustomsDocumentPM.DocumentRemarks;
-                attachment.documentType = _CustomsDocumentPM.DocumentTypeCode;
-            }
-            var bolbName = document.GetBlobUrl("");
-            if (!String.IsNullOrWhiteSpace(bolbName))
-            {
-                bolbName = System.IO.Path.GetFileName(bolbName);
-            }
-            attachment.fileName = bolbName;
-            attachment.IsAttachment = "true";
-            return attachment;
-        }
-
-        private AttachmentAdditionalData[] GetAttachmentAdditionalData(List<CustomsDocumentMetaDataValuePM> customsDocumentMetaDataList)
-        {
-            var AdditionalDataList = new List<AttachmentAdditionalData>();
-            foreach (var customsDocumentMetaData in customsDocumentMetaDataList)
-            {
-                var AdditionalData = new AttachmentAdditionalData();
-                int fieldId;
-                if (int.TryParse(customsDocumentMetaData.MetaDataTypeCode, out fieldId))
-                {
-                    if (!String.IsNullOrWhiteSpace(customsDocumentMetaData.MetaDataValue))
-                    {
-                        AdditionalData.fieldID = fieldId;
-                        //if (customsDocumentMetaData.MetaDataTypeCode == "55")
-                        //{
-                        //    AdditionalData.fieldData = DateExt.GetToDay();
-                        //}
-                        //else
-                        //{
-                        //    AdditionalData.fieldData = customsDocumentMetaData.MetaDataValue;
-                        //}
-                        AdditionalData.fieldData = customsDocumentMetaData.MetaDataValue;
-                        AdditionalDataList.Add(AdditionalData);
-                    }
-                }
-
-            }
-
-            return AdditionalDataList.ToArray();
-        }
-
-        public class ResultByDocumentType
-        {
-            public string DocumentsFilingId { get; set; }
-            public string DocumentId { get; set; }
-            
-        }
-        public List<CustomsDocumentPM> GetDeclarationDocumentWithConnectNotValid(string parentEntityId, string parentEntityCode, int tenant)
-        {
-            using (var s = (this.context as DbContextBase).CreateLogger()) 
-            {
-                var myCustomsDocumentPointerRepository = new CustomsDocumentPointerRepository(this.context);
- 
-
-                var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(this.context);
-                var q = (
-                    from cdp in myCustomsDocumentPointerRepository.GetQParentDocumentPointer(parentEntityId, parentEntityCode, tenant)
-                    join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
-                    join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
-
-                    where ((cdp.Child1EntityCode == "SupplierInvoice" && string.IsNullOrEmpty(cdp.Child1EntityId))
-                          || (cdp.Child2EntityCode == "SupplierInvoiceItem" && string.IsNullOrEmpty(cdp.Child2EntityId)))
-                    select cd
-                    )
-                             .Distinct();
-                 
-
-                           // );
-
-                //var q2 = (from  cdp, cdt  in q 
-                         
-                //          where   ((cdt.Child1EntityCode== "SupplierInvoice" && string.IsNullOrEmpty( cdt.Child1EntityId))
-                //          || (cdt.Child2EntityCode == "SupplierInvoiceItem" && string.IsNullOrEmpty(cdt.Child2EntityId)))
-                //          select cd
-                //             )
-                //             .Distinct();
-
-
-                var customsDocumentListPocos = q.ToList();
-
-                var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
-                return customsDocumentListPMs;
-            }
-
         }
     }
 }

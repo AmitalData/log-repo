@@ -12,16 +12,14 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
    
-    public partial class Payable
+    public class Payable
     {
 
 	    
-	[XmlAttribute]
     public string Id { get; set; }
     
     public ChargesType ChargesType { get; set; }
@@ -39,10 +37,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public PrepaidCollect PrepaidCollect { get; set; }
     
     public double? Amount { get; set; }
-    
-    public Card Vendor { get; set; }
-    
-    public string ChangeSetOp { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

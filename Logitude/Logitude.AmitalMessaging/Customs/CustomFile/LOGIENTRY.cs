@@ -84,8 +84,6 @@
 
         private CustomsDocuments[] customsDocumentsField;
 
-        private string taxationDateTimeField;
-
         private string idField;
 
         /// <remarks/>
@@ -285,19 +283,6 @@
             set
             {
                 this.customsDocumentsField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string TaxationDateTime
-        {
-            get
-            {
-                return this.taxationDateTimeField;
-            }
-            set
-            {
-                this.taxationDateTimeField = value;
             }
         }
 
@@ -527,8 +512,6 @@
 
         private EXPENSES[] eXPENSESField;
 
-        private string packageTypeCodeField;
-
         /// <remarks/>
         public string InvoiceNumber
         {
@@ -686,19 +669,6 @@
                 this.eXPENSESField = value;
             }
         }
-
-        /// <remarks/>
-        public string PackageTypeCode
-        {
-            get
-            {
-                return this.packageTypeCodeField;
-            }
-            set
-            {
-                this.packageTypeCodeField = value;
-            }
-        }
     }
 
     /// <remarks/>
@@ -732,22 +702,6 @@
         private string supplierAccountLineField;
 
         private string supplierItemLineField;
-
-        private string marksAndNumbersField;
-
-        private string packageWeightField;
-
-        private string packageQuantityField;
-
-        private string itemPriceField;
-
-        private string wholeSaleItemPriceField;
-
-        private string wholeSaleItemPriceCurrencyCodeField;
-
-        private string additionalQuantityField;
-
-        private string additionalQuantityTypeField;
 
         /// <remarks/>
         public string ItemNo
@@ -889,110 +843,6 @@
             set
             {
                 this.supplierItemLineField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string MarksAndNumbers
-        {
-            get
-            {
-                return this.marksAndNumbersField;
-            }
-            set
-            {
-                this.marksAndNumbersField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string PackageWeight
-        {
-            get
-            {
-                return this.packageWeightField;
-            }
-            set
-            {
-                this.packageWeightField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string PackageQuantity
-        {
-            get
-            {
-                return this.packageQuantityField;
-            }
-            set
-            {
-                this.packageQuantityField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string ItemPrice
-        {
-            get
-            {
-                return this.itemPriceField;
-            }
-            set
-            {
-                this.itemPriceField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string WholeSaleItemPrice
-        {
-            get
-            {
-                return this.wholeSaleItemPriceField;
-            }
-            set
-            {
-                this.wholeSaleItemPriceField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string WholeSaleItemPriceCurrencyCode
-        {
-            get
-            {
-                return this.wholeSaleItemPriceCurrencyCodeField;
-            }
-            set
-            {
-                this.wholeSaleItemPriceCurrencyCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string AdditionalQuantity
-        {
-            get
-            {
-                return this.additionalQuantityField;
-            }
-            set
-            {
-                this.additionalQuantityField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string AdditionalQuantityType
-        {
-            get
-            {
-                return this.additionalQuantityTypeField;
-            }
-            set
-            {
-                this.additionalQuantityTypeField = value;
             }
         }
     }

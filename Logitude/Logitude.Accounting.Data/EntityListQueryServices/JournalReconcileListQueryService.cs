@@ -1,35 +1,45 @@
-﻿using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
-{
-    public partial class JournalReconcileListQueryService
+{ 
+
+    public partial class JournalLineListQueryService
     {
-
-        private IQueryable<JournalReconcileList> GetIqueryableList(IQueryable<JournalReconcile> iQueryable)
+	    private IQueryable<JournalLineList> GetIqueryableList(IQueryable<JournalLine> iQueryable)
         {
-            IQueryable<JournalReconcileList> query = (from a in iQueryable
-                                                              select new JournalReconcileList()
-                                                              {
-
-                                                              });
+		IQueryable<JournalLineList> query = (from a in iQueryable
+                                            select new JournalLineList()
+											{
+                     
+		                    	            });
             return query;
-        }
+		}
 
-        private IQueryable<JournalReconcile> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<JournalReconcile> iQueryable, int tenant)
+		private IQueryable<JournalLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<JournalLine> iQueryable, int tenant)
         {
-            return iQueryable;
-        }
-        private IQueryable<JournalReconcile> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<JournalReconcile> iQueryable, int tenant)
+			throw new NotImplementedException();
+		}
+				private IQueryable<JournalLine> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<JournalLine> iQueryable, int tenant)
         {
-            return iQueryable;
+			return iQueryable;
+		}
+		
+			}
 
-        }
-    }
+
 }
+	

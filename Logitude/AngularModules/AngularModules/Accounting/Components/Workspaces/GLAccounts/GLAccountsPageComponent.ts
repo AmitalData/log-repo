@@ -11,12 +11,12 @@ import {JournalExtendedListService} from '../../../Services/ExtendedLists/Journa
 import {GLAccountList} from '../../../EntityLists/GLAccountList';
 import {JournalPM} from '../../../EntityPMs/JournalPM';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {GLAccountSummary, JournalSummary} from '../../../DataContracts/AccountingSummery';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './GLAccountsPageComponent.html',
 
 })
@@ -27,13 +27,14 @@ export class GLAccountsPageComponent implements AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     private _JournalExtendedListService: JournalExtendedListService = new JournalExtendedListService();
+    glAccountSummary: GLAccountSummary = new GLAccountSummary();
+    journalSummary: JournalSummary = new JournalSummary();
 
     // Queries Features
     public ActiveGLAccountsVisibility: boolean = false;
     public InactiveGLAccountsVisibility: boolean = false;
     public AllGLAccountsVisibility: boolean = false;
     public OpenFilesVisibility: boolean = false;
-    public OpenMastersVisibility: boolean = false;
     public ClosedFilesVisibility: boolean = false;
     public AllFilesVisibility: boolean = false;
     public AllJobsVisibility: boolean = false;
@@ -46,32 +47,16 @@ export class GLAccountsPageComponent implements AfterViewInit {
     public isRTL: boolean = false;
     public isScreenLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor()
-    {
+    constructor() {
         this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) =>
-        {
-            this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) =>
-            {
-                this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) =>
-                {
-                    this._entityResourceService.getEntityResourceByTableName("BankAccount").subscribe((response: any) =>
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => {
+                this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) =>
                     {
-                        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) =>
-                        {
-                            this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) =>
-                            {
-                                this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) =>
-                                {
-                                    this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) =>
-                                    {
-                                        this.isScreenLoaded = true;
-                                        this.CurrentSession.StopBusyIndicator();
-                                    });
-                                });
-                            });
-                        });
+                        this.isScreenLoaded = true;
+                        this.CurrentSession.StopBusyIndicator();
                     });
                 });
             });
@@ -94,6 +79,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
     }
 
     public LoadAllScreenData() {
+        this.LoadQueriesCounts();
         this.LoadRecentGLAccounts();
         this.ReloadUsersQuery();
     }
@@ -103,8 +89,6 @@ export class GLAccountsPageComponent implements AfterViewInit {
         this.InactiveGLAccountsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "INACTIVEGLACCOUNTS") ? true : false;
         this.AllGLAccountsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLGLACCOUNTS") ? true : false;
         this.OpenFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "OPENFILESGLACCOUNTS") ? true : false;
-        this.OpenMastersVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "GLAccount.Q.OpenMasters") ? true : false;
-
         this.ClosedFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "CLOSEDFILESGLACCOUNTS") ? true : false;
         this.AllFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLFILESGLACCOUNTS") ? true : false;
         this.AllJobsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLJOBSGLACCOUNTS") ? true : false;
@@ -125,33 +109,43 @@ export class GLAccountsPageComponent implements AfterViewInit {
         this.LoadAllScreenData();
     }
 
+    LoadQueriesCounts() {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+            if (myResult != null) {
+                this.glAccountSummary.ActiveGLAccountCount = myResult.ActiveGLAccountCount > 1000 ? "1000+" : myResult.ActiveGLAccountCount.toString();
+                this.glAccountSummary.InactiveGLAccountCount = myResult.InactiveGLAccountCount > 1000 ? "1000+" : myResult.InactiveGLAccountCount.toString();
+                this.glAccountSummary.AllGLAccountCount = myResult.AllGLAccountCount > 1000 ? "1000+" : myResult.AllGLAccountCount.toString();
+                this.glAccountSummary.OpenFilesCount = myResult.OpenFilesCount > 1000 ? "1000+" : myResult.OpenFilesCount.toString();
+                this.glAccountSummary.ClosedFilesGLAccountCount = myResult.ClosedFilesGLAccountCount > 1000 ? "1000+" : myResult.ClosedFilesGLAccountCount.toString();
+                this.glAccountSummary.AllFilesCount = myResult.AllFilesCount > 1000 ? "1000+" : myResult.AllFilesCount.toString();
+                this.glAccountSummary.AllJobsCount = myResult.AllJobsCount > 1000 ? "1000+" : myResult.AllJobsCount.toString();
+            }
+        });
+        this._JournalExtendedListService.GetJournalsSummary().subscribe(myResult => {
+            if (myResult != null) {
+
+                this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();
+                this.journalSummary.ApprovedJournalsCount = myResult.ApprovedJournalsCount > 1000 ? "1000+" : myResult.ApprovedJournalsCount.toString();
+                this.journalSummary.DraftJournalsCount = myResult.DraftJournalsCount > 1000 ? "1000+" : myResult.DraftJournalsCount.toString();
+                this.journalSummary.VoidedJournalsCount = myResult.VoidedJournalsCount > 1000 ? "1000+" : myResult.VoidedJournalsCount.toString();
+                this.journalSummary.WaitingJournalsCount = myResult.WaitingJournalsCount > 1000 ? "1000+" : myResult.WaitingJournalsCount.toString();
+            }
+        });
+    }
 
     EditGLAccount(entity: any) {
         if (entity != null) {
-            GLAccountSecurityLevelService.CheckLevel(entity.Id).then(hasAccess =>
-                {
-                    if (hasAccess)
-                        this.OpenGLAccountEditWindow(entity);
-                    else
-                        GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Main") });
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                        this.RefreshButtonClicked();
+                    });
                 });
-
-
         }
     }
-    OpenGLAccountEditWindow(entity)
-    {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef =>
-            {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Main") });
-                cmpRef.instance.BackCompleted.subscribe(($event: any) =>
-                {
-                    this.RefreshButtonClicked();
-                });
-            });
-    }
+
     RunNewGLAccountWizard() {
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewAccount"); // "New Account";
         //var windowArgs: BookingWizardArgs = new BookingWizardArgs();
@@ -207,14 +201,6 @@ export class GLAccountsPageComponent implements AfterViewInit {
                         displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.OpenFiles");
                         //filters.addAdditionalFilter("AccountTypeCode", "5", null, null, "Equals", false, false, false, "string");
                         //filters.addAdditionalFilter("BalanceInLocalCurrency", "0", null, null, "NotEqual", true, false, false, "decimal");
-
-                        break;
-                    }
-                case "OpenMasters":
-                    {
-                        displayTitle = "Open Masters";
-                        displayTitle = TextCodeTranslator.Translate("GLAccount.Q.OpenMasters");
-                        filters.addAdditionalFilter("BalanceInLocalCurrencyNotNull", true, null, null, "Equals", true, false, false, "string", false, false);
 
                         break;
                     }

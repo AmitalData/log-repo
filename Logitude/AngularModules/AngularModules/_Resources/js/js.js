@@ -150,10 +150,6 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function numberWithSeparators(x,separator) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
-}
-
 function querySelection(id) {
     return document.querySelector("#" + id).files[0];
 }
@@ -306,19 +302,6 @@ function RegisterCustomFroalaEditorButtom(viewModel) {
         callback: function () {
             if (viewModel) {
                 viewModel.InSertHtml("[PageBreak]");
-            }
-        },
-        undo: true
-    });
-
-
-    $.FroalaEditor.DefineIcon('InsertImage',{ NAME: 'image' });
-    $.FroalaEditor.RegisterCommand('InsertImage', {
-        title: 'Insert Image',
-        icon: 'InsertImage',
-        callback: function () {
-            if (viewModel) {
-                viewModel.InsertImageClick();
             }
         },
         undo: true

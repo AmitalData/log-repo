@@ -155,38 +155,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return entity;
 
         }
-        public QuoteTemplatePM GetSinglePM(string id)
-        {
-            QuoteTemplatePM entity;
-            entity = (from a in repository.quotesContext.QuoteTemplates
-                      where a.Id == id
-                      select new QuoteTemplatePM()
-                      {
-                          Id = a.Id,
-                          Tenant = a.Tenant,
-                          HeaderDocId = a.HeaderDocId,
-                          FooterDocId = a.FooterDocId,
-                          QuoteTemplateSettingId = a.QuoteTemplateSettingId,
-                          Name = a.Name,
-                          IsTemplate = a.IsTemplate,
-                          OriginalQuoteTemplateId = a.OriginalQuoteTemplateId,
-                          CreateDate = a.CreateDate,
-                          UpdateDate = a.UpdateDate,
-                          CreatedByUserId = a.CreatedByUserId,
-                          UpdatedByUserId = a.UpdatedByUserId,
-                          SearchFields = a.SearchFields,
-                          TemplateTypeCode = a.TemplateTypeCode,
-                          IsDefault = a.IsDefault,
-                          InActive = a.InActive,
-                          IsEnabledForCustomers = a.IsEnabledForCustomers,
-                          IsCopiedAtSignup = a.IsCopiedAtSignup,
-                      }).FirstOrDefault();
 
-
-
-            return entity;
-
-        }
 
         public QuoteTemplatePM GetSinglePMByQuoteId(string id, string quoteId, int tenant, string defultQuoteTemplate=null, string quotationSections=null)
         {
@@ -282,7 +251,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
         public IQueryable<QuoteTemplateList> GetQuoteTemplateLists()
         {
-            IQueryable<QuoteTemplateList> qUoteTemplate = from a in repository.quotesContext.QuoteTemplates.Include("CurrentTenant")
+            IQueryable<QuoteTemplateList> qUoteTemplate = from a in repository.quotesContext.QuoteTemplates
                                                           where  a.InActive == false
                                                           select new QuoteTemplateList()
                                                           {
@@ -304,7 +273,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                               InActive = a.InActive,
                                                               IsEnabledForCustomers = a.IsEnabledForCustomers,
                                                               IsCopiedAtSignup = a.IsCopiedAtSignup,
-                                                              TenantName = a.CurrentTenant != null ? a.CurrentTenant.Company : ""
                                                           };
             return qUoteTemplate;
         }
@@ -411,36 +379,5 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
 
         }
-
-        public IQueryable<QuoteTemplatePM> GetQuoteTemplatePMListsByQuotetemplatetype(string quotetemplatetype, int tenant)
-        {
-            IQueryable<QuoteTemplatePM> qUoteTemplate = from a in repository.quotesContext.QuoteTemplates
-                                                          where a.Tenant == tenant && a.TemplateTypeCode == quotetemplatetype && a.InActive == false
-                                                          select new QuoteTemplatePM()
-                                                          {
-                                                              Id = a.Id,
-                                                              HeaderDocId = a.HeaderDocId,
-                                                              FooterDocId = a.FooterDocId,
-                                                              QuoteTemplateSettingId = a.QuoteTemplateSettingId,
-                                                              Name = a.Name,
-                                                              IsTemplate = a.IsTemplate,
-                                                              OriginalQuoteTemplateId = a.OriginalQuoteTemplateId,
-                                                              CreateDate = a.CreateDate,
-                                                              UpdateDate = a.UpdateDate,
-                                                              CreatedByUserId = a.CreatedByUserId,
-                                                              UpdatedByUserId = a.UpdatedByUserId,
-                                                              SearchFields = a.SearchFields,
-                                                              TemplateTypeCode = a.TemplateTypeCode,
-                                                              Tenant = a.Tenant,
-                                                              IsDefault = a.IsDefault,
-                                                              InActive = a.InActive,
-                                                              IsEnabledForCustomers = a.IsEnabledForCustomers,
-                                                              IsCopiedAtSignup = a.IsCopiedAtSignup,
-
-                                                          };
-            return qUoteTemplate;
-        }
-
-
     }
 }

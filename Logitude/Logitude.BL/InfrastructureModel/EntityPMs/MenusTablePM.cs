@@ -20,8 +20,5 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string FeatureCode { get; set; }
         public bool ShowMenuTable { get; set; }
         public string HtmlView { get; set; }
-        public string FeatureUniqeCode { get; set; }
-        public string QuerySection { get; set; }
-
     }
 }

@@ -6,7 +6,7 @@ using Logitude.Server.Tools.BlobServiceReference;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
@@ -63,11 +63,9 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 AgentRepository agentRepository = new AgentRepository(tenant);
                 Agent agent = agentRepository.GetSingleAgent(tenant, agentId);
-                if (agent == null) throw new Exception("Please select the accurate Agent that you want to share with from the Partners tab");
 
                 AgentSharedLogisticsKeyRepository agentSharedLogisticsKeyRepository = new AgentSharedLogisticsKeyRepository();
                 AgentSharedLogisticsKey agentSharedLogisticsKey = null;
@@ -99,7 +97,6 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 AgentSharedLogisticsKeyRepository agentSharedLogisticsKeyRepository = new AgentSharedLogisticsKeyRepository();
 
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -228,7 +225,6 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
                     //SecurityUtility.CheckContactFeature("Shipment", "AgentSharedManifest", authToken.Tenant);
 
                     AgentSharedLogisticsKeyRepository agentSharedLogisticsKeyRepository = new AgentSharedLogisticsKeyRepository();

@@ -1,4 +1,4 @@
-
+﻿
 <style>
       .DisbleBox {
         display: inline-block;
@@ -40,9 +40,7 @@
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Customs.ItemGovernmentProcedureType'"
                                 [HideColumns]="true"
-                                [SelectedValue]="ProcessTypeCode"
-                                [QueryFilterItems]="ProcessTypeCodeFilterItems"
-                                >
+                                [SelectedValue]="ProcessTypeCode">
                         </LogLov>
                     </td>
                     <td><div></div></td>
@@ -119,7 +117,7 @@
                     </td>
                     <td style="width:5px"><div></div></td>
                     <td style="width:30px">
-                        <button class="Button" (click)="AddLines()" [disabled]="!IsAddButtonEnabled" id="Add_Lines">{{'Customs.General.B.Add' |TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="AddLines()" [disabled]="!IsAddButtonEnabled">{{'Customs.General.B.Add' |TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
@@ -138,8 +136,7 @@
 
 
                     <log-column [header]="'מספר'" [width]="'70'" [Alignment]="'right'" [Editable]="true">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                        <log-cell-template template="let item" #logcelltemplate>
                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                 <span>{{item.Number}}</span>
                             </div>
@@ -150,22 +147,19 @@
 
                             </div>
                         </log-cell-template>
-</ng-template>
 
 
                     </log-column>
 
                     <log-column [width]="'50'" [Editable]="true" [Alignment]="'right'">
-                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                             <div style="width: 30px; float: right; height:20px;padding-top:3px">
-                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked(it)" [IsEnabled]="!IsDisplayOnly"></IconButton>
                             </div>
 
 
 
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
 
@@ -196,7 +190,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly" id="UpdateProccess">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

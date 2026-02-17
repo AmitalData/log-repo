@@ -1,7 +1,18 @@
-import { Component } from '@angular/core';
-import { LoginService } from '../LoginService';
-import { SessionInfo } from '../SessionInfo';
-export var ResetPasswordComponent = (function () {
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var LoginService_1 = require("../LoginService");
+var SessionInfo_1 = require("../SessionInfo");
+var ResetPasswordComponent = /** @class */ (function () {
     function ResetPasswordComponent(_LoginService) {
         this._LoginService = _LoginService;
         this.HasErrors = false;
@@ -51,10 +62,7 @@ export var ResetPasswordComponent = (function () {
             this.ErrorMessage = "Please re-enter the characters you see in the image above";
         }
         else {
-            this.Succeeded = false;
             this.HasErrors = false;
-            this.ErrorMessage = "";
-            this.HasCaptchaErrors = false;
             var params = {
                 Email: this.Email,
                 IsChampLogin: false,
@@ -70,13 +78,14 @@ export var ResetPasswordComponent = (function () {
                 }
                 else {
                     _this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
+                    //disableForm(false);
                     if (userdata.InValidCaptcha) {
                         _this.CaptchaCode = "";
                         _this.IsShowAreaCaptcha = true;
                         _this.CaptchaImageUrl = userdata.CaptchaImage;
                         _this.HasCaptchaErrors = true;
                     }
-                    var errorMessage = "";
+                    var errorMessage = "Submit failed! invalid email." + "<br/>";
                     if (userdata.ExceptionMessage)
                         alert(userdata.ExceptionMessage);
                     else {
@@ -86,16 +95,14 @@ export var ResetPasswordComponent = (function () {
                             errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
                         if (userdata.InActive)
                             errorMessage = "Your account has been deactivated!" + "please contact your administrator.";
-                        if (errorMessage) {
-                            _this.HasErrors = true;
-                            _this.ErrorMessage = errorMessage;
+                        if (userdata.InValidMailOrPassword) {
+                            errorMessage = "Submit failed! invalid email.";
+                            _this.HasCaptchaErrors = false;
                         }
-                        else {
-                            _this.Succeeded = true;
-                            _this.HasErrors = false;
-                            _this.HideAreaCaptcha();
-                        }
+                        _this.HasErrors = true;
+                        _this.ErrorMessage = errorMessage;
                     }
+                    _this.ErrorMessage = errorMessage;
                 }
             });
         }
@@ -105,20 +112,18 @@ export var ResetPasswordComponent = (function () {
         return re.test(email);
     };
     ResetPasswordComponent.prototype.BackToLoginClicked = function () {
-        document.location.href = SessionInfo.GetLogitudeURL() + "Login.aspx";
+        document.location.href = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Login.aspx";
     };
-    ResetPasswordComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'ResetPasswordComponent',
-                    moduleId: './Login/Components/',
-                    templateUrl: 'ResetPasswordComponent.html',
-                    styleUrls: ['ChangePasswordComponent.css']
-                },] },
-    ];
-    /** @nocollapse */
-    ResetPasswordComponent.ctorParameters = [
-        { type: LoginService, },
-    ];
+    ResetPasswordComponent = __decorate([
+        core_1.Component({
+            selector: 'ResetPasswordComponent',
+            moduleId: './Login/Components/',
+            templateUrl: 'ResetPasswordComponent.html',
+            styleUrls: ['ChangePasswordComponent.css']
+        }),
+        __metadata("design:paramtypes", [LoginService_1.LoginService])
+    ], ResetPasswordComponent);
     return ResetPasswordComponent;
 }());
+exports.ResetPasswordComponent = ResetPasswordComponent;
 //# sourceMappingURL=ResetPasswordComponent.js.map

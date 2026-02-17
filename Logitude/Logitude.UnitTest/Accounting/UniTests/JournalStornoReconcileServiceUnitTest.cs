@@ -109,12 +109,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
             Assert.AreEqual(1, currReconciliationLine.GroupNumber);
         }
 
-        public static void GetExampleReconcile(out List<LedgerTransactionPM> myOrginalJournalTransaction, out List<LedgerTransactionPM> myStornoLedgerTransactionPM_newTrans)
+        public static void GetExampleReconcile(out List<LedgerTransactionPM> myOrginalJournalTransaction, out List<LedgerTransactionPM> myStornoLedgerTransactionPM)
         {
             int myid = 1;
             int myJournalLineNumber = 1;
             myOrginalJournalTransaction = new List<LedgerTransactionPM>();
-            myStornoLedgerTransactionPM_newTrans = new List<LedgerTransactionPM>();
+            myStornoLedgerTransactionPM = new List<LedgerTransactionPM>();
             myOrginalJournalTransaction.Add(new LedgerTransactionPM()
             {
                 Tenant = 1,
@@ -127,7 +127,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 OpenAmountCurrencyId = "usd",
                 IsReconciled = false,
             });
-            myStornoLedgerTransactionPM_newTrans.Add(new LedgerTransactionPM()
+            myStornoLedgerTransactionPM.Add(new LedgerTransactionPM()
             {
                 Tenant = 1,
                 Id = (myid++).ToString(),
@@ -155,7 +155,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 OpenAmountCurrencyId = "nis",
                 IsReconciled = false,
             });
-            myStornoLedgerTransactionPM_newTrans.Add(new LedgerTransactionPM()
+            myStornoLedgerTransactionPM.Add(new LedgerTransactionPM()
             {
                 Tenant = 1,
                 Id = (myid++).ToString(),
@@ -183,7 +183,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 OpenAmountCurrencyId = "usd",
                 IsReconciled = false,
             });
-            myStornoLedgerTransactionPM_newTrans.Add(new LedgerTransactionPM()
+            myStornoLedgerTransactionPM.Add(new LedgerTransactionPM()
             {
                 Tenant = 1,
                 Id = (myid++).ToString(),

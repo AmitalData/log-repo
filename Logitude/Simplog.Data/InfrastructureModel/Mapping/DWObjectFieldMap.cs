@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -22,20 +22,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DataTypeCode).IsRequired().HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.DimensionTableCode).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.AggregationTypeCode).HasMaxLength(5).IsUnicode(false);
-            this.Property(t => t.Category1).HasMaxLength(150).IsUnicode(false);
-            this.Property(t => t.Category2).HasMaxLength(150).IsUnicode(false);
+            //this.Property(t => t.Category1).HasMaxLength(150).IsUnicode(false);
+            //this.Property(t => t.Category2).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.LOVAdditionalColumns).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.HelpText).HasMaxLength(2000).IsUnicode(false);
-
-            this.Property(t => t.OriginalObjectFieldCode).HasMaxLength(200).IsUnicode(false);
-
-            this.Property(t => t.ViewFieldDisplayName).HasMaxLength(200).IsUnicode(true);
-            this.Property(t => t.DimensionDataViewName).HasMaxLength(200).IsUnicode(true);
-            this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
-
-
-
-
+             
             this.ToTable("DWObjectFields");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -51,25 +42,15 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsMeasurement).HasColumnName("IsMeasurement");
             this.Property(t => t.AggregationTypeCode).HasColumnName("AggregationTypeCode");
             this.Property(t => t.DisplayInQueryBuilder).HasColumnName("DisplayInQueryBuilder");
-            this.Property(t => t.Category1).HasColumnName("Category1"); 
-            this.Property(t => t.Category2).HasColumnName("Category2");
+            //this.Property(t => t.Category1).HasColumnName("Category1"); 
+            //this.Property(t => t.Category2).HasColumnName("Category2");
             this.Property(t => t.LOVAdditionalColumns).HasColumnName("LOVAdditionalColumns");
             this.Property(t => t.HideTree).HasColumnName("HideTree");
             this.Property(t => t.HelpText).HasColumnName("HelpText");
             this.Property(t => t.CannotFilter).HasColumnName("CannotFilter");
-            this.Property(t => t.IsCustom).HasColumnName("IsCustom");
-            this.Property(t => t.OriginalObjectFieldCode).HasColumnName("OriginalObjectFieldCode");
-            this.Property(t => t.ViewFieldDisplayName).HasColumnName("ViewFieldDisplayName");
-            this.Property(t => t.DontDisplayInView).HasColumnName("DontDisplayInView ");
-            this.Property(t => t.DimensionDataViewName).HasColumnName("DimensionDataViewName ");
-            this.Property(t => t.IsMultipleSelection).HasColumnName("IsMultipleSelection ");
-            this.Property(t => t.UseUnitSelection).HasColumnName("UseUnitSelection ");
-            this.Property(t => t.RecordType).HasColumnName("RecordType");
-
 
             this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWObjectTableCode);
             this.HasOptional(t => t.DimensionTable).WithMany().HasForeignKey(d => d.DimensionTableCode);
-
 
         }
     }

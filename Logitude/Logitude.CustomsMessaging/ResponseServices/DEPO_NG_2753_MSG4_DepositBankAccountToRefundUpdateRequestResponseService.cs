@@ -9,7 +9,7 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -54,8 +54,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Check if Tapag file is already exist
 
             string requestFileNumber = string.Concat(customResponse.TapagIdentifier.fileNumber, "-", customResponse.TapagIdentifier.numeral);
-            //string tapagId = tapagConnectionTableQueryService.GetTapagIdByRequestFileNumber(requestFileNumber, this._MyTenant);
-            string tapagId = tapagConnectionTableQueryService.GetTapagIdByFileAndNumeral(customResponse.TapagIdentifier.fileNumber, customResponse.TapagIdentifier.numeral, this._MyTenant);
+            string tapagId = tapagConnectionTableQueryService.GetTapagIdByRequestFileNumber(requestFileNumber, this._MyTenant);
 
             this.MyRequestSheetParam = new RequestSheetParam();
 
@@ -152,7 +151,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
             newNotificationPM.EntityId = _MyDepositPM.Id;
             newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
-            if(!String.IsNullOrWhiteSpace(_MyDepositPM.TapagID)) newNotificationPM.Reference2Number = _MyDepositPM.TapagID;
+            if(!String.IsNullOrWhiteSpace(_MyDepositPM.TapagNumber)) newNotificationPM.Reference2Number = _MyDepositPM.TapagNumber;
             string customerId = null;
             string referentUserId = null;
             if (connectedDeclarationPM != null)

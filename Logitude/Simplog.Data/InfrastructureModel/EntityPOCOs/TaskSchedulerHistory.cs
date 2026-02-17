@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,10 +26,5 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string LogType { get; set; }
         public string LogFirstLine { get; set; }
 
-        public string LogDocumentId { get; set; }
-
-
-        [ForeignKey("LogDocumentId")]
-        public virtual Document LogDocument { get; set; }
     }
 }

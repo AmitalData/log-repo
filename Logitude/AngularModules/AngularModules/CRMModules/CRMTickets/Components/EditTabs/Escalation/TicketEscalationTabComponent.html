@@ -1,4 +1,4 @@
-
+﻿
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -15,95 +15,77 @@
                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TicketEscalationsList">
 
                         <log-column [width]="'120'" [header]="'Line #'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width: 100%; text-align: center;">
-                                        {{item.LineNumber}}
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: center;">
+                                    {{item.LineNumber}}
+                                </div>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'170'" [header]="'Create Date'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width: 100%; text-align: left;">
-                                        {{item.CreateDate|DateTimePipe:'DTL12NW'}}
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: left;">
+                                    {{item.CreateDate|DateTimePipe:'DTL12NW'}}
+                                </div>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'120'" [header]="'Escalation For'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width: 100%; text-align: left;">
-                                        {{item.EscalationForName}}
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: left;">
+                                    {{item.EscalationForName}}
+                                </div>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'250'" [header]="'Recepients'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width: 100%; text-align: left;">
-                                        {{item.Recepients}}
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: left;">
+                                    {{item.Recepients}}
+                                </div>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'170'" [header]="'Due Date'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width: 100%; text-align: left;">
-                                        {{item.DueDate|DateTimePipe:'DTL12NW'}}
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: left;">
+                                    {{item.DueDate|DateTimePipe:'DTL12NW'}}
+                                </div>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'70'" [header]="'Violated'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width: 100%; text-align: center;">
-                                        <img *ngIf="item.IsSLAViolated" class="CenterCenter" src="./Images/CheckBoxIcon.png" style="width:15px;height:12px;" />
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: center;">
+                                    <img *ngIf="item.IsSLAViolated" class="CenterCenter" src="./Images/CheckBoxIcon.png" style="width:15px;height:12px;" />
+                                </div>
+                            </log-cell-template>
                         </log-column>
 
 
                         <log-column [width]="'170'" [header]="'Update Date'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width: 100%; text-align: left;">
-                                        {{item.UpdateDate|DateTimePipe:'DTL12NW'}}
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: left;">
+                                    {{item.UpdateDate|DateTimePipe:'DTL12NW'}}
+                                </div>
+                            </log-cell-template>
                         </log-column>
 
 
                         <log-column [width]="'70'" [header]="'Closed'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width: 100%; text-align: center;">
-                                        <img *ngIf="item.IsClose" class="CenterCenter" src="./Images/CheckBoxIcon.png" style="width:15px;height:12px;" />
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: center;">
+                                    <img *ngIf="item.IsClose" class="CenterCenter" src="./Images/CheckBoxIcon.png" style="width:15px;height:12px;" />
+                                </div>
+                            </log-cell-template>
                         </log-column>
 
                         <log-column [width]="'170'" [header]="'Close Date'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate>
-                                    <div style="width: 100%; text-align: left;">
-                                        {{item.CloseDate|DateTimePipe:'DTL12NW'}}
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: left;">
+                                    {{item.CloseDate|DateTimePipe:'DTL12NW'}}
+                                </div>
+                            </log-cell-template>
                         </log-column>
 
                     </logitude-edit-grid>

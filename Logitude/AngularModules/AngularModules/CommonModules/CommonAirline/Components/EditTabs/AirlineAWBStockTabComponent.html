@@ -1,4 +1,4 @@
-
+﻿
 <div class="TabHolder">
     <table *ngIf="IsVisibile">
         <tr class="TabTitleRow">
@@ -15,7 +15,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button id="{{'AssignStockTo' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsAddEnabled" (click)="AssignClicked()">Assign to</button>
+                            <button class="Button" [disabled]="!IsAddEnabled" (click)="AssignClicked()">Assign to</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -23,7 +23,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button id="{{'AddStocks' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsAddEnabled" (click)="AddStockClicked()">Add</button>
+                            <button class="Button" [disabled]="!IsAddEnabled" (click)="AddStockClicked()">Add</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -31,7 +31,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button id="{{'RemoveStock' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveClicked()">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveClicked()">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -39,7 +39,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button id="{{'AddSeriesStocks' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveSeriesClicked()">{{'MAWBStack.B.RemoveSeries' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveSeriesClicked()">{{'MAWBStack.B.RemoveSeries' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>
@@ -54,49 +54,47 @@
 
         <tr>
             <td>
-                <div class="MediaFill">
-                    <div class="SimpleGridView">
-                        <div class="SimpleGridViewHeader">
-                            <table>
-                                <tr>
-                                    <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'MAWBStack.F.Number' | TextCodeTranslationPipe}}</td>
-                                    <td style="width: 180px; min-width: 180px; max-width: 180px;">{{'MAWBStack.F.InsertionDate' | TextCodeTranslationPipe}}</td>
-                                    <td style="width: 250px; min-width: 250px; max-width: 250px;">{{'MAWBStack.F.AssignedToId' | TextCodeTranslationPipe}}</td>
-                                    <td>{{'MAWBStack.F.Notes' | TextCodeTranslationPipe}}</td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div id="{{'AirlineSimpleGridBodyId' | IdGeneratorAsyncPipe | async}}" class="SimpleGridViewBody">
-                            <table>
-                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-
-                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                        <div>{{item.Number | PaddingPipe:'L':8:'0'}}</div>
-                                    </td>
-
-                                    <td class="GridViewCell" style="width: 180px; min-width: 180px; max-width: 180px;">
-                                        <span class="Value">{{item.InsertionDate | DateTimePipe:'DTL12'}}</span>
-                                    </td>
-
-                                    <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
-                                        <div>{{item.AssignedToShipperName}}</div>
-                                    </td>
-
-                                    <td class="GridViewCell">
-                                        <div>{{item.Notes}}</div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="4">
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'MAWBStack.F.Number' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 180px; min-width: 180px; max-width: 180px;">{{'MAWBStack.F.InsertionDate' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 250px; min-width: 250px; max-width: 250px;">{{'MAWBStack.F.AssignedToId' | TextCodeTranslationPipe}}</td>
+                                <td>{{'MAWBStack.F.Notes' | TextCodeTranslationPipe}}</td>
+                            </tr>
+                        </table>
                     </div>
-                </div>                
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    <div>{{item.Number | PaddingPipe:'L':8:'0'}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 180px; min-width: 180px; max-width: 180px;">
+                                    <span class="Value">{{item.InsertionDate | DateTimePipe:'DTL12'}}</span>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                    <div>{{item.AssignedToShipperName}}</div>
+                                </td>
+
+                                <td class="GridViewCell">
+                                    <div>{{item.Notes}}</div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </td>
         </tr>
     </table>

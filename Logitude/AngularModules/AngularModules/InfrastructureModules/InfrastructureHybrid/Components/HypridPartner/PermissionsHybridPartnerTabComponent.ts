@@ -2,7 +2,7 @@ import {Component, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {HybridPartnerList} from '../../../../Common/EntityLists/HybridPartnerList';
-
+import {Headers} from '@angular/http';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -10,7 +10,7 @@ import {HybridPartnerExtendedListService} from '../../../../Common/Services/Exte
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PermissionsHybridPartnerTabComponent.html',
 })
 
@@ -46,7 +46,7 @@ export class PermissionsHybridPartnerTabComponent extends BaseComponent {
         this.IsCompleteLoadAllowdHybrid = false;
         this.AllowdHybridPartnerLists = [];
 
-        this.hybridPartnerExtendedListService.GetAllowdHybridPartnerLists(hybridPartnerId).subscribe((res:any) => {
+        this.hybridPartnerExtendedListService.GetAllowdHybridPartnerLists(hybridPartnerId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.AllowdHybridPartnerLists = pmResponse.Result;
@@ -65,7 +65,7 @@ export class PermissionsHybridPartnerTabComponent extends BaseComponent {
         this.IsCompleteLoadAllowingHybrid = false;
         this.AllowingHybridPartnerLists = [];
 
-        this.hybridPartnerExtendedListService.GetAllowingHybridPartnerLists(hybridPartnerId).subscribe((res:any) => {
+        this.hybridPartnerExtendedListService.GetAllowingHybridPartnerLists(hybridPartnerId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.AllowingHybridPartnerLists = pmResponse.Result;

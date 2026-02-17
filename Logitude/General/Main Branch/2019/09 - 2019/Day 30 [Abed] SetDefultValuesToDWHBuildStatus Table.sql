@@ -1,1 +1,0 @@
-insert into DWHBuildStatus(id,IsFullBuildDWRunning,IsIncrementalDWRunning) Values(1,0,0)

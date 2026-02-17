@@ -26,13 +26,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<ReconcileExternalPageLinePM> pms = ledgerTransactionPOCOs.Select(poco => GetEntityPM(poco)).ToList();
             return pms;
         }
-        public ReconcileExternalPageLine GetReconcileExternalPageLine(string pageId, int tenant)
-        {
-            return (from a in context.ReconcileExternalPageLines
-                    where a.ReconcileExternalPageId == pageId && a.Tenant == tenant && a.IsReconciled
-
-                    select a).FirstOrDefault();
-        }
     }
+
 }
 	 

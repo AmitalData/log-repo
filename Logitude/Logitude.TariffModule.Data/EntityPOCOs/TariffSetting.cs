@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -25,29 +25,6 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string DefaultPriceSteps { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [Column("DefaultWarningPercentage")]
-	    public double? DefaultWarningPercentage { get; set; }
-        [Column("AirDefaultStepsId")]
-	    public string AirDefaultStepsId { get; set; }
-        [Column("LCLDefaultStepsId")]
-	    public string LCLDefaultStepsId { get; set; }
-        [Column("ContainerDefaults")]
-	    public string ContainerDefaults { get; set; }
-        [ForeignKey("DefaultCurrency")]
-        [Column("DefaultCurrencyId")]
-	    public string DefaultCurrencyId { get; set; }
-	      
-        public virtual Currency DefaultCurrency { get; set; }
-        [ForeignKey("AirUnitOfMeasurement")]
-        [Column("AirUnitOfMeasurementCode")]
-	    public string AirUnitOfMeasurementCode { get; set; }
-	      
-        public virtual WeightUnit AirUnitOfMeasurement { get; set; }
-        [ForeignKey("LCLUnitOfMeasurement")]
-        [Column("LCLUnitOfMeasurementCode")]
-	    public string LCLUnitOfMeasurementCode { get; set; }
-	      
-        public virtual WeightUnit LCLUnitOfMeasurement { get; set; }
     }
 }
 	 

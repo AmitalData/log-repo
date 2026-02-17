@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.InvoiceModel
 {
@@ -128,8 +127,7 @@ namespace WebFreight.Web.InvoiceModel
                     else
                     {
                         Card myCard = CardRepository.GetSingleCard(entity.BillToId, tenant, true);
-                        AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
-                        entity.DebitAccount = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, entity.InvoiceCurrencyId, tenant, false);
+                        entity.DebitAccount = myCard.ReceivablesAccountingCard;
                     }
                 }
 
@@ -192,14 +190,9 @@ namespace WebFreight.Web.InvoiceModel
 
                         if (FieldIsEmpty(itemVAT.ExternalVATCard))
                         {
-                            if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+                            if (this.accountingSetting != null)
                             {
                                 itemVAT.ExternalVATCard = this.accountingSetting.ReceivableVATCard;
-                            }
-
-                            else
-                            {
-                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
                             }
                         }
 
@@ -241,9 +234,7 @@ namespace WebFreight.Web.InvoiceModel
                     else
                     {
                         Card myCard = CardRepository.GetSingleCard(entity.VendorId, tenant, true);
-                        AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
-                        entity.CreditAccount = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, entity.InvoiceCurrencyId, tenant, true);
-
+                        entity.CreditAccount = myCard.PayablesAccountingCard;
                     }
                 }
 
@@ -306,14 +297,9 @@ namespace WebFreight.Web.InvoiceModel
 
                         if (FieldIsEmpty(itemVAT.ExternalVATCard))
                         {
-                            if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+                            if (this.accountingSetting != null)
                             {
                                 itemVAT.ExternalVATCard = this.accountingSetting.PayableVATCard;
-                            }
-
-                            else
-                            {
-                                itemVAT.ExternalVATCard = myVatType.PayablesExternalId;
                             }
                         }
 
@@ -691,17 +677,10 @@ namespace WebFreight.Web.InvoiceModel
                 Card card = cardRep.GetSingleCard(entity.BillToId, entity.Tenant);
                 Currency currency = currencyRep.GetSingleCurrency(entity.PaymentCurrencyId, entity.Tenant);
                 string currencyError = "Currency External Id is required";
-
-               
-                if (card != null)
+                if (card != null && string.IsNullOrEmpty(card.ReceivablesAccountingCard))
                 {
-                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
-                    var receivablesAccountingCard = accountingSystemHelper.GetGenericCreditAccount(card.Id, entity.PaymentCurrencyId, entity.Tenant, false);
-                    if (string.IsNullOrEmpty(receivablesAccountingCard))
-                    {
-                        isReady = false;
-                        myError = "Bill To External Id is required";
-                    }
+                    isReady = false;
+                    myError = "Bill To External Id is required";
                 }
                 if (currency != null && string.IsNullOrEmpty(currency.AccountingExternalCode))
                 {

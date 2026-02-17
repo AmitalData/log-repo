@@ -28,26 +28,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? PaymentDateTime { get; set; }
         public string DeclarationWCOXml { get; set; }
 
-        public bool IsUserIDNumberRequired { get; set; }
-        public DateTime? UserIdNumberUpdateDate { get; set; }
-        public string UserIdNumberXMLData { get; set; }
-        public string UserIdNumber { get; set; }
-        public string DocumentsApprovedByUserName { get; set; }
-        public DateTime? DocumentInspection { get; set; }
-        public DateTime? GatepassDocumentsReady { get; set; }
-        public DateTime? GoodsClassification { get; set; }
 
-        public DateTime? PaymentRequestDateTime { get; set; }
-        public DateTime? DenyDate { get; set; }
-        public DateTime? InvoiceIssuedDate { get; set; }
-        public bool UserAcceptSaveID { get; set; }
-
-        /*
-                 IsUserIDNumberRequired (Bit)
-        UserIdNumberUpdateDate (Date)
-        UserIdNumberXMLData (VCMax)
-        UserIdNumber (VC35)
-         */
-          
     }
 }

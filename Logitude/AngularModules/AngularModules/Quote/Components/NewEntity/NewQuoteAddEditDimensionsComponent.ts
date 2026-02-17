@@ -7,7 +7,7 @@ import {DimensionsPackageItem} from './QuoteDimensionsComponent';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewQuoteAddEditDimensionsComponent.html',
 })
 

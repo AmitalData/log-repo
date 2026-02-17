@@ -17,11 +17,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Catalog { get; set; }
-        public bool IsParentTenant { get; set; }
-        public string PrivateUserName { get; set; }
-
         
-
-
     }
 }

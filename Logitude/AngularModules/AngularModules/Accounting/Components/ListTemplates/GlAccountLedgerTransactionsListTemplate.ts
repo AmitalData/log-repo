@@ -1,59 +1,43 @@
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
-import { Component, ChangeDetectorRef, ViewChildren, ViewChild, ViewContainerRef } from '@angular/core';
-import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
-import { ServiceArgs } from '../../../Infrastructure/DataContracts/ServiceArgs';
-import { OnInit, Output, EventEmitter, ComponentRef, QueryList } from '@angular/core';
-import { JournalExtendedListService } from '../../Services/ExtendedLists/JournalExtendedListService';
-import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool } from '../../../Infrastructure/Tools';
-import { ReconcileEventManager, EventParams } from '../../Utilities/ReconcileEventManager';
+import {Component,ChangeDetectorRef} from '@angular/core';
+import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
+import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
+import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
+import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
+import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {JournalList} from '../../EntityLists/JournalList';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { ListComponentArgs } from 'Infrastructure/Args';
-import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
-import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
-import { ChildDirective } from 'Controls/Directives/ChildDirective';
-import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 @Component({
-
+    moduleId: module.id,
     templateUrl: "./GlAccountLedgerTransactionsListTemplate.html"
 })
 export class GlAccountLedgerTransactionsListTemplate {
     public rowData: any;
     public fieldName: any;
-    public RowIndex: string;
+    public AdditionalData: any;
     public Source: any;
     public IconCode: string;
     public ColorCode: string;
     public TenantCurrencySign: string;
-    public ChequeStatusColor = "black";
-    public ChartOfAccountsTypeCode: string;
-    public ChartOfAccountsTypeBankCode = '5';
-    public ChequeStatusColorDictionary = {
-        'הופקד- טרם נפרע': 'orange',
-        'בקופה': 'orange',
-        'משמרת': 'orange',
-        'הוחזר ללקוח': 'red',
-        'נפרע': 'green',
-    };
-
 
     public _JournalExtendedListService = new JournalExtendedListService();
     public _ARPaymentExtendedListService = new ARPaymentExtendedListService();
+
     @Output() CheckBoxChecked = new EventEmitter();
     @Output() Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
-    IsMultiWithReconcileMethodCodeEqualOne: boolean = false;
-    constructor(private CD: ChangeDetectorRef,) {
+    constructor(private CD: ChangeDetectorRef) {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
-        this.Listen();
         if (ObjectsLocator.GlobalSetting)
             this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
-
     }
 
     checkBoxState: boolean = false;
@@ -65,32 +49,24 @@ export class GlAccountLedgerTransactionsListTemplate {
         this.checkBoxState = isChecked;
     }
 
-
-    public get transferAccountId(): string {
-        return this.CurrentSession.TransferAccountId;
-    }
-
-
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
         this.rowData = rowData;
+        if (this.rowData.IsChecked == true) {
+            console.log("Oh Yea True");
+        } else {
+            console.log("Else " + this.rowData.IsChecked);
+        }
         this.fieldName = fieldName;
+        this.AdditionalData = MyAdditionalData;
 
-        if (fieldName == "Source") {
-            this.IconCode = AccountingEntityHelper.getEntityIcon(this.rowData.SourceTypeCode);
-        }
-        else if (fieldName == "SelectCheckBox"){
+        //#region Set Icons
 
-            this.RowIndex = MyAdditionalData.rowIndex;
+        this.IconCode = AccountingEntityHelper.getEntityIcon(this.rowData.SourceTypeCode);
 
-            if (GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && !GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
-                this.IsCheckBoxEnabled = false;
-            }
-        }
-        else if (fieldName == "GLAccountIndicator") {
-            this.ChartOfAccountsTypeCode = MyAdditionalData;
-        }
+        //#endregion
 
-        if (!this.CD["destroyed"]) { 
+        var isDestroyed: boolean = this.CD["destroyed"];
+        if (!isDestroyed) {
             this.CD.detectChanges();
         }
     }
@@ -104,7 +80,70 @@ export class GlAccountLedgerTransactionsListTemplate {
         // Id:      SourceId
         // Display: SourceNumber
 
-        var tableName = AccountingEntityHelper.getEntityObjectTableName(this.rowData.SourceTypeCode);
+        var tableName = "Journal";
+
+        switch (this.rowData.SourceTypeCode) {
+            // 1-Journal
+            case "1": {
+                tableName = "Journal";
+                break;
+            }
+
+            // 2-ARInvoice
+            case "2": {
+                tableName = "ARInvoice";
+                break;
+            }
+
+            // 3-ARPayment
+            case "3": {
+                tableName = "ARPayment";
+
+                break;
+            }
+
+            // 4-APInvoice
+            case "4": {
+                tableName = "APInvoice";
+
+                break;
+            }
+
+            // 5-APPayment
+            case "5": {
+                tableName = "APPayment";
+
+                break;
+            }
+
+            // 6-Cheque Deposit
+            case "6": {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 7-Cash Deposit
+            case "7": {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 8-Revaluation
+            case "8": {
+                tableName = "Revaluation";
+
+                break;
+            }
+
+            // 9-PaymentCheque
+            case "9": {
+                tableName = "PaymentCheque";
+
+                break;
+            }
+        }
 
         SessionLocator.DynamicLoader.Load(
             "./Infrastructure/Components/EditComponent/EditComponent",
@@ -115,53 +154,6 @@ export class GlAccountLedgerTransactionsListTemplate {
                 EntityId: id,
                 ObjectTableName: tableName
             });
-
-        });
-    }
-
-    async OpenTaxReportId(id: string) {
-        SessionLocator.DynamicLoader.Load(
-            "./Infrastructure/Components/EditComponent/EditComponent",
-            this.CurrentSession.SessionLocation.viewContainerRef
-        ).then(cmpRef => {
-            cmpRef.instance.ComponentRef = cmpRef;
-            cmpRef.instance.Run({
-                EntityId: id,
-                ObjectTableName: 'TaxReport'      
-            });
-        });
-    }
-
-    OpenManageReconciliations(rowData: any, title: string) {
-
-        if (title != "סכום פתוח ") {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({
-                        SelectedTabCode: "GAMR",
-                        EntityId: rowData['AccountId'],
-                        ObjectTableName: "GLAccount",
-                        FromDate: new Date('01/01/2010'),
-                        JournalNumber: rowData['JournalNumber']
-
-
-                    });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                        console.log(bk);
-                    });
-
-                });
-        }
-
-
-    }
-
-    private Listen() {
-        GLAccountSecurityLevelService.IsCheckBoxEnabled.subscribe(($event) => {
-            this.isCheckBoxEnabled = GLAccountSecurityLevelService.IsCheckBoxEnabledParameter;
-            this.CD.detectChanges();
         });
     }
 
@@ -176,90 +168,67 @@ export class GlAccountLedgerTransactionsListTemplate {
                     EntityId: id,
                     ObjectTableName: "Journal"
                 });
-                cmpRef.instance.BackCompleted.subscribe(bk => { });
+                cmpRef.instance.BackCompleted.subscribe(bk => {});
             });
         }
     }
+
     CheckBoxClicked(checked: boolean) {
         //console.log("clicked: ", checked);
         //this.rowData['IsChecked'] = checked;
-
-        if (this.IsCheckBoxEnabled) {
-            var reconcileEventParams=new EventParams();
-            reconcileEventParams.Params={
-                line: this.rowData,
-                isChecked: checked,
-                RowIndex: this.RowIndex
-            };
-            ReconcileEventManager.CheckBoxChecked.emit(reconcileEventParams);
-        }
+        ReconcileEventManager.CheckBoxChecked.emit({
+            line: this.rowData,
+            isChecked: checked,
+            RowIndex: this.AdditionalData.rowIndex
+        });
         //ReconcileEventManager.RowUnselected.subscribe(($event) => {
         //    this.rowData = ro
         //});
     }
 
     CalculateOriginalAmount() {
-        let gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
         if (
             !AppTool.IsNullOrEmpty(
-                this.rowData["ReconcileMethodCode"]
+                ReconcileEventManager.GLAccountReconcileMethodCode
             )
         ) {
-            if (this.rowData["ReconcileMethodCode"] == "0") {
+            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") {
                 // 0-local currency
 
                 if (this.rowData["LocalAmountCredit"] == 0) {
                     return this.rowData["LocalAmountDebit"];
                 } else {
-                    return this.rowData["LocalAmountCredit"]; // -1 *
+                    return -1 * this.rowData["LocalAmountCredit"];
                 }
             } else if (
-                this.rowData["ReconcileMethodCode"] == "1"
+                ReconcileEventManager.GLAccountReconcileMethodCode == "1"
             ) {
                 // 1-foreign currency
 
                 if (this.rowData["ForeignAmountCredit"] == 0) {
                     return this.rowData["ForeignAmountDebit"];
                 } else {
-                    return this.rowData["ForeignAmountCredit"];  // -1 *
-                }
-            }
-        } else if (
-            
-            !AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)) {
-            if (gLAccountReconcileMethodCode == "0") {
-                // 0-local currency
-
-                if (this.rowData["LocalAmountCredit"] == 0) {
-                    return this.rowData["LocalAmountDebit"];
-                } else {
-                    return this.rowData["LocalAmountCredit"]; // -1 *
-                }
-            } else if (gLAccountReconcileMethodCode == "1") {
-                // 1-foreign currency
-
-                if (this.rowData["ForeignAmountCredit"] == 0) {
-                    return this.rowData["ForeignAmountDebit"];
-                } else {
-                    return this.rowData["ForeignAmountCredit"];  // -1 *
+                    return -1 * this.rowData["ForeignAmountCredit"];
                 }
             }
         }
     }
 
     CalculatOriginalCurruncy() {
-        let gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
-
         if (
-            !AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)
+            !AppTool.IsNullOrEmpty(
+                ReconcileEventManager.GLAccountReconcileMethodCode
+            )
         ) {
             // this code was copied to reconcile window, if it need change, please chenge it in reconcile window too
-            if (gLAccountReconcileMethodCode == "0") {
+            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") {
                 // 0-local currency
 
                 // local
                 return SessionLocator.TenantPM.CurrencySign;
-            } else if (gLAccountReconcileMethodCode == "1") {
+            } else if (
+                ReconcileEventManager.GLAccountReconcileMethodCode == "1"
+            ) {
                 // 1-foreign currency
 
                 // foreign
@@ -269,24 +238,17 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     GetIndicatorText() {
-        if (this.rowData['OpenAmount'] == 0) return this.showLocal ? "סגור" : "close";
-        if ((this.rowData['LocalAmountDebit'] > 0 && this.rowData['OpenAmount'] != this.CalculateOriginalAmount()) || (this.rowData['LocalAmountCredit'] > 0 && this.rowData['OpenAmount'] != -1 * this.CalculateOriginalAmount()))
+        if (this.rowData["OpenAmount"] != this.CalculateOriginalAmount())
             return this.showLocal ? "סכום פתוח חלקית" : "Partial transaction";
         else return this.showLocal ? "סכום פתוח " : "Open transaction";
     }
 
-    GetGLAccountIndicatorText() {
-        if (this.rowData['OpenAmount'] == 0) return this.showLocal ? "סגור" : "close";
-        if ((this.rowData['LocalAmountDebit'] != 0 && this.rowData['OpenAmount'] != this.CalculateOriginalAmount()) || (this.rowData['LocalAmountCredit'] != 0 && this.rowData['OpenAmount'] != -1 * this.CalculateOriginalAmount()))
-            return this.showLocal ? "סכום פתוח חלקית" : "Partial transaction";
-        else if (this.rowData['IsExternalReconcile'] == false && this.ChartOfAccountsTypeCode == "5") return this.showLocal ? "תנועות חיצוניות פתוחות " : "Open External Transaction";
-        else return this.showLocal ? "סכום פתוח " : "Open transaction";
-    }
+    OpenGLAccount() {
+        var account2open = this.rowData["OppositeAccountId"];
 
-    OpenGLAccount(fieldName: string) {
-        var account2open = this.rowData[fieldName];
+
+
         var tableName = "GLAccount";
-
         SessionLocator.DynamicLoader.Load(
             "./Infrastructure/Components/EditComponent/EditComponent",
             this.CurrentSession.SessionLocation.viewContainerRef
@@ -298,20 +260,4 @@ export class GlAccountLedgerTransactionsListTemplate {
             });
         });
     }
-
-    GetChequeStatusColor(chequeStatus) {
-
-        this.ChequeStatusColor = this.ChequeStatusColorDictionary[chequeStatus];
-
-        return this.ChequeStatusColor;
-    }
-
-    isCheckBoxEnabled: boolean = true;
-    get IsCheckBoxEnabled() { return this.isCheckBoxEnabled; }
-    set IsCheckBoxEnabled(value: boolean) {
-        if (this.isCheckBoxEnabled != value) {
-            this.isCheckBoxEnabled = value;
-        }
-    }
-
 }

@@ -43,10 +43,7 @@ export class TicketCreatedByTypePM {
     public OldEntityPM: TicketCreatedByTypePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -54,7 +51,6 @@ export class TicketCreatedByTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TicketCreatedByType");
            
         }
-       }
     }
 
     private MyClone: TicketCreatedByTypePM;

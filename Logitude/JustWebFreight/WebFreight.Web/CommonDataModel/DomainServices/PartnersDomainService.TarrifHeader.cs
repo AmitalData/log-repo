@@ -6,9 +6,9 @@ using System.Reflection;
 using System.ServiceModel.DomainServices.Server;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -384,7 +384,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 {
                     case ChangeOperation.Insert:
                         {
-                            r.ChangeSetOp = ChangeSetOperation.Insert;
+                            r.changeOp = ChangeSetOperation.Insert;
                             //r.Id = IdCounter.GetNumber("TarrifFromTo", currentEntity.Tenant).ToString();
                             //TarrifFromTo newFt = new TarrifFromTo()
                             //{
@@ -397,7 +397,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                     case ChangeOperation.Update:
                         {
-                            r.ChangeSetOp = ChangeSetOperation.Update;
+                            r.changeOp = ChangeSetOperation.Update;
                             //TarrifFromTo ft = tarrifFromToRepository.GetSingleTarrifFromTo(r.Id);
                             //MapTarrifFromToPMTarrifFromTo(r, ft);
                             //tarrifFromToRepository.Update(ft);
@@ -406,7 +406,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                     case ChangeOperation.Delete:
                         {
-                            r.ChangeSetOp = ChangeSetOperation.Delete;
+                            r.changeOp = ChangeSetOperation.Delete;
                             //TarrifFromTo ft = tarrifFromToRepository.GetSingleTarrifFromTo(r.Id);
                             //tarrifFromToRepository.Remove(ft);
                             break;

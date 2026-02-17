@@ -22,25 +22,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             poco.InActive = entityPM.InActive;            
             poco.UpdateDate = entityPM.UpdateDate;
             poco.UpdatedByUserName = entityPM.UpdatedByUserName;
-            poco.PartnerName = entityPM.PartnerName;
-            BuildSearchFields(entityPM, poco);
-
-        }
-        private static void BuildSearchFields(WebhookKeysPM entityPM, WebhookKeys entityPOCO)
-        {
-            string mySearchFields = "";
-
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PartnerName);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Description);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AccessKey);
-
-            if (mySearchFields.Length > 1000)
-            {
-                mySearchFields = mySearchFields.Substring(0, 1000);
-            }
-
-            entityPM.SearchFields = mySearchFields;
-            entityPOCO.SearchFields = mySearchFields;
+            poco.PartnerName = entityPM.PartnerName; 
+       
         }
     }
 }

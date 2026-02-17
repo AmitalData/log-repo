@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -31,7 +31,7 @@ using Logitude.Social.BL.EntityQueryServices;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Social.BL.EntityPMs;
 using Logitude.Social.BL.EntityUpdateServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Transactions;
 using Logitude.Social.Data.EntityListQueryServices;
 using Logitude.Social.Data.EntityPOCOs;
@@ -92,7 +92,6 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
             ISocialContext socialContext = SocialContext.GetContext(authToken.Tenant);
             PostRepository postRepository = new PostRepository(tenant);
             PostQueryService service = new PostQueryService(socialContext);
@@ -110,7 +109,6 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
             ISocialContext socialContext = SocialContext.GetContext(authToken.Tenant);
             PostRepository postRepository = new PostRepository(tenant);
             PostQueryService service = new PostQueryService(socialContext);
@@ -126,7 +124,6 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
             ISocialContext socialContext = SocialContext.GetContext(tenant);
             PostLikeRepository postLikeRepository = new PostLikeRepository(tenant);
             PostLike postLike = postLikeRepository.GetSingle(postId, userId, tenant);
@@ -146,7 +143,6 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
             ISocialContext socialContext = SocialContext.GetContext(authToken.Tenant);
 
             FollowerListQueryService followerListQueryService = new FollowerListQueryService(socialContext);
@@ -168,7 +164,6 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnEntityTenant("PostLike", likePM.Tenant, authToken.Tenant);
 
             ISocialContext socialContext = SocialContext.GetContext(likePM.Tenant);
             PostLikeRepository postLikeRepository = new PostLikeRepository(likePM.Tenant);

@@ -1,6 +1,6 @@
 ﻿
 (function (jQuery) {
-    jQuery.Token = null;
+
     jQuery.CurrentTenant = null;
     jQuery.CurrentCardId = null;
     jQuery.CurrentCardType = null;
@@ -12,7 +12,6 @@
     jQuery.IsBrandingEnabled = "";
     jQuery.TenantDateTimeFormat = null;
     jQuery.IsMoneyTabEnabled = false;
-    jQuery.DisplayDocumentsAndEvents = false;
 
     var IsTabSelected_PAR = false;
     var IsTabSelected_PAC = false;
@@ -64,10 +63,7 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
-
+            
             success: function (result) {                
                 //jQuery("#companyLogo").attr('src', result);
                 var img = new Image();
@@ -95,9 +91,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
 
@@ -109,8 +102,6 @@
                 }
 
                 $.TenantDateTimeFormat = result.TenantDateTimeFormat;
-                $.DisplayDocumentsAndEvents = result.DisplayDocumentsAndEvents;
-
                 $.GetSingleEntityPM();
             },
 
@@ -139,9 +130,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (shipmentPM) {
 
@@ -201,15 +189,11 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
 
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Partners Display", $.CurrentTenant, $.CurrentCardId);
 
-                $("#PartnersListBox").html("");
                 $("#PartnersListBox").kendoListView(
                 {
                     dataSource: { data: result },
@@ -243,9 +227,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
 
@@ -290,12 +271,7 @@
 
                     ChargesGridColumns.push({ title: "Description", field: "Description" });
                     ChargesGridColumns.push({ title: "Invoice Amount", field: "InvoiceAmount", template: "<div class='k-numeric'>#= InvoiceAmount #</div>" });
-
-                    if (result.IsShowAmountLocalCurrencyColumnInSharedLogistics == true){
-                        ChargesGridColumns.push({ title: "Local Amount", field: "LocalAmount", template: "<div class='k-numeric'>#= LocalAmount #</div>" });
-                    }
-
-                    
+                    ChargesGridColumns.push({ title: "Local Amount", field: "LocalAmount", template: "<div class='k-numeric'>#= LocalAmount #</div>" });
 
                     $.each(result.ARCharges, function (index, item) {
 
@@ -346,23 +322,12 @@
 
         $("#DocumentsPageBusyIndicator").show();
 
-        var url = null;
-
-        if ($.IsExternalURL) {
-            url = "../api/DocumentsData?securitykey=" + $.CurrentEntityKey + "&entityId=" + $.CurrentEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
-        }
-
-        else {
-            url = "../api/DocumentsData?entityId=" + $.CurrentEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
-        }
+        var url = "../api/DocumentsData?entityId=" + $.CurrentEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
 
         $.ajax({
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
 
@@ -371,6 +336,12 @@
                 if (result.length > 0) {
 
                     ko.applyBindings(BuildDocumentsTabPageViewModel(result, "../", false), document.getElementById("DocumentsTabPageControl"));
+
+                    //$("#DocumentsListBox").kendoListView(
+                    //{
+                    //    dataSource: { data: result },
+                    //    template: kendo.template($("#DocumentListBoxItemDataTemplate").html())
+                    //});
                 }
 
                 else {
@@ -399,30 +370,19 @@
     jQuery.GetShipmentEvents = (function () {
 
         $("#EventsPageBusyIndicator").show();
-        var url = null;
-        if ($.IsExternalURL) {
-            url = "../api/CommonData?securitykey=" + $.CurrentEntityKey + "&entityId=" + $.CurrentEntityId + "&objectTableName=Shipment" + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
-        }
 
-        else {
-            url = "../api/CommonData?entityId=" + $.CurrentEntityId + "&objectTableName=Shipment" + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
-        }
+        var url = "../api/CommonData?entityId=" + $.CurrentEntityId + "&objectTableName=Shipment" + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
 
         $.ajax({
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
 
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Events Display", $.CurrentTenant, $.CurrentCardId);
 
                 if (result.length > 0) {
-
-                    $("#EventsListBox").html("");
                     $("#EventsListBox").kendoListView(
                     {
                         dataSource: { data: BuildEventList(result, $.TenantDateTimeFormat) },
@@ -529,20 +489,14 @@
 
                         if ($.IsExternalURL) {
 
-                            if ($.DisplayDocumentsAndEvents) {
-                                $.GetShipmentDocuments();
-                            }
+                            $("#DocumentsTabPageControl").css({
+                                "font-family": "Arial",
+                                "color": "#8F9293",
+                                "font-size": "16px",
+                                "margin-top": "20px",
+                            });
 
-                            else {
-                                $("#DocumentsTabPageControl").css({
-                                    "font-family": "Arial",
-                                    "color": "#8F9293",
-                                    "font-size": "16px",
-                                    "margin-top": "20px",
-                                });
-
-                                $("#DocumentsTabPageControl").html("Documents information is only available for logged-in users");
-                            }
+                            $("#DocumentsTabPageControl").html("Documents information is only available for logged-in users");
                         }
 
                         else {
@@ -561,20 +515,14 @@
 
                         if ($.IsExternalURL) {
 
-                            if ($.DisplayDocumentsAndEvents) {
-                                $.GetShipmentEvents();
-                            }
+                            $("#EventsListBox").css({
+                                "font-family": "Arial",
+                                "color": "#8F9293",
+                                "font-size": "16px",
+                                "margin-top": "20px",
+                            });
 
-                            else {
-                                $("#EventsListBox").css({
-                                    "font-family": "Arial",
-                                    "color": "#8F9293",
-                                    "font-size": "16px",
-                                    "margin-top": "20px",
-                                });
-
-                                $("#EventsListBox").html("Events information is only available for logged-in users");
-                            }
+                            $("#EventsListBox").html("Events information is only available for logged-in users");
                         }
 
                         else {
@@ -588,8 +536,7 @@
         }
     });
     $("#BackButton").click(function () {
-        //parent.history.back();
-        window.history.go(-1);
+        parent.history.back();
         return false;
     });
 
@@ -602,9 +549,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
                 window.localStorage.setItem("Token", "");
@@ -636,15 +580,10 @@
         $.ResizePage(210);
         $.SetTabsEnabled(false);
 
-        $.Token = $("#TokenInput").val();
-        var linkQuery = $("#LoginInput").val();
+        var link = $(location).attr('href');
+        var linkArray = link.split('=')
+        var linkQuery = linkArray[1];
         var linkParameters = null;
-
-        if ($.trim($.Token) == "") {
-            var link = $(location).attr('href');
-            var linkArray = link.split('=')
-            linkQuery = linkArray[1];
-        }
 
         if (linkQuery && linkQuery.indexOf('%3A') > -1)
         {
@@ -660,9 +599,9 @@
             $.CurrentEntityKey = linkParameters[0];
             $.CurrentEntityId = linkParameters[1];
             $.CurrentTenant = linkParameters[2];
-            $.IsBrandingEnabled = linkParameters[3];          
-
+            $.IsBrandingEnabled = linkParameters[3];
             $.IsExternalURL = true;
+          
             if ($.IsBrandingEnabled == "true" || $.IsBrandingEnabled == "True") {
                
                 $("#PoweredArea2").hide();
@@ -678,8 +617,6 @@
         }
 
         else {
-
-            $("#DownloadAll").show();
 
             $.CurrentEntityId = linkParameters[0];
             $.CurrentCardId = linkParameters[1];

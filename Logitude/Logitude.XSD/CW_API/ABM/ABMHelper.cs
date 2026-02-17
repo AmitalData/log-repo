@@ -6,10 +6,10 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -30,7 +30,6 @@ using System.Xml;
 using System.Xml.Serialization;
 using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.XSD.CW_API.ABM
 {
@@ -100,12 +99,11 @@ namespace Logitude.XSD.CW_API.ABM
             GetLoggedContact();
         }
 
-
         public void Run()
         {
             if (this.IsValid)
             {
-                ABMDataContext dataContext = new ABMDataContext(this.ShipmentId, this.Tenant, this.commonContext);
+                ABMDataContext dataContext = new ABMDataContext(this.ShipmentId, this.Tenant);
                 ABMDataBuilder dataBuilder = new ABMDataBuilder(dataContext);
 
                 CustomsForceServiceRequest request = new CustomsForceServiceRequest()
@@ -166,44 +164,40 @@ namespace Logitude.XSD.CW_API.ABM
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             storageservice.Write(myByteArray, fileInfo);
 
-            //string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);
-            DbQueueService queueservice = new DbQueueService(queueName, Tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
+                {
+                    BrokeredMessage message = new BrokeredMessage();
+                    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.Add(new TimeSpan(0, 0, 10));
 
-            //try
-            //{
-            //    using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
-            //    {
-            //        BrokeredMessage message = new BrokeredMessage();
-            //        message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.Add(new TimeSpan(0, 0, 10));
+                    message.Properties["CommunicationLogId"] = myCommunicationLogId;
+                    message.Properties["Tenant"] = Tenant;
 
-            //        message.Properties["CommunicationLogId"] = myCommunicationLogId;
-            //        message.Properties["Tenant"] = Tenant;
+                    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);
+                    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
+                    client.Send(message);
 
-            //        string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);
-            //        QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
-            //        client.Send(message);
+                    scope.Complete();
+                }
+            }
 
-            //        scope.Complete();
-            //    }
-            //}
+            catch (Exception ex)
+            {
+                string ip = "";
 
-            //catch (Exception ex)
-            //{
-            //    string ip = "";
+                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                {
+                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                    if (string.IsNullOrEmpty(currentIP))
+                    {
+                        currentIP = HttpContext.Current.Request.UserHostAddress;
+                    }
+                    ip = currentIP;
+                }
 
-            //    if (HttpContext.Current != null && HttpContext.Current.Request != null)
-            //    {
-            //        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-            //        if (string.IsNullOrEmpty(currentIP))
-            //        {
-            //            currentIP = HttpContext.Current.Request.UserHostAddress;
-            //        }
-            //        ip = currentIP;
-            //    }
-
-            //    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "customs controller", null, ip);
-            //}
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "customs controller", null, ip);
+            }
         }
 
         private string myObjectTableId;

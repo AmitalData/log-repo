@@ -16,7 +16,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AdvanceDocumentTypeTemplate',
     templateUrl: './AdvanceDocumentTypeTemplateComponent.html', 
     providers: [ DocumentTypeTemplatePMService]
@@ -53,10 +53,7 @@ export class AdvanceDocumentTypeTemplateComponent extends BaseComponent implemen
 
     SetDataContext(entityPM: DocumentTypeTemplatePM) {
         this.EntityPM = entityPM;
-
-        if (this.EntityPM) {
-            this.SetUIProperties();
-        }
+ 
         var myService: CountryListService = new CountryListService();
         myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError && myResponse.Result) {
@@ -77,10 +74,6 @@ export class AdvanceDocumentTypeTemplateComponent extends BaseComponent implemen
     }
 
 
-    private SetUIProperties() {
-        this.EntityPM.UIProperties.SetEnabled("IsSystem", "DocumentTypeTemplate", SessionLocator.Tenant == 0);
-    }
-
     CountrySelectedChange(value: any) {
         if (value) {
             this.EntityPM.CountryCode = value.Code;
@@ -95,7 +88,7 @@ export class AdvanceDocumentTypeTemplateComponent extends BaseComponent implemen
 
     SaveButtonClicked() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-        this.documentTypeTemplatePMService.update(this.EntityPM).subscribe((res:any) => {
+        this.documentTypeTemplatePMService.update(this.EntityPM).subscribe(res => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.CloseButtonClicked();
         });

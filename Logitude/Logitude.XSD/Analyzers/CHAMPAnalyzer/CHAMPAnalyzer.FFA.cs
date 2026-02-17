@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Logitude.BookingLib.Data.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.Helpers;
@@ -46,11 +46,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 {
                     myMaster = "0" + myMaster;
                 }
-            }
-
-            if (!string.IsNullOrEmpty(myPrefix) && !string.IsNullOrEmpty(myMaster))
-            {
-                myLongMaster = myPrefix + "-" + myMaster;
             }
         }
 

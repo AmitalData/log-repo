@@ -27,17 +27,9 @@ export class FeatureLocator {
                         }
                     });
 
-                    if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
-                        if (myGroupedList.indexOf(myPackageCode) > -1) {
+                    if (myGroupedList.length == 1) {
+                        if (myGroupedList[0] == myPackageCode) {
                             myResult = true;
-                        }
-                    }
-
-                    else {
-                        if (myGroupedList.length == 1) {
-                            if (myGroupedList[0] == myPackageCode) {
-                                myResult = true;
-                            }
                         }
                     }
                 }
@@ -110,21 +102,6 @@ export class FeatureLocator {
 
         return myResult;
     }
-    public static IsFeatureGrantedByUniqeCode(featureUniqeCode: string) {
-        var myResult = false;
-
-        if (!AppTool.IsNullOrEmpty(featureUniqeCode)) {
-            if (FeatureLocator.Features != null) {
-                var myFeature: FeaturePM = FeatureLocator.Features.filter(d => d.FeatureUniqeCode == featureUniqeCode)[0];
-
-                if (myFeature != null) {
-                    myResult = true;
-                }
-            }
-        }
-
-        return myResult;
-    }
     public static IsPackage_CUST() {
         var myResult = false;
 
@@ -146,19 +123,8 @@ export class FeatureLocator {
     public static IsPackage_DVMT() {
         var myResult = false;
 
-        if (SessionLocator.TenantManagementJS != null && SessionLocator.TenantManagementJS.IsMultiPackage) {            
-            if (SessionLocator.TenantManagementJS.PackagesCodes_PK.length > 0) {
-                var index = SessionLocator.TenantManagementJS.PackagesCodes_PK.indexOf("DVMT");
-                if (index != -1) {
-                    myResult = true;
-                }
-            }
-        }
-
-        else {
-            if (FeatureLocator.IsPackageEquals("DVMT")) {
-                myResult = true;
-            }
+        if (FeatureLocator.IsPackageEquals("DVMT")) {
+            myResult = true;
         }
 
         return myResult;

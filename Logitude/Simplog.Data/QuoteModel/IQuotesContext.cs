@@ -1,6 +1,6 @@
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
@@ -9,11 +9,9 @@ namespace Simplog.Data.QuoteModel
     public interface IQuotesContext : IContext
     {
         IDbSet<Quote> Quotes { get; }
-        IDbSet<QuoteAnalytic> QuoteAnalytics { get; }
         IDbSet<QuoteCharge> QuoteCharges { get; }
         IDbSet<QuotePriceSteps> QuotePriceSteps { get; }
         IDbSet<QuoteType> QuoteTypes { get; }
-        IDbSet<ValidByType> ValidByTypes { get; }
         IDbSet<MarkUpType> MarkUpTypes { get; }
         IDbSet<QuoteCustomerType> QuoteCustomerTypes { get; }
         IDbSet<QuotePackage> QuotePackages { get; }
@@ -32,7 +30,6 @@ namespace Simplog.Data.QuoteModel
         IDbSet<QuoteTemplateExcludedSection> QuoteTemplateExcludedSections { get; }  
         IDbSet<QuoteStage> QuoteStages { get; }
         IDbSet<QuoteRating> QuoteRatings { get; }
-        IDbSet<QuoteComputedField> QuoteComputedField { get; }
         IDbSet<QuoteTemplateSectionModification> QuoteTemplateSectionModifications { get; }
         IDbSet<QuoteTotalVAT> QuoteTotalVATs { get; }
         IDbSet<QuoteSetting> QuoteSettings { get; }

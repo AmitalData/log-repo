@@ -1,8 +1,7 @@
 
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -15,11 +14,11 @@ import {DocumentsFilingList} from '../../EntityLists/DocumentsFilingList';
 @Injectable()
 
 export class DocumentsFilingViewsExtService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     public static CachedData: Array<DocumentsFilingList> = [];
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/documentsfilingviewsext';
     }
 
@@ -56,10 +55,13 @@ export class DocumentsFilingViewsExtService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
-                var serviceResponse: ServiceResponse = response.body;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
                 var _mappedListsArray: Array<DocumentsFilingList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -73,20 +75,21 @@ export class DocumentsFilingViewsExtService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     GetLastDocumentsFilingPM(entityId: string, objectTable: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetLastDocumentsFilingPM?entityId=" + entityId + "&objectTable=" + objectTable,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetLastDocumentsFilingPM?entityId=" + entityId + "&objectTable=" + objectTable,
+            { headers: authHeader }).map(response => {
 
                 var pmresponse: ServiceResponse = new ServiceResponse();
-                pmresponse.Result = response;
+                pmresponse.Result = response.json();
                 return pmresponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
     }
 
 

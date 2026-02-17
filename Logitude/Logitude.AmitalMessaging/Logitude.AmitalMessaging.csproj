@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,19 +9,18 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.AmitalMessaging</RootNamespace>
     <AssemblyName>Logitude.AmitalMessaging</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,14 +28,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\All Projects\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,40 +43,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>..\Library\Bin\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\All Projects\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
-    <OutputPath>bin\x64\None\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -89,13 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customs\CustomFile\CourierStatus\LOGICOURIERSTATUS.cs">
-      <DependentUpon>LOGICOURIERSTATUS.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Customs\CustomFile\DeclarationReferantData\LOGIDECREFERANTDATA.cs">
-      <DependentUpon>LOGIDECREFERANTDATA.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Customs\CustomFile\ExportStorageDTD\LogitudeStorage.cs" />
     <Compile Include="Customs\CustomFile\FileAdditionalData.cs" />
     <Compile Include="Customs\CustomFile\CargoQueryContext.cs" />
     <Compile Include="Customs\CustomFile\CellFile\LOGICELLFILE.cs">
@@ -120,9 +79,6 @@
     </Compile>
     <Compile Include="Customs\CustomFile\LOGIDOCS.cs">
       <DependentUpon>LOGIDOCS.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Customs\CustomFile\LOGIGENREQ.cs">
-      <DependentUpon>LOGIGENREQ.xsd</DependentUpon>
     </Compile>
     <Compile Include="Customs\CustomFile\LOGIPAYHAND.cs">
       <DependentUpon>LOGIPAYHAND.xsd</DependentUpon>
@@ -166,9 +122,6 @@
     <Compile Include="Customs\MasterCourier\LOGIMASTERCOUR.cs">
       <DependentUpon>LOGIMASTERCOUR.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Export\Entry\LOGIEXPORTSTORAGE.cs">
-      <DependentUpon>LOGIEXPORTSTORAGE.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Infrastructure\FuStatus\gfusts.cs">
       <DependentUpon>gfusts.xsd</DependentUpon>
     </Compile>
@@ -184,10 +137,6 @@
     <Compile Include="Utils\XmlGenericUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="Customs\CustomFile\CellFile\LOGICELLFILE.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -207,9 +156,6 @@
     <None Include="Customs\CustomFile\CommDecFile\LOGICOMMDEC.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Customs\CustomFile\CourierStatus\LOGICOURIERSTATUS.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Customs\CustomFile\CustomCertificatesRequest.dtd" />
     <None Include="Customs\CustomFile\CustomCertificatesRequest.xsd">
       <SubType>Designer</SubType>
@@ -218,16 +164,7 @@
     <None Include="Customs\CustomFile\CustomCertificatesResponse.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Customs\CustomFile\DeclarationReferantData\LOGIDECREFERANTDATA.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Customs\CustomFile\LOGIDOCS.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Customs\CustomFile\LOGIGENREQ.dtd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Customs\CustomFile\LOGIGENREQ.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Customs\CustomFile\LOGISCHEDULER.dtd">
@@ -303,18 +240,8 @@
     <None Include="Customs\CustomFile\ReleaseFile\LOGIBONDREL.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Customs\CustomFile\CourierStatus\LOGICOURIERSTATUS.dtd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Customs\CustomFile\DeclarationReferantData\LOGIDECREFERANTDATA.dtd" />
     <None Include="Customs\MasterCourier\LOGIMASTERCOUR.dtd" />
     <None Include="Customs\MasterCourier\LOGIMASTERCOUR.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Export\Entry\LOGIEXPORTSTORAGE.dtd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Export\Entry\LOGIEXPORTSTORAGE.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Infrastructure\FuStatus\gfusts.dtd" />
@@ -336,6 +263,7 @@
     </None>
     <Content Include="HowToBuildCsFromXsd.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

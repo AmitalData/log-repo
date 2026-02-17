@@ -1,4 +1,4 @@
-<style>
+﻿<style>
 
      .subTitle {
         color: #4b90cb;
@@ -26,111 +26,92 @@
 
                                 <!-- SequenceNumeric -->
                                 <log-column [header]="'Customs.SupplierInvoice.F.SequenceNumeric' | TextCodeTranslationPipe" [width]="'40'" [Alignment]="'right'" [binding]="'SequenceNumeric'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate [IgnoreMods]="true">
+                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.SequenceNumeric}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- InvoiceNumber -->
                                 <log-column [header]="'Customs.SupplierInvoice.F.InvoiceNumber' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'MethodTypeCode'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" >
                                             <span>{{item.InvoiceNumber}}</span>
                                         </div>
                                        
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- IssueDate -->
                                 <log-column [header]="'Customs.SupplierInvoice.F.IssueDate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'Amount'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" >
                                             <span>{{ item.IssueDate | DateTimePipe }}</span>
                                         </div>
                                         
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- IncotermCode -->
                                 <log-column [header]="'Customs.SupplierInvoice.F.IncotermCode' | TextCodeTranslationPipe" [width]="'60'" [Alignment]="'right'" [binding]="'BankCode'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" >
                                             <span>{{item.IncotermCode}}</span>
                                         </div>
                                        
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- InvoiceAmount -->
                                 <log-column [header]="'Customs.SupplierInvoice.F.InvoiceAmount' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" >
                                             <span style="padding-right:5px">{{item.InvoiceAmount}}</span>
                                             <span style="float:right">{{item.InvoiceCurrencyTypeCode}}</span>
                                         </div>
                                       
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <log-column [header]="'Customs.SupplierInvoice.F.IssueCountryCode' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.IssueCountryName}}</span>
                                         </div>
 
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <log-column [header]="'Customs.SupplierInvoice.F.VendorName' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" >
                                             <span>{{item.VendorName}}</span>
                                         </div>
 
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <log-column [header]="'Customs.SupplierInvoice.F.PreferenceDocumentTypeCode' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" >
                                             <span>{{item.PreferenceDocumentTypeName}}</span>
                                         </div>
 
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <log-column [header]="'Customs.Declaration.O.FreightAmount' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.TotalFreightInInvoiceCurrencyText |NumbersPipe:'N2'}}</span>
                                         </div>
 
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <log-column [header]="'Customs.Declaration.O.Insurance' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" >
                                        
                                             <span style="padding-right:5px">{{item.InsuranceAmount | NumbersPipe:'N2'}}</span>
@@ -140,19 +121,16 @@
                                         </div>
 
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
                                 <!-- Buttons -->
                                 <log-column [width]="'40'" [Alignment]="'right'">
-                                    <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                         <span class="CellSeparator" style="float: right;"></span>
                                         <div (click)="item.PreventSelect()">
                                             <CheckBox style="margin-right:5px;float:right;padding-top:5px"
                                                       [IsChecked]="item.IsSelected" (Checked)="item.IsSelected = $event "></CheckBox>
                                         </div>
-                                    </log-cell-template>
-</ng-template>                         
+                                    </log-cell-template>                         
                                 </log-column>
 
                             </logitude-edit-grid>
@@ -180,122 +158,102 @@
 
                     <!-- SequenceNumeric -->
                     <log-column [header]="'Customs.SupplierInvoice.F.SequenceNumeric' | TextCodeTranslationPipe" [width]="'40'" [Alignment]="'right'" [binding]="'SequenceNumeric'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate [IgnoreMods]="true">
+                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{item.SequenceNumeric}}</span>
                             </div>
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                     <!-- ItemCode -->
                     <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'MethodTypeCode'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                        <log-cell-template template="let item" #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{item.ItemCode}}</span>
                             </div>
                            
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                     <!-- ClassificationCode -->
                     <log-column [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'Amount'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                        <log-cell-template template="let item" #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming" >
                                 <span>{{ item.ClassificationCode  }}</span>
                             </div>
 
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                     <!-- TradeAgreementCode -->
                     <log-column [header]="'Customs.SupplierInvoiceItem.F.TradeAgreementCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'Amount'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                        <log-cell-template template="let item" #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{ item.TradeAgreementName  }}</span>
                             </div>
 
                         </log-cell-template>
-</ng-template>
                     </log-column>
                    
 
                     <!-- StatisticQuantity -->
                     <log-column [header]="'Customs.SupplierInvoiceItem.F.StatisticQuantity' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'BankCode'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                        <log-cell-template template="let item" #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming" >
                                 <span>{{item.StatisticQuantity |NumbersPipe:'N2'}}</span>
                             </div>
 
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                     <!-- InvoiceQuantity -->
                     <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantity' | TextCodeTranslationPipe" [width]="'110'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                        <log-cell-template template="let item" #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming" >
                          
                                 <span>{{item.InvoiceQuantity | NumbersPipe:'N2'}}</span>
                             </div>
 
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                     <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemPrice' | TextCodeTranslationPipe" [width]="'110'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                        <log-cell-template template="let item" #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming" >
                                 <span>{{item.ItemPrice  | NumbersPipe:'N2'}}</span>
                             </div>
 
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                     <log-column [header]="'Customs.SupplierInvoiceItem.F.ActualInvoiceLines' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                        <log-cell-template template="let item" #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming">
                                 <span>{{item.ActualInvoiceLines}}</span>
                             </div>
 
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                     <log-column [header]="'Customs.SupplierInvoiceItem.F.OriginCountryCode' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                        <log-cell-template template="let item" #logcelltemplate>
                             <div style="text-align: right;" class="TextTrimming" >
                                 <span>{{item.OriginCountryName}}</span>
                             </div>
 
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                    
                     <!-- Buttons -->
                     <log-column [width]="'40'" [Alignment]="'right'">
-                        <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                        <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                             <span class="CellSeparator" style="float: right;"></span>
                             <div (click)="item.PreventSelect()">
                                 <CheckBox style="margin-right:5px;float:right;padding-top:5px"
                                           [IsChecked]="item.IsSelected" (Checked)="item.IsSelected = $event "></CheckBox>
                                 </div>
                       </log-cell-template>
-</ng-template>
                     </log-column>
 
                 </logitude-edit-grid>

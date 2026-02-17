@@ -15,11 +15,9 @@ import { CustomsClosedTableList } from '../../../Customs/EntityLists/CustomsClos
 import { SystemTableRequestParams } from '../../../Customs/DataContract/RequestParams/SystemTableRequestParams';
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CustomMessageProgressComponent, CustomMessageProgressHelper } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
-import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomsClosedTablesComponent.html',
 })
 
@@ -42,39 +40,27 @@ export class CustomsClosedTablesComponent implements OnInit {
     onQueryChangeEvent = new EventEmitter();
 
     private _entityListService: EntityListService;
-    isTableUpdateButtonEnabled: boolean = false;
-    customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
-    private _isConnectedToUniFreight = false; 
-
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._entityListService = new EntityListService();
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             //try {
-            this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe(response => {
                 //this._IsLoaded = true;
             });
             //} catch (err) {
             //    console.warn(err);
             //}
         });
-        const canCustomerCare = SessionLocator?.LoggedUserPM?.IsCustomerCare ?? false;
-        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
-        .subscribe((res: ServiceResponse) => {
-            this._isConnectedToUniFreight = !!res?.Result?.IsConnectedToUniFreight;
-             this.isTableUpdateButtonEnabled = this._isConnectedToUniFreight || canCustomerCare;
-                });
-
-
     }
     _IsLoaded: boolean = false;
     ngOnInit() {
         //this._entityListService = new EntityListService();
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             //try {
-            this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe(response => {
                 this._IsLoaded = true;
             });
             //} catch (err) {
@@ -112,7 +98,7 @@ export class CustomsClosedTablesComponent implements OnInit {
 
             FieldName: 'Id',
             DataTypeCode: 'String',//'Number',
-            Display: TextCodeTranslator.Translate("Customs.CustomsClosedTable.O.Id"),
+            Display: TextCodeTranslator.Translate("Customs.CustomsClosedTable.F.Id"),
             Styles: { width: '75px' },
             IsCustomTemplate: true
         });
@@ -260,14 +246,14 @@ export class CustomsClosedTablesComponent implements OnInit {
         //systemTableRequestParamsystemTableRequestParams.s.RequestVIA == SendRequestVIA.WebServiceBatch;//all the time 
         systemTableRequestParams.UpdateAllTables = true;
 
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(systemTableRequestParams.PBId, 5, true);
         
         
         
         //CustomMessageProgressComponent
-        //    .ShowProgressBar(this.CurrentSession,systemTableRequestParams.PBId, "שליחת שאילתא להודעות בוקר", true)
+        //    .ShowProgressBar(systemTableRequestParams.PBId, "שליחת שאילתא להודעות בוקר", true)
         //    .then((res) => {
         //        //this.ResponseData = res;
         //        //this.OnMassageDisplayMethod();

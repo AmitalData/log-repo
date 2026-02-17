@@ -9,10 +9,10 @@ import {PartnersDomainService} from '../../Common/Services/PartnersDomainService
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentDomainService} from '../../Shipment/Services/ShipmentDomainService'; 
 import {ObjectsLocator}  from  '../../Infrastructure/Locators/ObjectsLocator';
-import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
+import { IdGeneratorPipe } from '../pipes/idgeneratorpipe';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuickSearchTextBox.html',
     selector: "QuickSearchTextBox",
     inputs: ['Watermark', 'ObjectTableName', 'Filters', 'DropDownWidth', 'ItemHeight', 'Area', 'IsDisabled', 'AWBMessagesCCSTypeCode', 'ShowViewAll', 'DisplayText', 'IsIconsVisible', 'IsItemSelected'],
@@ -196,19 +196,7 @@ export class QuickSearchTextBox implements OnInit {
                         this.myPartnersDomainService = new PartnersDomainService();
                     }
 
-                    var item = this.Filters.AdditionalFilters.filter(f => f.FieldName == "SearchFields")[0];
-                    if (item) {
-                        var indexOfItem = this.Filters.AdditionalFilters.indexOf(item);
-                        this.Filters.AdditionalFilters.splice(indexOfItem, 1);
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                        this.Filters.Filter10Name = "SearchFields";
-                        this.Filters.Filter10Value = this.SearchText;
-                        this.Filters.Filter10Operator = "Contains";
-                    }
-
-                    this.myPartnersDomainService.GetCustomersQuickSearch(this.Filters).subscribe((myResponse: ServiceResponse) => {
+                    this.myPartnersDomainService.GetCustomersQuickSearch(this.searchText).subscribe((myResponse: ServiceResponse) => {
                         this.OnDataLoaded(myResponse.Result);
                     });
 
@@ -285,7 +273,7 @@ export class QuickSearchTextBox implements OnInit {
 
                     var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.Filters);
                     loadPromise.then((res: any) => {
-                        res.subscribe((resp:any) => {
+                        res.subscribe(resp => {
                             this.OnDataLoaded(resp.Result);
                         })
                     });
@@ -324,7 +312,7 @@ export class QuickSearchTextBox implements OnInit {
                     else {
                         var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.Filters);
                         loadPromise.then((res: any) => {
-                            res.subscribe((resp:any) => {
+                            res.subscribe(resp => {
                                 this.OnDataLoaded(resp.Result);
                             })
                         });
@@ -365,17 +353,12 @@ export class QuickSearchTextBox implements OnInit {
         var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.Filters);
 
         loadPromise.then((res: any) => {
-            res.subscribe((resp:any) => {
+            res.subscribe(resp => {
                 this.OnDataLoaded(resp.Result);
             })
         });
     }
     private OnDataLoaded(items: any[] = []) {
-
-        if (!items) {
-            items = [];
-        }
-
         var itemsCount = items.length;
         this.IsQuickSearchLoading = false;
         this.IsQuickSearchNoResult = itemsCount == 0 ? true : false;

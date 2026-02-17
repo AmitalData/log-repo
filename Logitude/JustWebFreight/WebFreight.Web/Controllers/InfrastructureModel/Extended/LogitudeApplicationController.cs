@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel;
@@ -30,11 +30,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             {
                 UserValidityResponse response = new UserValidityResponse() { IsValid = true };
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-
                 IWebFreightContext ObjectContext = WebFreightContext.GetContext(tenant);
                 if (HttpContext.Current != null)
                 {
@@ -64,15 +59,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     //if (connection.Contains("Main"))
                     //{ }
 
-                    //isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
-
-
-                    isBlocking = (from a in globalcontext.GlobalDBs
-                                       where a.IsBlocking == true
-                                       select a.IsBlocking).Count() > 0;
-
-
-
+                    isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
                     GlobalContactRepository repository = new GlobalContactRepository(globalcontext);
                     GlobalContact contact = repository.GetGlobalContactByEmailAndTenant(authEmail, tenant);
                     if (contact != null && contact.InActive)
@@ -110,6 +97,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     }
                 }
 
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 if (authToken != null)
                 {
                     AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);
@@ -155,43 +144,29 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             ServiceResponse serviceResponse = new ServiceResponse();
             try
             {
-                bool isBlocking = false;
-                //string entityName = "SystemIsBlocked";
+                IGlobalContext globalcontext = GlobalContext.GetContext();
+                bool isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
 
-                //if (CacheManager.CacheWrapper != null)
-                //{
-                //    if (CacheManager.CacheWrapper.Get(entityName) == null)
-                //    {
-                //        isBlocking = GetIsBlockingFromDB();
+                bool isIpAuthenticated = true;
 
-                //        if (CacheManager.CacheWrapper.Get(entityName) == null)
-                //        {
-                //            CacheManager.CacheWrapper.Insert(entityName, isBlocking, null, DateTime.UtcNow.AddSeconds(30), TimeSpan.Zero);
-                //        }
+                string ipstring = LogitudeSettings.CustomerCareIP;
+                string[] authenticatedIPs = ipstring.Split(',');
 
-                //    }
-                //    else
-                //    {
-                //        var cachedEntity = CacheManager.CacheWrapper.Get(entityName);
-                //        if (cachedEntity != null)
-                //            isBlocking = (bool)cachedEntity;
-                //        else
-                //        {
-                //            isBlocking = GetIsBlockingFromDB();
-                //            if (CacheManager.CacheWrapper.Get(entityName) == null)
-                //            {
-                //                CacheManager.CacheWrapper.Insert(entityName, isBlocking, null, DateTime.UtcNow.AddSeconds(30), TimeSpan.Zero);
-                //            }
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    isBlocking = GetIsBlockingFromDB();
-                //}
-
-                isBlocking = GetIsBlockingFromDB();
-
+                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                if (string.IsNullOrEmpty(currentIP))
+                {
+                    currentIP = HttpContext.Current.Request.UserHostAddress;
+                }
+                if (!authenticatedIPs.Contains(currentIP))
+                {
+                    isIpAuthenticated = false;
+                }
+                
+                if (isIpAuthenticated)
+                {
+                    isBlocking = false;
+                }
+              
                 return Request.CreateResponse(HttpStatusCode.OK, isBlocking);
             }
             catch (Exception ex)
@@ -199,39 +174,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
-        }
-
-        private bool GetIsBlockingFromDB()
-        {
-            IGlobalContext globalcontext = GlobalContext.GetContext();
-            // bool isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
-
-            bool isBlocking = (from a in globalcontext.GlobalDBs 
-                               where a.IsBlocking == true
-                               select a.IsBlocking).Count()>0;
-
-
-            bool isIpAuthenticated = true;
-
-            string ipstring = LogitudeSettings.CustomerCareIP;
-            string[] authenticatedIPs = ipstring.Split(',');
-
-            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-            if (string.IsNullOrEmpty(currentIP))
-            {
-                currentIP = HttpContext.Current.Request.UserHostAddress;
-            }
-            if (!authenticatedIPs.Contains(currentIP))
-            {
-                isIpAuthenticated = false;
-            }
-
-            if (isIpAuthenticated)
-            {
-                isBlocking = false;
-            }
-
-            return isBlocking;
         }
     }
 

@@ -2,33 +2,43 @@ declare var window;
 import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool, FontTool } from '../../../../../Infrastructure/Tools';
+import { ItemCodeComponent } from '../../../../../Customsmodules/Customsdeclarationmodules/Declarationsupplierinvoice/Components/Supplierinvoices/SupplierInvoiceGeneralTabComponent';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+
 import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
+
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
+
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { CardPMService } from '../../../../../Common/Services/StandardPMs/CardPMService';
 import { CustomsHouseTypeExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsHouseTypeExtendedPMService';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
+import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
+
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
 import { CustomsRequiredFieldListService } from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+
+import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import { GITITEMDto } from '../../../../../Customs/EntityPMs/Extended/GITITEMDto';
 import { GITITEMExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/GITITEMExtendedPMService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
-import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DeclarationClassificationComponent.html',
 })
 //
@@ -39,6 +49,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     public CurrentEditComponentId: string;
     public IsDisplayOnly: boolean = false;
     public IsGetTableName: boolean = true;
+
     public IsImporerCodeEnabled: boolean = true;
     public IsTransferImporterEnabled: boolean = true;
     public IsEntitleImporterEnabled: boolean = true;
@@ -48,27 +59,23 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
     public PreceduralFilterItems: ApiQueryFilters;
     public RefreshDatePicker: boolean;
-    public ShowPalestinianCode: boolean;
     SInvoiceTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
-    IsDisplayMessage: boolean;
-    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService
-    //    , public declarationExtendedListService: DeclarationExtendedListService
-    ) {
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
         this.PreceduralFilterItems = new ApiQueryFilters();
         this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
-        this.ShowPalestinianCode = false;
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe((response:any) => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentInternalTransition").subscribe((response:any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
-                                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
-                                    this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
-                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
+
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe(response => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentInternalTransition").subscribe(response => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe(response => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
+                                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
+                                    this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
 
                                             this.EntityPM = this.entityArgs.EntityPM;
                                             this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -92,9 +99,6 @@ export class DeclarationClassificationComponent extends BaseComponent implements
                                                 this.CheckRequrierdFieldsForSend();
                                                 
                                                 this.BuildScreen();
-                                                if (this.EntityPM.ImporterCode == null) {
-                                                    this.ShowPalestinianCode = true;
-                                                }
                                             }
 
                                         });
@@ -146,9 +150,9 @@ export class DeclarationClassificationComponent extends BaseComponent implements
                         //        (tab.Parent.AddEditSupplierInvoiceDUMMYManager as AddEditSupplierInvoiceDUMMY).
                         //            SaveItemCodeLocalCache();
                         //    });
-                      if(this.EntityPM?.Direction != "E")  
-                        GITITEMCacheService.Instance.SaveItemCodeLocalCache();
-                    this.BuildScreen();                                 
+
+                      GITITEMCacheService.Instance.SaveItemCodeLocalCache();
+                        this.BuildScreen();                                 
                     }
                 })
             );
@@ -222,7 +226,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this.UIProperties.SetEnabled("FreightAmount", this.ObjectTableName, false);//41322
         
         this.UIProperties.SetEnabled("ProcedureCurrentCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CargoDescription", "Customs.Consignment", !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("CargoDescription", this.ObjectTableName, !this.IsDisplayOnly);
 
         
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
@@ -230,7 +234,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this.IsEntitleImporterEnabled = !this.IsDisplayOnly;
         if (!this.IsDisplayOnly) {
 
-            //this.IsImporerCodeEnabled = AppTool.IsNullOrEmpty(this.EntityPM.ImporterName) && AppTool.IsNullOrEmpty(this.EntityPM.ImporterAddress);
+            this.IsImporerCodeEnabled = AppTool.IsNullOrEmpty(this.EntityPM.ImporterName) && AppTool.IsNullOrEmpty(this.EntityPM.ImporterAddress);
             if (!AppTool.IsNullOrEmpty(this.ImporterCode)) {
                 this.IsImporerCodeEnabled = true;
                 if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
@@ -274,12 +278,6 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
     public DrawMe: boolean = true;
 
-    public get PalestinianCode() { return this.EntityPM.PalestinianCode; }
-    public set PalestinianCode(newValue: string) {
-        if (this.EntityPM.PalestinianCode != newValue) {
-            this.EntityPM.PalestinianCode = newValue;
-        }
-    }
 
     public get ImporterCode() { return this.EntityPM.ImporterCode; }
     public set ImporterCode(newValue: string) {
@@ -313,8 +311,19 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
 
     }
-
-    ImporterLostFocusChange(type: any, item: any, importerSearchBox: any) {
+    ImporterLostFocus(item: any,importerSearchBox: any) {
+        let type = 'Importer';
+        if (this.isImporterClicked != true) {
+            switch (type) {
+                case 'Importer': {
+                    this.EntityPM.ImporterId = "";
+                    this.CalculatedImporterName = "";
+                    break;
+                }
+              
+            }
+        }
+        this.isImporterClicked = false;
 
         if (type == 'Importer' && !AppTool.IsNullOrEmpty(this.EntityPM.CustomerVatNo) && !AppTool.IsNullOrEmpty(item) && this.EntityPM.CustomerVatNo != item) {
 
@@ -340,72 +349,8 @@ export class DeclarationClassificationComponent extends BaseComponent implements
                     this.ImporterCode = item;
                     break;
                 }
-
+                
             }
-        }
-    }
-
-    private _UnifreightCustomerDefualt: string = null;
-    ImporterLostFocus4CourierDeclaration(type: any, item: any, importerSearchBox: any) {
-
-        if (this._UnifreightCustomerDefualt == null) {
-            var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
-            customsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON", this.EntityPM.Tenant)
-                .subscribe((response: ServiceResponse) => {
-                    let obj = response.Result;
-                    if (obj) {
-                        let DefaultValue = obj['DefaultValue'];
-                        if (!AppTool.IsNullOrEmpty(DefaultValue)) {
-                            this._UnifreightCustomerDefualt = DefaultValue;
-                        }
-                        if (this._UnifreightCustomerDefualt == this.EntityPM.CustomerCode) {
-                            switch (type) {
-                                case 'Importer': {
-                                    this.ImporterCode = item;
-                                    break;
-                                }
-                            }
-                        }
-                        else {
-                            this.ImporterLostFocusChange(type, item, importerSearchBox);
-                        }
-                    }
-                });
-        }
-        else {
-            if (this._UnifreightCustomerDefualt == this.EntityPM.CustomerCode) {
-                switch (type) {
-                    case 'Importer': {
-                        this.ImporterCode = item;
-                        break;
-                    }
-                }
-            }
-            else {
-                this.ImporterLostFocusChange(type, item, importerSearchBox);
-            }
-        }
-    }
-
-    ImporterLostFocus(item: any,importerSearchBox: any) {
-        let type = 'Importer';
-        if (this.isImporterClicked != true) {
-            switch (type) {
-                case 'Importer': {
-                    this.EntityPM.ImporterId = "";
-                    this.CalculatedImporterName = "";
-                    break;
-                }
-              
-            }
-        }
-        this.isImporterClicked = false;
-
-        if (this.EntityPM.IsCourierDeclaration) {
-            this.ImporterLostFocus4CourierDeclaration(type, item, importerSearchBox);
-        }
-        else {
-            this.ImporterLostFocusChange(type, item, importerSearchBox);
         }
     }
     private isImporterClicked: boolean = false;
@@ -428,26 +373,6 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         }
 
     }
-    EditCasualSupplier() {
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.SelectedSession.StopBusyIndicator();
-        var windowArgs: any = {};
-        windowArgs.EntityPM = this.EntityPM;
-        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.AdditionalDataSupplier");
-
-        var logWindow = new LogitudeWindow();
-        
-        ///this.Type = "Importer";
-        logWindow.Width = 550;
-        logWindow.Height = 250;
-
-        logWindow.Title = windowTitle;
-        logWindow.ShowCloseButton = true;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/CasualSupplierDetailsComponent');
-    }
     EditImporter() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.CurrentSession.CurrentEditComponent.SaveChanges();
@@ -455,7 +380,6 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
 
         var logWindow = new LogitudeWindow();
@@ -579,7 +503,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     DocumentFilingId: string;
     GetDocumentFilingId(InvoiceCounterKey) {
         console.log(" --->> Getting related document filing ...");
-        this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.EntityPM.Id, InvoiceCounterKey).subscribe((response:any) => {
+        this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.EntityPM.Id, InvoiceCounterKey).subscribe(response => {
             console.log("[Reponse] GetDocumentFilingIdForForInvoice: ", response);
             var result = response.Result;
             if (result) {
@@ -642,54 +566,31 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     
         this.DrawMe = true;
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
-            {
-            this.IsDisplayMessage = true;
-
-                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
-                if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
-            }
-        }
-
-        else if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+        if (this.IsDisplayOnly) {
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
         }
         else if (this.EntityPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
+            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
-    
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
-            if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
-                {
-                this.IsDisplayMessage = true;
-
-                    this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
-                    if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
-                }
-            }
-
-            else if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + displayOnlyCheckResult.DisplayOnlyMessage;
+            if (this.IsDisplayOnly) {
+                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.StorageRequestStatus") + " " + this.EntityPM.StorageStatusName;
+                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
-        
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
-
-
- 
     _CargoDescription;
     public get CargoDescription() { return this._CargoDescription; }
     public set CargoDescription(value) {
@@ -768,17 +669,13 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this._FreightAmount = null;
         if (Object.keys(FreightCurrenciesArray).length == 1) {
             let freightAmount = ArrayTool.Sum(this.EntityPM.SupplierInvoices, "TotalFreightInFreightCurrency");
-            if (freightAmount != 0) {
-                let freightFix2 = Number(freightAmount).toFixed(2);
-                this._FreightAmount = this.EntityPM.SupplierInvoices[0].FreightCurrencyTypeCode + " " + freightFix2 as string; 
-            }
+            let freightFix2 = Number(freightAmount).toFixed(2);
+            this._FreightAmount = this.EntityPM.SupplierInvoices[0].FreightCurrencyTypeCode + " " + freightFix2 as string;
         }
         else {
             let freightAmount = ArrayTool.Sum(this.EntityPM.SupplierInvoices, "TotalFreightInNIS");
-            if (freightAmount != 0) {
-                let freightFix2 = Number(freightAmount).toFixed(2);
-                this._FreightAmount = "ILS " + freightFix2 as string;
-            }
+            let freightFix2 = Number(freightAmount).toFixed(2);
+            this._FreightAmount = "ILS " + freightFix2 as string;
         }
         let InvoiceAmountInUSD = ArrayTool.Sum(this.EntityPM.SupplierInvoices, "InvoiceAmountInUSD");
         this._TotalInvoiceAmountInUSD = Number(InvoiceAmountInUSD).toFixed(2);
@@ -844,22 +741,14 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         }
     }
     CheckRequrierdFieldsForSend() {
-        var isExport = false;
-        if (this.EntityPM.Direction == 'E') {
-            isExport = true;
-        }
-
         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.Declaration')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
-        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
-
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
+                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
             });
         });
@@ -936,7 +825,7 @@ export class AddEditSupplierInvoiceDUMMY {
   //                myGITITEMPM.NAMEENG = item.ItemDescription;
   //                myGITITEMPM.ORIGINCOUNTRY = item.OriginCountryCode;
 
-  //                this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe((myResult:any) => {
+  //                this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe(myResult => {
   //                    var mm: ServiceResponse = myResult;
   //                    if (!mm.HasError) {
   //                        //this.entity = mm.Result;

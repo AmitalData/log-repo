@@ -12,7 +12,6 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.BL.EntityPMs.UGenerated;
-using Logitude.Customs.Data.Repsitories;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -30,7 +29,7 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUSUPITEMSIPM entityPM)
         {
-            return new CCUSUPITEMSIKeys() { FILENO = entityPM.FILENO, LINENO = entityPM.LINENO, ACCLINENO = entityPM.ACCLINENO, Tenant = entityPM.Tenant };
+            return new CCUSUPITEMSIKeys() { FILENO = entityPM.FILENO, LINENO = entityPM.LINENO, ACCLINENO = entityPM.ACCLINENO };
         }
 
         protected override void OnCreating(CCUSUPITEMSIPM entityPM, SupplierInvoiceItem103PM entityParentPM)
@@ -41,21 +40,6 @@ namespace Unifreight.BL.EntityUpdateServices
                 entityPM.LINENO = entityParentPM.LINENO;
                 entityPM.ACCLINENO = entityParentPM.ACCLINENO;
             }
-        }
-
-        protected override void OnUpdating(CCUSUPITEMSIPM entityPM)
-        {
-            if (entityPM.Tenant != 0)
-            {
-                CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
-                bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
-                if (!isConnectedToUnifreight)
-                {
-                    entityPM.IS_SYNCH = false;
-                    entityPM.LAST_UPDATE_DT = DateTime.Now;
-                }
-            }
-
         }
 
         //protected override void UpdateComposition(CCUSUPITEMSIPM entityPM)

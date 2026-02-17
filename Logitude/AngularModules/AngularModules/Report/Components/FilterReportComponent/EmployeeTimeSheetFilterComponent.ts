@@ -6,11 +6,9 @@ import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
-import { UserList } from '../../../Common/EntityLists/UserList';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     selector: 'EmployeeTimeSheetFilterComponent',
     templateUrl: './EmployeeTimeSheetFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -29,17 +27,13 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
     queryFilterItem: QueryFilterItem;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "TMEmployeeTime";
-    private CurrentSession = SessionLocator.SelectedSession;
-    public EmployeesSelected: string = null;
+
+
     constructor() {
         super();
-        this.DateOfWorkMinutes = 525;
-
-        //this.DropButtonId += this.CurrentSession.GetNewId("DropButtonId_1");
-        //this.SearchTextBoxId += this.CurrentSession.GetNewId("SearchTextBoxId_1");
-
-        this.GetUsers();
+        this.DateOfWorkMinutes = 540;
     }
+
 
     private dateOfWorkMinutes: number;;
     get DateOfWorkMinutes() {
@@ -85,7 +79,7 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
         this.FromDate = this.SetDate(Year, month, 1);
         this.ToDate = this.SetDate(Year, month, daysofmonth);
 
-        this.ReportsPreview = myReportsPreview;        
+        this.ReportsPreview = myReportsPreview;
     }
 
     daysInMonth(aDate: Date) {
@@ -103,122 +97,57 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
         return date;
     }
 
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-
-        if (this.IsSchedulerReport) {
-            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-        }
-        else {
-            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-        }
-
-    }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ToDate":
-                    this.ToDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "Employees":
-                    this.EmployeesSelected = queryFilterItem.FieldValue;
-                    break;
-                case "TimeRequired":
-                    this.DateOfWorkMinutes = queryFilterItem.FieldValue;
-                    break;
-               
-
-            }
-
-        }
-    }
-    GetQueryFilterItems(){
-        var myEmployees: string = "";
-
-        if (this.UsersComboList.filter(i => i.Checked)[0] == null) {
-            this.UsersComboList.forEach((i) => {
-                myEmployees += i.Id + ",";
-            });
-        }
-        else {
-            this.UsersComboList.forEach((i) => {
-                if (i.Checked) {
-                    myEmployees += i.Id + ",";
-                }
-            });
-        }
-    
-
-        this.queryFilterItems = new Array<QueryFilterItem>();
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "Employees";
-        this.queryFilterItem.FieldValue = myEmployees;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "TimeRequired";
-        this.TimeRequired = this.DateOfWorkMinutes;
-        this.queryFilterItem.FieldValue = this.TimeRequired;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-        return this.queryFilterItems;
-    }
-    ValidateSelectedFilters(){
+    RunReport() {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
         }
-
         if (this.ToDate == null) {
             this.ValidationErrorsList.push("To Date is required");
         }
-
         if (this.FromDate > this.ToDate) {
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
         }
+        if (this.EmployeeUserId == null) {
+            this.ValidationErrorsList.push("Employee is required");
+        }
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
-        return this.ValidationErrorsList.length == 0;
-    }
-    RunReport() {
-       
-        if (this.ValidateSelectedFilters()) {
-          
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "EmployeeUserId";
+            this.queryFilterItem.FieldValue = this.EmployeeUserId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "TimeRequired";
+            this.TimeRequired = this.DateOfWorkMinutes;
+            this.queryFilterItem.FieldValue = this.TimeRequired;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
             this.reportFliter = new ReportFliter();
+            //this.reportFliter.DateType = "CreateDate";
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -227,43 +156,4 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
             this.ReportsPreview.GenerateReport(this.reportFliter, true);
         }
     }
-
-    public SelectedUsers: string;
-    EditedItemSource(newSource: any) {
-        this.UsersComboList = newSource;
-    }
-
-    public UsersComboList: UserItemClass[] = [];
-    GetUsers() {
-        var AddtionalService: UserListService = new UserListService();
-        AddtionalService.getAllFromCache().subscribe((result: any) => {
-            var usesrList: UserList[] = result.Result.filter(s => !s.InActive);
-            usesrList.sort((a, b) => { return (a.EnglishName === b.EnglishName) ? 0 : (a.EnglishName < b.EnglishName) ? -1 : 1 });
-
-            usesrList.forEach((item) => {
-                var isLoggedUser = false;
-                if (item.Id == SessionLocator.LoggedUserId || this.EmployeesSelected?.indexOf(item.Id) > -1) {
-                    isLoggedUser = true;
-                }
-                this.UsersComboList.push(new UserItemClass(item, isLoggedUser));
-            });
-        });
-    }
-}
-
-export class UserItemClass {
-    public entityList: UserList;
-    constructor(entityList: UserList, isLoggedUser: boolean) {
-        this.entityList = entityList;
-        if (isLoggedUser) {
-            this.Checked = true;
-        }
-    }
-
-    get Id() { return this.entityList.Id; }
-    get Name() { return this.entityList.EnglishName; }
-
-    private checked: boolean;
-    public get Checked() { return this.checked; }
-    public set Checked(value: boolean) { this.checked = value; }
 }

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -22,10 +22,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            this.Property(t => t.ObjectFieldCode)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-
             // Table & Column Mappings
             this.ToTable("ObjectFieldModifications");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -34,7 +30,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.MaxLength).HasColumnName("MaxLength");
             this.Property(t => t.MinLength).HasColumnName("MinLength");
             this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId");
-            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode");
             this.Property(t => t.UpdateDateGMT).HasColumnName("UpdateDateGMT");
             // Relationships
             //this.HasRequired(t => t.ObjectField)

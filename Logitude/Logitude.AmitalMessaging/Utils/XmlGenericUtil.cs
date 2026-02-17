@@ -47,7 +47,7 @@ namespace Logitude.AmitalMessaging.Utils
 
             return stream;
         }
-        
+
         public static string SerializeObjectWithoutDefaultNameSpace(MyType myTObject)
         {
             XmlSerializerNamespaces myXmlSerializerNamespaces = new XmlSerializerNamespaces();
@@ -154,32 +154,6 @@ namespace Logitude.AmitalMessaging.Utils
             return res;
         }
 
-        public static string MySerializeObject(MyType myTObject)
-        {
-            XmlSerializer myXmlSerializer = null;
-            using (var stream = new MemoryStream())
-            {
-                myXmlSerializer = CachingXmlSerializerFactory.Create(typeof(MyType));
-                myXmlSerializer.Serialize(stream, myTObject);
-                stream.Position = 0;
-                StreamReader reader = new StreamReader(stream);
-                string text = reader.ReadToEnd();
-                text = mystripNS(XElement.Parse(text)).ToString();
-                return text;
-            }
-        }
-        
-        static XElement mystripNS(XElement root)
-        {
-            XElement res = new XElement(
-                root.Name.LocalName,
-                root.HasElements ?
-                    root.Elements().Select(el => mystripNS(el)) :
-                    (object)root.Value
-            );
-
-            return res;
-        }
         public static MyType DeserializeWithNoRootNamespace(string data)
         //where T : class
         {

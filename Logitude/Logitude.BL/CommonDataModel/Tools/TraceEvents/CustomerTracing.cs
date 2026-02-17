@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel;
-
 namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 {
     public class CustomerTracing
@@ -23,9 +20,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
         private Customer entityPOCO;
         private string loggedContactId;
         private string myTableName;
-        ICommonDataContext objectContext;
-        private string emailForSendingSingArinvoiceBackUp;
-        public CustomerTracing(CustomerPM entityPM, Customer entityPOCO, string loggedContactId, bool isNewEntity ,string emailForSendingSingArinvoiceBackUp)
+        public CustomerTracing(CustomerPM entityPM, Customer entityPOCO, string loggedContactId, bool isNewEntity)
         {
             this.myTenant = entityPM.Tenant;
             this.isNewEntity = isNewEntity;
@@ -33,8 +28,6 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
             this.entityPOCO = entityPOCO;
             this.loggedContactId = loggedContactId;
             this.myTableName = "Customer";
-            this.emailForSendingSingArinvoiceBackUp = emailForSendingSingArinvoiceBackUp;
-
         }
 
         public void Trace()
@@ -69,7 +62,6 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
             else
             {
                 string notes = null;
-
                 if (!string.IsNullOrEmpty(entityPM.ReceivablesAccountingCard) && string.IsNullOrEmpty(entityPOCO.Card.ReceivablesAccountingCard))
                 {
                     notes = "External ID added";
@@ -86,16 +78,6 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 else if (string.IsNullOrEmpty(entityPM.ReceivablesAccountingCard) && !string.IsNullOrEmpty(entityPOCO.Card.ReceivablesAccountingCard))
                 {
                     notes = "External ID removed";
-                }
-
-                if (entityPM.Card?.EmailForSendingSingArinvoice != emailForSendingSingArinvoiceBackUp)
-                {
-                     string EmailForSendingSingArinvoiceName = "";
-                    if (!string.IsNullOrWhiteSpace(entityPM.Card?.EmailForSendingSingArinvoice)) {
-                        ContactQuery contactQuery = new ContactQuery(entityPOCO.Tenant);
-                        EmailForSendingSingArinvoiceName = contactQuery.GetSinglePMFromCache(entityPM.Card?.EmailForSendingSingArinvoice, entityPOCO.Tenant)?.Email;
-                    }
-                    notes += Environment.NewLine + "EmailForSendingSingArinvoice Changed to be : " + EmailForSendingSingArinvoiceName;
                 }
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -188,6 +170,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                     Notes = entityPM.EventNote,
                 });
             }
+
             if (!entityPM.IsCustomer && entityPOCO.IsCustomer)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -240,23 +223,8 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                     ObjectTableName = myTableName,
                 });
             }
-
-
         }
-        private string BuildNotesEventForUpdateCustomer()
-        {
-   //         string notes = string.Empty;
-			//if (entityPM.AccountManagerUserId != entityPOCO.AccountManagerUserId)
-			//{
-			//	notes += TranslateTextsClass.Translate("Customer.F.AccountManagerUserId", entityPM.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + entityPOCO.AccountManagerUserId.ToString() + " " + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.AccountManagerUserId.ToString() + "\n";
-			//}
-			
 
-
-
-
-			return"";
-        }
         private void TraceCreditLimitFields()
         {
             if (!this.isNewEntity)
@@ -437,51 +405,6 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 this.CreateEntityEvent("ADUP", "Customer", entityPM.Id, loggedContactId, entityPM.Tenant, myAddedItemsTexts, myUpdatedItemsTexts, myDeletedItemsTexts);
             }
         }
-
-        public void TraceProductItems(List<ProductItemPM> dataChangeSet, bool isNewEntity)
-        {
-            List<string> addedItemsTexts = new List<string>();
-            List<string> updatedItemsTexts = new List<string>();
-            List<string> deletedItemsTexts = new List<string>();
-
-            foreach (ProductItemPM itemPM in dataChangeSet)
-            {
-                if (isNewEntity)
-                {
-                    addedItemsTexts.Add(itemPM.Name);
-                }
-
-                else
-                {
-                    switch (itemPM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                addedItemsTexts.Add(itemPM.SKU);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Update:
-                            {
-                                updatedItemsTexts.Add(itemPM.SKU);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                deletedItemsTexts.Add(itemPM.SKU);
-                                break;
-                            }
-                    }
-                }
-            }
-
-            if (addedItemsTexts.Count + updatedItemsTexts.Count + deletedItemsTexts.Count > 0)
-            {
-                this.CreateEntityEvent("PIUP", "Customer", entityPM.Id, loggedContactId, entityPM.Tenant, addedItemsTexts, updatedItemsTexts, deletedItemsTexts);
-            }
-        }
-
 
         private void CreateEntityEvent(string myEventCode, string myTableName, string myEntityId, string myLoggedContactId, int myTenant, List<string> myAddedItemsTexts, List<string> myUpdatedItemsTexts, List<string> myDeletedItemsTexts)
         {

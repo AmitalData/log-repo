@@ -1,4 +1,4 @@
-﻿
+﻿    
 
 
 
@@ -8,12 +8,11 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:300px">
-                        <div>
-                            <SearchBox (TextChanged)="SearchText = $event" [Watermark]="'Search names'"></SearchBox>
+                    <td style="width:300px"><div>
+                      <SearchBox (TextChanged)="SearchText = $event" [Watermark]="'Search names'"></SearchBox>
 
 
-                        </div>
+</div>
                     </td>
                     <td style="width:10px"><div></div></td>
                     <td><label style="font-size:x-small;color:grey">{{HelpText}}</label></td>
@@ -27,223 +26,223 @@
             <div style="height:10px"></div>
         </td>
     </tr>
-    <tr style="border:solid 1px;border-color:lightgrey;height:420px" *ngIf="args.ReceivableCard || args.PayableCard">
+    <tr style="border:solid 1px;border-color:lightgrey;height:420px" *ngIf="args.ReceivableCard || args.PayableCard" >
         <td>
 
-            <table>
-                <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
-                <tr style="overflow-y:hidden">
-                    <td>
-                        <div class="MediaFill">
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeaderDark">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 300px; min-width: 300px;max-width:300px">Company Name</td>
-                                            <td style="width: 300px; min-width: 300px;max-width:300px">Display Name</td>
-                                            <td style="width: 100px; min-width: 100px;max-width:100px">City</td>
-                                            <td style="width: 100px; min-width: 100px;max-width:100px">Country</td>
-                                            <td class="LastChild">Currency</td>
+                <table>
+                    <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
+                    <tr style="overflow-y:hidden">
+                        <td>
+                            <div class="MediaFill">
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeaderDark">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 150px; min-width: 150px;max-width:150px">Company Name</td>
+                                                <td style="width: 150px; min-width: 150px;max-width:150px">Display Name</td>
+                                                <td style="width: 100px; min-width: 100px;max-width:100px">City</td>
+                                                <td style="width: 200px; min-width: 200px;max-width:200px">Country</td>
+                                                <td class="LastChild">Currency</td>
 
-                                        </tr>
-                                    </table>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let customer of CustomersListFilterd" (click)="SelectedItem = customer" [class.RowSelected]="customer === SelectedItem">
+                                                <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
+                                                    <div>{{customer.companyNameField}}</div>
+                                                </td>
+                                                <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
+                                                    <div>{{customer.displayNameField}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
+                                                    <span class="Value" *ngIf="customer.billAddrField">{{customer.billAddrField.cityField}}</span>
+                                                </td>
+                                                <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
+                                                    <span class="Value" *ngIf="customer.billAddrField">{{customer.billAddrField.countryField}}</span>
+                                                </td>
+                                                <td class="GridViewCell">
+                                                    <span class="Value" *ngIf="customer.currencyRefField">{{customer.currencyRefField.valueField}}</span>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="4">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-
-                                <div class="SimpleGridViewBody" style="overflow-y:auto">
-                                    <table>
-                                        <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let customer of CustomersListFilterd" (click)="SelectedItem = customer" [class.RowSelected]="customer === SelectedItem">
-                                            <td class="GridViewCell" style="width:300px; min-width: 300px;max-width:300px" title="{{customer.companyNameField}}">
-                                                <div>{{customer.companyNameField}}</div>
-                                            </td>
-                                            <td class="GridViewCell" style="width:300px; min-width: 300px;max-width:300px" title="{{customer.displayNameField}}">
-                                                <div>{{customer.displayNameField}}</div>
-                                            </td>
-
-                                            <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
-                                                <span class="Value" *ngIf="customer.billAddrField">{{customer.billAddrField.cityField}}</span>
-                                            </td>
-                                            <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
-                                                <span class="Value" *ngIf="customer.billAddrField">{{customer.billAddrField.countryField}}</span>
-                                            </td>
-                                            <td class="GridViewCell">
-                                                <span class="Value" *ngIf="customer.currencyRefField">{{customer.currencyRefField.valueField}}</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="4">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
                                 </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
+</td>
+                    </tr>
+                </table>
+</td>
     </tr>
-
-    <tr style="border:solid 1px;border-color:lightgrey;height:420px" *ngIf="isVatType">
+  
+    <tr style="border:solid 1px;border-color:lightgrey;height:420px" *ngIf="isVatType">       
         <td>
 
-            <table>
-                <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
-                <tr style="overflow-y:hidden">
-                    <td>
-                        <div class="MediaFill">
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeaderDark">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
-                                            <td class="LastChild"></td>
+                <table>
+                    <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
+                    <tr style="overflow-y:hidden">
+                        <td>
+                            <div class="MediaFill">
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeaderDark">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
+                                                <td class="LastChild"></td>
 
-                                        </tr>
-                                    </table>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                                <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
+                                                    <div>{{item.nameField}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell">
+                                                    <!--<span class="Value">{{item.rateValueField}}</span>-->
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-
-                                <div class="SimpleGridViewBody" style="overflow-y:auto">
-                                    <table>
-                                        <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-                                            <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
-                                                <div>{{item.nameField}}</div>
-                                            </td>
-
-                                            <td class="GridViewCell">
-                                                <!--<span class="Value">{{item.rateValueField}}</span>-->
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="2">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
                                 </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
+</td>
+                    </tr>
+                </table>
+</td>
     </tr>
 
 
     <tr style="border:solid 1px;border-color:lightgrey;height:420px" *ngIf="isReceivablesChargesType">
         <td>
-            <table>
-                <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
-                <tr style="overflow-y:hidden">
-                    <td>
-                        <div class="MediaFill">
+                <table>
+                    <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
+                    <tr style="overflow-y:hidden">
+                        <td>
+                            <div class="MediaFill">
 
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeaderDark">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 150px; min-width: 150px;max-width:150px">Name</td>
-                                            <td style="width: 200px; min-width: 200px;max-width:200px">Income Account Reference</td>
-                                            <td class="LastChild">Taxable</td>
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeaderDark">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 150px; min-width: 150px;max-width:150px">Name</td>
+                                                <td style="width: 200px; min-width: 200px;max-width:200px">Income Account Reference</td>
+                                                <td class="LastChild">Taxable</td>
 
 
 
-                                        </tr>
-                                    </table>
-                                </div>
+                                            </tr>
+                                        </table>
+                                    </div>
 
-                                <div class="SimpleGridViewBody" style="overflow-y:auto">
-                                    <table>
-                                        <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-                                            <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
-                                                <div>{{item.fullyQualifiedNameField}}</div>
-                                            </td>
+                                    <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                                <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
+                                                    <div>{{item.fullyQualifiedNameField}}</div>
+                                                </td>
 
-                                            <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
-                                                <div>{{item.incomeAccountRefField.nameField}}</div>
-                                            </td>
+                                                <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
+                                                    <div>{{item.incomeAccountRefField.nameField}}</div>
+                                                </td>
 
-                                            <td class="GridViewCell">
-                                                <span class="Value">{{item.taxableField}}</span>
-                                            </td>
+                                                <td class="GridViewCell">
+                                                    <span class="Value">{{item.taxableField}}</span>
+                                                </td>
 
-                                        </tr>
+                                            </tr>
 
-                                        <tr>
-                                            <td colspan="3">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </td>
-                </tr>
-            </table>
+</td>
+                    </tr>
+                </table>
         </td>
     </tr>
 
 
     <tr style="border:solid 1px;border-color:lightgrey;height:420px" *ngIf="isPayablesChargesType">
         <td>
-            <table>
-                <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
-                <tr style="overflow-y:hidden">
-                    <td>
-                        <div class="MediaFill">
+                <table>
+                    <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
+                    <tr style="overflow-y:hidden">
+                        <td>
+                            <div class="MediaFill">
 
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeaderDark">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 250px; min-width: 250px;max-width:250px">Name</td>
-                                            <td style="width: 150px; min-width: 150px;max-width:150px">Account SubType</td>
-                                            <td class="LastChild">Currency</td>
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeaderDark">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 250px; min-width: 250px;max-width:250px">Name</td>
+                                                <td style="width: 150px; min-width: 150px;max-width:150px">Account SubType</td>
+                                                <td class="LastChild">Currency</td>
 
 
 
-                                        </tr>
-                                    </table>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                                <td class="GridViewCell" style="width:250px; min-width: 250px;max-width:250px">
+                                                    <div>{{item.nameField}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
+                                                    <div>{{item.accountSubTypeField}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell">
+                                                    <div>
+                                                        {{item.currencyRefField.valueField}}
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-
-                                <div class="SimpleGridViewBody" style="overflow-y:auto">
-                                    <table>
-                                        <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-                                            <td class="GridViewCell" style="width:250px; min-width: 250px;max-width:250px">
-                                                <div>{{item.nameField}}</div>
-                                            </td>
-
-                                            <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
-                                                <div>{{item.accountSubTypeField}}</div>
-                                            </td>
-
-                                            <td class="GridViewCell">
-                                                <div>
-                                                    {{item.currencyRefField.valueField}}
-                                                </div>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="3">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
                                 </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
+</td>
+                    </tr>
+                </table>
+</td>
     </tr>
 
     <tr style="border:solid 1px;border-color:lightgrey;height:420px" *ngIf="isPaymentMethod">
@@ -289,96 +288,96 @@
     <tr style="border:solid 1px;border-color:lightgrey;height:420px" *ngIf="isPaymentTerm">
         <td>
 
-            <table>
-                <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
-                <tr style="overflow-y:hidden">
-                    <td>
-                        <div class="MediaFill">
+                <table>
+                    <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
+                    <tr style="overflow-y:hidden">
+                        <td>
+                            <div class="MediaFill">
 
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeaderDark">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
-                                            <td class="LastChild">Days</td>
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeaderDark">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
+                                                <td class="LastChild">Days</td>
 
-                                        </tr>
-                                    </table>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                                <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
+                                                    <div>{{item.nameField}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell">
+                                                    <span class="Value">{{item.itemsField[0]}}</span>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-
-                                <div class="SimpleGridViewBody" style="overflow-y:auto">
-                                    <table>
-                                        <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-                                            <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
-                                                <div>{{item.nameField}}</div>
-                                            </td>
-
-                                            <td class="GridViewCell">
-                                                <span class="Value">{{item.itemsField[0]}}</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="2">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
                                 </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
+</td>
+                    </tr>
+                </table>
+</td>
     </tr>
 
     <tr style="border:solid 1px;border-color:lightgrey;height:420px" *ngIf="isCurrency">
         <td>
 
-            <table>
-                <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
-                <tr style="overflow-y:hidden">
-                    <td>
-                        <div class="MediaFill">
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeaderDark">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 200px; min-width: 200px;max-width:200px">Code</td>
-                                            <td class="LastChild">Name</td>
+                <table>
+                    <tr style="height:20px;background-color:lightgrey"><td style="padding-left:10px">{{MyCardsLabel}}</td></tr>
+                    <tr style="overflow-y:hidden">
+                        <td>
+                            <div class="MediaFill">
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeaderDark">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 200px; min-width: 200px;max-width:200px">Code</td>
+                                                <td class="LastChild">Name</td>
 
-                                        </tr>
-                                    </table>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                                <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
+                                                    <div>{{item.codeField}}</div>
+                                                </td>
+
+                                                <td class="GridViewCell">
+                                                    <span class="Value">{{item.nameField}}</span>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-
-                                <div class="SimpleGridViewBody" style="overflow-y:auto">
-                                    <table>
-                                        <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of CustomersListFilterd" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-                                            <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
-                                                <div>{{item.codeField}}</div>
-                                            </td>
-
-                                            <td class="GridViewCell">
-                                                <span class="Value">{{item.nameField}}</span>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="2">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
                                 </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
+</td>
+                    </tr>
+                </table>
+</td>
     </tr>
 
 
@@ -391,27 +390,27 @@
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">
 
-            <table style="height: 22px;">
-                <tr>
+                <table style="height: 22px;">
+                    <tr>
 
 
-                    <td>
-                        <div></div>
-                    </td>
+                        <td>
+                            <div></div>
+                        </td>
 
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
-                    </td>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </td>
 
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!SelectedItem">Ok</button>
-                    </td>
-                </tr>
-            </table>
-        </td>
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!SelectedItem">Ok</button>
+                        </td>
+                    </tr>
+                </table>
+</td>
     </tr>
-</table>
+</table>    

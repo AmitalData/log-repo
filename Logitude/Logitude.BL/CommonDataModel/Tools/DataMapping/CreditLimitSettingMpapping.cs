@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,27 +22,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.InvoiceCreationWarning = entityPM.InvoiceCreationWarning;
             entityPOCO.IsCreditLimitEnabled = entityPM.IsCreditLimitEnabled;
             entityPOCO.ShipmentCreationBlock = entityPM.ShipmentCreationBlock;
-            entityPOCO.CustomersShipmentsBlock = entityPM.CustomersShipmentsBlock;
-            entityPOCO.AgentsShipmentsBlock = entityPM.AgentsShipmentsBlock;
-            entityPOCO.ShipperConsigneeShipmentBlock = entityPM.ShipperConsigneeShipmentBlock;
-            entityPOCO.CustomsAgentsShipmentsBlock = entityPM.CustomsAgentsShipmentsBlock;
-            entityPOCO.ShippingAgentsShipmentsBlock = entityPM.ShippingAgentsShipmentsBlock;
-            entityPOCO.AirlinesShipmentsBlock = entityPM.AirlinesShipmentsBlock;
-            entityPOCO.ShippingLinesShipmentsBlock = entityPM.ShippingLinesShipmentsBlock;
-            entityPOCO.TruckersShipmentsBlock = entityPM.TruckersShipmentsBlock;
-            entityPOCO.VendorsShipmentsBlock = entityPM.VendorsShipmentsBlock;
-            entityPOCO.WarehousesShipmentsBlock = entityPM.WarehousesShipmentsBlock;
-            entityPOCO.CustomersInvoicesBlock = entityPM.CustomersInvoicesBlock;
-            entityPOCO.AgentsInvoicesBlock = entityPM.AgentsInvoicesBlock;
-            entityPOCO.ShipperConsigneeInvoiceBlock = entityPM.ShipperConsigneeInvoiceBlock;
-            entityPOCO.CustomsAgentsInvoicesBlock = entityPM.CustomsAgentsInvoicesBlock;
-            entityPOCO.ShippingAgentsInvoicesBlock = entityPM.ShippingAgentsInvoicesBlock;
-            entityPOCO.AirlinesInvoicesBlock = entityPM.AirlinesInvoicesBlock;
-            entityPOCO.ShippingLinesInvoicesBlock = entityPM.ShippingLinesInvoicesBlock;
-            entityPOCO.TruckersInvoicesBlock = entityPM.TruckersInvoicesBlock;
-            entityPOCO.VendorsInvoicesBlock = entityPM.VendorsInvoicesBlock;
-            entityPOCO.WarehousesInvoicesBlock = entityPM.WarehousesInvoicesBlock;
-            entityPOCO.ShipmentCreationWarning = entityPM.ShipmentCreationWarning;
         }
     }
 }

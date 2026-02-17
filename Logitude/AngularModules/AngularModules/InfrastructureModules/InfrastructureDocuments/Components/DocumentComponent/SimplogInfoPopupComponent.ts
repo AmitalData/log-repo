@@ -2,7 +2,7 @@ import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SimplogInfoPopup',
     templateUrl: './SimplogInfoPopupComponent.html',  
 })

@@ -10,14 +10,11 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -42,40 +39,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Branch GetBranchById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public Branch GetBranchById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Branch with Id " + Id + " doesn't exist");
 
-				return BranchDataMapping(temp,Tenant,ComputingPartnerName);
+				return BranchDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
 		
-		public Branch GetBranchByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+		public Branch GetBranchByCode(string Code,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePMByCode(Code, Tenant);				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Branch with Code " + Code + " doesn't exist");
 
-				return BranchDataMapping(temp,Tenant,ComputingPartnerName);
+				return BranchDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -101,7 +98,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public BranchPM BranchDataMappingAndValidatin(Branch MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public BranchPM BranchDataMappingAndValidatin(Branch MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -113,7 +110,7 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -125,77 +122,31 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("Branch with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant );
+						temp = query.GetSinglePMByCode(MyCode, Tenant);
 						
 						
 					}
 					
-					
-			  	   if(temp == null)
-					{   
+					   					   
+					if(temp == null)
+					{
 					    throw new ApplicationException("Branch with Code " + MyEntity.Code + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-					   
-					    if(!string.IsNullOrEmpty(MyEntity.Id))
-					    {
-					        throw new ApplicationException("Branch with provided key doesn't exist");
-						
-						}
-						//else
-						//{
-						//    temp.Id = MyEntity.Id;
-
-						//} 
-
-						
+						temp.Id = MyEntity.Id;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.EnglishName = MyEntity.EnglishName;
-
-										}  
-
-					
+					temp.EnglishName = MyEntity.EnglishName;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
-					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{								
-							temp.Code = MyEntity.Code;
-								
-						
-						}  
-
-						
+						temp.Code = MyEntity.Code;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalName = MyEntity.LocalName;
-
-										}  
-
-					
+					temp.LocalName = MyEntity.LocalName;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
-					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-						{								
-							temp.Code = MyEntity.PartnerCode;
-								
-						
-						}  
-
-						
+						temp.Code = MyEntity.PartnerCode;
 					}					   
-					return temp;
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -203,8 +154,6 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

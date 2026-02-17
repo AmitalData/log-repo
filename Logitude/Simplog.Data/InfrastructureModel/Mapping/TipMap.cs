@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -27,11 +27,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            this.Property(t => t.ShortTextCodeCode)
-                .IsRequired()
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
             // Table & Column Mappings
             this.ToTable("Tips");
             this.Property(t => t.Code).HasColumnName("Code");
@@ -39,7 +34,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.VisibilityDefaultValue).HasColumnName("VisibilityDefaultValue");
             this.Property(t => t.ShortTextCode).HasColumnName("ShortTextCode");
             this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
-            this.Property(t => t.ShortTextCodeCode).HasColumnName("ShortTextCodeCode");
 
             // Relationships
             this.HasRequired(t => t.ObjectTable)

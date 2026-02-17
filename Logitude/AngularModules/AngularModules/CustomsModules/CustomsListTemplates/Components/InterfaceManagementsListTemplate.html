@@ -17,14 +17,14 @@
     </div>
 
     <div class="TextTrimming RightCenter"
-         *ngIf="fieldName == 'DefaultSendOptionName'">
+         *ngIf="fieldName == 'SendOptionsCode'">
 
         <span>{{SendOptionName}}</span> 
 
     </div>
     <div class="TextTrimming RightCenter"
          *ngIf="fieldName == 'DefaultPriority'">
-        <span>{{_InterfaceManagementList.TenantPriority || _InterfaceManagementList.DefaultPriority}}</span>
+        <span>{{_InterfaceManagementList.DefaultPriority}}</span>
     </div>
     <div class="TextTrimming RightCenter"
          *ngIf="fieldName == 'HasDefinition'">
@@ -36,10 +36,7 @@
         <span>{{_InterfaceManagementList.SignatureTypeName}}</span>
     </div>
     
-    <div class="TextTrimming RightCenter"
-         *ngIf="fieldName == 'EntityLockName'">
-        <span>{{_InterfaceManagementList.EntityLockName}}</span>
-    </div>
+
  
 
 </div>

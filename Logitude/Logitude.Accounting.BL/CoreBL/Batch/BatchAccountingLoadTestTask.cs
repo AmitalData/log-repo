@@ -94,19 +94,57 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             
         }
 
-        public void CreateBatchAccountingLoadTestTask(int tenant, string ActionType, int amount, int sleepEveryMinute, int year)
+        public void CreateBatchAccountingLoadTestTask(int tenant ,string ActionType,int amount , int sleepEveryMinute,int year)
         {
+            
+            
+                var args = new BatchAccountingLoadArg() { Tenant = tenant, ActionType = ActionType,Amount= amount, SleepEveryMinute= sleepEveryMinute, JournalYYYY= year };
+                var stringwriter = new System.IO.StringWriter();
+                var serializer = new XmlSerializer(typeof(BatchAccountingLoadArg));
+                serializer.Serialize(stringwriter, args);
+                string xmlParameters = stringwriter.ToString();
+                BatchTaskExecutionPM taskExe = null;
+                taskExe = new BatchTaskExecutionPM()
+                {
+                    Subject = "CreateBatchAccountingLoadTestTask",
+                    Tenant = tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchAccountingLoadTestTask,Logitude.Accounting.BL",
+                    CreateDate = DateTime.Now,
+                    PrametersXml = xmlParameters,
+                    StatusCode = "C",
+
+                };
 
 
-            var args = new BatchAccountingLoadArg() { Tenant = tenant, ActionType = ActionType, Amount = amount, SleepEveryMinute = sleepEveryMinute, JournalYYYY = year };
-            this.CreateQBatchTaskExecution<BatchAccountingLoadArg>(args, args.Tenant, "CreateBatchAccountingLoadTestTask", false);
+
+                var MyContext = InfrastructureContext.GetContext(tenant);
+                var bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                bteUpdateService.Update(taskExe, true);
+
+            bool immdet = false;
+            if (!immdet)
+            {
 
 
+                // 2- Send to queue
+                var queueservice = new DbQueueService();
+                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
 
+
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", tenant.ToString() }
+                });
+            }
+            else
+            {
+                var taskIt = new BatchAccountingLoadTestTask(taskExe) as BatchTaskExecutionsService;
+                taskIt.Execute();
+            }
+            
         }
-#if false
-
-#endif
     }
     public class BatchAccountingLoadArg {
         

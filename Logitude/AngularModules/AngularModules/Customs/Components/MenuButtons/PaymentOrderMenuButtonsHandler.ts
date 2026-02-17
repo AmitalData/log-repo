@@ -231,7 +231,7 @@ export class PaymentOrderMenuButtonsHandler {
 
         var documentFiling: DocumentsFilingPM;
         var documentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
-        documentsFilingExtendedPMService.GetSingleDocumentsFilingByChild(documentTypeId, this.EntityPM.PaymentNumber, this.EntityPM.Tenant).subscribe((res:any) => {
+        documentsFilingExtendedPMService.GetSingleDocumentsFilingByChild(documentTypeId, this.EntityPM.PaymentNumber, this.EntityPM.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && !AppTool.IsNullOrEmpty(pmResponse.Result)) {
                 var myResult = pmResponse.Result;

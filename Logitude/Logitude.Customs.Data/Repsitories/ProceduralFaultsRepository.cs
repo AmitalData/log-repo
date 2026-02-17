@@ -1,0 +1,38 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class ProceduralFaultRepository:IRepository<ProceduralFault>
+   {
+        
+		public List<ProceduralFault> GetMulti(EntityKeyFields entityKeys)
+        {
+            
+			throw new NotImplementedException();
+        }
+
+        public string GetFaultIdByFaultNumber(string proceduralFaultNumber, int tenant)
+        {
+            if (string.IsNullOrEmpty(proceduralFaultNumber)) return "";
+            return
+                  (
+                  from rec in context.ProceduralFaults
+                  where rec.ProceduralFaultNumber == proceduralFaultNumber && rec.Tenant == tenant
+                  select rec.Id
+                  ).FirstOrDefault();
+        }
+
+   }
+
+}
+   

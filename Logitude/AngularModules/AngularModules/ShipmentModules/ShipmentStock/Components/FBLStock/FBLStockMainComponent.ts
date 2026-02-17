@@ -13,7 +13,7 @@ import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {FBLStockExtenedPMService} from '../../../../Shipment/Services/ExtendedPMs/FBLStockExtenedPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FBLStockMainComponent.html',
 })
 
@@ -27,7 +27,7 @@ export class FBLStockMainComponent {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
-        this._entityResourceService.getEntityResourceByTableName("FBLStock", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("FBLStock", 0).subscribe(response => {
             this.IsVisibile = true;
             //this.EntityPM = entityArgs.EntityPM;
             this.FBLStockExtenedPMService = new FBLStockExtenedPMService();

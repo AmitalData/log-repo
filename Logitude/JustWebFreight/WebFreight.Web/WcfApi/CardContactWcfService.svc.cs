@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Validators;
@@ -38,7 +38,7 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-
+                   
                     ClassLevelValidator validationClass = new ClassLevelValidator("CardContact", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
@@ -90,49 +90,14 @@ namespace WebFreight.Web.WcfApi
 
                     CardContact entity = cardContactRepository.GetSingleCardContact(contact.Id, card.Id, entityPM.Tenant);
 
-                    foreach (CardContactProductPM product in entityPM.CardContactProducts)
-                    {
-                        if (!string.IsNullOrEmpty(product.ProductTypeCode))
-                        {
-                            product.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-
-                            ProductTypeRepository productTypeRepository = new ProductTypeRepository(objectContext);
-                            ProductType type = productTypeRepository.GetSingleProductType(product.ProductTypeCode, entityPM.Tenant);
-                            if (type == null)
-                            {
-
-                                response.HasError = true;
-                                response.ErrorMessage = "ProductTypeCode field doesn't exist in the database,Upsert this entity before using it.";
-                                return response;
-                            }
-
-                        }
-                        else
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "ProductTypeCode field is required";
-                            return response;
-                        }
-                    }
+                   
 
                     if (entity == null)
                     {
-                        service.SetChangeSet(entityPM.CardContactProducts);
                         service.Create(entityPM);
                     }
                     else
                     {
-
-                        CardContactProductQuery productTypeQuery = new CardContactProductQuery(new CardContactProductRepository(objectContext));
-                        List<CardContactProductPM> oldProducts = productTypeQuery.GetCardContactProductPMsByCardContactId(entity.Id, entity.Tenant);
-                        foreach (CardContactProductPM product in oldProducts)
-                        {
-                            product.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                            entityPM.CardContactProducts.Add(product);
-                        }
-
-                        service.SetChangeSet(entityPM.CardContactProducts);
-
                         entityPM.Id = entity.Id;
                         service.Update(entityPM);
 
@@ -192,14 +157,11 @@ namespace WebFreight.Web.WcfApi
         
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-
+                   
                     ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
                     CardContactRepository cardContactRepository = new CardContactRepository(objectContext);
 
                     CardContact entity = cardContactRepository.GetSingleCardContactByExternal(contactExternalId, cardCode, tenant);
-                    
-                    RemoveCardContactProducts(entity.Id, objectContext, tenant);
-                    RemoveCardContactAdditionalServices(entity.Id, objectContext, tenant);
 
                     if (entity != null)
                     {
@@ -231,29 +193,6 @@ namespace WebFreight.Web.WcfApi
             }
         }
 
-        private static void RemoveCardContactProducts(string cardContactId, ICommonDataContext objectContext, int tenant)
-        {
-            CardContactProductRepository cardContactProductRepository = new CardContactProductRepository(objectContext);
-            List<CardContactProduct> cardContactProducts = cardContactProductRepository.GetProductsByCardContactIdd(cardContactId, tenant).ToList();
-            foreach (CardContactProduct product in cardContactProducts)
-            {
-                cardContactProductRepository.Remove(product);
-            }
-
-            cardContactProductRepository.SubmitChanges();
-        }
-
-        private static void RemoveCardContactAdditionalServices(string cardContactId, ICommonDataContext objectContext, int tenant)
-        {
-            CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(objectContext);
-            List<CardContactAdditionalService> cardContactAdditionalServices = cardContactAdditionalServiceRepository.GetAdditionalServicesByCardContactIdd(cardContactId, tenant).ToList();
-            foreach (CardContactAdditionalService additionalService in cardContactAdditionalServices)
-            {
-                cardContactAdditionalServiceRepository.Remove(additionalService);
-            }
-
-            cardContactAdditionalServiceRepository.SubmitChanges();
-        }
 
         public CardContactPM GetCardContactPM(string contactExternalId, string cardCode, int tenant, ref Response response)
         {

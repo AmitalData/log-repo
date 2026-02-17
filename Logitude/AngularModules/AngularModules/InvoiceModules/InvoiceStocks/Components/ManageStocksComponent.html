@@ -49,7 +49,7 @@
 
                     <div class="SimpleGridViewBody">
                         <table>
-                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
 
                                 <td class="GridViewCell TextTrimming" style="width: 100px; min-width: 100px; max-width: 100px;">
                                     {{item.Name}}

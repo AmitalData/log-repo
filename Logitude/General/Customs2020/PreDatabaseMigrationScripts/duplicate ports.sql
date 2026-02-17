@@ -1,6 +1,0 @@
---delete from ports where rowid not in(
---select min(rowid)
---from   ports
---group  by code,countryid,tenant);
---/
---ALTER TABLE "PORTS" ADD CONSTRAINT "UQ_PORTS_TENANT_CODE_COUNTRYID" UNIQUE("TENANT","CODE","COUNTRYID");

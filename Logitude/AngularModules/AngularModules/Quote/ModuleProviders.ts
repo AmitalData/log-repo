@@ -1,4 +1,4 @@
-import {MarkUpTypeListService} from './Services/StandardLists/MarkUpTypeListService';
+﻿import {MarkUpTypeListService} from './Services/StandardLists/MarkUpTypeListService';
 import {QuoteClosingReasonListService} from './Services/StandardLists/QuoteClosingReasonListService';
 import {QuoteCustomerTypeListService} from './Services/StandardLists/QuoteCustomerTypeListService';
 import {QuoteListService} from './Services/StandardLists/QuoteListService';
@@ -10,9 +10,7 @@ import {QuotePMService} from './Services/StandardPMs/QuotePMService';
 import {QuoteStagePMService} from './Services/StandardPMs/QuoteStagePMService';
 //import {QuoteTemplatePMService} from './Services/StandardPMs/QuoteTemplatePMService';
 import {QuoteMenuButtonsHandler} from './Components/MenuButtons/QuoteMenuButtonsHandler';
-import { QuoteFollowUpListService } from './Services/StandardLists/QuoteFollowUpListService';
-import { QuoteClosingReasonPMService } from './Services/StandardPMs/QuoteClosingReasonPMService';
-import { ValidByTypeListService } from './Services/StandardLists/ValidByTypeListService';
+import {QuoteFollowUpListService} from './Services/StandardLists/QuoteFollowUpListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -32,9 +30,7 @@ export class ModuleProviders {
             case "QuoteStagePMService": { myResult = new QuoteStagePMService(); break; }
             //case "QuoteTemplatePMService": { myResult = new QuoteTemplatePMService(); break; }
             case "QuoteMenuButtonsHandler": { myResult = new QuoteMenuButtonsHandler(); break; }
-            case "QuoteFollowUpListService": { myResult = new QuoteFollowUpListService(); break; }
-            case "QuoteClosingReasonPMService": { myResult = new QuoteClosingReasonPMService(); break; }
-            case "ValidByTypeListService": { myResult = new ValidByTypeListService(); break; }
+            case "QuoteFollowUpListService": { myResult = new QuoteFollowUpListService(); break;}
         }
 
         return myResult;

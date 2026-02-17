@@ -9,14 +9,6 @@
                             <div class="TabTitle" [hidden]="IsTitleHidden">{{TabHeaderTextCode | TextCodeTranslationPipe}}</div>
                         </td>
 
-                        <td *ngIf="IsShowWasAnalyzed" style="width: 50px;">
-                            <CheckBox [IsChecked]="IncludeNotAnalyzed" (Checked)="IncludeNotAnalyzed = $event" [Text]="'Show all Communications'"></CheckBox>
-                        </td>
-
-                        <td *ngIf="IsShowWasAnalyzed" style="width: 5px;">
-                            <div></div>
-                        </td>
-
                         <td style="width: 21px;">
                             <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                         </td>
@@ -46,8 +38,6 @@
                                 <td style="width: 60px; min-width: 60px; max-width: 60px;">
                                     <div></div>
                                 </td>
-
-                                <td *ngIf="IsShowWasAnalyzed && IncludeNotAnalyzed" style="width: 120px; min-width: 120px; max-width: 120px;">{{'CommunicationLog.F.WasAnalyzed' | TextCodeTranslationPipe}}</td>
 
                                 <td class="LastChild" style="min-width: 20px;">
                                     <div></div>
@@ -113,18 +103,18 @@
                                 </td>
 
                                 <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
-                                    <span style="float: right;margin-left: 5px;" class="Value">{{item.CreateDate | DateTimeToDatePipe}}</span>&nbsp;
-                                    <span style="float: right;" class="Value">{{item.CreateDate | DateTimeToTimePipe}}</span>
+                                    <span class="Value">{{item.CreateDate | DateTimeToDatePipe}}</span>
+                                    <span class="Value">{{item.CreateDate | DateTimeToTimePipe}}</span>
                                 </td>
 
                                 <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
-                                    <span style="float: right;margin-left: 5px;" class="Value">{{item.LastStatusDate | DateTimeToDatePipe}}</span>&nbsp;
-                                    <span style="float: right;" class="Value">{{item.LastStatusDate | DateTimeToTimePipe}}</span>
+                                    <span class="Value">{{item.LastStatusDate | DateTimeToDatePipe}}</span>
+                                    <span class="Value">{{item.LastStatusDate | DateTimeToTimePipe}}</span>
                                 </td>
 
                                 <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
-                                    <span style="float: right;margin-left: 5px;" class="Value">{{item.LastStatusDateUTC | DateTimeToDatePipe}}</span>&nbsp;
-                                    <span style="float: right;" class="Value">{{item.LastStatusDateUTC | DateTimeToTimePipe}}</span>
+                                    <span class="Value">{{item.LastStatusDateUTC | DateTimeToDatePipe}}</span>
+                                    <span class="Value">{{item.LastStatusDateUTC | DateTimeToTimePipe}}</span>
                                 </td>
 
                                 <td class="CellStretched" style="width: 60px; min-width: 60px; max-width: 60px;">
@@ -135,19 +125,13 @@
                                     <button class="Button" (click)="EditItemClicked(item)">{{'CommunicationLog.B.Details' | TextCodeTranslationPipe}}</button>
                                 </td>
 
-                                <td *ngIf="IsShowWasAnalyzed && IncludeNotAnalyzed" class="CellStretched" style="width: 120px; min-width: 120px; max-width: 120px;">
-                                    <div style="width:120px">
-                                        <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.WasAnalyzed" src="./Images/Icons/MiniGreenTick.png"/>
-                                    </div>
-                                </td>
-
                                 <td class="LastChild" style="min-width: 20px;">
                                     <div></div>
                                 </td>
                             </tr>
 
                             <tr>
-                                <td colspan="12">
+                                <td colspan="11">
                                     <div></div>
                                 </td>
                             </tr>

@@ -10,11 +10,8 @@
 
                 <textarea
                 [(ngModel)]="Text"
-                style="height: 100%;font-size:12px;font-family: Arial;"
-                [readonly]="DisplayMode"
-                [style.text-align]="IsTextBoxRTL?'right':'left'"
-                [style.direction]="IsTextBoxRTL?'rtl':'ltr'"
-                (keydown)="OnKeyDown($event)">
+                style="height: 100%;" [class.Disable]="DisplayMode == true"
+                >
 
                       </textarea>
         </td>
@@ -39,7 +36,7 @@
                     <td style="width: 57px;" *ngIf="DisplayMode == false">
                         <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
-
+                    
 
                     <td style="width: 57px;" *ngIf="DisplayMode == true">
                         <button class="RedButton" (click)="OkButtonClicked()">Close</button>

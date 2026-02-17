@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public VesselRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public VesselRepository(ICommonDataContext context)
         {
@@ -33,11 +36,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Vessel GetSingleVesselByCode(string code, int tenant)
         {
             return (from a in context.Vessels where a.Tenant == tenant && a.Code == code select a).FirstOrDefault();
-        }
-
-        public Vessel GetSingleVesselByName(string name, int tenant)
-        {
-            return (from a in context.Vessels where a.Tenant == tenant && (a.EnglishName != null && a.EnglishName.ToLower().Trim() == name.ToLower().Trim()) select a).FirstOrDefault();
         }
 
         public IQueryable<Vessel> GetVesselsByTenant(int tenant)

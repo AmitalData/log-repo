@@ -74,32 +74,6 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         private string _REMARK;
 
 
-        /// <summary>
-        /// There are no comments for AQOPERATION in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual int? AQOPERATION
-        {
-            get
-            {
-                return _AQOPERATION;
-            }
-            set
-            {
-                if (_AQOPERATION != value)
-                {
-                    _AQOPERATION = value;
-                    OnPropertyChanged("AQOPERATION");
-                }
-            }
-        }
-        private int? _AQOPERATION;
-
-
-        #endregion
-
-        #region Extensibility Method Definitions
-        partial void OnCreated();
         #endregion
 
         #region INotifyPropertyChanged Members

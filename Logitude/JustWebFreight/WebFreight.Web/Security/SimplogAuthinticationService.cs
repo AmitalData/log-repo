@@ -5,7 +5,7 @@ using System.ServiceModel.DomainServices.Hosting;
 using System.Web;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
@@ -152,7 +152,7 @@ namespace WebFreight.Web.Security
                                     }
                                 }
 
-                                Logitude.BL.Security.ContactInfo myContactInfo = new Logitude.BL.Security.ContactInfo()
+                                ContactInfo myContactInfo = new ContactInfo()
                                 {
                                     Tenant = contact.GlobalTenantId,
                                     ContactEmail = contact.Email,
@@ -280,7 +280,6 @@ namespace WebFreight.Web.Security
                     }
 
                     lastLogin.ComputerId = computerId;
-                    lastLogin.WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment();
                     lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
 

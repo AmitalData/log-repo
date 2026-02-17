@@ -2,8 +2,7 @@
 using Logitude.Server.Tools.Counters;
 using Logitude.XSD.Analyzers.INTTRAAnalyzer;
 using Logitude.XSD.INTTRA.BL;
-using Logitude.XSD.INTTRA_Booking;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -258,7 +257,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
                     List<ShipmentContainerStatusList> myResult = new List<ShipmentContainerStatusList>();
 
-                    myResult = (from d in myContext.ShipmentContainerStatuses.Include("INTTRAStatus").DefaultIfEmpty().Include("LocationPort").DefaultIfEmpty().Include("ContainerStatus").DefaultIfEmpty().Include("ContainerStatusSource").DefaultIfEmpty()
+                    myResult = (from d in myContext.ShipmentContainerStatuses.Include("INTTRAStatus").Include("LocationPort")
                                 where d.Tenant == tenant
                                 && d.ShipmentId == ShipmentId
                                 && d.ContainerId == ContainerId
@@ -282,18 +281,13 @@ namespace WebFreight.Web.Controllers.WebServices
                                     StatusCode = d.StatusCode,
                                     TimeOfArrivalInfo = d.TimeOfArrivalInfo,
                                     TimeOfDepartureInfo = d.TimeOfDepartureInfo,
-                                    Location = d.Location,
-                                    StatusSource = d.StatusSource,
-                                    StatusSourceName = d.ContainerStatusSource == null ? "" : d.ContainerStatusSource.Name,
-                                    StatusName = d.INTTRAStatus == null ? (d.ContainerStatus == null ? null : d.ContainerStatus.Name) : d.INTTRAStatus.Name,
-                                    LocationCode = d.LocationPort == null ? "" : d.LocationPort.CombinedCode,
+                                    StatusName = d.INTTRAStatus == null ? null : d.INTTRAStatus.Name,
+                                    LocationCode = d.LocationPort == null ? "" : d.LocationPort.Code,
                                     LocationName = d.LocationPort == null ? "" : d.LocationPort.EnglishName,
+                                    Location = d.Location,
                                 }).ToList();
 
-                    //myResult = myResult
-                    //          .GroupBy(p => new { p.StatusName, p.EventDate,  p.StatusSource, p.VesselName, p.ArrivalDate, p.DepartureDate })
-                    //          .Select(g => g.FirstOrDefault())
-                    //          .ToList();
+
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(o => o.EventDate));
                 }
@@ -305,61 +299,6 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
-        public HttpResponseMessage GetSendEBooking(string myShipmentId)
-        {
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-
-                    INTRABookingHelper myHelper = new INTRABookingHelper(myShipmentId, tenant);
-
-                    myHelper.Run();
-
-                    INTTRAResult myResult = myHelper.Result;
-
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetBookingMessageResultValidate(string myShipmentId)
-        {
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-
-                    INTRABookingHelper myHelper = new INTRABookingHelper(myShipmentId, tenant);
-
-                    INTTRAResult myResult = myHelper.Result;
-
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
     }
 
     public class INTTRASimulator

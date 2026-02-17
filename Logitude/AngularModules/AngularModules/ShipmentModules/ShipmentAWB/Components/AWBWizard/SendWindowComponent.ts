@@ -9,9 +9,9 @@ import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CCSWebService, CCSResult, AWBResultClass, FHLShipmentValidator} from '../../../../Infrastructure/Services/WebServices/CCSWebService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './SendWindowComponent.html',
 })
 
@@ -30,12 +30,11 @@ export class SendWindowComponent {
     public IsRecipientsVisible: boolean = false;
     public PurchaseStockUri: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    public TestToggleIsVisible: boolean = false;
     constructor() {
         this.ValidationErrorsList = [];
         this.ValidationWarningsList = [];
-        this.PurchaseStockUri = "https://ws.bluesnap.com/buynow/checkout?sku3233898=1&language=ENGLISH&currency=USD&custom1=" + SessionLocator.Tenant + "&quantity=1";
-     }
+        this.PurchaseStockUri = "https://www.plimus.com/jsp/buynow.jsp?contractId=3233898&language=ENGLISH&currency=USD&custom1=" + SessionLocator.Tenant + "&quantity=1";
+    }
 
     public SetWindowArgs(args: any) {
         this.Tenant = args.EnttiyPM.Tenant;
@@ -56,10 +55,6 @@ export class SendWindowComponent {
         this.SetWarnings();
         this.SetMessageType();
         this.SetSendButton();
-
-        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TST")[0] != null) {
-            this.TestToggleIsVisible = true;
-        }
 
         if (this.isSendingFHLs) {
             this.IsFHLsStatusVisible = true;
@@ -514,7 +509,8 @@ export class SendWindowComponent {
 
         this.ValidationErrorsList = errors;
 
-        if (errors.length == 0) {            
+        if (errors.length == 0) {
+
             this.myCCSWebService.GetSendingValidations(this.entityPM.Id, this.SelectedRecipient, this.isSendingFHLs, this.isSendingCargonaut, this.isSendingDEXX, this.entityPM.MainCarriageCarrierId).subscribe((myResponse: ServiceResponse) => {
 
                 if (myResponse == null) {
@@ -641,7 +637,7 @@ export class SendWindowComponent {
     get DemoAreaIsVisible() {
         var myResult = false;
 
-        if (ObjectsLocator.IsDemoTenant(this.Tenant.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+        if (this.Tenant == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             myResult = true;
         }
 
@@ -741,25 +737,8 @@ export class SendWindowComponent {
         }
     }
     private Sending(entityId: string, entityNumber: string) {
-        if (this.TestToggleIsVisible && SessionLocator.LoggedUserPM.IsCustomerCare) {
-            this.CurrentSession.StopBusyIndicator();
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Width = 370;
-            logitudeWindow.Height = 150;
-            logitudeWindow.Title = "Toggle Code : TST";
-            logitudeWindow.Show('./ShipmentModules/ShipmentAWB/Components/AWBWizard/TestMultiHarmonizeComponent');
-            logitudeWindow.WindowClosed.subscribe(($event: any) => {                
-                this.ActualSending(entityId, entityNumber, $event);
-            });
-        }
 
-        else {
-            this.ActualSending(entityId, entityNumber);
-        } 
-    }
-
-    private ActualSending(entityId: string, entityNumber: string, HSType: string = null) {
-        var busyIndicatorText: string = "Sending in Progress..";
+        var busyIndicatorText:string = "Sending in Progress..";
 
         if (this.isSendingFHLs) {
             busyIndicatorText = "Sending FHL (" + this.sendingQueueIndex + " of " + this.myValidationResultClass.ValidHousesCount + ") " + entityNumber;
@@ -768,7 +747,7 @@ export class SendWindowComponent {
         this.CurrentSession.StopBusyIndicator();
         this.CurrentSession.StartBusyIndicator(busyIndicatorText);
 
-        this.myCCSWebService.Send(entityId, this.SelectedRecipient, this.isSendingCargonaut, this.isSendingDEXX, !AppTool.IsNullOrEmpty(HSType)).subscribe((myResponse: ServiceResponse) => {
+        this.myCCSWebService.Send(entityId, this.SelectedRecipient, this.isSendingCargonaut, this.isSendingDEXX).subscribe((myResponse: ServiceResponse) => {
             if (myResponse == null) {
                 this.CurrentSession.StopBusyIndicator();
             }
@@ -791,11 +770,6 @@ export class SendWindowComponent {
                     if (myResult.HasStockError) {
                         this.SendingResultForeground = this.redForeground;
                         this.SendingResultMessage = "Error sending: No remaining stock";
-                        this.CurrentSession.StopBusyIndicator();
-                    }
-
-                    if (myResult.IsFNAValidationLong) {
-                        this.ValidationErrorsList.push(TextCodeTranslator.Translate("Shipment.M.AWB.ValidateFNA"));
                         this.CurrentSession.StopBusyIndicator();
                     }
 

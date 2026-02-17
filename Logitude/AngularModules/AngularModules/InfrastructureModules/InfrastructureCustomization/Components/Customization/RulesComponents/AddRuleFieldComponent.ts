@@ -16,11 +16,10 @@ import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObjectFieldList } from '../../../../../Infrastructure/EntityLists/ObjectFieldList';
-import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddRuleFieldComponent',
     templateUrl: './AddRuleFieldComponent.html',
 })
@@ -32,7 +31,7 @@ export class AddRuleFieldComponent extends BaseComponent {
     public ObjectFields: ObjectFieldPM[] = [];
     public DataContext: AddRuleFieldComponent = this;
     private ObjectTableId: string;
-    public SelectedObjectFieldCode: string;
+    public SelectedObjectFieldId: string;
     public RuleFieldTXTAreaId: string;
     public SelectedObjectField: ObjectFieldPM;
     FieldsLovQueryFilters: ApiQueryFilters;
@@ -78,17 +77,9 @@ export class AddRuleFieldComponent extends BaseComponent {
         logWindow.Title = "Insert Data Field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentObjectFieldsComponent');
-        logWindow.WindowClosed.subscribe(($event: string) => {
+        logWindow.WindowClosed.subscribe(($event: any) => {
 
             if ($event) {
-                 
-                const addedField: ObjectFieldPM = this.ObjectFields.filter(f => f.FieldName === $event.replace('[','').replace(']',''))[0];
-                if (addedField?.MaxLength > this.SelectedObjectField?.MaxLength) {
-                    const window: MessageWindow = new MessageWindow();
-                    window.ShowWarningIcon = true;
-                    window.Show(`${addedField.FieldName} field length (${addedField.MaxLength}) is greater than ${this.SelectedObjectField.FieldName} field length (${this.SelectedObjectField.MaxLength}), value will be trimmed!`);
-                }
-
                 this.Expression = insertAtSubject(this.RuleFieldTXTAreaId, $event);
             }
 
@@ -111,7 +102,7 @@ export class AddRuleFieldComponent extends BaseComponent {
         logWindow.WindowClosed.subscribe(($event: any) => {
 
             if ($event) {
-                this.SelectedObjectFieldCode = $event;
+                this.SelectedObjectFieldId = $event;
             }
 
         });
@@ -122,9 +113,9 @@ export class AddRuleFieldComponent extends BaseComponent {
         this.Expression = null;
       this.HideLov = true;
       if (item) {
-        this.SelectedObjectField = this.ObjectFields.filter(f => f.FieldCode == item.FieldCode)[0];
-        if (item && this.SelectedObjectFieldCode != item.FieldCode) {
-          this.SelectedObjectFieldCode = item.FieldCode; item
+        this.SelectedObjectField = this.ObjectFields.filter(f => f.Id == item.Id)[0];
+        if (item && this.SelectedObjectFieldId != item.Id) {
+          this.SelectedObjectFieldId = item.Id; item
 
         }
       }
@@ -142,12 +133,12 @@ export class AddRuleFieldComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        if (this.SelectedObjectFieldCode) {
+        if (this.SelectedObjectFieldId) {
             if (this.Expression) {
-                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldCode + ',' + this.Expression);
+                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldId + ',' + this.Expression);
             }
             else {
-                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldCode);
+                this.CurrentSession.CurrentWindow.Close(this.SelectedObjectFieldId);
             }
         }
     }

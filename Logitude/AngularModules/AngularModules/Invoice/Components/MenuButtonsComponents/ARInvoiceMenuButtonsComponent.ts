@@ -10,7 +10,7 @@ import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ARInvoiceMenuButtonsComponent.html',
 })
 

@@ -22,7 +22,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './GuaranteeDataComponent.html',
     selector: 'GuaranteeDataComponent',
 })

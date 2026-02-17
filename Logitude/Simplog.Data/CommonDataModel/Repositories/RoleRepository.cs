@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -9,7 +9,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class RoleRepository:IRepository<Role>
     {
         ICommonDataContext commonDataContext;
-
+        public RoleRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public RoleRepository(ICommonDataContext context)
         {
@@ -39,7 +42,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Role GetSingleByCode(string code, int tenant)
         {
-
             var role = (from a in context.Roles
                         where a.Code == code && (a.Tenant == tenant || a.Tenant == 0)
                         select a).FirstOrDefault();

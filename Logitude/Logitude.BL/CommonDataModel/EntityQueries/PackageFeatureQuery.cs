@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PackageFeatureRepository repository;
 
-
+        public PackageFeatureQuery()
+        {
+            repository = new PackageFeatureRepository(); 
+        }
 
         public PackageFeatureQuery(int tenant)
         {
@@ -38,7 +41,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         PackageCode = a.PackageCode,
-                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).FirstOrDefault();
         }
 
@@ -52,7 +54,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         PackageCode = a.PackageCode,
-                        FeatureUniqeCode = a.FeatureUniqeCode
                     });
         }
 
@@ -66,7 +67,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Id = a.Id,
                         Tenant = a.Tenant,
                         PackageCode = a.PackageCode,
-                        FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
     }

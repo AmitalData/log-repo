@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -112,7 +112,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsSharedWithCustomer { get; set; }
         public string ForwarderDocumentId { get; set; }
         public string CustomerDocumentId { get; set; }
-        public string ComputedCustomerDocumentId { get; set; }
 
         public string SecurityId  { get; set; }
 
@@ -137,14 +136,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsDigitalSignRequired { get; set; }
         public bool BackedupExternally { get; set; }
         public DateTime? LastBackupDate { get; set; }
-        public bool? IsTransferdToQBO { get; set; }
 
-        [ForeignKey("ReceivedByByContactId")]
-        public virtual User ReceivedByByContact { get; set; }
-        public string ReceivedByByContactId { get; set; }
-        public string ReceivedByPartner { get; set; }
-        public string BillToId { get; set; }
-        public bool IsFromCloud { get; set; }
-        public string FileDataMD5Hash { get; set; }
+
     }
 }

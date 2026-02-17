@@ -33,11 +33,10 @@ import {BookingDomainService, BookingValidatorResultClass} from '../../Services/
 import {FSRWebService, FSRResultClass} from '../../../Infrastructure/Services/WebServices/FSRWebService';
 import {InfrastructureDomainService} from '../../../Infrastructure/Services/InfrastructureDomainService';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'BookingWizardComponent',
-    
+    moduleId: module.id,
     templateUrl: './BookingWizardComponent.html',
     providers: [EntityArgs]
 })
@@ -68,13 +67,48 @@ export class BookingWizardComponent implements AfterViewInit {
     SetWindowArgs(windowArgs: BookingWizardArgs) {
         this.WindowArgs = windowArgs;
         this.InitializeWizard();
+        this.RunComponent();
     }
 
     private isViewInited = false;
     ngAfterViewInit() {
-        this.isViewInited = true;
-        this.InitializeComponent();
+        //this.isViewInited = true;
+        //this.InitializeComponent();
+    }
+
+    RunComponent() {
+
+
         ServiceLocator.SendTotangoUserActivity("Booking", "Booking Wizard");
+        if (this.AllLocations) {
+
+            if (this.AllLocations.toArray().length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                this.isViewInited = true;
+                this.InitializeComponent();
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
     }
 
     private InitializeWizard() {
@@ -600,7 +634,7 @@ export class BookingWizardComponent implements AfterViewInit {
         }
 
         else {
-            this.myPartnersDomainService.GetAirlineRules(myAirlineCode, "FFR").subscribe((myResult:any) => {
+            this.myPartnersDomainService.GetAirlineRules(myAirlineCode, "FFR").subscribe(myResult => {
                 if (myResult == null) {
                     this.AirlineRulesList = [];
                     this.ValidateAllTabs();
@@ -1287,7 +1321,7 @@ export class BookingWizardComponent implements AfterViewInit {
 
     private SubmitCreatingBooking() {
         var myService: BookingPMService = new BookingPMService();
-        myService.insert(this.EntityPM).subscribe((myResult:any) => {
+        myService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -1311,7 +1345,7 @@ export class BookingWizardComponent implements AfterViewInit {
 
         var myService: BookingPMService = new BookingPMService();
 
-        myService.update(this.EntityPM).subscribe((myResult:any) => {
+        myService.update(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -1623,7 +1657,7 @@ export class BookingWizardComponent implements AfterViewInit {
     }
 
     private SetDemoMessage() {
-        if (ObjectsLocator.IsDemoTenant(InfraSettings.TenantPM.Id.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+        if (InfraSettings.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Please note that this message will not be sent to the airline since it is a demo environment. You can still review the built message");
         }
@@ -1674,13 +1708,13 @@ export class BookingWizardComponent implements AfterViewInit {
         else {
             var myService: CardListService = new CardListService();
 
-            myService.getSingle(this.EntityPM.ShipperId).subscribe((myResult:any) => {
+            myService.getSingle(this.EntityPM.ShipperId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
                     var shipper: CardList = myResponse.Result;
 
-                    myService.getSingle(this.EntityPM.ConsigneeId).subscribe((myResult:any) => {
+                    myService.getSingle(this.EntityPM.ConsigneeId).subscribe(myResult => {
                         var myResponse: ServiceResponse = myResult;
 
                         if (!myResponse.HasError) {
@@ -1794,7 +1828,7 @@ export class BookingWizardComponent implements AfterViewInit {
 
         var myService: BookingPMService = new BookingPMService();
 
-        myService.get(this.EntityPM.Id).subscribe((myResult:any) => {
+        myService.get(this.EntityPM.Id).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
 
             if (!mm.HasError) {
@@ -1901,30 +1935,22 @@ export class BookingWizardComponent implements AfterViewInit {
         }
     }
     CancelBookingClicked() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
-            var messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Title = "Cancelling Shipment";
-            messageWindow.Show("Can't cancel bookings that have a MAWB number, please remove it");
-        }
+        var confirmMsg = "Are you sure you want to cancel this Booking?";
 
-        else {
-            var confirmMsg = "Are you sure you want to cancel this Booking?";
+        var confirmWindow = new ConfirmWindow();
 
-            var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(confirmMsg);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                var isValid: boolean = this.ValidateBooking();
 
-            confirmWindow.Show(confirmMsg);
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    var isValid: boolean = this.ValidateBooking();
-
-                    if (isValid) {
-                        this.InitFlags();
-                        this.isCancelBookingButtonClicked = true;
-                        this.Save();
-                    }
+                if (isValid) {
+                    this.InitFlags();
+                    this.isCancelBookingButtonClicked = true;
+                    this.Save();  
                 }
-            });
-        }
+            }
+        });
     }
     ReactivateBookingClicked() {
         this.InitFlags();

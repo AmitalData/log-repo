@@ -7,7 +7,7 @@ import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/Api
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './HarmonizesComponent.html',
 })

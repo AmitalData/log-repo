@@ -12,7 +12,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.IO;
 using System.Xml.Serialization;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Reflection;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.InfrastructureModel.Repositories;

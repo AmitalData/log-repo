@@ -1,11 +1,11 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.GlobalModelDB
 {
@@ -290,32 +290,6 @@ namespace WebFreight.Web.GlobalModelDB
             {
                 throw new NotImplementedException();
             }
-        }
-
-        public IDbSet<BluesnapTransaction> BluesnapTransactions
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public IDbSet<AuthenticationToken> AuthenticationTokens => throw new NotImplementedException();
+        } 
     }
 }

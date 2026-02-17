@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -52,7 +52,7 @@
                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                     <div class="MediaFill">
                                         <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                            <CheckBox [IsChecked]="IsAllChecked" attr.data-cy="{{'CheckALL'  | IdGeneratorAsyncPipe | async}}"(Checked)="IsAllChecked = $event"></CheckBox>
+                                            <CheckBox [IsChecked]="IsAllChecked" (Checked)="IsAllChecked = $event"></CheckBox>
                                         </div>                                        
                                     </div>
                                 </td>
@@ -80,7 +80,7 @@
                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                     <div class="MediaFill">
                                         <div class="CenterCenter" style="width: 16px; height: 16px; padding-left: 1px;">
-                                            <CheckBox [IsChecked]="item.IsChecked" attr.data-cy="{{'CheckBox' + item.Reference | IdGeneratorAsyncPipe | async}}"(Checked)="item.IsChecked = $event"></CheckBox>
+                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
                                         </div>                                        
                                     </div>
                                 </td>
@@ -107,7 +107,7 @@
                                 </td>
 
                                 <td class="GridViewCell" style="width: 165px; min-width: 165px; max-width: 165px;">
-                                    <button class="Button" (click)="MarkAsBlockedClicked(item.Id)">Mark as blocked for transfer</button>
+                                    <button class="Button" (click)="item.MarkAsBlockedClicked()">Mark as blocked for transfer</button>
                                 </td>
 
                                 <td>

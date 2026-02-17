@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .FormFieldRow {
         height: 32px;
@@ -21,9 +21,9 @@
     <tr style="height:100%;vertical-align:top;">
         <td>
             <table>
-
+        
                 <tr class="FormFieldRow" style="vertical-align:top">
-
+       
                     <td style="width:100px;">  <LogLabel [Text]="'Email'" [DataContext]="DataContext"></LogLabel></td>
                     <td style="width:230px"><LogTextBox style="width:230px"   [ObjectFieldName]="'Email'" [DataContext]="DataContext"></LogTextBox></td>
                     <td><div></div></td>
@@ -43,11 +43,6 @@
                     <td><div></div></td>
                 </tr>
 
-                <tr *ngIf="IsCreateLogboxTenantFromCloud" class="FormFieldRow" style="vertical-align:top">
-                    <td style="width:100px;">  <LogLabel [Text]="'Vat Number'" [DataContext]="DataContext"></LogLabel></td>
-                    <td style="width:230px"><LogTextBox style="width:230px" [ObjectFieldName]="'VatNumber'" [DataContext]="DataContext"></LogTextBox></td>
-                    <td><div></div></td>
-                </tr>
 
                 <tr class="FormFieldRow" style="vertical-align:top">
 
@@ -56,7 +51,7 @@
                     <td><div></div></td>
                 </tr>
 
-                <tr *ngIf="!IsCreateLogboxTenantFromCloud" class="FormFieldRow" style="vertical-align:top">
+                <tr class="FormFieldRow" style="vertical-align:top">
                     <td style="width:100px;">  <LogLabel [Text]="'Package Code'" [DataContext]="DataContext"></LogLabel></td>
                     <td style="width:230px">
                         <div style="width:230px;height:22px">

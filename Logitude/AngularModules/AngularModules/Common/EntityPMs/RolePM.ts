@@ -20,7 +20,7 @@ export class RolePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -70,11 +70,6 @@ export class RolePM {
     public set IsCustomRole(newValue: boolean) { if (this.isCustomRole != newValue) { this.isCustomRole = newValue; this.MarkAsDirty("IsCustomRole"); } }
        
 	 
-    private inactive: boolean;
-    public get Inactive() { return this.inactive; }
-    public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
-       
-	 
     private exists: boolean;
     public get Exists() { return this.exists; }
     public set Exists(newValue: boolean) { if (this.exists != newValue) { this.exists = newValue; this.MarkAsDirty("Exists"); } }
@@ -104,10 +99,7 @@ export class RolePM {
     public OldEntityPM: RolePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -115,7 +107,6 @@ export class RolePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Role");
            
         }
-	 }
     }
     private MyClone: RolePM;
 

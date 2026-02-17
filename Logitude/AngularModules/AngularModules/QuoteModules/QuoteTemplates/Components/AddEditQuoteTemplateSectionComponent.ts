@@ -17,7 +17,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'AddEditQuoteTemplateSectionComponent',
-    
+    moduleId: module.id,
     templateUrl: './AddEditQuoteTemplateSectionComponent.html',
 })
 
@@ -62,7 +62,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
 
         var sectionDocId: string = !AppTool.IsNullOrEmpty(this.QuoteTemplateSectionViewModel.EntityPM.SectionDocId) ? this.QuoteTemplateSectionViewModel.EntityPM.SectionDocId : "";
 
-        this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, sectionDocId, "", "", "", "", SessionLocator.Tenant).subscribe((res:any) => {
+        this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, sectionDocId, "", "", "", "", SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
@@ -114,7 +114,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
     }
 
     UpdateQuoteTemplateSession(item: QuoteTemplateSectionPM, type: string) {
-        this.quoteTemplateSectionPMService.update(item).subscribe((res:any) => {
+        this.quoteTemplateSectionPMService.update(item).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 if (pmResponse.Result) {
@@ -146,16 +146,16 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
         var table = window.ObjectTables.filter(d => d.Name == "Quote")[0];
         if (table) tableId = table.Id;
 
-        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe((response:any) => {
-            this._entityResourceService.getEntityResourceByTableName("Quote").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("Quote").subscribe(response => {
                 var windowArgs: any = {};
                 windowArgs.InSertDataFieldType = "FroalaEditor";
                 windowArgs.ObjectTableId = tableId;
-                windowArgs.FromComponent = "QuotationComponent";
 
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 500;
                 logWindow.Height = 600;
+
                 logWindow.Title = "Insert Data Field";
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentObjectFieldsComponent');
@@ -197,7 +197,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
 
                 this.QuoteTemplateSectionViewModel.Templatedata = quotetemplateSectionBody;
                 this.RefreshSectionToList();
-                this.quoteTemplateSectionPMService.insert(this.QuoteTemplateSectionViewModel.EntityPM).subscribe((res:any) => {
+                this.quoteTemplateSectionPMService.insert(this.QuoteTemplateSectionViewModel.EntityPM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
 
                     if (!pmResponse.HasError) {

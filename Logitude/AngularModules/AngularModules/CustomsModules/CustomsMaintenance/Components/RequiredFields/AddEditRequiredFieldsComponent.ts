@@ -17,11 +17,10 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {CustomsRequiredFieldList} from '../../../../Customs/EntityLists/CustomsRequiredFieldList';
 import { CustomsRequierdFieldsWebService } from '../../../../Customs/Services/WebServices/CustomsRequierdFieldsWebService';
-import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddEditRequiredFieldsComponent',
     templateUrl: './AddEditRequiredFieldsComponent.html',
 })
@@ -64,10 +63,6 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
     GetObjectFields() {
         var objectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         var objectFields: any[] = window.ObjectFields.filter(x => x.ObjectTableId == objectTable.Id && (!x.IsMulti && x.FieldName != "ImporterId" && x.FieldName != "TransferImporterId" && x.FieldName != "EntitleImporterId"));
-        if (objectTable.Name == "Customs.Declaration") {
-            objectFields = objectFields.filter(x => x.ValidForQuerySection1 != "Customs.ExportDeclaration");
-            objectFields = objectFields.filter(x => x.FieldName != "DeclarationNumber");
-        }
 
         this.FieldsList.Clear();
         var items = [];
@@ -76,8 +71,6 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
 
             var requierdField = new CustomsRequiredFieldList();
             requierdField.ObjectfieldId = objectField.Id;
-            requierdField.ObjectfieldCode = objectField.FieldCode;
-
             requierdField.ObjectFieldName = objectField.FieldName;
             requierdField.ObjectTableId = objectField.ObjectTableId
             requierdField.Tenant = SessionLocator.Tenant;
@@ -85,19 +78,9 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
             var item = new RequiredFieldItemModel(objectField, requierdField);
             item.TranslatedName = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode);
 
-            //if (this.SelectedObjectFields.find(d => d.ObjectfieldCode == objectField.FieldCode)) {
-            //    item.Active = true;
-            //}
-            var selectObjectField = this.SelectedObjectFields.find(d => d.ObjectfieldCode == objectField.FieldCode);
-            if (!AppTool.IsNullOrEmpty(selectObjectField)) {
-                if (selectObjectField.IsExport)
-                    item.IsExport = true;
-
-                if (selectObjectField.IsImport)
-                    item.IsImport = true;
-                 item.Active = true;
+            if (this.SelectedObjectFields.find(d => d.ObjectfieldId == objectField.Id)) {
+                item.Active = true;
             }
-
             items.push(item);
 
         });
@@ -131,14 +114,9 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
         this.OriginalFieldsList.Collection.forEach((field: RequiredFieldItemModel) => {
             var i = new RequierdFieldObject();
             i.ObjectfieldId = field.ObjectfieldId;
-            i.ObjectfieldCode = field.ObjectfieldCode;
-
             i.ObjectTableId = field.ObjectField.ObjectTableId;
             i.ObjectFieldName = field.ObjectField.FieldName;
             i.Active = field.Active;
-            i.IsExport = field.IsExport;
-            i.IsImport = field.IsImport;
-
             items.push(i);
         });
 
@@ -163,42 +141,20 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
     CheckBoxChanged(event, itemModel: RequiredFieldItemModel) {
         console.log("<CheckBoxChanged> ", event, itemModel);
         if (itemModel) {
-             if (event == true) {
+
+            if (event == true) {
                 this.SelectedObjectFields.push(itemModel.RequierdField);
-                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
-                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
-
-                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
-                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
-            }
-            else {
-                var index = this.SelectedObjectFields.findIndex(d => d.ObjectFieldName == itemModel.ObjectField.FieldName);
-                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
-                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport = itemModel.IsImport;
-
-                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
-                this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport = itemModel.IsExport;
-
-            }
-
-            if (this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport == true || this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport == true) {
                 this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = true;
-            }
-            else {
-                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = false;
-
-            }
-
-
-            if (this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsImport == true || this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).IsExport == true) {
                 this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = true;
             }
             else {
+                var index = this.SelectedObjectFields.findIndex(d => d.ObjectFieldName == itemModel.ObjectField.FieldName);
+                this.SelectedObjectFields.splice(index, 1);
+                this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = false;
                 this.OriginalFieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active = false;
 
+
             }
-            if (this.FieldsList.Collection.find(d => d.Name == itemModel.ObjectField.FullNameTextCodeCode).Active == false)
-            this.SelectedObjectFields.splice(index, 1);
 
         }
     }
@@ -212,24 +168,15 @@ export class RequiredFieldItemModel extends BaseComponent {
     constructor(public ObjectField: any, public RequierdField: CustomsRequiredFieldList) {
         super();
         this.ObjectfieldId = ObjectField.Id;
-        this.ObjectfieldCode = ObjectField.FieldCode;
-     }
+    }
 
-    //#region PropertiesObjectfieldId
+    //#region Properties
 
     objectfieldId: string;
     get ObjectfieldId() { return this.objectfieldId; }
     set ObjectfieldId(value: string) {
         if (this.objectfieldId != value) {
             this.objectfieldId = value;
-        }
-    }
-
-    objectfieldCode: string;
-    get ObjectfieldCode() { return this.objectfieldCode; }
-    set ObjectfieldCode(value: string) {
-        if (this.objectfieldCode != value) {
-            this.objectfieldCode = value;
         }
     }
 
@@ -258,34 +205,12 @@ export class RequiredFieldItemModel extends BaseComponent {
         }
     }
 
-    isImport: boolean = false;
-    get IsImport() {return this.isImport; }
-    set IsImport(value: boolean) {
-    if (this.isImport != value) {
-        this.isImport = value;
-
-        }
-    }
-
-    isExport: boolean = false;
-    get IsExport() { return this.isExport; }
-    set IsExport(value: boolean) {
-        if (this.isExport != value) {
-            this.isExport = value;
-
-        }
-    }
-
     //#endregion
 }
 
 export class RequierdFieldObject {
     ObjectfieldId: string;
-    ObjectfieldCode: string;
     ObjectTableId: string;
     ObjectFieldName: string;
-    IsExport: boolean;
-    IsImport: boolean;
-    WarningExport: boolean;
     Active: boolean;
 }

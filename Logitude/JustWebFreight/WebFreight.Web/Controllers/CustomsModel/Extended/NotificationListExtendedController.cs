@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -790,18 +790,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         notificationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
                         service.Update(notificationPM, true);
-
-                        if (!string.IsNullOrEmpty(notificationPM.CustomerId))
-                        {
-                            CustomerRepository customerRepository = new CustomerRepository(notificationPM.Tenant);
-                            Customer customerCard = customerRepository.GetSingleCustomer(notificationPM.CustomerId, notificationPM.Tenant, false);
-                            if (customerCard != null && customerCard.Card != null)
-                            {
-                                notificationPM.CustomerName = customerCard.Card.LocalName;
-                            }
-                        }
                     }
                 }
+
+
+            
 
                 ServiceResponse response = new ServiceResponse();
 
@@ -834,9 +827,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;

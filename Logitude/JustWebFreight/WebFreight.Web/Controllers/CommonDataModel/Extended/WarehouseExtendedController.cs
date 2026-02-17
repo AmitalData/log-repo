@@ -4,9 +4,9 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -40,11 +40,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 mytenant = authToken.Tenant;
 
                 if (filters.Tenant != null)
-                {
-                    mytenant = filters.Tenant.Value;
-                    SecurityUtility.AuthenticationOnTenant(filters.Tenant.Value);
-                }
-                
+                    mytenant = tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -156,11 +152,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                                                   WebSite = card.Website,
                                                   SearchFields = card.SearchFields,
                                                   InvitationDate = card.InvitationDate,
-                                                  CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                                   SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                                   SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
-                                                  CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
-                                                  CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                                   LastLoginDate = card.LastLoginDate,
                                                   PrimaryContactId = card.PrimaryContactId,
                                                   CityName = card.CityName,
@@ -269,30 +262,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 response.Result = result;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-
-
-                return reponseMessage;
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetWarehouseTypeById(string warehouseId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
-
-                WarehouseQuery warehouseQuery = new WarehouseQuery(tenant);
-                string warehouseType = warehouseQuery.GetWarehouseTypeById(warehouseId, tenant);
-
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, warehouseType);
 
 
                 return reponseMessage;

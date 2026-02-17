@@ -1,17 +1,14 @@
-import {Output, EventEmitter} from '@angular/core';
+﻿import {Output, EventEmitter} from '@angular/core';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPickUpDeliveryPackagePM} from './ShipmentPickUpDeliveryPackagePM';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';
 
-export class ShipmentPickUpPM extends ChildEntitiesCustomFieldPM {
+export class ShipmentPickUpPM {
     public UIProperties: UIProperties;
     @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
     constructor(_entityParentPM: any) {
-        super("ShipmentPickUp");
-
         this.EntityParentPM = _entityParentPM;
         this.UIProperties = new UIProperties;
         this.IsDirty = false;
@@ -32,14 +29,6 @@ export class ShipmentPickUpPM extends ChildEntitiesCustomFieldPM {
     private pickUpDeliveryNumber: string;
     public get PickUpDeliveryNumber() { return this.pickUpDeliveryNumber; }
     public set PickUpDeliveryNumber(newValue: string) { this.pickUpDeliveryNumber = newValue; this.MarkAsDirty(); }
-
-    private pickUpDeliveryIndex: number;
-    public get PickUpDeliveryIndex() { return this.pickUpDeliveryIndex; }
-    public set PickUpDeliveryIndex(newValue: number) { this.pickUpDeliveryIndex = newValue; this.MarkAsDirty(); }
-
-    private childIndex: number;
-    public get ChildIndex() { return this.childIndex; }
-    public set ChildIndex(newValue: number) { this.childIndex = newValue; this.MarkAsDirty(); }
 
     private pickUpDeliveryTypeCode: string;
     public get PickUpDeliveryTypeCode() { return this.pickUpDeliveryTypeCode; }
@@ -291,22 +280,6 @@ export class ShipmentPickUpPM extends ChildEntitiesCustomFieldPM {
     private transportModeCode: string;
     public get TransportModeCode() { return this.transportModeCode; }
     public set TransportModeCode(newValue: string) { this.transportModeCode = newValue; this.MarkAsDirty(); }
-
-    private parentPickUpDeliveryId: string;
-    public get ParentPickUpDeliveryId() { return this.parentPickUpDeliveryId; }
-    public set ParentPickUpDeliveryId(newValue: string) { this.parentPickUpDeliveryId = newValue; this.MarkAsDirty(); }
-
-    private childPickUpIndex: number;
-    public get ChildPickUpIndex() { return this.childPickUpIndex; }
-    public set ChildPickUpIndex(newValue: number) { this.childPickUpIndex = newValue; this.MarkAsDirty(); }
-
-    private standaloneShipmentId: string;
-    public get StandaloneShipmentId() { return this.standaloneShipmentId; }
-    public set StandaloneShipmentId(newValue: string) { this.standaloneShipmentId = newValue; this.MarkAsDirty(); }
-
-    private standaloneShipmentNumber: string;
-    public get StandaloneShipmentNumber() { return this.standaloneShipmentNumber; }
-    public set StandaloneShipmentNumber(newValue: string) { this.standaloneShipmentNumber = newValue; this.MarkAsDirty(); }
 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }

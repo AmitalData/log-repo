@@ -10,7 +10,7 @@ import {TenantManagementPMService} from '../../../../Infrastructure/Services/Sta
 import {QueueMessagesWebService} from '../../../../Infrastructure/Services/WebServices/QueueMessagesWebService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'TenantManagementStatisticsTabComponent',
     templateUrl: './TenantManagementStatisticsTabComponent.html',
 })
@@ -97,24 +97,7 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
         this.AgentSharedLogisticsStatisticsLastWeek = this.EntityPM.AgentSharedLogisticsStatisticsLastWeek;
         this.AgentSharedLogisticsStatisticsLastMonth = this.EntityPM.AgentSharedLogisticsStatisticsLastMonth;
 
-        this.LastEbookingSentDate = this.EntityPM.LastEbookingSentDate;
-        this.LastSISentDate = this.EntityPM.LastSISentDate;
-        this.NumberOfBookingSentLastWeek = this.EntityPM.NumberOfBookingSentLastWeek;
-        this.NumberOfSISentLastWeek = this.EntityPM.NumberOfSISentLastWeek;
-        this.LastContainerStatusReceived = this.EntityPM.LastContainerStatusReceived;
-
-        this.LastTariffUpdateDate = this.EntityPM.LastTariffUpdateDate;
-        this.LastTariffUsageDate = this.EntityPM.LastTariffUsageDate;
-        this.LastWeekCreatedTariffs = this.EntityPM.LastWeekCreatedTariffs;
-        this.LastMonthCreatedTariffs = this.EntityPM.LastMonthCreatedTariffs;
-
-        this.DigitalPortalLastDate = this.EntityPM.DigitalPortalLastDate;
-        this.DigitalPortalMobTotalLastMonth = this.EntityPM.DigitalPortalMobTotalLastMonth;
-        this.DigitalPortalMobTotalLastWeek = this.EntityPM.DigitalPortalMobTotalLastWeek;
-        this.DigitalPortalMobileLastDate = this.EntityPM.DigitalPortalMobileLastDate;
-        this.DigitalPortalTotalLastMonth = this.EntityPM.DigitalPortalTotalLastMonth;
-        this.DigitalPortalTotalLastWeek = this.EntityPM.DigitalPortalTotalLastWeek;
-
+        
         this.SetColors();
     }
 
@@ -131,8 +114,6 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
         this.ActivityLastDateColor = FontTool.Gray;
         this.ShardLogisticLastDateColor = FontTool.Gray;
         this.MobileLastDateColor = FontTool.Gray;
-        this.DigitalPortalMobileLastDateColor = FontTool.Gray;
-        this.DigitalPortalLastDateColor = FontTool.Gray;
 		this.AgentSharedLogisticsStatisticsLastDateColor = FontTool.Gray;
 		
 
@@ -207,24 +188,8 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
                 this.MobileLastDateColor = FontTool.Red;
             }
         }
-
-        if (this.EntityPM.DigitalPortalLastDate != null) {
-            var myDate = new Date(this.EntityPM.DigitalPortalLastDate.valueOf()).valueOf();
-
-            if (myDate < date7) {
-                this.DigitalPortalLastDateColor = FontTool.Red;
-            }
-        }
-        
-        if (this.EntityPM.DigitalPortalMobileLastDate != null) {
-            var myDate = new Date(this.EntityPM.DigitalPortalMobileLastDate.valueOf()).valueOf();
-
-            if (myDate < date7) {
-                this.DigitalPortalMobileLastDateColor = FontTool.Red;
-            }
-        }
 		
-		if (this.EntityPM.AgentSharedLogisticsStatisticsLastDate != null) {
+		    if (this.EntityPM.AgentSharedLogisticsStatisticsLastDate != null) {
             var myDate = new Date(this.EntityPM.AgentSharedLogisticsStatisticsLastDate.valueOf()).valueOf();
 
             if (myDate < date7) {
@@ -295,26 +260,6 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
     public AgentSharedLogisticsStatisticsLastMonth: number;
     public AgentSharedLogisticsStatisticsLastDateColor: string
 
-    public LastEbookingSentDate: Date;
-    public LastSISentDate: Date;
-    public NumberOfBookingSentLastWeek: number;
-    public NumberOfSISentLastWeek: number;
-    public LastContainerStatusReceived: Date;
-
-    public LastTariffUpdateDate: Date;
-    public LastTariffUsageDate: Date;
-    public LastWeekCreatedTariffs: number;
-    public LastMonthCreatedTariffs: number;
-
-    DigitalPortalLastDate: Date;
-    DigitalPortalTotalLastWeek: number;
-    DigitalPortalTotalLastMonth: number;
-    DigitalPortalMobileLastDate: Date;
-    DigitalPortalMobTotalLastWeek: number;
-    DigitalPortalMobTotalLastMonth: number;
-
-    public DigitalPortalMobileLastDateColor: string
-    public DigitalPortalLastDateColor: string
 
     RefreshClicked() {
         this.CurrentSession.StartBusyIndicator("Refreshing....");
@@ -335,7 +280,7 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
     UpdateClicked() {
         var service = new QueueMessagesWebService();
 
-        service.UpdateTenantManagementStatistics(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+        service.UpdateTenantManagementStatistics(this.EntityPM.Id).subscribe((myResult) => {
             //var myResponse: ServiceResponse = myResult;
 
             //if (!myResponse.HasError) {

@@ -7,7 +7,6 @@ namespace WebFreight.Web.DataProviders
     public class StatementByInvoiceDateDataProvider: BaseDataProvider
     {
         public string CustomerName { get; set; }
-        public string PartnerName { get; set; }
         public DateTime CurrentDate { get; set; }
         public string TenantName { get; set; }
         public string Address1 { get; set; }
@@ -32,14 +31,6 @@ namespace WebFreight.Web.DataProviders
             public double? TotalPastAmount_60 { get; set; }
             public double? TotalPastAmount_90 { get; set; }
             public double? TotalPastAmountOver_90 { get; set; }
-
-            public double? TotalPastAmount1_15 { get; set; }
-            public double? TotalPastAmount16_30 { get; set; }
-            public double? TotalPastAmount31_60 { get; set; }
-            public double? TotalPastAmount61_90 { get; set; }
-            public double? TotalPastAmount91_120 { get; set; }
-            public double? TotalPastAmountOver_120 { get; set; }
-
             public double? TotalAmount { get; set; }
 
             public List<StatementByInvoiceRecord> StatementRecordList { get; set; }
@@ -60,20 +51,10 @@ namespace WebFreight.Web.DataProviders
             public double? PastAmount_60 { get; set; }
             public double? PastAmount_90 { get; set; }
             public double? PastAmountOver_90 { get; set; }
-
-            public double? PastAmount1_15 { get; set; }
-            public double? PastAmount16_30 { get; set; }
-            public double? PastAmount31_60 { get; set; }
-            public double? PastAmount61_90 { get; set; }
-            public double? PastAmount91_120 { get; set; }
-            public double? PastAmountOver_120 { get; set; }
-
             public double? PastTotalAmount { get; set; }
             public int DueAge { get; set; }
             public string Customer { get; set; }
             public string Salesman { get; set; }
-            public string ShipperRef1 { get; set; }
-            public string ShipperRef2 { get; set; }
         }
     }
 }

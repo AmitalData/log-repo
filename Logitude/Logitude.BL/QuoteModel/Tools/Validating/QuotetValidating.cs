@@ -6,7 +6,7 @@ using Logitude.BL.QuoteModel.EntityPMs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using System.Data;
 using Logitude.BL.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Helpers;
@@ -19,9 +19,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Data.Entity.Core;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.ShipmentsModel;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.QuoteModel.Tools.Validating
 {
@@ -33,7 +30,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
             if (isInlandDomestic)
             {
-
+                
             }
 
             else
@@ -62,45 +59,21 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
             ValidateMultiVatPercentages(entityPM, myCommonContext);
             ValidateConvertQuote(entityPM);
             ValidateFCLDuplicatedPackages(entityPM);
-            ValidateDomesticQuote(entityPM);
-            ValidateQuoteCharges(entityPM);
-            ValidateShipmentSubType(entityPM);
-            ValidateRegionalTax(entityPM);
         }
 
         private static void ValidateConvertQuote(QuotePM entityPM)
         {
-            if (IsConvertingQuoteTypeOrTransportMode(entityPM))
+            if (entityPM.ConvertToLCL || entityPM.ConvertToFCL)
             {
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
-                bool existConnectedShipments = MyContext.Shipments.Where(p => p.Tenant == entityPM.Tenant && p.QuoteId == entityPM.Id).FirstOrDefault() != null;
-                if (existConnectedShipments)
+                bool ExistConnectedShipments = MyContext.Shipments.Where(p => p.Tenant == entityPM.Tenant && p.QuoteId == entityPM.Id).FirstOrDefault() != null;
+                if (ExistConnectedShipments)
                 {
-                    if (entityPM.ConvertTransportMode)
-                    {
-                        throw new ApplicationException("Cannot change quote transport mode when connected to shipments");
-                    }
-                    else
-                    {
-                        throw new ApplicationException("Cannot change quote type when connected to shipments");
-                    }
+                    throw new ApplicationException("Cannot change quote type when connected to shipments");
                 }
+
             }
         }
-        private static bool IsConvertingQuoteTypeOrTransportMode(QuotePM entityPM)
-        {
-            if(entityPM.ConvertToLCL)
-                return true;
-
-            if (entityPM.ConvertToFCL)
-                return true;
-
-            if (entityPM.ConvertTransportMode)
-                return true;
-
-            return false;
-        }
-
         private static void ValidateAirlineRestriction(QuotePM entityPM)
         {
             if (entityPM.TransportModeId == "A")
@@ -141,7 +114,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                             }
                         }
 
-                        throw new ApplicationException("You are restricted for " + airlineCodes + " Airlines only");
+                        throw new ApplicationException("You are restricted for " + airlineCodes + " Airlines only"); 
                     }
                 }
             }
@@ -297,19 +270,17 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 AccountingSetting accountingSetting = (from d in myCommonContext.AccountingSettings
                                                        where d.Id == entityPM.Tenant
                                                        select d).FirstOrDefault();
-                if (accountingSetting != null)
-                {
-                    if (!accountingSetting.EnableMultiPercentageVATTypes)
-                    {
-                        List<VatType> allVats = (from f in myCommonContext.VatTypes
-                                                 where allVatsIds.Contains(f.Id)
-                                                 && f.Tenant == entityPM.Tenant
-                                                 select f).ToList();
 
-                        if (allVats.Where(d => d.IsMultiPercentage).Any())
-                        {
-                            throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
-                        }
+                if (!accountingSetting.EnableMultiPercentageVATTypes)
+                {
+                    List<VatType> allVats = (from f in myCommonContext.VatTypes
+                                             where allVatsIds.Contains(f.Id)
+                                             && f.Tenant == entityPM.Tenant
+                                             select f).ToList();
+
+                    if (allVats.Where(d => d.IsMultiPercentage).Any())
+                    {
+                        throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
                     }
                 }
             }
@@ -323,10 +294,10 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 entityPM.TransportModeId = entityPM.TransportModeId.ToUpper();
             }
 
-            //if (entityPM.ShipmentTypeId != null)
-            //{
-            //    entityPM.ShipmentTypeId = entityPM.ShipmentTypeId.ToUpper();
-            //}
+            if (entityPM.ShipmentTypeId != null)
+            {
+                entityPM.ShipmentTypeId = entityPM.ShipmentTypeId.ToUpper();
+            }
 
             if (entityPM.TransportModeId == "O" && (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "MYGO"))
             {
@@ -381,349 +352,5 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateDomesticQuote(QuotePM entityPM)
-        {
-            if (entityPM.DirectionId.ToUpper() == "D")
-            {
-                bool isInlandDomestic = entityPM.TransportModeId.ToUpper() == "I" && entityPM.DirectionId == "D" ? true : false;
-
-                if (isInlandDomestic)
-                {
-                    List<DomesticCountry> iDomesticCountries = GetInlandDomesticCountries(entityPM);
-
-                    if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
-                    {
-                        bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
-                        bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
-                        bool isAllPortChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
-
-                        if (!isAllPortsEC && !isAllPortsNA && !isAllPortChina)
-                        {
-                            throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
-                        }
-                    }
-                }
-                else
-                {
-                    List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
-                    AddDomesticPort(iDomesticCountries, entityPM.FromPortId, entityPM.Tenant);
-                    AddDomesticPort(iDomesticCountries, entityPM.ToPortId, entityPM.Tenant);
-
-                    if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
-                    {
-                        bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
-                        bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
-                        bool isAllPortChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
-
-                        if (!isAllPortsEC && !isAllPortsNA & !isAllPortChina)
-                        {
-                            throw new ApplicationException("All Ports must be in the same country since the direction is Domestic");
-                        }
-                    }
-                }
-            }
-        }
-        private static List<DomesticCountry> GetInlandDomesticCountries(QuotePM entityPM)
-        {
-            List<DomesticCountry> domesticCountries = new List<DomesticCountry>();
-
-            switch (entityPM.InlandDomesticFromTypeCode)
-            {
-                case "PART":
-                    {
-                        AddDomesticAddress(domesticCountries, entityPM.FromPartnerAddressId, entityPM.Tenant);
-                        break;
-                    }
-
-                case "PORT":
-                    {
-                        AddDomesticPort(domesticCountries, entityPM.FromPortId, entityPM.Tenant);
-                        break;
-                    }
-
-                case "CASL":
-                    {
-                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
-                        break;
-                    }
-            }
-
-            switch (entityPM.InlandDomesticToTypeCode)
-            {
-                case "PART":
-                    {
-                        AddDomesticAddress(domesticCountries, entityPM.ToPartnerAddressId, entityPM.Tenant);
-                        break;
-                    }
-
-                case "PORT":
-                    {
-                        AddDomesticPort(domesticCountries, entityPM.ToPortId, entityPM.Tenant);
-                        break;
-                    }
-
-                case "CASL":
-                    {
-                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticToCountryId, entityPM.Tenant);
-                        break;
-                    }
-            }
-
-            return domesticCountries;
-        }
-        private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iAddressId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
-                {
-                    AddressRepository addressRepository = new AddressRepository(iTenant);
-                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
-
-                    if (iAddress != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iAddress.Id + "A",
-                            CountryId = iAddress.CountryId,
-                            CountryIsEC = iAddress.Country.EC,
-                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
-                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
-
-                        });
-                    }
-                }
-            }
-        }
-        private static void AddDomesticCountry(List<DomesticCountry> iDomesticCountries, string iCountryId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iCountryId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iCountryId).Any())
-                {
-                    CountryRepository countryRepository = new CountryRepository(iTenant);
-                    Country iCountry = countryRepository.GetSingleCountry(iCountryId, iTenant);
-
-                    if (iCountry != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iCountry.Id + "C",
-                            CountryId = iCountry.Id,
-                            CountryIsEC = iCountry.EC,
-                            CountryIsNorthAmerica = iCountry.IsNorthAmerica,
-                            CountryIsGreaterChinese = iCountry.IsGreaterChina,
-                        });
-                    }
-                }
-            }
-        }
-        private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iPortId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iPortId).Any())
-                {
-                    PortPM iPort = PortQuery.GetSinglePort(iTenant, iPortId, true);
-
-                    if (iPort != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iPort.Id + "P",
-                            CountryId = iPort.CountryId,
-                            CountryIsEC = iPort.CountryEC,
-                            CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
-                            CountryIsGreaterChinese = iPort.CountryIsGreaterChinese,
-                        });
-                    }
-                }
-            }
-        }
-        private static void ValidateQuoteCharges(QuotePM entityPM)
-        {
-            ValidateQuoteCharges_SaleCurrencyMode(entityPM);
-
-            string freightLineCostCurrencyId = null;
-            string freightLineSaleCurrencyId = null;
-            QuoteChargePM freightCharge = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ChargesGroupCode == "FRT").FirstOrDefault();
-            if (freightCharge != null)
-            {
-                freightLineCostCurrencyId = freightCharge.CostCurrencyId;
-                freightLineSaleCurrencyId = freightCharge.SaleCurrencyId;
-            }
-
-            foreach (QuoteChargePM item in entityPM.QuoteCharges)
-            {
-                if (!string.IsNullOrEmpty(item.CostMeasurementCode))
-                {
-                    if (item.CostMeasurementCode == "PRFR" && !string.IsNullOrEmpty(item.CostCurrencyId) && !string.IsNullOrEmpty(freightLineCostCurrencyId))
-                    {
-                        if (item.CostTotalAmount != null && item.CostTotalAmount != 0)
-                        {
-                            if (item.CostCurrencyId != freightLineCostCurrencyId)
-                            {
-                                throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " cost currency must be the same as the freight currency in the case of Percent of Freight");
-                            }
-                        }
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(item.SaleMeasurementCode))
-                {
-                    if (item.SaleMeasurementCode == "PRFR" && !string.IsNullOrEmpty(item.SaleCurrencyId) && !string.IsNullOrEmpty(freightLineSaleCurrencyId))
-                    {
-                        if (item.SaleTotalAmount != null && item.SaleTotalAmount != 0)
-                        {
-                            if (item.SaleCurrencyId != freightLineSaleCurrencyId)
-                            {
-                                throw new ApplicationException("Charges Type " + item.ChargesTypeCode + " sale currency must be the same as the freight currency in the case of Percent of Freight");
-                            }
-                        }
-                    }
-                }
-
-                switch (item.ChangeSetOp)
-                {
-                    case Simplog.Server.Infrastructure.ChangeSetOperation.Insert:
-                    case Simplog.Server.Infrastructure.ChangeSetOperation.Update:
-                        {
-                            if (item.CostCurrencyId == null)
-                            {
-                                if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
-                                {
-                                    throw new ApplicationException("Tenant freight currency is required");
-                                }
-
-                                else
-                                {
-                                    throw new ApplicationException("Tenant other Charges currency is required");
-                                }
-                            }
-
-                            break;
-                        }
-                }
-            }
-        }
-
-        private static void ValidateQuoteCharges_SaleCurrencyMode(QuotePM entityPM)
-        {
-            List<QuoteChargePM> lines = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-
-            QuoteChargePM freightCharge = lines.Where(d => d.ChargesGroupCode == "FRT").FirstOrDefault();
-
-            if (lines.Count > 0)
-            {
-                foreach (QuoteChargePM item in lines)
-                {
-                    if (item.IsAllIN)
-                    {
-                        if (freightCharge != null)
-                        {
-                            if (item.SaleCurrencyId != freightCharge.SaleCurrencyId)
-                            {
-                                throw new ApplicationException("All in charges must be same as freight Charge sale currency");
-                            }
-                        }
-                    }
-
-                    if (entityPM.IsSaleCurrencySameAsCost)
-                    {
-                        
-                    }
-
-                    else if (entityPM.IsMultiCurrency)
-                    {
-
-                    }
-
-                    else
-                    {
-                        if (item.SaleCurrencyId != entityPM.SaleCurrencyId)
-                        {
-                            throw new ApplicationException("All charges sale currency must be fixed to quote sale currency");
-                        }
-                    }
-                }
-            }
-        }
-
-        private static void ValidateShipmentSubType(QuotePM entityPM)
-        {
-            if (!entityPM.IsHybrid)
-            {
-                if (!string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
-                {
-                    ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
-                    ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(entityPM.ShipmentSubTypeId, entityPM.Tenant);
-
-                    if (subType != null)
-                    {
-                        if (!string.IsNullOrEmpty(subType.ShipmentTypeCode))
-                        {
-                            if (entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode.ToLower())
-                            {
-                                throw new ApplicationException("Sub Type is not allowed with this shipment type");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        private static void ValidateRegionalTax(QuotePM entityPM)
-        {
-            List<QuoteChargePM> allRegionalTaxLines = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.IsRegionalTax).ToList();
-
-            if (allRegionalTaxLines.Count > 0)
-            {
-                if (allRegionalTaxLines.Where(d => d.VatIsMultiPercentage).Any())
-                {
-                    throw new ApplicationException("Can't set regional Tax for multi VAT");
-                }
-
-                else if (entityPM.RegionalTaxId == null)
-                {
-                    throw new ApplicationException("Quote regional tax field is required");
-                }
-
-                else
-                {
-                    var groupedIds = (from d in allRegionalTaxLines
-                                      where d.VatTypeId != null
-                                      group d by d.VatTypeId into g
-                                      select g.Key).ToList();
-
-                    if (groupedIds.Count > 1)
-                    {
-                        throw new ApplicationException("Can't set regional tax for different VATs");
-                    }
-
-                    else
-                    {
-                        var groupedPercentages = (from d in allRegionalTaxLines
-                                                  where d.VatTypeId != null
-                                                  group d by new { d.VatTypeId, d.VatPercentage } into g
-                                                  select g.Key).ToList();
-
-                        if (groupedPercentages.Count > 1)
-                        {
-                            throw new ApplicationException("Can't set different regional Tax percentages");
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-
-    public class DomesticCountry
-    {
-        public string Id { get; set; }
-        public string CountryId { get; set; }
-        public bool CountryIsEC { get; set; }
-        public bool CountryIsNorthAmerica { get; set; }
-        public bool CountryIsGreaterChinese { get; set; }
-
     }
 }

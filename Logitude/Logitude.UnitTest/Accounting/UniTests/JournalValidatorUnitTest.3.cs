@@ -38,7 +38,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -63,7 +63,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -95,7 +95,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -121,7 +121,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -151,7 +151,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -177,7 +177,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -208,7 +208,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -234,7 +234,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -271,7 +271,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -297,7 +297,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -328,7 +328,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }
@@ -354,7 +354,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_PaymentBankAccountCurrencyDifferent));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ButAccountCurrencyisDifferent));
             var lineCode = "if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + lineCode);
         }

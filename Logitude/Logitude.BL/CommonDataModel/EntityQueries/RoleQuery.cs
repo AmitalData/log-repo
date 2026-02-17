@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -41,7 +41,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ParentRoleId = a.ParentRoleId,
                             IsCustomRole = a.IsCustomRole,
                             SearchFields = a.SearchFields,
-                            Inactive = a.Inactive,
                         }).FirstOrDefault();
 
             return role;
@@ -63,7 +62,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ParentRoleId = a.ParentRoleId,
                             IsCustomRole = a.IsCustomRole,
                             SearchFields = a.SearchFields,
-                            Inactive = a.Inactive,
                         }).FirstOrDefault();
 
             return role;
@@ -85,7 +83,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ParentRoleId = a.ParentRoleId,
                             IsCustomRole = a.IsCustomRole,
                             SearchFields = a.SearchFields,
-                            Inactive = a.Inactive,
                         }).FirstOrDefault();
 
             return role;
@@ -127,7 +124,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  ParentRoleId = a.ParentRoleId,
                                  IsCustomRole = a.IsCustomRole,
                                  SearchFields = a.SearchFields,
-                                 Inactive = a.Inactive,
                              }).ToList();
 
                     foreach (ContactTenantRole contacttenantrole in contactTenantRoles)
@@ -157,7 +153,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ParentRoleId = a.ParentRoleId,
                              IsCustomRole = a.IsCustomRole,
                              SearchFields = a.SearchFields,
-                             Inactive = a.Inactive,
                          }).ToList();
             }
 
@@ -172,10 +167,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 ContactTenant contacttenant = (from a in repository.context.ContactTenants
                                                where a.ContactId == contactid && (a.TenantId == tenant)
                                                select a).FirstOrDefault();
-                if (contacttenant == null)
-                {
-                    throw new Exception($"contacttenant not exist in DB ({contactid})");
-                }
+
                 List<ContactTenantRole> contactTenantRoles = (from a in repository.context.ContactTenantRoles
                                                               where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
                                                               select a).ToList();
@@ -194,7 +186,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ParentRoleId = a.ParentRoleId,
                              IsCustomRole = a.IsCustomRole,
                              SearchFields = a.SearchFields,
-                             Inactive = a.Inactive,
                          }).ToList();
 
                 foreach (ContactTenantRole contacttenantrole in contactTenantRoles)
@@ -223,7 +214,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ParentRoleId = a.ParentRoleId,
                              IsCustomRole = a.IsCustomRole,
                              SearchFields = a.SearchFields,
-                             Inactive = a.Inactive,
                          }).ToList();
             }
             return roles.Where(d => d.Exists == true).ToList();
@@ -248,7 +238,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 ParentRoleId = a.ParentRoleId,
                                 IsCustomRole = a.IsCustomRole,
                                 SearchFields = a.SearchFields,
-                                Inactive = a.Inactive,
                             }).ToList();
             }
 
@@ -260,9 +249,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             if (myRolesIds.Count > 0)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetCustomRolesByIds myRolesIds: " +  myRolesIds?.Count());
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Before GetCustomRolesByIds repository.context.GetConnection().Database: {repository.context.GetConnection()?.Database}");
-
                 myResult = (from a in repository.context.Roles
                             where myRolesIds.Contains(a.Id) && a.IsCustomRole == true
                             select new RolePM()
@@ -276,13 +262,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 ParentRoleId = a.ParentRoleId,
                                 IsCustomRole = a.IsCustomRole,
                                 SearchFields = a.SearchFields,
-                                Inactive = a.Inactive,
                             }).ToList();
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"GetCustomRolesByIds myResult: {myResult?.Count()}");
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"After GetCustomRolesByIds repository.context.GetConnection().Database: {repository.context.GetConnection()?.Database}");
-
             }
-
 
             return myResult;
         }
@@ -303,7 +284,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ParentRoleId = a.ParentRoleId,
                                            IsCustomRole = a.IsCustomRole,
                                            SearchFields = a.SearchFields,
-                                           Inactive = a.Inactive,
                                        };
             return roles;
         }
@@ -322,7 +302,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               ParentRoleId = a.ParentRoleId,
                                               IsCustomRole = a.IsCustomRole,
                                               SearchFields = a.SearchFields,
-                                              Inactive = a.Inactive,
                                           };
             return result;
         }
@@ -343,7 +322,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ParentRoleId = a.ParentRoleId,
                                            IsCustomRole = a.IsCustomRole,
                                            SearchFields = a.SearchFields,
-                                           Inactive = a.Inactive,
                                        };
             return roles;
         }

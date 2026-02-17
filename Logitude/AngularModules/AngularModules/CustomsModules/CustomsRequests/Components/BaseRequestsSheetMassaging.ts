@@ -29,15 +29,11 @@ export class BaseRequestsSheetMassaging
     protected _RequestParamsXml: string;
     protected _ResponseDataXml: string;
 
-
-    public IsViewChildCustomMessageWrapperComponentInit: boolean = false;
-
+    _MyCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
     @ViewChild(CustomMessageWrapperComponent)
-    private _MyCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
     public get MyCustomMessageWrapperComponent() { return this._MyCustomMessageWrapperComponent; }
     public set MyCustomMessageWrapperComponent(val: CustomMessageWrapperComponent) {
-        this.IsViewChildCustomMessageWrapperComponentInit = true;
-        console.log("MyCustomMessageWrapperComponent is settt!!!!" + val.MyGuid);
+        console.log("MyCustomMessageWrapperComponent is settt!!!!");
         this._MyCustomMessageWrapperComponent = val;
     }
     //private _callBackOnMassageDisplay: () => void;
@@ -52,7 +48,8 @@ export class BaseRequestsSheetMassaging
         //alert("BaseRequestsSheetMassaging:ngOnInit")
         //this.CallOnMassageDisplayMethod();
         ///alert(this.MyCustomMessageWrapperComponent);
-     
+
+
 
     }
 
@@ -93,12 +90,10 @@ export class BaseRequestsSheetMassaging
         }
     }
 
-    public MessageDisplayWithNoData(){
-        this.CallOnMassageDisplayMethod();
-    }
     public MassageDisplay(RequestParamsXml: string, ResponseDataXml: string): void {
 
-       
+        
+
         this._RequestParamsXml = RequestParamsXml;
         this._ResponseDataXml = ResponseDataXml;
         if (AppTool.IsNullOrEmpty(this._RequestParamsXml)) {
@@ -169,7 +164,6 @@ export class BaseRequestsSheetMassaging
     public set MyCustomsMenuItem(newValue: CustomsMenuItem) {
         if (this._MyCustomMessageWrapperComponent.MyCustomsMenuItem != newValue) {
             this._MyCustomMessageWrapperComponent.MyCustomsMenuItem = newValue;
-            console.log("MyCustomsMenuItem is set !!" + JSON.stringify(this._MyCustomMessageWrapperComponent.MyCustomsMenuItem));
         }
     }
 

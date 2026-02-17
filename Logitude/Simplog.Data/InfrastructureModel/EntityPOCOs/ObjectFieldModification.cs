@@ -13,7 +13,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public int MinLength { get; set; }
         public bool IsRequired { get; set; }
         public string ObjectFieldId { get; set; }
-        public string ObjectFieldCode { get; set; }
         public DateTime? UpdateDateGMT { get; set; }
 
         [ForeignKey("ObjectFieldId")]

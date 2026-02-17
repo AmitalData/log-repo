@@ -22,7 +22,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int CurrentVersion { get; set; }
         public bool IsSystem { get; set; }
         public bool InActive { get; set; }
-        public bool UseStimul { get; set; }
         public string UpdateByUserName { get; set; }
         public bool IsDefault { get; set; }
         public string TemplateType { get; set; }
@@ -31,7 +30,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ReplyTo { get; set; }
         public string CC { get; set; }
         public string Subject { get; set; }
-        public string ObjectTableId { get; set; }
-        public string EntityId { get; set; }
+
     }
 }

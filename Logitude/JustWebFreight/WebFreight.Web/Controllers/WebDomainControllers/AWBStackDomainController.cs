@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -37,7 +37,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
 
                 MAWBStackQuery entityQuery = new MAWBStackQuery(tenant);
-                IQueryable<MAWBStackPM> myResult = entityQuery.GetMAWBStackPMsByAirlineId(myCardId, tenant).OrderBy(a => a.InsertionDate);
+                IQueryable<MAWBStackPM> myResult = entityQuery.GetMAWBStackPMsByAirlineId(myCardId, tenant).AsQueryable().OrderBy(a => a.InsertionDate);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

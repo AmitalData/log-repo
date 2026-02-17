@@ -43,11 +43,6 @@
                                                     <CheckBox [IsEnabled]="!IsCounterUsed" [IsChecked]="UniquePerPrefix" (Checked)="UniquePerPrefix = $event" [Text]="'Unique Per Prefix'"></CheckBox>
                                                 </td>
                                             </tr>
-                                            <tr style="height: 20px;" *ngIf="HasBranchCounterCodeFeature && HasSeparatePerBranchCounterCodeFeature">
-                                                <td>
-                                                    <CheckBox [IsEnabled]="!IsCounterUsed" [IsChecked]="SeperatePerBranch" (Checked)="SeperatePerBranch = $event" [Text]="'Seperate Per Branch'"></CheckBox>
-                                                </td>
-                                            </tr>
                                         </table>
                                     </td>
 
@@ -228,7 +223,7 @@
                                                                                         <td class="Value" style="padding-left: 10px;">{{itemColumn.Name}}</td>
                                                                                     </tr>
 
-                                                                                    <tr *ngFor="let item of itemColumn.ItemsSource" style="height: 120px;">
+                                                                                    <tr *ngFor="let item of itemColumn.ItemsSource" style="height: 100px;">
                                                                                         <td>
                                                                                             <table>
                                                                                                 <tr style="border: 1px solid #D1D1D1;">

@@ -154,43 +154,24 @@ export class QuoteTemplateSettingList {
 		HeaderTableColumn2LabelWidth: number;
 		HeaderTableColumn2ValueWidth: number;
 		HeaderTableColumWidthType: string;
-		DetailsTableColumWidthType: string;
-		ShowTotalPerChargeGroupPackages: boolean;
-		ShowTotalPerChargeGroupContainers: boolean;
-		ShowPageBreakBeforeTotalPerContainersTable: boolean;
-		TotalPerContainersAdditionalTextDesignId: string;
-		TotalPerContainersTableDesignId: string;
-		TotalPerContainersCurrencyType: string;
-		ShowTitleTotalPerContainersTable: boolean;
-		ShowChargeNotePackages: boolean;
-		ShowChargeNoteContainers: boolean;
-		ShowSaleMaxMinAmountPackages: boolean;
-		ShowSaleMaxMinAmountContainers: boolean;
-		ShowHeaderLabelsPackages: boolean;
-		ShowHeaderLabelsContainers: boolean;
-		SpaceLinesBeforeContainers: number;
-		SpaceLinesBeforePackages: number;
-		SpaceLinesBeforeQuoteHeaders: number;
-		SpaceLinesBeforeQuoteDetails: number;
-		SpaceLinesBeforeHeaders: number;
-		SpaceLinesBeforeFooters: number;
-		SpaceLinesBeforePerContainers: number;
-		QuoteTemplatePDFMarginTop: number;
-		QuoteTemplatePDFMarginBottom: number;
-		ShowIncludedChargesPerContainers: boolean;
-		ShowIncludedChargesPackages: boolean;
-		ShowIncludedChargesContainers: boolean;
-		ShowVATTypePackages: boolean;
-		ShowVATTypeContainers: boolean;
-		ShowVATPercentagePackages: boolean;
-		ShowVATPercentageContainers: boolean;
-		HidePageNumber: boolean;
-		PageNumberingTextDesignId: string;
-		ShowRegionalTAXPackages: boolean;
-		ShowRegionalTAXContainers: boolean;
-		ShowSaleIncludingVATContainers: boolean;
-		ShowSaleIncludingVATPackages: boolean;
-		ShowLocalSaleIncludingVATContainers: boolean;
-		ShowLocalSaleIncludingVATPackages: boolean;
-	
-}
+        DetailsTableColumWidthType: string;
+
+
+        ShowTotalPerChargeGroupContainers: boolean;
+        ShowTotalPerChargeGroupPackages: boolean;
+
+        ShowPageBreakBeforeTotalPerContainersTable: boolean;
+        TotalPerContainersAdditionalTextDesignId: string;
+        TotalPerContainersTableDesignId: string;
+        TotalPerContainersCurrencyType: string;
+        ShowTitleTotalPerContainersTable: boolean;
+
+        ShowChargeNotePackages: boolean;
+        ShowChargeNoteContainers: boolean;
+
+
+        ShowSaleMaxMinAmountPackages: boolean;
+        ShowSaleMaxMinAmountContainers: boolean;
+
+
+}     

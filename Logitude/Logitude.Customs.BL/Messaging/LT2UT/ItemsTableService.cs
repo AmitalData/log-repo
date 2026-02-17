@@ -1,12 +1,8 @@
 ﻿using Logitude.AmitalMessaging.Utils;
-using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Customs;
-using Logitude.Customs.BL.TraceEvents;
-using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.Messaging.Customs;
-using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -38,20 +34,20 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
 
         public void OpenUnifreighTask(string xmlReq)
         {
-            CustomsSettingQueryService settingService = new CustomsSettingQueryService(_Tenant);
+            var sw = Stopwatch.StartNew();
+            AmitalContext MyContext = AmitalContext.GetContext(_Tenant);
 
-          
-          
-                var sw = Stopwatch.StartNew();
-
-                TransactionScope scope = null;
-                if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
-                {
-                    scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
-                }
+            TransactionScope scope = null;
+            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            {
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            }
             try
             {
-               
+                var myGGGQUpdateService = new GGGQUpdateService(MyContext);
+                myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                var myYCULTASKUpdateService = new YCULTASKUpdateService(MyContext);
+                myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                 var requestData = "";
 
                 //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_Tenant);
@@ -112,10 +108,9 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
    )
 ));
                 requestData = doc.ToString(SaveOptions.None);
-                var id=CommCounterUtil.GetUnique30(DateTime.Now);
+
                 var myYCULTASKPM = new YCULTASKPM()
                 {
-                    TASKID= id,
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                     STATUS = "W",
                     REQUESTDATA = requestData,
@@ -128,39 +123,26 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                 };
                 //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                myYCULTASKPM.Tenant = _Tenant;
-                
-                AmitalContext MyContext = AmitalContext.GetContext(_Tenant);
-
-                var myGGGQUpdateService = new GGGQUpdateService(MyContext);
-                myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                var myYCULTASKUpdateService = new YCULTASKUpdateService(MyContext);
-                myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                 myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
                 var myGGGQPM = new GGGQPM()
                 {
-                    QUEID = id,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     ORIGINQUE = "LGT", //LugitudeRequest
                     STATUS = "1",
                     EXPTASKTIME = 5,
-                    EXECDATE = DateTime.Now,
+                    EXECDATE = (new DualQueryService(MyContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
                     TRY = 9,
                     PRIORITY = 8,
                     ENTNAME = "GITITEM",
                     PRIMARYNUM = _ListGITITEMPM.First().COUNTER.ToString(),//EITAN SEE ITS ZERO
                     FORMID = "LGT_UPDATE_FCI",
                     DEBUG = "F",
-                    DONEOPERATION = "D",
+                    DONEOPERATION = "A",
                     GSTRING1 = "NO_LOCK",
                     //GSTRING1 = myYCULTASKPM.TASKID,
                 };
-              
-                myGGGQPM.Tenant = _Tenant;
-                
                 myGGGQUpdateService.Update(myGGGQPM, true);
-                
                 if (scope != null)
                 {
                     scope.Complete();
@@ -173,9 +155,8 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     scope.Dispose();
                 }
             }
-                LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
-            }
-      
+            LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
+        }
 
 
     }

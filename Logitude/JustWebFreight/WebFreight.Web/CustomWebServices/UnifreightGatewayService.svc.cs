@@ -22,11 +22,7 @@ using System.Threading.Tasks;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Threading;
-using System.Web;
-using Logitude.Customs.BL.EntityQueryServices;
-using WebFreight.Web.App_Code.AngularJS_App_Code.Generated;
-using WebFreight.Web.Security;
+
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -112,7 +108,7 @@ namespace WebFreight.Web.CustomWebServices
 
             curr = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService";
             _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.U2L.CommDec.CommDecService>(curr);
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService>(curr);
 
             curr = "Logitude.Customs.BL.Messaging.U2L.Reshimon.ReshimonService"; 
             _AllIUnifreightGenericService.Add(curr);
@@ -177,34 +173,7 @@ namespace WebFreight.Web.CustomWebServices
 
             curr = "Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService";
             _AllIUnifreightGenericService.Add(curr);
-            //_UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService>(curr);
-            //change from Logitude.Customs.BL.Messaging.U2L.CommMasterCourier to Logitude.CustomsMessaging.UnifreightGateway due to use of DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.UnifreightGateway.CommMasterCourierService>(curr);
-
-            curr = "Logitude.Customs.BL.Messaging.U2L.Courier.CourierPendingReasonService";
-            _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.Courier.CourierPendingReasonService>(curr);
-
-            curr = "Logitude.Customs.BL.Messaging.U2L.CourierStatus.CourierStatusService";
-            _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CourierStatus.CourierStatusService>(curr);
-
-            curr = "Logitude.Customs.BL.Messaging.U2L.CommDecReferantData.CommDecReferantDataService";
-            _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommDecReferantData.CommDecReferantDataService>(curr);
-
-            curr = "Logitude.CustomsMessaging.UnifreightGateway.ExportCloudSSOService";
-            _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.UnifreightGateway.ExportCloudSSOService>(curr);
-
-            curr = "Logitude.Customs.BL.Messaging.U2L.ExportStorage.ExportStorageUpsertService";
-            _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.ExportStorage.ExportStorageUpsertService>(curr);
-
-            curr = "Logitude.CustomsMessaging.UnifreightGateway.ExportCloudSSOService";
-            _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.UnifreightGateway.ExportCloudSSOService>(curr);
-
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService>(curr);
         }
 
         private static void AddSendDirectMessageService()
@@ -369,12 +338,12 @@ namespace WebFreight.Web.CustomWebServices
             {
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                 _sbGatewayLog.Insert(0, "ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,"ProccessRequest():Exception ");
+                Debug.WriteLine("ProccessRequest():Exception " + FormatedException.ToString(), true);
             }
             catch (Exception e)
             {
                 _sbGatewayLog.Insert(0, "ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"ProccessRequest():Exception " );
+                Debug.WriteLine("ProccessRequest():Exception " + e.ToString(), true);
             }
             finally
             {
@@ -384,7 +353,7 @@ namespace WebFreight.Web.CustomWebServices
                 DataOut1 = DataOut1 ?? "";
                 DataOut2 = DataOut2 ?? "";
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                Debug.WriteLine(
                     "GatewayService:Request=" + _HashCode.ToString() +
 string.Format(
 @"DataIn1={0}
@@ -392,7 +361,7 @@ DataIn2={1}
 DataOut1={2}
 DataOut2={3}                  
 SUCCESS={4}"
-, string.Concat(DataIn1.Take(100)), string.Concat(DataIn2.Take(100)), string.Concat(DataOut1.Take(100)), string.Concat(DataOut2.Take(100)), SUCCESS));
+, string.Concat(DataIn1.Take(100)), string.Concat(DataIn2.Take(100)), string.Concat(DataOut1.Take(100)), string.Concat(DataOut2.Take(100)), SUCCESS), false);
                 if (myWSProxy != null)
                 {
                     _sbGatewayLog.AppendLine(myWSProxy.GetLog());
@@ -448,21 +417,34 @@ SUCCESS={4}"
                     _sbGatewayLog.AppendLine("UnifreightImpersonate  Failed ");
                 }
                 unifreightGenericService.SetTenant(iTenanat);
-                if (!HttpContext.Current.Items.Contains("Tenant"))
+                if (false)
                 {
-                    HttpContext.Current.Items.Add("Tenant", iTenanat);
+                    AuthenticationUtil.DebugUsers();
+
+
+                    // Wait for all tasks to complete.
+                    Task[] tasks = new Task[10];
+                    for (int i = 0; i < 10; i++)
+                    {
+                        //System.Threading.Tasks.Task.Factory.StartNew(() => {  ; });
+                        tasks[i] = Task.Factory.StartNew(() => AuthenticationUtil.DebugUsers());
+                    }
+                    Task.WaitAll(tasks);
                 }
+
+
+
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))//new TransactionScope(TransactionScopeOption.RequiresNew, TimeSpan.FromMinutes(10)))
                 {
                     unifreightGenericService.ProccessGenericRequest(DataIn1, ref MoreParams, out MessageOutWS);
-                   
-                        if (unifreightGenericService.MyGenericResponseObj.StatusType == Logitude.AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success)
-                        {
-                            scope.Complete();
-                        }
- 
+
+                    if (unifreightGenericService.MyGenericResponseObj.StatusType == Logitude.AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success)
+                    {
+                        scope.Complete();
+                    }
                 }
+                //DataOut1 = XmlGenericUtil<GenericResponseObj>.SerializeObject(unifreightGenericService.MyGenericResponseObj);
             }
             catch (BusinessErrorException businessErrorException)
             {
@@ -474,7 +456,7 @@ SUCCESS={4}"
             {
                 var formatedException = ExceptionFormatUtil.GetFormated(ex);
                 //_sbLog.Insert(0, "ProccessRequest():Exception " + formatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,"ProccessRequest():Exception ");
+                Debug.WriteLine("ProccessRequest():Exception " + formatedException.ToString(), true);
                 unifreightGenericService.MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 unifreightGenericService.MyGenericResponseObj.Message = "Error while DeclarationUpdateService.Update " + formatedException.Message;
                 unifreightGenericService.MyGenericResponseObj.ErrorDescription = formatedException.ToString();
@@ -492,22 +474,17 @@ SUCCESS={4}"
                 if (e.InnerException != null)
                 {
                     unifreightGenericService.MyGenericResponseObj.InnerException = e.InnerException.ToString();
-                    if (e.InnerException.InnerException != null)
-                    {
-                        unifreightGenericService.MyGenericResponseObj.InnerException += e.InnerException.InnerException.ToString();
-                    }
                 }
-
 
             }
 
             finally
             {
-   
                 unifreightGenericService.MyGenericResponseObj.Log = unifreightGenericService.GetLog();
                 DataOut1 = XmlGenericUtil<GenericResponseObj>.SerializeObject(unifreightGenericService.MyGenericResponseObj);
 
                 DataOut1 = LogCommunication(unifreightGenericService, DataIn1, DataOut1);
+
             }
 
 
@@ -679,7 +656,7 @@ SUCCESS={4}"
         {
             _swGatewayLog.Stop();
             _sbGatewayLog.AppendLine("Dispose:ElapsedMilliseconds=" + _swGatewayLog.ElapsedMilliseconds.ToString());
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_sbGatewayLog.ToString());
+            Debug.WriteLine(_sbGatewayLog.ToString(), false);
         }
 
 

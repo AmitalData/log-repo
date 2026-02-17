@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityPMService} from '../../../../CRM/Services/StandardPMs/ActivityPMService';
 import {ActivityValidator} from '../../../../CRM/Validators/ActivityValidator';
@@ -13,15 +13,15 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'NewTaskComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewTaskComponent.html',
 })
 
-export class NewTaskComponent extends BaseComponent implements AfterViewInit {
+export class NewTaskComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Activity";
     public DataContext: NewTaskComponent = this;
     public EntityPM: ActivityPM;    
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private myActivityPMService: ActivityPMService;
     private entityResourceService: EntityResourceService;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -33,10 +33,33 @@ export class NewTaskComponent extends BaseComponent implements AfterViewInit {
         this.EntityPM = this.myActivityPMService.GetNewEntityPM();        
     }
 
-    ngAfterViewInit() {
-        this.LoadChildComponent();
+    ngOnInit() {
+        this.RunComponent();
     }
 
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
@@ -132,7 +155,7 @@ export class NewTaskComponent extends BaseComponent implements AfterViewInit {
     }
 
     AddCustomerClicked() {
-        this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
             this.entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response1 => {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "New Potential Customer";

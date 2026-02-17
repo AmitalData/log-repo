@@ -11,7 +11,5 @@ namespace WebFreight.Web.Helpers
         public string PartnerType { get; set; }
         public string FilterName { get; set; }
         public string SearchField { get; set; }
-        public int PageSize { get; set; }
-        public int PageIndex { get; set; }
     }
 }

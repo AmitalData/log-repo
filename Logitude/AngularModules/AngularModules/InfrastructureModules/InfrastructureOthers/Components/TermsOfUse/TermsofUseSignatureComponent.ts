@@ -13,9 +13,8 @@ import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper'
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
-import { AppTool } from '../../../../Infrastructure/Tools';
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'TermsofUseSignature',
     templateUrl: './TermsofUseSignatureComponent.html',
@@ -53,7 +52,7 @@ export class TermsofUseSignatureComponent implements OnInit {
     LoadData() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.TermsofUseSignaturePMLists = [];
-        this._termsofUseSignatureExtendedPM.GetTermsofUseSignatures(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe((res:any) => {
+        this._termsofUseSignatureExtendedPM.GetTermsofUseSignatures(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -82,33 +81,32 @@ export class TermsofUseSignatureComponent implements OnInit {
 
 
     ViewFile(item: TermsofUseSignaturePMViewModel) {
-
-        if (item.VersionDocumentId == null) {
-            DownloadManager.DownloadPage(item.TermsOfUseId + "_termsofuses");
-        } else {
-            DownloadManager.DownloadTermsOfUse(null, item.VersionDocumentId);
+  
+        if (SessionLocator.PrivateLableSettings) {
+            var documentName = SessionLocator.PrivateLableSettings.PrivateLabelShortName + "-" + item.TermsofUseVersion + "_termsofuses";// +"." + CurrentDocument.Extension;
+            DownloadManager.DownloadPage(documentName);
+            
         }
+        else {
+            var documentName = item.TermsofUseVersion + "_termsofuses";// +"." + CurrentDocument.Extension;
+            DownloadManager.DownloadPage(documentName);
+        } 
 
-       
-    }  
+    }
+
+
+
 }
-
- 
 
 
 class TermsofUseSignaturePMViewModel {
-      
+
 
     SignedDatetime: Date;
     TermsofUseVersion: number;
-    VersionDocumentId: string;
-    TermsOfUseId: number;
-
     constructor(item: TermsofUseSignaturePM) {
         this.SignedDatetime = item.SignedDatetime;
-        this.TermsofUseVersion = item.VersionNumber;
-        this.VersionDocumentId = item.VersionDocumentId;
-        this.TermsOfUseId = item.TermsofUseId;
+        this.TermsofUseVersion = item.TermsofUseVersion;
     }
 
 }

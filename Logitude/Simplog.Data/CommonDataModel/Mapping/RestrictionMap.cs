@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -37,10 +37,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            this.Property(t => t.ObjectFieldCode)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-
             // Table & Column Mappings
             this.ToTable("Restrictions");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -49,7 +45,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId");
             this.Property(t => t.Value).HasColumnName("Value");
             this.Property(t => t.ContactTenantId).HasColumnName("ContactTenantId");
-            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode");
 
             // Relationships
             this.HasRequired(t => t.ContactTenant)

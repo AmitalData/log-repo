@@ -12,7 +12,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 
 @Component({
     selector: 'CustomsInterfaceSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './CustomsInterfaceSettingsComponent.html',
 })
 
@@ -93,16 +93,8 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.LocalCustomsInterfaceCode)) {
             if (this.EntityPM.LocalCustomsInterfaceCode != "NO") {
-                if (this.EntityPM.LocalCustomsInterfaceCode == "AMC") {
-                    if (this.EntityPM.AMCAirStartDate != null && this.EntityPM.AMCOceanStartDate != null) {
-                        localTickVisible = true;
-                    }
-                }
-
-                else {
-                    if (!AppTool.IsNullOrEmpty(this.EntityPM.LocalCompanyId) && !AppTool.IsNullOrEmpty(this.EntityPM.LocalUserId) && !AppTool.IsNullOrEmpty(this.EntityPM.LocalPassword)) {
-                        localTickVisible = true;
-                    }
+                if (!AppTool.IsNullOrEmpty(this.EntityPM.LocalCompanyId) && !AppTool.IsNullOrEmpty(this.EntityPM.LocalUserId) && !AppTool.IsNullOrEmpty(this.EntityPM.LocalPassword)) {
+                    localTickVisible = true;
                 }
             }
         }
@@ -143,7 +135,6 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
             }
 
             this.SetUIProperties();
-            this.SetTickProperties();
         }
     }
 
@@ -176,22 +167,11 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
         var logitudeWindow = new LogitudeWindow();
 
         switch (type) {
-            case "Local": {
-                var windowTitle: string;
-
-                if (this.LocalCustomsInterfaceCode == "AMC") {
-                    windowTitle = "AMANAC Start Dates";                    
-                }
-
-                else {
-                    windowTitle = "Local Interface Credintials";
-                }
-
-                logitudeWindow.Title = windowTitle;
+            case "Local": {               
+                logitudeWindow.Title = "Local Interface Credintials";
                 logitudeWindow.WindowArgs = this.EntityPM;
                 logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
-                logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/LocalCustomsInterfaceDetailsComponent');
-
+                logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceCredintialsComponent');
                 break;
             }
 

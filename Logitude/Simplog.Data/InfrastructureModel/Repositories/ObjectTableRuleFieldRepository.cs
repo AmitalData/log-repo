@@ -4,7 +4,7 @@ using System.Linq;
 using System.Transactions;
 using System.Web;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -38,12 +38,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return (from record in context.ObjectTableRuleFields where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
-        public IQueryable<ObjectTableRuleField> GetRuleFieldsByRuleId(string ruleId, int tenant)
-        {
-            return (from record in context.ObjectTableRuleFields where record.ObjectTableRuleId == ruleId && record.Tenant == tenant select record);
-        }
-
-
+      
         //public static List<ObjectTableRuleField> GetObjectTableRuleFieldByObjectTableRuleId(string objectTableRuleId, int tenant)
         //{
         //    List<ObjectTableRuleField> zeroquery;
@@ -66,7 +61,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         //            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
         //            {
-        //                WebFreightContext context = WebFreightContext.GetContext(tenant);
+        //                WebFreightContext context = WebFreightContext.GetContext(0);
         //                zeroquery = (from a in context.ObjectTableRuleFields
         //                             where (a.Tenant == 0) && a.ObjectTableRuleId == objectTableRuleId
         //                             select a).ToList();
@@ -94,7 +89,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         //        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
         //        {
-        //            WebFreightContext context = WebFreightContext.GetContext(tenant);
+        //            WebFreightContext context = WebFreightContext.GetContext(0);
         //            zeroquery = (from a in context.ObjectTableRuleFields
         //                         where (a.Tenant == 0) && a.ObjectTableRuleId == objectTableRuleId
         //                         select a).ToList();
@@ -129,7 +124,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        IWebFreightContext context = WebFreightContext.GetContext(0);
                         zeroquery = (from a in context.ObjectTableRuleFields.Include("ObjectField").Include("ObjectTableRule")
                                      where (a.Tenant == 0)
                                      select a).ToList();
@@ -157,7 +152,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                   IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                   IWebFreightContext context = WebFreightContext.GetContext(0);
                    zeroquery = (from a in context.ObjectTableRuleFields.Include("ObjectField").Include("ObjectTableRule")
                                  where (a.Tenant == 0) 
                                  select a).ToList();

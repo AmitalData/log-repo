@@ -9,7 +9,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewBankAccountLiteComponent.html',
 })
 

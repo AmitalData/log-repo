@@ -1,1042 +1,945 @@
-<!-- CargoQueryRequestComponent view  -->
+﻿<!-- CargoQueryRequestComponent view  -->
 <div>
-  <custom-message-wrapper>
+    <custom-message-wrapper>
 
-    <!-- Request -->
-    <div class="class-request-content">
-      <div style="width: 560px;height: 80px;">
-        <table *ngIf="_IsReady">
-          <!-- Request Fields -->
-          <tr class="FormFieldRow" style="height:1px">
-            <td style="width: 90px;">
-              <LogLabel [TextCode]="'Customs.Declaration.F.CustomFileNo'"
-                        [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="'Customs.Declaration'" [DataContext]="DataContext"></LogLabel>
-            </td>
-            <td style="width: 120px;">
-              <LogTextBox [ObjectFieldName]="'CustomFileNo'"
-                          [InputType]="'text'"
-                          [DataContext]="DataContext"
-                          [ObjectTableName]="ObjectTableName"
-                          [HideColumns]="true"
-                          (LostFocus)="CustomFileNoTextChanged($event)"
-                          [Text]="CustomFileNo"></LogTextBox>
-            </td>
+        <!-- Request -->
+        <div class="class-request-content">
+            <div style="width: 560px;height: 80px;">
+                <table *ngIf="_IsReady">
+                    <!-- Request Fields -->
+                    <tr class="FormFieldRow" style="height:1px">
+                        <td style="width: 90px;">
+                            <LogLabel [TextCode]="'Customs.Declaration.F.CustomFileNo'"
+                                      [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="'Customs.Declaration'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 120px;">
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'"
+                                        [InputType]="text"
+                                        [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"
+                                        (LostFocus)="CustomFileNoTextChanged($event)"
+                                        [Text]="CustomFileNo"></LogTextBox>
+                        </td>
 
-            <td>
-              <div></div>
-            </td>
-          </tr>
-
-          <tr class="FormFieldRow">
-            <td style="width: 90px;">
-              <LogLabel [ObjectFieldName]="'CargoTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.CargoTypeCode'"></LogLabel>
-            </td>
-            <td style="width: 120px;">
-              <LogLov [ObjectFieldName]="'CargoTypeCode'"
-                      [SelectedValue]="CargoTypeCode"
-                      [ObjectTableName]="'Customs.Consignment'"
-                      [DataContext]="DataContext"
-                      [LookUpTableName]="'Customs.CargoIdentifireType'"
-                      [HideLastColumn]="true"
-                      (ValueChanged)="CargoTypeCodeValueChanged($event)"
-                      [HideColumns]="true">
-              </LogLov>
-            </td>
-
-            <td style="width: 90px;">
-              <LogLabel [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ManifestNumber'"></LogLabel>
-            </td>
-            <td style="width: 120px;">
-              <LogTextBox [ObjectFieldName]="'ManifestNumber'"
-                          [InputType]="'text'"
-                          [DataContext]="DataContext"
-                          [ObjectTableName]="ObjectTableName"
-                          [HideColumns]="true"
-                          (LostFocus)="ManifestNumberTextChanged($event)"
-                          [Text]="ManifestNumber"></LogTextBox>
-            </td>
-          </tr>
-
-          <tr class="FormFieldRow">
-            <td style="width: 90px;">
-              <LogLabel [ObjectFieldName]="'SecondCargoID'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.SecondCargoID'"></LogLabel>
-            </td>
-            <td style="width: 120px;">
-              <LogTextBox [ObjectFieldName]="'SecondCargoID'"
-                          [InputType]="'text'"
-                          [DataContext]="DataContext"
-                          [ObjectTableName]="ObjectTableName"
-                          [HideColumns]="true"
-                          (LostFocus)="SecondCargoIDTextChanged($event)"
-                          [Text]="SecondCargoID"></LogTextBox>
-            </td>
-
-            <td style="width: 90px;">
-              <LogLabel [ObjectFieldName]="'ThirdCargoID'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ThirdCargoID'"></LogLabel>
-            </td>
-            <td style="width: 120px;">
-              <!--(LostFocus)="ThirdCargoIDTextChanged($event)"-->
-              <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
-                          [InputType]="'text'"
-                          [DataContext]="DataContext"
-                          [ObjectTableName]="ObjectTableName"
-                          [HideColumns]="true"
-                          [Text]="ThirdCargoID"></LogTextBox>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-    <!-- Response -->
-    <div class="class-response-content" style="width: 970px;height: 450px;padding-top: 10px;">
-      <div class="ScrollViewer">
-        <div class="ScrollContent">
-          <table style="min-height: 450px; width: 970px">
-
-            <tr style="width: 100%;height:25px;" *ngIf="IsShowUserMessage">
-              <td>
-                <div class="Outlook2013Message"
-                     style="margin: 0px 100px 0px 100px; text-align: center;">{{UserMessage}}</div>
-              </td>
-            </tr>
-
-            <tr style="width:100%; height:25px;">
-              <td style="width: 200px; font-size: 12px; color: #1B90CB;">
-                {{'Customs.General.O.CargoDetailsResults'| TextCodeTranslationPipe}}
-              </td>
-            </tr>
-            <tr style="width:100%; height:150px;">
-              <td>
-                <fieldset [disabled]="true">
-                  <table>
-                    <tr class="FormFieldRow">
-                      <!-- ManifestTypeName -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryManifestResults.O.ManifestType'"
-                                  [ObjectFieldName]="'ManifestTypeName'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-                        <LogTextBox [ObjectFieldName]="'ManifestTypeName'"
-                                    [Text]="ManifestTypeName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-                      <!-- ManifestStatus -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryManifestResults.O.ManifestStatus'"
-                                  [ObjectFieldName]="'ManifestStatus'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-                        <LogTextBox [ObjectFieldName]="'ManifestStatusName'"
-                                    [Text]="ManifestStatusName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-                      <!-- ManifestNumber -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryManifestResults.O.ManifestNumber'"
-                                  [ObjectFieldName]="'ResponseManifestNumber'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-                        <LogTextBox [ObjectFieldName]="'ResponseManifestNumber'"
-                                    [Text]="ResponseManifestNumber"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-                      <td>
-                        <div></div>
-                      </td>
+                        <td><div></div></td>
                     </tr>
 
                     <tr class="FormFieldRow">
-                      <td colspan="10" style="text-align: right; height:25px; font-size: 12px; color: #1B90CB;">
-                        {{'Customs.General.O.CargoQueryCargoResults'| TextCodeTranslationPipe}}
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <!-- CargoIdentifierKey1 -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.CargoIdentifierKey1'"
-                                  [ObjectFieldName]="'CargoIdentifierKey1'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-                        <LogTextBox [ObjectFieldName]="'CargoIdentifierKey1'"
-                                    [Text]="CargoIdentifierKey1"
+                        <td style="width: 90px;">
+                            <LogLabel [ObjectFieldName]="'CargoTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.CargoTypeCode'"></LogLabel>
+                        </td>
+                        <td style="width: 120px;">
+                            <LogLov [ObjectFieldName]="'CargoTypeCode'"
+                                    [SelectedValue]="CargoTypeCode"
+                                    [ObjectTableName]="'Customs.Consignment'"
                                     [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
+                                    [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                    [HideLastColumn]="true"
+                                    (ValueChanged)="CargoTypeCodeValueChanged($event)"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
 
-                      <!-- ParentCargoID -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.ParentCargoID'"
-                                  [ObjectFieldName]="'ParentCargoID'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-                        <LogTextBox [ObjectFieldName]="'ParentCargoID'"
-                                    [Text]="ParentCargoID"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-
-                      <!-- UnloadingLocationName -->
-                      <td style="width: 100px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.UnloadingLocationName'"
-                                  [ObjectFieldName]="'UnloadingLocationName'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-
-                        <LogTextBox [ObjectFieldName]="'UnloadingLocationName'"
-                                    [Text]="UnloadingLocationName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-
-                      <!-- TotalNumberOfPackeges -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TotalNumberOfPackeges'"
-                                  [ObjectFieldName]="'TotalNumberOfPackeges'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 90px;">
-                        <LogTextBox [ObjectFieldName]="'TotalNumberOfPackeges'"
-                                    [Text]="TotalNumberOfPackeges"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-
-                      <!-- TotalRecordNumberOfPackeges -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TotalRecordNumberOfPackeges'"
-                                  [ObjectFieldName]="'TotalRecordNumberOfPackeges'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 90px;">
-                        <LogTextBox [ObjectFieldName]="'TotalRecordNumberOfPackeges'"
-                                    [Text]="TotalRecordNumberOfPackeges"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-                      <td>
-                        <div></div>
-                      </td>
+                        <td style="width: 90px;">
+                            <LogLabel [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ManifestNumber'"></LogLabel>
+                        </td>
+                        <td style="width: 120px;">
+                            <LogTextBox [ObjectFieldName]="'ManifestNumber'"
+                                        [InputType]="text"
+                                        [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"
+                                        (LostFocus)="ManifestNumberTextChanged($event)"
+                                        [Text]="ManifestNumber"></LogTextBox>
+                        </td>
                     </tr>
 
                     <tr class="FormFieldRow">
-                      <!-- GovernmentProcedureTypeName -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.GovernmentProcedureTypeName'"
-                                  [ObjectFieldName]="'GovernmentProcedureTypeName'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-                        <LogTextBox [ObjectFieldName]="'GovernmentProcedureTypeName'"
-                                    [Text]="GovernmentProcedureTypeName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
+                        <td style="width: 90px;">
+                            <LogLabel [ObjectFieldName]="'SecondCargoID'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.SecondCargoID'"></LogLabel>
+                        </td>
+                        <td style="width: 120px;">
+                            <LogTextBox [ObjectFieldName]="'SecondCargoID'"
+                                        [InputType]="text"
+                                        [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"
+                                        (LostFocus)="SecondCargoIDTextChanged($event)"
+                                        [Text]="SecondCargoID"></LogTextBox>
+                        </td>
 
-
-                      <!-- TreatmentWayName -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TreatmentWayName'"
-                                  [ObjectFieldName]="'TreatmentWayName'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-
-                        <LogTextBox [ObjectFieldName]="'TreatmentWayName'"
-                                    [Text]="GovernmentProcedureTypeName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-
-                      <!-- GoodsReceiptPlaceSiteName -->
-                      <td style="width: 100px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.GoodsReceiptPlaceSiteName'"
-                                  [ObjectFieldName]="'GoodsReceiptPlaceSiteName'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-
-                        <LogTextBox [ObjectFieldName]="'GoodsReceiptPlaceSiteName'"
-                                    [Text]="GoodsReceiptPlaceSiteName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-
-                      <!-- TotalWeight -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TotalWeight'"
-                                  [ObjectFieldName]="'TotalWeight'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 90px;">
-                        <LogTextBox [ObjectFieldName]="'TotalWeight'"
-                                    [Text]="TotalWeight"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-                      <!-- TotalRecordWeight -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TotalRecordWeight'"
-                                  [ObjectFieldName]="'TotalRecordWeight'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 90px;">
-                        <LogTextBox [ObjectFieldName]="'TotalRecordWeight'"
-                                    [Text]="TotalRecordWeight"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-                      <td>
-                        <div></div>
-                      </td>
+                        <td style="width: 90px;">
+                            <LogLabel [ObjectFieldName]="'ThirdCargoID'" [DataContext]="DataContext" [TextCode]="'Customs.Consignment.F.ThirdCargoID'"></LogLabel>
+                        </td>
+                        <td style="width: 120px;">
+                            <!--(LostFocus)="ThirdCargoIDTextChanged($event)"-->
+                            <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
+                                        [InputType]="text"
+                                        [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"
+                                        [Text]="ThirdCargoID"></LogTextBox>
+                        </td>
                     </tr>
-
-                    <tr class="FormFieldRow">
-                      <!-- MasterBolNumber -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.MasterBolNumber'"
-                                  [ObjectFieldName]="'MasterBolNumber'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-
-                        <LogTextBox [ObjectFieldName]="'MasterBolNumber'"
-                                    [Text]="MasterBolNumber"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-                      <!-- BillOfLadingNumber -->
-                      <td style="width: 90px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.BillOfLadingNumber'"
-                                  [ObjectFieldName]="'BillOfLadingNumber'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-                        <LogTextBox [ObjectFieldName]="'BillOfLadingNumber'"
-                                    [Text]="BillOfLadingNumber"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-                      <!-- TransitDestinationLocationName -->
-                      <td style="width: 100px;">
-                        <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TransitDestinationLocationName'"
-                                  [ObjectFieldName]="'TransitDestinationLocationName'"
-                                  [ObjectTableName]="'Customs.Declaration'"
-                                  [DataContext]="DataContext"></LogLabel>
-                      </td>
-                      <td style="width: 100px;">
-
-                        <LogTextBox [ObjectFieldName]="'TransitDestinationLocationName'"
-                                    [Text]="TransitDestinationLocationName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"></LogTextBox>
-                      </td>
-
-                      <td>
-                        <div></div>
-                      </td>
-                    </tr>
-
-                  </table>
-
-                </fieldset>
-              </td>
-            </tr>
-
-            <tr style="width:100%; height:25px;">
-              <td style="width: 200px; font-size: 12px; color: #1B90CB;">
-                {{'Customs.General.O.CargoQueryDeliveryOrderResults'| TextCodeTranslationPipe}}
-              </td>
-            </tr>
-            <tr style="width:100%; height:85px;">
-              <td style="width: 950px; height: 85px;">
-                <div style="width: 950px; height: 85px;">
-                  <div class="GeneratedGridContainer" style="height : 85px;">
-                    <logitude-edit-grid GridWidth="100%"
-                                        GridHeight="100%"
-                                        [ItemSource]="DeliveryOrderResultList">
-
-
-                      <!-- DeliveryOrderNumber -->
-                      <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderNumber' | TextCodeTranslationPipe"
-                                  [binding]="'DeliveryOrderNumber'"
-                                  [width]="'80'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.DeliveryOrderNumber}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- ProducerName -->
-                      <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ProducerName' | TextCodeTranslationPipe"
-                                  [binding]="'ProducerName'"
-                                  [width]="'180'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.ProducerName}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- ReceiverName -->
-                      <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverName' | TextCodeTranslationPipe"
-                                  [binding]="'ReceiverName'"
-                                  [width]="'180'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.ReceiverName}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- ReceiverCustomerActivityTypeName -->
-                      <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverCustomerActivityTypeName' | TextCodeTranslationPipe"
-                                  [binding]="'ReceiverCustomerActivityTypeName'"
-                                  [width]="'100'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.ReceiverCustomerActivityTypeName}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- ReceiverCustomerActivityTypeName -->
-                      <!--<log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverCustomerActivityTypeName' | TextCodeTranslationPipe"
-                                                                              [binding]="'ReceiverCustomerActivityTypeName'"
-                                                                              [width]="'100'" [Alignment]="'right'">
-                                                                      <ng-template let-item>
-                      <log-cell-template  #logcelltemplate>
-                                                                          <div class="RightCenter">
-                                                                              <span>{{item.ReceiverCustomerActivityTypeName}}</span>
-                                                                          </div>
-                                                                      </log-cell-template>
-                      </ng-template>
-                                                                  </log-column>-->
-                      <!-- DeliveryOrderDate -->
-                      <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderDate' | TextCodeTranslationPipe"
-                                  [binding]="'DeliveryOrderDate'"
-                                  [width]="'100'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.DeliveryOrderDate}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- DeliveryOrderStatusName -->
-                      <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderStatusName' | TextCodeTranslationPipe"
-                                  [binding]="'DeliveryOrderStatusName'"
-                                  [width]="'100'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.DeliveryOrderStatusName}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- DeliverySiteName -->
-                      <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliverySiteName' | TextCodeTranslationPipe"
-                                  [binding]="'DeliverySiteName'"
-                                  [width]="'150'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.DeliverySiteName}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-                    </logitude-edit-grid>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr style="width:100%; height:25px;">
-              <td style="width: 200px; font-size: 12px; color: #1B90CB;">
-                {{'Customs.General.O.CargoQueryCargosVersionResults'| TextCodeTranslationPipe}}
-              </td>
-            </tr>
-            <tr style="width:100%; height:85px;">
-              <td style="width: 950px; height: 85px;">
-                <div style="width: 950px; height: 85px;">
-                  <div class="GeneratedGridContainer" style="height : 85px;">
-                    <logitude-edit-grid GridWidth="100%"
-                                        GridHeight="100%"
-                                        [ItemSource]="CargosVersionResultList">
-
-
-                      <!-- Version -->
-                      <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.Version' | TextCodeTranslationPipe"
-                                  [binding]="'Version'"
-                                  [width]="'80'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.Version}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- SubmiterName -->
-                      <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.SubmiterName' | TextCodeTranslationPipe"
-                                  [binding]="'SubmiterName'"
-                                  [width]="'220'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.SubmiterName}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- CreateDate -->
-                      <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.CreateDate' | TextCodeTranslationPipe"
-                                  [binding]="'CreateDate'"
-                                  [width]="'120'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.CreateDate}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- ActionDate -->
-                      <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.ActionDate' | TextCodeTranslationPipe"
-                                  [binding]="'ActionDate'"
-                                  [width]="'120'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.ActionDate}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- CargoStausName -->
-                      <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.CargoStausName' | TextCodeTranslationPipe"
-                                  [binding]="'CargoStausName'"
-                                  [width]="'120'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.CargoStausName}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                    </logitude-edit-grid>
-                  </div>
-                </div>
-
-              </td>
-            </tr>
-
-            <tr style="width: 100%;height : 25px;">
-              <td style="width: 200px; font-size: 12px; color: #1B90CB;">
-                {{'Customs.General.O.CargoQueryCargoItemResults'| TextCodeTranslationPipe}}
-              </td>
-            </tr>
-            <tr style="width: 100%;height : 85px;">
-              <td style="width: 950px; height: 85px;">
-                <div class="MediaFill" style="width: 950px;height : 85px;">
-                  <div class="GeneratedGridContainer" style="height:150px; Width:950px">
-                    <logitude-edit-grid GridWidth="950px"
-                                        GridHeight="100%"
-                                        (RowDataLoaded)="OnRowLoaded($event)"
-                                        [ItemSource]="CargoItemResultList">
-
-
-                      <log-row-details style="width: 920px;">
-                        <row-template>
-                          <ng-template let-item>
-                            <!--[style.height.px]="item.RowDetailsHeights"-->
-                            <div style="min-height: 200px; width: 920px; background: #E8F7FF; position: relative;"
-                                 [style.height.px]="(item.SealDetailsList.length * 26)  + (item.CargoMovmentList.length * 26) + 20 + 28 + 25">
-                              <div style="width: 920px; position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
-                                <table style="width: 900px;">
-                                  <tr style="width: 70%;height:25px;">
-                                    <td style="width: 200px; font-size: 12px; color: #1B90CB;">
-                                      {{'Customs.General.O.CargoQuerySealDetailsResults'| TextCodeTranslationPipe}}
-                                    </td>
-
-                                  </tr>
-                                  <tr style="width: 70%;">
-                                    <td>
-                                      <div style="min-height:50px;">
-                                        <!-- SealDetailsList -->
-                                        <logitude-edit-grid GridWidth="300px" GridHeight="70%"
-                                                            [ItemSource]="item.SealDetailsObservableCollection">
-
-
-                                          <!-- RowNumber -->
-                                          <log-column [width]="'70'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQuerySealDetailsResults.O.RowNumber' | TextCodeTranslationPipe"
-                                                      [binding]="'RowNumber'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.RowNumber}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-                                          <!-- SealTypeName -->
-                                          <log-column [width]="'70'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQuerySealDetailsResults.O.SealTypeName' | TextCodeTranslationPipe"
-                                                      [binding]="'SealTypeName'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.SealTypeName}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-                                          <!-- SealNumber -->
-                                          <log-column [width]="'100'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQuerySealDetailsResults.O.SealNumber' | TextCodeTranslationPipe"
-                                                      [binding]="'SealNumber'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.SealNumber}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-                                        </logitude-edit-grid>
-
-                                      </div>
-                                    </td>
-                                  </tr>
-
-                                  <tr style="width: 70%;height:25px;">
-                                    <td style="width: 200px; font-size: 12px; color: #1B90CB;">
-                                      {{'Customs.General.O.CargoQueryCargoMovmentResults'| TextCodeTranslationPipe}}
-                                    </td>
-
-                                  </tr>
-                                  <tr style="width: 80%;">
-                                    <td>
-                                      <div style="min-height:50px;">
-                                        <!-- SealDetailsList -->
-                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                            [ItemSource]="item.CargoMovmentObservableCollection">
-
-
-                                          <!-- RowNumber -->
-                                          <log-column [width]="'40'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQuerySealDetailsResults.O.RowNumber' | TextCodeTranslationPipe"
-                                                      [binding]="'RowNumber'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.RowNumber}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-                                          <!-- ExitReasonName -->
-                                          <log-column [width]="'90'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQueryCargoMovmentResults.O.ExitReasonName' | TextCodeTranslationPipe"
-                                                      [binding]="'ExitReasonName'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.ExitReasonName}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-                                          <!-- StatusName -->
-                                          <log-column [width]="'90'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQueryCargoMovmentResults.O.StatusName' | TextCodeTranslationPipe"
-                                                      [binding]="'StatusName'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.StatusName}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-                                          <!-- DocumentNumber -->
-                                          <log-column [width]="'90'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQueryCargoMovmentResults.O.DocumentNumber' | TextCodeTranslationPipe"
-                                                      [binding]="'DocumentNumber'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.DocumentNumber}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-
-                                          <!-- ReferenceTypeName -->
-                                          <log-column [width]="'80'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQueryCargoMovmentResults.O.ReferenceTypeName' | TextCodeTranslationPipe"
-                                                      [binding]="'ReferenceTypeName'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.ReferenceTypeName}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-                                          <!-- ReferenceNum -->
-                                          <log-column [width]="'100'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQueryCargoMovmentResults.O.ReferenceNum' | TextCodeTranslationPipe"
-                                                      [binding]="'ReferenceNum'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.ReferenceNum}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-
-                                          <!-- ExitSiteName -->
-                                          <log-column [width]="'100'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQueryCargoMovmentResults.O.ExitSiteName' | TextCodeTranslationPipe"
-                                                      [binding]="'ExitSiteName'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.ExitSiteName}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-                                          <!-- ExitDateTime -->
-                                          <log-column [width]="'90'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQueryCargoMovmentResults.O.ExitDateTime' | TextCodeTranslationPipe"
-                                                      [binding]="'ExitDateTime'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.ExitDateTime}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-                                          <!-- EntrySiteName -->
-                                          <log-column [width]="'90'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQueryCargoMovmentResults.O.EntrySiteName' | TextCodeTranslationPipe"
-                                                      [binding]="'EntrySiteName'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.EntrySiteName}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-
-                                          <!-- EntryDateTime -->
-                                          <log-column [width]="'90'" [Alignment]="'right'"
-                                                      [header]="'Customs.CargoQueryCargoMovmentResults.O.EntryDateTime' | TextCodeTranslationPipe"
-                                                      [binding]="'EntryDateTime'">
-                                            <ng-template let-item>
-                                              <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;">
-                                                  <div class="RightCenter">
-                                                    <span>{{item.EntryDateTime}}</span>
-                                                  </div>
-                                                </div>
-                                              </log-cell-template>
-                                            </ng-template>
-                                          </log-column>
-
-                                        </logitude-edit-grid>
-
-                                      </div>
-                                    </td>
-                                  </tr>
-
-                                </table>
-
-                              </div>
-                            </div>
-                          </ng-template>
-                        </row-template>
-                      </log-row-details>
-
-
-                      <!-- RowNumber -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.RowNumber' | TextCodeTranslationPipe"
-                                  [binding]="'RowNumber'"
-                                  [width]="'40'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.RowNumber}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                      <!-- ParentCargoRowDetailsID -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.ParentCargoRowDetailsID' | TextCodeTranslationPipe"
-                                  [binding]="'ParentCargoRowDetailsID'"
-                                  [width]="'100'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.ParentCargoRowDetailsID}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                      <!-- ContainerNumber -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.ContainerNumber' | TextCodeTranslationPipe"
-                                  [binding]="'ContainerNumber'"
-                                  [width]="'100'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.ContainerNumber}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                      <!-- CharacteristicCode -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.CharacteristicCode' | TextCodeTranslationPipe"
-                                  [binding]="'CharacteristicCode'"
-                                  [width]="'90'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.CharacteristicCode}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                      <!-- ContainerType -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.ContainerType' | TextCodeTranslationPipe"
-                                  [binding]="'ContainerType'"
-                                  [width]="'80'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.ContainerType}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                      <!-- Length -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.Length' | TextCodeTranslationPipe"
-                                  [binding]="'Length'"
-                                  [width]="'70'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.Length}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                      <!-- Quantity -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.Quantity' | TextCodeTranslationPipe"
-                                  [binding]="'Quantity'"
-                                  [width]="'85'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.Quantity}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                      <!-- GrossMassMeasureWeight -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.GrossMassMeasureWeight' | TextCodeTranslationPipe"
-                                  [binding]="'GrossMassMeasureWeight'"
-                                  [width]="'85'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.GrossMassMeasureWeight}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                      <!-- RecordNumberOfPackeges -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.RecordNumberOfPackeges' | TextCodeTranslationPipe"
-                                  [binding]="'RecordNumberOfPackeges'"
-                                  [width]="'80'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.RecordNumberOfPackeges}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-
-                      <!-- TotalRecordWeight -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.TotalRecordWeight' | TextCodeTranslationPipe"
-                                  [binding]="'TotalRecordWeight'"
-                                  [width]="'80'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <span>{{item.TotalRecordWeight}}</span>
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                      <!-- DangerousGoodsIndication -->
-                      <log-column [header]="'Customs.CargoQueryCargoItemResults.O.DangerousGoodsIndication' | TextCodeTranslationPipe"
-                                  [binding]="'DangerousGoodsIndication'"
-                                  [width]="'70'" [Alignment]="'right'">
-                        <ng-template let-item>
-                          <log-cell-template #logcelltemplate>
-                            <div class="RightCenter">
-                              <img *ngIf="item.DangerousGoodsIndication == 'Visible' " title="is Dangerous " src="./Images/CheckBoxIcon.png" />
-                            </div>
-                          </log-cell-template>
-                        </ng-template>
-                      </log-column>
-
-                    </logitude-edit-grid>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td></td>
-            </tr>
-          </table>
-
+                </table>
+            </div>
         </div>
-      </div>
 
-    </div>
+        <!-- Response -->
+        <div class="class-response-content" style="width: 970px;height: 450px;padding-top: 10px;">
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <table style="min-height: 450px; width: 970px">
 
-  </custom-message-wrapper>
+                        <tr style="width: 100%;height:25px;" *ngIf="IsShowUserMessage" >
+                            <td >
+                                <div class="Outlook2013Message" 
+                                     style="margin: 0px 100px 0px 100px; text-align: center;"
+                                     > {{UserMessage}}</div>
+                            </td>
+                        </tr>
+
+                        <tr style="width:100%; height:25px;">
+                            <td style="width: 200px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.General.O.CargoDetailsResults'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr style="width:100%; height:150px;">
+                            <td >
+                                <fieldset [disabled]="true">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <!-- ManifestTypeName -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryManifestResults.O.ManifestType'"
+                                                          [ObjectFieldName]="'ManifestTypeName'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'ManifestTypeName'"
+                                                            [Text]="ManifestTypeName"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <!-- ManifestStatus -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryManifestResults.O.ManifestStatus'"
+                                                          [ObjectFieldName]="'ManifestStatus'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'ManifestStatusName'"
+                                                            [Text]="ManifestStatusName"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <!-- ManifestNumber -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryManifestResults.O.ManifestNumber'"
+                                                          [ObjectFieldName]="'ResponseManifestNumber'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'ResponseManifestNumber'"
+                                                            [Text]="ResponseManifestNumber"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td colspan="10" style="text-align: right; height:25px; font-size: 12px; color: #1B90CB;">
+                                                {{'Customs.General.O.CargoQueryCargoResults'| TextCodeTranslationPipe}}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <!-- CargoIdentifierKey1 -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.CargoIdentifierKey1'"
+                                                          [ObjectFieldName]="'CargoIdentifierKey1'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'CargoIdentifierKey1'"
+                                                            [Text]="CargoIdentifierKey1"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <!-- ParentCargoID -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.ParentCargoID'"
+                                                          [ObjectFieldName]="'ParentCargoID'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'ParentCargoID'"
+                                                            [Text]="ParentCargoID"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+
+                                            <!-- UnloadingLocationName -->
+                                            <td style="width: 100px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.UnloadingLocationName'"
+                                                          [ObjectFieldName]="'UnloadingLocationName'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+
+                                                <LogTextBox [ObjectFieldName]="'UnloadingLocationName'"
+                                                            [Text]="UnloadingLocationName"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+
+                                            <!-- TotalNumberOfPackeges -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TotalNumberOfPackeges'"
+                                                          [ObjectFieldName]="'TotalNumberOfPackeges'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 90px;">
+                                                <LogTextBox [ObjectFieldName]="'TotalNumberOfPackeges'"
+                                                            [Text]="TotalNumberOfPackeges"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+
+                                            <!-- TotalRecordNumberOfPackeges -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TotalRecordNumberOfPackeges'"
+                                                          [ObjectFieldName]="'TotalRecordNumberOfPackeges'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 90px;">
+                                                <LogTextBox [ObjectFieldName]="'TotalRecordNumberOfPackeges'"
+                                                            [Text]="TotalRecordNumberOfPackeges"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <!-- GovernmentProcedureTypeName -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.GovernmentProcedureTypeName'"
+                                                          [ObjectFieldName]="'GovernmentProcedureTypeName'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'GovernmentProcedureTypeName'"
+                                                            [Text]="GovernmentProcedureTypeName"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+
+                                            <!-- TreatmentWayName -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TreatmentWayName'"
+                                                          [ObjectFieldName]="'TreatmentWayName'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+
+                                                <LogTextBox [ObjectFieldName]="'TreatmentWayName'"
+                                                            [Text]="GovernmentProcedureTypeName"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+
+                                            <!-- GoodsReceiptPlaceSiteName -->
+                                            <td style="width: 100px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.GoodsReceiptPlaceSiteName'"
+                                                          [ObjectFieldName]="'GoodsReceiptPlaceSiteName'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+
+                                                <LogTextBox [ObjectFieldName]="'GoodsReceiptPlaceSiteName'"
+                                                            [Text]="GoodsReceiptPlaceSiteName"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+
+                                            <!-- TotalWeight -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TotalWeight'"
+                                                          [ObjectFieldName]="'TotalWeight'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 90px;">
+                                                <LogTextBox [ObjectFieldName]="'TotalWeight'"
+                                                            [Text]="TotalWeight"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <!-- TotalRecordWeight -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TotalRecordWeight'"
+                                                          [ObjectFieldName]="'TotalRecordWeight'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 90px;">
+                                                <LogTextBox [ObjectFieldName]="'TotalRecordWeight'"
+                                                            [Text]="TotalRecordWeight"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <!-- MasterBolNumber -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.MasterBolNumber'"
+                                                          [ObjectFieldName]="'MasterBolNumber'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+
+                                                <LogTextBox [ObjectFieldName]="'MasterBolNumber'"
+                                                            [Text]="MasterBolNumber"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <!-- BillOfLadingNumber -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.BillOfLadingNumber'"
+                                                          [ObjectFieldName]="'BillOfLadingNumber'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'BillOfLadingNumber'"
+                                                            [Text]="BillOfLadingNumber"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <!-- TransitDestinationLocationName -->
+                                            <td style="width: 100px;">
+                                                <LogLabel [TextCode]="'Customs.CargoQueryCargoResults.O.TransitDestinationLocationName'"
+                                                          [ObjectFieldName]="'TransitDestinationLocationName'"
+                                                          [ObjectTableName]="'Customs.Declaration'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 100px;">
+
+                                                <LogTextBox [ObjectFieldName]="'TransitDestinationLocationName'"
+                                                            [Text]="TransitDestinationLocationName"
+                                                            [DataContext]="DataContext"
+                                                            [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                    </table>
+
+                                </fieldset>
+                            </td>
+                        </tr>
+
+                        <tr style="width:100%; height:25px;">
+                            <td style="width: 200px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.General.O.CargoQueryDeliveryOrderResults'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr style="width:100%; height:85px;">
+                            <td style="width: 950px; height: 85px;">
+                                <div style="width: 950px; height: 85px;">
+                                    <div class="GeneratedGridContainer" style="height : 85px;">
+                                        <logitude-edit-grid GridWidth="100%"
+                                                            GridHeight="100%"
+                                                            [ItemSource]="DeliveryOrderResultList">
+
+
+                                            <!-- DeliveryOrderNumber -->
+                                            <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderNumber' | TextCodeTranslationPipe"
+                                                        [binding]="'DeliveryOrderNumber'"
+                                                        [width]="'80'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.DeliveryOrderNumber}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- ProducerName -->
+                                            <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ProducerName' | TextCodeTranslationPipe"
+                                                        [binding]="'ProducerName'"
+                                                        [width]="'180'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ProducerName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- ReceiverName -->
+                                            <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverName' | TextCodeTranslationPipe"
+                                                        [binding]="'ReceiverName'"
+                                                        [width]="'180'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ReceiverName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- ReceiverCustomerActivityTypeName -->
+                                            <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverCustomerActivityTypeName' | TextCodeTranslationPipe"
+                                                        [binding]="'ReceiverCustomerActivityTypeName'"
+                                                        [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ReceiverCustomerActivityTypeName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- ReceiverCustomerActivityTypeName -->
+                                            <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverCustomerActivityTypeName' | TextCodeTranslationPipe"
+                                                        [binding]="'ReceiverCustomerActivityTypeName'"
+                                                        [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ReceiverCustomerActivityTypeName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- DeliveryOrderDate -->
+                                            <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderDate' | TextCodeTranslationPipe"
+                                                        [binding]="'DeliveryOrderDate'"
+                                                        [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.DeliveryOrderDate}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- DeliverySiteName -->
+                                            <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliverySiteName' | TextCodeTranslationPipe"
+                                                        [binding]="'DeliverySiteName'"
+                                                        [width]="'150'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.DeliverySiteName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+                                        </logitude-edit-grid>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="width:100%; height:25px;">
+                            <td style="width: 200px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.General.O.CargoQueryCargosVersionResults'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr style="width:100%; height:85px;">
+                            <td style="width: 950px; height: 85px;">
+                                <div style="width: 950px; height: 85px;">
+                                    <div class="GeneratedGridContainer" style="height : 85px;">
+                                        <logitude-edit-grid GridWidth="100%"
+                                                            GridHeight="100%"
+                                                            [ItemSource]="CargosVersionResultList">
+
+
+                                            <!-- Version -->
+                                            <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.Version' | TextCodeTranslationPipe"
+                                                        [binding]="'Version'"
+                                                        [width]="'80'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.Version}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- SubmiterName -->
+                                            <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.SubmiterName' | TextCodeTranslationPipe"
+                                                        [binding]="'SubmiterName'"
+                                                        [width]="'220'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.SubmiterName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- CreateDate -->
+                                            <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.CreateDate' | TextCodeTranslationPipe"
+                                                        [binding]="'CreateDate'"
+                                                        [width]="'120'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CreateDate}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- ActionDate -->
+                                            <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.ActionDate' | TextCodeTranslationPipe"
+                                                        [binding]="'ActionDate'"
+                                                        [width]="'120'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ActionDate}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- CargoStausName -->
+                                            <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.CargoStausName' | TextCodeTranslationPipe"
+                                                        [binding]="'CargoStausName'"
+                                                        [width]="'120'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CargoStausName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                        </logitude-edit-grid>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        <tr style="width: 100%;height : 25px;">
+                            <td style="width: 200px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.General.O.CargoQueryCargoItemResults'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr style="width: 100%;height : 85px;">
+                            <td style="width: 950px; height: 85px;">
+                                <div class="MediaFill" style="width: 950px;height : 85px;">
+                                    <div class="GeneratedGridContainer" style="height:150px; Width:950px">
+                                        <logitude-edit-grid GridWidth="950px"
+                                                            GridHeight="100%"
+                                                            (RowDataLoaded)="OnRowLoaded($event)"
+                                                            [ItemSource]="CargoItemResultList">
+
+
+                                            <log-row-details style="width: 920px;">
+                                                <row-template template="let item">
+                                                    <!--[style.height.px]="item.RowDetailsHeights"-->
+                                                    <div style="min-height: 200px; width: 920px; background: #E8F7FF; position: relative;"
+                                                        [style.height.px]="(item.SealDetailsList.length * 26)  + (item.CargoMovmentList.length * 26) + 20 + 28 + 25">
+                                                        <div style="width: 920px; position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
+                                                            <table style="width: 900px;">
+                                                                <tr style="width: 70%;height:25px;">
+                                                                    <td style="width: 200px; font-size: 12px; color: #1B90CB;">
+                                                                        {{'Customs.General.O.CargoQuerySealDetailsResults'| TextCodeTranslationPipe}}
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr style="width: 70%;">
+                                                                    <td>
+                                                                        <div style="min-height:50px;">
+                                                                            <!-- SealDetailsList -->
+                                                                            <logitude-edit-grid GridWidth="300px" GridHeight="70%"
+                                                                                                [ItemSource]="item.SealDetailsObservableCollection">
+
+
+                                                                                <!-- RowNumber -->
+                                                                                <log-column [width]="'70'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQuerySealDetailsResults.O.RowNumber' | TextCodeTranslationPipe"
+                                                                                            [binding]="'RowNumber'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.RowNumber}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+                                                                                <!-- SealTypeName -->
+                                                                                <log-column [width]="'70'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQuerySealDetailsResults.O.SealTypeName' | TextCodeTranslationPipe"
+                                                                                            [binding]="'SealTypeName'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.SealTypeName}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+                                                                                <!-- SealNumber -->
+                                                                                <log-column [width]="'100'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQuerySealDetailsResults.O.SealNumber' | TextCodeTranslationPipe"
+                                                                                            [binding]="'SealNumber'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.SealNumber}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+                                                                            </logitude-edit-grid>
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="width: 70%;height:25px;">
+                                                                    <td style="width: 200px; font-size: 12px; color: #1B90CB;">
+                                                                        {{'Customs.General.O.CargoQueryCargoMovmentResults'| TextCodeTranslationPipe}}
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr style="width: 80%;">
+                                                                    <td>
+                                                                        <div style="min-height:50px;">
+                                                                            <!-- SealDetailsList -->
+                                                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                                                                [ItemSource]="item.CargoMovmentObservableCollection">
+
+
+                                                                                <!-- RowNumber -->
+                                                                                <log-column [width]="'40'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQuerySealDetailsResults.O.RowNumber' | TextCodeTranslationPipe"
+                                                                                            [binding]="'RowNumber'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.RowNumber}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+                                                                                <!-- ExitReasonName -->
+                                                                                <log-column [width]="'90'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQueryCargoMovmentResults.O.ExitReasonName' | TextCodeTranslationPipe"
+                                                                                            [binding]="'ExitReasonName'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.ExitReasonName}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+                                                                                <!-- StatusName -->
+                                                                                <log-column [width]="'90'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQueryCargoMovmentResults.O.StatusName' | TextCodeTranslationPipe"
+                                                                                            [binding]="'StatusName'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.StatusName}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+                                                                                <!-- DocumentNumber -->
+                                                                                <log-column [width]="'90'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQueryCargoMovmentResults.O.DocumentNumber' | TextCodeTranslationPipe"
+                                                                                            [binding]="'DocumentNumber'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.DocumentNumber}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+
+                                                                                <!-- ReferenceTypeName -->
+                                                                                <log-column [width]="'80'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQueryCargoMovmentResults.O.ReferenceTypeName' | TextCodeTranslationPipe"
+                                                                                            [binding]="'ReferenceTypeName'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.ReferenceTypeName}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+                                                                                <!-- ReferenceNum -->
+                                                                                <log-column [width]="'100'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQueryCargoMovmentResults.O.ReferenceNum' | TextCodeTranslationPipe"
+                                                                                            [binding]="'ReferenceNum'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.ReferenceNum}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+
+                                                                                <!-- ExitSiteName -->
+                                                                                <log-column [width]="'100'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQueryCargoMovmentResults.O.ExitSiteName' | TextCodeTranslationPipe"
+                                                                                            [binding]="'ExitSiteName'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.ExitSiteName}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+                                                                                <!-- ExitDateTime -->
+                                                                                <log-column [width]="'90'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQueryCargoMovmentResults.O.ExitDateTime' | TextCodeTranslationPipe"
+                                                                                            [binding]="'ExitDateTime'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.ExitDateTime}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+                                                                                <!-- EntrySiteName -->
+                                                                                <log-column [width]="'90'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQueryCargoMovmentResults.O.EntrySiteName' | TextCodeTranslationPipe"
+                                                                                            [binding]="'EntrySiteName'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.EntrySiteName}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+
+                                                                                <!-- EntryDateTime -->
+                                                                                <log-column [width]="'90'" [Alignment]="'right'"
+                                                                                            [header]="'Customs.CargoQueryCargoMovmentResults.O.EntryDateTime' | TextCodeTranslationPipe"
+                                                                                            [binding]="'EntryDateTime'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="width:100%;height:100%;">
+                                                                                            <div class="RightCenter">
+                                                                                                <span>{{item.EntryDateTime}}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+                                                                            </logitude-edit-grid>
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                </row-template>
+                                            </log-row-details>
+
+
+                                            <!-- RowNumber -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.RowNumber' | TextCodeTranslationPipe"
+                                                        [binding]="'RowNumber'"
+                                                        [width]="'40'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.RowNumber}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <!-- ParentCargoRowDetailsID -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.ParentCargoRowDetailsID' | TextCodeTranslationPipe"
+                                                        [binding]="'ParentCargoRowDetailsID'"
+                                                        [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ParentCargoRowDetailsID}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <!-- ContainerNumber -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.ContainerNumber' | TextCodeTranslationPipe"
+                                                        [binding]="'ContainerNumber'"
+                                                        [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ContainerNumber}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <!-- CharacteristicCode -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.CharacteristicCode' | TextCodeTranslationPipe"
+                                                        [binding]="'CharacteristicCode'"
+                                                        [width]="'90'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CharacteristicCode}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <!-- ContainerType -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.ContainerType' | TextCodeTranslationPipe"
+                                                        [binding]="'ContainerType'"
+                                                        [width]="'80'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ContainerType}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <!-- Length -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.Length' | TextCodeTranslationPipe"
+                                                        [binding]="'Length'"
+                                                        [width]="'70'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.Length}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <!-- Quantity -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.Quantity' | TextCodeTranslationPipe"
+                                                        [binding]="'Quantity'"
+                                                        [width]="'85'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.Quantity}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <!-- GrossMassMeasureWeight -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.GrossMassMeasureWeight' | TextCodeTranslationPipe"
+                                                        [binding]="'GrossMassMeasureWeight'"
+                                                        [width]="'85'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.GrossMassMeasureWeight}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <!-- RecordNumberOfPackeges -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.RecordNumberOfPackeges' | TextCodeTranslationPipe"
+                                                        [binding]="'RecordNumberOfPackeges'"
+                                                        [width]="'80'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.RecordNumberOfPackeges}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <!-- TotalRecordWeight -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.TotalRecordWeight' | TextCodeTranslationPipe"
+                                                        [binding]="'TotalRecordWeight'"
+                                                        [width]="'80'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.TotalRecordWeight}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- DangerousGoodsIndication -->
+                                            <log-column [header]="'Customs.CargoQueryCargoItemResults.O.DangerousGoodsIndication' | TextCodeTranslationPipe"
+                                                        [binding]="'DangerousGoodsIndication'"
+                                                        [width]="'70'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <img *ngIf="item.DangerousGoodsIndication == 'Visible' " title="is Dangerous " src="./Images/CheckBoxIcon.png" />
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                        </logitude-edit-grid>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr> <td></td> </tr>
+                    </table>
+                        
+                </div>
+            </div>
+                
+        </div>
+
+</custom-message-wrapper>
 </div>

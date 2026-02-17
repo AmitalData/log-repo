@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.QuoteModel.EntityPOCOs
 {
@@ -29,6 +29,5 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("QuoteId")]
         public Quote Quote { get; set; }
-
     }
 }

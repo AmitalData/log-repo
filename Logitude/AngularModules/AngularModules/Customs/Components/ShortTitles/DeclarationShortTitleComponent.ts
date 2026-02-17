@@ -1,15 +1,13 @@
 
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-import { DeclarationPM } from '../../EntityPMs/DeclarationPM';
-import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
+import {DeclarationPM} from '../../EntityPMs/DeclarationPM';
+import {AmitalGatewayUtil} from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 //C:\LW\Customs\AngularModules\AngularModules\Customs\Controller\DeclarationEditComponentController.ts
-import { DeclarationEditComponentController } from '../../Controller/DeclarationEditComponentController';
-import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import {DeclarationEditComponentController} from '../../Controller/DeclarationEditComponentController';
 @Component({
-
+    moduleId: module.id,
     templateUrl: "DeclarationShortTitleComponent.html",
 })
 
@@ -17,8 +15,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 export class DeclarationShortTitleComponent {
     public EntityPM: DeclarationPM;
     private CurrentSession = SessionLocator.SelectedSession;
-    _CustomsSettingListService: CustomsSettingListService = new CustomsSettingListService();
-    constructor(private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
+    constructor(private cd: ChangeDetectorRef,public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.Listen();
 
@@ -34,7 +31,7 @@ export class DeclarationShortTitleComponent {
     private Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
 
-
+     
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
@@ -45,11 +42,11 @@ export class DeclarationShortTitleComponent {
                 })
             );
 
-
+   
         }
     }
-
-
+    
+    
 
     public get CourierImporterName() {
         if (this.EntityPM.ImporterCode) {
@@ -63,8 +60,7 @@ export class DeclarationShortTitleComponent {
     public set CourierImporterName(newValue: string) { this._CourierImporterName = newValue; }
 
     private BuildComponent() {
-        this._EntityNumber = null;
-        this.EntityNumber = null;
+
         if (this.EntityPM.IsCourierDeclaration) {
 
             if (this.EntityPM.CustomFileNo && (this.EntityPM.CalculatedImporterName || this.EntityPM.ImporterName)) {
@@ -94,29 +90,16 @@ export class DeclarationShortTitleComponent {
                 this.EntityNumber = this.EntityPM.CustomFileNo;
             }
 
-
+            
         }
-        var isConnectToUnifreight = null;
-        this._CustomsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
-            .subscribe((customsSettingList: ServiceResponse) => {
-                if (customsSettingList) {
-                    
-                    isConnectToUnifreight = customsSettingList.Result ? customsSettingList?.Result?.IsConnectedToUniFreight : null;
-                    if (AmitalGatewayUtil.Instance.AmitalBrowserInUse && AmitalGatewayUtil.Instance.IsTabCA23) {
 
-                        this._ShowEntityNumberClick = true;
-                    }
-                    if (!isConnectToUnifreight && this.EntityPM.Direction == 'E')
-                        this._ShowEntityNumberClick = false;
-                }
-            });
-
-
-        
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse && AmitalGatewayUtil.Instance.IsTabCA23) {
+            this._ShowEntityNumberClick = true;
+        }
     }
 
-    EntityNumberClick() {
-
+    EntityNumberClick() {   
+        
         if (!this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
             this.ShowCustomFileOPCFromDeclaration();
         } else {
@@ -126,46 +109,20 @@ export class DeclarationShortTitleComponent {
                 sub.unsubscribe();
                 if (isSaveSuccess) {
                     this.ShowCustomFileOPCFromDeclaration();
-                }
+                } 
             });
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
-    RefreshButtonClicked() {
-        
-        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
-    }
-
 
     ShowCustomFileOPCFromDeclaration() {
 
         var declarationEditComponentController: DeclarationEditComponentController = (this.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController)
         declarationEditComponentController.ForceCheckIfLockWhileReload();
-
-        let myViewModelName = "DeclarationShortTitleComponent";
-
-        SessionLocator.SelectedSession.StopBusyIndicator();
-        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-            .subscribe(
-                (mess: UnifreightMessageM) => {
-                    var IsMatchUnifreightCallbackCommand = (
-                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                        mess.LogitudeEntityNumber == this.EntityPM.Id &&
-                        mess.LogitudeViewModel == myViewModelName);
-                    if (IsMatchUnifreightCallbackCommand) {
-                        sub.unsubscribe();
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-                    }
-                }
-            );
-
+         
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.EntityPM.CustomFileNo, this.EntityPM.Id, myViewModelName
-                    , AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity(this.EntityPM.Direction));
+                DeclarationMessaging.GetMessage(this.EntityPM.CustomFileNo, this.EntityPM.Id, "DeclarationShortTitleComponent");
 
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(

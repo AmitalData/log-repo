@@ -1,61 +1,57 @@
-import { ApiQueryFiltersAddParams } from './../../DataContracts/ApiQueryFiltersAddParams';
 declare var window: any;
 declare var System: any;
-import { Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { BaseComponent } from './BaseComponent';
-import { EntityListService } from '../../Services/EntityListService';
-import { ServiceArgs } from '../../DataContracts/ServiceArgs';
-import { ApiQueryFilters, FilterItem } from '../../DataContracts/ApiQueryFilters';
-import { ControlsIdCounter } from '../../Utilities/ControlsIdCounter';
-import { EntityResourceService } from '../../Services/EntityResourceService';
-import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
-import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
-import { SessionLocator } from '../../Utilities/SessionLocator';
-import { AppTool } from '../../Tools';
-import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
-import { FocusMeDirective } from '../../Utilities/FocusMeDirective';
-import { FixedPositionDirective } from '../../Utilities/FixedPositionDirective';
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { FieldValidator } from '../../Validators/FieldValidator';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CustomEntityArgs } from './LogSearchWindowComponent';
-import { UIProperty, UIProperties, UIPropertyArgs } from './UIProperties';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
-import { FeatureLocator } from '../../Utilities/FeatureLocator';
-import { InfraSettings } from '../../Utilities/InfraSettings';
-import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { NewEntityArgs } from '../../Args';
-import { EntityPMService } from '../../Services/EntityPMService';
-import { ImportEntityArgs } from '../../../Common/Components/Maintenance/TenantImportComponent';
-import { CachedDataManager } from '../../Utilities/CachedDataManager';
+import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy} from '@angular/core';
+import {BaseComponent} from './BaseComponent';
+import {EntityListService} from '../../Services/EntityListService';
+import {ServiceArgs} from '../../DataContracts/ServiceArgs';
+import {ApiQueryFilters, FilterItem} from '../../DataContracts/ApiQueryFilters';
+import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
+import {EntityResourceService} from '../../Services/EntityResourceService';
+import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
+import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
+import {SessionLocator} from '../../Utilities/SessionLocator';
+import {AppTool} from '../../Tools';
+import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
+import {FocusMeDirective} from '../../Utilities/FocusMeDirective';
+import {FixedPositionDirective} from '../../Utilities/FixedPositionDirective';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+import {FieldValidator} from '../../Validators/FieldValidator';
+import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {CustomEntityArgs} from './LogSearchWindowComponent';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/observable/fromEvent';
+import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
+//import {PartnerTypeListService} from '../../../Common/Services/StandardLists/PartnerTypeListService';
+//import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
+
+import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
+import {FeatureLocator} from '../../Utilities/FeatureLocator';
+import {InfraSettings} from '../../Utilities/InfraSettings';
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+import { NewEntityArgs} from '../../Args';
+import {EntityPMService} from '../../Services/EntityPMService';
+import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
+import {CachedDataManager} from '../../Utilities/CachedDataManager';
 declare var logLoveReturnWhich, Selection: any;
-import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
-import { PartnerTypeList } from '../../../Common/EntityLists/PartnerTypeList';
-import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
+import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
+import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import { SessionInfo } from '../../Utilities/SessionInfo';
-import { fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
-import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
-import { CardExtendedPMService } from 'Common/Services/ExtendedPMs/CardExtendedPMService';
 
 @Component({
-
     selector: 'LogLov',
+    moduleId: module.id,
     templateUrl: './LogLovV2Component.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath', 'IsDisabled',
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath',
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
-        "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
-        "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode", "DefaultPageSize", "LocalFilterFields", "SearchFieldName", "StartSearchFromChar", "StartSearchFromNumber"],
+        "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact", "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
-    private _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
 
     private forceFocus: any;
     @Input()
@@ -72,12 +68,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.forceFocus = false;
     }
     CopyValueSubs: any;
-    @Input() UseDefaultPosition: boolean = false;
     public ForceShowValidation: boolean = false;
     public ShowHelp: boolean = false;
-    public DefaultPageSize: number = null;
-    public LocalFilterFields: string[] = null;
-    public SearchFieldName: string;
     public ObjectField: ObjectFieldPM;
     public ObjectFieldName: string = null;
     public ObjectFieldHelp: string = null;
@@ -98,21 +90,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public HideLastColumn: boolean = false;
     public SelectedValuePath: string;
     public DisplayMemberPath: string;
-    public StartSearchFromChar: number;
-    public StartSearchFromNumber: number;
-
-    public DisplayMemberPathManuallySet: boolean = false;
+    public DisplayMemberPathManuallySet:boolean=false;
     public DataContext: any;
     public DataList: any[];
     public IsFreeText: boolean = false;
     public AlwaysEnabled: boolean = false;
     public IgnoreCustomFieldCheck: boolean = false;
-    public IgnoreFeatureCheck: boolean = false;
-    public DataCy: string;
-    private LocalFilterServerSearchTxtLength: number = null;;
     LayoutDirection: string = 'ltr';
     private dataContext: BaseComponent;
-    uiProperty: UIProperty;
+    private uiProperty: UIProperty;
     private show: boolean;
     private LookUp1: string;
     private LookUp2: string;
@@ -126,22 +112,20 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     isFirstTime: boolean = true;
     imgNgStyle: any;
     private isDisabled: boolean;
-    public UseCompactSearch: boolean;
-    public ForceDisabled: boolean;
-    public IsDecendingSort: boolean = false;
-    public ObjectFieldCode: string;
+  public UseCompactSearch: boolean;
 
-    public get IsVisible() {
-        if (!this.uiProperty) {
-            this.InitializeUiProperty();
-        }
-        return this.uiProperty.IsVisible;
+
+  public get IsVisible() {
+    if (!this.uiProperty) {
+      this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
     }
-    //public set IsVisibile(newValue: boolean) {
-    //  this.isVisibile = newValue;
+    return this.uiProperty.IsVisible;
+  }
+  //public set IsVisibile(newValue: boolean) {
+  //  this.isVisibile = newValue;
 
-    //}
-    public get IsDisabled() {
+  //}
+  public get IsDisabled() {
         return this.isDisabled;
     }
     public set IsDisabled(newValue: boolean) {
@@ -154,14 +138,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.imgNgStyle = { 'opacity': 1, 'pointer-events': 'all' };
             if (this.uiProperty != null) {
                 if (this.uiProperty.ValidValue) {
-                    this.InputDivStyle = { 'opacity': 1, /*'pointer-events': 'all' */ };
+                    this.InputDivStyle = { 'opacity': 1, /*'pointer-events': 'all' */};
                 }
                 else {
                     if (this.searchTextChanged) {
                         this.InputDivStyle = { 'opacity': 1, /*'pointer-events': 'all',*/ 'border': '1px solid #ff0000' };
                     }
                     else {
-                        this.InputDivStyle = { 'opacity': 1 };
+                        this.InputDivStyle = { 'opacity': 1};
                     }
                 }
             }
@@ -173,14 +157,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public IsOpen: boolean;
     public SelectedItem: any;
     @Input() SelectedItemObject: any;
-
     public ItemsSource: any[];
     public ItemsSourceCount: number = -1;
     public ItemsSourceStatic: any[];
     ClosedByBlur: boolean;
     DisplayValue: string;
     MouseInArea: boolean;
-    headerColumns: any[];
+    private headerColumns: any[];
     private dataColumns: any[];
     DivLogLovId: string;
     ToolTipId: string;
@@ -193,110 +176,40 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     IsTenantZeroSearch: boolean;
     InputDivStyle: any;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
-    @Input() QueryFilterItems: ApiQueryFilters;
     private selectedValue: any;
     @Input()
     public get SelectedValue() {
-
         return this.selectedValue;
     }
     public set SelectedValue(newValue: any) {
-
         if (this.selectedValue != newValue) {
-            if (this.ShowInActivePopUpWindow && this.SelectedItem?.InActive) {
-                this.ShowInactivePopUpConfirmWindow(newValue);
+            this.selectedValue = newValue;
+
+
+            if (!this.isSelectedFromList || this.IsFreeText) {//&& !this.isFirstTime) {
+
+                if (this.uiProperty != null) {
+                    //this.uiProperty.UIPropertyChanged.emit("valuechanges"); // caused "a changed was made after it was checked in generatedComponent"
+                }
+                this.ValueChanged.emit(this.selectedValue);
+                var lookup = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
+                if (!newValue) {
+                    this.ForceShowValidation = true;
+                    this.deleteSearchText = true;
+                }
+                else {
+                    this.ForceShowValidation = false;
+                }
+                this.GetSingle(lookup);
+                this.isSelectedFromList = false;
             }
-            else {
-                this.SetSelectedValue(newValue);
-            }
-        }
-    }
 
-    ShowInactivePopUpConfirmWindow(newValue: any) {
-        var messageWindow = new MessageWindow();
-        messageWindow.Width = 400;
-        messageWindow.Height = 150;
-        messageWindow.Show("The shipping line " + this.SelectedItem?.Code + " is inactive and cannot be selected.");
-        messageWindow.WindowClosed.subscribe((event: any) => {
-            this.OnDeleteValue();
-        });
-    }
-
-    SetSelectedItemInActiveField() {
-        this.UpdateSelectedEntity(this.SelectedItem?.Id);
-    }
-
-    UpdateSelectedEntity(id: string) {
-        var tablename = this.GetTableName();
-        this.entityPMService.getSingle(tablename, id).then((response: any) => {
-            response.subscribe((myResponse: any) => {
-                var entity = myResponse.Result;
-                entity["InActive"] = false;
-                this.entityPMService.update(tablename, entity).then((res: any) => {
-                    res.subscribe((response: any) => {
-                        CachedDataManager.RefreshTableData(tablename, true);
-                    });
-                });
-            });
-        });
-    }
-
-
-    GetTableName(): string {
-        var tablename = this.GetObjectTableName(this.LookUpTableName);
-        if (this.SelectedItem?.PartnerTypeId == "SL") {
-            tablename = "ShippingLine";
-        }
-        if (this.SelectedItem?.PartnerTypeId == "AL") {
-            tablename = "Airline";
-        }
-        if (this.SelectedItem?.PartnerTypeId == "TR") {
-            tablename = "Trucker";
-        }
-        return tablename;
-    }
-
-    ResetSelectedValueInput() {
-        this.SearchTextNgModel = null;
-        this.OldSearchInput = null;
-        this.DisplayValue = null;
-        this.SelectedItem = null;
-        this.SelectedItemObject = null;
-        this.isSelectedFromList = false;
-        this.DataContext[this.ObjectFieldName] = null;
-        this.SetSelectedValue(null);
-        this.ValidateField(true);
-        this.SetToolTipInfo();
-        this.SelectedItemChanged.emit(this.SelectedItem);
-        this.ValueChanged.emit(this.selectedValue);
-    }
-
-    SetSelectedValue(newValue: any) {
-        this.selectedValue = newValue;
-
-        if (!this.isSelectedFromList || this.IsFreeText) {//&& !this.isFirstTime) {
-            if (this.uiProperty != null) {
-                //this.uiProperty.UIPropertyChanged.emit("valuechanges"); // caused "a changed was made after it was checked in generatedComponent"
-            }
-            this.ValueChanged.emit(this.selectedValue);
-            var lookup = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
-            if (!newValue) {
-                this.ForceShowValidation = true;
-                this.deleteSearchText = true;
-            }
-            else {
-                this.ForceShowValidation = false;
-            }
-            this.GetSingle(lookup);
             this.isSelectedFromList = false;
         }
-        this.isSelectedFromList = false;
     }
-
     @Input() RunToggleMode: boolean;
     @Input() AutoCompleteSearchWindow: boolean;
     @Input() ForceShowAddLink: boolean;
-    @Input() ForceShowLocalAndEnglishColumns: boolean;
     showToggleButton: boolean;
     showPopup: boolean = false;
     ObjectTable: ObjectTablePM;
@@ -307,25 +220,18 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     searchTextChanged: boolean = false;
     ErrorMessage: string;
     PropertyChangedSubscribtion: any;
-    @Input() FocusOnSelect: boolean = true;
+    FocusOnSelect: boolean = true;
     @Input() DisplayFieldsFromList: string;
-    @Input() DisplayLocalFieldsFromList: string;
     public isRTL: boolean = false;
-    LovPartnerTypes: Array<PartnerTypeList> = [];
+    private LovPartnerTypes: Array<PartnerTypeList> = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    CustomizedWidth: number;
     constructor(public entityListService: EntityListService, private entityPMService: EntityPMService,
-        private _entityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
+        private _entityResourceService: EntityResourceService) {
         this.show = false;
         this.TenantPM = InfraSettings.TenantPM;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        this.CurrentSession.SessionEvent.subscribe((res) => {
-            if (res == "TariffStepsRefresh") {
-                this.OnEditCompleted();
-            }
-        });
     }
 
     DropPopUpStyle: any;
@@ -348,7 +254,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     ItemsNgStyles: any[];
     DropDownWidth: number = 300;
     DropDownHeight: number = 257;
-    ShowInActivePopUpWindow: boolean;
+
     public isLoading: boolean = false;
     public isLoadingZero: boolean = false;
     Widths: number[];
@@ -376,10 +282,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     @Output() LostFocus: EventEmitter<any> = new EventEmitter();
     public LovMessage: string;
-    public AllDataLovMessage: string;
     @Input() HideEdit: boolean = false;
     @Input() HideAdd: boolean = false;
-    //@Input() QueryFilterItems: ApiQueryFilters;
+    @Input() QueryFilterItems: ApiQueryFilters;
     OriginalQueryFilterItems: ApiQueryFilters;
     IsCTRLDown: boolean = false;
     OldSearchInput: string;
@@ -391,12 +296,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     PartnersPopupTop: string;
     PartnersPopupLeft: string;
     _KeyDownSubscribe: any;
-    _PasteSubscribe : any;
-
-    @Output() KeyDownEvent: EventEmitter<any> = new EventEmitter();
-    @Input() ColumnsWidths: ColumnsWidths[] = [];
-    @Input() ForceShowLanguageFilterOnSearchWindow: boolean = false;
-
     ngAfterViewInit() {
         this.RunComponent();
         //this.InitializeAfterViewInit();
@@ -413,11 +312,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.RunComponentTimer();
         }
     }
-    GetSearchFieldName() {
-        if (this.SearchFieldName)
-            return this.SearchFieldName;
-        return "SearchFields";
-    }
+
     private Retries: number = 0;
     private timerTokenComponent: any;
     private RunComponentTimer() {
@@ -427,7 +322,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             clearTimeout(this.timerTokenComponent);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerTokenComponent = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -443,27 +338,40 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.AfterViewInitialized = false;
             this.RunComponentTimer();
         }
-        var debounceTimeVal = 400;
 
         if (this.AfterViewInitialized) {
             this._KeyDownSubscribe =
-                fromEvent(input, 'keydown').pipe(
-                    debounceTime(debounceTimeVal))
-                    .subscribe(keyboardEvent => {
-                    
-                        this.HandleSearchTextChanged(keyboardEvent);
+            Observable.fromEvent(input, 'keydown')
+                .debounceTime(400)
+                .subscribe(keyboardEvent => {
+                    var TABKEY = 9;
+                    var ENTERKEY = 13;
+                    var DOWNKEY = 40;
+                    var UPKEY = 38;
+                    var ESC = 27;
+                    var END = 35;
+                    var HOME = 36;
+                    var CTRL = 17;
+                    var BACKSPACE = 8;
+                    var which = logLoveReturnWhich(keyboardEvent);
+                    if (which == TABKEY || which == ENTERKEY || which == DOWNKEY || which == UPKEY
+                        || which == ESC || which == END || which == HOME || which == 220 || which == CTRL || this.IsCTRLDown) {
+                        return;
+                    }
+                    if (this.SearchTextNgModel != undefined) {
 
-                    });
-            this._PasteSubscribe =
-                   fromEvent(input, 'input')
-                       .subscribe((keyboardEvent) => {
-                        const inputEvent = keyboardEvent as InputEvent;
-                        if(inputEvent.inputType === "insertFromPaste")
-                            this.HandleSearchTextChanged(keyboardEvent);   
-                        else
-                            return;
-                       });
-                
+                        this.OldSearchInput = this.SearchTextNgModel;
+                        this.IsDropDownVisible = true;
+                        this.IsOpen = true;
+
+                        this.Populate(this.SearchTextNgModel);
+                        this.searchTextChanged = true;
+                    }
+                    if (!this.SearchTextNgModel) {
+                        this.OnDeleteValue();
+                    }
+                });
+
             if (this.FocusOnMe) {
                 var element = document.getElementById(this.ElementId);
                 element.focus();
@@ -474,106 +382,33 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
         }
     }
-    private HandleSearchTextChanged(keyboardEvent?: any) {
-        var TABKEY = 9;
-        var ENTERKEY = 13;
-        var DOWNKEY = 40;
-        var UPKEY = 38;
-        var ESC = 27;
-        var END = 35;
-        var HOME = 36;
-        var CTRL = 17;
-       
 
-        var which = logLoveReturnWhich(keyboardEvent);
-
-        if (which == TABKEY || which == ENTERKEY || which == DOWNKEY || which == UPKEY
-            || which == ESC || which == END || which == HOME || which == 220 || which == CTRL || this.IsCTRLDown) {
-            return;
-        }
-        if (this.SearchTextNgModel !== undefined) {
-            this.OldSearchInput = this.SearchTextNgModel;
-            this.IsDropDownVisible = true;
-            this.IsOpen = true;
-            this.Populate(this.SearchTextNgModel);
-            this.searchTextChanged = true;
-        }
-    
-        if (!this.SearchTextNgModel) {
-            this.OnDeleteValue();
-        }
-    }    
     ngOnInit() {
         this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
-
             if (this.LookUpTable.CacheOnClient) {
                 var filters: ApiQueryFilters;
                 filters = new ApiQueryFilters();
                 //filters.PageSize = 50;
                 this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-                    res.subscribe((resp: any) => {
+                    res.subscribe(resp => {
 
                     });
 
                 });
             }
             else {
-
                 var filters: ApiQueryFilters;
                 filters = new ApiQueryFilters();
                 //filters.PageSize = 50;
 
-                if (this.LookUpTableName == "GLAccount") {
-                    var loadPr = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, filters);
-                    loadPr.then((res: any) => {
-                        res.subscribe((resp: any) => {
-                            console.log(resp);
-                        });
+                var loadPr = this.entityListService.getByFilters(this.LookUpTableName, filters);
+                loadPr.then((res: any) => {
+                    res.subscribe(resp => {
+                        console.log(resp);
                     });
-                }
-
-                else {
-                    var loadPr = this.entityListService.getByFilters(this.LookUpTableName, filters);
-                    loadPr.then((res: any) => {
-                        res.subscribe((resp: any) => {
-                            console.log(resp);
-                        });
-                    });
-                }
+                });
             }
-
-
-        });
-        this.InitializeUiProperty();
-        this.uiProperty.UIPropertyChanged.subscribe(value => {
-
-            if (value instanceof UIPropertyArgs) {
-                var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
-                var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-                if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
-                    if (uiPropertyArgs.property == "IsEnabled") {
-                        var isEnabled = uiPropertyArgs.newValue;
-                        this.IsDisabled = !isEnabled;
-                        this.uiProperty.IsEnabled = isEnabled;
-                    }
-                    else if (uiPropertyArgs.property == "IsRequired") {
-                        if (this.searchTextChanged) {
-
-                            this.ValidateField(false);
-                        }
-                    }
-                    else if (uiPropertyArgs.property == "IsVisible") {
-                        if (uiPropertyArgs.newValue == true && this.AfterViewInitialized == false) {
-                            this.InitializeAfterViewInit();
-                        }
-                    }
-                    else if (uiPropertyArgs.property == "IsValid") {
-                        this.ValidateField(false);
-                    }
-                }
-            }
-
         });
         this.InitializeControl();
 
@@ -584,9 +419,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (this._KeyDownSubscribe) {
             this._KeyDownSubscribe.unsubscribe();
         }
-        if (this._PasteSubscribe) {
-            this._PasteSubscribe.unsubscribe();
-        }
         if (this.PropertyChangedSubscribtion != null && this.PropertyChangedSubscribtion != undefined) {
             this.PropertyChangedSubscribtion.unsubscribe();
         }
@@ -594,8 +426,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.CopyValueSubs.unsubscribe();
             this.CopyValueSubs = null;
         }
+        //if (this.uiProperty != null && this.uiProperty != undefined) {
+        //    if (this.uiProperty.UIPropertyChanged != null && this.uiProperty.UIPropertyChanged != undefined) {
+        //        this.uiProperty.UIPropertyChanged.unsubscribe();
+        //        this.uiProperty = null;
+        //    }
+        //}
     }
-
     CheckIfExists(IdCom: string) {
         var element = document.getElementById(IdCom);
         if (element != null && element != undefined) {
@@ -604,8 +441,23 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         return false;
     }
 
-    SetControlIds() {
+    SetControlIds(baseIdCombination: string) {
 
+        this.DivLogLovId = 'LogLov_' + baseIdCombination;
+        this.ElementId = baseIdCombination;
+        this.DropdownId = 'LogLovDropDown-' + baseIdCombination;
+        this.ErrorPopUpId = 'loglovererrorpop_' + baseIdCombination;
+        this.MyDataListId = 'mydatalist_' + baseIdCombination;
+        this.AllDataListId = 'alldatalist_' + baseIdCombination;
+        this.SearchIconId = 'searchicon_' + baseIdCombination;
+        this.ToolTipId = 'tooltip_' + baseIdCombination;
+    }
+    SetIsDisabledTimer: any;
+    InitializeControl() {
+        this.Widths = [];
+        this.MinWidths = [];
+        this.ItemsNgStyles = [];
+        this.LogLOVControlClass = "LogLOVControl";
         this.counterId = null;
         var baseIdCombination = null;
         if (this.ObjectTableName) {
@@ -622,303 +474,294 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
         }
 
-        this.DivLogLovId = 'LogLov_' + baseIdCombination;
-        this.ElementId = baseIdCombination;
-        this.DropdownId = 'LogLovDropDown-' + baseIdCombination;
-        this.ErrorPopUpId = 'loglovererrorpop_' + baseIdCombination;
-        this.MyDataListId = 'mydatalist_' + baseIdCombination;
-        this.AllDataListId = 'alldatalist_' + baseIdCombination;
-        this.SearchIconId = 'searchicon_' + baseIdCombination;
-        this.ToolTipId = 'tooltip_' + baseIdCombination;
-    }
-    SetIsDisabledTimer: any;
-    InitializeControl() {
-        this.InitializeLovVariables();
+        this.SetControlIds(baseIdCombination);
 
-        this.SetControlIds();
+        if (this.FocusOnMe) {// it means it is inside a grid.
+            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+                if (id == this.ElementId) {
+                    //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                    this.GetSingle(this.LookUpTable);
+                    this.CurrentSession.CopiedCell = null;
+                }
+            });
 
-        this.InsideEditableGridCopyCellInitialization();
+            //if (this.CurrentSession.CopiedCell) {
+            //    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+            //    this.CurrentSession.CopiedCell = null;
+            //}
+        }
 
-        this.AssignLookupAndObjectTable();
+        var objectFieldAvailable: boolean = true;
+        this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
+        this.ObjectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+        //(currentTable.AutoCompleteSearchWindow || this.AutoCompleteSearchWindow) && !this.RunToggleMode
+        if ((this.LookUpTable.AutoCompleteSearchWindow || this.AutoCompleteSearchWindow) && !this.RunToggleMode) {
+            this.ShowSearchButton = true;
+            this.showToggleButton = false;
+        }
+        else {
+            this.showToggleButton = true;
+            this.ShowSearchButton = false;
 
-        this.ShowSearchOrToggleButton();
+        }
 
-        this.AssignLookup1AndLookup2();
-
-        this.SetDropDownWidthAccordingToTable();
-
-        this.UseCompactSearchForSomeTables();
-
-        this.ConvertToAllMyDataModeForSomeTables();
-
-        this.InitializeSelectedValuePath();
-
-        this.InitializeKeyPropertyPath();
-
-        this.InitializeUiProperty();
-
-        this.SetIsDisabled();
-
-        this.SetIsDisabledTimer = setInterval(() => this.SetIsDisabled(), 1);
-
-        this.StartLoadingEntityRescourcesAndContinueInitialization();
-
-        this.InitializeActionButtonsState();
-
-    }
-
-    private InitializeLovVariables() {
-        this.Widths = [];
-        this.MinWidths = [];
-        this.ItemsNgStyles = [];
+        this.LookUp1 = this.LookUpTable.LookUp1;
+        this.LookUp2 = this.LookUpTable.LookUp2;
         this.headerColumns = [];
         this.dataColumns = [];
-        this.LogLOVControlClass = "LogLOVControl";
+        if (this.LookUpTableName == 'Card' || this.LookUpTableName == 'User') {
+            this.DropDownWidth = 400;
+        }
+        if (this.LookUpTableName == 'Carrier') {
+            this.DropDownWidth = 350;
+        }
+        if (this.LookUpTableName == 'GLAccount') {
+            this.DropDownWidth = 400;
+        }
+
+        if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier' || this.LookUpTableName == 'Card') {
+            this.UseCompactSearch = true;
+        }
+        if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier') {
+            this.IsAllDataVisible = true;
+            this.DropDownHeight = 276;
+            this.MyDropDownHeight = { 'height': '105px' }
+            this.DisplayHeader = false;
+            if (this.LookUpTableName == 'Port') {
+                this.AllDataHeaderTitle = 'All Ports';
+                this.MyDataHeaderTitle = 'My Ports';
+            }
+            else {
+                this.AllDataHeaderTitle = 'All Carriers';
+                this.MyDataHeaderTitle = 'My Carriers';
+            }
+        }
+        else {
+
+            this.IsAllDataVisible = false;
+        }
+
 
         if (!this.PlaceHolder) {
             this.PlaceHolder = '';
         }
-    }
 
-    private StartLoadingEntityRescourcesAndContinueInitialization() {
-        let objectFieldAvailable: boolean = true;
+        
+
+        if (!this.SelectedValuePath) {
+            this.SelectedValuePath = this.LookUpTable.KeyPropertyPath;
+        }
+        this.KeyPropertyPath = this.LookUpTable.KeyPropertyPath;
+        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+        //console.log(this.uiProperty);
+        if (this.AlwaysEnabled == true) {
+            this.IsDisabled = false;
+        }
+        else {
+            this.IsDisabled = !this.uiProperty.IsEnabled;
+            //console.log("Out " + this.LookUpTableName+ " " + this.uiProperty.IsEnabled)
+        }
+        if (this.SetIsDisabledTimer) {
+            clearTimeout(this.SetIsDisabledTimer);
+        }
+        this.SetIsDisabledTimer = setInterval(() => this.SetIsDisabled(), 1);
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
             this._entityResourceService.getEntityResourceByTableName("PartnerType", 0).subscribe((res3: any) => {
 
-                var apiQueryFilter: ApiQueryFilters = new ApiQueryFilters();
-                //this.PrepareApiQueryFilters();
-                this.entityListService.getAllFromCache("PartnerType", apiQueryFilter).then((res3: any) => {
-                    res3.subscribe(res4 => {
+                var apiQueryFilter: ApiQueryFilters;
+                if (!this.QueryFilterItems) {
+                    apiQueryFilter = new ApiQueryFilters();
+
+                }
+                else {
+                    apiQueryFilter = new ApiQueryFilters();
+                    for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
+                        var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
+                        apiQueryFilter.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
+                            filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
+                    }
+
+
+                }
+               // apiQueryFilter.GetAll = true; by mohammad.
+                this.entityListService.getAllFromCache("PartnerType", apiQueryFilter).then((res3:any)=> {
+                    res3.subscribe(res4=> {
                         this.PartnerTypes = res4.Result;
                         var parentName = this.GetObjectTableName(this.LookUpTableName);
                         this._entityResourceService.getEntityResourceByTableName(parentName, 0).subscribe((res5: any) => {
 
-                            this.InitializeLovPartnerTypsForSomeTables();
+                            if (this.LookUpTableName == "Card" || this.LookUpTableName == "Carrier") {
+                                if (this.DependencyFilter1Value != null && this.DependencyFilter1Value != undefined) {
 
-                            this.InitializeLanguageFilter();
+                                    //this._entityResourceService.getEntityResourceByTableName(parentName, 0).subscribe((otherResp: any) => { });
+                                    if (this.DependencyFilter1Value.toString().split(',').length > 1) {
+                                        var types: string[] = this.DependencyFilter1Value.toString().split(',');
+                                        this.LovPartnerTypes = this.PartnerTypes.filter(d => types.indexOf(d.Id) > -1);
+                                    }
+                                }
+                            }
 
+                            // drow columns
+                            var lang='E';
+                            if(SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
+                                lang='L';
+                                this.ShowLanguageFilter=true;
+                            }
+                            this.LanguageFilterValue=lang;
                             this.DrawColumns();
+                            if(!this.DisplayMemberPath){
+                              this.SetDisplayMemberPath();
+                            }
+                            else{
+                                this.DisplayMemberPathManuallySet=true;
+                            }
 
-                            this.SetDropDownWidthAccordingToTable();
 
-                            this.InitializeDisplayMemberPath();
+                            if (this.ObjectTable) {
+                                this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTable.Id && d.FieldName === this.ObjectFieldName)[0];
+                                if (!this.ObjectField) {
+                                    objectFieldAvailable = false;
 
 
-                            objectFieldAvailable = this.ContinueInitializationIfObjectFieldAvailable(objectFieldAvailable);
+                                }
+                                else {
+                                    objectFieldAvailable = true;
+                                    if (this.ObjectField.HelpTextCodeId != null) {
+                                        this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
 
-                            this.WarnIfObjectFieldNotAvailable(objectFieldAvailable);
+                                        if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
+                                            if (this.ObjectFieldHelp.length > 1) {
+                                                if (!this.IsFreeText) this.ShowHelp = true;
 
-                            this.GetFirstSingleValueForInitialization();
+                                            }
+                                        }
+                                    }
+                                    if (this.ObjectField.DependencyFilter1Value) {
+                                        if (this.ObjectField.DependencyFilter1Type == "Constant") {
+                                            this.DependencyFilter1Value = this.ObjectField.DependencyFilter1Value;
+                                            this.DependencyFilter1IsList = this.ObjectField.DependencyFilter1IsList;
+                                        }
+                                        else {
 
+                                            this.DependencyFilter1Value = this.DataContext[this.ObjectField.DependencyFilter1Value];
+                                        }
+                                    }
+                                    else if (this.ObjectField.ControlField1) {
+                                        this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
+                                    }
+
+                                    if (this.ObjectField.DependencyFilter2Value) {
+                                        if (this.ObjectField.DependencyFilter2Type == "Constant") {
+                                            this.DependencyFilter2Value = this.ObjectField.DependencyFilter2Value;
+                                            this.DependencyFilter2IsList = this.ObjectField.DependencyFilter2IsList;
+                                        }
+                                        else {
+                                            this.DependencyFilter2Value = this.DataContext[this.ObjectField.DependencyFilter2Value];
+                                        }
+                                    }
+                                    else if (this.ObjectField.ControlField2) {
+                                        this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
+                                    }
+
+                                    if (this.ObjectField.DependencyFilter3Value) {
+                                        if (this.ObjectField.DependencyFilter3Type == "Constant") {
+                                            this.DependencyFilter3Value = this.ObjectField.DependencyFilter3Value;
+                                            this.DependencyFilter3IsList = this.ObjectField.DependencyFilter3IsList;
+                                        }
+                                        else {
+
+                                            this.DependencyFilter3Value = this.DataContext[this.ObjectField.DependencyFilter3Value];
+                                        }
+                                    }
+                                    else if (this.ObjectField.ControlField3) {
+                                        this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
+                                    }
+
+                                    if (this.ObjectField.ControlField1 || this.ObjectField.ControlField2 || this.ObjectField.ControlField3) {
+                                        if (this.DataContext.PropertyChanged != null && this.DataContext.PropertyChanged != undefined) {
+                                            this.PropertyChangedSubscribtion =  this.DataContext.PropertyChanged.subscribe(args => {
+                                                if (args.PropertyName == this.ObjectField.ControlField1) {
+                                                    this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
+                                                    this.OnDeleteValue();
+                                                }
+
+                                                if (args.PropertyName == this.ObjectField.ControlField2) {
+                                                    this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
+                                                    this.OnDeleteValue();
+                                                }
+
+                                                if (args.PropertyName == this.ObjectField.ControlField3) {
+                                                    this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
+                                                    this.OnDeleteValue();
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            var value = this.DataContext[this.ObjectFieldName];
+                            if (this.ObjectField && this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
+                                var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                                if (customFieldClass != null && customFieldClass != undefined) {
+                                    value = customFieldClass.Value;
+                                }
+                                else {
+                                    console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
+                                }
+
+                            }
+
+                            if (value) {
+
+                                this.GetSingle(this.LookUpTable);
+
+                            }
+
+
+                            this.uiProperty.UIPropertyChanged.subscribe(value=> {
+
+                                if (value instanceof UIPropertyArgs) {
+                                    var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+                                    var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
+                                    if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
+                                        if (uiPropertyArgs.property == "IsEnabled") {
+                                            var isEnabled = uiPropertyArgs.newValue;
+                                            this.IsDisabled = !isEnabled;
+                                            this.uiProperty.IsEnabled = isEnabled;
+                                        }
+                                        else if (uiPropertyArgs.property == "IsRequired") {
+                                            if (this.searchTextChanged) {
+
+                                                this.ValidateField(false);
+                                            }
+                                        }
+                                        else if (uiPropertyArgs.property == "IsVisible") {
+                                            if (uiPropertyArgs.newValue == true && this.AfterViewInitialized == false) {
+                                                this.InitializeAfterViewInit();
+                                            }
+                                        }
+                                        else if (uiPropertyArgs.property == "IsValid") {
+                                            this.ValidateField(false);
+                                        }
+                                    }
+                                }
+
+                            });
                         });
                     });
                 });
             });
         });
-        return objectFieldAvailable;
-    }
-
-    private WarnIfObjectFieldNotAvailable(objectFieldAvailable: boolean) {
-        if (!objectFieldAvailable && !this.NoObjectField) {
-            console.warn(this.ObjectFieldName + " LOV has no object field!");
-        }
-    }
-
-    private ContinueInitializationIfObjectFieldAvailable(objectFieldAvailable: boolean) {
-        if (this.ObjectTable) {
-            this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTable.Id && d.FieldName === this.ObjectFieldName)[0];
-            if (!this.ObjectField) {
-                objectFieldAvailable = false;
-            }
-            else {
-                objectFieldAvailable = true;
-                this.InitializeObjectFieldHelp();
-
-                this.InitializeDependencyFilter1Value();
-
-                this.InitializeDependencyFilter2Value();
-
-                this.InitializeDependencyFilter3Value();
-
-                this.InitializeControlFieldSubscribtion();
-            }
-
-        }
-        return objectFieldAvailable;
-    }
-
-    private InitializeControlFieldSubscribtion() {
-        if (this.ObjectField.ControlField1 || this.ObjectField.ControlField2 || this.ObjectField.ControlField3) {
-            if (this.DataContext.PropertyChanged != null && this.DataContext.PropertyChanged != undefined) {
-                this.PropertyChangedSubscribtion = this.DataContext.PropertyChanged.subscribe(args => {
-                    if (args.PropertyName == this.ObjectField.ControlField1) {
-                        this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
-                        this.OnDeleteValue();
-                    }
-
-                    if (args.PropertyName == this.ObjectField.ControlField2) {
-                        this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
-                        this.OnDeleteValue();
-                    }
-
-                    if (args.PropertyName == this.ObjectField.ControlField3) {
-                        this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
-                        this.OnDeleteValue();
-                    }
-                });
-            }
-        }
-    }
-
-    private InitializeDependencyFilter3Value() {
-        if (this.DependencyFilter3Value == null || this.DependencyFilter3Value === undefined) {
-            if (this.ObjectField.DependencyFilter3Value) {
-                if (this.ObjectField.DependencyFilter3Type == "Constant") {
-                    this.DependencyFilter3Value = this.ObjectField.DependencyFilter3Value;
-                    this.DependencyFilter3IsList = this.ObjectField.DependencyFilter3IsList;
-                }
-                else {
-
-                    this.DependencyFilter3Value = this.DataContext[this.ObjectField.DependencyFilter3Value];
-                }
-            }
-            else if (this.ObjectField.ControlField3) {
-                this.DependencyFilter3Value = this.DataContext[this.ObjectField.ControlField3];
-            }
-        }
-    }
-
-    private InitializeDependencyFilter2Value() {
-        if (this.DependencyFilter2Value == null || this.DependencyFilter2Value === undefined) {
-            if (this.ObjectField.DependencyFilter2Value) {
-                if (this.ObjectField.DependencyFilter2Type == "Constant") {
-                    this.DependencyFilter2Value = this.ObjectField.DependencyFilter2Value;
-                    this.DependencyFilter2IsList = this.ObjectField.DependencyFilter2IsList;
-                }
-                else {
-                    this.DependencyFilter2Value = this.DataContext[this.ObjectField.DependencyFilter2Value];
-                }
-            }
-            else if (this.ObjectField.ControlField2) {
-                this.DependencyFilter2Value = this.DataContext[this.ObjectField.ControlField2];
-            }
-        }
-    }
-
-    private InitializeDependencyFilter1Value() {
-        if (this.DependencyFilter1Value == null || this.DependencyFilter1Value === undefined) {
-            if (this.ObjectField.DependencyFilter1Value) {
-                if (this.ObjectField.DependencyFilter1Type == "Constant") {
-                    this.DependencyFilter1Value = this.ObjectField.DependencyFilter1Value;
-                    this.DependencyFilter1IsList = this.ObjectField.DependencyFilter1IsList;
-                }
-                else {
-
-                    this.DependencyFilter1Value = this.DataContext[this.ObjectField.DependencyFilter1Value];
-                }
-            }
-            else if (this.ObjectField.ControlField1) {
-                this.DependencyFilter1Value = this.DataContext[this.ObjectField.ControlField1];
-            }
-        }
-    }
-
-    private InitializeObjectFieldHelp() {
-        if (this.ObjectField.HelpTextCodeCode != null) {
-            this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
-
-            if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
-                if (this.ObjectFieldHelp.length > 1) {
-                    if (!this.IsFreeText)
-                        this.ShowHelp = true;
-
-                }
-            }
-        }
-    }
-
-    private GetFirstSingleValueForInitialization() {
-        var value = this.DataContext[this.ObjectFieldName];
-        if (this.ObjectField && this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
-            var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
-            if (customFieldClass != null && customFieldClass != undefined) {
-                value = customFieldClass.Value;
-            }
-            else {
-                console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
-            }
-
-        }
-
-        if (value) {
-
-            this.GetSingle(this.LookUpTable);
-
-        }
-    }
-
-    private InitializeDisplayMemberPath() {
-        if (!this.DisplayMemberPath) {
-            this.SetDisplayMemberPath();
-        }
-        else {
-            this.DisplayMemberPathManuallySet = true;
-        }
-    }
-
-    private InitializeLovPartnerTypsForSomeTables() {
-
-        if (this.LookUpTableName == "Card" || this.LookUpTableName == "Carrier") {
-            if (this.DependencyFilter1Value != null && this.DependencyFilter1Value != undefined) {
-
-                //this._entityResourceService.getEntityResourceByTableName(parentName, 0).subscribe((otherResp: any) => { });
-                if (this.DependencyFilter1Value.toString().split(',').length > 1) {
-                    var types: string[] = this.DependencyFilter1Value.toString().split(',');
-                    this.LovPartnerTypes = this.PartnerTypes.filter(d => types.indexOf(d.Id) > -1);
-                }
-            }
-        }
-    }
-
-    private InitializeLanguageFilter() {
-        var lang = 'E';
-        if (SessionInfo.LoggedUserPM.ShowLocalNameInLOV) {
-            lang = 'L';
-            this.ShowLanguageFilter = true;
-        }
-        this.LanguageFilterValue = lang;
-    }
-
-    private PrepareApiQueryFilters() {
-        var apiQueryFilter: ApiQueryFilters;
-        if (!this.QueryFilterItems) {
-            apiQueryFilter = new ApiQueryFilters();
-
-        }
-        else {
-            apiQueryFilter = new ApiQueryFilters();
-            for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
-                var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
-                apiQueryFilter.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
-                    filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
-            }
-
-
-        }
-
-        apiQueryFilter = this.FillTreeFilterDetails(apiQueryFilter);
-
-        return apiQueryFilter;
-    }
-
-    private InitializeActionButtonsState() {
         if (this.LookUpTable.IsClosed)
             this.showOnlyDelete = true;
         if (this.LookUpTable.EnableAddFromLOV) {
             this.isAddDisabled = false;
 
-            if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
-                this.ShowAddLink = false;
+            if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.LookUpTableName == "User") {
+                this.ShowAddLink = false
 
             }
 
@@ -954,270 +797,117 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
         }
 
-        if (!this.ShowAddLink && !this.ShowSearchButton) {
+        //*ngIf="ShowAddLink || ShowSearchButton"
+      if (!this.ShowAddLink && !this.ShowSearchButton) {
 
-            this.MyDropDownHeight = { 'height': '255px' };
+            this.MyDropDownHeight = { 'height': '255px' }
+        }
+
+        if (!objectFieldAvailable && !this.NoObjectField) {
+            console.warn(this.ObjectFieldName + " LOV has no object field!");
         }
     }
-
-    private ClearIsDisabledTimer() {
-        if (this.SetIsDisabledTimer) {
-            clearTimeout(this.SetIsDisabledTimer);
-        }
-    }
-
-    private InitializeUiProperty() {
-        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
-    }
-
-    private InitializeKeyPropertyPath() {
-        this.KeyPropertyPath = this.LookUpTable.KeyPropertyPath;
-    }
-
-    private InitializeSelectedValuePath() {
-        if (!this.SelectedValuePath) {
-            this.SelectedValuePath = this.LookUpTable.KeyPropertyPath;
-        }
-    }
-
-    private ConvertToAllMyDataModeForSomeTables() {
-        if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier') {
-            this.IsAllDataVisible = true;
-            this.DropDownHeight = 280;
-            this.MyDropDownHeight = { 'height': '105px' };
-            this.DisplayHeader = false;
-            if (this.LookUpTableName == 'Port') {
-                this.AllDataHeaderTitle = 'All Ports';
-                this.MyDataHeaderTitle = 'My Ports';
-            }
-            else {
-                this.AllDataHeaderTitle = 'All Carriers';
-                this.MyDataHeaderTitle = 'My Carriers';
-            }
-        }
-        else {
-
-            this.IsAllDataVisible = false;
-        }
-    }
-
-    private UseCompactSearchForSomeTables() {
-        if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier' || this.LookUpTableName == 'Card') {
-            this.UseCompactSearch = true;
-        }
-    }
-
-    private SetDropDownWidthAccordingToTable() {
-        const hasCustomColumnWidths = this.ColumnsWidths.length > 0;
-        if (hasCustomColumnWidths) {
-            this.CalculateDropdownPanelWidthFromCustomColumnsWidths();
-        }
-        else if (!this.CustomizedWidth) {
-            if (this.LookUpTableName == 'Card') {
-                this.DropDownWidth = 450;
-            }
-            if (this.LookUpTableName == 'User' || this.LookUpTableName == 'ChargesType') {
-                this.DropDownWidth = 400;
-            }
-            if (this.LookUpTableName == 'Carrier') {
-                this.DropDownWidth = 350;
-            }
-            if (this.LookUpTableName == 'GLAccount') {
-                this.DropDownWidth = 400;
-            }
-        }
-        else {
-            this.DropDownWidth = this.CustomizedWidth;
-        }
-    }
-
-    private CalculateDropdownPanelWidthFromCustomColumnsWidths() {
-        this.DropDownWidth = this.ColumnsWidths
-            .filter(colWidth => this.headerColumns.map(col => col.Field).includes(colWidth.ColumnName))
-            .reduce((sum, colWidth) => (sum + colWidth.Width), 0);
-    }
-
-    private AssignLookup1AndLookup2() {
-        this.LookUp1 = this.LookUpTable.LookUp1;
-        this.LookUp2 = this.LookUpTable.LookUp2;
-    }
-
-    private AssignLookupAndObjectTable() {
-        this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
-        this.ObjectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
-    }
-
-    private ShowSearchOrToggleButton() {
-        if ((this.LookUpTable.AutoCompleteSearchWindow || this.AutoCompleteSearchWindow) && !this.RunToggleMode) {
-            this.ShowSearchButton = true;
-            this.showToggleButton = false;
-        }
-        else {
-            this.showToggleButton = true;
-            this.ShowSearchButton = false;
-
-        }
-    }
-
-    private InsideEditableGridCopyCellInitialization() {
-        if (this.FocusOnMe) { // it means it is inside a grid.
-            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
-                if (id == this.ElementId) {
-                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
-                    this.GetSingle(this.LookUpTable);
-                    this.CurrentSession.CopiedCell = null;
-                }
-            });
-
-        }
-    }
-
-    DrawColumns() {
+    DrawColumns(){
         var lookupFields: any[];
-        this.headerColumns = [];
-        this.dataColumns = [];
-        let drawCustomColumns = (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined)
-            || (this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
+        this.headerColumns=[];
+        this.dataColumns=[];
+                            if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
+                                var fields: string[] = this.DisplayFieldsFromList.split(',');
+                                lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName)>-1);
+                            }
+                            else {
+                                //if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
+                                    if(this.LanguageFilterValue=='E'){
+                                    lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+                                    }
+                                    else{
+                                        lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
+                                        if(lookupFields.length==0){
+                                            console.warn("There is no Fields defined as display in lookup local");
+                                            this.ShowLanguageFilter=false;
+                                            lookupFields=window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+                                        }
+                                    }
+                            }
+                            if (!this.DisplayFieldsFromList) {
+                                lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
+                            }
 
-        if (drawCustomColumns) {
-            lookupFields = this.DrawCustomColumns(lookupFields);
-        }
-        else {
+                            for (var i = 0; i < lookupFields.length; i++) {
+                                //this.Widths.push(this.DropDownWidth / lookupFields.length);
+                                this.MinWidths.push(TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode).length * 8 + 6);
+                            }
+                            //var dropdownWidth = lookupFields.length * 120 + 20;
+                            //this.DropPopUpStyle = { width: dropdownWidth.toString() + 'px' };
+                            var additionalCols = lookupFields.filter(d => d.DisplayInLookUpIndex > 1);
+                            if (lookupFields.length == 1) {
+                                this.DisplayHeader = false;
+                            }
+                            else if (!this.IsAllDataVisible) {
+                                this.DisplayHeader = true;
+                          }
+                          if (!this.ShowAddLink && !this.ShowSearchButton) {
+                            if (this.DisplayHeader) {
+                              this.DropDownHeight = 278;
+                            }
+                            else {
+                              this.DropDownHeight = 260;
+                            }
+                          }
+                            this.IsReady = true;
+                            for (var i = 0; i < lookupFields.length; i++) {
+                                var width: number = 100;
+                                if (lookupFields[i].DisplayInLookupColumnSize) {
+                                    width = lookupFields[i].DisplayInLookupColumnSize;
+                                }
+                                else {
+                                    if (lookupFields[i].DisplayInLookUpIndex == 0) {
+                                        if (!additionalCols || additionalCols.length == 0 || additionalCols.length == 1) {
+                                            width = 120;
+                                        }
+                                        else {
+                                            width = 70;
+                                        }
+                                    }
+                                    if (lookupFields[i].DisplayInLookUpIndex == 1) {
+                                        if (!additionalCols || additionalCols.length == 0 || additionalCols.length == 1) {
+                                            width = 120;
+                                        }
+                                        else {
+                                            width = 100;
+                                        }
+                                    }
 
-            lookupFields = this.DrawDefaultColumns(lookupFields);
-        }
+                                    if (lookupFields[i].DisplayInLookUpIndex > 1) {
+                                        if (additionalCols.length == 1) {
+                                            width = 85;
+                                        }
+                                        if (additionalCols.length > 1) {
+                                            width = (400 - 170) / additionalCols.length;
+                                        }
+                                    }
 
+                                }
 
-        for (var i = 0; i < lookupFields.length; i++) {
-
-            this.MinWidths.push(TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode).length * 8 + 6);
-        }
-
-
-        var additionalCols = lookupFields.filter(d => d.DisplayInLookUpIndex > 1);
-        if (lookupFields.length == 1) {
-            this.DisplayHeader = false;
-        }
-        else if (!this.IsAllDataVisible) {
-            this.DisplayHeader = true;
-        }
-        if (!this.ShowAddLink && !this.ShowSearchButton) {
-            if (this.DisplayHeader) {
-                this.DropDownHeight = 278;
-            }
-            else {
-                this.DropDownHeight = 260;
-            }
-        }
-        this.IsReady = true;
-        for (var i = 0; i < lookupFields.length; i++) {
-            var width: number = 100;
-            if (lookupFields[i].DisplayInLookupColumnSize) {
-                width = lookupFields[i].DisplayInLookupColumnSize;
-            }
-            else {
-                if (lookupFields[i].DisplayInLookUpIndex == 0) {
-                    if (!additionalCols || additionalCols.length == 0 || additionalCols.length == 1) {
-                        width = 120;
-                    }
-                    else {
-                        width = 70;
-                    }
-                }
-                if (lookupFields[i].DisplayInLookUpIndex == 1) {
-                    if (!additionalCols || additionalCols.length == 0 || additionalCols.length == 1) {
-                        width = 120;
-                    }
-                    else {
-                        width = 100;
-                    }
-                }
-
-                if (lookupFields[i].DisplayInLookUpIndex > 1) {
-                    if (additionalCols.length == 1) {
-                        width = 85;
-                    }
-                    if (additionalCols.length > 1) {
-                        width = (400 - 170) / additionalCols.length;
-                    }
-                }
-
-            }
-
-            this.headerColumns.push({
-                Display: TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode),
-                Width: width,
-                Field: lookupFields[i].FieldName,
-                Index: lookupFields[i].DisplayInLookUpIndex,
-            });
-            this.dataColumns.push({ Field: lookupFields[i].FieldName });
-        }
-
-        this.SetDropDownWidthAccordingToTable();
+                                this.headerColumns.push({
+                                    Display: TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode),
+                                    Width: width,
+                                    Field: lookupFields[i].FieldName,
+                                    Index: lookupFields[i].DisplayInLookUpIndex,
+                                });
+                                this.dataColumns.push({ Field: lookupFields[i].FieldName });
+                            }
     }
 
-    private DrawDefaultColumns(lookupFields: any[]) {
-        if (this.LanguageFilterValue == 'E') {
-            lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
-        }
-        else {
-            lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
-            if (lookupFields.length == 0) {
-                console.warn("There is no Fields defined as display in lookup local");
-                this.ShowLanguageFilter = false;
-                lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
-            }
-        }
-        lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
-        return lookupFields;
-    }
-
-    private DrawCustomColumns(lookupFields: any[]) {
-        let fields: string[] = [];
-        let hasLocalCustomColumns = (this.DisplayLocalFieldsFromList != null && this.DisplayLocalFieldsFromList != undefined);
-        let hasEnglishCustomColumns = (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined);
-
-        if (this.ForceShowLocalAndEnglishColumns) {
-
-            let allColumns = this.DisplayFieldsFromList.replace('EnglishName', 'EnglishName,LocalName')
-            fields = allColumns.split(',');
-            this.DropDownWidth += 145;
-
-        } else if (hasEnglishCustomColumns && (this.LanguageFilterValue == 'E' || !hasLocalCustomColumns)) {
-            fields = this.DisplayFieldsFromList.split(',');
-        }
-        else {
-            fields = this.DisplayLocalFieldsFromList.split(',');
-        }
-
-        lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
-        lookupFields = this.OrderLookupFieldsByCustomFieldsArray(lookupFields, fields);
-        return lookupFields;
-    }
-
-    OrderLookupFieldsByCustomFieldsArray(lookupFields: ObjectFieldPM[], orderedFields: string[]) {
-        lookupFields = lookupFields.sort((a, b) => {
-            var A = a['FieldName'], B = b['FieldName'];
-
-            if (orderedFields.indexOf(A) > orderedFields.indexOf(B)) {
-                return 1;
-            }
-            else {
-                return -1;
-            }
-        });
-        return lookupFields;
-    }
-
-    SetDisplayMemberPath() {
+    SetDisplayMemberPath(){
         if (!this.DisplayMemberPathManuallySet) {
             /// this case we have to show the local display member path if available
-            if (this.LanguageFilterValue != 'E') {
-                if (this.LookUpTable.LovDisplayMemberPathLocal) {
-                    this.DisplayMemberPath = this.LookUpTable.LovDisplayMemberPathLocal;
+            if(this.LanguageFilterValue!='E'){ 
+                if(this.LookUpTable.LovDisplayMemberPathLocal){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPathLocal;
                 }
-                else if (this.LookUpTable.LovDisplayMemberPath) {
-                    this.DisplayMemberPath = this.LookUpTable.LovDisplayMemberPath;
+                else if(this.LookUpTable.LovDisplayMemberPath){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPath;
                 }
                 else if (this.LookUpTable.LookUp2) {
                     this.DisplayMemberPath = this.LookUpTable.LookUp2;
@@ -1227,9 +917,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 }
             }
             /// this case we have to show the display member path if available
-            else {
-                if (this.LookUpTable.LovDisplayMemberPath) {
-                    this.DisplayMemberPath = this.LookUpTable.LovDisplayMemberPath;
+            else{
+                if(this.LookUpTable.LovDisplayMemberPath){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPath;
                 }
                 else if (this.LookUpTable.LookUp2) {
                     this.DisplayMemberPath = this.LookUpTable.LookUp2;
@@ -1237,18 +927,23 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 else {
                     this.DisplayMemberPath = this.LookUpTable.LookUp1;
                 }
-            }
+           }
         }
     }
 
     SetIsDisabled() {
+        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+        //console.log(this.uiProperty);
         if (this.AlwaysEnabled == true) {
             this.IsDisabled = false;
         }
         else {
-            this.IsDisabled = this.ForceDisabled ? true : !this.uiProperty.IsEnabled;
+            this.IsDisabled = !this.uiProperty.IsEnabled;
+            //console.log("Out " + this.LookUpTableName+ " " + this.uiProperty.IsEnabled)
         }
-        this.ClearIsDisabledTimer();
+        if (this.SetIsDisabledTimer) {
+            clearTimeout(this.SetIsDisabledTimer);
+        }
     }
     GetSingle(lookup: any) {
 
@@ -1279,12 +974,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
                     var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
                     apiFilters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
-                        filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, lookup.CacheOnClient);
-                }
+                        filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
+            }
 
             }
             if (lookup.CacheOnClient) {
-                this.entityListService.getSingleFromCache(value, this.LookUpTableName, apiFilters).then((res: any) => {
+                this.entityListService.getSingleFromCache(value, this.LookUpTableName, apiFilters).then((res:any) => {
                     res.subscribe(myResponse => {
                         if (myResponse != null) {
 
@@ -1294,13 +989,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             }
 
                             if (list) {
-                                this.SearchTextNgModel = list[this.DisplayMemberPath];
-                                this.OldSearchInput = this.SearchTextNgModel;
-                                this.DisplayValue = list[this.DisplayMemberPath];
-                                this.SelectedItem = list;
-                                this.SetToolTipInfo();
-                                this.SelectedItemObject = this.SelectedItem;
-                                this.SelectedItemChanged.emit(this.SelectedItem);
+                            this.SearchTextNgModel = list[this.DisplayMemberPath];
+                            this.OldSearchInput = this.SearchTextNgModel;
+                            this.DisplayValue = list[this.DisplayMemberPath];
+                            this.SelectedItem = list;
+                            this.SetToolTipInfo();
+                            this.SelectedItemObject = this.SelectedItem;
+                            this.SelectedItemChanged.emit(this.SelectedItem);
                             }
 
                         }
@@ -1308,51 +1003,26 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 });
             }
             else {
-                let includeMetaDataFieldsFilter = this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters ?
-                    this.QueryFilterItems.AdditionalFilters.find(f => f.FieldName == "IncludeMetaDataFields") : null;
-
-                if (this.LookUpTableName === "ObjectField" && includeMetaDataFieldsFilter && includeMetaDataFieldsFilter.FieldValue === true) {
-                    let objectFieldListService = new ObjectFieldListService();
-                    objectFieldListService.getSingle(value, true).subscribe(myResponse => {
+                this.entityListService.getSingle(value, this.LookUpTableName).then((res:any) => {
+                    res.subscribe(myResponse => {
                         if (myResponse != null) {
+
                             var list = myResponse;
                             if (myResponse instanceof ServiceResponse) {
                                 list = myResponse.Result;
                             }
                             if (list) {
-                                this.SearchTextNgModel = list[this.DisplayMemberPath];
-                                this.OldSearchInput = this.SearchTextNgModel;
-                                this.DisplayValue = list[this.DisplayMemberPath];
-                                this.SelectedItem = list;
-                                this.SetToolTipInfo();
-                                this.SelectedItemObject = this.SelectedItem;
-                                this.SelectedItemChanged.emit(this.SelectedItem);
-                            }
+                            this.SearchTextNgModel = list[this.DisplayMemberPath];
+                            this.OldSearchInput = this.SearchTextNgModel;
+                            this.DisplayValue = list[this.DisplayMemberPath];
+                            this.SelectedItem = list;
+                            this.SetToolTipInfo();
+                            this.SelectedItemObject = this.SelectedItem;
+                            this.SelectedItemChanged.emit(this.SelectedItem);
                         }
-                    });
-                }
-                else {
-                    this.entityListService.getSingle(value, this.LookUpTableName).then((res: any) => {
-                        res.subscribe(myResponse => {
-                            if (myResponse != null) {
-
-                                var list = myResponse;
-                                if (myResponse instanceof ServiceResponse) {
-                                    list = myResponse.Result;
-                                }
-                                if (list) {
-                                    this.SearchTextNgModel = list[this.DisplayMemberPath];
-                                    this.OldSearchInput = this.SearchTextNgModel;
-                                    this.DisplayValue = list[this.DisplayMemberPath];
-                                    this.SelectedItem = list;
-                                    this.SetToolTipInfo();
-                                    this.SelectedItemObject = this.SelectedItem;
-                                    this.SelectedItemChanged.emit(this.SelectedItem);
-                                }
-                            }
-                        });
-                    });
-                }
+                        }
+                    })
+                });
             }
             this.ValidateField(true);
         }
@@ -1389,7 +1059,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnLogLovKeyDown($event) {
-
         var TABKEY = 9;
         var SHIFTKEY = 16;
         var DELETEKEY = 46;
@@ -1417,14 +1086,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnSelected(item: any) {
-
         this.isSelectedFromList = true;
         this.SelectedItem = item;
         var value = this.DataContext[this.ObjectFieldName];
         if (this.ObjectField && this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
             var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
             if (customFieldClass != null && customFieldClass != undefined) {
-                customFieldClass.Value = this.SelectedItem[this.SelectedValuePath];
+                customFieldClass.Value = this.SelectedItem[this.SelectedValuePath];;
                 this.DataContext[this.ObjectFieldName] = customFieldClass;
                 value = customFieldClass.Value;
             }
@@ -1482,22 +1150,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     NavigateListItems(isDown: boolean) {
-
         if (isDown) {
             var isSelected = false;
             var active = document.getElementsByClassName("highlighted");
+
             if (!active[0]) {
                 if (this.ItemsSource && this.ItemsSource.length > 0) {
                     var input = document.getElementById(this.MyDataListId);
                     var lis = input.getElementsByTagName("li");
                     lis[0].classList.add("highlighted");
-                }
-                else if (this.IsAllDataVisible) {
-                    if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                        var input = document.getElementById(this.AllDataListId);
-                        var lis = input.getElementsByTagName("li");
-                        lis[0].classList.add("highlighted");
-                    }
                 }
 
             }
@@ -1505,85 +1166,118 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (active[0].nextElementSibling) {
                     active[0].nextElementSibling.classList.add("highlighted");
                     active[0].classList.remove("highlighted");
+
+
                     active[0].scrollIntoView(false);
-                }
-                else if (this.IsAllDataVisible) {
-                    if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                        var input = document.getElementById(this.AllDataListId);
-                        active[0].classList.remove("highlighted");
-                        var lis = input.getElementsByTagName("li");
-                        lis[0].classList.add("highlighted");
-                    }
                 }
             }
         }
         else {
             var active = document.getElementsByClassName("highlighted");
             if (active[0]) {
-                // if (this.ItemsSource && this.ItemsSource.length > 0) {
-                if (active[0].previousElementSibling) {
-                    active[0].previousElementSibling.classList.add("highlighted");
-                    active = document.getElementsByClassName("highlighted");
-                    active[1].classList.remove("highlighted");
-                    active[0].scrollIntoView(false);
-                }
-                else if (this.IsAllDataVisible) {
-                    if (this.ItemsSource && this.ItemsSource.length > 0) {
-                        var input = document.getElementById(this.MyDataListId);
-                        active[0].classList.remove("highlighted");
-                        var lis = input.getElementsByTagName("li");
-                        lis[lis.length - 1].classList.add("highlighted");
+                if (this.ItemsSource && this.ItemsSource.length > 0) {
+                    if (active[0].previousElementSibling) {
+                        active[0].previousElementSibling.classList.add("highlighted");
+                        active = document.getElementsByClassName("highlighted");
+                        active[1].classList.remove("highlighted");
+                        active[0].scrollIntoView(false);
                     }
                 }
-                // }
-                // else if(this.IsAllDataVisible){
-                //     if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                //         var input = document.getElementById(this.AllDataListId);
-                //         var lis = input.getElementsByTagName("li");
-                //         lis[0].classList.add("highlighted");
-                //     }
-                // }
             }
         }
     }
 
     OnSearchIputKeyDown($event) {
 
-        const TABKEY = 9;
-        const ENTERKEY = 13;
-        const DOWNKEY = 40;
-        const UPKEY = 38;
-        const ESC = 27;
-        const CTRL = 17;
-        const SHIFT = 16;
-       
-        if ($event.keyCode === CTRL) {
+        var TABKEY = 9;
+        var ENTERKEY = 13;
+        var DOWNKEY = 40;
+        var UPKEY = 38;
+        var ESC = 27;
+        var CTRL = 17;
+        var SHIFT = 16;
+        if ($event.keyCode == CTRL) {
             this.IsCTRLDown = true;
         }
 
-        if ($event.keyCode === 220) {
+        if ($event.keyCode == 220) {
             return false;
         }
-        if ($event.keyCode === TABKEY) {
+        if ($event.keyCode == TABKEY) {
             this.MouseInArea = false;
             this.tabkeyDown = true;
 
             if (this.IsOpen) {
-                this.FocusOnSelect = false;
-                this.SelectHighlightedItem();
-            }
-        }
+                var active = document.getElementsByClassName("highlighted");
+                if (active[0]) {
+                    var input = document.getElementById(this.MyDataListId);
+                    var lis = input.getElementsByTagName("li");
+                    for (var i = 0; i < lis.length; i++) {
 
-        if ($event.keyCode === ENTERKEY) {
+                        if (lis[i].className.search("highlighted") > -1) {
+                            this.FocusOnSelect = false;
+                            lis[i].classList.remove("highlighted");
+                            lis[i].click();
+                        }
+                    }
+
+                }
+                else {
+                    var selected = document.getElementsByClassName("liItemSelected");
+                    if (selected[0]) {
+                        var input = document.getElementById(this.MyDataListId);
+                        var lis = input.getElementsByTagName("li");
+                        for (var i = 0; i < lis.length; i++) {
+
+                            if (lis[i].className.search("liItemSelected") > -1) {
+                                this.FocusOnSelect = false;
+                                lis[i].classList.remove("liItemSelected");
+                                lis[i].click();
+                            }
+                        }
+                    }
+                }
+
+            }
             if (this.IsOpen) {
-                this.SelectHighlightedItem();
+                this.ToggleOpenDropDown();
             }
-            else {
-                this.KeyDownEvent.emit(13);
+            //this.OnBlurEvent.emit("");
+        }
+
+        if ($event.keyCode == ENTERKEY) {
+            if (this.IsOpen) {
+                var active = document.getElementsByClassName("highlighted");
+                if (active[0]) {
+                    var input = document.getElementById(this.MyDataListId);
+                    var lis = input.getElementsByTagName("li");
+                    for (var i = 0; i < lis.length; i++) {
+
+                        if (lis[i].className.search("highlighted") > -1) {
+                            lis[i].classList.remove("highlighted");
+                            lis[i].click();
+                        }
+                    }
+
+                }
+                else {
+                    var selected = document.getElementsByClassName("liItemSelected");
+                    if (selected[0]) {
+                        var input = document.getElementById(this.MyDataListId);
+                        var lis = input.getElementsByTagName("li");
+                        for (var i = 0; i < lis.length; i++) {
+
+                            if (lis[i].className.search("liItemSelected") > -1) {
+                                lis[i].classList.remove("liItemSelected");
+                                lis[i].click();
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        if ($event.keyCode === DOWNKEY) {
+        if ($event.keyCode == DOWNKEY) {
 
             if (!this.IsOpen) {
                 this.ToggleOpenDropDown();
@@ -1592,14 +1286,16 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 }
             }
             else {
-                const selected = document.getElementsByClassName('liItemSelected');
+                var selected = document.getElementsByClassName("liItemSelected");
                 if (selected[0]) {
-                    if (this.ItemsSource && this.ItemsSource.length > 0) {
-                        this.RemoveSelectedAddHighlighted(this.MyDataListId);
-                    }
-                    else if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                        this.RemoveSelectedAddHighlighted(this.AllDataListId);
+                    var input = document.getElementById(this.MyDataListId);
+                    var lis = input.getElementsByTagName("li");
+                    for (var i = 0; i < lis.length; i++) {
 
+                        if (lis[i].className.search("liItemSelected") > -1) {
+                            lis[i].classList.remove("liItemSelected");
+                            lis[i].classList.add("highlighted");
+                        }
                     }
                 }
                 this.NavigateListItems(true);
@@ -1607,92 +1303,30 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             return false;
         }
 
-        if ($event.keyCode === UPKEY) {
+        if ($event.keyCode == UPKEY) {
             this.NavigateListItems(false);
             return false;
         }
 
-        if ($event.keyCode === ESC) {
+        if ($event.keyCode == ESC) {
             if (this.IsOpen) {
                 this.ToggleOpenDropDown();
             }
         }
 
-        const key = $event.keyCode;
-        if (key !== 17 && key !== 18 && key !== 19 && key !== 20
-            && key !== 37 && key !== 38 && key != 39 && key !== 40
-            && key !== 35 && key !== 45 && key !== 33 && key !== 34
-            && key !== 145 && key !== 13 && key !== 27 && key !== 9
-            && key !== 16 && key !== 36 && key !== 144
+        var key = $event.keyCode;
+        if (key != 17 && key != 18 && key != 19 && key != 20
+            && key != 37 && key != 38 && key != 39 && key != 40
+            && key != 35 && key != 45 && key != 33 && key != 34
+            && key != 145 && key != 13 && key != 27 && key != 9
+            && key != 16 && key != 36 && key != 144
             && !(key >= 112 && key <= 123) && !this.IsCTRLDown) {
             this.OnDeleteValue(false);
         }
 
-    }
-
-    RemoveSelectedAddHighlighted(dropDownId: string) {
-        var myDataDropDown = document.getElementById(dropDownId);
-        var lis = myDataDropDown.getElementsByTagName("li");
-        for (var i = 0; i < lis.length; i++) {
-
-            if (lis[i].className.search("liItemSelected") > -1) {
-                lis[i].classList.remove("liItemSelected");
-                lis[i].classList.add("highlighted");
-            }
-        }
-    }
-
-    ClickOnHighlightedItemReturnStatus(dropDownListId: string) {
-        var input = document.getElementById(dropDownListId);
-        var lis = input.getElementsByTagName("li");
-        var selectedItemFound: boolean = false;
-        for (var i = 0; i < lis.length; i++) {
-
-            if (lis[i].className.search("highlighted") > -1) {
-                selectedItemFound = true;
-                lis[i].classList.remove("highlighted");
-                lis[i].click();
-            }
-        }
-        return selectedItemFound;
-    }
-
-    ClickOnSelectedItemReturnStatus(dropDownListId: string) {
-        var input = document.getElementById(dropDownListId);
-        var selectedItemFound: boolean = false;
-        if (input) {
-            var lis = input.getElementsByTagName("li");
-            for (var i = 0; i < lis.length; i++) {
-
-                if (lis[i].className.search("liItemSelected") > -1) {
-                    selectedItemFound = true;
-                    lis[i].classList.remove("liItemSelected");
-                    lis[i].click();
-                }
-            }
-        }
-        return selectedItemFound;
-    }
-
-    SelectHighlightedItem() {
-        var selectedItemFound: boolean = false;
-        var active = document.getElementsByClassName("highlighted");
-        if (active[0]) {
-            selectedItemFound = this.ClickOnHighlightedItemReturnStatus(this.MyDataListId);
-            if (!selectedItemFound) {
-                selectedItemFound = this.ClickOnHighlightedItemReturnStatus(this.AllDataListId);
-            }
-
-        }
-        else {
-            var selected = document.getElementsByClassName("liItemSelected");
-            if (selected[0]) {
-                selectedItemFound = this.ClickOnSelectedItemReturnStatus(this.MyDataListId);
-            }
-            if (!selectedItemFound) {
-                selectedItemFound = this.ClickOnSelectedItemReturnStatus(this.AllDataListId);
-            }
-        }
+        //if ((48 <= key && key <= 57) || (65 <= key && key <= 90) || key == 8 || key == 46 || key == 32) {
+        //    this.OnDeleteValue(false);
+        //}
     }
 
     OnLiMouseOver($event) {
@@ -1712,109 +1346,56 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         $event.target.classList.remove("highlighted");
     }
     SelectedItemKey: any;
-    SelectedZeroItemKey: any;
     KeyPropertyPath: any;
-    HighlightSelectedValue() {
+    HighlightSelectedValue(items: any[]) {
         this.SelectedItemKey = null;
-        //this.SelectedZeroItemKey=null;
-        if (this.SearchTextNgModel != null && this.SearchTextNgModel != undefined && this.SearchTextNgModel != "") {
+        if (this.SearchTextNgModel != null && this.SearchTextNgModel != undefined && this.SearchTextNgModel!="") {
 
-            if (this.ItemsSource && this.ItemsSource.length > 0) {
-                var oldItems = this.ItemsSource;
+            var oldItems = items;
 
-                var item = this.ItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
-                if (!item && this.LookUp2) {
-                    var item = this.ItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
-                }
-                if (!item) {
-                    var item = this.ItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
-                }
-                if (item) {
-                    this.ItemsSource = [];
-                    this.ItemsSource.push(item);
-                    var index = oldItems.indexOf(item);
-                    oldItems.splice(index, 1);
-                    oldItems.forEach((itm) => {
-                        this.ItemsSource.push(itm);
-                    });
-
-                    //var index = items.indexOf(item);
-                    //var temp = items[0];
-                    //items[0] = item;
-                    //items[index] = temp;
-                    this.SelectedItemKey = item[this.KeyPropertyPath];
-                }
-                else if (this.ItemsSource.length > 0) {
-                    this.SelectedItemKey = this.ItemsSource[0][this.KeyPropertyPath];
-                }
+            var item = items.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+            if (!item && this.LookUp2) {
+                var item = items.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
             }
-            else if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                if (this.ZeroItemsSource.length > 0) {
-                    var oldItems = this.ZeroItemsSource;
+            if (!item) {
+                var item = items.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+            }
+            if (item) {
+                this.ItemsSource = [];
+                this.ItemsSource.push(item);
+                var index = oldItems.indexOf(item);
+                oldItems.splice(index, 1);
+                oldItems.forEach((itm) => {
+                    this.ItemsSource.push(itm);
+                });
 
-                    var item = this.ZeroItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
-                    if (!item && this.LookUp2) {
-                        var item = this.ZeroItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
-                    }
-                    if (!item) {
-                        var item = this.ZeroItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
-                    }
-                    if (item) {
-                        this.ZeroItemsSource = [];
-                        this.ZeroItemsSource.push(item);
-                        var index = oldItems.indexOf(item);
-                        oldItems.splice(index, 1);
-                        oldItems.forEach((itm) => {
-                            this.ZeroItemsSource.push(itm);
-                        });
-
-                        //var index = items.indexOf(item);
-                        //var temp = items[0];
-                        //items[0] = item;
-                        //items[index] = temp;
-                        this.SelectedItemKey = item[this.KeyPropertyPath];
-                    }
-                    else if (this.ZeroItemsSource.length > 0) {
-                        this.SelectedItemKey = this.ZeroItemsSource[0][this.KeyPropertyPath];
-                    }
-                }
+                //var index = items.indexOf(item);
+                //var temp = items[0];
+                //items[0] = item;
+                //items[index] = temp;
+                this.SelectedItemKey = item[this.KeyPropertyPath];
+            }
+            else if (items.length>0){
+                this.SelectedItemKey = items[0][this.KeyPropertyPath];
             }
         }
     }
-    private oldsearchText: string = ""
-    private cardExtendedPMService: CardExtendedPMService = new CardExtendedPMService()
+
     Populate(searchText: string, setFirstAsSelected: boolean = false) {
-        this.oldsearchText = this.oldsearchText == null ? "" : this.oldsearchText;
-        if (searchText?.length > this.oldsearchText?.length) {
-            if (!AppTool.IsNullOrEmpty(searchText) && ((isNaN(+searchText) && !AppTool.IsNullOrEmpty(this.StartSearchFromChar) && searchText?.length < this.StartSearchFromChar) || (!AppTool.IsNullOrEmpty(this.StartSearchFromNumber) && !isNaN(+searchText) && searchText?.length < this.StartSearchFromNumber)))
-                return;
-        }
+
         this.LovMessage = null;
-        this.oldsearchText = searchText;
-        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+
+        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
 
             this.LovMessage = "Your package doesn't include this module..";
             return;
         }
-        else if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
+        else if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
             this.LovMessage = "You have no permission to view entities of this type.";
             return;
         }
 
-        if (this.LocalFilterFields && this.LocalFilterFields.length > 0 && searchText && searchText.length >= 4 && this.bufferData && this.bufferData.length > 0
-            && this.LocalFilterServerSearchTxtLength != null && searchText.length >= this.LocalFilterServerSearchTxtLength) {
-            const arr = Object.assign([], this.bufferData);
-            this.ItemsSource = arr.filter(x => this.LocalFilterFields.some(fl => x[fl].toLowerCase().startsWith(searchText.toLowerCase())));
-            this.HighlightSelectedValue();
-            if (this.ItemsSource && this.ItemsSource.length > 0) {
-                return;
-            }
-        }
 
-        if (searchText) {
-            this.LocalFilterServerSearchTxtLength = searchText.length;
-        }
-        //this.QueryFilterItems=null
         //reset counters
         this.bufferData = [];
         this.callCount = 0;
@@ -1839,20 +1420,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
             }
         }
-        if (this.IsDecendingSort == true) {
-            filters.SortDirection = "Decending";
-        }
-        else {
-            filters.SortDirection = "Ascending";
 
-        }
-
+        filters.SortDirection = "Ascending";
         if (this.IsTenantZeroSearch) {
             filters.Tenant = 0;
         }
 
         this.SetDependencyProperties(filters);
-        filters = this.FillTreeFilterDetails(filters);
         filters.PageIndex = 0;
 
         if (this.LookUpTable.SortingByObjectField) {
@@ -1864,7 +1438,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (originalTable.Name == "Carrier") {
             originalTable = window.ObjectTables.filter(d => d.Name === "Card")[0];
         }
-        var inactiveField = window.ObjectFields.filter(d => d.FieldName?.toLowerCase() === "inactive" && (d.ObjectTableId === parenttable.Id || d.ObjectTableId === originalTable.Id))[0];
+        var inactiveField = window.ObjectFields.filter(d => d.FieldName.toLowerCase() === "inactive" && (d.ObjectTableId === parenttable.Id || d.ObjectTableId === originalTable.Id))[0];
         if (inactiveField && !this.ShowInActive) {
             filters.addAdditionalFilter(inactiveField.FieldName, false, null, null, "Equals", false, false, false, null, false, this.LookUpTable.CacheOnClient);
         }
@@ -1873,7 +1447,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 searchText = searchText.replace(/"/g, "");
             }
         }
-        if (!this.LookUpTable.CacheOnClient || this.IsTenantZeroSearch || !AppTool.IsNullOrEmpty(filters.TreeFilters)) {//calling data from server;
+        if (!this.LookUpTable.CacheOnClient || this.IsTenantZeroSearch) {//calling data from server;
             this.CallDataFromServer(searchText, filters);
         }
         else {//calling data from cache;
@@ -1893,23 +1467,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
                     tenantZeroFilters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
                         filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, false);
-                }
+            }
             }
 
-            if (this.IsDecendingSort == true) {
-                tenantZeroFilters.SortDirection = "Decending";
-            }
-            else {
-                tenantZeroFilters.SortDirection = "Ascending";
-
-            }
+            tenantZeroFilters.SortDirection = "Ascending";
             if (this.LookUpTable.SortingByObjectField) {
                 tenantZeroFilters.SortBy = this.LookUpTable.SortingByObjectField;
             }
 
             tenantZeroFilters.Tenant = 0;
             if (searchText && !this.UseCompactSearch) {
-                tenantZeroFilters.addAdditionalFilter(this.GetSearchFieldName(), searchText, null, null, "Contains", false, false, false, null, false, false);
+                tenantZeroFilters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, false);
             }
 
             if (inactiveField && !this.ShowInActive) {
@@ -1917,7 +1485,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
 
             this.SetDependencyProperties(tenantZeroFilters);
-            filters = this.FillTreeFilterDetails(filters);
 
             tenantZeroFilters.PageIndex = 0;
             if (this.IsAllDataVisible) {
@@ -1931,49 +1498,21 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             //turn loading flag on
             this.isLoadingZero = true;
 
-            if (this.LookUpTableName == "GLAccount") {
-                var loadPromise = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, tenantZeroFilters);
-            }
-
-            else {
-                var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, tenantZeroFilters);
-            }
+            var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, tenantZeroFilters);
             if (this.UseCompactSearch) {
 
-                let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
-                filterParams.FieldName = "CompactSearchField"
-                filterParams.FieldValue = searchText;
-                filterParams.Operator = "Contains";
-                filterParams.IsCustom = false;
-                filterParams.DisplayInList = false;
-                filterParams.IsCustomField = false;
-                filterParams.FieldDataType = null;
-                filterParams.IsCacheOnClient = false;
-                filterParams.IsLookUpFilter = true;
-                //filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
-                tenantZeroFilters.pushAdditionalFilter(filterParams);
-
-                //tenantZeroFilters.addAdditionalFilter("CompactSearchField", sarchText, null, null, "Contains", false, false, false, null, false, false);
-                if (this.LookUpTableName == "Card") {
-
-                    loadPromise = this.cardExtendedPMService.getByCompactFilters(this.LookUpTableName, tenantZeroFilters);
-
-                }
-                else {
-                    loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, tenantZeroFilters);
-
-                }
+                tenantZeroFilters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null, false, false);
+                loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, tenantZeroFilters);
             }
 
-            loadPromise.then((res: any) => {
-                res.subscribe((resp: any) => {
+            loadPromise.then((res:any)=> {
+                res.subscribe(resp => {
                     //turn loading flag off
                     this.isLoadingZero = false;
                     if (resp.Result) {
                         this.CalculateWidths(resp.Result);
                         this.ZeroItemsSourceCount = resp.Result.length;
                         this.ZeroItemsSource = resp.Result;
-
                     }
                     else {
                         this.CalculateWidths(resp);
@@ -1981,27 +1520,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ZeroItemsSource = resp;
 
                     }
-                    this.ShowOrHideAllDataNoresultMessage();
-                    this.HighlightSelectedValue();
                 })
             });
         }
 
     }
 
-    ShowOrHideAllDataNoresultMessage() {
-        if (this.IsAllDataVisible) {
-            if (this.ZeroItemsSourceCount == 0) {
-                this.AllDataLovMessage = TextCodeTranslator.Translate("General.O.NoMoreResult");
-            }
-            else {
-                this.AllDataLovMessage = null;
-            }
-        }
-    }
-
     OnSearchInputBlur() {
-
         if (!this.MouseInArea) {
             if (this.IsOpen) {
                 this.ToggleOpenDropDown();
@@ -2014,9 +1539,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             if (this.uiProperty.ValidValue) {
                 this.timerToken = setTimeout(() => {
                     this.InputDivStyle = null;
-                }, 300);
+                },300);
             }
-            this.OnBlurEvent.emit({ Id: this.ElementId });
+            this.OnBlurEvent.emit({ Id: this.ElementId});
             this.LostFocus.emit(this.SelectedValue);
         }
 
@@ -2032,8 +1557,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 this.ValidateField();
             }
 
-        }
-        // this.OnBlurEvent.emit({ Id: this.ElementId, Close: true });
+    }
+       // this.OnBlurEvent.emit({ Id: this.ElementId, Close: true });
     }
 
     OnMouseOver() {
@@ -2076,7 +1601,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     //apiQueryFilters.SetFilter(table.DependencyFilter1, depValue1, dependencyField.IsCustomFilter, fieldOperator, null, dependencyField.DisplayInList);
                     apiQueryFilters.addAdditionalFilter(dependencyField.FieldName, this.GetFieldValue(dependencyField.DataTypeCode, this.DependencyFilter1Value),
                         null, null, fieldOperator, dependencyField.IsCustomFilter, dependencyField.DisplayInList, dependencyField.IsCustom,
-                        dependencyField.DataTypeCode, false, this.LookUpTable.CacheOnClient);
+                        dependencyField.DataTypeCode,false, this.LookUpTable.CacheOnClient);
                     //apiQueryFilters.Filter2Name = dependencyField.FieldName;
                     //apiQueryFilters.Filter2Operator = fieldOperator;
                     //apiQueryFilters.Filter2Value = this.GetFieldValue(dependencyField.DataTypeCode, this.DependencyFilter1Value);
@@ -2135,7 +1660,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (value == null || value == undefined) {
             return null;
         }
-        switch (dataTypeCode?.toLowerCase()) {
+        switch (dataTypeCode.toLowerCase()) {
             case "ntext":
             case "text":
                 {
@@ -2151,10 +1676,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 {
                     var bb: boolean;
                     if (typeof (value) == "string") {
-                        if (value?.toLowerCase() == 'false') {
+                        if (value.toLowerCase() == 'false') {
                             bb = false;
                         }
-                        else if (value?.toLowerCase() == 'true') {
+                        else if (value.toLowerCase() == 'true') {
                             bb = true;
                         }
                     }
@@ -2180,7 +1705,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnAllDataSelect(item: any) {
+
         this.CopySelectedItem(item.Id)
+
+
     }
 
     OnDropDownMouseOver() {
@@ -2229,9 +1757,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (deleteSearch) {
             this.SearchTextNgModel = null;
             this.OldSearchInput = this.SearchTextNgModel;
-            this.ValidateField();
+        this.ValidateField();
 
-        }
+    }
 
     }
 
@@ -2276,13 +1804,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     SearchButtonClicked() {
 
-        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
             return;
         }
 
-        else if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
+        else if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "READ") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("You have no permission to view entities of this type.");
             return;
@@ -2300,7 +1828,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         //var ObjectTableId = window.ObjectTables.filter(x => x.Name === this.LookUpTableName)[0].Id;
         var args = new CustomEntityArgs();
         args.ObjectTableId = this.LookUpTable.Id;
-        args.ObjectField = this.ObjectField;
         args.ObjectTableName = this.LookUpTableName;
         args.IsTenantZeroSearch = this.IsTenantZeroSearch;
         args.IsAllDataVisible = this.IsAllDataVisible;
@@ -2322,13 +1849,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         args.IsAddDisabled = this.isAddDisabled;
         args.IsEditDisabled = this.isEditDisabled;
         args.DisplayFieldsFromList = this.DisplayFieldsFromList;
-        args.DisplayLocalFieldsFromList = this.DisplayLocalFieldsFromList;
-        args.LanguageFilterValue = this.LanguageFilterValue;
-        args.ForceShowLanguageFilterOnSearchWindow = this.ForceShowLanguageFilterOnSearchWindow;
-        args.ForceShowLocalAndEnglishColumns = this.ForceShowLocalAndEnglishColumns;
-        args.EntityPM = this.DataContext;
-        args.ObjectFieldCode = this.ObjectFieldCode;
-        args.SearchFieldName = this.LookUpTableName == "DocumentTypeTemplate" ? "Description" : null;
         var tablename = TextCodeTranslator.TranslateTablePlural(this.GetObjectTableName(this.LookUpTableName));
 
         if (tablename == "Cards") {
@@ -2344,8 +1864,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
         logitudeWindow.WindowArgs = args;
-        logitudeWindow.Title = this.isRTL ? TextCodeTranslator.Translate("Accounting.General.O.Search") + " " + TextCodeTranslator.Translate("Accounting.General.O." + tablename) + TextCodeTranslator.TranslateTable(tablename) : tablename + " Search";
-
+        logitudeWindow.Title = tablename + " Search";
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/LogSearchWindowComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnSearchWindowClosed($event));
 
@@ -2356,12 +1875,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             // Get Selected value
             var id = null;
             var tenant = null;
-            let languageCode = this.LanguageFilterValue;
             if (args.indexOf(',')) {
                 var argsarr = args.split(',');
                 id = argsarr[0];
                 tenant = argsarr[1];
-                languageCode = argsarr[2];
             }
             else {
                 id = args;
@@ -2378,17 +1895,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             if (myResponse instanceof ServiceResponse) {
                                 list = myResponse.Result;
                             }
-
-                            this.LanguageFilterValue = languageCode;
-                            this.SetDisplayMemberPath();
-
                             this.isSelectedFromList = true;
                             this.SearchTextNgModel = list[this.DisplayMemberPath];
                             this.OldSearchInput = this.SearchTextNgModel;
                             this.DisplayValue = list[this.DisplayMemberPath];
                             this.SelectedItem = list;
                             this.SetToolTipInfo();
-
                             var value = this.DataContext[this.ObjectFieldName];
                             if (this.ObjectField && this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
                                 var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
@@ -2502,7 +2014,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnToggleClicked() {
-
         this.ToggleOpenDropDown();
         if (this.IsOpen) {
             this.Populate(null);
@@ -2530,95 +2041,60 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     CalculateWidths(items: any[]) {
         if (items.length > 0) {
-
-            const hasCustomColumnsWidths = this.ColumnsWidths.length > 0;
-            if (hasCustomColumnsWidths) {
-                this.SetCustomColumnsWidths();
-            } else {
-
-
-                this.Widths = [];
-                //var lookup = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
-                var lookupFields: any[];
-                if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
-                    var fields: string[] = this.DisplayFieldsFromList.split(',');
-                    lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
-                    lookupFields.sort((a, b) => {
-                        const indexA = fields.indexOf(a.FieldName);
-                        const indexB = fields.indexOf(b.FieldName);
-
-                        // If both fields are found in DisplayFieldsFromList, compare their indices
-                        if (indexA !== -1 && indexB !== -1) {
-                            return indexA - indexB;
-                        }
-
-                        // If one of the fields is not found, place it after the one found
-                        if (indexA === -1) {
-                            return 1;
-                        } else {
-                            return -1;
-                        }
-                    });
+            this.Widths = [];
+            //var lookup = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
+            var lookupFields: any[];
+            if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
+                var fields: string[] = this.DisplayFieldsFromList.split(',');
+                lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName)>-1);
+            }
+            else {
+                //if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
+                if(this.LanguageFilterValue=='E'){
+                lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
                 }
-                else {
-                    //if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
-                    if (this.LanguageFilterValue == 'E') {
-                        lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
-                    }
-                    else {
-                        lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
-                        if (lookupFields.length == 0) {
-                            console.warn("There is no Fields defined as display in lookup local");
-                            this.ShowLanguageFilter = false;
-                            lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
-                        }
+                else{
+                    lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
+                    if(lookupFields.length==0){
+                        console.warn("There is no Fields defined as display in lookup local");
+                        this.ShowLanguageFilter=false;
+                        lookupFields=window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
                     }
                 }
-                if (!this.DisplayFieldsFromList) {
-                    lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
-                }
-                lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });//Bug 154065: HD CAll#383618 - LOV column not sorted- why not to force any time - quick
-                for (var i = 0; i < lookupFields.length; i++) {
-                    var words: string[] = [];
-                    for (var j = 0; j < items.length; j++) {
-                        words.push(items[j][lookupFields[i].FieldName]);
-                    }
-                    var value = this.GetTheLongestWord(words);
-                    var maxLength = value.length;
-                    if (maxLength > 22) {
-                        maxLength = 22;
-                    }
-                    var width = (maxLength * 7) + 8;
-                    if (i > 1 && width > 85) {
-                        width = 85;
-                    }
-                    this.Widths.push(width);
-
-                }
-                var sum = 0;
-                for (var i = 0; i < this.Widths.length; i++) {
-                    if (i != 1) {
-                        sum += (this.Widths[i] > this.MinWidths[i] ? this.Widths[i] : this.MinWidths[i]);
-                    }
-                }
-                this.Widths[1] = this.DropDownWidth - sum;
+            }
+            if (!this.DisplayFieldsFromList) {
+                lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
             }
 
-        }
-    }
+            for (var i = 0; i < lookupFields.length; i++) {
+                var words: string[]=[];
+                for (var j = 0; j < items.length; j++) {
+                    words.push(items[j][lookupFields[i].FieldName]);
+                }
+                var value = this.GetTheLongestWord(words);
+                var maxLength = value.length;
+                if (maxLength > 22) {
+                    maxLength = 22;
+                }
+                var width = (maxLength * 7) + 8;
+                if (i > 1 && width>85) {
+                    width = 85;
+                }
+                this.Widths.push(width);
 
-    private SetCustomColumnsWidths() {
-        this.Widths = [];
-        const defaultColumnWidth = 85;
-
-        for (const column of this.headerColumns) {
-            const colWidth = this.ColumnsWidths.find(colWidth => colWidth.ColumnName == column.Field);
-            this.Widths.push(colWidth.Width || defaultColumnWidth);
-        }
+            }
+            var sum = 0;
+            for (var i = 0; i < this.Widths.length; i++) {
+                if (i != 1) {
+                    sum += (this.Widths[i] > this.MinWidths[i] ? this.Widths[i] : this.MinWidths[i]);
+                }
+            }
+            this.Widths[1] = this.DropDownWidth - sum;
+       }
     }
 
     GetTheLongestWord(words: string[]) {
-        var maxWord = '';
+        var maxWord='';
         for (var i = 0; i < words.length; i++) {
             if (words[i]) {
                 if (words[i].length > maxWord.length) {
@@ -2631,13 +2107,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     // Edit Button Commands
     OnEditValue() {
-        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "UPDATE") && this.LookUpTable.EnableSecurity) {
+        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "UPDATE") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("You have no permission to edit an entity of this type.");
             return;
         }
 
-        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
             return;
@@ -2647,7 +2123,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (!this.IsPickList) {
             var currentEntity: any = this.SelectedItem;
 
-            if (currentEntity != null && currentEntity != null) {
+            if (currentEntity != null && currentEntity != null ) {
                 //disableValidationPopups = true;
                 ////validationPopup.IsOpen = false;
                 ////warningPopup.IsOpen = false;
@@ -2659,21 +2135,29 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (objectTableName == "Card" || objectTableName == "Carrier") {
                     objectTableName = this.GetObjectTableNameForDependency(this.SelectedItem["PartnerTypeId"], objectTableName);
                 }
+                //if (objectTableName == "Card" || objectTableName == "Carrier") {
+                //    objectTableName = this.GetObjectTableName(objectTableName);
 
-                if (objectTableName == "GLAccount") {
-                    GLAccountSecurityLevelService.CheckLevel(currentEntity.Id)
-                        .then(hasAccess => {
-                            if (hasAccess) {
-                                this.configureEditWindow(objectTableName, currentEntity);
-                            }
-                            else {
-                                GLAccountSecurityLevelService.ShowSecurityBockingMessage();
-                                return;
-                            }
-                        });
-                } else {
-                    this.configureEditWindow(objectTableName, currentEntity);
+                //}
+
+                if (!AppTool.IsNullOrEmpty(currentEntity.Id)) {
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Title = TextCodeTranslator.TranslateTable("General.B.Edit") + " " + TextCodeTranslator.TranslateTable(objectTableName);
+                    logWindow.ShowEditComponent(currentEntity.Id, objectTableName);
+                    logWindow.WindowClosed.subscribe(($event: any) => {
+                        //if ($event)
+                            this.OnEditCompleted();
+                    });
                 }
+                //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                //    .then(cmpRef => {
+                //        cmpRef.instance.ComponentRef = cmpRef;
+                //        cmpRef.instance.Run({ EntityId: currentEntity.Id, ObjectTableName: objectTableName });
+                //        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                //            if ($event)
+                //                this.OnEditCompleted();
+                //        });
+                //    });
             }
         }
 
@@ -2684,17 +2168,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.ToggleOpenDropDown();
         }
 
-    }
-    private configureEditWindow(objectTableName: string, currentEntity: any) {
-        if (!AppTool.IsNullOrEmpty(currentEntity.Id)) {
-            var logWindow = new LogitudeWindow();
-            logWindow.Title = TextCodeTranslator.TranslateTable("General.B.Edit") + " " + TextCodeTranslator.TranslateTable(objectTableName);
-            logWindow.ShowEditComponent(currentEntity.Id, objectTableName);
-            logWindow.WindowClosed.subscribe(($event: any) => {
-                //if ($event)
-                this.OnEditCompleted();
-            });
-        }
     }
     OnEditCompleted() {
         var value = this.DataContext[this.ObjectFieldName];
@@ -2710,7 +2183,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         }
 
-        this.entityListService.getSingle(value, this.LookUpTableName).then((res: any) => {
+        this.entityListService.getSingle(value, this.LookUpTableName).then((res:any) => {
             res.subscribe(myResponse => {
                 if (myResponse != null) {
 
@@ -2769,28 +2242,29 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     }
     NewEntityMethod(objectTableName) {
-        // var lookup: ObjectTablePM = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
+       // var lookup: ObjectTablePM = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
 
         //disableValidationPopups = true;
         //SetWarningPopupVisibility(false);
         //SetValidationPopupVisibility(false);
         objectTableName = this.GetObjectTableName(objectTableName);
-        var originalTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name?.toLowerCase() === objectTableName.toLocaleLowerCase())[0];
+        var originalTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name.toLowerCase() === objectTableName.toLocaleLowerCase())[0];
 
-        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "NEW") && this.LookUpTable.EnableSecurity) {
+        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "NEW") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("You have no permission to add a new entity of this type.");
             return;
         }
 
-        if (!this.IgnoreFeatureCheck && !FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
+        if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
             return;
         }
 
         if (this.TenantPM.Id != 0) {
-            if (objectTableName == "Port" || objectTableName == "Airline" || objectTableName == "Carrier" || objectTableName == "ShippingLine") {
+            if (objectTableName == "Port" || objectTableName == "Airline" || objectTableName == "Carrier"  || objectTableName == "ShippingLine")
+            {
 
                 var windowTitle = "Add " + objectTableName;
                 var logWindow = new LogitudeWindow();
@@ -2838,15 +2312,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             logWindow.Height = 570;
 
             switch (this.LookUpTableName) {
-                case "Customs.Client":
-                case "Customs.CourierPendingReason":
-                    {
-
-                        logWindow.Width = 800;
-                        logWindow.Height = 600;
-                        logWindow.IsShowCloseButton = true;
-                        break;
-                    }
+                case "Customs.Client": {
+                    logWindow.Width = 800;
+                    logWindow.Height = 600;
+                    logWindow.IsShowCloseButton = true;
+                    break;
+                }
 
                 case "Customs.Declaration":
                 case "Customs.PaymentOrder":
@@ -2863,11 +2334,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 }
                 case "User": {
                     logWindow.Width = 965;
-                    logWindow.Height = 600;
-                    break;
-                }
-                case "Card": {
-                    logWindow.Width = 890;
                     logWindow.Height = 600;
                     break;
                 }
@@ -2909,7 +2375,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     private OnNewEntityWindowClosed($event: any) {
         //console.log($event);
         if ($event && $event != "event") {
-            this.entityListService.getSingle($event, this.LookUpTableName).then((res: any) => {
+            this.entityListService.getSingle($event, this.LookUpTableName).then((res:any) => {
                 res.subscribe(myResponse => {
                     if (myResponse != null) {
 
@@ -2952,7 +2418,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             });
             this.showPopup = false;
         }
-    }
+}
 
 
     //****
@@ -2969,8 +2435,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.isEditDisabled = false;
             this.isDeleteDisabled = false;
 
-            if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare) {
-                if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User" || this.LookUpTableName == "Contact") {
+            if (this.TenantPM.Id == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare) {
+                if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User") {
                     this.isEditDisabled = true;
                 }
             }
@@ -2980,7 +2446,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             if ((this.LookUpTable.EnableAddFromLOV) && !this.HideAdd) {
                 this.isAddDisabled = false;
 
-                if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
+                if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.LookUpTableName == "User") {
                     this.ShowAddLink = false;
 
                 }
@@ -2989,8 +2455,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     this.ShowAddLink = true;
                 }
 
-                if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare) {
-                    if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User" || this.LookUpTableName == "Contact") {
+                if (this.TenantPM.Id == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare) {
+                    if (this.LookUpTableName == "ChargesType" || this.LookUpTableName == "User") {
                         this.isAddDisabled = true;
                         this.ShowAddLink = false;
 
@@ -3021,8 +2487,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         return this.GetObjectTableNameForDependency(dep, parentObjectName);
     }
     private GetObjectTableNameForDependency(dependency: string, parentObjectName: string) {
-        let partnerType: PartnerTypeList = this.PartnerTypes ? this.PartnerTypes.filter(p => p.Id?.toLowerCase() == dependency?.toLowerCase())[0] : null;
-
+        var partnerType = this.PartnerTypes.filter(p => p.Id.toLowerCase() == dependency.toLowerCase())[0];
         if (partnerType != null && partnerType != undefined) {
             var name: string = partnerType.Name.replace(" ", "");
 
@@ -3030,7 +2495,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 name = "Customer";
             }
 
-            var table: ObjectTablePM = window.ObjectTables.filter(d => d.Name?.toLowerCase() === name.toLocaleLowerCase())[0];
+            var table: ObjectTablePM = window.ObjectTables.filter(d => d.Name.toLowerCase() === name.toLocaleLowerCase())[0];
             if (table != null) {
                 return table.Name;
             }
@@ -3046,20 +2511,20 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     private timerToken: any;
     onhover: boolean = false;
     OnMouseHover() {
-        this.onhover = true;
-        this.timerToken = setTimeout(() => {
-            if (this.onhover) {
-                //this.show = true;
-                this.showPopup = false;
+    this.onhover = true;
+    this.timerToken = setTimeout(() => {
+        if (this.onhover) {
+            //this.show = true;
+            this.showPopup = false;
 
-                if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && (this.LookUpTableName == "User" || this.LookUpTableName == "Contact")) {
-                    this.ShowMaintenanceBtn = false;
-                }
-
-                else {
-                    this.ShowMaintenanceBtn = true;
-                }
+            if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.LookUpTableName == "User") {
+                this.ShowMaintenanceBtn = false;
             }
+
+            else {
+                this.ShowMaintenanceBtn = true;
+            }
+        }
         }, 700);
     }
     OnMouseLeave() {
@@ -3073,7 +2538,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }, 700);
     }
 
-    CopySelectedItem(id: string) {
+    CopySelectedItem(id:string) {
         this.entityListService.getEntityCopyToCurrentTenant(id, this.LookUpTableName).then((res: any) => {
             res.subscribe(myResponse => {
                 if (myResponse != null) {
@@ -3113,13 +2578,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     }
                     this.ValidateField();
                     CachedDataManager.RefreshTableData(this.LookUpTableName, true);
-                    // this.OnBlurEvent.emit("");
+                   // this.OnBlurEvent.emit("");
                 }
             })
         });
     }
 
     CallDataFromCache(searchText: string, filters: ApiQueryFilters, setFirstAsSelected: boolean = false) {
+
+
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
             filters.PageSize = 1000;
         }
@@ -3136,15 +2603,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             filters.removeAdditionalFilter("CompactSearchField");
         }
 
-        let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
-        filterParams.FieldValue = searchText;
-        filterParams.Operator = "StartsWith";
-        filterParams.IsCustom = false;
-        filterParams.DisplayInList = false;
-        filterParams.IsCustomField = false;
-        filterParams.FieldDataType = null;
-        filterParams.IsCacheOnClient = this.LookUpTable.CacheOnClient;
-        filterParams.IsLookUpFilter = true;
         if (searchText) {
 
             //if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0 && this.callCount == 0) {
@@ -3158,16 +2616,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0) {
                     for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
                         var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
-                        if (this.LookUp1 == filter.FieldName) {
+                        if (this.LookUp1 == filter.FieldName)
+                        {
                             forceEnableAdd = true;
                         }
                     }
                 }
 
-                filterParams.FieldName = this.LookUp1;
-                filterParams.ForceEnableAdd = forceEnableAdd;
-
-                // filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
+                filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp1;
             }
             else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
@@ -3181,14 +2637,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         }
                     }
                 }
-                if (this.LookUpTable.DependencyFilter1 != this.LookUp1
-                    && this.LookUpTable.DependencyFilter2 != this.LookUp1
-                    && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
+                if (this.LookUpTable.DependencyFilter1 != this.LookUp1 && this.LookUpTable.DependencyFilter2 != this.LookUp1 && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
-                filterParams.FieldName = this.LookUp2;
-                filterParams.ForceEnableAdd = forceEnableAdd;
-                //filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
+                filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp2;
             }
             else {
@@ -3197,7 +2649,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0) {
                     for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
                         var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
-                        if (this.GetSearchFieldName() == filter.FieldName) {
+                        if ("SearchFields" == filter.FieldName) {
                             forceEnableAdd = true;
                         }
                     }
@@ -3208,20 +2660,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp2 && this.LookUpTable.DependencyFilter2 != this.LookUp2 && this.LookUpTable.DependencyFilter3 != this.LookUp2) {
                     filters.removeAdditionalFilter(this.LookUp2);
                 }
-                filterParams.FieldName = this.GetSearchFieldName();
-                filterParams.ForceEnableAdd = forceEnableAdd;
-                filterParams.Operator = "Contains";
-
-                //filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
+                filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = null;
             }
-            filters.pushAdditionalFilter(filterParams);
         }
         //turn loading flag on
         this.isLoading = true;
-        filters = this.FillTreeFilterDetails(filters);
         this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-            res.subscribe((resp: any) => {
+            res.subscribe(resp=> {
                 if (resp.Result) {
 
                     for (var i = 0; i < resp.Result.length; i++) {
@@ -3233,12 +2679,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     if (setFirstAsSelected) {
                         if (this.bufferData.length > 0) {
                             this.FocusOnSelect = false;
-                            var item = this.bufferData.filter(d => d[this.LookUp1] != null && d[this.LookUp1]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
+                            var item = this.bufferData.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
                             if (!item && this.LookUp2) {
-                                var item = this.bufferData.filter(d => d[this.LookUp2] != null && d[this.LookUp2]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
+                                var item = this.bufferData.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
                             }
                             if (!item) {
-                                var item = this.bufferData.filter(d => d[this.DisplayMemberPath]?.toLowerCase() === this.SearchTextNgModel?.toLowerCase())[0];
+                                var item = this.bufferData.filter(d => d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
                             }
                             if (item) {
                                 this.OnSelected(item);
@@ -3280,7 +2726,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 else {
 
                     for (var i = 0; i < resp.length; i++) {
-                        var item = this.bufferData.filter(d => d[this.LookUp1] == resp[i][this.LookUp1])[0];
+                        var item = this.bufferData.filter(d=> d[this.LookUp1] == resp[i][this.LookUp1])[0];
                         if (!item) {
                             this.bufferData.push(resp[i]);
                         }
@@ -3325,24 +2771,21 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     else {
                         this.LovMessage = null;
                     }
-
                     this.ItemsSourceStatic = this.ItemsSource;
-                    this.HighlightSelectedValue();
+                    this.HighlightSelectedValue(this.ItemsSource);
                     this.isLoading = false;
                 }
-                this.CD.detectChanges();
-
             });
         });
     }
 
     CallDataFromServer(searchText: string, filters: ApiQueryFilters) {
+        //turn loading flag on
+        //if (searchText && !this.UseCompactSearch) {
+        //    filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null);
+        //}
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
-            if (this.DefaultPageSize) {
-                filters.PageSize = this.DefaultPageSize;
-            } else {
-                filters.PageSize = 50;
-            }
+            filters.PageSize = 50;
         }
         else {
             if (!this.IsAllDataVisible) {
@@ -3354,59 +2797,19 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
         this.isLoading = true;
 
-        filters = this.FillTreeFilterDetails(filters);
 
-
-        if (this.LookUpTableName == "GLAccount") {
-            var loadPromise = this._GLAccountExtendedListService.getByFiltersShort(this.LookUpTableName, filters);
-
-        }
-        else {
-            var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, filters);
-        }
+        var loadPromise = this.entityListService.getByFilters(this.LookUpTableName, filters);
         if (this.UseCompactSearch) {
-            let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
-            filterParams.FieldName = "CompactSearchField"
-            filterParams.FieldValue = searchText;
-            filterParams.Operator = "Contains";
-            filterParams.IsCustom = false;
-            filterParams.DisplayInList = false;
-            filterParams.IsCustomField = false;
-            filterParams.FieldDataType = null;
-            filterParams.IsCacheOnClient = false;
-            filterParams.IsLookUpFilter = true;
-            //filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
-            filters.pushAdditionalFilter(filterParams);
-
-            if (this.LookUpTableName == "Card") {
-                filters.PageSize = 15;
-                loadPromise = this.cardExtendedPMService.getByCompactFilters(this.LookUpTableName, filters);
-
-            }
-            else {
-                loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, filters);
-
-            }
+            filters.addAdditionalFilter("CompactSearchField", searchText, null, null, "Contains", false, false, false, null);
+            loadPromise = this.entityListService.getByCompactFilters(this.LookUpTableName, filters);
         }
         else if (searchText) {
 
             searchText = searchText.replace(/\\/g, "\\\\");
 
-            let filterParams: ApiQueryFiltersAddParams = new ApiQueryFiltersAddParams();
-            filterParams.FieldValue = searchText;
-            filterParams.Operator = "StartsWith";
-            filterParams.IsCustom = false;
-            filterParams.DisplayInList = false;
-            filterParams.IsCustomField = false;
-            filterParams.FieldDataType = null;
-            filterParams.IsCacheOnClient = false;
-            filterParams.IsLookUpFilter = true;
-
             if (this.currentFilter == null || this.currentFilter == undefined) {
                 this.callCount = 1;
-                filterParams.FieldName = this.LookUp1;
-
-                //filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null);
+                filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null);
                 this.currentFilter = this.LookUp1;
             }
             else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
@@ -3414,8 +2817,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp1 && this.LookUpTable.DependencyFilter2 != this.LookUp1 && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
-                filterParams.FieldName = this.LookUp2;
-                //filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null);
+                filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null);
                 this.currentFilter = this.LookUp2;
             }
             else {
@@ -3426,22 +2828,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp2 && this.LookUpTable.DependencyFilter2 != this.LookUp2 && this.LookUpTable.DependencyFilter3 != this.LookUp2) {
                     filters.removeAdditionalFilter(this.LookUp2);
                 }
-                filterParams.FieldName = this.GetSearchFieldName();;
-                filterParams.Operator = "Contains";
-                //filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null);
+                filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null);
                 this.currentFilter = null;
             }
-            filters.pushAdditionalFilter(filterParams);
 
-
-        }
-
+}
         loadPromise.then((res: any) => {
-            res.subscribe((resp: any) => {
+            res.subscribe(resp=> {
                 if (resp.Result) {
 
                     for (var i = 0; i < resp.Result.length; i++) {
-                        var item = this.bufferData.filter(d => d[this.LookUpTable.KeyPropertyPath] == resp.Result[i][this.LookUpTable.KeyPropertyPath])[0];
+                        var item = this.bufferData.filter(d=> d[this.LookUpTable.KeyPropertyPath] == resp.Result[i][this.LookUpTable.KeyPropertyPath])[0];
                         if (!item) {
                             this.bufferData.push(resp.Result[i]);
                         }
@@ -3459,8 +2856,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     } else {
                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
-                        this.headerColumns;
-
                     }
 
                 }
@@ -3480,7 +2875,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     } else {
                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
-                        this.headerColumns;
                     }
 
                 }
@@ -3492,90 +2886,24 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     else {
                         this.LovMessage = null;
                     }
-
                     this.ItemsSourceStatic = this.ItemsSource;
-                    //if(!(this.LocalFilterFields && this.LocalFilterFields.length > 0)) {
-                    this.HighlightSelectedValue();
-                    //}
+                    this.HighlightSelectedValue(this.ItemsSource);
 
                     //turn loading flag off
                     this.isLoading = false;
                 }
-                if (this.CD) this.CD.detectChanges();
             })
         });
     }
 
-    FillTreeFilterDetails(filters) {
-        let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
-        if (!objectField) objectField = window.ObjectFields.filter(f => f.FieldCode == this.ObjectFieldCode)[0];
-        filters.TreeFilters = objectField ? objectField.DefaultAdditionalFilters : this.ObjectField?.DefaultAdditionalFilters;
-        filters.ParentEntity = this.GetParentEntity();
-        filters.ParentEntityId = this.GetParentEntityId();
-        filters.ParentObjectTableName = this.ObjectField?.ObjectTableName;
-        return filters;
-    }
-
-    GetParentEntityId() {
-        let parentEntityId = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityId;
-        return parentEntityId ? parentEntityId : null;
-    }
-
-    GetParentEntity() {
-        let entityPM = SessionLocator?.SelectedSession?.CurrentEditComponent?.EntityPM;
-        if (!entityPM) entityPM = this.DataContext;
-        if (!entityPM) return null;
-
-        let objectField = window.ObjectFields.filter(f => f.Id == this.ObjectField?.Id)[0];
-        if (!objectField) objectField = window.ObjectFields.filter(f => f.FieldCode == this.ObjectFieldCode)[0];
-        let objectFieldAdditionalTreeFilters = objectField ? objectField.DefaultAdditionalTreeFilters : this.ObjectField?.DefaultAdditionalTreeFilters;
-        if (!objectFieldAdditionalTreeFilters) return null;
-
-        var parentEntity = {};
-        return this.RestoreFilters(objectFieldAdditionalTreeFilters, parentEntity, entityPM);
-    }
-
-    RestoreFilters(BaseFilter: any, parentEntity: any, entityPM: any) {
-        BaseFilter.QueryFilterItems?.forEach((field) => {
-            this.RestoreQueryFilterViewItem(field, parentEntity, entityPM);
-        });
-
-        return JSON.stringify(parentEntity);
-    }
-
-    private RestoreQueryFilterViewItem(field: any, parentEntity: any, entityPM: any) {
-        if (!field) return;
-
-        if (field.FieldName?.indexOf('.') > -1) {
-            let fieldName = field.FieldName.split('.')[1];
-            parentEntity[fieldName] = entityPM[fieldName];
-        }
-
-        if (field.Operator?.indexOf('Field') > -1 && field.FieldValue?.indexOf('.') > -1) {
-            let fieldName = field.FieldValue.split('.')[1];
-            parentEntity[fieldName] = entityPM[fieldName];
-        }
-
-        if (!field.QueryFilterItems) {
-            return;
-        }
-
-        if (field.QueryFilterItems.length == 0) {
-            return;
-        }
-
-        this.RestoreFilters(field, parentEntity, entityPM);
-    }
-
     OnSearchInputKeyUP($event) {
-       var CTRL = 17;
-       if ($event.keyCode == CTRL) {
+        var CTRL = 17;
+        if ($event.keyCode == CTRL) {
             this.IsCTRLDown = false;
         }
     }
 
     ApplyManipulateData(bufferData: any[]) {
-
         var objectTableName = this.LookUpTableName;
         if (this.LookUpTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
@@ -3596,9 +2924,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 else {
                     this.LovMessage = null;
                 }
-
                 this.ItemsSourceStatic = this.ItemsSource;
-                this.HighlightSelectedValue();
+                this.HighlightSelectedValue(this.ItemsSource);
                 this.isLoading = false;
             });
         });
@@ -3633,7 +2960,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             var top = itemRect.top;
             var left = itemRect.left;
             this.PartnersPopupTop = top + 'px';
-            this.PartnersPopupLeft = left + 87 + 'px';
+            this.PartnersPopupLeft = left+87 + 'px';
         }
     }
 
@@ -3673,20 +3000,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.RunNewGenaricEntity();
         }
     }
-    LanguageFilterValue: string;
-    ShowLanguageFilter: boolean = false;
-    SwitchBetweenLocalAndEng(lang: string) {
-        this.LanguageFilterValue = lang;
+    LanguageFilterValue:string;
+    ShowLanguageFilter:boolean=false;
+    SwitchBetweenLocalAndEng(lang:string){
+        this.LanguageFilterValue=lang;
         this.DrawColumns();
-
-        const hasCustomColumnsWidths = this.ColumnsWidths.length > 0;
-        if (hasCustomColumnsWidths) {
-            this.SetCustomColumnsWidths();
-            this.CalculateDropdownPanelWidthFromCustomColumnsWidths();
-        }
-
-
-
         this.SetDisplayMemberPath();
     }
 }
@@ -3698,9 +3016,4 @@ export class EntityArgs {
 export class AddEntityArgs {
     public EntityPM: any;
     public ObjectTableName: string;
-}
-
-export class ColumnsWidths {
-    ColumnName: string;
-    Width: number;
 }

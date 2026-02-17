@@ -8,7 +8,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {CRMDomainService} from '../../../../CRM/Services/CRMDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SLAMainWindowComponent.html',
 })
 

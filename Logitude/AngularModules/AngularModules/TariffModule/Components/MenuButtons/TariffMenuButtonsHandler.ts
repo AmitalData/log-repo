@@ -1,18 +1,17 @@
+
 import { TariffPM } from '../../EntityPMs/TariffPM'
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow'
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { TariffDomainService } from '../../Services/TariffDomainService';
 
 export class TariffMenuButtonsHandler {
     public EntityPM: TariffPM;
     public entityArgs: EntityArgs
     private CurrentSession = SessionLocator.SelectedSession;
-    MenuButtonCode: string = null;
-
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -37,14 +36,6 @@ export class TariffMenuButtonsHandler {
 
                             break;
                         }
-
-                        case "EditPriceSteps": {
-                            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS"
-                                || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
-                                menuButton.IsHidden = true;
-                            }
-                            break;
-                        }
                     }
                 });
             }
@@ -53,10 +44,11 @@ export class TariffMenuButtonsHandler {
         return menuButtons;
     }
 
+
     private StopFlags() {
         this.isButtonClicked = false;
-        this.MenuButtonCode = null;
     }
+
 
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
@@ -64,25 +56,20 @@ export class TariffMenuButtonsHandler {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;                   
                 }
-                if (this.MenuButtonCode == "EditPriceSteps") {
-                    var service: TariffDomainService = new TariffDomainService();
-                    service.GetAllVersionsWithLinesForTariff(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
-                        if (!response.HasError) {
-                            this.EditPriceStepsAction(response.Result);
-                        }
-                    });
-                }
+
                 this.StopFlags();
+
             });
         }
     }
-  
+
+
     isButtonClicked: boolean = false;
     public MenuButtonClick(menuButton: MenuButtonPM) {
         if (!this.isButtonClicked) {
+
             this.StopFlags();
             this.isButtonClicked = true;
-            this.MenuButtonCode = menuButton.EventCode;
             switch (menuButton.EventCode) {
                 case "Inactive":
                     {
@@ -99,10 +86,6 @@ export class TariffMenuButtonsHandler {
                         this.entityArgs.EditComponent.SaveChanges();
                         break;
                     }
-                case "EditPriceSteps": {
-                    this.EditPriceStepsClicked();
-                    break;
-                }
                 default: {
                     this.isButtonClicked = false;
                     break;
@@ -111,65 +94,8 @@ export class TariffMenuButtonsHandler {
         }
     }
 
-    EditPriceStepsClicked() {
-        this.entityArgs.EditComponent.SaveChanges("Saving");
-    }
+    
 
-    EditPriceSteps() {
-        
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Price Steps";
-        logWindow.WindowArgs = [this.EntityPM.PriceSteps, this.EntityPM.UnitOfMeasurementCode];
-        logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
-        logWindow.ComponentLoaded.subscribe(s => {
-            logWindow.WindowClosed.subscribe(d => {
-                if (d != "cancel") {
-                    var steps = s.DefaultPriceSteps;
-                    this.EntityPM.PriceSteps = steps;
-                    this.EntityPM.UnitOfMeasurementCode = s.UnitOfMeasurementCode;
-                    this.CurrentSession.CurrentEditComponent.SaveChanges();
-                   // this.CurrentSession.SessionEvent.emit("PriceStepsModified");
-                }
-            });
-        });
-    }
 
-    ShowMessageWindow(msg: string) {
-        var messageWindow = new MessageWindow();
-        messageWindow.Show(msg);
-    }
-    EditPriceStepsAction(versions : any) {
-        if (versions != null) {
-            if (versions != null && versions.length > 1) {
-                this.ShowMessageWindow("Can't edit the price steps since the tariff has lines already.");
-            }
-            else {
-                var version = versions[0];
-                if (version == null || (version != null && version.IsDraft)) {
-                    var hasTariffLines = false;
-                    versions.forEach(item => {
-                        if (item.TariffLines != null && item.TariffLines.length > 0) {
-                            hasTariffLines = true;
-                        }
-                    });
 
-                    if (hasTariffLines) {
-                        this.ShowMessageWindow("Can't edit the price steps since the tariff has lines already.");
-                    }
-                    else {
-                        this.EditPriceSteps();
-                    }
-                }
-                else if (version != null && !version.IsDraft) {
-                    this.ShowMessageWindow("Can't edit the price steps since the tariff has lines already.");
-                }
-                else {
-                    this.EditPriceSteps();
-                }
-            }
-        }
-        else {
-            this.EditPriceSteps();
-        }
-    }   
 }

@@ -11,15 +11,8 @@ namespace WebFreight.Web.DataContracts
     {
         public List<ScreenFieldPM> ScreenFields { get; set; }
         public List<ScreenFieldPM> RemovedScreenFields { get; set; }
-        public List<ScreenSectionPM> ScreenSections { get; set; }
-
-       
         public string ScreenId { get; set; }
-        public string ScreenCode { get; set; }
         public int Rows { get; set; }
         public int Columns { get; set; }
-        public string SortedByFieldCode { get; set; }
-        public string SortedType { get; set; }
-        public string RelatedScreenCode { get; set; }
     }
 }

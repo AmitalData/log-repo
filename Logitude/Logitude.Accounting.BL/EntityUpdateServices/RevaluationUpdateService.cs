@@ -8,10 +8,10 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -27,9 +27,6 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.BL.CoreBL;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -55,7 +52,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 entityPM.CreatedByUserId = contact.Id;
             }
-            entityPM.Status = null;
+            entityPM.Status =null;
             if (entityPM.RevaluationNumber == 0) entityPM.RevaluationNumber = CodeCounter.GetNumber("Revaluation.Number", entityPM.Tenant);
             entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             entityPM.SearchFields = entityPM.RevaluationNumber.ToString();
@@ -88,7 +85,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.RevaluationNumber = CodeCounter.GetNumber("Revaluation.Number", entityPM.Tenant);
                 entityPM.SearchFields = entityPM.RevaluationNumber.ToString();
             }
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            if (entityPM.ChangeSetOp== ChangeSetOperation.Insert )
             {
 
                 ///////GetOpenRevaluationList
@@ -101,11 +98,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     (entityPM.Status == "" || entityPM.Status != "2") &&
                 (entityPM.RevaluationDate != null || entityPM.RevaluationDate != DateTime.MinValue))
                 {
-                 
                     var wrkr = new RevaluationBatch.RevaluationWorkerRole();
                     wrkr.EnQueue(entityPM.Tenant, entityPM.RevaluationNumber);
-
-
+                    
+                    
                 }
 
             }
@@ -142,7 +138,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             //if (pm.IsCancelled)
             //{
-            //    throw new ApplicationException("Revaluation already  Cancelled");
+            //    throw new Exception("Revaluation already  Cancelled");
             //}
             //pm.IsCancelled = true;
             pm.ChangeSetOp = ChangeSetOperation.Update;
@@ -151,13 +147,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return pm;
         }
 
-        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+
 
         protected override void Trace(RevaluationPM entityPM, Revaluation entityPOCO, string changesXml)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
-            ContactPM contact = GetLoggedContact(entityPM.Tenant); // contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
+            Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
@@ -194,33 +190,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 });
             }
 
-        }
-        protected override void AfterUpdating(RevaluationPM entityPM, EntityPM entityParentPM)
-        {
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-
-                if ( (entityPM.Status == "" || entityPM.Status != "2") && (entityPM.RevaluationDate != null || entityPM.RevaluationDate != DateTime.MinValue))
-                {
-                    RevaluationService.CreateRevaluationInBatch(entityPM.Id, entityPM.Tenant);
-
-
-                }
-
-
-            }
-        }
-
-
-        public static ContactPM GetLoggedContact(int tenant)
-        {
-            if (OverrideGetLoggedContactFunc != null)
-            {
-                return OverrideGetLoggedContactFunc(tenant);
-            }
-
-            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
-            return loggedcontact;
         }
 
     }

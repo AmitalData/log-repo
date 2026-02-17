@@ -18,12 +18,8 @@ export class VatTypeList {
 		Description: string;
 		LocalDescription: string;
 		SearchFields: string;
-		RecognizedPercentage: number;
 		ExternalVATCard: string;
-		PayablesExternalId: string;
-		ReceivablesExternalId: string;
 		ExternalTAXItemId: string;
 		IsMultiPercentage: boolean;
-		IsRegionalTax: boolean;
 	
 }

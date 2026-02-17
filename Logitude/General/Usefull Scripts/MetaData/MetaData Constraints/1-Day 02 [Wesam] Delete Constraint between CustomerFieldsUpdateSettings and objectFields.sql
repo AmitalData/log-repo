@@ -1,3 +1,0 @@
-
-ALTER TABLE CustomerFieldsUpdateSettings
-DROP CONSTRAINT  [FK_dbo.CustomerFieldsUpdateSettings_dbo.ObjectFields_ObjectFieldId];

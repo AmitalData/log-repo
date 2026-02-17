@@ -10,7 +10,7 @@ import {EntityListService} from '../../../Infrastructure/Services/EntityListServ
 
 @Component({
     selector: 'NewBankCodeComponent',
-    
+    moduleId: module.id,
     providers: [EntityListService],
     templateUrl: './NewBankCodeComponent.html',
 })
@@ -79,7 +79,7 @@ export class NewBankCodeComponent extends BaseComponent{
     }
 
     SubmitChanges() {
-        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this.myService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

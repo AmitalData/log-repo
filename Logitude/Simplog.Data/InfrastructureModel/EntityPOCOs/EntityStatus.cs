@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,19 +20,12 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         //public int IndexOrder { get; set; }
         public string SearchFields { get; set; }
         public string DisplayName { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
         [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
-        public int? StatusLocalWeight { get; set; }
-        public string EntityStatusTypeCode { get; set; }
+     //   public List<EventType> EventTypes { get; set; }
+       // public List<Shipment> Shipments { get; set; }
+       // public List<Quote> Quotes { get; set; }
+       // public List<ShipmentMasterData> ShipmentMasterDatas { get; set; }
 
-        [ForeignKey("EntityStatusTypeCode")]
-        public virtual EntityStatusType EntityStatusType { get; set; }
-        //   public List<EventType> EventTypes { get; set; }
-        // public List<Shipment> Shipments { get; set; }
-        // public List<Quote> Quotes { get; set; }
-        // public List<ShipmentMasterData> ShipmentMasterDatas { get; set; }
-        public bool AllowPartial { get; set; }
-        public bool IsDigitalPortal { get; set; }
     }
 }

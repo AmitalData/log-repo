@@ -26,7 +26,7 @@ namespace CustomsWorkerRole.Utils
             {
 
                 var mes = "queueName=" + item.Path + ":MessageCount=" + item.MessageCount.ToString();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mes);
+                Debug.WriteLine(mes);
                 
             }
 

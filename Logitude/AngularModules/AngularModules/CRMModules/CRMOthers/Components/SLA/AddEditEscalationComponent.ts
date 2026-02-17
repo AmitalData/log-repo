@@ -9,7 +9,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditEscalationComponent.html',
 })
 

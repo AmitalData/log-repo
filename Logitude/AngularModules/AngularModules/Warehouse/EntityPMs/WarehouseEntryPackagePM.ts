@@ -20,9 +20,9 @@ export class WarehouseEntryPackagePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	                  this.EntityParentPM = _entityParentPM;
-                this.UIProperties = new UIProperties(this);
-                this.IsDirty = false;
+          this.EntityParentPM = _entityParentPM;
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
       }
 
 	 
@@ -267,31 +267,6 @@ export class WarehouseEntryPackagePM {
     public set CommodityNumber(newValue: string) { if (this.commodityNumber != newValue) { this.commodityNumber = newValue; this.MarkAsDirty("CommodityNumber"); } }
        
 	 
-    private releasesNumber: string;
-    public get ReleasesNumber() { return this.releasesNumber; }
-    public set ReleasesNumber(newValue: string) { if (this.releasesNumber != newValue) { this.releasesNumber = newValue; this.MarkAsDirty("ReleasesNumber"); } }
-       
-	 
-    private warehouseEntryNumber: string;
-    public get WarehouseEntryNumber() { return this.warehouseEntryNumber; }
-    public set WarehouseEntryNumber(newValue: string) { if (this.warehouseEntryNumber != newValue) { this.warehouseEntryNumber = newValue; this.MarkAsDirty("WarehouseEntryNumber"); } }
-       
-	 
-    private shipmentPackageId: string;
-    public get ShipmentPackageId() { return this.shipmentPackageId; }
-    public set ShipmentPackageId(newValue: string) { if (this.shipmentPackageId != newValue) { this.shipmentPackageId = newValue; this.MarkAsDirty("ShipmentPackageId"); } }
-       
-	 
-    private overManifest: number;
-    public get OverManifest() { return this.overManifest; }
-    public set OverManifest(newValue: number) { if (this.overManifest != newValue) { this.overManifest = newValue; this.MarkAsDirty("OverManifest"); } }
-       
-	 
-    private oldQuantity: number;
-    public get OldQuantity() { return this.oldQuantity; }
-    public set OldQuantity(newValue: number) { if (this.oldQuantity != newValue) { this.oldQuantity = newValue; this.MarkAsDirty("OldQuantity"); } }
-       
-	 
 
     public OldEntityPM: WarehouseEntryPackagePM;
 	
@@ -306,10 +281,7 @@ export class WarehouseEntryPackagePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -319,7 +291,6 @@ export class WarehouseEntryPackagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WarehouseEntryPackage");
            
         }
-       }
     }
 
     private MyClone: WarehouseEntryPackagePM;

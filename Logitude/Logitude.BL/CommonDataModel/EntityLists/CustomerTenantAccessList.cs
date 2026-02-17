@@ -30,8 +30,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsPrivateLabelCustomer { get; set; }
         public string CustomCompanyName { get; set; }
         public string StockTypeCode { get; set; }
-        public bool IsCustom { get; set; }
-        public bool IsExport { get; set; }
-        public string CustomersCodes { get; set; }
     }
 }

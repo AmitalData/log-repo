@@ -25,7 +25,7 @@ import { DeclarationList } from '../../../../Customs/EntityLists/DeclarationList
 
 @Component({
     selector: 'PaymentOrderQueryComponent',
-    
+    moduleId: module.id,
     templateUrl: './PaymentOrderQueryComponent.html',
 })
 
@@ -185,7 +185,7 @@ export class PaymentOrderQueryComponent
                 .subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.BankID = myResponse.Result.BankCode;
-                        this.BranchID = Number(myResponse.Result.BranchCode).toString() + "," + myResponse.Result.BankCode;
+                        this.BranchID = myResponse.Result.BranchCode + "," + myResponse.Result.BankCode;
                         this.BankAccount = myResponse.Result.AccountNumber;
                         this.UIProperties.SetEnabled("BankID", "Customs.Bank", false);
                         this.UIProperties.SetEnabled("BranchID", "Customs.CustomsBranch", false);
@@ -425,11 +425,10 @@ export class PaymentOrderQueryComponent
         currRequestParams.PaymentType = this.PaymentType;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא להוראות תשלום", true)
             .then((res) => {
                 this.ResponseData = res;
-                this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {

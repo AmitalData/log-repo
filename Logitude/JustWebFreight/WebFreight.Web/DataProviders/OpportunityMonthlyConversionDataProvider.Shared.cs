@@ -23,6 +23,5 @@ namespace WebFreight.Web.DataProviders
         public double Percentage { get; set; }
         public string PercentageString { get; set; }
         public int RowIndex { get; set; }
-        public string StageId { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 declare var System: any, window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
-
+import {Http, Response} from '@angular/http';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {HybridPartnerExtendedListService} from '../../../../Common/Services/ExtendedLists/HybridPartnerExtendedListService';
@@ -17,7 +17,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'DropBoxConnection',
-    
+    moduleId: module.id,
     templateUrl: './DropBoxConnectionComponent.html',
 })
 
@@ -34,7 +34,7 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
         if (FeatureLocator.HasFeaturePermession("General", "DROPBOXTESTFILE")) {
             this.ShowTestButton = true;
         }
-        this.CurrentSession.SessionEvent.subscribe((res:any) => {
+        this.CurrentSession.SessionEvent.subscribe(res => {
             if (res.Name == "DropBoxWindowCLosed") {
                 this.DropBoxWindowCLosed(res.Timer);
             }
@@ -49,7 +49,7 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
 
     ConnectToDropBox() {
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetDropBoxAuthURI(SessionLocator.Tenant).subscribe((myResult:any) => {
+        myService.GetDropBoxAuthURI(SessionLocator.Tenant).subscribe((myResult) => {
             var temp = myResult.Result;
             //this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
             //var new_window = window.open(temp, 'Authenticate with Dropbox', 'left=300, top=200,directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=1300,height=650');
@@ -94,7 +94,7 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
     DropBoxEmail: string = "";
     DropBoxWindowCLosed(timer: any = null) {
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetDropBoxAccessTocken(SessionLocator.Tenant).subscribe((myResult:any) => {
+        myService.GetDropBoxAccessTocken(SessionLocator.Tenant).subscribe((myResult) => {
             if (myResult.HasError == false && !AppTool.IsNullOrEmpty(myResult.Result.DropBoxAccessToken)) {
                 this.DropBoxEmail = myResult.Result.DropBoxUEmail;
                 var temp = myResult.Result;
@@ -129,7 +129,7 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
 
     Disconnect() {
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetRedOfDropBoxAccessTocken(SessionLocator.Tenant).subscribe((myResult:any) => {
+        myService.GetRedOfDropBoxAccessTocken(SessionLocator.Tenant).subscribe((myResult) => {
             if (myResult.HasError == false) {
                 var temp = myResult.Result;
                 this.IsConnected = false;
@@ -140,7 +140,7 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
     CheckConnection() {
         var myService: CommonDomainService = new CommonDomainService();
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Testing ...");
-        myService.GetDropBoxConnectionTest(SessionLocator.Tenant).subscribe((myResult:any) => {
+        myService.GetDropBoxConnectionTest(SessionLocator.Tenant).subscribe((myResult) => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.messageWindow.Width = 300;
             this.messageWindow.Height = 200;

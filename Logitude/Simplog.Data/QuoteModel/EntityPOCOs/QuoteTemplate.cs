@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -55,8 +55,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         [ForeignKey("TemplateTypeCode")]
         public virtual QuoteType QuoteType { get; set; }
 
-        [ForeignKey("Tenant")]
-        public virtual Tenant CurrentTenant { get; set; }
 
     }
 }

@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .SectionTitle {
         height: 20px;
@@ -66,7 +66,8 @@
                                         <tr>
                                             <td style="height: 100px; vertical-align: top;">
                                                 <div style="height: 100px; width: 100%;">
-                                                    <LogTextBox [ForceDirection]="DescriptionFlowDirection" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsDescriptionRightToLeftEnabled"></LogTextBox>
+                                                    <LogTextBox [ngStyle]="{direction: DescriptionFlowDirection}" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsDescriptionRightToLeftEnabled"></LogTextBox>
+                                                    <!--<textarea [ngStyle]="{direction: DescriptionFlowDirection}"  [(ngModel)]="Description"></textarea>-->
                                                 </div>
                                             </td>
                                             <td *ngIf="IsDescriptionRightToLeftEnabled" style="width: 50px;height:20px; vertical-align:top;">
@@ -75,19 +76,14 @@
                                                         <td width="5px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width: 16px;height: 14px;">
-                                                            <div [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionLeftClicked()">
-                                                                <img src="./Images/LTR.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionRightClicked()" />
-
-                                                            </div>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background: DescriptionBackgroundAlignLeft}">
+                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="AlignDescriptionLeftClicked()" />
                                                         </td>
-                                                        <td width="10px;">
+                                                        <td width="5px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width: 16px;height: 14px;">
-                                                            <div [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionRightClicked()">
-                                                                <img src="./Images/RTL.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionLeftClicked()" />
-                                                            </div>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background: DescriptionBackgroundAlignRight}">
+                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="AlignDescriptionRightClicked()" />
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -502,7 +498,7 @@
                                         <tr>
                                             <td style="height: 105px; vertical-align: top;">
                                                 <div style="height: 105px; width: 100%;">
-                                                    <LogTextBox [ForceDirection]="DescriptionFlowDirection" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsDescriptionRightToLeftEnabled"></LogTextBox>
+                                                    <LogTextBox [ngStyle]="{direction: DescriptionFlowDirection}" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsDescriptionRightToLeftEnabled"></LogTextBox>
                                                 </div>
                                             </td>
                                             <td *ngIf="IsDescriptionRightToLeftEnabled" style="width: 50px;height:20px; vertical-align:top;">
@@ -511,19 +507,14 @@
                                                         <td width="5px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width: 16px;height: 14px;">
-                                                            <div [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionLeftClicked()">
-                                                                <img src="./Images/LTR.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionRightClicked()" />
-
-                                                            </div>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background: DescriptionBackgroundAlignLeft}">
+                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="AlignDescriptionLeftClicked()" />
                                                         </td>
-                                                        <td width="10px;">
+                                                        <td width="5px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width: 16px;height: 14px;">
-                                                            <div [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionRightClicked()">
-                                                                <img src="./Images/RTL.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionLeftClicked()" />
-                                                            </div>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background: DescriptionBackgroundAlignRight}">
+                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="AlignDescriptionRightClicked()" />
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -1096,7 +1087,8 @@
                             <tr>
                                 <td style="height: 100px; vertical-align: top;">
                                     <div style="height: 100px; width: 100%;">
-                                        <LogTextBox [ForceDirection]="DescriptionFlowDirection" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsDescriptionRightToLeftEnabled"></LogTextBox>
+                                        <LogTextBox [ngStyle]="{direction: DescriptionFlowDirection}" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsDescriptionRightToLeftEnabled"></LogTextBox>
+                                        <!--<textarea [ngStyle]="{direction: DescriptionFlowDirection}"  [(ngModel)]="Description"></textarea>-->
                                     </div>
                                 </td>
                                 <td *ngIf="IsDescriptionRightToLeftEnabled" style="width: 50px;height:20px; vertical-align:top;">
@@ -1105,19 +1097,14 @@
                                             <td width="5px;">
                                                 <div></div>
                                             </td>
-                                            <td style="width: 16px;height: 14px;">
-                                                <div [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionLeftClicked()">
-                                                    <img src="./Images/LTR.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionRightClicked()" />
-
-                                                </div>
+                                            <td style="width: 20px;height: 25px;" [ngStyle]="{background: DescriptionBackgroundAlignLeft}">
+                                                <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="AlignDescriptionLeftClicked()" />
                                             </td>
-                                            <td width="10px;">
+                                            <td width="5px;">
                                                 <div></div>
                                             </td>
-                                            <td style="width: 16px;height: 14px;">
-                                                <div [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionRightClicked()">
-                                                    <img src="./Images/RTL.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionLeftClicked()" />
-                                                </div>
+                                            <td style="width: 20px;height: 25px;" [ngStyle]="{background: DescriptionBackgroundAlignRight}">
+                                                <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="AlignDescriptionRightClicked()" />
                                             </td>
                                         </tr>
                                     </table>
@@ -1144,7 +1131,7 @@
                             <tr>
                                 <td style="height: 100px; vertical-align: top;">
                                     <div style="height: 100px; width: 100%;">
-                                        <LogTextBox [ForceDirection]="MeetingSummaryFlowDirection" [ObjectFieldName]="'MeetingSummary'" [Text]="MeetingSummary" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsMeetingSummaryRightToLeftEnabled"></LogTextBox>
+                                        <LogTextBox [ngStyle]="{direction: MeetingSummaryFlowDirection}" [ObjectFieldName]="'MeetingSummary'" [Text]="MeetingSummary" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsMeetingSummaryRightToLeftEnabled"></LogTextBox>
                                     </div>
                                 </td>
                                 <td *ngIf="IsMeetingSummaryRightToLeftEnabled" style="width: 50px;height:20px; vertical-align:top;">
@@ -1153,19 +1140,14 @@
                                             <td width="5px;">
                                                 <div></div>
                                             </td>
-                                            <td style="width: 16px;height: 14px;">
-                                                <div [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignMeetingSummaryLeftClicked()">
-                                                    <img src="./Images/LTR.png" style="width: 16px;height: 14px;" (click)="AlignMeetingSummaryRightClicked()" />
-
-                                                </div>
+                                            <td style="width: 20px;height: 25px;" [ngStyle]="{background: MeetingSummaryBackgroundAlignLeft}">
+                                                <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="AlignMeetingSummaryLeftClicked()" />
                                             </td>
-                                            <td width="10px;">
+                                            <td width="5px;">
                                                 <div></div>
                                             </td>
-                                            <td style="width: 16px;height: 14px;">
-                                                <div [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignMeetingSummaryRightClicked()">
-                                                    <img src="./Images/RTL.png" style="width: 16px;height: 14px;" (click)="AlignMeetingSummaryLeftClicked()" />
-                                                </div>
+                                            <td style="width: 20px;height: 25px;" [ngStyle]="{background: MeetingSummaryBackgroundAlignRight}">
+                                                <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="AlignMeetingSummaryRightClicked()" />
                                             </td>
                                         </tr>
                                     </table>
@@ -1182,10 +1164,10 @@
                 </tr>
 
                 <!-- Additional Fields -->
-                <tr>
+                <tr style="height: 1px;">
                     <td colspan="4">
                         <table>
-                            <tr style="height: 1px;">
+                            <tr style="height: 1px;vertical-align:top;">
                                 <td class="SectionTitle">Additional Fields</td>
                             </tr>
 
@@ -1220,7 +1202,7 @@
                         <Label style="font-size:11px;color:#6E7172;vertical-align:central"> From:</Label>
                     </td>
 
-                    <td style="width: 420px;">
+                    <td style="width: 420px;" >
                         <div class="TextTrimming" style="width: 420px;float:left;vertical-align:central">
                             {{EmailFrom}}
                         </div>
@@ -1237,7 +1219,7 @@
                         <Label style="font-size:11px;color:#6E7172;vertical-align:central"> To:</Label>
                     </td>
 
-                    <td style="width: 420px;">
+                    <td  style="width: 420px;">
                         <div class="TextTrimming" style="width: 420px;float:left;vertical-align:central">
                             {{EmailTO}}
                         </div>
@@ -1253,7 +1235,7 @@
                         <Label style="font-size:11px;color:#6E7172;vertical-align:central"> Cc:</Label>
                     </td>
 
-                    <td style="width: 420px;">
+                    <td  style="width: 420px;">
                         <div class="TextTrimming" style="width: 420px;float:left;vertical-align:central">
                             {{EmailCC}}
                         </div>
@@ -1431,7 +1413,8 @@
                                         <tr>
                                             <td style="height: 100px; vertical-align: top;">
                                                 <div style="height: 100px; width: 100%;">
-                                                    <LogTextBox [ForceDirection]="DescriptionFlowDirection" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsDescriptionRightToLeftEnabled"></LogTextBox>
+                                                    <LogTextBox [ngStyle]="{direction: DescriptionFlowDirection}" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="IsDescriptionRightToLeftEnabled"></LogTextBox>
+                                                    <!--<textarea [ngStyle]="{direction: DescriptionFlowDirection}"  [(ngModel)]="Description"></textarea>-->
                                                 </div>
                                             </td>
                                             <td *ngIf="IsDescriptionRightToLeftEnabled" style="width: 50px;height:20px; vertical-align:top;">
@@ -1440,19 +1423,14 @@
                                                         <td width="5px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width: 16px;height: 14px;">
-                                                            <div [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionLeftClicked()">
-                                                                <img src="./Images/LTR.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionRightClicked()" />
-
-                                                            </div>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background: DescriptionBackgroundAlignLeft}">
+                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="AlignDescriptionLeftClicked()" />
                                                         </td>
-                                                        <td width="10px;">
+                                                        <td width="5px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width: 16px;height: 14px;">
-                                                            <div [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignDescriptionRightClicked()">
-                                                                <img src="./Images/RTL.png" style="width: 16px;height: 14px;" (click)="AlignDescriptionLeftClicked()" />
-                                                            </div>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background: DescriptionBackgroundAlignRight}">
+                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="AlignDescriptionRightClicked()" />
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -1673,73 +1651,73 @@
                                         <tr>
                                             <td>
                                                 <div class="FillParent">
-                                                    <table>
-                                                        <tr class="FormFieldRow">
-                                                            <td style="width: 130px;">
-                                                                <LogLabel [ObjectFieldName]="'DueDateOffset'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                            </td>
+                                                   <table>
+                                                       <tr class="FormFieldRow">
+                                                           <td style="width: 130px;">
+                                                               <LogLabel [ObjectFieldName]="'DueDateOffset'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                           </td>
 
-                                                            <td style="width:250px;">
-                                                                <LogTextBox [ObjectFieldName]="'DueDateOffset'" [Text]="DueDateOffset" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                            </td>
+                                                           <td style="width:250px;">
+                                                               <LogTextBox [ObjectFieldName]="'DueDateOffset'" [Text]="DueDateOffset" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                           </td>
 
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
+                                                           <td>
+                                                               <div></div>
+                                                           </td>
+                                                       </tr>
 
-                                                        <tr class="FormFieldRow">
-                                                            <td>
-                                                                <LogLabel [ObjectFieldName]="'DueDateDateField'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                            </td>
+                                                       <tr class="FormFieldRow">
+                                                           <td>
+                                                               <LogLabel [ObjectFieldName]="'DueDateDateField'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                           </td>
 
-                                                            <td>
-                                                                <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'DueDateDefaultText'" [Text]="DueDateDefaultText" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                            </td>
+                                                           <td>
+                                                               <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'DueDateDefaultText'" [Text]="DueDateDefaultText" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                           </td>
 
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
+                                                           <td>
+                                                               <div></div>
+                                                           </td>
+                                                       </tr>
 
-                                                        <tr class="FormFieldRow">
-                                                            <td style="width: 110px;">
-                                                                <LogLabel [ObjectFieldName]="'BusinessProcessQueueId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                            </td>
+                                                       <tr class="FormFieldRow">
+                                                           <td style="width: 110px;">
+                                                               <LogLabel [ObjectFieldName]="'BusinessProcessQueueId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                           </td>
 
-                                                            <td>
-                                                                <LogLov [ObjectFieldName]="'BusinessProcessQueueId'"
-                                                                        [SelectedValue]="BusinessProcessQueueId"
-                                                                        [ObjectTableName]="ObjectTableName"
-                                                                        [DataContext]="DataContext"
-                                                                        [LookUpTableName]="'BusinessProcessQueue'">
-                                                                </LogLov>
-                                                            </td>
+                                                           <td>
+                                                               <LogLov [ObjectFieldName]="'BusinessProcessQueueId'"
+                                                                       [SelectedValue]="BusinessProcessQueueId"
+                                                                       [ObjectTableName]="ObjectTableName"
+                                                                       [DataContext]="DataContext"
+                                                                       [LookUpTableName]="'BusinessProcessQueue'">
+                                                               </LogLov>
+                                                           </td>
 
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
+                                                           <td>
+                                                               <div></div>
+                                                           </td>
+                                                       </tr>
 
-                                                        <tr class="FormFieldRow">
-                                                            <td style="width: 110px;">
-                                                                <LogLabel [ObjectFieldName]="'TeamId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                            </td>
+                                                       <tr class="FormFieldRow">
+                                                           <td style="width: 110px;">
+                                                               <LogLabel [ObjectFieldName]="'TeamId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                           </td>
 
-                                                            <td>
-                                                                <LogLov [ObjectFieldName]="'TeamId'"
-                                                                        [SelectedValue]="TeamId"
-                                                                        [ObjectTableName]="ObjectTableName"
-                                                                        [DataContext]="DataContext"
-                                                                        [LookUpTableName]="'Team'">
-                                                                </LogLov>
-                                                            </td>
+                                                           <td>
+                                                               <LogLov [ObjectFieldName]="'TeamId'"
+                                                                       [SelectedValue]="TeamId"
+                                                                       [ObjectTableName]="ObjectTableName"
+                                                                       [DataContext]="DataContext"
+                                                                       [LookUpTableName]="'Team'">
+                                                               </LogLov>
+                                                           </td>
 
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                           <td>
+                                                               <div></div>
+                                                           </td>
+                                                       </tr>
+                                                   </table>
                                                 </div>
                                             </td>
                                         </tr>

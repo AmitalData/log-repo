@@ -32,6 +32,7 @@ namespace WebFreight.Web.DataProviders
         public string TenantPhone { get; set; }
         public string TenantFax { get; set; }
 
+
         public List<Quotes> QuotesList { get; set; }
 
         public class Quotes
@@ -45,8 +46,10 @@ namespace WebFreight.Web.DataProviders
             public string Status { get; set; }
             public string DirectionTransportMode { get; set; }
             public DateTime? OpenDate { get; set; }
-            public string DeclineReason { get; set; }
-            public double? EstimateProfit { get; set; }
+       
+
+
+
         }
     }
 }

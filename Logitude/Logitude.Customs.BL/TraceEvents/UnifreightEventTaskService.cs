@@ -6,9 +6,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Transactions;
 using System.Xml.Linq;
 using Unifreight.BL.EntityPMs;
@@ -19,7 +17,7 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
-    public class UnifreightEventTaskService
+    internal class UnifreightEventTaskService
     {
         private AmitalContext _AmitalContext;
 
@@ -29,25 +27,26 @@ namespace Logitude.Customs.BL.TraceEvents
 
         public void UpsertEventLE2U(int tenant, string UserId, UnifreightEventParam myUnifreightEventParam)
         {
-  
+            //TransactionScope scope = null;
+            //if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            //{
+            //    scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            //}
+
+
+
+            //long customFile;
 
             if (!myUnifreightEventParam.IsValid())
             {
                 return;
             }
-
-            var mySetting = EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(tenant);
-
-            if (mySetting.StandAlone)
-                return;
-
             string unifreightUserId = GetUnifreightUserId(tenant, UserId);
             try
             {
-                if (myUnifreightEventParam.Entname == "CFIFILEM")
-                {
-                    _AmitalContext = AmitalContext.GetContext(tenant);
 
+                using (_AmitalContext = AmitalContext.GetContext(tenant))
+                {
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
@@ -55,19 +54,14 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
 
-                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightEventParam,tenant);
-
-                    
-                    InsertGGGQ4Entity(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, myGGGQUpdateService, mySetting.IsConnectedToUniFreight, tenant);
-                    
-
+                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightEventParam);
                     string requestData = GetEventRequestDATA(myUnifreightEventParam, unifreightUserId, true);
-                    InsertEventTask4Entity(myUnifreightEventParam, unifreightUserId, tenant, requestData);
+                    InsertEventTask4Entity(myUnifreightEventParam, unifreightUserId, myYCULTASKUpdateService, requestData);
 
-
-
-
+                    InsertGGGQ4Entity(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, myGGGQUpdateService);
                 }
+
+
             }
             finally
             {
@@ -78,36 +72,30 @@ namespace Logitude.Customs.BL.TraceEvents
             }
         }
 
-        private void InsertGGGQ4Entity(string ENTNAME, string ENTITYNUM, GGGQUpdateService myGGGQUpdateService, bool isConnectedToUniFreight, int tenant)
+        private void InsertGGGQ4Entity(string ENTNAME, string ENTITYNUM, GGGQUpdateService myGGGQUpdateService)
         {
-
             var myGGGQPM_Packs = new GGGQPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
                 ORIGINQUE = "LGT", //LugitudeRequest
                 STATUS = "1",
                 EXPTASKTIME = 5,
-                EXECDATE = DateTime.Now, 
+                EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
                 TRY = 9,
                 PRIORITY = 8,
                 ENTNAME = ENTNAME,
                 PRIMARYNUM = ENTITYNUM,
                 FORMID = "LGT_UPDATE_FCI",
                 DEBUG = "F",
-                DONEOPERATION = "D",
+                DONEOPERATION = "A",
 
             };
             myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with 
-            
-            myGGGQPM_Packs.Tenant = tenant;
-            
             myGGGQUpdateService.Update(myGGGQPM_Packs, true);
         }
 
-        private static void InsertEventTask4Entity(UnifreightEventParam myUnifreightEventParam, string unfreightUserId, int tenant, string requestData)
+        private static void InsertEventTask4Entity(UnifreightEventParam myUnifreightEventParam, string unfreightUserId, YCULTASKUpdateService myYCULTASKUpdateService, string requestData)
         {
-
-           
 
 
             var myYCULTASKPM_Packs = new YCULTASKPM()
@@ -124,17 +112,9 @@ namespace Logitude.Customs.BL.TraceEvents
                 ARCHIVE = "F",
 
             };
-           
-            myYCULTASKPM_Packs.Tenant = tenant;
-            
-            AmitalContext  _AmitalContext = AmitalContext.GetContext(tenant);
-            var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-            myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
 
+            myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
             myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
-            
-           
-            
         }
 
         public static string GetEventRequestDATA(
@@ -181,50 +161,24 @@ namespace Logitude.Customs.BL.TraceEvents
 
         private static XElement GetEventsXElement(UnifreightEventParam MyUnifreightEventParam, string unfreightUserId, string EventDate, string EventTime)
         {
-            var EventsXElement = new XElement("Events");
-            if (MyUnifreightEventParam.PrimaryNumList != null && MyUnifreightEventParam.PrimaryNumList.Count > 0)
-            {
-                EventsXElement =
-                            //new XDocument(
-                            //new XDeclaration("1.0", "utf-8", "yes"),
-                            //new XComment("OpenUnifreighTaskService.UpsertEventLE2U"),
-                            new XElement("Events",
-                            from PrimaryNumParam in MyUnifreightEventParam.PrimaryNumList
-                            select new XElement("Event",
-                                    new XElement("Code", MyUnifreightEventParam.Code),
-                                    new XElement("Mode", MyUnifreightEventParam.Mode.ToString()),
+            var EventsXElement =
+                        //new XDocument(
+                        //new XDeclaration("1.0", "utf-8", "yes"),
+                        //new XComment("OpenUnifreighTaskService.UpsertEventLE2U"),
+                        new XElement("Events",
+                            new XElement("Event",
+                                new XElement("Code", MyUnifreightEventParam.Code),
+                                new XElement("Mode", MyUnifreightEventParam.Mode.ToString()),
 
-                                    new XElement("EventDate", EventDate),
-                                    new XElement("EventTime", EventTime),
+                                new XElement("EventDate", EventDate),
+                                new XElement("EventTime", EventTime),
 
-                                    new XElement("EventRemarks", MyUnifreightEventParam.EventRemarks),
-                                    new XElement("EventUser", unfreightUserId),
-                                    new XElement("Entname", MyUnifreightEventParam.Entname),
-                                    new XElement("PrimaryNum", PrimaryNumParam)
-                                    )
-                            );
-            }
-            else
-            {
-                EventsXElement =
-                            //new XDocument(
-                            //new XDeclaration("1.0", "utf-8", "yes"),
-                            //new XComment("OpenUnifreighTaskService.UpsertEventLE2U"),
-                            new XElement("Events",
-                                new XElement("Event",
-                                    new XElement("Code", MyUnifreightEventParam.Code),
-                                    new XElement("Mode", MyUnifreightEventParam.Mode.ToString()),
-
-                                    new XElement("EventDate", EventDate),
-                                    new XElement("EventTime", EventTime),
-
-                                    new XElement("EventRemarks", MyUnifreightEventParam.EventRemarks),
-                                    new XElement("EventUser", unfreightUserId),
-                                    new XElement("Entname", MyUnifreightEventParam.Entname),
-                                    new XElement("PrimaryNum", MyUnifreightEventParam.PrimaryNum)
-                                    )
-                            );
-            }
+                                new XElement("EventRemarks", MyUnifreightEventParam.EventRemarks),
+                                new XElement("EventUser", unfreightUserId),
+                                new XElement("Entname", MyUnifreightEventParam.Entname),
+                                new XElement("PrimaryNum", MyUnifreightEventParam.PrimaryNum)
+                                )
+                        );
             return EventsXElement;
         }
 
@@ -251,9 +205,9 @@ namespace Logitude.Customs.BL.TraceEvents
             return unfreightUserId;
         }
 
-        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightEventParam myUnifreightEventParam,int tenant)
+        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightEventParam myUnifreightEventParam)
         {
-            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum,tenant, false);
+            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, false);
             if (myCCUQUELOCK == null)
             {
                 var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -284,7 +238,6 @@ namespace Logitude.Customs.BL.TraceEvents
         public string EventUser { get; set; }
         public string Entname { get; set; }
         public string PrimaryNum { get; set; }
-        public List<string> PrimaryNumList { get; set; }
 
         internal bool IsValid()
         {

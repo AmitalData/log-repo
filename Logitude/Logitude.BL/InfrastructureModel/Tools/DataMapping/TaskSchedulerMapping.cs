@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
@@ -22,13 +22,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.InActive = TaskSchedulerPM.InActive;
             TaskScheduler.IsLastRunError = TaskSchedulerPM.IsLastRunError;
             TaskScheduler.LastRunResult = TaskSchedulerPM.LastRunResult;
-            TaskScheduler.LastRunEndTime = TaskSchedulerPM.LastRunEndTime;
+            TaskScheduler.LastRunTime = TaskSchedulerPM.LastRunTime;
             TaskScheduler.Monday = TaskSchedulerPM.Monday;
             TaskScheduler.Name = TaskSchedulerPM.Name;
             TaskScheduler.NextRunTime = TaskSchedulerPM.NextRunTime;
             TaskScheduler.RepeatInMinutes = TaskSchedulerPM.RepeatInMinutes;
             TaskScheduler.Satarday = TaskSchedulerPM.Satarday;
-            TaskScheduler.ProcedureCode = TaskSchedulerPM.ProcedureCode;
+            TaskScheduler.ServiceClassName = TaskSchedulerPM.ServiceClassName;
             TaskScheduler.StartDateTime = TaskSchedulerPM.StartDateTime;
             TaskScheduler.Sunday = TaskSchedulerPM.Sunday;
             TaskScheduler.Thursday = TaskSchedulerPM.Thursday;
@@ -41,22 +41,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.SchedulerDetailsXML = TaskSchedulerPM.SchedulerDetailsXML;
 
             TaskScheduler.StartDateTimeUTC = TaskSchedulerPM.StartDateTimeUTC;
-            TaskScheduler.LastRunEndTimeUTC = TaskSchedulerPM.LastRunEndTimeUTC;
+            TaskScheduler.LastRunTimeUTC = TaskSchedulerPM.LastRunTimeUTC;
             TaskScheduler.NextRunTimeUTC = TaskSchedulerPM.NextRunTimeUTC;
 
-            TaskScheduler.Version = TaskSchedulerPM.Version;
-            TaskScheduler.Status = TaskSchedulerPM.Status;
-            TaskScheduler.Retries = TaskSchedulerPM.Retries;
-            TaskScheduler.LastRunStartTime = TaskSchedulerPM.LastRunStartTime;
 
-            TaskScheduler.LastRunStartTimeUTC = TaskSchedulerPM.LastRunStartTimeUTC;
-            TaskScheduler.AverageRunTime = TaskScheduler.AverageRunTime;
-            TaskScheduler.EntityId = TaskSchedulerPM.EntityId;
-            TaskScheduler.MonthlyDay = 0;
-            TaskScheduler.ResultType = TaskSchedulerPM.ResultType;
-            TaskScheduler.Format = TaskSchedulerPM.Format;
-            TaskScheduler.AdvancedFormat = TaskSchedulerPM.AdvancedFormat;
-            TaskScheduler.ExecutedByServerName = TaskSchedulerPM.ExecutedByServerName;
+
         }
     }
 }

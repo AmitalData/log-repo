@@ -31,7 +31,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ExpirationDate, 
 	         Name, 
 	         InActive, 
-	         Notes, 
+	         Description, 
 	         SellerId, 
 	         CurrencyId, 
 	         CreateDate, 
@@ -41,42 +41,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         TypeCode, 
 	         LastStartDate, 
 	         LastVersion, 
-	         ContractNumber, 
-	         TariffNumber, 
-	         Surcharge1Id, 
-	         Surcharge2Id, 
-	         Surcharge3Id, 
-	         Surcharge4Id, 
-	         Surcharge5Id, 
-	         Surcharge6Id, 
-	         Surcharge7Id, 
-	         Surcharge8Id, 
-	         Surcharge9Id, 
-	         Surcharge10Id, 
-	         Surcharge1UOM, 
-	         Surcharge2UOM, 
-	         Surcharge3UOM, 
-	         Surcharge4UOM, 
-	         Surcharge5UOM, 
-	         Surcharge6UOM, 
-	         Surcharge7UOM, 
-	         Surcharge8UOM, 
-	         Surcharge9UOM, 
-	         Surcharge10UOM, 
-	         ConcurrencyGUID, 
-	         ContainerType1Id, 
-	         ContainerType2Id, 
-	         ContainerType3Id, 
-	         ContainerType4Id, 
-	         ContainerType5Id, 
-	         TariffProductId, 
-	         SellerPartnerTypeId, 
-	         LastUsedDate, 
-	         FreightChargeId, 
-	         CustomsBrokerId, 
-	         CustomsBrokerPartnerTypeId, 
-	         UnitOfMeasurementCode, 
-	         CustomerGroupId,
+	         ContractNumber,
 	      }
 
 
@@ -92,7 +57,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ExpirationDate, 
 	         Name, 
 	         InActive, 
-	         Notes, 
+	         Description, 
 	         SellerId, 
 	         CurrencyId, 
 	         CreateDate, 
@@ -104,59 +69,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LastStartDate, 
 	         LastVersion, 
 	         ContractNumber, 
-	         SellerName, 
 	         SetAsInActive, 
-	         SetAsReActive, 
-	         TariffNumber, 
-	         TariffLinesAdded, 
-	         Surcharge1Id, 
-	         Surcharge2Id, 
-	         Surcharge3Id, 
-	         Surcharge4Id, 
-	         Surcharge5Id, 
-	         Surcharge6Id, 
-	         Surcharge7Id, 
-	         Surcharge8Id, 
-	         Surcharge9Id, 
-	         Surcharge10Id, 
-	         Surcharge1UOM, 
-	         Surcharge2UOM, 
-	         Surcharge3UOM, 
-	         Surcharge4UOM, 
-	         Surcharge5UOM, 
-	         Surcharge6UOM, 
-	         Surcharge7UOM, 
-	         Surcharge8UOM, 
-	         Surcharge9UOM, 
-	         Surcharge10UOM, 
-	         TariffLinesAddedNumbers, 
-	         TariffLinesAddedFromExcel, 
-	         FileUploadedName, 
-	         ConcurrencyGUID, 
-	         NewConcurrencyGUID, 
-	         IsApprovingDraftVersion, 
-	         IsSurchargeUpdate, 
-	         IsFromUpdateScreen, 
-	         IsFromCopy, 
-	         IsUpdatingMissingPorts, 
-	         ContainerType1Id, 
-	         ContainerType2Id, 
-	         ContainerType3Id, 
-	         ContainerType4Id, 
-	         ContainerType5Id, 
-	         TransportModeCode, 
-	         TransportModeName, 
-	         TariffProductId, 
-	         SellerPartnerTypeId, 
-	         IsRefreshTranslations, 
-	         LastUsedDate, 
-	         FreightChargeId, 
-	         CustomsBrokerId, 
-	         CustomsBrokerName, 
-	         CustomsBrokerPartnerTypeId, 
-	         UnitOfMeasurementCode, 
-	         CustomerGroupId, 
-	         CustomerGroupName,
+	         SetAsReActive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -205,9 +119,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 				entityPOCO.InActive = entityPM.InActive;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
             {
-				entityPOCO.Notes = entityPM.Notes;
+				entityPOCO.Description = entityPM.Description;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SellerId))
@@ -258,181 +172,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContractNumber))
             {
 				entityPOCO.ContractNumber = entityPM.ContractNumber;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffNumber))
-            {
-				entityPOCO.TariffNumber = entityPM.TariffNumber;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1Id))
-            {
-				entityPOCO.Surcharge1Id = entityPM.Surcharge1Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2Id))
-            {
-				entityPOCO.Surcharge2Id = entityPM.Surcharge2Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3Id))
-            {
-				entityPOCO.Surcharge3Id = entityPM.Surcharge3Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4Id))
-            {
-				entityPOCO.Surcharge4Id = entityPM.Surcharge4Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5Id))
-            {
-				entityPOCO.Surcharge5Id = entityPM.Surcharge5Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6Id))
-            {
-				entityPOCO.Surcharge6Id = entityPM.Surcharge6Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7Id))
-            {
-				entityPOCO.Surcharge7Id = entityPM.Surcharge7Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8Id))
-            {
-				entityPOCO.Surcharge8Id = entityPM.Surcharge8Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9Id))
-            {
-				entityPOCO.Surcharge9Id = entityPM.Surcharge9Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10Id))
-            {
-				entityPOCO.Surcharge10Id = entityPM.Surcharge10Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1UOM))
-            {
-				entityPOCO.Surcharge1UOM = entityPM.Surcharge1UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2UOM))
-            {
-				entityPOCO.Surcharge2UOM = entityPM.Surcharge2UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3UOM))
-            {
-				entityPOCO.Surcharge3UOM = entityPM.Surcharge3UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4UOM))
-            {
-				entityPOCO.Surcharge4UOM = entityPM.Surcharge4UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5UOM))
-            {
-				entityPOCO.Surcharge5UOM = entityPM.Surcharge5UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6UOM))
-            {
-				entityPOCO.Surcharge6UOM = entityPM.Surcharge6UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7UOM))
-            {
-				entityPOCO.Surcharge7UOM = entityPM.Surcharge7UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8UOM))
-            {
-				entityPOCO.Surcharge8UOM = entityPM.Surcharge8UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9UOM))
-            {
-				entityPOCO.Surcharge9UOM = entityPM.Surcharge9UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10UOM))
-            {
-				entityPOCO.Surcharge10UOM = entityPM.Surcharge10UOM;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
-            {
-				entityPOCO.ConcurrencyGUID = entityPM.ConcurrencyGUID;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType1Id))
-            {
-				entityPOCO.ContainerType1Id = entityPM.ContainerType1Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType2Id))
-            {
-				entityPOCO.ContainerType2Id = entityPM.ContainerType2Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType3Id))
-            {
-				entityPOCO.ContainerType3Id = entityPM.ContainerType3Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType4Id))
-            {
-				entityPOCO.ContainerType4Id = entityPM.ContainerType4Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType5Id))
-            {
-				entityPOCO.ContainerType5Id = entityPM.ContainerType5Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffProductId))
-            {
-				entityPOCO.TariffProductId = entityPM.TariffProductId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SellerPartnerTypeId))
-            {
-				entityPOCO.SellerPartnerTypeId = entityPM.SellerPartnerTypeId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUsedDate))
-            {
-				entityPOCO.LastUsedDate = entityPM.LastUsedDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FreightChargeId))
-            {
-				entityPOCO.FreightChargeId = entityPM.FreightChargeId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerId))
-            {
-				entityPOCO.CustomsBrokerId = entityPM.CustomsBrokerId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerPartnerTypeId))
-            {
-				entityPOCO.CustomsBrokerPartnerTypeId = entityPM.CustomsBrokerPartnerTypeId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
-            {
-				entityPOCO.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerGroupId))
-            {
-				entityPOCO.CustomerGroupId = entityPM.CustomerGroupId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -486,9 +225,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.InActive = entityPOCO.InActive;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Notes))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Description))
             {
-					entityPM.Notes = entityPOCO.Notes;
+					entityPM.Description = entityPOCO.Description;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SellerId))
@@ -541,181 +280,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ContractNumber = entityPOCO.ContractNumber;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffNumber))
-            {
-					entityPM.TariffNumber = entityPOCO.TariffNumber;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge1Id))
-            {
-					entityPM.Surcharge1Id = entityPOCO.Surcharge1Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge2Id))
-            {
-					entityPM.Surcharge2Id = entityPOCO.Surcharge2Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge3Id))
-            {
-					entityPM.Surcharge3Id = entityPOCO.Surcharge3Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge4Id))
-            {
-					entityPM.Surcharge4Id = entityPOCO.Surcharge4Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge5Id))
-            {
-					entityPM.Surcharge5Id = entityPOCO.Surcharge5Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge6Id))
-            {
-					entityPM.Surcharge6Id = entityPOCO.Surcharge6Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge7Id))
-            {
-					entityPM.Surcharge7Id = entityPOCO.Surcharge7Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge8Id))
-            {
-					entityPM.Surcharge8Id = entityPOCO.Surcharge8Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge9Id))
-            {
-					entityPM.Surcharge9Id = entityPOCO.Surcharge9Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge10Id))
-            {
-					entityPM.Surcharge10Id = entityPOCO.Surcharge10Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge1UOM))
-            {
-					entityPM.Surcharge1UOM = entityPOCO.Surcharge1UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge2UOM))
-            {
-					entityPM.Surcharge2UOM = entityPOCO.Surcharge2UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge3UOM))
-            {
-					entityPM.Surcharge3UOM = entityPOCO.Surcharge3UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge4UOM))
-            {
-					entityPM.Surcharge4UOM = entityPOCO.Surcharge4UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge5UOM))
-            {
-					entityPM.Surcharge5UOM = entityPOCO.Surcharge5UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge6UOM))
-            {
-					entityPM.Surcharge6UOM = entityPOCO.Surcharge6UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge7UOM))
-            {
-					entityPM.Surcharge7UOM = entityPOCO.Surcharge7UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge8UOM))
-            {
-					entityPM.Surcharge8UOM = entityPOCO.Surcharge8UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge9UOM))
-            {
-					entityPM.Surcharge9UOM = entityPOCO.Surcharge9UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge10UOM))
-            {
-					entityPM.Surcharge10UOM = entityPOCO.Surcharge10UOM;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConcurrencyGUID))
-            {
-					entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType1Id))
-            {
-					entityPM.ContainerType1Id = entityPOCO.ContainerType1Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType2Id))
-            {
-					entityPM.ContainerType2Id = entityPOCO.ContainerType2Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType3Id))
-            {
-					entityPM.ContainerType3Id = entityPOCO.ContainerType3Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType4Id))
-            {
-					entityPM.ContainerType4Id = entityPOCO.ContainerType4Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType5Id))
-            {
-					entityPM.ContainerType5Id = entityPOCO.ContainerType5Id;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffProductId))
-            {
-					entityPM.TariffProductId = entityPOCO.TariffProductId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SellerPartnerTypeId))
-            {
-					entityPM.SellerPartnerTypeId = entityPOCO.SellerPartnerTypeId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastUsedDate))
-            {
-					entityPM.LastUsedDate = entityPOCO.LastUsedDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FreightChargeId))
-            {
-					entityPM.FreightChargeId = entityPOCO.FreightChargeId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBrokerId))
-            {
-					entityPM.CustomsBrokerId = entityPOCO.CustomsBrokerId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBrokerPartnerTypeId))
-            {
-					entityPM.CustomsBrokerPartnerTypeId = entityPOCO.CustomsBrokerPartnerTypeId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnitOfMeasurementCode))
-            {
-					entityPM.UnitOfMeasurementCode = entityPOCO.UnitOfMeasurementCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerGroupId))
-            {
-					entityPM.CustomerGroupId = entityPOCO.CustomerGroupId;
-            }
-
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -762,9 +326,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 oldEntityPM.InActive = entityPM.InActive;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
             {
-                oldEntityPM.Notes = entityPM.Notes;
+                oldEntityPM.Description = entityPM.Description;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SellerId))
@@ -817,181 +381,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 oldEntityPM.ContractNumber = entityPM.ContractNumber;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffNumber))
-            {
-                oldEntityPM.TariffNumber = entityPM.TariffNumber;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1Id))
-            {
-                oldEntityPM.Surcharge1Id = entityPM.Surcharge1Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2Id))
-            {
-                oldEntityPM.Surcharge2Id = entityPM.Surcharge2Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3Id))
-            {
-                oldEntityPM.Surcharge3Id = entityPM.Surcharge3Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4Id))
-            {
-                oldEntityPM.Surcharge4Id = entityPM.Surcharge4Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5Id))
-            {
-                oldEntityPM.Surcharge5Id = entityPM.Surcharge5Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6Id))
-            {
-                oldEntityPM.Surcharge6Id = entityPM.Surcharge6Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7Id))
-            {
-                oldEntityPM.Surcharge7Id = entityPM.Surcharge7Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8Id))
-            {
-                oldEntityPM.Surcharge8Id = entityPM.Surcharge8Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9Id))
-            {
-                oldEntityPM.Surcharge9Id = entityPM.Surcharge9Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10Id))
-            {
-                oldEntityPM.Surcharge10Id = entityPM.Surcharge10Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1UOM))
-            {
-                oldEntityPM.Surcharge1UOM = entityPM.Surcharge1UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2UOM))
-            {
-                oldEntityPM.Surcharge2UOM = entityPM.Surcharge2UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3UOM))
-            {
-                oldEntityPM.Surcharge3UOM = entityPM.Surcharge3UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4UOM))
-            {
-                oldEntityPM.Surcharge4UOM = entityPM.Surcharge4UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5UOM))
-            {
-                oldEntityPM.Surcharge5UOM = entityPM.Surcharge5UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6UOM))
-            {
-                oldEntityPM.Surcharge6UOM = entityPM.Surcharge6UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7UOM))
-            {
-                oldEntityPM.Surcharge7UOM = entityPM.Surcharge7UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8UOM))
-            {
-                oldEntityPM.Surcharge8UOM = entityPM.Surcharge8UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9UOM))
-            {
-                oldEntityPM.Surcharge9UOM = entityPM.Surcharge9UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10UOM))
-            {
-                oldEntityPM.Surcharge10UOM = entityPM.Surcharge10UOM;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
-            {
-                oldEntityPM.ConcurrencyGUID = entityPM.ConcurrencyGUID;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType1Id))
-            {
-                oldEntityPM.ContainerType1Id = entityPM.ContainerType1Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType2Id))
-            {
-                oldEntityPM.ContainerType2Id = entityPM.ContainerType2Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType3Id))
-            {
-                oldEntityPM.ContainerType3Id = entityPM.ContainerType3Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType4Id))
-            {
-                oldEntityPM.ContainerType4Id = entityPM.ContainerType4Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType5Id))
-            {
-                oldEntityPM.ContainerType5Id = entityPM.ContainerType5Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffProductId))
-            {
-                oldEntityPM.TariffProductId = entityPM.TariffProductId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SellerPartnerTypeId))
-            {
-                oldEntityPM.SellerPartnerTypeId = entityPM.SellerPartnerTypeId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUsedDate))
-            {
-                oldEntityPM.LastUsedDate = entityPM.LastUsedDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FreightChargeId))
-            {
-                oldEntityPM.FreightChargeId = entityPM.FreightChargeId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerId))
-            {
-                oldEntityPM.CustomsBrokerId = entityPM.CustomsBrokerId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerPartnerTypeId))
-            {
-                oldEntityPM.CustomsBrokerPartnerTypeId = entityPM.CustomsBrokerPartnerTypeId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
-            {
-                oldEntityPM.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerGroupId))
-            {
-                oldEntityPM.CustomerGroupId = entityPM.CustomerGroupId;
-            }
-			
 		}
 
 	    public void EncodeBase64NVARCHARFields(TariffPM entityPM)
@@ -1009,9 +398,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             {
                 entityPM.Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Name));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
+            if (!String.IsNullOrWhiteSpace(entityPM.Description)) //T4 find type == nText 
             {
-                entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
+                entityPM.Description = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Description));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

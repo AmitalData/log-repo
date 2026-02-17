@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -38,12 +38,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Signature).HasColumnName("Signature");
             this.Property(t => t.INTTRAId).HasColumnName("INTTRAId");
             this.Property(t => t.INTTRAContactId).HasColumnName("INTTRAContactId");
-            this.Property(t => t.INTTRAAlias).HasColumnName("INTTRAAlias"); 
-            this.Property(t => t.CounterCode).HasColumnName("CounterCode");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
+            this.Property(t => t.INTTRAAlias).HasColumnName("INTTRAAlias");
+			this.Property(t => t.CounterCode).HasColumnName("CounterCode");
 
 
-            this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);
+			this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);
             this.HasOptional(t => t.INTTRAContact).WithMany().HasForeignKey(d => d.INTTRAContactId);
         }
     }

@@ -27,9 +27,8 @@ import {VendorMessagesService} from '../../../../../Customs/Services/WebServices
 import {CustomsVendorPMService} from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 
 
-
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './VendorGeneralTabComponent.html',
 })
 
@@ -41,14 +40,12 @@ export class VendorGeneralTabComponent extends BaseComponent {
     public IsNewEntity: boolean = false;
     public ValdationErrorList: any[];
     public SubCountryCodeEnabled: boolean = false;
-    public isEntityChange: boolean = false;
     IsDelete: boolean = false;
     CommunicationsList: ObservableCollection;
     RequestParams: VendorInsertUpdateDeleteMessageRequestParams;
     ResponseData: INF_MSG_GenericResponseData;
     vendorMessagesService: VendorMessagesService = new VendorMessagesService();
     customsVendorPMService: CustomsVendorPMService = new CustomsVendorPMService();
-    inActiveVendor: string = TextCodeTranslator.Translate("Customs.Vendor.O.InActiveVendor");
 
     RequestVIA: SendRequestVIA;
 
@@ -59,7 +56,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
 
     }
 
-    SetTabArgs(args: any, valdationErrorList: any[] = []) {
+    SetTabArgs(args: any, valdationErrorList: any[]) {
         this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
 
@@ -78,9 +75,6 @@ export class VendorGeneralTabComponent extends BaseComponent {
     }
 
     SetFieldsEditability() {
-
-
-
         this.UIProperties.SetEnabled("VendorTypeCode", this.ObjectTableName, this.IsNewEntity);
         this.UIProperties.SetEnabled("SubCountryCode", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityPM.CountryCode));
     }
@@ -139,38 +133,8 @@ export class VendorGeneralTabComponent extends BaseComponent {
     public set TransactionTypeID(newValue: string) {
         this.EntityPM.TransactionTypeID = newValue;
     }
-    public get InActive() { return this.EntityPM.InActive; }
-    public set InActive(newValue: boolean) {
-        this.EntityPM.InActive = newValue;
-    }
 
     //#endregion
-
-    InActiveVendor(isChecked){
-       
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-
-            !this.EntityPM.InActive ? confirmWindow.Show(TextCodeTranslator.Translate("Customs.Vendor.O.ConfirmInActiveVendor")) 
-                : confirmWindow.Show(TextCodeTranslator.Translate("Customs.Vendor.O.CancelInActiveVendor"));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                     if (confirmWindow.Yes) {
-                        this.EntityPM.InActive = !this.EntityPM.InActive;
-                    
-                          this.customsVendorPMService.update(this.EntityPM).subscribe(myResult => {
-                          if (myResult.HasError) {
-                                this.ValdationErrorList = [];
-                                this.ValdationErrorList.push(myResult.ErrorsArray[0]);
-                                return;
-                            } });
-                        }
-                       
-                        isChecked.target.checked = this.EntityPM.InActive; 
-                    });
-          
-
-    }
 
     line = 0;
     AddButonClicked() {
@@ -319,8 +283,8 @@ export class VendorGeneralTabComponent extends BaseComponent {
             });
         }
 
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,deleteParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", false).then((res) => {
-            this.isEntityChange = true;
+        CustomMessageProgressComponent.ShowProgressBar(deleteParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", false).then((res) => {
+
             this.ResponseData = res;
             console.log("[Delete] Response/ShowProgressBar : ", this.ResponseData);
 
@@ -418,8 +382,6 @@ export class VendorGeneralTabComponent extends BaseComponent {
         addParams.ExternalId = this.EntityPM.ExternalId;
         addParams.ConcurrencyGUID = this.EntityPM.ConcurrencyGUID;
         addParams.RequestVIA = this.RequestVIA;
-        addParams.InActive = this.EntityPM.InActive;
-
         //addParams.TestCase = SelectedTest; // this is should be in RequestParamsBase but it does not
         addParams.IsAfterWarning = isAfterWarning;
 
@@ -464,7 +426,7 @@ export class VendorGeneralTabComponent extends BaseComponent {
                 }
                 return false;
             };
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,addParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", false
+        CustomMessageProgressComponent.ShowProgressBar(addParams.PBId, "שליחת מסר הוספה/עדכון/מחיקת ספק", false
 
             ,
             //(res1) => {
@@ -478,7 +440,6 @@ export class VendorGeneralTabComponent extends BaseComponent {
             //}
             myShowProgressBarParams
             ).then((res) => {
-                this.isEntityChange = true;
 
             this.ResponseData = res;
             console.log("[Send] Response/ShowProgressBar : ", this.ResponseData);
@@ -579,9 +540,6 @@ export class VendorGeneralTabComponent extends BaseComponent {
         //TenantContext.Current.RefreshTableData("Customs.Vendor", DateTime.UtcNow, true);
         //this.Dispose();
     }
-
-
-   
     //#endregion
 }
 

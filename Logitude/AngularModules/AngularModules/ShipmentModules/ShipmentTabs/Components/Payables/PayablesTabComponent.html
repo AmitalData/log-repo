@@ -19,22 +19,6 @@
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
     }
-
-    .SimpleGridViewRow:hover {
-        background: #f8f8f8;
-    }
-
-        .SimpleGridViewRow:hover .deleteIcon {
-            display: block !important;
-        }
-
-    .deleteIcon {
-        opacity: 0;
-    }
-
-        .deleteIcon:hover {
-            opacity: 1;
-        }
 </style>
 
 <table>
@@ -63,26 +47,11 @@
                                         </div>
                                     </td>
 
-                                    <td style="width:5px;" *ngIf="IsUpdateCustomsChargesVisible">
-                                        <div></div>
-                                    </td>
-
-                                    <td [style.width.px]="UpdateCustomsChargesMessageWidth + 70" *ngIf="IsUpdateCustomsChargesVisible">
-                                        <div class="MediaFill">
-                                            <div class="MediaFillAbsolute OrangeInfo" style="top: 2px; bottom: 2px; padding: 0px;">
-                                                <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">{{UpdateCustomsChargesMessage}}</div>
-                                                <div style="line-height: 25px; margin-left: 10px; float: left; width: 50px;">
-                                                    <button class="Button" style="margin-top: 1px;" [disabled]="!IsEditingEnabled" (click)="UpdateCustomsChargesClicked()">Update</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-
                                     <td>
                                         <div></div>
                                     </td>
 
-                                    <td id="{{'AddPayable'| IdGeneratorAsyncPipe | async}}" style="width: 21px">
+                                    <td style="width: 21px">
                                         <IconButton [Name]="'Add'" [IsEnabled]="IsEditingEnabled" (click)="AddPayable()"></IconButton>
                                     </td>
 
@@ -90,20 +59,19 @@
                                         <div style="width:1px; height: 22px; background: #DADADA; margin:auto;"></div>
                                     </td>
 
-                                    <td style="width: 1px;">
-                                        <button id="{{'ReceiveInvoice' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="!IsEditingEnabled" (click)="ReceiveInvoiceClicked()">{{'Shipment.B.Payables.ReceiveInvoice' | TextCodeTranslationPipe}}</button>
+                                    <td style="width: 90px">
+                                        <button id="{{'ReceiveInvoice' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsEditingEnabled" (click)="ReceiveInvoiceClicked()">{{'Shipment.B.Payables.ReceiveInvoice' | TextCodeTranslationPipe}}</button>
                                     </td>
 
-                                    <td style="width: 1px; padding-left: 5px;" *ngIf="IsDeleteAllPayablesVisible">
-                                        <button id="{{'DeleteAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="IsEditingEnabled == false || ItemsSource.Length == 0" (click)="DeleteAllClicked()">Delete All</button>
+                                    <td style="width:5px;" *ngIf="EntityPM.ShipmentLevelCode != 'H' && EntityPM.TransportModeId == 'A'">
+                                        <div></div>
                                     </td>
 
-                                    <td style="width: 1px; padding-left: 5px;" *ngIf="IsPriceCheckVisible">
-                                        <button id="{{'PriceCheck' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="PriceCheck()">{{'Shipment.Features.ShipmentPriceCheck' | TextCodeTranslationPipe}}</button>
-                                    </td>
-
-                                    <td style="width: 1px; padding-left: 5px;" *ngIf="IsCustomsChargesVisible">
-                                        <button id="{{'CustomsCharges' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddCustomsChargesClicked(true)">Add Customs Charges</button>
+                                    <td style="width: 1px;" *ngIf="EntityPM.ShipmentLevelCode != 'H' && EntityPM.TransportModeId == 'A'">
+                                        <button class="Button" [disabled]="!IsEditingEnabled" (click)="TariffsButtonClicked()">
+                                            <img class="LeftCenter" style="margin-left: 2px; width: 16px; height: 16px;" src="./Images/Icons/Window.png" />
+                                            <span style="line-height: 19px; margin-left: 15px;">{{'Shipment.B.Payables.Tariffs' | TextCodeTranslationPipe}}</span>
+                                        </button>
                                     </td>
 
                                     <td style="width:15px;" *ngIf="EntityPM.QuoteId">
@@ -126,444 +94,481 @@
                                                     [ItemSource]="ItemsSource"
                                                     [SelectedRow]="SelectedRow"
                                                     (RowDataLoaded)="OnRowLoaded($event)"
-                                                    (SelectedItemChanged)="OnRowSelected($event)" [UseVirtuallization]="IsUsingVirtuallization">
+                                                    (SelectedItemChanged)="OnRowSelected($event)">
 
                                     <log-row-details>
-                                        <row-template>
-                                            <ng-template let-item>
-                                                <div style="min-height: 80px; width: 100%; background: #E8F7FF; position: relative;" [style.height.px]="(item.InsideItemsSource.length * 26) + 20 + 28 + 25">
-                                                    <div style="position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
-                                                        <div class="SimpleGridView" style="background: none; border: 1px solid #85CBED;">
-                                                            <div class="SimpleGridViewHeader" style="background: none; border: none; border-bottom: 1px solid #85CBED;">
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                            <div></div>
-                                                                        </td>
-                                                                        <td style="width: 130px; min-width: 130px; max-width: 130px; color : #6E7172;">{{'Shipment.F.ShipmentNumber' | TextCodeTranslationPipe}}</td>
-                                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'ShipmentPayable.F.Quantity' | TextCodeTranslationPipe}}</td>
-                                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; color : #6E7172;">{{'ShipmentPayable.F.MeasurementId.Short' | TextCodeTranslationPipe}}</td>
-                                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; color : #6E7172;">{{'ShipmentPayable.CH.CurrencyIdListLable' | TextCodeTranslationPipe}}</td>
-                                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'ShipmentPayable.F.UnitPrice' | TextCodeTranslationPipe}}</td>
-                                                                        <td style="width: 110px; min-width: 110px; max-width: 110px; color : #6E7172;">{{'ShipmentPayable.F.TotalAmount.Short' | TextCodeTranslationPipe}}</td>
-                                                                        <td style="width: 150px; min-width: 150px; max-width: 150px; color : #6E7172;">{{ExpectedAmountLocalHeader}}</td>
-                                                                        <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                            <div></div>
-                                                                        </td>
-                                                                        <td class="LastChild">
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
+                                        <row-template template="let item">
+                                            <div style="min-height: 80px; width: 100%; background: #E8F7FF; position: relative;" [style.height.px]="(item.InsideItemsSource.length * 26) + 20 + 28 + 25">
+                                                <div style="position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
+                                                    <div class="SimpleGridView" style="background: none; border: 1px solid #85CBED;">
+                                                        <div class="SimpleGridViewHeader" style="background: none; border: none; border-bottom: 1px solid #85CBED;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="width: 130px; min-width: 130px; max-width: 130px; color : #6E7172;">{{'Shipment.F.ShipmentNumber' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'ShipmentPayable.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 50px; min-width: 50px; max-width: 50px; color : #6E7172;">{{'ShipmentPayable.F.MeasurementId.Short' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 50px; min-width: 50px; max-width: 50px; color : #6E7172;">{{'ShipmentPayable.CH.CurrencyIdListFieldLable' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'ShipmentPayable.F.UnitPrice' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 110px; min-width: 110px; max-width: 110px; color : #6E7172;">{{'ShipmentPayable.F.Amount.Short' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 150px; min-width: 150px; max-width: 150px; color : #6E7172;">{{ExpectedAmountLocalHeader}}</td>
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td class="LastChild">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
 
-                                                            <div class="SimpleGridViewBody">
-                                                                <table>
-                                                                    <tr class="SimpleGridViewRow" *ngFor="let insideItem of item.InsideItemsSource">
+                                                        <div class="SimpleGridViewBody">
+                                                            <table>
+                                                                <tr class="SimpleGridViewRow" *ngFor="let insideItem of item.InsideItemsSource">
 
-                                                                        <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                            <div style="height: 100%; width: 100%; position: relative;">
-                                                                                <img class="CenterCenter" [attr.title]="insideItem.SatusTypeToolTip" *ngIf="insideItem.EntityPM.ShipmentPayableLineStatusCode == 'DRFT'" src="./Images/CellIcons/DRFT.png" />
-                                                                                <img class="CenterCenter" [attr.title]="insideItem.SatusTypeToolTip" *ngIf="insideItem.EntityPM.ShipmentPayableLineStatusCode == 'ACCT'" src="./Images/CellIcons/ACCT.png" />
-                                                                            </div>
-                                                                        </td>
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <div style="height: 100%; width: 100%; position: relative;">
+                                                                            <img class="CenterCenter" [attr.title]="insideItem.SatusTypeToolTip" *ngIf="insideItem.EntityPM.ShipmentPayableLineStatusCode == 'DRFT'" src="./Images/CellIcons/DRFT.png" />
+                                                                            <img class="CenterCenter" [attr.title]="insideItem.SatusTypeToolTip" *ngIf="insideItem.EntityPM.ShipmentPayableLineStatusCode == 'ACCT'" src="./Images/CellIcons/ACCT.png" />
+                                                                        </div>
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
-                                                                            {{insideItem.ShipmentNumber}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
+                                                                        {{insideItem.ShipmentNumber}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
-                                                                            {{insideItem.Quantity | NumbersPipe:'N2'}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
+                                                                        {{insideItem.Quantity | NumbersPipe:'N2'}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">
-                                                                            {{insideItem.MeasurementCode}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">
+                                                                        {{insideItem.MeasurementCode}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">
-                                                                            {{insideItem.CurrencyCode}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">
+                                                                        {{insideItem.CurrencyCode}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
-                                                                            <table>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div></div>
-                                                                                    </td>
+                                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
 
-                                                                                    <td style="width: 1px;">
-                                                                                        {{insideItem.UnitPrice | NumbersPipe:'N3'}}
-                                                                                    </td>
+                                                                                <td style="width: 1px;">
+                                                                                    {{insideItem.UnitPrice | NumbersPipe:'N3'}}
+                                                                                </td>
 
-                                                                                    <td *ngIf="insideItem.MeasurementCode == 'PRVL' || insideItem.MeasurementCode =='PRFR' || insideItem.MeasurementCode =='PFCL'" style="width:1px; padding-left: 2px;">
-                                                                                        %
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
+                                                                                <td *ngIf="insideItem.MeasurementCode == 'PRVL' || insideItem.MeasurementCode =='PRFR'" style="width:1px; padding-left: 2px;">
+                                                                                    %
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
-                                                                            <span [attr.data-cy]="'HouseExpectedAmount'" >{{insideItem.ExpectedAmount | NumbersPipe:'N2'}}</span>
-                                                                            <span [attr.data-cy]="'HouseCurrencyCode'" style="margin-left: 2px;" *ngIf="insideItem.ExpectedAmount">{{insideItem.CurrencyCode}}</span>
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
+                                                                        <span>{{insideItem.ExpectedAmount | NumbersPipe:'N2'}}</span>
+                                                                        <span style="margin-left: 2px;" *ngIf="insideItem.ExpectedAmount">{{insideItem.CurrencyCode}}</span>
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; text-align: right;">
-                                                                            {{insideItem.ExpectedAmountLocal | NumbersPipe:'N2'}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; text-align: right;">
+                                                                        {{insideItem.ExpectedAmountLocal | NumbersPipe:'N2'}}
+                                                                    </td>
 
-                                                                        <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                            <img style="vertical-align: middle; display: block;" *ngIf="insideItem.Notes" src="./Images/Notes_exists.png" />
-                                                                        </td>
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <img style="vertical-align: middle; display: block;" *ngIf="insideItem.Notes" src="./Images/Notes_exists.png" />
+                                                                    </td>
 
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
 
-                                                                    <tr style="height: 25px;">
-                                                                        <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                            <div></div>
-                                                                        </td>
+                                                                <tr style="height: 25px;">
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <div></div>
+                                                                    </td>
 
-                                                                        <td style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                                            <div></div>
-                                                                        </td>
+                                                                    <td style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                                        <div></div>
+                                                                    </td>
 
-                                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
-                                                                            {{item.SumOfQuantity | NumbersPipe:'N2'}}
-                                                                        </td>
+                                                                    <td style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
+                                                                        {{item.SumOfQuantity | NumbersPipe:'N2'}}
+                                                                    </td>
 
-                                                                        <td style="width: 50px; min-width: 50px; max-width: 50px;">
-                                                                            <div></div>
-                                                                        </td>
+                                                                    <td style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div></div>
+                                                                    </td>
 
-                                                                        <td style="width: 50px; min-width: 50px; max-width: 50px;">
-                                                                            <div></div>
-                                                                        </td>
+                                                                    <td style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div></div>
+                                                                    </td>
 
-                                                                        <td style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                                            <div></div>
-                                                                        </td>
+                                                                    <td style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                                        <div></div>
+                                                                    </td>
 
-                                                                        <td style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
-                                                                            <span [attr.data-cy]="'SumOfAmount'">{{item.SumOfAmount | NumbersPipe:'N2'}}</span>
-                                                                            <span style="margin-left: 2px;" *ngIf="item.SumOfAmount">{{item.CurrencyCode}}</span>
-                                                                        </td>
+                                                                    <td style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
+                                                                        <span>{{item.SumOfAmount | NumbersPipe:'N2'}}</span>
+                                                                        <span style="margin-left: 2px;" *ngIf="item.SumOfAmount">{{item.CurrencyCode}}</span>
+                                                                    </td>
 
-                                                                        <td style="width: 150px; min-width: 150px; max-width: 150px; text-align: right;">
-                                                                            {{item.SumOfAmountLocal | NumbersPipe:'N2'}}
-                                                                        </td>
+                                                                    <td style="width: 150px; min-width: 150px; max-width: 150px; text-align: right;">
+                                                                        {{item.SumOfAmountLocal | NumbersPipe:'N2'}}
+                                                                    </td>
 
-                                                                        <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                            <div></div>
-                                                                        </td>
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <div></div>
+                                                                    </td>
 
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
 
-                                                                    <tr>
-                                                                        <td colspan="10">
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
+                                                                <tr>
+                                                                    <td colspan="10">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </ng-template>                                            
+                                            </div>
                                         </row-template>
                                     </log-row-details>
 
                                     <!-- Icon: Status -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <img class="CenterCenter" [attr.title]="item.SatusTypeToolTip" *ngIf="item.EntityPM.ShipmentPayableLineStatusCode == 'PACC'" src="./Images/CellIcons/DRFT.png" />
-                                                <img class="CenterCenter" [attr.title]="item.SatusTypeToolTip" *ngIf="item.EntityPM.ShipmentPayableLineStatusCode == 'ACCT'" src="./Images/CellIcons/ACCT.png" />
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <img class="CenterCenter" [attr.title]="item.SatusTypeToolTip" *ngIf="item.EntityPM.ShipmentPayableLineStatusCode == 'PACC'" src="./Images/CellIcons/DRFT.png" />
+                                            <img class="CenterCenter" [attr.title]="item.SatusTypeToolTip" *ngIf="item.EntityPM.ShipmentPayableLineStatusCode == 'ACCT'" src="./Images/CellIcons/ACCT.png" />
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Icon: Amount Type -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <img class="CenterCenter" [attr.title]="item.EntityPM.ShipmentPayableAmountTypeName" *ngIf="item.EntityPM.ShipmentPayableAmountTypeCode == 'ACCU'" src="./Images/CellIcons/Package.png" />
-                                                <img class="CenterCenter" [attr.title]="item.EntityPM.ShipmentPayableAmountTypeName" *ngIf="item.EntityPM.ShipmentPayableAmountTypeCode == 'NEXP'" src="./Images/CellIcons/Package_gray.png" />
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <img class="CenterCenter" [attr.title]="item.EntityPM.ShipmentPayableAmountTypeName" *ngIf="item.EntityPM.ShipmentPayableAmountTypeCode == 'ACCU'" src="./Images/CellIcons/Package.png" />
+                                            <img class="CenterCenter" [attr.title]="item.EntityPM.ShipmentPayableAmountTypeName" *ngIf="item.EntityPM.ShipmentPayableAmountTypeCode == 'NEXP'" src="./Images/CellIcons/Package_gray.png" />
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- ChargesTypeCode -->
                                     <log-column [width]="'50'" [header]="'Shipment.O.Payables.Code' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.ChargesTypeCode}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            {{item.ChargesTypeCode}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- ChargesTypeName -->
                                     <log-column [width]="'150'" [header]="'Shipment.O.Payables.Name' | TextCodeTranslationPipe" [SortFieldName]="'ChargesTypeName'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.ChargesTypeName}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            {{item.ChargesTypeName}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- PrepaidCollectId -->
                                     <log-column [width]="'35'" [header]="'ShipmentPayable.F.PrepaidCollectId.Short' | TextCodeTranslationPipe" [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
-                                                {{item.PrepaidCollectId}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
+                                            {{item.PrepaidCollectId}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- VendorName -->
                                     <log-column [width]="'130'" [header]="'ShipmentPayable.F.VendorId' | TextCodeTranslationPipe" [SortFieldName]="'VendorName'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.VendorName}}
-                                            </log-cell-template>
-                                        </ng-template>  
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            {{item.VendorName}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Quantity -->
                                     <log-column [width]="'90'" [header]="'ShipmentPayable.F.Quantity' | TextCodeTranslationPipe" [SortFieldName]="'Quantity'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsQuantityEnabled">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsQuantityEnabled">
 
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Quantity | NumbersPipe:'N3'">
-                                                    {{item.Quantity | NumbersPipe:'N3'}}
-                                                </div>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Quantity | NumbersPipe:'N3'">
+                                                {{item.Quantity | NumbersPipe:'N3'}}
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- MeasurementCode -->
                                     <log-column [width]="'50'" [header]="'ShipmentPayable.F.MeasurementId.Short' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'MeasurementCode'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
-                                                {{item.MeasurementCode}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
+                                            {{item.MeasurementCode}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- CurrencyCode -->
-                                    <log-column [width]="'50'" [header]="'ShipmentPayable.CH.CurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'CurrencyCode'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
-                                                {{item.CurrencyCode}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'50'" [header]="'ShipmentPayable.CH.CurrencyIdListFieldLable' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'CurrencyCode'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'center'">
+                                            {{item.CurrencyCode}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- UnitPrice -->
                                     <log-column [width]="'90'" [header]="'ShipmentPayable.F.UnitPrice' | TextCodeTranslationPipe" [SortFieldName]="'UnitPrice'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsUnitPriceEnabled">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsUnitPriceEnabled">
 
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;" class="TextTrimming" [attr.title]="item.UnitPrice | NumbersPipe:'N3'" [ngStyle]="{background: item.UnitPrice < 0 ? '#FCC1C1':'transparent'}">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width: 18px; padding-right: 2px;" *ngIf="item.EntityPM.IsChargeBySteps">
-                                                                <img src="./Images/CellIcons/B-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.PricedueQuoteCharge' | TextCodeTranslationPipe" />
-                                                            </td>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;" class="TextTrimming" [attr.title]="item.UnitPrice | NumbersPipe:'N3'" [ngStyle]="{background: item.UnitPrice < 0 ? '#FCC1C1':'transparent'}">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 18px; padding-right: 2px;" *ngIf="item.EntityPM.IsChargeBySteps">
+                                                            <img src="./Images/CellIcons/B-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.PricedueQuoteCharge' | TextCodeTranslationPipe" />
+                                                        </td>
 
-                                                            <td style="text-align: right;">
-                                                                {{item.UnitPrice | NumbersPipe:'N3'}}
-                                                            </td>
+                                                        <td style="text-align: right;">
+                                                            {{item.UnitPrice | NumbersPipe:'N3'}}
+                                                        </td>
 
-                                                            <td *ngIf="item.MeasurementCode == 'PRVL' || item.MeasurementCode =='PRFR'  || item.MeasurementCode =='PFCL'" style="width:1px; padding-left: 2px;">
-                                                                %
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
+                                                        <td *ngIf="item.MeasurementCode == 'PRVL' || item.MeasurementCode =='PRFR'" style="width:1px; padding-left: 2px;">
+                                                            %
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- ExpectedAmount -->
-                                    <log-column [width]="'115'" [header]="'ShipmentPayable.F.TotalAmount.Short' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'ExpectedAmount'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsTotalAmountEnabled">
+                                    <log-column [width]="'115'" [header]="'ShipmentPayable.F.Amount.Short' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'ExpectedAmount'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsTotalAmountEnabled">
 
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.ExpectedAmount | NumbersPipe:'N2'">
-                                                    <table>
-                                                        <tr>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.ExpectedAmount | NumbersPipe:'N2'">
+                                                <table>
+                                                    <tr>
 
-                                                            <!-- MinMax From Quote Charge -->
-                                                            <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMinMaxFromQuoteIconVisible">
-                                                                <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [title]="item.MinMaxFromQuoteToolTip" />
-                                                            </td>
+                                                        <!-- MinMax From Quote Charge -->
+                                                        <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMinMaxFromQuoteIconVisible">
+                                                            <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [title]="item.MinMaxFromQuoteToolTip" />
+                                                        </td>
 
-                                                            <!-- Minimum From Tarrif Charge -->
-                                                            <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMinFromTarrifIconVisible">
-                                                                <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.AmountdueTarrifChargeMin' | TextCodeTranslationPipe" />
-                                                            </td>
+                                                        <!-- Minimum From Tarrif Charge -->
+                                                        <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMinFromTarrifIconVisible">
+                                                            <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.AmountdueTarrifChargeMin' | TextCodeTranslationPipe" />
+                                                        </td>
 
-                                                            <!-- Maximum From Tarrif Charge -->
-                                                            <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMaxFromTarrifIconVisible">
-                                                                <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.AmountdueTarrifChargeMax' | TextCodeTranslationPipe" />
-                                                            </td>
+                                                        <!-- Maximum From Tarrif Charge -->
+                                                        <td style="width: 18px; padding-right: 2px;" *ngIf="item.IsMaxFromTarrifIconVisible">
+                                                            <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.AmountdueTarrifChargeMax' | TextCodeTranslationPipe" />
+                                                        </td>
 
-                                                            <td style="text-align: right;">
-                                                                <span [attr.data-cy]="'MasterExpectedAmount'" [ngStyle]="{color: item.ExpectedAmountColor}">{{item.ExpectedAmount | NumbersPipe:'N2'}}</span>
-                                                                <span [attr.data-cy]="'MasterCurrencyCode'" [ngStyle]="{color: item.ExpectedAmountColor}" style="margin-left: 2px;" *ngIf="item.ExpectedAmount != null">{{item.CurrencyCode}}</span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
+                                                        <td style="text-align: right;">
+                                                            <span [ngStyle]="{color: item.ExpectedAmountColor}">{{item.ExpectedAmount | NumbersPipe:'N2'}}</span>
+                                                            <span [ngStyle]="{color: item.ExpectedAmountColor}" style="margin-left: 2px;" *ngIf="item.ExpectedAmount != null">{{item.CurrencyCode}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ExpectedAmount'" [Text]="item.ExpectedAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>                                        
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ExpectedAmount'" [Text]="item.ExpectedAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- AccountedAmount -->
                                     <log-column [width]="'130'" [header]="'Shipment.O.Payables.AccountedAmount' | TextCodeTranslationPipe" [Alignment]="'center'" [SortFieldName]="'AccountedAmount'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                <div style="width: 100%">
-                                                    <table [hidden]="!item.IsAccountedAmountVisible">
-                                                        <tr>
-                                                            <td style="width: 16px;" *ngIf="item.IsInvoicesIconVisible">
-                                                                <CellTooltip [Height]="(item.PayableInvoices.length * 40) + (item.PayableInvoices.length * 5) + 28 + 52" [MaxHeight]="165" [Width]="300" [IsOnClick]="true" [IsOpened]="item.IsInvoicesTooltipOpened" (Opened)="item.IsInvoicesTooltipOpened = $event" [IconPath]="'./Images/CellIcons/Info_Blue.png'">
-                                                                    <table class="FixedTable">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            <div style="width: 100%">
+                                                <table [hidden]="!item.IsAccountedAmountVisible">
+                                                    <tr>
+                                                        <td style="width: 16px;" *ngIf="item.IsInvoicesIconVisible">
+                                                            <CellTooltip [Height]="(item.PayableInvoices.length * 40) + (item.PayableInvoices.length * 5) + 28 + 52" [MaxHeight]="165" [Width]="300" [IsOnClick]="true" [IsOpened]="item.IsInvoicesTooltipOpened" (Opened)="item.IsInvoicesTooltipOpened = $event" [IconPath]="'./Images/CellIcons/Info_Blue.png'">
+                                                                <table class="FixedTable">
 
-                                                                        <tr style="height: 20px;">
-                                                                            <td style="font-size: 13px; color: #1B90CB; line-height: 20px;">{{'Shipment.O.Payables.PayableInvoices' | TextCodeTranslationPipe}}</td>
-                                                                        </tr>
+                                                                    <tr style="height: 20px;">
+                                                                        <td style="font-size: 13px; color: #1B90CB; line-height: 20px;">{{'Shipment.O.Payables.PayableInvoices' | TextCodeTranslationPipe}}</td>
+                                                                    </tr>
 
-                                                                        <tr>
-                                                                            <td>
-                                                                                <ScrollViewer>
-                                                                                    <div *ngFor="let invoiceItem of item.PayableInvoices">
-                                                                                        <div class="InvoiceListItem" [ngStyle]="{background: invoiceItem.DueDate | DateTimeToBackgroundPipe}">
-                                                                                            <table>
-                                                                                                <tr style="line-height: 19px;">
-                                                                                                    <td>
-                                                                                                        <Hyperlink (click)="item.IsInvoicesTooltipOpened = false; ViewInvoiceClicked(invoiceItem.Id)">{{invoiceItem.InvoiceNumber}}</Hyperlink>
-                                                                                                        <span style="margin-left: 5px;" [ngStyle]="{color: invoiceItem.StatusName | StringToColorPipe}">{{invoiceItem.StatusName}}</span>
-                                                                                                    </td>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <ScrollViewer>
+                                                                                <div *ngFor="let invoiceItem of item.PayableInvoices">
+                                                                                    <div class="InvoiceListItem" [ngStyle]="{background: invoiceItem.DueDate | DateTimeToBackgroundPipe}">
+                                                                                        <table>
+                                                                                            <tr style="line-height: 19px;">
+                                                                                                <td>
+                                                                                                    <Hyperlink (click)="item.IsInvoicesTooltipOpened = false; ViewInvoiceClicked(invoiceItem.Id)">{{invoiceItem.InvoiceNumber}}</Hyperlink>
+                                                                                                    <span style="margin-left: 5px;" [ngStyle]="{color: invoiceItem.StatusName | StringToColorPipe}">{{invoiceItem.StatusName}}</span>
+                                                                                                </td>
 
-                                                                                                    <td style="width: 80px; text-align: right;">
-                                                                                                        <span class="Value">{{invoiceItem.GrandTotalInLocalCurrency}}</span>
-                                                                                                        <span class="Label">({{invoiceItem.LocalCurrencyCode}})</span>
-                                                                                                    </td>
-                                                                                                </tr>
+                                                                                                <td style="width: 80px; text-align: right;">
+                                                                                                    <span class="Value">{{invoiceItem.GrandTotalInLocalCurrency}}</span>
+                                                                                                    <span class="Label">({{invoiceItem.LocalCurrencyCode}})</span>
+                                                                                                </td>
+                                                                                            </tr>
 
-                                                                                                <tr style="line-height: 19px;">
-                                                                                                    <td>
-                                                                                                        <span class="Label">{{'Shipment.O.Payables.DueDate' | TextCodeTranslationPipe}}:</span>
-                                                                                                        <span class="Value" style="margin-left: 3px;">{{invoiceItem.DueDate | DateTimeToDatePipe}}</span>
-                                                                                                    </td>
+                                                                                            <tr style="line-height: 19px;">
+                                                                                                <td>
+                                                                                                    <span class="Label">{{'Shipment.O.Payables.DueDate' | TextCodeTranslationPipe}}:</span>
+                                                                                                    <span class="Value" style="margin-left: 3px;">{{invoiceItem.DueDate | DateTimeToDatePipe}}</span>
+                                                                                                </td>
 
-                                                                                                    <td style="text-align: right;">
-                                                                                                        <span class="Value" [hidden]="LocalCurrencyId == invoiceItem.InvoiceCurrencyId">{{invoiceItem.GrandTotalInInvoiceCurrency}}</span>
-                                                                                                        <span class="Label" [hidden]="LocalCurrencyId == invoiceItem.InvoiceCurrencyId"> ({{invoiceItem.InvoiceCurrencyCode}})</span>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </div>
-
-                                                                                        <div style="height: 5px; width: 100%;"></div>
+                                                                                                <td style="text-align: right;">
+                                                                                                    <span class="Value" [hidden]="LocalCurrencyId == invoiceItem.InvoiceCurrencyId">{{invoiceItem.GrandTotalInInvoiceCurrency}}</span>
+                                                                                                    <span class="Label" [hidden]="LocalCurrencyId == invoiceItem.InvoiceCurrencyId"> ({{invoiceItem.InvoiceCurrencyCode}})</span>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
                                                                                     </div>
-                                                                                </ScrollViewer>
-                                                                            </td>
-                                                                        </tr>
 
-                                                                        <tr style="height: 32px;">
-                                                                            <td>
-                                                                                <table style="height: 22px;">
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <div></div>
-                                                                                        </td>
+                                                                                    <div style="height: 5px; width: 100%;"></div>
+                                                                                </div>
+                                                                            </ScrollViewer>
+                                                                        </td>
+                                                                    </tr>
 
-                                                                                        <td style="width: 57px;">
-                                                                                            <button class="RedButton" (click)="item.IsInvoicesTooltipOpened = false">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </CellTooltip>
-                                                            </td>
+                                                                    <tr style="height: 32px;">
+                                                                        <td>
+                                                                            <table style="height: 22px;">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
 
-                                                            <td style="text-align: right;">
-                                                                {{item.AccountedAmount | NumbersPipe:'N2'}}
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>                                        
+                                                                                    <td style="width: 57px;">
+                                                                                        <button class="RedButton" (click)="item.IsInvoicesTooltipOpened = false">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </CellTooltip>
+                                                        </td>
+
+                                                        <td style="text-align: right;">
+                                                            {{item.AccountedAmount | NumbersPipe:'N2'}}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- OpenAmount -->
                                     <log-column [width]="'120'" [SortFieldName]="'OpenAmount'">
-                                        <ng-template let-item>
-                                            <log-header-template>
-                                                <div style="width: 100%; height: 100%; position: relative;">
+                                        <log-header-template template="let item">
+                                            <div style="width: 100%; height: 100%; position: relative;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 3px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>{{'Shipment.O.Payables.OpenAmount' | TextCodeTranslationPipe}}</td>
+
+                                                        <td style="width: 1px;">
+                                                            <HelpIcon [IconSize]="14" [Header]="'Shipment.O.Payables.OpenAmount' | TextCodeTranslationPipe" [Text]="'Shipment.O.Payables.OpenAmountHelp' | TextCodeTranslationPipe"></HelpIcon>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-header-template>
+
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsOpenAmountEnabled">
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 16px;">
+                                                            <CellTooltip *ngIf="item.IsCorrectionTooltipVisible" [Height]="110" [Width]="260" [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Correction'">
+                                                                <table>
+                                                                    <tr style="height: 1px; line-height: 20px;">
+                                                                        <td class="Label" style="width: 1px;">Amount:</td>
+                                                                        <td class="Value" style="padding-left: 5px;" [ngStyle]="{color: item.CorrectionAmountColor}">{{item.CorrectionAmount | NumbersPipe:'N2'}}</td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 1px; line-height: 20px;">
+                                                                        <td class="Label" style="width: 1px;">By User:</td>
+                                                                        <td class="Value" style="padding-left: 5px;">{{item.CorrectionByUserName}}</td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 1px; line-height: 20px;">
+                                                                        <td class="Label" style="width: 1px;">Date:</td>
+                                                                        <td class="Value" style="padding-left: 5px;">{{item.CorrectionDate | DateTimeToDatePipe}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </CellTooltip>
+                                                        </td>
+
+                                                        <td style="text-align: right;">
+                                                            <span [ngStyle]="{color: item.OpenAmountColor}" [hidden]="!item.IsOpenAmountVisible">{{item.OpenAmount | NumbersPipe:'N2'}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [InputType]="'Double'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [Text]="item.OpenAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Buttons -->
+                                    <log-column [width]="'100'">
+                                        <log-cell-template template="let item" [TabIndex]="-1">
+                                            <div style="width: 100%; height: 100%; position: relative;">
+                                                <div class="LeftCenter" style="height: 20px;">
                                                     <table>
                                                         <tr>
-                                                            <td style="width: 3px;">
+                                                            <td style="width: 4px;">
+                                                                <span class="CellSeparator"></span>
+                                                            </td>
+
+                                                            <td style="width: 16px;">
+                                                                <div class="MediaFill">
+                                                                    <div style="width: 16px; height: 16px;" class="CenterCenter">
+                                                                        <img style="vertical-align: middle; display: block;" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" />
+                                                                        <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'ShipmentPayable.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 5px;">
                                                                 <div></div>
                                                             </td>
 
-                                                            <td>{{'Shipment.O.Payables.OpenAmount' | TextCodeTranslationPipe}}</td>
-
-                                                            <td style="width: 1px;">
-                                                                <HelpIcon [IconSize]="14" [Header]="'Shipment.O.Payables.OpenAmount' | TextCodeTranslationPipe" [Text]="'Shipment.O.Payables.OpenAmountHelp' | TextCodeTranslationPipe"></HelpIcon>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-header-template>
-                                        </ng-template>
-
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsOpenAmountEnabled">
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width: 16px;">
-                                                                <CellTooltip *ngIf="item.IsCorrectionTooltipVisible" [Height]="110" [Width]="260" [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Correction'">
+                                                            <td style="width: 20px;" *ngIf="ShipmentLevelCode && ShipmentLevelCode != 'C'">
+                                                                <CellTooltip [Height]="110" [Width]="260" [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Shipment.S.Payables.Summary' | TextCodeTranslationPipe">
                                                                     <table>
                                                                         <tr style="height: 1px; line-height: 20px;">
-                                                                            <td class="Label" style="width: 1px;">Amount:</td>
-                                                                            <td class="Value" style="padding-left: 5px;" [ngStyle]="{color: item.CorrectionAmountColor}">{{item.CorrectionAmount | NumbersPipe:'N2'}}</td>
+                                                                            <td class="Label" style="width: 1px;">{{'Shipment.S.Payables.Receivable' | TextCodeTranslationPipe}}:</td>
+                                                                            <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;">{{item.ReceivableSummary | NumbersPipe:'N3'}}</td>
+                                                                            <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
                                                                         </tr>
 
                                                                         <tr style="height: 1px; line-height: 20px;">
-                                                                            <td class="Label" style="width: 1px;">By User:</td>
-                                                                            <td class="Value" style="padding-left: 5px;">{{item.CorrectionByUserName}}</td>
+                                                                            <td class="Label" style="width: 1px;">{{'Shipment.S.Payables.Payable' | TextCodeTranslationPipe}}:</td>
+                                                                            <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;">{{item.PayableSummary | NumbersPipe:'N3'}}</td>
+                                                                            <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
                                                                         </tr>
 
                                                                         <tr style="height: 1px; line-height: 20px;">
-                                                                            <td class="Label" style="width: 1px;">Date:</td>
-                                                                            <td class="Value" style="padding-left: 5px;">{{item.CorrectionDate | DateTimeToDatePipe}}</td>
+                                                                            <td class="Label" style="width: 1px;">{{'Shipment.S.Payables.Profit' | TextCodeTranslationPipe}}:</td>
+                                                                            <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;" [ngStyle]="{color: item.ProfitSummary | StringToColorPipe:'number'}">{{item.ProfitSummary | NumbersPipe:'N3'}}</td>
+                                                                            <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td colspan="2">
+                                                                            <td colspan="3">
                                                                                 <div></div>
                                                                             </td>
                                                                         </tr>
@@ -571,109 +576,16 @@
                                                                 </CellTooltip>
                                                             </td>
 
-                                                            <td style="text-align: right;">
-                                                                <span [ngStyle]="{color: item.OpenAmountColor}" [hidden]="!item.IsOpenAmountVisible">{{item.OpenAmount | NumbersPipe:'N2'}}</span>
+                                                            <td>
+                                                                <span class="CellSeparator"></span>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="5" (click)="EditPayable(item)"></IconButton>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteItem(item)" [disabled]="!item.IsEditingEnabled" *ngIf="!item.IsLineAttachted"></IconButton>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                 </div>
-
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'Double'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [Text]="item.OpenAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <!-- Tariff Link -->
-                                    <log-column *ngIf="IsPriceCheckVisible" [header]="'Tariff'" [width]="'80'" [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-cell-template [TabIndex]="-1" [Alignment]="'center'">
-                                                <div style="width: 100%; height: 100%; position: relative;">
-                                                    <table>
-                                                        <tr *ngIf="item.TariffNumber != null">
-                                                            <td>
-                                                                <div class="MediaFill">
-                                                                    <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditTariffClicked(item)">{{ item.TariffNumber}}</Hyperlink>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="deleteIcon" style="height: 20px;"  [class.Disable]="!item.IsEditingEnabled">
-                                                                    <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteTariff(item)" />
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>                                        
-                                    </log-column>
-
-                                    <!-- Buttons -->
-                                    <log-column [width]="'100'">
-                                        <ng-template let-item>
-                                            <log-cell-template [TabIndex]="-1">
-                                                <div style="width: 100%; height: 100%; position: relative;">
-                                                    <div class="LeftCenter" style="height: 20px;">
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width: 4px;">
-                                                                    <span class="CellSeparator"></span>
-                                                                </td>
-
-                                                                <td style="width: 16px;">
-                                                                    <div class="MediaFill">
-                                                                        <div style="width: 16px; height: 16px;" class="CenterCenter">
-                                                                            <img style="vertical-align: middle; display: block;" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" />
-                                                                            <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'ShipmentPayable.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
-
-                                                                <td style="width: 20px;" *ngIf="ShipmentLevelCode && ShipmentLevelCode != 'C'">
-                                                                    <CellTooltip [Height]="110" [Width]="260" [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Shipment.S.Payables.Summary' | TextCodeTranslationPipe">
-                                                                        <table>
-                                                                            <tr style="height: 1px; line-height: 20px;">
-                                                                                <td class="Label" style="width: 1px;">{{'Shipment.S.Payables.Receivable' | TextCodeTranslationPipe}}:</td>
-                                                                                <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;">{{item.ReceivableSummary | NumbersPipe:'N3'}}</td>
-                                                                                <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
-                                                                            </tr>
-
-                                                                            <tr style="height: 1px; line-height: 20px;">
-                                                                                <td class="Label" style="width: 1px;">{{'Shipment.S.Payables.Payable' | TextCodeTranslationPipe}}:</td>
-                                                                                <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;">{{item.PayableSummary | NumbersPipe:'N3'}}</td>
-                                                                                <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
-                                                                            </tr>
-
-                                                                            <tr style="height: 1px; line-height: 20px;">
-                                                                                <td class="Label" style="width: 1px;">{{'Shipment.S.Payables.Profit' | TextCodeTranslationPipe}}:</td>
-                                                                                <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 16px;" [ngStyle]="{color: item.ProfitSummary | StringToColorPipe:'number'}">{{item.ProfitSummary | NumbersPipe:'N3'}}</td>
-                                                                                <td class="Label" style="padding-left: 5px;">({{item.LocalCurrencyCode}})</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td colspan="3">
-                                                                                    <div></div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </CellTooltip>
-                                                                </td>
-
-                                                                <td>
-                                                                    <span class="CellSeparator"></span>
-                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="5" (click)="EditPayable(item)"></IconButton>
-                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteItem(item)" [disabled]="!item.IsEditingEnabled" *ngIf="!item.IsLineAttachted"></IconButton>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>                                        
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -682,15 +594,15 @@
                                     <div class="GenerateLinks">
 
                                         <div *ngIf="EntityPM.OriginShipmentId">
-                                            <Hyperlink id="{{'ORGNPayable-payable' | IdGeneratorAsyncPipe | async}}" [FontSize]="14" [IsEnabled]="IsEditingEnabled" (click)="GenerateClicked('ORGN')">Generate from Original Shipment</Hyperlink>
+                                            <Hyperlink id="{{'ORGNPayable-payable' | IdGeneratorPipe}}" [FontSize]="14" [IsEnabled]="IsEditingEnabled" (click)="GenerateClicked('ORGN')">Generate from Original Shipment</Hyperlink>
                                         </div>
 
                                         <div>
-                                            <Hyperlink id="{{'ATDSPayable-payable' | IdGeneratorAsyncPipe | async}}" [FontSize]="14" [IsEnabled]="IsEditingEnabled" (click)="GenerateClicked('ATDS')">{{'Shipment.B.Payables.GenerateAutoDisplay' | TextCodeTranslationPipe}}</Hyperlink>
+                                            <Hyperlink id="{{'ATDSPayable-payable' | IdGeneratorPipe}}" [FontSize]="14" [IsEnabled]="IsEditingEnabled" (click)="GenerateClicked('ATDS')">{{'Shipment.B.Payables.GenerateAutoDisplay' | TextCodeTranslationPipe}}</Hyperlink>
                                         </div>
 
                                         <div *ngIf="EntityPM.QuoteId">
-                                            <Hyperlink id="{{'QTPYPayable-payable' | IdGeneratorAsyncPipe | async}}" [FontSize]="14" [IsEnabled]="IsGenerateFromQuoteChargesEnabled" (click)="GenerateClicked('QTPY')">{{'Shipment.B.Payables.GenerateFromQuote' | TextCodeTranslationPipe}}</Hyperlink>
+                                            <Hyperlink id="{{'QTPYPayable-payable' | IdGeneratorPipe}}" [FontSize]="14" [IsEnabled]="IsGenerateFromQuoteChargesEnabled" (click)="GenerateClicked('QTPY')">{{'Shipment.B.Payables.GenerateFromQuote' | TextCodeTranslationPipe}}</Hyperlink>
                                             <span *ngIf="IsNoChargesTextVisibil" style="margin-left: 5px; color: gray; font-family: Arial; font-size: 10px; font-style: italic;">{{'Shipment.S.Payables.NoCharges' | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </div>
@@ -729,9 +641,7 @@
                                                         <div>
                                                             <table>
                                                                 <tr>
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
+                                                                    <td><div></div></td>
                                                                     <td>
                                                                         <div class="Label" style="text-align: center;">{{'Shipment.O.Receivables.Invoices' | TextCodeTranslationPipe}}</div>
                                                                     </td>
@@ -866,7 +776,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                    </td>
+                                    </td>                                    
                                 </tr>
                             </table>
                         </td>
@@ -905,7 +815,7 @@
                                             <tr>
                                                 <td style="width: 80px;" class="Label">{{'Shipment.S.Payables.Receivables' | TextCodeTranslationPipe}}:</td>
                                                 <td style="width: 200px; text-align: right;">
-                                                    <span id="{{'ReceivableAmount' | IdGeneratorAsyncPipe | async}}" class="Value" style="font-size: 14px;">{{ReceivablesInSelectedCurrencyText}}</span>
+                                                    <span id="{{'ReceivableAmount' | IdGeneratorPipe}}" class="Value" style="font-size: 14px;">{{ReceivablesInSelectedCurrencyText}}</span>
                                                     <span class="Label" style="font-size: 11px;">({{SelectedCurrencyCode}})</span>
                                                 </td>
                                                 <td>
@@ -916,7 +826,7 @@
                                             <tr>
                                                 <td style="width: 80px;" class="Label">{{'Shipment.S.Payables.Payables' | TextCodeTranslationPipe}}:</td>
                                                 <td style="width: 200px; text-align: right;">
-                                                    <span id="{{'PayableAmount' | IdGeneratorAsyncPipe | async}}" class="Value" style="font-size: 14px;">{{PayablesInSelectedCurrencyText}}</span>
+                                                    <span id="{{'PayableAmount' | IdGeneratorPipe}}" class="Value" style="font-size: 14px;">{{PayablesInSelectedCurrencyText}}</span>
                                                     <span class="Label" style="font-size: 11px;">({{SelectedCurrencyCode}})</span>
                                                 </td>
                                                 <td>
@@ -937,7 +847,7 @@
                                             <tr>
                                                 <td style="width: 80px;" class="Label">{{'Shipment.S.Payables.Profit' | TextCodeTranslationPipe}}:</td>
                                                 <td style="width: 200px; text-align: right;">
-                                                    <span id="{{'ProfitAmount' | IdGeneratorAsyncPipe | async}}" class="ProfitLink" style="font-size: 14px;" [ngStyle]="{color: ProfitInSelectedCurrencyText | StringToColorPipe:'number'}" (mousedown)="ShowProfitClicked()">{{ProfitInSelectedCurrencyText}}</span>
+                                                    <span id="{{'ProfitAmount' | IdGeneratorPipe}}" class="ProfitLink" style="font-size: 14px;" [ngStyle]="{color: ProfitInSelectedCurrencyText | StringToColorPipe:'number'}" (mousedown)="ShowProfitClicked()">{{ProfitInSelectedCurrencyText}}</span>
                                                     <span class="Label" style="font-size: 11px;">({{SelectedCurrencyCode}})</span>
                                                 </td>
                                                 <td>

@@ -4,13 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.BL.Validators;
 using System.Collections.Generic;
 using System.ServiceModel.DomainServices.Server;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentReceivableValidator), "IsShipmentReceivableValid")]
-    public class ShipmentReceivablePM: ChildEntitiesCustomFieldPM
+    public class ShipmentReceivablePM
     {
         [Key]
         public string Id { get; set; }
@@ -24,7 +23,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ChargesTypeCode { get; set; }
         public string ChargesTypeName { get; set; }
         public string ChargesGroupCode { get; set; }
-        public bool? IsExpenseCharge { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentReceivableLineStatusCode { get; set; }
@@ -38,7 +36,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CurrencyId { get; set; }
         public string CurrencyCode { get; set; }
-        public string CurrencyName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? Quantity { get; set; }
@@ -66,7 +63,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string UpdateByUserId { get; set; }
-        public string UpdateByUserName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? UpdateDate { get; set; }
@@ -104,7 +100,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CreatedByUserId { get; set; }
-        public string CreatedByUserName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string IATACodeId { get; set; }
@@ -162,12 +157,5 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public ChangeSetOperation ChangeSetOp { get; set; }
         public ChangeSetOperation ChildChangeOp { get; set; }
         public List<ShipmentReceivablePM> ChildShipmentReceivablesChangeSet { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? VatAmountLocal { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? VatAmountProfit { get; set; }
-        public string ChangeSet { get; set; }
-        public string PayableVendorId { get; set; }
     }
 }

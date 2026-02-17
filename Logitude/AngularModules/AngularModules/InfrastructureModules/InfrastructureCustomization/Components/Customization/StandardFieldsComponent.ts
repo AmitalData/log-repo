@@ -11,31 +11,24 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import { ObjectFieldPMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { CustomizationEditComponent } from './CustomizationEditComponent';
-
-
+import {ObjectFieldPMService} from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './StandardFieldsComponent.html',
 })
 
 export class StandardFieldsComponent {
     private myService: GeneralDomainService;
-    private  ObjecttableId: string;
+    private ObjecttableId: string;
     private CurrentSession = SessionLocator.SelectedSession;
-
-    public customizationEditComponent: CustomizationEditComponent;
-
     constructor(private _entityListService: EntityListService) {
         this.myService = new GeneralDomainService();
     }
 
-    SetWindowArgs(args: any) {
-        this.ObjecttableId = args['ObjectTableId'];
+    SetWindowArgs(windowArgs: any) {
+        this.ObjecttableId = windowArgs['ObjectTableId'];
         this.BuildTabsItemsSource();
     }
 
@@ -53,7 +46,7 @@ export class StandardFieldsComponent {
     }
 
     public Tabs: Array<TabItem>;
-    public BuildTabsItemsSource() {
+    private BuildTabsItemsSource() {
         var objectTablePM: ObjectTablePM;
         var tableName: string;
         this.Tabs = [];
@@ -62,6 +55,22 @@ export class StandardFieldsComponent {
         if (objectTablePM != null) {
             this.Tabs.push(new TabItem(objectTablePM, this));
         }
+
+        var tableIds: string[] = [];
+        var mulityList: ObjectFieldPM[] = window.ObjectFields.filter(d => d.ObjectTableId == this.ObjecttableId && d.IsMulti);
+
+        mulityList.forEach((item) => {
+            var index = tableIds.indexOf(item.MultiTableId);
+
+            if (index == -1) {
+                tableIds.push(item.MultiTableId);
+
+                objectTablePM = window.ObjectTables.filter(d => d.Id == item.MultiTableId)[0];
+                if (objectTablePM != null) {
+                    this.Tabs.push(new TabItem(objectTablePM, this));
+                }
+            }
+        });
 
         this.SelectedTabItem = this.Tabs[0];
     }
@@ -86,22 +95,13 @@ export class StandardFieldsComponent {
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-   Save() {
-        if (!this.customizationEditComponent.IsDirty && this.customizationEditComponent.IsSaveAndClose) {
-            this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
-            this.customizationEditComponent.IsSaveAndClose = false;
-        }
-    }
-    Cancel() {
-
-    }
 }
 
 export class TabItem {
     public ObjectTablePM: ObjectTablePM;
     public ObjectTableId: string;
     public Header: string;
-    public FieldsItemsSource: ObservableCollection;
+    public FieldsItemsSource: StandardFieldItem[];
     private myService: GeneralDomainService;
     public EntityTranslations: FieldsTranslations[];
     private CurrentSession = SessionLocator.SelectedSession;
@@ -109,7 +109,7 @@ export class TabItem {
         this.ObjectTablePM = objectTablePM;
         this.ObjectTableId = objectTablePM.Id;
         this.myService = new GeneralDomainService();
-        this.FieldsItemsSource = new ObservableCollection([]);
+
         this.SetTabHeader();
     }
 
@@ -120,12 +120,11 @@ export class TabItem {
     private loadedFields: ObjectFieldPM[];
     public LoadStandardFields() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.myService.GetStandardFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
+        this.myService.GetStandardFieldsByTableId(this.ObjectTableId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
                 this.loadedFields = myResponse.Result;
-                //this.BuildItemsSource();
                 if (this.loadedFields != null) {
                     this.LoadTranslationsForMultiEntity();
                 }
@@ -134,7 +133,7 @@ export class TabItem {
     }
 
     private LoadTranslationsForMultiEntity() {
-        this.myService.GetTranslationsByParam(null, this.ObjectTableId, SessionLocator.TenantPM.Language).subscribe((myResult: ServiceResponse) => {
+        this.myService.GetTranslationsByParam(null, this.ObjectTableId, SessionLocator.TenantPM.Language).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityTranslations = myResponse.Result;
@@ -144,24 +143,22 @@ export class TabItem {
     }
 
     public BuildItemsSource(searchText: string = null) {
-        this.FieldsItemsSource = new ObservableCollection([]);
-        var temp: StandardFieldItem[] = [];
+        this.FieldsItemsSource = [];
+
         if (AppTool.IsNullOrEmpty(searchText)) {
             this.loadedFields.forEach((item) => {
-
-                temp.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
+                this.FieldsItemsSource.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
             });
         }
 
         else {
             this.loadedFields.forEach((item) => {
                 if (!AppTool.IsNullOrEmpty(item.FullNameTextCodeDefaultText) && item.FullNameTextCodeDefaultText.toUpperCase().indexOf(searchText.toUpperCase()) > -1) {
-                    temp.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
+                    this.FieldsItemsSource.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
                 }
             });
         }
 
-        this.FieldsItemsSource.InsertCollection(temp);
         this.CurrentSession.StopBusyIndicator();
     }
 
@@ -170,20 +167,13 @@ export class TabItem {
         logitudeWindow.Title = "Edit Standard Field";
         logitudeWindow.WindowArgs = editedItem;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/EditStandardFieldComponent');
-
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event == "Ok") {
-                this.LoadStandardFields();
-            }
-
-        });
     }
 }
 
 export class StandardFieldItem {
     private ObjectField: ObjectFieldPM;
     public ObjectFieldId: string;
-    public ObjectFieldCode: string;
+
     public fullLabelObject: FieldsTranslations = new FieldsTranslations();
     public shortLabelObject: FieldsTranslations = new FieldsTranslations();
     public listLabelObject: FieldsTranslations = new FieldsTranslations();
@@ -192,12 +182,11 @@ export class StandardFieldItem {
     constructor(field: ObjectFieldPM, public loadedFields: ObjectFieldPM[], public fieldsTranslations: FieldsTranslations[]) {
         this.ObjectField = field;
         this.ObjectFieldId = field.Id;
-        this.ObjectFieldCode = field.FieldCode;
 
-        this.fullLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.FullNameTextCodeCode)[0];
-        this.shortLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.ShortNameTextCodeCode)[0];
-        this.listLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.ListTextCodeCode)[0];
-        this.helpLabelObject = this.fieldsTranslations.filter(f => f.TextCodeCode == field.HelpTextCodeCode)[0];
+        this.fullLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.FullNameTextCodeId)[0];
+        this.shortLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.ShortNameTextCodeId)[0];
+        this.listLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.ListTextCodeId)[0];
+        this.helpLabelObject = this.fieldsTranslations.filter(f => f.TextCodeId == field.HelpTextCodeId)[0];
     }
 
     get DefaultText() { return this.ObjectField.FullNameTextCodeDefaultText; }
@@ -225,32 +214,31 @@ export class StandardFieldItem {
         return result;
     }
 
-
     //private LoadObjects() {
     //    var generalService: GeneralDomainService = new GeneralDomainService();
 
-    //    generalService.(this.ObjectField.FullNameTextCodeId).subscribe((myResult:any) => {
+    //    generalService.(this.ObjectField.FullNameTextCodeId).subscribe(myResult => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.fullLabelObject = myResponse.Result;
     //        }
     //    });
 
-    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ShortNameTextCodeId).subscribe((myResult:any) => {
+    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ShortNameTextCodeId).subscribe(myResult => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.shortLabelObject = myResponse.Result;
     //        }
     //    });
 
-    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ListTextCodeId).subscribe((myResult:any) => {
+    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ListTextCodeId).subscribe(myResult => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.listLabelObject = myResponse.Result;
     //        }
     //    });
 
-    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.HelpTextCodeId).subscribe((myResult:any) => {
+    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.HelpTextCodeId).subscribe(myResult => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.helpLabelObject = myResponse.Result;

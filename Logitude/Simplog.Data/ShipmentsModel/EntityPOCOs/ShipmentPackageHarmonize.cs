@@ -15,12 +15,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int Tenant { get; set; }
         public string PackageId { get; set; }
         public string Harmonize { get; set; }
-        public string InsidePackageId { get; set; }
 
         [ForeignKey("PackageId")]
         public virtual ShipmentPackage Package { get; set; }
-
-        [ForeignKey("InsidePackageId")]
-        public virtual InsideShipmentPackage InsidePackage { get; set; }
     }
 }

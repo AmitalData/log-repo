@@ -23,15 +23,13 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import { JournalOpService } from '../../Services/Others/JournalOpService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AccountingLoadTestComponent',
     templateUrl: './AccountingLoadTestComponent.html',
     //providers: [EntityArgs],
 })
 
 export class AccountingLoadTestComponent extends BaseComponent implements AfterViewInit {
-  public SelectedIndexEveryMinuteItem: any;
-
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 
     public DataContext: AccountingLoadTestComponent = this;

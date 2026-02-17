@@ -1,151 +1,79 @@
+﻿
 <table>
-    <tr>
-        <td style="width: 410px;">
-            <table>
 
-                <!-- BillToId -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width: 70px;">
-                                    <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
+    <tr class="FormFieldRow">
+        <td style="width: 145px;" class="Label">
+            <LogLabel [ObjectFieldName]="'ReceivablesAccountingCard'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                <td style="width: 200px;">
-                                    <LogLov [ObjectFieldName]="'BillToId'"
-                                            [SelectedValue]="BillToId"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Card'">
-                                    </LogLov>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr style="height: 32px;">
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width: 16px;">
-                                    <LogCheckBox [ObjectFieldName]="'AccountingVATSplit'" [Checked]="AccountingVATSplit" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                </td>
-
-                                <td class="Label" style="font-size: 13px; padding-left: 5px;">Split by Currency</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr style="height: 105px;">
-                    <td>
-                        <div class="MediaFill">
-                            <SectionBox>
-                                <SectionHead>
-                                    <table>
-                                        <tr>
-                                            <td>No Split</td>
-
-                                            <td style="width: 1px;">
-                                                <button *ngIf="IsExternalByProductsVisible" class="Button" (click)="ExternalByProductsClicked()">Advanced</button>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </SectionHead>
-                                <SectionBody>
-                                    <table>
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 170px;">
-                                                <LogLabel [ObjectFieldName]="'ReceivablesAccountingCard'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td>
-                                                <LogTextBox [ObjectFieldName]="'ReceivablesAccountingCard'" [Text]="ReceivablesAccountingCard" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr class="FormFieldRow">
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'PayablesAccountingCard'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td>
-                                                <LogTextBox [ObjectFieldName]="'PayablesAccountingCard'" [Text]="PayablesAccountingCard" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                            </td>
-
-                                        </tr>
-                                    </table>
-                                </SectionBody>
-                            </SectionBox>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="MediaFill">
-                            <SectionBox>
-                                <SectionHead>Split by Currency</SectionHead>
-                                <SectionBody>
-                                    <div class="SimpleGridView">
-                                        <div class="SimpleGridViewHeader">
-                                            <table>
-                                                <tr>
-                                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">Currency</td>
-                                                    <td style="width: 160px; min-width: 160px; max-width: 160px;">Receivable Credit Account</td>
-                                                    <td *ngIf="IsPayablesAccountingCardVisible">Payable Debit Account</td>
-
-                                                </tr>
-                                            </table>
-                                        </div>
-
-                                        <div class="SimpleGridViewBody">
-                                            <table>
-                                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
-                                                    <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
-                                                        {{item.CurrencyCode}}
-                                                    </td>
-
-                                                    <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
-                                                        <LogTextBox [ObjectFieldName]="'ReceivableCreditAccount'" [Text]="item.ReceivableCreditAccount" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                                    </td>
-
-                                                    <td *ngIf="IsPayablesAccountingCardVisible" class="GridViewCell">
-                                                        <LogTextBox [ObjectFieldName]="'PayableDebitAccount'" [Text]="item.PayableDebitAccount" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                                    </td>
-
-
-                                                </tr>
-
-                                                <tr>
-                                                    <td *ngIf="IsPayablesAccountingCardVisible" colspan="3">
-                                                        <div></div>
-                                                    </td>
-                                                    <td *ngIf="!IsPayablesAccountingCardVisible" colspan="2">
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </SectionBody>
-                            </SectionBox>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+        <td style="width: 200px;">
+            <LogTextBox [ObjectFieldName]="'ReceivablesAccountingCard'" [Text]="ReceivablesAccountingCard" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
         </td>
 
         <td>
             <div></div>
         </td>
     </tr>
-</table>
 
+    <tr class="FormFieldRow">
+        <td style="width: 145px;" class="Label">
+            <LogLabel [ObjectFieldName]="'PayablesAccountingCard'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td style="width: 200px;">
+            <LogTextBox [ObjectFieldName]="'PayablesAccountingCard'" [Text]="PayablesAccountingCard" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <!--<tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'ExternalId2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogTextBox [ObjectFieldName]="'ExternalId2'" [Text]="ExternalId2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="FormFieldRow" *ngIf="IsExternalByProductsVisible">
+        <td>
+            <LogLabel [ObjectFieldName]="'ExternalAccountingBusinessArea'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogTextBox [ObjectFieldName]="'ExternalAccountingBusinessArea'" [Text]="ExternalAccountingBusinessArea" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>-->
+
+    <tr class="FormFieldRow" *ngIf="IsExternalByProductsVisible">
+        <td>
+            <div></div>
+        </td>
+
+        <td style="padding-right: 36px;">
+            <button class="Button" (click)="ExternalByProductsClicked()">Advanced</button>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3">
+            <div></div>
+        </td>
+    </tr>
+</table>

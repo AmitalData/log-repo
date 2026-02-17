@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         VesselRepository repository;
 
-
+        public VesselQuery()
+        {
+            repository = new VesselRepository(); 
+        }
 
         public VesselQuery(int tenant)
         {
@@ -127,12 +130,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      Code = a.Code,
                                      EnglishName = a.EnglishName,
                                      Id = a.Id,
-                                     InActive = a.InActive,
-                                     LocalName = a.LocalName,
-                                     Notes = a.Notes,
-                                     Tenant = a.Tenant,
-                                     SearchFields = a.SearchFields,
-                                     ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                      IMOCode = a.IMOCode,
                                      CountryId = a.CountryId,
                                  }).FirstOrDefault();

@@ -38,16 +38,16 @@
     }
 
     .BookingWizardHeader {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
+        width: 100%;
         height: 75px;
         background: #F7F7F7;
         border: 1px solid #DADADA;
         -webkit-border-radius: 8px 8px 0 0;
         -moz-border-radius: 8px 8px 0 0;
         border-radius: 8px 8px 0 0;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
     }
 
     .ResponseProgressLayout {
@@ -112,187 +112,181 @@
     </tr>
 
     <tr>
-        <td>
-            <div class="MediaFill">
+        <td style="vertical-align:top;">
+            <div class="BookingWizardHeader">
+                <table>
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
-                <!-- HeaderScreen -->
-                <div class="BookingWizardHeader">
-                    <table>
-                        <tr style="height: 5px;">
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
+                    <tr style="height: 40px;">
+                        <td>
+                            <table class="FixedTable">
+                                <tr>
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
 
-                        <tr style="height: 40px;">
-                            <td>
-                                <table class="FixedTable">
-                                    <tr>
-                                        <td style="width: 10px;">
-                                            <div></div>
-                                        </td>
+                                    <td style="width: 200px;">
+                                        <table class="FixedTable">
+                                            <tr>
+                                                <td class="Label" style="width: 40px;">MAWB:</td>
+                                                <td class="Value">{{EntityPM.LongMaster}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="Label" style="width: 40px;">Airline:</td>
+                                                <td class="Value">{{EntityPM.MainCarriageCarrierName}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
-                                        <td style="width: 200px;">
-                                            <table class="FixedTable">
-                                                <tr>
-                                                    <td class="Label" style="width: 40px;">MAWB:</td>
-                                                    <td class="Value">{{EntityPM.LongMaster}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="Label" style="width: 40px;">Airline:</td>
-                                                    <td class="Value">{{EntityPM.MainCarriageCarrierName}}</td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                    <td>
+                                        <div style="width:1px; height: calc(100% - 10px); background: #DADADA; margin:auto;"></div>
+                                    </td>
 
-                                        <td>
-                                            <div style="width:1px; height: calc(100% - 10px); background: #DADADA; margin:auto;"></div>
-                                        </td>
+                                    <td style="width: 180px;">
+                                        <table class="FixedTable">
+                                            <tr>
+                                                <td class="Label">Booking #:</td>
+                                                <td class="Value">{{EntityPM.BookingNumber}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="Label">Product:</td>
+                                                <td class="Value">{{EntityPM.BookingProductName}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
-                                        <td style="width: 180px;">
-                                            <table class="FixedTable">
-                                                <tr>
-                                                    <td class="Label">Booking #:</td>
-                                                    <td class="Value">{{EntityPM.BookingNumber}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="Label">Product:</td>
-                                                    <td class="Value">{{EntityPM.BookingProductName}}</td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                    <td>
+                                        <div style="width:1px; height: calc(100% - 10px); background: #DADADA; margin:auto;"></div>
+                                    </td>
 
-                                        <td>
-                                            <div style="width:1px; height: calc(100% - 10px); background: #DADADA; margin:auto;"></div>
-                                        </td>
+                                    <td style="width: 180px;">
+                                        <table class="FixedTable">
+                                            <tr>
+                                                <td class="Label">Routing:</td>
+                                                <td class="Value">{{EntityPM.Routing | ReplacePipe:',':'>'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="Label">First Flight:</td>
+                                                <td class="Value">{{EntityPM.FirstFlight}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
-                                        <td style="width: 180px;">
-                                            <table class="FixedTable">
-                                                <tr>
-                                                    <td class="Label">Routing:</td>
-                                                    <td class="Value">{{EntityPM.Routing | ReplacePipe:',':'>'}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="Label">First Flight:</td>
-                                                    <td class="Value">{{EntityPM.FirstFlight}}</td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                    <td>
+                                        <div style="width:1px; height: calc(100% - 10px); background: #DADADA; margin:auto;"></div>
+                                    </td>
 
-                                        <td>
-                                            <div style="width:1px; height: calc(100% - 10px); background: #DADADA; margin:auto;"></div>
-                                        </td>
+                                    <td style="width: 280px;">
+                                        <table class="FixedTable">
+                                            <tr>
+                                                <td class="Label" style="width:105px;">Messaging Status:</td>
+                                                <td class="Value" [ngStyle]="{color: EntityPM.FFRStatusName | StringToColorPipe}">{{EntityPM.FFRStatusName}}</td>
 
-                                        <td style="width: 280px;">
-                                            <table class="FixedTable">
-                                                <tr>
-                                                    <td class="Label" style="width:105px;">Messaging Status:</td>
-                                                    <td class="Value" [ngStyle]="{color: EntityPM.FFRStatusName | StringToColorPipe}">{{EntityPM.FFRStatusName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="Label">Booking Status:</td>
+                                                <td class="Value" [ngStyle]="{color: EntityPM.BookingStatusName | StringToColorPipe}">{{EntityPM.BookingStatusName}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
-                                                </tr>
-                                                <tr>
-                                                    <td class="Label">Booking Status:</td>
-                                                    <td class="Value" [ngStyle]="{color: EntityPM.BookingStatusName | StringToColorPipe}">{{EntityPM.BookingStatusName}}</td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                                        <td style="width: 10px;">
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-                        <tr>
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-                    </table>
+            <div class="TabControl" style="position: absolute; top: 50px; height: calc(100% - 50px)">
+                <div class="TabControlHead">
+                    <ul style="margin-left: 2px;">
+                        <li [class.Selected]="SelectedTabCode == 'OVE'" (click)="SelectedTabCode = 'OVE'" *ngIf="IsTabVisible_OVE">
+                            <div class="InnerChild">
+                                Overview
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'BKD'" (click)="SelectedTabCode = 'BKD'">
+                            <div class="InnerChild">
+                                Booking Details
+                                <div class="TabSquareIcon" [ngStyle]="{background: Fill_BKD}"></div>
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'PAR'" (click)="SelectedTabCode = 'PAR'">
+                            <div class="InnerChild">
+                                Partners
+                                <div class="TabSquareIcon" [ngStyle]="{background: Fill_PAR}"></div>
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'PAC'" (click)="SelectedTabCode = 'PAC'">
+                            <div class="InnerChild">
+                                Packages
+                                <div class="TabSquareIcon" [ngStyle]="{background: Fill_PAC}"></div>
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'GEN'" (click)="SelectedTabCode = 'GEN'">
+                            <div class="InnerChild">
+                                General Details
+                                <div class="TabSquareIcon" [ngStyle]="{background: Fill_GEN}"></div>
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'EVE'" (click)="SelectedTabCode = 'EVE'">
+                            <div class="InnerChild">
+                                Events
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="MediaFillAbsolute" style="top: 50px;">
-                    <div class="TabControl">
-                        <div class="TabControlHead">
-                            <ul style="margin-left: 2px;">
-                                <li [class.Selected]="SelectedTabCode == 'OVE'" (click)="SelectedTabCode = 'OVE'" *ngIf="IsTabVisible_OVE">
-                                    <div class="InnerChild">
-                                        Overview
-                                    </div>
-                                </li>
+                <div class="TabControlBody">
 
-                                <li [class.Selected]="SelectedTabCode == 'BKD'" (click)="SelectedTabCode = 'BKD'">
-                                    <div class="InnerChild">
-                                        Booking Details
-                                        <div class="TabSquareIcon" [ngStyle]="{background: Fill_BKD}"></div>
-                                    </div>
-                                </li>
-
-                                <li [class.Selected]="SelectedTabCode == 'PAR'" (click)="SelectedTabCode = 'PAR'">
-                                    <div class="InnerChild">
-                                        Partners
-                                        <div class="TabSquareIcon" [ngStyle]="{background: Fill_PAR}"></div>
-                                    </div>
-                                </li>
-
-                                <li [class.Selected]="SelectedTabCode == 'PAC'" (click)="SelectedTabCode = 'PAC'">
-                                    <div class="InnerChild">
-                                        Packages
-                                        <div class="TabSquareIcon" [ngStyle]="{background: Fill_PAC}"></div>
-                                    </div>
-                                </li>
-
-                                <li [class.Selected]="SelectedTabCode == 'GEN'" (click)="SelectedTabCode = 'GEN'">
-                                    <div class="InnerChild">
-                                        General Details
-                                        <div class="TabSquareIcon" [ngStyle]="{background: Fill_GEN}"></div>
-                                    </div>
-                                </li>
-
-                                <li [class.Selected]="SelectedTabCode == 'EVE'" (click)="SelectedTabCode = 'EVE'">
-                                    <div class="InnerChild">
-                                        Events
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="TabControlBody">
-
-                            <!-- Overview -->
-                            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'OVE'">
-                                <div class="LocationDirective" LocationDirective Code="OVE" (DirectiveLoaded)="OverviewDirectiveLoaded()"></div>
-                            </div>
-
-                            <!-- Booking Details -->
-                            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'BKD'">
-                                <div class="LocationDirective" LocationDirective Code="BKD"></div>
-                            </div>
-
-                            <!-- Partners -->
-                            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'PAR'">
-                                <div class="LocationDirective" LocationDirective Code="PAR"></div>
-                            </div>
-
-                            <!-- Packages -->
-                            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'PAC'">
-                                <div class="LocationDirective" LocationDirective Code="PAC"></div>
-                            </div>
-
-                            <!-- General Details -->
-                            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'GEN'">
-                                <div class="LocationDirective" LocationDirective Code="GEN"></div>
-                            </div>
-
-                            <!-- Events -->
-                            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'EVE'">
-                                <div class="LocationDirective" LocationDirective Code="EVE"></div>
-                            </div>
-
-                        </div>
+                    <!-- Overview -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'OVE'">
+                        <div class="LocationDirective" LocationDirective Code="OVE" (DirectiveLoaded)="OverviewDirectiveLoaded()"></div>
                     </div>
+
+                    <!-- Booking Details -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'BKD'">
+                        <div class="LocationDirective" LocationDirective Code="BKD"></div>
+                    </div>
+
+                    <!-- Partners -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'PAR'">
+                        <div class="LocationDirective" LocationDirective Code="PAR"></div>
+                    </div>
+
+                    <!-- Packages -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'PAC'">
+                        <div class="LocationDirective" LocationDirective Code="PAC"></div>
+                    </div>
+
+                    <!-- General Details -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'GEN'">
+                        <div class="LocationDirective" LocationDirective Code="GEN"></div>
+                    </div>
+
+                    <!-- Events -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'EVE'">
+                        <div class="LocationDirective" LocationDirective Code="EVE"></div>
+                    </div>
+
                 </div>
             </div>
         </td>
@@ -400,9 +394,9 @@
                         <div></div>
                     </td>
 
-                    <!-- Send FFR -->
+                    <!-- Send FFR -->                    
                     <td style="width: 98px;">
-                        <button class="Button" *ngIf="!IsUpdateBookingVisible" [disabled]="!IsSendFFREnabled" (click)="OnSendFFRButtonClicked()">{{SendFFRContent}}</button>
+                        <button class="Button" *ngIf="!IsUpdateBookingVisible" [disabled]="!IsSendFFREnabled" (click)="OnSendFFRButtonClicked()" >{{SendFFRContent}}</button>
 
                         <button class="EntityChangesButton" style="cursor:pointer;" *ngIf="IsUpdateBookingVisible" (click)="OnSendFFRButtonClicked()" [disabled]="!IsSendFFREnabled">{{SendFFRContent}}</button>
                     </td>
@@ -463,4 +457,4 @@
             </table>
         </div>
     </div>
-</div>
+</div>  

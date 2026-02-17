@@ -24,11 +24,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AgentSharedManifestRef).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ShipperReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ShipperReference2).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ShipperReference3).HasMaxLength(300).IsUnicode(false);
             this.Property(t => t.CustomFileNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ConsigneeReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeReference2).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ConsigneeReference3).HasMaxLength(300).IsUnicode(true);
             this.Property(t => t.House).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CASSCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.BranchId).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -48,7 +46,15 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.TransportModeId).IsRequired().IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.DirectionId).IsRequired().IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.Notes).HasMaxLength(1000).IsUnicode(true);
-            this.Property(t => t.DescriptionOfGoods).HasMaxLength(2000).IsUnicode(true);            
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.PreCarriageTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.PreCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PreCarriageToPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PreCarriageCarrierNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.OnCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageToPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageCarrierNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AgentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AgentComputed).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Notify1AddressId).HasMaxLength(15).IsUnicode(false);
@@ -101,36 +107,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Field38).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.Field39).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.Field40).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field41).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field42).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field43).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field44).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field45).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field46).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field47).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field48).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field49).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field50).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field51).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field52).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field53).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field54).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field55).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field56).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field57).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field58).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field59).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field60).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field61).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field62).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field63).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field64).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field65).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field66).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field67).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field68).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field69).HasMaxLength(2000).IsUnicode(true);
-            this.Property(t => t.Field70).HasMaxLength(2000).IsUnicode(true);
+
             this.Property(t => t.FreightPrepaidCollectId).IsRequired().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.OtherPrepaidCollectId).IsRequired().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.ShipperNotExporterId).HasMaxLength(15).IsUnicode(false);
@@ -147,20 +124,22 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.VolumeUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.StatusId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusLocation).HasMaxLength(40).IsUnicode(true);
-            this.Property(t => t.PartialStatusAmount).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.MainHarmonize).HasMaxLength(18).IsUnicode(false);
             this.Property(t => t.DangerousFlashPoint).HasMaxLength(8).IsUnicode(false);
             this.Property(t => t.DangerousIMDGCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.DangerousUnNumber).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.DangerousClassNumber).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.DangerousPackagingGroup).HasMaxLength(10).IsUnicode(false);
-            this.Property(t => t.DangerousMaterialDescription).HasMaxLength(200).IsUnicode(true);            
+            this.Property(t => t.DangerousMaterialDescription).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.PreCarriageVesselId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageVesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuoteId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.QuoteNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.BookingId).HasMaxLength(15).IsUnicode(false);            
             this.Property(t => t.ShipmentReceivableStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ShipmentPayableStatusCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);            
+            this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PreCarriageCarrierId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageCarrierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AWBCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomAgentImportReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CustomAgentExportId).HasMaxLength(15).IsUnicode(false);
@@ -168,12 +147,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FreightForwarderId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FreightForwarderReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CustomerId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.HandlerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CustomerReference2).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.CustomerReference3).HasMaxLength(300).IsUnicode(true);
             this.Property(t => t.ShipmentCustomerTypeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.CustomAgentExportAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomAgentExportContactId).HasMaxLength(15).IsUnicode(false);
@@ -192,21 +169,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentLevelCode).HasMaxLength(1).IsUnicode(false);
-            
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.SearchFields).HasMaxLength(2000).IsUnicode(true);
-            }
-            else
-            {
-                this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
-            }
-                
+            this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
             this.Property(t => t.AWBComments).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.OIConcurrencyGUID).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.AWBChargesCodeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.IssuingCarrierAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IssuingCarrierAgentId).HasMaxLength(15).IsUnicode(false);
@@ -238,7 +204,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ColoaderReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.MoveTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AMSBL).HasMaxLength(17).IsUnicode(true);
-            this.Property(t => t.SecurityKey).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.SecurityKey).HasMaxLength(40);
             this.Property(t => t.AccountNumber).HasMaxLength(14).IsUnicode(false);
             this.Property(t => t.DeliveryOrder).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.FreightLocationId).HasMaxLength(15).IsUnicode(false);
@@ -288,9 +254,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ConsolidatorReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.AccountManagerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IssuingCarrierReference1).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ShipperName).HasMaxLength(140).IsUnicode(true);
+            this.Property(t => t.ShipperName).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ConsigneeName).HasMaxLength(70).IsUnicode(false);
-            this.Property(t => t.ShippingAgent).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.ForwarderShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CustomerShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CustomsDeclarationNumber).HasMaxLength(35).IsUnicode(false);
@@ -315,46 +280,22 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WarehouseLegReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.LastSharedEventId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LastSharedEventLocation).HasMaxLength(40).IsUnicode(true);
-            this.Property(t => t.WarehouseLeg2WarehouseId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.WarehouseLeg2AddressId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.WarehouseLeg2Remarks).HasMaxLength(500).IsUnicode(true);
-            this.Property(t => t.WarehouseLeg2TerminalCode).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.WarehouseLeg2Reference).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.LockerAddress).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.LockerName).HasMaxLength(1000).IsUnicode(true);
-            this.Property(t => t.LockerCode).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.LockerCity).HasMaxLength(1000).IsUnicode(false);
-
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.LastSharedEventNotes).HasMaxLength(2000).IsUnicode(true);
-            }
-            else
-            {
-                this.Property(t => t.LastSharedEventNotes).HasMaxLength(4000).IsUnicode(true);
-            }
-
+            this.Property(t => t.LastSharedEventNotes).HasMaxLength(4000).IsUnicode(true);
             this.Property(t => t.AWBPrintingComments).IsMaxLength().IsUnicode(true);
             this.Property(t => t.LocalCustomsSentByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedByPartner).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.INTTRASIStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.INTTRASIError).HasMaxLength(256).IsUnicode(false);
-            this.Property(t => t.INTTRABookingError).HasMaxLength(256).IsUnicode(false);
-            this.Property(t => t.INTTRALastBookingResponse).IsMaxLength().IsUnicode(true);
             this.Property(t => t.EmergencyContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.INTTRAContractNumber).HasMaxLength(35).IsUnicode(false);
             this.Property(t => t.INTTRAInstructions).HasMaxLength(500).IsUnicode(false);
-            this.Property(t => t.INTTRAComments).HasMaxLength(500).IsUnicode(false);            
+            this.Property(t => t.INTTRAComments).HasMaxLength(500).IsUnicode(false);
+            this.Property(t => t.OnCarriageAdditionalTransportModeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.INTTRADocumentTypeCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.INTTRABookingStatusCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.INTTRABookingTransStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.LastFinalDestination).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.Notify1Reference).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.Notify1Reference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Notify2Reference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ShipperNotExporterReference).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ShipperNotExporterReference1).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ShipperNotExporterReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ForwardingPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ProjectNumber).HasMaxLength(100).IsUnicode(false);
@@ -369,48 +310,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Origin).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ComputedShipmentNumber).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.SLAC).HasMaxLength(5).IsUnicode(false);
-            this.Property(t => t.ShipmentSubTypeId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ChargeStorageCurrencyId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.WeightMeasurementCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.WeightRoundingCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.TruckerId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.TruckerAddressId).HasMaxLength(15).IsUnicode(true);
-            this.Property(t => t.TruckerContactId).HasMaxLength(15).IsUnicode(true);
-            this.Property(t => t.TruckerReference1).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.TruckerReference2).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.PreForwardingTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.PreForwardingFromPortId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingToPortId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingCarrierNumber).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingVesselId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingCarrierId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.OnForwardingFromPortId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingToPortId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingCarrierNumber).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingVesselId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingCarrierId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.OnForwardingAdditionalTransportModeCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.ParentShipmentDirectionId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.ParentShipmentNumber).HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.ParentShipmentType).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.OperationalStatusId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.BillingStatusId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.DestinationWarehouseId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PreForwardingVesselName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.OnForwardingVesselName).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.LastDeliveryFullAddress).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.FirstPickupFullAddress).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.PrivateLabelAgentName).HasMaxLength(70).IsUnicode(false);
-            this.Property(t => t.ShippingLine).HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.PlaceOfDelivery).HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.PickupPlace).HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.SealNo).HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.HSCode).HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.IskaNumber).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ReferantUserId).HasMaxLength(16).IsUnicode(false);
+
+            //    .HasColumnAnnotation(
+            //IndexAnnotation.AnnotationName,
+            //new IndexAnnotation(
+            //    new IndexAttribute("IX_ComputedForwarderShipmentNumber", 2) { IsUnique = true })); ;
 
             // Table & Column Mappings
             this.ToTable("Shipments");
@@ -425,10 +329,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ComputedShipmentNumber).HasColumnName("ComputedShipmentNumber");            
             this.Property(t => t.ShipperReference1).HasColumnName("ShipperReference1");
             this.Property(t => t.ShipperReference2).HasColumnName("ShipperReference2");
-            this.Property(t => t.ShipperReference3).HasColumnName("ShipperReference3");
             this.Property(t => t.ConsigneeReference1).HasColumnName("ConsigneeReference1");
             this.Property(t => t.ConsigneeReference2).HasColumnName("ConsigneeReference2");
-            this.Property(t => t.ConsigneeReference3).HasColumnName("ConsigneeReference3");
             this.Property(t => t.House).HasColumnName("House");
             this.Property(t => t.BranchId).HasColumnName("BranchId");
             this.Property(t => t.IncotermId).HasColumnName("IncotermId");
@@ -448,9 +350,25 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DirectionId).HasColumnName("DirectionId");
             this.Property(t => t.Notes).HasColumnName("Notes");
             this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods");
-            this.Property(t => t.HAWBDate).HasColumnName("HAWBDate");            
+            this.Property(t => t.HAWBDate).HasColumnName("HAWBDate");
+            this.Property(t => t.PreCarriageTransportModeId).HasColumnName("PreCarriageTransportModeId");
+            this.Property(t => t.PreCarriageFromPortId).HasColumnName("PreCarriageFromPortId");
+            this.Property(t => t.PreCarriageToPortId).HasColumnName("PreCarriageToPortId");
+            this.Property(t => t.PreCarriageATD).HasColumnName("PreCarriageATD");
+            this.Property(t => t.PreCarriageATA).HasColumnName("PreCarriageATA");
+            this.Property(t => t.PreCarriageCarrierNumber).HasColumnName("PreCarriageCarrierNumber");
+            this.Property(t => t.OnCarriageTransportModeId).HasColumnName("OnCarriageTransportModeId");
+            this.Property(t => t.OnCarriageFromPortId).HasColumnName("OnCarriageFromPortId");
+            this.Property(t => t.OnCarriageToPortId).HasColumnName("OnCarriageToPortId");
+            this.Property(t => t.OnCarriageATD).HasColumnName("OnCarriageATD");
+            this.Property(t => t.OnCarriageATA).HasColumnName("OnCarriageATA");
+            this.Property(t => t.OnCarriageCarrierNumber).HasColumnName("OnCarriageCarrierNumber");
             this.Property(t => t.AgentId).HasColumnName("AgentId");
-            this.Property(t => t.AgentComputed).HasColumnName("AgentComputed");
+            this.Property(t => t.AgentComputed).HasColumnName("AgentComputed");            
+            this.Property(t => t.OnCarriageETD).HasColumnName("OnCarriageETD");
+            this.Property(t => t.OnCarriageETA).HasColumnName("OnCarriageETA");
+            this.Property(t => t.PreCarriageETA).HasColumnName("PreCarriageETA");
+            this.Property(t => t.PreCarriageETD).HasColumnName("PreCarriageETD");
             this.Property(t => t.Notify1AddressId).HasColumnName("Notify1AddressId");
             this.Property(t => t.Notify2AddressId).HasColumnName("Notify2AddressId");
             this.Property(t => t.Notify1ContactId).HasColumnName("Notify1ContactId");
@@ -463,7 +381,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ConsigneeContactId).HasColumnName("ConsigneeContactId");
             this.Property(t => t.ChargeableWeightInKG).HasColumnName("ChargeableWeightInKG");
             this.Property(t => t.GrossWeightInKG).HasColumnName("GrossWeightInKG");
-            this.Property(t => t.GrossWeightPerStorageDays).HasColumnName("GrossWeightPerStorageDays");
             this.Property(t => t.Field1).HasColumnName("Field1");
             this.Property(t => t.Field2).HasColumnName("Field2");
             this.Property(t => t.Field3).HasColumnName("Field3");
@@ -504,36 +421,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Field38).HasColumnName("Field38");
             this.Property(t => t.Field39).HasColumnName("Field39");
             this.Property(t => t.Field40).HasColumnName("Field40");
-            this.Property(t => t.Field41).HasColumnName("Field41");
-            this.Property(t => t.Field42).HasColumnName("Field42");
-            this.Property(t => t.Field43).HasColumnName("Field43");
-            this.Property(t => t.Field44).HasColumnName("Field44");
-            this.Property(t => t.Field45).HasColumnName("Field45");
-            this.Property(t => t.Field46).HasColumnName("Field46");
-            this.Property(t => t.Field47).HasColumnName("Field47");
-            this.Property(t => t.Field48).HasColumnName("Field48");
-            this.Property(t => t.Field49).HasColumnName("Field49");
-            this.Property(t => t.Field50).HasColumnName("Field50");
-            this.Property(t => t.Field51).HasColumnName("Field51");
-            this.Property(t => t.Field52).HasColumnName("Field52");
-            this.Property(t => t.Field53).HasColumnName("Field53");
-            this.Property(t => t.Field54).HasColumnName("Field54");
-            this.Property(t => t.Field55).HasColumnName("Field55");
-            this.Property(t => t.Field56).HasColumnName("Field56");
-            this.Property(t => t.Field57).HasColumnName("Field57");
-            this.Property(t => t.Field58).HasColumnName("Field58");
-            this.Property(t => t.Field59).HasColumnName("Field59");
-            this.Property(t => t.Field60).HasColumnName("Field60");
-            this.Property(t => t.Field61).HasColumnName("Field61");
-            this.Property(t => t.Field62).HasColumnName("Field62");
-            this.Property(t => t.Field63).HasColumnName("Field63");
-            this.Property(t => t.Field64).HasColumnName("Field64");
-            this.Property(t => t.Field65).HasColumnName("Field65");
-            this.Property(t => t.Field66).HasColumnName("Field66");
-            this.Property(t => t.Field67).HasColumnName("Field67");
-            this.Property(t => t.Field68).HasColumnName("Field68");
-            this.Property(t => t.Field69).HasColumnName("Field69");
-            this.Property(t => t.Field70).HasColumnName("Field70");
             this.Property(t => t.OrderGrossWeight).HasColumnName("OrderGrossWeight");
             this.Property(t => t.BookingVolume).HasColumnName("BookingVolume");
             this.Property(t => t.BookingNumberOfPackages).HasColumnName("BookingNumberOfPackages");
@@ -568,12 +455,13 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DangerousUnNumber).HasColumnName("DangerousUnNumber");
             this.Property(t => t.DangerousClassNumber).HasColumnName("DangerousClassNumber");
             this.Property(t => t.DangerousPackagingGroup).HasColumnName("DangerousPackagingGroup");
-            this.Property(t => t.DangerousMaterialDescription).HasColumnName("DangerousMaterialDescription");            
+            this.Property(t => t.DangerousMaterialDescription).HasColumnName("DangerousMaterialDescription");
+            this.Property(t => t.PreCarriageVesselId).HasColumnName("PreCarriageVesselId");
+            this.Property(t => t.OnCarriageVesselId).HasColumnName("OnCarriageVesselId");
             this.Property(t => t.LTCWEdited).HasColumnName("LTCWEdited");
             this.Property(t => t.ShipmentPickUpIndex).HasColumnName("ShipmentPickUpIndex");
             this.Property(t => t.ShipmentDeliveryIndex).HasColumnName("ShipmentDeliveryIndex");
             this.Property(t => t.QuoteId).HasColumnName("QuoteId");
-            this.Property(t => t.QuoteNumber).HasColumnName("QuoteNumber");
             this.Property(t => t.BookingId).HasColumnName("BookingId");
             this.Property(t => t.ShipmentReceivableStatusCode).HasColumnName("ShipmentReceivableStatusCode");
             this.Property(t => t.ShipmentPayableStatusCode).HasColumnName("ShipmentPayableStatusCode");
@@ -585,8 +473,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CancelledDate).HasColumnName("CancelledDate");
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
-            this.Property(t => t.OpenReceivablesInLocalCurrency).HasColumnName("OpenReceivablesInLocalCurrency").IsRequired();          
-            this.Property(t => t.ProfitInLocalCurrency).HasColumnName("ProfitInLocalCurrency");            
+            this.Property(t => t.OpenReceivablesInLocalCurrency).HasColumnName("OpenReceivablesInLocalCurrency");          
+            this.Property(t => t.ProfitInLocalCurrency).HasColumnName("ProfitInLocalCurrency");
+            this.Property(t => t.PreCarriageCarrierId).HasColumnName("PreCarriageCarrierId");
+            this.Property(t => t.OnCarriageCarrierId).HasColumnName("OnCarriageCarrierId");
             this.Property(t => t.OrderVolumetricWeight).HasColumnName("OrderVolumetricWeight");
             this.Property(t => t.OrderChargeableWeight).HasColumnName("OrderChargeableWeight");
             this.Property(t => t.AWBCurrencyId).HasColumnName("AWBCurrencyId");
@@ -604,7 +494,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomerContactId).HasColumnName("CustomerContactId");
             this.Property(t => t.CustomerReference1).HasColumnName("CustomerReference1");
             this.Property(t => t.CustomerReference2).HasColumnName("CustomerReference2");
-            this.Property(t => t.CustomerReference3).HasColumnName("CustomerReference3");
             this.Property(t => t.ShipmentCustomerTypeCode).HasColumnName("ShipmentCustomerTypeCode");
             this.Property(t => t.CustomAgentExportAddressId).HasColumnName("CustomAgentExportAddressId");
             this.Property(t => t.CustomAgentExportContactId).HasColumnName("CustomAgentExportContactId");
@@ -629,6 +518,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.AWBComments).HasColumnName("AWBComments");
+            this.Property(t => t.CutoffDate).HasColumnName("CutoffDate");
             this.Property(t => t.OpenPayablesInLocalCurrency).HasColumnName("OpenPayablesInLocalCurrency");           
             this.Property(t => t.OpenPayablesInProfitCurrency).HasColumnName("OpenPayablesInProfitCurrency");            
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode");
@@ -636,7 +526,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChargeableWeight).HasColumnName("ChargeableWeight");
             this.Property(t => t.Volume).HasColumnName("Volume");
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
-            this.Property(t => t.OIConcurrencyGUID).HasColumnName("OIConcurrencyGUID");
             this.Property(t => t.AWBChargesCodeCode).HasColumnName("AWBChargesCodeCode");
             this.Property(t => t.IssuingCarrierAddressId).HasColumnName("IssuingCarrierAddressId");
             this.Property(t => t.IssuingCarrierAgentId).HasColumnName("IssuingCarrierAgentId");
@@ -744,7 +633,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentContainerReturnIndex).HasColumnName("ShipmentContainerReturnIndex");
             this.Property(t => t.FreightRelease).HasColumnName("FreightRelease");
             this.Property(t => t.TerminalAvailable).HasColumnName("TerminalAvailable");
-            this.Property(t => t.Terminal2Available).HasColumnName("Terminal2Available");
             this.Property(t => t.ISFNumber).HasColumnName("ISFNumber");
             this.Property(t => t.ISFDate).HasColumnName("ISFDate");
             this.Property(t => t.ITNumber).HasColumnName("ITNumber");
@@ -764,16 +652,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WarehouseLegReference).HasColumnName("WarehouseLegReference");
             this.Property(t => t.WarehouseLegVGMCutOffDate).HasColumnName("WarehouseLegVGMCutOffDate");
             this.Property(t => t.WarehouseLegCutOffDate).HasColumnName("WarehouseLegCutOffDate");
-            this.Property(t => t.WarehouseLeg2WarehouseId).HasColumnName("WarehouseLeg2WarehouseId");
-            this.Property(t => t.WarehouseLeg2AddressId).HasColumnName("WarehouseLeg2AddressId");
-            this.Property(t => t.WarehouseLeg2TerminalCode).HasColumnName("WarehouseLeg2TerminalCode");
-            this.Property(t => t.WarehouseLeg2ExpectedEntryDate).HasColumnName("WarehouseLeg2ExpectedEntryDate");
-            this.Property(t => t.WarehouseLeg2ActualEntryDate).HasColumnName("WarehouseLeg2ActualEntryDate");
-            this.Property(t => t.WarehouseLeg2ActualReleaseDate).HasColumnName("WarehouseLeg2ActualReleaseDate");
-            this.Property(t => t.WarehouseLeg2Remarks).HasColumnName("WarehouseLeg2Remarks");
-            this.Property(t => t.WarehouseLeg2Reference).HasColumnName("WarehouseLeg2Reference");
-            this.Property(t => t.WarehouseLeg2VGMCutOffDate).HasColumnName("WarehouseLeg2VGMCutOffDate");
-            this.Property(t => t.WarehouseLeg2CutOffDate).HasColumnName("WarehouseLeg2CutOffDate");
             this.Property(t => t.LastSharedEventId).HasColumnName("LastSharedEventId");
             this.Property(t => t.LastSharedEventLocation).HasColumnName("LastSharedEventLocation");
             this.Property(t => t.LastSharedEventNotes).HasColumnName("LastSharedEventNotes");
@@ -796,21 +674,17 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.INTTRADocumentQTY).HasColumnName("INTTRADocumentQTY");
             this.Property(t => t.SIHasAttachList).HasColumnName("SIHasAttachList");
             this.Property(t => t.INTTRAIsFreighted).HasColumnName("INTTRAIsFreighted");
-            this.Property(t => t.INTTRADocumentTypeCode).HasColumnName("INTTRADocumentTypeCode");
-            this.Property(t => t.INTTRABookingTransStatusCode).HasColumnName("INTTRABookingTransStatusCode");
-            this.Property(t => t.INTTRABookingStatusCode).HasColumnName("INTTRABookingStatusCode");
+            this.Property(t => t.INTTRADocumentTypeCode).HasColumnName("INTTRADocumentTypeCode");            
             this.Property(t => t.LastFinalDestination).HasColumnName("LastFinalDestination");
             this.Property(t => t.FirstPickupETA).HasColumnName("FirstPickupETA");
-            this.Property(t => t.FirstPickupETD).HasColumnName("FirstPickupETD");            
+            this.Property(t => t.FirstPickupETD).HasColumnName("FirstPickupETD");
+            this.Property(t => t.SplitOnCarriage).HasColumnName("SplitOnCarriage");
             this.Property(t => t.EstimatedFinalArrivalDate).HasColumnName("EstimatedFinalArrivalDate");
             this.Property(t => t.ActualFinalArrivalDate).HasColumnName("ActualFinalArrivalDate");
             this.Property(t => t.INTTRALastStatusDate).HasColumnName("INTTRALastStatusDate");
             this.Property(t => t.Notify1Reference).HasColumnName("Notify1Reference");
-            this.Property(t => t.Notify1Reference2).HasColumnName("Notify1Reference2");
             this.Property(t => t.Notify2Reference).HasColumnName("Notify2Reference");
             this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
-            this.Property(t => t.ShipperNotExporterReference1).HasColumnName("ShipperNotExporterReference1");
-            this.Property(t => t.ShipperNotExporterReference2).HasColumnName("ShipperNotExporterReference2");
             this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
             this.Property(t => t.ForwardingPartnerId).HasColumnName("ForwardingPartnerId");
             this.Property(t => t.ProjectNumber).HasColumnName("ProjectNumber");
@@ -823,121 +697,17 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FreightPayerAddressId).HasColumnName("FreightPayerAddressId");
             this.Property(t => t.FBLIsFromStock).HasColumnName("FBLIsFromStock");
             this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
-            this.Property(t => t.TruckerId).HasColumnName("TruckerId");
-            this.Property(t => t.TruckerAddressId).HasColumnName("TruckerAddressId");
-            this.Property(t => t.TruckerContactId).HasColumnName("TruckerContactId");
-            this.Property(t => t.TruckerReference1).HasColumnName("TruckerReference1");
-            this.Property(t => t.TruckerReference2).HasColumnName("TruckerReference2");
-            this.Property(t => t.AssignedToTruckerDate).HasColumnName("AssignedToTruckerDate"); 
-            this.Property(t => t.AssginedToCustomsAgentDate).HasColumnName("AssginedToCustomsAgentDate");
-            this.Property(t => t.IsPODReceived).HasColumnName("IsPODReceived");
-            this.Property(t => t.PODReceivedDate).HasColumnName("PODReceivedDate");
-            this.Property(t => t.IsShipmentOrder).HasColumnName("IsShipmentOrder");
-            this.Property(t => t.QuoteFreightExpirationDate).HasColumnName("QuoteFreightExpirationDate");
-            this.Property(t => t.LockerCity).HasColumnName("LockerCity");
-            this.Property(t => t.LockerCode).HasColumnName("LockerCode");
-            this.Property(t => t.LockerName).HasColumnName("LockerName");
-            this.Property(t => t.LockerAddress).HasColumnName("LockerAddress");
-
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.From).HasColumnName("FromC");
-                this.Property(t => t.To).HasColumnName("ToC");
-            }
-            else
-            {
-                this.Property(t => t.From).HasColumnName("From");
-                this.Property(t => t.To).HasColumnName("To");
-            }
-
+            this.Property(t => t.From).HasColumnName("From");
+            this.Property(t => t.To).HasColumnName("To");
             this.Property(t => t.Origin).HasColumnName("Origin");
             this.Property(t => t.ARInvoices).HasColumnName("ARInvoices");
             this.Property(t => t.OrderGrossWeightEdited).HasColumnName("OrderGrossWeightEdited");
             this.Property(t => t.OrderChargeableWeightEdited).HasColumnName("OrderChargeableWeightEdited");
-            this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");
-            this.Property(t => t.FirstARInvoiceApprovalDate).HasColumnName("FirstARInvoiceApprovalDate");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
-            this.Property(t => t.SLAC).HasColumnName("SLAC");
-            this.Property(t => t.ShipmentSubTypeId).HasColumnName("ShipmentSubTypeId");
-            this.Property(t => t.ChargeStorage).HasColumnName("ChargeStorage");
-            this.Property(t => t.ChargeStorageCurrencyId).HasColumnName("ChargeStorageCurrencyId");
-            this.Property(t => t.WeightMeasurementCode).HasColumnName("WeightMeasurementCode");
-            this.Property(t => t.WeightRoundingCode).HasColumnName("WeightRoundingCode");
-            this.Property(t => t.IsCFSWarehouse).HasColumnName("IsCFSWarehouse");
-            this.Property(t => t.IsCFSWarehouseChanged).HasColumnName("IsCFSWarehouseChanged");
-            this.Property(t => t.IsAccrualsApproved).HasColumnName("IsAccrualsApproved");
-            this.Property(t => t.AccrualsApprovalDate).HasColumnName("AccrualsApprovalDate");
-            this.Property(t => t.HousesOpenPayablesInLocal).HasColumnName("HousesOpenPayablesInLocal");
-            this.Property(t => t.HousesOpenPayablesInProfit).HasColumnName("HousesOpenPayablesInProfit");
-            this.Property(t => t.HousesACCTPayablesInLocal).HasColumnName("HousesACCTPayablesInLocal");
-            this.Property(t => t.HousesACCTPayablesInProfit).HasColumnName("HousesACCTPayablesInProfit");
-            this.Property(t => t.HousesOpenReceivablesInLocal).HasColumnName("HousesOpenReceivablesInLocal");
-            this.Property(t => t.HousesOpenReceivablesInProfit).HasColumnName("HousesOpenReceivablesInProfit");
-            this.Property(t => t.HousesACCTReceivablesInLocal).HasColumnName("HousesACCTReceivablesInLocal");
-            this.Property(t => t.HousesACCTReceivablesInProfit).HasColumnName("HousesACCTReceivablesInProfit");
-            this.Property(t => t.PreForwardingTransportModeId).HasColumnName("PreForwardingTransportModeId");
-            this.Property(t => t.PreForwardingFromPortId).HasColumnName("PreForwardingFromPortId");
-            this.Property(t => t.PreForwardingToPortId).HasColumnName("PreForwardingToPortId");
-            this.Property(t => t.PreForwardingATD).HasColumnName("PreForwardingATD");
-            this.Property(t => t.PreForwardingATA).HasColumnName("PreForwardingATA");
-            this.Property(t => t.PreForwardingCarrierNumber).HasColumnName("PreForwardingCarrierNumber");
-            this.Property(t => t.PreForwardingETA).HasColumnName("PreForwardingETA");
-            this.Property(t => t.PreForwardingETD).HasColumnName("PreForwardingETD");
-            this.Property(t => t.PreForwardingVesselId).HasColumnName("PreForwardingVesselId");
-            this.Property(t => t.PreForwardingCarrierId).HasColumnName("PreForwardingCarrierId");
-            this.Property(t => t.OnForwardingTransportModeId).HasColumnName("OnForwardingTransportModeId");
-            this.Property(t => t.OnForwardingFromPortId).HasColumnName("OnForwardingFromPortId");
-            this.Property(t => t.OnForwardingToPortId).HasColumnName("OnForwardingToPortId");
-            this.Property(t => t.OnForwardingATD).HasColumnName("OnForwardingATD");
-            this.Property(t => t.OnForwardingATA).HasColumnName("OnForwardingATA");
-            this.Property(t => t.OnForwardingCarrierNumber).HasColumnName("OnForwardingCarrierNumber");
-            this.Property(t => t.OnForwardingETD).HasColumnName("OnForwardingETD");
-            this.Property(t => t.OnForwardingETA).HasColumnName("OnForwardingETA");
-            this.Property(t => t.OnForwardingVesselId).HasColumnName("OnForwardingVesselId");
-            this.Property(t => t.OnForwardingCarrierId).HasColumnName("OnForwardingCarrierId");
-            this.Property(t => t.SplitOnForwarding).HasColumnName("SplitOnForwarding");
-            this.Property(t => t.OnForwardingAdditionalTransportModeCode).HasColumnName("OnForwardingAdditionalTransportModeCode");
-            this.Property(t => t.IsStandalonePickupDelivery).HasColumnName("IsStandalonePickupDelivery");
-            this.Property(t => t.IsHTSMissing).HasColumnName("IsHTSMissing");
-            this.Property(t => t.ForwarderStandaloneShipmentId).HasColumnName("ForwarderStandaloneShipmentId");
-            this.Property(t => t.PlannedCargoReadyDate).HasColumnName("PlannedCargoReadyDate");
-            this.Property(t => t.ApprovedCargoReadyDate).HasColumnName("ApprovedCargoReadyDate");
-            this.Property(t => t.HandlerUserId).HasColumnName("HandlerUserId");
 
-            this.Property(t => t.PrivateLabelInvoiceNumber).HasColumnName("PrivateLabelInvoiceNumber"); 
-            this.Property(t => t.PrivateLabelIncludePickup).HasColumnName("PrivateLabelIncludePickup");
-            this.Property(t => t.PrivateLabelIncludeDelivery).HasColumnName("PrivateLabelIncludeDelivery");
-            this.Property(t => t.RequestedFlightDate).HasColumnName("RequestedFlightDate");
-            this.Property(t => t.StandalonePickupDeliveryId).HasColumnName("StandalonePickupDeliveryId");
-            this.Property(t => t.ForwarderPickUpDeliveryType).HasColumnName("ForwarderPickUpDeliveryType");
-
-            this.Property(t => t.ParentShipmentDirectionId).HasColumnName("ParentShipmentDirectionId");
-            this.Property(t => t.ParentShipmentNumber).HasColumnName("ParentShipmentNumber");
-            this.Property(t => t.ParentShipmentType).HasColumnName("ParentShipmentType");
-            this.Property(t => t.BillingStatusId).HasColumnName("BillingStatusId");
-            this.Property(t => t.DestinationWarehouseId).HasColumnName("DestinationWarehouseId");
-            this.Property(t => t.OperationalStatusId).HasColumnName("OperationalStatusId");
-            this.Property(t => t.HasUnassignedData).HasColumnName("HasUnassignedData");
-            this.Property(t => t.PrivateLabelAgentName).HasColumnName("PrivateLabelAgentName");
-            this.Property(t => t.PreForwardingVesselName).HasColumnName("PreForwardingVesselName");
-            this.Property(t => t.OnForwardingVesselName).HasColumnName("OnForwardingVesselName");
-            this.Property(t => t.PrivateLabelAgentName).HasColumnName("PrivateLabelAgentName");
-            this.Property(t => t.PartialStatusAmount).HasColumnName("PartialStatusAmount");
-            this.Property(t => t.LastDeliveryFullAddress).HasColumnName("LastDeliveryFullAddress");
-            this.Property(t => t.FirstPickupFullAddress).HasColumnName("FirstPickupFullAddress");
-            this.Property(t => t.ShippingLine).HasColumnName("ShippingLine");
-            this.Property(t => t.PlaceOfDelivery).HasColumnName("PlaceOfDelivery");
-            this.Property(t => t.PickupPlace).HasColumnName("PickupPlace");
-            this.Property(t => t.SealNo).HasColumnName("SealNo");
-            this.Property(t => t.HSCode).HasColumnName("HSCode");
-            this.Property(t => t.IskaNumber).HasColumnName("IskaNumber");
-            this.Property(t => t.ReferantUserId).HasColumnName("ReferantUserId");
-            this.Property(t => t.UniCloudShipment).HasColumnName("UniCloudShipment");
-
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal").IsRequired();
+                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal");
                 this.Property(t => t.OpenReceivablesInProfitCurrency).HasColumnName("OpenReceivablesInProfit");
                 this.Property(t => t.AccountedReceivablesInProfitCurrency).HasColumnName("AccountedReceivablesInProfit");
                 this.Property(t => t.AccountedPayablesInLocalCurrency).HasColumnName("AccountedPayablesInLocal");
@@ -966,16 +736,16 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 this.Property(t => t.SupplementaryShipmentInformation1).HasColumnName("SupplementaryShipmentInfo1");
                 this.Property(t => t.SupplementaryShipmentInformation2).HasColumnName("SupplementaryShipmentInfo2");
                 this.Property(t => t.WarehouseLegExpectedReleaseDate).HasColumnName("WarehouseExpectedReleaseDate");
-                this.Property(t => t.WarehouseLeg2ExpectedReleaseDate).HasColumnName("Warehouse2ExpectedReleaseDate");
                 this.Property(t => t.LocalCustomsTransmissionsStatusCode).HasColumnName("LocalCustomsTransStatusCode");
                 this.Property(t => t.LocalCustomsTransmissionsStatusError).HasColumnName("LocalCustomsTransStatusError");
                 this.Property(t => t.LocalCustomsTransmissionsStatusDate).HasColumnName("LocalCustomsTransStatusDate");
-                this.Property(t => t.ComputedForwarderShipmentNumber).HasColumnName("ComputedForwarderShipmentNum");                
+                this.Property(t => t.ComputedForwarderShipmentNumber).HasColumnName("ComputedForwarderShipmentNum");
+                this.Property(t => t.OnCarriageAdditionalTransportModeCode).HasColumnName("OnCarriageAddTransportModeCode");
             }
 
             else
             {
-                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocalCurrency").IsRequired();
+                this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocalCurrency");
                 this.Property(t => t.OpenReceivablesInProfitCurrency).HasColumnName("OpenReceivablesInProfitCurrency");
                 this.Property(t => t.AccountedReceivablesInProfitCurrency).HasColumnName("AccountedReceivablesInProfitCurrency");
                 this.Property(t => t.AccountedPayablesInLocalCurrency).HasColumnName("AccountedPayablesInLocalCurrency");
@@ -1004,13 +774,14 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 this.Property(t => t.SupplementaryShipmentInformation1).HasColumnName("SupplementaryShipmentInformation1");
                 this.Property(t => t.SupplementaryShipmentInformation2).HasColumnName("SupplementaryShipmentInformation2");
                 this.Property(t => t.WarehouseLegExpectedReleaseDate).HasColumnName("WarehouseLegExpectedReleaseDate");
-                this.Property(t => t.WarehouseLeg2ExpectedReleaseDate).HasColumnName("WarehouseLeg2ExpectedReleaseDate");
                 this.Property(t => t.LocalCustomsTransmissionsStatusCode).HasColumnName("LocalCustomsTransmissionsStatusCode");
                 this.Property(t => t.LocalCustomsTransmissionsStatusError).HasColumnName("LocalCustomsTransmissionsStatusError");
                 this.Property(t => t.LocalCustomsTransmissionsStatusDate).HasColumnName("LocalCustomsTransmissionsStatusDate");
-                this.Property(t => t.ComputedForwarderShipmentNumber).HasColumnName("ComputedForwarderShipmentNumber");                
+                this.Property(t => t.ComputedForwarderShipmentNumber).HasColumnName("ComputedForwarderShipmentNumber");
+                this.Property(t => t.OnCarriageAdditionalTransportModeCode).HasColumnName("OnCarriageAdditionalTransportModeCode");
             }
-            
+
+
             // Relationships
             this.HasOptional(t => t.FreightLocationWarehouse).WithMany().HasForeignKey(d => d.FreightLocationId);
             this.HasOptional(t => t.AgentAddress).WithMany().HasForeignKey(d => d.AgentAddressId);
@@ -1041,14 +812,15 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.CustomAgentExportCard).WithMany().HasForeignKey(d => d.CustomAgentExportId);
             this.HasOptional(t => t.CustomerCard).WithMany().HasForeignKey(d => d.CustomerId);
             this.HasOptional(t => t.FreightForwarderCard).WithMany().HasForeignKey(d => d.FreightForwarderId);
-            this.HasOptional(t => t.IssuingCarrierAgent).WithMany().HasForeignKey(d => d.IssuingCarrierAgentId);            
+            this.HasOptional(t => t.IssuingCarrierAgent).WithMany().HasForeignKey(d => d.IssuingCarrierAgentId);
+            this.HasOptional(t => t.OnCarriageCarrierCard).WithMany().HasForeignKey(d => d.OnCarriageCarrierId);
+            this.HasOptional(t => t.PreCarriageCarrierCard).WithMany().HasForeignKey(d => d.PreCarriageCarrierId);
             this.HasOptional(t => t.ShipperCard).WithMany().HasForeignKey(d => d.ShipperId);
             this.HasOptional(t => t.CustomAgentImportCard).WithMany().HasForeignKey(d => d.CustomAgentImportId);
             this.HasOptional(t => t.ConsigneeCard).WithMany().HasForeignKey(d => d.ConsigneeId);
             this.HasOptional(t => t.Notify1Card).WithMany().HasForeignKey(d => d.Notify1Id);
             this.HasOptional(t => t.Notify2Card).WithMany().HasForeignKey(d => d.Notify2Id);
             this.HasOptional(t => t.AgentCard).WithMany().HasForeignKey(d => d.AgentId);
-            this.HasOptional(t => t.AgentComputedCard).WithMany().HasForeignKey(d => d.AgentComputed);
             this.HasOptional(t => t.ShipperNotExporterCard).WithMany().HasForeignKey(d => d.ShipperNotExporterId);
             this.HasOptional(t => t.AgentContact).WithMany().HasForeignKey(d => d.AgentContactId);
             this.HasOptional(t => t.ShipperContact).WithMany().HasForeignKey(d => d.ShipperContactId);
@@ -1068,17 +840,22 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.FHLStatus).WithMany().HasForeignKey(d => d.FHLStatusCode);
             this.HasOptional(t => t.Incoterm).WithMany().HasForeignKey(d => d.IncotermId);
             this.HasOptional(t => t.NextLeg).WithMany().HasForeignKey(d => d.NextLegCode);
-            this.HasOptional(t => t.FromPort).WithMany().HasForeignKey(d => d.FromPortId);            
+            this.HasOptional(t => t.FromPort).WithMany().HasForeignKey(d => d.FromPortId);
+            this.HasOptional(t => t.OnCarriageFromPort).WithMany().HasForeignKey(d => d.OnCarriageFromPortId);
+            this.HasOptional(t => t.OnCarriageToPort).WithMany().HasForeignKey(d => d.OnCarriageToPortId);
+            this.HasOptional(t => t.PreCarriageFromPort).WithMany().HasForeignKey(d => d.PreCarriageFromPortId);
+            this.HasOptional(t => t.PreCarriageToPort).WithMany().HasForeignKey(d => d.PreCarriageToPortId);
             this.HasOptional(t => t.ToPort).WithMany().HasForeignKey(d => d.ToPortId);
             this.HasOptional(t => t.ShipmentCustomerType).WithMany().HasForeignKey(d => d.ShipmentCustomerTypeCode);
             this.HasOptional(t => t.ShipmentLevel).WithMany().HasForeignKey(d => d.ShipmentLevelCode);
             this.HasOptional(t => t.ShipmentPayableStatus).WithMany().HasForeignKey(d => d.ShipmentPayableStatusCode);
             this.HasOptional(t => t.ShipmentReceivableStatus).WithMany().HasForeignKey(d => d.ShipmentReceivableStatusCode);
-            this.HasOptional(t => t.ChargeableWeightUnit).WithMany().HasForeignKey(d => d.ChargeableWeightUnitCode);            
+            this.HasOptional(t => t.ChargeableWeightUnit).WithMany().HasForeignKey(d => d.ChargeableWeightUnitCode);
+            this.HasOptional(t => t.OnCarriageVessel).WithMany().HasForeignKey(d => d.OnCarriageVesselId);
+            this.HasOptional(t => t.PreCarriageVessel).WithMany().HasForeignKey(d => d.PreCarriageVesselId);
             this.HasOptional(t => t.ShipmentType).WithMany().HasForeignKey(d => d.ShipmentTypeId);
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);
-            this.HasRequired(t => t.HandlerUser).WithMany().HasForeignKey(d => d.HandlerUserId);
             this.HasOptional(t => t.GrossWeightUnit).WithMany().HasForeignKey(d => d.GrossWeightUnitCode);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
             this.HasOptional(t => t.CustomClearancePoint).WithMany().HasForeignKey(d => d.CustomClearancePointId);
@@ -1119,43 +896,21 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.CustomsTransmissionsStatus).WithMany().HasForeignKey(d => d.LocalCustomsTransmissionsStatusCode);
             this.HasOptional(t => t.WarehouseLegCard).WithMany().HasForeignKey(d => d.WarehouseLegWarehouseId);
             this.HasOptional(t => t.WarehouseLegAddress).WithMany().HasForeignKey(d => d.WarehouseLegAddressId);
-            this.HasOptional(t => t.WarehouseLeg2Card).WithMany().HasForeignKey(d => d.WarehouseLeg2WarehouseId);
-            this.HasOptional(t => t.WarehouseLeg2Address).WithMany().HasForeignKey(d => d.WarehouseLeg2AddressId);
             this.HasOptional(t => t.LastSharedEvent).WithMany().HasForeignKey(d => d.LastSharedEventId);
             this.HasOptional(t => t.LocalCustomsSentByUser).WithMany().HasForeignKey(d => d.LocalCustomsSentByUserId);
             this.HasOptional(t => t.OperationalClosedByUser).WithMany().HasForeignKey(d => d.OperationalClosedByUserId);
             this.HasOptional(t => t.INTTRASIStatus).WithMany().HasForeignKey(d => d.INTTRASIStatusCode);
-            this.HasOptional(t => t.EmergencyContact).WithMany().HasForeignKey(d => d.EmergencyContactId);            
+            this.HasOptional(t => t.EmergencyContact).WithMany().HasForeignKey(d => d.EmergencyContactId);
+            this.HasOptional(t => t.OnCarriageAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnCarriageAdditionalTransportModeCode);
             this.HasOptional(t => t.INTTRADocumentType).WithMany().HasForeignKey(d => d.INTTRADocumentTypeCode);
-            this.HasOptional(t => t.INTTRABookingTransStatus).WithMany().HasForeignKey(d => d.INTTRABookingTransStatusCode);
-            this.HasOptional(t => t.INTTRABookingStatus).WithMany().HasForeignKey(d => d.INTTRABookingStatusCode);
+            //this.HasOptional(t => t.HybridPartner).WithMany().HasForeignKey(d => d.ForwardingPartnerId);
             this.HasOptional(t => t.BasicFreight).WithMany().HasForeignKey(d => d.BasicFreightId);
             this.HasOptional(t => t.DestinationPortCharges).WithMany().HasForeignKey(d => d.DestinationPortChargesId);
             this.HasOptional(t => t.DestinationHaulageCharges).WithMany().HasForeignKey(d => d.DestinationHaulageChargesId);
             this.HasOptional(t => t.AdditionalCharges).WithMany().HasForeignKey(d => d.AdditionalChargesId);
             this.HasOptional(t => t.FreightPayer).WithMany().HasForeignKey(d => d.FreightPayerId);
             this.HasOptional(t => t.FreightPayerAddress).WithMany().HasForeignKey(d => d.FreightPayerAddressId);
-            this.HasOptional(t => t.ShipmentSubType).WithMany().HasForeignKey(d => d.ShipmentSubTypeId);
-            this.HasOptional(t => t.ChargeStorageCurrency).WithMany().HasForeignKey(d => d.ChargeStorageCurrencyId);
-            this.HasOptional(t => t.WeightMeasurement).WithMany().HasForeignKey(d => d.WeightMeasurementCode);
-            this.HasOptional(t => t.WeightRounding).WithMany().HasForeignKey(d => d.WeightRoundingCode);
-            this.HasOptional(t => t.TruckerCard).WithMany().HasForeignKey(d => d.TruckerId); 
-            this.HasOptional(t => t.PreForwardingCarrierCard).WithMany().HasForeignKey(d => d.PreForwardingCarrierId);
-            this.HasOptional(t => t.PreForwardingFromPort).WithMany().HasForeignKey(d => d.PreForwardingFromPortId);
-            this.HasOptional(t => t.PreForwardingToPort).WithMany().HasForeignKey(d => d.PreForwardingToPortId);
-            this.HasOptional(t => t.PreForwardingVessel).WithMany().HasForeignKey(d => d.PreForwardingVesselId);
-            this.HasOptional(t => t.OnForwardingCarrierCard).WithMany().HasForeignKey(d => d.OnForwardingCarrierId);
-            this.HasOptional(t => t.OnForwardingFromPort).WithMany().HasForeignKey(d => d.OnForwardingFromPortId);
-            this.HasOptional(t => t.OnForwardingToPort).WithMany().HasForeignKey(d => d.OnForwardingToPortId);
-            this.HasOptional(t => t.OnForwardingVessel).WithMany().HasForeignKey(d => d.OnForwardingVesselId);
-            this.HasOptional(t => t.OnForwardingAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnForwardingAdditionalTransportModeCode);
-            this.HasOptional(t => t.BillingStatus).WithMany().HasForeignKey(d => d.BillingStatusId);
-            this.HasOptional(t => t.OperationalStatus).WithMany().HasForeignKey(d => d.OperationalStatusId);
-            this.HasOptional(t => t.DestinationWarehouseCard).WithMany().HasForeignKey(d => d.DestinationWarehouseId);
-            this.HasOptional(t => t.TruckerAddress).WithMany().HasForeignKey(d => d.TruckerAddressId);
-            this.HasOptional(t => t.TruckerContact).WithMany().HasForeignKey(d => d.TruckerContactId);
-            this.HasOptional(t => t.TruckerCard).WithMany().HasForeignKey(d => d.TruckerId);
-            this.HasOptional(t => t.UserId).WithMany().HasForeignKey(d => d.ReferantUserId);
+
         }
     }
 }
